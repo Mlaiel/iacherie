@@ -60,7 +60,8 @@ class EncryptionKeyManagement(Base):
     expires_at = Column(DateTime(timezone=True), nullable=True)
 
 class ComplianceRecord(Base):
-    """GDPR/CCPA compliance tracking."""
+    """
+        GDPR/CCPA compliance tracking."""
     __tablename__ = 'compliance_records'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -80,7 +81,8 @@ class ComplianceRecord(Base):
     updated_at = Column(DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class AuditTrail(Base):
-    """Comprehensive audit trail system."""
+    """
+        Comprehensive audit trail system."""
     __tablename__ = 'audit_trails'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -101,7 +103,8 @@ class AuditTrail(Base):
     created_at = Column(DateTime(timezone=True), default=datetime.utcnow)
 
 class AccessControlMatrix(Base):
-    """Granular access control management."""
+    """
+        Granular access control management."""
     __tablename__ = 'access_control_matrix'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -122,7 +125,8 @@ class AccessControlMatrix(Base):
     last_used_at = Column(DateTime(timezone=True), nullable=True)
 
 class SecurityIncident(Base):
-    """Security incident management."""
+    """
+        Security incident management."""
     __tablename__ = 'security_incidents'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -144,7 +148,8 @@ class SecurityIncident(Base):
     resolved_at = Column(DateTime(timezone=True), nullable=True)
     
 class DataAnonymization(Base):
-    """Data anonymization tracking."""
+    """
+        Data anonymization tracking."""
     __tablename__ = 'data_anonymization'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

@@ -217,7 +217,8 @@ class CreatorNetworkManager:
         self._initialize_scoring_models()
     
     def _initialize_scoring_models(self):
-        """Initialise les modèles de scoring"""
+        """
+        Initialise les modèles de scoring"""
         self.scoring_models = {
             'reputation': {
                 'weights': {
@@ -255,9 +256,11 @@ class CreatorNetworkManager:
         }
     
     async def register_creator(self, creator_data: Dict) -> CreatorProfile:
-        """Enregistre un nouveau créateur"""
+        """
+        Enregistre un nouveau créateur"""
         try:
             # Créer le profil créateur
+
             creator = CreatorProfile(
                 username=creator_data['username'],
                 display_name=creator_data.get('display_name', ''),
@@ -292,12 +295,15 @@ class CreatorNetworkManager:
             
             # Déclencher la découverte de connexions
             await self._discover_potential_connections(creator.id)
+
             
             logger.info(f"Créateur enregistré: {creator.username}")
+
             return creator
             
         except Exception as e:
             logger.error(f"Erreur enregistrement créateur: {e}")
+
             raise
     
     async def discover_creators(self, search_criteria: Dict) -> List[CreatorProfile]:
@@ -315,6 +321,8 @@ class CreatorNetworkManager:
             # Recherche par tier
             if 'tier' in search_criteria:
                 target_tier = CreatorTier(search_criteria['tier'])
+
+
                 discovered_creators = [
                     c for c in discovered_creators 
                     if c.tier == target_tier
@@ -323,6 +331,7 @@ class CreatorNetworkManager:
             # Recherche par localisation
             if 'location' in search_criteria:
                 target_location = search_criteria['location']
+
                 discovered_creators = [
                     c for c in discovered_creators
                     if target_location.lower() in c.location.lower()
@@ -331,31 +340,42 @@ class CreatorNetworkManager:
             # Recherche par score minimum
             if 'min_reputation_score' in search_criteria:
                 min_score = search_criteria['min_reputation_score']
+
                 discovered_creators = [
                     c for c in discovered_creators
                     if c.reputation_score >= min_score
                 ]
             
             # Tri par pertinence
+
             discovered_creators = await self._rank_creators_by_relevance(
                 discovered_creators, search_criteria
             )
             
             # Limiter les résultats
+
             limit = search_criteria.get('limit', 50)
+
             return discovered_creators[:limit]
             
         except Exception as e:
             logger.error(f"Erreur découverte créateurs: {e}")
+
             return []
     
     async def match_creators_for_collaboration(self, project_requirements: Dict) -> List[Tuple[str, float]]:
         """Match des créateurs pour une collaboration"""
         try:
             # Extraire les critères du projet
+
             required_categories = [ContentCategory(cat) for cat in project_requirements.get('categories', [])]
+
             target_audience = project_requirements.get('target_audience', {})
+
+
             budget_range = project_requirements.get('budget_range', {})
+
+
             timeline = project_requirements.get('timeline', {})
             
             # Calculer les scores de compatibilité
@@ -369,27 +389,32 @@ class CreatorNetworkManager:
                 compatibility_score = await self._calculate_collaboration_compatibility(
                     creator, project_requirements
                 )
+
                 
                 if compatibility_score > 0.5:  # Seuil minimum
                     creator_matches.append((creator_id, compatibility_score))
             
             # Trier par score décroissant
             creator_matches.sort(key=lambda x: x[1], reverse=True)
+
             
             return creator_matches[:20]  # Top 20 matches
             
         except Exception as e:
             logger.error(f"Erreur matching créateurs: {e}")
+
             return []
     
     async def analyze_creator_network(self, creator_id: str) -> Dict[str, Any]:
         """Analyse le réseau d'un créateur"""
         try:
             creator_network = self.creator_networks.get(creator_id)
+
             if not creator_network:
                 raise ValueError("Réseau créateur introuvable")
             
             # Analyser la structure du réseau
+
             network_analysis = {
                 'total_connections': len(creator_network.connections),
                 'connection_types': {},
@@ -416,43 +441,59 @@ class CreatorNetworkManager:
             
             # Évaluer la santé du réseau
             network_analysis['network_health'] = await self._evaluate_network_health(creator_id)
+
             
             return network_analysis
             
         except Exception as e:
             logger.error(f"Erreur analyse réseau créateur: {e}")
+
             raise
     
     async def suggest_network_expansion(self, creator_id: str) -> List[Dict[str, Any]]:
         """Suggère des expansions de réseau"""
         try:
             creator = self.creator_profiles.get(creator_id)
+
             if not creator:
                 raise ValueError("Créateur introuvable")
+
+
             
             suggestions = []
             
             # Suggestion basée sur les catégories communes
+
             category_suggestions = await self._suggest_by_categories(creator)
+
             suggestions.extend(category_suggestions)
             
             # Suggestion basée sur l'audience similaire
+
             audience_suggestions = await self._suggest_by_audience_similarity(creator)
+
             suggestions.extend(audience_suggestions)
             
             # Suggestion basée sur la localisation
+
             location_suggestions = await self._suggest_by_location(creator)
+
             suggestions.extend(location_suggestions)
             
             # Suggestion basée sur l'historique de collaboration
+
             collaboration_suggestions = await self._suggest_by_collaboration_history(creator)
+
             suggestions.extend(collaboration_suggestions)
             
             # Suggestion basée sur l'analyse de réseau
+
             network_suggestions = await self._suggest_by_network_analysis(creator_id)
+
             suggestions.extend(network_suggestions)
             
             # Supprimer les doublons et trier par score
+
             unique_suggestions = {}
             for suggestion in suggestions:
                 suggested_id = suggestion['creator_id']
@@ -460,44 +501,58 @@ class CreatorNetworkManager:
                     unique_suggestions[suggested_id] = suggestion
             
             # Convertir en liste et trier
+
             final_suggestions = list(unique_suggestions.values())
+
             final_suggestions.sort(key=lambda x: x['score'], reverse=True)
+
             
             return final_suggestions[:10]  # Top 10 suggestions
             
         except Exception as e:
             logger.error(f"Erreur suggestions expansion réseau: {e}")
+
             return []
     
     async def _calculate_collaboration_compatibility(self, creator: CreatorProfile, 
                                                    requirements: Dict) -> float:
         """Calcule la compatibilité pour une collaboration"""
         score = 0.0
+
         max_score = 0.0
         
         # Score des catégories
+
         required_categories = [ContentCategory(cat) for cat in requirements.get('categories', [])]
         if required_categories:
             category_matches = sum(1 for cat in creator.categories if cat in required_categories)
+
+
             category_score = category_matches / len(required_categories)
+
             score += category_score * 0.3
         max_score += 0.3
         
         # Score d'audience
+
         target_audience = requirements.get('target_audience', {})
         if target_audience:
             audience_score = await self._calculate_audience_match(creator, target_audience)
+
             score += audience_score * 0.25
         max_score += 0.25
         
         # Score de réputation
+
         reputation_threshold = requirements.get('min_reputation_score', 0)
         if creator.reputation_score >= reputation_threshold:
             reputation_score = min(creator.reputation_score / 100, 1.0)
+
             score += reputation_score * 0.2
         max_score += 0.2
         
         # Score d'engagement
+
         engagement_threshold = requirements.get('min_engagement_rate', 0)
         if creator.engagement_rate >= engagement_threshold:
             engagement_score = min(creator.engagement_rate / 10, 1.0)  # Normaliser à 10%
@@ -505,7 +560,9 @@ class CreatorNetworkManager:
         max_score += 0.15
         
         # Score de disponibilité (simulé - à implémenter selon calendrier réel)
+
         timeline = requirements.get('timeline', {})
+
         availability_score = await self._check_creator_availability(creator.id, timeline)
         score += availability_score * 0.1
         max_score += 0.1
@@ -535,19 +592,25 @@ class CreatorDiscoveryEngine:
         self.niche_detectors = {}
         
     async def discover_emerging_creators(self, platform: str, niche: str) -> List[Dict[str, Any]]:
-        """Découvre des créateurs émergents"""
+        """
+        Découvre des créateurs émergents"""
         try:
             # Analyser les tendances de la niche
+
             trending_content = await self._analyze_trending_content(platform, niche)
             
             # Identifier les créateurs associés au contenu trending
+
             emerging_creators = []
             
             for content in trending_content:
                 creator_data = await self._extract_creator_from_content(content)
+
                 if creator_data:
                     # Analyser le potentiel
+
                     potential_score = await self._calculate_emergence_potential(creator_data)
+
                     
                     if potential_score > 0.7:  # Seuil de potentiel élevé
                         creator_info = {
@@ -565,35 +628,44 @@ class CreatorDiscoveryEngine:
             
             # Trier par potentiel
             emerging_creators.sort(key=lambda x: x['potential_score'], reverse=True)
+
             
             return emerging_creators[:20]  # Top 20 créateurs émergents
             
         except Exception as e:
             logger.error(f"Erreur découverte créateurs émergents: {e}")
+
             return []
     
     async def analyze_niche_opportunities(self, niche: str) -> Dict[str, Any]:
         """Analyse les opportunités dans une niche"""
         try:
             # Analyser la saturation de la niche
+
             saturation_analysis = await self._analyze_niche_saturation(niche)
             
             # Identifier les sous-niches sous-exploitées
+
             untapped_sub_niches = await self._identify_untapped_sub_niches(niche)
             
             # Analyser la croissance de la niche
+
             growth_analysis = await self._analyze_niche_growth(niche)
             
             # Identifier les influenceurs dominants
+
             dominant_influencers = await self._identify_dominant_influencers(niche)
             
             # Analyser les gaps de contenu
+
             content_gaps = await self._analyze_content_gaps(niche)
             
             # Calculer le score d'opportunité global
+
             opportunity_score = await self._calculate_niche_opportunity_score(
                 saturation_analysis, growth_analysis, content_gaps
             )
+
             
             return {
                 'niche': niche,
@@ -610,6 +682,7 @@ class CreatorDiscoveryEngine:
             
         except Exception as e:
             logger.error(f"Erreur analyse opportunités niche: {e}")
+
             raise
 
 # ==========================================
@@ -638,7 +711,8 @@ class CreatorReputationSystem:
         self._initialize_reputation_system()
     
     def _initialize_reputation_system(self):
-        """Initialise le système de réputation"""
+        """
+        Initialise le système de réputation"""
         self.reputation_factors = {
             'collaboration_success': {
                 'weight': 0.25,
@@ -696,21 +770,29 @@ class CreatorReputationSystem:
         }
     
     async def calculate_reputation_score(self, creator_id: str) -> float:
-        """Calcule le score de réputation"""
+        """
+        Calcule le score de réputation"""
         try:
             creator = self.network_manager.creator_profiles.get(creator_id)
+
             if not creator:
                 raise ValueError("Créateur introuvable")
+
+
             
             total_score = 0.0
             
             # Calculer chaque facteur de réputation
             for factor_name, factor_config in self.reputation_factors.items():
                 factor_score = await self._calculate_reputation_factor(creator, factor_name)
+
+
                 weighted_score = factor_score * factor_config['weight']
                 total_score += weighted_score
             
             # Normaliser le score (0-100)
+
+
             normalized_score = min(total_score, 100.0)
             
             # Mettre à jour le profil créateur
@@ -718,17 +800,21 @@ class CreatorReputationSystem:
             
             # Vérifier l'éligibilité aux badges
             await self._check_badge_eligibility(creator)
+
             
             return normalized_score
             
         except Exception as e:
             logger.error(f"Erreur calcul score réputation: {e}")
+
             return 0.0
     
     async def add_review(self, creator_id: str, reviewer_id: str, review_data: Dict) -> str:
         """Ajoute un avis sur un créateur"""
         try:
             review_id = str(uuid.uuid4())
+
+
             
             review = {
                 'id': review_id,
@@ -755,12 +841,15 @@ class CreatorReputationSystem:
             # Persister
             if self.network_manager.db_session:
                 await self._persist_review(review)
+
             
             logger.info(f"Avis ajouté pour créateur {creator_id}")
+
             return review_id
             
         except Exception as e:
             logger.error(f"Erreur ajout avis: {e}")
+
             raise
 
 # ==========================================
@@ -786,15 +875,8 @@ async def create_creator_network(redis_url: Optional[str] = None,
     redis_client = None
     if redis_url:
         try:
-            # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+            # Connexion Redis
+            import aioredis
             redis_client = await aioredis.from_url(redis_url)
         except Exception as e:
             logger.warning(f"Impossible de se connecter à Redis: {e}")

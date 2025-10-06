@@ -32,7 +32,8 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class EngagementMetric(Enum):
-    """Engagement metrics for mobile analytics"""
+    """
+        Engagement metrics for mobile analytics"""
     VIEWS = "views"
     LIKES = "likes"
     SHARES = "shares"
@@ -120,7 +121,8 @@ class EngagementPrediction:
 
 @dataclass
 class TrendInsight:
-    """Trend insight structure"""
+    """
+        Trend insight structure"""
     trend_id: str
     trend_type: TrendAnalysisType
     trend_strength: float
@@ -148,7 +150,8 @@ class AudienceInsight:
 
 @dataclass
 class MobileEngagementRequest:
-    """Mobile engagement prediction request"""
+    """
+        Mobile engagement prediction request"""
     content_id: str
     creator_id: str
     content_metadata: Dict[str, Any]
@@ -169,7 +172,8 @@ class MobileTrendRequest:
 
 @dataclass
 class MobileAudienceRequest:
-    """Mobile audience targeting request"""
+    """
+        Mobile audience targeting request"""
     creator_id: str
     content_type: str
     targeting_strategies: List[TargetingStrategy]
@@ -178,10 +182,12 @@ class MobileAudienceRequest:
     geographic_constraints: List[str] = field(default_factory=list)
 
 class MobileAnalyticsEngine:
-    """Unified mobile analytics engine consolidating engagement, trending, and audience analytics"""
+    """
+        Unified mobile analytics engine consolidating engagement, trending, and audience analytics"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize mobile analytics engine with comprehensive capabilities"""
+        """
+        Initialize mobile analytics engine with comprehensive capabilities"""
         self.config = config or {}
         self.engagement_predictor = MobileEngagementPredictor(self.config)
         self.trending_analyzer = MobileTrendingAnalyzer(self.config)
@@ -215,34 +221,45 @@ class MobileAnalyticsEngine:
             start_time = datetime.utcnow()
             
             # Check cache for similar predictions
+
             cache_key = self._generate_prediction_cache_key(request)
+
             if cache_key in self.prediction_cache:
                 cached_result = self.prediction_cache[cache_key]
                 if self._is_cache_valid(cached_result):
                     logger.info(f"Using cached prediction for {request.content_id}")
+
                     return cached_result["result"]
             
             # Generate engagement prediction
+
             prediction_result = await self.engagement_predictor.predict_mobile_engagement(request)
             
             # Analyze trends to enhance prediction
+
             trend_request = MobileTrendRequest(
                 content_id=request.content_id,
                 analysis_types=[TrendAnalysisType.VIRAL_POTENTIAL, TrendAnalysisType.ENGAGEMENT_TREND],
                 mobile_focused=True
             )
+
+
             trend_analysis = await self.trending_analyzer.analyze_mobile_trends(trend_request)
             
             # Get audience insights for context
+
             audience_request = MobileAudienceRequest(
                 creator_id=request.creator_id,
                 content_type=request.content_metadata.get("type", "unknown"),
                 targeting_strategies=[TargetingStrategy.ENGAGEMENT_BASED, TargetingStrategy.MOBILE_FIRST],
                 mobile_optimization=True
             )
+
+
             audience_insights = await self.audience_targeting.analyze_mobile_audience(audience_request)
             
             # Combine all analytics for comprehensive prediction
+
             comprehensive_result = {
                 "prediction_id": prediction_id,
                 "content_id": request.content_id,
@@ -269,11 +286,13 @@ class MobileAnalyticsEngine:
             # Update metrics
             self.analytics_metrics["predictions_made"] += 1
             self._update_analytics_metrics(comprehensive_result)
+
             
             return comprehensive_result
             
         except Exception as e:
             logger.error(f"Mobile engagement prediction failed: {e}")
+
             raise
     
     async def analyze_trends(self, request: MobileTrendRequest) -> Dict[str, Any]:
@@ -283,21 +302,27 @@ class MobileAnalyticsEngine:
             start_time = datetime.utcnow()
             
             # Perform comprehensive trend analysis
+
             trend_results = await self.trending_analyzer.analyze_mobile_trends(request)
             
             # Enhance with engagement predictions
+
             engagement_request = MobileEngagementRequest(
                 content_id=request.content_id,
                 creator_id="",  # Will be filled from content metadata
+
                 content_metadata={"trend_analysis": True},
                 mobile_specific=True
             )
+
+
             
             engagement_context = await self.engagement_predictor.get_engagement_context(
                 request.content_id
             )
             
             # Combine trend and engagement analytics
+
             comprehensive_trends = {
                 "analysis_id": analysis_id,
                 "content_id": request.content_id,
@@ -321,6 +346,7 @@ class MobileAnalyticsEngine:
             
         except Exception as e:
             logger.error(f"Mobile trend analysis failed: {e}")
+
             raise
     
     async def target_audience(self, request: MobileAudienceRequest) -> Dict[str, Any]:
@@ -330,19 +356,23 @@ class MobileAnalyticsEngine:
             start_time = datetime.utcnow()
             
             # Perform audience analysis
+
             audience_results = await self.audience_targeting.analyze_mobile_audience(request)
             
             # Get engagement insights for audience
+
             engagement_patterns = await self.engagement_predictor.get_audience_engagement_patterns(
                 request.creator_id
             )
             
             # Analyze trending topics for audience interests
+
             trending_topics = await self.trending_analyzer.get_trending_topics_for_audience(
                 audience_results.get("segments", [])
             )
             
             # Comprehensive audience strategy
+
             audience_strategy = {
                 "targeting_id": targeting_id,
                 "creator_id": request.creator_id,
@@ -369,24 +399,30 @@ class MobileAnalyticsEngine:
             
         except Exception as e:
             logger.error(f"Mobile audience targeting failed: {e}")
+
             raise
     
     async def get_comprehensive_analytics(self, content_id: str, creator_id: str) -> Dict[str, Any]:
         """Get comprehensive analytics combining all mobile analytics capabilities"""
         try:
             # Create requests for all analytics types
+
             engagement_request = MobileEngagementRequest(
                 content_id=content_id,
                 creator_id=creator_id,
                 content_metadata={"comprehensive": True},
                 mobile_specific=True
             )
+
+
             
             trend_request = MobileTrendRequest(
                 content_id=content_id,
                 analysis_types=list(TrendAnalysisType),
                 mobile_focused=True
             )
+
+
             
             audience_request = MobileAudienceRequest(
                 creator_id=creator_id,
@@ -396,15 +432,22 @@ class MobileAnalyticsEngine:
             )
             
             # Execute all analytics in parallel
+
             engagement_task = asyncio.create_task(self.predict_engagement(engagement_request))
+
+
             trend_task = asyncio.create_task(self.analyze_trends(trend_request))
+
+
             audience_task = asyncio.create_task(self.target_audience(audience_request))
+
             
             engagement_result, trend_result, audience_result = await asyncio.gather(
                 engagement_task, trend_task, audience_task
             )
             
             # Synthesize comprehensive insights
+
             comprehensive_analytics = {
                 "analytics_id": f"comprehensive_{uuid.uuid4().hex[:8]}",
                 "content_id": content_id,
@@ -428,6 +471,7 @@ class MobileAnalyticsEngine:
             
         except Exception as e:
             logger.error(f"Comprehensive analytics failed: {e}")
+
             raise
     
     async def get_analytics_metrics(self) -> Dict[str, Any]:
@@ -450,6 +494,7 @@ class MobileAnalyticsEngine:
     def _is_cache_valid(self, cached_item: Dict[str, Any]) -> bool:
         """Check if cached item is still valid"""
         cached_at = cached_item.get("cached_at", datetime.min)
+
         ttl = cached_item.get("ttl", 3600)
         return (datetime.utcnow() - cached_at).total_seconds() < ttl
     
@@ -476,12 +521,15 @@ class MobileAnalyticsEngine:
     def _update_analytics_metrics(self, result: Dict[str, Any]):
         """Update analytics performance metrics"""
         confidence = result.get("confidence_score", 0.0)
+
         current_avg = self.analytics_metrics["average_accuracy"]
+
         total_predictions = self.analytics_metrics["predictions_made"]
         
         self.analytics_metrics["average_accuracy"] = (
             (current_avg * (total_predictions - 1) + confidence) / total_predictions
         )
+
         
         self.analytics_metrics["mobile_optimization_score"] = result.get("mobile_optimization_impact", 0.0)
     
@@ -501,6 +549,7 @@ class MobileAnalyticsEngine:
             trend_results.get("viral_potential_score", 0.0) * 0.6 +
             engagement_context.get("viral_indicators", 0.0) * 0.4
         )
+
         
         return {
             "viral_score": viral_score,
@@ -524,18 +573,23 @@ class MobileAnalyticsEngine:
     
     def _generate_trend_recommendations(self, trend_results: Dict[str, Any], 
                                       engagement_context: Dict[str, Any]) -> List[str]:
-        """Generate trend-based recommendations"""
+        """
+        Generate trend-based recommendations"""
         recommendations = []
         
         if trend_results.get("mobile_trend_strength", 0) > 0.7:
             recommendations.append("Optimize for mobile-first distribution")
+
         
         if engagement_context.get("peak_hours"):
             recommendations.append("Schedule posts during identified peak mobile hours")
+
+
         
         viral_potential = trend_results.get("viral_potential_score", 0)
         if viral_potential > 0.6:
             recommendations.append("Amplify with mobile-focused viral marketing")
+
         
         return recommendations
     
@@ -584,6 +638,7 @@ class MobileAnalyticsEngine:
                 "trend_alignment": trending_topics.get("alignment_score", 0),
                 "confidence": 0.7
             })
+
         
         return strategies
     
@@ -620,14 +675,17 @@ class MobileAnalyticsEngine:
             insights.append("Strong mobile engagement potential - prioritize mobile distribution")
         
         # Trend insights
+
         viral_potential = trend.get("viral_potential_analysis", {}).get("viral_score", 0)
         if viral_potential > 0.6:
             insights.append("High viral potential detected - consider amplification strategies")
         
         # Audience insights
+
         mobile_segments = audience.get("mobile_targeting_optimization", {}).get("mobile_first_segments", [])
         if len(mobile_segments) > 3:
             insights.append("Multiple mobile-first audience segments identified - create segment-specific content")
+
         
         return insights
     
@@ -647,6 +705,7 @@ class MobileAnalyticsEngine:
         })
         
         # Timing optimization
+
         peak_times = audience.get("audience_analysis", {}).get("optimal_posting_times", [])
         if peak_times:
             recommendations.append({
@@ -656,6 +715,7 @@ class MobileAnalyticsEngine:
                 "expected_impact": "15-25% reach increase",
                 "implementation": f"Schedule posts for: {', '.join(map(str, peak_times[:3]))}"
             })
+
         
         return recommendations
     
@@ -669,8 +729,7 @@ class MobileAnalyticsEngine:
             "prediction_cache_size": len(self.prediction_cache),
             "trend_cache_size": len(self.trend_cache),
             "analytics_cache_size": len(self.analytics_cache),
-            "cache_hit_rate": 0.75,  # Placeholder - would calculate actual hit rate
-            "average_response_time": 0.15  # seconds
+            "cache_hit_rate": 0.75,            "average_response_time": 0.15  # seconds
         }
 
 
@@ -683,18 +742,24 @@ class MobileEngagementPredictor:
         self.historical_data = {}
         
     async def predict_mobile_engagement(self, request: MobileEngagementRequest) -> EngagementPrediction:
-        """Predict engagement for mobile content"""
+        """
+        Predict engagement for mobile content"""
         # Analyze content features
+
         content_features = await self._extract_content_features(request)
         
         # Get historical performance context
+
         historical_context = await self._get_historical_context(request.creator_id)
         
         # Mobile-specific predictions
+
         mobile_predictions = await self._predict_mobile_metrics(content_features, historical_context)
         
         # Calculate confidence scores
+
         confidence_scores = await self._calculate_confidence_scores(mobile_predictions)
+
         
         return EngagementPrediction(
             content_id=request.content_id,
@@ -708,7 +773,8 @@ class MobileEngagementPredictor:
         )
     
     async def get_engagement_context(self, content_id: str) -> Dict[str, Any]:
-        """Get engagement context for content"""
+        """
+        Get engagement context for content"""
         return {
             "viral_indicators": 0.6,
             "mobile_viral_factor": 0.8,
@@ -758,7 +824,9 @@ class MobileEngagementPredictor:
                                     context: Dict[str, Any]) -> Dict[EngagementMetric, float]:
         """Predict mobile engagement metrics"""
         base_engagement = context.get("average_engagement_rate", 0.05)
+
         mobile_boost = context.get("mobile_performance_factor", 1.2)
+
         
         return {
             EngagementMetric.VIEWS: 10000 * mobile_boost,
@@ -776,7 +844,8 @@ class MobileEngagementPredictor:
 
 
 class MobileTrendingAnalyzer:
-    """Mobile trending analysis with viral potential assessment"""
+    """
+        Mobile trending analysis with viral potential assessment"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -784,12 +853,15 @@ class MobileTrendingAnalyzer:
         self.trending_data = {}
         
     async def analyze_mobile_trends(self, request: MobileTrendRequest) -> Dict[str, Any]:
-        """Analyze mobile trends and viral potential"""
+        """
+        Analyze mobile trends and viral potential"""
         trend_insights = []
         
         for analysis_type in request.analysis_types:
             insight = await self._analyze_specific_trend(analysis_type, request)
+
             trend_insights.append(insight)
+
         
         return {
             "trend_insights": trend_insights,
@@ -852,12 +924,15 @@ class MobileAudienceTargeting:
         self.audience_data = {}
         
     async def analyze_mobile_audience(self, request: MobileAudienceRequest) -> Dict[str, Any]:
-        """Analyze mobile audience and generate targeting insights"""
+        """
+        Analyze mobile audience and generate targeting insights"""
         audience_insights = []
         
         for strategy in request.targeting_strategies:
             insight = await self._analyze_targeting_strategy(strategy, request)
+
             audience_insights.append(insight)
+
         
         return {
             "audience_insights": audience_insights,

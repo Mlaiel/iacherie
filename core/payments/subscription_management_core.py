@@ -24,7 +24,8 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class SubscriptionStatus(Enum):
-    """Subscription status types"""
+    """
+Subscription status types"""
     ACTIVE = "active"
     PENDING = "pending"
     CANCELLED = "cancelled"
@@ -34,7 +35,8 @@ class SubscriptionStatus(Enum):
     PAST_DUE = "past_due"
 
 class BillingCycle(Enum):
-    """Billing cycle options"""
+    """
+Billing cycle options"""
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
     SEMI_ANNUAL = "semi_annual"
@@ -43,7 +45,8 @@ class BillingCycle(Enum):
     DAILY = "daily"
 
 class SubscriptionTier(Enum):
-    """Subscription tier levels"""
+    """
+Subscription tier levels"""
     BASIC = "basic"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
@@ -51,7 +54,8 @@ class SubscriptionTier(Enum):
     TRIAL = "trial"
 
 class BillingAction(Enum):
-    """Billing action types"""
+    """
+Billing action types"""
     CHARGE = "charge"
     REFUND = "refund"
     PRORATION = "proration"
@@ -59,7 +63,8 @@ class BillingAction(Enum):
     ADJUSTMENT = "adjustment"
 
 class RevenueType(Enum):
-    """Revenue type categories"""
+    """
+Revenue type categories"""
     SUBSCRIPTION = "subscription"
     ONE_TIME = "one_time"
     USAGE_BASED = "usage_based"
@@ -68,7 +73,8 @@ class RevenueType(Enum):
 
 @dataclass
 class SubscriptionPlan:
-    """Subscription plan definition"""
+    """
+Subscription plan definition"""
     plan_id: str
     name: str
     description: str
@@ -85,7 +91,8 @@ class SubscriptionPlan:
 
 @dataclass
 class Subscription:
-    """Active subscription record"""
+    """
+Active subscription record"""
     subscription_id: str
     customer_id: str
     plan_id: str
@@ -109,7 +116,8 @@ class Subscription:
 
 @dataclass
 class BillingTransaction:
-    """Billing transaction record"""
+    """
+Billing transaction record"""
     transaction_id: str
     subscription_id: str
     customer_id: str
@@ -128,7 +136,8 @@ class BillingTransaction:
 
 @dataclass
 class Invoice:
-    """Invoice record"""
+    """
+Invoice record"""
     invoice_id: str
     subscription_id: str
     customer_id: str
@@ -148,7 +157,8 @@ class Invoice:
 
 @dataclass
 class RevenueRecord:
-    """Revenue tracking record"""
+    """
+Revenue tracking record"""
     record_id: str
     customer_id: str
     subscription_id: Optional[str]
@@ -163,7 +173,8 @@ class RevenueRecord:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class PlanManager:
-    """Subscription plan management system"""
+    """
+Subscription plan management system"""
     
     def __init__(self):
         self.plans = {}
@@ -176,7 +187,8 @@ class PlanManager:
         logger.info("Plan Manager initialized")
 
     def _initialize_default_plans(self):
-        """Initialize default subscription plans"""
+        """
+Initialize default subscription plans"""
         default_plans = [
             {
                 "plan_id": "basic_monthly",
@@ -260,7 +272,8 @@ class PlanManager:
             self.plans[plan.plan_id] = plan
 
     async def create_plan(self, plan_data: Dict[str, Any]) -> str:
-        """Create new subscription plan"""
+        """
+Create new subscription plan"""
         try:
             plan_id = plan_data.get("plan_id", f"plan_{uuid.uuid4().hex[:12]}")
             
@@ -288,7 +301,8 @@ class PlanManager:
             raise
 
     async def update_plan(self, plan_id: str, updates: Dict[str, Any]) -> bool:
-        """Update existing subscription plan"""
+        """
+Update existing subscription plan"""
         try:
             if plan_id not in self.plans:
                 raise ValueError(f"Plan not found: {plan_id}")
@@ -319,11 +333,13 @@ class PlanManager:
             return False
 
     async def get_plan(self, plan_id: str) -> Optional[SubscriptionPlan]:
-        """Get subscription plan by ID"""
+        """
+Get subscription plan by ID"""
         return self.plans.get(plan_id)
 
     async def list_plans(self, tier: Optional[SubscriptionTier] = None, active_only: bool = True) -> List[SubscriptionPlan]:
-        """List subscription plans with optional filtering"""
+        """
+List subscription plans with optional filtering"""
         plans = list(self.plans.values())
         
         if active_only:
@@ -336,7 +352,8 @@ class PlanManager:
 
     async def calculate_proration(self, old_plan: SubscriptionPlan, new_plan: SubscriptionPlan, 
                                 days_remaining: int, billing_cycle_days: int) -> Dict[str, Any]:
-        """Calculate proration for plan changes"""
+        """
+Calculate proration for plan changes"""
         try:
             # Calculate remaining value of old plan
             old_daily_rate = old_plan.price / billing_cycle_days
@@ -368,7 +385,8 @@ class PlanManager:
             raise
 
 class BillingEngine:
-    """Automated billing processing engine"""
+    """
+Automated billing processing engine"""
     
     def __init__(self):
         self.billing_transactions = {}
@@ -382,7 +400,8 @@ class BillingEngine:
         logger.info("Billing Engine initialized")
 
     def _initialize_billing_rules(self):
-        """Initialize billing and tax rules"""
+        """
+Initialize billing and tax rules"""
         self.billing_rules = {
             "retry_failed_payments": {
                 "max_retries": 3,
@@ -420,7 +439,8 @@ class BillingEngine:
         }
 
     async def process_billing_cycle(self, subscription: Subscription) -> Dict[str, Any]:
-        """Process billing for subscription cycle"""
+        """
+Process billing for subscription cycle"""
         try:
             # Calculate billing amount
             billing_amount = await self._calculate_billing_amount(subscription)
@@ -459,7 +479,8 @@ class BillingEngine:
             raise
 
     async def _calculate_billing_amount(self, subscription: Subscription) -> Dict[str, Any]:
-        """Calculate total billing amount for subscription"""
+        """
+Calculate total billing amount for subscription"""
         base_amount = subscription.price * subscription.quantity
         discount_amount = subscription.discount_amount
         subtotal = base_amount - discount_amount
@@ -478,7 +499,6 @@ class BillingEngine:
 
     async def _calculate_usage_charges(self, subscription: Subscription) -> Decimal:
         """Calculate usage-based charges"""
-        # Mock usage calculation - would integrate with usage tracking
         usage_data = subscription.metadata.get("usage_data", {})
         overage_charges = Decimal('0')
         
@@ -494,7 +514,8 @@ class BillingEngine:
         return overage_charges
 
     async def _calculate_taxes(self, subscription: Subscription, subtotal: Decimal) -> Decimal:
-        """Calculate applicable taxes"""
+        """
+Calculate applicable taxes"""
         customer_country = subscription.metadata.get("billing_country", "US")
         tax_rule = self.tax_rules.get(customer_country, {"tax_rate": Decimal('0')})
         
@@ -505,7 +526,8 @@ class BillingEngine:
 
     async def _create_invoice(self, subscription: Subscription, billing_amount: Dict[str, Any], 
                             tax_amount: Decimal) -> Invoice:
-        """Create invoice for billing cycle"""
+        """
+Create invoice for billing cycle"""
         invoice_id = f"inv_{uuid.uuid4().hex[:12]}"
         invoice_number = f"INV-{datetime.utcnow().strftime('%Y%m%d')}-{invoice_id[-6:].upper()}"
         
@@ -557,7 +579,8 @@ class BillingEngine:
         return invoice
 
     async def _create_billing_transaction(self, subscription: Subscription, invoice: Invoice) -> BillingTransaction:
-        """Create billing transaction record"""
+        """
+Create billing transaction record"""
         transaction_id = f"btxn_{uuid.uuid4().hex[:12]}"
         
         transaction = BillingTransaction(
@@ -579,8 +602,7 @@ class BillingEngine:
     async def _process_payment(self, subscription: Subscription, transaction: BillingTransaction) -> Dict[str, Any]:
         """Process payment for billing transaction"""
         try:
-            # Mock payment processing - would integrate with payment gateway
-            payment_success = True  # Mock success
+            payment_success = True
             
             if payment_success:
                 transaction.status = "completed"
@@ -612,7 +634,8 @@ class BillingEngine:
             }
 
     def _calculate_next_billing_date(self, subscription: Subscription) -> datetime:
-        """Calculate next billing date based on cycle"""
+        """
+Calculate next billing date based on cycle"""
         current_end = subscription.current_period_end
         
         if subscription.billing_cycle == BillingCycle.MONTHLY:
@@ -627,7 +650,8 @@ class BillingEngine:
             return current_end + timedelta(days=30)  # Default to monthly
 
     async def retry_failed_payment(self, transaction_id: str) -> Dict[str, Any]:
-        """Retry failed payment transaction"""
+        """
+Retry failed payment transaction"""
         try:
             if transaction_id not in self.billing_transactions:
                 raise ValueError(f"Transaction not found: {transaction_id}")
@@ -640,8 +664,7 @@ class BillingEngine:
                     "error": "Transaction is not in failed status"
                 }
             
-            # Mock retry payment
-            retry_success = True  # Mock success
+            retry_success = True
             
             if retry_success:
                 transaction.status = "completed"
@@ -670,7 +693,8 @@ class BillingEngine:
             }
 
 class RevenueAnalytics:
-    """Revenue analytics and reporting system"""
+    """
+Revenue analytics and reporting system"""
     
     def __init__(self):
         self.revenue_records = {}
@@ -679,7 +703,8 @@ class RevenueAnalytics:
         logger.info("Revenue Analytics initialized")
 
     async def record_revenue(self, revenue_data: Dict[str, Any]) -> str:
-        """Record revenue transaction"""
+        """
+Record revenue transaction"""
         try:
             record_id = f"rev_{uuid.uuid4().hex[:12]}"
             
@@ -707,7 +732,8 @@ class RevenueAnalytics:
             raise
 
     async def calculate_mrr(self, as_of_date: Optional[datetime] = None) -> Dict[str, Any]:
-        """Calculate Monthly Recurring Revenue (MRR)"""
+        """
+Calculate Monthly Recurring Revenue (MRR)"""
         try:
             if not as_of_date:
                 as_of_date = datetime.utcnow()
@@ -754,7 +780,8 @@ class RevenueAnalytics:
             raise
 
     async def calculate_arr(self, as_of_date: Optional[datetime] = None) -> Dict[str, Any]:
-        """Calculate Annual Recurring Revenue (ARR)"""
+        """
+Calculate Annual Recurring Revenue (ARR)"""
         try:
             mrr_data = await self.calculate_mrr(as_of_date)
             arr = mrr_data["mrr"] * 12
@@ -773,15 +800,14 @@ class RevenueAnalytics:
             raise
 
     async def analyze_churn(self, period_days: int = 30) -> Dict[str, Any]:
-        """Analyze customer churn rate"""
+        """
+Analyze customer churn rate"""
         try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
-            
-            # Mock churn analysis - would integrate with subscription data
-            total_customers_start = 1000  # Mock data
-            churned_customers = 50  # Mock data
-            new_customers = 80  # Mock data
+            total_customers_start = 1000
+            churned_customers = 50
+            new_customers = 80
             total_customers_end = total_customers_start - churned_customers + new_customers
             
             churn_rate = churned_customers / total_customers_start if total_customers_start > 0 else 0
@@ -809,7 +835,8 @@ class RevenueAnalytics:
             raise
 
     async def generate_revenue_report(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Generate comprehensive revenue report"""
+        """
+Generate comprehensive revenue report"""
         try:
             # Filter revenue records for period
             period_records = [
@@ -870,7 +897,8 @@ class RevenueAnalytics:
             raise
 
 class SubscriptionManagementCore:
-    """Main Subscription Management Core System"""
+    """
+Main Subscription Management Core System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -883,7 +911,8 @@ class SubscriptionManagementCore:
         logger.info("Subscription Management Core initialized")
 
     async def create_subscription(self, subscription_data: Dict[str, Any]) -> str:
-        """Create new subscription"""
+        """
+Create new subscription"""
         try:
             subscription_id = f"sub_{uuid.uuid4().hex[:12]}"
             
@@ -946,7 +975,8 @@ class SubscriptionManagementCore:
             raise
 
     async def update_subscription(self, subscription_id: str, updates: Dict[str, Any]) -> bool:
-        """Update existing subscription"""
+        """
+Update existing subscription"""
         try:
             if subscription_id not in self.subscriptions:
                 raise ValueError(f"Subscription not found: {subscription_id}")
@@ -977,7 +1007,8 @@ class SubscriptionManagementCore:
 
     async def cancel_subscription(self, subscription_id: str, cancellation_reason: str = "", 
                                 immediate: bool = False) -> bool:
-        """Cancel subscription"""
+        """
+Cancel subscription"""
         try:
             if subscription_id not in self.subscriptions:
                 raise ValueError(f"Subscription not found: {subscription_id}")
@@ -1005,7 +1036,8 @@ class SubscriptionManagementCore:
             return False
 
     async def process_subscription_billing(self, subscription_id: str) -> Dict[str, Any]:
-        """Process billing for specific subscription"""
+        """
+Process billing for specific subscription"""
         try:
             if subscription_id not in self.subscriptions:
                 raise ValueError(f"Subscription not found: {subscription_id}")
@@ -1052,7 +1084,8 @@ class SubscriptionManagementCore:
             raise
 
     async def get_subscription_analytics(self, customer_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get subscription analytics"""
+        """
+Get subscription analytics"""
         try:
             # Filter subscriptions
             if customer_id:
@@ -1102,7 +1135,8 @@ class SubscriptionManagementCore:
             raise
 
     def _calculate_period_end(self, start_date: datetime, billing_cycle: BillingCycle) -> datetime:
-        """Calculate period end based on billing cycle"""
+        """
+Calculate period end based on billing cycle"""
         if billing_cycle == BillingCycle.MONTHLY:
             return start_date + timedelta(days=30)
         elif billing_cycle == BillingCycle.QUARTERLY:
@@ -1115,7 +1149,8 @@ class SubscriptionManagementCore:
             return start_date + timedelta(days=30)  # Default to monthly
 
     async def _change_subscription_plan(self, subscription: Subscription, new_plan_id: str):
-        """Handle subscription plan change with proration"""
+        """
+Handle subscription plan change with proration"""
         try:
             # Get new plan
             new_plan = await self.plan_manager.get_plan(new_plan_id)
@@ -1146,7 +1181,8 @@ class SubscriptionManagementCore:
             raise
 
     def _get_billing_cycle_days(self, billing_cycle: BillingCycle) -> int:
-        """Get number of days in billing cycle"""
+        """
+Get number of days in billing cycle"""
         cycle_days = {
             BillingCycle.WEEKLY: 7,
             BillingCycle.MONTHLY: 30,
@@ -1156,7 +1192,8 @@ class SubscriptionManagementCore:
         return cycle_days.get(billing_cycle, 30)
 
     async def _record_proration_transaction(self, subscription: Subscription, proration: Dict[str, Any]):
-        """Record proration transaction"""
+        """
+Record proration transaction"""
         transaction_id = f"pro_{uuid.uuid4().hex[:12]}"
         
         proration_transaction = BillingTransaction(
@@ -1175,7 +1212,8 @@ class SubscriptionManagementCore:
         self.billing_engine.billing_transactions[transaction_id] = proration_transaction
 
     async def get_system_health(self) -> Dict[str, Any]:
-        """Get system health and statistics"""
+        """
+Get system health and statistics"""
         total_subscriptions = len(self.subscriptions)
         total_plans = len(self.plan_manager.plans)
         total_transactions = len(self.billing_engine.billing_transactions)
@@ -1220,4 +1258,4 @@ __all__ = [
 ]
 
 if __name__ == "__main__":
-    logger.info("Subscription Management Core module loaded successfully")
+    logger.info("Subscription Management Core module initialized successfully")

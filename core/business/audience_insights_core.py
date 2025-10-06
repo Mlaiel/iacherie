@@ -31,7 +31,8 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class AudienceSegment(str, Enum):
-    """Audience segment types"""
+    """
+Audience segment types"""
     DEMOGRAPHICS = "demographics"
     BEHAVIORAL = "behavioral"
     PSYCHOGRAPHIC = "psychographic"
@@ -40,7 +41,8 @@ class AudienceSegment(str, Enum):
     ENGAGEMENT_BASED = "engagement_based"
 
 class EngagementType(str, Enum):
-    """Types of audience engagement"""
+    """
+Types of audience engagement"""
     VIEW = "view"
     LIKE = "like"
     COMMENT = "comment"
@@ -51,7 +53,8 @@ class EngagementType(str, Enum):
     DOWNLOAD = "download"
 
 class AudienceMetricType(str, Enum):
-    """Audience metric types"""
+    """
+Audience metric types"""
     REACH = "reach"
     IMPRESSIONS = "impressions"
     ENGAGEMENT_RATE = "engagement_rate"
@@ -63,7 +66,8 @@ class AudienceMetricType(str, Enum):
 
 @dataclass
 class AudienceMember:
-    """Individual audience member profile"""
+    """
+Individual audience member profile"""
     user_id: str
     demographics: Dict[str, Any] = field(default_factory=dict)
     geographic_info: Dict[str, str] = field(default_factory=dict)
@@ -79,7 +83,8 @@ class AudienceMember:
 
 @dataclass
 class AudienceSegmentData:
-    """Audience segment analytics data"""
+    """
+Audience segment analytics data"""
     segment_id: str
     segment_name: str
     segment_type: AudienceSegment
@@ -95,7 +100,8 @@ class AudienceSegmentData:
 
 @dataclass
 class EngagementInsight:
-    """Audience engagement insight"""
+    """
+Audience engagement insight"""
     metric_type: AudienceMetricType
     value: float
     trend: str  # "increasing", "decreasing", "stable"
@@ -107,7 +113,8 @@ class EngagementInsight:
 
 @dataclass
 class AudienceReport:
-    """Comprehensive audience analytics report"""
+    """
+Comprehensive audience analytics report"""
     creator_id: str
     report_period: Tuple[datetime, datetime]
     total_audience: int
@@ -124,7 +131,8 @@ class AudienceReport:
 
 @dataclass
 class AudienceMetrics:
-    """Audience insights system metrics"""
+    """
+Audience insights system metrics"""
     total_audience_members: int = 0
     total_segments: int = 0
     reports_generated: int = 0
@@ -134,10 +142,12 @@ class AudienceMetrics:
     accuracy_score: float = 0.0
 
 class AudienceInsightsCore:
-    """Enterprise audience analytics and insights system"""
+    """
+Enterprise audience analytics and insights system"""
     
     def __init__(self, level: str = "enterprise"):
-        """Initialize audience insights core"""
+        """
+Initialize audience insights core"""
         self.level = level
         self.audience_members: Dict[str, AudienceMember] = {}
         self.segments: Dict[str, AudienceSegmentData] = {}
@@ -161,7 +171,8 @@ class AudienceInsightsCore:
         logger.info(f"👥 Audience Insights Core initialized - Level: {level}")
 
     async def add_audience_member(self, member: AudienceMember):
-        """Add or update audience member"""
+        """
+Add or update audience member"""
         self.audience_members[member.user_id] = member
         self.metrics.total_audience_members = len(self.audience_members)
         
@@ -178,7 +189,8 @@ class AudienceInsightsCore:
         value: float = 1.0,
         metadata: Optional[Dict[str, Any]] = None
     ):
-        """Record audience engagement event"""
+        """
+Record audience engagement event"""
         
         engagement_event = {
             "user_id": user_id,
@@ -203,7 +215,8 @@ class AudienceInsightsCore:
         logger.debug(f"Recorded engagement: {user_id} -> {content_id} ({engagement_type.value})")
 
     async def _update_behavior_patterns(self, member: AudienceMember, engagement_event: Dict[str, Any]):
-        """Update member behavior patterns"""
+        """
+Update member behavior patterns"""
         
         patterns = member.behavior_patterns
         
@@ -236,7 +249,8 @@ class AudienceInsightsCore:
         segment_type: AudienceSegment,
         criteria: Dict[str, Any]
     ) -> str:
-        """Create new audience segment"""
+        """
+Create new audience segment"""
         
         segment_id = f"segment_{int(time.time())}_{len(self.segments)}"
         
@@ -257,7 +271,8 @@ class AudienceInsightsCore:
         return segment_id
 
     async def _populate_segment(self, segment: AudienceSegmentData):
-        """Populate segment with matching audience members"""
+        """
+Populate segment with matching audience members"""
         
         matching_members = []
         
@@ -277,7 +292,8 @@ class AudienceInsightsCore:
         criteria: Dict[str, Any],
         segment_type: AudienceSegment
     ) -> bool:
-        """Check if member matches segment criteria"""
+        """
+Check if member matches segment criteria"""
         
         try:
             if segment_type == AudienceSegment.DEMOGRAPHICS:
@@ -296,7 +312,8 @@ class AudienceInsightsCore:
             return False
 
     def _match_demographics(self, member: AudienceMember, criteria: Dict[str, Any]) -> bool:
-        """Match demographic criteria"""
+        """
+Match demographic criteria"""
         
         for key, value in criteria.items():
             member_value = member.demographics.get(key)
@@ -319,7 +336,8 @@ class AudienceInsightsCore:
         return True
 
     def _match_behavioral(self, member: AudienceMember, criteria: Dict[str, Any]) -> bool:
-        """Match behavioral criteria"""
+        """
+Match behavioral criteria"""
         
         patterns = member.behavior_patterns
         
@@ -345,7 +363,8 @@ class AudienceInsightsCore:
         return True
 
     def _match_geographic(self, member: AudienceMember, criteria: Dict[str, Any]) -> bool:
-        """Match geographic criteria"""
+        """
+Match geographic criteria"""
         
         geo_info = member.geographic_info
         
@@ -362,7 +381,8 @@ class AudienceInsightsCore:
         return True
 
     def _match_engagement(self, member: AudienceMember, criteria: Dict[str, Any]) -> bool:
-        """Match engagement-based criteria"""
+        """
+Match engagement-based criteria"""
         
         # Calculate engagement metrics
         recent_engagements = [
@@ -388,7 +408,8 @@ class AudienceInsightsCore:
         segment: AudienceSegmentData,
         members: List[AudienceMember]
     ):
-        """Calculate metrics for segment"""
+        """
+Calculate metrics for segment"""
         
         if not members:
             return
@@ -416,7 +437,8 @@ class AudienceInsightsCore:
         segment.behavior_insights = self._calculate_behavior_insights(members)
 
     def _calculate_demographics_breakdown(self, members: List[AudienceMember]) -> Dict[str, Any]:
-        """Calculate demographics breakdown for segment"""
+        """
+Calculate demographics breakdown for segment"""
         
         breakdown = {}
         
@@ -441,7 +463,8 @@ class AudienceInsightsCore:
         return breakdown
 
     def _calculate_behavior_insights(self, members: List[AudienceMember]) -> Dict[str, Any]:
-        """Calculate behavior insights for segment"""
+        """
+Calculate behavior insights for segment"""
         
         insights = {}
         
@@ -477,7 +500,8 @@ class AudienceInsightsCore:
         start_date: datetime,
         end_date: datetime
     ) -> AudienceReport:
-        """Generate comprehensive audience report"""
+        """
+Generate comprehensive audience report"""
         
         start_time = time.time()
         
@@ -530,7 +554,8 @@ class AudienceInsightsCore:
             raise
 
     def _is_creator_audience(self, member: AudienceMember, creator_id: str) -> bool:
-        """Check if member is part of creator's audience"""
+        """
+Check if member is part of creator's audience"""
         
         # Check if member has engaged with creator's content
         for engagement in member.engagement_history:
@@ -546,7 +571,8 @@ class AudienceInsightsCore:
         start_date: datetime,
         end_date: datetime
     ) -> List[EngagementInsight]:
-        """Calculate engagement insights for time period"""
+        """
+Calculate engagement insights for time period"""
         
         insights = []
         
@@ -579,7 +605,8 @@ class AudienceInsightsCore:
         return insights
 
     def _calculate_geographic_distribution(self, audience: List[AudienceMember]) -> Dict[str, Any]:
-        """Calculate geographic distribution of audience"""
+        """
+Calculate geographic distribution of audience"""
         
         distribution = {}
         
@@ -601,7 +628,8 @@ class AudienceInsightsCore:
         return distribution
 
     def _calculate_overall_behavior_patterns(self, audience: List[AudienceMember]) -> Dict[str, Any]:
-        """Calculate overall behavior patterns"""
+        """
+Calculate overall behavior patterns"""
         
         patterns = {}
         
@@ -625,7 +653,8 @@ class AudienceInsightsCore:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, float]:
-        """Calculate audience growth metrics"""
+        """
+Calculate audience growth metrics"""
         
         # This would require historical data
         # For now, return basic metrics
@@ -638,7 +667,8 @@ class AudienceInsightsCore:
         return metrics
 
     async def _calculate_retention_metrics(self, audience: List[AudienceMember]) -> Dict[str, float]:
-        """Calculate audience retention metrics"""
+        """
+Calculate audience retention metrics"""
         
         metrics = {}
         
@@ -664,7 +694,8 @@ class AudienceInsightsCore:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Analyze content performance for creator"""
+        """
+Analyze content performance for creator"""
         
         # Filter engagements for creator's content in time period
         creator_engagements = [
@@ -705,7 +736,8 @@ class AudienceInsightsCore:
         audience: List[AudienceMember],
         insights: List[EngagementInsight]
     ) -> List[str]:
-        """Generate recommendations based on audience analysis"""
+        """
+Generate recommendations based on audience analysis"""
         
         recommendations = []
         
@@ -743,7 +775,8 @@ class AudienceInsightsCore:
         return recommendations
 
     async def predict_churn_risk(self, user_id: str) -> float:
-        """Predict churn risk for user"""
+        """
+Predict churn risk for user"""
         
         if user_id not in self.audience_members:
             return 0.5  # Unknown user
@@ -782,7 +815,8 @@ class AudienceInsightsCore:
         return member.risk_score
 
     async def get_high_risk_users(self, threshold: float = 0.7) -> List[AudienceMember]:
-        """Get users with high churn risk"""
+        """
+Get users with high churn risk"""
         
         high_risk_users = []
         
@@ -794,7 +828,8 @@ class AudienceInsightsCore:
         return sorted(high_risk_users, key=lambda x: x.risk_score, reverse=True)
 
     async def _update_member_segments(self, member: AudienceMember):
-        """Update member's segment memberships"""
+        """
+Update member's segment memberships"""
         
         for segment in self.segments.values():
             if await self._member_matches_criteria(member, segment.criteria, segment.segment_type):
@@ -802,11 +837,13 @@ class AudienceInsightsCore:
                 pass
 
     def get_metrics(self) -> AudienceMetrics:
-        """Get audience insights metrics"""
+        """
+Get audience insights metrics"""
         return self.metrics
 
     async def health_check(self) -> bool:
-        """Health check for audience insights system"""
+        """
+Health check for audience insights system"""
         try:
             # Test basic operations
             if self.audience_members:
@@ -826,4 +863,4 @@ __all__ = [
     "AudienceMetrics"
 ]
 
-logger.info("👥 Audience Insights Core module loaded")
+logger.info("👥 Audience Insights Core module initialized")

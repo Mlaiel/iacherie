@@ -49,7 +49,8 @@ logger = logging.getLogger(__name__)
 # ============================================================================
 
 class RewardType(str, Enum):
-    """Unified reward types."""
+    """
+        Unified reward types."""
     # General Platform Rewards
     CURRENCY = "currency"
     EXPERIENCE = "experience"
@@ -161,7 +162,8 @@ class RewardCalculationContext:
 
 @dataclass
 class Reward:
-    """Unified reward definition."""
+    """
+        Unified reward definition."""
     reward_id: str = field(default_factory=lambda: str(uuid4()))
     user_id: str = ""
     reward_type: RewardType = RewardType.CURRENCY
@@ -190,6 +192,73 @@ class Reward:
     source_context: Dict[str, Any] = field(default_factory=dict)
     calculation_details: Dict[str, Any] = field(default_factory=dict)
     multipliers_applied: Dict[str, float] = field(default_factory=dict)
+
+
+@dataclass
+class RewardBundle:
+    """Bundle of multiple rewards distributed together."""
+    bundle_id: str = field(default_factory=lambda: str(uuid4()))
+    user_id: str = ""
+    bundle_name: str = ""
+    bundle_description: str = ""
+    rewards: List[Reward] = field(default_factory=list)
+    total_value: Decimal = Decimal('0')
+    tier: RewardTier = RewardTier.COMMON
+    source: RewardSource = RewardSource.CONTENT_UPLOAD
+    
+    # Bundle-specific features
+    is_premium_bundle: bool = False
+    is_seasonal_bundle: bool = False
+    is_gaming_bundle: bool = False
+    bundle_icon_url: Optional[str] = None
+    
+    # Timing
+    created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    expires_at: Optional[datetime] = None
+    claimed_at: Optional[datetime] = None
+    
+    # Metadata
+    bundle_metadata: Dict[str, Any] = field(default_factory=dict)
+    
+    def add_reward(self, reward: Reward) -> None:
+        """Add a reward to the bundle."""
+        self.rewards.append(reward)
+        if reward.amount:
+            self.total_value += Decimal(str(reward.amount))
+    
+    def get_reward_count(self) -> int:
+        """Get total number of rewards in bundle."""
+        return len(self.rewards)
+    
+    def get_rewards_by_type(self, reward_type: RewardType) -> List[Reward]:
+        """Get all rewards of specific type."""
+        return [r for r in self.rewards if r.reward_type == reward_type]
+
+
+@dataclass
+class GamingReward(Reward):
+    """Gaming-specific reward with extended features."""
+    virtual_currency_type: str = "tycoon_cash"
+    power_up_type: Optional[str] = None
+    multiplier_value: float = 1.0
+    time_accelerator_hours: Optional[int] = None
+    exclusive_asset_id: Optional[str] = None
+    competitive_points: int = 0
+    
+    def __post_init__(self):
+        """Automatically flag as gaming reward."""
+        self.is_gaming_reward = True
+
+
+@dataclass
+class RewardMultiplier:
+    """Reward multiplier definition."""
+    multiplier_id: str = field(default_factory=lambda: str(uuid4()))
+    name: str = ""
+    multiplier_value: float = 1.0
+    applicable_types: List[RewardType] = field(default_factory=list)
+    active: bool = True
+    expires_at: Optional[datetime] = None
 
 
 @dataclass
@@ -323,6 +392,7 @@ class UnifiedRewardSystem:
         """Initialize exchange rates between currencies."""
         self.currency_rates = {
             # Platform currencies (base rate: 1 credit = 1.0)
+
             CurrencyType.CREDITS: 1.0,
             CurrencyType.COLLABORATION_COINS: 2.5,
             CurrencyType.QUALITY_CRYSTALS: 5.0,
@@ -339,24 +409,35 @@ class UnifiedRewardSystem:
         }
     
     async def calculate_reward(self, context: RewardCalculationContext) -> List[Reward]:
-        """Calculate rewards based on context."""
+        """
+        Calculate rewards based on context."""
         try:
             rewards = []
             
             # Get base template
+
             template_key = self._get_template_key(context.source, context.is_gaming_context)
+
+
             templates = self.gaming_reward_templates if context.is_gaming_context else self.reward_templates
+
             template = templates.get(template_key, {})
+
             
             if not template:
                 logger.warning(f"No template found for source: {context.source}")
+
                 return rewards
             
             # Calculate base amount
+
             base_amount = template.get('base_amount', 100)
+
+
             final_amount = self._apply_multipliers(base_amount, context)
             
             # Create reward
+
             reward = Reward(
                 user_id=context.user_id,
                 reward_type=RewardType(template.get('reward_type', 'currency')),
@@ -380,17 +461,22 @@ class UnifiedRewardSystem:
             if context.is_gaming_context:
                 reward.gaming_metadata = context.gaming_stats
                 reward.tycoon_player_id = context.gaming_stats.get('player_id')
+
             
             rewards.append(reward)
             
             # Add bonus rewards for special conditions
+
             bonus_rewards = await self._calculate_bonus_rewards(context, reward)
+
             rewards.extend(bonus_rewards)
+
             
             return rewards
             
         except Exception as e:
             logger.error(f"Error calculating reward: {e}")
+
             return []
     
     def _get_template_key(self, source: RewardSource, is_gaming: bool) -> str:
@@ -417,6 +503,7 @@ class UnifiedRewardSystem:
             final_amount *= multiplier_value
         
         # Apply user profile bonuses
+
         profile = context.user_profile
         if profile.get('premium_member', False):
             final_amount *= 1.5
@@ -429,30 +516,38 @@ class UnifiedRewardSystem:
         # Apply gaming-specific multipliers
         if context.is_gaming_context:
             gaming_level = context.gaming_stats.get('level', 1)
+
+
             level_multiplier = 1.0 + (gaming_level - 1) * 0.02  # 2% per level
             final_amount *= level_multiplier
             
             # Apply prestige bonuses
+
             prestige_points = context.gaming_stats.get('prestige_points', 0)
+
             if prestige_points > 0:
                 prestige_multiplier = 1.0 + (prestige_points * 0.01)  # 1% per prestige point
                 final_amount *= prestige_multiplier
         
         # Add random variance (±5%)
+
         variance = random.uniform(-0.05, 0.05)
         final_amount *= (1.0 + variance)
+
         
         return max(1.0, final_amount)  # Minimum 1 unit
     
     async def _calculate_bonus_rewards(self, context: RewardCalculationContext, 
                                      primary_reward: Reward) -> List[Reward]:
-        """Calculate additional bonus rewards."""
+        """
+        Calculate additional bonus rewards."""
         bonus_rewards = []
         
         try:
             # Daily login streak bonus
             if context.source == RewardSource.DAILY_LOGIN:
                 streak_days = context.base_data.get('streak_days', 1)
+
                 if streak_days >= 7:  # Weekly bonus
                     bonus_rewards.append(Reward(
                         user_id=context.user_id,
@@ -468,6 +563,7 @@ class UnifiedRewardSystem:
             # Gaming achievement bonus
             if context.is_gaming_context and context.source == RewardSource.ACHIEVEMENT_UNLOCK:
                 achievement_tier = context.base_data.get('achievement_tier', 'bronze')
+
                 if achievement_tier in ['legendary', 'mythical']:
                     bonus_rewards.append(Reward(
                         user_id=context.user_id,
@@ -483,6 +579,7 @@ class UnifiedRewardSystem:
             # Quality milestone bonus
             if context.source == RewardSource.QUALITY_MILESTONE:
                 quality_score = context.base_data.get('quality_score', 0)
+
                 if quality_score >= 95:  # Exceptional quality
                     bonus_rewards.append(Reward(
                         user_id=context.user_id,
@@ -494,11 +591,13 @@ class UnifiedRewardSystem:
                         title="Exceptional Quality Bonus",
                         description="Extra crystals for exceptional content quality"
                     ))
+
             
             return bonus_rewards
             
         except Exception as e:
             logger.error(f"Error calculating bonus rewards: {e}")
+
             return []
     
     async def award_rewards(self, user_id: str, rewards: List[Reward]) -> Dict[str, Any]:
@@ -507,9 +606,13 @@ class UnifiedRewardSystem:
             if user_id not in self.user_rewards:
                 self.user_rewards[user_id] = []
                 self.user_stats[user_id] = UserRewardStats(user_id=user_id)
+
+
             
             awarded_rewards = []
+
             total_value = Decimal('0')
+
             
             for reward in rewards:
                 # Set reward as awarded
@@ -518,17 +621,21 @@ class UnifiedRewardSystem:
                 
                 # Add to user rewards
                 self.user_rewards[user_id].append(reward)
+
                 awarded_rewards.append(reward)
                 
                 # Calculate value for stats
                 if reward.currency_type:
                     rate = self.currency_rates.get(reward.currency_type, 1.0)
+
                     total_value += Decimal(str(reward.amount)) * Decimal(str(rate))
             
             # Update user stats
             await self._update_user_stats(user_id, awarded_rewards, total_value)
+
             
             logger.info(f"💰 Awarded {len(awarded_rewards)} rewards to user {user_id}")
+
             
             return {
                 "success": True,
@@ -539,13 +646,17 @@ class UnifiedRewardSystem:
             
         except Exception as e:
             logger.error(f"Error awarding rewards: {e}")
+
             return {"success": False, "message": str(e)}
     
     async def claim_reward(self, user_id: str, reward_id: str) -> Dict[str, Any]:
         """Claim a specific reward."""
         try:
             user_rewards = self.user_rewards.get(user_id, [])
+
+
             reward = next((r for r in user_rewards if r.reward_id == reward_id), None)
+
             
             if not reward:
                 return {"success": False, "message": "Reward not found"}
@@ -562,6 +673,7 @@ class UnifiedRewardSystem:
             reward.claimed_at = datetime.now(timezone.utc)
             
             # Update user stats
+
             stats = self.user_stats[user_id]
             stats.total_rewards_claimed += 1
             
@@ -571,13 +683,18 @@ class UnifiedRewardSystem:
             # Update currency totals
             if reward.currency_type:
                 current_amount = stats.total_currency_earned.get(reward.currency_type, Decimal('0'))
+
                 stats.total_currency_earned[reward.currency_type] = current_amount + Decimal(str(reward.amount))
+
                 
                 if reward.is_gaming_reward:
                     gaming_current = stats.gaming_currency_earned.get(reward.currency_type, Decimal('0'))
+
                     stats.gaming_currency_earned[reward.currency_type] = gaming_current + Decimal(str(reward.amount))
+
             
             logger.info(f"💎 User {user_id} claimed reward: {reward.title}")
+
             
             return {
                 "success": True,
@@ -587,6 +704,7 @@ class UnifiedRewardSystem:
             
         except Exception as e:
             logger.error(f"Error claiming reward: {e}")
+
             return {"success": False, "message": str(e)}
     
     async def _update_user_stats(self, user_id: str, rewards: List[Reward], total_value: Decimal):
@@ -596,6 +714,7 @@ class UnifiedRewardSystem:
             
             # Update basic stats
             stats.total_rewards_received += len(rewards)
+
             stats.last_reward_date = datetime.now(timezone.utc)
             
             # Update value stats
@@ -605,11 +724,15 @@ class UnifiedRewardSystem:
             # Update source and tier breakdowns
             for reward in rewards:
                 # Source breakdown
+
                 current_source_count = stats.rewards_by_source.get(reward.source, 0)
+
                 stats.rewards_by_source[reward.source] = current_source_count + 1
                 
                 # Tier breakdown
+
                 current_tier_count = stats.rewards_by_tier.get(reward.tier, 0)
+
                 stats.rewards_by_tier[reward.tier] = current_tier_count + 1
                 
                 # Gaming stats
@@ -623,17 +746,23 @@ class UnifiedRewardSystem:
                     stats.legendary_rewards_count += 1
             
             # Calculate average reward value
+
             all_rewards = self.user_rewards.get(user_id, [])
+
             if all_rewards:
                 values = []
                 for r in all_rewards:
                     if r.currency_type:
                         rate = self.currency_rates.get(r.currency_type, 1.0)
+
+
                         value = float(r.amount) * rate
                         values.append(value)
+
                 
                 if values:
                     stats.average_reward_value = mean(values)
+
             
         except Exception as e:
             logger.error(f"Error updating user stats: {e}")
@@ -643,9 +772,12 @@ class UnifiedRewardSystem:
         """Get user rewards with optional filtering."""
         try:
             user_rewards = self.user_rewards.get(user_id, [])
+
+
             stats = self.user_stats.get(user_id, UserRewardStats(user_id=user_id))
             
             # Apply filters
+
             filtered_rewards = user_rewards
             
             if status_filter:
@@ -656,6 +788,7 @@ class UnifiedRewardSystem:
             
             # Sort by most recent first
             filtered_rewards.sort(key=lambda x: x.awarded_at, reverse=True)
+
             
             return {
                 "user_id": user_id,
@@ -669,6 +802,7 @@ class UnifiedRewardSystem:
             
         except Exception as e:
             logger.error(f"Error getting user rewards: {e}")
+
             return {"error": str(e)}
 
 
@@ -687,11 +821,13 @@ def get_reward_system() -> UnifiedRewardSystem:
 async def calculate_and_award_reward(user_id: str, source: RewardSource, 
                                     base_data: Dict[str, Any],
                                     is_gaming_context: bool = False) -> Dict[str, Any]:
-    """Calculate and award rewards for a user action."""
+    """
+        Calculate and award rewards for a user action."""
     try:
         system = get_reward_system()
         
         # Create calculation context
+
         context = RewardCalculationContext(
             user_id=user_id,
             source=source,
@@ -700,11 +836,13 @@ async def calculate_and_award_reward(user_id: str, source: RewardSource,
         )
         
         # Calculate rewards
+
         rewards = await system.calculate_reward(context)
         
         # Award rewards
         if rewards:
             result = await system.award_rewards(user_id, rewards)
+
             return result
         else:
             return {"success": False, "message": "No rewards calculated"}
@@ -712,3 +850,65 @@ async def calculate_and_award_reward(user_id: str, source: RewardSource,
     except Exception as e:
         logger.error(f"Error in calculate_and_award_reward: {e}")
         return {"success": False, "message": str(e)}
+
+
+async def calculate_and_award_rewards(user_id: str, source: RewardSource, context: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Calculate and award rewards (plural version).
+    Wrapper function for compatibility with imports expecting plural form.
+    """
+    reward_context = RewardCalculationContext(
+        user_id=user_id,
+        source=source,
+        context_data=context
+    )
+    return await calculate_and_award_reward(user_id, reward_context)
+
+
+async def award_gaming_reward(user_id: str, reward_type: str, amount: Union[int, float], metadata: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    """
+    Award a gaming-specific reward to user.
+    
+    Args:
+        user_id: User identifier
+        reward_type: Type of gaming reward (e.g., 'tycoon_cash', 'gaming_xp')
+        amount: Reward amount
+        metadata: Additional reward metadata
+    
+    Returns:
+        Award result with reward details
+    """
+    try:
+        system = get_reward_system()
+        
+        # Create gaming reward
+        gaming_reward = GamingReward(
+            user_id=user_id,
+            reward_type=RewardType.VIRTUAL_CURRENCY,
+            amount=amount,
+            virtual_currency_type=reward_type,
+            title=f"Gaming Reward: {reward_type}",
+            description=f"Awarded {amount} {reward_type}",
+            gaming_metadata=metadata or {}
+        )
+        
+        # Award the reward
+        result = await system.award_rewards(user_id, [gaming_reward])
+        
+        return {
+            "success": True,
+            "reward": {
+                "reward_id": gaming_reward.reward_id,
+                "type": reward_type,
+                "amount": amount,
+                "awarded_at": gaming_reward.awarded_at.isoformat()
+            },
+            "message": f"Successfully awarded {amount} {reward_type}"
+        }
+        
+    except Exception as e:
+        logger.error(f"Error awarding gaming reward: {e}")
+        return {
+            "success": False,
+            "message": str(e)
+        }

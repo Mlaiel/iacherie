@@ -231,13 +231,21 @@ class AdvancedMicroservicesArchitect:
         # Initialize API gateway routes
         self._initialize_api_gateway()
         
-        # Start background tasks
-        asyncio.create_task(self._health_check_loop())
-        asyncio.create_task(self._message_processing_loop())
-        asyncio.create_task(self._metrics_collection_loop())
-        asyncio.create_task(self._service_discovery_loop())
+        # Lazy init for background tasks
+        self._health_task = None
+        self._message_task = None
+        self._metrics_task = None
+        self._discovery_task = None
         
         logger.info("Microservices system components initialized")
+    
+    async def ensure_initialized(self):
+        """Ensure async components are initialized"""
+        if self._health_task is None:
+            self._health_task = asyncio.create_task(self._health_check_loop())
+            self._message_task = asyncio.create_task(self._message_processing_loop())
+            self._metrics_task = asyncio.create_task(self._metrics_collection_loop())
+            self._discovery_task = asyncio.create_task(self._service_discovery_loop())
 
     def _register_core_services(self):
         """Register core platform services"""

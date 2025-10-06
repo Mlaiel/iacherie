@@ -38,7 +38,8 @@ import re
 logger = logging.getLogger(__name__)
 
 class SecurityLevel(Enum):
-    """Security level enumeration"""
+    """
+        Security level enumeration"""
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -129,7 +130,8 @@ class SecurityValidationResult:
 
 @dataclass
 class SecurityContext:
-    """Security context for validation"""
+    """
+        Security context for validation"""
     user_id: str
     session_id: Optional[str] = None
     ip_address: Optional[str] = None
@@ -141,7 +143,8 @@ class SecurityContext:
 
 @dataclass
 class TransactionContext:
-    """Transaction context for security validation"""
+    """
+        Transaction context for security validation"""
     transaction_id: str
     transaction_type: str
     amount: Decimal
@@ -171,7 +174,8 @@ class SecurityValidator:
         self._initialize_security_policies()
     
     def _initialize_default_rules(self):
-        """Initialize default security rules"""
+        """
+        Initialize default security rules"""
         default_rules = [
             SecurityRule(
                 rule_id="rate_limit_login",
@@ -255,19 +259,29 @@ class SecurityValidator:
         """Perform comprehensive security validation on transaction"""
         try:
             start_time = time.time()
+
+
             validation_id = f"validation_{uuid.uuid4().hex[:12]}"
             
             checks = []
+
             threats_detected = []
             
             # Perform individual security checks
             checks.extend(await self._check_authentication_security(security_context))
+
             checks.extend(await self._check_transaction_limits(transaction_context, security_context))
+
             checks.extend(await self._check_rate_limits(security_context))
+
             checks.extend(await self._check_geographic_anomalies(security_context))
+
             checks.extend(await self._check_device_fingerprint(security_context))
+
             checks.extend(await self._check_payment_fraud_indicators(transaction_context))
+
             checks.extend(await self._check_velocity_patterns(transaction_context, security_context))
+
             checks.extend(await self._check_blacklists(security_context))
             
             # Calculate overall risk score
@@ -277,9 +291,14 @@ class SecurityValidator:
             overall_status, recommended_action = self._determine_action(overall_score, risk_level, checks)
             
             # Detect specific threats
+
             threats_detected = self._detect_threats(checks)
+
+
             
             validation_time_ms = int((time.time() - start_time) * 1000)
+
+
             
             result = SecurityValidationResult(
                 validation_id=validation_id,
@@ -293,13 +312,16 @@ class SecurityValidator:
                 threats_detected=threats_detected,
                 validation_time_ms=validation_time_ms
             )
+
             
             self.validation_results[validation_id] = result
             
             # Log security event
             await self._log_security_event(result)
+
             
             logger.info(f"Security validation completed for transaction {transaction_context.transaction_id}: {overall_status.value}")
+
             return result
             
         except Exception as e:
@@ -321,6 +343,7 @@ class SecurityValidator:
         checks = []
         
         # Session validation
+
         session_valid = await self._validate_session(context.user_id, context.session_id)
         checks.append(SecurityCheck(
             check_id=f"session_{uuid.uuid4().hex[:8]}",
@@ -333,8 +356,11 @@ class SecurityValidator:
         ))
         
         # Multi-factor authentication check
+
         mfa_required = await self._check_mfa_requirement(context.user_id)
+
         mfa_completed = await self._check_mfa_status(context.user_id)
+
         
         if mfa_required and not mfa_completed:
             checks.append(SecurityCheck(
@@ -346,6 +372,7 @@ class SecurityValidator:
                 details="MFA required but not completed",
                 evidence={"mfa_required": True, "mfa_completed": False}
             ))
+
         
         return checks
     
@@ -358,6 +385,7 @@ class SecurityValidator:
         checks = []
         
         # Single transaction limit
+
         single_limit = self.security_policies["transaction_limits"]["single_transaction_limit"]
         if transaction_context.amount > single_limit:
             checks.append(SecurityCheck(
@@ -371,8 +399,12 @@ class SecurityValidator:
             ))
         
         # Daily limit check
+
         daily_total = await self._get_daily_transaction_total(security_context.user_id)
+
         is_verified = await self._is_user_verified(security_context.user_id)
+
+
         
         daily_limit_key = "daily_limit_verified" if is_verified else "daily_limit_unverified"
         daily_limit = self.security_policies["transaction_limits"][daily_limit_key]
@@ -391,6 +423,7 @@ class SecurityValidator:
                     "daily_limit": float(daily_limit)
                 }
             ))
+
         
         return checks
     
@@ -399,13 +432,16 @@ class SecurityValidator:
         checks = []
         
         # Check transaction velocity
+
         user_key = f"user_{context.user_id}"
         current_time = datetime.utcnow()
+
         
         if user_key not in self.rate_limits:
             self.rate_limits[user_key] = []
         
         # Clean old entries (older than 1 hour)
+
         cutoff_time = current_time - timedelta(hours=1)
         self.rate_limits[user_key] = [
             timestamp for timestamp in self.rate_limits[user_key]
@@ -413,8 +449,11 @@ class SecurityValidator:
         ]
         
         # Check velocity
+
         velocity_limit = self.security_policies["transaction_limits"]["velocity_limit_per_hour"]
+
         current_velocity = len(self.rate_limits[user_key])
+
         
         if current_velocity >= velocity_limit:
             checks.append(SecurityCheck(
@@ -429,6 +468,7 @@ class SecurityValidator:
         
         # Add current transaction to rate limit tracking
         self.rate_limits[user_key].append(current_time)
+
         
         return checks
     
@@ -440,18 +480,24 @@ class SecurityValidator:
             return checks
         
         # Get user's recent locations
+
         recent_locations = await self._get_recent_locations(context.user_id)
+
         
         if recent_locations:
             # Calculate distance from most recent location
+
             distance_km = self._calculate_distance(
                 recent_locations[0],
                 context.location
             )
             
             # Check for impossible travel
+
             time_diff_hours = (datetime.utcnow() - recent_locations[0]["timestamp"]).total_seconds() / 3600
+
             max_travel_speed = 1000  # km/h (commercial aircraft speed)
+
             
             if distance_km > (max_travel_speed * time_diff_hours):
                 checks.append(SecurityCheck(
@@ -467,6 +513,7 @@ class SecurityValidator:
                         "max_possible": max_travel_speed * time_diff_hours
                     }
                 ))
+
         
         return checks
     
@@ -478,7 +525,9 @@ class SecurityValidator:
             return checks
         
         # Get user's known devices
+
         known_devices = await self._get_known_devices(context.user_id)
+
         
         if context.device_fingerprint not in known_devices:
             checks.append(SecurityCheck(
@@ -493,6 +542,7 @@ class SecurityValidator:
                     "known_devices_count": len(known_devices)
                 }
             ))
+
         
         return checks
     
@@ -503,7 +553,9 @@ class SecurityValidator:
         # Check for suspicious payment patterns
         if context.payment_method:
             # Check for recently added payment methods
+
             payment_age = await self._get_payment_method_age(context.payment_method)
+
             
             if payment_age and payment_age < timedelta(hours=24) and context.amount > Decimal("100"):
                 checks.append(SecurityCheck(
@@ -518,6 +570,7 @@ class SecurityValidator:
                         "amount": float(context.amount)
                     }
                 ))
+
         
         return checks
     
@@ -530,7 +583,9 @@ class SecurityValidator:
         checks = []
         
         # Check for rapid-fire transactions
+
         recent_transactions = await self._get_recent_transactions(security_context.user_id, minutes=5)
+
         
         if len(recent_transactions) > 3:
             checks.append(SecurityCheck(
@@ -542,6 +597,7 @@ class SecurityValidator:
                 details=f"Rapid transactions detected: {len(recent_transactions)} in 5 minutes",
                 evidence={"transaction_count": len(recent_transactions)}
             ))
+
         
         return checks
     
@@ -572,6 +628,7 @@ class SecurityValidator:
                 details="Device is blacklisted",
                 evidence={"device_fingerprint": context.device_fingerprint}
             ))
+
         
         return checks
     
@@ -581,7 +638,9 @@ class SecurityValidator:
             return 0.0, SecurityLevel.LOW
         
         # Weighted scoring - failed checks contribute more
+
         total_score = 0.0
+
         weight_sum = 0.0
         
         for check in checks:
@@ -593,10 +652,12 @@ class SecurityValidator:
             
             total_score += check.score * weight
             weight_sum += weight
+
         
         overall_score = total_score / weight_sum if weight_sum > 0 else 0.0
         
         # Determine risk level
+
         thresholds = self.security_policies["risk_scoring"]
         if overall_score >= thresholds["high_risk_threshold"]:
             risk_level = SecurityLevel.HIGH
@@ -615,6 +676,7 @@ class SecurityValidator:
     ) -> Tuple[ValidationStatus, SecurityAction]:
         """Determine overall status and recommended action"""
         # Check for critical failures
+
         critical_failures = [
             check for check in checks
             if check.status == ValidationStatus.FAILED and check.risk_level == SecurityLevel.CRITICAL
@@ -624,11 +686,13 @@ class SecurityValidator:
             return ValidationStatus.BLOCKED, SecurityAction.BLOCK
         
         # Check auto-block threshold
+
         auto_block_threshold = self.security_policies["risk_scoring"]["auto_block_threshold"]
         if overall_score >= auto_block_threshold:
             return ValidationStatus.BLOCKED, SecurityAction.BLOCK
         
         # Check for high-risk scenarios requiring additional verification
+
         high_risk_checks = [
             check for check in checks
             if check.risk_level == SecurityLevel.HIGH
@@ -646,6 +710,7 @@ class SecurityValidator:
     def _detect_threats(self, checks: List[SecurityCheck]) -> List[ThreatType]:
         """Detect specific threat types from checks"""
         threats = []
+
         
         threat_patterns = {
             "velocity_check": ThreatType.VELOCITY_FRAUD,
@@ -660,8 +725,10 @@ class SecurityValidator:
         for check in checks:
             if check.status in [ValidationStatus.FAILED, ValidationStatus.WARNING]:
                 threat_type = threat_patterns.get(check.check_type)
+
                 if threat_type and threat_type not in threats:
                     threats.append(threat_type)
+
         
         return threats
     
@@ -684,84 +751,97 @@ class SecurityValidator:
     
     async def _validate_session(self, user_id: str, session_id: Optional[str]) -> bool:
         """Validate user session"""
-        # Mock implementation
         return session_id is not None
     
     async def _check_mfa_requirement(self, user_id: str) -> bool:
         """Check if MFA is required for user"""
-        # Mock implementation
         return False
     
     async def _check_mfa_status(self, user_id: str) -> bool:
-        """Check MFA completion status"""
-        # Mock implementation
+        """
+        Check MFA completion status
+        """
         return True
     
     async def _get_daily_transaction_total(self, user_id: str) -> Decimal:
-        """Get user's daily transaction total"""
-        # Mock implementation
+        """
+        Get user's daily transaction total
+        """
         return Decimal("100.00")
     
     async def _is_user_verified(self, user_id: str) -> bool:
         """Check if user is verified"""
-        # Mock implementation
         return True
     
     async def _get_recent_locations(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get user's recent locations"""
-        # Mock implementation
+        """
+        Get user's recent locations
+        """
         return []
     
     def _calculate_distance(self, loc1: Dict[str, str], loc2: Dict[str, str]) -> float:
-        """Calculate distance between two locations"""
-        # Mock implementation - would use geospatial calculation
+        """
+        Calculate distance between two locations
+        """
         return 0.0
     
     async def _get_known_devices(self, user_id: str) -> Set[str]:
-        """Get user's known device fingerprints"""
-        # Mock implementation
+        """
+        Get user's known device fingerprints
+        """
         return set()
     
     async def _get_payment_method_age(self, payment_method: str) -> Optional[timedelta]:
-        """Get age of payment method"""
-        # Mock implementation
+        """
+        Get age of payment method
+        """
         return timedelta(days=30)
     
     async def _get_recent_transactions(self, user_id: str, minutes: int = 5) -> List[Dict[str, Any]]:
-        """Get recent transactions for user"""
-        # Mock implementation
+        """
+        Get recent transactions for user
+        """
         return []
     
     # Public interface methods
     
     async def add_security_rule(self, rule: SecurityRule) -> bool:
-        """Add or update security rule"""
+        """
+        Add or update security rule"""
         try:
             self.security_rules[rule.rule_id] = rule
             logger.info(f"Security rule added/updated: {rule.rule_id}")
+
             return True
         except Exception as e:
             logger.error(f"Error adding security rule: {e}")
+
             return False
     
     async def blacklist_ip(self, ip_address: str, reason: str = "") -> bool:
         """Add IP address to blacklist"""
         try:
             self.blacklisted_ips.add(ip_address)
+
             logger.warning(f"IP address blacklisted: {ip_address} - {reason}")
+
             return True
         except Exception as e:
             logger.error(f"Error blacklisting IP: {e}")
+
             return False
     
     async def blacklist_device(self, device_fingerprint: str, reason: str = "") -> bool:
         """Add device to blacklist"""
         try:
             self.blacklisted_devices.add(device_fingerprint)
+
             logger.warning(f"Device blacklisted: {device_fingerprint} - {reason}")
+
             return True
         except Exception as e:
             logger.error(f"Error blacklisting device: {e}")
+
             return False
     
     def get_validation_result(self, validation_id: str) -> Optional[SecurityValidationResult]:
@@ -769,19 +849,25 @@ class SecurityValidator:
         return self.validation_results.get(validation_id)
     
     async def get_security_analytics(self) -> Dict[str, Any]:
-        """Get security analytics and metrics"""
+        """
+        Get security analytics and metrics"""
         total_validations = len(self.validation_results)
+
         
         if total_validations == 0:
             return {"total_validations": 0}
+
         
         passed = len([r for r in self.validation_results.values() if r.overall_status == ValidationStatus.PASSED])
+
         blocked = len([r for r in self.validation_results.values() if r.overall_status == ValidationStatus.BLOCKED])
         
         # Calculate average risk score
+
         avg_risk_score = sum(r.overall_score for r in self.validation_results.values()) / total_validations
         
         # Count threat types
+
         threat_counts = {}
         for result in self.validation_results.values():
             for threat in result.threats_detected:
@@ -810,6 +896,7 @@ async def main():
         currency="USD",
         payment_method="credit_card"
     )
+
     
     security_context = SecurityContext(
         user_id="user_001",

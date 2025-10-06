@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""IA Chérie Core Engine - Enterprise Master Orchestrator
+"""
+IA Chérie Core Engine - Enterprise Master Orchestrator
 =====================================================
 
 Core engine orchestrator for the IA Chérie platform providing centralized
@@ -41,7 +42,8 @@ from contextlib import asynccontextmanager
 logger = logging.getLogger(__name__)
 
 class CoreSystemLevel(str, Enum):
-    """Core system complexity levels"""
+    """
+Core system complexity levels"""
     BASIC = "basic"
     STANDARD = "standard"
     PROFESSIONAL = "professional"
@@ -50,7 +52,8 @@ class CoreSystemLevel(str, Enum):
     ULTRA_ADVANCED = "ultra_advanced"
 
 class iacherieCoreFlow(str, Enum):
-    """IA Chérie core business logic flow stages"""
+    """
+IA Chérie core business logic flow stages"""
     SYSTEM_INITIALIZATION = "system_initialization"
     CREATOR_ONBOARDING_CORE = "creator_onboarding_core"
     CONTENT_PROCESSING_CORE = "content_processing_core"
@@ -63,7 +66,8 @@ class iacherieCoreFlow(str, Enum):
     OPTIMIZATION_CORE = "optimization_core"
 
 class CoreSystemStatus(str, Enum):
-    """Core system operational status"""
+    """
+Core system operational status"""
     INITIALIZING = "initializing"
     READY = "ready"
     RUNNING = "running"
@@ -75,7 +79,8 @@ class CoreSystemStatus(str, Enum):
 
 @dataclass
 class CoreSystemHealth:
-    """Core system health metrics"""
+    """
+Core system health metrics"""
     status: CoreSystemStatus = CoreSystemStatus.INITIALIZING
     cpu_usage: float = 0.0
     memory_usage: float = 0.0
@@ -87,29 +92,36 @@ class CoreSystemHealth:
     subsystem_health: Dict[str, bool] = field(default_factory=dict)
 
 class CoreSystemProtocol(Protocol):
-    """Protocol for core system components"""
+    """
+Protocol for core system components"""
     
     async def initialize(self) -> bool:
-        """Initialize the core system component"""
+        """
+Initialize the core system component"""
         ...
     
     async def start(self) -> bool:
-        """Start the core system component"""
+        """
+Start the core system component"""
         ...
     
     async def stop(self) -> bool:
-        """Stop the core system component"""
+        """
+Stop the core system component"""
         ...
     
     async def health_check(self) -> bool:
-        """Check health of the core system component"""
+        """
+Check health of the core system component"""
         ...
 
 class iacherieCoreEngine:
-    """Master core engine orchestrator for IA Chérie platform"""
+    """
+Master core engine orchestrator for IA Chérie platform"""
     
     def __init__(self, level: CoreSystemLevel = CoreSystemLevel.ENTERPRISE):
-        """Initialize core engine"""
+        """
+Initialize core engine"""
         self.level = level
         self.status = CoreSystemStatus.INITIALIZING
         self.health = CoreSystemHealth()
@@ -137,7 +149,8 @@ class iacherieCoreEngine:
         logger.info(f"🏗️ IA Chérie Core Engine initialized - Level: {self.level.value}")
     
     def _initialize_core_subsystems(self):
-        """Initialize all core subsystems with safe imports"""
+        """
+Initialize all core subsystems with safe imports"""
         # Infrastructure systems
         self._init_infrastructure_systems()
         
@@ -160,7 +173,8 @@ class iacherieCoreEngine:
         self._init_platform_systems()
     
     def _init_infrastructure_systems(self):
-        """Initialize infrastructure systems with safe imports"""
+        """
+Initialize infrastructure systems with safe imports"""
         systems = {
             "logging": self._safe_import("infrastructure.logging", "LoggingCore"),
             "middleware": self._safe_import("infrastructure.middleware", "MiddlewareCore"),
@@ -185,7 +199,8 @@ class iacherieCoreEngine:
                     logger.error(f"❌ Failed to initialize {name}: {e}")
     
     def _init_orchestration_systems(self):
-        """Initialize orchestration systems"""
+        """
+Initialize orchestration systems"""
         systems = {
             "enterprise_orchestration": self._safe_import("orchestration.enterprise_orchestration_core", "EnterpriseOrchestrationCore"),
             "microservices": self._safe_import("orchestration.microservices_core", "MicroservicesCore"),
@@ -204,7 +219,8 @@ class iacherieCoreEngine:
                     logger.error(f"❌ Failed to initialize {name}: {e}")
     
     def _init_ai_systems(self):
-        """Initialize AI intelligence systems"""
+        """
+Initialize AI intelligence systems"""
         systems = {
             "ai_model": self._safe_import("ai.ai_model_core", "AIModelCore"),
             "ia_processing": self._safe_import("ai.ia_processing_core", "IAProcessingCore"),
@@ -225,7 +241,8 @@ class iacherieCoreEngine:
                     logger.error(f"❌ Failed to initialize {name}: {e}")
     
     def _init_business_systems(self):
-        """Initialize business logic systems"""
+        """
+Initialize business logic systems"""
         systems = {
             "creator_multi_format": self._safe_import("business.creator_multi_format_core", "CreatorMultiFormatCore"),
             "creator_types": self._safe_import("business.creator_types_core", "CreatorTypesCore"),
@@ -254,7 +271,8 @@ class iacherieCoreEngine:
                     logger.error(f"❌ Failed to initialize {name}: {e}")
     
     def _init_security_systems(self):
-        """Initialize security systems"""
+        """
+Initialize security systems"""
         systems = {
             "auth": self._safe_import("security.auth", "AuthCore"),
             "security": self._safe_import("security.security", "SecurityCore"),
@@ -275,7 +293,8 @@ class iacherieCoreEngine:
                     logger.error(f"❌ Failed to initialize {name}: {e}")
     
     def _init_payment_systems(self):
-        """Initialize payment systems"""
+        """
+Initialize payment systems"""
         systems = {
             "payment_gateway": self._safe_import("payments.payment_gateway_core", "PaymentGatewayCore"),
             "crypto_payment": self._safe_import("payments.crypto_payment_core", "CryptoPaymentCore"),
@@ -293,7 +312,8 @@ class iacherieCoreEngine:
                     logger.error(f"❌ Failed to initialize {name}: {e}")
     
     def _init_platform_systems(self):
-        """Initialize platform systems"""
+        """
+Initialize platform systems"""
         systems = {
             "api_gateway": self._safe_import("platform.api_gateway_core", "APIGatewayCore"),
             "websocket_manager": self._safe_import("platform.websocket_manager_core", "WebSocketManagerCore"),
@@ -310,7 +330,8 @@ class iacherieCoreEngine:
                     logger.error(f"❌ Failed to initialize {name}: {e}")
     
     def _safe_import(self, module_path: str, class_name: str) -> Optional[Type]:
-        """Safely import a class from a module"""
+        """
+Safely import a class from a module"""
         try:
             from importlib import import_module
             module = import_module(f".{module_path}", package=__package__)
@@ -320,7 +341,8 @@ class iacherieCoreEngine:
             return None
     
     def _setup_system_dependencies(self):
-        """Setup system dependencies"""
+        """
+Setup system dependencies"""
         self.system_dependencies = {
             # Infrastructure dependencies
             "database": [],
@@ -361,7 +383,8 @@ class iacherieCoreEngine:
         }
     
     def _setup_core_flows(self):
-        """Setup core business logic flows"""
+        """
+Setup core business logic flows"""
         self.core_flows = {
             iacherieCoreFlow.SYSTEM_INITIALIZATION: {
                 "required_systems": ["logging", "database", "cache"],
@@ -425,7 +448,8 @@ class iacherieCoreEngine:
         }
     
     async def initialize_system(self) -> bool:
-        """Initialize the complete core system"""
+        """
+Initialize the complete core system"""
         try:
             self.status = CoreSystemStatus.INITIALIZING
             logger.info(f"🚀 Initializing IA Chérie Core Engine - Level: {self.level.value}")
@@ -455,7 +479,8 @@ class iacherieCoreEngine:
             return False
     
     def _calculate_initialization_order(self) -> List[str]:
-        """Calculate system initialization order based on dependencies"""
+        """
+Calculate system initialization order based on dependencies"""
         ordered_systems = []
         remaining_systems = set(self.core_systems.keys())
         
@@ -478,7 +503,8 @@ class iacherieCoreEngine:
         return ordered_systems
     
     async def start_system(self) -> bool:
-        """Start the complete core system"""
+        """
+Start the complete core system"""
         try:
             if self.status != CoreSystemStatus.READY:
                 await self.initialize_system()
@@ -513,7 +539,8 @@ class iacherieCoreEngine:
             return False
     
     async def _start_system(self, system_name: str, system: Any) -> bool:
-        """Start individual system"""
+        """
+Start individual system"""
         try:
             await system.start()
             logger.info(f"✅ {system_name} started successfully")
@@ -524,7 +551,8 @@ class iacherieCoreEngine:
             return False
     
     async def _health_monitor_loop(self):
-        """Health monitoring loop"""
+        """
+Health monitoring loop"""
         while not self._shutdown_event.is_set():
             try:
                 await self._perform_health_check()
@@ -536,7 +564,8 @@ class iacherieCoreEngine:
                 await asyncio.sleep(60)  # Wait longer on error
     
     async def _perform_health_check(self):
-        """Perform comprehensive health check"""
+        """
+Perform comprehensive health check"""
         try:
             # Update basic metrics
             self.health.uptime_seconds = int(time.time() - self.start_time)
@@ -575,7 +604,8 @@ class iacherieCoreEngine:
             logger.error(f"Health check failed: {str(e)}")
     
     async def stop_system(self) -> bool:
-        """Stop the complete core system"""
+        """
+Stop the complete core system"""
         try:
             logger.info("🛑 Stopping IA Chérie Core Engine")
             self.status = CoreSystemStatus.SHUTDOWN
@@ -609,7 +639,8 @@ class iacherieCoreEngine:
             return False
     
     async def _stop_system(self, system_name: str, system: Any) -> bool:
-        """Stop individual system"""
+        """
+Stop individual system"""
         try:
             await system.stop()
             logger.info(f"✅ {system_name} stopped successfully")
@@ -619,19 +650,23 @@ class iacherieCoreEngine:
             return False
     
     def get_system(self, system_name: str) -> Optional[Any]:
-        """Get specific core system by name"""
+        """
+Get specific core system by name"""
         return self.core_systems.get(system_name)
     
     def get_core_flow_config(self, flow: iacherieCoreFlow) -> Dict[str, Any]:
-        """Get configuration for specific core flow"""
+        """
+Get configuration for specific core flow"""
         return self.core_flows.get(flow, {})
     
     def get_system_health(self) -> CoreSystemHealth:
-        """Get current system health"""
+        """
+Get current system health"""
         return self.health
     
     def get_system_summary(self) -> Dict[str, Any]:
-        """Get comprehensive system summary"""
+        """
+Get comprehensive system summary"""
         healthy_systems = sum(1 for health in self.system_health.values() if health)
         total_systems = len(self.system_health)
         
@@ -660,32 +695,39 @@ core_engine = iacherieCoreEngine(CoreSystemLevel.ENTERPRISE)
 
 # Convenience functions
 def get_core_system(system_name: str) -> Optional[Any]:
-    """Get core system by name"""
+    """
+Get core system by name"""
     return core_engine.get_system(system_name)
 
 def get_core_flow_config(flow: iacherieCoreFlow) -> Dict[str, Any]:
-    """Get core flow configuration"""
+    """
+Get core flow configuration"""
     return core_engine.get_core_flow_config(flow)
 
 def get_system_health() -> CoreSystemHealth:
-    """Get current system health"""
+    """
+Get current system health"""
     return core_engine.get_system_health()
 
 async def initialize_core_engine() -> bool:
-    """Initialize complete core engine"""
+    """
+Initialize complete core engine"""
     return await core_engine.initialize_system()
 
 async def start_core_engine() -> bool:
-    """Start complete core engine"""
+    """
+Start complete core engine"""
     return await core_engine.start_system()
 
 async def stop_core_engine() -> bool:
-    """Stop complete core engine"""
+    """
+Stop complete core engine"""
     return await core_engine.stop_system()
 
 @asynccontextmanager
 async def core_engine_context():
-    """Context manager for core engine lifecycle"""
+    """
+Context manager for core engine lifecycle"""
     try:
         await start_core_engine()
         yield core_engine

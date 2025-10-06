@@ -1,4 +1,5 @@
-"""IA Chérie Core Billing Engine - Enterprise Billing & Invoicing System
+"""
+IA Chérie Core Billing Engine - Enterprise Billing & Invoicing System
 ===================================================================
 
 Advanced billing engine providing subscription billing, usage-based billing,
@@ -23,7 +24,8 @@ import json
 logger = logging.getLogger(__name__)
 
 class BillingModel(str, Enum):
-    """Billing models"""
+    """
+Billing models"""
     SUBSCRIPTION = "subscription"
     USAGE_BASED = "usage_based"
     HYBRID = "hybrid"
@@ -33,7 +35,8 @@ class BillingModel(str, Enum):
     METERED = "metered"
 
 class BillingPeriod(str, Enum):
-    """Billing periods"""
+    """
+Billing periods"""
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -42,7 +45,8 @@ class BillingPeriod(str, Enum):
     ON_DEMAND = "on_demand"
 
 class InvoiceStatus(str, Enum):
-    """Invoice status"""
+    """
+Invoice status"""
     DRAFT = "draft"
     PENDING = "pending"
     SENT = "sent"
@@ -52,7 +56,8 @@ class InvoiceStatus(str, Enum):
     REFUNDED = "refunded"
 
 class PaymentStatus(str, Enum):
-    """Payment status"""
+    """
+Payment status"""
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -62,7 +67,8 @@ class PaymentStatus(str, Enum):
 
 @dataclass
 class BillingPlan:
-    """Billing plan configuration"""
+    """
+Billing plan configuration"""
     plan_id: str
     name: str
     billing_model: BillingModel
@@ -78,7 +84,8 @@ class BillingPlan:
 
 @dataclass
 class Subscription:
-    """Customer subscription"""
+    """
+Customer subscription"""
     subscription_id: str
     customer_id: str
     plan_id: str
@@ -94,7 +101,8 @@ class Subscription:
 
 @dataclass
 class InvoiceItem:
-    """Invoice line item"""
+    """
+Invoice line item"""
     item_id: str
     description: str
     quantity: Decimal
@@ -106,7 +114,8 @@ class InvoiceItem:
 
 @dataclass
 class Invoice:
-    """Customer invoice"""
+    """
+Customer invoice"""
     invoice_id: str
     customer_id: str
     subscription_id: Optional[str]
@@ -126,7 +135,8 @@ class Invoice:
 
 @dataclass
 class Payment:
-    """Payment record"""
+    """
+Payment record"""
     payment_id: str
     invoice_id: str
     customer_id: str
@@ -141,7 +151,8 @@ class Payment:
 
 @dataclass
 class BillingMetrics:
-    """Billing engine metrics"""
+    """
+Billing engine metrics"""
     invoices_generated: int = 0
     invoices_paid: int = 0
     invoices_overdue: int = 0
@@ -157,10 +168,12 @@ class BillingMetrics:
     last_health_check: float = field(default_factory=time.time)
 
 class BillingEngineCore:
-    """Enterprise billing engine core management system"""
+    """
+Enterprise billing engine core management system"""
     
     def __init__(self, level: str = "enterprise"):
-        """Initialize billing engine core"""
+        """
+Initialize billing engine core"""
         self.level = level
         self.metrics = BillingMetrics()
         self.start_time = time.time()
@@ -193,7 +206,8 @@ class BillingEngineCore:
         logger.info("💰 Billing Engine Core initialized")
     
     async def initialize(self) -> bool:
-        """Initialize billing engine"""
+        """
+Initialize billing engine"""
         try:
             logger.info("🚀 Initializing billing engine core")
             
@@ -208,7 +222,8 @@ class BillingEngineCore:
             return False
     
     async def _create_default_plans(self):
-        """Create default billing plans"""
+        """
+Create default billing plans"""
         default_plans = [
             BillingPlan(
                 plan_id="basic_monthly",
@@ -241,7 +256,8 @@ class BillingEngineCore:
             self.billing_plans[plan.plan_id] = plan
     
     async def start(self) -> bool:
-        """Start billing engine"""
+        """
+Start billing engine"""
         try:
             if not hasattr(self, '_initialized'):
                 await self.initialize()
@@ -259,7 +275,8 @@ class BillingEngineCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop billing engine"""
+        """
+Stop billing engine"""
         try:
             logger.info("🛑 Stopping billing engine core")
             
@@ -284,7 +301,8 @@ class BillingEngineCore:
     
     async def create_subscription(self, customer_id: str, plan_id: str, 
                                  metadata: Optional[Dict[str, Any]] = None) -> Optional[str]:
-        """Create customer subscription"""
+        """
+Create customer subscription"""
         try:
             if plan_id not in self.billing_plans:
                 logger.error(f"Billing plan '{plan_id}' not found")
@@ -336,7 +354,8 @@ class BillingEngineCore:
             return None
     
     async def _generate_subscription_invoice(self, subscription_id: str) -> Optional[str]:
-        """Generate invoice for subscription"""
+        """
+Generate invoice for subscription"""
         try:
             subscription = self.subscriptions.get(subscription_id)
             if not subscription:
@@ -415,7 +434,8 @@ class BillingEngineCore:
             return None
     
     def _calculate_usage_charges(self, subscription: Subscription, plan: BillingPlan) -> List[InvoiceItem]:
-        """Calculate usage-based charges"""
+        """
+Calculate usage-based charges"""
         items = []
         
         for usage_type, usage_amount in subscription.usage_data.items():
@@ -439,7 +459,8 @@ class BillingEngineCore:
         return items
     
     def _calculate_tax(self, customer_id: str, amount: Decimal) -> Decimal:
-        """Calculate tax amount"""
+        """
+Calculate tax amount"""
         try:
             # Get customer's tax location (simplified)
             customer = self.customers.get(customer_id, {})
@@ -454,7 +475,8 @@ class BillingEngineCore:
     
     async def process_payment(self, invoice_id: str, payment_method: str, 
                             gateway_transaction_id: Optional[str] = None) -> Optional[str]:
-        """Process payment for invoice"""
+        """
+Process payment for invoice"""
         try:
             invoice = self.invoices.get(invoice_id)
             if not invoice:
@@ -507,7 +529,8 @@ class BillingEngineCore:
             return None
     
     async def record_usage(self, subscription_id: str, usage_type: str, amount: int) -> bool:
-        """Record usage for subscription"""
+        """
+Record usage for subscription"""
         try:
             subscription = self.subscriptions.get(subscription_id)
             if not subscription:
@@ -521,7 +544,8 @@ class BillingEngineCore:
             return False
     
     async def cancel_subscription(self, subscription_id: str, reason: str = "") -> bool:
-        """Cancel subscription"""
+        """
+Cancel subscription"""
         try:
             subscription = self.subscriptions.get(subscription_id)
             if not subscription:
@@ -541,7 +565,8 @@ class BillingEngineCore:
             return False
     
     async def _billing_processor_loop(self):
-        """Background billing processor"""
+        """
+Background billing processor"""
         while not self._shutdown_event.is_set():
             try:
                 # Process pending invoices
@@ -562,7 +587,8 @@ class BillingEngineCore:
                 await asyncio.sleep(1800)  # Wait 30 minutes on error
     
     async def _process_pending_invoices(self):
-        """Process pending invoices"""
+        """
+Process pending invoices"""
         current_time = datetime.utcnow()
         
         for invoice_id, invoice in self.invoices.items():
@@ -571,7 +597,8 @@ class BillingEngineCore:
                 self.metrics.invoices_overdue += 1
     
     async def _check_subscription_renewals(self):
-        """Check for subscription renewals"""
+        """
+Check for subscription renewals"""
         current_time = datetime.utcnow()
         
         for subscription in self.subscriptions.values():
@@ -582,7 +609,8 @@ class BillingEngineCore:
                 await self._renew_subscription(subscription.subscription_id)
     
     async def _renew_subscription(self, subscription_id: str) -> bool:
-        """Renew subscription"""
+        """
+Renew subscription"""
         try:
             subscription = self.subscriptions.get(subscription_id)
             if not subscription:
@@ -616,7 +644,8 @@ class BillingEngineCore:
             return False
     
     async def _update_billing_metrics(self):
-        """Update billing metrics"""
+        """
+Update billing metrics"""
         try:
             # Calculate MRR and ARR
             monthly_revenue = Decimal("0.00")
@@ -641,7 +670,8 @@ class BillingEngineCore:
             logger.error(f"Metrics update failed: {str(e)}")
     
     async def health_check(self) -> bool:
-        """Perform billing engine health check"""
+        """
+Perform billing engine health check"""
         try:
             # Check data consistency
             if len(self.billing_plans) == 0:
@@ -657,7 +687,8 @@ class BillingEngineCore:
             return False
     
     async def _health_monitor_loop(self):
-        """Health monitoring loop"""
+        """
+Health monitoring loop"""
         while not self._shutdown_event.is_set():
             try:
                 await self.health_check()
@@ -669,7 +700,8 @@ class BillingEngineCore:
                 await asyncio.sleep(600)
     
     def get_metrics_summary(self) -> Dict[str, Any]:
-        """Get billing metrics summary"""
+        """
+Get billing metrics summary"""
         return {
             "total_revenue": float(self.metrics.total_revenue),
             "monthly_recurring_revenue": float(self.metrics.monthly_recurring_revenue),
@@ -689,7 +721,8 @@ class BillingEngineCore:
         }
     
     def get_invoice(self, invoice_id: str) -> Optional[Dict[str, Any]]:
-        """Get invoice details"""
+        """
+Get invoice details"""
         invoice = self.invoices.get(invoice_id)
         if not invoice:
             return None

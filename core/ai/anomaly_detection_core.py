@@ -24,7 +24,8 @@ from abc import ABC, abstractmethod
 logger = logging.getLogger(__name__)
 
 class AnomalyType(Enum):
-    """Types of anomalies"""
+    """
+Types of anomalies"""
     STATISTICAL = "statistical"
     BEHAVIORAL = "behavioral"
     TEMPORAL = "temporal"
@@ -33,7 +34,8 @@ class AnomalyType(Enum):
     POINT = "point"
 
 class DetectionMethod(Enum):
-    """Anomaly detection methods"""
+    """
+Anomaly detection methods"""
     ISOLATION_FOREST = "isolation_forest"
     LOCAL_OUTLIER_FACTOR = "local_outlier_factor"
     ONE_CLASS_SVM = "one_class_svm"
@@ -43,7 +45,8 @@ class DetectionMethod(Enum):
 
 @dataclass
 class AnomalyResult:
-    """Anomaly detection result"""
+    """
+Anomaly detection result"""
     anomaly_id: str
     anomaly_type: AnomalyType
     confidence_score: float
@@ -54,7 +57,8 @@ class AnomalyResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class AnomalyDetectorCore:
-    """Advanced Anomaly Detection Core System"""
+    """
+Advanced Anomaly Detection Core System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -67,7 +71,8 @@ class AnomalyDetectorCore:
         logger.info(f"Anomaly Detection Core initialized - Level: {level}")
 
     async def detect_anomalies(self, data: Dict[str, Any], method: DetectionMethod) -> List[AnomalyResult]:
-        """Detect anomalies in data"""
+        """
+Detect anomalies in data"""
         try:
             anomalies = []
             
@@ -90,7 +95,8 @@ class AnomalyDetectorCore:
             return []
 
     async def _detect_statistical_anomalies(self, data: Dict[str, Any]) -> List[AnomalyResult]:
-        """Detect statistical anomalies"""
+        """
+Detect statistical anomalies"""
         anomalies = []
         
         # Implement statistical anomaly detection logic
@@ -112,7 +118,8 @@ class AnomalyDetectorCore:
         return anomalies
 
     async def _detect_behavioral_anomalies(self, data: Dict[str, Any]) -> List[AnomalyResult]:
-        """Detect behavioral anomalies"""
+        """
+Detect behavioral anomalies"""
         anomalies = []
         
         # Implement behavioral anomaly detection logic
@@ -136,7 +143,8 @@ class AnomalyDetectorCore:
         return anomalies
 
     async def _detect_temporal_anomalies(self, data: Dict[str, Any]) -> List[AnomalyResult]:
-        """Detect temporal anomalies"""
+        """
+Detect temporal anomalies"""
         anomalies = []
         
         # Implement temporal anomaly detection logic
@@ -161,19 +169,19 @@ class AnomalyDetectorCore:
         return anomalies
 
     async def train_model(self, training_data: List[Dict[str, Any]], method: DetectionMethod) -> bool:
-        """Train anomaly detection model"""
+        """
+Train anomaly detection model"""
         try:
             model_id = f"model_{method.value}_{uuid.uuid4().hex[:8]}"
             
             # Store training data
             self.training_data[model_id] = training_data
             
-            # Mock model training
             model_config = {
                 "method": method.value,
                 "trained_at": datetime.now().isoformat(),
                 "data_size": len(training_data),
-                "accuracy": 0.92  # Mock accuracy
+                "accuracy": 0.92
             }
             
             self.detection_models[model_id] = model_config
@@ -186,7 +194,8 @@ class AnomalyDetectorCore:
             return False
 
     async def get_anomaly_insights(self, time_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Get anomaly insights for time range"""
+        """
+Get anomaly insights for time range"""
         try:
             insights = {
                 "total_anomalies": 0,
@@ -230,4 +239,4 @@ __all__ = [
     "AnomalyResult"
 ]
 
-logger.info("🔍 Anomaly Detection Core module loaded")
+logger.info("🔍 Anomaly Detection Core module initialized")

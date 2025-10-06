@@ -40,14 +40,15 @@ import hashlib
 # External dependencies pour enterprise features
 try:
     # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+    try:
+        import aioredis
+        REDIS_AVAILABLE = True
+    except (ImportError, TypeError) as e:
+        # Handle Python 3.12 TimeoutError duplicate base class issue
+        from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+        import logging
+        logging.warning(f"Using Redis compatibility layer: {e}")
+    
     from sqlalchemy.ext.asyncio import AsyncSession
     from sqlalchemy import select, update, delete, and_, or_
     import numpy as np
@@ -292,7 +293,8 @@ class ApprovalEngine:
         self._initialize_default_rules()
     
     def _initialize_default_rules(self):
-        """Initialise les règles d'approbation par défaut"""
+        """
+        Initialise les règles d'approbation par défaut"""
         self.approval_rules = {
             'task': {
                 'low_priority': {'levels': [ApprovalLevel.AUTOMATIC], 'conditions': ['creator_is_lead']},
@@ -315,21 +317,27 @@ class ApprovalEngine:
     
     async def submit_for_approval(self, item_id: str, item_type: str, 
                                 requester_id: str, approval_context: Optional[Dict] = None) -> List[str]:
-        """Soumet un élément pour approbation"""
+        """
+        Soumet un élément pour approbation"""
         try:
             # Déterminer le workflow d'approbation approprié
             workflow = await self._determine_approval_workflow(item_type, approval_context)
+
+
             
             approval_request_ids = []
             
             for level_config in workflow:
                 # Déterminer l'approbateur pour ce niveau
+
                 approver_id = await self._determine_approver(
                     level_config['level'], requester_id, approval_context
                 )
+
                 
                 if approver_id:
                     # Créer la demande d'approbation
+
                     approval_request = ApprovalRequest(
                         item_id=item_id,
                         item_type=item_type,
@@ -342,6 +350,7 @@ class ApprovalEngine:
                     
                     # Stocker la demande
                     approval_request_ids.append(approval_request.id)
+
                     self.pending_approvals[approver_id].append(approval_request)
                     
                     # Persister
@@ -353,12 +362,15 @@ class ApprovalEngine:
                     
                     # Planifier l'escalation
                     await self._schedule_escalation(approval_request)
+
             
             logger.info(f"Soumis pour approbation: {item_type} {item_id}, {len(approval_request_ids)} niveaux")
+
             return approval_request_ids
             
         except Exception as e:
             logger.error(f"Erreur soumission approbation: {e}")
+
             raise
     
     async def process_approval(self, approval_request_id: str, approver_id: str, 
@@ -366,7 +378,9 @@ class ApprovalEngine:
         """Traite une décision d'approbation"""
         try:
             # Trouver la demande d'approbation
+
             approval_request = await self._get_approval_request(approval_request_id)
+
             
             if not approval_request:
                 raise ValueError("Demande d'approbation introuvable")
@@ -383,14 +397,17 @@ class ApprovalEngine:
             if decision.lower() == 'approve':
                 approval_request.status = WorkflowStatus.APPROVED
                 await self._handle_approval_granted(approval_request)
+
             elif decision.lower() == 'reject':
                 approval_request.status = WorkflowStatus.REJECTED
                 await self._handle_approval_rejected(approval_request)
+
             else:
                 raise ValueError("Décision invalide (approve/reject)")
             
             # Mettre à jour les détails
             approval_request.responded_at = datetime.utcnow()
+
             approval_request.response_message = comments
             
             # Persister
@@ -403,12 +420,15 @@ class ApprovalEngine:
             
             # Notifier le demandeur
             await self._notify_approval_decision(approval_request)
+
             
             logger.info(f"Approbation traitée: {decision} pour {approval_request.item_type} {approval_request.item_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Erreur traitement approbation: {e}")
+
             return False
     
     async def _determine_approval_workflow(self, item_type: str, context: Optional[Dict]) -> List[Dict]:
@@ -416,6 +436,7 @@ class ApprovalEngine:
         if item_type not in self.approval_rules:
             # Workflow par défaut
             return [{'level': ApprovalLevel.SUPERVISOR, 'timeout_hours': 24}]
+
         
         type_rules = self.approval_rules[item_type]
         
@@ -444,10 +465,13 @@ class ApprovalEngine:
     
     async def _determine_approver(self, level: ApprovalLevel, requester_id: str, 
                                 context: Optional[Dict]) -> Optional[str]:
-        """Détermine qui doit approuver à un niveau donné"""
+        """
+        Détermine qui doit approuver à un niveau donné"""
         try:
             # Vérifier les délégations
+
             delegated_approver = await self._check_delegation(level, requester_id)
+
             if delegated_approver:
                 return delegated_approver
             
@@ -458,27 +482,33 @@ class ApprovalEngine:
             elif level == ApprovalLevel.PEER_REVIEW:
                 # Trouver un pair dans la même équipe
                 return await self._find_peer_reviewer(requester_id)
+
             
             elif level == ApprovalLevel.SUPERVISOR:
                 # Trouver le superviseur direct
                 return await self._find_supervisor(requester_id)
+
             
             elif level == ApprovalLevel.MANAGER:
                 # Trouver le manager
                 return await self._find_manager(requester_id)
+
             
             elif level == ApprovalLevel.EXECUTIVE:
                 # Trouver un exécutif
                 return await self._find_executive()
+
             
             elif level == ApprovalLevel.BOARD:
                 # Membre du conseil d'administration
                 return await self._find_board_member()
+
             
             return None
             
         except Exception as e:
             logger.error(f"Erreur détermination approbateur: {e}")
+
             return None
     
     async def setup_delegation(self, delegator_id: str, delegate_id: str, 
@@ -498,18 +528,22 @@ class ApprovalEngine:
             }
             
             # Stocker la délégation
+
             delegation_key = f"{delegator_id}_{delegate_id}"
             self.delegation_rules[delegation_key] = delegation
             
             # Persister
             if self.db_session:
                 await self._persist_delegation(delegation)
+
             
             logger.info(f"Délégation configurée: {delegator_id} -> {delegate_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Erreur configuration délégation: {e}")
+
             return False
     
     async def get_pending_approvals(self, approver_id: str) -> List[ApprovalRequest]:
@@ -518,6 +552,7 @@ class ApprovalEngine:
             pending = self.pending_approvals.get(approver_id, [])
             
             # Filtrer les demandes expirées ou traitées
+
             active_pending = []
             for approval in pending:
                 if (approval.status == WorkflowStatus.PENDING and
@@ -531,6 +566,7 @@ class ApprovalEngine:
             
         except Exception as e:
             logger.error(f"Erreur récupération approbations en attente: {e}")
+
             return []
 
 # ==========================================
@@ -561,7 +597,8 @@ class ConsentProcessor:
         self._initialize_consent_templates()
     
     def _initialize_consent_templates(self):
-        """Initialise les templates de consentement"""
+        """
+        Initialise les templates de consentement"""
         self.consent_templates = {
             'data_usage': {
                 'title': 'Utilisation des données personnelles',
@@ -588,10 +625,13 @@ class ConsentProcessor:
     
     async def request_consent(self, user_id: str, consent_type: str, 
                             consent_data: Dict, requester_id: str) -> str:
-        """Demande un consentement"""
+        """
+        Demande un consentement"""
         try:
             if consent_type not in self.consent_templates:
                 raise ValueError(f"Type de consentement non reconnu: {consent_type}")
+
+
             
             template = self.consent_templates[consent_type]
             
@@ -601,6 +641,7 @@ class ConsentProcessor:
                     raise ValueError(f"Champ requis manquant: {field}")
             
             # Créer la demande de consentement
+
             consent_request = {
                 'id': str(uuid.uuid4()),
                 'user_id': user_id,
@@ -615,10 +656,12 @@ class ConsentProcessor:
             }
             
             # Utiliser le moteur d'approbation pour traiter
+
             approval_ids = await self.approval_engine.submit_for_approval(
                 consent_request['id'], 'consent', requester_id,
                 {'consent_type': consent_type, 'target_user': user_id}
             )
+
             
             consent_request['approval_ids'] = approval_ids
             
@@ -628,12 +671,15 @@ class ConsentProcessor:
             
             # Notifier l'utilisateur
             await self._notify_consent_request(consent_request)
+
             
             logger.info(f"Demande de consentement créée: {consent_type} pour {user_id}")
+
             return consent_request['id']
             
         except Exception as e:
             logger.error(f"Erreur demande consentement: {e}")
+
             raise
     
     async def grant_consent(self, consent_request_id: str, user_id: str, 
@@ -641,6 +687,7 @@ class ConsentProcessor:
         """Accorde un consentement"""
         try:
             consent_request = await self._get_consent_request(consent_request_id)
+
             
             if not consent_request:
                 raise ValueError("Demande de consentement introuvable")
@@ -654,6 +701,7 @@ class ConsentProcessor:
                 raise ValueError("Demande de consentement expirée")
             
             # Créer le consentement actif
+
             consent = {
                 'id': str(uuid.uuid4()),
                 'request_id': consent_request_id,
@@ -679,16 +727,20 @@ class ConsentProcessor:
             # Persister
             if self.db_session:
                 await self._persist_consent(consent)
+
                 await self._update_consent_request(consent_request)
             
             # Notifier le demandeur
             await self._notify_consent_granted(consent)
+
             
             logger.info(f"Consentement accordé: {consent_request['consent_type']} par {user_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Erreur accord consentement: {e}")
+
             return False
     
     async def revoke_consent(self, user_id: str, consent_type: str, reason: str = "") -> bool:
@@ -696,8 +748,11 @@ class ConsentProcessor:
         try:
             if consent_type not in self.active_consents[user_id]:
                 raise ValueError("Consentement actif introuvable")
+
+
             
             consent = self.active_consents[user_id][consent_type]
+
             template = self.consent_templates[consent_type]
             
             # Vérifier si révocable
@@ -707,6 +762,7 @@ class ConsentProcessor:
             # Marquer comme révoqué
             consent['is_active'] = False
             consent['revoked_at'] = datetime.utcnow()
+
             consent['revocation_reason'] = reason
             
             # Supprimer des consentements actifs
@@ -726,21 +782,27 @@ class ConsentProcessor:
             
             # Notifier les parties concernées
             await self._notify_consent_revoked(consent, reason)
+
             
             logger.info(f"Consentement révoqué: {consent_type} par {user_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Erreur révocation consentement: {e}")
+
             return False
     
     def _calculate_consent_expiry(self, consent_request: Dict) -> Optional[datetime]:
         """Calcule la date d'expiration du consentement"""
         template = consent_request['template']
+
         renewal_period = template.get('renewal_period')
+
         
         if renewal_period:
             return datetime.utcnow() + timedelta(days=renewal_period)
+
         
         return None  # Consentement permanent
 
@@ -773,7 +835,8 @@ class CollaborationWorkspace:
         self._initialize_workspace_templates()
     
     def _initialize_workspace_templates(self):
-        """Initialise les templates d'espaces de travail"""
+        """
+        Initialise les templates d'espaces de travail"""
         self.workspace_templates = {
             'content_creation': {
                 'name': 'Création de Contenu',
@@ -806,9 +869,11 @@ class CollaborationWorkspace:
         }
     
     async def create_workspace(self, creator_id: str, workspace_data: Dict) -> Workspace:
-        """Crée un nouvel espace de travail"""
+        """
+        Crée un nouvel espace de travail"""
         try:
             # Créer l'espace de travail
+
             workspace = Workspace(
                 name=workspace_data['name'],
                 type=WorkspaceType(workspace_data.get('type', 'project')),
@@ -820,6 +885,7 @@ class CollaborationWorkspace:
             
             # Appliquer un template si spécifié
             template_name = workspace_data.get('template')
+
             if template_name and template_name in self.workspace_templates:
                 await self._apply_workspace_template(workspace, template_name)
             
@@ -835,12 +901,15 @@ class CollaborationWorkspace:
             
             # Créer l'analyse initiale
             await self._initialize_workspace_analytics(workspace.id)
+
             
             logger.info(f"Espace de travail créé: {workspace.name}")
+
             return workspace
             
         except Exception as e:
             logger.error(f"Erreur création espace de travail: {e}")
+
             raise
     
     async def add_member(self, workspace_id: str, user_id: str, added_by: str, 
@@ -848,6 +917,7 @@ class CollaborationWorkspace:
         """Ajoute un membre à l'espace de travail"""
         try:
             workspace = self.active_workspaces.get(workspace_id)
+
             if not workspace:
                 raise ValueError("Espace de travail introuvable")
             
@@ -876,18 +946,22 @@ class CollaborationWorkspace:
                 'added_by': added_by,
                 'role': role
             })
+
             
             logger.info(f"Membre ajouté: {user_id} à {workspace.name}")
+
             return True
             
         except Exception as e:
             logger.error(f"Erreur ajout membre: {e}")
+
             return False
     
     async def upload_file(self, workspace_id: str, user_id: str, file_data: Dict) -> str:
         """Upload un fichier dans l'espace de travail"""
         try:
             workspace = self.active_workspaces.get(workspace_id)
+
             if not workspace:
                 raise ValueError("Espace de travail introuvable")
             
@@ -896,6 +970,7 @@ class CollaborationWorkspace:
                 raise PermissionError("Accès non autorisé")
             
             # Créer l'entrée fichier
+
             file_entry = {
                 'id': str(uuid.uuid4()),
                 'name': file_data['name'],
@@ -925,12 +1000,15 @@ class CollaborationWorkspace:
                 'file_name': file_entry['name'],
                 'uploaded_by': user_id
             })
+
             
             logger.info(f"Fichier uploadé: {file_entry['name']} dans {workspace.name}")
+
             return file_entry['id']
             
         except Exception as e:
             logger.error(f"Erreur upload fichier: {e}")
+
             raise
     
     async def create_shared_document(self, workspace_id: str, creator_id: str, 
@@ -938,6 +1016,7 @@ class CollaborationWorkspace:
         """Crée un document partagé"""
         try:
             workspace = self.active_workspaces.get(workspace_id)
+
             if not workspace:
                 raise ValueError("Espace de travail introuvable")
             
@@ -946,6 +1025,7 @@ class CollaborationWorkspace:
                 raise PermissionError("Accès non autorisé")
             
             # Créer le document
+
             document = {
                 'id': str(uuid.uuid4()),
                 'title': document_data['title'],
@@ -970,18 +1050,22 @@ class CollaborationWorkspace:
             
             # Initialiser le versioning
             await self._initialize_document_versioning(document['id'])
+
             
             logger.info(f"Document partagé créé: {document['title']}")
+
             return document['id']
             
         except Exception as e:
             logger.error(f"Erreur création document partagé: {e}")
+
             raise
     
     async def start_real_time_session(self, workspace_id: str, user_id: str) -> str:
         """Démarre une session temps réel"""
         try:
             workspace = self.active_workspaces.get(workspace_id)
+
             if not workspace:
                 raise ValueError("Espace de travail introuvable")
             
@@ -990,7 +1074,10 @@ class CollaborationWorkspace:
                 raise PermissionError("Accès non autorisé")
             
             # Créer la session
+
             session_id = str(uuid.uuid4())
+
+
             session_data = {
                 'id': session_id,
                 'workspace_id': workspace_id,
@@ -1006,12 +1093,15 @@ class CollaborationWorkspace:
             
             # Notifier les autres utilisateurs
             await self._notify_user_joined_session(workspace_id, user_id)
+
             
             logger.info(f"Session temps réel démarrée: {user_id} dans {workspace.name}")
+
             return session_id
             
         except Exception as e:
             logger.error(f"Erreur démarrage session temps réel: {e}")
+
             raise
 
 # [CONTINUATION DES AUTRES CLASSES...]

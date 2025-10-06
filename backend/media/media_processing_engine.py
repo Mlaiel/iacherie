@@ -78,7 +78,8 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class MediaType(Enum):
-    """Media type enumeration"""
+    """
+        Media type enumeration"""
     TEXT = "text"
     IMAGE = "image"
     VIDEO = "video"
@@ -159,7 +160,8 @@ class ProcessingConfig:
 
 @dataclass
 class MediaMetadata:
-    """Media file metadata"""
+    """
+        Media file metadata"""
     media_type: MediaType
     format: MediaFormat
     file_size: int
@@ -175,7 +177,8 @@ class MediaMetadata:
 
 @dataclass
 class ProcessingResult:
-    """Processing operation result"""
+    """
+        Processing operation result"""
     success: bool
     output_data: Any
     output_metadata: MediaMetadata
@@ -185,16 +188,19 @@ class ProcessingResult:
     error_message: Optional[str] = None
 
 class MediaProcessingEngine:
-    """Unified media processing engine"""
+    """
+        Unified media processing engine"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize media processing engine"""
+        """
+        Initialize media processing engine"""
         self.config = config or {}
         self.processors = {}
         self.temp_dir = tempfile.mkdtemp(prefix="media_processing_")
         
         # Initialize specialized processors
         self._initialize_processors()
+
         
         logger.info("🎬 Media Processing Engine initialized")
     
@@ -215,36 +221,48 @@ class MediaProcessingEngine:
         media_type: MediaType,
         operations: List[ProcessingConfig]
     ) -> ProcessingResult:
-        """Process media with specified operations"""
+        """
+        Process media with specified operations"""
         start_time = datetime.now(timezone.utc)
+
         
         try:
             processor = self.processors.get(media_type)
+
             if not processor:
                 raise ValueError(f"No processor available for {media_type.value}")
             
             # Get initial metadata
+
             initial_metadata = await self._extract_metadata(media_data, media_type)
             
             # Process through operations pipeline
+
             current_data = media_data
+
             applied_operations = []
             
             for operation_config in operations:
                 current_data = await processor.apply_operation(
                     current_data, operation_config
                 )
+
                 applied_operations.append(operation_config.operation)
             
             # Get final metadata
+
             final_metadata = await self._extract_metadata(current_data, media_type)
             
             # Calculate quality score
+
             quality_score = await self._calculate_quality_score(
                 initial_metadata, final_metadata, applied_operations
             )
+
+
             
             processing_time = (datetime.now(timezone.utc) - start_time).total_seconds()
+
             
             return ProcessingResult(
                 success=True,
@@ -254,10 +272,14 @@ class MediaProcessingEngine:
                 operations_applied=applied_operations,
                 quality_score=quality_score
             )
+
             
         except Exception as e:
             logger.error(f"Media processing failed: {e}")
+
+
             processing_time = (datetime.now(timezone.utc) - start_time).total_seconds()
+
             
             return ProcessingResult(
                 success=False,
@@ -285,15 +307,20 @@ class MediaProcessingEngine:
                 media_type=MediaType(request['media_type']),
                 operations=[ProcessingConfig(**op) for op in request.get('operations', [])]
             )
+
             tasks.append(task)
+
+
         
         results = await asyncio.gather(*tasks, return_exceptions=True)
         
         # Handle exceptions
+
         processed_results = []
         for i, result in enumerate(results):
             if isinstance(result, Exception):
                 logger.error(f"Batch processing failed for request {i}: {result}")
+
                 processed_results.append(ProcessingResult(
                     success=False,
                     output_data=None,
@@ -307,8 +334,10 @@ class MediaProcessingEngine:
                     quality_score=0.0,
                     error_message=str(result)
                 ))
+
             else:
                 processed_results.append(result)
+
         
         return processed_results
     
@@ -321,9 +350,11 @@ class MediaProcessingEngine:
     ) -> ProcessingResult:
         """Convert media between formats"""
         # Determine media type from format
+
         media_type = self._get_media_type_from_format(source_format)
         
         # Create conversion operation
+
         conversion_config = ProcessingConfig(
             operation=ProcessingOperation.CONVERT,
             target_format=target_format,
@@ -333,18 +364,22 @@ class MediaProcessingEngine:
                 'target_format': target_format.value
             }
         )
+
         
         return await self.process_media(media_data, media_type, [conversion_config])
     
     async def get_metadata(self, media_data: Any, media_type: MediaType) -> MediaMetadata:
-        """Extract metadata from media"""
+        """
+        Extract metadata from media"""
         return await self._extract_metadata(media_data, media_type)
     
     def cleanup(self):
-        """Cleanup temporary files"""
+        """
+        Cleanup temporary files"""
         try:
             import shutil
             shutil.rmtree(self.temp_dir, ignore_errors=True)
+
             logger.info("Temporary files cleaned up")
         except Exception as e:
             logger.warning(f"Failed to cleanup temporary files: {e}")
@@ -370,10 +405,12 @@ class MediaProcessingEngine:
         final_metadata: MediaMetadata,
         operations: List[ProcessingOperation]
     ) -> float:
-        """Calculate quality score for processed media"""
+        """
+        Calculate quality score for processed media"""
         base_score = 0.8
         
         # Adjust based on operations
+
         quality_impact = {
             ProcessingOperation.ENHANCE: 0.1,
             ProcessingOperation.NORMALIZE: 0.05,
@@ -381,22 +418,28 @@ class MediaProcessingEngine:
             ProcessingOperation.RESIZE: -0.02,
             ProcessingOperation.CONVERT: -0.05
         }
+
         
         score = base_score
         for operation in operations:
             impact = quality_impact.get(operation, 0)
+
             score += impact
         
         return max(0.0, min(1.0, score))
     
     def _get_media_type_from_format(self, format: MediaFormat) -> MediaType:
-        """Determine media type from format"""
+        """
+        Determine media type from format"""
         image_formats = {MediaFormat.PNG, MediaFormat.JPEG, MediaFormat.WEBP, 
                         MediaFormat.GIF, MediaFormat.SVG, MediaFormat.TIFF, MediaFormat.BMP}
+
         video_formats = {MediaFormat.MP4, MediaFormat.AVI, MediaFormat.MOV, 
                         MediaFormat.WEBM, MediaFormat.MKV, MediaFormat.FLV}
+
         audio_formats = {MediaFormat.WAV, MediaFormat.MP3, MediaFormat.FLAC, 
                         MediaFormat.AAC, MediaFormat.OGG, MediaFormat.M4A}
+
         text_formats = {MediaFormat.TXT, MediaFormat.HTML, MediaFormat.MARKDOWN, 
                        MediaFormat.JSON, MediaFormat.XML}
         
@@ -412,76 +455,113 @@ class MediaProcessingEngine:
             return MediaType.TEXT  # Default fallback
 
 class BaseProcessor:
-    """Base class for media processors"""
+    """
+        Base class for media processors"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
     
     async def apply_operation(self, data: Any, config: ProcessingConfig) -> Any:
-        """Apply processing operation to data"""
+        """
+        Apply processing operation to data"""
         raise NotImplementedError
     
     async def extract_metadata(self, data: Any) -> MediaMetadata:
-        """Extract metadata from data"""
+        """
+        Extract metadata from data"""
         raise NotImplementedError
 
 class ImageProcessor(BaseProcessor):
-    """Image processing implementation"""
+    """
+        Image processing implementation"""
     
     async def apply_operation(self, data: Any, config: ProcessingConfig) -> Any:
-        """Apply image processing operation"""
+        """
+        Apply image processing operation"""
         try:
             if not PIL_AVAILABLE:
                 logger.warning("PIL not available, returning original data")
+
                 return data
             
             # Convert data to PIL Image if needed
+
             image = await self._to_pil_image(data)
+
             
             if config.operation == ProcessingOperation.RESIZE:
                 width = config.parameters.get('width', 800)
+
+
                 height = config.parameters.get('height', 600)
+
+
                 image = image.resize((width, height), Image.Resampling.LANCZOS)
+
             
             elif config.operation == ProcessingOperation.CROP:
                 box = config.parameters.get('box', (0, 0, 400, 400))
+
+
                 image = image.crop(box)
+
             
             elif config.operation == ProcessingOperation.ROTATE:
                 angle = config.parameters.get('angle', 90)
+
+
                 image = image.rotate(angle, expand=True)
+
             
             elif config.operation == ProcessingOperation.FLIP:
                 direction = config.parameters.get('direction', 'horizontal')
+
                 if direction == 'horizontal':
                     image = image.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
+
                 else:
                     image = image.transpose(Image.Transpose.FLIP_TOP_BOTTOM)
+
             
             elif config.operation == ProcessingOperation.FILTER:
                 filter_type = config.parameters.get('filter', 'blur')
+
                 if filter_type == 'blur':
                     radius = config.parameters.get('radius', 2)
+
+
                     image = image.filter(ImageFilter.GaussianBlur(radius))
+
                 elif filter_type == 'sharpen':
                     image = image.filter(ImageFilter.SHARPEN)
+
             
             elif config.operation == ProcessingOperation.ENHANCE:
                 enhancement_type = config.parameters.get('type', 'brightness')
+
+
                 factor = config.parameters.get('factor', 1.2)
+
                 
                 if enhancement_type == 'brightness':
                     enhancer = ImageEnhance.Brightness(image)
+
                 elif enhancement_type == 'contrast':
                     enhancer = ImageEnhance.Contrast(image)
+
                 elif enhancement_type == 'color':
                     enhancer = ImageEnhance.Color(image)
+
                 elif enhancement_type == 'sharpness':
                     enhancer = ImageEnhance.Sharpness(image)
+
                 else:
                     enhancer = ImageEnhance.Brightness(image)
+
+
                 
                 image = enhancer.enhance(factor)
+
             
             elif config.operation == ProcessingOperation.CONVERT:
                 target_format = config.target_format
@@ -490,13 +570,18 @@ class ImageProcessor(BaseProcessor):
                     if target_format == MediaFormat.JPEG and image.mode in ('RGBA', 'LA'):
                         # Convert to RGB for JPEG
                         rgb_image = Image.new('RGB', image.size, (255, 255, 255))
+
                         rgb_image.paste(image, mask=image.split()[-1] if image.mode == 'RGBA' else None)
+
+
                         image = rgb_image
             
             return await self._from_pil_image(image, config.target_format)
+
             
         except Exception as e:
             logger.error(f"Image processing failed: {e}")
+
             return data
     
     async def extract_metadata(self, data: Any) -> MediaMetadata:
@@ -504,6 +589,7 @@ class ImageProcessor(BaseProcessor):
         try:
             if PIL_AVAILABLE:
                 image = await self._to_pil_image(data)
+
                 return MediaMetadata(
                     media_type=MediaType.IMAGE,
                     format=MediaFormat.PNG,
@@ -513,6 +599,7 @@ class ImageProcessor(BaseProcessor):
                 )
         except Exception as e:
             logger.error(f"Failed to extract image metadata: {e}")
+
         
         return MediaMetadata(
             media_type=MediaType.IMAGE,
@@ -528,7 +615,9 @@ class ImageProcessor(BaseProcessor):
             # Assume base64 encoded image
             if data.startswith('data:image'):
                 data = data.split(',')[1]
+
             image_data = base64.b64decode(data)
+
             return Image.open(io.BytesIO(image_data))
         elif isinstance(data, bytes):
             return Image.open(io.BytesIO(data))
@@ -537,8 +626,10 @@ class ImageProcessor(BaseProcessor):
             return Image.new('RGB', (800, 600), color='lightgray')
     
     async def _from_pil_image(self, image: Image.Image, target_format: Optional[MediaFormat]) -> str:
-        """Convert PIL Image to output format"""
+        """
+        Convert PIL Image to output format"""
         buffer = io.BytesIO()
+
         format_name = target_format.value.upper() if target_format else 'PNG'
         if format_name == 'JPEG':
             format_name = 'JPEG'
@@ -547,21 +638,30 @@ class ImageProcessor(BaseProcessor):
         return base64.b64encode(buffer.getvalue()).decode('utf-8')
 
 class VideoProcessor(BaseProcessor):
-    """Video processing implementation"""
+    """
+        Video processing implementation"""
     
     async def apply_operation(self, data: Any, config: ProcessingConfig) -> Any:
-        """Apply video processing operation"""
-        # Placeholder video processing
+        """
+        Apply video processing operation"""
+        
         logger.info(f"Applying video operation: {config.operation.value}")
+
         
         if config.operation == ProcessingOperation.TRIM:
             start_time = config.parameters.get('start', 0)
+
+
             end_time = config.parameters.get('end', 30)
+
             return f"trimmed_video_{start_time}_{end_time}.mp4"
         
         elif config.operation == ProcessingOperation.RESIZE:
             width = config.parameters.get('width', 1920)
+
+
             height = config.parameters.get('height', 1080)
+
             return f"resized_video_{width}x{height}.mp4"
         
         elif config.operation == ProcessingOperation.CONVERT:
@@ -576,24 +676,32 @@ class VideoProcessor(BaseProcessor):
             media_type=MediaType.VIDEO,
             format=MediaFormat.MP4,
             file_size=10 * 1024 * 1024,  # 10MB estimate
+
             dimensions=(1920, 1080),
             duration=30.0
         )
 
 class AudioProcessor(BaseProcessor):
-    """Audio processing implementation"""
+    """
+        Audio processing implementation"""
     
     async def apply_operation(self, data: Any, config: ProcessingConfig) -> Any:
-        """Apply audio processing operation"""
+        """
+        Apply audio processing operation"""
         logger.info(f"Applying audio operation: {config.operation.value}")
+
         
         if config.operation == ProcessingOperation.TRIM:
             start_time = config.parameters.get('start', 0)
+
+
             end_time = config.parameters.get('end', 30)
+
             return f"trimmed_audio_{start_time}_{end_time}"
         
         elif config.operation == ProcessingOperation.NORMALIZE:
             target_db = config.parameters.get('target_db', -23)
+
             return f"normalized_audio_{target_db}db"
         
         elif config.operation == ProcessingOperation.CONVERT:
@@ -608,20 +716,25 @@ class AudioProcessor(BaseProcessor):
             media_type=MediaType.AUDIO,
             format=MediaFormat.WAV,
             file_size=5 * 1024 * 1024,  # 5MB estimate
+
             duration=30.0,
             sample_rate=44100,
             channels=2
         )
 
 class VoiceProcessor(BaseProcessor):
-    """Voice processing implementation"""
+    """
+        Voice processing implementation"""
     
     async def apply_operation(self, data: Any, config: ProcessingConfig) -> Any:
-        """Apply voice processing operation"""
+        """
+        Apply voice processing operation"""
         logger.info(f"Applying voice operation: {config.operation.value}")
+
         
         if config.operation == ProcessingOperation.ENHANCE:
             enhancement_type = config.parameters.get('type', 'clarity')
+
             return f"enhanced_voice_{enhancement_type}"
         
         elif config.operation == ProcessingOperation.NORMALIZE:
@@ -635,17 +748,21 @@ class VoiceProcessor(BaseProcessor):
             media_type=MediaType.VOICE,
             format=MediaFormat.WAV,
             file_size=2 * 1024 * 1024,  # 2MB estimate
+
             duration=15.0,
             sample_rate=22050,
             channels=1
         )
 
 class TextProcessor(BaseProcessor):
-    """Text processing implementation"""
+    """
+        Text processing implementation"""
     
     async def apply_operation(self, data: Any, config: ProcessingConfig) -> Any:
-        """Apply text processing operation"""
+        """
+        Apply text processing operation"""
         logger.info(f"Applying text operation: {config.operation.value}")
+
         
         if config.operation == ProcessingOperation.CONVERT:
             target_format = config.target_format
@@ -655,9 +772,11 @@ class TextProcessor(BaseProcessor):
                 return f"# Content\n\n{data}"
             elif target_format == MediaFormat.JSON:
                 return json.dumps({"content": data})
+
         
         elif config.operation == ProcessingOperation.ENHANCE:
             enhancement_type = config.parameters.get('type', 'grammar')
+
             return f"Enhanced text with {enhancement_type}: {data}"
         
         return data
@@ -677,18 +796,23 @@ class TextProcessor(BaseProcessor):
         )
 
 class AvatarProcessor(BaseProcessor):
-    """Avatar processing implementation"""
+    """
+        Avatar processing implementation"""
     
     async def apply_operation(self, data: Any, config: ProcessingConfig) -> Any:
-        """Apply avatar processing operation"""
+        """
+        Apply avatar processing operation"""
         logger.info(f"Applying avatar operation: {config.operation.value}")
+
         
         if config.operation == ProcessingOperation.RESIZE:
             size = config.parameters.get('size', '512x512')
+
             return f"resized_avatar_{size}"
         
         elif config.operation == ProcessingOperation.ENHANCE:
             enhancement_type = config.parameters.get('type', 'quality')
+
             return f"enhanced_avatar_{enhancement_type}"
         
         return data
@@ -699,6 +823,7 @@ class AvatarProcessor(BaseProcessor):
             media_type=MediaType.AVATAR,
             format=MediaFormat.PNG,
             file_size=1024 * 1024,  # 1MB estimate
+
             dimensions=(512, 512),
             color_mode='RGBA'
         )

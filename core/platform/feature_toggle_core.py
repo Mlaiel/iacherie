@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class FeatureToggleCore:
-    """Advanced FeatureToggleCore System"""
+    """
+Advanced FeatureToggleCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class FeatureToggleCore:
 # Module exports
 __all__ = ["FeatureToggleCore"]
 
-logger.info("🔀 FeatureToggleCore module loaded")
+logger.info("🔀 FeatureToggleCore module initialized")

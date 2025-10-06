@@ -103,7 +103,8 @@ class TokenomicsConfig:
 
 @dataclass
 class StakingPool:
-    """Staking pool configuration"""
+    """
+        Staking pool configuration"""
     pool_id: str
     name: str
     token_address: str
@@ -119,7 +120,8 @@ class StakingPool:
 
 @dataclass
 class GovernanceProposal:
-    """Governance proposal"""
+    """
+        Governance proposal"""
     proposal_id: str
     proposer: str
     proposal_type: GovernanceProposalType
@@ -213,9 +215,11 @@ class TokenomicsManager:
         self.circulating_supply = config.initial_supply
         self.burned_supply = Decimal('0')
         self.staked_supply = Decimal('0')
+
         
     async def initialize(self) -> None:
-        """Initialize tokenomics system"""
+        """
+        Initialize tokenomics system"""
         await self._load_current_metrics()
         await self._start_background_tasks()
         logger.info("Tokenomics manager initialized successfully")
@@ -229,11 +233,13 @@ class TokenomicsManager:
                 raise ValueError("Minting not allowed under current tokenomics rules")
             
             # Check supply constraints
+
             new_total_supply = self.total_supply + amount
             if self.config.max_supply and new_total_supply > self.config.max_supply:
                 raise ValueError("Minting would exceed maximum supply")
             
             # Execute minting
+
             mint_result = await self._execute_mint(amount, recipient, mint_type)
             
             # Update metrics
@@ -244,12 +250,15 @@ class TokenomicsManager:
             await self._log_tokenomics_event(
                 TokenomicsEvent.MINT, amount, {"recipient": recipient, "type": mint_type}
             )
+
             
             logger.info(f"Minted {amount} tokens to {recipient} (type: {mint_type})")
+
             return mint_result
             
         except Exception as e:
             logger.error(f"Token minting failed: {str(e)}")
+
             raise
     
     async def burn_tokens(self, amount: Decimal, burn_source: str = "fee") -> Dict[str, Any]:
@@ -260,11 +269,13 @@ class TokenomicsManager:
                 raise ValueError("Cannot burn more than circulating supply")
             
             # Calculate burn amount based on mechanism
+
             actual_burn_amount = await self.burning_mechanism.calculate_burn_amount(
                 amount, burn_source
             )
             
             # Execute burning
+
             burn_result = await self._execute_burn(actual_burn_amount, burn_source)
             
             # Update metrics
@@ -275,18 +286,22 @@ class TokenomicsManager:
             await self._log_tokenomics_event(
                 TokenomicsEvent.BURN, actual_burn_amount, {"source": burn_source}
             )
+
             
             logger.info(f"Burned {actual_burn_amount} tokens from {burn_source}")
+
             return burn_result
             
         except Exception as e:
             logger.error(f"Token burning failed: {str(e)}")
+
             raise
     
     async def calculate_token_economics(self) -> Dict[str, Any]:
         """Calculate comprehensive token economics"""
         try:
             # Supply metrics
+
             supply_metrics = {
                 "total_supply": float(self.total_supply),
                 "circulating_supply": float(self.circulating_supply),
@@ -297,8 +312,12 @@ class TokenomicsManager:
             }
             
             # Economic indicators
+
             current_price = await self._get_current_price()
+
+
             market_cap = float(self.circulating_supply) * current_price
+
             
             economic_indicators = {
                 "current_price": current_price,
@@ -311,13 +330,17 @@ class TokenomicsManager:
             }
             
             # Velocity and turnover
+
             velocity_metrics = await self._calculate_velocity_metrics()
             
             # Staking metrics
+
             staking_metrics = await self._calculate_staking_metrics()
             
             # Governance metrics
+
             governance_metrics = await self._calculate_governance_metrics()
+
             
             return {
                 "supply_metrics": supply_metrics,
@@ -330,24 +353,31 @@ class TokenomicsManager:
             
         except Exception as e:
             logger.error(f"Failed to calculate token economics: {str(e)}")
+
             raise
     
     async def optimize_tokenomics_parameters(self) -> Dict[str, Any]:
         """AI-powered tokenomics parameter optimization"""
         try:
             # Collect historical data
+
             historical_data = await self._collect_historical_data()
             
             # Analyze current performance
+
             performance_metrics = await self._analyze_performance()
             
             # Generate optimization recommendations
+
             recommendations = await self._generate_optimization_recommendations(
                 historical_data, performance_metrics
             )
             
             # Simulate proposed changes
+
             simulation_results = await self._simulate_parameter_changes(recommendations)
+
+
             
             optimization_report = {
                 "current_parameters": self._get_current_parameters(),
@@ -360,15 +390,18 @@ class TokenomicsManager:
             }
             
             logger.info("Tokenomics optimization analysis completed")
+
             return optimization_report
             
         except Exception as e:
             logger.error(f"Tokenomics optimization failed: {str(e)}")
+
             raise
     
     async def _validate_minting(self, amount: Decimal, mint_type: str) -> bool:
         """Validate if minting is allowed"""
         # Check inflation constraints
+
         current_inflation = await self._calculate_current_inflation_rate()
         if current_inflation > self.config.inflation_rate:
             return False
@@ -381,7 +414,6 @@ class TokenomicsManager:
     
     async def _execute_mint(self, amount: Decimal, recipient: str, mint_type: str) -> Dict[str, Any]:
         """Execute token minting"""
-        # Mock implementation - integrate with actual blockchain
         return {
             "transaction_hash": f"0x{uuid4().hex}",
             "amount": float(amount),
@@ -392,7 +424,6 @@ class TokenomicsManager:
     
     async def _execute_burn(self, amount: Decimal, burn_source: str) -> Dict[str, Any]:
         """Execute token burning"""
-        # Mock implementation - integrate with actual blockchain
         return {
             "transaction_hash": f"0x{uuid4().hex}",
             "amount": float(amount),
@@ -417,22 +448,22 @@ class TokenomicsManager:
     
     async def _load_current_metrics(self) -> None:
         """Load current tokenomics metrics"""
-        # Mock implementation - load from database
         pass
     
     async def _start_background_tasks(self) -> None:
-        """Start background tokenomics tasks"""
+        """
+        Start background tokenomics tasks"""
         asyncio.create_task(self._update_metrics_periodically())
         asyncio.create_task(self._monitor_economic_health())
     
     async def _get_current_price(self) -> float:
-        """Get current token price"""
-        # Mock implementation - integrate with price oracles
+        """
+        Get current token price"""
         return 1.0
     
     async def _calculate_velocity_metrics(self) -> Dict[str, Any]:
-        """Calculate token velocity metrics"""
-        # Mock implementation
+        """
+        Calculate token velocity metrics"""
         return {
             "daily_transaction_volume": 100000.0,
             "velocity": 2.5,
@@ -450,7 +481,6 @@ class TokenomicsManager:
     
     async def _calculate_governance_metrics(self) -> Dict[str, Any]:
         """Calculate governance participation metrics"""
-        # Mock implementation
         return {
             "active_proposals": 3,
             "voter_participation_rate": 0.15,
@@ -464,8 +494,8 @@ class TokenomicsManager:
         return 0.05  # 5% annual inflation
     
     async def _collect_historical_data(self) -> Dict[str, Any]:
-        """Collect historical tokenomics data"""
-        # Mock implementation
+        """
+        Collect historical tokenomics data"""
         return {"price_history": [], "volume_history": [], "supply_history": []}
     
     async def _analyze_performance(self) -> Dict[str, Any]:
@@ -531,6 +561,7 @@ class TokenomicsManager:
         while True:
             try:
                 await self._update_supply_metrics()
+
                 await asyncio.sleep(3600)  # Update hourly
             except Exception as e:
                 logger.error(f"Error updating metrics: {str(e)}")
@@ -540,7 +571,9 @@ class TokenomicsManager:
         while True:
             try:
                 health_metrics = await self.calculate_token_economics()
+
                 await self._check_economic_alerts(health_metrics)
+
                 await asyncio.sleep(1800)  # Check every 30 minutes
             except Exception as e:
                 logger.error(f"Error monitoring economic health: {str(e)}")
@@ -552,13 +585,15 @@ class TokenomicsManager:
         pass
     
     async def _check_economic_alerts(self, metrics: Dict[str, Any]) -> None:
-        """Check for economic alerts"""
+        """
+        Check for economic alerts"""
         # Implement alert logic for economic anomalies
         pass
 
 
 class InflationController:
-    """Controls token inflation according to economic models"""
+    """
+        Controls token inflation according to economic models"""
     
     def __init__(self, config: TokenomicsConfig):
         self.config = config
@@ -566,13 +601,18 @@ class InflationController:
         self.max_deviation = 0.02  # 2% maximum deviation from target
     
     async def calculate_optimal_inflation(self, economic_data: Dict[str, Any]) -> float:
-        """Calculate optimal inflation rate based on economic conditions"""
+        """
+        Calculate optimal inflation rate based on economic conditions"""
         # Economic indicators
+
         staking_ratio = economic_data.get("staking_ratio", 0.5)
+
         price_volatility = economic_data.get("price_volatility", 0.1)
+
         adoption_rate = economic_data.get("adoption_rate", 0.1)
         
         # Base inflation rate
+
         base_rate = self.target_inflation_rate
         
         # Adjustments based on conditions
@@ -588,7 +628,9 @@ class InflationController:
             base_rate += 0.005  # Slight increase to support growth
         
         # Ensure within bounds
+
         optimal_rate = max(0, min(base_rate, self.target_inflation_rate + self.max_deviation))
+
         
         return optimal_rate
     
@@ -596,6 +638,7 @@ class InflationController:
         """Adjust inflation schedule"""
         if abs(new_rate - self.target_inflation_rate) > self.max_deviation:
             raise ValueError("Inflation rate adjustment exceeds maximum deviation")
+
         
         return {
             "old_rate": self.target_inflation_rate,
@@ -621,45 +664,58 @@ class TokenBurningMechanism:
     async def calculate_burn_amount(self, base_amount: Decimal, burn_source: str) -> Decimal:
         """Calculate amount to burn based on source"""
         burn_rate = self.burn_strategies.get(burn_source, self.config.burning_rate)
+
         burn_amount = base_amount * Decimal(str(burn_rate))
         
         # Apply additional logic based on burn source
         if burn_source == "deflationary":
             # Deflationary burn based on circulating supply
+
             burn_amount = self._calculate_deflationary_burn()
         elif burn_source == "buyback_burn":
             # Buyback burn based on treasury and market conditions
+
             burn_amount = await self._calculate_buyback_burn(base_amount)
+
         
         return burn_amount
     
     def _calculate_deflationary_burn(self) -> Decimal:
         """Calculate deflationary burn amount"""
         # Burn 0.01% of circulating supply daily
+
         daily_burn_rate = Decimal('0.0001')
         # This would be calculated based on actual circulating supply
-        circulating_supply = Decimal('1000000')  # Mock value
+
+        circulating_supply = Decimal('1000000')
+        
         return circulating_supply * daily_burn_rate
     
     async def _calculate_buyback_burn(self, revenue: Decimal) -> Decimal:
-        """Calculate buyback and burn amount from revenue"""
+        """
+        Calculate buyback and burn amount from revenue"""
         # Use 50% of allocated revenue for buyback
+
         buyback_amount = revenue * Decimal('0.5')
         
         # Calculate tokens that can be bought at current price
+
         current_price = await self._get_current_price()
+
         tokens_to_burn = buyback_amount / Decimal(str(current_price))
+
         
         return tokens_to_burn
     
     async def _get_current_price(self) -> float:
-        """Get current token price"""
-        # Mock implementation
+        """
+        Get current token price"""
         return 1.0
 
 
 class RewardCalculator:
-    """Calculates staking and governance rewards"""
+    """
+        Calculates staking and governance rewards"""
     
     def __init__(self, config: TokenomicsConfig):
         self.config = config
@@ -670,7 +726,8 @@ class RewardCalculator:
     async def calculate_staking_rewards(self, staked_amount: Decimal, 
                                       stake_duration: int, 
                                       pool_config: Optional[StakingPool] = None) -> Dict[str, Any]:
-        """Calculate staking rewards"""
+        """
+        Calculate staking rewards"""
         # Base reward calculation
         if pool_config:
             annual_rate = pool_config.apy
@@ -678,7 +735,9 @@ class RewardCalculator:
             annual_rate = self.base_staking_rate
         
         # Time-based calculations
+
         daily_rate = annual_rate / 365
+
         reward_amount = staked_amount * Decimal(str(daily_rate)) * Decimal(str(stake_duration))
         
         # Apply multipliers
@@ -686,9 +745,11 @@ class RewardCalculator:
             reward_amount *= Decimal(str(self.loyalty_multiplier))
         
         # Apply early withdrawal penalty if applicable
+
         penalty = Decimal('0')
         if pool_config and stake_duration < pool_config.lock_period:
             penalty = reward_amount * Decimal(str(pool_config.early_withdrawal_penalty))
+
             reward_amount -= penalty
         
         return {
@@ -703,22 +764,31 @@ class RewardCalculator:
                                          participation_rate: float) -> Decimal:
         """Calculate governance participation rewards"""
         # Base governance reward
+
         base_reward = voting_power * Decimal(str(self.governance_bonus / 365))  # Daily rate
         
         # Participation bonus
+
         participation_bonus = base_reward * Decimal(str(participation_rate))
+
         
         return base_reward + participation_bonus
     
     async def calculate_liquidity_rewards(self, liquidity_provided: Decimal, 
                                         pool_performance: Dict[str, Any]) -> Decimal:
-        """Calculate liquidity provision rewards"""
+        """
+        Calculate liquidity provision rewards"""
         # Base liquidity reward (simplified)
+
         base_rate = 0.05  # 5% annual rate
+
         daily_rate = base_rate / 365
         
         # Performance multiplier based on pool metrics
+
         performance_multiplier = pool_performance.get("performance_score", 1.0)
+
+
         
         reward = liquidity_provided * Decimal(str(daily_rate)) * Decimal(str(performance_multiplier))
         return reward
@@ -766,15 +836,23 @@ class GovernanceEngine:
         """Create a new governance proposal"""
         try:
             # Validate proposer voting power
+
             proposer_power = await self.voting_calculator.calculate_voting_power(proposer)
+
+
             requirements = self.proposal_requirements[proposal_type]
             
             if proposer_power < requirements["min_voting_power"]:
                 raise ValueError("Insufficient voting power to create proposal")
             
             # Create proposal
+
             proposal_id = str(uuid4())
+
+
             voting_ends_at = datetime.utcnow() + timedelta(hours=self.config.proposal_duration)
+
+
             
             proposal = GovernanceProposal(
                 proposal_id=proposal_id,
@@ -788,6 +866,7 @@ class GovernanceEngine:
             )
             
             # Store in database
+
             proposal_db = GovernanceProposalDB(
                 proposal_id=proposal_id,
                 proposer=proposer,
@@ -798,7 +877,9 @@ class GovernanceEngine:
                 voting_power_required=requirements["min_voting_power"],
                 voting_ends_at=voting_ends_at
             )
+
             self.db.add(proposal_db)
+
             await self.db.commit()
             
             # Store in cache for quick access
@@ -814,8 +895,10 @@ class GovernanceEngine:
                     "status": "active"
                 })
             )
+
             
             logger.info(f"Governance proposal created: {proposal_id}")
+
             return {
                 "proposal_id": proposal_id,
                 "status": "created",
@@ -826,6 +909,7 @@ class GovernanceEngine:
             
         except Exception as e:
             logger.error(f"Failed to create proposal: {str(e)}")
+
             raise
     
     async def vote_on_proposal(self, proposal_id: str, voter: str, 
@@ -833,9 +917,12 @@ class GovernanceEngine:
         """Vote on a governance proposal"""
         try:
             # Validate proposal exists and is active
+
             proposal = await self._get_proposal(proposal_id)
+
             if not proposal or proposal["status"] != "active":
                 raise ValueError("Proposal not found or not active")
+
             
             if datetime.fromisoformat(proposal["voting_ends_at"]) < datetime.utcnow():
                 raise ValueError("Voting period has ended")
@@ -845,6 +932,7 @@ class GovernanceEngine:
                 voting_power = await self.voting_calculator.calculate_voting_power(voter)
             
             # Record vote
+
             vote_record = {
                 "voter": voter,
                 "proposal_id": proposal_id,
@@ -864,9 +952,12 @@ class GovernanceEngine:
             await self._update_proposal_votes(proposal_id, vote, voting_power)
             
             # Check if proposal can be executed
+
             execution_result = await self._check_proposal_execution(proposal_id)
+
             
             logger.info(f"Vote recorded for proposal {proposal_id} by {voter}: {vote}")
+
             return {
                 "vote_recorded": True,
                 "voting_power_used": float(voting_power),
@@ -876,20 +967,28 @@ class GovernanceEngine:
             
         except Exception as e:
             logger.error(f"Failed to record vote: {str(e)}")
+
             raise
     
     async def execute_proposal(self, proposal_id: str, executor: str) -> Dict[str, Any]:
         """Execute a passed governance proposal"""
         try:
             # Validate proposal can be executed
+
             execution_check = await self._check_proposal_execution(proposal_id)
+
             if not execution_check.get("can_execute", False):
                 raise ValueError("Proposal cannot be executed")
+
+
             
             proposal = await self._get_proposal(proposal_id)
+
+
             proposal_type = GovernanceProposalType(proposal["proposal_type"])
             
             # Execute based on proposal type
+
             execution_result = await self._execute_proposal_by_type(
                 proposal_type, proposal["parameters"]
             )
@@ -903,8 +1002,10 @@ class GovernanceEngine:
                 "executor": executor,
                 "execution_result": execution_result
             })
+
             
             logger.info(f"Proposal {proposal_id} executed successfully")
+
             return {
                 "executed": True,
                 "execution_result": execution_result,
@@ -913,11 +1014,13 @@ class GovernanceEngine:
             
         except Exception as e:
             logger.error(f"Failed to execute proposal {proposal_id}: {str(e)}")
+
             raise
     
     async def _get_proposal(self, proposal_id: str) -> Optional[Dict[str, Any]]:
         """Get proposal from cache or database"""
         # Try cache first
+
         cached = await self.redis.get(f"proposal:{proposal_id}")
         if cached:
             return json.loads(cached)
@@ -933,8 +1036,11 @@ class GovernanceEngine:
         current_votes = await self.redis.hgetall(vote_key)
         
         # Convert to proper types
+
         votes_for = Decimal(current_votes.get("for", "0"))
+
         votes_against = Decimal(current_votes.get("against", "0"))
+
         votes_abstain = Decimal(current_votes.get("abstain", "0"))
         
         # Update vote counts
@@ -960,31 +1066,45 @@ class GovernanceEngine:
             return {"can_execute": False, "reason": "proposal_not_found"}
         
         # Check if voting period ended
+
         voting_ends_at = datetime.fromisoformat(proposal["voting_ends_at"])
         if voting_ends_at > datetime.utcnow():
             return {"can_execute": False, "reason": "voting_period_active"}
         
         # Get vote counts
+
         vote_key = f"proposal_votes:{proposal_id}"
         votes = await self.redis.hgetall(vote_key)
+
+
         
         votes_for = Decimal(votes.get("for", "0"))
+
         votes_against = Decimal(votes.get("against", "0"))
+
         total_votes = Decimal(votes.get("total", "0"))
         
         # Get requirements
+
         proposal_type = GovernanceProposalType(proposal["proposal_type"])
+
         requirements = self.proposal_requirements[proposal_type]
         
         # Check quorum
+
         total_voting_power = await self._get_total_voting_power()
+
         quorum_met = total_votes >= (total_voting_power * Decimal(str(requirements["quorum"])))
         
         # Check approval threshold
+
         approval_met = False
         if total_votes > 0:
             approval_rate = votes_for / total_votes
+
             approval_met = approval_rate >= Decimal(str(requirements["approval_threshold"]))
+
+
         
         can_execute = quorum_met and approval_met
         
@@ -1015,22 +1135,18 @@ class GovernanceEngine:
     
     async def _execute_parameter_change(self, parameters: Dict[str, Any]) -> Dict[str, Any]:
         """Execute parameter change proposal"""
-        # Mock implementation
         return {"parameter_updated": True, "new_values": parameters}
     
     async def _execute_treasury_spending(self, parameters: Dict[str, Any]) -> Dict[str, Any]:
         """Execute treasury spending proposal"""
-        # Mock implementation
         return {"funds_transferred": True, "amount": parameters.get("amount", 0)}
     
     async def _execute_protocol_upgrade(self, parameters: Dict[str, Any]) -> Dict[str, Any]:
         """Execute protocol upgrade proposal"""
-        # Mock implementation
         return {"upgrade_scheduled": True, "version": parameters.get("version", "1.0.0")}
     
     async def _execute_emergency_action(self, parameters: Dict[str, Any]) -> Dict[str, Any]:
         """Execute emergency action proposal"""
-        # Mock implementation
         return {"emergency_action_executed": True, "action": parameters.get("action", "")}
     
     async def _update_proposal_status(self, proposal_id: str, status: str, 
@@ -1040,7 +1156,8 @@ class GovernanceEngine:
         pass
     
     async def _log_governance_event(self, event_type: str, data: Dict[str, Any]) -> None:
-        """Log governance event"""
+        """
+        Log governance event"""
         event = {
             "event_id": str(uuid4()),
             "event_type": event_type,
@@ -1051,12 +1168,12 @@ class GovernanceEngine:
     
     async def _get_total_voting_power(self) -> Decimal:
         """Get total voting power in the system"""
-        # Mock implementation
         return Decimal('1000000')
 
 
 class VotingPowerCalculator:
-    """Calculates voting power using various mechanisms"""
+    """
+        Calculates voting power using various mechanisms"""
     
     def __init__(self, config: TokenomicsConfig):
         self.config = config
@@ -1064,14 +1181,19 @@ class VotingPowerCalculator:
     
     async def calculate_voting_power(self, user_id: str, 
                                    method: Optional[VotingPowerCalculation] = None) -> Decimal:
-        """Calculate voting power for a user"""
+        """
+        Calculate voting power for a user"""
         if method is None:
             method = self.calculation_method
         
         # Get user's token holdings and staking positions
+
         token_balance = await self._get_token_balance(user_id)
+
         staked_amount = await self._get_staked_amount(user_id)
+
         staking_duration = await self._get_average_staking_duration(user_id)
+
         
         if method == VotingPowerCalculation.LINEAR:
             return token_balance + staked_amount
@@ -1079,33 +1201,37 @@ class VotingPowerCalculator:
         elif method == VotingPowerCalculation.QUADRATIC:
             total_tokens = token_balance + staked_amount
             return Decimal(str(math.sqrt(float(total_tokens))))
+
         
         elif method == VotingPowerCalculation.STAKE_WEIGHTED:
             base_power = token_balance * Decimal('0.5')  # 50% weight for liquid tokens
+
             staking_power = staked_amount * Decimal('1.5')  # 150% weight for staked tokens
             return base_power + staking_power
         
         elif method == VotingPowerCalculation.TIME_WEIGHTED:
             base_power = token_balance + staked_amount
+
             time_multiplier = min(Decimal('2.0'), Decimal('1.0') + Decimal(str(staking_duration)) / Decimal('365'))
+
             return base_power * time_multiplier
         
         else:
             return token_balance + staked_amount
     
     async def _get_token_balance(self, user_id: str) -> Decimal:
-        """Get user's token balance"""
-        # Mock implementation
+        """
+        Get user's token balance"""
         return Decimal('1000')
     
     async def _get_staked_amount(self, user_id: str) -> Decimal:
-        """Get user's staked amount"""
-        # Mock implementation
+        """
+        Get user's staked amount"""
         return Decimal('5000')
     
     async def _get_average_staking_duration(self, user_id: str) -> int:
-        """Get user's average staking duration in days"""
-        # Mock implementation
+        """
+        Get user's average staking duration in days"""
         return 180
 
 

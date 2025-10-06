@@ -1,0 +1,43 @@
+# AI Leader Agent - Requirements
+# Dépendances Python pour l'AI Leader Agent autonome
+
+# Framework Web
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+python-multipart==0.0.6
+
+# Machine Learning & IA
+torch==2.1.2
+numpy==1.26.3
+transformers==4.37.0
+
+# Data Processing
+pandas==2.2.0
+scipy==1.12.0
+
+# API & Networking
+httpx==0.26.0
+aiohttp==3.9.1
+requests==2.31.0
+
+# Logging & Monitoring
+python-json-logger==2.0.7
+loguru==0.7.2
+
+# Configuration
+python-dotenv==1.0.0
+pydantic==2.5.3
+pydantic-settings==2.1.0
+
+# Database (optionnel pour persistence)
+redis==5.0.1
+asyncpg==0.29.0
+
+# Testing
+pytest==7.4.4
+pytest-asyncio==0.23.3
+httpx==0.26.0
+
+# Utilities
+python-dateutil==2.8.2
+pytz==2024.1

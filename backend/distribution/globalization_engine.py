@@ -49,7 +49,8 @@ logger = logging.getLogger(__name__)
 
 
 class GeographicRegion(str, Enum):
-    """Geographic regions for content distribution."""
+    """
+        Geographic regions for content distribution."""
     NORTH_AMERICA = "north_america"
     SOUTH_AMERICA = "south_america"
     EUROPE = "europe"
@@ -142,7 +143,8 @@ class GeographicTarget:
 
 @dataclass
 class CulturalAdaptation:
-    """Cultural adaptation settings."""
+    """
+        Cultural adaptation settings."""
     target_culture: CulturalContext
     content_modifications: Dict[str, str] = field(default_factory=dict)
     visual_adaptations: List[str] = field(default_factory=list)
@@ -187,7 +189,8 @@ class LegalCompliance:
 
 @dataclass
 class RegionalMonetization:
-    """Regional monetization configuration."""
+    """
+        Regional monetization configuration."""
     supported_currencies: List[str] = field(default_factory=list)
     payment_methods: List[str] = field(default_factory=list)
     pricing_strategies: Dict[str, Any] = field(default_factory=dict)
@@ -200,7 +203,8 @@ class RegionalMonetization:
 
 @dataclass
 class GlobalizationResponse:
-    """Response from globalization operations."""
+    """
+        Response from globalization operations."""
     success: bool
     region: Optional[GeographicRegion] = None
     adapted_content: Optional[Dict[str, Any]] = None
@@ -215,7 +219,8 @@ class GlobalizationResponse:
 
 @dataclass
 class GlobalAnalytics:
-    """Global distribution analytics."""
+    """
+        Global distribution analytics."""
     total_countries: int = 0
     total_regions: int = 0
     engagement_by_country: Dict[str, float] = field(default_factory=dict)
@@ -230,7 +235,8 @@ class GlobalAnalytics:
 
 
 class GeoTargetingEngine:
-    """Intelligent geo-targeting system."""
+    """
+        Intelligent geo-targeting system."""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.geo_targeting")
@@ -341,9 +347,12 @@ class GeoTargetingEngine:
                                     })
             
             # Optimize language priorities
+
             all_languages = set()
+
             for country in optimized_targeting["primary_countries"] + optimized_targeting["secondary_countries"]:
                 all_languages.add(country["language"])
+
             
             optimized_targeting["language_priorities"] = list(all_languages)
             
@@ -352,21 +361,27 @@ class GeoTargetingEngine:
                 optimized_targeting["timezone_schedule"][timezone.value] = self._calculate_optimal_posting_times(timezone)
             
             # Identify cultural adaptations needed
+
             cultural_contexts = set()
+
             for country in optimized_targeting["primary_countries"]:
                 cultural_contexts.add(country["cultural_context"])
+
             
             optimized_targeting["cultural_adaptations_needed"] = list(cultural_contexts)
+
             
             return optimized_targeting
             
         except Exception as e:
             self.logger.error(f"Geo-targeting optimization error: {e}")
+
             return {}
     
     def _calculate_optimal_posting_times(self, timezone: TimezoneRegion) -> List[str]:
         """Calculate optimal posting times for a timezone."""
         # Sample optimal times based on timezone (would be data-driven in production)
+
         optimal_times = {
             TimezoneRegion.PST: ["09:00", "12:00", "17:00", "20:00"],
             TimezoneRegion.EST: ["10:00", "13:00", "18:00", "21:00"],
@@ -430,8 +445,11 @@ class CulturalAdaptationEngine:
         try:
             if target_culture not in self.cultural_rules:
                 return CulturalAdaptation(target_culture=target_culture)
+
+
             
             cultural_rules = self.cultural_rules[target_culture]
+
             
             adaptation = CulturalAdaptation(
                 target_culture=target_culture,
@@ -449,31 +467,39 @@ class CulturalAdaptationEngine:
             
             # Generate cultural recommendations
             adaptation.local_references = await self._suggest_local_references(target_culture)
+
             
             return adaptation
             
         except Exception as e:
             self.logger.error(f"Cultural adaptation error: {e}")
+
             return CulturalAdaptation(target_culture=target_culture)
     
     async def _identify_sensitivities(self, content_metadata: Dict[str, Any], 
                                     cultural_rules: Dict[str, Any]) -> List[str]:
         """Identify potential cultural sensitivities in content."""
         sensitivities = []
+
         
         content_text = content_metadata.get("description", "") + " " + content_metadata.get("title", "")
+
         taboo_subjects = cultural_rules.get("taboo_subjects", [])
+
         
         for taboo in taboo_subjects:
             # Simple keyword matching (would use NLP in production)
+
             if taboo.lower() in content_text.lower():
                 sensitivities.append(f"Contains reference to: {taboo}")
+
         
         return sensitivities
     
     async def _suggest_local_references(self, culture: CulturalContext) -> List[str]:
         """Suggest local references to improve cultural relevance."""
         # Sample local references by culture
+
         references = {
             CulturalContext.WESTERN: ["local_events", "popular_brands", "cultural_icons"],
             CulturalContext.EASTERN: ["traditional_festivals", "local_celebrities", "cultural_values"],
@@ -535,14 +561,20 @@ class ComplianceEngine:
         """Check legal compliance for content in target countries."""
         try:
             applicable_frameworks = []
+
             compliance_requirements = []
+
             content_warnings = []
+
             age_restrictions = {}
             
             # Determine applicable frameworks based on target countries
             for country in target_countries:
                 country_frameworks = self._get_country_frameworks(country)
+
                 applicable_frameworks.extend(country_frameworks)
+
+
             
             applicable_frameworks = list(set(applicable_frameworks))  # Remove duplicates
             
@@ -568,12 +600,15 @@ class ComplianceEngine:
                     # Check content-specific requirements
                     if framework_rules.get("child_protection"):
                         content_warnings.append("Child protection measures required")
+
                     
                     if framework_rules.get("copyright_protection"):
                         compliance_requirements.append("Copyright compliance verification needed")
             
             # Determine content rating
+
             content_rating = self._determine_content_rating(content_metadata)
+
             
             return LegalCompliance(
                 applicable_frameworks=applicable_frameworks,
@@ -584,14 +619,17 @@ class ComplianceEngine:
                 content_warnings=content_warnings,
                 accessibility_standards=["WCAG_2.1", "Section_508"] if "US" in target_countries else []
             )
+
             
         except Exception as e:
             self.logger.error(f"Compliance check error: {e}")
+
             return LegalCompliance()
     
     def _get_country_frameworks(self, country: str) -> List[ComplianceFramework]:
         """Get applicable compliance frameworks for a country."""
         # Mapping of countries to applicable frameworks
+
         country_frameworks = {
             "US": [ComplianceFramework.COPPA, ComplianceFramework.CCPA, ComplianceFramework.DMCA],
             "CA": [ComplianceFramework.PIPEDA, ComplianceFramework.DMCA],
@@ -612,14 +650,17 @@ class ComplianceEngine:
     def _determine_content_rating(self, content_metadata: Dict[str, Any]) -> ContentRating:
         """Determine appropriate content rating based on content."""
         # Simple content analysis (would use AI in production)
+
         content_text = content_metadata.get("description", "") + " " + content_metadata.get("title", "")
         
         # Check for mature content indicators
+
         mature_keywords = ["violence", "adult", "explicit", "mature", "18+"]
         if any(keyword in content_text.lower() for keyword in mature_keywords):
             return ContentRating.R
         
         # Check for mild content indicators
+
         mild_keywords = ["mild", "language", "suggestive", "brief"]
         if any(keyword in content_text.lower() for keyword in mild_keywords):
             return ContentRating.PG13
@@ -705,17 +746,21 @@ class LocalizationEngine:
             for language in target_languages:
                 if language != primary_language:
                     # Simulate translation (would use actual translation service)
+
+
                     translated_content = await self._translate_content(
                         content_metadata.get("title", ""), 
                         primary_language, 
                         language
                     )
+
                     localization.translations[language] = translated_content
             
             return localization
             
         except Exception as e:
             self.logger.error(f"Localization error: {e}")
+
             return LanguageLocalization(primary_language=LanguageCode.EN)
     
     async def _translate_content(self, content: str, 
@@ -723,6 +768,7 @@ class LocalizationEngine:
                                target_lang: LanguageCode) -> str:
         """Translate content between languages."""
         # Simulate translation (would integrate with Google Translate, DeepL, etc.)
+
         translations = {
             (LanguageCode.EN, LanguageCode.ES): "Contenido traducido al español",
             (LanguageCode.EN, LanguageCode.FR): "Contenu traduit en français",
@@ -749,10 +795,12 @@ class GlobalizationManager:
         """Initialize the globalization system."""
         try:
             self.logger.info("✅ Globalization manager initialized")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Error initializing globalization manager: {e}")
+
             return False
     
     async def globalize_content(self, content_metadata: Dict[str, Any], 
@@ -760,31 +808,42 @@ class GlobalizationManager:
         """Comprehensive content globalization."""
         try:
             # Optimize geo-targeting
+
             geo_optimization = await self.geo_targeting.optimize_targeting(content_metadata, target_config)
             
             # Get target countries for compliance check
+
             target_countries = [c["code"] for c in geo_optimization.get("primary_countries", [])]
             target_countries.extend([c["code"] for c in geo_optimization.get("secondary_countries", [])])
             
             # Check legal compliance
+
             compliance = await self.compliance_engine.check_compliance(content_metadata, target_countries)
             
             # Apply cultural adaptations
+
             cultural_adaptations = []
             if geo_optimization.get("cultural_adaptations_needed"):
                 for culture_str in geo_optimization["cultural_adaptations_needed"]:
                     try:
                         culture = CulturalContext(culture_str)
+
+
                         adaptation = await self.cultural_adaptation.adapt_content(content_metadata, culture)
+
                         cultural_adaptations.append(adaptation)
+
                     except ValueError:
                         continue
             
             # Apply localization
+
             target_languages = [LanguageCode(lang) for lang in geo_optimization.get("language_priorities", ["en"])]
+
             localization = await self.localization_engine.localize_content(content_metadata, target_languages)
             
             # Create adapted content
+
             adapted_content = {
                 "original": content_metadata,
                 "geo_targeting": geo_optimization,
@@ -794,12 +853,15 @@ class GlobalizationManager:
             }
             
             # Generate warnings for compliance issues
+
             legal_warnings = []
             if compliance.content_warnings:
                 legal_warnings.extend(compliance.content_warnings)
+
             
             if compliance.age_restrictions:
                 legal_warnings.append(f"Age restrictions apply: {compliance.age_restrictions}")
+
             
             return GlobalizationResponse(
                 success=True,
@@ -809,9 +871,11 @@ class GlobalizationManager:
                 cultural_adaptations=[ca.target_culture.value for ca in cultural_adaptations],
                 legal_warnings=legal_warnings
             )
+
             
         except Exception as e:
             self.logger.error(f"Content globalization error: {e}")
+
             return GlobalizationResponse(
                 success=False,
                 error_message=str(e)
@@ -822,6 +886,8 @@ class GlobalizationManager:
         """Get global distribution analytics."""
         try:
             # Simulate global analytics (would integrate with actual data sources)
+
+
             analytics = GlobalAnalytics(
                 total_countries=25,
                 total_regions=6,
@@ -856,11 +922,13 @@ class GlobalizationManager:
                     "African market entry"
                 ]
             )
+
             
             return analytics
             
         except Exception as e:
             self.logger.error(f"Global analytics error: {e}")
+
             return GlobalAnalytics()
     
     def get_supported_regions(self) -> List[Dict[str, Any]]:

@@ -23,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 
 class QualityLevel(Enum):
-    """Quality levels"""
+    """
+        Quality levels"""
     POOR = "poor"
     FAIR = "fair"
     GOOD = "good"
@@ -50,7 +51,8 @@ class QualityScore:
 
 @dataclass
 class QualityIssue:
-    """Identified quality issue"""
+    """
+        Identified quality issue"""
     issue_id: str
     severity: str
     category: str
@@ -61,7 +63,8 @@ class QualityIssue:
 
 @dataclass
 class QualityReport:
-    """Comprehensive quality analysis report"""
+    """
+        Comprehensive quality analysis report"""
     content_id: str
     media_type: str
     analysis_mode: AnalysisMode
@@ -75,10 +78,12 @@ class QualityReport:
 
 
 class QualityAnalyzer:
-    """Comprehensive media quality analysis system"""
+    """
+        Comprehensive media quality analysis system"""
     
     def __init__(self):
-        """Initialize quality analyzer"""
+        """
+        Initialize quality analyzer"""
         self.audio_processor = AudioProcessor()
         self.video_processor = VideoProcessor()
         self.image_optimizer = ImageOptimizer()
@@ -100,6 +105,7 @@ class QualityAnalyzer:
         Args:
             media_data: Media content to analyze
             media_type: Type of media (audio, video, image)
+
             analysis_mode: Depth of analysis
             custom_params: Additional analysis parameters
             
@@ -108,6 +114,8 @@ class QualityAnalyzer:
         """
         try:
             start_time = asyncio.get_event_loop().time()
+
+
             content_id = str(uuid.uuid4())
             
             # Get input data
@@ -115,6 +123,7 @@ class QualityAnalyzer:
                 input_bytes = media_data
             else:
                 input_bytes = media_data.read()
+
                 media_data.seek(0)
             
             # Perform analysis based on media type
@@ -122,34 +131,43 @@ class QualityAnalyzer:
                 analysis_result = await self._analyze_audio_quality(
                     input_bytes, analysis_mode, custom_params
                 )
+
             elif media_type.lower() == 'video':
                 analysis_result = await self._analyze_video_quality(
                     input_bytes, analysis_mode, custom_params
                 )
+
             elif media_type.lower() == 'image':
                 analysis_result = await self._analyze_image_quality(
                     input_bytes, analysis_mode, custom_params
                 )
+
             else:
                 raise ValueError(f"Unsupported media type: {media_type}")
             
             # Calculate overall quality score
+
             quality_score = self._calculate_quality_score(
                 analysis_result['metrics'], media_type
             )
             
             # Determine quality level
+
             quality_level = self._determine_quality_level(quality_score.overall)
             
             # Detect issues
+
             issues = await self._detect_quality_issues(
                 analysis_result['metrics'], media_type, analysis_mode
             )
             
             # Generate recommendations
+
             recommendations = await self._generate_recommendations(
                 quality_score, issues, media_type
             )
+
+
             
             processing_time = asyncio.get_event_loop().time() - start_time
             
@@ -165,9 +183,11 @@ class QualityAnalyzer:
                 analysis_timestamp=str(start_time),
                 processing_time=processing_time
             )
+
             
         except Exception as e:
             logger.error(f"Quality analysis failed: {e}")
+
             return QualityReport(
                 content_id=str(uuid.uuid4()),
                 media_type=media_type,
@@ -206,7 +226,10 @@ class QualityAnalyzer:
                 analysis_mode,
                 media_file.get('custom_params')
             )
+
             tasks.append(task)
+
+
         
         results = await asyncio.gather(*tasks, return_exceptions=True)
         
@@ -225,6 +248,7 @@ class QualityAnalyzer:
                     analysis_timestamp=str(asyncio.get_event_loop().time()),
                     processing_time=0
                 )
+
         
         return results
     
@@ -245,15 +269,19 @@ class QualityAnalyzer:
         """
         try:
             # Analyze both versions
+
             original_report = await self.analyze_media_quality(
                 original_media, media_type, AnalysisMode.COMPREHENSIVE
             )
+
+
             
             processed_report = await self.analyze_media_quality(
                 processed_media, media_type, AnalysisMode.COMPREHENSIVE
             )
             
             # Calculate quality differences
+
             quality_diff = {
                 'overall': processed_report.quality_score.overall - original_report.quality_score.overall,
                 'technical': processed_report.quality_score.technical - original_report.quality_score.technical,
@@ -264,17 +292,22 @@ class QualityAnalyzer:
             }
             
             # Determine if processing improved or degraded quality
+
             overall_improvement = quality_diff['overall'] > 0
             
             # Identify specific improvements and degradations
+
             improvements = []
+
             degradations = []
             
             for metric, diff in quality_diff.items():
                 if diff > 5:  # Significant improvement
                     improvements.append(f"{metric}: +{diff:.1f}")
+
                 elif diff < -5:  # Significant degradation
                     degradations.append(f"{metric}: {diff:.1f}")
+
             
             return {
                 'original_quality': original_report.quality_score.__dict__,
@@ -290,6 +323,7 @@ class QualityAnalyzer:
             
         except Exception as e:
             logger.error(f"Quality comparison failed: {e}")
+
             return {
                 'error': str(e),
                 'comparison_failed': True
@@ -302,22 +336,29 @@ class QualityAnalyzer:
         """Analyze audio quality"""
         try:
             # Use audio processor for analysis
+
             analysis_result = await self.audio_processor.analyze_audio_quality(audio_data)
+
             
             if 'error' in analysis_result:
                 raise Exception(analysis_result['error'])
+
+
             
             metrics = analysis_result['metrics']
             
             # Add additional analysis for comprehensive mode
             if analysis_mode in [AnalysisMode.COMPREHENSIVE, AnalysisMode.PROFESSIONAL]:
                 # Extract audio features for advanced analysis
+
                 features_result = await self.audio_processor.extract_audio_features(audio_data)
+
                 
                 if 'features' in features_result:
                     metrics.update({
                         'advanced_features': features_result['features']
                     })
+
             
             return {
                 'metrics': metrics,
@@ -326,6 +367,7 @@ class QualityAnalyzer:
             
         except Exception as e:
             logger.error(f"Audio quality analysis failed: {e}")
+
             return {
                 'metrics': {},
                 'error': str(e)
@@ -338,19 +380,25 @@ class QualityAnalyzer:
         """Analyze video quality"""
         try:
             # Use video processor for analysis
+
             analysis_result = await self.video_processor.analyze_video_quality(video_data)
+
             
             if 'error' in analysis_result:
                 raise Exception(analysis_result['error'])
+
+
             
             metrics = analysis_result['metrics']
             
             # Add additional analysis for comprehensive mode
             if analysis_mode in [AnalysisMode.COMPREHENSIVE, AnalysisMode.PROFESSIONAL]:
                 # Extract frames for detailed analysis
+
                 frames_result = await self.video_processor.extract_frames(
                     video_data, frame_interval=5.0, max_frames=20
                 )
+
                 
                 if frames_result.get('success'):
                     metrics.update({
@@ -359,6 +407,7 @@ class QualityAnalyzer:
                             'frame_consistency': self._analyze_frame_consistency(frames_result['frames'])
                         }
                     })
+
             
             return {
                 'metrics': metrics,
@@ -367,6 +416,7 @@ class QualityAnalyzer:
             
         except Exception as e:
             logger.error(f"Video quality analysis failed: {e}")
+
             return {
                 'metrics': {},
                 'error': str(e)
@@ -382,14 +432,18 @@ class QualityAnalyzer:
             from .image_optimizer import OptimizationMode
             
             # Perform a dummy optimization to get metrics
+
             result = await self.image_optimizer.optimize_image(
                 image_data,
                 OptimizationMode.QUALITY,
                 custom_params=custom_params
             )
+
             
             if result.error:
                 raise Exception(result.error)
+
+
             
             metrics = result.quality_metrics.__dict__
             
@@ -401,6 +455,7 @@ class QualityAnalyzer:
                     'noise_level': self._estimate_noise_level(metrics),
                     'detail_preservation': self._assess_detail_preservation(metrics)
                 })
+
             
             return {
                 'metrics': metrics,
@@ -409,6 +464,7 @@ class QualityAnalyzer:
             
         except Exception as e:
             logger.error(f"Image quality analysis failed: {e}")
+
             return {
                 'metrics': {},
                 'error': str(e)
@@ -418,18 +474,24 @@ class QualityAnalyzer:
         """Calculate comprehensive quality score"""
         try:
             thresholds = self._quality_thresholds.get(media_type, {})
+
             
             if media_type == 'audio':
                 return self._calculate_audio_quality_score(metrics, thresholds)
+
             elif media_type == 'video':
                 return self._calculate_video_quality_score(metrics, thresholds)
+
             elif media_type == 'image':
                 return self._calculate_image_quality_score(metrics, thresholds)
+
             else:
                 return QualityScore(50, 50, 50, 50, 50, 50)
+
                 
         except Exception as e:
             logger.error(f"Quality score calculation failed: {e}")
+
             return QualityScore(0, 0, 0, 0, 0, 0)
     
     def _calculate_audio_quality_score(self, metrics: Dict[str, Any], thresholds: Dict[str, Any]) -> QualityScore:
@@ -442,32 +504,44 @@ class QualityAnalyzer:
             technical += 25
         
         # Perceptual score based on dynamic range and frequency response
+
         perceptual = 50
         if metrics.get('dynamic_range', 0) >= thresholds.get('good_dynamic_range', 20):
             perceptual += 25
         
         # Noise score (inverted - lower noise is better)
+
         noise = max(0, 100 - (metrics.get('noise_level', 50)))
         
         # Clarity score based on frequency response
+
         clarity = 50
+
         freq_response = metrics.get('frequency_response', {})
         if freq_response:
             balance = abs(freq_response.get('bass', 0) - freq_response.get('treble', 0))
+
             if balance < 10:  # Good frequency balance
                 clarity += 25
+
         
         compression = 75  # Default for audio
+
         overall = (technical + perceptual + noise + clarity) / 4
         
         return QualityScore(overall, technical, perceptual, compression, noise, clarity)
     
     def _calculate_video_quality_score(self, metrics: Dict[str, Any], thresholds: Dict[str, Any]) -> QualityScore:
-        """Calculate video quality score"""
+        """
+        Calculate video quality score"""
         # Technical score based on resolution, fps, bitrate
+
         technical = 50
+
         width = metrics.get('width', 0)
+
         height = metrics.get('height', 0)
+
         
         if width >= 1920 and height >= 1080:
             technical += 20
@@ -481,12 +555,15 @@ class QualityAnalyzer:
             technical += 15
         
         # Perceptual score based on motion and scene complexity
+
         perceptual = 50 + min(25, metrics.get('quality_score', 50) - 50)
         
         # Compression score based on bitrate vs resolution
+
         pixel_count = width * height
         if pixel_count > 0 and metrics.get('bitrate', 0) > 0:
             bits_per_pixel = metrics.get('bitrate', 0) / (pixel_count * metrics.get('fps', 30))
+
             if bits_per_pixel > 0.1:
                 compression = 85
             elif bits_per_pixel > 0.05:
@@ -495,18 +572,25 @@ class QualityAnalyzer:
                 compression = 50
         else:
             compression = 50
+
         
         noise = 75  # Default noise score for video
+
         clarity = 50 + min(25, metrics.get('scene_complexity', 0) / 2)
+
+
         
         overall = (technical + perceptual + compression + noise + clarity) / 5
         
         return QualityScore(overall, technical, perceptual, compression, noise, clarity)
     
     def _calculate_image_quality_score(self, metrics: Dict[str, Any], thresholds: Dict[str, Any]) -> QualityScore:
-        """Calculate image quality score"""
+        """
+        Calculate image quality score"""
         # Technical score based on resolution and bit depth
+
         technical = 50
+
         megapixels = (metrics.get('width', 0) * metrics.get('height', 0)) / 1000000
         
         if megapixels >= 24:  # 6K+
@@ -517,6 +601,7 @@ class QualityAnalyzer:
             technical += 15
         
         # Perceptual score based on sharpness and contrast
+
         perceptual = 50
         if metrics.get('sharpness', 0) > thresholds.get('good_sharpness', 500):
             perceptual += 25
@@ -524,20 +609,26 @@ class QualityAnalyzer:
             perceptual += 25
         
         # Compression score based on file size vs quality
+
         compression = 75  # Default
         
         # Noise score (lower is better)
+
         noise = 75  # Default
         
         # Clarity score based on sharpness
+
         clarity = min(100, 50 + (metrics.get('sharpness', 0) / 20))
+
+
         
         overall = (technical + perceptual + compression + noise + clarity) / 5
         
         return QualityScore(overall, technical, perceptual, compression, noise, clarity)
     
     def _determine_quality_level(self, overall_score: float) -> QualityLevel:
-        """Determine quality level from overall score"""
+        """
+        Determine quality level from overall score"""
         if overall_score >= 85:
             return QualityLevel.EXCELLENT
         elif overall_score >= 70:
@@ -551,9 +642,12 @@ class QualityAnalyzer:
                                    metrics: Dict[str, Any],
                                    media_type: str,
                                    analysis_mode: AnalysisMode) -> List[QualityIssue]:
-        """Detect quality issues based on metrics"""
+        """
+        Detect quality issues based on metrics"""
         issues = []
+
         rules = self._detection_rules.get(media_type, [])
+
         
         for rule in rules:
             if self._evaluate_rule(rule, metrics):
@@ -565,19 +659,27 @@ class QualityAnalyzer:
                     recommendation=rule['recommendation'],
                     confidence=rule.get('confidence', 0.8)
                 )
+
                 issues.append(issue)
+
         
         return issues
     
     def _evaluate_rule(self, rule: Dict[str, Any], metrics: Dict[str, Any]) -> bool:
-        """Evaluate a detection rule against metrics"""
+        """
+        Evaluate a detection rule against metrics"""
         try:
             condition = rule['condition']
+
             metric_path = condition['metric']
+
             operator = condition['operator']
+
             threshold = condition['threshold']
             
             # Get metric value (support nested paths)
+
+
             metric_value = metrics
             for key in metric_path.split('.'):
                 metric_value = metric_value.get(key, 0)
@@ -598,6 +700,7 @@ class QualityAnalyzer:
             
         except Exception as e:
             logger.error(f"Rule evaluation failed: {e}")
+
             return False
     
     async def _generate_recommendations(self,
@@ -610,17 +713,22 @@ class QualityAnalyzer:
         # General recommendations based on quality score
         if quality_score.overall < 50:
             recommendations.append("Overall quality is poor - consider re-recording or using higher quality settings")
+
         
         if quality_score.technical < 60:
             if media_type == 'audio':
                 recommendations.append("Use higher sample rate (48kHz or higher) and bit depth")
+
             elif media_type == 'video':
                 recommendations.append("Increase resolution and frame rate for better quality")
+
             elif media_type == 'image':
                 recommendations.append("Use higher resolution camera or scanning settings")
+
         
         if quality_score.noise > 70:  # High noise
             recommendations.append("Apply noise reduction to improve clarity")
+
         
         if quality_score.clarity < 60:
             recommendations.append("Apply sharpening or clarity enhancement")
@@ -629,6 +737,7 @@ class QualityAnalyzer:
         for issue in issues:
             if issue.severity in ['high', 'critical']:
                 recommendations.append(issue.recommendation)
+
         
         return list(set(recommendations))  # Remove duplicates
     
@@ -658,7 +767,8 @@ class QualityAnalyzer:
         }
     
     def _initialize_detection_rules(self) -> Dict[str, List[Dict[str, Any]]]:
-        """Initialize quality issue detection rules"""
+        """
+        Initialize quality issue detection rules"""
         return {
             'audio': [
                 {
@@ -709,23 +819,22 @@ class QualityAnalyzer:
         }
     
     def _analyze_frame_consistency(self, frames: List[Dict[str, Any]]) -> float:
-        """Analyze consistency between video frames"""
-        # Placeholder for frame consistency analysis
-        return 0.8  # Default good consistency
+        """
+        Analyze consistency between video frames"""        return 0.8  # Default good consistency
     
     def _detect_compression_artifacts(self, metrics: Dict[str, Any]) -> float:
-        """Detect compression artifacts in image"""
-        # Placeholder for compression artifact detection
-        return 0.2  # Default low artifacts
+        """
+        Detect compression artifacts in image"""        return 0.2  # Default low artifacts
     
     def _estimate_noise_level(self, metrics: Dict[str, Any]) -> float:
-        """Estimate noise level in image"""
-        # Placeholder for noise level estimation
-        return 0.3  # Default moderate noise
+        """
+        Estimate noise level in image"""        return 0.3  # Default moderate noise
     
     def _assess_detail_preservation(self, metrics: Dict[str, Any]) -> float:
-        """Assess detail preservation in image"""
+        """
+        Assess detail preservation in image"""
         # Based on sharpness and other factors
+
         sharpness = metrics.get('sharpness', 0)
         return min(1.0, sharpness / 1000)  # Normalize to 0-1
     
@@ -733,7 +842,8 @@ class QualityAnalyzer:
                                      overall_improvement: bool,
                                      improvements: List[str],
                                      degradations: List[str]) -> str:
-        """Get recommendation based on quality comparison"""
+        """
+        Get recommendation based on quality comparison"""
         if overall_improvement and not degradations:
             return "Processing improved quality without significant degradation"
         elif overall_improvement and degradations:

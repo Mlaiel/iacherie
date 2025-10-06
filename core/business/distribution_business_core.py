@@ -23,7 +23,8 @@ from collections import defaultdict
 logger = logging.getLogger(__name__)
 
 class DistributionPlatform(Enum):
-    """Supported distribution platforms"""
+    """
+Supported distribution platforms"""
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -41,7 +42,8 @@ class DistributionPlatform(Enum):
     DISCORD = "discord"
 
 class ContentFormat(Enum):
-    """Content formats for distribution"""
+    """
+Content formats for distribution"""
     VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
@@ -54,7 +56,8 @@ class ContentFormat(Enum):
     INFOGRAPHIC = "infographic"
 
 class DistributionStrategy(Enum):
-    """Distribution strategies"""
+    """
+Distribution strategies"""
     SIMULTANEOUS = "simultaneous"
     SEQUENTIAL = "sequential"
     TARGETED = "targeted"
@@ -64,7 +67,8 @@ class DistributionStrategy(Enum):
     CONVERSION_DRIVEN = "conversion_driven"
 
 class AudienceSegment(Enum):
-    """Audience segments for targeting"""
+    """
+Audience segments for targeting"""
     DEMOGRAPHICS = "demographics"
     INTERESTS = "interests"
     BEHAVIORS = "behaviors"
@@ -75,7 +79,8 @@ class AudienceSegment(Enum):
 
 @dataclass
 class DistributionPlan:
-    """Comprehensive distribution plan"""
+    """
+Comprehensive distribution plan"""
     plan_id: str
     content_id: str
     creator_id: str
@@ -93,7 +98,8 @@ class DistributionPlan:
 
 @dataclass
 class PlatformAdaptation:
-    """Platform-specific content adaptation"""
+    """
+Platform-specific content adaptation"""
     adaptation_id: str
     source_content_id: str
     target_platform: DistributionPlatform
@@ -110,7 +116,8 @@ class PlatformAdaptation:
 
 @dataclass
 class DistributionExecution:
-    """Distribution execution tracking"""
+    """
+Distribution execution tracking"""
     execution_id: str
     plan_id: str
     platform: DistributionPlatform
@@ -129,7 +136,8 @@ class DistributionExecution:
 
 @dataclass
 class CrossPlatformAnalytics:
-    """Cross-platform performance analytics"""
+    """
+Cross-platform performance analytics"""
     analytics_id: str
     content_id: str
     analysis_period: Tuple[datetime, datetime]
@@ -146,7 +154,8 @@ class CrossPlatformAnalytics:
 
 @dataclass
 class AudienceProfile:
-    """Detailed audience profile for distribution"""
+    """
+Detailed audience profile for distribution"""
     profile_id: str
     platform: DistributionPlatform
     demographics: Dict[str, Any]
@@ -169,7 +178,8 @@ class DistributionBusinessCore:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize distribution business core"""
+        """
+Initialize distribution business core"""
         self.config = config or {}
         self.distribution_plans: Dict[str, DistributionPlan] = {}
         self.platform_adaptations: Dict[str, PlatformAdaptation] = {}
@@ -200,7 +210,8 @@ class DistributionBusinessCore:
         logger.info("Distribution Business Core initialized")
     
     def _initialize_platform_configs(self) -> Dict[DistributionPlatform, Dict[str, Any]]:
-        """Initialize platform-specific configurations"""
+        """
+Initialize platform-specific configurations"""
         return {
             DistributionPlatform.YOUTUBE: {
                 'max_video_length': 43200,  # 12 hours
@@ -245,7 +256,8 @@ class DistributionBusinessCore:
         }
     
     def _initialize_distribution_algorithms(self) -> Dict[str, Any]:
-        """Initialize distribution optimization algorithms"""
+        """
+Initialize distribution optimization algorithms"""
         return {
             'timing_optimization': {
                 'algorithm': 'ml_based_timing',
@@ -270,7 +282,8 @@ class DistributionBusinessCore:
         }
     
     def _initialize_optimization_models(self) -> Dict[str, Any]:
-        """Initialize optimization models for distribution"""
+        """
+Initialize optimization models for distribution"""
         return {
             'engagement_prediction': {
                 'model_type': 'gradient_boosting',
@@ -298,7 +311,8 @@ class DistributionBusinessCore:
         creator_id: str, 
         distribution_goals: Dict[str, Any]
     ) -> DistributionPlan:
-        """Create comprehensive distribution plan"""
+        """
+Create comprehensive distribution plan"""
         try:
             plan_id = str(uuid.uuid4())
             
@@ -358,7 +372,8 @@ class DistributionBusinessCore:
             raise
     
     async def _analyze_content_for_distribution(self, content_id: str) -> Dict[str, Any]:
-        """Analyze content characteristics for distribution optimization"""
+        """
+Analyze content characteristics for distribution optimization"""
         try:
             # Simulate content analysis (would integrate with content analysis APIs)
             analysis = {
@@ -386,7 +401,8 @@ class DistributionBusinessCore:
         content_analysis: Dict[str, Any], 
         distribution_goals: Dict[str, Any]
     ) -> DistributionStrategy:
-        """Determine optimal distribution strategy"""
+        """
+Determine optimal distribution strategy"""
         try:
             primary_goal = distribution_goals.get('primary_goal', 'reach')
             
@@ -414,7 +430,8 @@ class DistributionBusinessCore:
         distribution_goals: Dict[str, Any], 
         creator_id: str
     ) -> List[DistributionPlatform]:
-        """Select optimal platforms for distribution"""
+        """
+Select optimal platforms for distribution"""
         try:
             content_type = content_analysis.get('content_type', 'video')
             target_demographics = content_analysis.get('target_demographics', [])
@@ -472,7 +489,8 @@ class DistributionBusinessCore:
         content_id: str, 
         target_platforms: List[DistributionPlatform]
     ) -> Dict[DistributionPlatform, Dict[str, Any]]:
-        """Plan content adaptations for each platform"""
+        """
+Plan content adaptations for each platform"""
         try:
             adaptations = {}
             
@@ -501,7 +519,8 @@ class DistributionBusinessCore:
         platform: DistributionPlatform, 
         config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Plan format adjustments for specific platform"""
+        """
+Plan format adjustments for specific platform"""
         adjustments = {
             'aspect_ratio': '16:9',  # Default
             'resolution': config.get('optimal_resolution', '1920x1080'),
@@ -523,7 +542,8 @@ class DistributionBusinessCore:
         return adjustments
     
     async def _plan_metadata_optimization(self, platform: DistributionPlatform) -> Dict[str, Any]:
-        """Plan metadata optimization for platform"""
+        """
+Plan metadata optimization for platform"""
         return {
             'title_optimization': f'Platform-optimized title for {platform.value}',
             'description_strategy': 'Keyword-rich description with CTAs',
@@ -533,7 +553,8 @@ class DistributionBusinessCore:
         }
     
     async def _optimize_duration_for_platform(self, platform: DistributionPlatform) -> Dict[str, Any]:
-        """Optimize content duration for platform"""
+        """
+Optimize content duration for platform"""
         duration_strategies = {
             DistributionPlatform.TIKTOK: {'target': 30, 'max': 180, 'strategy': 'hook_in_first_3_seconds'},
             DistributionPlatform.INSTAGRAM: {'target': 60, 'max': 90, 'strategy': 'story_arc_completion'},
@@ -544,7 +565,8 @@ class DistributionBusinessCore:
         return duration_strategies.get(platform, {'target': 120, 'strategy': 'balanced_approach'})
     
     async def _plan_engagement_enhancements(self, platform: DistributionPlatform) -> List[str]:
-        """Plan engagement enhancements for platform"""
+        """
+Plan engagement enhancements for platform"""
         enhancements = {
             DistributionPlatform.TIKTOK: ['trending_sounds', 'effects', 'challenges', 'duets'],
             DistributionPlatform.INSTAGRAM: ['stories_integration', 'reels_optimization', 'carousel_posts'],
@@ -555,7 +577,8 @@ class DistributionBusinessCore:
         return enhancements.get(platform, ['general_engagement_tactics'])
     
     async def _check_compliance_requirements(self, platform: DistributionPlatform) -> Dict[str, bool]:
-        """Check compliance requirements for platform"""
+        """
+Check compliance requirements for platform"""
         return {
             'content_guidelines': True,
             'copyright_compliance': True,
@@ -569,7 +592,8 @@ class DistributionBusinessCore:
         target_platforms: List[DistributionPlatform], 
         creator_id: str
     ) -> Dict[DistributionPlatform, datetime]:
-        """Optimize distribution scheduling for maximum impact"""
+        """
+Optimize distribution scheduling for maximum impact"""
         try:
             base_time = datetime.utcnow()
             scheduling = {}
@@ -605,7 +629,8 @@ class DistributionBusinessCore:
         creator_id: str, 
         distribution_goals: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Configure audience targeting across platforms"""
+        """
+Configure audience targeting across platforms"""
         try:
             targeting_config = {
                 'demographics': {
@@ -638,7 +663,8 @@ class DistributionBusinessCore:
             return {}
     
     async def _get_platform_interests(self, platform: DistributionPlatform) -> List[str]:
-        """Get platform-specific interest categories"""
+        """
+Get platform-specific interest categories"""
         interests_map = {
             DistributionPlatform.LINKEDIN: ['business', 'technology', 'professional_development'],
             DistributionPlatform.TIKTOK: ['entertainment', 'music', 'trends', 'challenges'],
@@ -649,7 +675,8 @@ class DistributionBusinessCore:
         return interests_map.get(platform, ['general_interests'])
     
     async def _get_platform_behaviors(self, platform: DistributionPlatform) -> List[str]:
-        """Get platform-specific behavioral targeting options"""
+        """
+Get platform-specific behavioral targeting options"""
         behaviors_map = {
             DistributionPlatform.FACEBOOK: ['frequent_travelers', 'online_shoppers', 'mobile_users'],
             DistributionPlatform.INSTAGRAM: ['fashion_enthusiasts', 'food_lovers', 'fitness_enthusiasts'],
@@ -660,7 +687,8 @@ class DistributionBusinessCore:
         return behaviors_map.get(platform, ['engaged_users'])
     
     async def _calculate_optimal_audience_size(self, platform: DistributionPlatform) -> Dict[str, int]:
-        """Calculate optimal audience size for platform"""
+        """
+Calculate optimal audience size for platform"""
         size_recommendations = {
             DistributionPlatform.FACEBOOK: {'min': 1000, 'optimal': 50000, 'max': 2000000},
             DistributionPlatform.INSTAGRAM: {'min': 1000, 'optimal': 100000, 'max': 2000000},
@@ -675,7 +703,8 @@ class DistributionBusinessCore:
         target_platforms: List[DistributionPlatform], 
         distribution_goals: Dict[str, Any]
     ) -> Dict[DistributionPlatform, float]:
-        """Optimize budget allocation across platforms"""
+        """
+Optimize budget allocation across platforms"""
         try:
             total_budget = distribution_goals.get('total_budget', 1000.0)
             
@@ -713,7 +742,8 @@ class DistributionBusinessCore:
         target_platforms: List[DistributionPlatform], 
         distribution_goals: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Set performance goals for distribution"""
+        """
+Set performance goals for distribution"""
         try:
             base_engagement = content_analysis.get('engagement_potential', 0.5)
             
@@ -734,7 +764,8 @@ class DistributionBusinessCore:
             return {}
     
     async def _plan_cross_promotion(self, target_platforms: List[DistributionPlatform]) -> Dict[str, Any]:
-        """Plan cross-promotion strategy across platforms"""
+        """
+Plan cross-promotion strategy across platforms"""
         return {
             'cross_posting_strategy': 'platform_adapted_content',
             'platform_linking': True,
@@ -745,7 +776,8 @@ class DistributionBusinessCore:
         }
     
     async def _setup_analytics_tracking(self, target_platforms: List[DistributionPlatform]) -> Dict[str, Any]:
-        """Setup comprehensive analytics tracking"""
+        """
+Setup comprehensive analytics tracking"""
         return {
             'utm_parameters': True,
             'conversion_tracking': True,
@@ -758,7 +790,8 @@ class DistributionBusinessCore:
         }
     
     async def _create_contingency_plans(self, target_platforms: List[DistributionPlatform]) -> List[Dict[str, Any]]:
-        """Create contingency plans for distribution issues"""
+        """
+Create contingency plans for distribution issues"""
         return [
             {
                 'scenario': 'platform_algorithm_change',
@@ -778,7 +811,8 @@ class DistributionBusinessCore:
         ]
     
     def get_core_metrics(self) -> Dict[str, Any]:
-        """Get core distribution metrics"""
+        """
+Get core distribution metrics"""
         total_plans = len(self.distribution_plans)
         total_executions = sum(len(executions) for executions in self.distribution_executions.values())
         

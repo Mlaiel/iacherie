@@ -89,7 +89,8 @@ class ServiceConfiguration:
 
 @dataclass
 class ServiceMetrics:
-    """Real-time service metrics"""
+    """
+        Real-time service metrics"""
     service_name: str
     status: ServiceStatus
     cpu_usage: float = 0.0
@@ -103,7 +104,8 @@ class ServiceMetrics:
 
 @dataclass
 class CircuitBreaker:
-    """Circuit breaker for service resilience"""
+    """
+        Circuit breaker for service resilience"""
     service_name: str
     state: CircuitBreakerState = CircuitBreakerState.CLOSED
     failure_count: int = 0
@@ -128,7 +130,8 @@ class EnterpriseBackendManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize enterprise backend manager"""
+        """
+        Initialize enterprise backend manager"""
         self.config = config or {}
         
         # Service management
@@ -166,6 +169,7 @@ class EnterpriseBackendManager:
         # Initialize components
         self._initialize_core_services()
         self._setup_monitoring()
+
         
         logger.info("Enterprise Backend Manager initialized")
     
@@ -173,6 +177,7 @@ class EnterpriseBackendManager:
         """Initialize core distribution services"""
         
         # Core distribution services
+
         core_services = [
             ServiceConfiguration(
                 service_name="content_processor",
@@ -256,6 +261,7 @@ class EnterpriseBackendManager:
         for i in range(service_config.replicas):
             instance_id = f"{service_config.service_name}-{i}"
             self.service_instances[service_config.service_name].append(instance_id)
+
         
         logger.info(f"Registered service: {service_config.service_name} with {service_config.replicas} replicas")
     
@@ -282,8 +288,11 @@ class EnterpriseBackendManager:
         """Initialize Redis connection for caching"""
         try:
             redis_url = self.config.get('redis_url', 'redis://localhost:6379')
+
             self.redis_client = await aioredis.from_url(redis_url)
+
             await self.redis_client.ping()
+
             logger.info("Redis connection established")
         except Exception as e:
             logger.error(f"Failed to connect to Redis: {e}")
@@ -300,6 +309,7 @@ class EnterpriseBackendManager:
         """Route request through load balancer with circuit breaker protection"""
         
         start_time = time.time()
+
         
         try:
             # Check circuit breaker
@@ -307,6 +317,7 @@ class EnterpriseBackendManager:
                 raise Exception(f"Circuit breaker OPEN for service: {service_name}")
             
             # Select optimal service instance
+
             instance_url = await self._select_service_instance(service_name)
             
             # Apply rate limiting
@@ -314,23 +325,28 @@ class EnterpriseBackendManager:
                 raise Exception(f"Rate limit exceeded for service: {service_name}")
             
             # Make request with monitoring
+
             response = await self._make_monitored_request(
                 instance_url, endpoint, method, data, headers, timeout
             )
             
             # Record success metrics
+
             processing_time = time.time() - start_time
             await self._record_success_metrics(service_name, processing_time)
+
             
             return response
             
         except Exception as e:
             # Record failure metrics
+
             processing_time = time.time() - start_time
             await self._record_failure_metrics(service_name, str(e), processing_time)
             
             # Update circuit breaker
             await self._record_circuit_breaker_failure(service_name)
+
             
             raise
     
@@ -340,20 +356,26 @@ class EnterpriseBackendManager:
         instances = self.service_instances.get(service_name, [])
         if not instances:
             raise Exception(f"No instances available for service: {service_name}")
+
+
         
         service_config = self.services[service_name]
         
         if self.load_balancer_strategy == LoadBalancingStrategy.ROUND_ROBIN:
             return self._round_robin_select(service_name, instances)
+
         
         elif self.load_balancer_strategy == LoadBalancingStrategy.LEAST_CONNECTIONS:
             return self._least_connections_select(instances)
+
         
         elif self.load_balancer_strategy == LoadBalancingStrategy.LEAST_RESPONSE_TIME:
             return self._least_response_time_select(service_name, instances)
+
         
         elif self.load_balancer_strategy == LoadBalancingStrategy.ADAPTIVE:
             return await self._adaptive_select(service_name, instances)
+
         
         else:
             # Default to round robin
@@ -366,82 +388,111 @@ class EnterpriseBackendManager:
         
         if service_name not in self._round_robin_counters:
             self._round_robin_counters[service_name] = 0
+
         
         index = self._round_robin_counters[service_name] % len(instances)
         self._round_robin_counters[service_name] += 1
+
         
         instance = instances[index]
         return self._build_instance_url(service_name, instance)
     
     def _least_connections_select(self, instances: List[str]) -> str:
-        """Select instance with least active connections"""
+        """
+        Select instance with least active connections"""
         min_connections = float('inf')
+
         selected_instance = instances[0]
         
         for instance in instances:
             connections = self.connection_counts.get(instance, 0)
+
             if connections < min_connections:
                 min_connections = connections
+
                 selected_instance = instance
         
         return self._build_instance_url_from_instance(selected_instance)
     
     def _least_response_time_select(self, service_name: str, instances: List[str]) -> str:
-        """Select instance with lowest average response time"""
+        """
+        Select instance with lowest average response time"""
         min_response_time = float('inf')
+
         selected_instance = instances[0]
+
         
         response_times = self.response_times.get(service_name, deque())
+
         
         for instance in instances:
             # Calculate average response time for this instance
+
             instance_times = [rt for rt in response_times if instance in str(rt)]
             if instance_times:
                 avg_time = sum(instance_times) / len(instance_times)
+
                 if avg_time < min_response_time:
                     min_response_time = avg_time
+
                     selected_instance = instance
         
         return self._build_instance_url(service_name, selected_instance)
     
     async def _adaptive_select(self, service_name: str, instances: List[str]) -> str:
-        """Adaptive load balancing based on multiple factors"""
+        """
+        Adaptive load balancing based on multiple factors"""
         
         scores = {}
+
         service_metrics = self.service_metrics.get(service_name, ServiceMetrics(service_name))
+
         
         for instance in instances:
             # Calculate composite score
+
             connections_score = 1.0 / (self.connection_counts.get(instance, 0) + 1)
+
+
             
             response_times = self.response_times.get(service_name, deque())
+
+
             response_time_score = 1.0 / (np.mean(list(response_times)) + 1) if response_times else 1.0
+
             
             cpu_score = 1.0 / (service_metrics.cpu_usage / 100 + 0.1)
+
+
             memory_score = 1.0 / (service_metrics.memory_usage / 100 + 0.1)
             
             # Weighted composite score
+
             composite_score = (
                 connections_score * 0.3 +
                 response_time_score * 0.3 +
                 cpu_score * 0.2 +
                 memory_score * 0.2
             )
+
             
             scores[instance] = composite_score
         
         # Select instance with highest score
+
         best_instance = max(scores.keys(), key=lambda x: scores[x])
         return self._build_instance_url(service_name, best_instance)
     
     def _build_instance_url(self, service_name: str, instance: str) -> str:
-        """Build URL for service instance"""
+        """
+        Build URL for service instance"""
         service_config = self.services[service_name]
         return f"{service_config.base_url}"
     
     def _build_instance_url_from_instance(self, instance: str) -> str:
         """Build URL from instance identifier"""
         # Extract service name from instance
+
         service_name = instance.rsplit('-', 1)[0]
         return self._build_instance_url(service_name, instance)
     
@@ -454,10 +505,12 @@ class EnterpriseBackendManager:
         headers: Optional[Dict[str, str]],
         timeout: Optional[int]
     ) -> Dict[str, Any]:
-        """Make HTTP request with comprehensive monitoring"""
+        """
+        Make HTTP request with comprehensive monitoring"""
         
         full_url = f"{url}{endpoint}"
         timeout = timeout or 30
+
         headers = headers or {}
         
         # Add tracing headers
@@ -466,31 +519,39 @@ class EnterpriseBackendManager:
             'X-Timestamp': str(int(time.time())),
             'User-Agent': 'IA Chérie-Backend-Manager/1.0'
         })
+
+
         
         start_time = time.time()
+
         
         async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=timeout)) as session:
             
             if method.upper() == 'GET':
                 async with session.get(full_url, headers=headers) as response:
                     result = await response.json()
+
                     
             elif method.upper() == 'POST':
                 async with session.post(full_url, json=data, headers=headers) as response:
                     result = await response.json()
+
                     
             elif method.upper() == 'PUT':
                 async with session.put(full_url, json=data, headers=headers) as response:
                     result = await response.json()
+
                     
             elif method.upper() == 'DELETE':
                 async with session.delete(full_url, headers=headers) as response:
                     result = await response.json()
+
                     
             else:
                 raise ValueError(f"Unsupported HTTP method: {method}")
         
         # Record request metrics
+
         processing_time = time.time() - start_time
         self.request_history.append({
             'url': full_url,
@@ -499,6 +560,7 @@ class EnterpriseBackendManager:
             'status': 'success',
             'timestamp': datetime.now()
         })
+
         
         return result
     
@@ -507,6 +569,7 @@ class EnterpriseBackendManager:
         
         if service_name not in self.circuit_breakers:
             return True
+
         
         cb = self.circuit_breakers[service_name]
         
@@ -520,6 +583,7 @@ class EnterpriseBackendManager:
                 cb.state = CircuitBreakerState.HALF_OPEN
                 cb.half_open_calls = 0
                 logger.info(f"Circuit breaker for {service_name} moved to HALF_OPEN")
+
                 return True
             return False
         
@@ -536,16 +600,19 @@ class EnterpriseBackendManager:
         
         if service_name not in self.circuit_breakers:
             return
+
         
         cb = self.circuit_breakers[service_name]
         cb.failure_count += 1
         cb.last_failure_time = datetime.now()
+
         
         if cb.state == CircuitBreakerState.HALF_OPEN:
             # Back to OPEN state
             cb.state = CircuitBreakerState.OPEN
             cb.failure_count = 0
             logger.warning(f"Circuit breaker for {service_name} reopened due to failure")
+
         
         elif cb.state == CircuitBreakerState.CLOSED and cb.failure_count >= cb.failure_threshold:
             # Open the circuit breaker
@@ -558,22 +625,29 @@ class EnterpriseBackendManager:
         service_config = self.services.get(service_name)
         if not service_config:
             return True
+
         
         current_time = time.time()
+
         minute_window = int(current_time / 60)
+
+
         
         key = f"rate_limit:{service_name}:{minute_window}"
         
         if self.redis_client:
             try:
                 current_count = await self.redis_client.incr(key)
+
                 if current_count == 1:
                     await self.redis_client.expire(key, 60)
+
                 
                 return current_count <= service_config.rate_limit_rpm
                 
             except Exception as e:
                 logger.error(f"Rate limit check failed: {e}")
+
                 return True
         
         # Fallback to in-memory rate limiting
@@ -594,8 +668,10 @@ class EnterpriseBackendManager:
             metrics.request_count += 1
             
             # Update average response time
+
             response_times = self.response_times[service_name]
             response_times.append(processing_time)
+
             metrics.avg_response_time = sum(response_times) / len(response_times)
             
             # Reset circuit breaker on success if in HALF_OPEN state
@@ -623,17 +699,20 @@ class EnterpriseBackendManager:
     
     # Background monitoring loops
     async def _health_monitoring_loop(self):
-        """Background health monitoring for all services"""
+        """
+        Background health monitoring for all services"""
         
         while self.is_running:
             try:
                 for service_name, service_config in self.services.items():
                     await self._check_service_health(service_name, service_config)
+
                 
                 await asyncio.sleep(30)  # Check every 30 seconds
                 
             except Exception as e:
                 logger.error(f"Health monitoring error: {e}")
+
                 await asyncio.sleep(60)
     
     async def _check_service_health(self, service_name: str, service_config: ServiceConfiguration):
@@ -646,9 +725,12 @@ class EnterpriseBackendManager:
                 async with session.get(health_url) as response:
                     if response.status == 200:
                         health_data = await response.json()
+
                         await self._update_service_metrics(service_name, health_data)
+
                     else:
                         await self._mark_service_unhealthy(service_name, f"HTTP {response.status}")
+
                         
         except Exception as e:
             await self._mark_service_unhealthy(service_name, str(e))
@@ -664,16 +746,19 @@ class EnterpriseBackendManager:
         metrics.last_health_check = datetime.now()
         
         # Calculate uptime
+
         total_requests = metrics.request_count + metrics.error_count
         if total_requests > 0:
             metrics.uptime_percentage = (metrics.request_count / total_requests) * 100
     
     async def _mark_service_unhealthy(self, service_name: str, error: str):
-        """Mark service as unhealthy"""
+        """
+        Mark service as unhealthy"""
         
         metrics = self.service_metrics[service_name]
         metrics.status = ServiceStatus.CRITICAL
         metrics.last_health_check = datetime.now()
+
         
         logger.error(f"Service {service_name} health check failed: {error}")
     
@@ -683,10 +768,12 @@ class EnterpriseBackendManager:
         while self.is_running:
             try:
                 await self._analyze_performance_metrics()
+
                 await asyncio.sleep(60)  # Analyze every minute
                 
             except Exception as e:
                 logger.error(f"Performance monitoring error: {e}")
+
                 await asyncio.sleep(120)
     
     async def _analyze_performance_metrics(self):
@@ -698,9 +785,11 @@ class EnterpriseBackendManager:
             # Check if service needs scaling
             if metrics.cpu_usage > service_config.cpu_threshold:
                 await self._scale_service_up(service_name, "High CPU usage")
+
             
             elif metrics.memory_usage > service_config.memory_threshold:
                 await self._scale_service_up(service_name, "High memory usage")
+
             
             elif metrics.avg_response_time > service_config.response_time_threshold:
                 await self._scale_service_up(service_name, "High response time")
@@ -717,10 +806,12 @@ class EnterpriseBackendManager:
         while self.is_running:
             try:
                 await self._perform_auto_scaling()
+
                 await asyncio.sleep(30)  # Check every 30 seconds
                 
             except Exception as e:
                 logger.error(f"Auto-scaling error: {e}")
+
                 await asyncio.sleep(60)
     
     async def _perform_auto_scaling(self):
@@ -730,13 +821,17 @@ class EnterpriseBackendManager:
             await self._evaluate_scaling_decision(service_name)
     
     async def _evaluate_scaling_decision(self, service_name: str):
-        """Evaluate whether to scale service up or down"""
+        """
+        Evaluate whether to scale service up or down"""
         
         metrics = self.service_metrics[service_name]
+
         service_config = self.services[service_name]
+
         current_replicas = len(self.service_instances[service_name])
         
         # Scaling up conditions
+
         scale_up_score = 0
         
         if metrics.cpu_usage > service_config.cpu_threshold:
@@ -753,6 +848,7 @@ class EnterpriseBackendManager:
             scale_up_score += 2
         
         # Error rate check
+
         total_requests = metrics.request_count + metrics.error_count
         if total_requests > 0:
             error_rate = (metrics.error_count / total_requests) * 100
@@ -762,6 +858,7 @@ class EnterpriseBackendManager:
         # Make scaling decision
         if scale_up_score >= 3 and current_replicas < service_config.max_replicas:
             await self._scale_service_up(service_name, f"Score: {scale_up_score}")
+
         
         elif (scale_up_score == 0 and 
               metrics.cpu_usage < 30 and 
@@ -773,15 +870,20 @@ class EnterpriseBackendManager:
         """Scale service up by adding replica"""
         
         service_config = self.services[service_name]
+
         current_replicas = len(self.service_instances[service_name])
+
         
         if current_replicas >= service_config.max_replicas:
             logger.warning(f"Cannot scale {service_name} up: at max replicas ({current_replicas})")
+
             return
         
         # Add new instance
+
         new_instance_id = f"{service_name}-{current_replicas}"
         self.service_instances[service_name].append(new_instance_id)
+
         
         logger.info(f"Scaled {service_name} UP: {current_replicas} -> {current_replicas + 1} replicas. Reason: {reason}")
         
@@ -792,13 +894,17 @@ class EnterpriseBackendManager:
         """Scale service down by removing replica"""
         
         service_config = self.services[service_name]
+
         current_replicas = len(self.service_instances[service_name])
+
         
         if current_replicas <= service_config.min_replicas:
             return
         
         # Remove last instance
+
         removed_instance = self.service_instances[service_name].pop()
+
         
         logger.info(f"Scaled {service_name} DOWN: {current_replicas} -> {current_replicas - 1} replicas. Reason: {reason}")
         
@@ -818,11 +924,13 @@ class EnterpriseBackendManager:
                             cb.state = CircuitBreakerState.HALF_OPEN
                             cb.half_open_calls = 0
                             logger.info(f"Circuit breaker for {service_name} attempting recovery")
+
                 
                 await asyncio.sleep(10)  # Check every 10 seconds
                 
             except Exception as e:
                 logger.error(f"Circuit breaker monitoring error: {e}")
+
                 await asyncio.sleep(30)
     
     async def _security_monitoring_loop(self):
@@ -831,16 +939,19 @@ class EnterpriseBackendManager:
         while self.is_running:
             try:
                 await self._analyze_security_metrics()
+
                 await asyncio.sleep(60)  # Security check every minute
                 
             except Exception as e:
                 logger.error(f"Security monitoring error: {e}")
+
                 await asyncio.sleep(120)
     
     async def _analyze_security_metrics(self):
         """Analyze security metrics and detect threats"""
         
         # Analyze request patterns for anomalies
+
         recent_requests = list(self.request_history)[-1000:]  # Last 1000 requests
         
         if len(recent_requests) > 100:
@@ -851,9 +962,11 @@ class EnterpriseBackendManager:
             await self._detect_error_anomalies()
     
     async def _detect_traffic_anomalies(self, requests: List[Dict[str, Any]]):
-        """Detect unusual traffic patterns"""
+        """
+        Detect unusual traffic patterns"""
         
         # Analyze request frequency
+
         time_windows = defaultdict(int)
         for req in requests:
             window = int(req['timestamp'].timestamp() / 60)  # 1-minute windows
@@ -861,6 +974,8 @@ class EnterpriseBackendManager:
         
         if time_windows:
             avg_requests = sum(time_windows.values()) / len(time_windows)
+
+
             max_requests = max(time_windows.values())
             
             # Alert if traffic spike is 5x normal
@@ -874,8 +989,11 @@ class EnterpriseBackendManager:
         
         if len(recent_errors) > 10:
             # Check error rate
+
             error_times = [err['timestamp'] for err in recent_errors]
+
             time_span = (max(error_times) - min(error_times)).total_seconds()
+
             
             if time_span > 0:
                 error_rate = len(recent_errors) / time_span  # errors per second
@@ -890,12 +1008,10 @@ class EnterpriseBackendManager:
     
     async def _notify_orchestrator_scale_up(self, service_name: str, instance_id: str):
         """Notify container orchestrator to scale up"""
-        # Placeholder for K8s/Docker Swarm integration
         logger.debug(f"Orchestrator: Scale up {service_name} -> {instance_id}")
     
     async def _notify_orchestrator_scale_down(self, service_name: str, instance_id: str):
         """Notify container orchestrator to scale down"""
-        # Placeholder for K8s/Docker Swarm integration
         logger.debug(f"Orchestrator: Scale down {service_name} -> {instance_id}")
     
     def _setup_audit_logging(self):
@@ -905,7 +1021,8 @@ class EnterpriseBackendManager:
         return audit_logger
     
     def _setup_monitoring(self):
-        """Setup monitoring and observability"""
+        """
+        Setup monitoring and observability"""
         logger.info("Setting up enterprise monitoring and observability")
         
         # In production, this would setup:
@@ -919,13 +1036,21 @@ class EnterpriseBackendManager:
         """Get comprehensive system status"""
         
         total_services = len(self.services)
-        healthy_services = sum(1 for m in self.service_metrics.values() 
+
+        healthy_services = sum(1 for m in self.service_metrics.values()
+ 
                               if m.status == ServiceStatus.HEALTHY)
+
+
         
         total_instances = sum(len(instances) for instances in self.service_instances.values())
+
+
         
-        open_circuit_breakers = sum(1 for cb in self.circuit_breakers.values() 
+        open_circuit_breakers = sum(1 for cb in self.circuit_breakers.values()
+ 
                                    if cb.state == CircuitBreakerState.OPEN)
+
         
         return {
             'system': {
@@ -942,7 +1067,8 @@ class EnterpriseBackendManager:
             'circuit_breakers': {
                 'total': len(self.circuit_breakers),
                 'open': open_circuit_breakers,
-                'half_open': sum(1 for cb in self.circuit_breakers.values() 
+                'half_open': sum(1 for cb in self.circuit_breakers.values()
+ 
                                if cb.state == CircuitBreakerState.HALF_OPEN)
             },
             'performance': {
@@ -959,13 +1085,13 @@ class EnterpriseBackendManager:
     
     def _calculate_system_uptime(self) -> str:
         """Calculate system uptime"""
-        # Placeholder - would track actual startup time
         return "99.9% (30 days)"
     
     async def shutdown(self):
         """Gracefully shutdown the backend manager"""
         
         logger.info("Shutting down Enterprise Backend Manager...")
+
         
         self.is_running = False
         
@@ -982,6 +1108,7 @@ class EnterpriseBackendManager:
         
         # Shutdown executor
         self.executor.shutdown(wait=True)
+
         
         logger.info("Backend Manager shutdown complete")
 

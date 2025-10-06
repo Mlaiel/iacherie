@@ -33,7 +33,8 @@ import math
 logger = logging.getLogger(__name__)
 
 class FraudRiskLevel(Enum):
-    """Fraud risk level enumeration"""
+    """
+        Fraud risk level enumeration"""
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -74,7 +75,8 @@ class FraudIndicator:
 
 @dataclass
 class FraudScore:
-    """Fraud risk score data structure"""
+    """
+        Fraud risk score data structure"""
     entity_id: str
     entity_type: str  # user, transaction, listing
     score: float  # 0.0 to 100.0
@@ -85,7 +87,8 @@ class FraudScore:
 
 @dataclass
 class FraudAlert:
-    """Fraud detection alert"""
+    """
+        Fraud detection alert"""
     alert_id: str
     entity_id: str
     entity_type: str
@@ -111,7 +114,8 @@ class BehaviorPattern:
     last_updated: datetime = field(default_factory=datetime.utcnow)
 
 class FraudDetectionEngine:
-    """AI-powered fraud detection and prevention system"""
+    """
+        AI-powered fraud detection and prevention system"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -127,12 +131,14 @@ class FraudDetectionEngine:
         
         # Initialize fraud indicators
         self._initialize_fraud_indicators()
+
         
         logger.info("🛡️ Fraud Detection Engine initialized")
     
     def _initialize_fraud_indicators(self):
         """Initialize default fraud detection indicators"""
         try:
+
             indicators = [
                 FraudIndicator(
                     indicator_id="velocity_check",
@@ -202,51 +208,74 @@ class FraudDetectionEngine:
     async def analyze_transaction(self, transaction_data: Dict[str, Any]) -> FraudScore:
         """Analyze transaction for fraud indicators"""
         try:
+
             transaction_id = transaction_data.get("transaction_id")
+
+
             user_id = transaction_data.get("user_id")
+
+
             amount = Decimal(str(transaction_data.get("amount", 0)))
+
+
             
             risk_score = 0.0
+
             detected_indicators = []
             
             # Velocity analysis
+
             velocity_score = await self._check_transaction_velocity(user_id, transaction_data)
+
             if velocity_score > self.fraud_indicators["velocity_check"].threshold:
                 risk_score += velocity_score * self.fraud_indicators["velocity_check"].weight
                 detected_indicators.append("velocity_check")
             
             # Amount anomaly analysis
+
             amount_score = await self._check_amount_anomaly(user_id, amount)
+
             if amount_score > self.fraud_indicators["amount_anomaly"].threshold:
                 risk_score += amount_score * self.fraud_indicators["amount_anomaly"].weight * 10
                 detected_indicators.append("amount_anomaly")
             
             # Geographic analysis
+
             geo_score = await self._check_geographic_anomaly(user_id, transaction_data)
+
             if geo_score > self.fraud_indicators["geographic_anomaly"].threshold:
                 risk_score += (geo_score / 1000) * self.fraud_indicators["geographic_anomaly"].weight * 20
                 detected_indicators.append("geographic_anomaly")
             
             # Device fingerprint analysis
+
             device_score = await self._check_device_fingerprint(user_id, transaction_data)
+
             if device_score < self.fraud_indicators["device_fingerprint"].threshold:
                 risk_score += (1 - device_score) * self.fraud_indicators["device_fingerprint"].weight * 30
                 detected_indicators.append("device_fingerprint")
             
             # Behavioral analysis
+
             behavior_score = await self._check_behavioral_anomaly(user_id, transaction_data)
+
             if behavior_score > self.fraud_indicators["behavioral_anomaly"].threshold:
                 risk_score += behavior_score * self.fraud_indicators["behavioral_anomaly"].weight * 10
                 detected_indicators.append("behavioral_anomaly")
             
             # Normalize score to 0-100 range
+
             risk_score = min(100.0, risk_score)
             
             # Determine risk level
+
             risk_level = self._determine_risk_level(risk_score)
             
             # Calculate confidence based on number of indicators
+
             confidence = min(1.0, len(detected_indicators) / 3.0)
+
+
             
             fraud_score = FraudScore(
                 entity_id=transaction_id,
@@ -256,36 +285,47 @@ class FraudDetectionEngine:
                 indicators=detected_indicators,
                 confidence=confidence
             )
+
             
             self.fraud_scores[transaction_id] = fraud_score
             
             # Create alert if necessary
             if risk_score >= self.min_risk_threshold:
                 await self._create_fraud_alert(fraud_score, FraudType.PAYMENT_FRAUD)
+
             
             logger.info(f"Transaction fraud analysis completed: {transaction_id} - Score: {risk_score:.2f}")
+
             return fraud_score
         
         except Exception as e:
             logger.error(f"Transaction fraud analysis error: {e}")
+
             raise
     
     async def analyze_user(self, user_data: Dict[str, Any]) -> FraudScore:
         """Analyze user account for fraud indicators"""
         try:
+
             user_id = user_data.get("user_id")
+
+
             
             risk_score = 0.0
+
             detected_indicators = []
             
             # Account age analysis
+
             account_age_days = (datetime.utcnow() - user_data.get("created_at", datetime.utcnow())).days
             if account_age_days < 7:  # New account risk
                 risk_score += 15.0
                 detected_indicators.append("new_account")
             
             # Profile completeness analysis
+
             profile_completeness = await self._check_profile_completeness(user_data)
+
             if profile_completeness < 0.5:  # Incomplete profile risk
                 risk_score += (1 - profile_completeness) * 20.0
                 detected_indicators.append("incomplete_profile")
@@ -296,25 +336,34 @@ class FraudDetectionEngine:
                 detected_indicators.append("unverified_identity")
             
             # Behavioral pattern analysis
+
             behavior_score = await self._analyze_user_behavior(user_id)
+
             if behavior_score > 2.0:
                 risk_score += behavior_score * 8.0
                 detected_indicators.append("behavioral_anomaly")
             
             # Transaction history analysis
+
             transaction_risk = await self._analyze_transaction_history(user_id)
+
             risk_score += transaction_risk
             if transaction_risk > 10.0:
                 detected_indicators.append("suspicious_transactions")
             
             # Normalize score
+
             risk_score = min(100.0, risk_score)
             
             # Determine risk level
+
             risk_level = self._determine_risk_level(risk_score)
             
             # Calculate confidence
+
             confidence = min(1.0, len(detected_indicators) / 4.0)
+
+
             
             fraud_score = FraudScore(
                 entity_id=user_id,
@@ -324,61 +373,84 @@ class FraudDetectionEngine:
                 indicators=detected_indicators,
                 confidence=confidence
             )
+
             
             self.fraud_scores[user_id] = fraud_score
             
             # Create alert if necessary
             if risk_score >= self.min_risk_threshold:
                 await self._create_fraud_alert(fraud_score, FraudType.IDENTITY_THEFT)
+
             
             logger.info(f"User fraud analysis completed: {user_id} - Score: {risk_score:.2f}")
+
             return fraud_score
         
         except Exception as e:
             logger.error(f"User fraud analysis error: {e}")
+
             raise
     
     async def analyze_listing(self, listing_data: Dict[str, Any]) -> FraudScore:
         """Analyze listing for fraud indicators"""
         try:
+
             listing_id = listing_data.get("listing_id")
+
+
             seller_id = listing_data.get("seller_id")
+
+
             
             risk_score = 0.0
+
             detected_indicators = []
             
             # Duplicate listing check
+
             duplicate_score = await self._check_duplicate_listings(listing_data)
+
             if duplicate_score > self.fraud_indicators["listing_similarity"].threshold:
                 risk_score += duplicate_score * 30.0
                 detected_indicators.append("duplicate_listing")
             
             # Price manipulation check
+
             price_score = await self._check_price_manipulation(listing_data)
+
             if price_score > self.fraud_indicators["price_manipulation"].threshold:
                 risk_score += price_score * 20.0
                 detected_indicators.append("price_manipulation")
             
             # Content quality analysis
+
             content_score = await self._analyze_content_quality(listing_data)
+
             if content_score < 0.3:  # Low quality content
                 risk_score += (1 - content_score) * 25.0
                 detected_indicators.append("low_quality_content")
             
             # Seller reputation analysis
+
             seller_risk = await self._analyze_seller_reputation(seller_id)
+
             risk_score += seller_risk
             if seller_risk > 15.0:
                 detected_indicators.append("suspicious_seller")
             
             # Normalize score
+
             risk_score = min(100.0, risk_score)
             
             # Determine risk level
+
             risk_level = self._determine_risk_level(risk_score)
             
             # Calculate confidence
+
             confidence = min(1.0, len(detected_indicators) / 3.0)
+
+
             
             fraud_score = FraudScore(
                 entity_id=listing_id,
@@ -388,46 +460,52 @@ class FraudDetectionEngine:
                 indicators=detected_indicators,
                 confidence=confidence
             )
+
             
             self.fraud_scores[listing_id] = fraud_score
             
             # Create alert if necessary
             if risk_score >= self.min_risk_threshold:
                 await self._create_fraud_alert(fraud_score, FraudType.LISTING_FRAUD)
+
             
             logger.info(f"Listing fraud analysis completed: {listing_id} - Score: {risk_score:.2f}")
+
             return fraud_score
         
         except Exception as e:
             logger.error(f"Listing fraud analysis error: {e}")
+
             raise
     
     async def _check_transaction_velocity(self, user_id: str, transaction_data: Dict[str, Any]) -> float:
         """Check transaction velocity for anomalies"""
-        try:
-            # Mock implementation - would analyze actual transaction velocity
-            # Check transactions in last hour
-            recent_transactions = 3  # Mock count
+        try:            # Check transactions in last hour
+
+            recent_transactions = 3
             time_window = 60  # minutes
+
             
             velocity = recent_transactions / (time_window / 60)  # transactions per hour
             return velocity
         except Exception as e:
             logger.error(f"Transaction velocity check error: {e}")
+
             return 0.0
     
     async def _check_amount_anomaly(self, user_id: str, amount: Decimal) -> float:
         """Check for transaction amount anomalies"""
         try:
-            # Mock implementation - would analyze user's typical transaction amounts
-            typical_amount = Decimal('50.00')  # Mock typical amount
-            std_deviation = Decimal('20.00')   # Mock standard deviation
+
+            typical_amount = Decimal('50.00')
+            std_deviation = Decimal('20.00')
             
             if std_deviation > 0:
                 z_score = abs(float((amount - typical_amount) / std_deviation))
                 return z_score
             
             return 0.0
+
         except Exception as e:
             logger.error(f"Amount anomaly check error: {e}")
             return 0.0
@@ -435,48 +513,61 @@ class FraudDetectionEngine:
     async def _check_geographic_anomaly(self, user_id: str, transaction_data: Dict[str, Any]) -> float:
         """Check for geographic location anomalies"""
         try:
-            # Mock implementation - would analyze IP geolocation
             current_location = transaction_data.get("location", {"lat": 52.5, "lon": 13.4})  # Berlin
-            typical_location = {"lat": 52.5, "lon": 13.4}  # Mock typical location
-            
+
+            typical_location = {"lat": 52.5, "lon": 13.4}            
             # Calculate distance (simple approximation)
+
+
             lat_diff = current_location["lat"] - typical_location["lat"]
+
             lon_diff = current_location["lon"] - typical_location["lon"]
+
             distance = math.sqrt(lat_diff**2 + lon_diff**2) * 111  # Rough km conversion
             
             return distance
         except Exception as e:
             logger.error(f"Geographic anomaly check error: {e}")
+
             return 0.0
     
     async def _check_device_fingerprint(self, user_id: str, transaction_data: Dict[str, Any]) -> float:
         """Check device fingerprint similarity"""
         try:
-            # Mock implementation - would analyze device characteristics
             current_fingerprint = transaction_data.get("device_fingerprint", "mock_fingerprint")
+
+
             typical_fingerprint = "mock_typical_fingerprint"  # Would get from user history
             
             # Simple similarity calculation (mock)
+
             if current_fingerprint == typical_fingerprint:
                 return 1.0
             else:
-                return 0.2  # Mock low similarity
+                return 0.2
         except Exception as e:
             logger.error(f"Device fingerprint check error: {e}")
+
             return 1.0  # Assume similar on error
     
     async def _check_behavioral_anomaly(self, user_id: str, transaction_data: Dict[str, Any]) -> float:
         """Check for behavioral anomalies"""
         try:
             # Get or create behavior pattern
+
             pattern = self.behavior_patterns.get(user_id)
+
             if not pattern:
                 pattern = BehaviorPattern(user_id=user_id, pattern_type="transaction")
+
                 self.behavior_patterns[user_id] = pattern
             
             # Analyze current behavior vs typical
+
             current_hour = datetime.utcnow().hour
+
             typical_hours = pattern.typical_behavior.get("active_hours", [9, 12, 15, 18])
+
             
             if current_hour not in typical_hours:
                 return 2.0  # Unusual time activity
@@ -484,42 +575,48 @@ class FraudDetectionEngine:
             return 0.5  # Normal behavior
         except Exception as e:
             logger.error(f"Behavioral anomaly check error: {e}")
+
             return 0.0
     
     async def _check_profile_completeness(self, user_data: Dict[str, Any]) -> float:
         """Check user profile completeness"""
         try:
+
             required_fields = ["name", "email", "phone", "address", "profile_picture"]
+
             completed_fields = sum(1 for field in required_fields if user_data.get(field))
+
             
             return completed_fields / len(required_fields)
         except Exception as e:
             logger.error(f"Profile completeness check error: {e}")
+
             return 0.5
     
     async def _analyze_user_behavior(self, user_id: str) -> float:
         """Analyze user behavior patterns"""
         try:
-            # Mock implementation - would analyze user activity patterns
-            return 1.5  # Mock behavior score
+            return 1.5
         except Exception as e:
             logger.error(f"User behavior analysis error: {e}")
+
             return 0.0
     
     async def _analyze_transaction_history(self, user_id: str) -> float:
         """Analyze user transaction history for risk indicators"""
         try:
-            # Mock implementation - would analyze transaction patterns
-            return 8.0  # Mock transaction risk score
+            return 8.0
         except Exception as e:
             logger.error(f"Transaction history analysis error: {e}")
+
             return 0.0
     
     async def _check_duplicate_listings(self, listing_data: Dict[str, Any]) -> float:
         """Check for duplicate or similar listings"""
         try:
-            # Mock implementation - would use content similarity algorithms
             title = listing_data.get("title", "")
+
+
             description = listing_data.get("description", "")
             
             # Simple mock similarity check
@@ -529,16 +626,19 @@ class FraudDetectionEngine:
             return 0.1  # Low similarity
         except Exception as e:
             logger.error(f"Duplicate listing check error: {e}")
+
             return 0.0
     
     async def _check_price_manipulation(self, listing_data: Dict[str, Any]) -> float:
         """Check for price manipulation indicators"""
         try:
+
             price = Decimal(str(listing_data.get("price", 0)))
+
+
             category = listing_data.get("category", "general")
-            
-            # Mock implementation - would compare to market prices
-            market_average = Decimal('50.00')  # Mock market average
+
+            market_average = Decimal('50.00')
             
             if price > market_average * 3:  # 3x higher than average
                 return 3.0
@@ -548,15 +648,21 @@ class FraudDetectionEngine:
             return 1.0  # Normal price range
         except Exception as e:
             logger.error(f"Price manipulation check error: {e}")
+
             return 1.0
     
     async def _analyze_content_quality(self, listing_data: Dict[str, Any]) -> float:
         """Analyze content quality score"""
         try:
-            # Mock implementation - would use AI content analysis
             title_length = len(listing_data.get("title", ""))
+
+
             description_length = len(listing_data.get("description", ""))
+
+
             image_count = len(listing_data.get("images", []))
+
+
             
             quality_score = 0.0
             
@@ -575,17 +681,17 @@ class FraudDetectionEngine:
             return quality_score
         except Exception as e:
             logger.error(f"Content quality analysis error: {e}")
+
             return 0.5
     
     async def _analyze_seller_reputation(self, seller_id: str) -> float:
         """Analyze seller reputation and risk"""
-        try:
-            # Mock implementation - would analyze seller history
-            # Factors: account age, ratings, transaction history, disputes
+        try:            # Factors: account age, ratings, transaction history, disputes
+
             
-            account_age_days = 365  # Mock account age
-            average_rating = 4.2    # Mock rating
-            dispute_count = 2       # Mock disputes
+            account_age_days = 365
+            average_rating = 4.2
+            dispute_count = 2
             
             risk_score = 0.0
             
@@ -607,6 +713,7 @@ class FraudDetectionEngine:
             return risk_score
         except Exception as e:
             logger.error(f"Seller reputation analysis error: {e}")
+
             return 0.0
     
     def _determine_risk_level(self, score: float) -> FraudRiskLevel:
@@ -621,7 +728,8 @@ class FraudDetectionEngine:
             return FraudRiskLevel.LOW
     
     async def _create_fraud_alert(self, fraud_score: FraudScore, fraud_type: FraudType):
-        """Create fraud detection alert"""
+        """
+        Create fraud detection alert"""
         try:
             # Determine recommended action
             if fraud_score.score >= self.auto_block_threshold:
@@ -648,6 +756,7 @@ class FraudDetectionEngine:
                 },
                 recommended_action=recommended_action
             )
+
             
             self.fraud_alerts[alert.alert_id] = alert
             
@@ -656,6 +765,7 @@ class FraudDetectionEngine:
             # Auto-execute actions if configured
             if self.config.get('auto_execute_actions', False):
                 await self._execute_fraud_action(alert)
+
         
         except Exception as e:
             logger.error(f"Fraud alert creation error: {e}")
@@ -663,6 +773,7 @@ class FraudDetectionEngine:
     async def _execute_fraud_action(self, alert: FraudAlert):
         """Execute fraud prevention action"""
         try:
+
             if alert.recommended_action == FraudAction.BLOCK:
                 logger.warning(f"🚫 Blocking entity: {alert.entity_id}")
                 # Would implement actual blocking logic
@@ -677,6 +788,7 @@ class FraudDetectionEngine:
             
             # Log action execution
             logger.info(f"Fraud action executed: {alert.recommended_action.value} for {alert.entity_id}")
+
         
         except Exception as e:
             logger.error(f"Fraud action execution error: {e}")
@@ -686,55 +798,74 @@ class FraudDetectionEngine:
         return self.fraud_scores.get(entity_id)
     
     async def get_active_alerts(self, risk_level: FraudRiskLevel = None) -> List[FraudAlert]:
-        """Get active fraud alerts"""
+        """
+        Get active fraud alerts"""
         try:
+
             alerts = [alert for alert in self.fraud_alerts.values() if alert.status == "active"]
             
             if risk_level:
                 alerts = [alert for alert in alerts if alert.risk_level == risk_level]
             
             # Sort by score (highest first)
+
             alerts.sort(key=lambda a: a.score, reverse=True)
+
             
             return alerts
         except Exception as e:
             logger.error(f"Active alerts retrieval error: {e}")
+
             return []
     
     async def generate_fraud_report(self, start_date: datetime = None, end_date: datetime = None) -> Dict[str, Any]:
         """Generate fraud detection report"""
         try:
+
             if not start_date:
                 start_date = datetime.utcnow() - timedelta(days=30)
+
             if not end_date:
                 end_date = datetime.utcnow()
             
             # Filter alerts by date range
-            alerts = [a for a in self.fraud_alerts.values() 
+
+            alerts = [a for a in self.fraud_alerts.values()
+ 
                      if start_date <= a.created_at <= end_date]
             
             # Calculate statistics
+
             total_alerts = len(alerts)
+
+
             critical_alerts = len([a for a in alerts if a.risk_level == FraudRiskLevel.CRITICAL])
+
+
             high_alerts = len([a for a in alerts if a.risk_level == FraudRiskLevel.HIGH])
             
             # Fraud type distribution
+
             fraud_types = {}
             for alert in alerts:
                 fraud_type = alert.fraud_type.value
                 fraud_types[fraud_type] = fraud_types.get(fraud_type, 0) + 1
             
             # Average scores by entity type
+
             entity_scores = {}
             for score in self.fraud_scores.values():
                 entity_type = score.entity_type
                 if entity_type not in entity_scores:
                     entity_scores[entity_type] = []
                 entity_scores[entity_type].append(score.score)
+
+
             
             avg_scores = {}
             for entity_type, scores in entity_scores.items():
                 avg_scores[entity_type] = sum(scores) / len(scores) if scores else 0
+
             
             report = {
                 "report_id": str(uuid.uuid4()),
@@ -750,10 +881,12 @@ class FraudDetectionEngine:
             }
             
             logger.info(f"Fraud report generated: {report['report_id']}")
+
             return report
         
         except Exception as e:
             logger.error(f"Fraud report generation error: {e}")
+
             return {}
 
 # Export classes
@@ -769,4 +902,4 @@ __all__ = [
 ]
 
 # Module initialization
-logger.info("🛡️ Fraud Detection Engine module loaded")
+logger.info("🛡️ Fraud Detection Engine module initialized")

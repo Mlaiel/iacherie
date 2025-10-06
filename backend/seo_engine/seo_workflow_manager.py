@@ -28,7 +28,8 @@ logger = logging.getLogger(__name__)
 # === ÉNUMÉRATIONS ===
 
 class WorkflowStatus(Enum):
-    """Statuts de workflow"""
+    """
+        Statuts de workflow"""
     PENDING = "pending"
     RUNNING = "running"
     PAUSED = "paused"
@@ -88,7 +89,8 @@ class TaskDefinition:
 
 @dataclass
 class TaskExecution:
-    """Exécution d'une tâche"""
+    """
+        Exécution d'une tâche"""
     execution_id: str
     task_id: str
     status: TaskStatus
@@ -102,7 +104,8 @@ class TaskExecution:
 
 @dataclass
 class WorkflowDefinition:
-    """Définition d'un workflow"""
+    """
+        Définition d'un workflow"""
     workflow_id: str
     name: str
     description: str
@@ -115,7 +118,8 @@ class WorkflowDefinition:
 
 @dataclass
 class WorkflowExecution:
-    """Exécution d'un workflow"""
+    """
+        Exécution d'un workflow"""
     execution_id: str
     workflow_id: str
     status: WorkflowStatus
@@ -129,7 +133,8 @@ class WorkflowExecution:
 
 @dataclass
 class ScheduleConfig:
-    """Configuration de planification"""
+    """
+        Configuration de planification"""
     schedule_type: ScheduleType
     schedule_time: Optional[datetime] = None
     cron_expression: Optional[str] = None
@@ -149,7 +154,8 @@ class SEOWorkflowManager:
     """
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize SEO workflow manager"""
+        """
+        Initialize SEO workflow manager"""
         self.config = config or {}
         
         # Storage des workflows et exécutions
@@ -188,6 +194,7 @@ class SEOWorkflowManager:
         """Démarrer le gestionnaire de workflows"""
         if self.is_running:
             logger.warning("Workflow manager already running")
+
             return
         
         self.is_running = True
@@ -198,9 +205,11 @@ class SEOWorkflowManager:
                 self._task_worker(priority),
                 name=f"worker_{priority.value}"
             )
+
             self.worker_tasks.append(worker_task)
         
         # Démarrer le scheduler
+
         scheduler_task = asyncio.create_task(
             self._scheduler_worker(),
             name="scheduler"
@@ -208,11 +217,13 @@ class SEOWorkflowManager:
         self.worker_tasks.append(scheduler_task)
         
         # Démarrer le monitoring
+
         monitor_task = asyncio.create_task(
             self._monitoring_worker(),
             name="monitor"
         )
         self.worker_tasks.append(monitor_task)
+
         
         logger.info("🚀 SEO Workflow Manager started")
     
@@ -234,6 +245,7 @@ class SEOWorkflowManager:
         # Arrêter les exécutions actives
         for execution_task in self.active_executions.values():
             execution_task.cancel()
+
         
         logger.info("🛑 SEO Workflow Manager stopped")
     
@@ -252,6 +264,7 @@ class SEOWorkflowManager:
         # Configurer les triggers
         for trigger in workflow_def.triggers:
             await self._setup_workflow_trigger(workflow_def.workflow_id, trigger)
+
         
         logger.info(f"📝 Workflow registered: {workflow_def.name} ({workflow_def.workflow_id})")
     
@@ -264,13 +277,17 @@ class SEOWorkflowManager:
         """Exécuter un workflow"""
         if workflow_id not in self.workflow_definitions:
             raise ValueError(f"Workflow not found: {workflow_id}")
+
         
         if len(self.active_executions) >= self.max_concurrent_workflows:
             raise RuntimeError("Maximum concurrent workflows reached")
         
         # Créer une nouvelle exécution
+
         execution_id = str(uuid.uuid4())
+
         workflow_def = self.workflow_definitions[workflow_id]
+
         
         execution = WorkflowExecution(
             execution_id=execution_id,
@@ -279,14 +296,17 @@ class SEOWorkflowManager:
             triggered_by=triggered_by,
             context=context or {}
         )
+
         
         self.workflow_executions[execution_id] = execution
         
         # Démarrer l'exécution asynchrone
+
         execution_task = asyncio.create_task(
             self._execute_workflow_async(execution),
             name=f"workflow_{workflow_id}_{execution_id[:8]}"
         )
+
         
         self.active_executions[execution_id] = execution_task
         
@@ -298,7 +318,8 @@ class SEOWorkflowManager:
         return self.workflow_executions.get(execution_id)
     
     async def cancel_execution(self, execution_id: str) -> bool:
-        """Annuler une exécution"""
+        """
+        Annuler une exécution"""
         if execution_id in self.active_executions:
             execution_task = self.active_executions[execution_id]
             execution_task.cancel()
@@ -307,8 +328,10 @@ class SEOWorkflowManager:
             if execution_id in self.workflow_executions:
                 self.workflow_executions[execution_id].status = WorkflowStatus.CANCELLED
                 self.workflow_executions[execution_id].end_time = datetime.utcnow()
+
             
             logger.info(f"❌ Workflow execution cancelled: {execution_id}")
+
             return True
         
         return False
@@ -320,6 +343,7 @@ class SEOWorkflowManager:
             if execution.status == WorkflowStatus.RUNNING:
                 execution.status = WorkflowStatus.PAUSED
                 logger.info(f"⏸️ Workflow execution paused: {execution_id}")
+
                 return True
         
         return False
@@ -331,6 +355,7 @@ class SEOWorkflowManager:
             if execution.status == WorkflowStatus.PAUSED:
                 execution.status = WorkflowStatus.RUNNING
                 logger.info(f"▶️ Workflow execution resumed: {execution_id}")
+
                 return True
         
         return False
@@ -340,25 +365,34 @@ class SEOWorkflowManager:
         if workflow_id:
             executions = [
                 ex for ex in self.workflow_executions.values()
+
                 if ex.workflow_id == workflow_id
             ]
         else:
             executions = list(self.workflow_executions.values())
+
         
         if not executions:
             return {"message": "No executions found"}
         
         # Calculer les statistiques
+
         total_executions = len(executions)
+
         completed_executions = len([ex for ex in executions if ex.status == WorkflowStatus.COMPLETED])
+
         failed_executions = len([ex for ex in executions if ex.status == WorkflowStatus.FAILED])
         
         # Calculer les durées
+
         completed_durations = []
         for ex in executions:
             if ex.status == WorkflowStatus.COMPLETED and ex.start_time and ex.end_time:
                 duration = (ex.end_time - ex.start_time).total_seconds()
+
                 completed_durations.append(duration)
+
+
         
         avg_duration = sum(completed_durations) / len(completed_durations) if completed_durations else 0
         
@@ -382,10 +416,12 @@ class SEOWorkflowManager:
             # Mettre à jour le statut
             execution.status = WorkflowStatus.RUNNING
             execution.start_time = datetime.utcnow()
+
             
             logger.info(f"🔄 Starting workflow execution: {workflow_def.name}")
             
             # Construire le graphe de dépendances
+
             dependency_graph = await self._build_dependency_graph(workflow_def.tasks)
             
             # Exécuter les tâches selon les dépendances
@@ -394,22 +430,30 @@ class SEOWorkflowManager:
             # Workflow complété avec succès
             execution.status = WorkflowStatus.COMPLETED
             execution.end_time = datetime.utcnow()
+
             execution.progress_percentage = 100.0
             
             logger.info(f"✅ Workflow execution completed: {workflow_def.name}")
+
             
         except asyncio.CancelledError:
             execution.status = WorkflowStatus.CANCELLED
             execution.end_time = datetime.utcnow()
+
             logger.info(f"❌ Workflow execution cancelled: {workflow_def.name}")
+
             
         except Exception as e:
             execution.status = WorkflowStatus.FAILED
             execution.end_time = datetime.utcnow()
+
             execution.error = str(e)
+
             
             logger.error(f"❌ Workflow execution failed: {workflow_def.name} - {e}")
+
             logger.error(traceback.format_exc())
+
             
         finally:
             # Nettoyer les ressources
@@ -426,17 +470,22 @@ class SEOWorkflowManager:
     ):
         """Exécuter les tâches selon leurs dépendances"""
         workflow_def = self.workflow_definitions[execution.workflow_id]
+
         task_dict = {task.task_id: task for task in workflow_def.tasks}
+
         completed_tasks = set()
+
         running_tasks = {}
         
         while len(completed_tasks) < len(workflow_def.tasks):
             # Vérifier si l'exécution est en pause
             if execution.status == WorkflowStatus.PAUSED:
                 await asyncio.sleep(1)
+
                 continue
             
             # Trouver les tâches prêtes à être exécutées
+
             ready_tasks = []
             for task_id, dependencies in dependency_graph.items():
                 if (task_id not in completed_tasks and 
@@ -445,17 +494,24 @@ class SEOWorkflowManager:
                     ready_tasks.append(task_id)
             
             # Limiter le nombre de tâches concurrentes
+
             available_slots = workflow_def.max_concurrent_tasks - len(running_tasks)
+
+
             ready_tasks = ready_tasks[:available_slots]
             
             # Démarrer les tâches prêtes
             for task_id in ready_tasks:
                 task_def = task_dict[task_id]
+
                 task_execution = await self._create_task_execution(task_def, execution)
+
                 execution.task_executions[task_id] = task_execution
                 
                 # Démarrer l'exécution de la tâche
+
                 task_coroutine = self._execute_single_task(task_def, task_execution, execution)
+
                 running_tasks[task_id] = asyncio.create_task(task_coroutine)
             
             # Attendre qu'au moins une tâche se termine
@@ -468,6 +524,7 @@ class SEOWorkflowManager:
                 # Traiter les tâches terminées
                 for task in done:
                     # Trouver l'ID de la tâche terminée
+
                     completed_task_id = None
                     for task_id, task_ref in running_tasks.items():
                         if task_ref == task:
@@ -476,6 +533,7 @@ class SEOWorkflowManager:
                     
                     if completed_task_id:
                         completed_tasks.add(completed_task_id)
+
                         del running_tasks[completed_task_id]
                         
                         # Mettre à jour le progrès
@@ -490,15 +548,19 @@ class SEOWorkflowManager:
         task_execution: TaskExecution,
         workflow_execution: WorkflowExecution
     ):
-        """Exécuter une tâche unique"""
+        """
+        Exécuter une tâche unique"""
         try:
             task_execution.status = TaskStatus.RUNNING
             task_execution.start_time = datetime.utcnow()
+
             
             logger.debug(f"🔄 Starting task: {task_def.name}")
             
             # Préparer les paramètres de la tâche
+
             task_params = task_def.parameters.copy()
+
             task_params.update({
                 'workflow_context': workflow_execution.context,
                 'execution_id': workflow_execution.execution_id,
@@ -511,25 +573,32 @@ class SEOWorkflowManager:
                     task_def.function(**task_params),
                     timeout=task_def.timeout_seconds
                 )
+
                 
                 task_execution.result = result
                 task_execution.status = TaskStatus.COMPLETED
                 task_execution.end_time = datetime.utcnow()
+
                 
                 if task_execution.start_time:
                     task_execution.duration_seconds = (
                         task_execution.end_time - task_execution.start_time
                     ).total_seconds()
+
                 
                 logger.debug(f"✅ Task completed: {task_def.name}")
+
                 
             except asyncio.TimeoutError:
                 raise Exception(f"Task timeout after {task_def.timeout_seconds} seconds")
+
             
         except Exception as e:
             task_execution.status = TaskStatus.FAILED
             task_execution.error = str(e)
+
             task_execution.end_time = datetime.utcnow()
+
             
             if task_execution.start_time:
                 task_execution.duration_seconds = (
@@ -548,8 +617,10 @@ class SEOWorkflowManager:
                 
                 # Relancer la tâche
                 await self._execute_single_task(task_def, task_execution, workflow_execution)
+
             else:
                 logger.error(f"❌ Task failed: {task_def.name} - {e}")
+
                 raise
     
     async def _create_task_execution(
@@ -575,11 +646,13 @@ class SEOWorkflowManager:
         
         # Valider qu'il n'y a pas de dépendances circulaires
         await self._validate_dependency_graph(graph)
+
         
         return graph
     
     async def _validate_dependency_graph(self, graph: Dict[str, List[str]]):
-        """Valider le graphe de dépendances (pas de cycles)"""
+        """
+        Valider le graphe de dépendances (pas de cycles)"""
         def has_cycle(node, visited, rec_stack):
             visited[node] = True
             rec_stack[node] = True
@@ -593,8 +666,10 @@ class SEOWorkflowManager:
             
             rec_stack[node] = False
             return False
+
         
         visited = {}
+
         rec_stack = {}
         
         for node in graph:
@@ -605,6 +680,7 @@ class SEOWorkflowManager:
     async def _validate_workflow_definition(self, workflow_def: WorkflowDefinition):
         """Valider la définition d'un workflow"""
         # Vérifier l'unicité des IDs de tâches
+
         task_ids = [task.task_id for task in workflow_def.tasks]
         if len(task_ids) != len(set(task_ids)):
             raise ValueError("Duplicate task IDs in workflow")
@@ -620,6 +696,7 @@ class SEOWorkflowManager:
         schedule = workflow_def.schedule
         if not schedule:
             return
+
         
         schedule_config = ScheduleConfig(**schedule)
         self.scheduled_workflows[workflow_def.workflow_id] = {
@@ -632,24 +709,34 @@ class SEOWorkflowManager:
     async def _setup_workflow_trigger(self, workflow_id: str, trigger: Dict[str, Any]):
         """Configurer un trigger de workflow"""
         trigger_type = trigger.get("type")
+
         
         if trigger_type == "metric_threshold":
             # Configurer un trigger basé sur un seuil de métrique
+
             metric_name = trigger.get("metric_name")
+
+
             threshold = trigger.get("threshold")
+
+
             condition = trigger.get("condition", "greater_than")
+
             
             async def metric_trigger(metric_value):
                 if condition == "greater_than" and metric_value > threshold:
                     await self.execute_workflow(workflow_id, triggered_by=f"metric_trigger_{metric_name}")
+
                 elif condition == "less_than" and metric_value < threshold:
                     await self.execute_workflow(workflow_id, triggered_by=f"metric_trigger_{metric_name}")
+
             
             self.triggers[metric_name].append(metric_trigger)
     
     async def _calculate_next_execution(self, schedule_config: ScheduleConfig) -> Optional[datetime]:
         """Calculer la prochaine exécution planifiée"""
         now = datetime.utcnow()
+
         
         if schedule_config.schedule_type == ScheduleType.SCHEDULED and schedule_config.schedule_time:
             return schedule_config.schedule_time
@@ -657,25 +744,29 @@ class SEOWorkflowManager:
         elif schedule_config.schedule_type == ScheduleType.RECURRING and schedule_config.interval_seconds:
             return now + timedelta(seconds=schedule_config.interval_seconds)
         
-        # TODO: Implémenter le parsing des expressions cron
         elif schedule_config.schedule_type == ScheduleType.RECURRING and schedule_config.cron_expression:
             # Simulation: prochaine heure
             return now.replace(minute=0, second=0, microsecond=0) + timedelta(hours=1)
+
         
         return None
     
     async def _task_worker(self, priority: TaskPriority):
-        """Worker pour traiter les tâches d'une priorité donnée"""
+        """
+        Worker pour traiter les tâches d'une priorité donnée"""
         queue = self.task_queues[priority]
         
         while self.is_running:
             try:
                 # Attendre une tâche avec timeout
+
                 task_item = await asyncio.wait_for(queue.get(), timeout=1.0)
                 
                 # Traiter la tâche
                 await self._process_task_item(task_item)
+
                 queue.task_done()
+
                 
             except asyncio.TimeoutError:
                 continue
@@ -687,9 +778,11 @@ class SEOWorkflowManager:
         while self.is_running:
             try:
                 now = datetime.utcnow()
+
                 
                 for workflow_id, schedule_info in self.scheduled_workflows.items():
                     config = schedule_info["config"]
+
                     next_execution = schedule_info["next_execution"]
                     
                     if (config.enabled and 
@@ -708,6 +801,7 @@ class SEOWorkflowManager:
                 
             except Exception as e:
                 logger.error(f"Scheduler worker error: {e}")
+
                 await asyncio.sleep(60)
     
     async def _monitoring_worker(self):
@@ -728,6 +822,7 @@ class SEOWorkflowManager:
                 
             except Exception as e:
                 logger.error(f"Monitoring worker error: {e}")
+
                 await asyncio.sleep(300)
     
     async def _process_task_item(self, task_item: Dict[str, Any]):
@@ -738,6 +833,8 @@ class SEOWorkflowManager:
     async def _cleanup_old_executions(self):
         """Nettoyer les anciennes exécutions"""
         cutoff_time = datetime.utcnow() - timedelta(seconds=self.workflow_cleanup_interval)
+
+
         
         to_remove = []
         for execution_id, execution in self.workflow_executions.items():
@@ -745,6 +842,7 @@ class SEOWorkflowManager:
                 execution.end_time < cutoff_time and
                 execution_id not in self.active_executions):
                 to_remove.append(execution_id)
+
         
         for execution_id in to_remove:
             del self.workflow_executions[execution_id]
@@ -755,23 +853,30 @@ class SEOWorkflowManager:
     async def _check_execution_timeouts(self):
         """Vérifier les timeouts d'exécution"""
         now = datetime.utcnow()
+
         
         for execution_id, execution in self.workflow_executions.items():
             if (execution.status == WorkflowStatus.RUNNING and
                 execution.start_time):
                 
                 workflow_def = self.workflow_definitions.get(execution.workflow_id)
+
                 if workflow_def:
                     elapsed = (now - execution.start_time).total_seconds()
+
                     if elapsed > workflow_def.timeout_seconds:
                         logger.warning(f"⏰ Workflow execution timeout: {execution_id}")
+
                         await self.cancel_execution(execution_id)
     
     async def _update_performance_metrics(self):
         """Mettre à jour les métriques de performance"""
         # Calculer les métriques actuelles
+
         active_count = len(self.active_executions)
+
         total_executions = len(self.workflow_executions)
+
         
         self.performance_stats["active_executions"] = active_count
         self.performance_stats["total_executions"] = total_executions
@@ -781,6 +886,7 @@ class SEOWorkflowManager:
         """Enregistrer les métriques d'exécution"""
         if execution.start_time and execution.end_time:
             duration = (execution.end_time - execution.start_time).total_seconds()
+
             
             self.execution_metrics[execution.workflow_id].append({
                 "execution_id": execution.execution_id,
@@ -817,6 +923,7 @@ class TaskScheduler:
     ) -> str:
         """Planifier une tâche unique"""
         task_id = str(uuid.uuid4())
+
         
         self.scheduled_tasks[task_id] = {
             "task_name": task_name,
@@ -838,6 +945,7 @@ class TaskScheduler:
     ) -> str:
         """Planifier une tâche récurrente"""
         task_id = str(uuid.uuid4())
+
         
         self.recurring_tasks[task_id] = {
             "task_name": task_name,
@@ -879,6 +987,7 @@ class WorkflowOrchestrator:
         chain_id = str(uuid.uuid4())
         
         # Créer un workflow composite
+
         chain_tasks = []
         
         for i, workflow_id in enumerate(workflow_sequence):
@@ -890,6 +999,7 @@ class WorkflowOrchestrator:
                 parameters={"workflow_id": workflow_id},
                 dependencies=[f"workflow_{i-1}_{workflow_sequence[i-1]}"] if i > 0 else []
             )
+
             chain_tasks.append(task_def)
         
         # Créer la définition du workflow chaîné
@@ -899,8 +1009,10 @@ class WorkflowOrchestrator:
             description=f"Workflow chain: {' -> '.join(workflow_sequence)}",
             tasks=chain_tasks
         )
+
         
         await self.workflow_manager.register_workflow(chain_workflow)
+
         
         logger.info(f"🔗 Workflow chain created: {chain_name} ({chain_id})")
         return chain_id
@@ -916,9 +1028,11 @@ class WorkflowOrchestrator:
         # Attendre la completion
         while True:
             execution = await self.workflow_manager.get_execution_status(execution_id)
+
             if execution and execution.status in [WorkflowStatus.COMPLETED, WorkflowStatus.FAILED, WorkflowStatus.CANCELLED]:
                 break
             await asyncio.sleep(1)
+
         
         return execution_id
 

@@ -30,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class EdgeOptimizationStrategy(str, Enum):
-    """Edge optimization strategies."""
+    """
+        Edge optimization strategies."""
     LATENCY_OPTIMIZED = "latency_optimized"
     THROUGHPUT_OPTIMIZED = "throughput_optimized"
     ENERGY_EFFICIENT = "energy_efficient"
@@ -65,7 +66,8 @@ class EdgeInferenceConfig:
 
 @dataclass
 class EdgeInferenceMetrics:
-    """Edge inference performance metrics."""
+    """
+        Edge inference performance metrics."""
     total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
@@ -81,7 +83,8 @@ class EdgeInferenceMetrics:
 
 
 class EdgeInferenceOrchestrator:
-    """Edge AI inference orchestrator.
+    """
+        Edge AI inference orchestrator.
     
     Provides high-level orchestration for edge AI inference with
     optimization strategies, load balancing, and monitoring.
@@ -112,6 +115,7 @@ class EdgeInferenceOrchestrator:
         """Start the edge inference orchestrator."""
         if self.running:
             logger.warning("Edge inference orchestrator already running")
+
             return
         
         self.running = True
@@ -124,6 +128,7 @@ class EdgeInferenceOrchestrator:
             self.background_tasks.append(
                 asyncio.create_task(self._resource_monitor())
             )
+
         
         if self.config.metrics_collection_enabled:
             self.background_tasks.append(
@@ -133,6 +138,7 @@ class EdgeInferenceOrchestrator:
         # Perform model warming if enabled
         if self.config.enable_model_warming:
             asyncio.create_task(self._warm_default_models())
+
         
         logger.info("Edge inference orchestrator started")
     
@@ -146,6 +152,7 @@ class EdgeInferenceOrchestrator:
         # Cancel background tasks
         for task in self.background_tasks:
             task.cancel()
+
             try:
                 await task
             except asyncio.CancelledError:
@@ -155,6 +162,7 @@ class EdgeInferenceOrchestrator:
         
         # Stop the inference engine
         await self.inference_engine.stop()
+
         
         logger.info("Edge inference orchestrator stopped")
     
@@ -168,14 +176,19 @@ class EdgeInferenceOrchestrator:
         """Perform edge-optimized inference."""
         if not self.running:
             raise RuntimeError("Edge inference orchestrator not running")
+
+
         
         start_time = time.time()
+
         
         try:
             # Apply edge optimization strategy
+
             optimized_params = self._apply_optimization_strategy(model_id, input_data)
             
             # Perform inference using the local engine
+
             result = await self.inference_engine.infer(
                 model_id=model_id,
                 input_data=input_data,
@@ -186,17 +199,22 @@ class EdgeInferenceOrchestrator:
             )
             
             # Update metrics
+
             latency_ms = (time.time() - start_time) * 1000
             self._update_request_metrics(latency_ms, success=True)
+
             
             return result
             
         except Exception as e:
             # Update metrics for failed request
+
             latency_ms = (time.time() - start_time) * 1000
             self._update_request_metrics(latency_ms, success=False)
+
             
             logger.error(f"Edge inference failed: {e}")
+
             raise
     
     async def load_model(
@@ -208,16 +226,20 @@ class EdgeInferenceOrchestrator:
         """Load a model for edge inference."""
         try:
             success = await self.inference_engine.load_model(model_id, model_config, priority)
+
             
             if success:
-                logger.info(f"Model {model_id} loaded successfully for edge inference")
+                logger.info(f"Model {model_id} initialized successfully for edge inference")
+
             else:
                 logger.warning(f"Failed to load model {model_id}")
+
             
             return success
             
         except Exception as e:
             logger.error(f"Error loading model {model_id}: {e}")
+
             return False
     
     def get_metrics(self) -> EdgeInferenceMetrics:
@@ -225,8 +247,11 @@ class EdgeInferenceOrchestrator:
         return self.metrics
     
     def get_engine_status(self) -> Dict[str, Any]:
-        """Get comprehensive status of the edge inference system."""
+        """
+        Get comprehensive status of the edge inference system."""
         base_status = self.inference_engine.get_engine_status()
+
+
         
         edge_status = {
             "edge_orchestrator": {
@@ -269,6 +294,7 @@ class EdgeInferenceOrchestrator:
                 "gradient_checkpointing": True,
                 "precision": "int8"
             })
+
         
         return params
     
@@ -288,35 +314,48 @@ class EdgeInferenceOrchestrator:
         
         if self.request_latencies:
             self.metrics.average_latency_ms = sum(self.request_latencies) / len(self.request_latencies)
+
+
             sorted_latencies = sorted(self.request_latencies)
+
+
             n = len(sorted_latencies)
+
             self.metrics.p95_latency_ms = sorted_latencies[int(n * 0.95)] if n > 0 else 0
             self.metrics.p99_latency_ms = sorted_latencies[int(n * 0.99)] if n > 0 else 0
     
     async def _resource_monitor(self):
-        """Monitor system resources."""
+        """
+        Monitor system resources."""
         import psutil
         
         while self.running:
             try:
                 # Update CPU and memory metrics
                 self.metrics.cpu_usage_percent = psutil.cpu_percent(interval=1)
+
+
                 memory = psutil.virtual_memory()
+
                 self.metrics.memory_usage_mb = (memory.total - memory.available) / 1024 / 1024
                 
                 # Try to get GPU metrics if available
                 try:
                     import GPUtil
+
                     gpus = GPUtil.getGPUs()
+
                     if gpus:
                         self.metrics.gpu_usage_percent = gpus[0].load * 100
                 except:
                     self.metrics.gpu_usage_percent = 0
                 
                 await asyncio.sleep(self.config.health_check_interval_seconds)
+
                 
             except Exception as e:
                 logger.error(f"Resource monitoring error: {e}")
+
                 await asyncio.sleep(60)
     
     async def _metrics_updater(self):
@@ -324,8 +363,13 @@ class EdgeInferenceOrchestrator:
         while self.running:
             try:
                 # Calculate requests per second
+
                 current_time = datetime.now()
+
+
                 time_window = timedelta(seconds=60)
+
+
                 recent_requests = [
                     req for req in self.request_history
                     if current_time - req['timestamp'] <= time_window
@@ -339,6 +383,7 @@ class EdgeInferenceOrchestrator:
                 
             except Exception as e:
                 logger.error(f"Metrics updater error: {e}")
+
                 await asyncio.sleep(60)
     
     async def _warm_default_models(self):
@@ -347,6 +392,7 @@ class EdgeInferenceOrchestrator:
             # This is a placeholder for model warming logic
             # In a real implementation, you would load commonly used models
             logger.info("Model warming completed")
+
             
         except Exception as e:
             logger.error(f"Model warming error: {e}")
@@ -364,9 +410,11 @@ async def create_edge_inference_orchestrator(
 
 # Example usage
 async def main():
-    """Example usage of the edge inference orchestrator."""
+    """
+        Example usage of the edge inference orchestrator."""
     try:
         # Create configuration optimized for latency
+
         config = EdgeInferenceConfig(
             optimization_strategy=EdgeOptimizationStrategy.LATENCY_OPTIMIZED,
             max_concurrent_requests=5,
@@ -374,20 +422,29 @@ async def main():
         )
         
         # Create and start orchestrator
+
         orchestrator = await create_edge_inference_orchestrator(config)
+
         
         try:
             # Get status
+
             status = orchestrator.get_engine_status()
+
             print("Edge Inference Orchestrator Status:")
+
             print(json.dumps(status, indent=2, default=str))
             
             # Get metrics
+
             metrics = orchestrator.get_metrics()
+
             print(f"\nCurrent metrics: {asdict(metrics)}")
+
             
         finally:
             await orchestrator.stop()
+
             
     except Exception as e:
         logger.error(f"Example failed: {e}")

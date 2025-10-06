@@ -23,7 +23,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class TaxType(Enum):
-    """Types of taxes"""
+    """
+Types of taxes"""
     INCOME = "income"
     VAT = "vat"
     GST = "gst"
@@ -33,7 +34,8 @@ class TaxType(Enum):
     CARBON = "carbon"
 
 class TaxJurisdiction(Enum):
-    """Tax jurisdictions"""
+    """
+Tax jurisdictions"""
     US = "us"
     EU = "eu"
     UK = "uk"
@@ -44,7 +46,8 @@ class TaxJurisdiction(Enum):
     NETHERLANDS = "netherlands"
 
 class TaxableEntity(Enum):
-    """Taxable entity types"""
+    """
+Taxable entity types"""
     INDIVIDUAL = "individual"
     BUSINESS = "business"
     CORPORATION = "corporation"
@@ -53,7 +56,8 @@ class TaxableEntity(Enum):
 
 @dataclass
 class TaxRate:
-    """Tax rate information"""
+    """
+Tax rate information"""
     rate_id: str
     jurisdiction: TaxJurisdiction
     tax_type: TaxType
@@ -66,7 +70,8 @@ class TaxRate:
 
 @dataclass
 class TaxCalculationResult:
-    """Tax calculation result"""
+    """
+Tax calculation result"""
     calculation_id: str
     gross_amount: Decimal
     net_amount: Decimal
@@ -79,7 +84,8 @@ class TaxCalculationResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class TaxCalculatorCore:
-    """Advanced Tax Calculator Core System"""
+    """
+Advanced Tax Calculator Core System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -95,7 +101,8 @@ class TaxCalculatorCore:
         logger.info(f"Tax Calculator Core initialized - Level: {level}")
 
     def _initialize_default_rates(self):
-        """Initialize default tax rates for common jurisdictions"""
+        """
+Initialize default tax rates for common jurisdictions"""
         default_rates = [
             # US rates
             TaxRate("us_income_standard", TaxJurisdiction.US, TaxType.INCOME, 
@@ -127,7 +134,8 @@ class TaxCalculatorCore:
 
     async def calculate_tax(self, amount: Decimal, jurisdiction: TaxJurisdiction, 
                            entity_type: TaxableEntity, tax_types: List[TaxType] = None) -> TaxCalculationResult:
-        """Calculate tax for given amount and parameters"""
+        """
+Calculate tax for given amount and parameters"""
         try:
             calculation_id = f"calc_{uuid.uuid4().hex[:12]}"
             
@@ -191,7 +199,8 @@ class TaxCalculatorCore:
 
     async def _calculate_tax_by_type(self, amount: Decimal, jurisdiction: TaxJurisdiction, 
                                     entity_type: TaxableEntity, tax_type: TaxType) -> Decimal:
-        """Calculate tax for specific tax type"""
+        """
+Calculate tax for specific tax type"""
         try:
             rate = self._find_applicable_rate(jurisdiction, tax_type, amount)
             if not rate:
@@ -217,7 +226,8 @@ class TaxCalculatorCore:
             return Decimal("0")
 
     def _find_applicable_rate(self, jurisdiction: TaxJurisdiction, tax_type: TaxType, amount: Decimal) -> Optional[TaxRate]:
-        """Find applicable tax rate"""
+        """
+Find applicable tax rate"""
         # Find rates for jurisdiction and tax type
         applicable_rates = [
             rate for rate in self.tax_rates.values()
@@ -238,7 +248,8 @@ class TaxCalculatorCore:
 
     async def _calculate_progressive_tax(self, amount: Decimal, jurisdiction: TaxJurisdiction, 
                                         entity_type: TaxableEntity) -> Decimal:
-        """Calculate progressive tax (for income tax)"""
+        """
+Calculate progressive tax (for income tax)"""
         try:
             # Progressive tax brackets (simplified)
             brackets = {
@@ -283,7 +294,8 @@ class TaxCalculatorCore:
             return amount * Decimal("0.2")  # Fallback to 20%
 
     async def get_tax_compliance_status(self, entity_id: str, jurisdiction: TaxJurisdiction) -> Dict[str, Any]:
-        """Get tax compliance status for entity"""
+        """
+Get tax compliance status for entity"""
         try:
             # Find calculations for entity
             entity_calculations = [
@@ -298,8 +310,6 @@ class TaxCalculatorCore:
             total_calculations = len(entity_calculations)
             total_tax_calculated = sum(calc.total_tax for calc in entity_calculations)
             avg_tax_rate = (total_tax_calculated / sum(calc.gross_amount for calc in entity_calculations)) * 100
-            
-            # Mock compliance score
             compliance_score = min(100, 70 + (total_calculations * 2))  # Improve with more calculations
             
             compliance_status = {
@@ -321,7 +331,8 @@ class TaxCalculatorCore:
             return {"status": "error", "compliance_score": 0}
 
     def _generate_compliance_recommendations(self, score: float, jurisdiction: TaxJurisdiction) -> List[str]:
-        """Generate compliance recommendations"""
+        """
+Generate compliance recommendations"""
         recommendations = []
         
         if score < 60:
@@ -352,7 +363,8 @@ class TaxCalculatorCore:
         return recommendations
 
     async def generate_tax_report(self, entity_id: str, time_period: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Generate tax report for entity and time period"""
+        """
+Generate tax report for entity and time period"""
         try:
             # Filter calculations for entity and time period
             relevant_calculations = [
@@ -416,4 +428,4 @@ __all__ = [
     "TaxCalculationResult"
 ]
 
-logger.info("💰 Tax Calculator Core module loaded")
+logger.info("💰 Tax Calculator Core module initialized")

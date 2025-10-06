@@ -1,4 +1,5 @@
-"""Performance Monitoring Core - Enterprise System Performance Engine
+"""
+Performance Monitoring Core - Enterprise System Performance Engine
 
 Central performance monitoring core for real-time system metrics, health checks,
 and performance optimization with enterprise-grade observability and alerting.
@@ -30,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 # Performance Metrics Types
 class MetricType(Enum):
-    """Performance metric types"""
+    """
+Performance metric types"""
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -39,7 +41,8 @@ class MetricType(Enum):
 
 # Alert Levels
 class AlertLevel(Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -48,7 +51,8 @@ class AlertLevel(Enum):
 
 # Health Status
 class HealthStatus(Enum):
-    """System health status"""
+    """
+System health status"""
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -57,7 +61,8 @@ class HealthStatus(Enum):
 
 # Monitoring Categories
 class MonitoringCategory(Enum):
-    """Monitoring categories"""
+    """
+Monitoring categories"""
     SYSTEM = "system"
     APPLICATION = "application"
     DATABASE = "database"
@@ -67,7 +72,8 @@ class MonitoringCategory(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Performance metric structure"""
+    """
+Performance metric structure"""
     metric_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     category: MonitoringCategory = MonitoringCategory.SYSTEM
@@ -81,7 +87,8 @@ class PerformanceMetric:
     
 @dataclass
 class PerformanceAlert:
-    """Performance alert structure"""
+    """
+Performance alert structure"""
     alert_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     level: AlertLevel = AlertLevel.WARNING
@@ -99,7 +106,8 @@ class PerformanceAlert:
     
 @dataclass
 class HealthCheckResult:
-    """Health check result"""
+    """
+Health check result"""
     check_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     category: MonitoringCategory = MonitoringCategory.SYSTEM
@@ -112,7 +120,8 @@ class HealthCheckResult:
     
 @dataclass
 class PerformanceThreshold:
-    """Performance threshold configuration"""
+    """
+Performance threshold configuration"""
     metric_name: str
     warning_threshold: Optional[float] = None
     error_threshold: Optional[float] = None
@@ -124,7 +133,8 @@ class PerformanceThreshold:
 
 @dataclass
 class PerformanceReport:
-    """Performance analysis report"""
+    """
+Performance analysis report"""
     report_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     generated_at: datetime = field(default_factory=datetime.utcnow)
@@ -148,7 +158,8 @@ class PerformanceMonitoringCore:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None, level: str = "enterprise"):
-        """Initialize Performance Monitoring Core"""
+        """
+Initialize Performance Monitoring Core"""
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -217,7 +228,8 @@ class PerformanceMonitoringCore:
         self.logger.info("Performance Monitoring Core initialized")
         
     def start_monitoring(self):
-        """Start performance monitoring"""
+        """
+Start performance monitoring"""
         
         if self.monitoring_thread and self.monitoring_thread.is_alive():
             return
@@ -248,7 +260,8 @@ class PerformanceMonitoringCore:
         self.logger.info("Performance monitoring started")
         
     def stop_monitoring(self):
-        """Stop performance monitoring"""
+        """
+Stop performance monitoring"""
         
         self._stop_monitoring.set()
         
@@ -264,7 +277,8 @@ class PerformanceMonitoringCore:
         self.logger.info("Performance monitoring stopped")
         
     def _run_monitoring_loop(self):
-        """Main monitoring loop"""
+        """
+Main monitoring loop"""
         
         while not self._stop_monitoring.is_set():
             try:
@@ -292,7 +306,8 @@ class PerformanceMonitoringCore:
                 self._stop_monitoring.wait(10)  # Wait 10 seconds on error
                 
     def _run_health_check_loop(self):
-        """Health check loop"""
+        """
+Health check loop"""
         
         while not self._stop_monitoring.is_set():
             try:
@@ -317,7 +332,8 @@ class PerformanceMonitoringCore:
                 self._stop_monitoring.wait(30)  # Wait 30 seconds on error
                 
     def _run_cleanup_loop(self):
-        """Cleanup loop for old data"""
+        """
+Cleanup loop for old data"""
         
         while not self._stop_monitoring.is_set():
             try:
@@ -335,7 +351,8 @@ class PerformanceMonitoringCore:
                 self._stop_monitoring.wait(300)  # Wait 5 minutes on error
                 
     def _collect_system_metrics(self):
-        """Collect system performance metrics"""
+        """
+Collect system performance metrics"""
         
         try:
             current_time = datetime.utcnow()
@@ -388,7 +405,8 @@ class PerformanceMonitoringCore:
             self.logger.error(f"System metrics collection error: {e}")
             
     def _collect_application_metrics(self):
-        """Collect application-specific metrics"""
+        """
+Collect application-specific metrics"""
         
         try:
             current_time = datetime.utcnow()
@@ -413,7 +431,8 @@ class PerformanceMonitoringCore:
             self.logger.error(f"Application metrics collection error: {e}")
             
     def _add_metric(self, name: str, value: float, unit: str, category: MonitoringCategory, timestamp: datetime, tags: Optional[Dict[str, str]] = None):
-        """Add a metric to the buffer"""
+        """
+Add a metric to the buffer"""
         
         metric = PerformanceMetric(
             name=name,
@@ -431,7 +450,8 @@ class PerformanceMonitoringCore:
         self.monitoring_stats["total_metrics_collected"] += 1
         
     def _check_thresholds(self):
-        """Check metrics against thresholds and trigger alerts"""
+        """
+Check metrics against thresholds and trigger alerts"""
         
         if not self.alerting_enabled:
             return
@@ -490,7 +510,8 @@ class PerformanceMonitoringCore:
             self.logger.error(f"Threshold checking error: {e}")
             
     def _check_threshold_condition(self, value: float, threshold: Optional[float], operator: str) -> bool:
-        """Check if value meets threshold condition"""
+        """
+Check if value meets threshold condition"""
         
         if threshold is None:
             return False
@@ -511,7 +532,8 @@ class PerformanceMonitoringCore:
             return False
             
     def _trigger_alert(self, metric_name: str, level: AlertLevel, actual_value: float, threshold_value: float, metric: PerformanceMetric):
-        """Trigger a performance alert"""
+        """
+Trigger a performance alert"""
         
         try:
             # Check cooldown
@@ -550,7 +572,8 @@ class PerformanceMonitoringCore:
             self.logger.error(f"Alert triggering error: {e}")
             
     def _run_health_check(self, name: str, check_func: Callable) -> HealthCheckResult:
-        """Run a single health check"""
+        """
+Run a single health check"""
         
         start_time = time.time()
         
@@ -588,7 +611,8 @@ class PerformanceMonitoringCore:
             )
             
     def _register_default_health_checks(self):
-        """Register default health checks"""
+        """
+Register default health checks"""
         
         # System health checks
         self.register_health_check("disk_space", self._check_disk_space)
@@ -597,7 +621,8 @@ class PerformanceMonitoringCore:
         self.register_health_check("process_health", self._check_process_health)
         
     def _check_disk_space(self) -> Dict[str, Any]:
-        """Check disk space health"""
+        """
+Check disk space health"""
         
         disk = psutil.disk_usage('/')
         usage_percent = (disk.used / disk.total) * 100
@@ -619,7 +644,8 @@ class PerformanceMonitoringCore:
         }
         
     def _check_memory_usage(self) -> Dict[str, Any]:
-        """Check memory usage health"""
+        """
+Check memory usage health"""
         
         memory = psutil.virtual_memory()
         
@@ -640,7 +666,8 @@ class PerformanceMonitoringCore:
         }
         
     def _check_cpu_usage(self) -> Dict[str, Any]:
-        """Check CPU usage health"""
+        """
+Check CPU usage health"""
         
         cpu_percent = psutil.cpu_percent(interval=1)
         
@@ -660,7 +687,8 @@ class PerformanceMonitoringCore:
         }
         
     def _check_process_health(self) -> Dict[str, Any]:
-        """Check process health"""
+        """
+Check process health"""
         
         try:
             process = psutil.Process()
@@ -688,7 +716,8 @@ class PerformanceMonitoringCore:
             }
             
     def _get_default_thresholds(self) -> Dict[str, PerformanceThreshold]:
-        """Get default performance thresholds"""
+        """
+Get default performance thresholds"""
         
         return {
             "cpu.usage.percent": PerformanceThreshold(
@@ -718,7 +747,8 @@ class PerformanceMonitoringCore:
         }
         
     def _get_threshold_for_metric(self, metric_name: str) -> Optional[PerformanceThreshold]:
-        """Get threshold configuration for a metric"""
+        """
+Get threshold configuration for a metric"""
         
         # Check custom thresholds first
         if metric_name in self.custom_thresholds:
@@ -731,7 +761,8 @@ class PerformanceMonitoringCore:
         return None
         
     def _update_monitoring_stats(self, collection_time: float):
-        """Update monitoring statistics"""
+        """
+Update monitoring statistics"""
         
         self.monitoring_stats["last_collection_time"] = datetime.utcnow()
         
@@ -745,7 +776,8 @@ class PerformanceMonitoringCore:
             )
             
     def _cleanup_old_data(self):
-        """Clean up old metrics and data"""
+        """
+Clean up old metrics and data"""
         
         try:
             cutoff_time = datetime.utcnow() - timedelta(seconds=self.retention_period)
@@ -773,7 +805,8 @@ class PerformanceMonitoringCore:
             self.logger.error(f"Data cleanup error: {e}")
             
     def _cleanup_resolved_alerts(self):
-        """Clean up resolved alerts"""
+        """
+Clean up resolved alerts"""
         
         try:
             # Remove resolved alerts older than 24 hours
@@ -793,15 +826,18 @@ class PerformanceMonitoringCore:
     # Public API methods
     
     def register_health_check(self, name: str, check_func: Callable):
-        """Register a custom health check"""
+        """
+Register a custom health check"""
         self.health_checks[name] = check_func
         
     def set_custom_threshold(self, threshold: PerformanceThreshold):
-        """Set a custom threshold for a metric"""
+        """
+Set a custom threshold for a metric"""
         self.custom_thresholds[threshold.metric_name] = threshold
         
     def get_current_metrics(self, category: Optional[MonitoringCategory] = None) -> List[PerformanceMetric]:
-        """Get current metrics"""
+        """
+Get current metrics"""
         
         if category:
             return list(self.metrics_by_category[category])
@@ -809,7 +845,8 @@ class PerformanceMonitoringCore:
             return list(self.metrics_buffer)
             
     def get_metric_history(self, metric_name: str, time_window: int = 3600) -> List[PerformanceMetric]:
-        """Get metric history for a specific metric"""
+        """
+Get metric history for a specific metric"""
         
         cutoff_time = datetime.utcnow() - timedelta(seconds=time_window)
         
@@ -819,11 +856,13 @@ class PerformanceMonitoringCore:
         ]
         
     def get_active_alerts(self) -> List[PerformanceAlert]:
-        """Get currently active alerts"""
+        """
+Get currently active alerts"""
         return [alert for alert in self.active_alerts.values() if alert.is_active]
         
     def resolve_alert(self, alert_id: str) -> bool:
-        """Resolve an alert"""
+        """
+Resolve an alert"""
         
         if alert_id in self.active_alerts:
             alert = self.active_alerts[alert_id]
@@ -834,11 +873,13 @@ class PerformanceMonitoringCore:
         return False
         
     def get_health_status(self) -> Dict[str, HealthCheckResult]:
-        """Get current health status"""
+        """
+Get current health status"""
         return self.health_status_cache.copy()
         
     def get_overall_health(self) -> HealthStatus:
-        """Get overall system health"""
+        """
+Get overall system health"""
         
         if not self.health_status_cache:
             return HealthStatus.HEALTHY
@@ -855,7 +896,8 @@ class PerformanceMonitoringCore:
             return HealthStatus.HEALTHY
             
     def generate_performance_report(self, time_window: int = 3600) -> PerformanceReport:
-        """Generate a performance report"""
+        """
+Generate a performance report"""
         
         try:
             end_time = datetime.utcnow()
@@ -917,7 +959,8 @@ class PerformanceMonitoringCore:
             return PerformanceReport(name="Error Report")
             
     def _generate_recommendations(self, metrics_summary: Dict[str, Any]) -> List[str]:
-        """Generate performance recommendations"""
+        """
+Generate performance recommendations"""
         
         recommendations = []
         
@@ -950,7 +993,8 @@ class PerformanceMonitoringCore:
         return recommendations
         
     def _identify_bottlenecks(self, metrics_summary: Dict[str, Any]) -> List[str]:
-        """Identify system bottlenecks"""
+        """
+Identify system bottlenecks"""
         
         bottlenecks = []
         
@@ -973,7 +1017,8 @@ class PerformanceMonitoringCore:
         return bottlenecks
         
     def get_monitoring_statistics(self) -> Dict[str, Any]:
-        """Get monitoring statistics"""
+        """
+Get monitoring statistics"""
         
         uptime = time.time() - self.monitoring_stats["system_uptime"]
         

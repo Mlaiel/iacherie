@@ -425,3 +425,53 @@ For licensing, partnerships, or investment opportunities:
 *Copyright © 2025 Fahed Mlaiel. All rights reserved.*
 
 </div>
+---
+
+## 🎯 SYSTÈME D'OPTIMISATION INTELLIGENTE
+
+### 💰 Économisez 75% sur les coûts d'IA tout en maintenant une qualité professionnelle !
+
+Notre système d'orchestration intelligent sélectionne automatiquement le meilleur provider selon vos besoins :
+
+#### 🎨 Génération d'Images
+
+| Qualité | Provider | Coût | Usage |
+|---------|----------|------|-------|
+| **ULTRA** | DALL-E 3 | $0.08 | Marketing premium |
+| **STANDARD** | Leonardo AI | $0.015 | Production courante ✅ |
+| **DRAFT** | Replicate | $0.008 | Tests rapides |
+
+**Exemple : 1000 images = $19.40 au lieu de $80 (économie de 75%)**
+
+#### 💬 Génération de Texte
+
+- **OpenAI** : 9+ modèles (GPT-4o, GPT-4o-mini, o1, etc.)
+- **Claude Sonnet 4.5** : Créativité maximale
+- **Google Gemini** : Économique, multimodal
+- **Cohere** : NLP professionnel
+
+#### 🎵 Intégration Spotify
+
+- Recherche de musique et artistes
+- Recommandations personnalisées
+- Playlists populaires
+- Aperçus audio 30s
+
+### �� APIs Configurées (50+)
+
+✅ **IA & Génération** : OpenAI, Claude, Gemini, DALL-E 3, Leonardo, Replicate  
+✅ **Réseaux Sociaux** : YouTube, Instagram, Facebook, Twitter, Reddit, Discord  
+✅ **Musique & Audio** : Spotify, Freesound  
+✅ **Cloud & Data** : Supabase, Pinecone, Algolia, Redis  
+✅ **Médias** : Unsplash, Freepik, Flaticon  
+✅ **Analytics** : Google Analytics, Sentry, PageSpeed  
+
+### 📖 Documentation Complète
+
+Voir [SYSTEME_OPTIMISATION_INTELLIGENTE.md](./SYSTEME_OPTIMISATION_INTELLIGENTE.md) pour :
+- Guide complet d'utilisation
+- Exemples de code
+- Comparatifs de coûts
+- Bonnes pratiques
+- Statistiques de performance
+

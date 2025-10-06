@@ -34,7 +34,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentProcessingResult:
-    """Result structure for content processing operations"""
+    """
+        Result structure for content processing operations"""
     content_type: str
     processing_type: str
     quality_score: float
@@ -99,19 +100,29 @@ class ContentAgents:
         
         Args:
             music_params: Music generation parameters (genre, tempo, instruments, etc.)
+
             
         Returns:
             ContentProcessingResult: Generated music analysis and metadata
         """
         try:
             genre = music_params.get('genre', 'electronic')
+
+
             tempo = music_params.get('tempo', 120)
+
+
             duration = music_params.get('duration', 180)  # seconds
+
             instruments = music_params.get('instruments', ['synth', 'drums'])
             
             # Simulate music production analysis
+
             complexity_score = len(instruments) * 15 + (tempo / 120) * 20
+
             quality_score = min(100, complexity_score + 40)
+
+
             
             enhancements = [
                 f"Generated {genre} track at {tempo} BPM",
@@ -121,9 +132,9 @@ class ContentAgents:
             
             if quality_score > 80:
                 enhancements.append("Applied advanced harmonic progression")
+
                 enhancements.append("Added dynamic range compression")
-            
-            # Mock output path
+
             output_path = f"/tmp/generated_music_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.mp3"
             
             return ContentProcessingResult(
@@ -143,9 +154,11 @@ class ContentAgents:
                 },
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             logger.error(f"Music production failed: {e}")
+
             raise
     
     async def process_audio(self, audio_data: Dict[str, Any]) -> ContentProcessingResult:
@@ -160,15 +173,25 @@ class ContentAgents:
         """
         try:
             file_path = audio_data.get('file_path', '')
+
+
             processing_type = audio_data.get('processing_type', 'enhance')
+
+
             target_quality = audio_data.get('target_quality', 'high')
             
             # Simulate audio analysis
+
             duration = audio_data.get('duration', 120)
+
+
             sample_rate = audio_data.get('sample_rate', 44100)
+
+
             channels = audio_data.get('channels', 2)
             
             # Calculate quality score based on audio properties
+
             quality_score = 60  # Base score
             if sample_rate >= 44100:
                 quality_score += 15
@@ -176,6 +199,7 @@ class ContentAgents:
                 quality_score += 10
             if duration > 30:
                 quality_score += 15
+
             
             enhancements = []
             if processing_type == 'enhance':
@@ -184,6 +208,7 @@ class ContentAgents:
                     "Normalized audio levels",
                     "Enhanced dynamic range"
                 ])
+
                 quality_score += 10
             elif processing_type == 'master':
                 enhancements.extend([
@@ -191,7 +216,9 @@ class ContentAgents:
                     "Mastered for streaming platforms",
                     "Added subtle compression"
                 ])
+
                 quality_score += 15
+
             
             output_path = f"/tmp/processed_audio_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.wav"
             
@@ -210,9 +237,11 @@ class ContentAgents:
                 },
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             logger.error(f"Audio processing failed: {e}")
+
             raise
     
     # === VIDEO AGENTS ===
@@ -229,16 +258,27 @@ class ContentAgents:
         """
         try:
             file_path = video_data.get('file_path', '')
+
+
             editing_type = video_data.get('editing_type', 'basic')
+
+
             target_format = video_data.get('target_format', 'mp4')
+
+
             resolution = video_data.get('resolution', '1080p')
             
             # Simulate video analysis
+
             duration = video_data.get('duration', 300)  # seconds
+
             fps = video_data.get('fps', 30)
+
+
             has_audio = video_data.get('has_audio', True)
             
             # Calculate quality score
+
             quality_score = 50  # Base score
             if resolution in ['1080p', '4K']:
                 quality_score += 20
@@ -246,6 +286,7 @@ class ContentAgents:
                 quality_score += 15
             if has_audio:
                 quality_score += 15
+
             
             enhancements = []
             if editing_type == 'basic':
@@ -254,6 +295,7 @@ class ContentAgents:
                     "Trimmed unnecessary segments",
                     "Added smooth transitions"
                 ])
+
             elif editing_type == 'advanced':
                 enhancements.extend([
                     "Applied advanced color grading",
@@ -261,6 +303,7 @@ class ContentAgents:
                     "Synchronized audio and video tracks",
                     "Applied noise reduction to audio"
                 ])
+
                 quality_score += 20
             elif editing_type == 'professional':
                 enhancements.extend([
@@ -269,7 +312,9 @@ class ContentAgents:
                     "Multi-layer audio mixing",
                     "Dynamic scene detection and editing"
                 ])
+
                 quality_score += 30
+
             
             output_path = f"/tmp/edited_video_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.{target_format}"
             
@@ -289,9 +334,11 @@ class ContentAgents:
                 },
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             logger.error(f"Video editing failed: {e}")
+
             raise
     
     async def optimize_livestream(self, stream_data: Dict[str, Any]) -> ContentProcessingResult:
@@ -306,12 +353,20 @@ class ContentAgents:
         """
         try:
             platform = stream_data.get('platform', 'twitch')
+
+
             target_bitrate = stream_data.get('target_bitrate', '3000k')
+
+
             resolution = stream_data.get('resolution', '1080p')
+
+
             fps = stream_data.get('fps', 30)
             
             # Calculate optimization score based on platform requirements
+
             quality_score = 70  # Base score for live streaming
+
             
             platform_specs = {
                 'twitch': {'max_bitrate': '6000k', 'recommended_fps': 30},
@@ -324,6 +379,7 @@ class ContentAgents:
                 if fps >= spec['recommended_fps']:
                     quality_score += 15
                 quality_score += 15  # Platform optimization bonus
+
             
             enhancements = [
                 f"Optimized for {platform.title()} streaming",
@@ -337,6 +393,7 @@ class ContentAgents:
                     "Configured low-latency mode",
                     "Optimized encoder settings for quality"
                 ])
+
             
             return ContentProcessingResult(
                 content_type="video",
@@ -344,6 +401,7 @@ class ContentAgents:
                 quality_score=quality_score,
                 enhancements=enhancements,
                 output_path=None,  # Live streams don't have output files
+
                 metadata={
                     'platform': platform,
                     'target_bitrate': target_bitrate,
@@ -353,9 +411,11 @@ class ContentAgents:
                 },
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             logger.error(f"Livestream optimization failed: {e}")
+
             raise
     
     # === IMAGE AGENTS ===
@@ -372,20 +432,31 @@ class ContentAgents:
         """
         try:
             file_path = image_data.get('file_path', '')
+
+
             processing_type = image_data.get('processing_type', 'enhance')
+
+
             target_format = image_data.get('target_format', 'jpg')
             
             # Simulate image analysis
+
             width = image_data.get('width', 1920)
+
+
             height = image_data.get('height', 1080)
+
+
             file_size = image_data.get('file_size', 2048)  # KB
             
             # Calculate quality score
+
             quality_score = 60  # Base score
             if width >= 1920 and height >= 1080:
                 quality_score += 20
             if file_size < 5000:  # Under 5MB
                 quality_score += 10
+
             
             enhancements = []
             if processing_type == 'enhance':
@@ -394,6 +465,7 @@ class ContentAgents:
                     "Adjusted brightness and contrast",
                     "Reduced noise and artifacts"
                 ])
+
                 quality_score += 15
             elif processing_type == 'artistic':
                 enhancements.extend([
@@ -401,6 +473,7 @@ class ContentAgents:
                     "Enhanced colors and saturation",
                     "Added creative filters"
                 ])
+
                 quality_score += 10
             elif processing_type == 'professional':
                 enhancements.extend([
@@ -408,7 +481,9 @@ class ContentAgents:
                     "Advanced sharpening and detail enhancement",
                     "Optimized for print and digital use"
                 ])
+
                 quality_score += 25
+
             
             output_path = f"/tmp/processed_image_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.{target_format}"
             
@@ -426,9 +501,11 @@ class ContentAgents:
                 },
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             logger.error(f"Image processing failed: {e}")
+
             raise
     
     async def generate_thumbnail(self, thumbnail_data: Dict[str, Any]) -> ContentProcessingResult:
@@ -443,26 +520,36 @@ class ContentAgents:
         """
         try:
             content_type = thumbnail_data.get('content_type', 'video')
+
+
             style = thumbnail_data.get('style', 'modern')
+
+
             text_overlay = thumbnail_data.get('text_overlay', '')
+
+
             target_platform = thumbnail_data.get('target_platform', 'youtube')
             
             # Platform-specific optimization
+
             platform_specs = {
                 'youtube': {'size': '1280x720', 'aspect_ratio': '16:9'},
                 'instagram': {'size': '1080x1080', 'aspect_ratio': '1:1'},
                 'tiktok': {'size': '1080x1920', 'aspect_ratio': '9:16'},
                 'twitter': {'size': '1200x675', 'aspect_ratio': '16:9'}
             }
+
             
             spec = platform_specs.get(target_platform, platform_specs['youtube'])
             
             # Calculate quality score based on optimization factors
+
             quality_score = 70
             if text_overlay:
                 quality_score += 10  # Text overlay bonus
             if style in ['modern', 'professional']:
                 quality_score += 15
+
             
             enhancements = [
                 f"Generated {style} style thumbnail",
@@ -472,6 +559,7 @@ class ContentAgents:
             
             if text_overlay:
                 enhancements.append(f"Added text overlay: '{text_overlay[:30]}...'")
+
             
             if quality_score > 85:
                 enhancements.extend([
@@ -479,6 +567,8 @@ class ContentAgents:
                     "Enhanced visual contrast and appeal",
                     "A/B testing ready design"
                 ])
+
+
             
             output_path = f"/tmp/thumbnail_{target_platform}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.jpg"
             
@@ -497,9 +587,11 @@ class ContentAgents:
                 },
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             logger.error(f"Thumbnail generation failed: {e}")
+
             raise
     
     # === TEXT AGENTS ===
@@ -516,12 +608,21 @@ class ContentAgents:
         """
         try:
             content_type = text_data.get('content_type', 'article')
+
+
             topic = text_data.get('topic', 'general')
+
+
             target_length = text_data.get('target_length', 500)
+
+
             tone = text_data.get('tone', 'professional')
+
+
             language = text_data.get('language', 'en')
             
             # Simulate text generation quality assessment
+
             quality_score = 75  # Base score for AI text generation
             
             if target_length >= 300:
@@ -530,6 +631,7 @@ class ContentAgents:
                 quality_score += 10
             if content_type in ['article', 'blog_post']:
                 quality_score += 5
+
             
             enhancements = [
                 f"Generated {content_type} on '{topic}'",
@@ -543,8 +645,7 @@ class ContentAgents:
                     "Enhanced readability and engagement",
                     "Added relevant keywords and phrases"
                 ])
-            
-            # Mock generated content
+
             output_path = f"/tmp/generated_text_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.txt"
             
             return ContentProcessingResult(
@@ -563,9 +664,11 @@ class ContentAgents:
                 },
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             logger.error(f"Text generation failed: {e}")
+
             raise
     
     async def generate_subtitles(self, subtitle_data: Dict[str, Any]) -> ContentProcessingResult:
@@ -580,19 +683,29 @@ class ContentAgents:
         """
         try:
             video_file = subtitle_data.get('video_file', '')
+
+
             source_language = subtitle_data.get('source_language', 'en')
+
+
             target_languages = subtitle_data.get('target_languages', ['en'])
+
+
             include_timestamps = subtitle_data.get('include_timestamps', True)
             
             # Simulate subtitle generation analysis
+
             video_duration = subtitle_data.get('duration', 300)  # seconds
+
             estimated_words = video_duration * 2.5  # Average speaking rate
+
             
             quality_score = 80  # Base score for subtitle generation
             if len(target_languages) > 1:
                 quality_score += 10  # Multi-language bonus
             if include_timestamps:
                 quality_score += 5
+
             
             enhancements = [
                 f"Generated subtitles for {video_duration//60}:{video_duration%60:02d} video",
@@ -602,12 +715,16 @@ class ContentAgents:
             
             if include_timestamps:
                 enhancements.append("Included precise timestamps")
+
             
             enhancements.append(f"Estimated {int(estimated_words)} words processed")
+
+
             
             output_files = []
             for lang in target_languages:
                 output_files.append(f"/tmp/subtitles_{lang}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.srt")
+
             
             return ContentProcessingResult(
                 content_type="text",
@@ -625,9 +742,11 @@ class ContentAgents:
                 },
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             logger.error(f"Subtitle generation failed: {e}")
+
             raise
     
     # === CONTENT OPTIMIZATION & MODERATION ===
@@ -644,11 +763,17 @@ class ContentAgents:
         """
         try:
             content_type = content_data.get('content_type', 'mixed')
+
+
             target_platform = content_data.get('target_platform', 'youtube')
+
+
             optimization_goals = content_data.get('goals', ['engagement', 'reach'])
             
             # Calculate optimization score
+
             quality_score = 65  # Base optimization score
+
             
             platform_bonuses = {
                 'youtube': 15,
@@ -658,6 +783,7 @@ class ContentAgents:
             }
             
             quality_score += platform_bonuses.get(target_platform, 5)
+
             
             if 'seo' in optimization_goals:
                 quality_score += 10
@@ -665,6 +791,7 @@ class ContentAgents:
                 quality_score += 8
             if 'reach' in optimization_goals:
                 quality_score += 7
+
             
             enhancements = [
                 f"Optimized for {target_platform.title()} platform",
@@ -678,6 +805,7 @@ class ContentAgents:
                     "Optimized for algorithm preferences",
                     "Enhanced for maximum engagement"
                 ])
+
             
             return ContentProcessingResult(
                 content_type=content_type,
@@ -685,6 +813,7 @@ class ContentAgents:
                 quality_score=min(100, quality_score),
                 enhancements=enhancements,
                 output_path=None,  # Optimization doesn't create new files
+
                 metadata={
                     'target_platform': target_platform,
                     'optimization_goals': optimization_goals,
@@ -692,9 +821,11 @@ class ContentAgents:
                 },
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             logger.error(f"Content optimization failed: {e}")
+
             raise
     
     async def moderate_content(self, content_data: Dict[str, Any]) -> ContentProcessingResult:
@@ -709,20 +840,27 @@ class ContentAgents:
         """
         try:
             content_type = content_data.get('content_type', 'text')
+
+
             content_source = content_data.get('source', '')
+
+
             moderation_level = content_data.get('moderation_level', 'standard')
             
             # Simulate content moderation analysis
+
             safety_score = 85  # Base safety score (higher is safer)
-            
-            # Mock safety checks
+
             flags = []
             if 'inappropriate' in content_source.lower():
                 flags.append('potentially_inappropriate')
+
                 safety_score -= 20
             if 'spam' in content_source.lower():
                 flags.append('spam_detected')
+
                 safety_score -= 15
+
             
             enhancements = [
                 f"Moderated {content_type} content",
@@ -732,15 +870,20 @@ class ContentAgents:
             
             if flags:
                 enhancements.append(f"Flags detected: {', '.join(flags)}")
+
             else:
                 enhancements.append("No safety concerns detected")
+
             
             if safety_score > 90:
                 enhancements.append("Content approved for all audiences")
+
             elif safety_score > 70:
                 enhancements.append("Content approved with minor recommendations")
+
             else:
                 enhancements.append("Content requires review before publication")
+
             
             return ContentProcessingResult(
                 content_type=content_type,
@@ -756,9 +899,11 @@ class ContentAgents:
                 },
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             logger.error(f"Content moderation failed: {e}")
+
             raise
     
     # === COMPREHENSIVE CONTENT PROCESSING ===
@@ -775,17 +920,21 @@ class ContentAgents:
         """
         try:
             results = {}
+
             tasks = []
             
             # Process different content types
             if 'audio' in content_data:
                 tasks.append(('audio_processing', self.process_audio(content_data['audio'])))
+
             
             if 'video' in content_data:
                 tasks.append(('video_editing', self.edit_video(content_data['video'])))
+
             
             if 'image' in content_data:
                 tasks.append(('image_processing', self.process_image(content_data['image'])))
+
             
             if 'text' in content_data:
                 tasks.append(('text_generation', self.generate_text(content_data['text'])))
@@ -793,6 +942,7 @@ class ContentAgents:
             # Content optimization and moderation for all content
             if content_data:
                 tasks.append(('content_optimization', self.optimize_content(content_data)))
+
                 tasks.append(('content_moderation', self.moderate_content(content_data)))
             
             # Execute all processing tasks
@@ -801,12 +951,14 @@ class ContentAgents:
                     results[task_name] = await task_coro
                 except Exception as e:
                     logger.error(f"Failed to complete {task_name}: {e}")
+
                     results[task_name] = None
             
             return results
             
         except Exception as e:
             logger.error(f"Multi-format content processing failed: {e}")
+
             raise
     
     def get_supported_formats(self) -> Dict[str, List[str]]:
@@ -814,11 +966,13 @@ class ContentAgents:
         return self._supported_formats.copy()
     
     def get_quality_standards(self) -> Dict[str, Dict[str, Any]]:
-        """Get quality standards for each content type"""
+        """
+        Get quality standards for each content type"""
         return self._quality_standards.copy()
     
     def get_agent_capabilities(self) -> List[str]:
-        """Get list of all content agent capabilities"""
+        """
+        Get list of all content agent capabilities"""
         return [
             "music_production",
             "audio_processing",
@@ -847,33 +1001,41 @@ class ContentAgents:
     async def optimize_content(self, content: str, optimization_goals: List[str]) -> ContentProcessingResult:
         """
         Content Optimizer Agent - Performance optimization (agent_content_optimizer.py)
+
         
         Args:
             content: Content to optimize
             optimization_goals: List of optimization targets (engagement, seo, readability, etc.)
+
             
         Returns:
             ContentProcessingResult: Optimized content analysis and suggestions
         """
         try:
             # Analyze content for optimization opportunities
+
             enhancements = []
+
             quality_score = 70  # Base score
             
             if "engagement" in optimization_goals:
                 enhancements.append("Added engagement-focused keywords and call-to-actions")
+
                 quality_score += 10
                 
             if "seo" in optimization_goals:
                 enhancements.append("Optimized for search engine visibility")
+
                 quality_score += 8
                 
             if "readability" in optimization_goals:
                 enhancements.append("Improved sentence structure and clarity")
+
                 quality_score += 7
                 
             if "viral" in optimization_goals:
                 enhancements.append("Incorporated viral content patterns and triggers")
+
                 quality_score += 12
             
             return ContentProcessingResult(
@@ -890,14 +1052,17 @@ class ContentAgents:
                 },
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             logger.error(f"Content optimization failed: {e}")
+
             raise
     
     async def generate_hashtags(self, content: str, platform: str = "instagram", count: int = 10) -> ContentProcessingResult:
         """
         Hashtag Generator Agent - AI-powered hashtag generation (agent_hashtag_generator.py)
+
         
         Args:
             content: Content to generate hashtags for
@@ -909,26 +1074,31 @@ class ContentAgents:
         """
         try:
             # Simulate hashtag generation based on content analysis
+
             base_hashtags = [
                 "#content", "#creative", "#inspiration", "#trending", "#viral",
                 "#engagement", "#community", "#lifestyle", "#amazing", "#beautiful"
             ]
             
             # Platform-specific hashtags
+
             platform_hashtags = {
                 "instagram": ["#instadaily", "#photooftheday", "#instagood", "#instagrammers"],
                 "tiktok": ["#fyp", "#foryou", "#trending", "#viral"],
                 "twitter": ["#trending", "#discussion", "#news", "#update"],
                 "linkedin": ["#professional", "#business", "#networking", "#career"]
             }
+
             
             generated_hashtags = base_hashtags[:count//2] + platform_hashtags.get(platform, [])[:count//2]
+
             
             enhancements = [
                 f"Generated {len(generated_hashtags)} optimized hashtags for {platform}",
                 "Analyzed content keywords and trending topics",
                 "Balanced popular and niche hashtags for optimal reach"
             ]
+
             
             quality_score = 85 + (count * 0.5)  # Higher score for more comprehensive hashtag sets
             
@@ -946,37 +1116,52 @@ class ContentAgents:
                 },
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             logger.error(f"Hashtag generation failed: {e}")
+
             raise
     
     async def write_caption(self, content_context: Dict[str, Any]) -> ContentProcessingResult:
         """
         Caption Writer Agent - Intelligent caption creation (agent_caption_writer.py)
+
         
         Args:
             content_context: Context about the content (type, mood, audience, etc.)
+
             
         Returns:
             ContentProcessingResult: Generated caption with optimization suggestions
         """
         try:
             content_type = content_context.get("type", "general")
+
+
             mood = content_context.get("mood", "neutral")
+
+
             audience = content_context.get("audience", "general")
+
+
             max_length = content_context.get("max_length", 150)
             
             # Generate caption based on context
+
             caption_templates = {
                 "inspirational": "✨ {content} Let this remind you that every day is a new opportunity to grow and shine! 💫",
                 "educational": "📚 Here's something interesting: {content} What do you think about this? Share your thoughts below! 💭",
                 "promotional": "🎉 Exciting news! {content} Don't miss out on this amazing opportunity! Link in bio 🔗",
                 "personal": "💕 {content} Grateful for these moments and the amazing people in my life! ✨"
             }
+
             
             base_caption = caption_templates.get(mood, "{content}")
+
+
             generated_caption = base_caption.format(content=content_context.get("description", "Amazing content"))
+
             
             if len(generated_caption) > max_length:
                 generated_caption = generated_caption[:max_length-3] + "..."
@@ -987,8 +1172,10 @@ class ContentAgents:
                 "Added relevant emojis for visual appeal",
                 "Included call-to-action elements"
             ]
+
             
             quality_score = 82 + (10 if mood != "neutral" else 0)
+
             
             return ContentProcessingResult(
                 content_type="text",
@@ -1005,38 +1192,50 @@ class ContentAgents:
                 },
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             logger.error(f"Caption writing failed: {e}")
+
             raise
     
     async def create_story(self, story_params: Dict[str, Any]) -> ContentProcessingResult:
         """
         Story Teller Agent - Narrative and storytelling creation (agent_story_teller.py)
+
         
         Args:
             story_params: Story parameters (genre, length, audience, theme, etc.)
+
             
         Returns:
             ContentProcessingResult: Generated story with narrative analysis
         """
         try:
             genre = story_params.get("genre", "inspirational")
+
+
             length = story_params.get("length", "short")  # short, medium, long
+
             theme = story_params.get("theme", "personal growth")
+
+
             audience = story_params.get("audience", "general")
             
             # Story structure templates
+
             story_structures = {
                 "inspirational": "Once, {protagonist} faced {challenge}. Through {journey}, they discovered {lesson}. Today, {outcome}.",
                 "educational": "Let me tell you about {topic}. It started with {beginning}, then {development}, and finally {conclusion}.",
                 "personal": "I remember when {memory}. It taught me that {lesson}. Now I {current_state}.",
                 "adventure": "The journey began when {start}. Along the way, {obstacles} challenged us. But in the end, {triumph}."
             }
+
             
             story_template = story_structures.get(genre, story_structures["inspirational"])
             
             # Generate story elements based on theme
+
             story_elements = {
                 "protagonist": "a determined creator",
                 "challenge": "overwhelming obstacles",
@@ -1044,8 +1243,11 @@ class ContentAgents:
                 "lesson": f"the power of {theme}",
                 "outcome": "they achieved their dreams"
             }
+
             
             generated_story = story_template.format(**story_elements)
+
+
             
             enhancements = [
                 f"Created {genre} story with {theme} theme",
@@ -1053,6 +1255,7 @@ class ContentAgents:
                 "Optimized for audience engagement",
                 "Balanced emotion and action elements"
             ]
+
             
             quality_score = 88 if genre != "general" else 75
             
@@ -1071,38 +1274,52 @@ class ContentAgents:
                 },
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             logger.error(f"Story creation failed: {e}")
+
             raise
     
     async def generate_reply(self, context: Dict[str, Any]) -> ContentProcessingResult:
         """
         Reply Generator Agent - Automated response generation (agent_reply_generator.py)
+
         
         Args:
             context: Reply context (original_message, tone, purpose, etc.)
+
             
         Returns:
             ContentProcessingResult: Generated reply with engagement optimization
         """
         try:
             original_message = context.get("original_message", "")
+
+
             tone = context.get("tone", "friendly")
+
+
             purpose = context.get("purpose", "engage")  # engage, support, promote, educate
+
             max_length = context.get("max_length", 100)
             
             # Reply templates based on purpose
+
             reply_templates = {
                 "engage": "Thanks for sharing! {response} What's your experience with this? 🤔",
                 "support": "I understand your perspective! {response} Feel free to reach out if you need more help! 💛",
                 "promote": "Great point! {response} You might also be interested in {suggestion}. Check it out! 🔗",
                 "educate": "Excellent question! {response} Here's what I've learned about this topic... 📚"
             }
+
             
             response_content = f"I really appreciate your thoughtful comment about {original_message[:50]}..."
             template = reply_templates.get(purpose, reply_templates["engage"])
+
+
             generated_reply = template.format(response=response_content, suggestion="our latest content")
+
             
             if len(generated_reply) > max_length:
                 generated_reply = generated_reply[:max_length-3] + "..."
@@ -1113,8 +1330,10 @@ class ContentAgents:
                 "Added engagement elements and emojis",
                 "Optimized length for platform requirements"
             ]
+
             
             quality_score = 80 + (5 if purpose != "general" else 0) + (5 if tone != "neutral" else 0)
+
             
             return ContentProcessingResult(
                 content_type="text",
@@ -1131,28 +1350,39 @@ class ContentAgents:
                 },
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             logger.error(f"Reply generation failed: {e}")
+
             raise
     
     async def predict_viral_potential(self, content: Dict[str, Any]) -> ContentProcessingResult:
         """
         Viral Predictor Agent - Viral content prediction (agent_viral_predictor.py)
+
         
         Args:
             content: Content to analyze (text, metadata, context, etc.)
+
             
         Returns:
             ContentProcessingResult: Viral potential analysis and optimization suggestions
         """
         try:
             content_text = content.get("text", "")
+
+
             content_type = content.get("type", "text")
+
+
             platform = content.get("platform", "general")
+
+
             timing = content.get("timing", "optimal")
             
             # Viral factors analysis
+
             viral_factors = {
                 "emotional_appeal": 0,
                 "shareability": 0,
@@ -1162,8 +1392,11 @@ class ContentAgents:
             }
             
             # Analyze emotional appeal
+
             emotional_keywords = ["amazing", "incredible", "shocking", "beautiful", "inspiring", "funny"]
+
             emotional_score = sum(1 for word in emotional_keywords if word.lower() in content_text.lower())
+
             viral_factors["emotional_appeal"] = min(emotional_score * 20, 100)
             
             # Analyze shareability
@@ -1175,6 +1408,7 @@ class ContentAgents:
                 viral_factors["shareability"] = 40
             
             # Platform-specific scoring
+
             platform_multipliers = {
                 "tiktok": 1.3,
                 "instagram": 1.2,
@@ -1182,9 +1416,14 @@ class ContentAgents:
                 "facebook": 1.0,
                 "linkedin": 0.8
             }
+
             
             base_viral_score = sum(viral_factors.values()) / len(viral_factors)
+
+
             viral_score = base_viral_score * platform_multipliers.get(platform, 1.0)
+
+
             
             enhancements = [
                 f"Analyzed viral potential: {viral_score:.1f}/100",
@@ -1195,10 +1434,13 @@ class ContentAgents:
             
             if viral_score > 80:
                 enhancements.append("High viral potential detected!")
+
             elif viral_score > 60:
                 enhancements.append("Good viral potential with optimization")
+
             else:
                 enhancements.append("Consider viral optimization strategies")
+
             
             return ContentProcessingResult(
                 content_type=content_type,
@@ -1219,14 +1461,17 @@ class ContentAgents:
                 },
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             logger.error(f"Viral prediction failed: {e}")
+
             raise
     
     async def schedule_content(self, content_data: Dict[str, Any]) -> ContentProcessingResult:
         """
         Content Scheduler Agent - Optimal scheduling (agent_content_scheduler.py)
+
         
         Args:
             content_data: Content and scheduling parameters
@@ -1236,11 +1481,19 @@ class ContentAgents:
         """
         try:
             platform = content_data.get("platform", "instagram")
+
+
             content_type = content_data.get("content_type", "post")
+
+
             audience_timezone = content_data.get("audience_timezone", "UTC")
+
+
             frequency = content_data.get("frequency", "daily")
             
             # Platform-specific optimal times (simplified)
+
+
             optimal_times = {
                 "instagram": ["09:00", "12:00", "17:00", "20:00"],
                 "tiktok": ["06:00", "10:00", "19:00", "21:00"],
@@ -1248,10 +1501,12 @@ class ContentAgents:
                 "facebook": ["09:00", "13:00", "15:00"],
                 "linkedin": ["08:00", "12:00", "17:00"]
             }
+
             
             platform_times = optimal_times.get(platform, optimal_times["instagram"])
             
             # Generate schedule recommendations
+
             schedule_recommendations = []
             for time in platform_times:
                 schedule_recommendations.append({
@@ -1259,6 +1514,8 @@ class ContentAgents:
                     "engagement_prediction": "high" if time in ["12:00", "20:00"] else "medium",
                     "audience_activity": "peak" if time in ["17:00", "20:00"] else "active"
                 })
+
+
             
             enhancements = [
                 f"Generated optimal schedule for {platform}",
@@ -1266,6 +1523,7 @@ class ContentAgents:
                 "Considered platform-specific engagement patterns",
                 f"Optimized for {frequency} posting frequency"
             ]
+
             
             quality_score = 85 if len(schedule_recommendations) >= 3 else 75
             
@@ -1284,9 +1542,11 @@ class ContentAgents:
                 },
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             logger.error(f"Content scheduling failed: {e}")
+
             raise
 
 

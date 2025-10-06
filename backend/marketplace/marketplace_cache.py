@@ -33,7 +33,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class CacheLayer(Enum):
-    """Cache layer enumeration"""
+    """
+        Cache layer enumeration"""
     L1_MEMORY = "l1_memory"           # In-memory cache (fastest)
     L2_REDIS = "l2_redis"             # Redis cache (fast, distributed)
     L3_DATABASE = "l3_database"       # Database cache (persistent)
@@ -80,7 +81,8 @@ class CacheEntry:
 
 @dataclass
 class CacheStats:
-    """Cache statistics data structure"""
+    """
+        Cache statistics data structure"""
     hits: int = 0
     misses: int = 0
     evictions: int = 0
@@ -92,7 +94,8 @@ class CacheStats:
 
 @dataclass
 class CacheConfig:
-    """Cache configuration"""
+    """
+        Cache configuration"""
     redis_host: str = "localhost"
     redis_port: int = 6379
     redis_db: int = 0
@@ -112,36 +115,44 @@ class MockRedisClient:
         self.expiry: Dict[str, datetime] = {}
     
     async def get(self, key: str) -> Optional[str]:
-        """Get value from mock Redis"""
+        """
+        Get value from mock Redis"""
         if key in self.expiry and datetime.utcnow() > self.expiry[key]:
             await self.delete(key)
+
             return None
         return self.data.get(key)
     
     async def set(self, key: str, value: str, ex: int = None) -> bool:
-        """Set value in mock Redis"""
+        """
+        Set value in mock Redis"""
         self.data[key] = value
         if ex:
             self.expiry[key] = datetime.utcnow() + timedelta(seconds=ex)
         return True
     
     async def delete(self, key: str) -> bool:
-        """Delete key from mock Redis"""
+        """
+        Delete key from mock Redis"""
         self.data.pop(key, None)
         self.expiry.pop(key, None)
         return True
     
     async def exists(self, key: str) -> bool:
-        """Check if key exists in mock Redis"""
+        """
+        Check if key exists in mock Redis"""
         if key in self.expiry and datetime.utcnow() > self.expiry[key]:
             await self.delete(key)
+
             return False
         return key in self.data
     
     async def expire(self, key: str, seconds: int) -> bool:
-        """Set expiry for key in mock Redis"""
+        """
+        Set expiry for key in mock Redis"""
         if key in self.data:
             self.expiry[key] = datetime.utcnow() + timedelta(seconds=seconds)
+
             return True
         return False
     
@@ -159,7 +170,8 @@ class MockRedisClient:
         return True
 
 class MarketplaceCacheManager:
-    """Enterprise marketplace caching system"""
+    """
+        Enterprise marketplace caching system"""
     
     def __init__(self, config: CacheConfig = None):
         self.config = config or CacheConfig()
@@ -184,16 +196,22 @@ class MarketplaceCacheManager:
         """Initialize cache connections"""
         try:
             # Initialize Redis client (mock for now)
+
             self.redis_client = MockRedisClient()
             
             # Test connection
             await self.redis_client.set("test_connection", "ok", ex=1)
+
+
             test_value = await self.redis_client.get("test_connection")
+
             
             if test_value == "ok":
                 logger.info("✅ Cache connections established")
+
             else:
                 logger.warning("⚠️ Cache connection test failed")
+
                 
         except Exception as e:
             logger.error(f"Cache initialization error: {e}")
@@ -204,38 +222,55 @@ class MarketplaceCacheManager:
         """Get value from cache with multi-layer strategy"""
         try:
             start_time = datetime.utcnow()
+
+
             cache_key = CacheKey(key=key, namespace=namespace)
+
+
             full_key = cache_key.full_key()
             
             # Try L1 cache first (memory)
+
             if full_key in self.l1_cache:
                 entry = self.l1_cache[full_key]
                 if not self._is_expired(entry):
                     entry.access_count += 1
                     entry.last_accessed = datetime.utcnow()
+
                     self._record_hit(start_time)
+
                     return self._deserialize(entry.value)
+
                 else:
                     # Remove expired entry
                     del self.l1_cache[full_key]
             
             # Try L2 cache (Redis)
+
             if self.redis_client:
                 redis_value = await self.redis_client.get(full_key)
+
                 if redis_value:
                     # Cache hit in Redis, promote to L1
+
                     value = self._deserialize(redis_value)
+
                     await self._store_l1(cache_key, value)
+
                     self._record_hit(start_time)
+
                     return value
             
             # Cache miss
             self._record_miss(start_time)
+
             return None
             
         except Exception as e:
             logger.error(f"Cache get error for key {key}: {e}")
+
             self._record_miss(start_time)
+
             return None
     
     async def set(self, key: str, value: Any, ttl: int = None, namespace: str = "marketplace") -> bool:
@@ -251,20 +286,26 @@ class MarketplaceCacheManager:
             await self._store_l1(cache_key, value)
             
             # Store in L2 cache (Redis)
+
             if self.redis_client:
                 await self._store_l2(cache_key, value)
+
             
             logger.debug(f"Cached value for key: {cache_key.full_key()}")
+
             return True
             
         except Exception as e:
             logger.error(f"Cache set error for key {key}: {e}")
+
             return False
     
     async def delete(self, key: str, namespace: str = "marketplace") -> bool:
         """Delete value from all cache layers"""
         try:
             cache_key = CacheKey(key=key, namespace=namespace)
+
+
             full_key = cache_key.full_key()
             
             # Remove from L1 cache
@@ -272,14 +313,18 @@ class MarketplaceCacheManager:
                 del self.l1_cache[full_key]
             
             # Remove from L2 cache (Redis)
+
             if self.redis_client:
                 await self.redis_client.delete(full_key)
+
             
             logger.debug(f"Deleted cache key: {full_key}")
+
             return True
             
         except Exception as e:
             logger.error(f"Cache delete error for key {key}: {e}")
+
             return False
     
     async def invalidate_pattern(self, pattern: str, namespace: str = "marketplace") -> int:
@@ -289,29 +334,36 @@ class MarketplaceCacheManager:
             invalidated_count = 0
             
             # Invalidate L1 cache
+
             keys_to_remove = [k for k in self.l1_cache.keys() if self._matches_pattern(k, full_pattern)]
             for key in keys_to_remove:
                 del self.l1_cache[key]
                 invalidated_count += 1
             
             # Invalidate L2 cache (Redis)
+
             if self.redis_client:
                 redis_keys = await self.redis_client.keys(full_pattern)
+
                 for key in redis_keys:
                     await self.redis_client.delete(key)
+
                     invalidated_count += 1
             
             logger.info(f"Invalidated {invalidated_count} cache keys matching pattern: {pattern}")
+
             return invalidated_count
             
         except Exception as e:
             logger.error(f"Cache pattern invalidation error: {e}")
+
             return 0
     
     def _matches_pattern(self, key: str, pattern: str) -> bool:
         """Check if key matches pattern"""
         # Simple pattern matching (replace * with any characters)
         import re
+
         regex_pattern = pattern.replace("*", ".*")
         return bool(re.match(regex_pattern, key))
     
@@ -319,6 +371,8 @@ class MarketplaceCacheManager:
         """Store value in L1 memory cache"""
         try:
             serialized_value = self._serialize(value)
+
+
             entry = CacheEntry(
                 key=cache_key.full_key(),
                 value=serialized_value,
@@ -331,6 +385,7 @@ class MarketplaceCacheManager:
                 self.l1_cache[cache_key.full_key()] = entry
             else:
                 await self._evict_l1_entries()
+
                 self.l1_cache[cache_key.full_key()] = entry
                 
         except Exception as e:
@@ -340,6 +395,7 @@ class MarketplaceCacheManager:
         """Store value in L2 Redis cache"""
         try:
             serialized_value = self._serialize(value)
+
             await self.redis_client.set(
                 cache_key.full_key(), 
                 serialized_value, 
@@ -351,18 +407,21 @@ class MarketplaceCacheManager:
     def _check_memory_limit(self, new_entry: CacheEntry) -> bool:
         """Check if adding new entry would exceed memory limit"""
         current_usage = sum(entry.size_bytes for entry in self.l1_cache.values())
+
         max_usage = self.config.max_memory_mb * 1024 * 1024
         
         return (current_usage + new_entry.size_bytes) <= max_usage
     
     async def _evict_l1_entries(self):
-        """Evict entries from L1 cache based on strategy"""
+        """
+        Evict entries from L1 cache based on strategy"""
         try:
             if self.invalidation_strategy == InvalidationStrategy.LRU:
                 # Remove least recently used
                 if self.l1_cache:
                     lru_key = min(self.l1_cache.keys(), 
                                  key=lambda k: self.l1_cache[k].last_accessed)
+
                     del self.l1_cache[lru_key]
                     self.stats.evictions += 1
             
@@ -371,6 +430,7 @@ class MarketplaceCacheManager:
                 if self.l1_cache:
                     lfu_key = min(self.l1_cache.keys(), 
                                  key=lambda k: self.l1_cache[k].access_count)
+
                     del self.l1_cache[lfu_key]
                     self.stats.evictions += 1
             
@@ -384,15 +444,18 @@ class MarketplaceCacheManager:
         return False
     
     def _serialize(self, value: Any) -> str:
-        """Serialize value for caching"""
+        """
+        Serialize value for caching"""
         try:
             if self.config.serialization_format == "json":
                 return json.dumps(value, default=str)
+
             else:
                 # Default to JSON
                 return json.dumps(value, default=str)
         except Exception as e:
             logger.error(f"Serialization error: {e}")
+
             return str(value)
     
     def _deserialize(self, value: str) -> Any:
@@ -400,11 +463,13 @@ class MarketplaceCacheManager:
         try:
             if self.config.serialization_format == "json":
                 return json.loads(value)
+
             else:
                 # Default to JSON
                 return json.loads(value)
         except Exception as e:
             logger.error(f"Deserialization error: {e}")
+
             return value
     
     def _record_hit(self, start_time: datetime):
@@ -415,14 +480,16 @@ class MarketplaceCacheManager:
         self._update_hit_rate()
     
     def _record_miss(self, start_time: datetime):
-        """Record cache miss statistics"""
+        """
+        Record cache miss statistics"""
         self.stats.misses += 1
         self.stats.total_requests += 1
         self._record_response_time(start_time)
         self._update_hit_rate()
     
     def _record_response_time(self, start_time: datetime):
-        """Record response time for performance tracking"""
+        """
+        Record response time for performance tracking"""
         response_time = (datetime.utcnow() - start_time).total_seconds() * 1000
         self.response_times.append(response_time)
         
@@ -434,25 +501,33 @@ class MarketplaceCacheManager:
         self.stats.avg_response_time_ms = sum(self.response_times) / len(self.response_times)
     
     def _update_hit_rate(self):
-        """Update cache hit rate"""
+        """
+        Update cache hit rate"""
         if self.stats.total_requests > 0:
             self.stats.hit_rate = self.stats.hits / self.stats.total_requests
     
     async def warm_cache(self, data_loader_func, key_patterns: List[str]):
-        """Warm cache with frequently accessed data"""
+        """
+        Warm cache with frequently accessed data"""
         try:
             logger.info("🔥 Starting cache warming process...")
+
+
             warmed_count = 0
             
             for pattern in key_patterns:
                 # Load data using provided function
+
                 data_items = await data_loader_func(pattern)
+
                 
                 for key, value in data_items.items():
                     await self.set(key, value)
+
                     warmed_count += 1
             
             logger.info(f"✅ Cache warming completed: {warmed_count} items preloaded")
+
             
         except Exception as e:
             logger.error(f"Cache warming error: {e}")
@@ -464,17 +539,21 @@ class MarketplaceCacheManager:
             self.stats.memory_usage_bytes = sum(
                 entry.size_bytes for entry in self.l1_cache.values()
             )
+
             self.stats.total_keys = len(self.l1_cache)
             
             # Add Redis stats if available
             if self.redis_client:
                 redis_keys = await self.redis_client.keys("*")
+
                 self.stats.total_keys += len(redis_keys)
+
             
             return self.stats
             
         except Exception as e:
             logger.error(f"Cache stats error: {e}")
+
             return self.stats
     
     async def cleanup_expired(self):
@@ -485,11 +564,13 @@ class MarketplaceCacheManager:
             for key, entry in self.l1_cache.items():
                 if self._is_expired(entry):
                     expired_keys.append(key)
+
             
             for key in expired_keys:
                 del self.l1_cache[key]
             
             logger.info(f"🧹 Cleaned up {len(expired_keys)} expired cache entries")
+
             
         except Exception as e:
             logger.error(f"Cache cleanup error: {e}")
@@ -501,14 +582,18 @@ class MarketplaceCacheManager:
             self.l1_cache.clear()
             
             # Clear L2 cache (Redis)
+
             if self.redis_client:
                 await self.redis_client.flushdb()
             
             # Reset stats
             self.stats = CacheStats()
+
             self.response_times.clear()
+
             
             logger.info("🗑️ All cache layers flushed")
+
             
         except Exception as e:
             logger.error(f"Cache flush error: {e}")
@@ -521,7 +606,8 @@ class MarketplaceCacheHelpers:
         self.cache_manager = cache_manager
     
     async def cache_listing(self, listing_id: str, listing_data: Dict[str, Any], ttl: int = 1800):
-        """Cache marketplace listing"""
+        """
+        Cache marketplace listing"""
         return await self.cache_manager.set(f"listing:{listing_id}", listing_data, ttl)
     
     async def get_cached_listing(self, listing_id: str) -> Optional[Dict[str, Any]]:
@@ -571,4 +657,4 @@ __all__ = [
 ]
 
 # Module initialization
-logger.info("🗄️ Marketplace Cache Manager module loaded")
+logger.info("🗄️ Marketplace Cache Manager module initialized")

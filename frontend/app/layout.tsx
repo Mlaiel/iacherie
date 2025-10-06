@@ -2,6 +2,9 @@ import './globals.css';
 import { Inter } from 'next/font/google';
 import { Providers } from './providers';
 import { Toaster } from 'react-hot-toast';
+import { QueryClientProvider } from '@/lib/query/config';
+import { AuthProvider } from '@/lib/auth/provider';
+import { WebSocketProvider } from '@/lib/websocket';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,14 +28,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>
-          <div className="min-h-screen bg-gray-50">
-            <main>
-              {children}
-            </main>
-            <Toaster position="top-right" />
-          </div>
-        </Providers>
+        <QueryClientProvider>
+          <AuthProvider>
+            <WebSocketProvider autoConnect={true} showConnectionStatus={true}>
+              <Providers>
+                <div className="min-h-screen bg-gray-50">
+                  <main>
+                    {children}
+                  </main>
+                  <Toaster position="top-right" />
+                </div>
+              </Providers>
+            </WebSocketProvider>
+          </AuthProvider>
+        </QueryClientProvider>
       </body>
     </html>
   );

@@ -34,7 +34,8 @@ logger = logging.getLogger(__name__)
 
 
 class NFTStandard(Enum):
-    """Supported NFT standards"""
+    """
+        Supported NFT standards"""
     ERC721 = "erc721"
     ERC1155 = "erc1155"
     ERC2981 = "erc2981"  # NFT Royalty Standard
@@ -72,7 +73,8 @@ class NFTMetadata:
 
 @dataclass
 class CollectionConfig:
-    """NFT collection configuration"""
+    """
+        NFT collection configuration"""
     name: str
     symbol: str
     description: str
@@ -87,7 +89,8 @@ class CollectionConfig:
 
 @dataclass
 class NFTCreationRequest:
-    """Request structure for NFT creation"""
+    """
+        Request structure for NFT creation"""
     collection_id: str
     metadata: NFTMetadata
     recipient_address: str
@@ -115,22 +118,17 @@ class NFTFactory:
         # Network configurations
         self.network_configs = config.get("networks", {})
         self.contract_templates = self._load_contract_templates()
+
         
     def _load_contract_templates(self) -> Dict[str, Any]:
         """Load smart contract templates for different NFT standards"""
         return {
             "erc721": {
-                "bytecode": "0x608060405234801561001057600080fd5b50...",  # Placeholder
-                "abi": []  # Placeholder ABI
-            },
+                "bytecode": "0x608060405234801561001057600080fd5b50...",            },
             "erc1155": {
-                "bytecode": "0x608060405234801561001057600080fd5b50...",  # Placeholder
-                "abi": []  # Placeholder ABI
-            },
+                "bytecode": "0x608060405234801561001057600080fd5b50...",            },
             "erc2981": {
-                "bytecode": "0x608060405234801561001057600080fd5b50...",  # Placeholder
-                "abi": []  # Placeholder ABI
-            }
+                "bytecode": "0x608060405234801561001057600080fd5b50...",            }
         }
     
     async def create_collection(
@@ -148,13 +146,16 @@ class NFTFactory:
         """
         try:
             collection_id = str(uuid.uuid4())
+
             
             self.logger.info(f"Creating NFT collection: {config.name}")
             
             # Deploy collection contract
+
             contract_address = await self._deploy_collection_contract(config)
             
             # Setup collection metadata
+
             collection_metadata = {
                 "id": collection_id,
                 "name": config.name,
@@ -174,21 +175,22 @@ class NFTFactory:
             
             # Store collection
             self.collections[collection_id] = config
+
             
             result = {
                 "collection_id": collection_id,
                 "contract_address": contract_address,
                 "metadata": collection_metadata,
-                "transaction_hash": "0x" + "0" * 64,  # Placeholder
-                "gas_used": 2500000,
-                "creation_cost": Decimal("0.05")
+                "transaction_hash": "0x" + "0" * 64,                "creation_cost": Decimal("0.05")
             }
             
             self.logger.info(f"NFT collection created: {collection_id}")
+
             return result
             
         except Exception as e:
             self.logger.error(f"Collection creation failed: {e}")
+
             raise
     
     async def _deploy_collection_contract(
@@ -204,7 +206,6 @@ class NFTFactory:
         Returns:
             Deployed contract address
         """
-        # Mock deployment - in real implementation would deploy to blockchain
         contract_address = f"0x{''.join([f'{ord(c):02x}' for c in config.name[:20]])}"
         
         self.logger.info(f"Deployed collection contract: {contract_address}")
@@ -226,9 +227,13 @@ class NFTFactory:
         try:
             if request.collection_id not in self.collections:
                 raise ValueError(f"Collection not found: {request.collection_id}")
+
+
             
             collection = self.collections[request.collection_id]
+
             token_id = await self._generate_token_id(request.collection_id)
+
             
             self.logger.info(f"Minting NFT in collection: {request.collection_id}")
             
@@ -236,9 +241,12 @@ class NFTFactory:
             metadata_uri = await self._upload_metadata_to_ipfs(request.metadata)
             
             # Mint NFT on blockchain
+
             transaction_hash = await self._mint_on_blockchain(
                 collection, token_id, request.recipient_address, metadata_uri
             )
+
+
             
             result = {
                 "token_id": token_id,
@@ -252,10 +260,12 @@ class NFTFactory:
             }
             
             self.logger.info(f"NFT minted: Token ID {token_id}")
+
             return result
             
         except Exception as e:
             self.logger.error(f"NFT minting failed: {e}")
+
             raise
     
     async def _generate_token_id(self, collection_id: str) -> int:
@@ -264,7 +274,8 @@ class NFTFactory:
         return len(self.collections.get(collection_id, [])) + 1
     
     async def _upload_metadata_to_ipfs(self, metadata: NFTMetadata) -> str:
-        """Upload NFT metadata to IPFS"""
+        """
+        Upload NFT metadata to IPFS"""
         metadata_dict = {
             "name": metadata.name,
             "description": metadata.description,
@@ -276,9 +287,8 @@ class NFTFactory:
             "creator": metadata.creator,
             "created_at": metadata.created_at.isoformat() if metadata.created_at else None
         }
-        
-        # Mock IPFS upload - would use actual IPFS client
         content_hash = hashlib.sha256(json.dumps(metadata_dict).encode()).hexdigest()
+
         ipfs_hash = f"Qm{content_hash[:44]}"
         
         return f"ipfs://{ipfs_hash}"
@@ -291,7 +301,6 @@ class NFTFactory:
         metadata_uri: str
     ) -> str:
         """Mint NFT on blockchain"""
-        # Mock blockchain transaction
         transaction_hash = f"0x{''.join([f'{i:02x}' for i in range(32)])}"
         
         self.logger.info(f"Minted NFT {token_id} to {recipient}")
@@ -316,23 +325,31 @@ class NFTFactory:
         
         try:
             self.logger.info(f"Batch minting {len(batch_requests)} NFTs")
+
             
             for request in batch_requests:
                 request.collection_id = collection_id
+
                 result = await self.mint_nft(request)
+
                 results.append(result)
+
             
             self.logger.info(f"Batch minting completed: {len(results)} NFTs")
+
             return results
             
         except Exception as e:
             self.logger.error(f"Batch minting failed: {e}")
+
             raise
     
     async def get_collection_info(self, collection_id: str) -> Dict[str, Any]:
         """Get collection information"""
         if collection_id not in self.collections:
             raise ValueError(f"Collection not found: {collection_id}")
+
+
         
         config = self.collections[collection_id]
         return {
@@ -355,10 +372,9 @@ class NFTFactory:
         """Set or update royalty recipients for a collection"""
         if collection_id not in self.collections:
             raise ValueError(f"Collection not found: {collection_id}")
+
         
         self.logger.info(f"Setting royalties for collection: {collection_id}")
-        
-        # Mock royalty setting - would interact with blockchain contract
         transaction_hash = f"0x{''.join([f'{i:02x}' for i in range(32)])}"
         
         return {
@@ -408,10 +424,13 @@ class NFTFactoryManager:
             if network in self.factories:
                 try:
                     result = await self.factories[network].create_collection(config)
+
                     results[network] = result
                     self.logger.info(f"Cross-chain collection created on {network}")
+
                 except Exception as e:
                     self.logger.error(f"Failed to create collection on {network}: {e}")
+
                     results[network] = {"error": str(e)}
         
         return results
@@ -427,6 +446,7 @@ class NFTFactoryManager:
         
         for network, factory in self.factories.items():
             network_collections = len(factory.collections)
+
             stats["network_stats"][network] = {
                 "collections": network_collections,
                 "status": "active"

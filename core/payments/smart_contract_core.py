@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class SmartContractCore:
-    """Advanced SmartContractCore System"""
+    """
+Advanced SmartContractCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class SmartContractCore:
 # Module exports
 __all__ = ["SmartContractCore"]
 
-logger.info("📜 SmartContractCore module loaded")
+logger.info("📜 SmartContractCore module initialized")

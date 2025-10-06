@@ -23,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 
 class DashboardType(Enum):
-    """Types of dashboards"""
+    """
+        Types of dashboards"""
     PRODUCTION = "production"
     BUSINESS = "business"
     SYSTEM = "system"
@@ -55,7 +56,8 @@ class DashboardWidget:
 
 @dataclass
 class Dashboard:
-    """Dashboard definition"""
+    """
+        Dashboard definition"""
     id: str
     name: str
     dashboard_type: DashboardType
@@ -75,7 +77,8 @@ class DashboardDataProvider:
         self._register_default_sources()
     
     def _register_default_sources(self):
-        """Register default data sources"""
+        """
+        Register default data sources"""
         self.data_sources.update({
             "system_metrics": self._get_system_metrics,
             "business_metrics": self._get_business_metrics,
@@ -98,10 +101,12 @@ class DashboardDataProvider:
             data_func = self.data_sources[data_source]
             if asyncio.iscoroutinefunction(data_func):
                 return await data_func(config or {})
+
             else:
                 return data_func(config or {})
         except Exception as e:
             logger.error(f"Error getting data for {data_source}: {e}")
+
             return {"error": str(e)}
     
     # Data source implementations
@@ -400,9 +405,11 @@ class UnifiedDashboardManager:
         self._create_default_dashboards()
     
     def _create_default_dashboards(self):
-        """Create default dashboards"""
+        """
+        Create default dashboards"""
         
         # Production Dashboard
+
         production_dashboard = Dashboard(
             id="production",
             name="Production Monitoring",
@@ -444,6 +451,7 @@ class UnifiedDashboardManager:
         self.dashboards["production"] = production_dashboard
         
         # Business Dashboard
+
         business_dashboard = Dashboard(
             id="business",
             name="Business Analytics",
@@ -485,6 +493,7 @@ class UnifiedDashboardManager:
         self.dashboards["business"] = business_dashboard
         
         # System Dashboard
+
         system_dashboard = Dashboard(
             id="system",
             name="System Monitoring",
@@ -536,6 +545,8 @@ class UnifiedDashboardManager:
     ) -> str:
         """Create a new dashboard"""
         dashboard_id = name.lower().replace(" ", "_")
+
+
         
         dashboard = Dashboard(
             id=dashboard_id,
@@ -546,6 +557,7 @@ class UnifiedDashboardManager:
             tags=tags or [],
             public=public
         )
+
         
         self.dashboards[dashboard_id] = dashboard
         logger.info(f"Created dashboard: {name}")
@@ -555,11 +567,14 @@ class UnifiedDashboardManager:
         """Add widget to dashboard"""
         if dashboard_id not in self.dashboards:
             logger.warning(f"Dashboard {dashboard_id} not found")
+
             return False
+
         
         dashboard = self.dashboards[dashboard_id]
         dashboard.widgets.append(widget)
         dashboard.updated_at = datetime.now()
+
         
         logger.info(f"Added widget {widget.title} to dashboard {dashboard.name}")
         return True
@@ -568,19 +583,24 @@ class UnifiedDashboardManager:
         """Remove widget from dashboard"""
         if dashboard_id not in self.dashboards:
             return False
+
         
         dashboard = self.dashboards[dashboard_id]
         dashboard.widgets = [w for w in dashboard.widgets if w.id != widget_id]
         dashboard.updated_at = datetime.now()
+
         
         return True
     
     async def get_dashboard_data(self, dashboard_id: str) -> Dict[str, Any]:
-        """Get complete dashboard data"""
+        """
+        Get complete dashboard data"""
         if dashboard_id not in self.dashboards:
             return {"error": f"Dashboard {dashboard_id} not found"}
+
         
         dashboard = self.dashboards[dashboard_id]
+
         dashboard_data = {
             "dashboard": {
                 "id": dashboard.id,
@@ -600,6 +620,7 @@ class UnifiedDashboardManager:
                 widget_data = await self.data_provider.get_widget_data(
                     widget.data_source, widget.config
                 )
+
                 dashboard_data["widgets"][widget.id] = {
                     "widget": {
                         "id": widget.id,
@@ -612,6 +633,7 @@ class UnifiedDashboardManager:
                 }
             except Exception as e:
                 logger.error(f"Error getting data for widget {widget.id}: {e}")
+
                 dashboard_data["widgets"][widget.id] = {
                     "widget": {
                         "id": widget.id,
@@ -645,12 +667,16 @@ class UnifiedDashboardManager:
         return self.dashboards.get(dashboard_id)
     
     async def refresh_widget_data(self, dashboard_id: str, widget_id: str) -> Dict[str, Any]:
-        """Refresh data for a specific widget"""
+        """
+        Refresh data for a specific widget"""
         if dashboard_id not in self.dashboards:
             return {"error": f"Dashboard {dashboard_id} not found"}
+
         
         dashboard = self.dashboards[dashboard_id]
+
         widget = next((w for w in dashboard.widgets if w.id == widget_id), None)
+
         
         if not widget:
             return {"error": f"Widget {widget_id} not found"}

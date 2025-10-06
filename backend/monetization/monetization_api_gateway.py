@@ -100,6 +100,7 @@ class RateLimiter:
         # Check if under limit
         if len(self.requests[api_key]) < limit:
             self.requests[api_key].append(now)
+
             return True
         
         return False
@@ -161,12 +162,16 @@ class MonetizationAPIGateway:
             
             # Log incoming request
             self.logger.info(f"Request: {request.method} {request.url}")
+
+
             
             response = await call_next(request)
             
             # Log response
+
             process_time = time.time() - start_time
             self.logger.info(f"Response: {response.status_code} - {process_time:.3f}s")
+
             
             return response
     
@@ -182,12 +187,14 @@ class MonetizationAPIGateway:
         async def services_health():
             """Check health of all downstream services"""
             health_checks = await self.check_services_health()
+
             return {"services": health_checks, "timestamp": datetime.utcnow()}
         
         @self.app.get("/metrics")
         async def api_metrics():
             """Get API gateway metrics"""
             metrics = await self.get_api_metrics()
+
             return {"metrics": metrics, "timestamp": datetime.utcnow()}
         
         # Revenue Management Routes
@@ -239,11 +246,14 @@ class MonetizationAPIGateway:
             token = credentials.credentials
             
             # Decode JWT token
+
             payload = jwt.decode(
                 token,
                 "your-secret-key",  # In production: use proper secret management
+
                 algorithms=["HS256"]
             )
+
             
             return payload
             
@@ -262,9 +272,12 @@ class MonetizationAPIGateway:
         """Check if request is within rate limits"""
         try:
             # Extract API key from headers
+
             api_key = request.headers.get("X-API-Key", "anonymous")
             
             # Determine tier based on API key (mock logic)
+
+
             tier = "premium" if "premium" in api_key else "default"
             
             # Check rate limit
@@ -273,6 +286,7 @@ class MonetizationAPIGateway:
                     status_code=status.HTTP_429_TOO_MANY_REQUESTS,
                     detail="Rate limit exceeded"
                 )
+
             
             return True
             
@@ -280,6 +294,7 @@ class MonetizationAPIGateway:
             raise
         except Exception as e:
             self.logger.error(f"Rate limit check failed: {e}")
+
             return True  # Allow request on error
     
     async def proxy_request(
@@ -295,6 +310,7 @@ class MonetizationAPIGateway:
             
             # Get service URL
             service_url = self.services.get(service_name)
+
             if not service_url:
                 raise HTTPException(
                     status_code=status.HTTP_404_NOT_FOUND,
@@ -306,7 +322,6 @@ class MonetizationAPIGateway:
             if request.query_params:
                 target_url += f"?{request.query_params}"
             
-            # Mock downstream service response
             mock_response = {
                 "service": service_name,
                 "path": path,
@@ -320,13 +335,16 @@ class MonetizationAPIGateway:
             
             # Log request
             self.logger.info(f"Proxying {request.method} {path} to {service_name}")
+
             
             return JSONResponse(content=mock_response)
+
             
         except HTTPException:
             raise
         except Exception as e:
             self.logger.error(f"Proxy request failed: {e}")
+
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 detail="Internal gateway error"
@@ -338,15 +356,20 @@ class MonetizationAPIGateway:
         
         for service_name, service_url in self.services.items():
             try:
-                # Mock health check (in production: actual HTTP health check)
                 start_time = time.time()
+
                 await asyncio.sleep(0.01)  # Simulate network call
+
                 response_time = (time.time() - start_time) * 1000
                 
                 # Simulate random service status
                 import random
+
                 statuses = [ServiceStatus.OPERATIONAL, ServiceStatus.DEGRADED]
+
                 status = random.choice(statuses)
+
+
                 
                 health = ServiceHealth(
                     service_name=service_name,
@@ -355,8 +378,10 @@ class MonetizationAPIGateway:
                     last_check=datetime.utcnow(),
                     error_count=random.randint(0, 5)
                 )
+
                 
                 health_checks.append(health)
+
                 
             except Exception as e:
                 health = ServiceHealth(
@@ -366,15 +391,18 @@ class MonetizationAPIGateway:
                     last_check=datetime.utcnow(),
                     error_count=1
                 )
+
                 health_checks.append(health)
+
                 self.logger.error(f"Health check failed for {service_name}: {e}")
+
         
         return health_checks
     
     async def get_api_metrics(self) -> List[APIMetrics]:
         """Get API gateway metrics"""
+        
         try:
-            # Mock metrics (in production: get from Redis/monitoring system)
             metrics = [
                 APIMetrics(
                     endpoint="/api/v1/revenue",
@@ -403,6 +431,7 @@ class MonetizationAPIGateway:
             
         except Exception as e:
             self.logger.error(f"Failed to get API metrics: {e}")
+
             return []
     
     async def log_api_request(
@@ -429,6 +458,7 @@ class MonetizationAPIGateway:
                     "api_logs",
                     json.dumps(log_entry)
                 )
+
             
         except Exception as e:
             self.logger.error(f"Failed to log API request: {e}")

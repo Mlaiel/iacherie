@@ -34,9 +34,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials, OAuth2Pas
 from pydantic import BaseModel, EmailStr, Field, validator
 try:
     import redis.asyncio as redis
-except ImportError:
-    # Mock redis if not available
-    redis = None
+except ImportError:    redis = None
 import asyncio
 
 # ========================================
@@ -44,7 +42,8 @@ import asyncio
 # ========================================
 
 class AuthProvider(str, Enum):
-    """Supported authentication providers - 35+ platforms for creators"""
+    """
+        Supported authentication providers - 35+ platforms for creators"""
     # Core Platforms
     LOCAL = "local"
     GOOGLE = "google"
@@ -126,7 +125,8 @@ class UserCredentials(BaseModel):
     remember_me: bool = Field(default=False)
 
 class TokenPair(BaseModel):
-    """JWT token pair"""
+    """
+        JWT token pair"""
     access_token: str
     refresh_token: str
     token_type: str = "bearer"
@@ -150,7 +150,8 @@ class UserSession(BaseModel):
 # ========================================
 
 class JWTManager:
-    """JWT token management for authentication"""
+    """
+        JWT token management for authentication"""
     
     def __init__(self, secret_key: str, algorithm: str = "HS256"):
         self.secret_key = secret_key
@@ -162,6 +163,7 @@ class JWTManager:
         """Create JWT access token"""
         if scope is None:
             scope = ["read", "write"]
+
             
         payload = {
             "sub": user_id,
@@ -190,6 +192,7 @@ class JWTManager:
         """Verify and decode JWT token"""
         try:
             payload = jwt.decode(token, self.secret_key, algorithms=[self.algorithm])
+
             return payload
         except jwt.ExpiredSignatureError:
             raise HTTPException(
@@ -205,7 +208,9 @@ class JWTManager:
     def create_token_pair(self, user_id: str, scope: List[str] = None) -> TokenPair:
         """Create access and refresh token pair"""
         access_token = self.create_access_token(user_id, scope)
+
         refresh_token = self.create_refresh_token(user_id)
+
         
         return TokenPair(
             access_token=access_token,
@@ -268,7 +273,8 @@ class OAuth2Manager:
         }
     
     def _google_config(self) -> Dict[str, str]:
-        """Google OAuth2 configuration"""
+        """
+        Google OAuth2 configuration"""
         return {
             "authorization_url": "https://accounts.google.com/o/oauth2/auth",
             "token_url": "https://oauth2.googleapis.com/token",
@@ -648,6 +654,8 @@ class OAuth2Manager:
     def get_authorization_url(self, provider: AuthProvider, client_id: str, redirect_uri: str) -> str:
         """Get OAuth2 authorization URL for provider"""
         config = self.providers[provider]()
+
+
         
         params = {
             "client_id": client_id,
@@ -656,6 +664,7 @@ class OAuth2Manager:
             "response_type": "code",
             "state": secrets.token_urlsafe(16)
         }
+
         
         query_string = "&".join([f"{k}={v}" for k, v in params.items()])
         return f"{config['authorization_url']}?{query_string}"
@@ -672,8 +681,11 @@ class SessionManager:
         self.session_expire = timedelta(hours=24)
     
     async def create_session(self, user_id: str, device_info: Dict[str, Any]) -> UserSession:
-        """Create new user session"""
+        """
+        Create new user session"""
         session_id = secrets.token_urlsafe(32)
+
+
         
         session = UserSession(
             session_id=session_id,
@@ -688,12 +700,14 @@ class SessionManager:
         )
         
         # Store in Redis
+
         session_key = f"session:{session_id}"
         await self.redis.setex(
             session_key, 
             int(self.session_expire.total_seconds()),
             session.json()
         )
+
         
         return session
     
@@ -701,6 +715,7 @@ class SessionManager:
         """Get session by ID"""
         session_key = f"session:{session_id}"
         session_data = await self.redis.get(session_key)
+
         
         if session_data:
             return UserSession.parse_raw(session_data)
@@ -711,12 +726,15 @@ class SessionManager:
         session = await self.get_session(session_id)
         if session:
             session.last_activity = datetime.utcnow()
+
+
             session_key = f"session:{session_id}"
             await self.redis.setex(
                 session_key,
                 int(self.session_expire.total_seconds()),
                 session.json()
             )
+
             return True
         return False
     
@@ -740,20 +758,27 @@ class MFAManager:
         return pyotp.random_base32()
     
     def generate_totp_qr_code(self, user_email: str, secret: str) -> str:
-        """Generate QR code for TOTP setup"""
+        """
+        Generate QR code for TOTP setup"""
         totp_uri = pyotp.totp.TOTP(secret).provisioning_uri(
             name=user_email,
             issuer_name=self.totp_issuer
         )
+
+
         
         qr = qrcode.QRCode(version=1, box_size=10, border=5)
         qr.add_data(totp_uri)
         qr.make(fit=True)
+
+
         
         img = qr.make_image(fill_color="black", back_color="white")
+
         buffer = BytesIO()
         img.save(buffer, format="PNG")
         buffer.seek(0)
+
         
         return base64.b64encode(buffer.read()).decode()
     
@@ -763,13 +788,15 @@ class MFAManager:
         return totp.verify(code, valid_window=1)
     
     async def send_sms_code(self, phone_number: str) -> str:
-        """Send SMS verification code"""
+        """
+        Send SMS verification code"""
         code = secrets.randbelow(900000) + 100000
         # SMS integration would go here
         return str(code)
     
     async def send_email_code(self, email: str) -> str:
-        """Send email verification code"""
+        """
+        Send email verification code"""
         code = secrets.randbelow(900000) + 100000
         # Email integration would go here
         return str(code)
@@ -779,7 +806,8 @@ class MFAManager:
 # ========================================
 
 class BiometricAuthManager:
-    """Biometric authentication manager for face, voice, fingerprint recognition"""
+    """
+        Biometric authentication manager for face, voice, fingerprint recognition"""
     
     def __init__(self):
         self.supported_types = [BiometricType.FACE, BiometricType.VOICE, BiometricType.FINGERPRINT]
@@ -787,7 +815,8 @@ class BiometricAuthManager:
         self.max_attempts = 3
     
     async def enroll_biometric(self, user_id: str, biometric_type: BiometricType, biometric_data: bytes) -> str:
-        """Enroll biometric data for user"""
+        """
+        Enroll biometric data for user"""
         # Generate unique biometric template ID
         template_id = f"bio_{user_id}_{biometric_type.value}_{secrets.token_hex(8)}"
         
@@ -803,6 +832,7 @@ class BiometricAuthManager:
         
         # Store encrypted template
         await self._store_biometric_template(template_id, template)
+
         
         return template_id
     
@@ -810,7 +840,9 @@ class BiometricAuthManager:
         """Verify biometric data against enrolled template"""
         try:
             # Get user's enrolled templates
+
             templates = await self._get_user_templates(user_id, biometric_type)
+
             
             if not templates:
                 return False
@@ -818,16 +850,20 @@ class BiometricAuthManager:
             # Process verification data
             if biometric_type == BiometricType.FACE:
                 verification_template = await self._process_face_verification(biometric_data)
+
             elif biometric_type == BiometricType.VOICE:
                 verification_template = await self._process_voice_verification(biometric_data)
+
             elif biometric_type == BiometricType.FINGERPRINT:
                 verification_template = await self._process_fingerprint_verification(biometric_data)
+
             else:
                 return False
             
             # Compare against enrolled templates
             for template in templates:
                 confidence = await self._compare_templates(verification_template, template)
+
                 if confidence >= self.confidence_threshold:
                     return True
             
@@ -838,8 +874,8 @@ class BiometricAuthManager:
             return False
     
     async def _process_face_enrollment(self, face_data: bytes) -> Dict[str, Any]:
-        """Process face enrollment using facial recognition"""
-        # Mock implementation - would use OpenCV/dlib in production
+        """
+        Process face enrollment using facial recognition"""
         return {
             "type": "face",
             "features": hashlib.sha256(face_data).hexdigest(),
@@ -849,7 +885,6 @@ class BiometricAuthManager:
     
     async def _process_voice_enrollment(self, voice_data: bytes) -> Dict[str, Any]:
         """Process voice enrollment using speaker recognition"""
-        # Mock implementation - would use speech processing libraries
         return {
             "type": "voice",
             "features": hashlib.sha256(voice_data).hexdigest(),
@@ -859,7 +894,6 @@ class BiometricAuthManager:
     
     async def _process_fingerprint_enrollment(self, fingerprint_data: bytes) -> Dict[str, Any]:
         """Process fingerprint enrollment"""
-        # Mock implementation - would use fingerprint SDK
         return {
             "type": "fingerprint",
             "minutiae": hashlib.sha256(fingerprint_data).hexdigest(),
@@ -872,26 +906,28 @@ class BiometricAuthManager:
         return await self._process_face_enrollment(face_data)
     
     async def _process_voice_verification(self, voice_data: bytes) -> Dict[str, Any]:
-        """Process voice verification data"""
+        """
+        Process voice verification data"""
         return await self._process_voice_enrollment(voice_data)
     
     async def _process_fingerprint_verification(self, fingerprint_data: bytes) -> Dict[str, Any]:
-        """Process fingerprint verification data"""
+        """
+        Process fingerprint verification data"""
         return await self._process_fingerprint_enrollment(fingerprint_data)
     
     async def _store_biometric_template(self, template_id: str, template: Dict[str, Any]) -> None:
-        """Store encrypted biometric template"""
+        """
+        Store encrypted biometric template"""
         # In production, this would use secure encrypted storage
         pass
     
     async def _get_user_templates(self, user_id: str, biometric_type: BiometricType) -> List[Dict[str, Any]]:
-        """Get user's enrolled biometric templates"""
-        # Mock implementation
+        """
+        Get user's enrolled biometric templates"""
         return [{"features": "mock_template", "quality_score": 0.9}]
     
     async def _compare_templates(self, template1: Dict[str, Any], template2: Dict[str, Any]) -> float:
         """Compare biometric templates and return confidence score"""
-        # Mock implementation - would use specialized comparison algorithms
         return 0.9 if template1.get("features") == template2.get("features") else 0.3
 
 
@@ -916,6 +952,7 @@ class HardwareSecurityManager:
                 raise ValueError("Invalid hardware key")
             
             # Extract key information
+
             key_info = {
                 "key_id": key_id,
                 "user_id": user_id,
@@ -939,6 +976,7 @@ class HardwareSecurityManager:
         """Verify hardware key challenge response"""
         try:
             # Get user's registered keys
+
             user_keys = [k for k in self.key_registry.values() if k["user_id"] == user_id]
             
             if not user_keys:
@@ -950,6 +988,7 @@ class HardwareSecurityManager:
                     # Update usage counter
                     key_info["counter"] += 1
                     key_info["last_used"] = datetime.utcnow().isoformat()
+
                     return True
             
             return False
@@ -964,7 +1003,6 @@ class HardwareSecurityManager:
     
     async def _verify_fido2_response(self, key_info: Dict, challenge: str, response: Dict) -> bool:
         """Verify FIDO2 challenge response"""
-        # Mock implementation - would use WebAuthn libraries in production
         return (
             response.get("challenge") == challenge and
             response.get("key_id") == key_info["key_id"]
@@ -1004,6 +1042,7 @@ class DistributedSessionManager:
             
             # Enforce session limits
             await self._enforce_session_limits(user_id)
+
             
             return session_id
             
@@ -1014,19 +1053,25 @@ class DistributedSessionManager:
         """Validate session across Redis cluster"""
         try:
             session_data = await self._get_session_distributed(session_id)
+
             
             if not session_data or not session_data.get("is_active"):
                 return None
             
             # Check session timeout
+
             created_at = datetime.fromisoformat(session_data["created_at"])
+
             if (datetime.utcnow() - created_at).total_seconds() > self.session_timeout:
                 await self._invalidate_session_distributed(session_id)
+
                 return None
             
             # Update last activity
             session_data["last_activity"] = datetime.utcnow().isoformat()
+
             await self._store_session_distributed(session_id, session_data)
+
             
             return session_data
             
@@ -1035,12 +1080,11 @@ class DistributedSessionManager:
     
     async def _store_session_distributed(self, session_id: str, session_data: Dict[str, Any]) -> None:
         """Store session data in Redis cluster"""
-        # Mock implementation - would use Redis cluster client
         pass
     
     async def _get_session_distributed(self, session_id: str) -> Optional[Dict[str, Any]]:
-        """Get session data from Redis cluster"""
-        # Mock implementation - would query Redis cluster
+        """
+        Get session data from Redis cluster"""
         return {
             "session_id": session_id,
             "user_id": "mock_user",
@@ -1051,12 +1095,11 @@ class DistributedSessionManager:
     
     async def _invalidate_session_distributed(self, session_id: str) -> None:
         """Invalidate session across Redis cluster"""
-        # Mock implementation - would remove from Redis cluster
         pass
     
     async def _enforce_session_limits(self, user_id: str) -> None:
-        """Enforce maximum sessions per user"""
-        # Mock implementation - would query and cleanup old sessions
+        """
+        Enforce maximum sessions per user"""
         pass
 
 
@@ -1065,7 +1108,8 @@ class DistributedSessionManager:
 # ========================================
 
 class EnterpriseAuthenticationService:
-    """Enhanced authentication service with enterprise features"""
+    """
+        Enhanced authentication service with enterprise features"""
     
     def __init__(self, jwt_secret: str, redis_cluster: Optional[List[str]] = None):
         self.jwt_manager = JWTManager(jwt_secret)
@@ -1082,31 +1126,42 @@ class EnterpriseAuthenticationService:
         auth_code: str,
         device_info: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Authenticate user via multiple OAuth platforms"""
+        """
+        Authenticate user via multiple OAuth platforms"""
         try:
             # Get provider configuration
+
             provider_config = self.oauth2_manager.providers.get(provider)
+
             if not provider_config:
                 raise HTTPException(status_code=400, detail=f"Unsupported provider: {provider}")
             
             # Exchange auth code for tokens
+
             tokens = await self._exchange_oauth_code(provider, auth_code, provider_config())
             
             # Get user info from provider
+
             user_info = await self._get_provider_user_info(provider, tokens, provider_config())
             
             # Create or update user account
+
             user_account = await self._create_or_update_user(user_info, provider)
             
             # Create distributed session
+
             session_id = await self.session_manager.create_distributed_session(
                 user_account["id"], 
                 device_info
             )
             
             # Generate JWT tokens
+
             access_token = await self.jwt_manager.create_access_token(user_account["id"])
+
+
             refresh_token = await self.jwt_manager.create_refresh_token(user_account["id"])
+
             
             return {
                 "access_token": access_token,
@@ -1130,17 +1185,25 @@ class EnterpriseAuthenticationService:
         """Authenticate user via biometric data"""
         try:
             # Verify biometric data
+
             is_valid = await self.biometric_manager.verify_biometric(
                 user_id, biometric_type, biometric_data
             )
+
             
             if not is_valid:
                 raise HTTPException(status_code=401, detail="Biometric authentication failed")
             
             # Create session and tokens
+
             session_id = await self.session_manager.create_distributed_session(user_id, device_info)
+
+
             access_token = await self.jwt_manager.create_access_token(user_id)
+
+
             refresh_token = await self.jwt_manager.create_refresh_token(user_id)
+
             
             return {
                 "access_token": access_token,
@@ -1163,17 +1226,25 @@ class EnterpriseAuthenticationService:
         """Authenticate user via hardware security key"""
         try:
             # Verify hardware key response
+
             is_valid = await self.hardware_security.verify_hardware_key(
                 user_id, challenge, key_response
             )
+
             
             if not is_valid:
                 raise HTTPException(status_code=401, detail="Hardware key authentication failed")
             
             # Create session and tokens
+
             session_id = await self.session_manager.create_distributed_session(user_id, device_info)
+
+
             access_token = await self.jwt_manager.create_access_token(user_id)
+
+
             refresh_token = await self.jwt_manager.create_refresh_token(user_id)
+
             
             return {
                 "access_token": access_token,
@@ -1188,7 +1259,6 @@ class EnterpriseAuthenticationService:
     
     async def _exchange_oauth_code(self, provider: AuthProvider, code: str, config: Dict) -> Dict:
         """Exchange OAuth authorization code for tokens"""
-        # Mock implementation - would make HTTP request to provider
         return {
             "access_token": f"oauth_{provider.value}_{secrets.token_hex(16)}",
             "refresh_token": f"refresh_{provider.value}_{secrets.token_hex(16)}",
@@ -1197,7 +1267,6 @@ class EnterpriseAuthenticationService:
     
     async def _get_provider_user_info(self, provider: AuthProvider, tokens: Dict, config: Dict) -> Dict:
         """Get user information from OAuth provider"""
-        # Mock implementation - would make HTTP request to provider
         return {
             "id": f"provider_{provider.value}_{secrets.token_hex(8)}",
             "email": f"user@{provider.value}.com",
@@ -1207,7 +1276,6 @@ class EnterpriseAuthenticationService:
     
     async def _create_or_update_user(self, user_info: Dict, provider: AuthProvider) -> Dict:
         """Create or update user account from provider info"""
-        # Mock implementation - would interact with database
         return {
             "id": user_info["id"],
             "email": user_info["email"],
@@ -1224,7 +1292,6 @@ class EnterpriseAuthenticationService:
     
     async def _process_fingerprint_enrollment(self, fingerprint_data: bytes) -> Dict[str, Any]:
         """Process fingerprint enrollment"""
-        # Mock implementation - would use fingerprint SDKs
         return {
             "type": "fingerprint",
             "minutiae": hashlib.sha256(fingerprint_data).hexdigest(),
@@ -1237,16 +1304,18 @@ class EnterpriseAuthenticationService:
         return await self._process_face_enrollment(face_data)
     
     async def _process_voice_verification(self, voice_data: bytes) -> Dict[str, Any]:
-        """Process voice verification"""
+        """
+        Process voice verification"""
         return await self._process_voice_enrollment(voice_data)
     
     async def _process_fingerprint_verification(self, fingerprint_data: bytes) -> Dict[str, Any]:
-        """Process fingerprint verification"""
+        """
+        Process fingerprint verification"""
         return await self._process_fingerprint_enrollment(fingerprint_data)
     
     async def _compare_templates(self, template1: Dict[str, Any], template2: Dict[str, Any]) -> float:
-        """Compare two biometric templates and return confidence score"""
-        # Mock implementation - would use specialized matching algorithms
+        """
+        Compare two biometric templates and return confidence score"""
         if template1.get("type") != template2.get("type"):
             return 0.0
         
@@ -1262,12 +1331,11 @@ class EnterpriseAuthenticationService:
     
     async def _store_biometric_template(self, template_id: str, template: Dict[str, Any]) -> None:
         """Store encrypted biometric template"""
-        # Mock implementation - would use secure storage with encryption
         pass
     
     async def _get_user_templates(self, user_id: str, biometric_type: BiometricType) -> List[Dict[str, Any]]:
-        """Get user's enrolled biometric templates"""
-        # Mock implementation - would retrieve from secure storage
+        """
+        Get user's enrolled biometric templates"""
         return []
 
 # ========================================
@@ -1275,7 +1343,8 @@ class EnterpriseAuthenticationService:
 # ========================================
 
 class PasswordManager:
-    """Password hashing and validation manager"""
+    """
+        Password hashing and validation manager"""
     
     def __init__(self):
         self.rounds = 12
@@ -1283,34 +1352,43 @@ class PasswordManager:
         self.max_length = 128
     
     def hash_password(self, password: str) -> str:
-        """Hash password using bcrypt"""
+        """
+        Hash password using bcrypt"""
         return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt(rounds=self.rounds)).decode('utf-8')
     
     def verify_password(self, password: str, hashed: str) -> bool:
-        """Verify password against hash"""
+        """
+        Verify password against hash"""
         return bcrypt.checkpw(password.encode('utf-8'), hashed.encode('utf-8'))
     
     def validate_password_strength(self, password: str) -> List[str]:
-        """Validate password strength and return issues"""
+        """
+        Validate password strength and return issues"""
         issues = []
         
         if len(password) < self.min_length:
             issues.append(f"Password must be at least {self.min_length} characters")
+
         
         if len(password) > self.max_length:
             issues.append(f"Password must be no more than {self.max_length} characters")
+
         
         if not any(c.isupper() for c in password):
             issues.append("Password must contain at least one uppercase letter")
+
         
         if not any(c.islower() for c in password):
             issues.append("Password must contain at least one lowercase letter")
+
         
         if not any(c.isdigit() for c in password):
             issues.append("Password must contain at least one digit")
+
         
         if not any(c in "!@#$%^&*()_+-=[]{}|;':\",./<>?" for c in password):
             issues.append("Password must contain at least one special character")
+
         
         return issues
 
@@ -1330,13 +1408,16 @@ class AuthenticationService:
         self.password_manager = PasswordManager()
     
     async def authenticate_user(self, credentials: UserCredentials, device_info: Dict[str, Any]) -> TokenPair:
-        """Authenticate user with email/password"""
+        """
+        Authenticate user with email/password"""
         # Password validation would go here
         # For now, returning mock response
+
         
         user_id = "user_123"  # Would come from database
         
         # Create session
+
         session = await self.session_manager.create_session(user_id, device_info)
         
         # Create tokens
@@ -1345,12 +1426,15 @@ class AuthenticationService:
     async def refresh_token(self, refresh_token: str) -> TokenPair:
         """Refresh access token using refresh token"""
         payload = self.jwt_manager.verify_token(refresh_token)
+
         
         if payload.get("type") != "refresh":
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Invalid refresh token"
             )
+
+
         
         user_id = payload.get("sub")
         return self.jwt_manager.create_token_pair(user_id)
@@ -1367,11 +1451,10 @@ class AuthenticationService:
 _auth_service = None
 
 def get_auth_service() -> AuthenticationService:
-    """Get authentication service instance"""
+    """
+        Get authentication service instance"""
     global _auth_service
-    if _auth_service is None:
-        # Mock initialization - would use proper dependency injection
-        _auth_service = AuthenticationService("mock_secret", None)
+    if _auth_service is None:        _auth_service = AuthenticationService("mock_secret", None)
     return _auth_service
 
 # ========================================

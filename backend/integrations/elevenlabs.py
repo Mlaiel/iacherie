@@ -23,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 
 class ElevenLabsModel(str, Enum):
-    """ElevenLabs voice models."""
+    """
+        ElevenLabs voice models."""
     ELEVEN_MULTILINGUAL_V2 = "eleven_multilingual_v2"
     ELEVEN_MULTILINGUAL_V1 = "eleven_multilingual_v1"
     ELEVEN_MONOLINGUAL_V1 = "eleven_monolingual_v1"
@@ -52,7 +53,8 @@ class Voice:
 
 @dataclass
 class VoiceSettings:
-    """Voice synthesis settings."""
+    """
+        Voice synthesis settings."""
     stability: float = 0.75
     similarity_boost: float = 0.75
     style: float = 0.0
@@ -61,7 +63,8 @@ class VoiceSettings:
 
 @dataclass
 class SpeechSynthesisResult:
-    """Speech synthesis result."""
+    """
+        Speech synthesis result."""
     audio_data: bytes
     voice_id: str
     text: str
@@ -75,7 +78,8 @@ class SpeechSynthesisResult:
 
 @dataclass
 class VoiceCloneResult:
-    """Voice cloning result."""
+    """
+        Voice cloning result."""
     voice_id: str
     name: str
     status: str
@@ -85,7 +89,8 @@ class VoiceCloneResult:
 
 
 class ElevenLabsIntegration:
-    """Professional ElevenLabs API integration."""
+    """
+        Professional ElevenLabs API integration."""
     
     def __init__(
         self,
@@ -111,11 +116,13 @@ class ElevenLabsIntegration:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+        Async context manager exit."""
         await self.close()
     
     async def _ensure_session(self):
-        """Ensure HTTP session is available."""
+        """
+        Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
                 "xi-api-key": self.api_key,
@@ -134,16 +141,23 @@ class ElevenLabsIntegration:
             await self.session.close()
     
     async def get_voices(self) -> List[Voice]:
-        """Get available voices."""
+        """
+        Get available voices."""
         await self._ensure_session()
+
         
         try:
             async with self.session.get(f"{self.base_url}/voices") as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"ElevenLabs API error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 voices = []
                 
                 for voice_data in result.get("voices", []):
@@ -156,13 +170,17 @@ class ElevenLabsIntegration:
                         available_for_tiers=voice_data.get("available_for_tiers", []),
                         settings=voice_data.get("settings")
                     )
+
                     voices.append(voice)
+
                 
                 logger.info(f"Retrieved {len(voices)} voices")
+
                 return voices
         
         except Exception as e:
             logger.error(f"Failed to get voices: {e}")
+
             raise
     
     async def synthesize_speech(
@@ -175,9 +193,12 @@ class ElevenLabsIntegration:
     ) -> SpeechSynthesisResult:
         """Synthesize speech from text."""
         await self._ensure_session()
+
         
         if voice_settings is None:
             voice_settings = VoiceSettings()
+
+
         
         data = {
             "text": text,
@@ -192,6 +213,7 @@ class ElevenLabsIntegration:
         
         try:
             start_time = datetime.now()
+
             
             async with self.session.post(
                 f"{self.base_url}/text-to-speech/{voice_id}",
@@ -199,17 +221,26 @@ class ElevenLabsIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"ElevenLabs TTS error: {error_data}")
+
+
                 
                 audio_data = await response.read()
+
+
                 end_time = datetime.now()
                 
                 # Calculate duration (approximate based on text length)
+
+
                 duration_ms = int((end_time - start_time).total_seconds() * 1000)
                 
                 # Track usage
                 self.character_count += len(text)
+
                 self.request_count += 1
+
                 
                 result = SpeechSynthesisResult(
                     audio_data=audio_data,
@@ -222,18 +253,22 @@ class ElevenLabsIntegration:
                     created_at=start_time,
                     metadata=metadata or {}
                 )
+
                 
                 self._add_to_history("speech_synthesis", {
                     "voice_id": voice_id,
                     "text_length": len(text),
                     "model": model.value
                 }, result, metadata)
+
                 
                 logger.info(f"Speech synthesized: {len(text)} characters, {len(audio_data)} bytes")
+
                 return result
         
         except Exception as e:
             logger.error(f"Speech synthesis failed: {e}")
+
             raise
     
     async def clone_voice(
@@ -248,9 +283,11 @@ class ElevenLabsIntegration:
         await self._ensure_session()
         
         # Prepare form data
+
         form_data = aiohttp.FormData()
         form_data.add_field('name', name)
         form_data.add_field('description', description)
+
         
         if labels:
             form_data.add_field('labels', json.dumps(labels))
@@ -263,10 +300,13 @@ class ElevenLabsIntegration:
                 filename=f'sample_{i}.wav',
                 content_type='audio/wav'
             )
+
         
         try:
             # Temporarily update headers for form data
+
             original_headers = self.session.headers.copy()
+
             del self.session.headers['Content-Type']
             
             async with self.session.post(
@@ -275,9 +315,14 @@ class ElevenLabsIntegration:
             ) as response:
                 if response.status not in [200, 201]:
                     error_data = await response.json()
+
                     raise Exception(f"ElevenLabs voice cloning error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 
                 voice_clone = VoiceCloneResult(
                     voice_id=result["voice_id"],
@@ -287,18 +332,22 @@ class ElevenLabsIntegration:
                     created_at=datetime.now(),
                     metadata=metadata or {}
                 )
+
                 
                 self.request_count += 1
                 self._add_to_history("voice_clone", {
                     "name": name,
                     "sample_count": len(files)
                 }, voice_clone, metadata)
+
                 
                 logger.info(f"Voice cloned successfully: {voice_clone.voice_id}")
+
                 return voice_clone
             
         except Exception as e:
             logger.error(f"Voice cloning failed: {e}")
+
             raise
         finally:
             # Restore original headers
@@ -307,14 +356,20 @@ class ElevenLabsIntegration:
     async def get_voice_details(self, voice_id: str) -> Voice:
         """Get detailed information about a specific voice."""
         await self._ensure_session()
+
         
         try:
             async with self.session.get(f"{self.base_url}/voices/{voice_id}") as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"ElevenLabs API error: {error_data}")
+
+
                 
                 voice_data = await response.json()
+
+
                 
                 voice = Voice(
                     voice_id=voice_data["voice_id"],
@@ -325,55 +380,73 @@ class ElevenLabsIntegration:
                     available_for_tiers=voice_data.get("available_for_tiers", []),
                     settings=voice_data.get("settings")
                 )
+
                 
                 logger.info(f"Voice details retrieved: {voice_id}")
+
                 return voice
         
         except Exception as e:
             logger.error(f"Failed to get voice details: {e}")
+
             raise
     
     async def delete_voice(self, voice_id: str) -> bool:
         """Delete a cloned voice."""
         await self._ensure_session()
+
         
         try:
             async with self.session.delete(f"{self.base_url}/voices/{voice_id}") as response:
                 if response.status not in [200, 204]:
                     error_data = await response.json()
+
                     raise Exception(f"ElevenLabs API error: {error_data}")
+
                 
                 self.request_count += 1
                 self._add_to_history("voice_delete", {"voice_id": voice_id}, {"deleted": True}, None)
+
                 
                 logger.info(f"Voice deleted: {voice_id}")
+
                 return True
         
         except Exception as e:
             logger.error(f"Failed to delete voice: {e}")
+
             raise
     
     async def get_user_info(self) -> Dict[str, Any]:
         """Get user account information and usage."""
         await self._ensure_session()
+
         
         try:
             async with self.session.get(f"{self.base_url}/user") as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"ElevenLabs API error: {error_data}")
+
+
                 
                 user_info = await response.json()
+
                 logger.info("User info retrieved")
+
                 return user_info
         
         except Exception as e:
             logger.error(f"Failed to get user info: {e}")
+
             raise
     
     async def get_usage_history(self, start_unix: Optional[int] = None, end_unix: Optional[int] = None) -> Dict[str, Any]:
         """Get usage history within date range."""
         await self._ensure_session()
+
+
         
         params = {}
         if start_unix:
@@ -385,14 +458,20 @@ class ElevenLabsIntegration:
             async with self.session.get(f"{self.base_url}/user/usage", params=params) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"ElevenLabs API error: {error_data}")
+
+
                 
                 usage_data = await response.json()
+
                 logger.info("Usage history retrieved")
+
                 return usage_data
         
         except Exception as e:
             logger.error(f"Failed to get usage history: {e}")
+
             raise
     
     async def stream_speech(
@@ -405,9 +484,12 @@ class ElevenLabsIntegration:
     ) -> AsyncGenerator[bytes, None]:
         """Stream speech synthesis for real-time playback."""
         await self._ensure_session()
+
         
         if voice_settings is None:
             voice_settings = VoiceSettings()
+
+
         
         data = {
             "text": text,
@@ -427,13 +509,16 @@ class ElevenLabsIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"ElevenLabs streaming error: {error_data}")
+
                 
                 async for chunk in response.content.iter_chunked(chunk_size):
                     yield chunk
                 
                 # Track usage
                 self.character_count += len(text)
+
                 self.request_count += 1
                 
                 self._add_to_history("stream_synthesis", {
@@ -441,9 +526,11 @@ class ElevenLabsIntegration:
                     "text_length": len(text),
                     "model": model.value
                 }, {"streaming": True}, None)
+
         
         except Exception as e:
             logger.error(f"Streaming synthesis failed: {e}")
+
             raise
     
     def _add_to_history(
@@ -523,7 +610,8 @@ async def quick_speech_synthesis(
     api_key: str,
     model: ElevenLabsModel = ElevenLabsModel.ELEVEN_MULTILINGUAL_V2
 ) -> bytes:
-    """Quick speech synthesis utility."""
+    """
+        Quick speech synthesis utility."""
     async with ElevenLabsIntegration(api_key) as elevenlabs:
         result = await elevenlabs.synthesize_speech(
             text=text,
@@ -534,7 +622,8 @@ async def quick_speech_synthesis(
 
 
 async def get_default_voice_id(api_key: str) -> str:
-    """Get a default voice ID for quick usage."""
+    """
+        Get a default voice ID for quick usage."""
     async with ElevenLabsIntegration(api_key) as elevenlabs:
         voices = await elevenlabs.get_voices()
         if voices:
@@ -552,27 +641,37 @@ if __name__ == "__main__":
     # Example usage
     async def main():
         import os
+
         api_key = os.getenv("ELEVENLABS_API_KEY")
         if not api_key:
             print("Please set ELEVENLABS_API_KEY environment variable")
+
             return
         
         async with ElevenLabsIntegration(api_key) as elevenlabs:
             # Test get voices
+
             voices = await elevenlabs.get_voices()
+
             print(f"Available voices: {len(voices)}")
+
             
             if voices:
                 # Test speech synthesis
+
                 voice_id = voices[0].voice_id
+
                 result = await elevenlabs.synthesize_speech(
                     text="Hello, this is a test of ElevenLabs integration.",
                     voice_id=voice_id
                 )
+
                 print(f"Synthesized {len(result.audio_data)} bytes of audio")
                 
                 # Test usage stats
+
                 stats = elevenlabs.get_usage_stats()
+
                 print(f"Usage stats: {stats}")
     
     asyncio.run(main())

@@ -23,7 +23,8 @@ import redis.asyncio as redis
 
 # Enums
 class SocialPlatform(Enum):
-    """Social media platforms"""
+    """
+        Social media platforms"""
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     YOUTUBE_SHORTS = "youtube_shorts"
@@ -112,7 +113,8 @@ class AudienceProfile:
 
 @dataclass
 class PlatformSpecification:
-    """Platform-specific content specifications"""
+    """
+        Platform-specific content specifications"""
     platform: SocialPlatform
     video_specs: Dict[str, Any]
     image_specs: Dict[str, Any]
@@ -124,7 +126,8 @@ class PlatformSpecification:
 
 @dataclass
 class OptimizedContent:
-    """Optimized content for social platform"""
+    """
+        Optimized content for social platform"""
     platform: SocialPlatform
     content_path: str
     optimized_metadata: Dict[str, Any]
@@ -136,7 +139,8 @@ class OptimizedContent:
 
 @dataclass
 class SocialOptimizationReport:
-    """Complete social optimization report"""
+    """
+        Complete social optimization report"""
     content_id: str
     optimized_content: List[OptimizedContent]
     audience_insights: Dict[SocialPlatform, List[AudienceProfile]]
@@ -147,15 +151,18 @@ class SocialOptimizationReport:
 
 # Exceptions
 class SocialOptimizationError(Exception):
-    """Base social optimization error"""
+    """
+        Base social optimization error"""
     pass
 
 class AudienceTargetingError(SocialOptimizationError):
-    """Audience targeting error"""
+    """
+        Audience targeting error"""
     pass
 
 class ContentAdaptationError(SocialOptimizationError):
-    """Content adaptation error"""
+    """
+        Content adaptation error"""
     pass
 
 # Core Social Optimizer
@@ -187,7 +194,8 @@ class EnterpriseSocialOptimizer:
         self._initialize_trending_data()
     
     def _initialize_platform_specs(self):
-        """Initialize platform-specific content specifications"""
+        """
+        Initialize platform-specific content specifications"""
         self.platform_specs = {
             SocialPlatform.TIKTOK: PlatformSpecification(
                 platform=SocialPlatform.TIKTOK,
@@ -294,19 +302,20 @@ class EnterpriseSocialOptimizer:
         }
 
     def _initialize_ml_models(self):
-        """Initialize ML models for audience targeting"""
-        try:
-            # Placeholder for ML model initialization
-            self.ml_models = {
+        """
+        Initialize ML models for audience targeting"""
+        try:            self.ml_models = {
                 'audience_segmentation': KMeans(n_clusters=5, random_state=42),
                 'engagement_predictor': None,  # XGBoost, RandomForest
                 'content_classifier': None,     # CNN, BERT
                 'hashtag_recommender': None,    # NLP models
             }
             self.scaler = StandardScaler()
+
             self.logger.info("ML models initialized for social optimization")
         except Exception as e:
             self.logger.warning(f"ML models initialization failed: {e}")
+
             self.ml_models = {}
 
     def _initialize_trending_data(self):
@@ -330,13 +339,17 @@ class EnterpriseSocialOptimizer:
         }
 
     async def initialize_redis(self):
-        """Initialize Redis connection for caching"""
+        """
+        Initialize Redis connection for caching"""
         try:
             self.redis_client = redis.from_url(self.config.redis_url)
+
             await self.redis_client.ping()
+
             self.logger.info("Redis connection established for social optimizer")
         except Exception as e:
             self.logger.error(f"Redis connection failed: {e}")
+
             self.redis_client = None
 
     async def optimize_for_social_platforms(
@@ -354,6 +367,7 @@ class EnterpriseSocialOptimizer:
             content_id: Unique content identifier
             content_path: Path to content file
             content_metadata: Content metadata (title, description, etc.)
+
             target_platforms: Platforms to optimize for
             target_audience: Target audience parameters
             
@@ -362,14 +376,18 @@ class EnterpriseSocialOptimizer:
         """
         try:
             content_path = Path(content_path)
+
+
             target_platforms = target_platforms or self.config.target_platforms
             
             # Step 1: Analyze audience for each platform
+
             audience_insights = await self._analyze_audience_insights(
                 target_platforms, target_audience
             )
             
             # Step 2: Optimize content for each platform
+
             optimized_content = []
             for platform in target_platforms:
                 try:
@@ -380,28 +398,35 @@ class EnterpriseSocialOptimizer:
                         platform,
                         audience_insights.get(platform, [])
                     )
+
                     if optimized:
                         optimized_content.append(optimized)
+
                 except Exception as e:
                     self.logger.error(f"Platform optimization failed for {platform}: {e}")
+
                     continue
             
             # Step 3: Generate performance predictions
+
             performance_predictions = await self._predict_performance(
                 optimized_content, audience_insights
             )
             
             # Step 4: Create cross-platform strategy
+
             cross_platform_strategy = await self._create_cross_platform_strategy(
                 optimized_content, performance_predictions
             )
             
             # Step 5: Generate recommendations
+
             recommendations = self._generate_optimization_recommendations(
                 optimized_content, audience_insights, performance_predictions
             )
             
             # Create report
+
             report = SocialOptimizationReport(
                 content_id=content_id,
                 optimized_content=optimized_content,
@@ -419,12 +444,15 @@ class EnterpriseSocialOptimizer:
                     86400,  # 24 hours
                     json.dumps(asdict(report), default=str)
                 )
+
             
             self.logger.info(f"Social optimization completed for {content_id}")
+
             return report
             
         except Exception as e:
             self.logger.error(f"Social optimization failed: {e}")
+
             raise SocialOptimizationError(f"Social optimization failed: {e}")
 
     async def _analyze_audience_insights(
@@ -440,9 +468,11 @@ class EnterpriseSocialOptimizer:
                 platform_audiences = await self._segment_audience_for_platform(
                     platform, target_audience
                 )
+
                 audience_insights[platform] = platform_audiences
             except Exception as e:
                 self.logger.error(f"Audience analysis failed for {platform}: {e}")
+
                 audience_insights[platform] = []
         
         return audience_insights
@@ -455,9 +485,11 @@ class EnterpriseSocialOptimizer:
         """Segment audience for specific platform"""
         try:
             # Generate platform-specific audience segments
+
             segments = []
             
             # Demographics-based segment
+
             demo_segment = AudienceProfile(
                 segment_id=f"{platform.value}_demographics_1",
                 segment_type=AudienceSegment.DEMOGRAPHICS,
@@ -476,9 +508,11 @@ class EnterpriseSocialOptimizer:
                 optimal_content_types=[ContentStyle.ENTERTAINMENT, ContentStyle.EDUCATIONAL],
                 peak_activity_hours=self._get_platform_peak_hours(platform)
             )
+
             segments.append(demo_segment)
             
             # Interest-based segment
+
             interest_segment = AudienceProfile(
                 segment_id=f"{platform.value}_interests_1",
                 segment_type=AudienceSegment.INTERESTS,
@@ -492,9 +526,11 @@ class EnterpriseSocialOptimizer:
                 optimal_content_types=[ContentStyle.EDUCATIONAL, ContentStyle.INSPIRATIONAL],
                 peak_activity_hours=self._get_platform_peak_hours(platform)
             )
+
             segments.append(interest_segment)
             
             # Behavior-based segment
+
             behavior_segment = AudienceProfile(
                 segment_id=f"{platform.value}_behavior_1",
                 segment_type=AudienceSegment.BEHAVIOR,
@@ -508,12 +544,15 @@ class EnterpriseSocialOptimizer:
                 optimal_content_types=[ContentStyle.TRENDING, ContentStyle.ENTERTAINMENT],
                 peak_activity_hours=self._get_platform_peak_hours(platform)
             )
+
             segments.append(behavior_segment)
+
             
             return segments
             
         except Exception as e:
             self.logger.error(f"Audience segmentation failed for {platform}: {e}")
+
             return []
 
     def _get_platform_peak_hours(self, platform: SocialPlatform) -> List[int]:
@@ -535,42 +574,52 @@ class EnterpriseSocialOptimizer:
         platform: SocialPlatform,
         audience_segments: List[AudienceProfile]
     ) -> Optional[OptimizedContent]:
-        """Optimize content for specific social platform"""
+        """
+        Optimize content for specific social platform"""
         try:
             platform_spec = self.platform_specs.get(platform)
+
             if not platform_spec:
                 self.logger.warning(f"No specifications for platform {platform}")
+
                 return None
             
             # Step 1: Adapt content format
+
             optimized_path = await self._adapt_content_format(
                 content_path, platform_spec
             )
             
             # Step 2: Optimize metadata
+
             optimized_metadata = await self._optimize_metadata_for_platform(
                 metadata, platform_spec, audience_segments
             )
             
             # Step 3: Generate optimal hashtags
+
             hashtags = await self._generate_optimal_hashtags(
                 metadata, platform, audience_segments
             )
             
             # Step 4: Create posting schedule
+
             posting_schedule = await self._create_posting_schedule(
                 platform, audience_segments
             )
             
             # Step 5: Predict performance
+
             expected_performance = await self._predict_content_performance(
                 platform, optimized_metadata, hashtags, audience_segments
             )
             
             # Step 6: Calculate optimization score
+
             optimization_score = self._calculate_optimization_score(
                 platform_spec, optimized_metadata, hashtags, audience_segments
             )
+
             
             return OptimizedContent(
                 platform=platform,
@@ -582,9 +631,11 @@ class EnterpriseSocialOptimizer:
                 expected_performance=expected_performance,
                 optimization_score=optimization_score
             )
+
             
         except Exception as e:
             self.logger.error(f"Content optimization failed for {platform}: {e}")
+
             return None
 
     async def _adapt_content_format(
@@ -595,15 +646,19 @@ class EnterpriseSocialOptimizer:
         """Adapt content format for platform specifications"""
         # Simplified content adaptation
         # In production: Use FFmpeg, PIL, or other tools for format conversion
+
         
         output_dir = content_path.parent / "social_optimized" / platform_spec.platform.value
         output_dir.mkdir(parents=True, exist_ok=True)
+
+
         
         output_path = output_dir / f"{content_path.stem}_optimized{content_path.suffix}"
         
         # For demo, just copy the file
         # In production: Apply platform-specific optimizations
         output_path.write_bytes(content_path.read_bytes())
+
         
         return output_path
 
@@ -622,15 +677,18 @@ class EnterpriseSocialOptimizer:
             optimized['title'] = self._optimize_for_tiktok_algorithm(
                 metadata.get('title', ''), audience_segments
             )
+
             optimized['description'] = self._add_trending_elements(
                 metadata.get('description', ''), platform_spec.platform
             )
+
             
         elif platform_spec.platform == SocialPlatform.INSTAGRAM:
             # Instagram optimizations
             optimized['caption'] = self._create_instagram_caption(
                 metadata, audience_segments
             )
+
             optimized['alt_text'] = metadata.get('description', '')[:100]
             
         elif platform_spec.platform == SocialPlatform.YOUTUBE_SHORTS:
@@ -638,11 +696,13 @@ class EnterpriseSocialOptimizer:
             optimized['title'] = self._optimize_youtube_title(
                 metadata.get('title', ''), audience_segments
             )
+
             optimized['description'] = self._create_youtube_description(
                 metadata, audience_segments
             )
         
         # Ensure length limits
+
         text_specs = platform_spec.text_specs
         for field, limit in text_specs.items():
             if field in optimized and isinstance(optimized[field], str):
@@ -658,11 +718,14 @@ class EnterpriseSocialOptimizer:
     ) -> str:
         """Optimize title for TikTok algorithm"""
         # Add engaging elements
+
         engaging_words = ['Amazing', 'Incredible', 'You Won\'t Believe', 'Secret', 'Hack']
         
         # Check if title already has engaging elements
         if not any(word.lower() in title.lower() for word in engaging_words):
             selected_word = np.random.choice(engaging_words)
+
+
             title = f"{selected_word}: {title}"
         
         return title
@@ -674,11 +737,16 @@ class EnterpriseSocialOptimizer:
     ) -> str:
         """Add trending elements to description"""
         trending = self.trending_data.get(platform, {})
+
         trending_hashtags = trending.get('trending_hashtags', [])
+
         
         if trending_hashtags and not any(tag in description for tag in trending_hashtags):
             # Add one trending hashtag
+
             trending_tag = np.random.choice(trending_hashtags)
+
+
             description = f"{description} {trending_tag}"
         
         return description
@@ -690,9 +758,11 @@ class EnterpriseSocialOptimizer:
     ) -> str:
         """Create optimized Instagram caption"""
         title = metadata.get('title', '')
+
         description = metadata.get('description', '')
         
         # Create engaging caption structure
+
         caption_parts = []
         
         # Hook
@@ -707,8 +777,10 @@ class EnterpriseSocialOptimizer:
             primary_segment = audience_segments[0]
             if ContentStyle.ENTERTAINMENT in primary_segment.optimal_content_types:
                 caption_parts.append("\n\nDouble tap if you agree! 👍")
+
             elif ContentStyle.EDUCATIONAL in primary_segment.optimal_content_types:
                 caption_parts.append("\n\nSave this for later! 📚")
+
         
         return "".join(caption_parts)
 
@@ -719,6 +791,7 @@ class EnterpriseSocialOptimizer:
     ) -> str:
         """Optimize title for YouTube algorithm"""
         # Add power words for YouTube
+
         power_words = ['Ultimate', 'Complete', 'Best', 'Top', 'Essential']
         
         # Check audience preferences
@@ -750,6 +823,7 @@ class EnterpriseSocialOptimizer:
         description_parts.append("\n\n🔗 Connect with us:")
         description_parts.append("Instagram: @username")
         description_parts.append("TikTok: @username")
+
         
         return "\n".join(description_parts)
 
@@ -763,16 +837,20 @@ class EnterpriseSocialOptimizer:
         hashtags = []
         
         # Get platform spec
+
         platform_spec = self.platform_specs.get(platform)
         if not platform_spec:
             return hashtags
         
         # Start with trending hashtags
+
         trending = self.trending_data.get(platform, {})
+
         trending_hashtags = trending.get('trending_hashtags', [])
         hashtags.extend(trending_hashtags[:2])  # Add 2 trending hashtags
         
         # Add content-specific hashtags
+
         content_keywords = metadata.get('keywords', [])
         for keyword in content_keywords[:3]:
             hashtag = f"#{keyword.lower().replace(' ', '')}"
@@ -787,6 +865,7 @@ class EnterpriseSocialOptimizer:
                     hashtags.append(hashtag)
         
         # Add niche hashtags
+
         niche_hashtags = [
             '#contentcreator', '#viral', '#fyp', '#trending',
             '#content', '#creator', '#influence', '#social'
@@ -797,6 +876,7 @@ class EnterpriseSocialOptimizer:
                 hashtags.append(hashtag)
         
         # Ensure we don't exceed platform limits
+
         max_hashtags = platform_spec.hashtag_limits['optimal_count']
         return hashtags[:max_hashtags]
 
@@ -809,6 +889,7 @@ class EnterpriseSocialOptimizer:
         schedule = []
         
         # Get peak hours from audience segments
+
         all_peak_hours = []
         for segment in audience_segments:
             all_peak_hours.extend(segment.peak_activity_hours)
@@ -820,6 +901,7 @@ class EnterpriseSocialOptimizer:
                 hour_counts[hour] = hour_counts.get(hour, 0) + 1
             
             # Sort by frequency
+
             optimal_hours = sorted(
                 hour_counts.keys(),
                 key=lambda x: hour_counts[x],
@@ -829,7 +911,9 @@ class EnterpriseSocialOptimizer:
             optimal_hours = self._get_platform_peak_hours(platform)[:3]
         
         # Create schedule for next 7 days
+
         base_date = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
+
         
         for day in range(7):
             posting_date = base_date + timedelta(days=day + 1)
@@ -837,7 +921,9 @@ class EnterpriseSocialOptimizer:
             # Add optimal posting times for this day
             for hour in optimal_hours:
                 posting_time = posting_date.replace(hour=hour)
+
                 schedule.append(posting_time)
+
         
         return schedule[:10]  # Limit to 10 scheduled posts
 
@@ -848,15 +934,19 @@ class EnterpriseSocialOptimizer:
         hashtags: List[str],
         audience_segments: List[AudienceProfile]
     ) -> Dict[str, float]:
-        """Predict content performance metrics"""
+        """
+        Predict content performance metrics"""
         # Simplified performance prediction
         # In production: Use ML models trained on historical data
         
         # Base performance metrics
+
         base_reach = sum(segment.size_estimate for segment in audience_segments)
+
         avg_engagement_rate = np.mean([segment.engagement_rate for segment in audience_segments]) if audience_segments else 0.03
         
         # Apply platform multipliers
+
         platform_multipliers = {
             SocialPlatform.TIKTOK: {'reach': 2.5, 'engagement': 1.8},
             SocialPlatform.INSTAGRAM: {'reach': 1.5, 'engagement': 1.2},
@@ -864,19 +954,29 @@ class EnterpriseSocialOptimizer:
             SocialPlatform.FACEBOOK: {'reach': 1.0, 'engagement': 0.8},
             SocialPlatform.TWITTER: {'reach': 1.2, 'engagement': 1.1}
         }
+
         
         multiplier = platform_multipliers.get(platform, {'reach': 1.0, 'engagement': 1.0})
+
+
         
         predicted_reach = int(base_reach * multiplier['reach'])
+
         predicted_engagement_rate = avg_engagement_rate * multiplier['engagement']
+
         predicted_engagements = int(predicted_reach * predicted_engagement_rate)
         
         # Hashtag boost
+
         trending_hashtags = self.trending_data.get(platform, {}).get('trending_hashtags', [])
+
         hashtag_boost = len([h for h in hashtags if h in trending_hashtags]) * 0.1
+
         
         predicted_reach = int(predicted_reach * (1 + hashtag_boost))
+
         predicted_engagements = int(predicted_engagements * (1 + hashtag_boost))
+
         
         return {
             'predicted_reach': predicted_reach,
@@ -894,28 +994,36 @@ class EnterpriseSocialOptimizer:
         hashtags: List[str],
         audience_segments: List[AudienceProfile]
     ) -> float:
-        """Calculate optimization score for content"""
+        """
+        Calculate optimization score for content"""
         score = 0.0
         
         # Hashtag optimization score (30%)
+
         optimal_hashtag_count = platform_spec.hashtag_limits['optimal_count']
+
         hashtag_score = min(len(hashtags) / optimal_hashtag_count, 1.0) * 30
         score += hashtag_score
         
         # Audience targeting score (25%)
+
         audience_score = min(len(audience_segments) / 3, 1.0) * 25
         score += audience_score
         
         # Content format score (20%)
+
         format_score = 20  # Assume optimized format
         score += format_score
         
         # Trending elements score (15%)
+
         trending_hashtags = self.trending_data.get(platform_spec.platform, {}).get('trending_hashtags', [])
+
         trending_score = len([h for h in hashtags if h in trending_hashtags]) / max(len(trending_hashtags), 1) * 15
         score += trending_score
         
         # Metadata optimization score (10%)
+
         metadata_score = 10 if metadata.get('title') and metadata.get('description') else 5
         score += metadata_score
         
@@ -926,18 +1034,22 @@ class EnterpriseSocialOptimizer:
         optimized_content: List[OptimizedContent],
         audience_insights: Dict[SocialPlatform, List[AudienceProfile]]
     ) -> Dict[SocialPlatform, Dict[str, float]]:
-        """Predict performance across all platforms"""
+        """
+        Predict performance across all platforms"""
         predictions = {}
         
         for content in optimized_content:
             platform = content.platform
+
             performance = content.expected_performance.copy()
             
             # Add cross-platform synergy effects
             if len(optimized_content) > 1:
                 synergy_boost = 0.15  # 15% boost for cross-platform strategy
                 performance['predicted_reach'] = int(performance['predicted_reach'] * (1 + synergy_boost))
+
                 performance['predicted_engagements'] = int(performance['predicted_engagements'] * (1 + synergy_boost))
+
             
             predictions[platform] = performance
         
@@ -948,7 +1060,8 @@ class EnterpriseSocialOptimizer:
         optimized_content: List[OptimizedContent],
         performance_predictions: Dict[SocialPlatform, Dict[str, float]]
     ) -> Dict[str, Any]:
-        """Create cross-platform content strategy"""
+        """
+        Create cross-platform content strategy"""
         strategy = {
             'posting_sequence': [],
             'content_variations': {},
@@ -961,8 +1074,10 @@ class EnterpriseSocialOptimizer:
             return strategy
         
         # Sort platforms by predicted performance
+
         platform_performance = [
             (content.platform, performance_predictions.get(content.platform, {}).get('predicted_reach', 0))
+
             for content in optimized_content
         ]
         platform_performance.sort(key=lambda x: x[1], reverse=True)
@@ -982,6 +1097,7 @@ class EnterpriseSocialOptimizer:
         # Cross-promotion strategy
         for i, content in enumerate(optimized_content):
             platform = content.platform
+
             other_platforms = [c.platform.value for j, c in enumerate(optimized_content) if j != i]
             strategy['cross_promotion'][platform.value] = {
                 'mention_platforms': other_platforms[:2],  # Mention top 2 other platforms
@@ -997,12 +1113,14 @@ class EnterpriseSocialOptimizer:
         audience_insights: Dict[SocialPlatform, List[AudienceProfile]],
         performance_predictions: Dict[SocialPlatform, Dict[str, float]]
     ) -> List[str]:
-        """Generate actionable optimization recommendations"""
+        """
+        Generate actionable optimization recommendations"""
         recommendations = []
         
         # Platform-specific recommendations
         for content in optimized_content:
             platform = content.platform
+
             score = content.optimization_score
             
             if score < 70:
@@ -1012,8 +1130,12 @@ class EnterpriseSocialOptimizer:
                 )
             
             # Performance-based recommendations
+
             performance = performance_predictions.get(platform, {})
+
+
             predicted_reach = performance.get('predicted_reach', 0)
+
             
             if predicted_reach < 10000:
                 recommendations.append(
@@ -1026,6 +1148,7 @@ class EnterpriseSocialOptimizer:
             recommendations.append(
                 "Implement cross-platform promotion strategy to maximize reach synergy."
             )
+
             recommendations.append(
                 "Schedule posts 2-4 hours apart to maintain momentum across platforms."
             )
@@ -1034,6 +1157,7 @@ class EnterpriseSocialOptimizer:
         for platform, segments in audience_insights.items():
             if segments:
                 top_segment = max(segments, key=lambda x: x.engagement_rate)
+
                 recommendations.append(
                     f"Focus on {top_segment.segment_type.value} segment for {platform.value} "
                     f"(engagement rate: {top_segment.engagement_rate:.2%})"
@@ -1046,6 +1170,7 @@ class EnterpriseSocialOptimizer:
             "Prepare 2-3 content variations for A/B testing",
             "Use analytics to refine future content strategies"
         ])
+
         
         return recommendations[:10]  # Limit to top 10 recommendations
 
@@ -1054,12 +1179,16 @@ class EnterpriseSocialOptimizer:
         try:
             if self.redis_client:
                 report_data = await self.redis_client.get(f"social_optimization:{content_id}")
+
                 if report_data:
                     data = json.loads(report_data)
+
                     return SocialOptimizationReport(**data)
+
             return None
         except Exception as e:
             self.logger.error(f"Failed to get optimization report: {e}")
+
             return None
 
 # Legacy Integration Classes
@@ -1075,8 +1204,11 @@ class SocialMediaFormatOptimizer:
         platform: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize content format using legacy interface"""
+        """
+        Optimize content format using legacy interface"""
         platform_enum = SocialPlatform(platform)
+
+
         
         result = await self.optimizer._optimize_content_for_platform(
             "legacy",
@@ -1085,6 +1217,7 @@ class SocialMediaFormatOptimizer:
             platform_enum,
             []
         )
+
         
         return asdict(result) if result else {'success': False, 'error': 'Optimization failed'}
 
@@ -1099,27 +1232,34 @@ class AudienceTargetingProcessor:
         platform: str,
         audience_params: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Target audience using legacy interface"""
+        """
+        Target audience using legacy interface"""
         platform_enum = SocialPlatform(platform)
+
+
         
         segments = await self.optimizer._segment_audience_for_platform(
             platform_enum, audience_params
         )
+
         
         return [asdict(segment) for segment in segments]
 
 # Factory Pattern
 class SocialOptimizerFactory:
-    """Factory for creating social optimizers"""
+    """
+        Factory for creating social optimizers"""
     
     @staticmethod
     def create_standard_optimizer() -> EnterpriseSocialOptimizer:
-        """Create standard social optimizer"""
+        """
+        Create standard social optimizer"""
         return EnterpriseSocialOptimizer()
     
     @staticmethod
     def create_enterprise_optimizer() -> EnterpriseSocialOptimizer:
-        """Create enterprise social optimizer"""
+        """
+        Create enterprise social optimizer"""
         config = SocialOptimizationConfig(
             target_platforms=[
                 SocialPlatform.TIKTOK,
@@ -1147,8 +1287,10 @@ async def optimize_social_content_enterprise(
     platforms: List[str],
     target_audience: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """Enterprise social optimization interface"""
+    """
+        Enterprise social optimization interface"""
     optimizer = SocialOptimizerFactory.create_standard_optimizer()
+
     
     platform_enums = [SocialPlatform(p) for p in platforms]
     report = await optimizer.optimize_for_social_platforms(

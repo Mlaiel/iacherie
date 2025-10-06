@@ -101,11 +101,11 @@ class MultiPlatformDistributionEngine:
             
             for platform in target_platforms:
                 platform_config = self.platforms.get(platform)
+
                 if not platform_config:
                     self.logger.warning(f"Platform not configured: {platform}")
+
                     continue
-                
-                # Mock distribution process
                 distribution_id = f"dist_{content_id}_{platform.value}_{datetime.now().timestamp()}"
                 
                 result = DistributionResult(
@@ -119,20 +119,23 @@ class MultiPlatformDistributionEngine:
                     distributed_at=datetime.utcnow(),
                     last_sync=datetime.utcnow()
                 )
+
                 
                 results.append(result)
+
                 self.logger.info(f"Content distributed to {platform.value}: {distribution_id}")
+
             
             return results
             
         except Exception as e:
             self.logger.error(f"Content distribution failed: {e}")
+
             raise
     
     async def sync_platform_revenue(self, platform: Platform) -> Dict[str, Any]:
         """Synchronize revenue data from platform"""
         try:
-            # Mock revenue synchronization
             sync_result = {
                 "platform": platform.value,
                 "total_revenue": 1250.75,
@@ -142,10 +145,12 @@ class MultiPlatformDistributionEngine:
             }
             
             self.logger.info(f"Revenue synced from {platform.value}")
+
             return sync_result
             
         except Exception as e:
             self.logger.error(f"Revenue sync failed for {platform.value}: {e}")
+
             raise
     
     async def get_cross_platform_analytics(self, content_id: str) -> Dict[str, Any]:
@@ -171,6 +176,7 @@ class MultiPlatformDistributionEngine:
             
         except Exception as e:
             self.logger.error(f"Failed to get cross-platform analytics: {e}")
+
             raise
 
 __all__ = [

@@ -30,14 +30,7 @@ import json
 import uuid
 import statistics
 # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+from protection.utils.redis_compat import aioredis, REDIS_AVAILABLE
 from sqlalchemy.ext.asyncio import AsyncSession
 import psutil
 import time
@@ -47,7 +40,8 @@ from collections import defaultdict, deque
 logger = logging.getLogger(__name__)
 
 class PerformanceLevel(Enum):
-    """Performance optimization level"""
+    """
+        Performance optimization level"""
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -111,7 +105,8 @@ class PerformanceMetric:
 
 @dataclass
 class QualitySettings:
-    """Quality settings configuration"""
+    """
+        Quality settings configuration"""
     profile: QualityProfile
     resolution: Tuple[int, int]
     bitrate: int
@@ -125,7 +120,8 @@ class QualitySettings:
 
 @dataclass
 class BandwidthProfile:
-    """Bandwidth profile configuration"""
+    """
+        Bandwidth profile configuration"""
     profile_id: str
     min_bandwidth: int
     max_bandwidth: int
@@ -138,7 +134,8 @@ class BandwidthProfile:
 
 @dataclass
 class PerformanceOptimization:
-    """Performance optimization result"""
+    """
+        Performance optimization result"""
     optimization_id: str
     session_id: str
     strategy: OptimizationStrategy
@@ -153,7 +150,8 @@ class PerformanceOptimization:
 
 @dataclass
 class ResourceScaling:
-    """Resource scaling configuration"""
+    """
+        Resource scaling configuration"""
     scaling_id: str
     resource_type: str
     current_capacity: int
@@ -166,36 +164,46 @@ class ResourceScaling:
     rollback_plan: Dict[str, Any]
 
 class RealTimeMetricsCollector:
-    """Real-time performance metrics collection"""
+    """
+        Real-time performance metrics collection"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Optional[Any]):
         self.redis = redis_client
         self.metrics_buffer = defaultdict(lambda: deque(maxlen=1000))
         self.collectors = {}
         self.sampling_rates = {}
         
     async def initialize_metrics_collection(self) -> Dict[str, Any]:
-        """Initialize real-time metrics collection"""
+        """
+        Initialize real-time metrics collection"""
         try:
             # Setup system metrics collectors
+
             system_collectors = await self._setup_system_metrics_collectors()
             
             # Setup streaming metrics collectors
+
             streaming_collectors = await self._setup_streaming_metrics_collectors()
             
             # Setup network metrics collectors
+
             network_collectors = await self._setup_network_metrics_collectors()
             
             # Setup quality metrics collectors
+
             quality_collectors = await self._setup_quality_metrics_collectors()
             
             # Configure metric aggregation
+
             aggregation_config = await self._configure_metric_aggregation()
             
             # Start collection tasks
+
             collection_tasks = await self._start_collection_tasks()
+
             
             logger.info(f"📊 Metrics collection initialized with {len(self.collectors)} collectors")
+
             
             return {
                 "system_collectors": len(system_collectors),
@@ -209,6 +217,7 @@ class RealTimeMetricsCollector:
             
         except Exception as e:
             logger.error(f"Failed to initialize metrics collection: {e}")
+
             raise
 
     async def collect_streaming_metrics(
@@ -219,10 +228,14 @@ class RealTimeMetricsCollector:
         """Collect real-time streaming performance metrics"""
         try:
             current_time = datetime.utcnow()
+
+
             metrics = {}
             
             # Collect latency metrics
+
             latency_metric = await self._collect_latency_metrics(session_id, stream_data)
+
             metrics["latency"] = PerformanceMetric(
                 metric_id=str(uuid.uuid4()),
                 metric_type=MetricType.LATENCY,
@@ -238,7 +251,9 @@ class RealTimeMetricsCollector:
             )
             
             # Collect throughput metrics
+
             throughput_metric = await self._collect_throughput_metrics(session_id, stream_data)
+
             metrics["throughput"] = PerformanceMetric(
                 metric_id=str(uuid.uuid4()),
                 metric_type=MetricType.THROUGHPUT,
@@ -254,7 +269,9 @@ class RealTimeMetricsCollector:
             )
             
             # Collect bandwidth metrics
+
             bandwidth_metric = await self._collect_bandwidth_metrics(session_id, stream_data)
+
             metrics["bandwidth"] = PerformanceMetric(
                 metric_id=str(uuid.uuid4()),
                 metric_type=MetricType.BANDWIDTH,
@@ -270,7 +287,9 @@ class RealTimeMetricsCollector:
             )
             
             # Collect quality metrics
+
             quality_metric = await self._collect_quality_metrics(session_id, stream_data)
+
             metrics["quality"] = PerformanceMetric(
                 metric_id=str(uuid.uuid4()),
                 metric_type=MetricType.QUALITY_SCORE,
@@ -287,41 +306,52 @@ class RealTimeMetricsCollector:
             
             # Store metrics in buffer and Redis
             await self._store_metrics(session_id, metrics)
+
             
             return metrics
             
         except Exception as e:
             logger.error(f"Failed to collect streaming metrics: {e}")
+
             raise
 
 class AdaptiveQualityController:
     """Adaptive quality control system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Optional[Any]):
         self.redis = redis_client
         self.quality_profiles = {}
         self.adaptation_rules = {}
         self.quality_history = defaultdict(list)
+
         
     async def initialize_quality_controller(self) -> Dict[str, Any]:
-        """Initialize adaptive quality controller"""
+        """
+        Initialize adaptive quality controller"""
         try:
             # Setup quality profiles
+
             quality_profiles = await self._setup_quality_profiles()
             
             # Configure adaptation algorithms
+
             adaptation_algorithms = await self._configure_adaptation_algorithms()
             
             # Setup bandwidth monitoring
+
             bandwidth_monitoring = await self._setup_bandwidth_monitoring()
             
             # Configure quality rules
+
             quality_rules = await self._configure_quality_rules()
             
             # Initialize ML-based optimization
+
             ml_optimization = await self._initialize_ml_optimization()
+
             
             logger.info(f"🎯 Quality controller initialized with {len(quality_profiles)} profiles")
+
             
             return {
                 "quality_profiles": len(quality_profiles),
@@ -333,6 +363,7 @@ class AdaptiveQualityController:
             
         except Exception as e:
             logger.error(f"Failed to initialize quality controller: {e}")
+
             raise
 
     async def optimize_streaming_quality(
@@ -344,32 +375,38 @@ class AdaptiveQualityController:
         """Optimize streaming quality based on current conditions"""
         try:
             # Analyze current performance
+
             performance_analysis = await self._analyze_current_performance(
                 current_metrics, bandwidth_profile
             )
             
             # Determine optimal quality settings
+
             optimal_quality = await self._determine_optimal_quality(
                 session_id, performance_analysis, bandwidth_profile
             )
             
             # Calculate quality adjustments
+
             quality_adjustments = await self._calculate_quality_adjustments(
                 session_id, optimal_quality, current_metrics
             )
             
             # Apply quality changes
+
             quality_application = await self._apply_quality_changes(
                 session_id, quality_adjustments
             )
             
             # Validate quality improvements
+
             quality_validation = await self._validate_quality_improvements(
                 session_id, quality_adjustments, current_metrics
             )
             
             # Update quality history
             await self._update_quality_history(session_id, optimal_quality, current_metrics)
+
             
             return {
                 "success": True,
@@ -384,12 +421,13 @@ class AdaptiveQualityController:
             
         except Exception as e:
             logger.error(f"Failed to optimize streaming quality: {e}")
+
             raise
 
 class BandwidthOptimizer:
     """Bandwidth optimization system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Optional[Any]):
         self.redis = redis_client
         self.bandwidth_profiles = {}
         self.optimization_algorithms = {}
@@ -402,35 +440,43 @@ class BandwidthOptimizer:
         target_quality: QualitySettings,
         network_conditions: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize bandwidth usage for streaming"""
+        """
+        Optimize bandwidth usage for streaming"""
         try:
             # Analyze network conditions
+
             network_analysis = await self._analyze_network_conditions(
                 network_conditions, current_bandwidth
             )
             
             # Calculate optimal bandwidth allocation
+
             bandwidth_allocation = await self._calculate_optimal_bandwidth(
                 session_id, target_quality, network_analysis
             )
             
             # Implement traffic shaping
+
             traffic_shaping = await self._implement_traffic_shaping(
                 session_id, bandwidth_allocation
             )
             
             # Configure adaptive bitrate
+
             adaptive_bitrate = await self._configure_adaptive_bitrate(
                 session_id, bandwidth_allocation, network_analysis
             )
             
             # Setup bandwidth monitoring
+
             bandwidth_monitoring = await self._setup_session_bandwidth_monitoring(session_id)
             
             # Validate bandwidth optimization
+
             optimization_validation = await self._validate_bandwidth_optimization(
                 session_id, bandwidth_allocation, current_bandwidth
             )
+
             
             return {
                 "success": True,
@@ -446,12 +492,13 @@ class BandwidthOptimizer:
             
         except Exception as e:
             logger.error(f"Failed to optimize bandwidth usage: {e}")
+
             raise
 
 class IntelligentScaler:
     """Intelligent resource scaling system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.scaling_policies = {}
@@ -464,32 +511,39 @@ class IntelligentScaler:
         performance_metrics: Dict[str, PerformanceMetric],
         predicted_demand: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze resource scaling requirements"""
+        """
+        Analyze resource scaling requirements"""
         try:
             # Analyze current resource utilization
+
             utilization_analysis = await self._analyze_resource_utilization(
                 current_load, performance_metrics
             )
             
             # Predict future resource needs
+
             resource_prediction = await self._predict_resource_needs(
                 predicted_demand, utilization_analysis
             )
             
             # Calculate scaling recommendations
+
             scaling_recommendations = await self._calculate_scaling_recommendations(
                 utilization_analysis, resource_prediction
             )
             
             # Assess scaling impact
+
             scaling_impact = await self._assess_scaling_impact(
                 scaling_recommendations, current_load
             )
             
             # Generate scaling plan
+
             scaling_plan = await self._generate_scaling_plan(
                 scaling_recommendations, scaling_impact
             )
+
             
             return {
                 "utilization_analysis": utilization_analysis,
@@ -502,6 +556,7 @@ class IntelligentScaler:
             
         except Exception as e:
             logger.error(f"Failed to analyze scaling requirements: {e}")
+
             raise
 
     async def execute_intelligent_scaling(
@@ -512,27 +567,33 @@ class IntelligentScaler:
         """Execute intelligent resource scaling"""
         try:
             # Validate scaling plan
+
             plan_validation = await self._validate_scaling_plan(scaling_plan)
+
             if not plan_validation["valid"]:
                 raise ValueError("Invalid scaling plan")
             
             # Execute scaling actions
+
             scaling_execution = await self._execute_scaling_actions(
                 scaling_plan, execution_strategy
             )
             
             # Monitor scaling progress
+
             scaling_monitoring = await self._monitor_scaling_progress(
                 scaling_plan["scaling_id"]
             )
             
             # Validate scaling results
+
             scaling_validation = await self._validate_scaling_results(
                 scaling_plan, scaling_execution
             )
             
             # Update scaling history
             await self._update_scaling_history(scaling_plan, scaling_execution)
+
             
             return {
                 "success": True,
@@ -546,12 +607,13 @@ class IntelligentScaler:
             
         except Exception as e:
             logger.error(f"Failed to execute intelligent scaling: {e}")
+
             raise
 
 class PerformanceAnalyzer:
     """Advanced performance analysis engine"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Optional[Any]):
         self.redis = redis_client
         self.analysis_models = {}
         self.performance_baselines = {}
@@ -563,33 +625,41 @@ class PerformanceAnalyzer:
         metrics_history: List[Dict[str, PerformanceMetric]],
         performance_targets: Dict[str, float]
     ) -> Dict[str, Any]:
-        """Comprehensive streaming performance analysis"""
+        """
+        Comprehensive streaming performance analysis"""
         try:
             # Calculate performance trends
+
             performance_trends = await self._calculate_performance_trends(metrics_history)
             
             # Identify performance bottlenecks
+
             bottleneck_analysis = await self._identify_performance_bottlenecks(
                 metrics_history, performance_targets
             )
             
             # Analyze quality consistency
+
             quality_analysis = await self._analyze_quality_consistency(metrics_history)
             
             # Calculate performance scores
+
             performance_scores = await self._calculate_performance_scores(
                 metrics_history, performance_targets
             )
             
             # Generate optimization recommendations
+
             optimization_recommendations = await self._generate_optimization_recommendations(
                 performance_trends, bottleneck_analysis, quality_analysis
             )
             
             # Predict performance trajectory
+
             performance_prediction = await self._predict_performance_trajectory(
                 metrics_history, performance_trends
             )
+
             
             return {
                 "session_id": session_id,
@@ -604,12 +674,13 @@ class PerformanceAnalyzer:
             
         except Exception as e:
             logger.error(f"Failed to analyze streaming performance: {e}")
+
             raise
 
 class StreamingPerformanceOptimizer:
     """Unified streaming performance optimizer - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         
@@ -630,24 +701,32 @@ class StreamingPerformanceOptimizer:
         """Initialize performance optimization system"""
         try:
             # Initialize metrics collection
+
             metrics_status = await self.metrics_collector.initialize_metrics_collection()
             
             # Initialize quality controller
+
             quality_status = await self.quality_controller.initialize_quality_controller()
             
             # Setup performance baselines
+
             baselines_setup = await self._setup_performance_baselines()
             
             # Configure optimization algorithms
+
             optimization_algorithms = await self._configure_optimization_algorithms()
             
             # Initialize ML-based optimization
+
             ml_optimization = await self._initialize_ml_optimization()
             
             # Setup performance monitoring
+
             monitoring_setup = await self._setup_performance_monitoring()
+
             
             logger.info("🚀 Streaming Performance Optimizer fully initialized")
+
             
             return {
                 "optimization_status": "initialized",
@@ -669,6 +748,7 @@ class StreamingPerformanceOptimizer:
             
         except Exception as e:
             logger.error(f"Failed to initialize performance optimizer: {e}")
+
             raise
     
     async def optimize_streaming_session(
@@ -681,16 +761,19 @@ class StreamingPerformanceOptimizer:
         """Optimize streaming session performance comprehensively"""
         try:
             # Collect current performance metrics
+
             current_metrics = await self.metrics_collector.collect_streaming_metrics(
                 session_id, {"session_id": session_id}
             )
             
             # Analyze current performance
+
             performance_analysis = await self.performance_analyzer.analyze_streaming_performance(
                 session_id, [current_metrics], performance_targets
             )
             
             # Create bandwidth profile
+
             bandwidth_profile = BandwidthProfile(
                 profile_id=str(uuid.uuid4()),
                 min_bandwidth=1,
@@ -704,11 +787,13 @@ class StreamingPerformanceOptimizer:
             )
             
             # Optimize quality settings
+
             quality_optimization = await self.quality_controller.optimize_streaming_quality(
                 session_id, current_metrics, bandwidth_profile
             )
             
             # Optimize bandwidth usage
+
             bandwidth_optimization = await self.bandwidth_optimizer.optimize_bandwidth_usage(
                 session_id, 
                 current_metrics.get("bandwidth", PerformanceMetric(
@@ -720,11 +805,13 @@ class StreamingPerformanceOptimizer:
             )
             
             # Analyze scaling requirements
+
             scaling_analysis = await self.intelligent_scaler.analyze_scaling_requirements(
                 {"current_load": 50}, current_metrics, {"predicted_viewers": 1000}
             )
             
             # Generate comprehensive optimization result
+
             optimization_result = PerformanceOptimization(
                 optimization_id=str(uuid.uuid4()),
                 session_id=session_id,
@@ -757,6 +844,7 @@ class StreamingPerformanceOptimizer:
             
         except Exception as e:
             logger.error(f"Failed to optimize streaming session: {e}")
+
             raise
     
     # Additional helper methods implementation...
@@ -771,6 +859,7 @@ class StreamingPerformanceOptimizer:
             }
         except Exception as e:
             logger.error(f"Failed to setup performance baselines: {e}")
+
             return {}
 
     async def _configure_optimization_algorithms(self) -> Dict[str, Any]:
@@ -784,6 +873,7 @@ class StreamingPerformanceOptimizer:
             }
         except Exception as e:
             logger.error(f"Failed to configure optimization algorithms: {e}")
+
             return {}
 
 # Export main classes

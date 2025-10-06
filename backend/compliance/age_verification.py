@@ -8,6 +8,7 @@ Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
 """
 
+
 import logging
 import uuid
 from datetime import datetime, timedelta, date
@@ -19,7 +20,10 @@ logger = logging.getLogger(__name__)
 
 
 class VerificationMethod(str, Enum):
-    """Age verification methods"""
+    """
+
+        Age verification methods"""
+
     SELF_DECLARATION = "self_declaration"
     GOVERNMENT_ID = "government_id"
     CREDIT_CARD = "credit_card"
@@ -31,6 +35,7 @@ class VerificationMethod(str, Enum):
 
 class VerificationStatus(str, Enum):
     """Verification status"""
+
     PENDING = "pending"
     VERIFIED = "verified"
     FAILED = "failed"
@@ -40,6 +45,7 @@ class VerificationStatus(str, Enum):
 
 class ConsentMethod(str, Enum):
     """Parental consent methods"""
+
     EMAIL_PLUS_ADDITIONAL = "email_plus_additional"
     DIGITAL_SIGNATURE = "digital_signature"
     CREDIT_CARD = "credit_card"
@@ -50,6 +56,7 @@ class ConsentMethod(str, Enum):
 
 class AgeCategory(str, Enum):
     """Age categories for compliance"""
+
     UNDER_13 = "under_13"
     TEEN_13_TO_17 = "teen_13_to_17"
     ADULT_18_PLUS = "adult_18_plus"
@@ -59,6 +66,7 @@ class AgeCategory(str, Enum):
 @dataclass
 class VerificationResult:
     """Age verification result"""
+
     user_id: int
     verification_id: str
     method: VerificationMethod
@@ -74,7 +82,10 @@ class VerificationResult:
 
 @dataclass
 class ParentalConsent:
-    """Parental consent record"""
+    """
+
+        Parental consent record"""
+
     consent_id: str
     child_user_id: int
     parent_email: str
@@ -88,7 +99,10 @@ class ParentalConsent:
 
 @dataclass
 class COPPAComplianceReport:
-    """COPPA compliance status report"""
+    """
+
+        COPPA compliance status report"""
+
     user_id: int
     report_date: datetime
     age_category: AgeCategory
@@ -102,9 +116,11 @@ class COPPAComplianceReport:
 
 class AgeVerificationCompliance:
     """
+
     Enterprise age verification compliance manager.
     Provides comprehensive age verification and COPPA compliance services.
     """
+
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.logger = logger
@@ -134,7 +150,10 @@ class AgeVerificationCompliance:
         self._initialize_verification_rules()
     
     def _initialize_verification_rules(self):
-        """Initialize age verification rules and requirements"""
+        """
+
+        Initialize age verification rules and requirements"""
+
         self.verification_rules = {
             AgeCategory.UNDER_13: {
                 "allowed_methods": [VerificationMethod.PARENTAL_CONSENT],
@@ -189,31 +208,41 @@ class AgeVerificationCompliance:
         verification_data: Dict[str, Any]
     ) -> VerificationResult:
         """Verify user's age using specified method"""
+
         try:
             verification_id = str(uuid.uuid4())
             
             # Perform age verification based on method
             if method == VerificationMethod.SELF_DECLARATION:
                 result = await self._verify_by_self_declaration(user_id, verification_data)
+
             elif method == VerificationMethod.GOVERNMENT_ID:
                 result = await self._verify_by_government_id(user_id, verification_data)
+
             elif method == VerificationMethod.CREDIT_CARD:
                 result = await self._verify_by_credit_card(user_id, verification_data)
+
             elif method == VerificationMethod.PHONE_VERIFICATION:
                 result = await self._verify_by_phone(user_id, verification_data)
+
             elif method == VerificationMethod.THIRD_PARTY_SERVICE:
                 result = await self._verify_by_third_party(user_id, verification_data)
+
             else:
                 raise ValueError(f"Unsupported verification method: {method}")
             
             # Determine age category
+
             age_category = self._determine_age_category(result.get("verified_age"))
             
             # Check if parental consent is required
+
             requires_consent = (
                 age_category == AgeCategory.UNDER_13 or
                 (age_category == AgeCategory.TEEN_13_TO_17 and self.coppa_compliance)
             )
+
+
             
             verification_result = VerificationResult(
                 user_id=user_id,
@@ -228,6 +257,7 @@ class AgeVerificationCompliance:
                 requires_parental_consent=requires_consent,
                 verification_data=result.get("verification_data", {})
             )
+
             
             self.verification_results[user_id] = verification_result
             
@@ -235,12 +265,15 @@ class AgeVerificationCompliance:
             if requires_consent and age_category == AgeCategory.UNDER_13:
                 verification_result.status = VerificationStatus.REQUIRES_PARENTAL_CONSENT
                 await self._initiate_parental_consent_process(user_id, verification_data)
+
             
             self.logger.info(f"Age verification completed for user {user_id}: {verification_result.status}")
+
             return verification_result
             
         except Exception as e:
             self.logger.error(f"Error verifying age for user {user_id}: {str(e)}")
+
             return VerificationResult(
                 user_id=user_id,
                 verification_id=verification_id,
@@ -261,14 +294,22 @@ class AgeVerificationCompliance:
         data: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Verify age by self-declaration"""
+
         try:
             birth_date_str = data.get("birth_date")
+
             if not birth_date_str:
                 return {"status": VerificationStatus.FAILED, "reason": "Birth date required"}
+
             
             birth_date = datetime.strptime(birth_date_str, "%Y-%m-%d").date()
+
+
             today = date.today()
+
+
             age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
+
             
             return {
                 "status": VerificationStatus.VERIFIED,
@@ -286,19 +327,26 @@ class AgeVerificationCompliance:
         data: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Verify age by government ID"""
+
         try:
             # Simulate government ID verification
+
             id_number = data.get("id_number")
+
+
             id_type = data.get("id_type")
+
             
             if not id_number or not id_type:
                 return {"status": VerificationStatus.FAILED, "reason": "ID details required"}
             
             # Simulate ID validation (in practice, use real ID verification service)
+
             if len(id_number) >= 8:  # Basic validation
                 # Extract age from ID (simplified simulation)
-                simulated_age = 25  # Placeholder
-                
+
+
+                simulated_age = 25
                 return {
                     "status": VerificationStatus.VERIFIED,
                     "verified_age": simulated_age,
@@ -321,12 +369,15 @@ class AgeVerificationCompliance:
         data: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Verify age by credit card (18+ verification)"""
+
         try:
             card_number = data.get("card_number")
+
             if not card_number:
                 return {"status": VerificationStatus.FAILED, "reason": "Card number required"}
             
             # Simulate credit card verification (in practice, use payment processor)
+
             if len(card_number.replace(" ", "")) == 16:
                 return {
                     "status": VerificationStatus.VERIFIED,
@@ -346,8 +397,10 @@ class AgeVerificationCompliance:
         data: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Verify age by phone verification"""
+
         try:
             phone_number = data.get("phone_number")
+
             if not phone_number:
                 return {"status": VerificationStatus.FAILED, "reason": "Phone number required"}
             
@@ -368,8 +421,10 @@ class AgeVerificationCompliance:
         data: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Verify age by third-party service"""
+
         try:
             service_token = data.get("service_token")
+
             if not service_token:
                 return {"status": VerificationStatus.FAILED, "reason": "Service token required"}
             
@@ -386,6 +441,7 @@ class AgeVerificationCompliance:
 
     def _determine_age_category(self, age: Optional[int]) -> AgeCategory:
         """Determine age category based on verified age"""
+
         if age is None:
             return AgeCategory.UNKNOWN
         elif age < 13:
@@ -400,13 +456,21 @@ class AgeVerificationCompliance:
         user_id: int,
         verification_data: Dict[str, Any]
     ):
-        """Initiate parental consent process for children under 13"""
+        """
+
+        Initiate parental consent process for children under 13"""
+
         try:
             parent_email = verification_data.get("parent_email")
+
             if not parent_email:
                 raise ValueError("Parent email required for children under 13")
+
+
             
             consent_request_id = str(uuid.uuid4())
+
+
             consent_request = {
                 "request_id": consent_request_id,
                 "child_user_id": user_id,
@@ -420,16 +484,19 @@ class AgeVerificationCompliance:
             self.consent_requests[consent_request_id] = consent_request
             
             # Send parental consent email (placeholder)
+
             await self._send_parental_consent_email(consent_request)
+
             
             self.logger.info(f"Parental consent process initiated for user {user_id}")
+
             
         except Exception as e:
             self.logger.error(f"Error initiating parental consent: {str(e)}")
 
     async def _send_parental_consent_email(self, consent_request: Dict[str, Any]):
         """Send parental consent email"""
-        # Placeholder for email sending
+
         self.logger.info(f"Parental consent email sent to {consent_request['parent_email']}")
 
     async def process_parental_consent(
@@ -439,9 +506,11 @@ class AgeVerificationCompliance:
         consent_data: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Process parental consent response"""
+
         try:
             if consent_request_id not in self.consent_requests:
                 return {"status": "error", "message": "Consent request not found"}
+
             
             consent_request = self.consent_requests[consent_request_id]
             
@@ -454,9 +523,14 @@ class AgeVerificationCompliance:
                 return {"status": "error", "message": "Invalid consent method for online processing"}
             
             # Process consent
+
             consent_granted = consent_data.get("consent_granted", False)
+
+
             
             consent_id = str(uuid.uuid4())
+
+
             parental_consent = ParentalConsent(
                 consent_id=consent_id,
                 child_user_id=consent_request["child_user_id"],
@@ -468,6 +542,7 @@ class AgeVerificationCompliance:
                 revoked_at=None,
                 consent_data=consent_data
             )
+
             
             self.parental_consents[consent_request["child_user_id"]] = parental_consent
             
@@ -479,8 +554,10 @@ class AgeVerificationCompliance:
             # Mark consent request as completed
             consent_request["status"] = "completed"
             consent_request["completed_at"] = datetime.utcnow()
+
             
             self.logger.info(f"Parental consent processed: {consent_granted} for user {consent_request['child_user_id']}")
+
             
             return {
                 "status": "success",
@@ -490,10 +567,12 @@ class AgeVerificationCompliance:
             
         except Exception as e:
             self.logger.error(f"Error processing parental consent: {str(e)}")
+
             return {"status": "error", "message": str(e)}
 
     async def check_coppa_compliance(self, user_id: int) -> Dict[str, Any]:
         """Check COPPA compliance for user"""
+
         try:
             if user_id not in self.verification_results:
                 return {
@@ -501,6 +580,7 @@ class AgeVerificationCompliance:
                     "compliant": False,
                     "reason": "Age verification required"
                 }
+
             
             verification = self.verification_results[user_id]
             
@@ -522,6 +602,7 @@ class AgeVerificationCompliance:
                         "compliant": False,
                         "reason": "Parental consent required for children under 13"
                     }
+
                 
                 consent = self.parental_consents[user_id]
                 if not consent.granted or (consent.expires_at and datetime.utcnow() > consent.expires_at):
@@ -541,13 +622,18 @@ class AgeVerificationCompliance:
             
         except Exception as e:
             self.logger.error(f"Error checking COPPA compliance: {str(e)}")
+
             return {"user_id": user_id, "compliant": False, "error": str(e)}
 
     async def generate_compliance_report(self, user_id: int) -> COPPAComplianceReport:
         """Generate comprehensive COPPA compliance report"""
+
         try:
             verification = self.verification_results.get(user_id)
+
+
             consent = self.parental_consents.get(user_id)
+
             
             if not verification:
                 # User not verified
@@ -564,8 +650,11 @@ class AgeVerificationCompliance:
                 )
             
             # Determine compliance status
+
             age_category = verification.age_category
+
             requires_consent = age_category == AgeCategory.UNDER_13
+
             consent_status = None
             
             if requires_consent:
@@ -577,11 +666,17 @@ class AgeVerificationCompliance:
                     consent_status = "pending"
             
             # Check data collection compliance
+
             rules = self.verification_rules.get(age_category, {})
+
+
             data_collection_compliant = self._check_data_collection_compliance(user_id, age_category)
             
             # Calculate compliance score
+
             compliance_score = self._calculate_compliance_score(verification, consent, age_category)
+
+
             
             report = COPPAComplianceReport(
                 user_id=user_id,
@@ -594,17 +689,22 @@ class AgeVerificationCompliance:
                 disclosure_restrictions=rules.get("disclosure_restrictions", []),
                 compliance_score=compliance_score
             )
+
             
             return report
             
         except Exception as e:
             self.logger.error(f"Error generating compliance report: {str(e)}")
+
             raise
 
     def _check_data_collection_compliance(self, user_id: int, age_category: AgeCategory) -> bool:
         """Check if data collection is compliant for age category"""
+
         # Simplified compliance check
+
         rules = self.verification_rules.get(age_category, {})
+
         restrictions = rules.get("data_collection_restrictions", [])
         
         # In practice, this would check actual data collection against restrictions
@@ -617,6 +717,7 @@ class AgeVerificationCompliance:
         age_category: AgeCategory
     ) -> float:
         """Calculate overall compliance score"""
+
         score = 0.0
         
         # Age verification score (40 points)
@@ -637,13 +738,18 @@ class AgeVerificationCompliance:
         return min(score, 100.0)
 
     async def revoke_parental_consent(self, user_id: int, revocation_reason: str) -> Dict[str, Any]:
-        """Revoke parental consent for a child user"""
+        """
+
+        Revoke parental consent for a child user"""
+
         try:
             if user_id not in self.parental_consents:
                 return {"status": "error", "message": "No parental consent found"}
+
             
             consent = self.parental_consents[user_id]
             consent.revoked_at = datetime.utcnow()
+
             consent.granted = False
             
             # Update verification status
@@ -652,6 +758,7 @@ class AgeVerificationCompliance:
                 verification.status = VerificationStatus.REQUIRES_PARENTAL_CONSENT
             
             self.logger.info(f"Parental consent revoked for user {user_id}: {revocation_reason}")
+
             
             return {
                 "status": "success",
@@ -661,17 +768,23 @@ class AgeVerificationCompliance:
             
         except Exception as e:
             self.logger.error(f"Error revoking parental consent: {str(e)}")
+
             return {"status": "error", "message": str(e)}
 
     async def get_user_age_restrictions(self, user_id: int) -> Dict[str, Any]:
         """Get age-based restrictions for user"""
+
         try:
             verification = self.verification_results.get(user_id)
+
             if not verification:
                 return {"user_id": user_id, "restrictions": "all", "reason": "Age not verified"}
+
             
             age_category = verification.age_category
+
             rules = self.verification_rules.get(age_category, {})
+
             
             return {
                 "user_id": user_id,
@@ -684,4 +797,5 @@ class AgeVerificationCompliance:
             
         except Exception as e:
             self.logger.error(f"Error getting age restrictions: {str(e)}")
+
             return {"user_id": user_id, "error": str(e)}

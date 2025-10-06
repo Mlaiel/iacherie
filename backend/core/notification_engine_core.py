@@ -35,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationChannel(Enum):
-    """Types of notification channels"""
+    """
+        Types of notification channels"""
     EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
@@ -91,7 +92,8 @@ class NotificationTemplate:
 
 @dataclass
 class NotificationRecipient:
-    """Notification recipient information"""
+    """
+        Notification recipient information"""
     recipient_id: str
     user_id: Optional[str] = None
     channels: Dict[NotificationChannel, str] = field(default_factory=dict)
@@ -143,7 +145,8 @@ class MultiChannelNotificationEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the Multi-Channel Notification Engine"""
+        """
+        Initialize the Multi-Channel Notification Engine"""
         self.config = config or {}
         self.templates: Dict[str, NotificationTemplate] = {}
         self.recipients: Dict[str, NotificationRecipient] = {}
@@ -177,17 +180,20 @@ class MultiChannelNotificationEngine:
         }
     
     async def create_template(self, template: NotificationTemplate) -> bool:
-        """Create notification template"""
+        """
+        Create notification template"""
         
         try:
             with self._engine_lock:
                 self.templates[template.template_id] = template
             
             self.logger.info(f"Template {template.template_name} created successfully")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Failed to create template {template.template_name}: {e}")
+
             return False
     
     async def register_recipient(self, recipient: NotificationRecipient) -> bool:
@@ -198,10 +204,12 @@ class MultiChannelNotificationEngine:
                 self.recipients[recipient.recipient_id] = recipient
             
             self.logger.info(f"Recipient {recipient.recipient_id} registered successfully")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Failed to register recipient {recipient.recipient_id}: {e}")
+
             return False
     
     async def send_notification(self, 
@@ -215,33 +223,42 @@ class MultiChannelNotificationEngine:
         
         if recipient_id not in self.recipients:
             raise ValueError(f"Recipient {recipient_id} not registered")
+
         
         if template_id not in self.templates:
             raise ValueError(f"Template {template_id} not found")
+
+
         
         recipient = self.recipients[recipient_id]
+
         template = self.templates[template_id]
         
         # Determine channel
         if channel is None:
             # Use template's default channel
+
             channel = template.channel
         
         # Check if recipient opted out of this channel
         if channel in recipient.opt_out_channels:
             self.logger.info(f"Recipient {recipient_id} opted out of {channel.value}")
+
             return ""
         
         # Check if recipient has contact info for this channel
         if channel not in recipient.channels:
             self.logger.warning(f"Recipient {recipient_id} has no {channel.value} contact info")
+
             return ""
         
         try:
             # Render template with variables
+
             rendered_message = await self._render_template(template, variables or {})
             
             # Create notification message
+
             message = NotificationMessage(
                 message_id=str(uuid.uuid4()),
                 recipient=recipient,
@@ -256,12 +273,15 @@ class MultiChannelNotificationEngine:
             
             # Queue for delivery
             await self._queue_message(message)
+
             
             self.logger.info(f"Notification queued for {recipient_id} via {channel.value}")
+
             return message.message_id
             
         except Exception as e:
             self.logger.error(f"Failed to send notification to {recipient_id}: {e}")
+
             raise
     
     async def _render_template(self, 
@@ -271,13 +291,19 @@ class MultiChannelNotificationEngine:
         
         try:
             # Simple template rendering (in production, use a proper template engine)
+
+
             subject = template.subject_template
+
             body = template.body_template
             
             for var_name, var_value in variables.items():
                 placeholder = f"{{{var_name}}}"
                 subject = subject.replace(placeholder, str(var_value))
+
+
                 body = body.replace(placeholder, str(var_value))
+
             
             return {
                 'subject': subject,
@@ -286,6 +312,7 @@ class MultiChannelNotificationEngine:
             
         except Exception as e:
             self.logger.error(f"Template rendering failed: {e}")
+
             raise
     
     async def _queue_message(self, message: NotificationMessage):
@@ -303,7 +330,8 @@ class MultiChannelNotificationEngine:
                 self.message_queue.append(message.message_id)
     
     async def _message_processor(self):
-        """Main message processing loop"""
+        """
+        Main message processing loop"""
         
         while self._processor_running:
             try:
@@ -311,6 +339,7 @@ class MultiChannelNotificationEngine:
                 if self.message_queue:
                     with self._engine_lock:
                         message_id = self.message_queue.popleft()
+
                     
                     await self._process_message(message_id)
                 
@@ -320,15 +349,18 @@ class MultiChannelNotificationEngine:
                 # Sleep briefly if no work
                 if not self.message_queue:
                     await asyncio.sleep(1)
+
                     
             except Exception as e:
                 self.logger.error(f"Message processor error: {e}")
+
                 await asyncio.sleep(5)  # Longer sleep on error
     
     async def _process_scheduled_messages(self):
         """Process scheduled messages that are due"""
         
         now = datetime.now(timezone.utc)
+
         due_messages = []
         
         with self._engine_lock:
@@ -337,15 +369,18 @@ class MultiChannelNotificationEngine:
                     message.scheduled_at <= now and 
                     message.status == NotificationStatus.PENDING):
                     due_messages.append(message_id)
+
         
         for message_id in due_messages:
             self.message_queue.append(message_id)
     
     async def _process_message(self, message_id: str):
-        """Process a single message"""
+        """
+        Process a single message"""
         
         if message_id not in self.pending_messages:
             return
+
         
         message = self.pending_messages[message_id]
         
@@ -354,6 +389,7 @@ class MultiChannelNotificationEngine:
             if message.expires_at and datetime.now(timezone.utc) > message.expires_at:
                 message.status = NotificationStatus.CANCELLED
                 self.logger.info(f"Message {message_id} expired")
+
                 return
             
             # Update status
@@ -363,10 +399,13 @@ class MultiChannelNotificationEngine:
             # Get channel handler
             if message.channel not in self.channel_handlers:
                 raise ValueError(f"No handler for channel {message.channel.value}")
+
+
             
             handler = self.channel_handlers[message.channel]
             
             # Send message
+
             delivery_result = await handler(message)
             
             # Update status based on result
@@ -375,6 +414,7 @@ class MultiChannelNotificationEngine:
                 message.delivered_at = datetime.now(timezone.utc)
                 
                 # Create delivery report
+
                 report = DeliveryReport(
                     report_id=str(uuid.uuid4()),
                     message_id=message_id,
@@ -383,29 +423,36 @@ class MultiChannelNotificationEngine:
                     timestamp=datetime.now(timezone.utc),
                     metadata=delivery_result.get('metadata', {})
                 )
+
                 
                 self.delivery_reports.append(report)
+
                 
             else:
                 # Handle failure
                 message.retry_count += 1
                 message.error_message = delivery_result.get('error', 'Unknown error')
+
                 
                 if message.retry_count <= message.max_retries:
                     message.status = NotificationStatus.RETRYING
                     
                     # Re-queue with exponential backoff
+
                     retry_delay = min(2 ** message.retry_count, 300)  # Max 5 minutes
                     message.scheduled_at = datetime.now(timezone.utc) + timedelta(seconds=retry_delay)
+
                     
                     self.logger.warning(
                         f"Message {message_id} failed, retrying in {retry_delay}s "
                         f"({message.retry_count}/{message.max_retries})"
                     )
+
                 else:
                     message.status = NotificationStatus.FAILED
                     
                     # Create failure report
+
                     report = DeliveryReport(
                         report_id=str(uuid.uuid4()),
                         message_id=message_id,
@@ -414,14 +461,18 @@ class MultiChannelNotificationEngine:
                         timestamp=datetime.now(timezone.utc),
                         error_details=message.error_message
                     )
+
                     
                     self.delivery_reports.append(report)
+
                     
                     self.logger.error(f"Message {message_id} failed permanently: {message.error_message}")
+
                     
         except Exception as e:
             message.status = NotificationStatus.FAILED
             message.error_message = str(e)
+
             self.logger.error(f"Message processing failed for {message_id}: {e}")
     
     # Channel-specific handlers
@@ -430,14 +481,20 @@ class MultiChannelNotificationEngine:
         
         try:
             email_config = self.config.get('email', {})
+
+
             recipient_email = message.recipient.channels.get(NotificationChannel.EMAIL)
+
             
             if not recipient_email:
                 return {'success': False, 'error': 'No email address'}
             
             # Create email message
+
             msg = MIMEMultipart()
+
             msg['From'] = email_config.get('from_address', 'noreply@iacherie.com')
+
             msg['To'] = recipient_email
             msg['Subject'] = message.subject
             
@@ -449,6 +506,7 @@ class MultiChannelNotificationEngine:
             await asyncio.sleep(0.1)  # Simulate network delay
             
             self.logger.info(f"Email sent to {recipient_email}")
+
             
             return {
                 'success': True,
@@ -466,14 +524,17 @@ class MultiChannelNotificationEngine:
         
         try:
             phone_number = message.recipient.channels.get(NotificationChannel.SMS)
+
             
             if not phone_number:
                 return {'success': False, 'error': 'No phone number'}
             
             # Simulate SMS sending
             await asyncio.sleep(0.1)
+
             
             self.logger.info(f"SMS sent to {phone_number}")
+
             
             return {
                 'success': True,
@@ -491,14 +552,17 @@ class MultiChannelNotificationEngine:
         
         try:
             device_token = message.recipient.channels.get(NotificationChannel.PUSH)
+
             
             if not device_token:
                 return {'success': False, 'error': 'No device token'}
             
             # Simulate push notification
             await asyncio.sleep(0.1)
+
             
             self.logger.info(f"Push notification sent to device")
+
             
             return {
                 'success': True,
@@ -521,6 +585,8 @@ class MultiChannelNotificationEngine:
                 return {'success': False, 'error': 'No user ID'}
             
             # Store in-app notification (would be stored in database)
+
+
             notification_data = {
                 'user_id': user_id,
                 'title': message.subject,
@@ -530,6 +596,7 @@ class MultiChannelNotificationEngine:
             }
             
             self.logger.info(f"In-app notification created for user {user_id}")
+
             
             return {
                 'success': True,
@@ -544,11 +611,13 @@ class MultiChannelNotificationEngine:
         
         try:
             webhook_url = message.recipient.channels.get(NotificationChannel.WEBHOOK)
+
             
             if not webhook_url:
                 return {'success': False, 'error': 'No webhook URL'}
             
             # Prepare webhook payload
+
             payload = {
                 'message_id': message.message_id,
                 'subject': message.subject,
@@ -559,8 +628,10 @@ class MultiChannelNotificationEngine:
             
             # Simulate webhook call
             await asyncio.sleep(0.1)
+
             
             self.logger.info(f"Webhook called: {webhook_url}")
+
             
             return {
                 'success': True,
@@ -578,14 +649,17 @@ class MultiChannelNotificationEngine:
         
         try:
             slack_channel = message.recipient.channels.get(NotificationChannel.SLACK)
+
             
             if not slack_channel:
                 return {'success': False, 'error': 'No Slack channel'}
             
             # Simulate Slack API call
             await asyncio.sleep(0.1)
+
             
             self.logger.info(f"Slack message sent to {slack_channel}")
+
             
             return {
                 'success': True,
@@ -603,14 +677,17 @@ class MultiChannelNotificationEngine:
         
         try:
             discord_channel = message.recipient.channels.get(NotificationChannel.DISCORD)
+
             
             if not discord_channel:
                 return {'success': False, 'error': 'No Discord channel'}
             
             # Simulate Discord API call
             await asyncio.sleep(0.1)
+
             
             self.logger.info(f"Discord message sent to {discord_channel}")
+
             
             return {
                 'success': True,
@@ -628,14 +705,17 @@ class MultiChannelNotificationEngine:
         
         try:
             telegram_chat = message.recipient.channels.get(NotificationChannel.TELEGRAM)
+
             
             if not telegram_chat:
                 return {'success': False, 'error': 'No Telegram chat'}
             
             # Simulate Telegram Bot API call
             await asyncio.sleep(0.1)
+
             
             self.logger.info(f"Telegram message sent to {telegram_chat}")
+
             
             return {
                 'success': True,
@@ -653,14 +733,17 @@ class MultiChannelNotificationEngine:
         
         try:
             whatsapp_number = message.recipient.channels.get(NotificationChannel.WHATSAPP)
+
             
             if not whatsapp_number:
                 return {'success': False, 'error': 'No WhatsApp number'}
             
             # Simulate WhatsApp Business API call
             await asyncio.sleep(0.1)
+
             
             self.logger.info(f"WhatsApp message sent to {whatsapp_number}")
+
             
             return {
                 'success': True,
@@ -678,6 +761,7 @@ class MultiChannelNotificationEngine:
         
         if message_id not in self.pending_messages:
             return {'error': 'Message not found'}
+
         
         message = self.pending_messages[message_id]
         
@@ -695,23 +779,30 @@ class MultiChannelNotificationEngine:
     
     async def get_delivery_analytics(self, 
                                    time_range: Optional[Tuple[datetime, datetime]] = None) -> Dict[str, Any]:
-        """Get delivery analytics"""
+        """
+        Get delivery analytics"""
         
         # Filter reports by time range if provided
+
         reports = self.delivery_reports
         if time_range:
             start_time, end_time = time_range
+
             reports = [
                 report for report in reports
                 if start_time <= report.timestamp <= end_time
             ]
         
         # Calculate analytics
+
         total_messages = len(reports)
+
         delivered_count = len([r for r in reports if r.status == DeliveryStatus.DELIVERED])
+
         failed_count = len([r for r in reports if r.status == DeliveryStatus.FAILED])
         
         # Channel breakdown
+
         channel_stats = defaultdict(lambda: {'delivered': 0, 'failed': 0})
         for report in reports:
             if report.status == DeliveryStatus.DELIVERED:
@@ -741,7 +832,8 @@ class RealTimeMessagingCore:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the Real-Time Messaging Core"""
+        """
+        Initialize the Real-Time Messaging Core"""
         self.config = config or {}
         self.active_connections: Dict[str, Dict[str, Any]] = {}
         self.message_rooms: Dict[str, Set[str]] = defaultdict(set)
@@ -776,11 +868,13 @@ class RealTimeMessagingCore:
             
             # Notify other users in shared rooms
             await self._broadcast_presence_update(user_id, 'online')
+
             
             return True
             
         except Exception as e:
             self.logger.error(f"Failed to connect user {user_id}: {e}")
+
             return False
     
     async def disconnect_user(self, connection_id: str) -> bool:
@@ -792,6 +886,8 @@ class RealTimeMessagingCore:
             
             with self._messaging_lock:
                 connection = self.active_connections.pop(connection_id)
+
+
                 user_id = connection['user_id']
                 
                 # Update user presence
@@ -806,11 +902,13 @@ class RealTimeMessagingCore:
             
             # Notify other users
             await self._broadcast_presence_update(user_id, 'offline')
+
             
             return True
             
         except Exception as e:
             self.logger.error(f"Failed to disconnect connection {connection_id}: {e}")
+
             return False
     
     async def join_room(self, user_id: str, room_id: str) -> bool:
@@ -819,6 +917,7 @@ class RealTimeMessagingCore:
         try:
             with self._messaging_lock:
                 self.message_rooms[room_id].add(user_id)
+
             
             self.logger.info(f"User {user_id} joined room {room_id}")
             
@@ -835,11 +934,13 @@ class RealTimeMessagingCore:
                 },
                 exclude_user=user_id
             )
+
             
             return True
             
         except Exception as e:
             self.logger.error(f"Failed to join user {user_id} to room {room_id}: {e}")
+
             return False
     
     async def leave_room(self, user_id: str, room_id: str) -> bool:
@@ -849,6 +950,7 @@ class RealTimeMessagingCore:
             with self._messaging_lock:
                 if room_id in self.message_rooms:
                     self.message_rooms[room_id].discard(user_id)
+
             
             self.logger.info(f"User {user_id} left room {room_id}")
             
@@ -862,11 +964,13 @@ class RealTimeMessagingCore:
                 },
                 exclude_user=user_id
             )
+
             
             return True
             
         except Exception as e:
             self.logger.error(f"Failed to remove user {user_id} from room {room_id}: {e}")
+
             return False
     
     async def send_message(self, 
@@ -896,12 +1000,15 @@ class RealTimeMessagingCore:
                 'type': 'message',
                 'message': message
             })
+
             
             self.logger.info(f"Message sent from {sender_id} to room {room_id}")
+
             return message['message_id']
             
         except Exception as e:
             self.logger.error(f"Failed to send message from {sender_id} to room {room_id}: {e}")
+
             raise
     
     async def send_direct_message(self, 
@@ -926,12 +1033,15 @@ class RealTimeMessagingCore:
                 'type': 'direct_message',
                 'message': message
             })
+
             
             self.logger.info(f"Direct message sent from {sender_id} to {recipient_id}")
+
             return message['message_id']
             
         except Exception as e:
             self.logger.error(f"Failed to send direct message from {sender_id} to {recipient_id}: {e}")
+
             raise
     
     async def _broadcast_presence_update(self, user_id: str, status: str):
@@ -945,11 +1055,13 @@ class RealTimeMessagingCore:
         }
         
         # Find all rooms this user is in and notify other members
+
         user_rooms = []
         with self._messaging_lock:
             for room_id, members in self.message_rooms.items():
                 if user_id in members:
                     user_rooms.append(room_id)
+
         
         for room_id in user_rooms:
             await self._broadcast_to_room(room_id, presence_update, exclude_user=user_id)
@@ -958,12 +1070,15 @@ class RealTimeMessagingCore:
                                room_id: str,
                                message: Dict[str, Any],
                                exclude_user: str = None):
-        """Broadcast message to all users in room"""
+        """
+        Broadcast message to all users in room"""
         
         if room_id not in self.message_rooms:
             return
+
         
         room_members = self.message_rooms[room_id].copy()
+
         
         for user_id in room_members:
             if exclude_user and user_id == exclude_user:
@@ -972,15 +1087,19 @@ class RealTimeMessagingCore:
             await self._send_to_user(user_id, message)
     
     async def _send_to_user(self, user_id: str, message: Dict[str, Any]):
-        """Send message to specific user"""
+        """
+        Send message to specific user"""
         
         try:
             # Check if user is online
             if user_id not in self.user_presence:
                 return False
+
             
             presence = self.user_presence[user_id]
+
             connection_id = presence.get('connection_id')
+
             
             if not connection_id or connection_id not in self.active_connections:
                 return False
@@ -992,11 +1111,13 @@ class RealTimeMessagingCore:
             # Update last activity
             if connection_id in self.active_connections:
                 self.active_connections[connection_id]['last_activity'] = datetime.now(timezone.utc)
+
             
             return True
             
         except Exception as e:
             self.logger.error(f"Failed to send message to user {user_id}: {e}")
+
             return False
     
     async def _send_message_history(self, user_id: str, room_id: str):
@@ -1004,8 +1125,10 @@ class RealTimeMessagingCore:
         
         if room_id not in self.message_history:
             return
+
         
         history = list(self.message_history[room_id])
+
         
         if history:
             await self._send_to_user(user_id, {
@@ -1015,7 +1138,8 @@ class RealTimeMessagingCore:
             })
     
     async def get_user_presence(self, user_id: str) -> Dict[str, Any]:
-        """Get user presence information"""
+        """
+        Get user presence information"""
         
         if user_id not in self.user_presence:
             return {
@@ -1023,6 +1147,7 @@ class RealTimeMessagingCore:
                 'status': 'offline',
                 'last_seen': None
             }
+
         
         presence = self.user_presence[user_id]
         return {
@@ -1033,15 +1158,19 @@ class RealTimeMessagingCore:
         }
     
     async def get_room_members(self, room_id: str) -> List[Dict[str, Any]]:
-        """Get list of room members with presence info"""
+        """
+        Get list of room members with presence info"""
         
         if room_id not in self.message_rooms:
             return []
+
         
         members = []
         for user_id in self.message_rooms[room_id]:
             presence = await self.get_user_presence(user_id)
+
             members.append(presence)
+
         
         return members
 
@@ -1055,7 +1184,8 @@ class NotificationEngineCore:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the Notification Engine Core"""
+        """
+        Initialize the Notification Engine Core"""
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -1081,13 +1211,16 @@ class NotificationEngineCore:
             
             # Initialize default templates
             await self._initialize_default_templates()
+
             
             self.is_initialized = True
             self.logger.info("Notification Engine Core initialized successfully")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Notification Engine Core initialization failed: {e}")
+
             return False
     
     async def _initialize_default_templates(self):
@@ -1130,16 +1263,20 @@ class NotificationEngineCore:
         
         for template in default_templates:
             await self.multi_channel_engine.create_template(template)
+
             self.notification_stats['templates_created'] += 1
     
     async def get_engine_status(self) -> Dict[str, Any]:
         """Get comprehensive notification engine status"""
         
         # Get delivery analytics
+
         analytics = await self.multi_channel_engine.get_delivery_analytics()
         
         # Count active real-time connections
+
         active_connections = len(self.real_time_messaging.active_connections)
+
         
         return {
             'initialized': self.is_initialized,
@@ -1160,12 +1297,14 @@ class NotificationEngineCore:
 # =============================================================================
 
 def create_notification_engine_core(config: Optional[Dict[str, Any]] = None) -> NotificationEngineCore:
-    """Factory function to create Notification Engine Core"""
+    """
+        Factory function to create Notification Engine Core"""
     return NotificationEngineCore(config)
 
 
 async def quick_notification_setup() -> NotificationEngineCore:
-    """Quick setup for development environment"""
+    """
+        Quick setup for development environment"""
     core = create_notification_engine_core({
         'channels': {
             'email': {'from_address': 'noreply@iacherie.com'}

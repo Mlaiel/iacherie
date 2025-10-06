@@ -21,7 +21,8 @@ import hashlib
 logger = logging.getLogger(__name__)
 
 class PaymentMethod(Enum):
-    """Payment methods"""
+    """
+        Payment methods"""
     CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     PAYPAL = "paypal"
@@ -67,7 +68,8 @@ class FraudDetection:
     recommended_action: str
 
 class PaymentProcessor:
-    """Advanced payment processor"""
+    """
+        Advanced payment processor"""
     
     def __init__(self):
         self.payment_methods = {}
@@ -80,9 +82,12 @@ class PaymentProcessor:
         user_id: str,
         metadata: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Process payment securely"""
+        """
+        Process payment securely"""
         # Security validation
+
         security_check = await self._validate_security(user_id, amount, payment_method)
+
         
         if not security_check["is_valid"]:
             return {
@@ -92,7 +97,9 @@ class PaymentProcessor:
             }
         
         # Fraud detection
+
         fraud_result = await self._detect_fraud(user_id, amount, payment_method, metadata)
+
         
         if fraud_result.is_fraudulent:
             return {
@@ -103,10 +110,14 @@ class PaymentProcessor:
             }
         
         # Process payment
+
         transaction_id = f"pay_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
         # Simulate payment processing
+
         success = await self._execute_payment(amount, payment_method, transaction_id)
+
+
         
         result = {
             "result": PaymentResult.SUCCESS if success else PaymentResult.FAILED,
@@ -141,20 +152,26 @@ class PaymentProcessor:
     ) -> FraudDetection:
         """Detect fraudulent transactions"""
         risk_score = 0.0
+
         detection_reasons = []
         
         # Risk factors
         if amount > 5000:
             risk_score += 0.3
             detection_reasons.append("High transaction amount")
+
         
         if payment_method == PaymentMethod.CRYPTOCURRENCY:
             risk_score += 0.2
             detection_reasons.append("Cryptocurrency payment")
         
         # Determine fraud status
+
         is_fraudulent = risk_score > 0.7
+
         confidence_level = min(risk_score * 1.2, 1.0)
+
+
         
         recommended_action = "approve" if not is_fraudulent else "reject"
         
@@ -178,7 +195,8 @@ class PaymentProcessor:
         return True  # Simulate successful payment
 
 class TransactionManager:
-    """Transaction management system"""
+    """
+        Transaction management system"""
     
     def __init__(self):
         self.transactions = {}
@@ -191,7 +209,8 @@ class TransactionManager:
         user_id: str,
         metadata: Dict[str, Any] = None
     ) -> str:
-        """Create new transaction"""
+        """
+        Create new transaction"""
         transaction_id = f"txn_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
         transaction = {
@@ -215,12 +234,14 @@ class TransactionManager:
     ) -> Dict[str, Any]:
         """Process transaction refund"""
         original_transaction = self.transactions.get(original_transaction_id)
+
         
         if not original_transaction:
             return {"success": False, "error": "Transaction not found"}
         
         if refund_amount > original_transaction["amount"]:
             return {"success": False, "error": "Refund amount exceeds original"}
+
         
         refund_id = await self.create_transaction(
             TransactionType.REFUND,
@@ -228,6 +249,7 @@ class TransactionManager:
             original_transaction["user_id"],
             {"original_transaction": original_transaction_id, "reason": reason}
         )
+
         
         return {
             "success": True,
@@ -240,10 +262,12 @@ class PaymentProcessingService:
     """Comprehensive payment processing service"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize payment processing service"""
+        """
+        Initialize payment processing service"""
         self.config = config or {}
         self.payment_processor = PaymentProcessor()
         self.transaction_manager = TransactionManager()
+
         
         logger.info("💳 Payment Processing Service initialized")
     
@@ -261,6 +285,7 @@ class PaymentProcessingService:
             )
         except Exception as e:
             logger.error(f"Payment processing failed: {e}")
+
             return {
                 "result": PaymentResult.FAILED,
                 "error": str(e),
@@ -279,12 +304,14 @@ class PaymentProcessingService:
             subscription_id = f"sub_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             
             # Create initial transaction
+
             transaction_id = await self.transaction_manager.create_transaction(
                 TransactionType.SUBSCRIPTION,
                 self._get_plan_price(plan_id),
                 user_id,
                 {"plan_id": plan_id, "billing_cycle": billing_cycle}
             )
+
             
             return {
                 "subscription_id": subscription_id,
@@ -295,6 +322,7 @@ class PaymentProcessingService:
             
         except Exception as e:
             logger.error(f"Subscription creation failed: {e}")
+
             raise
     
     def _get_plan_price(self, plan_id: str) -> float:

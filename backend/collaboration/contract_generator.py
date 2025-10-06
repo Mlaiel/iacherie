@@ -20,7 +20,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContractType(Enum):
-    """Types of collaboration contracts"""
+    """
+        Types of collaboration contracts"""
     CONTENT_CREATION = "content_creation"
     REVENUE_SHARING = "revenue_sharing"
     CROSS_PROMOTION = "cross_promotion"
@@ -110,7 +111,8 @@ class IntellectualProperty:
 
 @dataclass
 class DeliverableSpec:
-    """Contract deliverable specification"""
+    """
+        Contract deliverable specification"""
     deliverable_id: str
     title: str
     description: str
@@ -139,7 +141,8 @@ class ContractTerms:
 
 @dataclass
 class SmartContract:
-    """Smart contract representation"""
+    """
+        Smart contract representation"""
     contract_id: str
     contract_type: ContractType
     status: ContractStatus
@@ -175,7 +178,8 @@ class ContractTemplate:
 
 
 class ContractGenerator:
-    """AI-powered smart contract generation system"""
+    """
+        AI-powered smart contract generation system"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -197,6 +201,7 @@ class ContractGenerator:
         
         # Initialize default templates
         self._initialize_default_templates()
+
         
         logger.info("ContractGenerator initialized with AI-powered legal document generation")
     
@@ -215,6 +220,7 @@ class ContractGenerator:
             logger.info(f"Generating {contract_type.value} contract {contract_id}")
             
             # Convert party dictionaries to ContractParty objects
+
             contract_parties = [self._create_contract_party(party_data) for party_data in parties]
             
             # Generate contract terms using AI
@@ -223,16 +229,19 @@ class ContractGenerator:
             )
             
             # Select or create template
+
             template = await self._select_contract_template(
                 contract_type, self.default_jurisdiction, template_id
             )
             
             # Generate contract text
+
             contract_text = await self._generate_contract_text(
                 template, contract_parties, contract_terms, project_details
             )
             
             # Create contract object
+
             contract = SmartContract(
                 contract_id=contract_id,
                 contract_type=contract_type,
@@ -255,6 +264,7 @@ class ContractGenerator:
             # AI-powered legal compliance check
             if self.compliance_enabled:
                 compliance_issues = await self._check_legal_compliance(contract)
+
                 if compliance_issues:
                     contract.metadata['compliance_issues'] = compliance_issues
             
@@ -262,10 +272,12 @@ class ContractGenerator:
             self.contracts[contract_id] = contract
             
             logger.info(f"Contract {contract_id} generated successfully")
+
             return contract
             
         except Exception as e:
             logger.error(f"Contract generation failed: {e}")
+
             raise
     
     async def negotiate_contract_terms(
@@ -278,6 +290,8 @@ class ContractGenerator:
         """Handle contract term negotiations"""
         if contract_id not in self.contracts:
             raise ValueError(f"Contract {contract_id} not found")
+
+
         
         contract = self.contracts[contract_id]
         
@@ -285,6 +299,7 @@ class ContractGenerator:
             raise ValueError(f"Contract {contract_id} is not in negotiable state")
         
         # Create contract amendment
+
         amendment = {
             'amendment_id': f"amendment_{len(contract.amendments) + 1}",
             'proposed_by': party_id,
@@ -300,6 +315,7 @@ class ContractGenerator:
         # AI-powered negotiation analysis
         if self.ai_optimization:
             negotiation_analysis = await self._analyze_negotiation_impact(contract, amendment)
+
             amendment['ai_analysis'] = negotiation_analysis
         
         logger.info(f"Contract {contract_id} terms negotiation initiated by {party_id}")
@@ -314,24 +330,31 @@ class ContractGenerator:
         """Approve a contract amendment"""
         if contract_id not in self.contracts:
             raise ValueError(f"Contract {contract_id} not found")
+
+
         
         contract = self.contracts[contract_id]
+
         amendment = next((a for a in contract.amendments if a['amendment_id'] == amendment_id), None)
+
         
         if not amendment:
             raise ValueError(f"Amendment {amendment_id} not found")
         
         # Apply the amendment to contract terms
         await self._apply_contract_amendment(contract, amendment)
+
         
         amendment['status'] = 'approved'
         amendment['approved_by'] = approving_party_id
         amendment['approved_at'] = datetime.now().isoformat()
         
         # Regenerate contract text with amendments
+
         template = await self._select_contract_template(
             contract.contract_type, contract.legal_jurisdiction
         )
+
         
         contract.contract_text = await self._generate_contract_text(
             template, contract.parties, contract.terms, contract.metadata
@@ -357,6 +380,8 @@ class ContractGenerator:
         """Record contract signature"""
         if contract_id not in self.contracts:
             raise ValueError(f"Contract {contract_id} not found")
+
+
         
         contract = self.contracts[contract_id]
         
@@ -364,11 +389,13 @@ class ContractGenerator:
             raise ValueError(f"Contract {contract_id} must be approved before signing")
         
         # Verify party is authorized to sign
+
         party = next((p for p in contract.parties if p.party_id == party_id), None)
         if not party:
             raise ValueError(f"Party {party_id} not found in contract")
         
         # Record signature
+
         signature = {
             'party_id': party_id,
             'signature_type': signature_data.get('type', 'digital'),
@@ -389,6 +416,7 @@ class ContractGenerator:
             # Deploy to blockchain if enabled
             if self.blockchain_enabled:
                 blockchain_address = await self._deploy_to_blockchain(contract)
+
                 contract.blockchain_address = blockchain_address
         
         logger.info(f"Contract {contract_id} signed by party {party_id}")
@@ -398,17 +426,21 @@ class ContractGenerator:
         """Execute a signed contract"""
         if contract_id not in self.contracts:
             raise ValueError(f"Contract {contract_id} not found")
+
+
         
         contract = self.contracts[contract_id]
         
         if contract.status != ContractStatus.SIGNED:
             raise ValueError(f"Contract {contract_id} must be signed before execution")
+
         
         contract.status = ContractStatus.ACTIVE
         
         # Set up automated contract monitoring
         if self.ai_optimization:
             await self._setup_contract_monitoring(contract)
+
         
         logger.info(f"Contract {contract_id} is now active and executing")
         return contract
@@ -435,33 +467,45 @@ class ContractGenerator:
         project_details: Dict[str, Any],
         custom_terms: Optional[Dict[str, Any]] = None
     ) -> ContractTerms:
-        """Generate comprehensive contract terms using AI"""
+        """
+        Generate comprehensive contract terms using AI"""
         
         # Generate payment terms
+
         payment_terms = await self._generate_payment_terms(
             contract_type, project_details, custom_terms
         )
         
         # Generate intellectual property terms
+
         ip_terms = await self._generate_ip_terms(
             contract_type, parties, project_details, custom_terms
         )
         
         # Generate deliverable specifications
+
         deliverables = await self._generate_deliverables(
             contract_type, project_details, custom_terms
         )
         
         # Generate timeline terms
+
         timeline = await self._generate_timeline_terms(project_details, custom_terms)
         
         # Generate standard terms
+
         cancellation_terms = await self._generate_cancellation_terms(contract_type, custom_terms)
+
         dispute_resolution = await self._generate_dispute_resolution_terms(custom_terms)
+
         confidentiality = await self._generate_confidentiality_terms(contract_type, custom_terms)
+
         force_majeure = await self._generate_force_majeure_terms()
+
         amendments = await self._generate_amendment_terms()
+
         termination = await self._generate_termination_terms(contract_type, custom_terms)
+
         
         return ContractTerms(
             payment_terms=payment_terms,
@@ -482,9 +526,11 @@ class ContractGenerator:
         project_details: Dict[str, Any],
         custom_terms: Optional[Dict[str, Any]] = None
     ) -> PaymentTerm:
-        """Generate payment terms based on contract type and project details"""
+        """
+        Generate payment terms based on contract type and project details"""
         
         # Default payment structures by contract type
+
         payment_defaults = {
             ContractType.CONTENT_CREATION: PaymentType.MILESTONE_BASED,
             ContractType.REVENUE_SHARING: PaymentType.REVENUE_SHARE,
@@ -493,22 +539,29 @@ class ContractGenerator:
             ContractType.COMMISSION_WORK: PaymentType.FIXED_FEE,
             ContractType.SPONSORSHIP: PaymentType.PERFORMANCE_BASED
         }
+
         
         payment_type = PaymentType(
             custom_terms.get('payment_type') if custom_terms else 
             payment_defaults.get(contract_type, PaymentType.FIXED_FEE).value
         )
+
+
         
         amount = project_details.get('budget', 1000.0)
         if custom_terms and 'amount' in custom_terms:
             amount = custom_terms['amount']
         
         # Generate payment schedule based on type
+
         payment_schedule = []
         
         if payment_type == PaymentType.MILESTONE_BASED:
             # Split into milestones
+
             milestones = project_details.get('milestones', 3)
+
+
             milestone_amount = amount / milestones
             
             for i in range(milestones):
@@ -518,6 +571,7 @@ class ContractGenerator:
                     'description': f"Milestone {i + 1} completion",
                     'percentage': round(100 / milestones, 2)
                 })
+
         
         elif payment_type == PaymentType.REVENUE_SHARE:
             payment_schedule.append({
@@ -525,6 +579,7 @@ class ContractGenerator:
                 'percentage': custom_terms.get('revenue_percentage', 50) if custom_terms else 50,
                 'distribution_frequency': 'monthly'
             })
+
         
         else:
             # Fixed fee or hourly - simple payment schedule
@@ -533,6 +588,7 @@ class ContractGenerator:
                 'due_date': 'upon_completion',
                 'description': 'Full payment upon project completion'
             })
+
         
         return PaymentTerm(
             payment_type=payment_type,
@@ -541,6 +597,7 @@ class ContractGenerator:
             payment_schedule=payment_schedule,
             payment_conditions=['Completion of agreed deliverables', 'Quality acceptance'],
             late_payment_penalty=1.5,  # 1.5% per month
+
             payment_method=custom_terms.get('payment_method', 'bank_transfer') if custom_terms else 'bank_transfer'
         )
     
@@ -567,6 +624,7 @@ class ContractGenerator:
             copyright_owner = custom_terms['copyright_owner']
         
         # Usage rights based on contract type
+
         usage_rights = []
         if contract_type in [ContractType.CONTENT_CREATION, ContractType.JOINT_VENTURE]:
             usage_rights = [
@@ -604,7 +662,9 @@ class ContractGenerator:
         """Generate deliverable specifications"""
         
         deliverables = []
+
         project_deliverables = project_details.get('deliverables', [])
+
         
         if not project_deliverables:
             # Generate default deliverables based on contract type
@@ -635,7 +695,9 @@ class ContractGenerator:
                 revision_rounds=2,
                 responsible_party="all_parties"
             )
+
             deliverables.append(spec)
+
         
         return deliverables
     
@@ -649,9 +711,13 @@ class ContractGenerator:
         start_date = datetime.now()
         if 'start_date' in project_details:
             start_date = datetime.fromisoformat(project_details['start_date'])
+
+
         
         duration_days = project_details.get('duration_days', 30)
+
         end_date = start_date + timedelta(days=duration_days)
+
         
         return {
             'project_start_date': start_date.isoformat(),
@@ -672,7 +738,8 @@ class ContractGenerator:
         contract_type: ContractType,
         custom_terms: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Generate contract cancellation terms"""
+        """
+        Generate contract cancellation terms"""
         
         return {
             'cancellation_notice_period_days': 14,
@@ -700,7 +767,8 @@ class ContractGenerator:
         self,
         custom_terms: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Generate dispute resolution terms"""
+        """
+        Generate dispute resolution terms"""
         
         return {
             'dispute_resolution_method': 'mediation_then_arbitration',
@@ -718,7 +786,8 @@ class ContractGenerator:
         contract_type: ContractType,
         custom_terms: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Generate confidentiality and NDA terms"""
+        """
+        Generate confidentiality and NDA terms"""
         
         return {
             'mutual_confidentiality': True,
@@ -740,7 +809,8 @@ class ContractGenerator:
         }
     
     async def _generate_force_majeure_terms(self) -> Dict[str, Any]:
-        """Generate force majeure terms"""
+        """
+        Generate force majeure terms"""
         
         return {
             'force_majeure_events': [
@@ -757,7 +827,8 @@ class ContractGenerator:
         }
     
     async def _generate_amendment_terms(self) -> Dict[str, Any]:
-        """Generate contract amendment terms"""
+        """
+        Generate contract amendment terms"""
         
         return {
             'amendment_requires_written_agreement': True,
@@ -777,7 +848,8 @@ class ContractGenerator:
         contract_type: ContractType,
         custom_terms: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Generate contract termination terms"""
+        """
+        Generate contract termination terms"""
         
         return {
             'termination_notice_period_days': 30,
@@ -808,7 +880,8 @@ class ContractGenerator:
         jurisdiction: LegalJurisdiction,
         template_id: Optional[str] = None
     ) -> Optional[ContractTemplate]:
-        """Select appropriate contract template"""
+        """
+        Select appropriate contract template"""
         
         if template_id and template_id in self.templates:
             return self.templates[template_id]
@@ -820,6 +893,7 @@ class ContractGenerator:
                 return template
         
         # Return generic template if specific not found
+
         generic_template_id = f"generic_{contract_type.value}"
         return self.templates.get(generic_template_id)
     
@@ -836,6 +910,7 @@ class ContractGenerator:
             contract_text = template.template_text
             
             # Replace template variables
+
             replacements = {
                 '{{PARTY_A_NAME}}': parties[0].name if parties else 'Party A',
                 '{{PARTY_B_NAME}}': parties[1].name if len(parties) > 1 else 'Party B',
@@ -848,10 +923,13 @@ class ContractGenerator:
             
             for placeholder, value in replacements.items():
                 contract_text = contract_text.replace(placeholder, str(value))
+
         
         else:
             # Generate basic contract text if no template
+
             contract_text = self._generate_basic_contract_text(parties, terms, project_details)
+
         
         return contract_text
     
@@ -864,7 +942,10 @@ class ContractGenerator:
         """Generate basic contract text without template"""
         
         party_a = parties[0] if parties else ContractParty("party_a", "Party A")
+
         party_b = parties[1] if len(parties) > 1 else ContractParty("party_b", "Party B")
+
+
         
         contract_text = f"""
 COLLABORATION AGREEMENT
@@ -906,7 +987,8 @@ Date: _______________                        Date: _______________
         return contract_text.strip()
     
     def _generate_contract_hash(self, contract: SmartContract) -> str:
-        """Generate cryptographic hash of contract for integrity"""
+        """
+        Generate cryptographic hash of contract for integrity"""
         
         hash_data = {
             'contract_id': contract.contract_id,
@@ -919,12 +1001,14 @@ Date: _______________                        Date: _______________
             },
             'created_date': contract.created_date.isoformat()
         }
+
         
         hash_string = json.dumps(hash_data, sort_keys=True)
         return hashlib.sha256(hash_string.encode()).hexdigest()
     
     def _generate_signature_hash(self, party_id: str, signature_data: Dict[str, Any]) -> str:
-        """Generate hash for signature verification"""
+        """
+        Generate hash for signature verification"""
         
         hash_data = {
             'party_id': party_id,
@@ -932,16 +1016,19 @@ Date: _______________                        Date: _______________
             'timestamp': datetime.now().isoformat(),
             'ip_address': signature_data.get('ip_address', '')
         }
+
         
         hash_string = json.dumps(hash_data, sort_keys=True)
         return hashlib.sha256(hash_string.encode()).hexdigest()
     
     async def _check_legal_compliance(self, contract: SmartContract) -> List[str]:
-        """Check contract for legal compliance issues"""
+        """
+        Check contract for legal compliance issues"""
         
         compliance_issues = []
         
         # Check for required clauses based on jurisdiction
+
         required_clauses = {
             LegalJurisdiction.US_FEDERAL: [
                 'governing law', 'dispute resolution', 'intellectual property'
@@ -950,8 +1037,10 @@ Date: _______________                        Date: _______________
                 'data protection', 'privacy rights', 'governing law'
             ]
         }
+
         
         jurisdiction_requirements = required_clauses.get(contract.legal_jurisdiction, [])
+
         
         for requirement in jurisdiction_requirements:
             if requirement.lower() not in contract.contract_text.lower():
@@ -965,6 +1054,7 @@ Date: _______________                        Date: _______________
         for party in contract.parties:
             if not party.email:
                 compliance_issues.append(f"Missing email for party: {party.name}")
+
         
         return compliance_issues
     
@@ -976,6 +1066,7 @@ Date: _______________                        Date: _______________
         """Analyze the impact of proposed contract changes"""
         
         proposed_changes = amendment['proposed_changes']
+
         analysis = {
             'impact_level': 'low',
             'affected_sections': [],
@@ -984,14 +1075,18 @@ Date: _______________                        Date: _______________
         }
         
         # Analyze impact of different types of changes
+
         high_impact_fields = ['payment_amount', 'copyright_owner', 'termination_terms']
+
         medium_impact_fields = ['delivery_date', 'payment_schedule', 'usage_rights']
         
         for field in proposed_changes:
             if field in high_impact_fields:
                 analysis['impact_level'] = 'high'
                 analysis['affected_sections'].append(field)
+
                 analysis['legal_implications'].append(f"Changes to {field} may require legal review")
+
             elif field in medium_impact_fields:
                 if analysis['impact_level'] == 'low':
                     analysis['impact_level'] = 'medium'
@@ -1000,8 +1095,10 @@ Date: _______________                        Date: _______________
         # Generate recommendations
         if analysis['impact_level'] == 'high':
             analysis['recommendations'].append("Legal review recommended before approval")
+
         
         analysis['recommendations'].append("All parties should review changes carefully")
+
         
         return analysis
     
@@ -1022,12 +1119,14 @@ Date: _______________                        Date: _______________
                 # Update deliverable dates
                 for deliverable in contract.terms.deliverables:
                     deliverable.delivery_date = datetime.fromisoformat(new_value)
+
             elif field == 'copyright_owner':
                 contract.terms.intellectual_property.copyright_owner = new_value
             # Add more field mappings as needed
     
     async def _all_parties_approved(self, contract: SmartContract) -> bool:
-        """Check if all parties have approved the contract"""
+        """
+        Check if all parties have approved the contract"""
         
         # For simplicity, assume all parties approved if there are amendments
         # In real implementation, track individual party approvals
@@ -1036,16 +1135,20 @@ Date: _______________                        Date: _______________
         )
     
     async def _deploy_to_blockchain(self, contract: SmartContract) -> str:
-        """Deploy contract to blockchain (simulated)"""
+        """
+        Deploy contract to blockchain (simulated)"""
         
         # In real implementation, integrate with blockchain platform
         # For now, return simulated blockchain address
         import random
         import string
+
         
         blockchain_address = '0x' + ''.join(random.choices(string.hexdigits.lower(), k=40))
+
         
         logger.info(f"Contract {contract.contract_id} deployed to blockchain: {blockchain_address}")
+
         
         return blockchain_address
     
@@ -1064,6 +1167,7 @@ Date: _______________                        Date: _______________
         """Initialize default contract templates"""
         
         # Content Creation Template
+
         content_template = ContractTemplate(
             template_id="content_creation_us",
             name="Content Creation Agreement",
@@ -1084,6 +1188,7 @@ This Agreement is entered into on {{CONTRACT_DATE}} between {{PARTY_A_NAME}} and
             required_clauses=['payment_terms', 'intellectual_property', 'deliverables'],
             compliance_requirements=['signature_requirements', 'dispute_resolution']
         )
+
         
         self.templates[content_template.template_id] = content_template
         

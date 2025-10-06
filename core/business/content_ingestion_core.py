@@ -1,4 +1,5 @@
-"""Content Ingestion Core - Enterprise Content Validation & Processing Engine
+"""
+Content Ingestion Core - Enterprise Content Validation & Processing Engine
 
 Central content ingestion and validation core for multi-format content processing.
 Handles content validation, quality assurance, and preprocessing with enterprise standards.
@@ -30,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 # Content Validation Status
 class ValidationStatus(Enum):
-    """Content validation status"""
+    """
+Content validation status"""
     PENDING = "pending"
     VALIDATING = "validating"
     VALID = "valid"
@@ -40,7 +42,8 @@ class ValidationStatus(Enum):
     
 # Content Quality Assessment
 class QualityScore(Enum):
-    """Content quality assessment scores"""
+    """
+Content quality assessment scores"""
     EXCELLENT = "excellent"  # 90-100%
     GOOD = "good"           # 70-89%
     ACCEPTABLE = "acceptable" # 50-69%
@@ -49,7 +52,8 @@ class QualityScore(Enum):
 
 # Content Safety Levels
 class SafetyLevel(Enum):
-    """Content safety classification"""
+    """
+Content safety classification"""
     SAFE = "safe"
     MODERATE = "moderate"
     RESTRICTED = "restricted"
@@ -58,7 +62,8 @@ class SafetyLevel(Enum):
 
 @dataclass
 class ContentMetadata:
-    """Content metadata structure"""
+    """
+Content metadata structure"""
     content_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     filename: str = ""
     file_size: int = 0
@@ -77,7 +82,8 @@ class ContentMetadata:
 
 @dataclass
 class ValidationResult:
-    """Content validation result"""
+    """
+Content validation result"""
     content_id: str
     status: ValidationStatus
     quality_score: QualityScore
@@ -92,7 +98,8 @@ class ValidationResult:
 
 @dataclass
 class IngestionRequest:
-    """Content ingestion request"""
+    """
+Content ingestion request"""
     request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_source: str = ""  # file_path, url, or stream
     creator_id: str = ""
@@ -113,7 +120,8 @@ class ContentIngestionCore:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Content Ingestion Core"""
+        """
+Initialize Content Ingestion Core"""
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -232,7 +240,8 @@ class ContentIngestionCore:
                 del self.active_ingestions[request.request_id]
                 
     async def _process_ingestion(self, request: IngestionRequest) -> ValidationResult:
-        """Process content ingestion"""
+        """
+Process content ingestion"""
         
         # Step 1: Content acquisition
         content_data = await self._acquire_content(request.content_source)
@@ -277,7 +286,8 @@ class ContentIngestionCore:
         return final_result
         
     async def _acquire_content(self, source: str) -> Optional[bytes]:
-        """Acquire content from source"""
+        """
+Acquire content from source"""
         try:
             if source.startswith(("http://", "https://")):
                 # URL download
@@ -299,7 +309,8 @@ class ContentIngestionCore:
     async def _basic_validation(
         self, content_data: bytes, request: IngestionRequest
     ) -> ValidationResult:
-        """Perform basic content validation"""
+        """
+Perform basic content validation"""
         
         try:
             # File size check
@@ -346,7 +357,8 @@ class ContentIngestionCore:
     async def _extract_metadata(
         self, content_data: bytes, request: IngestionRequest
     ) -> ContentMetadata:
-        """Extract content metadata"""
+        """
+Extract content metadata"""
         
         # Basic metadata
         metadata = ContentMetadata(
@@ -376,7 +388,8 @@ class ContentIngestionCore:
     async def _extract_audio_metadata(
         self, content_data: bytes, metadata: ContentMetadata
     ) -> ContentMetadata:
-        """Extract audio-specific metadata"""
+        """
+Extract audio-specific metadata"""
         try:
             import tempfile
             import os
@@ -405,7 +418,8 @@ class ContentIngestionCore:
     async def _extract_video_metadata(
         self, content_data: bytes, metadata: ContentMetadata
     ) -> ContentMetadata:
-        """Extract video-specific metadata"""
+        """
+Extract video-specific metadata"""
         try:
             import tempfile
             import os
@@ -442,7 +456,8 @@ class ContentIngestionCore:
     async def _extract_image_metadata(
         self, content_data: bytes, metadata: ContentMetadata
     ) -> ContentMetadata:
-        """Extract image-specific metadata"""
+        """
+Extract image-specific metadata"""
         try:
             import io
             
@@ -460,7 +475,8 @@ class ContentIngestionCore:
     async def _extract_text_metadata(
         self, content_data: bytes, metadata: ContentMetadata
     ) -> ContentMetadata:
-        """Extract text-specific metadata"""
+        """
+Extract text-specific metadata"""
         try:
             # Detect encoding
             import chardet
@@ -477,7 +493,8 @@ class ContentIngestionCore:
         return metadata
         
     def _is_supported_format(self, mime_type: str) -> bool:
-        """Check if format is supported"""
+        """
+Check if format is supported"""
         supported_mimes = {
             # Audio
             "audio/mpeg", "audio/wav", "audio/flac", "audio/ogg", "audio/aac", "audio/mp4",
@@ -494,7 +511,8 @@ class ContentIngestionCore:
     async def _format_specific_validation(
         self, content_data: bytes, metadata: ContentMetadata
     ) -> ValidationResult:
-        """Perform format-specific validation"""
+        """
+Perform format-specific validation"""
         
         try:
             format_type = metadata.mime_type.split("/")[0]
@@ -536,7 +554,8 @@ class ContentIngestionCore:
     def _validate_audio_rules(
         self, metadata: ContentMetadata, rules: Dict[str, Any]
     ) -> List[str]:
-        """Validate audio-specific rules"""
+        """
+Validate audio-specific rules"""
         errors = []
         
         if metadata.duration:
@@ -556,7 +575,8 @@ class ContentIngestionCore:
     def _validate_video_rules(
         self, metadata: ContentMetadata, rules: Dict[str, Any]
     ) -> List[str]:
-        """Validate video-specific rules"""
+        """
+Validate video-specific rules"""
         errors = []
         
         if metadata.duration:
@@ -579,7 +599,8 @@ class ContentIngestionCore:
     def _validate_image_rules(
         self, metadata: ContentMetadata, rules: Dict[str, Any]
     ) -> List[str]:
-        """Validate image-specific rules"""
+        """
+Validate image-specific rules"""
         errors = []
         
         if metadata.dimensions:
@@ -599,7 +620,8 @@ class ContentIngestionCore:
     def _validate_text_rules(
         self, metadata: ContentMetadata, rules: Dict[str, Any]
     ) -> List[str]:
-        """Validate text-specific rules"""
+        """
+Validate text-specific rules"""
         errors = []
         
         if metadata.duration:  # Character count for text
@@ -617,7 +639,8 @@ class ContentIngestionCore:
     async def _assess_quality(
         self, content_data: bytes, metadata: ContentMetadata
     ) -> ValidationResult:
-        """Assess content quality"""
+        """
+Assess content quality"""
         
         try:
             quality_score = 100.0  # Start with perfect score
@@ -668,7 +691,8 @@ class ContentIngestionCore:
             )
             
     def _get_optimal_size(self, mime_type: str) -> int:
-        """Get optimal file size for content type"""
+        """
+Get optimal file size for content type"""
         optimal_sizes = {
             "audio/mpeg": 5 * 1024 * 1024,    # 5MB
             "video/mp4": 50 * 1024 * 1024,    # 50MB
@@ -680,7 +704,8 @@ class ContentIngestionCore:
     async def _assess_format_quality(
         self, content_data: bytes, metadata: ContentMetadata
     ) -> float:
-        """Assess format-specific quality"""
+        """
+Assess format-specific quality"""
         
         format_type = metadata.mime_type.split("/")[0]
         
@@ -696,7 +721,8 @@ class ContentIngestionCore:
         return 75.0  # Default quality score
         
     def _assess_audio_quality(self, metadata: ContentMetadata) -> float:
-        """Assess audio quality"""
+        """
+Assess audio quality"""
         quality = 100.0
         
         if metadata.bitrate:
@@ -712,7 +738,8 @@ class ContentIngestionCore:
         return max(quality, 0.0)
         
     def _assess_video_quality(self, metadata: ContentMetadata) -> float:
-        """Assess video quality"""
+        """
+Assess video quality"""
         quality = 100.0
         
         if metadata.dimensions:
@@ -729,7 +756,8 @@ class ContentIngestionCore:
         return max(quality, 0.0)
         
     def _assess_image_quality(self, metadata: ContentMetadata) -> float:
-        """Assess image quality"""
+        """
+Assess image quality"""
         quality = 100.0
         
         if metadata.dimensions:
@@ -742,7 +770,8 @@ class ContentIngestionCore:
         return max(quality, 0.0)
         
     def _assess_text_quality(self, content_data: bytes, metadata: ContentMetadata) -> float:
-        """Assess text quality"""
+        """
+Assess text quality"""
         quality = 100.0
         
         try:
@@ -767,7 +796,8 @@ class ContentIngestionCore:
     async def _analyze_safety(
         self, content_data: bytes, metadata: ContentMetadata
     ) -> ValidationResult:
-        """Analyze content safety"""
+        """
+Analyze content safety"""
         
         try:
             safety_level = SafetyLevel.SAFE
@@ -802,7 +832,8 @@ class ContentIngestionCore:
     async def _check_format_safety(
         self, content_data: bytes, metadata: ContentMetadata
     ) -> SafetyLevel:
-        """Check format-specific safety"""
+        """
+Check format-specific safety"""
         
         format_type = metadata.mime_type.split("/")[0]
         
@@ -816,7 +847,8 @@ class ContentIngestionCore:
     async def _check_text_safety(
         self, content_data: bytes, metadata: ContentMetadata
     ) -> SafetyLevel:
-        """Check text content safety"""
+        """
+Check text content safety"""
         
         try:
             text_content = content_data.decode(metadata.encoding or 'utf-8').lower()
@@ -839,7 +871,8 @@ class ContentIngestionCore:
     async def _check_media_safety(
         self, content_data: bytes, metadata: ContentMetadata
     ) -> SafetyLevel:
-        """Check media content safety"""
+        """
+Check media content safety"""
         
         # Basic media safety checks
         if metadata.file_size > 500 * 1024 * 1024:  # 500MB
@@ -855,7 +888,8 @@ class ContentIngestionCore:
         quality: ValidationResult,
         safety: ValidationResult
     ) -> ValidationResult:
-        """Combine all validation results"""
+        """
+Combine all validation results"""
         
         # Determine overall status
         statuses = [basic.status, format_val.status, quality.status, safety.status]
@@ -914,7 +948,8 @@ class ContentIngestionCore:
         )
         
     def _update_statistics(self, result: ValidationResult, processing_time: float):
-        """Update ingestion statistics"""
+        """
+Update ingestion statistics"""
         self.ingestion_stats["total_processed"] += 1
         
         if result.status == ValidationStatus.VALID:
@@ -930,7 +965,8 @@ class ContentIngestionCore:
         )
         
     async def get_ingestion_status(self, request_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of ingestion request"""
+        """
+Get status of ingestion request"""
         if request_id in self.active_ingestions:
             task = self.active_ingestions[request_id]
             return {
@@ -941,7 +977,8 @@ class ContentIngestionCore:
         return None
         
     def get_statistics(self) -> Dict[str, Any]:
-        """Get ingestion statistics"""
+        """
+Get ingestion statistics"""
         return {
             **self.ingestion_stats,
             "active_ingestions": len(self.active_ingestions),

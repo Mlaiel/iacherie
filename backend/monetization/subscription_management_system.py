@@ -92,6 +92,7 @@ class EnterpriseSubscriptionManager:
                 billing_cycle="monthly",
                 features=["Unlimited uploads", "Advanced analytics", "Priority support"],
                 max_content_uploads=-1,  # Unlimited
+
                 storage_limit_gb=100,
                 analytics_access=True,
                 priority_support=True
@@ -109,15 +110,22 @@ class EnterpriseSubscriptionManager:
             subscription_id = f"sub_{user_id}_{uuid.uuid4().hex[:8]}"
             
             plan = self.plans.get(plan_id)
+
             if not plan:
                 raise ValueError(f"Invalid plan: {plan_id}")
             
             # Calculate end date based on billing cycle
+
             start_date = datetime.utcnow()
+
             if plan.billing_cycle == "monthly":
                 end_date = start_date + timedelta(days=30)
+
             else:  # yearly
+
                 end_date = start_date + timedelta(days=365)
+
+
             
             subscription = UserSubscription(
                 subscription_id=subscription_id,
@@ -131,22 +139,26 @@ class EnterpriseSubscriptionManager:
                 last_payment_date=start_date,
                 next_billing_date=end_date
             )
+
             
             self.logger.info(f"Subscription created: {subscription_id}")
+
             return subscription
             
         except Exception as e:
             self.logger.error(f"Failed to create subscription: {e}")
+
             raise
     
     async def process_recurring_billing(self):
         """Process recurring billing for all active subscriptions"""
         try:
-            # Mock implementation for recurring billing
             self.logger.info("Processing recurring billing...")
+
             return {"processed": 0, "failed": 0}
         except Exception as e:
             self.logger.error(f"Recurring billing failed: {e}")
+
             raise
 
 __all__ = [

@@ -50,7 +50,8 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class AIProcessingMode(Enum):
-    """AI processing modes for different scenarios"""
+    """
+        AI processing modes for different scenarios"""
     REAL_TIME = "real_time"           # Fast processing, minimal latency
     BATCH = "batch"                   # Optimized for throughput
     ENSEMBLE = "ensemble"             # Multiple models for accuracy
@@ -82,7 +83,8 @@ class AIModelMetrics:
 
 @dataclass
 class EnsemblePrediction:
-    """Ensemble prediction with multiple model results"""
+    """
+        Ensemble prediction with multiple model results"""
     final_prediction: Any
     confidence: float
     models_used: List[str]
@@ -94,7 +96,8 @@ class EnsemblePrediction:
 
 @dataclass
 class AIProcessingTask:
-    """AI processing task definition"""
+    """
+        AI processing task definition"""
     task_id: str
     content_type: str
     content_data: Any
@@ -134,6 +137,7 @@ class AIOrchestrator:
         # Initialize configurations
         self._initialize_ensemble_configs()
         self._initialize_default_models()
+
         
         logger.info("AdvancedAIOrchestrator initialized - Lead Developer IA")
 
@@ -187,6 +191,7 @@ class AIOrchestrator:
         # Content Quality Assessor
         self.models["quality_assessor"] = ContentQualityAssessor()
         self.model_metrics["quality_assessor"] = AIModelMetrics("quality_assessor")
+
         
         logger.info(f"Initialized {len(self.models)} AI models")
 
@@ -202,28 +207,37 @@ class AIOrchestrator:
         Lead Developer IA: Advanced ensemble processing with dynamic model selection
         """
         start_time = time.time()
+
         
         try:
             # Determine content complexity
+
             complexity = await self._assess_content_complexity(content, content_type)
             
             # Select optimal models based on complexity and performance
+
             selected_models = await self._select_optimal_models(content_type, complexity, processing_mode)
             
             # Process with selected models
+
             predictions = await self._process_with_models(content, selected_models)
             
             # Fuse predictions using ensemble strategy
+
             ensemble_result = await self._fuse_predictions(
                 predictions, 
                 content_type, 
                 selected_models
             )
+
+
             
             processing_time = (time.time() - start_time) * 1000
             
             # Update model metrics
             await self._update_model_metrics(selected_models, predictions, processing_time)
+
+
             
             result = EnsemblePrediction(
                 final_prediction=ensemble_result["prediction"],
@@ -239,8 +253,10 @@ class AIOrchestrator:
                     "ensemble_strategy": ensemble_result.get("strategy", "default")
                 }
             )
+
             
             logger.info(f"Ensemble processing completed in {processing_time:.2f}ms with {len(selected_models)} models")
+
             return result
             
         except Exception as e:
@@ -254,6 +270,7 @@ class AIOrchestrator:
             if content_type == "text":
                 if isinstance(content, str):
                     length = len(content)
+
                     if length < 100:
                         return ContentComplexity.SIMPLE
                     elif length < 500:
@@ -265,6 +282,7 @@ class AIOrchestrator:
             
             elif content_type in ["audio", "video"]:
                 # For audio/video, assess based on duration and quality
+
                 duration = content.get("duration", 0) if isinstance(content, dict) else 0
                 if duration < 30:
                     return ContentComplexity.SIMPLE
@@ -292,13 +310,18 @@ class AIOrchestrator:
         if processing_mode == AIProcessingMode.REAL_TIME:
             # Select fastest models with acceptable accuracy
             return self._get_fastest_models(content_type, max_count=2)
+
         
         elif processing_mode == AIProcessingMode.ENSEMBLE:
             # Select best ensemble for accuracy
+
             ensemble_config = self.ensemble_configs.get(content_type, {})
+
+
             base_models = ensemble_config.get("models", [])
             
             # Filter available models
+
             available_models = [m for m in base_models if m in self.models]
             
             if complexity == ContentComplexity.HIGHLY_COMPLEX:
@@ -314,6 +337,7 @@ class AIOrchestrator:
         elif processing_mode == AIProcessingMode.ADAPTIVE:
             # Dynamically select based on current performance
             return self._get_adaptive_models(content_type, complexity)
+
         
         else:
             # Default selection
@@ -326,6 +350,7 @@ class AIOrchestrator:
         for model_id, metrics in self.model_metrics.items():
             if model_id in self.models:
                 # Consider both latency and reliability
+
                 speed_score = 1000 / max(metrics.latency_ms, 1) * metrics.accuracy
                 model_speeds.append((model_id, speed_score))
         
@@ -334,20 +359,27 @@ class AIOrchestrator:
         return [model_id for model_id, _ in model_speeds[:max_count]]
 
     def _get_adaptive_models(self, content_type: str, complexity: ContentComplexity) -> List[str]:
-        """Adaptively select models based on current performance"""
+        """
+        Adaptively select models based on current performance"""
         # Calculate adaptive scores based on recent performance
+
         adaptive_scores = {}
         
         for model_id, metrics in self.model_metrics.items():
             if model_id in self.models:
                 # Weighted score: accuracy (40%) + speed (30%) + reliability (30%)
+
+
                 accuracy_score = metrics.accuracy * 0.4
+
                 speed_score = (1000 / max(metrics.latency_ms, 1)) * 0.3
+
                 reliability_score = self.model_reliability[model_id] * 0.3
                 
                 adaptive_scores[model_id] = accuracy_score + speed_score + reliability_score
         
         # Sort and select top models
+
         sorted_models = sorted(adaptive_scores.items(), key=lambda x: x[1], reverse=True)
         
         # Select number of models based on complexity
@@ -363,7 +395,8 @@ class AIOrchestrator:
         content: Any, 
         model_ids: List[str]
     ) -> Dict[str, Dict]:
-        """Process content with selected models concurrently"""
+        """
+        Process content with selected models concurrently"""
         
         tasks = []
         for model_id in model_ids:
@@ -371,18 +404,24 @@ class AIOrchestrator:
                 task = asyncio.create_task(
                     self._process_with_single_model(content, model_id)
                 )
+
                 tasks.append((model_id, task))
+
+
         
         predictions = {}
         for model_id, task in tasks:
             try:
                 result = await asyncio.wait_for(task, timeout=30.0)
+
                 predictions[model_id] = result
             except asyncio.TimeoutError:
                 logger.warning(f"Model {model_id} timed out")
+
                 predictions[model_id] = {"error": "timeout", "confidence": 0.0}
             except Exception as e:
                 logger.error(f"Model {model_id} failed: {str(e)}")
+
                 predictions[model_id] = {"error": str(e), "confidence": 0.0}
         
         return predictions
@@ -390,6 +429,7 @@ class AIOrchestrator:
     async def _process_with_single_model(self, content: Any, model_id: str) -> Dict:
         """Process content with a single model"""
         start_time = time.time()
+
         
         try:
             model = self.models[model_id]
@@ -397,11 +437,16 @@ class AIOrchestrator:
             # Different processing based on model type
             if hasattr(model, 'predict_async'):
                 result = await model.predict_async(content)
+
             elif hasattr(model, 'predict'):
                 result = model.predict(content)
+
             else:
                 # Fallback processing
+
                 result = await self._fallback_model_processing(model, content)
+
+
             
             processing_time = (time.time() - start_time) * 1000
             
@@ -414,6 +459,7 @@ class AIOrchestrator:
             
         except Exception as e:
             logger.error(f"Single model processing failed for {model_id}: {str(e)}")
+
             return {
                 "error": str(e),
                 "confidence": 0.0,
@@ -430,8 +476,10 @@ class AIOrchestrator:
         """Fuse multiple model predictions using ensemble strategy"""
         
         # Filter out failed predictions
+
         valid_predictions = {
-            k: v for k, v in predictions.items() 
+            k: v for k, v in predictions.items()
+ 
             if "error" not in v and v.get("confidence", 0) > 0
         }
         
@@ -444,8 +492,11 @@ class AIOrchestrator:
             }
         
         # Get ensemble configuration
+
         ensemble_config = self.ensemble_configs.get(content_type, {})
+
         voting_strategy = ensemble_config.get("voting_strategy", "average")
+
         
         if voting_strategy == "soft":
             return self._soft_voting_fusion(valid_predictions)
@@ -459,11 +510,13 @@ class AIOrchestrator:
     def _soft_voting_fusion(self, predictions: Dict[str, Dict]) -> Dict:
         """Soft voting fusion based on confidence-weighted predictions"""
         total_confidence = sum(p["confidence"] for p in predictions.values())
+
         
         if total_confidence == 0:
             return {"prediction": None, "confidence": 0.0, "consensus": 0.0, "strategy": "soft_failed"}
         
         # Weighted average based on confidence
+
         weighted_sum = 0
         for pred in predictions.values():
             weight = pred["confidence"] / total_confidence
@@ -473,9 +526,12 @@ class AIOrchestrator:
             except (ValueError, TypeError):
                 # Handle non-numeric predictions
                 pass
+
         
         avg_confidence = statistics.mean([p["confidence"] for p in predictions.values()])
+
         consensus = min(avg_confidence, 1.0)
+
         
         return {
             "prediction": weighted_sum,
@@ -487,21 +543,29 @@ class AIOrchestrator:
     def _weighted_voting_fusion(self, predictions: Dict[str, Dict], model_ids: List[str]) -> Dict:
         """Weighted voting based on model performance"""
         weighted_predictions = []
+
         total_weight = 0
         
         for model_id, pred in predictions.items():
             if model_id in self.model_metrics:
                 # Weight based on model accuracy and reliability
+
                 model_metrics = self.model_metrics[model_id]
+
                 weight = model_metrics.accuracy * self.model_reliability[model_id]
                 weighted_predictions.append(pred["prediction"] * weight)
+
                 total_weight += weight
         
         if total_weight == 0:
             return self._average_fusion(predictions)
+
+
         
         final_prediction = sum(weighted_predictions) / total_weight
+
         avg_confidence = statistics.mean([p["confidence"] for p in predictions.values()])
+
         consensus = len(predictions) / len(model_ids) if model_ids else 0
         
         return {
@@ -514,6 +578,7 @@ class AIOrchestrator:
     def _maximum_confidence_fusion(self, predictions: Dict[str, Dict]) -> Dict:
         """Select prediction with maximum confidence"""
         max_pred = max(predictions.values(), key=lambda x: x["confidence"])
+
         
         return {
             "prediction": max_pred["prediction"],
@@ -529,17 +594,25 @@ class AIOrchestrator:
             for pred in predictions.values():
                 try:
                     numeric_predictions.append(float(pred["prediction"]))
+
                 except (ValueError, TypeError):
                     pass
             
             if numeric_predictions:
                 avg_prediction = statistics.mean(numeric_predictions)
+
             else:
                 # For non-numeric predictions, return most common
+
                 pred_values = [p["prediction"] for p in predictions.values()]
+
                 avg_prediction = max(set(pred_values), key=pred_values.count)
+
+
             
             avg_confidence = statistics.mean([p["confidence"] for p in predictions.values()])
+
+
             consensus = avg_confidence
             
             return {
@@ -551,6 +624,7 @@ class AIOrchestrator:
             
         except Exception as e:
             logger.error(f"Average fusion failed: {str(e)}")
+
             return {
                 "prediction": None,
                 "confidence": 0.0,
@@ -569,6 +643,7 @@ class AIOrchestrator:
         for model_id in model_ids:
             if model_id in self.model_metrics and model_id in predictions:
                 metrics = self.model_metrics[model_id]
+
                 pred = predictions[model_id]
                 
                 # Update metrics
@@ -578,11 +653,15 @@ class AIOrchestrator:
                     metrics.successful_predictions += 1
                     
                     # Update latency
+
                     new_latency = pred.get("processing_time_ms", 0)
+
                     metrics.latency_ms = (metrics.latency_ms + new_latency) / 2
                     
                     # Update confidence
+
                     new_confidence = pred.get("confidence", 0)
+
                     metrics.confidence_avg = (metrics.confidence_avg + new_confidence) / 2
                 
                 # Update error rate
@@ -597,6 +676,7 @@ class AIOrchestrator:
         """Fallback processing when ensemble fails"""
         try:
             # Use the most reliable single model
+
             best_model = max(
                 self.model_reliability.items(),
                 key=lambda x: x[1]
@@ -604,6 +684,7 @@ class AIOrchestrator:
             
             if best_model and best_model in self.models:
                 result = await self._process_with_single_model(content, best_model)
+
                 
                 return EnsemblePrediction(
                     final_prediction=result.get("prediction"),
@@ -615,6 +696,7 @@ class AIOrchestrator:
                     processing_time_ms=result.get("processing_time_ms", 0),
                     metadata={"fallback": True, "reason": "ensemble_failure"}
                 )
+
             else:
                 # Complete fallback
                 return EnsemblePrediction(
@@ -627,9 +709,11 @@ class AIOrchestrator:
                     processing_time_ms=0,
                     metadata={"fallback": True, "reason": "no_models_available"}
                 )
+
                 
         except Exception as e:
             logger.error(f"Fallback processing failed: {str(e)}")
+
             return EnsemblePrediction(
                 final_prediction=None,
                 confidence=0.0,
@@ -678,19 +762,23 @@ class AIOrchestrator:
         logger.info("Starting model performance optimization...")
         
         # Remove unreliable models
+
         unreliable_models = [
             model_id for model_id, reliability in self.model_reliability.items()
+
             if reliability < 0.3
         ]
         
         for model_id in unreliable_models:
             if model_id in self.models:
                 logger.warning(f"Removing unreliable model: {model_id} (reliability: {self.model_reliability[model_id]:.2f})")
+
                 del self.models[model_id]
         
         # Update ensemble configurations based on performance
         for content_type, config in self.ensemble_configs.items():
             # Filter models based on current availability and performance
+
             available_models = [
                 m for m in config["models"]
                 if m in self.models and self.model_reliability[m] > 0.5
@@ -699,7 +787,6 @@ class AIOrchestrator:
         
         logger.info("Model performance optimization completed")
 
-# Mock models for demonstration
 class ContentClassificationModelV1:
     """Advanced content classification model"""
     

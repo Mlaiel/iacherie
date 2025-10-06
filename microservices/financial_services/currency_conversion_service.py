@@ -71,12 +71,15 @@ class CurrencyConversionService:
         }
         self.base_currency = "USD"
         self.max_history = 10000
+        self._rate_update_task = None  # Lazy init
         
         # Initialize supported currencies
         self._initialize_currencies()
-        
-        # Schedule rate updates
-        asyncio.create_task(self._schedule_rate_updates())
+    
+    async def ensure_initialized(self):
+        """Ensure async components are initialized"""
+        if self._rate_update_task is None:
+            self._rate_update_task = asyncio.create_task(self._schedule_rate_updates())
 
     def _initialize_currencies(self):
         """Initialize supported currencies"""

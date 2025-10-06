@@ -137,10 +137,13 @@ def get_collector(platform: str, **kwargs):
         
     Examples:
         # Consolidated collectors (recommended)
+
         social_collector = get_collector('social_media')
+
         video_collector = get_collector('video_platforms')
         
         # Individual platform collectors (legacy)
+
         instagram_collector = get_collector('instagram')
     """
     if platform not in PLATFORM_COLLECTORS:
@@ -153,7 +156,8 @@ def get_supported_platforms():
     return list(PLATFORM_COLLECTORS.keys())
 
 def get_consolidated_collectors():
-    """Get list of consolidated collector types (recommended)."""
+    """
+        Get list of consolidated collector types (recommended)."""
     return [
         'social_media',
         'video_platforms', 
@@ -164,7 +168,8 @@ def get_consolidated_collectors():
     ]
 
 def get_individual_platforms():
-    """Get list of individual platform collectors (legacy support)."""
+    """
+        Get list of individual platform collectors (legacy support)."""
     return [
         'instagram', 'tiktok', 'youtube', 'twitter', 'facebook', 'linkedin',
         'ecommerce', 'news', 'trends', 'misc', 'pinterest', 'reddit', 

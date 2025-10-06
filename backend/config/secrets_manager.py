@@ -47,33 +47,10 @@ import aiohttp
 # ===============================
 
 class SecretType(str, Enum):
-    """Types of secrets"""
-# SECURITY: # SECURITY: API_KEY = os.getenv("API_KEY", "CHANGE_ME") # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
-# SECURITY: # SECURITY: DATABASE_PASSWORD = "database_password" # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
-# SECURITY: # SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
-    CERTIFICATE = "certificate"
-# SECURITY: # SECURITY: PRIVATE_KEY = "private_key" # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
-# SECURITY: # SECURITY: JWT_SECRET = os.getenv("SECRET", "CHANGE_ME") # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
-# SECURITY: # SECURITY: OAUTH_CLIENT_SECRET = os.getenv("SECRET", "CHANGE_ME") # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
-# SECURITY: # SECURITY: WEBHOOK_SECRET = os.getenv("SECRET", "CHANGE_ME") # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
-# SECURITY: # SECURITY: SERVICE_ACCOUNT_KEY = "service_account_key" # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
-    ACCESS_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
+    """
+        Types of secrets"""
+# SECURITY: # SECURITY: API_KEY = os.getenv("API_KEY", "CHANGE_ME") # MOVED TO ENV # MOVED TO ENV# SECURITY: # SECURITY: DATABASE_PASSWORD = "database_password" # MOVED TO ENV # MOVED TO ENV# SECURITY: # SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV # MOVED TO ENV    CERTIFICATE = "certificate"
+# SECURITY: # SECURITY: PRIVATE_KEY = "private_key" # MOVED TO ENV # MOVED TO ENV# SECURITY: # SECURITY: JWT_SECRET = os.getenv("SECRET", "CHANGE_ME") # MOVED TO ENV # MOVED TO ENV# SECURITY: # SECURITY: OAUTH_CLIENT_SECRET = os.getenv("SECRET", "CHANGE_ME") # MOVED TO ENV # MOVED TO ENV# SECURITY: # SECURITY: WEBHOOK_SECRET = os.getenv("SECRET", "CHANGE_ME") # MOVED TO ENV # MOVED TO ENV# SECURITY: # SECURITY: SERVICE_ACCOUNT_KEY = "service_account_key" # MOVED TO ENV # MOVED TO ENV    ACCESS_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
 
 class SecretVaultType(str, Enum):
     """Secret vault types"""
@@ -99,7 +76,8 @@ class AccessLevel(IntEnum):
     SUPER_ADMIN = 4
 
 class RotationStrategy(str, Enum):
-    """Secret rotation strategies"""
+    """
+        Secret rotation strategies"""
     MANUAL = "manual"
     TIME_BASED = "time_based"
     USAGE_BASED = "usage_based"
@@ -126,7 +104,8 @@ class SecretMetadata:
 
 @dataclass
 class EncryptedSecret:
-    """Encrypted secret entry"""
+    """
+        Encrypted secret entry"""
     secret_id: str
     secret_type: SecretType
     encrypted_value: str
@@ -138,7 +117,8 @@ class EncryptedSecret:
 
 @dataclass
 class AccessPolicy:
-    """Secret access policy"""
+    """
+        Secret access policy"""
     policy_id: str
     secret_patterns: List[str]
     allowed_users: List[str]
@@ -150,7 +130,8 @@ class AccessPolicy:
 
 @dataclass
 class AuditLogEntry:
-    """Audit log entry for secret access"""
+    """
+        Audit log entry for secret access"""
     timestamp: datetime
     user_id: str
     action: str
@@ -163,7 +144,8 @@ class AuditLogEntry:
 
 @dataclass
 class RotationConfig:
-    """Secret rotation configuration"""
+    """
+        Secret rotation configuration"""
     secret_id: str
     strategy: RotationStrategy
     interval: Optional[timedelta] = None
@@ -177,7 +159,8 @@ class RotationConfig:
 # ==============================
 
 class EncryptionManager:
-    """Advanced encryption management for secrets"""
+    """
+        Advanced encryption management for secrets"""
     
     def __init__(self):
         self.master_key = self._generate_or_load_master_key()
@@ -188,6 +171,7 @@ class EncryptionManager:
     def _generate_or_load_master_key(self) -> bytes:
         """Generate or load master encryption key"""
         key_file = Path("./secrets/master.key")
+
         
         if key_file.exists():
             with open(key_file, 'rb') as f:
@@ -195,13 +179,17 @@ class EncryptionManager:
         else:
             # Generate new master key
             key_file.parent.mkdir(exist_ok=True, parents=True)
+
+
             master_key = Fernet.generate_key()
+
             
             with open(key_file, 'wb') as f:
                 f.write(master_key)
             
             # Set restrictive permissions
             os.chmod(key_file, 0o600)
+
             return master_key
     
     def get_encryption_key(self, key_version: str = None) -> Fernet:
@@ -210,6 +198,7 @@ class EncryptionManager:
         
         if version not in self.encryption_cache:
             # Derive key from master key and version
+
             kdf = PBKDF2HMAC(
                 algorithm=hashes.SHA256(),
                 length=32,
@@ -217,26 +206,37 @@ class EncryptionManager:
                 iterations=100000,
                 backend=default_backend()
             )
+
+
             derived_key = base64.urlsafe_b64encode(kdf.derive(self.master_key))
+
             self.encryption_cache[version] = Fernet(derived_key)
+
         
         return self.encryption_cache[version]
     
     async def encrypt_secret(self, plaintext: str, 
                            algorithm: EncryptionAlgorithm = EncryptionAlgorithm.FERNET,
                            key_version: str = None) -> Dict[str, str]:
-        """Encrypt secret value"""
+        """
+        Encrypt secret value"""
         version = key_version or self.current_key_version
         
         if algorithm == EncryptionAlgorithm.FERNET:
             fernet = self.get_encryption_key(version)
+
+
             encrypted_bytes = fernet.encrypt(plaintext.encode())
+
+
             encrypted_value = base64.urlsafe_b64encode(encrypted_bytes).decode()
         else:
             raise ValueError(f"Unsupported encryption algorithm: {algorithm}")
         
         # Generate checksum
+
         checksum = hashlib.sha256(plaintext.encode()).hexdigest()
+
         
         return {
             "encrypted_value": encrypted_value,
@@ -251,8 +251,13 @@ class EncryptionManager:
         """Decrypt secret value"""
         if algorithm == EncryptionAlgorithm.FERNET:
             fernet = self.get_encryption_key(key_version)
+
+
             encrypted_bytes = base64.urlsafe_b64decode(encrypted_value.encode())
+
+
             decrypted_bytes = fernet.decrypt(encrypted_bytes)
+
             return decrypted_bytes.decode()
         else:
             raise ValueError(f"Unsupported decryption algorithm: {algorithm}")
@@ -260,7 +265,9 @@ class EncryptionManager:
     def rotate_encryption_keys(self) -> str:
         """Rotate encryption keys"""
         # Generate new key version
+
         current_version_num = int(self.current_key_version[1:])
+
         new_version = f"v{current_version_num + 1}"
         
         # Store old version
@@ -280,15 +287,18 @@ class SecretVault(Protocol):
     """Protocol for secret vault implementations"""
     
     async def store_secret(self, secret: EncryptedSecret) -> bool:
-        """Store encrypted secret"""
+        """
+        Store encrypted secret"""
         ...
     
     async def retrieve_secret(self, secret_id: str) -> Optional[EncryptedSecret]:
-        """Retrieve encrypted secret"""
+        """
+        Retrieve encrypted secret"""
         ...
     
     async def delete_secret(self, secret_id: str) -> bool:
-        """Delete secret"""
+        """
+        Delete secret"""
         ...
     
     async def list_secrets(self, pattern: str = "*") -> List[str]:
@@ -296,7 +306,8 @@ class SecretVault(Protocol):
         ...
 
 class LocalFileVault:
-    """Local file-based secret vault"""
+    """
+        Local file-based secret vault"""
     
     def __init__(self, vault_path: str = "./secrets/vault"):
         self.vault_path = Path(vault_path)
@@ -337,10 +348,12 @@ class LocalFileVault:
             
             # Set restrictive permissions
             os.chmod(secret_file, 0o600)
+
             return True
             
         except Exception as e:
             logging.error(f"Failed to store secret {secret.secret_id}: {e}")
+
             return False
     
     async def retrieve_secret(self, secret_id: str) -> Optional[EncryptedSecret]:
@@ -355,7 +368,9 @@ class LocalFileVault:
                 secret_data = json.loads(await f.read())
             
             # Reconstruct metadata
+
             metadata_data = secret_data["metadata"]
+
             metadata = SecretMetadata(
                 created_at=datetime.fromisoformat(metadata_data["created_at"]),
                 updated_at=datetime.fromisoformat(metadata_data["updated_at"]),
@@ -370,6 +385,7 @@ class LocalFileVault:
             )
             
             # Reconstruct secret
+
             secret = EncryptedSecret(
                 secret_id=secret_data["secret_id"],
                 secret_type=SecretType(secret_data["secret_type"]),
@@ -380,11 +396,13 @@ class LocalFileVault:
                 checksum=secret_data["checksum"],
                 vault_path=secret_data["vault_path"]
             )
+
             
             return secret
             
         except Exception as e:
             logging.error(f"Failed to retrieve secret {secret_id}: {e}")
+
             return None
     
     async def delete_secret(self, secret_id: str) -> bool:
@@ -394,12 +412,14 @@ class LocalFileVault:
             
             if secret_file.exists():
                 secret_file.unlink()
+
                 return True
             
             return False
             
         except Exception as e:
             logging.error(f"Failed to delete secret {secret_id}: {e}")
+
             return False
     
     async def list_secrets(self, pattern: str = "*") -> List[str]:
@@ -412,11 +432,14 @@ class LocalFileVault:
                 secret_id = secret_file.stem
                 if fnmatch.fnmatch(secret_id, pattern):
                     secret_ids.append(secret_id)
+
             
             return sorted(secret_ids)
+
             
         except Exception as e:
             logging.error(f"Failed to list secrets: {e}")
+
             return []
 
 class HashiCorpVault:
@@ -428,7 +451,8 @@ class HashiCorpVault:
         self.session: Optional[aiohttp.ClientSession] = None
     
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get HTTP session for Vault API"""
+        """
+        Get HTTP session for Vault API"""
         if not self.session:
             headers = {
                 "X-Vault-Token": self.vault_token,
@@ -441,6 +465,8 @@ class HashiCorpVault:
         """Store secret in HashiCorp Vault"""
         try:
             session = await self._get_session()
+
+
             
             secret_data = {
                 "data": {
@@ -457,6 +483,7 @@ class HashiCorpVault:
                     }
                 }
             }
+
             
             url = f"{self.vault_url}/v1/secret/data/{secret.secret_id}"
             
@@ -465,21 +492,28 @@ class HashiCorpVault:
                 
         except Exception as e:
             logging.error(f"Failed to store secret in Vault: {e}")
+
             return False
     
     async def retrieve_secret(self, secret_id: str) -> Optional[EncryptedSecret]:
         """Retrieve secret from HashiCorp Vault"""
         try:
             session = await self._get_session()
+
+
             url = f"{self.vault_url}/v1/secret/data/{secret_id}"
             
             async with session.get(url) as response:
                 if response.status == 200:
                     data = await response.json()
+
+
                     secret_data = data["data"]["data"]
                     
                     # Reconstruct metadata
+
                     metadata_data = secret_data["metadata"]
+
                     metadata = SecretMetadata(
                         created_at=datetime.fromisoformat(metadata_data["created_at"]),
                         updated_at=datetime.fromisoformat(metadata_data["updated_at"]),
@@ -488,6 +522,7 @@ class HashiCorpVault:
                     )
                     
                     # Reconstruct secret
+
                     secret = EncryptedSecret(
                         secret_id=secret_id,
                         secret_type=SecretType(secret_data["secret_type"]),
@@ -498,6 +533,7 @@ class HashiCorpVault:
                         checksum=secret_data["checksum"],
                         vault_path=f"secret/{secret_id}"
                     )
+
                     
                     return secret
                 
@@ -505,12 +541,15 @@ class HashiCorpVault:
                 
         except Exception as e:
             logging.error(f"Failed to retrieve secret from Vault: {e}")
+
             return None
     
     async def delete_secret(self, secret_id: str) -> bool:
         """Delete secret from HashiCorp Vault"""
         try:
             session = await self._get_session()
+
+
             url = f"{self.vault_url}/v1/secret/metadata/{secret_id}"
             
             async with session.delete(url) as response:
@@ -518,12 +557,15 @@ class HashiCorpVault:
                 
         except Exception as e:
             logging.error(f"Failed to delete secret from Vault: {e}")
+
             return False
     
     async def list_secrets(self, pattern: str = "*") -> List[str]:
         """List secrets from HashiCorp Vault"""
         try:
             session = await self._get_session()
+
+
             url = f"{self.vault_url}/v1/secret/metadata"
             
             params = {"list": "true"}
@@ -531,6 +573,8 @@ class HashiCorpVault:
             async with session.get(url, params=params) as response:
                 if response.status == 200:
                     data = await response.json()
+
+
                     secret_ids = data["data"]["keys"]
                     
                     # Filter by pattern
@@ -541,12 +585,14 @@ class HashiCorpVault:
                 
         except Exception as e:
             logging.error(f"Failed to list secrets from Vault: {e}")
+
             return []
     
     async def close(self):
         """Close HTTP session"""
         if self.session:
             await self.session.close()
+
             self.session = None
 
 # ==============================
@@ -554,7 +600,8 @@ class HashiCorpVault:
 # ==============================
 
 class AccessControlManager:
-    """Access control and policy management"""
+    """
+        Access control and policy management"""
     
     def __init__(self):
         self.policies: Dict[str, AccessPolicy] = {}
@@ -563,7 +610,8 @@ class AccessControlManager:
         self.active_sessions: Dict[str, Dict[str, Any]] = {}
     
     def create_access_policy(self, policy: AccessPolicy) -> None:
-        """Create new access policy"""
+        """
+        Create new access policy"""
         self.policies[policy.policy_id] = policy
         logging.info(f"Created access policy: {policy.policy_id}")
     
@@ -580,26 +628,32 @@ class AccessControlManager:
     
     def _matches_policy(self, policy: AccessPolicy, user_id: str, 
                        secret_id: str, action: str, context: Dict[str, Any]) -> bool:
-        """Check if access matches policy"""
+        """
+        Check if access matches policy"""
         import fnmatch
         
         # Check secret pattern
+
         pattern_match = any(
-            fnmatch.fnmatch(secret_id, pattern) 
+            fnmatch.fnmatch(secret_id, pattern)
+ 
             for pattern in policy.secret_patterns
         )
+
         
         if not pattern_match:
             return False
         
         # Check user/role
         if user_id not in policy.allowed_users and not any(
-            role in context.get("user_roles", []) 
+            role in context.get("user_roles", [])
+ 
             for role in policy.allowed_roles
         ):
             return False
         
         # Check access level
+
         required_level = self._get_required_access_level(action)
         if policy.access_level < required_level:
             return False
@@ -641,6 +695,7 @@ class AccessControlManager:
         # Check allowed days
         if "allowed_days" in restrictions:
             current_day = current_time.weekday()
+
             if current_day not in restrictions["allowed_days"]:
                 return False
         
@@ -650,6 +705,7 @@ class AccessControlManager:
                   success: bool, context: Dict[str, Any] = None) -> None:
         """Log access attempt"""
         context = context or {}
+
         
         audit_entry = AuditLogEntry(
             timestamp=datetime.now(),
@@ -662,6 +718,7 @@ class AccessControlManager:
             error_message=context.get("error_message"),
             access_level=context.get("access_level")
         )
+
         
         self.audit_log.append(audit_entry)
         
@@ -699,7 +756,8 @@ class AccessControlManager:
 # ==============================
 
 class SecretRotationManager:
-    """Automated secret rotation management"""
+    """
+        Automated secret rotation management"""
     
     def __init__(self):
         self.rotation_configs: Dict[str, RotationConfig] = {}
@@ -708,12 +766,14 @@ class SecretRotationManager:
         self.notification_handlers: List[Callable] = []
     
     def register_rotation_config(self, config: RotationConfig) -> None:
-        """Register rotation configuration for secret"""
+        """
+        Register rotation configuration for secret"""
         self.rotation_configs[config.secret_id] = config
         
         # Start automated rotation if strategy requires it
         if config.strategy in [RotationStrategy.TIME_BASED, RotationStrategy.CONTINUOUS]:
             self._schedule_rotation(config)
+
         
         logging.info(f"Registered rotation config for secret: {config.secret_id}")
     
@@ -722,11 +782,15 @@ class SecretRotationManager:
         self.notification_handlers.append(handler)
     
     async def rotate_secret(self, secret_id: str, new_value: Optional[str] = None) -> Dict[str, Any]:
-        """Rotate specific secret"""
+        """
+        Rotate specific secret"""
         if secret_id not in self.rotation_configs:
             raise ValueError(f"No rotation config found for secret: {secret_id}")
+
+
         
         config = self.rotation_configs[secret_id]
+
         rotation_result = {
             "secret_id": secret_id,
             "rotation_timestamp": datetime.now(),
@@ -741,6 +805,7 @@ class SecretRotationManager:
             if new_value is None:
                 if config.rotation_function:
                     new_value = await config.rotation_function()
+
                 else:
                     new_value = self._generate_secret_value(secret_id)
             
@@ -763,12 +828,16 @@ class SecretRotationManager:
             
             # Send notifications
             await self._send_rotation_notifications(secret_id, rotation_result)
+
             
             logging.info(f"Successfully rotated secret: {secret_id}")
+
             
         except Exception as e:
             rotation_result["error"] = str(e)
+
             logging.error(f"Failed to rotate secret {secret_id}: {e}")
+
         
         return rotation_result
     
@@ -778,20 +847,25 @@ class SecretRotationManager:
         return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode()
     
     def _schedule_rotation(self, config: RotationConfig) -> None:
-        """Schedule automated rotation"""
+        """
+        Schedule automated rotation"""
         async def rotation_loop():
             while True:
                 try:
                     if config.interval:
                         await asyncio.sleep(config.interval.total_seconds())
+
                     else:
                         await asyncio.sleep(86400)  # Default 24 hours
                     
                     await self.rotate_secret(config.secret_id)
+
                     
                 except Exception as e:
                     logging.error(f"Rotation loop error for {config.secret_id}: {e}")
+
                     await asyncio.sleep(3600)  # Wait 1 hour on error
+
         
         task = asyncio.create_task(rotation_loop())
         self.rotation_tasks[config.secret_id] = task
@@ -802,6 +876,7 @@ class SecretRotationManager:
         for handler in self.notification_handlers:
             try:
                 await handler(secret_id, rotation_result)
+
             except Exception as e:
                 logging.error(f"Notification handler failed: {e}")
     
@@ -810,11 +885,15 @@ class SecretRotationManager:
         return self.rotation_history.get(secret_id, [])
     
     async def rollback_secret(self, secret_id: str, version: str) -> Dict[str, Any]:
-        """Rollback secret to previous version"""
+        """
+        Rollback secret to previous version"""
         if secret_id not in self.rotation_history:
             raise ValueError(f"No rotation history found for secret: {secret_id}")
+
+
         
         history = self.rotation_history[secret_id]
+
         target_rotation = None
         
         for rotation in history:
@@ -826,6 +905,7 @@ class SecretRotationManager:
             raise ValueError(f"Version {version} not found in rotation history")
         
         # Simulate rollback
+
         rollback_result = {
             "secret_id": secret_id,
             "rollback_timestamp": datetime.now(),
@@ -840,6 +920,7 @@ class SecretRotationManager:
         """Stop automated rotation for secret"""
         if secret_id in self.rotation_tasks:
             self.rotation_tasks[secret_id].cancel()
+
             del self.rotation_tasks[secret_id]
             logging.info(f"Stopped rotation for secret: {secret_id}")
 
@@ -878,7 +959,10 @@ class SecretsManager:
             return LocalFileVault()
         elif vault_type == SecretVaultType.HASHICORP_VAULT:
             vault_url = os.getenv("VAULT_URL", "http://localhost:8200")
+
+
             vault_token = os.getenv("VAULT_TOKEN", "")
+
             return HashiCorpVault(vault_url, vault_token)
         else:
             raise ValueError(f"Unsupported vault type: {vault_type}")
@@ -890,13 +974,16 @@ class SecretsManager:
         # Check access
         if not self.access_control.check_access(user_id, secret_id, "write"):
             self.access_control.log_access(user_id, "write", secret_id, False)
+
             self.metrics["access_denied"] += 1
             raise PermissionError(f"Access denied for user {user_id}")
         
         # Encrypt secret
+
         encryption_result = await self.encryption_manager.encrypt_secret(secret_value)
         
         # Create metadata
+
         metadata = SecretMetadata(
             created_at=datetime.now(),
             updated_at=datetime.now(),
@@ -905,6 +992,7 @@ class SecretsManager:
         )
         
         # Create encrypted secret
+
         encrypted_secret = EncryptedSecret(
             secret_id=secret_id,
             secret_type=secret_type,
@@ -917,7 +1005,9 @@ class SecretsManager:
         )
         
         # Store in vault
+
         success = await self.vault.store_secret(encrypted_secret)
+
         
         if success:
             # Update cache
@@ -925,6 +1015,7 @@ class SecretsManager:
             
             # Log access
             self.access_control.log_access(user_id, "write", secret_id, True)
+
             self.metrics["secrets_stored"] += 1
             
             return {
@@ -944,16 +1035,20 @@ class SecretsManager:
         # Check access
         if not self.access_control.check_access(user_id, secret_id, "read", context):
             self.access_control.log_access(user_id, "read", secret_id, False, context)
+
             self.metrics["access_denied"] += 1
             raise PermissionError(f"Access denied for user {user_id}")
         
         # Check cache first
+
         cached_secret = self._get_from_cache(secret_id)
         if cached_secret:
             encrypted_secret = cached_secret
         else:
             # Retrieve from vault
+
             encrypted_secret = await self.vault.retrieve_secret(secret_id)
+
             if not encrypted_secret:
                 raise ValueError(f"Secret not found: {secret_id}")
             
@@ -965,6 +1060,7 @@ class SecretsManager:
             raise ValueError(f"Secret has expired: {secret_id}")
         
         # Decrypt secret
+
         decrypted_value = await self.encryption_manager.decrypt_secret(
             encrypted_secret.encrypted_value,
             encrypted_secret.encryption_algorithm,
@@ -989,11 +1085,14 @@ class SecretsManager:
         # Check access
         if not self.access_control.check_access(user_id, secret_id, "delete"):
             self.access_control.log_access(user_id, "delete", secret_id, False)
+
             self.metrics["access_denied"] += 1
             raise PermissionError(f"Access denied for user {user_id}")
         
         # Delete from vault
+
         success = await self.vault.delete_secret(secret_id)
+
         
         if success:
             # Remove from cache
@@ -1003,23 +1102,28 @@ class SecretsManager:
             # Remove rotation config
             if secret_id in self.rotation_manager.rotation_configs:
                 await self.rotation_manager.stop_rotation(secret_id)
+
                 del self.rotation_manager.rotation_configs[secret_id]
             
             # Log access
             self.access_control.log_access(user_id, "delete", secret_id, True)
+
         
         return success
     
     async def list_secrets(self, user_id: str, pattern: str = "*") -> List[str]:
         """List secrets accessible to user"""
         # Get all secrets matching pattern
+
         all_secrets = await self.vault.list_secrets(pattern)
         
         # Filter by access control
+
         accessible_secrets = []
         for secret_id in all_secrets:
             if self.access_control.check_access(user_id, secret_id, "read"):
                 accessible_secrets.append(secret_id)
+
         
         return sorted(accessible_secrets)
     
@@ -1029,11 +1133,14 @@ class SecretsManager:
         # Check access
         if not self.access_control.check_access(user_id, secret_id, "rotate"):
             self.access_control.log_access(user_id, "rotate", secret_id, False)
+
             self.metrics["access_denied"] += 1
             raise PermissionError(f"Access denied for user {user_id}")
         
         # Perform rotation
+
         rotation_result = await self.rotation_manager.rotate_secret(secret_id, new_value)
+
         
         if rotation_result["success"]:
             # Clear cache to force reload
@@ -1042,6 +1149,7 @@ class SecretsManager:
             
             # Log access
             self.access_control.log_access(user_id, "rotate", secret_id, True)
+
             self.metrics["rotations_performed"] += 1
         
         return rotation_result
@@ -1057,9 +1165,12 @@ class SecretsManager:
         """Get secret from cache if valid"""
         if secret_id not in self.secret_cache:
             return None
+
         
         cached_entry = self.secret_cache[secret_id]
+
         cache_age = (datetime.now() - cached_entry["cached_at"]).total_seconds()
+
         
         if cache_age > self.cache_ttl:
             del self.secret_cache[secret_id]
@@ -1098,6 +1209,7 @@ class SecretsManager:
         # Close vault connections
         if hasattr(self.vault, 'close'):
             await self.vault.close()
+
         
         logging.info("Secrets manager shutdown complete")
 

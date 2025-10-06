@@ -51,7 +51,8 @@ logger = structlog.get_logger(__name__)
 # =============================================================================
 
 class ProcessingStage(Enum):
-    """Processing pipeline stages"""
+    """
+        Processing pipeline stages"""
     VALIDATION = "validation"
     AI_ANALYSIS = "ai_analysis"
     ENHANCEMENT = "enhancement"
@@ -76,7 +77,8 @@ class ProcessingPriority(Enum):
     CRITICAL = 4
 
 class ProcessingStatus(Enum):
-    """Processing status"""
+    """
+        Processing status"""
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -109,7 +111,8 @@ class ProcessingRequest:
 
 @dataclass
 class ProcessingResult:
-    """Processing result container"""
+    """
+        Processing result container"""
     request_id: str
     status: ProcessingStatus
     stages_completed: List[ProcessingStage] = field(default_factory=list)
@@ -121,7 +124,8 @@ class ProcessingResult:
 
 @dataclass
 class MediaProcessingConfig:
-    """Central configuration for media processing"""
+    """
+        Central configuration for media processing"""
     # AI Models
     ai_models_path: str = "/models"
     ai_processing_enabled: bool = True
@@ -156,7 +160,8 @@ class MainProcessor:
     """Central processing coordinator"""
     
     def __init__(self, config: Optional[MediaProcessingConfig] = None):
-        """Initialize the main processor"""
+        """
+        Initialize the main processor"""
         self.config = config or MediaProcessingConfig()
         self.processing_queue: Dict[str, ProcessingRequest] = {}
         self.results_cache: Dict[str, ProcessingResult] = {}
@@ -189,17 +194,25 @@ class MainProcessor:
         try:
             # Import and initialize processors
             await self._init_ai_processors()
+
             await self._init_media_processors()
+
             await self._init_protection_processors()
+
             await self._init_seo_processors()
+
             await self._init_collaboration_processors()
+
             await self._init_distribution_processors()
+
             
             self._initialized = True
             logger.info("All processors initialized successfully")
+
             
         except Exception as e:
             logger.error("Failed to initialize processors", error=str(e))
+
             raise MediaProcessingError(
                 "Processor initialization failed",
                 error_code="INIT_FAILED",
@@ -221,8 +234,10 @@ class MainProcessor:
                 'content_classifier': ContentClassifier(self.config),
                 'enhancement_pipeline': EnhancementPipeline(self.config)
             })
+
             
             logger.info("AI processors initialized")
+
             
         except ImportError as e:
             logger.warning(f"Some AI processors not available: {e}")
@@ -237,11 +252,14 @@ class MainProcessor:
                     'multimodal_processor': MultimodalAIProcessor(),
                     'content_analyzer': IntelligentContentAnalyzer()
                 })
+
                 
                 logger.info("Using existing AI processors")
+
                 
             except ImportError:
                 logger.warning("No AI processors available - using fallback")
+
                 self._processors['ai_orchestrator'] = None
     
     async def _init_media_processors(self):
@@ -256,8 +274,10 @@ class MainProcessor:
                 'video_processor': VideoProcessor(),
                 'image_processor': ImageProcessor()
             })
+
             
             logger.info("Media processors initialized")
+
             
         except ImportError as e:
             logger.warning(f"Some media processors not available: {e}")
@@ -272,6 +292,7 @@ class MainProcessor:
                     'video_processor': VideoProcessor(),
                     'image_processor': ImageOptimizer()
                 })
+
                 
             except ImportError:
                 logger.warning("Using minimal media processing")
@@ -288,8 +309,10 @@ class MainProcessor:
                 'anti_piracy_engine': AntiPiracyEngine(self.config),
                 'watermark_processor': WatermarkProcessor()
             })
+
             
             logger.info("Protection processors initialized")
+
             
         except ImportError as e:
             logger.warning(f"Protection processors not available: {e}")
@@ -302,8 +325,10 @@ class MainProcessor:
             self._processors.update({
                 'seo_optimizer': SEOOptimizer(self.config)
             })
+
             
             logger.info("SEO processors initialized")
+
             
         except ImportError as e:
             logger.warning(f"SEO processors not available: {e}")
@@ -316,8 +341,10 @@ class MainProcessor:
             self._processors.update({
                 'collaboration_engine': CollaborationEngine(self.config)
             })
+
             
             logger.info("Collaboration processors initialized")
+
             
         except ImportError as e:
             logger.warning(f"Collaboration processors not available: {e}")
@@ -332,8 +359,10 @@ class MainProcessor:
                 'distribution_engine': DistributionEngine(self.config),
                 'social_optimizer': SocialOptimizer(self.config)
             })
+
             
             logger.info("Distribution processors initialized")
+
             
         except ImportError as e:
             logger.warning(f"Distribution processors not available: {e}")
@@ -355,6 +384,7 @@ class MainProcessor:
         await self._validate_processing_request(content_id, file_path, content_type)
         
         # Create processing request
+
         request = ProcessingRequest(
             content_id=content_id,
             content_type=content_type,
@@ -374,16 +404,20 @@ class MainProcessor:
         await self.initialize_processors()
         
         # Start processing
+
         start_time = time.time()
+
         result = ProcessingResult(
             request_id=content_id,
             status=ProcessingStatus.RUNNING
         )
+
         
         try:
             # Process through each stage
             for stage in request.stages:
                 stage_start = time.time()
+
                 
                 logger.info(
                     "Starting processing stage",
@@ -391,13 +425,19 @@ class MainProcessor:
                     stage=stage.value,
                     creator_id=creator_id
                 )
+
+
                 
                 stage_result = await self._process_stage(request, stage)
+
                 
                 result.results[stage.value] = stage_result
                 result.stages_completed.append(stage)
+
+
                 
                 stage_duration = int((time.time() - stage_start) * 1000)
+
                 logger.info(
                     "Completed processing stage",
                     content_id=content_id,
@@ -412,11 +452,13 @@ class MainProcessor:
             # Mark as completed
             result.status = ProcessingStatus.COMPLETED
             result.completed_at = datetime.utcnow()
+
             self.metrics['successful_completions'] += 1
             
         except Exception as e:
             result.status = ProcessingStatus.FAILED
             result.errors.append(str(e))
+
             self.metrics['failed_requests'] += 1
             
             logger.error(
@@ -431,15 +473,19 @@ class MainProcessor:
         
         finally:
             # Update metrics
+
             processing_time = int((time.time() - start_time) * 1000)
+
             result.processing_time_ms = processing_time
             
             # Update average processing time
+
             total_time = (
                 self.metrics['average_processing_time_ms'] * 
                 (self.metrics['successful_completions'] + self.metrics['failed_requests'] - 1) +
                 processing_time
             )
+
             self.metrics['average_processing_time_ms'] = int(
                 total_time / (self.metrics['successful_completions'] + self.metrics['failed_requests'])
             )
@@ -449,7 +495,9 @@ class MainProcessor:
             
             # Remove from processing queue
             self.processing_queue.pop(content_id, None)
+
             self.metrics['queue_length'] = len(self.processing_queue)
+
         
         return result
     
@@ -470,6 +518,7 @@ class MainProcessor:
             )
         
         # Validate file path
+
         path = Path(file_path)
         if not path.exists():
             raise ValidationError(
@@ -479,6 +528,7 @@ class MainProcessor:
             )
         
         # Check file size
+
         file_size_mb = path.stat().st_size / (1024 * 1024)
         if file_size_mb > self.config.max_file_size_mb:
             raise ValidationError(
@@ -511,6 +561,7 @@ class MainProcessor:
             ProcessingStage.COLLABORATION: self._process_collaboration,
             ProcessingStage.DISTRIBUTION: self._process_distribution
         }
+
         
         processor = stage_processors.get(stage)
         if not processor:
@@ -520,6 +571,7 @@ class MainProcessor:
             return await processor(request)
         except Exception as e:
             logger.error(f"Stage {stage.value} failed", error=str(e))
+
             return {'error': str(e)}
     
     async def _process_validation(self, request: ProcessingRequest) -> Dict[str, Any]:
@@ -531,103 +583,122 @@ class MainProcessor:
         }
     
     async def _process_ai_analysis(self, request: ProcessingRequest) -> Dict[str, Any]:
-        """Process AI analysis stage"""
+        """
+        Process AI analysis stage"""
         if not self._processors.get('ai_orchestrator'):
             return {'status': 'skipped', 'reason': 'AI processor not available'}
         
         try:
             orchestrator = self._processors['ai_orchestrator']
+
             result = await orchestrator.process_content(
                 request.file_path,
                 request.content_type.value,
                 request.options
             )
+
             return {'status': 'completed', 'ai_analysis': result}
         except Exception as e:
             return {'status': 'failed', 'error': str(e)}
     
     async def _process_enhancement(self, request: ProcessingRequest) -> Dict[str, Any]:
-        """Process enhancement stage"""
+        """
+        Process enhancement stage"""
         if not self._processors.get('enhancement_pipeline'):
             return {'status': 'skipped', 'reason': 'Enhancement processor not available'}
         
         try:
             enhancer = self._processors['enhancement_pipeline']
+
             result = await enhancer.enhance_content(
                 request.file_path,
                 request.content_type.value,
                 request.options
             )
+
             return {'status': 'completed', 'enhancement': result}
         except Exception as e:
             return {'status': 'failed', 'error': str(e)}
     
     async def _process_protection(self, request: ProcessingRequest) -> Dict[str, Any]:
-        """Process protection stage"""
+        """
+        Process protection stage"""
         if not self._processors.get('protection_manager'):
             return {'status': 'skipped', 'reason': 'Protection processor not available'}
         
         try:
             protector = self._processors['protection_manager']
+
             result = await protector.protect_content(
                 request.file_path,
                 request.creator_id,
                 request.options
             )
+
             return {'status': 'completed', 'protection': result}
         except Exception as e:
             return {'status': 'failed', 'error': str(e)}
     
     async def _process_seo(self, request: ProcessingRequest) -> Dict[str, Any]:
-        """Process SEO optimization stage"""
+        """
+        Process SEO optimization stage"""
         if not self._processors.get('seo_optimizer'):
             return {'status': 'skipped', 'reason': 'SEO processor not available'}
         
         try:
             seo = self._processors['seo_optimizer']
+
             result = await seo.optimize_content(
                 request.file_path,
                 request.content_type.value,
                 request.options
             )
+
             return {'status': 'completed', 'seo': result}
         except Exception as e:
             return {'status': 'failed', 'error': str(e)}
     
     async def _process_collaboration(self, request: ProcessingRequest) -> Dict[str, Any]:
-        """Process collaboration stage"""
+        """
+        Process collaboration stage"""
         if not self._processors.get('collaboration_engine'):
             return {'status': 'skipped', 'reason': 'Collaboration processor not available'}
         
         try:
             collaboration = self._processors['collaboration_engine']
+
             result = await collaboration.find_collaborators(
                 request.creator_id,
                 request.content_type.value,
                 request.options
             )
+
             return {'status': 'completed', 'collaboration': result}
         except Exception as e:
             return {'status': 'failed', 'error': str(e)}
     
     async def _process_distribution(self, request: ProcessingRequest) -> Dict[str, Any]:
-        """Process distribution stage"""
+        """
+        Process distribution stage"""
         if not self._processors.get('distribution_engine'):
             return {'status': 'skipped', 'reason': 'Distribution processor not available'}
         
         try:
             distributor = self._processors['distribution_engine']
+
             result = await distributor.prepare_distribution(
                 request.file_path,
                 request.content_type.value,
                 request.options
             )
+
             return {'status': 'completed', 'distribution': result}
         except Exception as e:
             return {'status': 'failed', 'error': str(e)}
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get processing metrics"""
+        """
+        Get processing metrics"""
         return {
             **self.metrics,
             'queue_length': len(self.processing_queue),
@@ -637,7 +708,8 @@ class MainProcessor:
         }
     
     def get_queue_status(self) -> Dict[str, Any]:
-        """Get processing queue status"""
+        """
+        Get processing queue status"""
         return {
             'queue_length': len(self.processing_queue),
             'queued_requests': list(self.processing_queue.keys()),
@@ -645,14 +717,17 @@ class MainProcessor:
         }
     
     async def get_result(self, content_id: str) -> Optional[ProcessingResult]:
-        """Get processing result"""
+        """
+        Get processing result"""
         return self.results_cache.get(content_id)
     
     async def cancel_processing(self, content_id: str) -> bool:
-        """Cancel processing request"""
+        """
+        Cancel processing request"""
         if content_id in self.active_processors:
             task = self.active_processors[content_id]
             task.cancel()
+
             del self.active_processors[content_id]
             return True
         
@@ -670,7 +745,8 @@ class MainProcessor:
 _main_processor: Optional[MainProcessor] = None
 
 def get_main_processor(config: Optional[MediaProcessingConfig] = None) -> MainProcessor:
-    """Get global main processor instance"""
+    """
+        Get global main processor instance"""
     global _main_processor
     if _main_processor is None:
         _main_processor = MainProcessor(config)
@@ -687,7 +763,8 @@ async def process_content(
     creator_id: str,
     **kwargs
 ) -> ProcessingResult:
-    """Convenience function for content processing"""
+    """
+        Convenience function for content processing"""
     processor = get_main_processor()
     
     # Convert string content type to enum

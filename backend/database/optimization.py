@@ -68,7 +68,8 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationType(Enum):
-    """Optimization type enumeration."""
+    """
+        Optimization type enumeration."""
     INDEX_RECOMMENDATION = "index_recommendation"
     QUERY_REWRITE = "query_rewrite"
     PARTITION_STRATEGY = "partition_strategy"
@@ -117,7 +118,8 @@ class QueryPattern:
 
 @dataclass
 class OptimizationRecommendation:
-    """Optimization recommendation data structure."""
+    """
+        Optimization recommendation data structure."""
     recommendation_id: str
     optimization_type: OptimizationType
     title: str
@@ -138,7 +140,8 @@ class OptimizationRecommendation:
 
 @dataclass
 class PerformanceMetrics:
-    """Performance metrics data structure."""
+    """
+        Performance metrics data structure."""
     timestamp: datetime
     query_throughput: float
     average_response_time: float
@@ -154,21 +157,25 @@ class PerformanceMetrics:
 
 
 class IOptimizationEngine(ABC):
-    """Optimization engine interface."""
+    """
+        Optimization engine interface."""
     
     @abstractmethod
     async def analyze_performance(self, metrics: PerformanceMetrics) -> List[OptimizationRecommendation]:
-        """Analyze performance and generate recommendations."""
+        """
+        Analyze performance and generate recommendations."""
         pass
     
     @abstractmethod
     async def implement_optimization(self, recommendation: OptimizationRecommendation) -> bool:
-        """Implement optimization recommendation."""
+        """
+        Implement optimization recommendation."""
         pass
     
     @abstractmethod
     async def monitor_optimization(self, recommendation_id: str) -> Dict[str, Any]:
-        """Monitor optimization effectiveness."""
+        """
+        Monitor optimization effectiveness."""
         pass
 
 
@@ -187,7 +194,8 @@ class QueryOptimizationEngine(IOptimizationEngine):
         self._performance_baseline: Optional[PerformanceMetrics] = None
         
     async def analyze_performance(self, metrics: PerformanceMetrics) -> List[OptimizationRecommendation]:
-        """Analyze query performance and generate optimization recommendations."""
+        """
+        Analyze query performance and generate optimization recommendations."""
         recommendations = []
         
         # Set baseline if not exists
@@ -197,38 +205,50 @@ class QueryOptimizationEngine(IOptimizationEngine):
         
         # Analyze slow queries
         if metrics.average_response_time > 1000:  # > 1 second
+
             slow_query_rec = await self._recommend_slow_query_optimization(metrics)
+
             if slow_query_rec:
                 recommendations.append(slow_query_rec)
         
         # Analyze query patterns for indexing opportunities
+
         index_recommendations = await self._analyze_indexing_opportunities()
         recommendations.extend(index_recommendations)
         
         # Check for query rewrite opportunities
+
         rewrite_recommendations = await self._analyze_query_rewrite_opportunities()
         recommendations.extend(rewrite_recommendations)
+
         
         return recommendations
     
     async def _recommend_slow_query_optimization(self, metrics: PerformanceMetrics) -> Optional[OptimizationRecommendation]:
-        """Recommend optimizations for slow queries."""
+        """
+        Recommend optimizations for slow queries."""
         if metrics.slow_queries_count == 0:
             return None
         
         # Analyze recent slow queries
+
         slow_queries = [q for q in list(self._query_history)[-100:] if q.get("duration", 0) > 1000]
         
         if not slow_queries:
             return None
         
         # Find most common slow query patterns
+
         pattern_frequency = defaultdict(int)
         for query in slow_queries:
             pattern = self._extract_query_pattern(query.get("sql", ""))
+
             pattern_frequency[pattern] += 1
+
         
         most_common_pattern = max(pattern_frequency, key=pattern_frequency.get)
+
+
         
         recommendation = OptimizationRecommendation(
             recommendation_id=f"slow_query_{int(datetime.now().timestamp())}",
@@ -251,6 +271,7 @@ class QueryOptimizationEngine(IOptimizationEngine):
                 "avg_duration": statistics.mean([q.get("duration", 0) for q in slow_queries])
             }
         )
+
         
         return recommendation
     
@@ -262,12 +283,18 @@ class QueryOptimizationEngine(IOptimizationEngine):
             return recommendations
         
         # Analyze WHERE clauses for potential indexes
+
         where_columns = defaultdict(int)
+
         join_columns = defaultdict(int)
+
         order_columns = defaultdict(int)
+
         
         for query in list(self._query_history)[-1000:]:  # Last 1000 queries
+
             sql = query.get("sql", "")
+
             if not sql:
                 continue
             
@@ -275,27 +302,35 @@ class QueryOptimizationEngine(IOptimizationEngine):
                 parsed = sqlparse.parse(sql)[0]
                 
                 # Extract WHERE columns
+
                 where_cols = self._extract_where_columns(parsed)
+
                 for col in where_cols:
                     where_columns[col] += 1
                 
                 # Extract JOIN columns
+
                 join_cols = self._extract_join_columns(parsed)
+
                 for col in join_cols:
                     join_columns[col] += 1
                 
                 # Extract ORDER BY columns
+
                 order_cols = self._extract_order_columns(parsed)
+
                 for col in order_cols:
                     order_columns[col] += 1
                     
             except Exception as e:
                 logger.error(f"Failed to parse SQL: {e}")
+
                 continue
         
         # Generate index recommendations for frequently used columns
         for column, frequency in where_columns.items():
             if frequency >= 10:  # Column used in WHERE clause at least 10 times
+
                 rec = OptimizationRecommendation(
                     recommendation_id=f"index_where_{hashlib.md5(column.encode()).hexdigest()[:8]}",
                     optimization_type=OptimizationType.INDEX_RECOMMENDATION,
@@ -313,7 +348,9 @@ class QueryOptimizationEngine(IOptimizationEngine):
                     created_at=datetime.now(timezone.utc),
                     metadata={"column": column, "frequency": frequency, "type": "where_clause"}
                 )
+
                 recommendations.append(rec)
+
         
         return recommendations
     
@@ -323,18 +360,25 @@ class QueryOptimizationEngine(IOptimizationEngine):
             return ""
         
         # Remove comments
+
         sql = re.sub(r'--.*$', '', sql, flags=re.MULTILINE)
+
         sql = re.sub(r'/\*.*?\*/', '', sql, flags=re.DOTALL)
         
         # Normalize string literals
+
         sql = re.sub(r"'[^']*'", "'?'", sql)
+
         sql = re.sub(r'"[^"]*"', '"?"', sql)
         
         # Normalize numeric literals
+
         sql = re.sub(r'\b\d+\b', '?', sql)
         
         # Normalize whitespace
+
         sql = ' '.join(sql.split())
+
         
         return sql.strip()
     
@@ -344,17 +388,22 @@ class QueryOptimizationEngine(IOptimizationEngine):
         
         # Simple regex to find table names after FROM and JOIN
         from_matches = re.findall(r'FROM\s+(\w+)', pattern, re.IGNORECASE)
+
         join_matches = re.findall(r'JOIN\s+(\w+)', pattern, re.IGNORECASE)
+
         
         tables.extend(from_matches)
         tables.extend(join_matches)
+
         
         return list(set(tables))
     
     async def _generate_query_optimization_sql(self, pattern: str) -> List[str]:
-        """Generate SQL statements for query optimization."""
+        """
+        Generate SQL statements for query optimization."""
         # This would contain more sophisticated optimization logic
         # For now, return basic optimization suggestions
+
         optimizations = []
         
         # Add LIMIT if not present and no aggregation
@@ -364,6 +413,7 @@ class QueryOptimizationEngine(IOptimizationEngine):
         # Suggest covering indexes for SELECT columns
         if "SELECT" in pattern.upper():
             optimizations.append("-- Consider creating covering indexes for frequently selected columns")
+
         
         return optimizations
     
@@ -375,19 +425,22 @@ class QueryOptimizationEngine(IOptimizationEngine):
         return columns
     
     def _extract_join_columns(self, parsed_sql) -> List[str]:
-        """Extract columns used in JOIN conditions."""
+        """
+        Extract columns used in JOIN conditions."""
         columns = []
         # Implementation would parse the SQL tree to find JOIN conditions
         return columns
     
     def _extract_order_columns(self, parsed_sql) -> List[str]:
-        """Extract columns used in ORDER BY clauses."""
+        """
+        Extract columns used in ORDER BY clauses."""
         columns = []
         # Implementation would parse the SQL tree to find ORDER BY columns
         return columns
     
     async def implement_optimization(self, recommendation: OptimizationRecommendation) -> bool:
-        """Implement query optimization recommendation."""
+        """
+        Implement query optimization recommendation."""
         try:
             logger.info(f"⚡ Implementing optimization: {recommendation.title}")
             
@@ -400,13 +453,16 @@ class QueryOptimizationEngine(IOptimizationEngine):
                 
                 logger.info(f"Executing optimization SQL: {sql}")
                 # await database_connection.execute(sql)
+
             
             recommendation.status = OptimizationStatus.IMPLEMENTED
             logger.info(f"✅ Optimization implemented: {recommendation.recommendation_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to implement optimization {recommendation.recommendation_id}: {e}")
+
             recommendation.status = OptimizationStatus.REJECTED
             return False
     
@@ -434,12 +490,16 @@ class QueryOptimizationEngine(IOptimizationEngine):
         self._query_history.append(query_record)
         
         # Update query patterns
+
         pattern = query_record["pattern"]
         if pattern in self._query_patterns:
             self._query_patterns[pattern].frequency += 1
+
             durations = [self._query_patterns[pattern].average_duration, duration_ms]
             self._query_patterns[pattern].average_duration = statistics.mean(durations)
+
             self._query_patterns[pattern].max_duration = max(self._query_patterns[pattern].max_duration, duration_ms)
+
             self._query_patterns[pattern].min_duration = min(self._query_patterns[pattern].min_duration, duration_ms)
         else:
             self._query_patterns[pattern] = QueryPattern(
@@ -473,7 +533,8 @@ class ConnectionPoolOptimizer(IOptimizationEngine):
         self._pool_configurations: Dict[str, Dict[str, Any]] = {}
         
     async def analyze_performance(self, metrics: PerformanceMetrics) -> List[OptimizationRecommendation]:
-        """Analyze connection pool performance."""
+        """
+        Analyze connection pool performance."""
         recommendations = []
         
         # Record metrics
@@ -484,11 +545,14 @@ class ConnectionPoolOptimizer(IOptimizationEngine):
         })
         
         # Check if pool is consistently over-utilized
+
         recent_metrics = list(self._connection_metrics)[-20:]  # Last 20 data points
         if len(recent_metrics) >= 10:
             avg_utilization = statistics.mean([m["utilization"] for m in recent_metrics])
+
             
             if avg_utilization > 0.8:  # 80% utilization
+
                 rec = OptimizationRecommendation(
                     recommendation_id=f"pool_scale_{int(datetime.now().timestamp())}",
                     optimization_type=OptimizationType.CONNECTION_POOL,
@@ -510,9 +574,12 @@ class ConnectionPoolOptimizer(IOptimizationEngine):
                         "suggested_multiplier": 1.5
                     }
                 )
+
                 recommendations.append(rec)
+
             
             elif avg_utilization < 0.3:  # 30% utilization
+
                 rec = OptimizationRecommendation(
                     recommendation_id=f"pool_reduce_{int(datetime.now().timestamp())}",
                     optimization_type=OptimizationType.CONNECTION_POOL,
@@ -534,7 +601,9 @@ class ConnectionPoolOptimizer(IOptimizationEngine):
                         "suggested_multiplier": 0.7
                     }
                 )
+
                 recommendations.append(rec)
+
         
         return recommendations
     
@@ -542,7 +611,10 @@ class ConnectionPoolOptimizer(IOptimizationEngine):
         """Implement connection pool optimization."""
         try:
             action = recommendation.metadata.get("recommended_action")
+
+
             multiplier = recommendation.metadata.get("suggested_multiplier", 1.0)
+
             
             if action == "increase_pool_size":
                 # Increase pool size
@@ -559,6 +631,7 @@ class ConnectionPoolOptimizer(IOptimizationEngine):
             
         except Exception as e:
             logger.error(f"❌ Failed to implement pool optimization: {e}")
+
             return False
     
     async def monitor_optimization(self, recommendation_id: str) -> Dict[str, Any]:
@@ -591,8 +664,10 @@ class DatabaseOptimizationManager:
         self._auto_optimization_enabled = False
         
     async def initialize(self, auto_optimization: bool = False):
-        """Initialize optimization manager."""
+        """
+        Initialize optimization manager."""
         logger.info("⚡ Initializing Enterprise Database Optimization Manager...")
+
         
         self._auto_optimization_enabled = auto_optimization
         
@@ -600,6 +675,7 @@ class DatabaseOptimizationManager:
         self._monitoring_tasks.append(
             asyncio.create_task(self._optimization_monitor())
         )
+
         
         logger.info("✅ Enterprise Database Optimization Manager initialized")
     
@@ -612,6 +688,7 @@ class DatabaseOptimizationManager:
                 if self._auto_optimization_enabled:
                     # Auto-implement low-risk optimizations
                     await self._auto_implement_safe_optimizations()
+
                 
             except asyncio.CancelledError:
                 break
@@ -633,17 +710,21 @@ class DatabaseOptimizationManager:
                     optimization.optimization_type in [OptimizationType.INDEX_RECOMMENDATION]):
                     
                     logger.info(f"🤖 Auto-implementing safe optimization: {optimization.title}")
+
+
                     
                     success = False
                     for engine in self._optimization_engines:
                         if hasattr(engine, 'implement_optimization'):
                             success = await engine.implement_optimization(optimization)
+
                             if success:
                                 break
                     
                     if success:
                         optimization.status = OptimizationStatus.MONITORING
                         logger.info(f"✅ Auto-implemented: {optimization.recommendation_id}")
+
                     
             except Exception as e:
                 logger.error(f"Auto-optimization failed for {optimization.recommendation_id}: {e}")
@@ -656,7 +737,9 @@ class DatabaseOptimizationManager:
         for engine in self._optimization_engines:
             try:
                 recommendations = await engine.analyze_performance(metrics)
+
                 all_recommendations.extend(recommendations)
+
             except Exception as e:
                 logger.error(f"Optimization engine analysis failed: {e}")
         
@@ -668,8 +751,10 @@ class DatabaseOptimizationManager:
             key=lambda x: (x.expected_impact.value, x.confidence_score),
             reverse=True
         )
+
         
         logger.info(f"📊 Generated {len(all_recommendations)} optimization recommendations")
+
         
         return all_recommendations
     
@@ -683,6 +768,7 @@ class DatabaseOptimizationManager:
         
         if not recommendation:
             logger.error(f"Optimization recommendation not found: {recommendation_id}")
+
             return False
         
         # Find appropriate engine
@@ -691,9 +777,11 @@ class DatabaseOptimizationManager:
                 if await engine.implement_optimization(recommendation):
                     recommendation.status = OptimizationStatus.IMPLEMENTED
                     logger.info(f"✅ Optimization implemented: {recommendation_id}")
+
                     return True
             except Exception as e:
                 logger.error(f"Engine failed to implement optimization: {e}")
+
         
         recommendation.status = OptimizationStatus.REJECTED
         return False
@@ -701,19 +789,24 @@ class DatabaseOptimizationManager:
     async def get_optimization_dashboard(self) -> Dict[str, Any]:
         """Get comprehensive optimization dashboard."""
         # Count recommendations by status
+
         status_counts = defaultdict(int)
+
         impact_counts = defaultdict(int)
+
         
         for opt in self._optimization_history:
             status_counts[opt.status.value] += 1
             impact_counts[opt.expected_impact.value] += 1
         
         # Recent recommendations
+
         recent_recommendations = sorted(
             self._optimization_history,
             key=lambda x: x.created_at,
             reverse=True
         )[:10]
+
         
         dashboard = {
             "summary": {
@@ -750,16 +843,19 @@ class DatabaseOptimizationManager:
         return None
     
     def get_recommendations_by_type(self, optimization_type: OptimizationType) -> List[OptimizationRecommendation]:
-        """Get recommendations by optimization type."""
+        """
+        Get recommendations by optimization type."""
         return [opt for opt in self._optimization_history if opt.optimization_type == optimization_type]
     
     async def close(self):
-        """Close optimization manager."""
+        """
+        Close optimization manager."""
         logger.info("🔌 Closing Database Optimization Manager...")
         
         # Cancel monitoring tasks
         for task in self._monitoring_tasks:
             task.cancel()
+
             try:
                 await task
             except asyncio.CancelledError:

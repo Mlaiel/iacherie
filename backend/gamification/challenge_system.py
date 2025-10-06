@@ -44,7 +44,8 @@ logger = logging.getLogger(__name__)
 
 
 class ChallengeType(str, Enum):
-    """Types of challenges."""
+    """
+        Types of challenges."""
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -131,7 +132,8 @@ class Challenge:
 
 @dataclass
 class ChallengeParticipation:
-    """User challenge participation tracking."""
+    """
+        User challenge participation tracking."""
     id: str
     user_id: str
     challenge_id: str
@@ -146,7 +148,8 @@ class ChallengeParticipation:
 
 @dataclass
 class ChallengeTemplate:
-    """Template for generating challenges."""
+    """
+        Template for generating challenges."""
     id: str
     name: str
     title_template: str
@@ -166,13 +169,15 @@ class ChallengeSystem:
     """
     
     def __init__(self, database_connection=None, cache_client=None):
-        """Initialize the challenge system."""
+        """
+        Initialize the challenge system."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.db = database_connection
         self.cache = cache_client
         self.active_challenges: Dict[str, Challenge] = {}
         self.user_participations: Dict[str, List[ChallengeParticipation]] = {}
         self.challenge_templates = self._initialize_challenge_templates()
+
         
         self.logger.info("ChallengeSystem initialized")
     
@@ -206,6 +211,7 @@ class ChallengeSystem:
             duration_days=1,
             tags=["daily", "content", "consistency"]
         )
+
         
         templates["daily_engagement"] = ChallengeTemplate(
             id="daily_engagement",
@@ -259,6 +265,7 @@ class ChallengeSystem:
             duration_days=7,
             tags=["weekly", "consistency", "dedication"]
         )
+
         
         templates["weekly_collaboration"] = ChallengeTemplate(
             id="weekly_collaboration",
@@ -371,6 +378,7 @@ class ChallengeSystem:
             duration_days=21,
             tags=["skill", "quality", "excellence"]
         )
+
         
         return templates
     
@@ -383,15 +391,19 @@ class ChallengeSystem:
         try:
             if template_id not in self.challenge_templates:
                 self.logger.error(f"Template not found: {template_id}")
+
                 return None
+
             
             template = self.challenge_templates[template_id]
+
             customizations = customizations or {}
             
             # Generate challenge ID
             challenge_id = str(uuid4())
             
             # Build requirements from template
+
             requirements = []
             for i, req_template in enumerate(template.requirement_templates):
                 requirement = ChallengeRequirement(
@@ -403,9 +415,11 @@ class ChallengeSystem:
                     weight=req_template.get("weight", 1.0),
                     is_optional=req_template.get("is_optional", False)
                 )
+
                 requirements.append(requirement)
             
             # Build rewards from template
+
             rewards = []
             for reward_template in template.reward_templates:
                 reward = ChallengeReward(
@@ -414,13 +428,18 @@ class ChallengeSystem:
                     currency=reward_template.get("currency", "CREDITS"),
                     description=reward_template["description"]
                 )
+
                 rewards.append(reward)
             
             # Calculate dates
+
             start_date = customizations.get("start_date", datetime.utcnow())
+
+
             end_date = customizations.get("end_date", start_date + timedelta(days=template.duration_days))
             
             # Create challenge
+
             challenge = Challenge(
                 id=challenge_id,
                 title=customizations.get("title", template.title_template),
@@ -441,11 +460,13 @@ class ChallengeSystem:
             self.active_challenges[challenge_id] = challenge
             
             self.logger.info(f"✅ Challenge created from template {template_id}: {challenge.title}")
+
             
             return challenge
             
         except Exception as e:
             self.logger.error(f"Error creating challenge from template: {e}")
+
             return None
     
     async def create_custom_challenge(
@@ -465,6 +486,7 @@ class ChallengeSystem:
             challenge_id = str(uuid4())
             
             # Build requirements
+
             challenge_requirements = []
             for i, req_data in enumerate(requirements):
                 requirement = ChallengeRequirement(
@@ -476,9 +498,11 @@ class ChallengeSystem:
                     weight=req_data.get("weight", 1.0),
                     is_optional=req_data.get("is_optional", False)
                 )
+
                 challenge_requirements.append(requirement)
             
             # Build rewards
+
             challenge_rewards = []
             for reward_data in rewards:
                 reward = ChallengeReward(
@@ -488,13 +512,18 @@ class ChallengeSystem:
                     description=reward_data["description"],
                     metadata=reward_data.get("metadata", {})
                 )
+
                 challenge_rewards.append(reward)
             
             # Calculate dates
+
             start_date = kwargs.get("start_date", datetime.utcnow())
+
+
             end_date = kwargs.get("end_date", start_date + timedelta(days=duration_days))
             
             # Create challenge
+
             challenge = Challenge(
                 id=challenge_id,
                 title=title,
@@ -517,11 +546,13 @@ class ChallengeSystem:
             self.active_challenges[challenge_id] = challenge
             
             self.logger.info(f"✅ Custom challenge created: {challenge.title}")
+
             
             return challenge
             
         except Exception as e:
             self.logger.error(f"Error creating custom challenge: {e}")
+
             return None
     
     async def join_challenge(self, user_id: str, challenge_id: str) -> bool:
@@ -529,29 +560,35 @@ class ChallengeSystem:
         try:
             if challenge_id not in self.active_challenges:
                 self.logger.error(f"Challenge not found: {challenge_id}")
+
                 return False
+
             
             challenge = self.active_challenges[challenge_id]
             
             # Check if challenge is active
             if challenge.status != ChallengeStatus.ACTIVE:
                 self.logger.error(f"Challenge not active: {challenge_id}")
+
                 return False
             
             # Check if challenge has started
             if datetime.utcnow() < challenge.start_date:
                 self.logger.error(f"Challenge not started yet: {challenge_id}")
+
                 return False
             
             # Check if challenge has ended
             if datetime.utcnow() > challenge.end_date:
                 self.logger.error(f"Challenge has ended: {challenge_id}")
+
                 return False
             
             # Check participant limit
             if (challenge.max_participants and 
                 challenge.current_participants >= challenge.max_participants):
                 self.logger.error(f"Challenge is full: {challenge_id}")
+
                 return False
             
             # Check if user already joined
@@ -560,17 +597,21 @@ class ChallengeSystem:
                     (p for p in self.user_participations[user_id] 
                      if p.challenge_id == challenge_id), None
                 )
+
                 if existing_participation:
                     self.logger.warning(f"User already joined challenge: {user_id} - {challenge_id}")
+
                     return False
             
             # Check prerequisites
             if challenge.prerequisites:
                 if not await self._check_user_prerequisites(user_id, challenge.prerequisites):
                     self.logger.error(f"User doesn't meet prerequisites: {user_id}")
+
                     return False
             
             # Create participation
+
             participation = ChallengeParticipation(
                 id=str(uuid4()),
                 user_id=user_id,
@@ -591,11 +632,13 @@ class ChallengeSystem:
             challenge.current_participants += 1
             
             self.logger.info(f"✅ User joined challenge: {user_id} - {challenge.title}")
+
             
             return True
             
         except Exception as e:
             self.logger.error(f"Error joining challenge: {e}")
+
             return False
     
     async def update_user_progress(
@@ -623,10 +666,12 @@ class ChallengeSystem:
                 
                 if participation.challenge_id not in self.active_challenges:
                     continue
+
                 
                 challenge = self.active_challenges[participation.challenge_id]
                 
                 # Check if challenge uses this metric
+
                 relevant_requirements = [
                     req for req in challenge.requirements 
                     if req.metric_key == metric_key
@@ -643,22 +688,27 @@ class ChallengeSystem:
                 if await self._check_challenge_completion(participation, challenge):
                     participation.status = ParticipationStatus.COMPLETED
                     participation.completed_at = datetime.utcnow()
+
                     completed_challenges.append(challenge.id)
                     
                     # Award challenge rewards
                     await self._award_challenge_rewards(user_id, challenge)
+
                     
                     self.logger.info(f"🏆 Challenge completed: {user_id} - {challenge.title}")
+
                 else:
                     # Update progress percentage
                     participation.completion_percentage = await self._calculate_challenge_progress(
                         participation, challenge
                     )
+
             
             return completed_challenges
             
         except Exception as e:
             self.logger.error(f"Error updating user progress: {e}")
+
             return []
     
     async def _check_user_prerequisites(
@@ -673,6 +723,7 @@ class ChallengeSystem:
             return True
         except Exception as e:
             self.logger.error(f"Error checking prerequisites: {e}")
+
             return False
     
     async def _check_challenge_completion(
@@ -683,6 +734,7 @@ class ChallengeSystem:
         """Check if challenge is completed by user."""
         try:
             required_count = 0
+
             completed_count = 0
             
             for requirement in challenge.requirements:
@@ -690,7 +742,9 @@ class ChallengeSystem:
                     continue
                 
                 required_count += 1
+
                 user_value = participation.progress_data.get(requirement.metric_key, 0)
+
                 
                 if requirement.comparison_type == "greater_equal":
                     if user_value >= requirement.target_value:
@@ -706,6 +760,7 @@ class ChallengeSystem:
             
         except Exception as e:
             self.logger.error(f"Error checking challenge completion: {e}")
+
             return False
     
     async def _calculate_challenge_progress(
@@ -716,49 +771,64 @@ class ChallengeSystem:
         """Calculate challenge completion percentage."""
         try:
             total_requirements = len([r for r in challenge.requirements if not r.is_optional])
+
             
             if total_requirements == 0:
                 return 100.0
+
             
             requirement_percentages = []
             
             for requirement in challenge.requirements:
                 if requirement.is_optional:
                     continue
+
                 
                 user_value = participation.progress_data.get(requirement.metric_key, 0)
+
+
                 target_value = requirement.target_value
                 
                 if requirement.comparison_type == "greater_equal":
                     if user_value >= target_value:
                         requirement_percentages.append(100.0)
+
                     else:
                         percentage = min(100.0, (user_value / target_value) * 100.0)
+
                         requirement_percentages.append(percentage)
+
                 elif requirement.comparison_type == "equal":
                     if user_value == target_value:
                         requirement_percentages.append(100.0)
+
                     else:
                         requirement_percentages.append(0.0)
+
                 elif requirement.comparison_type == "less_equal":
                     if user_value <= target_value:
                         requirement_percentages.append(100.0)
+
                     else:
                         requirement_percentages.append(0.0)
             
             # Weighted average based on requirement weights
             if requirement_percentages:
                 total_weight = sum(r.weight for r in challenge.requirements if not r.is_optional)
+
+
                 weighted_sum = sum(
                     p * challenge.requirements[i].weight 
                     for i, p in enumerate(requirement_percentages)
                 )
+
                 return weighted_sum / total_weight if total_weight > 0 else 0.0
             
             return 0.0
             
         except Exception as e:
             self.logger.error(f"Error calculating challenge progress: {e}")
+
             return 0.0
     
     async def _award_challenge_rewards(
@@ -771,10 +841,12 @@ class ChallengeSystem:
             # In a real implementation, this would integrate with the rewards system
             for reward in challenge.rewards:
                 self.logger.info(f"💰 Awarded {reward.amount} {reward.currency} to {user_id}")
+
             
             return True
         except Exception as e:
             self.logger.error(f"Error awarding challenge rewards: {e}")
+
             return False
     
     async def get_active_challenges(
@@ -808,11 +880,13 @@ class ChallengeSystem:
             
             # Sort by start date
             challenges.sort(key=lambda c: c.start_date)
+
             
             return challenges
             
         except Exception as e:
             self.logger.error(f"Error getting active challenges: {e}")
+
             return []
     
     async def get_user_challenges(
@@ -824,6 +898,7 @@ class ChallengeSystem:
         try:
             if user_id not in self.user_participations:
                 return []
+
             
             user_challenges = []
             
@@ -833,6 +908,7 @@ class ChallengeSystem:
                 
                 if participation.challenge_id not in self.active_challenges:
                     continue
+
                 
                 challenge = self.active_challenges[participation.challenge_id]
                 
@@ -840,11 +916,13 @@ class ChallengeSystem:
                     "challenge": challenge,
                     "participation": participation
                 })
+
             
             return user_challenges
             
         except Exception as e:
             self.logger.error(f"Error getting user challenges: {e}")
+
             return []
     
     async def get_challenge_leaderboard(
@@ -856,6 +934,7 @@ class ChallengeSystem:
         try:
             if challenge_id not in self.active_challenges:
                 return []
+
             
             leaderboard = []
             
@@ -863,6 +942,7 @@ class ChallengeSystem:
                 user_participation = next(
                     (p for p in participations if p.challenge_id == challenge_id), None
                 )
+
                 
                 if user_participation:
                     leaderboard.append({
@@ -882,11 +962,13 @@ class ChallengeSystem:
                 ),
                 reverse=True
             )
+
             
             return leaderboard[:limit]
             
         except Exception as e:
             self.logger.error(f"Error getting challenge leaderboard: {e}")
+
             return []
     
     async def generate_daily_challenges(self) -> List[Challenge]:
@@ -894,33 +976,45 @@ class ChallengeSystem:
         try:
             daily_templates = [
                 template for template in self.challenge_templates.values()
+
                 if template.challenge_type == ChallengeType.DAILY
             ]
+
             
             generated_challenges = []
             
             # Generate 2-3 daily challenges
+
             num_challenges = min(3, len(daily_templates))
+
+
             selected_templates = random.sample(daily_templates, num_challenges)
+
             
             for template in selected_templates:
                 challenge = await self.create_challenge_from_template(template.id)
+
                 if challenge:
                     generated_challenges.append(challenge)
+
             
             self.logger.info(f"✅ Generated {len(generated_challenges)} daily challenges")
+
             
             return generated_challenges
             
         except Exception as e:
             self.logger.error(f"Error generating daily challenges: {e}")
+
             return []
     
     async def cleanup_expired_challenges(self) -> int:
         """Clean up expired challenges."""
         try:
             expired_count = 0
+
             current_time = datetime.utcnow()
+
             
             for challenge_id, challenge in list(self.active_challenges.items()):
                 if current_time > challenge.end_date and challenge.status == ChallengeStatus.ACTIVE:
@@ -935,11 +1029,13 @@ class ChallengeSystem:
                                 participation.status = ParticipationStatus.FAILED
             
             self.logger.info(f"🧹 Cleaned up {expired_count} expired challenges")
+
             
             return expired_count
             
         except Exception as e:
             self.logger.error(f"Error cleaning up expired challenges: {e}")
+
             return 0
 
 
@@ -961,12 +1057,14 @@ async def create_challenge_from_template(
     template_id: str,
     customizations: Optional[Dict[str, Any]] = None
 ) -> Optional[Challenge]:
-    """Convenience function to create challenge from template."""
+    """
+        Convenience function to create challenge from template."""
     system = await get_challenge_system()
     return await system.create_challenge_from_template(template_id, customizations)
 
 
 async def join_challenge(user_id: str, challenge_id: str) -> bool:
-    """Convenience function to join a challenge."""
+    """
+        Convenience function to join a challenge."""
     system = await get_challenge_system()
     return await system.join_challenge(user_id, challenge_id)

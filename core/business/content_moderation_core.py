@@ -1,4 +1,5 @@
-"""IA Chérie Core Business - Content Moderation Core
+"""
+IA Chérie Core Business - Content Moderation Core
 ===============================================
 
 Enterprise-grade content moderation system providing automated content analysis,
@@ -27,7 +28,8 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 class ContentType(str, Enum):
-    """Content types for moderation"""
+    """
+Content types for moderation"""
     TEXT = "text"
     IMAGE = "image"
     VIDEO = "video"
@@ -40,7 +42,8 @@ class ContentType(str, Enum):
     MESSAGE = "message"
 
 class ModerationAction(str, Enum):
-    """Moderation actions"""
+    """
+Moderation actions"""
     APPROVE = "approve"
     REJECT = "reject"
     FLAG = "flag"
@@ -53,7 +56,8 @@ class ModerationAction(str, Enum):
     REQUEST_REVIEW = "request_review"
 
 class ModerationStatus(str, Enum):
-    """Moderation status"""
+    """
+Moderation status"""
     PENDING = "pending"
     APPROVED = "approved"
     REJECTED = "rejected"
@@ -63,7 +67,8 @@ class ModerationStatus(str, Enum):
     FINAL = "final"
 
 class ViolationType(str, Enum):
-    """Types of content violations"""
+    """
+Types of content violations"""
     TOXIC_LANGUAGE = "toxic_language"
     HATE_SPEECH = "hate_speech"
     HARASSMENT = "harassment"
@@ -81,7 +86,8 @@ class ViolationType(str, Enum):
     IMPERSONATION = "impersonation"
 
 class SeverityLevel(str, Enum):
-    """Severity levels for violations"""
+    """
+Severity levels for violations"""
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -90,7 +96,8 @@ class SeverityLevel(str, Enum):
 
 @dataclass
 class ModerationRule:
-    """Content moderation rule"""
+    """
+Content moderation rule"""
     id: str
     name: str
     description: str
@@ -110,7 +117,8 @@ class ModerationRule:
 
 @dataclass
 class ContentSubmission:
-    """Content submission for moderation"""
+    """
+Content submission for moderation"""
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_type: ContentType = ContentType.TEXT
     content_data: Dict[str, Any] = field(default_factory=dict)
@@ -126,7 +134,8 @@ class ContentSubmission:
 
 @dataclass
 class ModerationResult:
-    """Result of content moderation"""
+    """
+Result of content moderation"""
     submission_id: str
     status: ModerationStatus
     action: ModerationAction
@@ -143,7 +152,8 @@ class ModerationResult:
 
 @dataclass
 class ModerationQueue:
-    """Moderation queue for human review"""
+    """
+Moderation queue for human review"""
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
@@ -156,7 +166,8 @@ class ModerationQueue:
     active: bool = True
 
 class TextAnalyzer:
-    """Text content analyzer"""
+    """
+Text content analyzer"""
     
     def __init__(self):
         self.toxic_keywords = self._load_toxic_keywords()
@@ -164,7 +175,8 @@ class TextAnalyzer:
         self.compiled_regex = {}
         
     def _load_toxic_keywords(self) -> Set[str]:
-        """Load toxic keywords database"""
+        """
+Load toxic keywords database"""
         # In a real implementation, this would load from a comprehensive database
         return {
             "hate", "kill", "die", "stupid", "idiot", "moron", "retard",
@@ -172,7 +184,8 @@ class TextAnalyzer:
         }
     
     def _load_spam_patterns(self) -> List[str]:
-        """Load spam detection patterns"""
+        """
+Load spam detection patterns"""
         return [
             r"(?i)(buy now|click here|limited time|act fast|special offer)",
             r"(?i)(make money|work from home|get rich|easy money)",
@@ -182,7 +195,8 @@ class TextAnalyzer:
         ]
     
     async def analyze_text(self, text: str) -> Dict[str, Any]:
-        """Analyze text content for violations"""
+        """
+Analyze text content for violations"""
         if not text:
             return {"violations": [], "confidence": 0.0, "details": {}}
         
@@ -234,7 +248,8 @@ class TextAnalyzer:
         }
     
     def _analyze_toxicity(self, text: str) -> float:
-        """Analyze text for toxic language"""
+        """
+Analyze text for toxic language"""
         text_lower = text.lower()
         toxic_words_found = sum(1 for word in self.toxic_keywords if word in text_lower)
         total_words = len(text.split())
@@ -254,7 +269,8 @@ class TextAnalyzer:
         return base_score
     
     def _analyze_hate_speech(self, text: str) -> float:
-        """Analyze text for hate speech"""
+        """
+Analyze text for hate speech"""
         hate_indicators = [
             r"(?i)\b(kill|murder|die|suicide)\s+(all|every)?\s*(jews|muslims|christians|blacks|whites|gays|women|men)",
             r"(?i)\b(hitler|nazi|genocide|holocaust)\s+(was|is)\s+(right|good|justified)",
@@ -270,7 +286,8 @@ class TextAnalyzer:
         return score
     
     def _analyze_spam(self, text: str) -> float:
-        """Analyze text for spam content"""
+        """
+Analyze text for spam content"""
         spam_score = 0.0
         
         for pattern in self.spam_patterns:
@@ -295,7 +312,8 @@ class TextAnalyzer:
         return min(spam_score, 1.0)
     
     def _analyze_nsfw_text(self, text: str) -> float:
-        """Analyze text for NSFW content"""
+        """
+Analyze text for NSFW content"""
         nsfw_keywords = {
             "sex", "sexual", "porn", "pornography", "nude", "naked", "masturbate",
             "orgasm", "erotic", "xxx", "adult", "fetish", "kinky", "horny"
@@ -311,7 +329,8 @@ class TextAnalyzer:
         return min(nsfw_count / total_words * 3, 1.0)
     
     def _get_detected_patterns(self, text: str) -> List[str]:
-        """Get list of detected violation patterns"""
+        """
+Get list of detected violation patterns"""
         detected = []
         
         for i, pattern in enumerate(self.spam_patterns):
@@ -321,12 +340,12 @@ class TextAnalyzer:
         return detected
 
 class ImageAnalyzer:
-    """Image content analyzer"""
+    """
+Image content analyzer"""
     
     async def analyze_image(self, image_url: str) -> Dict[str, Any]:
-        """Analyze image content for violations"""
-        # Placeholder for image analysis
-        # In a real implementation, this would use computer vision models
+        """
+Analyze image content for violations"""        # In a real implementation, this would use computer vision models
         
         # Simulate analysis
         await asyncio.sleep(0.1)
@@ -343,9 +362,7 @@ class ImageAnalyzer:
         details = {
             "image_url": image_url,
             "nsfw_score": nsfw_score,
-            "detected_objects": ["person", "text"],  # Placeholder
-            "inappropriate_objects": []
-        }
+            "detected_objects": ["person", "text"],        }
         
         return {
             "violations": violations,
@@ -355,7 +372,8 @@ class ImageAnalyzer:
         }
 
 class ContentModerationCore:
-    """Core content moderation system"""
+    """
+Core content moderation system"""
     
     def __init__(self, level: str = "enterprise"):
         self.level = level
@@ -382,7 +400,8 @@ class ContentModerationCore:
         logger.info(f"Content Moderation Core initialized - Level: {level}")
     
     async def initialize(self) -> bool:
-        """Initialize content moderation system"""
+        """
+Initialize content moderation system"""
         try:
             # Create default moderation queues
             await self._create_default_queues()
@@ -394,7 +413,8 @@ class ContentModerationCore:
             return False
     
     async def start(self) -> bool:
-        """Start content moderation system"""
+        """
+Start content moderation system"""
         try:
             logger.info("Content Moderation Core started")
             return True
@@ -403,7 +423,8 @@ class ContentModerationCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop content moderation system"""
+        """
+Stop content moderation system"""
         try:
             logger.info("Content Moderation Core stopped")
             return True
@@ -412,7 +433,8 @@ class ContentModerationCore:
             return False
     
     async def health_check(self) -> bool:
-        """Check system health"""
+        """
+Check system health"""
         try:
             # Check if analyzers are working
             test_result = await self.text_analyzer.analyze_text("test content")
@@ -431,7 +453,8 @@ class ContentModerationCore:
             return False
     
     def _initialize_default_rules(self):
-        """Initialize default moderation rules"""
+        """
+Initialize default moderation rules"""
         default_rules = [
             ModerationRule(
                 id="toxic_language",
@@ -480,7 +503,8 @@ class ContentModerationCore:
             self.rules[rule.id] = rule
     
     async def _create_default_queues(self):
-        """Create default moderation queues"""
+        """
+Create default moderation queues"""
         queues = [
             ModerationQueue(
                 id="high_priority",
@@ -506,7 +530,8 @@ class ContentModerationCore:
             self.queues[queue.id] = queue
     
     async def submit_content(self, submission: ContentSubmission) -> str:
-        """Submit content for moderation"""
+        """
+Submit content for moderation"""
         try:
             # Store submission
             self.pending_submissions[submission.id] = submission
@@ -534,7 +559,8 @@ class ContentModerationCore:
             raise
     
     async def _process_submission(self, submission: ContentSubmission) -> ModerationResult:
-        """Process content submission through AI analysis"""
+        """
+Process content submission through AI analysis"""
         violations = []
         confidence_scores = {}
         ai_analysis = {}
@@ -602,7 +628,8 @@ class ContentModerationCore:
             )
     
     def _rule_matches(self, submission: ContentSubmission, rule: ModerationRule) -> bool:
-        """Check if submission matches a moderation rule"""
+        """
+Check if submission matches a moderation rule"""
         if not submission.text_content:
             return False
         
@@ -621,7 +648,8 @@ class ContentModerationCore:
         return False
     
     def _calculate_severity(self, violations: List[ViolationType]) -> SeverityLevel:
-        """Calculate overall severity based on violations"""
+        """
+Calculate overall severity based on violations"""
         if not violations:
             return SeverityLevel.LOW
         
@@ -655,7 +683,8 @@ class ContentModerationCore:
         return max_severity
     
     def _determine_action(self, violations: List[ViolationType], confidence_scores: Dict[str, float]) -> ModerationAction:
-        """Determine moderation action based on violations and confidence"""
+        """
+Determine moderation action based on violations and confidence"""
         if not violations:
             return ModerationAction.APPROVE
         
@@ -697,7 +726,8 @@ class ContentModerationCore:
         return max_action
     
     def _requires_human_review(self, result: ModerationResult) -> bool:
-        """Check if result requires human review"""
+        """
+Check if result requires human review"""
         # Always require human review for extreme violations
         if result.severity == SeverityLevel.EXTREME:
             return True
@@ -715,7 +745,8 @@ class ContentModerationCore:
         return False
     
     async def _apply_moderation_action(self, submission: ContentSubmission, result: ModerationResult):
-        """Apply automatic moderation action"""
+        """
+Apply automatic moderation action"""
         try:
             result.status = ModerationStatus.FINAL
             
@@ -735,7 +766,8 @@ class ContentModerationCore:
             logger.error(f"Failed to apply moderation action: {str(e)}")
     
     async def _add_to_review_queue(self, submission: ContentSubmission, result: Optional[ModerationResult]):
-        """Add submission to human review queue"""
+        """
+Add submission to human review queue"""
         try:
             # Determine appropriate queue based on priority
             queue_id = "standard_review"
@@ -767,7 +799,8 @@ class ContentModerationCore:
     
     async def moderate_submission(self, submission_id: str, moderator_id: str,
                                 action: ModerationAction, notes: Optional[str] = None) -> bool:
-        """Human moderator reviews and decides on submission"""
+        """
+Human moderator reviews and decides on submission"""
         try:
             if submission_id not in self.moderation_results:
                 return False
@@ -796,7 +829,8 @@ class ContentModerationCore:
             return False
     
     async def appeal_decision(self, submission_id: str, user_id: str, appeal_reason: str) -> bool:
-        """Submit appeal for moderation decision"""
+        """
+Submit appeal for moderation decision"""
         try:
             if submission_id not in self.moderation_results:
                 return False
@@ -827,7 +861,8 @@ class ContentModerationCore:
             return False
     
     def add_moderation_rule(self, rule: ModerationRule) -> bool:
-        """Add new moderation rule"""
+        """
+Add new moderation rule"""
         try:
             self.rules[rule.id] = rule
             logger.info(f"Added moderation rule: {rule.name}")
@@ -837,7 +872,8 @@ class ContentModerationCore:
             return False
     
     def update_moderation_rule(self, rule_id: str, updates: Dict[str, Any]) -> bool:
-        """Update existing moderation rule"""
+        """
+Update existing moderation rule"""
         try:
             if rule_id not in self.rules:
                 return False
@@ -855,11 +891,13 @@ class ContentModerationCore:
             return False
     
     def get_moderation_result(self, submission_id: str) -> Optional[ModerationResult]:
-        """Get moderation result for submission"""
+        """
+Get moderation result for submission"""
         return self.moderation_results.get(submission_id)
     
     def get_queue_status(self, queue_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of moderation queue"""
+        """
+Get status of moderation queue"""
         queue = self.queues.get(queue_id)
         if not queue:
             return None
@@ -875,7 +913,8 @@ class ContentModerationCore:
         }
     
     def get_system_metrics(self) -> Dict[str, Any]:
-        """Get system metrics"""
+        """
+Get system metrics"""
         active_queues = sum(1 for queue in self.queues.values() if queue.active)
         total_pending = sum(len(queue.submission_ids) for queue in self.queues.values())
         
@@ -903,7 +942,8 @@ content_moderation_core = ContentModerationCore()
 # Convenience functions
 async def submit_content_for_moderation(content_type: ContentType, content_data: Dict[str, Any],
                                        text_content: Optional[str] = None, user_id: Optional[str] = None) -> str:
-    """Submit content for moderation"""
+    """
+Submit content for moderation"""
     submission = ContentSubmission(
         content_type=content_type,
         content_data=content_data,
@@ -914,11 +954,13 @@ async def submit_content_for_moderation(content_type: ContentType, content_data:
 
 async def moderate_content(submission_id: str, moderator_id: str, action: ModerationAction,
                           notes: Optional[str] = None) -> bool:
-    """Human moderator decision on content"""
+    """
+Human moderator decision on content"""
     return await content_moderation_core.moderate_submission(submission_id, moderator_id, action, notes)
 
 def get_moderation_status(submission_id: str) -> Optional[ModerationResult]:
-    """Get moderation result"""
+    """
+Get moderation result"""
     return content_moderation_core.get_moderation_result(submission_id)
 
 # Module exports
@@ -929,4 +971,4 @@ __all__ = [
     "submit_content_for_moderation", "moderate_content", "get_moderation_status"
 ]
 
-logger.info("Content Moderation Core module loaded")
+logger.info("Content Moderation Core module initialized")

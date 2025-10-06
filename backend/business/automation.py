@@ -22,7 +22,8 @@ logger = logging.getLogger(__name__)
 
 
 class TriggerType(Enum):
-    """Types of automation triggers."""
+    """
+        Types of automation triggers."""
     TIME_BASED = "time_based"
     EVENT_BASED = "event_based"
     CONTENT_BASED = "content_based"
@@ -67,7 +68,8 @@ class AutomationTrigger:
 
 @dataclass
 class AutomationAction:
-    """Automation action definition."""
+    """
+        Automation action definition."""
     action_id: str
     action_type: ActionType
     parameters: Dict[str, Any]
@@ -78,7 +80,8 @@ class AutomationAction:
 
 @dataclass
 class AutomationRule:
-    """Complete automation rule definition."""
+    """
+        Complete automation rule definition."""
     rule_id: str
     name: str
     description: str
@@ -95,7 +98,8 @@ class AutomationRule:
 
 @dataclass
 class AutomationExecution:
-    """Automation execution record."""
+    """
+        Automation execution record."""
     execution_id: str
     rule_id: str
     started_at: datetime = field(default_factory=datetime.utcnow)
@@ -115,7 +119,8 @@ class ProcessAutomation:
     """
     
     def __init__(self):
-        """Initialize the process automation engine."""
+        """
+        Initialize the process automation engine."""
         self.automation_rules: Dict[str, AutomationRule] = {}
         self.executions: Dict[str, AutomationExecution] = {}
         self.action_handlers: Dict[ActionType, Callable] = {}
@@ -126,7 +131,8 @@ class ProcessAutomation:
         self._load_default_rules()
     
     def _register_default_handlers(self):
-        """Register default action handlers."""
+        """
+        Register default action handlers."""
         self.action_handlers.update({
             ActionType.WORKFLOW_START: self._handle_workflow_start,
             ActionType.NOTIFICATION_SEND: self._handle_notification_send,
@@ -141,8 +147,10 @@ class ProcessAutomation:
         })
     
     def _load_default_rules(self):
-        """Load default automation rules."""
+        """
+        Load default automation rules."""
         # Content protection automation
+
         content_protection_rule = AutomationRule(
             rule_id="auto_content_protection",
             name="Automatic Content Protection",
@@ -167,6 +175,7 @@ class ProcessAutomation:
         )
         
         # Daily analytics automation
+
         daily_analytics_rule = AutomationRule(
             rule_id="daily_analytics_report",
             name="Daily Analytics Report",
@@ -192,6 +201,7 @@ class ProcessAutomation:
         )
         
         # Revenue calculation automation
+
         revenue_calculation_rule = AutomationRule(
             rule_id="weekly_revenue_calculation",
             name="Weekly Revenue Calculation",
@@ -217,6 +227,7 @@ class ProcessAutomation:
         )
         
         # Collaboration matching automation
+
         collaboration_matching_rule = AutomationRule(
             rule_id="auto_collaboration_matching",
             name="Automatic Collaboration Matching",
@@ -249,9 +260,11 @@ class ProcessAutomation:
         try:
             self.automation_rules[rule.rule_id] = rule
             self.logger.info(f"Added automation rule: {rule.name} ({rule.rule_id})")
+
             return rule.rule_id
         except Exception as e:
             self.logger.error(f"Failed to add automation rule {rule.rule_id}: {str(e)}")
+
             raise
     
     def remove_automation_rule(self, rule_id: str) -> bool:
@@ -260,10 +273,12 @@ class ProcessAutomation:
             if rule_id in self.automation_rules:
                 del self.automation_rules[rule_id]
                 self.logger.info(f"Removed automation rule: {rule_id}")
+
                 return True
             return False
         except Exception as e:
             self.logger.error(f"Failed to remove automation rule {rule_id}: {str(e)}")
+
             return False
     
     def register_action_handler(self, action_type: ActionType, handler: Callable) -> None:
@@ -273,6 +288,7 @@ class ProcessAutomation:
             self.logger.info(f"Registered action handler for: {action_type.value}")
         except Exception as e:
             self.logger.error(f"Failed to register action handler: {str(e)}")
+
             raise
     
     async def start_automation_engine(self) -> None:
@@ -287,9 +303,11 @@ class ProcessAutomation:
                 self._process_event_queue(),
                 return_exceptions=True
             )
+
             
         except Exception as e:
             self.logger.error(f"Error starting automation engine: {str(e)}")
+
             self.is_running = False
             raise
     
@@ -312,13 +330,16 @@ class ProcessAutomation:
                     
                     if await self._should_trigger_rule(rule, {"event_type": event_type, **event_data}):
                         execution_id = await self._execute_automation_rule(rule, event_data)
+
                         if execution_id:
                             execution_ids.append(execution_id)
+
             
             return execution_ids
             
         except Exception as e:
             self.logger.error(f"Error triggering event {event_type}: {str(e)}")
+
             return []
     
     async def _process_time_based_triggers(self) -> None:
@@ -326,6 +347,7 @@ class ProcessAutomation:
         while self.is_running:
             try:
                 current_time = datetime.utcnow()
+
                 
                 for rule in self.automation_rules.values():
                     if (rule.status == AutomationStatus.ACTIVE and
@@ -336,9 +358,11 @@ class ProcessAutomation:
                 
                 # Sleep for a minute before checking again
                 await asyncio.sleep(60)
+
                 
             except Exception as e:
                 self.logger.error(f"Error processing time-based triggers: {str(e)}")
+
                 await asyncio.sleep(60)  # Continue even on error
     
     async def _process_event_queue(self) -> None:
@@ -348,12 +372,15 @@ class ProcessAutomation:
                 # Process events in the queue
                 while not self.event_queue.empty():
                     event = await self.event_queue.get()
+
                     await self.trigger_event(event["type"], event["data"])
+
                 
                 await asyncio.sleep(1)  # Short sleep to avoid busy waiting
                 
             except Exception as e:
                 self.logger.error(f"Error processing event queue: {str(e)}")
+
                 await asyncio.sleep(1)
     
     async def _should_trigger_rule(self, rule: AutomationRule, context: Dict[str, Any]) -> bool:
@@ -364,6 +391,7 @@ class ProcessAutomation:
             # Check trigger conditions
             for condition_key, condition_value in trigger.conditions.items():
                 context_value = context.get(condition_key)
+
                 
                 if condition_key == "event_type":
                     if context_value != condition_value:
@@ -382,6 +410,7 @@ class ProcessAutomation:
             
         except Exception as e:
             self.logger.error(f"Error checking rule trigger conditions: {str(e)}")
+
             return False
     
     async def _should_execute_scheduled_rule(self, rule: AutomationRule, current_time: datetime) -> bool:
@@ -390,11 +419,15 @@ class ProcessAutomation:
             schedule_config = rule.trigger.schedule
             if not schedule_config:
                 return False
+
             
             schedule_type = schedule_config.get("type", "")
+
             
             if schedule_type == "daily":
                 target_hour = schedule_config.get("hour", 0)
+
+
                 target_minute = schedule_config.get("minute", 0)
                 
                 # Check if we're at the right time and haven't executed today
@@ -406,16 +439,23 @@ class ProcessAutomation:
             
             elif schedule_type == "weekly":
                 target_day = schedule_config.get("day", "monday")
+
+
                 target_hour = schedule_config.get("hour", 0)
+
+
                 target_minute = schedule_config.get("minute", 0)
                 
                 # Map day names to weekday numbers
+
                 day_mapping = {
                     "monday": 0, "tuesday": 1, "wednesday": 2, "thursday": 3,
                     "friday": 4, "saturday": 5, "sunday": 6
                 }
+
                 
                 target_weekday = day_mapping.get(target_day.lower(), 0)
+
                 
                 if (current_time.weekday() == target_weekday and
                     current_time.hour == target_hour and
@@ -428,22 +468,27 @@ class ProcessAutomation:
             
         except Exception as e:
             self.logger.error(f"Error checking scheduled rule: {str(e)}")
+
             return False
     
     async def _execute_automation_rule(self, rule: AutomationRule, context: Dict[str, Any]) -> Optional[str]:
         """Execute an automation rule."""
         try:
             execution_id = str(uuid.uuid4())
+
+
             execution = AutomationExecution(
                 execution_id=execution_id,
                 rule_id=rule.rule_id,
                 context=context
             )
+
             
             self.executions[execution_id] = execution
             
             # Update rule execution info
             rule.last_executed = datetime.utcnow()
+
             rule.execution_count += 1
             
             self.logger.info(f"Executing automation rule: {rule.name} ({execution_id})")
@@ -452,12 +497,14 @@ class ProcessAutomation:
             for action in rule.actions:
                 try:
                     result = await self._execute_action(action, context)
+
                     execution.results.append({
                         "action_id": action.action_id,
                         "action_type": action.action_type.value,
                         "result": result,
                         "executed_at": datetime.utcnow().isoformat()
                     })
+
                 except Exception as e:
                     execution.results.append({
                         "action_id": action.action_id,
@@ -465,19 +512,26 @@ class ProcessAutomation:
                         "error": str(e),
                         "executed_at": datetime.utcnow().isoformat()
                     })
+
                     self.logger.error(f"Action {action.action_id} failed: {str(e)}")
+
             
             execution.status = "completed"
             execution.completed_at = datetime.utcnow()
+
             
             self.logger.info(f"Completed automation execution: {execution_id}")
+
             return execution_id
             
         except Exception as e:
             execution.status = "failed"
             execution.error_details = str(e)
+
             execution.completed_at = datetime.utcnow()
+
             self.logger.error(f"Failed automation execution: {str(e)}")
+
             return None
     
     async def _execute_action(self, action: AutomationAction, context: Dict[str, Any]) -> Dict[str, Any]:
@@ -485,14 +539,18 @@ class ProcessAutomation:
         try:
             if action.action_type not in self.action_handlers:
                 raise ValueError(f"No handler for action type: {action.action_type.value}")
+
+
             
             handler = self.action_handlers[action.action_type]
             
             # Execute with timeout
+
             result = await asyncio.wait_for(
                 handler(action, context),
                 timeout=action.timeout_seconds
             )
+
             
             return result
             
@@ -500,6 +558,7 @@ class ProcessAutomation:
             raise Exception(f"Action {action.action_id} timed out after {action.timeout_seconds} seconds")
         except Exception as e:
             self.logger.error(f"Error executing action {action.action_id}: {str(e)}")
+
             raise
     
     # Default action handlers
@@ -512,6 +571,7 @@ class ProcessAutomation:
     async def _handle_notification_send(self, action: AutomationAction, context: Dict[str, Any]) -> Dict[str, Any]:
         """Handle notification send action."""
         template = action.parameters.get("template")
+
         channels = action.parameters.get("channels", [])
         self.logger.info(f"Sending notification: {template} via {channels}")
         return {"notifications_sent": len(channels), "template": template, "channels": channels}
@@ -524,6 +584,7 @@ class ProcessAutomation:
     async def _handle_protection_scan(self, action: AutomationAction, context: Dict[str, Any]) -> Dict[str, Any]:
         """Handle protection scan action."""
         enable_fingerprinting = action.parameters.get("enable_fingerprinting", False)
+
         enable_monitoring = action.parameters.get("enable_monitoring", False)
         self.logger.info(f"Protection scan: fingerprinting={enable_fingerprinting}, monitoring={enable_monitoring}")
         return {
@@ -558,6 +619,7 @@ class ProcessAutomation:
     async def _handle_collaboration_matching(self, action: AutomationAction, context: Dict[str, Any]) -> Dict[str, Any]:
         """Handle collaboration matching action."""
         min_score = action.parameters.get("min_match_score", 0.5)
+
         max_matches = action.parameters.get("max_matches", 10)
         self.logger.info(f"Finding collaboration matches: min_score={min_score}, max={max_matches}")
         return {
@@ -594,9 +656,12 @@ class ProcessAutomation:
         try:
             if execution_id not in self.executions:
                 return None
+
             
             execution = self.executions[execution_id]
+
             rule = self.automation_rules.get(execution.rule_id)
+
             
             return {
                 "execution_id": execution_id,
@@ -612,6 +677,7 @@ class ProcessAutomation:
             
         except Exception as e:
             self.logger.error(f"Error getting execution status: {str(e)}")
+
             return None
     
     def get_automation_summary(self) -> Dict[str, Any]:
@@ -624,12 +690,15 @@ class ProcessAutomation:
                 "completed_executions": len([e for e in self.executions.values() if e.status == "completed"]),
                 "failed_executions": len([e for e in self.executions.values() if e.status == "failed"]),
                 "rules_by_trigger_type": {
-                    trigger_type.value: len([r for r in self.automation_rules.values() 
+                    trigger_type.value: len([r for r in self.automation_rules.values()
+ 
                                            if r.trigger.trigger_type == trigger_type])
+
                     for trigger_type in TriggerType
                 },
                 "is_running": self.is_running
             }
         except Exception as e:
             self.logger.error(f"Error getting automation summary: {str(e)}")
+
             return {}

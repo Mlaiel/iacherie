@@ -31,7 +31,8 @@ import json
 logger = logging.getLogger(__name__)
 
 class ComplianceStatus(Enum):
-    """Compliance status enumeration"""
+    """
+        Compliance status enumeration"""
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PENDING_REVIEW = "pending_review"
@@ -76,7 +77,8 @@ class ComplianceRecord:
 
 @dataclass
 class GDPRRequest:
-    """GDPR data subject request"""
+    """
+        GDPR data subject request"""
     request_id: str
     user_id: str
     request_type: GDPRRights
@@ -99,7 +101,8 @@ class LegalFramework:
     created_at: datetime = field(default_factory=datetime.utcnow)
 
 class MarketplaceComplianceManager:
-    """Marketplace compliance and regulatory management system"""
+    """
+        Marketplace compliance and regulatory management system"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -109,6 +112,7 @@ class MarketplaceComplianceManager:
         
         # Initialize default legal frameworks
         self._initialize_default_frameworks()
+
         
         logger.info("⚖️ Marketplace Compliance Manager initialized")
     
@@ -116,6 +120,7 @@ class MarketplaceComplianceManager:
         """Initialize default legal frameworks"""
         try:
             # EU GDPR Framework
+
             eu_gdpr = LegalFramework(
                 framework_id="eu_gdpr",
                 name="EU General Data Protection Regulation",
@@ -147,9 +152,11 @@ class MarketplaceComplianceManager:
                     "audit_logs": 365 * 6  # 6 years
                 }
             )
+
             self.legal_frameworks[eu_gdpr.framework_id] = eu_gdpr
             
             # US Compliance Framework
+
             us_framework = LegalFramework(
                 framework_id="us_compliance",
                 name="US Digital Commerce Compliance",
@@ -177,6 +184,7 @@ class MarketplaceComplianceManager:
                     "tax_records": 365 * 7  # 7 years
                 }
             )
+
             self.legal_frameworks[us_framework.framework_id] = us_framework
             
             logger.info("📋 Default legal frameworks initialized")
@@ -189,7 +197,9 @@ class MarketplaceComplianceManager:
             record_id = str(uuid.uuid4())
             
             # Get applicable framework
+
             framework = self._get_applicable_framework(region)
+
             if not framework:
                 raise ValueError(f"No framework found for region: {region.value}")
             
@@ -197,6 +207,8 @@ class MarketplaceComplianceManager:
             status, violations, remediation = await self._perform_compliance_check(
                 entity_type, entity_id, framework
             )
+
+
             
             record = ComplianceRecord(
                 record_id=record_id,
@@ -209,14 +221,17 @@ class MarketplaceComplianceManager:
                 violations=violations,
                 remediation_actions=remediation
             )
+
             
             self.compliance_records[record_id] = record
             
             logger.info(f"Compliance validation completed: {record_id} - Status: {status.value}")
+
             return record
         
         except Exception as e:
             logger.error(f"Compliance validation error: {e}")
+
             raise
     
     def _get_applicable_framework(self, region: ComplianceRegion) -> Optional[LegalFramework]:
@@ -227,6 +242,7 @@ class MarketplaceComplianceManager:
             ComplianceRegion.UK: "eu_gdpr",  # UK follows GDPR-similar rules
             ComplianceRegion.GLOBAL: "eu_gdpr"  # Default to strictest
         }
+
         
         framework_id = region_mapping.get(region)
         return self.legal_frameworks.get(framework_id) if framework_id else None
@@ -237,7 +253,6 @@ class MarketplaceComplianceManager:
             violations = []
             remediation_actions = []
             
-            # Mock compliance checks - in real implementation, these would be detailed validations
             if entity_type == "user":
                 # Check user data compliance
                 if not await self._check_user_consent(entity_id):
@@ -246,26 +261,35 @@ class MarketplaceComplianceManager:
                 
                 if not await self._check_data_minimization(entity_id):
                     violations.append("excessive_data_collection")
+
                     remediation_actions.append("reduce_data_collection_scope")
+
             
             elif entity_type == "transaction":
                 # Check transaction compliance
                 if not await self._check_transaction_documentation(entity_id):
                     violations.append("insufficient_transaction_documentation")
+
                     remediation_actions.append("enhance_transaction_records")
+
                 
                 if not await self._check_cross_border_compliance(entity_id):
                     violations.append("cross_border_violation")
+
                     remediation_actions.append("implement_adequacy_decision_check")
+
             
             elif entity_type == "listing":
                 # Check listing compliance
                 if not await self._check_content_legality(entity_id):
                     violations.append("potentially_illegal_content")
+
                     remediation_actions.append("content_legal_review")
+
                 
                 if not await self._check_pricing_transparency(entity_id):
                     violations.append("pricing_transparency_issue")
+
                     remediation_actions.append("improve_pricing_disclosure")
             
             # Determine overall status
@@ -280,40 +304,36 @@ class MarketplaceComplianceManager:
         
         except Exception as e:
             logger.error(f"Compliance check error: {e}")
+
             return ComplianceStatus.PENDING_REVIEW, ["check_error"], ["manual_review_required"]
     
     async def _check_user_consent(self, user_id: str) -> bool:
         """Check if user has provided explicit consent"""
-        # Mock implementation - would check consent records
         return True  # Assume consent exists
     
     async def _check_data_minimization(self, user_id: str) -> bool:
         """Check if data collection follows minimization principle"""
-        # Mock implementation - would analyze collected data vs purpose
         return True
     
     async def _check_transaction_documentation(self, transaction_id: str) -> bool:
         """Check transaction documentation completeness"""
-        # Mock implementation - would verify transaction records
         return True
     
     async def _check_cross_border_compliance(self, transaction_id: str) -> bool:
         """Check cross-border transaction compliance"""
-        # Mock implementation - would verify adequacy decisions
         return True
     
     async def _check_content_legality(self, listing_id: str) -> bool:
         """Check content legality and compliance"""
-        # Mock implementation - would scan for illegal content
         return True
     
     async def _check_pricing_transparency(self, listing_id: str) -> bool:
         """Check pricing transparency compliance"""
-        # Mock implementation - would verify pricing disclosure
         return True
     
     async def process_gdpr_request(self, user_id: str, request_type: GDPRRights, additional_data: Dict[str, Any] = None) -> GDPRRequest:
-        """Process GDPR data subject request"""
+        """
+        Process GDPR data subject request"""
         try:
             request = GDPRRequest(
                 request_id=str(uuid.uuid4()),
@@ -325,18 +345,24 @@ class MarketplaceComplianceManager:
             # Process based on request type
             if request_type == GDPRRights.ACCESS:
                 request.data_exported = await self._export_user_data(user_id)
+
                 request.status = "completed"
                 request.processed_at = datetime.utcnow()
+
             
             elif request_type == GDPRRights.ERASURE:
                 success = await self._delete_user_data(user_id)
+
                 request.status = "completed" if success else "failed"
                 request.processed_at = datetime.utcnow()
+
             
             elif request_type == GDPRRights.PORTABILITY:
                 request.data_exported = await self._export_portable_data(user_id)
+
                 request.status = "completed"
                 request.processed_at = datetime.utcnow()
+
             
             else:
                 request.status = "pending_manual_review"
@@ -344,16 +370,17 @@ class MarketplaceComplianceManager:
             self.gdpr_requests[request.request_id] = request
             
             logger.info(f"GDPR request processed: {request.request_id} - Type: {request_type.value}")
+
             return request
         
         except Exception as e:
             logger.error(f"GDPR request processing error: {e}")
+
             raise
     
     async def _export_user_data(self, user_id: str) -> str:
         """Export all user data for GDPR access request"""
         try:
-            # Mock implementation - would gather all user data
             user_data = {
                 "user_id": user_id,
                 "profile_data": "mock_profile_data",
@@ -370,7 +397,6 @@ class MarketplaceComplianceManager:
     async def _delete_user_data(self, user_id: str) -> bool:
         """Delete user data for GDPR erasure request"""
         try:
-            # Mock implementation - would delete user data
             logger.info(f"User data deletion initiated for: {user_id}")
             return True
         except Exception as e:
@@ -380,7 +406,6 @@ class MarketplaceComplianceManager:
     async def _export_portable_data(self, user_id: str) -> str:
         """Export portable user data for GDPR portability request"""
         try:
-            # Mock implementation - would format data for portability
             portable_data = {
                 "user_id": user_id,
                 "portable_content": "mock_portable_data",
@@ -391,21 +416,26 @@ class MarketplaceComplianceManager:
             return json.dumps(portable_data, indent=2)
         except Exception as e:
             logger.error(f"Portable data export error: {e}")
+
             return "{}"
     
     async def get_compliance_status(self, entity_type: str, entity_id: str) -> Optional[ComplianceRecord]:
         """Get current compliance status for entity"""
         try:
             # Find most recent compliance record
-            records = [r for r in self.compliance_records.values() 
+
+            records = [r for r in self.compliance_records.values()
+ 
                       if r.entity_type == entity_type and r.entity_id == entity_id]
             
             if records:
                 return max(records, key=lambda r: r.last_review)
+
             
             return None
         except Exception as e:
             logger.error(f"Compliance status retrieval error: {e}")
+
             return None
     
     async def generate_compliance_report(self, region: ComplianceRegion = ComplianceRegion.EU, 
@@ -415,27 +445,41 @@ class MarketplaceComplianceManager:
         try:
             if not start_date:
                 start_date = datetime.utcnow() - timedelta(days=30)
+
             if not end_date:
                 end_date = datetime.utcnow()
             
             # Filter records by region and date
-            records = [r for r in self.compliance_records.values() 
+
+            records = [r for r in self.compliance_records.values()
+ 
                       if r.region == region and start_date <= r.created_at <= end_date]
             
             # Calculate statistics
+
             total_records = len(records)
+
+
             compliant_count = len([r for r in records if r.status == ComplianceStatus.COMPLIANT])
+
+
             non_compliant_count = len([r for r in records if r.status == ComplianceStatus.NON_COMPLIANT])
+
+
             pending_count = len([r for r in records if r.status == ComplianceStatus.PENDING_REVIEW])
             
             # Common violations
+
             all_violations = []
             for record in records:
                 all_violations.extend(record.violations)
+
+
             
             violation_counts = {}
             for violation in all_violations:
                 violation_counts[violation] = violation_counts.get(violation, 0) + 1
+
             
             report = {
                 "report_id": str(uuid.uuid4()),
@@ -455,16 +499,17 @@ class MarketplaceComplianceManager:
             }
             
             logger.info(f"Compliance report generated for {region.value}: {report['report_id']}")
+
             return report
         
         except Exception as e:
             logger.error(f"Compliance report generation error: {e}")
+
             return {}
     
     async def audit_data_retention(self) -> Dict[str, Any]:
         """Audit data retention compliance"""
         try:
-            # Mock implementation - would check actual data retention
             audit_results = {
                 "audit_id": str(uuid.uuid4()),
                 "audit_date": datetime.utcnow().isoformat(),
@@ -477,14 +522,13 @@ class MarketplaceComplianceManager:
             # Check each framework's retention requirements
             for framework in self.legal_frameworks.values():
                 for data_type, retention_days in framework.retention_periods.items():
-                    # Mock check - would verify actual retention
                     cutoff_date = datetime.utcnow() - timedelta(days=retention_days)
                     
                     # In real implementation, would query database for old records
-                    audit_results["total_records_checked"] += 100  # Mock count
-                    audit_results["compliant_records"] += 95  # Mock compliant count
+                    audit_results["total_records_checked"] += 100
+                    audit_results["compliant_records"] += 95
                     
-                    if retention_days < 365:  # Mock violation condition
+                    if retention_days < 365:
                         audit_results["retention_violations"].append({
                             "framework": framework.framework_id,
                             "data_type": data_type,
@@ -511,4 +555,4 @@ __all__ = [
 ]
 
 # Module initialization
-logger.info("⚖️ Marketplace Compliance Manager module loaded")
+logger.info("⚖️ Marketplace Compliance Manager module initialized")

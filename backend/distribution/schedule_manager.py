@@ -45,7 +45,8 @@ logger = logging.getLogger(__name__)
 
 
 class ScheduleType(str, Enum):
-    """Types of scheduling."""
+    """
+        Types of scheduling."""
     IMMEDIATE = "immediate"
     SPECIFIC_TIME = "specific_time"
     OPTIMAL_TIME = "optimal_time"
@@ -106,7 +107,8 @@ class AudienceInsight:
 
 @dataclass
 class ScheduleRule:
-    """Scheduling rule configuration."""
+    """
+        Scheduling rule configuration."""
     id: str
     name: str
     priority: int
@@ -119,7 +121,8 @@ class ScheduleRule:
 
 @dataclass
 class ScheduledContent:
-    """Scheduled content item."""
+    """
+        Scheduled content item."""
     id: str
     content_id: str
     title: str
@@ -144,7 +147,8 @@ class ScheduledContent:
 
 @dataclass
 class OptimalTimeSlot:
-    """Optimal time slot suggestion."""
+    """
+        Optimal time slot suggestion."""
     datetime_utc: datetime
     score: float
     confidence: float
@@ -160,7 +164,8 @@ class ScheduleManager:
     """
     
     def __init__(self, database_connection=None, cache_client=None):
-        """Initialize the schedule manager."""
+        """
+        Initialize the schedule manager."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.db = database_connection
         self.cache = cache_client
@@ -169,6 +174,7 @@ class ScheduleManager:
         self.audience_insights: Dict[str, AudienceInsight] = {}
         self.default_time_windows = self._initialize_default_time_windows()
         self.platform_optimal_times = self._initialize_platform_optimal_times()
+
         
         self.logger.info("ScheduleManager initialized")
     
@@ -180,12 +186,14 @@ class ScheduleManager:
                     start_time=datetime.now().replace(hour=14, minute=0, second=0),
                     end_time=datetime.now().replace(hour=16, minute=0, second=0),
                     days_of_week=[1, 2, 3],  # Tuesday, Wednesday, Thursday
+
                     priority=1
                 ),
                 TimeWindow(
                     start_time=datetime.now().replace(hour=20, minute=0, second=0),
                     end_time=datetime.now().replace(hour=22, minute=0, second=0),
                     days_of_week=[5, 6],  # Saturday, Sunday
+
                     priority=2
                 )
             ],
@@ -194,12 +202,14 @@ class ScheduleManager:
                     start_time=datetime.now().replace(hour=11, minute=0, second=0),
                     end_time=datetime.now().replace(hour=13, minute=0, second=0),
                     days_of_week=[1, 2, 3, 4],  # Tuesday-Friday
+
                     priority=1
                 ),
                 TimeWindow(
                     start_time=datetime.now().replace(hour=19, minute=0, second=0),
                     end_time=datetime.now().replace(hour=21, minute=0, second=0),
                     days_of_week=[0, 1, 2, 3, 4],  # Monday-Friday
+
                     priority=2
                 )
             ],
@@ -208,12 +218,14 @@ class ScheduleManager:
                     start_time=datetime.now().replace(hour=18, minute=0, second=0),
                     end_time=datetime.now().replace(hour=21, minute=0, second=0),
                     days_of_week=[1, 2, 3, 4],  # Tuesday-Friday
+
                     priority=1
                 ),
                 TimeWindow(
                     start_time=datetime.now().replace(hour=12, minute=0, second=0),
                     end_time=datetime.now().replace(hour=15, minute=0, second=0),
                     days_of_week=[5, 6],  # Saturday, Sunday
+
                     priority=2
                 )
             ],
@@ -222,12 +234,14 @@ class ScheduleManager:
                     start_time=datetime.now().replace(hour=9, minute=0, second=0),
                     end_time=datetime.now().replace(hour=10, minute=0, second=0),
                     days_of_week=[1, 2, 3, 4],  # Tuesday-Friday
+
                     priority=1
                 ),
                 TimeWindow(
                     start_time=datetime.now().replace(hour=12, minute=0, second=0),
                     end_time=datetime.now().replace(hour=13, minute=0, second=0),
                     days_of_week=[1, 2, 3, 4],  # Tuesday-Friday
+
                     priority=2
                 )
             ]
@@ -286,23 +300,30 @@ class ScheduleManager:
             # Determine scheduled time based on type
             if schedule_type == ScheduleType.IMMEDIATE:
                 scheduled_time = datetime.utcnow()
+
             elif schedule_type == ScheduleType.SPECIFIC_TIME:
                 if not specific_time:
                     raise ValueError("Specific time required for SPECIFIC_TIME schedule type")
+
+
                 scheduled_time = specific_time
             elif schedule_type == ScheduleType.OPTIMAL_TIME:
                 optimal_times = await self.find_optimal_time_slots(
                     platforms, optimization_goal, timezone_str
                 )
+
                 if optimal_times:
                     scheduled_time = optimal_times[0].datetime_utc
                 else:
                     # Fallback to default time
+
                     scheduled_time = datetime.utcnow() + timedelta(hours=1)
+
             else:
                 scheduled_time = datetime.utcnow() + timedelta(hours=1)
             
             # Create scheduled content
+
             scheduled_content = ScheduledContent(
                 id=schedule_id,
                 content_id=content_id,
@@ -325,13 +346,16 @@ class ScheduleManager:
             # Set up recurring schedule if needed
             if recurrence_config:
                 await self._setup_recurring_schedule(scheduled_content)
+
             
             self.logger.info(f"✅ Content scheduled: {title} for {len(platforms)} platforms")
+
             
             return scheduled_content
             
         except Exception as e:
             self.logger.error(f"Error scheduling content: {e}")
+
             raise
     
     async def find_optimal_time_slots(
@@ -345,14 +369,22 @@ class ScheduleManager:
         """Find optimal time slots for content publishing."""
         try:
             suggestions = []
+
             current_time = datetime.utcnow()
+
+
             end_time = current_time + timedelta(hours=time_range_hours)
             
             # Generate candidate time slots (every hour)
+
+
             candidate_times = []
+
             check_time = current_time + timedelta(hours=1)
+
             while check_time <= end_time:
                 candidate_times.append(check_time)
+
                 check_time += timedelta(hours=1)
             
             # Score each candidate time for each platform
@@ -361,8 +393,10 @@ class ScheduleManager:
                     score = await self._score_time_slot(
                         candidate_time, platform, optimization_goal, timezone_str
                     )
+
                     
                     if score > 0.3:  # Minimum threshold
+
                         optimal_slot = OptimalTimeSlot(
                             datetime_utc=candidate_time,
                             score=score,
@@ -370,24 +404,32 @@ class ScheduleManager:
                             platform=platform,
                             reasoning=self._generate_reasoning(platform, candidate_time, score)
                         )
+
                         suggestions.append(optimal_slot)
             
             # Sort by score and return top suggestions
             suggestions.sort(key=lambda x: x.score, reverse=True)
             
             # Group by time and return best overall slots
+
             time_groups = {}
             for suggestion in suggestions:
                 time_key = suggestion.datetime_utc.replace(minute=0, second=0)
+
                 if time_key not in time_groups:
                     time_groups[time_key] = []
                 time_groups[time_key].append(suggestion)
             
             # Calculate average scores for each time slot
+
             final_suggestions = []
             for time_key, group in time_groups.items():
                 avg_score = mean([s.score for s in group])
+
+
                 avg_confidence = mean([s.confidence for s in group])
+
+
                 
                 final_suggestion = OptimalTimeSlot(
                     datetime_utc=time_key,
@@ -400,14 +442,17 @@ class ScheduleManager:
                         "estimated_reach_multiplier": 1 + (avg_score - 0.5)
                     }
                 )
+
                 final_suggestions.append(final_suggestion)
             
             # Sort and return top suggestions
             final_suggestions.sort(key=lambda x: x.score, reverse=True)
+
             return final_suggestions[:max_suggestions]
             
         except Exception as e:
             self.logger.error(f"Error finding optimal time slots: {e}")
+
             return []
     
     async def _score_time_slot(
@@ -420,17 +465,28 @@ class ScheduleManager:
         """Score a time slot for a specific platform."""
         try:
             # Convert to target timezone
+
             tz = pytz.timezone(timezone_str)
+
+
             local_time = candidate_time.replace(tzinfo=pytz.UTC).astimezone(tz)
             
             # Get platform optimal times
+
             platform_data = self.platform_optimal_times.get(platform.lower(), {})
+
+
             peak_hours = platform_data.get("peak_hours", [])
+
+
             peak_days = platform_data.get("peak_days", [])
+
+
             
             score = 0.5  # Base score
             
             # Hour of day score
+
             hour = local_time.hour
             if hour in peak_hours:
                 score += 0.3
@@ -438,11 +494,14 @@ class ScheduleManager:
                 score += 0.15
             
             # Day of week score
+
             day_of_week = local_time.weekday()
+
             if day_of_week in peak_days:
                 score += 0.2
             
             # Avoid very early or very late hours (general audience)
+
             if 6 <= hour <= 23:
                 score += 0.1
             elif hour < 6 or hour > 23:
@@ -474,15 +533,18 @@ class ScheduleManager:
             
             # Ensure score is within bounds
             return max(0.0, min(1.0, score))
+
             
         except Exception as e:
             self.logger.error(f"Error scoring time slot: {e}")
+
             return 0.0
     
     def _calculate_confidence(self, platform: str, candidate_time: datetime) -> float:
         """Calculate confidence score for a time slot."""
         try:
             # Base confidence
+
             confidence = 0.7
             
             # Higher confidence for platforms with more data
@@ -495,6 +557,7 @@ class ScheduleManager:
                 confidence += 0.2 * insight.confidence_score
             
             # Lower confidence for far future times
+
             hours_ahead = (candidate_time - datetime.utcnow()).total_seconds() / 3600
             if hours_ahead > 48:
                 confidence -= 0.1
@@ -502,32 +565,46 @@ class ScheduleManager:
                 confidence -= 0.2
             
             return max(0.0, min(1.0, confidence))
+
             
         except Exception as e:
             self.logger.error(f"Error calculating confidence: {e}")
+
             return 0.5
     
     def _generate_reasoning(self, platform: str, candidate_time: datetime, score: float) -> str:
         """Generate human-readable reasoning for time slot score."""
         try:
             local_time = candidate_time.replace(tzinfo=pytz.UTC)
+
+
             hour = local_time.hour
+
             day_name = calendar.day_name[local_time.weekday()]
+
             
             platform_data = self.platform_optimal_times.get(platform.lower(), {})
+
+
             peak_hours = platform_data.get("peak_hours", [])
+
+
             
             reasons = []
             
             if hour in peak_hours:
                 reasons.append(f"Peak hour for {platform}")
+
             elif any(abs(hour - ph) <= 1 for ph in peak_hours):
                 reasons.append(f"Near peak hours for {platform}")
+
             
             if local_time.weekday() < 5:
                 reasons.append("Weekday timing")
+
             else:
                 reasons.append("Weekend timing")
+
             
             if score > 0.8:
                 quality = "Excellent"
@@ -546,19 +623,24 @@ class ScheduleManager:
             
         except Exception as e:
             self.logger.error(f"Error generating reasoning: {e}")
+
             return f"Time slot for {platform}"
     
     async def _calculate_estimated_metrics(self, scheduled_content: ScheduledContent):
         """Calculate estimated metrics for scheduled content."""
         try:
             total_engagement_estimate = 0.0
+
             total_reach_estimate = 0
             
             for platform in scheduled_content.platforms:
                 platform_data = self.platform_optimal_times.get(platform.lower(), {})
+
+
                 base_engagement = platform_data.get("avg_engagement_rate", 0.03)
                 
                 # Score the scheduled time
+
                 score = await self._score_time_slot(
                     scheduled_content.scheduled_time,
                     platform,
@@ -567,7 +649,10 @@ class ScheduleManager:
                 )
                 
                 # Adjust estimates based on score
+
                 estimated_engagement = base_engagement * (1 + score)
+
+
                 estimated_reach = int(1000 * (1 + score))  # Base 1000 reach
                 
                 total_engagement_estimate += estimated_engagement
@@ -576,6 +661,7 @@ class ScheduleManager:
             # Average across platforms
             if scheduled_content.platforms:
                 scheduled_content.estimated_engagement = total_engagement_estimate / len(scheduled_content.platforms)
+
                 scheduled_content.estimated_reach = total_reach_estimate
             
         except Exception as e:
@@ -585,6 +671,7 @@ class ScheduleManager:
         """Set up recurring schedule based on configuration."""
         try:
             recurrence_config = scheduled_content.recurrence_config
+
             pattern = scheduled_content.recurrence_pattern
             
             if not pattern or not recurrence_config:
@@ -593,6 +680,7 @@ class ScheduleManager:
             # Implementation would create future scheduled items
             # based on recurrence pattern
             self.logger.info(f"✅ Recurring schedule set up for {scheduled_content.id}")
+
             
         except Exception as e:
             self.logger.error(f"Error setting up recurring schedule: {e}")
@@ -638,10 +726,12 @@ class ScheduleManager:
             
             # Sort by scheduled time
             filtered_content.sort(key=lambda x: x.scheduled_time)
+
             return filtered_content
             
         except Exception as e:
             self.logger.error(f"Error getting scheduled content: {e}")
+
             return []
     
     async def cancel_scheduled_content(self, schedule_id: str) -> bool:
@@ -650,10 +740,12 @@ class ScheduleManager:
             if schedule_id in self.scheduled_content:
                 self.scheduled_content[schedule_id].status = ScheduleStatus.CANCELLED
                 self.logger.info(f"✅ Scheduled content cancelled: {schedule_id}")
+
                 return True
             return False
         except Exception as e:
             self.logger.error(f"Error cancelling scheduled content: {e}")
+
             return False
     
     async def reschedule_content(
@@ -672,12 +764,15 @@ class ScheduleManager:
                 
                 # Recalculate estimated metrics
                 await self._calculate_estimated_metrics(content)
+
                 
                 self.logger.info(f"✅ Content rescheduled: {schedule_id}")
+
                 return True
             return False
         except Exception as e:
             self.logger.error(f"Error rescheduling content: {e}")
+
             return False
     
     async def get_schedule_analytics(
@@ -689,10 +784,13 @@ class ScheduleManager:
             start_time, end_time = time_range
             
             # Filter content in time range
+
             content_in_range = [
                 content for content in self.scheduled_content.values()
+
                 if start_time <= content.scheduled_time <= end_time
             ]
+
             
             analytics = {
                 "total_scheduled": len(content_in_range),
@@ -707,6 +805,7 @@ class ScheduleManager:
             # Calculate analytics
             for content in content_in_range:
                 # By status
+
                 status = content.status.value
                 analytics["by_status"][status] = analytics["by_status"].get(status, 0) + 1
                 
@@ -715,6 +814,7 @@ class ScheduleManager:
                     analytics["by_platform"][platform] = analytics["by_platform"].get(platform, 0) + 1
                 
                 # By schedule type
+
                 schedule_type = content.schedule_type.value
                 analytics["by_schedule_type"][schedule_type] = analytics["by_schedule_type"].get(schedule_type, 0) + 1
                 
@@ -727,17 +827,21 @@ class ScheduleManager:
             # Calculate averages
             if content_in_range:
                 analytics["avg_estimated_engagement"] /= len(content_in_range)
+
             
             return analytics
             
         except Exception as e:
             self.logger.error(f"Error getting schedule analytics: {e}")
+
             return {}
     
     async def process_scheduled_content(self):
         """Process content that is ready to be published."""
         try:
             current_time = datetime.utcnow()
+
+
             ready_content = []
             
             # Find content ready for publishing
@@ -745,8 +849,10 @@ class ScheduleManager:
                 if (content.status == ScheduleStatus.SCHEDULED and 
                     content.scheduled_time <= current_time):
                     ready_content.append(content)
+
             
             self.logger.info(f"📅 Processing {len(ready_content)} scheduled items")
+
             
             for content in ready_content:
                 try:
@@ -756,18 +862,22 @@ class ScheduleManager:
                     
                     # Here would integrate with platform connectors to actually publish
                     self.logger.info(f"✅ Published: {content.title}")
+
                     
                 except Exception as e:
                     content.status = ScheduleStatus.FAILED
                     content.error_message = str(e)
+
                     content.retry_count += 1
                     
                     # Retry logic
                     if content.retry_count < content.max_retries:
                         content.scheduled_time = current_time + timedelta(minutes=5)
+
                         content.status = ScheduleStatus.SCHEDULED
                     
                     self.logger.error(f"❌ Failed to publish {content.title}: {e}")
+
             
         except Exception as e:
             self.logger.error(f"Error processing scheduled content: {e}")

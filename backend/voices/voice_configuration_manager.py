@@ -19,6 +19,7 @@ import json
 import os
 import yaml
 import toml
+import shutil
 from pathlib import Path
 import redis
 import threading
@@ -30,7 +31,8 @@ from watchdog.events import FileSystemEventHandler
 logger = logging.getLogger(__name__)
 
 class ConfigType(Enum):
-    """Configuration type enumeration"""
+    """
+        Configuration type enumeration"""
     VOICE_ENGINE = "voice_engine"
     SYNTHESIS = "synthesis"
     PROCESSING = "processing"
@@ -81,7 +83,8 @@ class ConfigurationSchema:
 
 @dataclass
 class Configuration:
-    """Configuration instance"""
+    """
+        Configuration instance"""
     config_id: str
     name: str
     config_type: ConfigType
@@ -112,7 +115,8 @@ class ConfigurationHistory:
     changed_by: Optional[str] = None
 
 class ConfigurationEngine:
-    """Core configuration management engine"""
+    """
+        Core configuration management engine"""
     
     def __init__(self, config_dir: str = "/config"):
         """Initialize configuration engine"""
@@ -133,6 +137,7 @@ class ConfigurationEngine:
         
         # Start file watcher
         self._start_file_watcher()
+
         
         logger.info(f"⚙️ Configuration Engine initialized at {config_dir}")
     
@@ -157,17 +162,21 @@ class ConfigurationEngine:
                 default_values=schema_definition.get("defaults", {}),
                 required_fields=schema_definition.get("required", [])
             )
+
             
             self.schemas[schema_id] = schema
             
             # Save schema to file
             await self._save_schema_to_file(schema)
+
             
             logger.info(f"Created configuration schema: {schema_id}")
+
             return schema_id
             
         except Exception as e:
             logger.error(f"Failed to create schema: {e}")
+
             raise
     
     async def create_configuration(
@@ -191,6 +200,8 @@ class ConfigurationEngine:
             encrypted_values, encrypted_fields = await self._encrypt_sensitive_fields(
                 values, config_type
             )
+
+
             
             configuration = Configuration(
                 config_id=config_id,
@@ -202,6 +213,7 @@ class ConfigurationEngine:
                 environment=environment,
                 encrypted_fields=encrypted_fields
             )
+
             
             self.configurations[config_id] = configuration
             
@@ -213,12 +225,15 @@ class ConfigurationEngine:
             
             # Record history
             await self._record_history(config_id, "create", None, values)
+
             
             logger.info(f"Created configuration: {config_id}")
+
             return config_id
             
         except Exception as e:
             logger.error(f"Failed to create configuration: {e}")
+
             raise
     
     async def get_configuration(
@@ -234,15 +249,21 @@ class ConfigurationEngine:
             # Get by ID if provided
             if config_id:
                 # Try cache first
+
                 cached = await self._get_cached_configuration(config_id)
+
                 if cached:
                     return cached
                 
                 # Fallback to memory
+
                 config = self.configurations.get(config_id)
+
                 if config:
                     # Decrypt sensitive fields
+
                     decrypted_config = await self._decrypt_configuration(config)
+
                     return decrypted_config
             
             # Search by criteria
@@ -257,13 +278,16 @@ class ConfigurationEngine:
                     continue
                 
                 # Decrypt and return
+
                 decrypted_config = await self._decrypt_configuration(config)
+
                 return decrypted_config
             
             return None
             
         except Exception as e:
             logger.error(f"Failed to get configuration: {e}")
+
             return None
     
     async def update_configuration(
@@ -276,6 +300,7 @@ class ConfigurationEngine:
         """Update configuration values"""
         try:
             config = self.configurations.get(config_id)
+
             if not config:
                 raise ValueError(f"Configuration not found: {config_id}")
             
@@ -284,6 +309,7 @@ class ConfigurationEngine:
                 await self._validate_configuration(updates, config.schema_id)
             
             # Store old values for history
+
             old_values = config.values.copy()
             
             # Encrypt sensitive fields in updates
@@ -293,8 +319,11 @@ class ConfigurationEngine:
             
             # Update configuration
             config.values.update(encrypted_updates)
+
             config.encrypted_fields.extend(new_encrypted_fields)
+
             config.updated_at = datetime.utcnow()
+
             config.updated_by = updated_by
             
             # Save to file
@@ -304,17 +333,22 @@ class ConfigurationEngine:
             await self._cache_configuration(config)
             
             # Record history
+
             changed_fields = list(updates.keys())
+
             await self._record_history(
                 config_id, "update", old_values, config.values,
                 changed_fields, change_reason, updated_by
             )
+
             
             logger.info(f"Updated configuration: {config_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to update configuration: {e}")
+
             return False
     
     async def delete_configuration(
@@ -325,6 +359,7 @@ class ConfigurationEngine:
         """Delete configuration"""
         try:
             config = self.configurations.get(config_id)
+
             if not config:
                 return False
             
@@ -342,12 +377,15 @@ class ConfigurationEngine:
             
             # Archive file instead of deleting
             await self._archive_configuration_file(config)
+
             
             logger.info(f"Deleted configuration: {config_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to delete configuration: {e}")
+
             return False
     
     async def get_configuration_value(
@@ -359,11 +397,16 @@ class ConfigurationEngine:
         """Get specific configuration value"""
         try:
             config = await self.get_configuration(config_id)
+
             if not config:
                 return default
             
             # Support nested keys (e.g., "voice.synthesis.quality")
+
+
             keys = key.split('.')
+
+
             value = config.values
             
             for k in keys:
@@ -376,6 +419,7 @@ class ConfigurationEngine:
             
         except Exception as e:
             logger.error(f"Failed to get configuration value: {e}")
+
             return default
     
     async def set_configuration_value(
@@ -388,8 +432,12 @@ class ConfigurationEngine:
         """Set specific configuration value"""
         try:
             # Support nested keys
+
             keys = key.split('.')
+
+
             updates = {}
+
             current = updates
             
             for i, k in enumerate(keys):
@@ -397,12 +445,15 @@ class ConfigurationEngine:
                     current[k] = value
                 else:
                     current[k] = {}
+
                     current = current[k]
             
             return await self.update_configuration(config_id, updates, updated_by)
+
             
         except Exception as e:
             logger.error(f"Failed to set configuration value: {e}")
+
             return False
     
     async def _validate_configuration(
@@ -413,6 +464,7 @@ class ConfigurationEngine:
         """Validate configuration against schema"""
         try:
             schema = self.schemas.get(schema_id)
+
             if not schema:
                 raise ValueError(f"Schema not found: {schema_id}")
             
@@ -426,9 +478,11 @@ class ConfigurationEngine:
                 if field in schema.schema_definition:
                     field_schema = schema.schema_definition[field]
                     await self._validate_field(field, value, field_schema)
+
             
         except Exception as e:
             logger.error(f"Configuration validation failed: {e}")
+
             raise
     
     async def _validate_field(
@@ -440,35 +494,49 @@ class ConfigurationEngine:
         """Validate individual field"""
         try:
             # Type validation
+
             expected_type = field_schema.get("type")
+
             if expected_type and not isinstance(value, eval(expected_type)):
                 raise ValueError(f"Field {field_name} must be of type {expected_type}")
             
             # Range validation for numbers
             if isinstance(value, (int, float)):
                 min_val = field_schema.get("minimum")
+
+
                 max_val = field_schema.get("maximum")
+
                 if min_val is not None and value < min_val:
                     raise ValueError(f"Field {field_name} must be >= {min_val}")
+
                 if max_val is not None and value > max_val:
                     raise ValueError(f"Field {field_name} must be <= {max_val}")
             
             # String length validation
             if isinstance(value, str):
                 min_len = field_schema.get("minLength")
+
+
                 max_len = field_schema.get("maxLength")
+
                 if min_len is not None and len(value) < min_len:
                     raise ValueError(f"Field {field_name} must be at least {min_len} characters")
+
                 if max_len is not None and len(value) > max_len:
                     raise ValueError(f"Field {field_name} must be at most {max_len} characters")
             
             # Enum validation
+
             allowed_values = field_schema.get("enum")
+
             if allowed_values and value not in allowed_values:
                 raise ValueError(f"Field {field_name} must be one of: {allowed_values}")
+
             
         except Exception as e:
             logger.error(f"Field validation failed for {field_name}: {e}")
+
             raise
     
     async def _encrypt_sensitive_fields(
@@ -479,28 +547,36 @@ class ConfigurationEngine:
         """Encrypt sensitive configuration fields"""
         try:
             encrypted_values = values.copy()
+
+
             encrypted_fields = []
             
             # Define sensitive field patterns per config type
+
             sensitive_patterns = {
                 ConfigType.SECURITY: ["password", "secret", "key", "token"],
                 ConfigType.PLATFORM: ["api_key", "secret_key", "token"],
                 ConfigType.NOTIFICATION: ["smtp_password", "api_key"],
                 ConfigType.BACKUP: ["encryption_key", "password"]
             }
+
             
             patterns = sensitive_patterns.get(config_type, [])
+
             
             for field, value in values.items():
                 if any(pattern in field.lower() for pattern in patterns):
                     if isinstance(value, str):
                         encrypted_values[field] = await self._encrypt_value(value)
+
                         encrypted_fields.append(field)
+
             
             return encrypted_values, encrypted_fields
             
         except Exception as e:
             logger.error(f"Failed to encrypt sensitive fields: {e}")
+
             return values, []
     
     async def _encrypt_value(self, value: str) -> str:
@@ -508,9 +584,7 @@ class ConfigurationEngine:
         try:
             # Simple encryption implementation (would use proper encryption in production)
             if not self.encryption_key:
-# SECURITY: # SECURITY: self.encryption_key = "default_key_change_in_production" # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
+                self.encryption_key = "default_key_change_in_production"  # Fallback key
             
             # This is a placeholder - use proper encryption like Fernet
             import base64
@@ -519,22 +593,26 @@ class ConfigurationEngine:
             
         except Exception as e:
             logger.error(f"Failed to encrypt value: {e}")
+
             return value
     
     async def _decrypt_configuration(self, config: Configuration) -> Configuration:
         """Decrypt sensitive fields in configuration"""
         try:
             decrypted_config = Configuration(**config.__dict__)
+
             
             for field in config.encrypted_fields:
                 if field in decrypted_config.values:
                     encrypted_value = decrypted_config.values[field]
                     decrypted_config.values[field] = await self._decrypt_value(encrypted_value)
+
             
             return decrypted_config
             
         except Exception as e:
             logger.error(f"Failed to decrypt configuration: {e}")
+
             return config
     
     async def _decrypt_value(self, encrypted_value: str) -> str:
@@ -542,20 +620,24 @@ class ConfigurationEngine:
         try:
             if encrypted_value.startswith("encrypted:"):
                 # Remove prefix and decode
+
                 encoded = encrypted_value[10:]
                 import base64
                 return base64.b64decode(encoded.encode()).decode()
+
             
             return encrypted_value
             
         except Exception as e:
             logger.error(f"Failed to decrypt value: {e}")
+
             return encrypted_value
     
     async def _load_configurations(self):
         """Load configurations from files"""
         try:
             config_files = self.config_dir.glob("**/*.json")
+
             
             for config_file in config_files:
                 try:
@@ -563,13 +645,17 @@ class ConfigurationEngine:
                         data = json.load(f)
                     
                     # Convert to Configuration object
+
                     config = Configuration(**data)
+
                     self.configurations[config.config_id] = config
                     
                 except Exception as e:
                     logger.warning(f"Failed to load config file {config_file}: {e}")
+
             
             logger.info(f"Loaded {len(self.configurations)} configurations")
+
             
         except Exception as e:
             logger.error(f"Failed to load configurations: {e}")
@@ -581,6 +667,7 @@ class ConfigurationEngine:
             config_file.parent.mkdir(parents=True, exist_ok=True)
             
             # Convert to dict and save
+
             config_data = {
                 "config_id": config.config_id,
                 "name": config.name,
@@ -601,6 +688,7 @@ class ConfigurationEngine:
             
             with open(config_file, 'w') as f:
                 json.dump(config_data, f, indent=2)
+
             
         except Exception as e:
             logger.error(f"Failed to save configuration to file: {e}")
@@ -610,6 +698,8 @@ class ConfigurationEngine:
         try:
             schema_file = self.config_dir / "schemas" / f"{schema.name}.json"
             schema_file.parent.mkdir(parents=True, exist_ok=True)
+
+
             
             schema_data = {
                 "schema_id": schema.schema_id,
@@ -625,6 +715,7 @@ class ConfigurationEngine:
             
             with open(schema_file, 'w') as f:
                 json.dump(schema_data, f, indent=2)
+
             
         except Exception as e:
             logger.error(f"Failed to save schema to file: {e}")
@@ -632,9 +723,7 @@ class ConfigurationEngine:
     async def _cache_configuration(self, config: Configuration):
         """Cache configuration in Redis"""
         try:
-# SECURITY: # SECURITY: cache_key = f"config:{config.config_id}" # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
+            cache_key = f"config:{config.config_id}"
             cache_data = json.dumps({
                 "config_id": config.config_id,
                 "values": config.values,
@@ -650,29 +739,31 @@ class ConfigurationEngine:
     async def _get_cached_configuration(self, config_id: str) -> Optional[Configuration]:
         """Get configuration from cache"""
         try:
-# SECURITY: # SECURITY: cache_key = f"config:{config_id}" # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
+            cache_key = f"config:{config_id}"
             cached_data = await self.redis_client.get(cache_key)
+
             
             if cached_data:
                 data = json.loads(cached_data)
+
+
                 config = self.configurations.get(config_id)
+
                 if config:
                     return await self._decrypt_configuration(config)
+
             
             return None
             
         except Exception as e:
             logger.warning(f"Failed to get cached configuration: {e}")
+
             return None
     
     async def _remove_from_cache(self, config_id: str):
         """Remove configuration from cache"""
         try:
-# SECURITY: # SECURITY: cache_key = f"config:{config_id}" # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
+            cache_key = f"config:{config_id}"
             await self.redis_client.delete(cache_key)
             
         except Exception as e:
@@ -684,9 +775,11 @@ class ConfigurationEngine:
             config_file = self.config_dir / f"{config.config_type.value}" / f"{config.name}.json"
             archive_file = self.config_dir / "archive" / f"{config.name}_{int(time.time())}.json"
             archive_file.parent.mkdir(parents=True, exist_ok=True)
+
             
             if config_file.exists():
                 shutil.move(str(config_file), str(archive_file))
+
             
         except Exception as e:
             logger.error(f"Failed to archive configuration file: {e}")
@@ -715,11 +808,13 @@ class ConfigurationEngine:
                 change_reason=change_reason,
                 changed_by=changed_by
             )
+
             
             if config_id not in self.history:
                 self.history[config_id] = []
             
             self.history[config_id].append(history)
+
             
         except Exception as e:
             logger.error(f"Failed to record history: {e}")
@@ -734,13 +829,21 @@ class ConfigurationEngine:
                 def on_modified(self, event):
                     if not event.is_directory and event.src_path.endswith('.json'):
                         asyncio.create_task(self.engine._reload_configuration_file(event.src_path))
+
+
             
             event_handler = ConfigFileHandler(self)
+
+
             observer = Observer()
+
             observer.schedule(event_handler, str(self.config_dir), recursive=True)
+
             observer.start()
+
             
             logger.info("Configuration file watcher started")
+
             
         except Exception as e:
             logger.error(f"Failed to start file watcher: {e}")
@@ -750,14 +853,19 @@ class ConfigurationEngine:
         try:
             with open(file_path, 'r') as f:
                 data = json.load(f)
+
+
             
             config = Configuration(**data)
+
             self.configurations[config.config_id] = config
             
             # Update cache
             await self._cache_configuration(config)
+
             
             logger.info(f"Reloaded configuration from file: {file_path}")
+
             
         except Exception as e:
             logger.warning(f"Failed to reload configuration file {file_path}: {e}")
@@ -766,7 +874,8 @@ class SettingsManager:
     """Application settings management"""
     
     def __init__(self):
-        """Initialize settings manager"""
+        """
+        Initialize settings manager"""
         self.user_settings = {}
         self.default_settings = {}
         
@@ -776,7 +885,8 @@ class VoiceSettings:
     """Voice-specific settings management"""
     
     def __init__(self):
-        """Initialize voice settings"""
+        """
+        Initialize voice settings"""
         self.voice_profiles = {}
         self.synthesis_settings = {}
         
@@ -786,7 +896,8 @@ class ConfigurationAnalytics:
     """Configuration usage analytics"""
     
     def __init__(self):
-        """Initialize configuration analytics"""
+        """
+        Initialize configuration analytics"""
         self.usage_metrics = {}
         self.performance_stats = {}
         
@@ -796,7 +907,8 @@ class SettingsOptimization:
     """Settings optimization engine"""
     
     def __init__(self):
-        """Initialize settings optimization"""
+        """
+        Initialize settings optimization"""
         self.optimization_rules = {}
         
         logger.info("⚡ Settings Optimization initialized")
@@ -805,7 +917,8 @@ class ConfigurationManagement:
     """Configuration management system"""
     
     def __init__(self):
-        """Initialize configuration management"""
+        """
+        Initialize configuration management"""
         self.config_policies = {}
         
         logger.info("🛠️ Configuration Management initialized")
@@ -814,7 +927,8 @@ class VoiceConfigurationManager:
     """Main voice configuration manager"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize voice configuration manager"""
+        """
+        Initialize voice configuration manager"""
         self.config = config or {}
         self.configuration_engine = ConfigurationEngine()
         self.settings_manager = SettingsManager()
@@ -825,6 +939,7 @@ class VoiceConfigurationManager:
         
         # Initialize default voice configurations
         asyncio.create_task(self._initialize_voice_configurations())
+
         
         logger.info("🎤⚙️ Voice Configuration Manager initialized")
     
@@ -843,11 +958,13 @@ class VoiceConfigurationManager:
                 values=voice_settings,
                 environment=environment
             )
+
             
             return config_id
             
         except Exception as e:
             logger.error(f"Failed to create voice config: {e}")
+
             raise
     
     async def get_voice_config(
@@ -862,9 +979,11 @@ class VoiceConfigurationManager:
                 config_type=ConfigType.VOICE_ENGINE,
                 environment=environment
             )
+
             
         except Exception as e:
             logger.error(f"Failed to get voice config: {e}")
+
             return None
     
     async def _initialize_voice_configurations(self):
@@ -910,8 +1029,10 @@ class VoiceConfigurationManager:
                     "quality_enhancement": True
                 }
             )
+
             
             logger.info("Default voice configurations initialized")
+
             
         except Exception as e:
             logger.error(f"Failed to initialize voice configurations: {e}")

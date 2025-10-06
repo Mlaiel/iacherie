@@ -36,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 class PredictionCategory(Enum):
-    """Machine learning prediction categories"""
+    """
+        Machine learning prediction categories"""
     ENGAGEMENT = "engagement"
     REVENUE = "revenue"
     GROWTH = "growth"
@@ -70,7 +71,8 @@ class PredictionRequest:
 
 @dataclass
 class PredictionResult:
-    """ML prediction result data structure"""
+    """
+        ML prediction result data structure"""
     prediction_id: str
     category: PredictionCategory
     predicted_value: Union[float, Dict[str, float]]
@@ -157,29 +159,39 @@ class MLPredictionEngine:
         """
         try:
             # Check cache first
+
             cached_result = await self._get_cached_prediction(request.prediction_id)
+
             if cached_result:
                 self.logger.debug(f"✅ Returning cached prediction: {request.prediction_id}")
+
                 return cached_result
             
             # Select optimal model
+
             model_type = await self._select_optimal_model(request.category, request.model_preference)
             
             # Generate prediction
+
             predicted_value = await self._generate_prediction(request, model_type)
             
             # Calculate confidence and prediction interval
+
             confidence_score = await self._calculate_confidence(request, predicted_value, model_type)
+
+
             prediction_interval = await self._calculate_prediction_interval(
                 predicted_value, confidence_score, request.confidence_level
             )
             
             # Calculate feature importance
+
             feature_importance = await self._calculate_feature_importance(
                 request.category, request.input_data
             )
             
             # Create result
+
             result = PredictionResult(
                 prediction_id=request.prediction_id,
                 category=request.category,
@@ -199,16 +211,19 @@ class MLPredictionEngine:
             
             # Cache result
             await self._cache_prediction(result)
+
             
             self.logger.info(
                 f"🎯 Generated prediction {request.prediction_id} "
                 f"({request.category.value}) with {confidence_score:.2%} confidence"
             )
+
             
             return result
             
         except Exception as e:
             self.logger.error(f"❌ Prediction failed for {request.prediction_id}: {str(e)}")
+
             raise
     
     async def batch_predict(self, requests: List[PredictionRequest]) -> List[PredictionResult]:
@@ -225,10 +240,13 @@ class MLPredictionEngine:
             self.logger.info(f"🔄 Processing batch prediction of {len(requests)} requests")
             
             # Process predictions concurrently
+
             tasks = [self.predict(request) for request in requests]
+
             results = await asyncio.gather(*tasks, return_exceptions=True)
             
             # Filter successful results
+
             successful_results = [
                 result for result in results 
                 if isinstance(result, PredictionResult)
@@ -237,11 +255,13 @@ class MLPredictionEngine:
             self.logger.info(
                 f"✅ Batch prediction completed: {len(successful_results)}/{len(requests)} successful"
             )
+
             
             return successful_results
             
         except Exception as e:
             self.logger.error(f"❌ Batch prediction failed: {str(e)}")
+
             raise
     
     async def get_model_performance(self) -> Dict[str, Any]:
@@ -268,6 +288,7 @@ class MLPredictionEngine:
             return preference
         
         # Default model selection based on category
+
         category_models = {
             PredictionCategory.ENGAGEMENT: ModelType.RANDOM_FOREST,
             PredictionCategory.REVENUE: ModelType.GRADIENT_BOOSTING,
@@ -283,52 +304,86 @@ class MLPredictionEngine:
     async def _generate_prediction(self, 
                                   request: PredictionRequest,
                                   model_type: ModelType) -> Union[float, Dict[str, float]]:
-        """Generate the actual prediction value"""
+        """
+        Generate the actual prediction value"""
         # Simulate ML prediction based on input data
         # In production, this would call actual ML models
+
         
         input_data = request.input_data
+
         category = request.category
         
         # Base prediction calculation
         if category == PredictionCategory.ENGAGEMENT:
             # Engagement prediction
+
             base_engagement = input_data.get("historical_engagement", 100)
+
+
             content_boost = input_data.get("content_quality_score", 0.7) * 0.3
+
             timing_boost = input_data.get("optimal_timing_score", 0.5) * 0.2
+
             predicted_value = base_engagement * (1 + content_boost + timing_boost)
+
             
         elif category == PredictionCategory.REVENUE:
             # Revenue prediction
+
             base_revenue = input_data.get("historical_revenue", 1000)
+
+
             engagement_multiplier = input_data.get("engagement_rate", 0.05) * 10
+
             audience_multiplier = input_data.get("audience_growth", 0.1) * 5
+
             predicted_value = base_revenue * (1 + engagement_multiplier + audience_multiplier)
+
             
         elif category == PredictionCategory.GROWTH:
             # Growth prediction
+
             current_followers = input_data.get("current_followers", 1000)
+
+
             growth_rate = input_data.get("historical_growth_rate", 0.02)
+
+
             content_factor = input_data.get("content_consistency", 0.8) * 0.5
+
             predicted_value = current_followers * (1 + growth_rate + content_factor) ** (request.time_horizon / 30)
+
             
         elif category == PredictionCategory.CONTENT_PERFORMANCE:
             # Content performance prediction
+
             base_engagement = input_data.get("historical_engagement", 1000)
+
+
             quality_factor = input_data.get("content_quality_score", 0.7) * 0.4
+
             timing_factor = input_data.get("optimal_timing_score", 0.5) * 0.3
+
             trending_factor = input_data.get("trending_alignment", 0.5) * 0.3
+
             predicted_value = base_engagement * (1 + quality_factor + timing_factor + trending_factor)
+
             
         else:
             # Default prediction for other categories
+
             base_value = input_data.get("base_metric", 100)
             # Only sum numeric values for improvement factor
+
             numeric_values = [v for v in input_data.values() if isinstance(v, (int, float))]
+
             improvement_factor = sum(numeric_values) / len(numeric_values) if numeric_values else 1.0
+
             predicted_value = base_value * improvement_factor
         
         # Add model-specific adjustments
+
         model_adjustments = {
             ModelType.LINEAR_REGRESSION: 0.95,
             ModelType.RANDOM_FOREST: 1.02,
@@ -339,6 +394,7 @@ class MLPredictionEngine:
         }
         
         predicted_value *= model_adjustments.get(model_type, 1.0)
+
         
         return round(predicted_value, 2)
     
@@ -350,11 +406,15 @@ class MLPredictionEngine:
         base_confidence = self.model_performance[model_type]["accuracy"]
         
         # Adjust confidence based on data quality
+
         data_quality = len(request.input_data) / 10  # Assuming 10 is optimal feature count
+
         data_quality_factor = min(data_quality, 1.0) * 0.1
         
         # Adjust confidence based on time horizon
+
         time_horizon_factor = max(0, (60 - request.time_horizon) / 60) * 0.1
+
         
         confidence = base_confidence + data_quality_factor + time_horizon_factor
         return min(confidence, 0.99)  # Cap at 99%
@@ -368,9 +428,13 @@ class MLPredictionEngine:
             predicted_value = sum(predicted_value.values())
         
         # Simple interval calculation (in production, use proper statistical methods)
+
         margin = predicted_value * (1 - confidence_score) * (2 - confidence_level)
+
+
         
         lower_bound = max(0, predicted_value - margin)
+
         upper_bound = predicted_value + margin
         
         return (round(lower_bound, 2), round(upper_bound, 2))
@@ -378,23 +442,30 @@ class MLPredictionEngine:
     async def _calculate_feature_importance(self, 
                                           category: PredictionCategory,
                                           input_data: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate feature importance for the prediction"""
+        """
+        Calculate feature importance for the prediction"""
         category_features = self.category_features.get(category, {})
         
         # Normalize feature importance based on available features
+
         available_features = set(input_data.keys())
+
         relevant_features = {
             feature: importance 
             for feature, importance in category_features.items()
+
             if feature in available_features
         }
         
         if not relevant_features:
             # If no predefined features match, assign equal importance
+
             feature_count = len(available_features)
+
             return {feature: 1.0 / feature_count for feature in available_features}
         
         # Normalize to sum to 1.0
+
         total_importance = sum(relevant_features.values())
         return {
             feature: importance / total_importance
@@ -402,7 +473,8 @@ class MLPredictionEngine:
         }
     
     async def _get_cached_prediction(self, prediction_id: str) -> Optional[PredictionResult]:
-        """Get prediction from cache if available and not expired"""
+        """
+        Get prediction from cache if available and not expired"""
         if prediction_id in self.prediction_cache:
             result = self.prediction_cache[prediction_id]
             if datetime.now() < result.expires_at:
@@ -413,23 +485,27 @@ class MLPredictionEngine:
         return None
     
     async def _cache_prediction(self, result: PredictionResult) -> None:
-        """Cache prediction result"""
+        """
+        Cache prediction result"""
         self.prediction_cache[result.prediction_id] = result
         
         # Clean up expired cache entries
+
         current_time = datetime.now()
+
         expired_keys = [
             key for key, cached_result in self.prediction_cache.items()
+
             if current_time >= cached_result.expires_at
         ]
         for key in expired_keys:
             del self.prediction_cache[key]
     
     async def _calculate_cache_hit_rate(self) -> float:
-        """Calculate cache hit rate for performance monitoring"""
+        """
+        Calculate cache hit rate for performance monitoring"""
         # This would be calculated from actual usage metrics in production
-        return 0.75  # Placeholder value
-    
+        return 0.75    
     # ========================================================================
     # ENTERPRISE ENHANCEMENTS - ADVANCED ML CAPABILITIES
     # ========================================================================
@@ -445,6 +521,7 @@ class MLPredictionEngine:
         Args:
             requests: List of prediction requests
             batch_size: Batch size for processing (default: 32)
+
             
         Returns:
             List of prediction results
@@ -455,14 +532,19 @@ class MLPredictionEngine:
             # Process in batches for optimal performance
             for i in range(0, len(requests), batch_size):
                 batch = requests[i:i + batch_size]
+
                 batch_results = await self._process_prediction_batch(batch)
+
                 results.extend(batch_results)
+
             
             logger.info(f"✅ Bulk prediction completed: {len(requests)} requests processed")
+
             return results
             
         except Exception as e:
             logger.error(f"❌ Bulk prediction failed: {e}")
+
             return []
     
     async def _process_prediction_batch(self, batch: List[PredictionRequest]) -> List[PredictionResult]:
@@ -471,7 +553,9 @@ class MLPredictionEngine:
         
         for request in batch:
             result = await self.predict(request)
+
             batch_results.append(result)
+
         
         return batch_results
     
@@ -487,16 +571,21 @@ class MLPredictionEngine:
         """
         try:
             # Get base prediction
+
             result = await self.predict(request)
             
             # Calculate uncertainty metrics
+
             uncertainty_metrics = await self._calculate_uncertainty_metrics(request, result)
             
             # Calculate confidence intervals
+
             confidence_intervals = await self._calculate_confidence_intervals(request, result)
             
             # Calculate model ensemble predictions for robustness
+
             ensemble_predictions = await self._get_ensemble_predictions(request)
+
             
             return {
                 "prediction": result,
@@ -509,6 +598,7 @@ class MLPredictionEngine:
             
         except Exception as e:
             logger.error(f"❌ Uncertainty prediction failed: {e}")
+
             return {"error": str(e)}
     
     async def _calculate_uncertainty_metrics(
@@ -533,14 +623,21 @@ class MLPredictionEngine:
         """Calculate confidence intervals for predictions"""
         if not result.predicted_values:
             return {}
+
         
         confidence_intervals = {}
         
         for metric, value in result.predicted_values.items():
             # Calculate confidence intervals (simulated - in production would use proper statistical methods)
+
+
             uncertainty = 0.1  # 10% uncertainty
+
             lower_bound = value * (1 - uncertainty)
+
+
             upper_bound = value * (1 + uncertainty)
+
             
             confidence_intervals[metric] = {
                 "95%_lower": lower_bound,
@@ -560,6 +657,7 @@ class MLPredictionEngine:
         # Simulate multiple model predictions
         for i in range(5):  # 5 different models
             # Vary predictions slightly to simulate different models
+
             variation = 1.0 + (i * 0.02) - 0.04  # -4% to +4% variation
             
             if request.category == PredictionCategory.ENGAGEMENT:
@@ -577,6 +675,7 @@ class MLPredictionEngine:
                 prediction = {"value": 100.0 * variation}
             
             ensemble_predictions.append(prediction)
+
         
         return ensemble_predictions
     
@@ -584,18 +683,26 @@ class MLPredictionEngine:
         """Calculate agreement between ensemble models"""
         if not ensemble_predictions:
             return {}
+
         
         agreement_scores = {}
         
         # Calculate coefficient of variation for each metric
         for metric in ensemble_predictions[0].keys():
             values = [pred[metric] for pred in ensemble_predictions]
+
             mean_value = statistics.mean(values)
+
+
             std_dev = statistics.stdev(values) if len(values) > 1 else 0
             
             # Agreement score (lower coefficient of variation = higher agreement)
+
+
             cv = std_dev / mean_value if mean_value > 0 else 1.0
+
             agreement_score = max(0.0, 1.0 - cv)
+
             
             agreement_scores[metric] = agreement_score
         
@@ -606,7 +713,8 @@ class MLPredictionEngine:
         request: PredictionRequest, 
         result: PredictionResult
     ) -> Dict[str, float]:
-        """Assess overall prediction quality"""
+        """
+        Assess overall prediction quality"""
         return {
             "data_quality_score": 0.85,
             "model_confidence": result.confidence_score,
@@ -627,6 +735,8 @@ class MLPredictionEngine:
         """
         try:
             # Simulated feature importance (in production would come from actual models)
+
+
             feature_importance = {
                 "content_quality": 0.25,
                 "posting_frequency": 0.18,
@@ -640,13 +750,17 @@ class MLPredictionEngine:
             if model_type == ModelType.NEURAL_NETWORK:
                 feature_importance["deep_features"] = 0.20
                 # Normalize
+
                 total = sum(feature_importance.values())
+
+
                 feature_importance = {k: v/total for k, v in feature_importance.items()}
             
             return feature_importance
             
         except Exception as e:
             logger.error(f"❌ Failed to get feature importance: {e}")
+
             return {}
     
     async def explain_prediction(self, request: PredictionRequest) -> Dict[str, Any]:
@@ -661,12 +775,15 @@ class MLPredictionEngine:
         """
         try:
             # Get base prediction
+
             result = await self.predict(request)
             
             # Get feature importance
+
             feature_importance = await self.get_feature_importance(request.model_type)
             
             # Generate explanations
+
             explanations = []
             
             if request.category == PredictionCategory.ENGAGEMENT:
@@ -675,6 +792,7 @@ class MLPredictionEngine:
                     "Optimal posting time aligns with audience activity patterns",
                     "Trending topic inclusion boosts discoverability"
                 ])
+
             elif request.category == PredictionCategory.REVENUE:
                 explanations.extend([
                     "Strong audience engagement correlates with revenue potential",
@@ -683,6 +801,8 @@ class MLPredictionEngine:
                 ])
             
             # Calculate SHAP-like values (simulated)
+
+
             shap_values = {
                 feature: importance * result.confidence_score
                 for feature, importance in feature_importance.items()
@@ -699,6 +819,7 @@ class MLPredictionEngine:
             
         except Exception as e:
             logger.error(f"❌ Failed to explain prediction: {e}")
+
             return {"error": str(e)}
     
     async def _get_confidence_factors(self, request: PredictionRequest) -> List[str]:
@@ -707,15 +828,18 @@ class MLPredictionEngine:
         
         if request.data_size > 1000:
             factors.append("Large dataset provides high statistical power")
+
         
         if request.feature_count > 20:
             factors.append("Rich feature set enables comprehensive analysis")
+
         
         factors.extend([
             "Model has been validated on similar data",
             "Prediction falls within trained data distribution",
             "Historical accuracy for this prediction type is high"
         ])
+
         
         return factors
     
@@ -725,15 +849,18 @@ class MLPredictionEngine:
         
         if request.data_size < 100:
             sources.append("Limited data size increases uncertainty")
+
         
         if request.feature_count < 5:
             sources.append("Few features may miss important patterns")
+
         
         sources.extend([
             "External market factors not fully captured",
             "Seasonal variations may affect accuracy",
             "User behavior evolution introduces uncertainty"
         ])
+
         
         return sources
     
@@ -754,12 +881,16 @@ class MLPredictionEngine:
         """
         try:
             model_type = model_config.get("model_type", "neural_network")
+
+
             target_metric = model_config.get("target_metric", "accuracy")
             
             # Simulate model training process
+
             training_start = datetime.now()
             
             # Simulate training epochs
+
             training_metrics = {
                 "training_loss": [0.85, 0.72, 0.65, 0.58, 0.52],
                 "validation_loss": [0.78, 0.68, 0.63, 0.61, 0.59],
@@ -767,11 +898,15 @@ class MLPredictionEngine:
                 "precision": [0.68, 0.75, 0.79, 0.82, 0.84],
                 "recall": [0.70, 0.76, 0.80, 0.83, 0.85]
             }
+
             
             training_end = datetime.now()
+
+
             training_duration = (training_end - training_start).total_seconds()
             
             # Model metadata
+
             model_metadata = {
                 "model_id": f"custom_{int(datetime.now().timestamp())}",
                 "model_type": model_type,
@@ -790,6 +925,7 @@ class MLPredictionEngine:
             }
             
             logger.info(f"✅ Custom model training completed: {model_metadata['model_id']}")
+
             
             return {
                 "model_metadata": model_metadata,
@@ -809,6 +945,7 @@ class MLPredictionEngine:
             
         except Exception as e:
             logger.error(f"❌ Custom model training failed: {e}")
+
             return {"error": str(e)}
     
     async def get_model_performance_comparison(self) -> Dict[str, Any]:
@@ -820,6 +957,7 @@ class MLPredictionEngine:
         """
         try:
             # Simulate performance data for different models
+
             model_performance = {
                 ModelType.NEURAL_NETWORK: {
                     "accuracy": 0.87,
@@ -864,7 +1002,9 @@ class MLPredictionEngine:
             }
             
             # Calculate rankings
+
             rankings = {}
+
             metrics = ["accuracy", "precision", "recall", "f1_score"]
             
             for metric in metrics:
@@ -873,16 +1013,23 @@ class MLPredictionEngine:
                     key=lambda x: x[1][metric],
                     reverse=True
                 )
+
                 rankings[metric] = [model.value for model, _ in sorted_models]
             
             # Calculate efficiency scores
+
             efficiency_scores = {}
             for model_type, perf in model_performance.items():
                 # Efficiency = accuracy / (inference_time * memory_usage)
+
+
                 efficiency = perf["accuracy"] / (perf["inference_time_ms"] * perf["memory_usage_mb"] / 1000)
+
                 efficiency_scores[model_type] = efficiency
+
             
             best_efficiency_model = max(efficiency_scores.items(), key=lambda x: x[1])
+
             
             return {
                 "model_performance": {
@@ -912,6 +1059,7 @@ class MLPredictionEngine:
             
         except Exception as e:
             logger.error(f"❌ Model performance comparison failed: {e}")
+
             return {"error": str(e)}
     
     async def optimize_hyperparameters(
@@ -931,13 +1079,21 @@ class MLPredictionEngine:
         """
         try:
             # Simulate hyperparameter optimization
+
             search_method = optimization_config.get("search_method", "bayesian")
+
+
             max_iterations = optimization_config.get("max_iterations", 50)
+
+
             target_metric = optimization_config.get("target_metric", "accuracy")
             
             # Simulate optimization iterations
+
             optimization_history = []
+
             best_score = 0.0
+
             best_params = {}
             
             for iteration in range(max_iterations):
@@ -957,6 +1113,7 @@ class MLPredictionEngine:
                     }
                 
                 # Simulate score calculation
+
                 score = random.uniform(0.7, 0.9) + (iteration * 0.001)  # Gradually improving
                 
                 optimization_history.append({
@@ -965,13 +1122,17 @@ class MLPredictionEngine:
                     "score": score,
                     "validation_score": score - random.uniform(0.01, 0.05)
                 })
+
                 
                 if score > best_score:
                     best_score = score
+
                     best_params = params.copy()
             
             # Calculate improvement
+
             baseline_score = 0.75
+
             improvement = ((best_score - baseline_score) / baseline_score) * 100
             
             return {
@@ -989,7 +1150,8 @@ class MLPredictionEngine:
                     "score_stability": 0.95
                 },
                 "parameter_importance": {
-                    param: random.uniform(0.1, 0.9) 
+                    param: random.uniform(0.1, 0.9)
+ 
                     for param in best_params.keys()
                 },
                 "recommendations": [
@@ -1001,6 +1163,7 @@ class MLPredictionEngine:
             
         except Exception as e:
             logger.error(f"❌ Hyperparameter optimization failed: {e}")
+
             return {"error": str(e)}
     
     async def get_prediction_trends(
@@ -1018,35 +1181,45 @@ class MLPredictionEngine:
         """
         try:
             # Simulate trend data
+
             dates = [
-                datetime.now() - timedelta(days=i) 
+                datetime.now() - timedelta(days=i)
+ 
                 for i in range(time_period_days, 0, -1)
             ]
             
             # Generate trend data
+
             trends = {
                 "prediction_volume": [
-                    50 + i * 2 + random.randint(-10, 10) 
+                    50 + i * 2 + random.randint(-10, 10)
+ 
                     for i in range(time_period_days)
                 ],
                 "average_accuracy": [
-                    0.80 + (i * 0.001) + random.uniform(-0.02, 0.02) 
+                    0.80 + (i * 0.001) + random.uniform(-0.02, 0.02)
+ 
                     for i in range(time_period_days)
                 ],
                 "average_confidence": [
-                    0.75 + (i * 0.002) + random.uniform(-0.03, 0.03) 
+                    0.75 + (i * 0.002) + random.uniform(-0.03, 0.03)
+ 
                     for i in range(time_period_days)
                 ],
                 "processing_time_ms": [
-                    60 - (i * 0.5) + random.randint(-5, 5) 
+                    60 - (i * 0.5) + random.randint(-5, 5)
+ 
                     for i in range(time_period_days)
                 ]
             }
             
             # Calculate trend statistics
+
             trend_analysis = {}
             for metric, values in trends.items():
                 slope = (values[-1] - values[0]) / len(values)
+
+
                 trend_direction = "increasing" if slope > 0 else "decreasing" if slope < 0 else "stable"
                 
                 trend_analysis[metric] = {
@@ -1060,15 +1233,19 @@ class MLPredictionEngine:
                 }
             
             # Identify patterns
+
             patterns = []
             if trend_analysis["prediction_volume"]["trend_direction"] == "increasing":
                 patterns.append("Growing demand for predictions")
+
             
             if trend_analysis["average_accuracy"]["trend_direction"] == "increasing":
                 patterns.append("Model performance improving over time")
+
             
             if trend_analysis["processing_time_ms"]["trend_direction"] == "decreasing":
                 patterns.append("Processing efficiency increasing")
+
             
             return {
                 "analysis_period": {
@@ -1099,6 +1276,7 @@ class MLPredictionEngine:
             
         except Exception as e:
             logger.error(f"❌ Prediction trends analysis failed: {e}")
+
             return {"error": str(e)}
 
 

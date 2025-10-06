@@ -15,7 +15,8 @@ from datetime import datetime
 from decimal import Decimal
 
 def example_usage():
-    """Demonstrate usage of the consolidated models"""
+    """
+        Demonstrate usage of the consolidated models"""
     
     print("🎯 Consolidated Models Usage Example")
     print("=" * 50)

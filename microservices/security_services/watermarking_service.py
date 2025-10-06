@@ -42,6 +42,7 @@ class WatermarkType(str, Enum):
     ROBUST = "robust"
     FRAGILE = "fragile"
     SEMI_FRAGILE = "semi_fragile"
+    SEMANTIC = "semantic"
 
 
 class ContentType(str, Enum):

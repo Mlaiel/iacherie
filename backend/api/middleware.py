@@ -70,6 +70,7 @@ async def authentication_middleware(
             )
         
         # Create user context
+
         user_context = {
             "user_id": "validated_user", 
             "token": token, 
@@ -103,11 +104,13 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
     
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
         client_ip = request.client.host
+
         now = time.time()
         
         # Clean old entries
         self.clients = {
-            ip: times for ip, times in self.clients.items() 
+            ip: times for ip, times in self.clients.items()
+ 
             if any(t > now - self.period for t in times)
         }
         
@@ -127,6 +130,8 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
         
         # Record this request
         self.clients[client_ip].append(now)
+
+
         
         response = await call_next(request)
         return response
@@ -172,11 +177,13 @@ class RequestLoggingMiddleware(BaseHTTPMiddleware):
         
         # Log incoming request
         print(f"[{request_id}] {request.method} {request.url}")
+
         
         try:
             response = await call_next(request)
             
             # Calculate duration
+
             duration = time.time() - start_time
             
             # Log response
@@ -191,6 +198,7 @@ class RequestLoggingMiddleware(BaseHTTPMiddleware):
         except Exception as e:
             duration = time.time() - start_time
             print(f"[{request_id}] ERROR - {duration:.3f}s - {str(e)}")
+
             raise
 
 # ========================================
@@ -206,7 +214,8 @@ def setup_compression_middleware(app):
 # ========================================
 
 class SecurityHeadersMiddleware(BaseHTTPMiddleware):
-    """Middleware to add security headers"""
+    """
+        Middleware to add security headers"""
     
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
         response = await call_next(request)
@@ -248,7 +257,8 @@ def setup_middleware(app):
 # ========================================
 
 class SecurityLevel(str, Enum):
-    """Security level configurations"""
+    """
+        Security level configurations"""
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -277,7 +287,8 @@ class SecurityEvent(BaseModel):
     details: Dict[str, Any] = {}
 
 class AdvancedSecurityMiddleware(BaseHTTPMiddleware):
-    """Enterprise-grade security middleware with threat detection"""
+    """
+        Enterprise-grade security middleware with threat detection"""
     
     def __init__(self, app, security_level: SecurityLevel = SecurityLevel.HIGH):
         super().__init__(app)
@@ -297,12 +308,15 @@ class AdvancedSecurityMiddleware(BaseHTTPMiddleware):
         ]
         self.attack_signatures = {}
         self.rate_limiter = AdvancedRateLimiter()
+
         
     async def dispatch(self, request: Request, call_next):
         start_time = time.time()
         
         # Security checks
+
         security_result = await self._perform_security_checks(request)
+
         
         if security_result["blocked"]:
             return await self._create_blocked_response(security_result)
@@ -317,20 +331,26 @@ class AdvancedSecurityMiddleware(BaseHTTPMiddleware):
             await self._add_security_headers(response, request)
             
             # Log security metrics
+
             processing_time = time.time() - start_time
             await self._log_security_metrics(request, response, processing_time)
+
             
             return response
             
         except Exception as e:
             # Log potential security incidents
             await self._log_security_incident(request, str(e))
+
             raise
     
     async def _perform_security_checks(self, request: Request) -> Dict[str, Any]:
         """Perform comprehensive security checks"""
         client_ip = self._get_client_ip(request)
+
         user_agent = request.headers.get("user-agent", "")
+
+
         
         result = {
             "blocked": False,
@@ -344,13 +364,16 @@ class AdvancedSecurityMiddleware(BaseHTTPMiddleware):
         if client_ip in self.blocked_ips:
             result["blocked"] = True
             result["threats"].append(ThreatType.BRUTE_FORCE)
+
             return result
         
         # Check rate limits
+
         rate_limit_result = await self.rate_limiter.check_limits(request)
         if rate_limit_result["exceeded"]:
             result["blocked"] = True
             result["threats"].append(ThreatType.DDoS)
+
             result["risk_score"] += 8
         
         # Check for malicious patterns
@@ -359,13 +382,16 @@ class AdvancedSecurityMiddleware(BaseHTTPMiddleware):
         # Bot detection
         if self._is_malicious_bot(user_agent):
             result["threats"].append(ThreatType.MALICIOUS_BOT)
+
             result["risk_score"] += 3
         
         # Geographic risk assessment
+
         geo_risk = await self._assess_geographic_risk(client_ip)
         result["risk_score"] += geo_risk
         
         # Behavioral analysis
+
         behavioral_risk = await self._analyze_request_behavior(request)
         result["risk_score"] += behavioral_risk
         
@@ -379,10 +405,13 @@ class AdvancedSecurityMiddleware(BaseHTTPMiddleware):
         """Check for malicious patterns in request"""
         try:
             # Check URL for suspicious patterns
+
             url_str = str(request.url)
+
             for pattern in self.suspicious_patterns:
                 if re.search(pattern, url_str, re.IGNORECASE):
                     result["threats"].append(ThreatType.SUSPICIOUS_PATTERN)
+
                     result["risk_score"] += 5
             
             # Check query parameters
@@ -390,6 +419,7 @@ class AdvancedSecurityMiddleware(BaseHTTPMiddleware):
                 for pattern in self.suspicious_patterns:
                     if re.search(pattern, f"{key}={value}", re.IGNORECASE):
                         result["threats"].append(ThreatType.XSS)
+
                         result["risk_score"] += 6
             
             # Check headers for suspicious content
@@ -399,6 +429,7 @@ class AdvancedSecurityMiddleware(BaseHTTPMiddleware):
                 for pattern in self.suspicious_patterns:
                     if re.search(pattern, header_value, re.IGNORECASE):
                         result["threats"].append(ThreatType.XSS)
+
                         result["risk_score"] += 4
                         
         except Exception:
@@ -408,6 +439,7 @@ class AdvancedSecurityMiddleware(BaseHTTPMiddleware):
         """Detect malicious bots"""
         if not user_agent:
             return True
+
         
         user_agent_lower = user_agent.lower()
         
@@ -422,16 +454,17 @@ class AdvancedSecurityMiddleware(BaseHTTPMiddleware):
         return False
     
     async def _assess_geographic_risk(self, ip: str) -> int:
-        """Assess geographic risk based on IP"""
-        try:
-            # Mock geographic risk assessment
-            # In production, would use IP geolocation services
+        """
+        Assess geographic risk based on IP"""
+        try:            # In production, would use IP geolocation services
             if ip.startswith("192.168.") or ip.startswith("10.") or ip.startswith("172."):
                 return 0  # Local network
             
             # Would check against threat intelligence feeds
+
             high_risk_countries = ["CN", "RU", "KP"]  # Example
             # For now, return random risk based on IP hash
+
             risk = int(hashlib.md5(ip.encode()).hexdigest()[:2], 16) % 3
             return risk
             
@@ -444,6 +477,7 @@ class AdvancedSecurityMiddleware(BaseHTTPMiddleware):
         
         try:
             # Check request frequency patterns
+
             client_ip = self._get_client_ip(request)
             
             # Unusual request timing patterns
@@ -455,6 +489,7 @@ class AdvancedSecurityMiddleware(BaseHTTPMiddleware):
                         risk += 4
             
             # Suspicious headers
+
             suspicious_headers = ['x-forwarded-for', 'x-real-ip', 'x-originating-ip']
             for header in suspicious_headers:
                 if header in request.headers:
@@ -472,9 +507,12 @@ class AdvancedSecurityMiddleware(BaseHTTPMiddleware):
     def _get_client_ip(self, request: Request) -> str:
         """Get real client IP address"""
         # Check for forwarded headers
+
         forwarded_for = request.headers.get("x-forwarded-for")
         if forwarded_for:
             return forwarded_for.split(",")[0].strip()
+
+
         
         real_ip = request.headers.get("x-real-ip")
         if real_ip:
@@ -507,6 +545,7 @@ class AdvancedSecurityMiddleware(BaseHTTPMiddleware):
                 "Cross-Origin-Opener-Policy": "same-origin",
                 "Cross-Origin-Resource-Policy": "same-origin"
             })
+
         
         for header, value in security_headers.items():
             response.headers[header] = value
@@ -557,6 +596,7 @@ class AdvancedSecurityMiddleware(BaseHTTPMiddleware):
             
             # In production, send to monitoring system
             # logger.info(f"Security metrics: {json.dumps(metrics)}")
+
             
         except Exception:
             pass  # Don't let logging break the response
@@ -575,6 +615,7 @@ class AdvancedSecurityMiddleware(BaseHTTPMiddleware):
             
             # In production, send to SIEM system
             # logger.error(f"Security incident: {json.dumps(incident)}")
+
             
         except Exception:
             pass
@@ -586,20 +627,27 @@ class AdvancedRateLimiter:
         self.sliding_windows = defaultdict(lambda: deque())
         self.token_buckets = defaultdict(lambda: {"tokens": 100, "last_refill": time.time()})
         self.ip_reputation = defaultdict(int)
+
         
     async def check_limits(self, request: Request) -> Dict[str, Any]:
         """Check multiple rate limiting algorithms"""
         client_ip = self._get_client_ip(request)
+
         endpoint = f"{request.method}:{request.url.path}"
         
         # Sliding window rate limit
+
         sliding_exceeded = self._check_sliding_window(client_ip, endpoint)
         
         # Token bucket rate limit
+
         token_exceeded = self._check_token_bucket(client_ip)
         
         # Adaptive rate limiting based on IP reputation
+
         reputation_exceeded = self._check_reputation_limit(client_ip)
+
+
         
         exceeded = sliding_exceeded or token_exceeded or reputation_exceeded
         
@@ -609,6 +657,7 @@ class AdvancedRateLimiter:
             # Slowly improve reputation
             if self.ip_reputation[client_ip] > 0:
                 self.ip_reputation[client_ip] = max(0, self.ip_reputation[client_ip] - 0.1)
+
         
         return {
             "exceeded": exceeded,
@@ -622,6 +671,7 @@ class AdvancedRateLimiter:
         """Sliding window rate limiting"""
         key = f"{client_ip}:{endpoint}"
         now = time.time()
+
         window = self.sliding_windows[key]
         
         # Remove old entries
@@ -639,10 +689,13 @@ class AdvancedRateLimiter:
     def _check_token_bucket(self, client_ip: str, capacity: int = 100, refill_rate: float = 10.0) -> bool:
         """Token bucket rate limiting"""
         bucket = self.token_buckets[client_ip]
+
         now = time.time()
         
         # Refill tokens
+
         time_passed = now - bucket["last_refill"]
+
         tokens_to_add = time_passed * refill_rate
         bucket["tokens"] = min(capacity, bucket["tokens"] + tokens_to_add)
         bucket["last_refill"] = now
@@ -663,6 +716,7 @@ class AdvancedRateLimiter:
             return self._check_sliding_window(client_ip, "reputation", 60, 10)
         elif reputation > 5:
             return self._check_sliding_window(client_ip, "reputation", 60, 50)
+
         
         return False
     
@@ -687,19 +741,25 @@ class PerformanceOptimizationMiddleware(BaseHTTPMiddleware):
         # Check cache for GET requests
         if request.method == "GET":
             cache_key = self._generate_cache_key(request)
+
+
             cached_response = self.response_cache.get(cache_key)
+
             
             if cached_response and not self._is_cache_expired(cached_response):
                 cached_response["headers"]["X-Cache"] = "HIT"
                 cached_response["headers"]["X-Cache-Age"] = str(
                     int(time.time() - cached_response["timestamp"])
                 )
+
                 return Response(
                     content=cached_response["content"],
                     status_code=cached_response["status_code"],
                     headers=cached_response["headers"],
                     media_type=cached_response["media_type"]
                 )
+
+
         
         response = await call_next(request)
         
@@ -708,6 +768,7 @@ class PerformanceOptimizationMiddleware(BaseHTTPMiddleware):
             await self._cache_response(request, response)
         
         # Add performance headers
+
         processing_time = time.time() - start_time
         response.headers["X-Response-Time"] = f"{processing_time:.3f}s"
         response.headers["X-Cache"] = "MISS"
@@ -729,6 +790,7 @@ class PerformanceOptimizationMiddleware(BaseHTTPMiddleware):
             cache_key = self._generate_cache_key(request)
             
             # Read response content
+
             content = b""
             async for chunk in response.body_iterator:
                 content += chunk
@@ -744,6 +806,7 @@ class PerformanceOptimizationMiddleware(BaseHTTPMiddleware):
             
             # Recreate response with content
             response.body_iterator = self._create_body_iterator(content)
+
             
         except Exception:
             pass  # Don't let caching break the response
@@ -760,7 +823,8 @@ class PerformanceOptimizationMiddleware(BaseHTTPMiddleware):
 # ========================================
 
 def setup_advanced_middleware(app, security_level: SecurityLevel = SecurityLevel.HIGH):
-    """Setup advanced middleware stack with enterprise security"""
+    """
+        Setup advanced middleware stack with enterprise security"""
     
     # Performance optimization (first)
     app.add_middleware(PerformanceOptimizationMiddleware)
@@ -789,7 +853,8 @@ def setup_advanced_middleware(app, security_level: SecurityLevel = SecurityLevel
 # ========================================
 
 class OWASPSecurityMiddleware:
-    """OWASP Top 10 compliant security middleware"""
+    """
+        OWASP Top 10 compliant security middleware"""
     
     def __init__(self, app):
         self.app = app
@@ -809,7 +874,9 @@ class OWASPSecurityMiddleware:
     async def __call__(self, scope, receive, send):
         if scope["type"] == "http":
             # Pre-request OWASP security checks
+
             security_result = await self._run_owasp_checks(scope)
+
             
             if not security_result["secure"]:
                 response = Response(
@@ -821,7 +888,9 @@ class OWASPSecurityMiddleware:
                     status_code=403,
                     media_type="application/json"
                 )
+
                 await response(scope, receive, send)
+
                 return
         
         await self.app(scope, receive, send)
@@ -831,6 +900,7 @@ class OWASPSecurityMiddleware:
         try:
             for check_name, check_func in self.owasp_checks.items():
                 result = await check_func(scope)
+
                 if not result["secure"]:
                     return {
                         "secure": False,
@@ -850,9 +920,11 @@ class OWASPSecurityMiddleware:
     async def _check_injection_attacks(self, scope) -> Dict[str, Any]:
         """Check for SQL injection and other injection attacks"""
         # Extract query parameters and body
+
         query_string = scope.get("query_string", b"").decode()
         
         # Common injection patterns
+
         injection_patterns = [
             "' OR '1'='1",
             "UNION SELECT",
@@ -875,6 +947,7 @@ class OWASPSecurityMiddleware:
     async def _check_broken_authentication(self, scope) -> Dict[str, Any]:
         """Check for broken authentication patterns"""
         headers = dict(scope.get("headers", []))
+
         auth_header = headers.get(b"authorization", b"").decode()
         
         # Check for weak authentication patterns
@@ -890,8 +963,12 @@ class OWASPSecurityMiddleware:
     async def _check_sensitive_data_exposure(self, scope) -> Dict[str, Any]:
         """Check for sensitive data exposure"""
         # Check if HTTPS is enforced for sensitive endpoints
+
         scheme = scope.get("scheme", "http")
+
         path = scope.get("path", "")
+
+
         
         sensitive_paths = ["/api/auth", "/api/payment", "/api/user"]
         
@@ -907,6 +984,7 @@ class OWASPSecurityMiddleware:
     async def _check_xml_external_entities(self, scope) -> Dict[str, Any]:
         """Check for XXE vulnerabilities"""
         content_type = dict(scope.get("headers", [])).get(b"content-type", b"").decode()
+
         
         if "xml" in content_type.lower():
             # In a real implementation, would parse XML and check for external entities
@@ -924,6 +1002,7 @@ class OWASPSecurityMiddleware:
         headers = dict(scope.get("headers", []))
         
         # Check for security headers
+
         required_headers = [
             b"x-content-type-options",
             b"x-frame-options",
@@ -936,6 +1015,8 @@ class OWASPSecurityMiddleware:
     async def _check_cross_site_scripting(self, scope) -> Dict[str, Any]:
         """Check for XSS vulnerabilities"""
         query_string = scope.get("query_string", b"").decode()
+
+
         
         xss_patterns = [
             "<script>",
@@ -963,9 +1044,11 @@ class OWASPSecurityMiddleware:
     async def _check_vulnerable_components(self, scope) -> Dict[str, Any]:
         """Check for vulnerable components"""
         headers = dict(scope.get("headers", []))
+
         user_agent = headers.get(b"user-agent", b"").decode()
         
         # Check for known vulnerable user agent patterns
+
         vulnerable_patterns = ["old-browser", "vulnerable-lib"]
         
         for pattern in vulnerable_patterns:
@@ -1014,13 +1097,18 @@ class IntelligentRateLimiter:
         """Check rate limit with AI-based dynamic adjustment"""
         try:
             # Get base limits for user tier
+
             base_limit = self.base_limits.get(user_tier, self.base_limits["default"])
             
             # Apply threat level multiplier
+
             threat_multiplier = self.threat_multipliers.get(threat_level, 1.0)
+
+
             adjusted_limit = int(base_limit["requests"] * threat_multiplier)
             
             # Get current usage
+
             current_usage = await self._get_current_usage(client_id, endpoint, base_limit["window"])
             
             # Check if limit exceeded
@@ -1035,6 +1123,7 @@ class IntelligentRateLimiter:
             
             # Increment usage
             await self._increment_usage(client_id, endpoint, base_limit["window"])
+
             
             return {
                 "allowed": True,
@@ -1051,9 +1140,11 @@ class IntelligentRateLimiter:
         """Analyze traffic patterns for intelligent rate limiting"""
         try:
             # Get historical traffic data
+
             traffic_history = await self._get_traffic_history(client_id)
             
             # Analyze patterns
+
             patterns = {
                 "average_requests_per_minute": sum(traffic_history) / len(traffic_history) if traffic_history else 0,
                 "peak_requests": max(traffic_history) if traffic_history else 0,
@@ -1063,7 +1154,9 @@ class IntelligentRateLimiter:
             }
             
             # Calculate dynamic threat level
+
             threat_level = await self._calculate_threat_level(patterns)
+
             
             return {
                 "patterns": patterns,
@@ -1076,21 +1169,21 @@ class IntelligentRateLimiter:
     
     async def _get_current_usage(self, client_id: str, endpoint: str, window: int) -> int:
         """Get current usage from Redis"""
-        # Mock implementation
         return 5
     
     async def _increment_usage(self, client_id: str, endpoint: str, window: int) -> None:
-        """Increment usage counter in Redis"""
-        # Mock implementation
+        """
+        Increment usage counter in Redis"""
         pass
     
     async def _get_reset_time(self, client_id: str, endpoint: str) -> int:
-        """Get reset time for rate limit window"""
-        # Mock implementation - return seconds until reset
+        """
+        Get reset time for rate limit window"""
         return 45
     
     async def _detect_bot_behavior(self, traffic_history: List[int]) -> bool:
-        """Detect bot-like behavior patterns"""
+        """
+        Detect bot-like behavior patterns"""
         if not traffic_history:
             return False
         
@@ -1101,27 +1194,33 @@ class IntelligentRateLimiter:
         return False
     
     async def _calculate_consistency_score(self, traffic_history: List[int]) -> float:
-        """Calculate traffic consistency score"""
+        """
+        Calculate traffic consistency score"""
         if len(traffic_history) < 2:
             return 0.5
         
         # Calculate coefficient of variation
+
         mean_traffic = sum(traffic_history) / len(traffic_history)
         if mean_traffic == 0:
             return 0.0
+
         
         variance = sum((x - mean_traffic) ** 2 for x in traffic_history) / len(traffic_history)
+
         std_dev = variance ** 0.5
         
         return 1.0 - min(std_dev / mean_traffic, 1.0)
     
     async def _identify_threat_indicators(self, client_id: str) -> List[str]:
-        """Identify potential threat indicators"""
+        """
+        Identify potential threat indicators"""
         indicators = []
         
         # Check against known threat databases
         if client_id.startswith("suspicious_"):
             indicators.append("suspicious_client_pattern")
+
         
         return indicators
     

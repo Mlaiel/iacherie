@@ -1,5 +1,6 @@
 import os
 """
+
 Legal Framework Engine - Enterprise Legal Compliance Management
 
 Comprehensive legal framework management system for handling legal compliance,
@@ -8,6 +9,7 @@ contract analysis, intellectual property protection, and legal risk assessment.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: All rights reserved - Proprietary software
 """
+
 
 import asyncio
 import json
@@ -42,6 +44,7 @@ Base = declarative_base()
 
 class LegalFrameworkType(Enum):
     """Legal framework types"""
+
     TERMS_OF_SERVICE = "terms_of_service"
     PRIVACY_POLICY = "privacy_policy"
     USER_AGREEMENT = "user_agreement"
@@ -55,6 +58,7 @@ class LegalFrameworkType(Enum):
 
 class ContractType(Enum):
     """Contract types for analysis"""
+
     SERVICE_AGREEMENT = "service_agreement"
     LICENSING_AGREEMENT = "licensing_agreement"
     PARTNERSHIP_AGREEMENT = "partnership_agreement"
@@ -67,6 +71,7 @@ class ContractType(Enum):
 
 class LegalRiskLevel(Enum):
     """Legal risk assessment levels"""
+
     MINIMAL = "minimal"
     LOW = "low"
     MEDIUM = "medium"
@@ -76,6 +81,7 @@ class LegalRiskLevel(Enum):
 
 class IntellectualPropertyType(Enum):
     """Intellectual property types"""
+
     COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PATENT = "patent"
@@ -86,6 +92,7 @@ class IntellectualPropertyType(Enum):
 
 class LegalJurisdiction(Enum):
     """Legal jurisdictions"""
+
     US_FEDERAL = "us_federal"
     US_CALIFORNIA = "us_california"
     EU_GDPR = "eu_gdpr"
@@ -97,6 +104,7 @@ class LegalJurisdiction(Enum):
 @dataclass
 class LegalDocument:
     """Legal document structure"""
+
     document_id: str
     document_type: LegalFrameworkType
     title: str
@@ -111,7 +119,10 @@ class LegalDocument:
 
 @dataclass
 class ContractAnalysisResult:
-    """Contract analysis result"""
+    """
+
+        Contract analysis result"""
+
     analysis_id: str
     contract_id: str
     contract_type: ContractType
@@ -126,7 +137,10 @@ class ContractAnalysisResult:
 
 @dataclass
 class IntellectualPropertyAssessment:
-    """IP assessment result"""
+    """
+
+        IP assessment result"""
+
     assessment_id: str
     content_id: str
     ip_type: IntellectualPropertyType
@@ -137,7 +151,10 @@ class IntellectualPropertyAssessment:
 
 
 class LegalDocumentRecord(Base):
-    """Database model for legal documents"""
+    """
+
+        Database model for legal documents"""
+
     __tablename__ = "legal_documents"
     
     document_id = Column(String, primary_key=True)
@@ -156,6 +173,7 @@ class LegalDocumentRecord(Base):
 
 class ContractAnalysisRecord(Base):
     """Database model for contract analysis"""
+
     __tablename__ = "contract_analysis"
     
     analysis_id = Column(String, primary_key=True)
@@ -172,6 +190,7 @@ class ContractAnalysisRecord(Base):
 
 class IPAssessmentRecord(Base):
     """Database model for IP assessments"""
+
     __tablename__ = "ip_assessments"
     
     assessment_id = Column(String, primary_key=True)
@@ -186,8 +205,9 @@ class IPAssessmentRecord(Base):
 
 class LegalDocumentManager:
     """Legal document lifecycle management"""
+
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session: AsyncSession, redis_client: Any):
         self.db = db_session
         self.redis = redis_client
         
@@ -197,7 +217,10 @@ class LegalDocumentManager:
                                   content: str,
                                   jurisdiction: LegalJurisdiction,
                                   template_data: Dict[str, Any] = None) -> LegalDocument:
-        """Create new legal document"""
+        """
+
+        Create new legal document"""
+
         try:
             document_id = str(uuid.uuid4())
             
@@ -206,12 +229,15 @@ class LegalDocumentManager:
                 content = await self._apply_template(document_type, content, template_data)
             
             # Validate legal content
+
             validation_result = await self._validate_legal_content(content, document_type, jurisdiction)
+
             
             if not validation_result["is_valid"]:
                 raise ValueError(f"Legal document validation failed: {validation_result['issues']}")
             
             # Create document
+
             document = LegalDocument(
                 document_id=document_id,
                 document_type=document_type,
@@ -231,11 +257,13 @@ class LegalDocumentManager:
             
             # Store document
             await self._store_legal_document(document)
+
             
             return document
             
         except Exception as e:
             logger.error(f"Legal document creation failed: {str(e)}")
+
             raise
     
     async def update_legal_document(self, 
@@ -243,9 +271,12 @@ class LegalDocumentManager:
                                   updates: Dict[str, Any],
                                   increment_version: bool = True) -> LegalDocument:
         """Update existing legal document"""
+
         try:
             # Get current document
+
             document = await self._get_legal_document(document_id)
+
             if not document:
                 raise ValueError(f"Legal document {document_id} not found")
             
@@ -257,6 +288,7 @@ class LegalDocumentManager:
             # Increment version if requested
             if increment_version:
                 current_version = float(document.version)
+
                 document.version = str(current_version + 0.1)
             
             # Validate updated content
@@ -264,9 +296,11 @@ class LegalDocumentManager:
                 validation_result = await self._validate_legal_content(
                     document.content, document.document_type, document.jurisdiction
                 )
+
                 
                 if not validation_result["is_valid"]:
                     raise ValueError(f"Updated document validation failed: {validation_result['issues']}")
+
                 
                 document.metadata["last_validation"] = validation_result
             
@@ -275,27 +309,35 @@ class LegalDocumentManager:
             
             # Store updated document
             await self._store_legal_document(document)
+
             
             return document
             
         except Exception as e:
             logger.error(f"Legal document update failed: {str(e)}")
+
             raise
     
     async def review_legal_documents(self, jurisdiction: LegalJurisdiction = None) -> List[Dict[str, Any]]:
         """Review legal documents for compliance and updates"""
+
         try:
             documents = await self._get_documents_for_review(jurisdiction)
+
+
             review_results = []
             
             for document in documents:
                 review_result = await self._perform_document_review(document)
+
                 review_results.append(review_result)
+
             
             return review_results
             
         except Exception as e:
             logger.error(f"Legal document review failed: {str(e)}")
+
             raise
     
     async def _apply_template(self, 
@@ -303,20 +345,25 @@ class LegalDocumentManager:
                             content: str,
                             template_data: Dict[str, Any]) -> str:
         """Apply template data to legal document content"""
+
         try:
             # Get template for document type
+
             template = await self._get_legal_template(document_type)
+
             
             if template:
                 # Replace template variables
                 for key, value in template_data.items():
                     placeholder = f"{{{key}}}"
                     content = content.replace(placeholder, str(value))
+
             
             return content
             
         except Exception as e:
             logger.error(f"Template application failed: {str(e)}")
+
             return content
     
     async def _validate_legal_content(self, 
@@ -324,6 +371,7 @@ class LegalDocumentManager:
                                     document_type: LegalFrameworkType,
                                     jurisdiction: LegalJurisdiction) -> Dict[str, Any]:
         """Validate legal document content"""
+
         validation_result = {
             "is_valid": True,
             "issues": [],
@@ -333,29 +381,39 @@ class LegalDocumentManager:
         
         try:
             # Check required clauses based on document type
+
             required_clauses = await self._get_required_clauses(document_type, jurisdiction)
+
             
             for clause in required_clauses:
                 if not await self._check_clause_presence(content, clause):
                     validation_result["issues"].append(f"Missing required clause: {clause}")
+
                     validation_result["compliance_score"] -= 0.1
             
             # Check for problematic language
+
             problematic_terms = await self._check_problematic_terms(content)
+
             if problematic_terms:
                 validation_result["issues"].extend(problematic_terms)
+
                 validation_result["compliance_score"] -= 0.05 * len(problematic_terms)
             
             # Check jurisdiction-specific requirements
+
             jurisdiction_issues = await self._check_jurisdiction_requirements(content, jurisdiction)
+
             if jurisdiction_issues:
                 validation_result["issues"].extend(jurisdiction_issues)
+
                 validation_result["compliance_score"] -= 0.1 * len(jurisdiction_issues)
             
             # Generate recommendations
             validation_result["recommendations"] = await self._generate_content_recommendations(
                 validation_result["issues"], document_type
             )
+
             
             validation_result["is_valid"] = validation_result["compliance_score"] >= 0.7
             
@@ -363,14 +421,18 @@ class LegalDocumentManager:
             
         except Exception as e:
             logger.error(f"Legal content validation failed: {str(e)}")
+
             validation_result["is_valid"] = False
             validation_result["issues"].append(f"Validation error: {str(e)}")
+
             return validation_result
     
     async def _get_legal_template(self, document_type: LegalFrameworkType) -> Optional[str]:
         """Get legal document template"""
+
         templates = {
             LegalFrameworkType.PRIVACY_POLICY: """
+
 This Privacy Policy describes how {company_name} collects, uses, and protects
 your personal information when you use our services.
 
@@ -390,6 +452,7 @@ your personal information when you use our services.
 {contact_information}
 """,
             LegalFrameworkType.TERMS_OF_SERVICE: """
+
 These Terms of Service govern your use of {service_name} provided by {company_name}.
 
 1. Acceptance of Terms
@@ -407,6 +470,7 @@ These Terms of Service govern your use of {service_name} provided by {company_na
 5. Limitation of Liability
 {liability_clause}
 """
+
         }
         
         return templates.get(document_type)
@@ -414,7 +478,10 @@ These Terms of Service govern your use of {service_name} provided by {company_na
     async def _get_required_clauses(self, 
                                   document_type: LegalFrameworkType,
                                   jurisdiction: LegalJurisdiction) -> List[str]:
-        """Get required clauses for document type and jurisdiction"""
+        """
+
+        Get required clauses for document type and jurisdiction"""
+
         clauses_map = {
             (LegalFrameworkType.PRIVACY_POLICY, LegalJurisdiction.EU_GDPR): [
                 "lawful_basis", "data_subject_rights", "data_retention", "contact_dpo"
@@ -431,6 +498,7 @@ These Terms of Service govern your use of {service_name} provided by {company_na
     
     async def _check_clause_presence(self, content: str, clause: str) -> bool:
         """Check if required clause is present in content"""
+
         clause_patterns = {
             "lawful_basis": r"lawful\s+basis|legal\s+basis",
             "data_subject_rights": r"data\s+subject\s+rights|your\s+rights",
@@ -438,23 +506,27 @@ These Terms of Service govern your use of {service_name} provided by {company_na
             "liability_limitation": r"limitation\s+of\s+liability|disclaim",
             "acceptance": r"accept|agree\s+to|bound\s+by"
         }
+
         
         pattern = clause_patterns.get(clause, clause)
         return bool(re.search(pattern, content, re.IGNORECASE))
     
     async def _check_problematic_terms(self, content: str) -> List[str]:
         """Check for potentially problematic legal terms"""
+
         problematic_patterns = {
             "unlimited_liability": r"unlimited\s+liability",
             "no_warranties": r"no\s+warranties|without\s+warranty",
             "binding_arbitration": r"binding\s+arbitration",
             "class_action_waiver": r"class\s+action\s+waiver"
         }
+
         
         issues = []
         for issue_type, pattern in problematic_patterns.items():
             if re.search(pattern, content, re.IGNORECASE):
                 issues.append(f"Potentially problematic clause: {issue_type}")
+
         
         return issues
     
@@ -462,15 +534,18 @@ These Terms of Service govern your use of {service_name} provided by {company_na
                                              content: str,
                                              jurisdiction: LegalJurisdiction) -> List[str]:
         """Check jurisdiction-specific legal requirements"""
+
         issues = []
         
         if jurisdiction == LegalJurisdiction.EU_GDPR:
             if not re.search(r"gdpr|general\s+data\s+protection", content, re.IGNORECASE):
                 issues.append("GDPR compliance statement missing")
+
         
         elif jurisdiction == LegalJurisdiction.US_CALIFORNIA:
             if not re.search(r"ccpa|california\s+consumer\s+privacy", content, re.IGNORECASE):
                 issues.append("CCPA compliance statement missing")
+
         
         return issues
     
@@ -478,21 +553,26 @@ These Terms of Service govern your use of {service_name} provided by {company_na
                                               issues: List[str],
                                               document_type: LegalFrameworkType) -> List[str]:
         """Generate recommendations for content improvement"""
+
         recommendations = []
         
         if any("missing" in issue.lower() for issue in issues):
             recommendations.append("Add all required legal clauses for compliance")
+
         
         if any("problematic" in issue.lower() for issue in issues):
             recommendations.append("Review and revise potentially problematic clauses")
+
         
         if document_type == LegalFrameworkType.PRIVACY_POLICY:
             recommendations.append("Ensure plain language and user-friendly explanations")
+
         
         return recommendations
     
     async def _store_legal_document(self, document: LegalDocument) -> None:
         """Store legal document in database"""
+
         try:
             document_record = LegalDocumentRecord(
                 document_id=document.document_id,
@@ -506,27 +586,39 @@ These Terms of Service govern your use of {service_name} provided by {company_na
                 approval_status=document.approval_status,
                 metadata=document.metadata
             )
+
             
             self.db.add(document_record)
+
             await self.db.commit()
+
             
         except Exception as e:
             await self.db.rollback()
+
             logger.error(f"Failed to store legal document: {str(e)}")
+
             raise
     
     async def _get_legal_document(self, document_id: str) -> Optional[LegalDocument]:
         """Retrieve legal document from database"""
+
         # Implementation would query database
         return None
     
     async def _get_documents_for_review(self, jurisdiction: LegalJurisdiction = None) -> List[LegalDocument]:
-        """Get documents that need review"""
+        """
+
+        Get documents that need review"""
+
         # Implementation would query database for documents due for review
         return []
     
     async def _perform_document_review(self, document: LegalDocument) -> Dict[str, Any]:
-        """Perform comprehensive document review"""
+        """
+
+        Perform comprehensive document review"""
+
         return {
             "document_id": document.document_id,
             "review_status": "compliant",
@@ -538,31 +630,41 @@ These Terms of Service govern your use of {service_name} provided by {company_na
 
 class ContractAnalyzer:
     """Contract analysis and risk assessment"""
+
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Any):
         self.redis = redis_client
         
     async def analyze_contract(self, 
                              contract_id: str,
                              contract_content: str,
                              contract_type: ContractType) -> ContractAnalysisResult:
-        """Analyze contract for legal risks and compliance"""
+        """
+
+        Analyze contract for legal risks and compliance"""
+
         try:
             analysis_id = str(uuid.uuid4())
             
             # Extract key terms
+
             key_terms = await self._extract_key_terms(contract_content, contract_type)
             
             # Assess legal risks
+
             risk_assessment = await self._assess_contract_risks(contract_content, contract_type)
             
             # Check compliance issues
+
             compliance_issues = await self._check_contract_compliance(contract_content, contract_type)
             
             # Generate recommendations
+
             recommendations = await self._generate_contract_recommendations(
                 risk_assessment, compliance_issues, contract_type
             )
+
+
             
             analysis_result = ContractAnalysisResult(
                 analysis_id=analysis_id,
@@ -580,15 +682,18 @@ class ContractAnalyzer:
             # Cache analysis result
             await self.redis.setex(f"contract_analysis:{analysis_id}", 3600 * 24,
                                   json.dumps(analysis_result.__dict__, default=str))
+
             
             return analysis_result
             
         except Exception as e:
             logger.error(f"Contract analysis failed: {str(e)}")
+
             raise
     
     async def _extract_key_terms(self, content: str, contract_type: ContractType) -> Dict[str, Any]:
         """Extract key terms from contract"""
+
         key_terms = {}
         
         # Extract common terms
@@ -602,15 +707,19 @@ class ContractAnalyzer:
             key_terms["sla_metrics"] = await self._extract_sla_metrics(content)
         elif contract_type == ContractType.NDA:
             key_terms["confidentiality_scope"] = await self._extract_confidentiality_scope(content)
+
         
         return key_terms
     
     async def _assess_contract_risks(self, content: str, contract_type: ContractType) -> Dict[str, Any]:
         """Assess legal risks in contract"""
+
         risk_factors = []
+
         risk_score = 0.0
         
         # Check for high-risk clauses
+
         high_risk_patterns = [
             r"unlimited\s+liability",
             r"no\s+limitation\s+of\s+damages",
@@ -621,9 +730,11 @@ class ContractAnalyzer:
         for pattern in high_risk_patterns:
             if re.search(pattern, content, re.IGNORECASE):
                 risk_factors.append(f"High-risk clause detected: {pattern}")
+
                 risk_score += 0.3
         
         # Check for missing protective clauses
+
         protective_clauses = [
             r"limitation\s+of\s+liability",
             r"force\s+majeure",
@@ -634,6 +745,7 @@ class ContractAnalyzer:
         for clause in protective_clauses:
             if not re.search(clause, content, re.IGNORECASE):
                 risk_factors.append(f"Missing protective clause: {clause}")
+
                 risk_score += 0.2
         
         # Determine risk level
@@ -656,11 +768,13 @@ class ContractAnalyzer:
     
     async def _check_contract_compliance(self, content: str, contract_type: ContractType) -> List[str]:
         """Check contract for compliance issues"""
+
         compliance_issues = []
         
         # Check for legal compliance requirements
         if not re.search(r"governing\s+law", content, re.IGNORECASE):
             compliance_issues.append("Missing governing law clause")
+
         
         if not re.search(r"entire\s+agreement", content, re.IGNORECASE):
             compliance_issues.append("Missing entire agreement clause")
@@ -669,6 +783,7 @@ class ContractAnalyzer:
         if contract_type == ContractType.EMPLOYMENT_CONTRACT:
             if not re.search(r"at-will\s+employment|employment\s+term", content, re.IGNORECASE):
                 compliance_issues.append("Employment terms not clearly defined")
+
         
         return compliance_issues
     
@@ -677,13 +792,16 @@ class ContractAnalyzer:
                                                compliance_issues: List[str],
                                                contract_type: ContractType) -> List[str]:
         """Generate contract improvement recommendations"""
+
         recommendations = []
         
         if risk_assessment["risk_level"] in [LegalRiskLevel.HIGH, LegalRiskLevel.CRITICAL]:
             recommendations.append("Review and revise high-risk clauses with legal counsel")
+
         
         if compliance_issues:
             recommendations.append("Add missing compliance clauses")
+
         
         if risk_assessment["risk_score"] > 0.5:
             recommendations.append("Consider adding additional protective clauses")
@@ -691,14 +809,17 @@ class ContractAnalyzer:
         # Contract-specific recommendations
         if contract_type == ContractType.SLA:
             recommendations.append("Ensure SLA metrics are measurable and achievable")
+
         
         return recommendations
     
     async def _extract_payment_terms(self, content: str) -> Dict[str, Any]:
         """Extract payment terms from contract"""
+
         payment_terms = {}
         
         # Extract payment amount
+
         amount_match = re.search(r'\$(\d{1,3}(?:,\d{3})*(?:\.\d{2})?)', content)
         if amount_match:
             payment_terms["amount"] = amount_match.group(1)
@@ -713,9 +834,11 @@ class ContractAnalyzer:
     
     async def _extract_termination_clause(self, content: str) -> Dict[str, Any]:
         """Extract termination clause details"""
+
         termination = {}
         
         # Extract notice period
+
         notice_match = re.search(r'(\d+)\s+days?\s+notice', content, re.IGNORECASE)
         if notice_match:
             termination["notice_period"] = f"{notice_match.group(1)} days"
@@ -728,20 +851,24 @@ class ContractAnalyzer:
     
     async def _extract_liability_terms(self, content: str) -> Dict[str, Any]:
         """Extract liability limitation terms"""
+
         liability = {}
         
         if re.search(r'limitation\s+of\s+liability', content, re.IGNORECASE):
             liability["limited"] = True
         
         # Extract liability cap
+
         cap_match = re.search(r'liability.*limited\s+to.*\$(\d{1,3}(?:,\d{3})*)', content, re.IGNORECASE)
         if cap_match:
             liability["cap"] = cap_match.group(1)
+
         
         return liability
     
     async def _extract_ip_terms(self, content: str) -> Dict[str, Any]:
         """Extract intellectual property terms"""
+
         ip_terms = {}
         
         if re.search(r'intellectual\s+property', content, re.IGNORECASE):
@@ -754,14 +881,17 @@ class ContractAnalyzer:
     
     async def _extract_sla_metrics(self, content: str) -> Dict[str, Any]:
         """Extract SLA metrics from service level agreement"""
+
         sla_metrics = {}
         
         # Extract uptime requirement
+
         uptime_match = re.search(r'(\d{2,3}(?:\.\d+)?)\s*%\s*uptime', content, re.IGNORECASE)
         if uptime_match:
             sla_metrics["uptime"] = f"{uptime_match.group(1)}%"
         
         # Extract response time
+
         response_match = re.search(r'respond.*within\s+(\d+)\s+(hours?|minutes?)', content, re.IGNORECASE)
         if response_match:
             sla_metrics["response_time"] = f"{response_match.group(1)} {response_match.group(2)}"
@@ -770,12 +900,14 @@ class ContractAnalyzer:
     
     async def _extract_confidentiality_scope(self, content: str) -> Dict[str, Any]:
         """Extract confidentiality scope from NDA"""
+
         confidentiality = {}
         
         if re.search(r'confidential\s+information', content, re.IGNORECASE):
             confidentiality["definition_present"] = True
         
         # Extract duration
+
         duration_match = re.search(r'(\d+)\s+years?.*confidential', content, re.IGNORECASE)
         if duration_match:
             confidentiality["duration"] = f"{duration_match.group(1)} years"
@@ -785,27 +917,38 @@ class ContractAnalyzer:
 
 class IntellectualPropertyAnalyzer:
     """Intellectual property analysis and protection"""
+
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Any):
         self.redis = redis_client
         
     async def assess_ip_infringement_risk(self, 
                                         content: str,
                                         content_type: str,
                                         ip_type: IntellectualPropertyType) -> IntellectualPropertyAssessment:
-        """Assess intellectual property infringement risk"""
+        """
+
+        Assess intellectual property infringement risk"""
+
         try:
             assessment_id = str(uuid.uuid4())
+
+
             content_id = str(uuid.uuid4())  # Would be provided in real implementation
             
             # Analyze content for IP elements
+
             protected_elements = await self._identify_protected_elements(content, ip_type)
             
             # Calculate infringement risk
+
             infringement_risk = await self._calculate_infringement_risk(content, protected_elements, ip_type)
             
             # Generate recommendations
+
             recommendations = await self._generate_ip_recommendations(infringement_risk, protected_elements, ip_type)
+
+
             
             assessment = IntellectualPropertyAssessment(
                 assessment_id=assessment_id,
@@ -816,15 +959,18 @@ class IntellectualPropertyAnalyzer:
                 recommendations=recommendations,
                 assessed_at=datetime.utcnow()
             )
+
             
             return assessment
             
         except Exception as e:
             logger.error(f"IP infringement assessment failed: {str(e)}")
+
             raise
     
     async def _identify_protected_elements(self, content: str, ip_type: IntellectualPropertyType) -> List[str]:
         """Identify potentially protected IP elements"""
+
         protected_elements = []
         
         if ip_type == IntellectualPropertyType.COPYRIGHT:
@@ -833,24 +979,30 @@ class IntellectualPropertyAnalyzer:
                 protected_elements.append("Copyright notice detected")
             
             # Check for creative content indicators
+
             creative_indicators = ["story", "poem", "article", "image", "video", "music"]
             for indicator in creative_indicators:
                 if indicator in content.lower():
                     protected_elements.append(f"Creative content: {indicator}")
+
         
         elif ip_type == IntellectualPropertyType.TRADEMARK:
             # Look for trademark indicators
+
             trademark_patterns = [r'™', r'®', r'\btrademark\b', r'\bTM\b']
             for pattern in trademark_patterns:
                 if re.search(pattern, content):
                     protected_elements.append("Trademark indicator detected")
+
         
         elif ip_type == IntellectualPropertyType.PATENT:
             # Look for patent-related content
+
             patent_indicators = ["invention", "patent", "innovative process", "technical solution"]
             for indicator in patent_indicators:
                 if indicator in content.lower():
                     protected_elements.append(f"Patent-related: {indicator}")
+
         
         return protected_elements
     
@@ -859,6 +1011,7 @@ class IntellectualPropertyAnalyzer:
                                          protected_elements: List[str],
                                          ip_type: IntellectualPropertyType) -> float:
         """Calculate IP infringement risk score"""
+
         base_risk = 0.0
         
         # Risk based on protected elements found
@@ -890,23 +1043,32 @@ class IntellectualPropertyAnalyzer:
                                          protected_elements: List[str],
                                          ip_type: IntellectualPropertyType) -> List[str]:
         """Generate IP protection recommendations"""
+
         recommendations = []
         
         if risk_score >= 0.7:
             recommendations.append("High IP infringement risk - seek legal review")
+
             recommendations.append("Consider removing or modifying protected content")
+
         
         elif risk_score >= 0.4:
             recommendations.append("Moderate IP risk - verify usage rights")
+
             recommendations.append("Document fair use justification if applicable")
+
         
         if ip_type == IntellectualPropertyType.COPYRIGHT:
             recommendations.append("Ensure proper attribution for copyrighted material")
+
             recommendations.append("Consider fair use defense if applicable")
+
         
         elif ip_type == IntellectualPropertyType.TRADEMARK:
             recommendations.append("Verify trademark usage rights")
+
             recommendations.append("Consider nominative fair use if applicable")
+
         
         return recommendations
 
@@ -914,8 +1076,9 @@ class IntellectualPropertyAnalyzer:
 # Main Legal Framework Engine
 class LegalFrameworkEngine:
     """Main legal framework management engine"""
+
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session: AsyncSession, redis_client: Any):
         self.db = db_session
         self.redis = redis_client
         
@@ -923,37 +1086,50 @@ class LegalFrameworkEngine:
         self.document_manager = LegalDocumentManager(db_session, redis_client)
         self.contract_analyzer = ContractAnalyzer(redis_client)
         self.ip_analyzer = IntellectualPropertyAnalyzer(redis_client)
+
         
     async def comprehensive_legal_review(self, 
                                        content: str,
                                        context: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform comprehensive legal review of content"""
+        """
+
+        Perform comprehensive legal review of content"""
+
         try:
             review_id = str(uuid.uuid4())
             
             # Perform contract analysis if applicable
+
             contract_analysis = None
             if context.get("content_type") == "contract":
                 contract_type = ContractType(context.get("contract_type", "service_agreement"))
+
+
                 contract_analysis = await self.contract_analyzer.analyze_contract(
                     context.get("contract_id", review_id), content, contract_type
                 )
             
             # Perform IP analysis
+
             ip_assessments = []
             for ip_type in [IntellectualPropertyType.COPYRIGHT, IntellectualPropertyType.TRADEMARK]:
                 ip_assessment = await self.ip_analyzer.assess_ip_infringement_risk(
                     content, context.get("content_type", "text"), ip_type
                 )
+
                 ip_assessments.append(ip_assessment)
             
             # Generate overall legal risk assessment
+
             legal_risk = await self._assess_overall_legal_risk(contract_analysis, ip_assessments)
             
             # Generate recommendations
+
             recommendations = await self._generate_legal_recommendations(
                 contract_analysis, ip_assessments, legal_risk
             )
+
+
             
             comprehensive_review = {
                 "review_id": review_id,
@@ -967,34 +1143,42 @@ class LegalFrameworkEngine:
             # Cache review result
             await self.redis.setex(f"legal_review:{review_id}", 3600 * 24,
                                   json.dumps(comprehensive_review, default=str))
+
             
             return comprehensive_review
             
         except Exception as e:
             logger.error(f"Comprehensive legal review failed: {str(e)}")
+
             raise
     
     async def _assess_overall_legal_risk(self, 
                                        contract_analysis: Optional[ContractAnalysisResult],
                                        ip_assessments: List[IntellectualPropertyAssessment]) -> Dict[str, Any]:
         """Assess overall legal risk"""
+
         risk_factors = []
+
         risk_scores = []
         
         # Contract risk
         if contract_analysis:
             contract_risk_score = self._risk_level_to_score(contract_analysis.risk_level)
+
             risk_scores.append(contract_risk_score)
+
             if contract_risk_score > 0.5:
                 risk_factors.extend(contract_analysis.risk_factors)
         
         # IP risk
         for assessment in ip_assessments:
             risk_scores.append(assessment.infringement_risk)
+
             if assessment.infringement_risk > 0.5:
                 risk_factors.append(f"High {assessment.ip_type.value} infringement risk")
         
         # Calculate overall risk
+
         overall_risk_score = max(risk_scores) if risk_scores else 0.0
         
         if overall_risk_score >= 0.8:
@@ -1018,6 +1202,7 @@ class LegalFrameworkEngine:
     
     def _risk_level_to_score(self, risk_level: LegalRiskLevel) -> float:
         """Convert risk level to numeric score"""
+
         risk_map = {
             LegalRiskLevel.MINIMAL: 0.1,
             LegalRiskLevel.LOW: 0.3,
@@ -1031,12 +1216,16 @@ class LegalFrameworkEngine:
                                             contract_analysis: Optional[ContractAnalysisResult],
                                             ip_assessments: List[IntellectualPropertyAssessment],
                                             legal_risk: Dict[str, Any]) -> List[str]:
-        """Generate comprehensive legal recommendations"""
+        """
+
+        Generate comprehensive legal recommendations"""
+
         recommendations = []
         
         # Overall risk recommendations
         if legal_risk["risk_level"] in ["high", "critical"]:
             recommendations.append("Seek immediate legal counsel review")
+
             recommendations.append("Consider legal risk mitigation strategies")
         
         # Contract recommendations
@@ -1053,6 +1242,7 @@ class LegalFrameworkEngine:
             "Regular legal compliance reviews",
             "Update legal policies as needed"
         ])
+
         
         return list(set(recommendations))  # Remove duplicates
 

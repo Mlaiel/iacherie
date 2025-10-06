@@ -17,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class EncryptionConfig:
-    """Configuration pour le chiffrement"""
+    """
+Configuration pour le chiffrement"""
     algorithm: str = 'AES-256'
     key_size: int = 256
     hash_algorithm: str = 'SHA-256'
@@ -30,7 +31,8 @@ class CoreEncryption:
     """
     
     def __init__(self, config: Optional[EncryptionConfig] = None):
-        """Initialise le système de chiffrement"""
+        """
+Initialise le système de chiffrement"""
         self.config = config or EncryptionConfig()
         self._master_key = None
         
@@ -38,11 +40,13 @@ class CoreEncryption:
         logger.info(f"Key size: {self.config.key_size} bits")
     
     def generate_salt(self) -> bytes:
-        """Génère un salt aléatoire"""
+        """
+Génère un salt aléatoire"""
         return secrets.token_bytes(self.config.salt_size)
     
     def generate_key(self) -> str:
-        """Génère une clé de chiffrement"""
+        """
+Génère une clé de chiffrement"""
         key_bytes = secrets.token_bytes(self.config.key_size // 8)
         return base64.b64encode(key_bytes).decode('utf-8')
     
@@ -64,7 +68,8 @@ class CoreEncryption:
         return hashed_password, salt_b64
     
     def verify_password(self, password: str, hashed_password: str, salt_b64: str) -> bool:
-        """Vérifie un mot de passe contre son hash"""
+        """
+Vérifie un mot de passe contre son hash"""
         try:
             salt = base64.b64decode(salt_b64.encode('utf-8'))
             calculated_hash, _ = self.hash_password(password, salt)
@@ -136,7 +141,8 @@ class CoreEncryption:
             raise
     
     def generate_token(self, payload: Dict[str, Any], expiry_minutes: int = 60) -> str:
-        """Génère un token sécurisé"""
+        """
+Génère un token sécurisé"""
         import time
         
         token_data = {
@@ -156,7 +162,8 @@ class CoreEncryption:
         return f"{token_b64}.{signature}"
     
     def verify_token(self, token: str) -> Optional[Dict[str, Any]]:
-        """Vérifie et décode un token"""
+        """
+Vérifie et décode un token"""
         try:
             import time
             
@@ -185,7 +192,8 @@ class CoreEncryption:
             return None
     
     def secure_compare(self, a: str, b: str) -> bool:
-        """Comparaison sécurisée contre les attaques timing"""
+        """
+Comparaison sécurisée contre les attaques timing"""
         if len(a) != len(b):
             return False
         
@@ -205,46 +213,56 @@ DataEncryption = CoreEncryption
 
 # Fonctions utilitaires pour l'import facile
 def generate_key() -> str:
-    """Fonction globale de génération de clé"""
+    """
+Fonction globale de génération de clé"""
     return core_encryption.generate_key()
 
 def hash_password(password: str, salt: Optional[bytes] = None) -> Tuple[str, str]:
-    """Fonction globale de hashage de mot de passe"""
+    """
+Fonction globale de hashage de mot de passe"""
     return core_encryption.hash_password(password, salt)
 
 def verify_password(password: str, hashed_password: str, salt_b64: str) -> bool:
-    """Fonction globale de vérification de mot de passe"""
+    """
+Fonction globale de vérification de mot de passe"""
     return core_encryption.verify_password(password, hashed_password, salt_b64)
 
 def encrypt_data(data: str, key: Optional[str] = None) -> str:
-    """Fonction globale de chiffrement"""
+    """
+Fonction globale de chiffrement"""
     return core_encryption.encrypt_data(data, key)
 
 def decrypt_data(encrypted_data: str, key: str) -> str:
-    """Fonction globale de déchiffrement"""
+    """
+Fonction globale de déchiffrement"""
     return core_encryption.decrypt_data(encrypted_data, key)
 
 def generate_token(payload: Dict[str, Any], expiry_minutes: int = 60) -> str:
-    """Fonction globale de génération de token"""
+    """
+Fonction globale de génération de token"""
     return core_encryption.generate_token(payload, expiry_minutes)
 
 def verify_token(token: str) -> Optional[Dict[str, Any]]:
-    """Fonction globale de vérification de token"""
+    """
+Fonction globale de vérification de token"""
     return core_encryption.verify_token(token)
 
 def secure_compare(a: str, b: str) -> bool:
-    """Fonction globale de comparaison sécurisée"""
+    """
+Fonction globale de comparaison sécurisée"""
     return core_encryption.secure_compare(a, b)
 
 # Fonctions spécialisées pour l'authentification
 def encrypt_sensitive_data(data: str) -> Tuple[str, str]:
-    """Chiffre des données sensibles et retourne (encrypted_data, key)"""
+    """
+Chiffre des données sensibles et retourne (encrypted_data, key)"""
     key = generate_key()
     encrypted = encrypt_data(data, key)
     return encrypted, key
 
 def create_auth_token(user_id: str, roles: list, permissions: list) -> str:
-    """Crée un token d'authentification"""
+    """
+Crée un token d'authentification"""
     payload = {
         'user_id': user_id,
         'roles': roles,
@@ -254,7 +272,8 @@ def create_auth_token(user_id: str, roles: list, permissions: list) -> str:
     return generate_token(payload, expiry_minutes=120)  # 2 heures
 
 def create_api_key_hash(api_key: str) -> str:
-    """Crée un hash sécurisé pour une clé API"""
+    """
+Crée un hash sécurisé pour une clé API"""
     salt = core_encryption.generate_salt()
     hashed, salt_b64 = hash_password(api_key, salt)
     
@@ -262,7 +281,8 @@ def create_api_key_hash(api_key: str) -> str:
     return f"{hashed}${salt_b64}"
 
 def verify_api_key(api_key: str, stored_hash: str) -> bool:
-    """Vérifie une clé API contre son hash stocké"""
+    """
+Vérifie une clé API contre son hash stocké"""
     try:
         if '$' not in stored_hash:
             return False
@@ -272,4 +292,4 @@ def verify_api_key(api_key: str, stored_hash: str) -> bool:
     except Exception:
         return False
 
-logger.info("Core Security Encryption module loaded - 100% READY!")
+logger.info("Core Security Encryption module initialized - 100% READY!")

@@ -58,10 +58,7 @@ class NLPProcessor:
             # Initialize sentiment analysis
             self.sentiment_models = {}
             for lang in self.supported_languages:
-                self.sentiment_models[lang] = True  # Placeholder
-            
-            # Initialize language detection
-            self.language_detector = True
+                self.sentiment_models[lang] = True            self.language_detector = True
             
             # Initialize entity recognition
             self.entity_recognizer = True

@@ -14,14 +14,16 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class AlertLevel(Enum):
-    """Niveaux d'alerte"""
+    """
+Niveaux d'alerte"""
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 class AlertCategory(Enum):
-    """Catégories d'alertes"""
+    """
+Catégories d'alertes"""
     SYSTEM = "system"
     SECURITY = "security"
     PERFORMANCE = "performance"
@@ -30,7 +32,8 @@ class AlertCategory(Enum):
     APPLICATION = "application"
 
 class Alert:
-    """Classe représentant une alerte"""
+    """
+Classe représentant une alerte"""
     
     def __init__(self, level: AlertLevel, message: str, category: AlertCategory = AlertCategory.SYSTEM):
         self.id = str(uuid.uuid4())
@@ -42,13 +45,15 @@ class Alert:
         self.resolved_at = None
         
     def resolve(self):
-        """Résout l'alerte"""
+        """
+Résout l'alerte"""
         self.status = "resolved"
         self.resolved_at = datetime.now()
         logger.info(f"Alert resolved: {self.id}")
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit l'alerte en dictionnaire"""
+        """
+Convertit l'alerte en dictionnaire"""
         return {
             'id': self.id,
             'level': self.level.value,
@@ -60,7 +65,8 @@ class Alert:
         }
 
 class AlertManager:
-    """Gestionnaire d'alertes"""
+    """
+Gestionnaire d'alertes"""
     
     def __init__(self):
         self.alerts = []
@@ -69,7 +75,8 @@ class AlertManager:
     
     def create_alert(self, level: AlertLevel, message: str, 
                     category: AlertCategory = AlertCategory.SYSTEM) -> Alert:
-        """Crée une nouvelle alerte"""
+        """
+Crée une nouvelle alerte"""
         alert = Alert(level, message, category)
         self.alerts.append(alert)
         
@@ -84,19 +91,23 @@ class AlertManager:
         return alert
     
     def get_active_alerts(self) -> List[Alert]:
-        """Retourne les alertes actives"""
+        """
+Retourne les alertes actives"""
         return [alert for alert in self.alerts if alert.status == "active"]
     
     def get_alerts_by_level(self, level: AlertLevel) -> List[Alert]:
-        """Retourne les alertes par niveau"""
+        """
+Retourne les alertes par niveau"""
         return [alert for alert in self.alerts if alert.level == level]
     
     def get_alerts_by_category(self, category: AlertCategory) -> List[Alert]:
-        """Retourne les alertes par catégorie"""
+        """
+Retourne les alertes par catégorie"""
         return [alert for alert in self.alerts if alert.category == category]
     
     def resolve_alert(self, alert_id: str) -> bool:
-        """Résout une alerte par son ID"""
+        """
+Résout une alerte par son ID"""
         for alert in self.alerts:
             if alert.id == alert_id and alert.status == "active":
                 alert.resolve()
@@ -104,12 +115,14 @@ class AlertManager:
         return False
     
     def add_handler(self, handler):
-        """Ajoute un gestionnaire d'alertes"""
+        """
+Ajoute un gestionnaire d'alertes"""
         self.handlers.append(handler)
         logger.info("Alert handler added")
     
     def get_alert_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques des alertes"""
+        """
+Retourne les statistiques des alertes"""
         active_alerts = self.get_active_alerts()
         return {
             'total_alerts': len(self.alerts),
@@ -126,35 +139,41 @@ class AlertManager:
         }
 
 class AlertHandler:
-    """Gestionnaire base pour les alertes"""
+    """
+Gestionnaire base pour les alertes"""
     
     def __init__(self, name: str):
         self.name = name
         logger.info(f"AlertHandler '{name}' initialized")
     
     def handle(self, alert: Alert):
-        """Gère une alerte"""
+        """
+Gère une alerte"""
         logger.info(f"Handling alert {alert.id} with {self.name}")
 
 class ConsoleAlertHandler(AlertHandler):
-    """Gestionnaire d'alertes console"""
+    """
+Gestionnaire d'alertes console"""
     
     def __init__(self):
         super().__init__("Console")
     
     def handle(self, alert: Alert):
-        """Affiche l'alerte dans la console"""
+        """
+Affiche l'alerte dans la console"""
         print(f"[ALERT] {alert.level.value.upper()}: {alert.message}")
 
 class EmailAlertHandler(AlertHandler):
-    """Gestionnaire d'alertes email (simulation)"""
+    """
+Gestionnaire d'alertes email (simulation)"""
     
     def __init__(self, email: str):
         super().__init__(f"Email-{email}")
         self.email = email
     
     def handle(self, alert: Alert):
-        """Simule l'envoi d'email d'alerte"""
+        """
+Simule l'envoi d'email d'alerte"""
         logger.info(f"Email alert sent to {self.email}: {alert.message}")
 
 # Instance globale
@@ -162,33 +181,40 @@ alert_manager = AlertManager()
 
 # Fonctions utilitaires
 def create_alert(level: str, message: str, category: str = "system") -> Alert:
-    """Crée une alerte avec des chaînes"""
+    """
+Crée une alerte avec des chaînes"""
     alert_level = AlertLevel(level.lower())
     alert_category = AlertCategory(category.lower())
     return alert_manager.create_alert(alert_level, message, alert_category)
 
 def create_info_alert(message: str, category: str = "system") -> Alert:
-    """Crée une alerte info"""
+    """
+Crée une alerte info"""
     return create_alert("info", message, category)
 
 def create_warning_alert(message: str, category: str = "system") -> Alert:
-    """Crée une alerte warning"""
+    """
+Crée une alerte warning"""
     return create_alert("warning", message, category)
 
 def create_error_alert(message: str, category: str = "system") -> Alert:
-    """Crée une alerte error"""
+    """
+Crée une alerte error"""
     return create_alert("error", message, category)
 
 def create_critical_alert(message: str, category: str = "system") -> Alert:
-    """Crée une alerte critique"""
+    """
+Crée une alerte critique"""
     return create_alert("critical", message, category)
 
 def get_active_alerts() -> List[Dict[str, Any]]:
-    """Retourne les alertes actives sous forme de dictionnaires"""
+    """
+Retourne les alertes actives sous forme de dictionnaires"""
     return [alert.to_dict() for alert in alert_manager.get_active_alerts()]
 
 def resolve_alert(alert_id: str) -> bool:
-    """Résout une alerte"""
+    """
+Résout une alerte"""
     return alert_manager.resolve_alert(alert_id)
 
 # Exports

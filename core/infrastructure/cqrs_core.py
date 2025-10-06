@@ -1,4 +1,5 @@
-"""IA Chérie Core Infrastructure - CQRS Core
+"""
+IA Chérie Core Infrastructure - CQRS Core
 =========================================
 
 Enterprise-grade Command Query Responsibility Segregation (CQRS) implementation
@@ -30,7 +31,8 @@ TQuery = TypeVar('TQuery')
 TResult = TypeVar('TResult')
 
 class CommandStatus(str, Enum):
-    """Command execution status"""
+    """
+Command execution status"""
     PENDING = "pending"
     EXECUTING = "executing"
     COMPLETED = "completed"
@@ -39,7 +41,8 @@ class CommandStatus(str, Enum):
     RETRYING = "retrying"
 
 class QueryStatus(str, Enum):
-    """Query execution status"""
+    """
+Query execution status"""
     PENDING = "pending"
     EXECUTING = "executing"
     COMPLETED = "completed"
@@ -47,7 +50,8 @@ class QueryStatus(str, Enum):
     CACHED = "cached"
 
 class CommandPriority(str, Enum):
-    """Command priority levels"""
+    """
+Command priority levels"""
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -56,7 +60,8 @@ class CommandPriority(str, Enum):
 
 @dataclass
 class Command:
-    """Base command class"""
+    """
+Base command class"""
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     command_type: str = ""
     data: Dict[str, Any] = field(default_factory=dict)
@@ -74,7 +79,8 @@ class Command:
     status: CommandStatus = CommandStatus.PENDING
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert command to dictionary"""
+        """
+Convert command to dictionary"""
         data = asdict(self)
         data['created_at'] = self.created_at.isoformat()
         data['scheduled_at'] = self.scheduled_at.isoformat() if self.scheduled_at else None
@@ -82,7 +88,8 @@ class Command:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'Command':
-        """Create command from dictionary"""
+        """
+Create command from dictionary"""
         command = cls()
         command.id = data.get('id', command.id)
         command.command_type = data.get('command_type', '')
@@ -103,7 +110,8 @@ class Command:
 
 @dataclass
 class Query:
-    """Base query class"""
+    """
+Base query class"""
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     query_type: str = ""
     parameters: Dict[str, Any] = field(default_factory=dict)
@@ -119,14 +127,16 @@ class Query:
     status: QueryStatus = QueryStatus.PENDING
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert query to dictionary"""
+        """
+Convert query to dictionary"""
         data = asdict(self)
         data['created_at'] = self.created_at.isoformat()
         return data
 
 @dataclass
 class CommandResult:
-    """Command execution result"""
+    """
+Command execution result"""
     command_id: str
     success: bool
     result_data: Dict[str, Any] = field(default_factory=dict)
@@ -139,7 +149,8 @@ class CommandResult:
 
 @dataclass
 class QueryResult:
-    """Query execution result"""
+    """
+Query execution result"""
     query_id: str
     success: bool
     data: Any = None
@@ -153,41 +164,50 @@ class QueryResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class CommandHandler(ABC, Generic[TCommand]):
-    """Abstract command handler"""
+    """
+Abstract command handler"""
     
     @abstractmethod
     async def handle(self, command: TCommand) -> CommandResult:
-        """Handle command execution"""
+        """
+Handle command execution"""
         pass
     
     @abstractmethod
     def can_handle(self, command_type: str) -> bool:
-        """Check if handler can process command type"""
+        """
+Check if handler can process command type"""
         pass
     
     async def validate(self, command: TCommand) -> bool:
-        """Validate command before execution"""
+        """
+Validate command before execution"""
         return True
 
 class QueryHandler(ABC, Generic[TQuery, TResult]):
-    """Abstract query handler"""
+    """
+Abstract query handler"""
     
     @abstractmethod
     async def handle(self, query: TQuery) -> QueryResult:
-        """Handle query execution"""
+        """
+Handle query execution"""
         pass
     
     @abstractmethod
     def can_handle(self, query_type: str) -> bool:
-        """Check if handler can process query type"""
+        """
+Check if handler can process query type"""
         pass
     
     async def validate(self, query: TQuery) -> bool:
-        """Validate query before execution"""
+        """
+Validate query before execution"""
         return True
 
 class ReadModel(ABC):
-    """Abstract read model for queries"""
+    """
+Abstract read model for queries"""
     
     def __init__(self, name: str):
         self.name = name
@@ -197,22 +217,26 @@ class ReadModel(ABC):
     
     @abstractmethod
     async def project_event(self, event: Dict[str, Any]):
-        """Project event data into read model"""
+        """
+Project event data into read model"""
         pass
     
     @abstractmethod
     async def query(self, parameters: Dict[str, Any]) -> Any:
-        """Query read model data"""
+        """
+Query read model data"""
         pass
     
     async def reset(self):
-        """Reset read model to initial state"""
+        """
+Reset read model to initial state"""
         self.data = {}
         self.version = 0
         self.last_updated = datetime.utcnow()
 
 class CommandBus:
-    """Command bus for dispatching commands"""
+    """
+Command bus for dispatching commands"""
     
     def __init__(self):
         self.handlers: Dict[str, CommandHandler] = {}
@@ -223,16 +247,19 @@ class CommandBus:
         self.lock = threading.Lock()
         
     def register_handler(self, command_type: str, handler: CommandHandler):
-        """Register command handler"""
+        """
+Register command handler"""
         self.handlers[command_type] = handler
         logger.info(f"Registered command handler for: {command_type}")
     
     def add_middleware(self, middleware: Callable):
-        """Add middleware to command pipeline"""
+        """
+Add middleware to command pipeline"""
         self.middleware.append(middleware)
     
     async def dispatch(self, command: Command) -> str:
-        """Dispatch command for execution"""
+        """
+Dispatch command for execution"""
         try:
             # Apply middleware
             for middleware in self.middleware:
@@ -268,7 +295,8 @@ class CommandBus:
             raise
     
     async def execute_next(self) -> Optional[CommandResult]:
-        """Execute next command in queue"""
+        """
+Execute next command in queue"""
         command = None
         
         with self.lock:
@@ -331,7 +359,8 @@ class CommandBus:
             return None
     
     def _get_priority_order(self, priority: CommandPriority) -> int:
-        """Get numeric order for priority sorting"""
+        """
+Get numeric order for priority sorting"""
         order_map = {
             CommandPriority.URGENT: 0,
             CommandPriority.CRITICAL: 1,
@@ -342,11 +371,13 @@ class CommandBus:
         return order_map.get(priority, 3)
     
     def get_result(self, command_id: str) -> Optional[CommandResult]:
-        """Get command execution result"""
+        """
+Get command execution result"""
         return self.results.get(command_id)
     
     def get_queue_status(self) -> Dict[str, Any]:
-        """Get command queue status"""
+        """
+Get command queue status"""
         with self.lock:
             return {
                 'queued_commands': len(self.command_queue),
@@ -356,7 +387,8 @@ class CommandBus:
             }
 
 class QueryBus:
-    """Query bus for dispatching queries"""
+    """
+Query bus for dispatching queries"""
     
     def __init__(self):
         self.handlers: Dict[str, QueryHandler] = {}
@@ -367,21 +399,25 @@ class QueryBus:
         self.results: Dict[str, QueryResult] = {}
         
     def register_handler(self, query_type: str, handler: QueryHandler):
-        """Register query handler"""
+        """
+Register query handler"""
         self.handlers[query_type] = handler
         logger.info(f"Registered query handler for: {query_type}")
     
     def register_read_model(self, name: str, read_model: ReadModel):
-        """Register read model"""
+        """
+Register read model"""
         self.read_models[name] = read_model
         logger.info(f"Registered read model: {name}")
     
     def add_middleware(self, middleware: Callable):
-        """Add middleware to query pipeline"""
+        """
+Add middleware to query pipeline"""
         self.middleware.append(middleware)
     
     async def dispatch(self, query: Query) -> QueryResult:
-        """Dispatch query for execution"""
+        """
+Dispatch query for execution"""
         try:
             start_time = datetime.utcnow()
             
@@ -436,7 +472,8 @@ class QueryBus:
             return error_result
     
     def _get_cached_result(self, query: Query) -> Optional[QueryResult]:
-        """Get cached query result"""
+        """
+Get cached query result"""
         if query.cache_key not in self.cache:
             return None
         
@@ -465,7 +502,8 @@ class QueryBus:
         return result
     
     def _cache_result(self, query: Query, result: QueryResult):
-        """Cache query result"""
+        """
+Cache query result"""
         self.cache[query.cache_key] = {
             'data': result.data,
             'total_count': result.total_count,
@@ -474,7 +512,8 @@ class QueryBus:
         self.cache_timestamps[query.cache_key] = datetime.utcnow()
     
     def clear_cache(self, pattern: Optional[str] = None):
-        """Clear cache entries"""
+        """
+Clear cache entries"""
         if pattern:
             keys_to_remove = [key for key in self.cache.keys() if pattern in key]
             for key in keys_to_remove:
@@ -486,7 +525,8 @@ class QueryBus:
             self.cache_timestamps.clear()
     
     def get_cache_stats(self) -> Dict[str, Any]:
-        """Get cache statistics"""
+        """
+Get cache statistics"""
         return {
             'cached_entries': len(self.cache),
             'cache_size_bytes': sum(len(str(v)) for v in self.cache.values()),
@@ -495,7 +535,8 @@ class QueryBus:
         }
 
 class CQRSCore:
-    """Core CQRS management system"""
+    """
+Core CQRS management system"""
     
     def __init__(self, level: str = "enterprise"):
         self.level = level
@@ -516,7 +557,8 @@ class CQRSCore:
         logger.info(f"CQRS Core initialized - Level: {level}")
     
     async def initialize(self) -> bool:
-        """Initialize CQRS system"""
+        """
+Initialize CQRS system"""
         try:
             # Register default middleware
             self.command_bus.add_middleware(self._command_middleware)
@@ -529,7 +571,8 @@ class CQRSCore:
             return False
     
     async def start(self) -> bool:
-        """Start CQRS system"""
+        """
+Start CQRS system"""
         try:
             self.is_running = True
             
@@ -543,7 +586,8 @@ class CQRSCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop CQRS system"""
+        """
+Stop CQRS system"""
         try:
             self.is_running = False
             
@@ -562,7 +606,8 @@ class CQRSCore:
             return False
     
     async def health_check(self) -> bool:
-        """Check system health"""
+        """
+Check system health"""
         try:
             # Check if command processor is running
             if not self.command_processor_task or self.command_processor_task.done():
@@ -582,7 +627,8 @@ class CQRSCore:
             return False
     
     async def _command_middleware(self, command: Command):
-        """Default command middleware"""
+        """
+Default command middleware"""
         # Add correlation ID if not present
         if not command.correlation_id:
             command.correlation_id = str(uuid.uuid4())
@@ -592,7 +638,8 @@ class CQRSCore:
         command.metadata['processor'] = 'cqrs_core'
     
     async def _query_middleware(self, query: Query):
-        """Default query middleware"""
+        """
+Default query middleware"""
         # Generate cache key if not present
         if not query.cache_key and query.parameters:
             cache_data = f"{query.query_type}:{json.dumps(query.parameters, sort_keys=True)}"
@@ -603,7 +650,8 @@ class CQRSCore:
         query.metadata['processor'] = 'cqrs_core'
     
     async def _command_processor(self):
-        """Background command processor"""
+        """
+Background command processor"""
         while self.is_running:
             try:
                 result = await self.command_bus.execute_next()
@@ -625,7 +673,8 @@ class CQRSCore:
                 await asyncio.sleep(1)
     
     async def _publish_event(self, event_type: str, event_data: Dict[str, Any]):
-        """Publish domain event"""
+        """
+Publish domain event"""
         try:
             handlers = self.event_handlers.get(event_type, [])
             for handler in handlers:
@@ -642,30 +691,36 @@ class CQRSCore:
     
     # Public API methods
     def register_command_handler(self, command_type: str, handler: CommandHandler):
-        """Register command handler"""
+        """
+Register command handler"""
         self.command_bus.register_handler(command_type, handler)
     
     def register_query_handler(self, query_type: str, handler: QueryHandler):
-        """Register query handler"""
+        """
+Register query handler"""
         self.query_bus.register_handler(query_type, handler)
     
     def register_read_model(self, name: str, read_model: ReadModel):
-        """Register read model"""
+        """
+Register read model"""
         self.query_bus.register_read_model(name, read_model)
     
     def register_event_handler(self, event_type: str, handler: Callable):
-        """Register event handler"""
+        """
+Register event handler"""
         if event_type not in self.event_handlers:
             self.event_handlers[event_type] = []
         self.event_handlers[event_type].append(handler)
         logger.info(f"Registered event handler for: {event_type}")
     
     async def send_command(self, command: Command) -> str:
-        """Send command for execution"""
+        """
+Send command for execution"""
         return await self.command_bus.dispatch(command)
     
     async def send_query(self, query: Query) -> QueryResult:
-        """Send query for execution"""
+        """
+Send query for execution"""
         result = await self.query_bus.dispatch(query)
         self.metrics['queries_processed'] += 1
         self.metrics['total_execution_time'] += result.execution_time_ms
@@ -678,15 +733,18 @@ class CQRSCore:
         return result
     
     def get_command_result(self, command_id: str) -> Optional[CommandResult]:
-        """Get command execution result"""
+        """
+Get command execution result"""
         return self.command_bus.get_result(command_id)
     
     def clear_query_cache(self, pattern: Optional[str] = None):
-        """Clear query cache"""
+        """
+Clear query cache"""
         self.query_bus.clear_cache(pattern)
     
     def get_system_metrics(self) -> Dict[str, Any]:
-        """Get system metrics"""
+        """
+Get system metrics"""
         queue_status = self.command_bus.get_queue_status()
         cache_stats = self.query_bus.get_cache_stats()
         
@@ -721,7 +779,8 @@ cqrs_core = CQRSCore()
 async def send_command(command_type: str, data: Dict[str, Any], 
                       user_id: Optional[str] = None,
                       priority: CommandPriority = CommandPriority.NORMAL) -> str:
-    """Send command for execution"""
+    """
+Send command for execution"""
     command = Command(
         command_type=command_type,
         data=data,
@@ -732,7 +791,8 @@ async def send_command(command_type: str, data: Dict[str, Any],
 
 async def send_query(query_type: str, parameters: Dict[str, Any],
                     user_id: Optional[str] = None, cache_ttl: int = 300) -> QueryResult:
-    """Send query for execution"""
+    """
+Send query for execution"""
     query = Query(
         query_type=query_type,
         parameters=parameters,
@@ -742,11 +802,13 @@ async def send_query(query_type: str, parameters: Dict[str, Any],
     return await cqrs_core.send_query(query)
 
 def register_command_handler(command_type: str, handler: CommandHandler):
-    """Register command handler"""
+    """
+Register command handler"""
     cqrs_core.register_command_handler(command_type, handler)
 
 def register_query_handler(query_type: str, handler: QueryHandler):
-    """Register query handler"""
+    """
+Register query handler"""
     cqrs_core.register_query_handler(query_type, handler)
 
 # Module exports
@@ -757,4 +819,4 @@ __all__ = [
     "send_command", "send_query", "register_command_handler", "register_query_handler"
 ]
 
-logger.info("CQRS Core module loaded")
+logger.info("CQRS Core module initialized")

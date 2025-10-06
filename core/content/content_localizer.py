@@ -19,14 +19,16 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class LocalizationLevel(Enum):
-    """Content localization levels"""
+    """
+Content localization levels"""
     BASIC = "basic"
     STANDARD = "standard"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
 
 class ContentType(Enum):
-    """Content types for localization"""
+    """
+Content types for localization"""
     TEXT = "text"
     HTML = "html"
     MARKDOWN = "markdown"
@@ -35,7 +37,8 @@ class ContentType(Enum):
 
 @dataclass
 class LocalizationRequest:
-    """Localization request data structure"""
+    """
+Localization request data structure"""
     content: str
     source_locale: str
     target_locale: str
@@ -46,7 +49,8 @@ class LocalizationRequest:
 
 @dataclass
 class LocalizationResult:
-    """Localization result data structure"""
+    """
+Localization result data structure"""
     localized_content: str
     source_locale: str
     target_locale: str
@@ -63,7 +67,8 @@ class ContentLocalizer:
     """
     
     def __init__(self):
-        """Initialize content localizer"""
+        """
+Initialize content localizer"""
         self.locale_mappings = {}
         self.format_patterns = {}
         self.cultural_adaptations = {}
@@ -80,7 +85,8 @@ class ContentLocalizer:
         logger.info("🌍 Content Localizer initialized successfully")
     
     def _setup_locale_mappings(self):
-        """Setup locale mappings"""
+        """
+Setup locale mappings"""
         self.locale_mappings = {
             'en': {
                 'name': 'English',
@@ -157,7 +163,8 @@ class ContentLocalizer:
         }
     
     def _setup_format_patterns(self):
-        """Setup formatting patterns"""
+        """
+Setup formatting patterns"""
         self.format_patterns = {
             'number': {
                 'decimal': r'(\d+)\.(\d+)',
@@ -177,7 +184,8 @@ class ContentLocalizer:
         }
     
     def _setup_cultural_adaptations(self):
-        """Setup cultural adaptations"""
+        """
+Setup cultural adaptations"""
         self.cultural_adaptations = {
             'colors': {
                 'en': {'positive': 'green', 'negative': 'red', 'neutral': 'blue'},
@@ -197,7 +205,8 @@ class ContentLocalizer:
         }
     
     def _setup_currency_mappings(self):
-        """Setup currency mappings"""
+        """
+Setup currency mappings"""
         self.currency_mappings = {
             'USD': {'symbol': '$', 'position': 'before', 'locales': ['en', 'en-US']},
             'EUR': {'symbol': '€', 'position': 'after', 'locales': ['fr', 'de', 'es', 'it']},
@@ -208,7 +217,8 @@ class ContentLocalizer:
         }
     
     def _setup_date_patterns(self):
-        """Setup date patterns"""
+        """
+Setup date patterns"""
         self.date_patterns = {
             'en': 'MM/DD/YYYY',
             'en-US': 'MM/DD/YYYY',
@@ -301,7 +311,8 @@ class ContentLocalizer:
             )
     
     def _localize_numbers(self, content: str, source_locale: str, target_locale: str) -> Tuple[str, List[str]]:
-        """Localize number formatting"""
+        """
+Localize number formatting"""
         changes = []
         
         if source_locale not in self.locale_mappings or target_locale not in self.locale_mappings:
@@ -324,7 +335,8 @@ class ContentLocalizer:
         return content, changes
     
     def _localize_dates(self, content: str, source_locale: str, target_locale: str) -> Tuple[str, List[str]]:
-        """Localize date formatting"""
+        """
+Localize date formatting"""
         changes = []
         
         if target_locale not in self.date_patterns:
@@ -355,7 +367,8 @@ class ContentLocalizer:
         return content, changes
     
     def _localize_currency(self, content: str, source_locale: str, target_locale: str) -> Tuple[str, List[str]]:
-        """Localize currency formatting"""
+        """
+Localize currency formatting"""
         changes = []
         
         # Simple USD to EUR conversion example
@@ -373,7 +386,8 @@ class ContentLocalizer:
         return content, changes
     
     def _apply_cultural_adaptations(self, content: str, source_locale: str, target_locale: str) -> Tuple[str, List[str]]:
-        """Apply cultural adaptations"""
+        """
+Apply cultural adaptations"""
         changes = []
         
         # Example: Adapt color references for cultural context
@@ -386,7 +400,8 @@ class ContentLocalizer:
         return content, changes
     
     def _apply_text_direction(self, content: str, target_locale: str, content_type: ContentType) -> Tuple[str, List[str]]:
-        """Apply text direction for RTL languages"""
+        """
+Apply text direction for RTL languages"""
         changes = []
         
         if target_locale in ['ar', 'he'] and content_type == ContentType.HTML:
@@ -402,7 +417,8 @@ class ContentLocalizer:
         return content, changes
     
     def _calculate_localization_confidence(self, original: str, localized: str, changes: List[str]) -> float:
-        """Calculate confidence score for localization"""
+        """
+Calculate confidence score for localization"""
         if original == localized:
             return 0.8  # No changes needed can be good
         
@@ -416,15 +432,18 @@ class ContentLocalizer:
         return min(base_confidence + change_bonus, 0.95)
     
     def get_supported_locales(self) -> List[str]:
-        """Get list of supported locales"""
+        """
+Get list of supported locales"""
         return list(self.locale_mappings.keys())
     
     def get_locale_info(self, locale: str) -> Optional[Dict[str, Any]]:
-        """Get locale configuration information"""
+        """
+Get locale configuration information"""
         return self.locale_mappings.get(locale)
     
     def batch_localize(self, requests: List[LocalizationRequest]) -> List[LocalizationResult]:
-        """Localize multiple content items in batch"""
+        """
+Localize multiple content items in batch"""
         results = []
         for request in requests:
             result = self.localize_content(request)
@@ -432,11 +451,13 @@ class ContentLocalizer:
         return results
     
     def validate_locale(self, locale: str) -> bool:
-        """Validate if locale is supported"""
+        """
+Validate if locale is supported"""
         return locale in self.locale_mappings
     
     def get_cultural_preferences(self, locale: str) -> Dict[str, Any]:
-        """Get cultural preferences for locale"""
+        """
+Get cultural preferences for locale"""
         preferences = {}
         
         if locale in self.locale_mappings:
@@ -470,5 +491,5 @@ __all__ = [
 ]
 
 # Log module initialization
-logger.info("🌍 Content Localizer module loaded successfully")
+logger.info("🌍 Content Localizer module initialized successfully")
 logger.info("✅ Ready for comprehensive content localization")

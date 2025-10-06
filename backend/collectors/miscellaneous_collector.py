@@ -25,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 # Individual platform collector classes (simplified implementations)
 class MiscCollector(BaseCollector):
-    """Miscellaneous content collector."""
+    """
+        Miscellaneous content collector."""
     def __init__(self, **kwargs):
         super().__init__("misc", rate_limit=30)
     
@@ -47,11 +48,13 @@ class MiscCollector(BaseCollector):
         return []
     
     async def collect_from_rss_feed(self, feed_url: str, config: CollectionConfig) -> List[CollectorResult]:
-        """Collect from RSS feeds."""
+        """
+        Collect from RSS feeds."""
         return []
     
     async def scrape_website(self, website_config: Dict[str, Any], config: CollectionConfig) -> List[CollectorResult]:
-        """Scrape website content."""
+        """
+        Scrape website content."""
         return []
 
 class MiscellaneousCollector(BaseCollector):
@@ -63,10 +66,12 @@ class MiscellaneousCollector(BaseCollector):
     """
     
     def __init__(self, platform_configs: Optional[Dict[str, Dict]] = None):
-        """Initialize with platform-specific configurations."""
+        """
+        Initialize with platform-specific configurations."""
         super().__init__("miscellaneous", rate_limit=60)
         
         # Initialize individual platform collectors
+
         configs = platform_configs or {}
         
         self.misc = MiscCollector(**configs.get('misc', {}))
@@ -84,8 +89,10 @@ class MiscellaneousCollector(BaseCollector):
                 try:
                     # Dynamic collector registration for future expansions
                     self.register_specialized_collector(platform_name, platform_config)
+
                 except Exception as e:
                     logger.warning(f"Failed to register specialized collector {platform_name}: {e}")
+
         
         logger.info("Initialized unified miscellaneous collector")
     
@@ -112,20 +119,25 @@ class MiscellaneousCollector(BaseCollector):
             query: Search query
             config: Collection configuration
             platforms: List of platforms to search (default: all)
+
             
         Returns:
             List of collected miscellaneous content from all platforms
         """
         if platforms is None:
             platforms = list(self.collectors.keys())
+
+
         
         results = []
+
         tasks = []
         
         # Create search tasks for each platform
         for platform in platforms:
             if platform in self.collectors:
                 task = self.collectors[platform].search_content(query, config)
+
                 tasks.append((platform, task))
         
         # Execute searches concurrently
@@ -133,9 +145,12 @@ class MiscellaneousCollector(BaseCollector):
             try:
                 platform_results = await task
                 results.extend(platform_results)
+
                 logger.info(f"Collected {len(platform_results)} miscellaneous results from {platform}")
+
             except Exception as e:
                 logger.error(f"Miscellaneous search failed for {platform}: {e}")
+
         
         return results
     
@@ -146,6 +161,7 @@ class MiscellaneousCollector(BaseCollector):
         Args:
             content_id: ID of content to retrieve
             platform: Specific platform (auto-detect if None)
+
             
         Returns:
             Detailed miscellaneous content information
@@ -157,10 +173,12 @@ class MiscellaneousCollector(BaseCollector):
         for platform_name, collector in self.collectors.items():
             try:
                 result = await collector.get_content_details(content_id)
+
                 if result:
                     return result
             except Exception as e:
                 logger.debug(f"Miscellaneous content not found on {platform_name}: {e}")
+
         
         return None
     
@@ -179,21 +197,28 @@ class MiscellaneousCollector(BaseCollector):
         """
         if platforms is None:
             platforms = list(self.collectors.keys())
+
+
         
         results = []
+
         tasks = []
         
         for platform in platforms:
             if platform in self.collectors:
                 task = self.collectors[platform].get_user_content(user_id, config)
+
                 tasks.append((platform, task))
+
         
         for platform, task in tasks:
             try:
                 platform_results = await task
                 results.extend(platform_results)
+
             except Exception as e:
                 logger.error(f"User miscellaneous content collection failed for {platform}: {e}")
+
         
         return results
     
@@ -214,12 +239,15 @@ class MiscellaneousCollector(BaseCollector):
             platforms = list(self.collectors.keys())
         
         # Create async generators for each platform
+
         generators = []
         for platform in platforms:
             if platform in self.collectors:
                 try:
                     gen = self.collectors[platform].monitor_hashtags(hashtags, config)
+
                     generators.append(gen)
+
                 except Exception as e:
                     logger.error(f"Miscellaneous hashtag monitoring failed for {platform}: {e}")
         
@@ -228,11 +256,14 @@ class MiscellaneousCollector(BaseCollector):
             for i, gen in enumerate(generators[:]):
                 try:
                     result = await gen.__anext__()
+
                     yield result
                 except StopAsyncIteration:
                     generators.remove(gen)
+
                 except Exception as e:
                     logger.error(f"Miscellaneous hashtag monitoring error: {e}")
+
                     generators.remove(gen)
     
     async def get_trending_content(self, config: CollectionConfig,
@@ -249,21 +280,28 @@ class MiscellaneousCollector(BaseCollector):
         """
         if platforms is None:
             platforms = list(self.collectors.keys())
+
+
         
         results = []
+
         tasks = []
         
         for platform in platforms:
             if platform in self.collectors:
                 task = self.collectors[platform].get_trending_content(config)
+
                 tasks.append((platform, task))
+
         
         for platform, task in tasks:
             try:
                 platform_results = await task
                 results.extend(platform_results)
+
             except Exception as e:
                 logger.error(f"Trending miscellaneous content collection failed for {platform}: {e}")
+
         
         return results
     
@@ -284,24 +322,31 @@ class MiscellaneousCollector(BaseCollector):
         
         try:
             # Validate API configuration
+
             required_fields = ['endpoint', 'method']
             if not all(field in api_config for field in required_fields):
                 logger.error("Custom API config missing required fields: endpoint, method")
+
                 return results
             
             # Use misc collector to handle custom API calls
+
             custom_results = await self.misc.collect_from_custom_source(
                 source_type='custom_api',
                 source_config=api_config,
                 query=query,
                 config=config
             )
+
             
             results.extend(custom_results)
+
             logger.info(f"Collected {len(custom_results)} results from custom API")
+
             
         except Exception as e:
             logger.error(f"Custom API collection failed: {e}")
+
         
         return results
     
@@ -322,12 +367,17 @@ class MiscellaneousCollector(BaseCollector):
         for feed_url in feed_urls:
             try:
                 # Use misc collector to handle RSS feeds
+
                 feed_results = await self.misc.collect_from_rss_feed(feed_url, config)
+
                 results.extend(feed_results)
+
                 logger.info(f"Collected {len(feed_results)} items from RSS feed: {feed_url}")
+
                 
             except Exception as e:
                 logger.error(f"RSS feed monitoring failed for {feed_url}: {e}")
+
         
         return results
     
@@ -347,18 +397,25 @@ class MiscellaneousCollector(BaseCollector):
         
         try:
             # Validate website configuration
+
             required_fields = ['url', 'selectors']
             if not all(field in website_config for field in required_fields):
                 logger.error("Website config missing required fields: url, selectors")
+
                 return results
             
             # Use misc collector to handle website scraping
+
             scraped_results = await self.misc.scrape_website(website_config, config)
+
             results.extend(scraped_results)
+
             logger.info(f"Scraped {len(scraped_results)} items from website: {website_config['url']}")
+
             
         except Exception as e:
             logger.error(f"Website scraping failed: {e}")
+
         
         return results
     
@@ -389,13 +446,16 @@ class MiscellaneousCollector(BaseCollector):
         for platform_name, collector in self.collectors.items():
             try:
                 # Get user content from each platform
+
                 user_content = await collector.get_user_content(user_identifier, config)
+
                 
                 if user_content:
                     platform_data = {
                         'content_count': len(user_content),
                         'total_engagement': sum(
                             content.engagement_metrics.get('total_engagement', 0)
+
                             for content in user_content
                             if content.engagement_metrics
                         ),
@@ -408,6 +468,7 @@ class MiscellaneousCollector(BaseCollector):
                         platform_data['avg_engagement'] = (
                             platform_data['total_engagement'] / platform_data['content_count']
                         )
+
                     
                     aggregated_data['platforms'][platform_name] = platform_data
                     
@@ -422,6 +483,7 @@ class MiscellaneousCollector(BaseCollector):
                 
             except Exception as e:
                 logger.error(f"Cross-platform aggregation failed for {platform_name}: {e}")
+
                 aggregated_data['platforms'][platform_name] = {'error': str(e)}
         
         return aggregated_data
@@ -443,17 +505,24 @@ class MiscellaneousCollector(BaseCollector):
         for platform_name, collector in self.collectors.items():
             try:
                 # Search for niche-related content
+
                 niche_content = await collector.search_content(niche, config)
+
                 
                 if niche_content:
                     # Analyze platform potential
+
                     total_engagement = sum(
                         content.engagement_metrics.get('total_engagement', 0)
+
                         for content in niche_content
                         if content.engagement_metrics
                     )
+
+
                     
                     avg_engagement = total_engagement / len(niche_content) if niche_content else 0
+
                     
                     opportunity = {
                         'platform': platform_name,
@@ -476,12 +545,14 @@ class MiscellaneousCollector(BaseCollector):
                     }
                     
                     opportunities.append(opportunity)
+
                 
             except Exception as e:
                 logger.error(f"Platform opportunity detection failed for {platform_name}: {e}")
         
         # Sort by opportunity score
         opportunities.sort(key=lambda x: x['opportunity_score'], reverse=True)
+
         
         return opportunities
     
@@ -491,31 +562,41 @@ class MiscellaneousCollector(BaseCollector):
             return 0.0
         
         # Factors: engagement rate, content volume, recency
+
         total_engagement = sum(
             content.engagement_metrics.get('total_engagement', 0)
+
             for content in content_list
             if content.engagement_metrics
         )
+
+
         
         avg_engagement = total_engagement / len(content_list)
         
         # Recency factor (newer content gets higher score)
+
         recent_content = [
             content for content in content_list
             if datetime.fromtimestamp(content.timestamp) > datetime.now() - timedelta(days=30)
         ]
+
         recency_factor = len(recent_content) / len(content_list)
         
         # Volume factor (more content = more opportunity)
+
         volume_factor = min(1.0, len(content_list) / 100)  # Normalize to 0-1
         
         # Combine factors
+
         opportunity_score = (avg_engagement * 0.5 + recency_factor * 0.3 + volume_factor * 0.2)
+
         
         return min(1.0, opportunity_score / 1000)  # Normalize to 0-1 scale
     
     def _assess_competition_level(self, content_list: List[CollectorResult]) -> str:
-        """Assess competition level based on content analysis."""
+        """
+        Assess competition level based on content analysis."""
         if len(content_list) < 10:
             return 'low'
         elif len(content_list) < 50:
@@ -524,9 +605,11 @@ class MiscellaneousCollector(BaseCollector):
             return 'high'
     
     def _suggest_strategy(self, platform: str, content_list: List[CollectorResult]) -> str:
-        """Suggest strategy based on platform and content analysis."""
+        """
+        Suggest strategy based on platform and content analysis."""
         avg_engagement = sum(
             content.engagement_metrics.get('total_engagement', 0)
+
             for content in content_list
             if content.engagement_metrics
         ) / len(content_list) if content_list else 0
@@ -552,5 +635,6 @@ class MiscellaneousCollector(BaseCollector):
         
         for platform_name, collector in self.collectors.items():
             status['platforms'][platform_name] = collector.get_platform_info()
+
         
         return status

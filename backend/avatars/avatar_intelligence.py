@@ -25,7 +25,8 @@ from .facial_expressions import BaseEmotion, ComplexEmotion
 
 
 class PersonalityTrait(Enum):
-    """Traits de personnalité fondamentaux"""
+    """
+        Traits de personnalité fondamentaux"""
     EXTROVERT = "extrovert"
     INTROVERT = "introvert"
     OPTIMISTIC = "optimistic"
@@ -103,7 +104,8 @@ class EmotionalState:
 
 @dataclass
 class BehaviorPattern:
-    """Modèle de comportement"""
+    """
+        Modèle de comportement"""
     behavior_id: str
     behavior_type: BehaviorType
     triggers: List[str]
@@ -117,7 +119,8 @@ class BehaviorPattern:
 
 @dataclass
 class InteractionMemory:
-    """Mémoire d'interaction"""
+    """
+        Mémoire d'interaction"""
     interaction_id: str
     user_id: Optional[str] = None
     context: InteractionContext = InteractionContext.PERSONAL_CHAT
@@ -139,9 +142,12 @@ class EmotionalIntelligence:
     
     async def analyze_emotional_context(self, input_text: str, 
                                       context: InteractionContext) -> EmotionalState:
-        """Analyse du contexte émotionnel"""
+        """
+        Analyse du contexte émotionnel"""
         try:
             # Analyse basique du sentiment (simulation)
+
+
             emotional_keywords = {
                 BaseEmotion.HAPPINESS: ['happy', 'joy', 'excited', 'great', 'awesome', 'love'],
                 BaseEmotion.SADNESS: ['sad', 'sorry', 'down', 'disappointed', 'upset'],
@@ -150,30 +156,38 @@ class EmotionalIntelligence:
                 BaseEmotion.SURPRISE: ['wow', 'amazing', 'unexpected', 'surprised'],
                 BaseEmotion.DISGUST: ['disgusting', 'awful', 'terrible', 'horrible']
             }
+
             
             detected_emotion = BaseEmotion.NEUTRAL
             max_matches = 0
             
             for emotion, keywords in emotional_keywords.items():
                 matches = sum(1 for keyword in keywords if keyword in input_text.lower())
+
                 if matches > max_matches:
                     max_matches = matches
+
                     detected_emotion = matches > 0 and emotion or BaseEmotion.NEUTRAL
             
             # Calcul de l'intensité
             intensity = min(1.0, max_matches * 0.3 + 0.2)
+
+
             
             emotional_state = EmotionalState(
                 primary_emotion=detected_emotion,
                 intensity=intensity,
                 triggers=[input_text[:50]]
             )
+
             
             self.emotional_history.append(emotional_state)
+
             return emotional_state
             
         except Exception as e:
             self.logger.error(f"Erreur analyse émotionnelle: {e}")
+
             return EmotionalState(primary_emotion=BaseEmotion.NEUTRAL)
     
     async def adapt_response_emotion(self, response: str, 
@@ -202,10 +216,14 @@ class EmotionalIntelligence:
                     'tone': 'confident'
                 }
             }
+
             
             modifier = emotion_modifiers.get(target_emotion.primary_emotion, {})
+
             if modifier:
                 prefix = random.choice(modifier.get('prefix', ['']))
+
+
                 adapted_response = f"{prefix}{response}"
                 return adapted_response
             
@@ -213,11 +231,13 @@ class EmotionalIntelligence:
             
         except Exception as e:
             self.logger.error(f"Erreur adaptation émotionnelle: {e}")
+
             return response
     
     def get_emotional_trend(self, hours: int = 24) -> Dict[str, float]:
         """Analyse des tendances émotionnelles"""
         cutoff_time = datetime.now() - timedelta(hours=hours)
+
         recent_emotions = [
             state for state in self.emotional_history 
             if state.timestamp >= cutoff_time
@@ -225,18 +245,21 @@ class EmotionalIntelligence:
         
         if not recent_emotions:
             return {}
+
         
         emotion_counts = {}
         for state in recent_emotions:
             emotion = state.primary_emotion.value
             emotion_counts[emotion] = emotion_counts.get(emotion, 0) + 1
+
         
         total = len(recent_emotions)
         return {emotion: count/total for emotion, count in emotion_counts.items()}
 
 
 class BehaviorEngine:
-    """Moteur comportements dynamiques"""
+    """
+        Moteur comportements dynamiques"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -245,7 +268,8 @@ class BehaviorEngine:
         self._initialize_default_behaviors()
     
     def _initialize_default_behaviors(self):
-        """Initialisation des comportements par défaut"""
+        """
+        Initialisation des comportements par défaut"""
         default_behaviors = [
             BehaviorPattern(
                 behavior_id="greeting_enthusiastic",
@@ -289,14 +313,18 @@ class BehaviorEngine:
                 match_score = await self._calculate_behavior_match(
                     behavior, input_text, context, personality
                 )
+
                 if match_score > 0.3:  # Seuil de correspondance
                     matching_behaviors.append((behavior, match_score))
+
             
             if not matching_behaviors:
                 return None
             
             # Sélection pondérée par le score et la probabilité
             matching_behaviors.sort(key=lambda x: x[1] * x[0].probability, reverse=True)
+
+
             selected_behavior = matching_behaviors[0][0]
             
             # Mise à jour des statistiques
@@ -306,6 +334,7 @@ class BehaviorEngine:
             
         except Exception as e:
             self.logger.error(f"Erreur sélection comportement: {e}")
+
             return None
     
     async def _calculate_behavior_match(self, behavior: BehaviorPattern, 
@@ -331,7 +360,8 @@ class BehaviorEngine:
     
     async def _calculate_personality_match(self, behavior: BehaviorPattern,
                                          personality: PersonalityProfile) -> float:
-        """Calcul de la correspondance avec la personnalité"""
+        """
+        Calcul de la correspondance avec la personnalité"""
         # Correspondance basée sur les traits de personnalité
         if behavior.behavior_type == BehaviorType.GREETING:
             if PersonalityTrait.EXTROVERT in personality.primary_traits:
@@ -349,23 +379,27 @@ class BehaviorEngine:
     
     async def learn_from_interaction(self, behavior_id: str, 
                                    satisfaction_score: float) -> None:
-        """Apprentissage depuis l'interaction"""
+        """
+        Apprentissage depuis l'interaction"""
         if behavior_id in self.behavior_patterns:
             behavior = self.behavior_patterns[behavior_id]
             
             # Mise à jour du taux de succès
+
             total_weight = behavior.usage_count * behavior.success_rate + satisfaction_score
             behavior.success_rate = total_weight / (behavior.usage_count + 1)
             
             # Ajustement de la probabilité basé sur le succès
             if satisfaction_score > 0.7:
                 behavior.probability = min(1.0, behavior.probability * 1.1)
+
             elif satisfaction_score < 0.3:
                 behavior.probability = max(0.1, behavior.probability * 0.9)
 
 
 class InteractionManager:
-    """Gestion interactions utilisateur"""
+    """
+        Gestion interactions utilisateur"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -374,11 +408,13 @@ class InteractionManager:
     
     async def process_interaction(self, user_input: str, user_id: Optional[str] = None,
                                 context: InteractionContext = InteractionContext.PERSONAL_CHAT) -> Dict[str, Any]:
-        """Traitement complet d'une interaction"""
+        """
+        Traitement complet d'une interaction"""
         try:
             interaction_id = str(uuid.uuid4())
             
             # Création de la mémoire d'interaction
+
             memory = InteractionMemory(
                 interaction_id=interaction_id,
                 user_id=user_id,
@@ -387,11 +423,15 @@ class InteractionManager:
             )
             
             # Analyse du profil utilisateur
+
             user_profile = await self._get_or_create_user_profile(user_id)
             
             # Génération de la réponse
+
             response_data = await self._generate_response(user_input, context, user_profile)
+
             memory.avatar_response = response_data.get('text', '')
+
             memory.emotional_state = response_data.get('emotional_state')
             
             # Sauvegarde de l'interaction
@@ -400,6 +440,7 @@ class InteractionManager:
             # Mise à jour du profil utilisateur
             if user_id:
                 await self._update_user_profile(user_id, memory)
+
             
             return {
                 'interaction_id': interaction_id,
@@ -409,6 +450,7 @@ class InteractionManager:
             
         except Exception as e:
             self.logger.error(f"Erreur traitement interaction: {e}")
+
             return {
                 'interaction_id': str(uuid.uuid4()),
                 'response': {'text': 'Je suis désolé, je rencontre une difficulté technique.'},
@@ -434,8 +476,10 @@ class InteractionManager:
     
     async def _generate_response(self, user_input: str, context: InteractionContext,
                                user_profile: Dict[str, Any]) -> Dict[str, Any]:
-        """Génération de réponse personnalisée"""
+        """
+        Génération de réponse personnalisée"""
         # Simulation de génération de réponse intelligente
+
         response_templates = [
             "C'est une excellente question! Voici ce que je pense...",
             "J'apprécie que vous me demandiez cela. Mon point de vue est...",
@@ -443,8 +487,10 @@ class InteractionManager:
             "Je comprends votre perspective. De mon côté...",
             "C'est un sujet fascinant! Permettez-moi de partager..."
         ]
+
         
         response_text = random.choice(response_templates)
+
         
         return {
             'text': response_text,
@@ -470,7 +516,8 @@ class InteractionManager:
                 })
     
     def get_interaction_analytics(self, user_id: Optional[str] = None) -> Dict[str, Any]:
-        """Analyse des interactions"""
+        """
+        Analyse des interactions"""
         if user_id:
             user_interactions = [m for m in self.interaction_history if m.user_id == user_id]
         else:
@@ -491,7 +538,8 @@ class InteractionManager:
 
 
 class AvatarPersonality:
-    """Personnalité et comportements IA"""
+    """
+        Personnalité et comportements IA"""
     
     def __init__(self, personality_profile: Optional[PersonalityProfile] = None):
         self.logger = logging.getLogger(__name__)
@@ -502,7 +550,8 @@ class AvatarPersonality:
         self.learning_mode = LearningMode.ACTIVE
     
     def _create_default_personality(self) -> PersonalityProfile:
-        """Création d'une personnalité par défaut équilibrée"""
+        """
+        Création d'une personnalité par défaut équilibrée"""
         return PersonalityProfile(
             primary_traits=[PersonalityTrait.OPTIMISTIC, PersonalityTrait.EMPATHETIC],
             secondary_traits=[PersonalityTrait.CREATIVE, PersonalityTrait.ENERGETIC],
@@ -517,19 +566,23 @@ class AvatarPersonality:
     async def process_user_interaction(self, user_input: str, 
                                      context: InteractionContext = InteractionContext.PERSONAL_CHAT,
                                      user_id: Optional[str] = None) -> Dict[str, Any]:
-        """Traitement complet d'une interaction utilisateur"""
+        """
+        Traitement complet d'une interaction utilisateur"""
         try:
             # Analyse émotionnelle
+
             emotional_state = await self.emotional_intelligence.analyze_emotional_context(
                 user_input, context
             )
             
             # Sélection du comportement
+
             behavior = await self.behavior_engine.select_behavior(
                 user_input, context, self.personality
             )
             
             # Génération de la réponse
+
             interaction_result = await self.interaction_manager.process_interaction(
                 user_input, user_id, context
             )
@@ -537,20 +590,26 @@ class AvatarPersonality:
             # Adaptation émotionnelle de la réponse
             if behavior and behavior.responses:
                 selected_response = random.choice(behavior.responses)
+
+
                 adapted_text = await self.emotional_intelligence.adapt_response_emotion(
                     selected_response.get('text', ''), emotional_state
                 )
+
                 selected_response['text'] = adapted_text
                 interaction_result['response'].update(selected_response)
             
             # Apprentissage (si activé)
+
             if self.learning_mode in [LearningMode.ACTIVE, LearningMode.REINFORCEMENT]:
                 await self._learn_from_interaction(interaction_result, behavior)
+
             
             return interaction_result
             
         except Exception as e:
             self.logger.error(f"Erreur traitement interaction: {e}")
+
             return {
                 'response': {
                     'text': 'Je rencontre une difficulté pour répondre à votre message.',
@@ -564,22 +623,27 @@ class AvatarPersonality:
         """Apprentissage depuis l'interaction"""
         if behavior and self.learning_mode == LearningMode.REINFORCEMENT:
             # Simulation d'un score de satisfaction
+
             satisfaction_score = random.uniform(0.6, 0.9)
+
             await self.behavior_engine.learn_from_interaction(
                 behavior.behavior_id, satisfaction_score
             )
     
     def update_personality_trait(self, trait: PersonalityTrait, intensity: float) -> None:
-        """Mise à jour d'un trait de personnalité"""
+        """
+        Mise à jour d'un trait de personnalité"""
         if trait in self.personality.primary_traits:
             # Ajustement des attributs personnalisés
+
             trait_name = trait.value
             self.personality.custom_attributes[trait_name] = intensity
         else:
             self.personality.secondary_traits.append(trait)
     
     def get_personality_summary(self) -> Dict[str, Any]:
-        """Résumé de la personnalité"""
+        """
+        Résumé de la personnalité"""
         return {
             'primary_traits': [trait.value for trait in self.personality.primary_traits],
             'secondary_traits': [trait.value for trait in self.personality.secondary_traits],

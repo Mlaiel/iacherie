@@ -93,7 +93,8 @@ class CreatorProfile:
 
 @dataclass
 class SmartContract:
-    """Contrat intelligent de collaboration"""
+    """
+        Contrat intelligent de collaboration"""
     contract_id: str
     participants: List[str]
     contract_type: ContractType
@@ -111,7 +112,8 @@ class SmartContract:
 
 @dataclass
 class CollaborationWorkspace:
-    """Espace de travail collaboratif"""
+    """
+        Espace de travail collaboratif"""
     workspace_id: str
     workspace_type: WorkspaceType
     participants: List[str]
@@ -128,7 +130,8 @@ class CollaborationWorkspace:
 
 @dataclass
 class CollaborationWorkflow:
-    """Workflow de collaboration"""
+    """
+        Workflow de collaboration"""
     workflow_id: str
     collaboration_id: str
     stages: List[Dict[str, Any]]
@@ -142,34 +145,40 @@ class CollaborationWorkflow:
     updated_at: datetime
 
 class CollaborationManager:
-    """Gestionnaire principal de collaboration"""
+    """
+        Gestionnaire principal de collaboration"""
     
     def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.encryption_key = Fernet.generate_key()
         self.cipher = Fernet(self.encryption_key)
+
         
     async def create_collaboration(
         self,
         initiator_id: str,
         collaboration_request: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Créer une nouvelle collaboration"""
+        """
+        Créer une nouvelle collaboration"""
         try:
             collaboration_id = str(uuid.uuid4())
             
             # Analyser les requirements de collaboration
+
             collaboration_analysis = await self._analyze_collaboration_requirements(
                 collaboration_request
             )
             
             # Suggérer des créateurs potentiels
+
             suggested_creators = await self._suggest_collaboration_partners(
                 initiator_id, collaboration_request
             )
             
             # Créer le profil de collaboration
+
             collaboration_profile = {
                 "collaboration_id": collaboration_id,
                 "initiator_id": initiator_id,
@@ -197,8 +206,10 @@ class CollaborationManager:
                 await self._send_collaboration_invitation(
                     collaboration_id, creator_id, collaboration_profile
                 )
+
             
             logger.info(f"Created collaboration {collaboration_id} for initiator {initiator_id}")
+
             
             return {
                 "success": True,
@@ -210,6 +221,7 @@ class CollaborationManager:
             
         except Exception as e:
             logger.error(f"Failed to create collaboration: {e}")
+
             raise
 
     async def _analyze_collaboration_requirements(
@@ -221,6 +233,7 @@ class CollaborationManager:
             requirements = collaboration_request.get("requirements", {})
             
             # Analyse des compétences requises
+
             required_skills = await self._extract_required_skills(requirements)
             
             # Estimation de la complexité
@@ -229,19 +242,23 @@ class CollaborationManager:
             )
             
             # Estimation du budget optimal
+
             budget_estimation = await self._estimate_optimal_budget(
                 required_skills, complexity_score
             )
             
             # Analyse de la timeline
+
             timeline_analysis = await self._analyze_timeline_feasibility(
                 collaboration_request.get("timeline", {})
             )
             
             # Recommandations d'amélioration
+
             recommendations = await self._generate_collaboration_recommendations(
                 collaboration_request, complexity_score
             )
+
             
             return {
                 "required_skills": required_skills,
@@ -258,6 +275,7 @@ class CollaborationManager:
             
         except Exception as e:
             logger.error(f"Failed to analyze collaboration requirements: {e}")
+
             raise
 
 class SmartContracts:
@@ -268,6 +286,7 @@ class SmartContracts:
         self.db = db_session
         self.encryption_key = Fernet.generate_key()
         self.cipher = Fernet(self.encryption_key)
+
         
     async def create_smart_contract(
         self,
@@ -275,30 +294,38 @@ class SmartContracts:
         participants: List[str],
         contract_terms: Dict[str, Any]
     ) -> SmartContract:
-        """Créer un contrat intelligent"""
+        """
+        Créer un contrat intelligent"""
         try:
             contract_id = str(uuid.uuid4())
             
             # Valider les termes du contrat
+
             validated_terms = await self._validate_contract_terms(contract_terms)
             
             # Générer les conditions automatiques
+
             automated_conditions = await self._generate_automated_conditions(
                 validated_terms
             )
             
             # Calculer la répartition des revenus optimale
+
             revenue_split = await self._calculate_optimal_revenue_split(
                 participants, validated_terms
             )
             
             # Créer les jalons automatiques
+
             milestones = await self._create_automated_milestones(
                 validated_terms, participants
             )
             
             # Configurer l'escrow si nécessaire
+
             escrow_config = await self._configure_escrow(validated_terms)
+
+
             
             contract = SmartContract(
                 contract_id=contract_id,
@@ -308,7 +335,8 @@ class SmartContracts:
                 revenue_split=revenue_split,
                 milestones=milestones,
                 start_date=datetime.fromisoformat(validated_terms.get("start_date")),
-                end_date=datetime.fromisoformat(validated_terms.get("end_date")) 
+                end_date=datetime.fromisoformat(validated_terms.get("end_date"))
+ 
                     if validated_terms.get("end_date") else None,
                 status=CollaborationStatus.PENDING,
                 escrow_amount=escrow_config.get("amount"),
@@ -319,6 +347,7 @@ class SmartContracts:
             )
             
             # Sauvegarder le contrat
+
             contract_data = {
                 "contract_id": contract_id,
                 "collaboration_id": collaboration_id,
@@ -334,9 +363,11 @@ class SmartContracts:
             }
             
             # Chiffrer les données sensibles
+
             encrypted_contract = self.cipher.encrypt(
                 json.dumps(contract_data).encode()
             )
+
             
             await self.redis.setex(
                 f"smart_contract:{contract_id}",
@@ -346,13 +377,16 @@ class SmartContracts:
             
             # Envoyer pour signature
             await self._initiate_contract_signing(contract, participants)
+
             
             logger.info(f"Created smart contract {contract_id} for collaboration {collaboration_id}")
+
             
             return contract
             
         except Exception as e:
             logger.error(f"Failed to create smart contract: {e}")
+
             raise
 
 class RevenueSplitter:
@@ -369,22 +403,27 @@ class RevenueSplitter:
         revenue_source: str,
         metadata: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Traiter la distribution des revenus"""
+        """
+        Traiter la distribution des revenus"""
         try:
             # Récupérer le contrat de collaboration
+
             contract = await self._get_collaboration_contract(collaboration_id)
             
             # Calculer la distribution selon les termes du contrat
+
             distribution_calculation = await self._calculate_revenue_distribution(
                 contract, revenue_amount, revenue_source, metadata
             )
             
             # Appliquer les taxes et frais
+
             tax_calculation = await self._calculate_taxes_and_fees(
                 distribution_calculation, contract
             )
             
             # Traiter les paiements automatiques
+
             payment_results = await self._process_automatic_payments(
                 distribution_calculation, tax_calculation
             )
@@ -395,6 +434,7 @@ class RevenueSplitter:
             )
             
             # Générer le rapport de distribution
+
             distribution_report = {
                 "collaboration_id": collaboration_id,
                 "total_revenue": float(revenue_amount),
@@ -416,8 +456,10 @@ class RevenueSplitter:
             await self._send_revenue_notifications(
                 contract["participants"], distribution_report
             )
+
             
             logger.info(f"Processed revenue distribution for collaboration {collaboration_id}: ${revenue_amount}")
+
             
             return {
                 "success": True,
@@ -428,6 +470,7 @@ class RevenueSplitter:
             
         except Exception as e:
             logger.error(f"Failed to process revenue distribution: {e}")
+
             raise
 
 class WorkspaceManager:
@@ -442,29 +485,36 @@ class WorkspaceManager:
         collaboration_id: str,
         workspace_config: Dict[str, Any]
     ) -> CollaborationWorkspace:
-        """Créer un espace de travail collaboratif"""
+        """
+        Créer un espace de travail collaboratif"""
         try:
             workspace_id = str(uuid.uuid4())
             
             # Configurer l'espace de travail selon le type
+
             workspace_setup = await self._setup_workspace_environment(
                 workspace_config
             )
             
             # Configurer les permissions
+
             permissions = await self._configure_workspace_permissions(
                 workspace_config["participants"], workspace_config
             )
             
             # Initialiser les canaux de communication
+
             communication_channels = await self._initialize_communication_channels(
                 workspace_config["participants"]
             )
             
             # Préparer les ressources
+
             resources = await self._prepare_workspace_resources(
                 workspace_config["workspace_type"]
             )
+
+
             
             workspace = CollaborationWorkspace(
                 workspace_id=workspace_id,
@@ -483,6 +533,7 @@ class WorkspaceManager:
             )
             
             # Sauvegarder l'espace de travail
+
             workspace_data = {
                 "workspace_id": workspace_id,
                 "collaboration_id": collaboration_id,
@@ -506,13 +557,16 @@ class WorkspaceManager:
             
             # Notifier les participants
             await self._notify_workspace_creation(workspace)
+
             
             logger.info(f"Created collaboration workspace {workspace_id}")
+
             
             return workspace
             
         except Exception as e:
             logger.error(f"Failed to create collaboration workspace: {e}")
+
             raise
 
 class CollaborationOrchestratorService:
@@ -525,23 +579,30 @@ class CollaborationOrchestratorService:
         self.smart_contracts = SmartContracts(redis_client, db_session)
         self.revenue_splitter = RevenueSplitter(redis_client, db_session)
         self.workspace_manager = WorkspaceManager(redis_client, db_session)
+
         
     async def initialize_service(self) -> Dict[str, Any]:
-        """Initialiser le service d'orchestration"""
+        """
+        Initialiser le service d'orchestration"""
         try:
             # Vérifier les connexions
             await self.redis.ping()
             
             # Charger les configurations
+
             service_config = await self._load_service_configuration()
             
             # Initialiser les composants
+
             components_status = await self._initialize_components()
             
             # Démarrer les processus de background
+
             background_tasks = await self._start_background_processes()
+
             
             logger.info("🤝 Collaboration Orchestrator Service initialized successfully")
+
             
             return {
                 "service": "CollaborationOrchestratorService",
@@ -555,6 +616,7 @@ class CollaborationOrchestratorService:
             
         except Exception as e:
             logger.error(f"Failed to initialize collaboration orchestrator service: {e}")
+
             raise
     
     async def orchestrate_collaboration_lifecycle(
@@ -564,13 +626,17 @@ class CollaborationOrchestratorService:
         """Orchestrer le cycle de vie complet d'une collaboration"""
         try:
             # Étape 1: Créer la collaboration
+
             collaboration_result = await self.collaboration_manager.create_collaboration(
                 collaboration_request["initiator_id"], collaboration_request
             )
+
+
             
             collaboration_id = collaboration_result["collaboration_id"]
             
             # Étape 2: Créer le contrat intelligent
+
             contract = await self.smart_contracts.create_smart_contract(
                 collaboration_id,
                 collaboration_request["participants"],
@@ -578,20 +644,25 @@ class CollaborationOrchestratorService:
             )
             
             # Étape 3: Créer l'espace de travail
+
             workspace = await self.workspace_manager.create_collaboration_workspace(
                 collaboration_id,
                 collaboration_request["workspace_config"]
             )
             
             # Étape 4: Configurer le workflow
+
             workflow = await self._configure_collaboration_workflow(
                 collaboration_id, collaboration_request
             )
             
             # Étape 5: Activer le monitoring
+
             monitoring_config = await self._activate_collaboration_monitoring(
                 collaboration_id
             )
+
+
             
             orchestration_result = {
                 "collaboration_id": collaboration_id,
@@ -607,6 +678,7 @@ class CollaborationOrchestratorService:
             }
             
             logger.info(f"Successfully orchestrated collaboration lifecycle: {collaboration_id}")
+
             
             return {
                 "success": True,
@@ -618,6 +690,7 @@ class CollaborationOrchestratorService:
             
         except Exception as e:
             logger.error(f"Failed to orchestrate collaboration lifecycle: {e}")
+
             raise
     
     # Méthodes privées pour l'implémentation détaillée...

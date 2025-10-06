@@ -19,13 +19,15 @@ logging.basicConfig(
 logger = logging.getLogger("iacherie")
 
 def get_logger(name: Optional[str] = None) -> logging.Logger:
-    """Get a logger instance"""
+    """
+Get a logger instance"""
     if name:
         return logging.getLogger(f"iacherie.{name}")
     return logger
 
 def set_log_level(level: str) -> None:
-    """Set logging level"""
+    """
+Set logging level"""
     logger.setLevel(getattr(logging, level.upper()))
 
 __all__ = ["logger", "get_logger", "set_log_level"]

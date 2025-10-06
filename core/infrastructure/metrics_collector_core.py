@@ -41,7 +41,8 @@ from contextlib import asynccontextmanager
 logger = logging.getLogger(__name__)
 
 class MetricType(str, Enum):
-    """Types of metrics"""
+    """
+Types of metrics"""
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -49,7 +50,8 @@ class MetricType(str, Enum):
     TIMER = "timer"
 
 class MetricUnit(str, Enum):
-    """Metric units"""
+    """
+Metric units"""
     NONE = "none"
     BYTES = "bytes"
     SECONDS = "seconds"
@@ -61,14 +63,16 @@ class MetricUnit(str, Enum):
 
 @dataclass
 class MetricValue:
-    """A single metric value with timestamp"""
+    """
+A single metric value with timestamp"""
     value: Union[int, float]
     timestamp: float = field(default_factory=time.time)
     labels: Dict[str, str] = field(default_factory=dict)
 
 @dataclass
 class MetricSample:
-    """Metric sample with metadata"""
+    """
+Metric sample with metadata"""
     name: str
     metric_type: MetricType
     value: Union[int, float]
@@ -78,7 +82,8 @@ class MetricSample:
     help_text: str = ""
 
 class MetricAggregationType(str, Enum):
-    """Metric aggregation types"""
+    """
+Metric aggregation types"""
     SUM = "sum"
     AVERAGE = "average"
     MIN = "min"
@@ -90,7 +95,8 @@ class MetricAggregationType(str, Enum):
 
 @dataclass
 class AggregatedMetric:
-    """Aggregated metric data"""
+    """
+Aggregated metric data"""
     name: str
     aggregation_type: MetricAggregationType
     value: float
@@ -101,7 +107,8 @@ class AggregatedMetric:
     labels: Dict[str, str] = field(default_factory=dict)
 
 class Counter:
-    """Thread-safe counter metric"""
+    """
+Thread-safe counter metric"""
     
     def __init__(self, name: str, help_text: str = "", labels: Optional[Dict[str, str]] = None):
         self.name = name
@@ -111,24 +118,28 @@ class Counter:
         self._lock = threading.Lock()
     
     def inc(self, amount: Union[int, float] = 1):
-        """Increment counter"""
+        """
+Increment counter"""
         with self._lock:
             if amount < 0:
                 raise ValueError("Counter increment must be non-negative")
             self._value += amount
     
     def get(self) -> float:
-        """Get current value"""
+        """
+Get current value"""
         with self._lock:
             return self._value
     
     def reset(self):
-        """Reset counter to zero"""
+        """
+Reset counter to zero"""
         with self._lock:
             self._value = 0
 
 class Gauge:
-    """Thread-safe gauge metric"""
+    """
+Thread-safe gauge metric"""
     
     def __init__(self, name: str, help_text: str = "", labels: Optional[Dict[str, str]] = None):
         self.name = name
@@ -138,27 +149,32 @@ class Gauge:
         self._lock = threading.Lock()
     
     def set(self, value: Union[int, float]):
-        """Set gauge value"""
+        """
+Set gauge value"""
         with self._lock:
             self._value = value
     
     def inc(self, amount: Union[int, float] = 1):
-        """Increment gauge"""
+        """
+Increment gauge"""
         with self._lock:
             self._value += amount
     
     def dec(self, amount: Union[int, float] = 1):
-        """Decrement gauge"""
+        """
+Decrement gauge"""
         with self._lock:
             self._value -= amount
     
     def get(self) -> float:
-        """Get current value"""
+        """
+Get current value"""
         with self._lock:
             return self._value
 
 class Histogram:
-    """Thread-safe histogram metric"""
+    """
+Thread-safe histogram metric"""
     
     def __init__(self, name: str, buckets: Optional[List[float]] = None, 
                  help_text: str = "", labels: Optional[Dict[str, str]] = None):
@@ -172,7 +188,8 @@ class Histogram:
         self._lock = threading.Lock()
     
     def observe(self, value: Union[int, float]):
-        """Observe a value"""
+        """
+Observe a value"""
         with self._lock:
             self._sum += value
             self._count += 1
@@ -182,22 +199,26 @@ class Histogram:
                     self._bucket_counts[bucket] += 1
     
     def get_bucket_counts(self) -> Dict[float, int]:
-        """Get bucket counts"""
+        """
+Get bucket counts"""
         with self._lock:
             return self._bucket_counts.copy()
     
     def get_sum(self) -> float:
-        """Get sum of all observed values"""
+        """
+Get sum of all observed values"""
         with self._lock:
             return self._sum
     
     def get_count(self) -> int:
-        """Get count of observations"""
+        """
+Get count of observations"""
         with self._lock:
             return self._count
     
     def get_percentile(self, percentile: float) -> float:
-        """Estimate percentile value"""
+        """
+Estimate percentile value"""
         # Simplified percentile estimation
         with self._lock:
             if self._count == 0:
@@ -214,7 +235,8 @@ class Histogram:
             return max(self.buckets)
 
 class Timer:
-    """Timer metric for measuring durations"""
+    """
+Timer metric for measuring durations"""
     
     def __init__(self, name: str, help_text: str = "", labels: Optional[Dict[str, str]] = None):
         self.name = name
@@ -225,7 +247,8 @@ class Timer:
         self._lock = threading.Lock()
     
     def start(self, operation_id: Optional[str] = None) -> str:
-        """Start timing an operation"""
+        """
+Start timing an operation"""
         if operation_id is None:
             operation_id = f"{threading.get_ident()}_{time.time()}"
         
@@ -235,7 +258,8 @@ class Timer:
         return operation_id
     
     def stop(self, operation_id: str) -> float:
-        """Stop timing and record duration"""
+        """
+Stop timing and record duration"""
         end_time = time.time()
         
         with self._lock:
@@ -247,7 +271,8 @@ class Timer:
     
     @asynccontextmanager
     async def time_async(self):
-        """Async context manager for timing"""
+        """
+Async context manager for timing"""
         start_time = time.time()
         try:
             yield
@@ -256,7 +281,8 @@ class Timer:
             self.histogram.observe(duration)
     
     def time_function(self, func: Callable) -> Callable:
-        """Decorator for timing functions"""
+        """
+Decorator for timing functions"""
         def wrapper(*args, **kwargs):
             operation_id = self.start()
             try:
@@ -279,14 +305,16 @@ class Timer:
             return wrapper
 
 class MetricRegistry:
-    """Registry for managing metrics"""
+    """
+Registry for managing metrics"""
     
     def __init__(self):
         self.metrics: Dict[str, Union[Counter, Gauge, Histogram, Timer]] = {}
         self._lock = threading.Lock()
     
     def register_counter(self, name: str, help_text: str = "", labels: Optional[Dict[str, str]] = None) -> Counter:
-        """Register a counter metric"""
+        """
+Register a counter metric"""
         with self._lock:
             if name in self.metrics:
                 metric = self.metrics[name]
@@ -300,7 +328,8 @@ class MetricRegistry:
             return counter
     
     def register_gauge(self, name: str, help_text: str = "", labels: Optional[Dict[str, str]] = None) -> Gauge:
-        """Register a gauge metric"""
+        """
+Register a gauge metric"""
         with self._lock:
             if name in self.metrics:
                 metric = self.metrics[name]
@@ -315,7 +344,8 @@ class MetricRegistry:
     
     def register_histogram(self, name: str, buckets: Optional[List[float]] = None,
                           help_text: str = "", labels: Optional[Dict[str, str]] = None) -> Histogram:
-        """Register a histogram metric"""
+        """
+Register a histogram metric"""
         with self._lock:
             if name in self.metrics:
                 metric = self.metrics[name]
@@ -329,7 +359,8 @@ class MetricRegistry:
             return histogram
     
     def register_timer(self, name: str, help_text: str = "", labels: Optional[Dict[str, str]] = None) -> Timer:
-        """Register a timer metric"""
+        """
+Register a timer metric"""
         with self._lock:
             if name in self.metrics:
                 metric = self.metrics[name]
@@ -343,17 +374,20 @@ class MetricRegistry:
             return timer
     
     def get_metric(self, name: str) -> Optional[Union[Counter, Gauge, Histogram, Timer]]:
-        """Get metric by name"""
+        """
+Get metric by name"""
         with self._lock:
             return self.metrics.get(name)
     
     def list_metrics(self) -> List[str]:
-        """List all metric names"""
+        """
+List all metric names"""
         with self._lock:
             return list(self.metrics.keys())
     
     def collect_all(self) -> List[MetricSample]:
-        """Collect all metrics as samples"""
+        """
+Collect all metrics as samples"""
         samples = []
         
         with self._lock:
@@ -414,7 +448,8 @@ class MetricRegistry:
         return samples
 
 class MetricsAggregator:
-    """Aggregates metrics over time windows"""
+    """
+Aggregates metrics over time windows"""
     
     def __init__(self, window_seconds: int = 60):
         self.window_seconds = window_seconds
@@ -422,7 +457,8 @@ class MetricsAggregator:
         self._lock = threading.Lock()
     
     def add_value(self, name: str, value: Union[int, float], labels: Optional[Dict[str, str]] = None):
-        """Add a metric value"""
+        """
+Add a metric value"""
         metric_value = MetricValue(value=value, labels=labels or {})
         
         with self._lock:
@@ -435,7 +471,8 @@ class MetricsAggregator:
             ]
     
     def aggregate(self, name: str, aggregation_type: MetricAggregationType) -> Optional[AggregatedMetric]:
-        """Aggregate metric values"""
+        """
+Aggregate metric values"""
         with self._lock:
             values = self.metric_values.get(name, [])
             if not values:
@@ -475,7 +512,8 @@ class MetricsAggregator:
             )
 
 class SystemMetricsCollector:
-    """Collects system metrics"""
+    """
+Collects system metrics"""
     
     def __init__(self, registry: MetricRegistry):
         self.registry = registry
@@ -491,7 +529,8 @@ class SystemMetricsCollector:
         self.enabled = True
     
     async def collect_system_metrics(self):
-        """Collect system metrics"""
+        """
+Collect system metrics"""
         if not self.enabled:
             return
         
@@ -525,7 +564,8 @@ class SystemMetricsCollector:
             logger.error(f"Failed to collect system metrics: {e}")
 
 class MetricsCollectorCore:
-    """Advanced enterprise metrics collector core"""
+    """
+Advanced enterprise metrics collector core"""
     
     def __init__(self, level: str = "enterprise"):
         self.level = level
@@ -545,7 +585,8 @@ class MetricsCollectorCore:
         self._setup_business_metrics()
     
     def _get_performance_config(self) -> Dict[str, Any]:
-        """Get performance configuration based on level"""
+        """
+Get performance configuration based on level"""
         configs = {
             "basic": {
                 "collection_interval": 60,
@@ -575,7 +616,8 @@ class MetricsCollectorCore:
         return configs.get(self.level, configs["enterprise"])
     
     def _setup_business_metrics(self):
-        """Setup business-specific metrics"""
+        """
+Setup business-specific metrics"""
         # API metrics
         self.api_requests_total = self.registry.register_counter(
             "api_requests_total", "Total API requests", {"method": "", "endpoint": "", "status": ""}
@@ -617,7 +659,8 @@ class MetricsCollectorCore:
         )
     
     async def initialize(self) -> bool:
-        """Initialize metrics collector"""
+        """
+Initialize metrics collector"""
         try:
             logger.info(f"🚀 Initializing MetricsCollectorCore - Level: {self.level}")
             
@@ -632,7 +675,8 @@ class MetricsCollectorCore:
             return False
     
     async def start_collection(self) -> bool:
-        """Start metrics collection"""
+        """
+Start metrics collection"""
         try:
             if self._collection_running:
                 return True
@@ -657,7 +701,8 @@ class MetricsCollectorCore:
             return False
     
     async def _system_metrics_loop(self):
-        """System metrics collection loop"""
+        """
+System metrics collection loop"""
         while self._collection_running:
             try:
                 await self.system_collector.collect_system_metrics()
@@ -669,7 +714,8 @@ class MetricsCollectorCore:
                 await asyncio.sleep(self.performance_config["collection_interval"])
     
     async def _aggregation_loop(self):
-        """Metrics aggregation loop"""
+        """
+Metrics aggregation loop"""
         while self._collection_running:
             try:
                 # Perform aggregations
@@ -682,7 +728,8 @@ class MetricsCollectorCore:
                 await asyncio.sleep(self.performance_config["aggregation_window"])
     
     async def _perform_aggregations(self):
-        """Perform metric aggregations"""
+        """
+Perform metric aggregations"""
         # This would typically store aggregated metrics to a time-series database
         # For now, we'll just log some basic aggregations
         try:
@@ -695,7 +742,8 @@ class MetricsCollectorCore:
             logger.error(f"Aggregation error: {e}")
     
     def record_api_request(self, method: str, endpoint: str, status_code: int, duration: float):
-        """Record API request metrics"""
+        """
+Record API request metrics"""
         labels = {"method": method, "endpoint": endpoint, "status": str(status_code)}
         
         # Update counter with labels
@@ -709,7 +757,8 @@ class MetricsCollectorCore:
         self.aggregator.add_value("api_requests_total", 1, labels)
     
     def record_content_upload(self, content_type: str, status: str, processing_duration: float):
-        """Record content upload metrics"""
+        """
+Record content upload metrics"""
         labels = {"type": content_type, "status": status}
         
         counter = self.registry.register_counter("content_uploads_total", labels=labels)
@@ -720,7 +769,8 @@ class MetricsCollectorCore:
         self.aggregator.add_value("content_uploads_total", 1, labels)
     
     def record_ai_prediction(self, model_name: str, status: str, accuracy: Optional[float] = None):
-        """Record AI prediction metrics"""
+        """
+Record AI prediction metrics"""
         labels = {"model": model_name, "status": status}
         
         counter = self.registry.register_counter("ai_predictions_total", labels=labels)
@@ -731,39 +781,47 @@ class MetricsCollectorCore:
             gauge.set(accuracy)
     
     def record_security_violation(self, violation_type: str, severity: str):
-        """Record security violation metrics"""
+        """
+Record security violation metrics"""
         labels = {"type": violation_type, "severity": severity}
         
         counter = self.registry.register_counter("security_violations_total", labels=labels)
         counter.inc()
     
     def set_active_users(self, count: int):
-        """Set current active users count"""
+        """
+Set current active users count"""
         self.active_users.set(count)
     
     def get_timer(self, name: str, help_text: str = "") -> Timer:
-        """Get or create a timer metric"""
+        """
+Get or create a timer metric"""
         return self.registry.register_timer(name, help_text)
     
     def get_counter(self, name: str, help_text: str = "", labels: Optional[Dict[str, str]] = None) -> Counter:
-        """Get or create a counter metric"""
+        """
+Get or create a counter metric"""
         return self.registry.register_counter(name, help_text, labels)
     
     def get_gauge(self, name: str, help_text: str = "", labels: Optional[Dict[str, str]] = None) -> Gauge:
-        """Get or create a gauge metric"""
+        """
+Get or create a gauge metric"""
         return self.registry.register_gauge(name, help_text, labels)
     
     def get_histogram(self, name: str, buckets: Optional[List[float]] = None, 
                      help_text: str = "", labels: Optional[Dict[str, str]] = None) -> Histogram:
-        """Get or create a histogram metric"""
+        """
+Get or create a histogram metric"""
         return self.registry.register_histogram(name, buckets, help_text, labels)
     
     async def collect_metrics(self) -> List[MetricSample]:
-        """Collect all metrics"""
+        """
+Collect all metrics"""
         return self.registry.collect_all()
     
     async def get_prometheus_metrics(self) -> str:
-        """Get metrics in Prometheus format"""
+        """
+Get metrics in Prometheus format"""
         samples = await self.collect_metrics()
         prometheus_lines = []
         
@@ -785,7 +843,8 @@ class MetricsCollectorCore:
         return "\n".join(prometheus_lines)
     
     async def get_metrics_summary(self) -> Dict[str, Any]:
-        """Get metrics summary"""
+        """
+Get metrics summary"""
         samples = await self.collect_metrics()
         
         return {
@@ -805,7 +864,8 @@ class MetricsCollectorCore:
         }
     
     async def stop_collection(self) -> bool:
-        """Stop metrics collection"""
+        """
+Stop metrics collection"""
         try:
             self._collection_running = False
             
@@ -825,7 +885,8 @@ class MetricsCollectorCore:
             return False
     
     async def health_check(self) -> bool:
-        """Health check for metrics collector"""
+        """
+Health check for metrics collector"""
         try:
             # Check if collection is running and we have metrics
             return self._collection_running and len(self.registry.metrics) > 0
@@ -834,7 +895,8 @@ class MetricsCollectorCore:
             return False
     
     async def start(self) -> bool:
-        """Start metrics collector service"""
+        """
+Start metrics collector service"""
         try:
             logger.info("🚀 Starting MetricsCollectorCore service")
             return await self.start_collection()
@@ -843,7 +905,8 @@ class MetricsCollectorCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop metrics collector service"""
+        """
+Stop metrics collector service"""
         try:
             logger.info("🛑 Stopping MetricsCollectorCore service")
             return await self.stop_collection()

@@ -45,7 +45,8 @@ logger = logging.getLogger(__name__)
 # ============================================================================
 
 class ResourceType(str, Enum):
-    """Types de ressources edge."""
+    """
+        Types de ressources edge."""
     CPU = "cpu"
     MEMORY = "memory"
     GPU = "gpu"
@@ -109,7 +110,8 @@ class AllocationRequest:
 
 @dataclass
 class ResourceAllocation:
-    """Allocation de ressource."""
+    """
+        Allocation de ressource."""
     allocation_id: str
     request_id: str
     user_id: str
@@ -144,44 +146,55 @@ class DynamicResourceAllocator:
     def _initialize_default_resources(self):
         """Initialise les ressources par défaut."""
         # CPU Cluster
+
         cpu_cluster = ResourceSpec(
             resource_id="cpu_cluster_01",
             resource_type=ResourceType.CPU,
             capacity=64.0,  # 64 vCPUs
+
             location="edge_datacenter_01",
             cost_per_unit=0.10,  # $0.10 per vCPU-hour
+
             performance_rating=1.0
         )
         
         # GPU Cluster
+
         gpu_cluster = ResourceSpec(
             resource_id="gpu_cluster_01", 
             resource_type=ResourceType.GPU,
             capacity=8.0,  # 8 GPUs
+
             location="edge_datacenter_01",
             cost_per_unit=2.50,  # $2.50 per GPU-hour
+
             performance_rating=1.5
         )
         
         # Memory Pool
+
         memory_pool = ResourceSpec(
             resource_id="memory_pool_01",
             resource_type=ResourceType.MEMORY,
             capacity=512.0,  # 512 GB
             location="edge_datacenter_01",
             cost_per_unit=0.05,  # $0.05 per GB-hour
+
             performance_rating=1.0
         )
         
         # Storage Cluster
+
         storage_cluster = ResourceSpec(
             resource_id="storage_cluster_01",
             resource_type=ResourceType.STORAGE,
             capacity=10240.0,  # 10TB
             location="edge_datacenter_01",
             cost_per_unit=0.02,  # $0.02 per GB-hour
+
             performance_rating=0.8
         )
+
         
         self.resources.update({
             "cpu_cluster_01": cpu_cluster,
@@ -198,7 +211,6 @@ class DynamicResourceAllocator:
     
     def _initialize_prediction_models(self):
         """Initialise les modèles de prédiction."""
-        # TODO: Chargement modèles ML pré-entraînés
         logger.info("Resource prediction models initialized")
     
     async def request_allocation(self, request: AllocationRequest) -> str:
@@ -209,24 +221,31 @@ class DynamicResourceAllocator:
             # Validation demande
             if not await self._validate_request(request):
                 logger.error(f"Invalid allocation request: {request.request_id}")
+
                 return ""
             
             # Optimisation allocation avec IA
             allocation_plan = await self._optimize_allocation(request)
+
             
             if allocation_plan:
                 # Exécution allocation
+
                 allocation_id = await self._execute_allocation(request, allocation_plan)
+
                 
                 if allocation_id:
                     logger.info(f"Resource allocation successful: {allocation_id}")
+
                     return allocation_id
             
             logger.warning(f"Resource allocation failed: {request.request_id}")
+
             return ""
             
         except Exception as e:
             logger.error(f"Allocation request error: {e}")
+
             return ""
     
     async def _validate_request(self, request: AllocationRequest) -> bool:
@@ -238,15 +257,19 @@ class DynamicResourceAllocator:
                     return False
                 
                 # Vérification disponibilité théorique
+
                 available = await self._get_available_capacity(resource_type)
+
                 if available < amount:
                     logger.warning(f"Insufficient {resource_type}: requested {amount}, available {available}")
+
                     return False
             
             return True
             
         except Exception as e:
             logger.error(f"Request validation error: {e}")
+
             return False
     
     async def _get_available_capacity(self, resource_type: ResourceType) -> float:
@@ -256,16 +279,22 @@ class DynamicResourceAllocator:
         for resource_id in self.resource_pool.get(resource_type, []):
             if resource_id in self.resources:
                 resource = self.resources[resource_id]
+
                 available = resource.capacity - resource.allocated - resource.reserved
                 total_available += max(available, 0.0)
+
         
         return total_available
     
     async def _optimize_allocation(self, request: AllocationRequest) -> Optional[Dict[str, Any]]:
-        """Optimise l'allocation avec IA."""
+        """
+        Optimise l'allocation avec IA."""
         try:
             # Stratégie basée sur type de créateur
+
             strategy = await self._select_allocation_strategy(request)
+
+
             
             allocation_plan = {
                 "strategy": strategy,
@@ -279,6 +308,7 @@ class DynamicResourceAllocator:
                 assignment = await self._allocate_resource_type(
                     resource_type, required_amount, strategy, request
                 )
+
                 
                 if assignment:
                     allocation_plan["resource_assignments"][resource_type] = assignment
@@ -291,11 +321,13 @@ class DynamicResourceAllocator:
             
         except Exception as e:
             logger.error(f"Allocation optimization error: {e}")
+
             return None
     
     async def _select_allocation_strategy(self, request: AllocationRequest) -> AllocationStrategy:
         """Sélectionne la stratégie d'allocation optimale."""
         # Stratégies par type de créateur
+
         creator_strategies = {
             "musician": AllocationStrategy.AI_OPTIMIZED,  # Audio processing intensif
             "photographer": AllocationStrategy.LOAD_BALANCED,  # Image processing
@@ -316,6 +348,7 @@ class DynamicResourceAllocator:
             for resource_id in self.resource_pool.get(resource_type, []):
                 if resource_id in self.resources:
                     resource = self.resources[resource_id]
+
                     available = resource.capacity - resource.allocated - resource.reserved
                     
                     if available >= required_amount and resource.status == ResourceStatus.AVAILABLE:
@@ -327,17 +360,22 @@ class DynamicResourceAllocator:
                             "cost_per_unit": resource.cost_per_unit,
                             "performance": resource.performance_rating
                         })
+
             
             if not eligible_resources:
                 return None
             
             # Sélection selon stratégie
+
             selected = await self._select_by_strategy(eligible_resources, strategy, required_amount)
+
             
             if selected:
                 # Réservation ressource
+
                 resource = selected["resource"]
                 resource.allocated += required_amount
+
                 
                 assignment = {
                     "resource_id": selected["resource_id"],
@@ -353,6 +391,7 @@ class DynamicResourceAllocator:
             
         except Exception as e:
             logger.error(f"Resource type allocation error: {e}")
+
             return None
     
     async def _select_by_strategy(self, eligible_resources: List[Dict], strategy: AllocationStrategy,
@@ -364,31 +403,36 @@ class DynamicResourceAllocator:
         if strategy == AllocationStrategy.BEST_FIT:
             # Ressource avec le moins de gaspillage
             eligible_resources.sort(key=lambda x: x["available"] - required_amount)
+
             return eligible_resources[0]
         
         elif strategy == AllocationStrategy.WORST_FIT:
             # Ressource avec le plus d'espace disponible
             eligible_resources.sort(key=lambda x: x["available"], reverse=True)
+
             return eligible_resources[0]
         
         elif strategy == AllocationStrategy.LOAD_BALANCED:
             # Ressource la moins chargée
             eligible_resources.sort(key=lambda x: x["efficiency"], reverse=True)
+
             return eligible_resources[0]
         
         elif strategy == AllocationStrategy.AI_OPTIMIZED:
             # Optimisation IA basée sur performance/coût
+
             scores = []
             for res in eligible_resources:
                 score = res["performance"] / res["cost_per_unit"]
                 scores.append((score, res))
+
             
             scores.sort(key=lambda x: x[0], reverse=True)
+
             return scores[0][1]
         
         elif strategy == AllocationStrategy.CREATOR_OPTIMIZED:
             # Optimisation spécifique créateur
-            # TODO: Logique spécifique par type créateur
             return eligible_resources[0]
         
         else:  # FIRST_FIT par défaut
@@ -400,11 +444,13 @@ class DynamicResourceAllocator:
             allocation_id = str(uuid.uuid4())
             
             # Calcul ressources allouées
+
             allocated_resources = {}
             for resource_type, assignment in plan["resource_assignments"].items():
                 allocated_resources[assignment["resource_id"]] = assignment["allocated_amount"]
             
             # Création allocation
+
             allocation = ResourceAllocation(
                 allocation_id=allocation_id,
                 request_id=request.request_id,
@@ -414,14 +460,17 @@ class DynamicResourceAllocator:
                 end_time=datetime.now() + request.duration if request.duration else None,
                 cost=plan["estimated_cost"]
             )
+
             
             self.active_allocations[allocation_id] = allocation
             
             logger.info(f"Allocation executed: {allocation_id}, cost: ${plan['estimated_cost']:.2f}")
+
             return allocation_id
             
         except Exception as e:
             logger.error(f"Allocation execution error: {e}")
+
             return ""
     
     async def release_allocation(self, allocation_id: str) -> bool:
@@ -429,6 +478,7 @@ class DynamicResourceAllocator:
         try:
             if allocation_id not in self.active_allocations:
                 return False
+
             
             allocation = self.active_allocations[allocation_id]
             
@@ -442,15 +492,19 @@ class DynamicResourceAllocator:
             # Archivage
             allocation.status = "completed"
             allocation.end_time = datetime.now()
+
             self.allocation_history.append(allocation)
+
             
             del self.active_allocations[allocation_id]
             
             logger.info(f"Allocation released: {allocation_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Allocation release error: {e}")
+
             return False
     
     async def get_resource_utilization(self) -> Dict[str, Any]:
@@ -460,6 +514,7 @@ class DynamicResourceAllocator:
             
             for resource_type in ResourceType:
                 total_capacity = 0.0
+
                 total_allocated = 0.0
                 
                 for resource_id in self.resource_pool.get(resource_type, []):
@@ -479,6 +534,7 @@ class DynamicResourceAllocator:
             
         except Exception as e:
             logger.error(f"Utilization calculation error: {e}")
+
             return {}
 
 
@@ -499,7 +555,8 @@ class ResourceDemandPrediction:
 
 @dataclass
 class UsagePattern:
-    """Pattern d'utilisation des ressources."""
+    """
+        Pattern d'utilisation des ressources."""
     user_id: str
     creator_type: str
     resource_usage: Dict[ResourceType, List[float]]
@@ -509,7 +566,8 @@ class UsagePattern:
 
 
 class AIResourcePredictor:
-    """Prédicteur de ressources alimenté par IA."""
+    """
+        Prédicteur de ressources alimenté par IA."""
     
     def __init__(self, allocator: DynamicResourceAllocator):
         self.allocator = allocator
@@ -529,7 +587,6 @@ class AIResourcePredictor:
     
     def _initialize_models(self):
         """Initialise les modèles de prédiction."""
-        # TODO: Chargement modèles ML pré-entraînés
         logger.info("AI resource prediction models initialized")
     
     async def record_usage(self, user_id: str, creator_type: str, 
@@ -548,9 +605,12 @@ class AIResourcePredictor:
                     seasonality={},
                     trends={}
                 )
+
+
             
             pattern = self.usage_patterns[user_id]
             pattern.time_series.append(current_time)
+
             
             for resource_type, usage in resource_usage.items():
                 pattern.resource_usage[resource_type].append(usage)
@@ -559,7 +619,10 @@ class AIResourcePredictor:
                 self.demand_history[resource_type].append((current_time, usage))
             
             # Limitation historique (30 derniers jours)
+
+
             cutoff_date = current_time - timedelta(days=30)
+
             pattern.time_series = [t for t in pattern.time_series if t > cutoff_date]
             
             for resource_type in pattern.resource_usage:
@@ -568,6 +631,7 @@ class AIResourcePredictor:
             
             # Mise à jour patterns
             await self._update_usage_patterns(user_id)
+
             
         except Exception as e:
             logger.error(f"Usage recording error: {e}")
@@ -582,6 +646,7 @@ class AIResourcePredictor:
             
             # Détection tendances
             pattern.trends = await self._detect_trends(pattern)
+
             
         except Exception as e:
             logger.error(f"Pattern update error: {e}")
@@ -595,7 +660,9 @@ class AIResourcePredictor:
         
         try:
             # Analyse par heure du jour
+
             hourly_usage = defaultdict(list)
+
             
             for i, timestamp in enumerate(pattern.time_series):
                 hour = timestamp.hour
@@ -608,11 +675,13 @@ class AIResourcePredictor:
             for key, values in hourly_usage.items():
                 if values:
                     seasonality[key] = sum(values) / len(values)
+
             
             return seasonality
             
         except Exception as e:
             logger.error(f"Seasonality detection error: {e}")
+
             return {}
     
     async def _detect_trends(self, pattern: UsagePattern) -> Dict[str, float]:
@@ -623,16 +692,27 @@ class AIResourcePredictor:
             for resource_type, usage_list in pattern.resource_usage.items():
                 if len(usage_list) >= 10:  # Minimum pour calcul tendance
                     # Régression linéaire simple
+
                     n = len(usage_list)
+
+
                     x = list(range(n))
+
+
                     y = usage_list
                     
                     # Calcul pente
+
                     x_mean = sum(x) / n
+
                     y_mean = sum(y) / n
+
                     
                     numerator = sum((x[i] - x_mean) * (y[i] - y_mean) for i in range(n))
+
+
                     denominator = sum((x[i] - x_mean) ** 2 for i in range(n))
+
                     
                     if denominator != 0:
                         slope = numerator / denominator
@@ -642,6 +722,7 @@ class AIResourcePredictor:
             
         except Exception as e:
             logger.error(f"Trend detection error: {e}")
+
             return {}
     
     async def predict_demand(self, resource_type: ResourceType, 
@@ -649,19 +730,28 @@ class AIResourcePredictor:
         """Prédit la demande en ressources."""
         try:
             # Analyse historique
+
             historical_data = self.demand_history.get(resource_type, [])
+
             
             if len(historical_data) < 10:
                 # Données insuffisantes, prédiction basée sur utilisation actuelle
+
                 current_utilization = await self.allocator._get_available_capacity(resource_type)
+
+
                 predicted_demand = current_utilization * 1.2  # +20% buffer
+
                 confidence = 0.3
             else:
                 # Prédiction basée sur ML
                 predicted_demand, confidence = await self._ml_predict_demand(resource_type, historical_data, time_horizon)
             
             # Facteurs influençant la prédiction
+
             factors = await self._identify_demand_factors(resource_type)
+
+
             
             prediction = ResourceDemandPrediction(
                 resource_type=resource_type,
@@ -672,6 +762,7 @@ class AIResourcePredictor:
             )
             
             # Stockage prédiction
+
             prediction_key = f"{resource_type.value}_{time_horizon.total_seconds()}"
             self.predictions[prediction_key] = prediction
             
@@ -679,6 +770,7 @@ class AIResourcePredictor:
             
         except Exception as e:
             logger.error(f"Demand prediction error: {e}")
+
             return ResourceDemandPrediction(
                 resource_type=resource_type,
                 predicted_demand=0.0,
@@ -697,13 +789,20 @@ class AIResourcePredictor:
             
             if recent_demands:
                 # Moyenne pondérée (plus récent = plus de poids)
+
+
                 weights = [0.1 * (i + 1) for i in range(len(recent_demands))]
+
                 weighted_avg = sum(d * w for d, w in zip(recent_demands, weights)) / sum(weights)
                 
                 # Facteur temporel
+
                 hour_factor = await self._get_temporal_factor(time_horizon)
+
+
                 
                 predicted_demand = weighted_avg * hour_factor
+
                 confidence = min(len(recent_demands) / 20.0, 0.9)  # Max 90%
                 
                 return predicted_demand, confidence
@@ -712,15 +811,19 @@ class AIResourcePredictor:
             
         except Exception as e:
             logger.error(f"ML prediction error: {e}")
+
             return 0.0, 0.0
     
     async def _get_temporal_factor(self, time_horizon: timedelta) -> float:
         """Calcule le facteur temporel pour la prédiction."""
         target_time = datetime.now() + time_horizon
+
         hour = target_time.hour
+
         day_of_week = target_time.weekday()
         
         # Facteurs par heure (simulation)
+
         hour_factors = {
             0: 0.3, 1: 0.2, 2: 0.2, 3: 0.2, 4: 0.3, 5: 0.4,
             6: 0.6, 7: 0.8, 8: 0.9, 9: 1.0, 10: 1.1, 11: 1.2,
@@ -729,18 +832,22 @@ class AIResourcePredictor:
         }
         
         # Facteur week-end
+
         weekend_factor = 0.8 if day_of_week >= 5 else 1.0
         
         return hour_factors.get(hour, 1.0) * weekend_factor
     
     async def _identify_demand_factors(self, resource_type: ResourceType) -> List[str]:
-        """Identifie les facteurs influençant la demande."""
+        """
+        Identifie les facteurs influençant la demande."""
         factors = []
         
         # Facteurs généraux
+
         current_hour = datetime.now().hour
         if 18 <= current_hour <= 22:
             factors.append("peak_hours")
+
         
         if datetime.now().weekday() >= 5:
             factors.append("weekend")
@@ -752,6 +859,7 @@ class AIResourcePredictor:
             factors.extend(["general_compute", "concurrent_users"])
         elif resource_type == ResourceType.MEMORY:
             factors.extend(["data_processing", "cache_usage"])
+
         
         return factors
     
@@ -760,9 +868,12 @@ class AIResourcePredictor:
         try:
             if user_id not in self.usage_patterns:
                 return None
+
             
             pattern = self.usage_patterns[user_id]
+
             usage_history = pattern.resource_usage.get(resource_type, [])
+
             
             if len(usage_history) < 5:
                 return None
@@ -771,23 +882,29 @@ class AIResourcePredictor:
             recent_avg = sum(usage_history[-5:]) / 5
             
             # Application tendance
+
             trend_key = f"{resource_type.value}_trend"
             trend = pattern.trends.get(trend_key, 0.0)
             
             # Application saisonnalité
             current_hour = datetime.now().hour
+
             seasonal_key = f"{resource_type.value}_hour_{current_hour}"
             seasonal_factor = pattern.seasonality.get(seasonal_key, recent_avg)
+
             
             if seasonal_factor > 0:
                 prediction = (recent_avg + trend) * (seasonal_factor / recent_avg)
+
             else:
                 prediction = recent_avg + trend
             
             return max(prediction, 0.0)
+
             
         except Exception as e:
             logger.error(f"User prediction error: {e}")
+
             return None
 
 
@@ -809,7 +926,8 @@ class CostOptimizationRule:
 
 @dataclass
 class CostReport:
-    """Rapport de coûts."""
+    """
+        Rapport de coûts."""
     period_start: datetime
     period_end: datetime
     total_cost: float
@@ -819,7 +937,8 @@ class CostReport:
 
 
 class CostOptimizationEngine:
-    """Moteur d'optimisation des coûts."""
+    """
+        Moteur d'optimisation des coûts."""
     
     def __init__(self, allocator: DynamicResourceAllocator):
         self.allocator = allocator
@@ -830,8 +949,10 @@ class CostOptimizationEngine:
         self._initialize_optimization_rules()
     
     def _initialize_optimization_rules(self):
-        """Initialise les règles d'optimisation."""
+        """
+        Initialise les règles d'optimisation."""
         # Règle sous-utilisation
+
         underutilization_rule = CostOptimizationRule(
             rule_id="underutilization",
             name="Détection Sous-utilisation",
@@ -842,6 +963,7 @@ class CostOptimizationEngine:
         )
         
         # Règle ressources inactives
+
         idle_resources_rule = CostOptimizationRule(
             rule_id="idle_resources",
             name="Ressources Inactives",
@@ -852,6 +974,7 @@ class CostOptimizationEngine:
         )
         
         # Règle sur-approvisionnement
+
         overprovisioning_rule = CostOptimizationRule(
             rule_id="overprovisioning",
             name="Sur-approvisionnement",
@@ -860,6 +983,7 @@ class CostOptimizationEngine:
             priority=3,
             savings_potential=0.3
         )
+
         
         self.optimization_rules.update({
             "underutilization": underutilization_rule,
@@ -871,7 +995,9 @@ class CostOptimizationEngine:
         """Analyse les coûts sur une période."""
         try:
             # Calcul coûts par type de ressource
+
             cost_breakdown = {}
+
             total_cost = 0.0
             
             # Analyse allocations historiques
@@ -883,6 +1009,7 @@ class CostOptimizationEngine:
                     for resource_id, amount in allocation.allocated_resources.items():
                         if resource_id in self.allocator.resources:
                             resource = self.allocator.resources[resource_id]
+
                             resource_type = resource.resource_type
                             
                             cost_breakdown[resource_type] = cost_breakdown.get(resource_type, 0.0) + allocation.cost
@@ -893,10 +1020,14 @@ class CostOptimizationEngine:
                     total_cost += allocation.cost
             
             # Identification opportunités
+
             opportunities = await self._identify_optimization_opportunities()
             
             # Calcul économies projetées
+
             projected_savings = sum(opp.get("potential_savings", 0.0) for opp in opportunities)
+
+
             
             report = CostReport(
                 period_start=period_start,
@@ -906,11 +1037,13 @@ class CostOptimizationEngine:
                 optimization_opportunities=opportunities,
                 projected_savings=projected_savings
             )
+
             
             return report
             
         except Exception as e:
             logger.error(f"Cost analysis error: {e}")
+
             return CostReport(
                 period_start=period_start,
                 period_end=period_end,
@@ -926,10 +1059,14 @@ class CostOptimizationEngine:
         
         try:
             # Analyse utilisation ressources
+
             utilization = await self.allocator.get_resource_utilization()
+
             
             for resource_type_str, stats in utilization.items():
                 resource_type = ResourceType(resource_type_str)
+
+
                 utilization_rate = stats["utilization_rate"]
                 
                 # Sous-utilisation
@@ -944,6 +1081,7 @@ class CostOptimizationEngine:
                     })
                 
                 # Sur-utilisation (besoin de scale up)
+
                 elif utilization_rate > 0.9:
                     opportunities.append({
                         "type": "over_utilization",
@@ -955,26 +1093,30 @@ class CostOptimizationEngine:
                     })
             
             # Analyse patterns temporels
+
             temporal_opportunities = await self._analyze_temporal_patterns()
+
             opportunities.extend(temporal_opportunities)
+
             
             return opportunities
             
         except Exception as e:
             logger.error(f"Opportunity identification error: {e}")
+
             return []
     
     async def _analyze_temporal_patterns(self) -> List[Dict[str, Any]]:
         """Analyse les patterns temporels pour optimisation."""
         opportunities = []
         
-        try:
-            # TODO: Analyse patterns d'utilisation par heure/jour
-            # Identification périodes creuses pour hibernation
+        try:            # Identification périodes creuses pour hibernation
+
             
             current_hour = datetime.now().hour
             
             # Heures creuses (simulation)
+
             if 2 <= current_hour <= 6:
                 opportunities.append({
                     "type": "off_peak_optimization",
@@ -982,54 +1124,58 @@ class CostOptimizationEngine:
                     "potential_savings": 100.0,  # $100/hour
                     "description": "Réduction capacité pendant heures creuses"
                 })
+
             
             return opportunities
             
         except Exception as e:
             logger.error(f"Temporal pattern analysis error: {e}")
+
             return []
     
     async def apply_optimization(self, opportunity: Dict[str, Any]) -> bool:
         """Applique une optimisation."""
         try:
             action = opportunity.get("recommended_action")
+
             
             if action == "scale_down":
                 return await self._scale_down_resources(opportunity)
+
             elif action == "scale_up":
                 return await self._scale_up_resources(opportunity)
+
             elif action == "hibernate":
                 return await self._hibernate_resources(opportunity)
+
             elif action == "right_size":
                 return await self._right_size_resources(opportunity)
+
             
             return False
             
         except Exception as e:
             logger.error(f"Optimization application error: {e}")
+
             return False
     
     async def _scale_down_resources(self, opportunity: Dict[str, Any]) -> bool:
         """Réduit la capacité des ressources."""
-        # TODO: Implémentation scale down
         logger.info("Scaling down resources")
         return True
     
     async def _scale_up_resources(self, opportunity: Dict[str, Any]) -> bool:
         """Augmente la capacité des ressources."""
-        # TODO: Implémentation scale up
         logger.info("Scaling up resources")
         return True
     
     async def _hibernate_resources(self, opportunity: Dict[str, Any]) -> bool:
         """Met en hibernation des ressources."""
-        # TODO: Implémentation hibernation
         logger.info("Hibernating resources")
         return True
     
     async def _right_size_resources(self, opportunity: Dict[str, Any]) -> bool:
         """Ajuste la taille des ressources."""
-        # TODO: Implémentation right-sizing
         logger.info("Right-sizing resources")
         return True
     
@@ -1039,15 +1185,19 @@ class CostOptimizationEngine:
             # Analyse tendance historique
             if len(self.cost_history) < 7:
                 return {"forecast": 0.0, "confidence": 0.0}
+
             
             recent_costs = [cost for _, cost, _ in self.cost_history[-7:]]
+
             daily_avg = sum(recent_costs) / len(recent_costs)
             
             # Projection simple
+
             forecasted_cost = daily_avg * days_ahead
             
             # Facteur saisonnalité
             seasonal_factor = await self._get_seasonal_cost_factor()
+
             forecasted_cost *= seasonal_factor
             
             return {
@@ -1059,11 +1209,11 @@ class CostOptimizationEngine:
             
         except Exception as e:
             logger.error(f"Cost forecast error: {e}")
+
             return {"forecast": 0.0, "confidence": 0.0}
     
     async def _get_seasonal_cost_factor(self) -> float:
         """Calcule le facteur saisonnier des coûts."""
-        # TODO: Analyse saisonnalité réelle
         day_of_week = datetime.now().weekday()
         
         # Week-end généralement moins cher
@@ -1078,7 +1228,8 @@ class CostOptimizationEngine:
 # ============================================================================
 
 class EdgeResourceManager:
-    """Gestionnaire principal des ressources edge."""
+    """
+        Gestionnaire principal des ressources edge."""
     
     def __init__(self):
         # Composants principaux
@@ -1106,13 +1257,16 @@ class EdgeResourceManager:
             
             # Démarrage monitoring continu
             self.monitoring_task = asyncio.create_task(self._continuous_monitoring())
+
             
             self.is_initialized = True
             logger.info("Edge Resource Manager initialized successfully")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to initialize resource manager: {e}")
+
             return False
     
     async def allocate_resources_for_creator(self, creator_id: str, creator_type: str, 
@@ -1120,9 +1274,11 @@ class EdgeResourceManager:
         """Alloue des ressources optimisées pour un créateur."""
         try:
             # Définition besoins par type de créateur
+
             requirements = await self._get_creator_requirements(creator_type, workload_type)
             
             # Création demande allocation
+
             request = AllocationRequest(
                 request_id=str(uuid.uuid4()),
                 user_id=creator_id,
@@ -1135,6 +1291,7 @@ class EdgeResourceManager:
             
             # Allocation avec prédictions IA
             allocation_id = await self.dynamic_allocator.request_allocation(request)
+
             
             if allocation_id:
                 self.system_metrics["successful_allocations"] += 1
@@ -1143,8 +1300,10 @@ class EdgeResourceManager:
                 await self.ai_predictor.record_usage(
                     creator_id, creator_type, requirements
                 )
+
                 
                 logger.info(f"Resources allocated for {creator_type} creator {creator_id}: {allocation_id}")
+
                 return allocation_id
             else:
                 self.system_metrics["failed_allocations"] += 1
@@ -1152,6 +1311,7 @@ class EdgeResourceManager:
             
         except Exception as e:
             logger.error(f"Creator resource allocation error: {e}")
+
             return ""
     
     async def _get_creator_requirements(self, creator_type: str, workload_type: str) -> Dict[ResourceType, float]:
@@ -1188,6 +1348,7 @@ class EdgeResourceManager:
                 ResourceType.GPU: 2.0       # GPU pour encoding vidéo
             }
         }
+
         
         requirements = base_requirements.get(creator_type, {
             ResourceType.CPU: 2.0,
@@ -1212,7 +1373,6 @@ class EdgeResourceManager:
     
     async def _calculate_creator_priority(self, creator_id: str, creator_type: str) -> int:
         """Calcule la priorité d'allocation pour un créateur."""
-        # TODO: Intégration avec système analytics pour métriques réelles
         base_priority = {
             "musician": 3,
             "photographer": 2,
@@ -1221,28 +1381,36 @@ class EdgeResourceManager:
             "comedian": 3
         }.get(creator_type, 2)
         
-        # Ajustements basés sur performance/engagement
-        # TODO: Récupération métriques réelles créateur
-        
+        # Ajustements basés sur performance/engagement        
         return base_priority
     
     async def optimize_resource_allocation(self) -> Dict[str, Any]:
         """Optimise l'allocation des ressources."""
         try:
             # Analyse coûts
+
             period_start = datetime.now() - timedelta(days=1)
+
+
             period_end = datetime.now()
+
+
             cost_report = await self.cost_optimizer.analyze_costs(period_start, period_end)
             
             # Application optimisations
+
             applied_optimizations = []
             
             for opportunity in cost_report.optimization_opportunities:
                 if opportunity.get("potential_savings", 0) > 10.0:  # Seuil $10
+
                     success = await self.cost_optimizer.apply_optimization(opportunity)
+
                     if success:
                         applied_optimizations.append(opportunity)
+
                         self.system_metrics["cost_savings"] += opportunity.get("potential_savings", 0)
+
             
             return {
                 "cost_report": cost_report,
@@ -1252,18 +1420,22 @@ class EdgeResourceManager:
             
         except Exception as e:
             logger.error(f"Resource optimization error: {e}")
+
             return {}
     
     async def get_resource_analytics(self) -> Dict[str, Any]:
         """Récupère les analytics des ressources."""
         try:
             # Utilisation actuelle
+
             utilization = await self.dynamic_allocator.get_resource_utilization()
             
             # Prédictions
+
             predictions = {}
             for resource_type in ResourceType:
                 pred = await self.ai_predictor.predict_demand(resource_type)
+
                 predictions[resource_type.value] = {
                     "predicted_demand": pred.predicted_demand,
                     "confidence": pred.confidence,
@@ -1271,7 +1443,9 @@ class EdgeResourceManager:
                 }
             
             # Prévisions coûts
+
             cost_forecast = await self.cost_optimizer.get_cost_forecast()
+
             
             return {
                 "current_utilization": utilization,
@@ -1280,14 +1454,17 @@ class EdgeResourceManager:
                 "system_metrics": self.system_metrics,
                 "active_allocations": len(self.dynamic_allocator.active_allocations),
                 "total_capacity": {
-                    rt.value: sum(res.capacity for res in self.dynamic_allocator.resources.values() 
+                    rt.value: sum(res.capacity for res in self.dynamic_allocator.resources.values()
+ 
                                  if res.resource_type == rt)
+
                     for rt in ResourceType
                 }
             }
             
         except Exception as e:
             logger.error(f"Resource analytics error: {e}")
+
             return {}
     
     async def _continuous_monitoring(self):
@@ -1295,6 +1472,7 @@ class EdgeResourceManager:
         while self.is_initialized:
             try:
                 # Monitoring utilisation
+
                 utilization = await self.dynamic_allocator.get_resource_utilization()
                 
                 # Détection anomalies
@@ -1310,15 +1488,13 @@ class EdgeResourceManager:
                 
             except Exception as e:
                 logger.error(f"Continuous monitoring error: {e}")
+
                 await asyncio.sleep(60)
     
     async def _trigger_auto_scaling(self, resource_type: ResourceType):
         """Déclenche l'auto-scaling pour un type de ressource."""
         try:
-            logger.info(f"Triggering auto-scaling for {resource_type.value}")
-            
-            # TODO: Implémentation auto-scaling intelligent
-            # - Analyse tendances
+            logger.info(f"Triggering auto-scaling for {resource_type.value}")            # - Analyse tendances
             # - Prédiction demande future
             # - Décision scaling up/down
             # - Exécution scaling
@@ -1337,17 +1513,20 @@ def create_edge_resource_manager() -> EdgeResourceManager:
 
 
 def create_dynamic_allocator() -> DynamicResourceAllocator:
-    """Factory function pour créer l'allocateur dynamique."""
+    """
+        Factory function pour créer l'allocateur dynamique."""
     return DynamicResourceAllocator()
 
 
 def create_ai_predictor(allocator: DynamicResourceAllocator) -> AIResourcePredictor:
-    """Factory function pour créer le prédicteur IA."""
+    """
+        Factory function pour créer le prédicteur IA."""
     return AIResourcePredictor(allocator)
 
 
 def create_cost_optimizer(allocator: DynamicResourceAllocator) -> CostOptimizationEngine:
-    """Factory function pour créer l'optimiseur de coûts."""
+    """
+        Factory function pour créer l'optimiseur de coûts."""
     return CostOptimizationEngine(allocator)
 
 

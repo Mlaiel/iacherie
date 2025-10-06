@@ -68,7 +68,8 @@ from .collaboration.orchestrator import CollaborationOrchestrator
 logger = logging.getLogger(__name__)
 
 class ServiceStatus(Enum):
-    """Enhanced service status enumeration"""
+    """
+        Enhanced service status enumeration"""
     INACTIVE = "inactive"
     INITIALIZING = "initializing"
     ACTIVE = "active"
@@ -123,7 +124,8 @@ class iacheriePlatformIndex:
     """Ultra-advanced platform index and service discovery system"""
     
     def __init__(self):
-        """Initialize enhanced platform index"""
+        """
+        Initialize enhanced platform index"""
         self.services: Dict[str, EnhancedServiceInfo] = {}
         self.service_registry: Dict[str, Any] = {}
         self.health_status: Dict[str, Dict[str, Any]] = {}
@@ -136,9 +138,11 @@ class iacheriePlatformIndex:
         self._initialize_services()
     
     def _initialize_services(self):
-        """Initialize comprehensive service registry"""
+        """
+        Initialize comprehensive service registry"""
     def _initialize_services(self):
-        """Initialize comprehensive service registry"""
+        """
+        Initialize comprehensive service registry"""
         # Core Systems - Critical Priority
         self.register_service(EnhancedServiceInfo(
             name="core_business_logic",
@@ -172,6 +176,7 @@ class iacheriePlatformIndex:
                 "concurrent_processing": 1000
             }
         ))
+
         
         self.register_service(EnhancedServiceInfo(
             name="protection_engine",
@@ -200,6 +205,7 @@ class iacheriePlatformIndex:
                 "fraud_detection": True
             }
         ))
+
         
         self.register_service(EnhancedServiceInfo(
             name="collaboration_engine",
@@ -211,6 +217,7 @@ class iacheriePlatformIndex:
             health_check_url="/health/collaboration",
             documentation_url="/docs/collaboration"
         ))
+
         
         self.register_service(EnhancedServiceInfo(
             name="gamification_engine",
@@ -251,6 +258,7 @@ class iacheriePlatformIndex:
             health_check_url="/health/seo",
             documentation_url="/docs/seo"
         ))
+
         
         self.register_service(EnhancedServiceInfo(
             name="distribution_network",
@@ -274,6 +282,7 @@ class iacheriePlatformIndex:
             health_check_url="/health/blockchain",
             documentation_url="/docs/blockchain"
         ))
+
         
         self.register_service(EnhancedServiceInfo(
             name="quantum_processing_engine",
@@ -297,6 +306,7 @@ class iacheriePlatformIndex:
             health_check_url="/health/streaming",
             documentation_url="/docs/streaming"
         ))
+
         
         self.register_service(EnhancedServiceInfo(
             name="edge_computing_manager",
@@ -366,10 +376,12 @@ class iacheriePlatformIndex:
             health_check_url="/health/compliance",
             documentation_url="/docs/compliance"
         ))
+
         
         logger.info(f"✅ Initialized {len(self.services)} enterprise services")
         logger.info(f"🎯 Business Logic Flow: {' → '.join(BUSINESS_LOGIC_FLOW['creator_workflow'])}")
         ))
+
         
         self.register_service(ServiceInfo(
             name="platform_orchestrator", 
@@ -389,6 +401,7 @@ class iacheriePlatformIndex:
             dependencies=["core_business_logic"],
             health_check_url="/health/ai"
         ))
+
         
         self.register_service(ServiceInfo(
             name="protection_engine",
@@ -398,6 +411,7 @@ class iacheriePlatformIndex:
             dependencies=["ai_intelligence_engine"],
             health_check_url="/health/protection"
         ))
+
         
         self.register_service(ServiceInfo(
             name="quantum_processing",
@@ -417,6 +431,7 @@ class iacheriePlatformIndex:
             dependencies=["core_business_logic", "ai_intelligence_engine"],
             health_check_url="/health/monetization"
         ))
+
         
         self.register_service(ServiceInfo(
             name="collaboration_engine",
@@ -426,6 +441,7 @@ class iacheriePlatformIndex:
             dependencies=["ai_intelligence_engine", "monetization_engine"],
             health_check_url="/health/collaboration"
         ))
+
         
         self.register_service(ServiceInfo(
             name="gamification_engine",
@@ -435,6 +451,7 @@ class iacheriePlatformIndex:
             dependencies=["collaboration_engine"],
             health_check_url="/health/gamification"
         ))
+
         
         self.register_service(ServiceInfo(
             name="analytics_engine",
@@ -454,6 +471,7 @@ class iacheriePlatformIndex:
             dependencies=["ai_intelligence_engine"],
             health_check_url="/health/seo"
         ))
+
         
         self.register_service(ServiceInfo(
             name="distribution_network",
@@ -463,6 +481,7 @@ class iacheriePlatformIndex:
             dependencies=["seo_optimization", "protection_engine"],
             health_check_url="/health/distribution"
         ))
+
         
         self.register_service(ServiceInfo(
             name="streaming_infrastructure",
@@ -472,6 +491,7 @@ class iacheriePlatformIndex:
             dependencies=["distribution_network"],
             health_check_url="/health/streaming"
         ))
+
         
         self.register_service(ServiceInfo(
             name="media_processing",
@@ -491,6 +511,7 @@ class iacheriePlatformIndex:
             dependencies=["protection_engine", "monetization_engine"],
             health_check_url="/health/blockchain"
         ))
+
         
         self.register_service(ServiceInfo(
             name="edge_computing",
@@ -500,6 +521,7 @@ class iacheriePlatformIndex:
             dependencies=["streaming_infrastructure"],
             health_check_url="/health/edge"
         ))
+
         
         self.register_service(ServiceInfo(
             name="database_orchestrator",
@@ -519,6 +541,7 @@ class iacheriePlatformIndex:
             dependencies=["database_orchestrator"],
             health_check_url="/health/monitoring"
         ))
+
         
         self.register_service(ServiceInfo(
             name="compliance_manager",
@@ -539,20 +562,25 @@ class iacheriePlatformIndex:
         return self.services.get(service_name)
     
     def get_services_by_type(self, service_type: ServiceType) -> List[ServiceInfo]:
-        """Get all services of specific type"""
+        """
+        Get all services of specific type"""
         return [
             service for service in self.services.values()
+
             if service.type == service_type
         ]
     
     async def check_service_health(self, service_name: str) -> Dict[str, Any]:
-        """Check health of specific service"""
+        """
+        Check health of specific service"""
         service = self.get_service(service_name)
         if not service:
             return {"status": "not_found", "error": "Service not registered"}
         
         try:
             # Simulate health check (in production, this would make actual HTTP calls)
+
+
             health_status = {
                 "service": service_name,
                 "status": "healthy",
@@ -579,15 +607,19 @@ class iacheriePlatformIndex:
     async def get_platform_status(self) -> Dict[str, Any]:
         """Get comprehensive platform status"""
         total_services = len(self.services)
+
         health_checks = await asyncio.gather(
             *[self.check_service_health(name) for name in self.services.keys()],
             return_exceptions=True
         )
+
+
         
         healthy_services = sum(
             1 for check in health_checks 
             if isinstance(check, dict) and check.get("status") == "healthy"
         )
+
         
         return {
             "platform": "IA Chérie Backend",
@@ -616,13 +648,18 @@ class iacheriePlatformIndex:
                 return {"circular_dependency": True}
             
             visited.add(svc_name)
+
+
             svc = self.get_service(svc_name)
+
             if not svc:
                 return {"error": "Service not found"}
+
             
             dependencies = {}
             for dep in svc.dependencies:
                 dependencies[dep] = build_dependency_tree(dep, visited.copy())
+
             
             return {
                 "service": svc_name,
@@ -637,6 +674,7 @@ class iacheriePlatformIndex:
         """Get detailed business logic flow information"""
         if flow_name not in BUSINESS_LOGIC_FLOW:
             return {"error": "Business logic flow not found"}
+
         
         flow_steps = BUSINESS_LOGIC_FLOW[flow_name]
         
@@ -662,8 +700,10 @@ class iacheriePlatformIndex:
             "analytics_tracking": 15,
             "gamification_engagement": 20
         }
+
         
         total_seconds = sum(step_durations.get(step, 60) for step in steps)
+
         
         if total_seconds < 60:
             return f"{total_seconds}s"
@@ -671,6 +711,7 @@ class iacheriePlatformIndex:
             return f"{total_seconds // 60}m {total_seconds % 60}s"
         else:
             hours = total_seconds // 3600
+
             minutes = (total_seconds % 3600) // 60
             return f"{hours}h {minutes}m"
     
@@ -687,11 +728,14 @@ class iacheriePlatformIndex:
             "analytics_tracking": ["analytics_engine"],
             "gamification_engagement": ["gamification_engine"]
         }
+
         
         involved_services = set()
         for step in steps:
             services = step_services.get(step, [])
+
             involved_services.update(services)
+
         
         return list(involved_services)
     
@@ -724,6 +768,7 @@ class iacheriePlatformIndex:
         # Organize by service type
         for service_type in ServiceType:
             services = self.get_services_by_type(service_type)
+
             service_map["service_categories"][service_type.value] = [
                 {
                     "name": svc.name,
@@ -741,6 +786,7 @@ class iacheriePlatformIndex:
         # Add dependency information
         for service_name in self.services.keys():
             service_map["dependency_graph"][service_name] = self.get_service_dependencies(service_name)
+
         
         return service_map
 
@@ -753,19 +799,23 @@ async def get_platform_status() -> Dict[str, Any]:
     return await platform_index.get_platform_status()
 
 async def get_service_info(service_name: str) -> Optional[ServiceInfo]:
-    """Get information about specific service"""
+    """
+        Get information about specific service"""
     return platform_index.get_service(service_name)
 
 async def check_service_health(service_name: str) -> Dict[str, Any]:
-    """Check health of specific service"""
+    """
+        Check health of specific service"""
     return await platform_index.check_service_health(service_name)
 
 async def get_business_flow_info(flow_name: str) -> Dict[str, Any]:
-    """Get business logic flow information"""
+    """
+        Get business logic flow information"""
     return platform_index.get_business_logic_flow(flow_name)
 
 async def generate_platform_map() -> Dict[str, Any]:
-    """Generate comprehensive platform service map"""
+    """
+        Generate comprehensive platform service map"""
     return await platform_index.generate_service_map()
 
 # Export functions

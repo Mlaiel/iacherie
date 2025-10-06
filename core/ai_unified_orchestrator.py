@@ -18,7 +18,8 @@ import json
 
 @dataclass
 class AITask:
-    """AI task definition"""
+    """
+AI task definition"""
     task_id: str
     task_type: str  # content_generation, analysis, optimization, moderation
     input_data: Dict[str, Any]
@@ -30,7 +31,8 @@ class AITask:
 
 @dataclass
 class AIModel:
-    """AI model configuration"""
+    """
+AI model configuration"""
     model_id: str
     model_type: str  # llm, vision, audio, embedding
     provider: str  # openai, local, huggingface
@@ -41,7 +43,8 @@ class AIModel:
     availability: bool = True
 
 class UnifiedAIOrchestrator:
-    """Central AI orchestration system"""
+    """
+Central AI orchestration system"""
     
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -57,7 +60,8 @@ class UnifiedAIOrchestrator:
         }
     
     def register_model(self, model: AIModel) -> bool:
-        """Register an AI model"""
+        """
+Register an AI model"""
         try:
             self.models[model.model_id] = model
             self.logger.info(f"Registered AI model: {model.model_id}")
@@ -67,7 +71,8 @@ class UnifiedAIOrchestrator:
             return False
     
     async def process_task(self, task: AITask) -> Dict[str, Any]:
-        """Process an AI task"""
+        """
+Process an AI task"""
         start_time = datetime.now()
         
         try:
@@ -124,7 +129,8 @@ class UnifiedAIOrchestrator:
             }
     
     def _select_optimal_model(self, task: AITask) -> Optional[AIModel]:
-        """Select the optimal model for a task"""
+        """
+Select the optimal model for a task"""
         suitable_models = []
         
         for model in self.models.values():
@@ -146,7 +152,8 @@ class UnifiedAIOrchestrator:
         return max(suitable_models, key=lambda m: m.performance_score / max(m.cost_per_token, 0.001))
     
     async def _generate_content(self, task: AITask, model: AIModel) -> Dict[str, Any]:
-        """Generate content using AI model"""
+        """
+Generate content using AI model"""
         # Simplified implementation - in real scenario would call actual AI APIs
         return {
             "content": f"Generated content for task {task.task_id}",
@@ -155,7 +162,8 @@ class UnifiedAIOrchestrator:
         }
     
     async def _analyze_content(self, task: AITask, model: AIModel) -> Dict[str, Any]:
-        """Analyze content using AI model"""
+        """
+Analyze content using AI model"""
         return {
             "analysis": f"Analysis result for task {task.task_id}",
             "sentiment": "positive",
@@ -164,7 +172,8 @@ class UnifiedAIOrchestrator:
         }
     
     async def _optimize_content(self, task: AITask, model: AIModel) -> Dict[str, Any]:
-        """Optimize content using AI model"""
+        """
+Optimize content using AI model"""
         return {
             "optimized_content": f"Optimized content for task {task.task_id}",
             "improvements": ["clarity", "engagement"],
@@ -172,7 +181,8 @@ class UnifiedAIOrchestrator:
         }
     
     async def _moderate_content(self, task: AITask, model: AIModel) -> Dict[str, Any]:
-        """Moderate content using AI model"""
+        """
+Moderate content using AI model"""
         return {
             "is_safe": True,
             "confidence": 0.95,
@@ -182,7 +192,8 @@ class UnifiedAIOrchestrator:
     
     def _update_metrics(self, task: AITask, model: Optional[AIModel], 
                        processing_time: float, success: bool) -> None:
-        """Update performance metrics"""
+        """
+Update performance metrics"""
         self.performance_metrics["total_tasks"] += 1
         
         if success:
@@ -202,7 +213,8 @@ class UnifiedAIOrchestrator:
             self.performance_metrics["total_cost"] += estimated_cost
     
     def get_status(self) -> Dict[str, Any]:
-        """Get orchestrator status"""
+        """
+Get orchestrator status"""
         return {
             "active_models": len([m for m in self.models.values() if m.availability]),
             "active_tasks": len(self.active_tasks),

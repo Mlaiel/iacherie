@@ -27,18 +27,26 @@ except ImportError:
     BLOCKCHAIN_AVAILABLE = False
 
 # Import existing blockchain registry functionality
-from ...protection.watermarking.blockchain_registry import (
-    BlockchainWatermarkRegistry,
-    WatermarkRecord,
-    OwnershipProof
-)
+try:
+    from protection.watermarking.blockchain_registry import (
+        BlockchainWatermarkRegistry,
+        WatermarkRecord,
+        OwnershipProof
+    )
+except ImportError:
+    # Fallback si protection n'est pas dans le path
+    BlockchainWatermarkRegistry = None
+    WatermarkRecord = None
+    OwnershipProof = None
+
 
 logger = logging.getLogger(__name__)
 
 
 @dataclass
 class RightsRecord:
-    """Digital rights record for blockchain storage"""
+    """
+        Digital rights record for blockchain storage"""
     rights_id: str
     content_id: str
     owner_address: str
@@ -52,7 +60,8 @@ class RightsRecord:
 
 @dataclass  
 class ProtectionMetadata:
-    """Metadata for content protection"""
+    """
+        Metadata for content protection"""
     content_type: str
     protection_level: str
     watermark_strength: float
@@ -62,7 +71,8 @@ class ProtectionMetadata:
     
 
 class RightsType(Enum):
-    """Types of digital rights"""
+    """
+        Types of digital rights"""
     COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     LICENSING = "licensing"
@@ -73,6 +83,7 @@ class RightsType(Enum):
 
 class BlockchainRightsRegistry:
     """Enhanced blockchain registry for digital rights management"""
+
     
     def __init__(self, 
                  blockchain_url: Optional[str] = None,
@@ -86,6 +97,7 @@ class BlockchainRightsRegistry:
             private_key: Private key for transactions
             contract_address: Smart contract address
         """
+
         self.blockchain_url = blockchain_url
         self.contract_address = contract_address
         self._watermark_registry = BlockchainWatermarkRegistry(
@@ -93,17 +105,23 @@ class BlockchainRightsRegistry:
         )
         
         # Initialize Web3 connection if available
+
         if BLOCKCHAIN_AVAILABLE and blockchain_url:
             try:
+
                 self.web3 = Web3(Web3.HTTPProvider(blockchain_url))
+
                 if private_key:
                     self.account = Account.from_key(private_key)
+
                 else:
                     self.account = None
             except Exception as e:
                 logger.warning(f"Blockchain connection failed: {e}")
+
                 self.web3 = None
                 self.account = None
+
         else:
             self.web3 = None
             self.account = None
@@ -129,11 +147,16 @@ class BlockchainRightsRegistry:
         Returns:
             Registration result with transaction details
         """
+
         try:
+
             rights_id = str(uuid.uuid4())
+
+
             timestamp = int(time.time())
             
             # Create rights record
+
             rights_data = {
                 'rights_id': rights_id,
                 'content_id': content_id,
@@ -145,16 +168,22 @@ class BlockchainRightsRegistry:
             }
             
             # Generate signature
+
             rights_content = json.dumps(rights_data, sort_keys=True)
+
+
             signature = hashlib.sha256(rights_content.encode()).hexdigest()
             
             # Submit to blockchain if available
+
             if self.web3 and self.account:
                 tx_hash = await self._submit_rights_transaction(rights_data, signature)
+
             else:
                 tx_hash = f"local_{uuid.uuid4()}"
                 
             # Create rights record
+
             record = RightsRecord(
                 rights_id=rights_id,
                 content_id=content_id,
@@ -169,6 +198,7 @@ class BlockchainRightsRegistry:
             
             # Store locally for quick access
             self._local_registry[rights_id] = asdict(record)
+
             
             return {
                 'success': True,
@@ -181,6 +211,7 @@ class BlockchainRightsRegistry:
             
         except Exception as e:
             logger.error(f"Rights registration failed: {e}")
+
             return {
                 'success': False,
                 'error': str(e),
@@ -202,12 +233,16 @@ class BlockchainRightsRegistry:
         Returns:
             Verification result with ownership details
         """
+
         try:
             # Check local registry first
+
             if rights_id in self._local_registry:
+
                 record = self._local_registry[rights_id]
                 
                 # Verify content ID match
+
                 if record['content_id'] != content_id:
                     return {
                         'verified': False,
@@ -215,6 +250,7 @@ class BlockchainRightsRegistry:
                     }
                 
                 # Check expiration
+
                 if record.get('expiration_timestamp'):
                     if int(time.time()) > record['expiration_timestamp']:
                         return {
@@ -223,8 +259,13 @@ class BlockchainRightsRegistry:
                         }
                 
                 # Verify signature
+
                 record_copy = record.copy()
+
+
                 stored_signature = record_copy.pop('signature', '')
+
+
                 record_content = json.dumps({
                     'rights_id': record_copy['rights_id'],
                     'content_id': record_copy['content_id'],
@@ -234,8 +275,11 @@ class BlockchainRightsRegistry:
                     'timestamp': record_copy['creation_timestamp'],
                     'expiration': record_copy.get('expiration_timestamp')
                 }, sort_keys=True)
+
+
                 
                 expected_signature = hashlib.sha256(record_content.encode()).hexdigest()
+
                 
                 return {
                     'verified': stored_signature == expected_signature,
@@ -246,9 +290,11 @@ class BlockchainRightsRegistry:
             
             # If not found locally, check blockchain
             return await self._verify_blockchain_rights(rights_id, content_id)
+
             
         except Exception as e:
             logger.error(f"Rights verification failed: {e}")
+
             return {
                 'verified': False,
                 'error': str(e)
@@ -271,14 +317,18 @@ class BlockchainRightsRegistry:
         Returns:
             Combined registration result
         """
+
         try:
             # Register watermark using existing functionality
+
             watermark_result = await self._watermark_registry.register_watermark(
                 watermark_data, content_hash, owner_id
             )
+
             
             if watermark_result.get('success'):
                 # Register associated rights
+
                 license_terms = {
                     'usage_rights': 'exclusive',
                     'commercial_use': True,
@@ -286,6 +336,7 @@ class BlockchainRightsRegistry:
                     'distribution_rights': True,
                     'watermark_id': watermark_result['watermark_id']
                 }
+
                 
                 rights_result = await self.register_rights(
                     watermark_result['watermark_id'],
@@ -293,6 +344,7 @@ class BlockchainRightsRegistry:
                     rights_type,
                     license_terms
                 )
+
                 
                 return {
                     'success': True,
@@ -305,6 +357,7 @@ class BlockchainRightsRegistry:
                 
         except Exception as e:
             logger.error(f"Combined registration failed: {e}")
+
             return {
                 'success': False,
                 'error': str(e)
@@ -320,6 +373,7 @@ class BlockchainRightsRegistry:
         Returns:
             List of rights records
         """
+
         history = []
         
         for rights_id, record in self._local_registry.items():
@@ -332,20 +386,24 @@ class BlockchainRightsRegistry:
         
         # Sort by timestamp
         history.sort(key=lambda x: x['record']['creation_timestamp'], reverse=True)
+
         
         return history
     
     async def _submit_rights_transaction(self,
                                        rights_data: Dict[str, Any],
                                        signature: str) -> str:
-        """Submit rights transaction to blockchain"""
+        """
+        Submit rights transaction to blockchain"""
         # Simplified blockchain transaction
         # In production, this would interact with actual smart contract
         try:
+
             if not self.web3 or not self.account:
                 raise Exception("Blockchain not available")
                 
             # Create transaction data
+
             tx_data = {
                 'rights_data': rights_data,
                 'signature': signature,
@@ -353,21 +411,26 @@ class BlockchainRightsRegistry:
             }
             
             # Generate mock transaction hash
+
             tx_content = json.dumps(tx_data, sort_keys=True)
+
+
             tx_hash = hashlib.sha256(tx_content.encode()).hexdigest()
+
             
             logger.info(f"Rights transaction submitted: {tx_hash}")
+
             return tx_hash
             
         except Exception as e:
             logger.error(f"Blockchain transaction failed: {e}")
+
             raise
     
     async def _verify_blockchain_rights(self,
                                       rights_id: str,
                                       content_id: str) -> Dict[str, Any]:
         """Verify rights on blockchain"""
-        # Mock blockchain verification
         return {
             'verified': False,
             'error': 'Rights not found on blockchain'
@@ -378,9 +441,14 @@ class BlockchainRightsRegistry:
                                    owner_id: str,
                                    rights_type: RightsType,
                                    license_terms: Dict[str, Any]) -> Dict[str, Any]:
-        """Fallback local rights registration"""
+        """
+        Fallback local rights registration"""
+
         rights_id = str(uuid.uuid4())
+
         timestamp = int(time.time())
+
+
         
         record = {
             'rights_id': rights_id,

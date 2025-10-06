@@ -48,7 +48,8 @@ logger = logging.getLogger(__name__)
 
 
 class IntelligenceLevel(str, Enum):
-    """AI intelligence processing levels."""
+    """
+        AI intelligence processing levels."""
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -104,7 +105,8 @@ class TimingIntelligence:
 
 @dataclass
 class AudienceInsight:
-    """Advanced audience intelligence and insights."""
+    """
+        Advanced audience intelligence and insights."""
     segment_id: str
     segment_type: AudienceSegment
     size: int
@@ -123,7 +125,8 @@ class AudienceInsight:
 
 @dataclass
 class ViralPrediction:
-    """AI-powered viral potential prediction."""
+    """
+        AI-powered viral potential prediction."""
     content_id: str
     viral_probability: float
     peak_engagement_time: Optional[datetime]
@@ -139,7 +142,8 @@ class ViralPrediction:
 
 @dataclass
 class ContentOptimizationSuggestion:
-    """AI-generated content optimization suggestions."""
+    """
+        AI-generated content optimization suggestions."""
     optimization_type: str
     priority: int  # 1-10, 10 being highest
     suggestion: str
@@ -151,7 +155,8 @@ class ContentOptimizationSuggestion:
 
 @dataclass
 class CrossPlatformStrategy:
-    """Cross-platform distribution strategy."""
+    """
+        Cross-platform distribution strategy."""
     strategy_id: str
     platforms: List[str]
     content_variations: Dict[str, Dict[str, Any]]
@@ -163,7 +168,8 @@ class CrossPlatformStrategy:
 
 
 class AIDistributionEngine:
-    """Core AI-powered distribution intelligence engine."""
+    """
+        Core AI-powered distribution intelligence engine."""
     
     def __init__(self, intelligence_level: IntelligenceLevel = IntelligenceLevel.ADVANCED):
         self.intelligence_level = intelligence_level
@@ -180,6 +186,7 @@ class AIDistributionEngine:
         self.min_confidence_threshold = 0.7
         self.learning_rate = 0.01
         self.model_update_frequency = timedelta(hours=6)
+
         
         self.initialized = False
     
@@ -197,13 +204,16 @@ class AIDistributionEngine:
             
             # Setup real-time data feeds
             await self._setup_data_feeds()
+
             
             self.initialized = True
             self.logger.info(f"✅ AI Distribution Engine initialized with {self.intelligence_level.value} intelligence")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Failed to initialize AI distribution engine: {e}")
+
             return False
     
     async def _initialize_prediction_models(self):
@@ -219,6 +229,7 @@ class AIDistributionEngine:
         
         for model_type in PredictionModel:
             self.prediction_models[model_type] = base_model.copy()
+
             self.prediction_models[model_type]["type"] = model_type.value
             
             # Model-specific initialization
@@ -249,6 +260,7 @@ class AIDistributionEngine:
                 "content_type": secrets.choice(["video", "image", "text", "audio"]),
                 "viral_score": secrets.randbelow(100) / 100.0
             })
+
         
         self.content_performance_history = sample_data
         self.logger.info(f"Loaded {len(sample_data)} historical performance records")
@@ -256,6 +268,7 @@ class AIDistributionEngine:
     async def _initialize_audience_segments(self):
         """Initialize audience segmentation data."""
         # Create sample audience segments
+
         segments = [
             AudienceInsight(
                 segment_id="gen_z_creators",
@@ -316,24 +329,31 @@ class AIDistributionEngine:
         """Predict optimal posting times for content across platforms."""
         if not self.initialized:
             await self.initialize()
+
+
         
         timing_predictions = {}
         
         for platform in target_platforms:
             try:
                 # Analyze historical performance for similar content
+
                 similar_content = await self._find_similar_content(content_metadata, platform)
                 
                 # Get audience activity patterns
+
                 audience_patterns = await self._analyze_audience_activity(platform, target_audience)
                 
                 # Consider competition density
+
                 competition_analysis = await self._analyze_competition_density(platform)
                 
                 # Apply AI timing model
                 optimal_time, confidence = await self._calculate_optimal_timing(
                     platform, similar_content, audience_patterns, competition_analysis
                 )
+
+
                 
                 timing_intelligence = TimingIntelligence(
                     optimal_time=optimal_time,
@@ -350,6 +370,7 @@ class AIDistributionEngine:
                     alternative_times=await self._generate_alternative_times(optimal_time),
                     competition_analysis=competition_analysis
                 )
+
                 
                 timing_predictions[platform] = timing_intelligence
                 
@@ -363,19 +384,23 @@ class AIDistributionEngine:
                     audience_segment=target_audience or "general",
                     timezone="UTC"
                 )
+
         
         return timing_predictions
     
     async def _find_similar_content(self, content_metadata: Dict[str, Any], platform: str) -> List[Dict[str, Any]]:
         """Find historically similar content for performance analysis."""
         similar_content = []
+
         content_type = content_metadata.get("content_type", "unknown")
+
         
         for record in self.content_performance_history:
             if (record["platform"] == platform and 
                 record["content_type"] == content_type and
                 record["engagement_rate"] > 0.5):
                 similar_content.append(record)
+
         
         return similar_content[:50]  # Top 50 similar content pieces
     
@@ -383,7 +408,10 @@ class AIDistributionEngine:
         """Analyze audience activity patterns."""
         if target_audience and target_audience in self.audience_segments:
             segment = self.audience_segments[target_audience]
+
             platform_usage = segment.platforms.get(platform, 0.1)
+
+
             peak_hours = segment.peak_activity_hours
             
             return {
@@ -404,9 +432,11 @@ class AIDistributionEngine:
     async def _analyze_competition_density(self, platform: str) -> Dict[str, Any]:
         """Analyze competition density for timing optimization."""
         # Simulate competition analysis
+
         base_density = secrets.randbelow(50) / 100.0  # 0.0 to 0.5
         
         # Peak hours typically have higher competition
+
         current_hour = datetime.utcnow().hour
         if 19 <= current_hour <= 22:  # Peak hours
             base_density += 0.3
@@ -427,6 +457,7 @@ class AIDistributionEngine:
     ) -> Tuple[datetime, float]:
         """Calculate optimal timing using AI model."""
         # Weighted factors for timing calculation
+
         factors = {
             "audience_activity": audience_patterns.get("peak_score", 0.5) * 0.4,
             "historical_performance": min(len(similar_content) / 50.0, 1.0) * 0.3,
@@ -435,15 +466,21 @@ class AIDistributionEngine:
         }
         
         # Calculate overall timing score
+
         timing_score = sum(factors.values())
+
         confidence = min(timing_score + 0.2, 1.0)  # Add base confidence
         
         # Determine optimal hour based on audience peak activity
+
         peak_hours = audience_patterns.get("peak_hours", [20])
+
         optimal_hour = secrets.choice(peak_hours)
         
         # Calculate optimal time (next occurrence of optimal hour)
+
         now = datetime.utcnow()
+
         optimal_time = now.replace(hour=optimal_hour, minute=0, second=0, microsecond=0)
         
         # If the hour has passed today, schedule for tomorrow
@@ -459,7 +496,9 @@ class AIDistributionEngine:
     def _get_algorithm_score(self, platform: str, timing: datetime) -> float:
         """Get platform algorithm favorability score for specific timing."""
         # Simulate algorithm scoring
+
         hour = timing.hour
+
         
         platform_preferences = {
             "instagram": [19, 20, 21],  # Evening hours preferred
@@ -468,6 +507,7 @@ class AIDistributionEngine:
             "twitter": [12, 17, 19],  # Lunch and evening
             "facebook": [13, 15, 19],  # Afternoon and evening
         }
+
         
         preferred_hours = platform_preferences.get(platform, [20])
         if hour in preferred_hours:
@@ -478,13 +518,16 @@ class AIDistributionEngine:
     def _get_current_algorithm_score(self, platform: str) -> float:
         """Get current algorithm favorability for platform."""
         platform_data = self.trending_data.get("platforms", {}).get(platform, {})
+
         base_score = 0.7
         
         # Algorithm changes can affect favorability
+
         algorithm_change = platform_data.get("algorithm_change", 0)
         base_score -= algorithm_change
         
         # User growth can improve favorability
+
         user_growth = platform_data.get("user_growth", 0)
         base_score += user_growth
         
@@ -494,7 +537,9 @@ class AIDistributionEngine:
         """Generate alternative posting times."""
         alternatives = []
         for offset in [-2, -1, 1, 2, 3]:  # Hours before/after optimal
+
             alt_time = optimal_time + timedelta(hours=offset)
+
             alternatives.append(alt_time)
         return alternatives
     
@@ -503,21 +548,27 @@ class AIDistributionEngine:
         content_metadata: Dict[str, Any],
         target_platforms: List[str]
     ) -> ViralPrediction:
-        """Predict viral potential of content using AI analysis."""
+        """
+        Predict viral potential of content using AI analysis."""
         if not self.initialized:
             await self.initialize()
+
         
         try:
             # Analyze content characteristics
+
             content_score = await self._analyze_content_characteristics(content_metadata)
             
             # Check trending alignment
+
             trending_score = await self._calculate_trending_alignment(content_metadata)
             
             # Evaluate platform suitability
+
             platform_scores = await self._evaluate_platform_suitability(content_metadata, target_platforms)
             
             # Calculate overall viral probability
+
             factors = {
                 "content_quality": content_score,
                 "trending_alignment": trending_score,
@@ -528,6 +579,7 @@ class AIDistributionEngine:
             }
             
             # Weighted viral probability calculation
+
             weights = {
                 "content_quality": 0.25,
                 "trending_alignment": 0.20,
@@ -536,14 +588,19 @@ class AIDistributionEngine:
                 "creator_influence": 0.15,
                 "novelty_factor": 0.05
             }
+
             
             viral_probability = sum(factors[k] * weights[k] for k in factors.keys())
             
             # Generate recommendations
+
             recommendations = await self._generate_viral_recommendations(factors, viral_probability)
             
             # Estimate reach and engagement velocity
+
             estimated_reach = await self._estimate_viral_reach(viral_probability, target_platforms)
+
+
             engagement_velocity = viral_probability * 100  # Engagements per hour
             
             return ViralPrediction(
@@ -559,9 +616,11 @@ class AIDistributionEngine:
                 confidence_interval=(max(0.0, viral_probability - 0.15), min(1.0, viral_probability + 0.15)),
                 recommendations=recommendations
             )
+
             
         except Exception as e:
             self.logger.error(f"Error predicting viral potential: {e}")
+
             return ViralPrediction(
                 content_id=content_metadata.get("content_id", "unknown"),
                 viral_probability=0.5,
@@ -580,6 +639,7 @@ class AIDistributionEngine:
         score = 0.5  # Base score
         
         # Content type scoring
+
         content_type = content_metadata.get("content_type", "")
         if "video" in content_type:
             score += 0.2  # Videos tend to be more viral
@@ -603,10 +663,16 @@ class AIDistributionEngine:
     async def _calculate_trending_alignment(self, content_metadata: Dict[str, Any]) -> float:
         """Calculate alignment with current trending topics."""
         content_tags = content_metadata.get("tags", [])
+
         content_title = content_metadata.get("title", "").lower()
+
+
         
         trending_hashtags = self.trending_data.get("hashtags", {})
+
         trending_topics = self.trending_data.get("topics", {})
+
+
         
         alignment_score = 0.0
         
@@ -625,7 +691,10 @@ class AIDistributionEngine:
     async def _evaluate_platform_suitability(self, content_metadata: Dict[str, Any], platforms: List[str]) -> Dict[str, float]:
         """Evaluate content suitability for each platform."""
         scores = {}
+
         content_type = content_metadata.get("content_type", "")
+
+
         
         platform_preferences = {
             "tiktok": {"video": 0.9, "image": 0.3, "audio": 0.7},
@@ -651,13 +720,18 @@ class AIDistributionEngine:
     async def _calculate_novelty_factor(self, content_metadata: Dict[str, Any]) -> float:
         """Calculate content novelty factor."""
         # Check if similar content exists in recent history
+
         content_type = content_metadata.get("content_type", "")
+
         title_words = set(content_metadata.get("title", "").lower().split())
+
+
         
         recent_content = [
             record for record in self.content_performance_history
             if (datetime.utcnow() - record["posting_time"]).days <= 30
         ]
+
         
         similarity_count = 0
         for record in recent_content:
@@ -665,6 +739,7 @@ class AIDistributionEngine:
                 similarity_count += 1
         
         # Higher novelty = lower similarity
+
         novelty = max(0.0, 1.0 - (similarity_count / len(recent_content))) if recent_content else 1.0
         return novelty
     
@@ -674,19 +749,25 @@ class AIDistributionEngine:
         
         if factors.get("content_quality", 0) < 0.7:
             recommendations.append("Improve content quality with better production values")
+
         
         if factors.get("trending_alignment", 0) < 0.5:
             recommendations.append("Incorporate more trending hashtags and topics")
+
         
         if factors.get("platform_match", 0) < 0.6:
             recommendations.append("Optimize content format for target platforms")
+
         
         if viral_probability < 0.6:
             recommendations.append("Consider adding emotional hooks or call-to-action")
+
             recommendations.append("Collaborate with influencers to increase reach")
+
         
         if factors.get("novelty_factor", 0) < 0.3:
             recommendations.append("Add unique elements to differentiate from similar content")
+
         
         return recommendations
     
@@ -695,6 +776,7 @@ class AIDistributionEngine:
         base_reach = 10000  # Base organic reach
         
         # Platform multipliers
+
         platform_multipliers = {
             "tiktok": 50,
             "instagram": 30,
@@ -702,9 +784,12 @@ class AIDistributionEngine:
             "twitter": 25,
             "facebook": 40
         }
+
         
         total_multiplier = sum(platform_multipliers.get(p, 20) for p in platforms)
+
         viral_multiplier = (viral_probability ** 2) * 10  # Exponential growth for high probability
+
         
         estimated_reach = int(base_reach * total_multiplier * viral_multiplier)
         return min(estimated_reach, 10000000)  # Cap at 10M reach
@@ -722,13 +807,19 @@ class AIDistributionEngine:
         """Generate AI-powered audience insights for content."""
         if not self.initialized:
             await self.initialize()
+
+
         
         relevant_segments = []
+
         content_type = content_metadata.get("content_type", "")
+
         content_category = content_metadata.get("category", "general")
+
         
         for segment_id, segment in self.audience_segments.items():
             # Calculate relevance score
+
             relevance_score = 0.0
             
             # Check content type match
@@ -744,6 +835,7 @@ class AIDistributionEngine:
             
             if relevance_score >= 0.5:
                 relevant_segments.append(segment)
+
         
         return relevant_segments
     
@@ -755,31 +847,43 @@ class AIDistributionEngine:
         """Create optimized cross-platform distribution strategy."""
         if not self.initialized:
             await self.initialize()
+
+
         
         strategy_id = f"strategy_{uuid4().hex[:8]}"
         
         # Generate platform-specific content variations
+
         content_variations = {}
+
         timing_coordination = {}
         
         for platform in target_platforms:
             # Platform-specific optimization
+
             variations = await self._optimize_content_for_platform(content_metadata, platform)
+
             content_variations[platform] = variations
             
             # Optimal timing for each platform
+
             timing_intel = await self.predict_optimal_timing(content_metadata, [platform])
+
             if platform in timing_intel:
                 timing_coordination[platform] = timing_intel[platform].optimal_time
         
         # Calculate messaging consistency
+
         consistency_score = await self._calculate_messaging_consistency(content_variations)
         
         # Calculate synergy score
+
         synergy_score = await self._calculate_platform_synergy(target_platforms)
         
         # Estimate amplification effect
+
         amplification = await self._estimate_cross_platform_amplification(target_platforms, synergy_score)
+
         
         return CrossPlatformStrategy(
             strategy_id=strategy_id,
@@ -795,6 +899,8 @@ class AIDistributionEngine:
     async def _optimize_content_for_platform(self, content_metadata: Dict[str, Any], platform: str) -> Dict[str, Any]:
         """Optimize content for specific platform."""
         base_content = content_metadata.copy()
+
+
         
         platform_optimizations = {
             "tiktok": {
@@ -822,12 +928,14 @@ class AIDistributionEngine:
                 "tone": "conversational"
             }
         }
+
         
         optimizations = platform_optimizations.get(platform, {})
         
         # Apply optimizations
         if "title_max_length" in optimizations:
             title = base_content.get("title", "")
+
             if len(title) > optimizations["title_max_length"]:
                 base_content["title"] = title[:optimizations["title_max_length"]-3] + "..."
         
@@ -840,36 +948,47 @@ class AIDistributionEngine:
             return 1.0
         
         # Compare titles across platforms
+
         titles = [var.get("title", "") for var in content_variations.values()]
         
         # Simple consistency score based on title similarity
+
         consistency_scores = []
         for i in range(len(titles)):
             for j in range(i + 1, len(titles)):
                 similarity = self._calculate_text_similarity(titles[i], titles[j])
+
                 consistency_scores.append(similarity)
+
         
         return statistics.mean(consistency_scores) if consistency_scores else 1.0
     
     def _calculate_text_similarity(self, text1: str, text2: str) -> float:
         """Calculate simple text similarity score."""
         words1 = set(text1.lower().split())
+
         words2 = set(text2.lower().split())
+
         
         if not words1 or not words2:
             return 0.0
+
         
         intersection = words1.intersection(words2)
+
         union = words1.union(words2)
+
         
         return len(intersection) / len(union) if union else 0.0
     
     async def _calculate_platform_synergy(self, platforms: List[str]) -> float:
-        """Calculate synergy score between platforms."""
+        """
+        Calculate synergy score between platforms."""
         if len(platforms) < 2:
             return 0.5
         
         # Platform synergy matrix (simplified)
+
         synergy_matrix = {
             ("instagram", "tiktok"): 0.9,
             ("youtube", "instagram"): 0.8,
@@ -878,13 +997,17 @@ class AIDistributionEngine:
             ("facebook", "instagram"): 0.9,
             ("twitter", "youtube"): 0.6
         }
+
         
         synergy_scores = []
         for i in range(len(platforms)):
             for j in range(i + 1, len(platforms)):
                 pair = tuple(sorted([platforms[i], platforms[j]]))
+
+
                 score = synergy_matrix.get(pair, 0.5)  # Default synergy
                 synergy_scores.append(score)
+
         
         return statistics.mean(synergy_scores) if synergy_scores else 0.5
     
@@ -893,16 +1016,20 @@ class AIDistributionEngine:
         base_amplification = 1.0  # No amplification for single platform
         
         # Each additional platform adds amplification
+
         platform_multiplier = 1.0 + (len(platforms) - 1) * 0.3
         
         # Synergy bonus
+
         synergy_bonus = synergy_score * 0.5
+
         
         total_amplification = base_amplification + platform_multiplier + synergy_bonus
         return min(total_amplification, 5.0)  # Cap at 5x amplification
     
     async def _generate_adaptation_rules(self, platforms: List[str]) -> Dict[str, Any]:
-        """Generate content adaptation rules for platforms."""
+        """
+        Generate content adaptation rules for platforms."""
         return {
             "title_adaptation": "truncate_with_ellipsis",
             "hashtag_adaptation": "platform_specific",
@@ -920,7 +1047,9 @@ class AIDistributionEngine:
         suggestions = []
         
         # Analyze current performance
+
         engagement_rate = current_performance.get("engagement_rate", 0)
+
         reach = current_performance.get("reach", 0)
         
         # Title optimization
@@ -936,6 +1065,7 @@ class AIDistributionEngine:
             ))
         
         # Hashtag optimization
+
         hashtag_count = len(content_metadata.get("hashtags", []))
         if hashtag_count < 5:
             suggestions.append(ContentOptimizationSuggestion(
@@ -971,6 +1101,7 @@ class AIDistributionEngine:
                 affected_metrics=["engagement_rate", "completion_rate", "shares"],
                 supporting_data={"quality_score": content_metadata.get("quality_score", 0.5)}
             ))
+
         
         return suggestions
     
@@ -981,6 +1112,7 @@ class AIDistributionEngine:
         self.content_performance_history.clear()
         self.platform_analytics.clear()
         self.trending_data.clear()
+
         
         self.logger.info("✅ AI Distribution Engine cleaned up")
 

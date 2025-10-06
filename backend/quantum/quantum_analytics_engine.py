@@ -45,7 +45,8 @@ logger = logging.getLogger(__name__)
 # ========================================
 
 class AnalyticsType(Enum):
-    """Types d'analytics"""
+    """
+        Types d'analytics"""
     PERFORMANCE_ANALYTICS = "performance_metrics_analytics"
     PREDICTIVE_ANALYTICS = "predictive_modeling_analytics"
     BUSINESS_INTELLIGENCE = "business_intelligence_analytics"
@@ -124,7 +125,8 @@ class AnalyticsRequest:
 
 @dataclass
 class PredictiveRequest:
-    """Requête analytics prédictive"""
+    """
+        Requête analytics prédictive"""
     prediction_id: str
     target_metrics: List[str]
     prediction_horizon: PredictionHorizon
@@ -155,7 +157,8 @@ class RevenueAnalyticsRequest:
 
 @dataclass
 class AnalyticsResult:
-    """Résultat analytics"""
+    """
+        Résultat analytics"""
     request_id: str
     analytics_type: AnalyticsType
     metrics_calculated: Dict[str, float]
@@ -170,7 +173,8 @@ class AnalyticsResult:
 
 @dataclass
 class PredictiveResult:
-    """Résultat prédictif"""
+    """
+        Résultat prédictif"""
     prediction_id: str
     predictions: Dict[str, Any]
     model_accuracy: float
@@ -181,7 +185,8 @@ class PredictiveResult:
 
 @dataclass
 class BusinessIntelligenceResult:
-    """Résultat business intelligence"""
+    """
+        Résultat business intelligence"""
     bi_request_id: str
     executive_summary: Dict[str, Any]
     key_performance_indicators: Dict[str, float]
@@ -195,7 +200,8 @@ class BusinessIntelligenceResult:
 # ========================================
 
 class PerformanceAnalyzer(ABC):
-    """Interface analyseur performance"""
+    """
+        Interface analyseur performance"""
     
     @abstractmethod
     async def analyze_performance(self, request: AnalyticsRequest) -> Dict[str, Any]:
@@ -206,7 +212,8 @@ class PerformanceAnalyzer(ABC):
         pass
 
 class PredictiveModeler(ABC):
-    """Interface modélisateur prédictif"""
+    """
+        Interface modélisateur prédictif"""
     
     @abstractmethod
     async def create_predictive_model(self, request: PredictiveRequest) -> PredictiveResult:
@@ -217,7 +224,8 @@ class PredictiveModeler(ABC):
         pass
 
 class BusinessAnalyzer(ABC):
-    """Interface analyseur business"""
+    """
+        Interface analyseur business"""
     
     @abstractmethod
     async def analyze_business_performance(self, request: BusinessIntelligenceRequest) -> BusinessIntelligenceResult:
@@ -228,7 +236,8 @@ class BusinessAnalyzer(ABC):
         pass
 
 class RevenueAnalyzer(ABC):
-    """Interface analyseur revenus"""
+    """
+        Interface analyseur revenus"""
     
     @abstractmethod
     async def analyze_revenue(self, request: RevenueAnalyticsRequest) -> Dict[str, Any]:
@@ -300,53 +309,69 @@ class QuantumAnalyticsEngine:
         """
         try:
             start_time = datetime.utcnow()
+
             logger.info(f"📈 Computing comprehensive analytics: {request.analytics_type.value}")
             
             # Collecte et validation données
+
             raw_data = await self._collect_analytics_data(request)
+
+
             validated_data = await self._validate_analytics_data(raw_data, request)
             
             # Préprocessing données quantique
+
             processed_data = await self._preprocess_analytics_data(validated_data, request)
             
             # Calcul métriques core
+
             core_metrics = await self._calculate_core_metrics(processed_data, request.metrics)
             
             # Analyse tendances temporelles
+
             trends_analysis = await self._analyze_temporal_trends(processed_data, request)
             
             # Calcul métriques avancées
+
             advanced_metrics = await self._calculate_advanced_metrics(
                 processed_data, request.complexity_level
             )
             
             # Génération insights intelligents
+
             intelligent_insights = await self._generate_intelligent_insights(
                 core_metrics, advanced_metrics, trends_analysis
             )
             
             # Recommandations actionables
+
             actionable_recommendations = await self._generate_actionable_recommendations(
                 intelligent_insights, request.analytics_type
             )
             
             # Évaluation qualité données
+
             data_quality_score = await self._evaluate_data_quality(validated_data)
             
             # Calcul niveau confiance
+
             confidence_level = await self._calculate_analytics_confidence(
                 data_quality_score, core_metrics, request.complexity_level
             )
             
             # Calcul avantage quantique
+
             quantum_advantage = await self._calculate_analytics_quantum_advantage(
                 request.analytics_type, request.complexity_level
             )
             
             # Consolidation métriques finales
+
             consolidated_metrics = {**core_metrics, **advanced_metrics}
+
             
             processing_time = (datetime.utcnow() - start_time).total_seconds() * 1000
+
             
             result = AnalyticsResult(
                 request_id=request.request_id,
@@ -363,14 +388,18 @@ class QuantumAnalyticsEngine:
             
             # Mise à jour cache et historique
             await self._update_analytics_cache(request, result)
+
             self.analytics_history.append(request)
+
             
             logger.info(f"✅ Analytics computation completed: {len(consolidated_metrics)} metrics calculated (confidence: {confidence_level:.2%}, advantage: {quantum_advantage:.2f}x)")
+
             
             return result
             
         except Exception as e:
             logger.error(f"❌ Failed to compute analytics: {e}")
+
             raise
     
     # ========================================
@@ -394,49 +423,63 @@ class QuantumAnalyticsEngine:
             logger.info(f"🔮 Generating predictive insights: {request.prediction_horizon.value}")
             
             # Sélection ou création modélisateur prédictif
+
             modeler = await self._get_or_create_predictive_modeler("advanced")
             
             # Création modèle prédictif principal
+
             predictive_model = await modeler.create_predictive_model(request)
             
             # Préparation données historiques
+
             prepared_data = await self._prepare_historical_data(request.historical_data)
             
             # Ingénierie features avancée
+
             engineered_features = await self._engineer_predictive_features(
                 prepared_data, request.external_factors
             )
             
             # Entraînement modèles ensemble
+
             ensemble_models = await self._train_ensemble_models(
                 engineered_features, request.target_metrics
             )
             
             # Génération prédictions multi-modèles
+
             multi_model_predictions = await self._generate_multi_model_predictions(
                 ensemble_models, request.prediction_horizon
             )
             
             # Calcul intervalles confiance
+
             confidence_intervals = await self._calculate_prediction_confidence_intervals(
                 multi_model_predictions, request.confidence_level
             )
             
             # Analyse importance features
+
             feature_importance = await self._analyze_feature_importance(ensemble_models)
             
             # Analyse scenarios (optimiste, pessimiste, réaliste)
+
+
             scenario_analysis = await self._perform_scenario_analysis(
                 multi_model_predictions, request.external_factors
             )
             
             # Évaluation risques prédictifs
+
             risk_assessment = await self._assess_prediction_risks(
                 multi_model_predictions, scenario_analysis
             )
             
             # Validation croisée modèles
+
             model_accuracy = await self._validate_model_accuracy(ensemble_models, prepared_data)
+
+
             
             result = PredictiveResult(
                 prediction_id=request.prediction_id,
@@ -450,13 +493,16 @@ class QuantumAnalyticsEngine:
             
             # Stockage modèles pour réutilisation
             await self._store_predictive_models(request.prediction_id, ensemble_models)
+
             
             logger.info(f"✅ Predictive insights generated: {model_accuracy:.2%} accuracy with {len(multi_model_predictions)} predictions")
+
             
             return result
             
         except Exception as e:
             logger.error(f"❌ Failed to generate predictive insights: {e}")
+
             raise
     
     # ========================================
@@ -484,25 +530,31 @@ class QuantumAnalyticsEngine:
             logger.info(f"💼 Generating business intelligence for {len(request.business_dimensions)} dimensions")
             
             # Sélection ou création analyseur business
+
             analyzer = await self._get_or_create_business_analyzer("executive")
             
             # Analyse business performance principale
+
             business_performance = await analyzer.analyze_business_performance(request)
             
             # Collecte données multi-dimensionnelles
+
             multi_dimensional_data = await self._collect_multi_dimensional_business_data(
                 request.business_dimensions
             )
             
             # Calcul KPIs stratégiques
+
             strategic_kpis = await self._calculate_strategic_kpis(
                 multi_dimensional_data, request.business_dimensions
             )
             
             # Génération insights business
+
             business_insights = await analyzer.generate_business_insights(multi_dimensional_data)
             
             # Analyse performance concurrentielle
+
             competitive_analysis = await self._analyze_competitive_performance(
                 multi_dimensional_data
             )
@@ -513,19 +565,24 @@ class QuantumAnalyticsEngine:
             )
             
             # Recommandations stratégiques
+
             strategic_recommendations = await self._generate_strategic_recommendations(
                 business_insights, market_opportunities, request.stakeholder_level
             )
             
             # Synthèse exécutive
+
             executive_summary = await self._create_executive_summary(
                 strategic_kpis, business_insights, strategic_recommendations
             )
             
             # Analyse gaps et risques business
+
             business_gaps_risks = await self._analyze_business_gaps_and_risks(
                 business_performance, competitive_analysis
             )
+
+
             
             result = BusinessIntelligenceResult(
                 bi_request_id=request.bi_request_id,
@@ -536,13 +593,16 @@ class QuantumAnalyticsEngine:
                 competitive_analysis=competitive_analysis,
                 market_opportunities=market_opportunities
             )
+
             
             logger.info(f"✅ Business intelligence generated: {len(business_insights)} insights with {len(strategic_recommendations)} recommendations")
+
             
             return result
             
         except Exception as e:
             logger.error(f"❌ Failed to generate business intelligence: {e}")
+
             raise
     
     # ========================================
@@ -570,55 +630,68 @@ class QuantumAnalyticsEngine:
             logger.info(f"💰 Analyzing revenue performance for {len(request.revenue_streams)} streams")
             
             # Sélection ou création analyseur revenus
+
             analyzer = await self._get_or_create_revenue_analyzer("comprehensive")
             
             # Analyse revenus principale
+
             revenue_analysis = await analyzer.analyze_revenue(request)
             
             # Collecte données revenus multi-stream
+
             multi_stream_data = await self._collect_multi_stream_revenue_data(
                 request.revenue_streams, request.time_period
             )
             
             # Calcul métriques revenus core
+
             core_revenue_metrics = await self._calculate_core_revenue_metrics(
                 multi_stream_data, request.breakdown_dimensions
             )
             
             # Analyse trends revenus temporels
+
             revenue_trends = await self._analyze_revenue_trends(
                 multi_stream_data, request.comparison_periods
             )
             
             # Segmentation revenus avancée
+
             revenue_segmentation = await self._perform_revenue_segmentation(
                 multi_stream_data, request.breakdown_dimensions
             )
             
             # Analyse cohort revenus
+
             revenue_cohort_analysis = await self._perform_revenue_cohort_analysis(
                 multi_stream_data
             )
             
             # Forecasting revenus si requis
+
             revenue_forecast = {}
             if request.forecast_required:
                 revenue_forecast = await analyzer.forecast_revenue(multi_stream_data)
             
             # Analyse contributeur revenus
+
             revenue_contributors = await self._analyze_revenue_contributors(
                 multi_stream_data, revenue_segmentation
             )
             
             # Optimisation revenue streams
+
             revenue_optimization = await self._optimize_revenue_streams(
                 core_revenue_metrics, revenue_trends, revenue_forecast
             )
             
             # Évaluation santé revenue business
+
             revenue_health_score = await self._calculate_revenue_health_score(
                 core_revenue_metrics, revenue_trends
             )
+
+
             
             result = {
                 "revenue_analysis_id": request.revenue_analysis_id,
@@ -635,11 +708,13 @@ class QuantumAnalyticsEngine:
             }
             
             logger.info(f"✅ Revenue analysis completed: {revenue_health_score:.2%} health score")
+
             
             return result
             
         except Exception as e:
             logger.error(f"❌ Failed to analyze revenue performance: {e}")
+
             raise
     
     # ========================================
@@ -669,41 +744,55 @@ class QuantumAnalyticsEngine:
             logger.info(f"🔬 Computing advanced analytics with {complexity_level.value}")
             
             # Préparation données pour analytics avancée
+
             prepared_data = await self._prepare_advanced_analytics_data(data)
             
             # Machine Learning Analytics
+
             ml_analytics = await self._compute_ml_analytics(prepared_data, analytics_objectives)
             
             # Analyse statistique avancée
+
             statistical_analysis = await self._perform_advanced_statistical_analysis(prepared_data)
             
             # Analytics comportementale
+
             behavioral_analytics = await self._compute_behavioral_analytics(prepared_data)
             
             # Analyse cohortes
+
             cohort_analysis = await self._perform_cohort_analysis(prepared_data)
             
             # Analyse funnels
+
             funnel_analysis = await self._perform_funnel_analysis(prepared_data)
             
             # Modélisation attribution
+
             attribution_modeling = await self._perform_attribution_modeling(prepared_data)
             
             # Clustering et segmentation
+
             clustering_analysis = await self._perform_clustering_analysis(prepared_data)
             
             # Détection anomalies
+
             anomaly_detection = await self._perform_anomaly_detection(prepared_data)
             
             # Analyse réseaux (si données réseau disponibles)
+
+
             network_analysis = await self._perform_network_analysis(prepared_data)
             
             # Consolidation analytics avancée
+
             advanced_analytics_summary = await self._consolidate_advanced_analytics(
                 ml_analytics, statistical_analysis, behavioral_analytics,
                 cohort_analysis, funnel_analysis, attribution_modeling,
                 clustering_analysis, anomaly_detection, network_analysis
             )
+
+
             
             result = {
                 "ml_analytics": ml_analytics,
@@ -721,11 +810,13 @@ class QuantumAnalyticsEngine:
             }
             
             logger.info(f"✅ Advanced analytics completed with {complexity_level.value}")
+
             
             return result
             
         except Exception as e:
             logger.error(f"❌ Failed to compute advanced analytics: {e}")
+
             raise
     
     # ========================================
@@ -739,7 +830,8 @@ class QuantumAnalyticsEngine:
         return self.performance_analyzers[analyzer_type]
     
     async def _create_performance_analyzer(self, analyzer_type: str):
-        """Création analyseur performance"""
+        """
+        Création analyseur performance"""
         class MockPerformanceAnalyzer(PerformanceAnalyzer):
             async def analyze_performance(self, request: AnalyticsRequest) -> Dict[str, Any]:
                 return {
@@ -760,18 +852,26 @@ class QuantumAnalyticsEngine:
                 for metric in metrics:
                     if metric == MetricType.ENGAGEMENT_METRIC:
                         calculated_metrics["engagement_rate"] = np.random.uniform(0.05, 0.25)
+
                         calculated_metrics["session_duration"] = np.random.uniform(300, 1800)  # seconds
                     elif metric == MetricType.CONVERSION_METRIC:
                         calculated_metrics["conversion_rate"] = np.random.uniform(0.02, 0.15)
+
                         calculated_metrics["conversion_value"] = np.random.uniform(10, 100)
+
                     elif metric == MetricType.RETENTION_METRIC:
                         calculated_metrics["retention_rate_7d"] = np.random.uniform(0.4, 0.8)
+
                         calculated_metrics["retention_rate_30d"] = np.random.uniform(0.2, 0.6)
+
                     elif metric == MetricType.REVENUE_METRIC:
                         calculated_metrics["revenue_per_user"] = np.random.uniform(5, 50)
+
                         calculated_metrics["lifetime_value"] = np.random.uniform(50, 500)
+
                     else:
                         calculated_metrics[f"{metric.value}_score"] = np.random.uniform(0.5, 0.95)
+
                 
                 return calculated_metrics
         
@@ -780,6 +880,7 @@ class QuantumAnalyticsEngine:
     async def _collect_analytics_data(self, request: AnalyticsRequest) -> Dict[str, Any]:
         """Collecte données analytics"""
         # Simulation collecte données depuis diverses sources
+
         collected_data = {}
         
         for source in request.data_sources:
@@ -825,7 +926,8 @@ class QuantumAnalyticsEngine:
         return self.predictive_modelers[modeler_type]
     
     async def _create_predictive_modeler(self, modeler_type: str):
-        """Création modélisateur prédictif"""
+        """
+        Création modélisateur prédictif"""
         class MockPredictiveModeler(PredictiveModeler):
             async def create_predictive_model(self, request: PredictiveRequest) -> PredictiveResult:
                 predictions = {}
@@ -857,6 +959,7 @@ class QuantumAnalyticsEngine:
                         "model_uncertainty": np.random.uniform(0.05, 0.2)
                     }
                 )
+
             
             async def forecast_metrics(self, historical_data: Dict[str, Any], horizon: PredictionHorizon) -> Dict[str, Any]:
                 forecast_length = {
@@ -865,6 +968,7 @@ class QuantumAnalyticsEngine:
                     PredictionHorizon.LONG_TERM: 180,
                     PredictionHorizon.STRATEGIC_TERM: 365
                 }.get(horizon, 30)
+
                 
                 return {
                     "forecast_values": [np.random.uniform(0.8, 1.2) for _ in range(forecast_length)],
@@ -918,7 +1022,8 @@ class QuantumAnalyticsEngine:
         return self.business_analyzers[analyzer_type]
     
     async def _create_business_analyzer(self, analyzer_type: str):
-        """Création analyseur business"""
+        """
+        Création analyseur business"""
         class MockBusinessAnalyzer(BusinessAnalyzer):
             async def analyze_business_performance(self, request: BusinessIntelligenceRequest) -> BusinessIntelligenceResult:
                 return BusinessIntelligenceResult(
@@ -939,9 +1044,11 @@ class QuantumAnalyticsEngine:
                     competitive_analysis={},
                     market_opportunities=[]
                 )
+
             
             async def generate_business_insights(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
                 insights = []
+
                 insight_types = [
                     "user_behavior_pattern",
                     "revenue_opportunity",
@@ -959,6 +1066,7 @@ class QuantumAnalyticsEngine:
                         "confidence": np.random.uniform(0.7, 0.9),
                         "actionable": True
                     })
+
                 
                 return insights
         
@@ -975,12 +1083,14 @@ class QuantumAnalyticsEngine:
                     "user_acquisition_rate": np.random.uniform(0.1, 0.3),
                     "organic_acquisition_rate": np.random.uniform(0.4, 0.7)
                 })
+
             elif dimension == BusinessDimension.REVENUE_GENERATION:
                 strategic_kpis.update({
                     "revenue_per_user": np.random.uniform(20, 100),
                     "revenue_growth_rate": np.random.uniform(0.15, 0.45),
                     "revenue_diversification": np.random.uniform(0.3, 0.8)
                 })
+
             elif dimension == BusinessDimension.CONTENT_PERFORMANCE:
                 strategic_kpis.update({
                     "content_engagement_rate": np.random.uniform(0.08, 0.25),
@@ -1002,14 +1112,16 @@ class QuantumAnalyticsEngine:
         return self.revenue_analyzers[analyzer_type]
     
     async def _create_revenue_analyzer(self, analyzer_type: str):
-        """Création analyseur revenus"""
+        """
+        Création analyseur revenus"""
         class MockRevenueAnalyzer(RevenueAnalyzer):
             async def analyze_revenue(self, request: RevenueAnalyticsRequest) -> Dict[str, Any]:
                 return {
                     "total_revenue": np.random.uniform(50000, 500000),
                     "revenue_growth": np.random.uniform(0.1, 0.4),
                     "revenue_streams_breakdown": {
-                        stream: np.random.uniform(5000, 100000) 
+                        stream: np.random.uniform(5000, 100000)
+ 
                         for stream in request.revenue_streams
                     },
                     "revenue_quality_score": np.random.uniform(0.7, 0.9)
@@ -1047,6 +1159,7 @@ class QuantumAnalyticsEngine:
     async def _calculate_analytics_quantum_advantage(self, analytics_type: AnalyticsType, complexity: AnalyticsComplexity) -> float:
         """Calcul avantage quantique analytics"""
         base_advantage = 1.0
+
         
         type_advantages = {
             AnalyticsType.PREDICTIVE_ANALYTICS: 3.2,
@@ -1054,6 +1167,7 @@ class QuantumAnalyticsEngine:
             AnalyticsType.REVENUE_ANALYTICS: 2.5,
             AnalyticsType.PERFORMANCE_ANALYTICS: 2.1
         }
+
         
         complexity_multiplier = {
             AnalyticsComplexity.QUANTUM_ENHANCED: 1.5,
@@ -1061,11 +1175,13 @@ class QuantumAnalyticsEngine:
             AnalyticsComplexity.ADVANCED: 1.2,
             AnalyticsComplexity.INTERMEDIATE: 1.1
         }.get(complexity, 1.0)
+
         
         return type_advantages.get(analytics_type, base_advantage) * complexity_multiplier
     
     async def _update_analytics_cache(self, request: AnalyticsRequest, result: AnalyticsResult):
-        """Mise à jour cache analytics"""
+        """
+        Mise à jour cache analytics"""
         cache_key = f"{request.analytics_type.value}_{request.request_id}"
         self.analytics_cache[cache_key] = {
             "request": request,
@@ -1076,10 +1192,12 @@ class QuantumAnalyticsEngine:
         # Limitation taille cache
         if len(self.analytics_cache) > 1000:
             # Suppression entrées les plus anciennes
+
             sorted_cache = sorted(
                 self.analytics_cache.items(),
                 key=lambda x: x[1]["timestamp"]
             )
+
             self.analytics_cache = dict(sorted_cache[-500:])
 
 
@@ -1092,24 +1210,31 @@ class QuantumPerformanceAnalytics(QuantumAnalyticsEngine):
     pass
 
 class QuantumPredictiveIntelligence(QuantumAnalyticsEngine):
-    """Alias pour compatibilité - Predictive Intelligence"""
+    """
+        Alias pour compatibilité - Predictive Intelligence"""
     pass
 
 class QuantumBusinessIntelligence(QuantumAnalyticsEngine):
-    """Alias pour compatibilité - Business Intelligence"""
+    """
+        Alias pour compatibilité - Business Intelligence"""
     pass
 
 class QuantumRevenueAnalytics(QuantumAnalyticsEngine):
-    """Alias pour compatibilité - Revenue Analytics"""
+    """
+        Alias pour compatibilité - Revenue Analytics"""
     pass
 
 class QuantumAdvancedAnalytics(QuantumAnalyticsEngine):
-    """Alias pour compatibilité - Advanced Analytics"""
+    """
+        Alias pour compatibilité - Advanced Analytics"""
     pass
 
 # ========================================
 # EXPORT INTERFACES
 # ========================================
+
+# Enterprise aliases
+FinancialModelResult = BusinessIntelligenceResult
 
 __all__ = [
     "QuantumAnalyticsEngine",
@@ -1125,6 +1250,7 @@ __all__ = [
     "AnalyticsResult",
     "PredictiveResult",
     "BusinessIntelligenceResult",
+    "FinancialModelResult",  # Alias
     "AnalyticsType",
     "MetricType",
     "TimeGranularity",

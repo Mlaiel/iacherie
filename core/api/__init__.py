@@ -14,14 +14,16 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class APIStatus(Enum):
-    """Statuts d'API"""
+    """
+Statuts d'API"""
     ACTIVE = "active"
     INACTIVE = "inactive"
     MAINTENANCE = "maintenance"
     ERROR = "error"
 
 class HTTPMethod(Enum):
-    """Méthodes HTTP"""
+    """
+Méthodes HTTP"""
     GET = "GET"
     POST = "POST"
     PUT = "PUT"
@@ -31,7 +33,8 @@ class HTTPMethod(Enum):
     HEAD = "HEAD"
 
 class APIEndpoint:
-    """Classe représentant un endpoint API"""
+    """
+Classe représentant un endpoint API"""
     
     def __init__(self, path: str, method: HTTPMethod, handler=None):
         self.id = str(uuid.uuid4())
@@ -43,7 +46,8 @@ class APIEndpoint:
         self.metadata = {}
         
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit l'endpoint en dictionnaire"""
+        """
+Convertit l'endpoint en dictionnaire"""
         return {
             'id': self.id,
             'path': self.path,
@@ -54,7 +58,8 @@ class APIEndpoint:
         }
 
 class APIRegistry:
-    """Registre des APIs"""
+    """
+Registre des APIs"""
     
     def __init__(self):
         self.endpoints = {}
@@ -63,7 +68,8 @@ class APIRegistry:
         logger.info("APIRegistry initialized - API INFRASTRUCTURE READY!")
     
     def register_endpoint(self, endpoint: APIEndpoint) -> str:
-        """Enregistre un endpoint"""
+        """
+Enregistre un endpoint"""
         self.endpoints[endpoint.id] = endpoint
         route_key = f"{endpoint.method.value}:{endpoint.path}"
         self.routes[route_key] = endpoint.id
@@ -71,26 +77,31 @@ class APIRegistry:
         return endpoint.id
     
     def get_endpoint(self, endpoint_id: str) -> Optional[APIEndpoint]:
-        """Récupère un endpoint par ID"""
+        """
+Récupère un endpoint par ID"""
         return self.endpoints.get(endpoint_id)
     
     def find_endpoint(self, path: str, method: HTTPMethod) -> Optional[APIEndpoint]:
-        """Trouve un endpoint par chemin et méthode"""
+        """
+Trouve un endpoint par chemin et méthode"""
         route_key = f"{method.value}:{path}"
         endpoint_id = self.routes.get(route_key)
         return self.endpoints.get(endpoint_id) if endpoint_id else None
     
     def list_endpoints(self) -> List[APIEndpoint]:
-        """Liste tous les endpoints"""
+        """
+Liste tous les endpoints"""
         return list(self.endpoints.values())
     
     def add_middleware(self, middleware):
-        """Ajoute un middleware"""
+        """
+Ajoute un middleware"""
         self.middleware.append(middleware)
         logger.info(f"Middleware added: {middleware.__class__.__name__}")
 
 class APIManager:
-    """Gestionnaire d'API principal"""
+    """
+Gestionnaire d'API principal"""
     
     def __init__(self):
         self.registry = APIRegistry()
@@ -100,17 +111,20 @@ class APIManager:
         logger.info("APIManager initialized - CORE API SYSTEM OPERATIONAL!")
     
     def create_endpoint(self, path: str, method: str, handler=None) -> str:
-        """Crée un nouvel endpoint"""
+        """
+Crée un nouvel endpoint"""
         http_method = HTTPMethod(method.upper())
         endpoint = APIEndpoint(path, http_method, handler)
         return self.registry.register_endpoint(endpoint)
     
     def get_full_url(self, path: str) -> str:
-        """Construit l'URL complète"""
+        """
+Construit l'URL complète"""
         return f"{self.base_url}/api/{self.version}{path}"
     
     def health_check(self) -> Dict[str, Any]:
-        """Vérifie la santé de l'API"""
+        """
+Vérifie la santé de l'API"""
         return {
             'status': self.status.value,
             'version': self.version,
@@ -119,7 +133,8 @@ class APIManager:
         }
     
     def get_api_info(self) -> Dict[str, Any]:
-        """Retourne les informations de l'API"""
+        """
+Retourne les informations de l'API"""
         return {
             'base_url': self.base_url,
             'version': self.version,
@@ -128,7 +143,8 @@ class APIManager:
         }
 
 class APIClient:
-    """Client API pour les intégrations"""
+    """
+Client API pour les intégrations"""
     
     def __init__(self, base_url: str = "http://localhost:8000", api_key: str = None):
         self.base_url = base_url
@@ -143,7 +159,8 @@ class APIClient:
         logger.info(f"APIClient initialized - Session: {self.session_id}")
     
     def request(self, method: str, endpoint: str, data: Dict = None) -> Dict[str, Any]:
-        """Effectue une requête API (simulation)"""
+        """
+Effectue une requête API (simulation)"""
         url = f"{self.base_url}{endpoint}"
         logger.info(f"API Request: {method} {url}")
         
@@ -156,23 +173,28 @@ class APIClient:
         }
     
     def get(self, endpoint: str) -> Dict[str, Any]:
-        """Requête GET"""
+        """
+Requête GET"""
         return self.request('GET', endpoint)
     
     def post(self, endpoint: str, data: Dict = None) -> Dict[str, Any]:
-        """Requête POST"""
+        """
+Requête POST"""
         return self.request('POST', endpoint, data)
     
     def put(self, endpoint: str, data: Dict = None) -> Dict[str, Any]:
-        """Requête PUT"""
+        """
+Requête PUT"""
         return self.request('PUT', endpoint, data)
     
     def delete(self, endpoint: str) -> Dict[str, Any]:
-        """Requête DELETE"""
+        """
+Requête DELETE"""
         return self.request('DELETE', endpoint)
 
 class APIResponse:
-    """Classe de réponse API"""
+    """
+Classe de réponse API"""
     
     def __init__(self, data: Any = None, status_code: int = 200, message: str = "Success"):
         self.data = data
@@ -182,7 +204,8 @@ class APIResponse:
         self.response_id = str(uuid.uuid4())
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
+        """
+Convertit en dictionnaire"""
         return {
             'data': self.data,
             'status_code': self.status_code,
@@ -192,7 +215,8 @@ class APIResponse:
         }
     
     def is_success(self) -> bool:
-        """Vérifie si la réponse est un succès"""
+        """
+Vérifie si la réponse est un succès"""
         return 200 <= self.status_code < 300
 
 # Instance globale
@@ -201,19 +225,23 @@ api_client = APIClient()
 
 # Fonctions utilitaires
 def create_api_endpoint(path: str, method: str = "GET") -> str:
-    """Crée un endpoint API"""
+    """
+Crée un endpoint API"""
     return api_manager.create_endpoint(path, method)
 
 def get_api_health() -> Dict[str, Any]:
-    """Vérifie la santé de l'API"""
+    """
+Vérifie la santé de l'API"""
     return api_manager.health_check()
 
 def make_api_request(method: str, endpoint: str, data: Dict = None) -> Dict[str, Any]:
-    """Effectue une requête API"""
+    """
+Effectue une requête API"""
     return api_client.request(method, endpoint, data)
 
 def api_response(data: Any = None, status_code: int = 200, message: str = "Success") -> APIResponse:
-    """Crée une réponse API"""
+    """
+Crée une réponse API"""
     return APIResponse(data, status_code, message)
 
 # Exports

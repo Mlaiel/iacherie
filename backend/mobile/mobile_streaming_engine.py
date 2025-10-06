@@ -20,7 +20,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class StreamingProtocol(Enum):
-    """Streaming protocols"""
+    """
+        Streaming protocols"""
     RTMP = "rtmp"
     HLS = "hls"
     DASH = "dash"
@@ -60,7 +61,8 @@ class StreamingConfig:
 
 @dataclass
 class StreamMetrics:
-    """Stream performance metrics"""
+    """
+        Stream performance metrics"""
     viewers: int
     bitrate: float
     frame_rate: float
@@ -70,10 +72,12 @@ class StreamMetrics:
     mobile_viewers_percentage: float
 
 class MobileStreamingEngine:
-    """Advanced mobile streaming engine"""
+    """
+        Advanced mobile streaming engine"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize mobile streaming engine"""
+        """
+        Initialize mobile streaming engine"""
         self.config = config or {}
         self.live_stream_manager = LiveStreamManager(self.config)
         self.stream_optimizer = StreamOptimizer(self.config)
@@ -122,6 +126,7 @@ class MobileStreamingEngine:
             
         except Exception as e:
             logger.error(f"Failed to start stream: {e}")
+
             raise
     
     async def get_stream_metrics(self, stream_id: str) -> StreamMetrics:
@@ -130,7 +135,9 @@ class MobileStreamingEngine:
             raise ValueError(f"Stream {stream_id} not found")
         
         # Collect real-time metrics
+
         metrics = await self._collect_stream_metrics(stream_id)
+
         
         return StreamMetrics(
             viewers=metrics.get("viewers", 0),
@@ -148,6 +155,7 @@ class MobileStreamingEngine:
             return await self.quality_adaptation.adapt_quality(stream_id, target_quality)
         except Exception as e:
             logger.error(f"Failed to optimize stream quality: {e}")
+
             return False
     
     async def _collect_stream_metrics(self, stream_id: str) -> Dict[str, Any]:
@@ -171,7 +179,8 @@ class LiveStreamManager:
         self.config = config
         
     async def start_stream(self, creator_id: str, streaming_config: StreamingConfig) -> Dict[str, Any]:
-        """Start live stream session"""
+        """
+        Start live stream session"""
         stream_session = {
             "stream_id": streaming_config.stream_id,
             "creator_id": creator_id,
@@ -197,13 +206,15 @@ class LiveStreamManager:
 
 
 class StreamOptimizer:
-    """Stream optimization system"""
+    """
+        Stream optimization system"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         
     async def apply_mobile_optimizations(self, stream_id: str) -> bool:
-        """Apply mobile-specific optimizations"""
+        """
+        Apply mobile-specific optimizations"""
         optimizations = [
             "mobile_bitrate_optimization",
             "mobile_resolution_scaling",
@@ -214,6 +225,7 @@ class StreamOptimizer:
         # Apply each optimization
         for optimization in optimizations:
             await self._apply_optimization(stream_id, optimization)
+
         
         return True
     
@@ -224,29 +236,34 @@ class StreamOptimizer:
 
 
 class QualityAdaptation:
-    """Quality adaptation system"""
+    """
+        Quality adaptation system"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         
     async def enable_adaptive_streaming(self, stream_id: str) -> bool:
-        """Enable adaptive streaming for mobile viewers"""
+        """
+        Enable adaptive streaming for mobile viewers"""
         # Implementation for adaptive streaming
         return True
     
     async def adapt_quality(self, stream_id: str, target_quality: StreamQuality) -> bool:
-        """Adapt stream quality"""
+        """
+        Adapt stream quality"""
         # Implementation for quality adaptation
         return True
 
 
 class BroadcastController:
-    """Broadcast control system"""
+    """
+        Broadcast control system"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         
     async def control_broadcast(self, stream_id: str, action: str) -> bool:
-        """Control broadcast operations"""
+        """
+        Control broadcast operations"""
         # Implementation for broadcast control
         return True

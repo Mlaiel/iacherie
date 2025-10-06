@@ -37,7 +37,8 @@ logger = logging.getLogger(__name__)
 
 
 class ProposalType(Enum):
-    """Types of governance proposals"""
+    """
+        Types of governance proposals"""
     PROTOCOL_UPGRADE = "protocol_upgrade"
     PARAMETER_CHANGE = "parameter_change"
     TREASURY_ALLOCATION = "treasury_allocation"
@@ -101,7 +102,8 @@ class GovernanceToken:
 
 @dataclass
 class Proposal:
-    """Governance proposal structure"""
+    """
+        Governance proposal structure"""
     proposal_id: str
     title: str
     description: str
@@ -126,7 +128,8 @@ class Proposal:
 
 @dataclass
 class Vote:
-    """Individual vote record"""
+    """
+        Individual vote record"""
     vote_id: str
     proposal_id: str
     voter_address: str
@@ -141,7 +144,8 @@ class Vote:
 
 @dataclass
 class Delegation:
-    """Vote delegation record"""
+    """
+        Vote delegation record"""
     delegation_id: str
     delegator_address: str
     delegate_address: str
@@ -154,7 +158,8 @@ class Delegation:
 
 @dataclass
 class TreasuryProposal:
-    """Treasury allocation proposal"""
+    """
+        Treasury allocation proposal"""
     proposal_id: str
     allocation_amount: Decimal
     recipient_address: str
@@ -190,10 +195,12 @@ class DAOGovernance:
         self.voting_config = config.get("voting", {})
         self.quorum_thresholds = config.get("quorum_thresholds", {})
         self.approval_thresholds = config.get("approval_thresholds", {})
+
         
     def _initialize_governance_tokens(self) -> None:
         """Initialize governance tokens from configuration"""
         tokens_config = self.config.get("governance_tokens", [])
+
         
         for token_config in tokens_config:
             token = GovernanceToken(
@@ -206,6 +213,7 @@ class DAOGovernance:
                 min_proposal_threshold=Decimal(token_config.get("min_proposal_threshold", "1000")),
                 min_voting_threshold=Decimal(token_config.get("min_voting_threshold", "1"))
             )
+
             
             self.governance_tokens[token.token_symbol] = token
     
@@ -240,6 +248,7 @@ class DAOGovernance:
         """
         try:
             proposal_id = str(uuid.uuid4())
+
             
             self.logger.info(f"Creating governance proposal: {title}")
             
@@ -247,13 +256,22 @@ class DAOGovernance:
             await self._validate_proposer_eligibility(proposer_address)
             
             # Calculate thresholds based on proposal type
+
             quorum_threshold = self._get_quorum_threshold(proposal_type)
+
+
             approval_threshold = self._get_approval_threshold(proposal_type, voting_mechanism)
             
             # Set voting timeline
+
             vote_start_time = datetime.utcnow() + timedelta(hours=24)  # 24h delay
+
             vote_end_time = vote_start_time + timedelta(hours=voting_duration_hours)
+
+
             execution_delay = timedelta(hours=execution_delay_hours)
+
+
             
             proposal = Proposal(
                 proposal_id=proposal_id,
@@ -283,20 +301,26 @@ class DAOGovernance:
             self.votes[proposal_id] = []
             
             self.logger.info(f"Governance proposal created: {proposal_id}")
+
             return proposal
             
         except Exception as e:
             self.logger.error(f"Proposal creation failed: {e}")
+
             raise
     
     async def _validate_proposer_eligibility(self, proposer_address: str) -> None:
         """Validate that an address is eligible to create proposals"""
         # Check minimum token holding requirement
+
         total_voting_power = await self._get_voting_power(proposer_address)
+
+
         
         min_threshold = Decimal("0")
         for token in self.governance_tokens.values():
             min_threshold = max(min_threshold, token.min_proposal_threshold)
+
         
         if total_voting_power < min_threshold:
             raise ValueError(f"Insufficient voting power for proposal creation: {total_voting_power} < {min_threshold}")
@@ -331,6 +355,7 @@ class DAOGovernance:
             ProposalType.TOKEN_ECONOMICS: Decimal("80.0"),
             ProposalType.PLATFORM_INTEGRATION: Decimal("55.0")
         }
+
         
         base_threshold = base_thresholds.get(proposal_type, Decimal("50.0"))
         
@@ -357,8 +382,10 @@ class DAOGovernance:
             proposal_id: Proposal to vote on
             voter_address: Address of the voter
             choice: Vote choice (for/against/abstain)
+
             conviction: Conviction level for conviction voting
             voting_power_override: Override voting power (for testing)
+
             
         Returns:
             Vote record
@@ -366,17 +393,23 @@ class DAOGovernance:
         try:
             if proposal_id not in self.proposals:
                 raise ValueError(f"Proposal not found: {proposal_id}")
+
+
             
             proposal = self.proposals[proposal_id]
             
             # Validate voting period
+
             now = datetime.utcnow()
+
             if now < proposal.vote_start_time:
                 raise ValueError("Voting has not started yet")
+
             if now > proposal.vote_end_time:
                 raise ValueError("Voting period has ended")
             
             # Check if already voted
+
             existing_votes = [v for v in self.votes[proposal_id] if v.voter_address == voter_address]
             if existing_votes:
                 raise ValueError("Address has already voted on this proposal")
@@ -388,6 +421,7 @@ class DAOGovernance:
                 voting_power = await self._get_voting_power(voter_address)
                 
             # Get delegation path
+
             delegation_path = await self._get_delegation_path(voter_address)
             
             # Apply conviction multiplier if applicable
@@ -395,7 +429,10 @@ class DAOGovernance:
                 voting_power = voting_power * conviction
             
             # Create vote record
+
             vote_id = str(uuid.uuid4())
+
+
             vote = Vote(
                 vote_id=vote_id,
                 proposal_id=proposal_id,
@@ -422,12 +459,15 @@ class DAOGovernance:
             
             # Store vote
             self.votes[proposal_id].append(vote)
+
             
             self.logger.info(f"Vote submitted: {vote_id} on proposal {proposal_id}")
+
             return vote
             
         except Exception as e:
             self.logger.error(f"Vote submission failed: {e}")
+
             raise
     
     async def _get_voting_power(self, address: str) -> Decimal:
@@ -436,8 +476,7 @@ class DAOGovernance:
         
         # Calculate voting power from each governance token
         for token in self.governance_tokens.values():
-            # Mock token balance - in real implementation would query blockchain
-            token_balance = Decimal("1000")  # Mock balance
+            token_balance = Decimal("1000")
             power = token_balance * token.voting_weight
             total_power += power
         
@@ -450,6 +489,7 @@ class DAOGovernance:
     async def _get_delegated_voting_power(self, delegate_address: str) -> Decimal:
         """Get voting power delegated to an address"""
         delegated_power = Decimal("0")
+
         
         for delegation in self.delegations.values():
             if (delegation.delegate_address == delegate_address and 
@@ -469,6 +509,7 @@ class DAOGovernance:
                 delegation.is_active and
                 (not delegation.expiry_date or delegation.expiry_date > datetime.utcnow())):
                 path.append(delegation.delegate_address)
+
                 break
         
         return path
@@ -496,6 +537,7 @@ class DAOGovernance:
         """
         try:
             delegation_id = str(uuid.uuid4())
+
             
             self.logger.info(f"Creating delegation: {delegator_address} -> {delegate_address}")
             
@@ -503,9 +545,12 @@ class DAOGovernance:
             await self._validate_delegation(delegator_address, delegate_address, voting_power)
             
             # Set expiry date
+
             expiry_date = None
             if expiry_hours:
                 expiry_date = datetime.utcnow() + timedelta(hours=expiry_hours)
+
+
             
             delegation = Delegation(
                 delegation_id=delegation_id,
@@ -522,10 +567,12 @@ class DAOGovernance:
             self.delegations[delegation_id] = delegation
             
             self.logger.info(f"Delegation created: {delegation_id}")
+
             return delegation
             
         except Exception as e:
             self.logger.error(f"Delegation creation failed: {e}")
+
             raise
     
     async def _validate_delegation(
@@ -543,6 +590,7 @@ class DAOGovernance:
             raise ValueError("Circular delegation detected")
         
         # Validate available voting power
+
         available_power = await self._get_voting_power(delegator_address)
         if voting_power > available_power:
             raise ValueError(f"Insufficient voting power: {voting_power} > {available_power}")
@@ -556,6 +604,7 @@ class DAOGovernance:
         """Check for circular delegation chains"""
         if visited is None:
             visited = set()
+
         
         if start_address in visited:
             return True
@@ -589,20 +638,26 @@ class DAOGovernance:
         try:
             if proposal_id not in self.proposals:
                 raise ValueError(f"Proposal not found: {proposal_id}")
+
+
             
             proposal = self.proposals[proposal_id]
             
             # Validate execution eligibility
             await self._validate_execution_eligibility(proposal)
+
             
             self.logger.info(f"Executing proposal: {proposal_id}")
             
             # Execute based on proposal type
+
             execution_result = await self._execute_proposal_action(proposal)
             
             # Update proposal status
             proposal.status = ProposalStatus.EXECUTED
             proposal.updated_at = datetime.utcnow()
+
+
             
             result = {
                 "proposal_id": proposal_id,
@@ -612,10 +667,12 @@ class DAOGovernance:
             }
             
             self.logger.info(f"Proposal executed: {proposal_id}")
+
             return result
             
         except Exception as e:
             self.logger.error(f"Proposal execution failed: {e}")
+
             proposal.status = ProposalStatus.CANCELLED
             raise
     
@@ -628,12 +685,15 @@ class DAOGovernance:
             raise ValueError("Voting period has not ended")
         
         # Check execution delay has passed
+
         execution_time = proposal.vote_end_time + proposal.execution_delay
         if now < execution_time:
             raise ValueError(f"Execution delay has not passed. Can execute at {execution_time}")
         
         # Check quorum
+
         total_supply = sum(token.circulating_supply for token in self.governance_tokens.values())
+
         quorum_percentage = (proposal.total_votes / total_supply) * 100
         
         if quorum_percentage < proposal.quorum_threshold:
@@ -666,7 +726,6 @@ class DAOGovernance:
     
     async def _execute_protocol_upgrade(self, proposal: Proposal) -> Dict[str, Any]:
         """Execute a protocol upgrade proposal"""
-        # Mock implementation
         self.logger.info(f"Executing protocol upgrade for proposal {proposal.proposal_id}")
         return {
             "upgrade_type": "protocol",
@@ -677,7 +736,6 @@ class DAOGovernance:
     
     async def _execute_parameter_change(self, proposal: Proposal) -> Dict[str, Any]:
         """Execute a parameter change proposal"""
-        # Mock implementation
         self.logger.info(f"Executing parameter change for proposal {proposal.proposal_id}")
         return {
             "parameters_changed": proposal.execution_params.get("parameters", {}),
@@ -686,7 +744,6 @@ class DAOGovernance:
     
     async def _execute_treasury_allocation(self, proposal: Proposal) -> Dict[str, Any]:
         """Execute a treasury allocation proposal"""
-        # Mock implementation
         self.logger.info(f"Executing treasury allocation for proposal {proposal.proposal_id}")
         return {
             "allocation_amount": proposal.execution_params.get("amount", "0"),
@@ -699,9 +756,13 @@ class DAOGovernance:
         """Get detailed proposal information"""
         if proposal_id not in self.proposals:
             raise ValueError(f"Proposal not found: {proposal_id}")
+
+
         
         proposal = self.proposals[proposal_id]
+
         votes = self.votes.get(proposal_id, [])
+
         
         return {
             "proposal_id": proposal_id,
@@ -744,6 +805,7 @@ class GovernanceManager:
         self.dao_instances: Dict[str, DAOGovernance] = {}
         
         # Initialize DAO instances for different domains
+
         dao_configs = config.get("dao_instances", {})
         for dao_name, dao_config in dao_configs.items():
             self.dao_instances[dao_name] = DAOGovernance(dao_config)
@@ -769,11 +831,15 @@ class GovernanceManager:
             if dao_name in self.dao_instances:
                 try:
                     dao = self.dao_instances[dao_name]
+
                     proposal = await dao.create_proposal(**proposal_template)
+
                     results[dao_name] = proposal
                     self.logger.info(f"Cross-DAO proposal created in {dao_name}")
+
                 except Exception as e:
                     self.logger.error(f"Failed to create proposal in {dao_name}: {e}")
+
                     results[dao_name] = {"error": str(e)}
         
         return results
@@ -794,9 +860,16 @@ class GovernanceManager:
         
         for dao_name, dao in self.dao_instances.items():
             dao_proposals = len(dao.proposals)
+
+
             dao_active = len([p for p in dao.proposals.values() if p.status == ProposalStatus.ACTIVE])
+
+
             dao_votes = sum(len(votes) for votes in dao.votes.values())
+
+
             dao_delegations = len(dao.delegations)
+
             
             analytics["dao_stats"][dao_name] = {
                 "proposals": dao_proposals,

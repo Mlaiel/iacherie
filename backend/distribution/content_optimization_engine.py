@@ -48,7 +48,8 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationType(str, Enum):
-    """Content optimization types."""
+    """
+        Content optimization types."""
     FORMAT_ADAPTATION = "format_adaptation"
     HASHTAG_OPTIMIZATION = "hashtag_optimization"
     SEO_ENHANCEMENT = "seo_enhancement"
@@ -118,7 +119,8 @@ class OptimizationResult:
 
 @dataclass
 class HashtagAnalysis:
-    """Hashtag analysis and optimization results."""
+    """
+        Hashtag analysis and optimization results."""
     hashtag: str
     category: HashtagCategory
     popularity_score: float
@@ -133,7 +135,8 @@ class HashtagAnalysis:
 
 @dataclass
 class ABTestVariation:
-    """A/B test variation configuration."""
+    """
+        A/B test variation configuration."""
     variation_id: str
     variation_type: TestVariationType
     content_modifications: Dict[str, Any]
@@ -146,7 +149,8 @@ class ABTestVariation:
 
 @dataclass
 class ABTestConfiguration:
-    """A/B test configuration."""
+    """
+        A/B test configuration."""
     test_id: str
     content_id: str
     test_name: str
@@ -189,7 +193,8 @@ class SEOOptimization:
 
 
 class ContentOptimizationEngine:
-    """Core content optimization engine."""
+    """
+        Core content optimization engine."""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.ContentOptimizationEngine")
@@ -225,13 +230,16 @@ class ContentOptimizationEngine:
             
             # Initialize SEO keyword database
             await self._initialize_seo_keywords()
+
             
             self.initialized = True
             self.logger.info("✅ Content Optimization Engine initialized")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Failed to initialize optimization engine: {e}")
+
             return False
     
     async def _load_platform_specifications(self):
@@ -327,6 +335,7 @@ class ContentOptimizationEngine:
     async def _initialize_hashtag_database(self):
         """Initialize hashtag analysis database."""
         # Sample hashtag data - in production, this would be loaded from analytics
+
         sample_hashtags = [
             ("#contentcreator", HashtagCategory.COMMUNITY, 0.8, 0.9, 0.9, 0.85, True, 1500000),
             ("#viral", HashtagCategory.TRENDING, 0.95, 0.95, 0.7, 0.9, True, 2000000),
@@ -351,6 +360,7 @@ class ContentOptimizationEngine:
                 trending_status=trending,
                 usage_frequency=frequency,
                 suggested_placement=0,  # Will be calculated
+
                 similar_hashtags=[]
             )
         
@@ -360,23 +370,28 @@ class ContentOptimizationEngine:
     async def _build_hashtag_relationships(self):
         """Build relationships between similar hashtags."""
         hashtag_list = list(self.hashtag_database.keys())
+
         
         for hashtag in hashtag_list:
             similar = []
             for other_hashtag in hashtag_list:
                 if hashtag != other_hashtag:
                     # Simple similarity based on category and engagement
+
                     hashtag_analysis = self.hashtag_database[hashtag]
+
                     other_analysis = self.hashtag_database[other_hashtag]
                     
                     if (hashtag_analysis.category == other_analysis.category or
                         abs(hashtag_analysis.engagement_potential - other_analysis.engagement_potential) < 0.2):
                         similar.append(other_hashtag)
+
             
             self.hashtag_database[hashtag].similar_hashtags = similar[:5]  # Top 5 similar
     
     async def _load_trending_data(self):
-        """Load current trending hashtags and topics."""
+        """
+        Load current trending hashtags and topics."""
         # Simulate trending data - in production, this would come from real-time APIs
         self.trending_hashtags = {
             "#viral": 0.95,
@@ -415,12 +430,18 @@ class ContentOptimizationEngine:
         """Perform comprehensive content optimization."""
         if not self.initialized:
             await self.initialize()
+
+
         
         optimization_id = f"opt_{uuid4().hex[:8]}"
         original_content = content_data.copy()
+
         optimized_content = content_data.copy()
+
         applied_techniques = []
+
         improvements = {}
+
         recommendations = []
         
         try:
@@ -428,39 +449,61 @@ class ContentOptimizationEngine:
             for optimization_type in optimization_goals:
                 if optimization_type == OptimizationType.HASHTAG_OPTIMIZATION:
                     result = await self._optimize_hashtags(optimized_content, target_platforms)
+
                     optimized_content.update(result["content_updates"])
+
                     applied_techniques.extend(result["techniques"])
+
                     improvements.update(result["improvements"])
+
                     recommendations.extend(result["recommendations"])
+
                 
                 elif optimization_type == OptimizationType.FORMAT_ADAPTATION:
                     result = await self._optimize_format(optimized_content, target_platforms)
+
                     optimized_content.update(result["content_updates"])
+
                     applied_techniques.extend(result["techniques"])
+
                     improvements.update(result["improvements"])
+
                 
                 elif optimization_type == OptimizationType.SEO_ENHANCEMENT:
                     result = await self._optimize_seo(optimized_content)
+
                     optimized_content.update(result["content_updates"])
+
                     applied_techniques.extend(result["techniques"])
+
                     improvements.update(result["improvements"])
+
                 
                 elif optimization_type == OptimizationType.TITLE_OPTIMIZATION:
                     result = await self._optimize_title(optimized_content, target_platforms)
+
                     optimized_content.update(result["content_updates"])
+
                     applied_techniques.extend(result["techniques"])
+
                     improvements.update(result["improvements"])
+
                 
                 elif optimization_type == OptimizationType.DESCRIPTION_ENHANCEMENT:
                     result = await self._optimize_description(optimized_content, target_platforms)
+
                     optimized_content.update(result["content_updates"])
+
                     applied_techniques.extend(result["techniques"])
+
                     improvements.update(result["improvements"])
             
             # Calculate overall confidence score
+
             confidence_score = self._calculate_optimization_confidence(applied_techniques, improvements)
             
             # Create optimization result
+
             optimization_result = OptimizationResult(
                 optimization_id=optimization_id,
                 content_id=content_id,
@@ -475,13 +518,16 @@ class ContentOptimizationEngine:
             
             # Store optimization history
             self.optimization_history.append(optimization_result)
+
             self.optimization_stats["total_optimizations"] += 1
             
             self.logger.info(f"✅ Content optimization completed: {optimization_id}")
+
             return optimization_result
             
         except Exception as e:
             self.logger.error(f"Error optimizing content: {e}")
+
             return OptimizationResult(
                 optimization_id=optimization_id,
                 content_id=content_id,
@@ -500,16 +546,22 @@ class ContentOptimizationEngine:
         content_category = content.get('category', 'general')
         
         # Analyze current hashtags
+
         current_hashtags = content.get('hashtags', [])
         
         # Generate optimal hashtag mix
+
         optimal_hashtags = await self._generate_optimal_hashtag_mix(
             content_text, content_category, platforms, current_hashtags
         )
         
         # Calculate improvements
+
         current_score = self._calculate_hashtag_performance_score(current_hashtags)
+
         optimal_score = self._calculate_hashtag_performance_score(optimal_hashtags)
+
+
         
         improvement = ((optimal_score - current_score) / current_score * 100) if current_score > 0 else 50
         
@@ -542,15 +594,19 @@ class ContentOptimizationEngine:
                     optimal_hashtags.add(hashtag)
         
         # Add trending hashtags
+
         trending_count = 0
         for hashtag, score in self.trending_hashtags.items():
             if trending_count < 3 and hashtag not in optimal_hashtags:
                 optimal_hashtags.add(hashtag)
+
                 trending_count += 1
         
         # Add category-specific hashtags
+
         category_hashtags = [
             hashtag for hashtag, analysis in self.hashtag_database.items()
+
             if category.lower() in hashtag.lower() or analysis.category == HashtagCategory.NICHE
         ]
         
@@ -559,8 +615,10 @@ class ContentOptimizationEngine:
                 optimal_hashtags.add(hashtag)
         
         # Add community hashtags for engagement
+
         community_hashtags = [
             hashtag for hashtag, analysis in self.hashtag_database.items()
+
             if analysis.category == HashtagCategory.COMMUNITY and analysis.engagement_potential > 0.8
         ]
         
@@ -569,8 +627,10 @@ class ContentOptimizationEngine:
                 optimal_hashtags.add(hashtag)
         
         # Ensure we don't exceed platform limits
+
         max_hashtags = min([
             self.platform_specifications.get(platform, {}).get("hashtag_limit", 30)
+
             for platform in platforms
         ]) if platforms else 15
         
@@ -580,24 +640,32 @@ class ContentOptimizationEngine:
         """Calculate performance score for hashtag set."""
         if not hashtags:
             return 0.0
+
         
         total_score = 0.0
         for hashtag in hashtags:
             if hashtag in self.hashtag_database:
                 analysis = self.hashtag_database[hashtag]
                 # Weight engagement potential and popularity, penalize high competition
+
                 score = (analysis.engagement_potential * 0.5 + 
                         analysis.popularity_score * 0.3 - 
                         analysis.competition_level * 0.2)
+
                 total_score += max(score, 0.0)
+
         
         return total_score / len(hashtags)
     
     async def _optimize_format(self, content: Dict[str, Any], platforms: List[str]) -> Dict[str, Any]:
-        """Optimize content format for target platforms."""
+        """
+        Optimize content format for target platforms."""
         content_type = content.get('content_type', 'unknown')
+
+
         
         format_recommendations = []
+
         content_updates = {}
         
         for platform in platforms:
@@ -607,6 +675,7 @@ class ContentOptimizationEngine:
                 # Find matching content type specs
                 if 'video' in content_type and 'video' in platform_specs:
                     video_specs = platform_specs['video']
+
                     format_opt = FormatOptimization(
                         platform=platform,
                         recommended_format=video_specs['recommended_format'],
@@ -616,10 +685,13 @@ class ContentOptimizationEngine:
                         file_size_limit=video_specs.get('file_size_limit'),
                         optimization_reasoning=f"Optimized for {platform} video specifications"
                     )
+
                     format_recommendations.append(format_opt)
+
                 
                 elif 'image' in content_type and 'image' in platform_specs:
                     image_specs = platform_specs['image']
+
                     format_opt = FormatOptimization(
                         platform=platform,
                         recommended_format=image_specs['recommended_format'],
@@ -628,11 +700,13 @@ class ContentOptimizationEngine:
                         file_size_limit=image_specs.get('file_size_limit'),
                         optimization_reasoning=f"Optimized for {platform} image specifications"
                     )
+
                     format_recommendations.append(format_opt)
         
         # Apply format optimizations
         if format_recommendations:
             # Choose most common recommendation or best performing platform
+
             primary_format = format_recommendations[0]
             content_updates.update({
                 'recommended_format': primary_format.recommended_format.value,
@@ -648,6 +722,7 @@ class ContentOptimizationEngine:
                     for fmt in format_recommendations
                 ]
             })
+
         
         return {
             "content_updates": content_updates,
@@ -658,18 +733,23 @@ class ContentOptimizationEngine:
     async def _optimize_seo(self, content: Dict[str, Any]) -> Dict[str, Any]:
         """Optimize content for SEO."""
         title = content.get('title', '')
+
         description = content.get('description', '')
         
         # Analyze and optimize title
+
         optimized_title = await self._optimize_title_for_seo(title)
         
         # Analyze and optimize description
+
         optimized_description = await self._optimize_description_for_seo(description)
         
         # Generate keywords
+
         keywords = await self._extract_seo_keywords(f"{optimized_title} {optimized_description}")
         
         # Generate meta tags
+
         meta_tags = {
             "title": optimized_title,
             "description": optimized_description[:160],  # Meta description limit
@@ -677,13 +757,18 @@ class ContentOptimizationEngine:
         }
         
         # Generate alt text for images
+
         alt_text = await self._generate_alt_text(content)
         
         # Generate URL slug
+
         url_slug = self._generate_url_slug(optimized_title)
         
         # Calculate SEO score
+
         seo_score = self._calculate_seo_score(optimized_title, optimized_description, keywords)
+
+
         
         seo_optimization = SEOOptimization(
             title_optimized=optimized_title,
@@ -694,6 +779,7 @@ class ContentOptimizationEngine:
             url_slug=url_slug,
             seo_score=seo_score
         )
+
         
         return {
             "content_updates": {
@@ -713,6 +799,7 @@ class ContentOptimizationEngine:
             return title
         
         # Add high-value keywords if not present
+
         title_lower = title.lower()
         for keyword, score in sorted(self.seo_keywords.items(), key=lambda x: x[1], reverse=True)[:3]:
             if keyword not in title_lower and len(title) + len(keyword) + 3 < 100:
@@ -727,6 +814,7 @@ class ContentOptimizationEngine:
             return description
         
         # Ensure description has good keyword density
+
         words = description.split()
         if len(words) < 20:
             # Add relevant keywords to short descriptions
@@ -739,6 +827,7 @@ class ContentOptimizationEngine:
     async def _extract_seo_keywords(self, text: str) -> List[str]:
         """Extract SEO keywords from content."""
         text_lower = text.lower()
+
         found_keywords = []
         
         for keyword, score in self.seo_keywords.items():
@@ -750,9 +839,12 @@ class ContentOptimizationEngine:
         return [keyword for keyword, _ in found_keywords[:10]]
     
     async def _generate_alt_text(self, content: Dict[str, Any]) -> str:
-        """Generate alt text for accessibility."""
+        """
+        Generate alt text for accessibility."""
         title = content.get('title', '')
+
         content_type = content.get('content_type', '')
+
         
         if 'image' in content_type:
             return f"Image: {title}" if title else "Content image"
@@ -764,12 +856,15 @@ class ContentOptimizationEngine:
     def _generate_url_slug(self, title: str) -> str:
         """Generate URL slug from title."""
         # Convert to lowercase and replace spaces with hyphens
+
         slug = re.sub(r'[^\w\s-]', '', title.lower())
+
         slug = re.sub(r'[-\s]+', '-', slug)
         return slug.strip('-')[:50]  # Limit length
     
     def _calculate_seo_score(self, title: str, description: str, keywords: List[str]) -> float:
-        """Calculate SEO score based on optimization factors."""
+        """
+        Calculate SEO score based on optimization factors."""
         score = 0.0
         
         # Title score (30%)
@@ -798,14 +893,18 @@ class ContentOptimizationEngine:
         return min(score, 1.0)
     
     async def _optimize_title(self, content: Dict[str, Any], platforms: List[str]) -> Dict[str, Any]:
-        """Optimize title for specific platforms."""
+        """
+        Optimize title for specific platforms."""
         original_title = content.get('title', '')
         
         # Get platform title length limits
+
         min_length = min([
             self.platform_specifications.get(platform, {}).get("title_length", 100)
+
             for platform in platforms
         ]) if platforms else 100
+
         
         optimized_title = original_title
         
@@ -816,7 +915,10 @@ class ContentOptimizationEngine:
         # Add emotional hooks if title is short
         if len(optimized_title) < 30:
             emotional_hooks = ["Amazing", "Incredible", "Must-See", "Exclusive", "Ultimate"]
+
             hook = secrets.choice(emotional_hooks)
+
+
             optimized_title = f"{hook} {optimized_title}"
         
         # Ensure it's still within limits
@@ -836,10 +938,13 @@ class ContentOptimizationEngine:
         original_description = content.get('description', '')
         
         # Get platform description length limits
+
         min_length = min([
             self.platform_specifications.get(platform, {}).get("description_length", 2000)
+
             for platform in platforms
         ]) if platforms else 2000
+
         
         optimized_description = original_description
         
@@ -855,7 +960,10 @@ class ContentOptimizationEngine:
                 "Don't forget to like and follow!",
                 "Tag someone who needs to see this!"
             ]
+
             cta = secrets.choice(cta_phrases)
+
+
             optimized_description = f"{optimized_description}\n\n{cta}"
         
         # Ensure it's still within limits
@@ -875,11 +983,16 @@ class ContentOptimizationEngine:
         base_confidence = 0.7
         
         # Bonus for number of techniques applied
+
         technique_bonus = min(len(techniques) * 0.05, 0.2)
         
         # Bonus for expected improvements
+
         avg_improvement = statistics.mean(improvements.values()) if improvements else 0
+
         improvement_bonus = min(avg_improvement / 100.0 * 0.2, 0.1)
+
+
         
         total_confidence = base_confidence + technique_bonus + improvement_bonus
         return min(total_confidence, 1.0)
@@ -892,12 +1005,16 @@ class ContentOptimizationEngine:
         primary_metric: str,
         duration_hours: int = 24
     ) -> ABTestConfiguration:
-        """Create A/B test configuration for content optimization."""
+        """
+        Create A/B test configuration for content optimization."""
         test_id = f"ab_{uuid4().hex[:8]}"
         
         # Create test variations
+
         test_variations = []
+
         traffic_per_variation = 1.0 / len(variations)
+
         
         for i, variation_data in enumerate(variations):
             variation = ABTestVariation(
@@ -906,9 +1023,11 @@ class ContentOptimizationEngine:
                 content_modifications=variation_data.get("modifications", {}),
                 traffic_split=traffic_per_variation
             )
+
             test_variations.append(variation)
         
         # Create test configuration
+
         ab_test = ABTestConfiguration(
             test_id=test_id,
             content_id=content_id,
@@ -931,6 +1050,7 @@ class ContentOptimizationEngine:
         """Analyze A/B test results and determine winner."""
         if test_id not in self.active_ab_tests:
             return {"error": "Test not found"}
+
         
         test = self.active_ab_tests[test_id]
         
@@ -945,6 +1065,7 @@ class ContentOptimizationEngine:
             variation.sample_size = 1000 + secrets.randbelow(2000)
         
         # Determine winner based on primary metric
+
         best_variation = max(
             test.variations,
             key=lambda v: v.performance_metrics.get(test.primary_metric, 0)
@@ -952,14 +1073,20 @@ class ContentOptimizationEngine:
         best_variation.is_winner = True
         
         # Calculate statistical significance (simplified)
+
         best_score = best_variation.performance_metrics.get(test.primary_metric, 0)
+
         second_best_score = max(
-            [v.performance_metrics.get(test.primary_metric, 0) 
+            [v.performance_metrics.get(test.primary_metric, 0)
+ 
              for v in test.variations if v != best_variation],
             default=0
         )
+
+
         
         improvement = ((best_score - second_best_score) / second_best_score * 100) if second_best_score > 0 else 0
+
         statistical_significance = min(improvement / 10.0, 0.99)  # Simplified calculation
         
         best_variation.statistical_significance = statistical_significance
@@ -996,25 +1123,32 @@ class ContentOptimizationEngine:
             return {"message": "No optimization history available"}
         
         # Calculate success metrics
+
         successful_optimizations = [
             opt for opt in self.optimization_history
             if opt.confidence_score > 0.7 and any(imp > 10 for imp in opt.improvements.values())
         ]
+
         
         success_rate = len(successful_optimizations) / len(self.optimization_history) * 100
         
         # Most effective techniques
+
         technique_effectiveness = defaultdict(list)
         for opt in successful_optimizations:
             avg_improvement = statistics.mean(opt.improvements.values()) if opt.improvements else 0
             for technique in opt.applied_techniques:
                 technique_effectiveness[technique].append(avg_improvement)
+
+
         
         best_techniques = [
             (technique, statistics.mean(improvements))
+
             for technique, improvements in technique_effectiveness.items()
         ]
         best_techniques.sort(key=lambda x: x[1], reverse=True)
+
         
         return {
             "total_optimizations": len(self.optimization_history),
@@ -1038,6 +1172,7 @@ class ContentOptimizationEngine:
         self.seo_keywords.clear()
         self.optimization_history.clear()
         self.active_ab_tests.clear()
+
         
         self.logger.info("✅ Content Optimization Engine cleaned up")
 

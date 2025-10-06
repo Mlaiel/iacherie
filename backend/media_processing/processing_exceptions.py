@@ -22,6 +22,7 @@ Contact: mlaiel@live.de
 - Logging compliance for audit trails
 """
 
+import asyncio
 import logging
 import traceback
 from datetime import datetime
@@ -33,7 +34,8 @@ import structlog
 logger = structlog.get_logger(__name__)
 
 class ErrorSeverity(Enum):
-    """Error severity levels for monitoring and alerting"""
+    """
+        Error severity levels for monitoring and alerting"""
     CRITICAL = "critical"  # System failure, immediate action required
     HIGH = "high"         # Major functionality impacted
     MEDIUM = "medium"     # Limited functionality impacted
@@ -67,6 +69,7 @@ class MediaProcessingError(Exception):
         user_message: Optional[str] = None
     ):
         super().__init__(message)
+
         
         self.message = message
         self.error_code = error_code
@@ -133,7 +136,8 @@ class AIProcessingError(MediaProcessingError):
         super().__init__(message, **kwargs)
 
 class ModelLoadError(AIProcessingError):
-    """Error loading AI models"""
+    """
+        Error loading AI models"""
     
     def __init__(self, model_name: str, model_path: str, cause: Exception, **kwargs):
         message = f"Failed to load AI model '{model_name}' from path '{model_path}'"
@@ -187,7 +191,8 @@ class ContentProcessingError(MediaProcessingError):
         super().__init__(message, **kwargs)
 
 class UnsupportedFormatError(ContentProcessingError):
-    """Unsupported content format error"""
+    """
+        Unsupported content format error"""
     
     def __init__(self, file_format: str, supported_formats: List[str], **kwargs):
         message = f"Unsupported format '{file_format}'. Supported: {supported_formats}"
@@ -238,7 +243,8 @@ class ProtectionError(MediaProcessingError):
         super().__init__(message, **kwargs)
 
 class WatermarkError(ProtectionError):
-    """Error in watermarking operations"""
+    """
+        Error in watermarking operations"""
     
     def __init__(self, operation: str, content_type: str, cause: Exception, **kwargs):
         message = f"Watermark {operation} failed for {content_type} content"
@@ -293,7 +299,8 @@ class DatabaseError(MediaProcessingError):
         super().__init__(message, **kwargs)
 
 class PerformanceError(MediaProcessingError):
-    """Performance-related errors"""
+    """
+        Performance-related errors"""
     
     def __init__(self, message: str, **kwargs):
         kwargs.setdefault('error_code', 'PERFORMANCE_ERROR')
@@ -306,7 +313,8 @@ class PerformanceError(MediaProcessingError):
 # =============================================================================
 
 class ValidationError(MediaProcessingError):
-    """Input validation errors"""
+    """
+        Input validation errors"""
     
     def __init__(self, field: str, value: Any, constraint: str, **kwargs):
         message = f"Validation failed for field '{field}' with value '{value}': {constraint}"
@@ -350,12 +358,14 @@ class ErrorHandler:
         operation: str,
         context: Optional[Dict[str, Any]] = None
     ) -> MediaProcessingError:
-        """Convert generic exceptions to MediaProcessingError"""
+        """
+        Convert generic exceptions to MediaProcessingError"""
         
         if isinstance(exc, MediaProcessingError):
             return exc
         
         # Map common exception types
+
         error_mappings = {
             FileNotFoundError: lambda e: ContentProcessingError(
                 f"File not found during {operation}",
@@ -385,6 +395,7 @@ class ErrorHandler:
                 context=context
             )
         }
+
         
         exception_type = type(exc)
         if exception_type in error_mappings:
@@ -432,6 +443,7 @@ def handle_processing_errors(operation_name: str):
         async def async_wrapper(*args, **kwargs):
             try:
                 return await func(*args, **kwargs)
+
             except MediaProcessingError:
                 raise  # Re-raise our custom exceptions as-is
             except Exception as e:
@@ -446,6 +458,7 @@ def handle_processing_errors(operation_name: str):
         def sync_wrapper(*args, **kwargs):
             try:
                 return func(*args, **kwargs)
+
             except MediaProcessingError:
                 raise  # Re-raise our custom exceptions as-is
             except Exception as e:
@@ -469,7 +482,8 @@ def handle_processing_errors(operation_name: str):
 # =============================================================================
 
 class ErrorMetrics:
-    """Error metrics collection for monitoring"""
+    """
+        Error metrics collection for monitoring"""
     
     def __init__(self):
         self.error_counts = {}
@@ -477,20 +491,24 @@ class ErrorMetrics:
         self.category_counts = {}
     
     def record_error(self, error: MediaProcessingError):
-        """Record error for metrics collection"""
+        """
+        Record error for metrics collection"""
         # Count by error code
         self.error_counts[error.error_code] = self.error_counts.get(error.error_code, 0) + 1
         
         # Count by severity
+
         severity = error.severity.value
         self.severity_counts[severity] = self.severity_counts.get(severity, 0) + 1
         
         # Count by category
+
         category = error.category.value
         self.category_counts[category] = self.category_counts.get(category, 0) + 1
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get current error metrics"""
+        """
+        Get current error metrics"""
         return {
             'error_counts': self.error_counts,
             'severity_counts': self.severity_counts,

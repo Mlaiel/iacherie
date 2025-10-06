@@ -27,7 +27,8 @@ logger = logging.getLogger(__name__)
 # === ÉNUMÉRATIONS ===
 
 class SchemaType(Enum):
-    """Types de schema supportés"""
+    """
+        Types de schema supportés"""
     ARTICLE = "Article"
     BLOG_POSTING = "BlogPosting"
     VIDEO_OBJECT = "VideoObject"
@@ -77,7 +78,8 @@ class SchemaProperty:
 
 @dataclass
 class StructuredData:
-    """Données structurées"""
+    """
+        Données structurées"""
     schema_type: SchemaType
     properties: Dict[str, Any]
     context: str = "https://schema.org"
@@ -96,7 +98,8 @@ class SchemaValidationResult:
 
 @dataclass
 class MarkupOptimization:
-    """Optimisation de markup"""
+    """
+        Optimisation de markup"""
     original_markup: str
     optimized_markup: str
     improvements: List[str]
@@ -114,7 +117,8 @@ class SEOSchemaGenerator:
     """
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize SEO schema generator"""
+        """
+        Initialize SEO schema generator"""
         self.config = config or {}
         self.schema_templates = {}
         self.validation_rules = {}
@@ -125,6 +129,7 @@ class SEOSchemaGenerator:
         
         # Règles de validation
         self._initialize_validation_rules()
+
         
         logger.info("🏗️ SEO Schema Generator initialized")
     
@@ -138,9 +143,11 @@ class SEOSchemaGenerator:
         """Générer un schema markup"""
         try:
             # Obtenir le template de base
+
             template = await self._get_schema_template(schema_type)
             
             # Mapper les données de contenu
+
             mapped_properties = await self._map_content_to_schema(
                 content_data, template, schema_type
             )
@@ -151,6 +158,7 @@ class SEOSchemaGenerator:
             )
             
             # Créer la structure de données
+
             structured_data = StructuredData(
                 schema_type=schema_type,
                 properties=enriched_properties
@@ -161,27 +169,33 @@ class SEOSchemaGenerator:
                 structured_data.json_ld = await self._generate_json_ld(
                     structured_data
                 )
+
             elif format_type == MarkupFormat.MICRODATA:
                 structured_data.microdata = await self._generate_microdata(
                     structured_data
                 )
+
             elif format_type == MarkupFormat.RDFA:
                 structured_data.rdfa = await self._generate_rdfa(
                     structured_data
                 )
             
             # Valider le schema
+
             validation_result = await self.validate_schema(
                 structured_data, validation_level
             )
+
             
             if not validation_result.is_valid:
                 logger.warning(f"Schema validation failed: {validation_result.errors}")
+
             
             return structured_data
             
         except Exception as e:
             logger.error(f"Failed to generate schema: {e}")
+
             raise
     
     async def validate_schema(
@@ -192,41 +206,59 @@ class SEOSchemaGenerator:
         """Valider un schema markup"""
         try:
             errors = []
+
             warnings = []
+
             recommendations = []
             
             # Validation de base
+
             basic_validation = await self._validate_basic_structure(structured_data)
+
             errors.extend(basic_validation["errors"])
+
             warnings.extend(basic_validation["warnings"])
             
             # Validation des propriétés requises
+
             required_validation = await self._validate_required_properties(
                 structured_data
             )
+
             errors.extend(required_validation["errors"])
+
             warnings.extend(required_validation["warnings"])
             
             # Validation spécifique au type
+
             type_validation = await self._validate_schema_type_specific(
                 structured_data
             )
+
             errors.extend(type_validation["errors"])
+
             warnings.extend(type_validation["warnings"])
             
             # Validation Google Rich Results (si demandée)
+
             if validation_level == ValidationLevel.GOOGLE_RICH_RESULTS:
                 google_validation = await self._validate_google_rich_results(
                     structured_data
                 )
+
                 errors.extend(google_validation["errors"])
+
                 warnings.extend(google_validation["warnings"])
+
                 recommendations.extend(google_validation["recommendations"])
             
             # Calculer le score de validation
+
             score = await self._calculate_validation_score(
                 errors, warnings, structured_data
             )
+
+
             
             result = SchemaValidationResult(
                 is_valid=len(errors) == 0,
@@ -235,11 +267,13 @@ class SEOSchemaGenerator:
                 recommendations=recommendations,
                 score=score
             )
+
             
             return result
             
         except Exception as e:
             logger.error(f"Failed to validate schema: {e}")
+
             raise
     
     async def optimize_schema_markup(
@@ -251,14 +285,17 @@ class SEOSchemaGenerator:
         """Optimiser un markup existant"""
         try:
             # Parser le markup existant
+
             parsed_data = await self._parse_existing_markup(markup, markup_format)
             
             # Identifier les améliorations possibles
+
             improvements = await self._identify_markup_improvements(
                 parsed_data, optimization_goals or []
             )
             
             # Appliquer les optimisations
+
             optimized_data = await self._apply_markup_optimizations(
                 parsed_data, improvements
             )
@@ -277,6 +314,8 @@ class SEOSchemaGenerator:
             seo_impact = await self._calculate_seo_impact(
                 parsed_data, optimized_data, improvements
             )
+
+
             
             optimization = MarkupOptimization(
                 original_markup=markup,
@@ -285,11 +324,13 @@ class SEOSchemaGenerator:
                 seo_impact=seo_impact,
                 validation_result=validation_result
             )
+
             
             return optimization
             
         except Exception as e:
             logger.error(f"Failed to optimize markup: {e}")
+
             raise
     
     async def generate_comprehensive_schema_suite(
@@ -302,13 +343,17 @@ class SEOSchemaGenerator:
             schema_suite = {}
             
             # Schema principal basé sur le type de contenu
+
             primary_schema_type = await self._determine_primary_schema_type(
                 content_type, content_data
             )
+
+
             
             primary_schema = await self.generate_schema(
                 primary_schema_type, content_data
             )
+
             schema_suite["primary"] = primary_schema
             
             # Schemas complémentaires
@@ -316,12 +361,14 @@ class SEOSchemaGenerator:
                 author_schema = await self.generate_schema(
                     SchemaType.PERSON, content_data["author"]
                 )
+
                 schema_suite["author"] = author_schema
             
             if "organization" in content_data:
                 org_schema = await self.generate_schema(
                     SchemaType.ORGANIZATION, content_data["organization"]
                 )
+
                 schema_suite["organization"] = org_schema
             
             # Breadcrumb si naviguation fournie
@@ -329,6 +376,7 @@ class SEOSchemaGenerator:
                 breadcrumb_schema = await self.generate_schema(
                     SchemaType.BREADCRUMB_LIST, content_data["breadcrumb"]
                 )
+
                 schema_suite["breadcrumb"] = breadcrumb_schema
             
             # WebSite schema pour la page principale
@@ -336,6 +384,7 @@ class SEOSchemaGenerator:
                 website_schema = await self.generate_schema(
                     SchemaType.WEBSITE, content_data
                 )
+
                 schema_suite["website"] = website_schema
             
             # FAQ schema si FAQ présentes
@@ -343,12 +392,14 @@ class SEOSchemaGenerator:
                 faq_schema = await self.generate_schema(
                     SchemaType.FAQ_PAGE, content_data["faq"]
                 )
+
                 schema_suite["faq"] = faq_schema
             
             return schema_suite
             
         except Exception as e:
             logger.error(f"Failed to generate schema suite: {e}")
+
             raise
     
     # === MÉTHODES PRIVÉES ===
@@ -459,14 +510,17 @@ class SEOSchemaGenerator:
         template: Dict[str, Any],
         schema_type: SchemaType
     ) -> Dict[str, Any]:
-        """Mapper les données de contenu vers le schema"""
+        """
+        Mapper les données de contenu vers le schema"""
         mapped_properties = {
             "@context": "https://schema.org",
             "@type": schema_type.value
         }
         
         # Mapping des propriétés basé sur le template
+
         property_mappings = await self._get_property_mappings(schema_type)
+
         
         for content_key, schema_property in property_mappings.items():
             if content_key in content_data:
@@ -475,6 +529,7 @@ class SEOSchemaGenerator:
                     schema_property,
                     template.get("properties", {}).get(schema_property, {})
                 )
+
                 mapped_properties[schema_property] = mapped_value
         
         return mapped_properties
@@ -520,15 +575,18 @@ class SEOSchemaGenerator:
     ) -> Any:
         """Transformer une valeur selon la configuration de la propriété"""
         property_type = property_config.get("type", "string")
+
         
         if property_type == "datetime":
             if isinstance(value, str):
                 try:
                     return datetime.fromisoformat(value.replace("Z", "+00:00")).isoformat()
+
                 except:
                     return value
             elif isinstance(value, datetime):
                 return value.isoformat()
+
         
         elif property_type == "url":
             if not value.startswith(("http://", "https://")):
@@ -603,6 +661,7 @@ class SEOSchemaGenerator:
     async def _generate_microdata(self, structured_data: StructuredData) -> str:
         """Générer le microdata HTML"""
         # Implémentation simplifiée du microdata
+
         microdata_attrs = []
         
         for prop, value in structured_data.properties.items():
@@ -611,14 +670,17 @@ class SEOSchemaGenerator:
             
             if isinstance(value, str):
                 microdata_attrs.append(f'itemprop="{prop}" content="{value}"')
+
             elif isinstance(value, dict) and "@type" in value:
                 microdata_attrs.append(f'itemprop="{prop}" itemscope itemtype="https://schema.org/{value["@type"]}"')
+
         
         return f'<div itemscope itemtype="https://schema.org/{structured_data.schema_type.value}" {" ".join(microdata_attrs)}></div>'
     
     async def _generate_rdfa(self, structured_data: StructuredData) -> str:
         """Générer le RDFa"""
         # Implémentation simplifiée du RDFa
+
         rdfa_attrs = [f'typeof="schema:{structured_data.schema_type.value}"']
         
         for prop, value in structured_data.properties.items():
@@ -627,12 +689,14 @@ class SEOSchemaGenerator:
             
             if isinstance(value, str):
                 rdfa_attrs.append(f'property="schema:{prop}" content="{value}"')
+
         
         return f'<div {" ".join(rdfa_attrs)}></div>'
     
     async def _validate_basic_structure(self, structured_data: StructuredData) -> Dict[str, List[str]]:
         """Validation de structure de base"""
         errors = []
+
         warnings = []
         
         # Vérifier la présence du context
@@ -642,16 +706,21 @@ class SEOSchemaGenerator:
         # Vérifier la présence du type
         if "@type" not in structured_data.properties:
             errors.append("Missing @type property")
+
         
         return {"errors": errors, "warnings": warnings}
     
     async def _validate_required_properties(self, structured_data: StructuredData) -> Dict[str, List[str]]:
         """Validation des propriétés requises"""
         errors = []
+
         warnings = []
+
         
         template = self.schema_templates.get(structured_data.schema_type, {})
+
         required_props = template.get("required", [])
+
         recommended_props = template.get("recommended", [])
         
         # Vérifier les propriétés requises
@@ -663,30 +732,37 @@ class SEOSchemaGenerator:
         for prop in recommended_props:
             if prop not in structured_data.properties:
                 warnings.append(f"Recommended property missing: {prop}")
+
         
         return {"errors": errors, "warnings": warnings}
     
     async def _validate_schema_type_specific(self, structured_data: StructuredData) -> Dict[str, List[str]]:
         """Validation spécifique au type de schema"""
         errors = []
+
         warnings = []
         
         # Validation spécifique selon le type
         if structured_data.schema_type == SchemaType.ARTICLE:
             headline = structured_data.properties.get("headline", "")
+
             if len(headline) > 110:
                 warnings.append("Headline exceeds recommended length of 110 characters")
+
         
         elif structured_data.schema_type == SchemaType.VIDEO_OBJECT:
             if "thumbnailUrl" not in structured_data.properties:
                 errors.append("VideoObject requires thumbnailUrl for rich results")
+
         
         return {"errors": errors, "warnings": warnings}
     
     async def _validate_google_rich_results(self, structured_data: StructuredData) -> Dict[str, List[str]]:
         """Validation pour Google Rich Results"""
         errors = []
+
         warnings = []
+
         recommendations = []
         
         # Validation spécifique Google
@@ -694,9 +770,11 @@ class SEOSchemaGenerator:
             # Vérifications Google pour les articles
             if "image" not in structured_data.properties:
                 recommendations.append("Add high-quality images for better rich results")
+
             
             if "publisher" not in structured_data.properties:
                 warnings.append("Publisher information improves rich results eligibility")
+
         
         return {"errors": errors, "warnings": warnings, "recommendations": recommendations}
     
@@ -716,8 +794,11 @@ class SEOSchemaGenerator:
         base_score -= len(warnings) * 2
         
         # Bonus pour propriétés recommandées présentes
+
         template = self.schema_templates.get(structured_data.schema_type, {})
+
         recommended_props = template.get("recommended", [])
+
         present_recommended = [
             prop for prop in recommended_props 
             if prop in structured_data.properties
@@ -735,12 +816,16 @@ class SEOSchemaGenerator:
         if format_type == MarkupFormat.JSON_LD:
             try:
                 data = json.loads(markup)
+
+
                 schema_type = SchemaType(data.get("@type", "Article"))
+
                 return StructuredData(
                     schema_type=schema_type,
                     properties=data,
                     json_ld=markup
                 )
+
             except:
                 raise ValueError("Invalid JSON-LD markup")
         
@@ -757,8 +842,10 @@ class SEOSchemaGenerator:
     ) -> List[Dict[str, Any]]:
         """Identifier les améliorations possibles"""
         improvements = []
+
         
         template = self.schema_templates.get(structured_data.schema_type, {})
+
         recommended_props = template.get("recommended", [])
         
         # Propriétés recommandées manquantes
@@ -774,6 +861,7 @@ class SEOSchemaGenerator:
         # Optimisations spécifiques
         if "rich_results" in optimization_goals:
             improvements.extend(await self._get_rich_results_improvements(structured_data))
+
         
         return improvements
     
@@ -788,6 +876,7 @@ class SEOSchemaGenerator:
                     "description": "Add high-quality image for rich results",
                     "impact": "high"
                 })
+
         
         return improvements
     
@@ -798,12 +887,14 @@ class SEOSchemaGenerator:
     ) -> StructuredData:
         """Appliquer les optimisations"""
         optimized_properties = structured_data.properties.copy()
+
         
         for improvement in improvements:
             if improvement["type"] == "add_property":
                 prop = improvement["property"]
                 # Ajouter une valeur par défaut appropriée
                 optimized_properties[prop] = await self._get_default_property_value(prop)
+
         
         return StructuredData(
             schema_type=structured_data.schema_type,
@@ -838,6 +929,7 @@ class SEOSchemaGenerator:
             return await self._generate_microdata(structured_data)
         elif format_type == MarkupFormat.RDFA:
             return await self._generate_rdfa(structured_data)
+
         
         return ""
     
@@ -852,6 +944,7 @@ class SEOSchemaGenerator:
         
         for improvement in improvements:
             impact_level = improvement.get("impact", "low")
+
             
             if impact_level == "high":
                 impact_score += 3.0
@@ -913,15 +1006,18 @@ class StructuredDataOptimizer:
             SchemaType.RECIPE: self._optimize_recipe_rich_results,
             SchemaType.PRODUCT: self._optimize_product_rich_results
         }
+
         
         optimizer = optimization_strategies.get(structured_data.schema_type)
         if optimizer:
             return await optimizer(structured_data)
+
         
         return structured_data
     
     async def _optimize_article_rich_results(self, data: StructuredData) -> StructuredData:
-        """Optimiser les articles pour rich results"""
+        """
+        Optimiser les articles pour rich results"""
         optimized_props = data.properties.copy()
         
         # Assurer la présence d'images haute qualité
@@ -958,6 +1054,7 @@ class StructuredDataOptimizer:
         optimized_props = data.properties.copy()
         
         # Assurer les propriétés requises pour les vidéos
+
         required_video_props = {
             "thumbnailUrl": "https://example.com/thumbnail.jpg",
             "duration": "PT2M30S",  # Format ISO 8601
@@ -979,7 +1076,8 @@ class StructuredDataOptimizer:
         return data
     
     async def _optimize_product_rich_results(self, data: StructuredData) -> StructuredData:
-        """Optimiser les produits pour rich results"""
+        """
+        Optimiser les produits pour rich results"""
         # Implémentation pour les produits
         return data
 

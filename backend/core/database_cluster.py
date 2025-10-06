@@ -32,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 
 class DatabaseClusterType(Enum):
-    """Database cluster types for different workloads"""
+    """
+        Database cluster types for different workloads"""
     POSTGRES_XL = "postgres_xl"
     TIMESCALE_DB = "timescale_db"
     NEO4J_ENTERPRISE = "neo4j_enterprise"
@@ -200,6 +201,7 @@ class PineconeIndexConfig:
     def get_capacity_metrics(self) -> Dict[str, Any]:
         """Get capacity and performance metrics"""
         vectors_per_pod = 5_000_000  # 5M vectors per pod typically
+
         total_capacity = vectors_per_pod * self.pods
         
         return {
@@ -224,7 +226,8 @@ class iacherieDataArchitecture:
     """
     
     def __init__(self):
-        """Initialize the complete database cluster architecture"""
+        """
+        Initialize the complete database cluster architecture"""
         
         # Sharding strategy for 100B+ records
         self.postgres_cluster = self._initialize_postgres_xl()
@@ -237,9 +240,11 @@ class iacherieDataArchitecture:
         
         # Vector search for 10B+ embeddings
         self.pinecone_index = self._initialize_pinecone_index()
+
         
         self.logger = logging.getLogger(__name__)
         self._health_check_executor = ThreadPoolExecutor(max_workers=4)
+
         
         self.logger.info("iacherieDataArchitecture initialized with enterprise-grade clusters")
     

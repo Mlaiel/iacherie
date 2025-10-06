@@ -29,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceType(Enum):
-    """Types of services in the platform."""
+    """
+        Types of services in the platform."""
     API_GATEWAY = "api_gateway"
     USER_SERVICE = "user_service"
     CONTENT_SERVICE = "content_service"
@@ -81,7 +82,8 @@ class ServiceDefinition:
 
 @dataclass
 class ServiceInstance:
-    """Individual service instance."""
+    """
+        Individual service instance."""
     instance_id: str
     service_id: str
     endpoint_url: str
@@ -96,7 +98,8 @@ class ServiceInstance:
 
 @dataclass
 class OrchestrationTask:
-    """Orchestration task definition."""
+    """
+        Orchestration task definition."""
     task_id: str
     name: str
     workflow_id: str
@@ -114,7 +117,8 @@ class OrchestrationTask:
 
 @dataclass
 class DistributedWorkflow:
-    """Distributed workflow definition."""
+    """
+        Distributed workflow definition."""
     workflow_id: str
     name: str
     description: str
@@ -135,7 +139,8 @@ class ServiceOrchestrator:
     """
     
     def __init__(self):
-        """Initialize the service orchestrator."""
+        """
+        Initialize the service orchestrator."""
         self.service_registry: Dict[str, ServiceDefinition] = {}
         self.service_instances: Dict[str, List[ServiceInstance]] = defaultdict(list)
         self.workflows: Dict[str, DistributedWorkflow] = {}
@@ -147,7 +152,8 @@ class ServiceOrchestrator:
         self._setup_default_services()
     
     def _setup_default_services(self):
-        """Setup default service definitions."""
+        """
+        Setup default service definitions."""
         default_services = [
             ServiceDefinition(
                 service_id="api_gateway",
@@ -261,10 +267,12 @@ class ServiceOrchestrator:
             }
             
             self.logger.info(f"Registered service: {service.name} ({service.service_id})")
+
             return service.service_id
             
         except Exception as e:
             self.logger.error(f"Failed to register service {service.service_id}: {str(e)}")
+
             raise
     
     async def start_orchestration(self) -> None:
@@ -281,9 +289,11 @@ class ServiceOrchestrator:
                 self._auto_scale_services(),
                 return_exceptions=True
             )
+
             
         except Exception as e:
             self.logger.error(f"Error starting orchestration: {str(e)}")
+
             self.is_orchestrating = False
             raise
     
@@ -301,17 +311,20 @@ class ServiceOrchestrator:
             try:
                 for service_id, service in self.service_registry.items():
                     await self._check_service_health(service_id)
+
                 
                 await asyncio.sleep(30)  # Check health every 30 seconds
                 
             except Exception as e:
                 self.logger.error(f"Error monitoring service health: {str(e)}")
+
                 await asyncio.sleep(30)
     
     async def _check_service_health(self, service_id: str) -> None:
         """Check health of a specific service."""
         try:
             service = self.service_registry[service_id]
+
             circuit_breaker = self.circuit_breakers[service_id]
             
             # Skip health check if circuit breaker is open
@@ -320,12 +333,17 @@ class ServiceOrchestrator:
                     circuit_breaker["state"] = "half_open"
                 else:
                     return
+
             
             start_time = datetime.utcnow()
+
             
             try:
                 # Simulate health check (in real implementation, make HTTP request)
+
                 await self._simulate_service_call(service.health_check_url)
+
+
                 
                 response_time = (datetime.utcnow() - start_time).total_seconds() * 1000
                 
@@ -338,11 +356,14 @@ class ServiceOrchestrator:
                         status=ServiceStatus.HEALTHY,
                         response_time=response_time
                     )
+
                     self.service_instances[service_id].append(instance)
+
                 else:
                     instance = self.service_instances[service_id][0]
                     instance.status = ServiceStatus.HEALTHY
                     instance.last_health_check = datetime.utcnow()
+
                     instance.response_time = response_time
                 
                 # Update circuit breaker
@@ -361,12 +382,15 @@ class ServiceOrchestrator:
                 # Update circuit breaker
                 circuit_breaker["failure_count"] += 1
                 circuit_breaker["last_failure_time"] = datetime.utcnow().timestamp()
+
                 
                 if circuit_breaker["failure_count"] >= circuit_breaker["threshold"]:
                     circuit_breaker["state"] = "open"
                     self.logger.warning(f"Circuit breaker opened for service: {service_id}")
+
                 
                 self.logger.error(f"Health check failed for service {service_id}: {str(e)}")
+
                 
         except Exception as e:
             self.logger.error(f"Error checking health for service {service_id}: {str(e)}")
@@ -381,6 +405,7 @@ class ServiceOrchestrator:
         # Simulate occasional failures
         if random.random() < 0.05:  # 5% failure rate
             raise Exception("Service temporarily unavailable")
+
         
         return {"status": "healthy", "timestamp": datetime.utcnow().isoformat()}
     
@@ -390,6 +415,7 @@ class ServiceOrchestrator:
             workflow_id = str(uuid.uuid4())
             
             # Create tasks from definitions
+
             tasks = []
             for i, task_def in enumerate(task_definitions):
                 task = OrchestrationTask(
@@ -400,7 +426,10 @@ class ServiceOrchestrator:
                     task_definition=task_def,
                     dependencies=task_def.get("dependencies", [])
                 )
+
                 tasks.append(task)
+
+
             
             workflow = DistributedWorkflow(
                 workflow_id=workflow_id,
@@ -408,18 +437,22 @@ class ServiceOrchestrator:
                 description=f"Distributed workflow with {len(tasks)} tasks",
                 tasks=tasks
             )
+
             
             self.workflows[workflow_id] = workflow
             
             # Queue tasks for execution
             for task in tasks:
                 await self.task_queue.put(task)
+
             
             self.logger.info(f"Created distributed workflow: {workflow_name} ({workflow_id})")
+
             return workflow_id
             
         except Exception as e:
             self.logger.error(f"Error creating distributed workflow: {str(e)}")
+
             raise
     
     async def _process_task_queue(self) -> None:
@@ -427,16 +460,19 @@ class ServiceOrchestrator:
         while self.is_orchestrating:
             try:
                 # Wait for task with timeout
+
                 task = await asyncio.wait_for(self.task_queue.get(), timeout=1.0)
                 
                 # Execute task asynchronously
                 asyncio.create_task(self._execute_orchestration_task(task))
+
                 
             except asyncio.TimeoutError:
                 # No tasks in queue, continue
                 continue
             except Exception as e:
                 self.logger.error(f"Error processing task queue: {str(e)}")
+
                 await asyncio.sleep(1)
     
     async def _execute_orchestration_task(self, task: OrchestrationTask) -> None:
@@ -449,19 +485,26 @@ class ServiceOrchestrator:
             if not await self._check_task_dependencies(task):
                 # Re-queue task if dependencies not met
                 await asyncio.sleep(5)
+
                 await self.task_queue.put(task)
+
                 return
             
             # Check if required services are available
+
             available_services = await self._check_service_availability(task.services_required)
+
             if not available_services:
                 task.status = OrchestrationStatus.FAILED
                 task.error_details = "Required services not available"
                 task.completed_at = datetime.utcnow()
+
                 return
             
             # Execute task based on its definition
+
             result = await self._execute_task_logic(task)
+
             
             task.results = result
             task.status = OrchestrationStatus.COMPLETED
@@ -469,12 +512,15 @@ class ServiceOrchestrator:
             
             # Check if workflow is complete
             await self._check_workflow_completion(task.workflow_id)
+
             
             self.logger.info(f"Completed orchestration task: {task.name} ({task.task_id})")
+
             
         except Exception as e:
             task.status = OrchestrationStatus.FAILED
             task.error_details = str(e)
+
             task.completed_at = datetime.utcnow()
             
             # Retry logic
@@ -486,8 +532,10 @@ class ServiceOrchestrator:
                 # Re-queue task for retry
                 await asyncio.sleep(2 ** task.retry_count)  # Exponential backoff
                 await self.task_queue.put(task)
+
                 
                 self.logger.warning(f"Retrying task: {task.name} (attempt {task.retry_count})")
+
             else:
                 self.logger.error(f"Task failed after {task.max_retries} retries: {task.name} - {str(e)}")
     
@@ -496,12 +544,15 @@ class ServiceOrchestrator:
         try:
             if not task.dependencies:
                 return True
+
             
             workflow = self.workflows[task.workflow_id]
             
             for dep_task_id in task.dependencies:
                 # Find dependency task
+
                 dep_task = next((t for t in workflow.tasks if t.task_id == dep_task_id), None)
+
                 
                 if not dep_task or dep_task.status != OrchestrationStatus.COMPLETED:
                     return False
@@ -510,6 +561,7 @@ class ServiceOrchestrator:
             
         except Exception as e:
             self.logger.error(f"Error checking task dependencies: {str(e)}")
+
             return False
     
     async def _check_service_availability(self, required_services: List[str]) -> bool:
@@ -520,6 +572,7 @@ class ServiceOrchestrator:
                     return False
                 
                 # Check if at least one instance is healthy
+
                 healthy_instances = [
                     instance for instance in self.service_instances[service_id]
                     if instance.status == ServiceStatus.HEALTHY
@@ -529,7 +582,9 @@ class ServiceOrchestrator:
                     return False
                 
                 # Check circuit breaker
+
                 circuit_breaker = self.circuit_breakers.get(service_id, {})
+
                 if circuit_breaker.get("state") == "open":
                     return False
             
@@ -537,28 +592,37 @@ class ServiceOrchestrator:
             
         except Exception as e:
             self.logger.error(f"Error checking service availability: {str(e)}")
+
             return False
     
     async def _execute_task_logic(self, task: OrchestrationTask) -> Dict[str, Any]:
         """Execute the actual task logic."""
         try:
             task_type = task.task_definition.get("type", "generic")
+
             
             if task_type == "content_processing":
                 return await self._execute_content_processing_task(task)
+
             elif task_type == "payment_processing":
                 return await self._execute_payment_processing_task(task)
+
             elif task_type == "notification_sending":
                 return await self._execute_notification_task(task)
+
             elif task_type == "analytics_calculation":
                 return await self._execute_analytics_task(task)
+
             elif task_type == "collaboration_setup":
                 return await self._execute_collaboration_task(task)
+
             else:
                 return await self._execute_generic_task(task)
+
                 
         except Exception as e:
             self.logger.error(f"Error executing task logic: {str(e)}")
+
             raise
     
     async def _execute_content_processing_task(self, task: OrchestrationTask) -> Dict[str, Any]:
@@ -631,21 +695,28 @@ class ServiceOrchestrator:
         """Check if workflow is complete."""
         try:
             workflow = self.workflows[workflow_id]
+
             
             completed_tasks = [t for t in workflow.tasks if t.status == OrchestrationStatus.COMPLETED]
+
             failed_tasks = [t for t in workflow.tasks if t.status == OrchestrationStatus.FAILED]
             
             if len(completed_tasks) == len(workflow.tasks):
                 workflow.status = OrchestrationStatus.COMPLETED
                 workflow.completed_at = datetime.utcnow()
+
                 self.logger.info(f"Workflow completed: {workflow.name} ({workflow_id})")
+
             elif failed_tasks:
                 # Check if any critical tasks failed
+
                 critical_failures = [t for t in failed_tasks if t.retry_count >= t.max_retries]
                 if critical_failures:
                     workflow.status = OrchestrationStatus.FAILED
                     workflow.completed_at = datetime.utcnow()
+
                     self.logger.error(f"Workflow failed: {workflow.name} ({workflow_id})")
+
             
         except Exception as e:
             self.logger.error(f"Error checking workflow completion: {str(e)}")
@@ -661,11 +732,13 @@ class ServiceOrchestrator:
                             circuit_breaker["timeout"]):
                             circuit_breaker["state"] = "half_open"
                             self.logger.info(f"Circuit breaker half-opened for service: {service_id}")
+
                 
                 await asyncio.sleep(30)  # Check every 30 seconds
                 
             except Exception as e:
                 self.logger.error(f"Error managing circuit breakers: {str(e)}")
+
                 await asyncio.sleep(30)
     
     async def _auto_scale_services(self) -> None:
@@ -675,12 +748,14 @@ class ServiceOrchestrator:
                 for service_id, service in self.service_registry.items():
                     if not service.auto_scaling:
                         continue
+
                     
                     instances = self.service_instances[service_id]
                     if not instances:
                         continue
                     
                     # Calculate average load
+
                     avg_load = sum(instance.load for instance in instances) / len(instances)
                     
                     # Scale up if load is high
@@ -690,18 +765,23 @@ class ServiceOrchestrator:
                     # Scale down if load is low
                     elif avg_load < 20 and len(instances) > service.min_instances:
                         await self._scale_down_service(service_id)
+
                 
                 await asyncio.sleep(60)  # Check every minute
                 
             except Exception as e:
                 self.logger.error(f"Error in auto-scaling: {str(e)}")
+
                 await asyncio.sleep(60)
     
     async def _scale_up_service(self, service_id: str) -> None:
         """Scale up a service by adding instances."""
         try:
             service = self.service_registry[service_id]
+
             current_instances = len(self.service_instances[service_id])
+
+
             
             new_instance = ServiceInstance(
                 instance_id=f"{service_id}_instance_{current_instances + 1}",
@@ -710,9 +790,12 @@ class ServiceOrchestrator:
                 status=ServiceStatus.HEALTHY,
                 load=0.0
             )
+
             
             self.service_instances[service_id].append(new_instance)
+
             self.logger.info(f"Scaled up service {service_id}: {current_instances} -> {current_instances + 1} instances")
+
             
         except Exception as e:
             self.logger.error(f"Error scaling up service {service_id}: {str(e)}")
@@ -723,8 +806,11 @@ class ServiceOrchestrator:
             instances = self.service_instances[service_id]
             if len(instances) > 1:
                 # Remove the last instance
+
                 removed_instance = instances.pop()
+
                 self.logger.info(f"Scaled down service {service_id}: removed instance {removed_instance.instance_id}")
+
             
         except Exception as e:
             self.logger.error(f"Error scaling down service {service_id}: {str(e)}")
@@ -734,9 +820,12 @@ class ServiceOrchestrator:
         try:
             if service_id not in self.service_registry:
                 return None
+
             
             service = self.service_registry[service_id]
+
             instances = self.service_instances[service_id]
+
             circuit_breaker = self.circuit_breakers[service_id]
             
             return {
@@ -758,6 +847,7 @@ class ServiceOrchestrator:
             
         except Exception as e:
             self.logger.error(f"Error getting service status: {str(e)}")
+
             return None
     
     async def get_workflow_status(self, workflow_id: str) -> Optional[Dict[str, Any]]:
@@ -765,6 +855,7 @@ class ServiceOrchestrator:
         try:
             if workflow_id not in self.workflows:
                 return None
+
             
             workflow = self.workflows[workflow_id]
             
@@ -795,28 +886,41 @@ class ServiceOrchestrator:
             
         except Exception as e:
             self.logger.error(f"Error getting workflow status: {str(e)}")
+
             return None
     
     async def get_orchestration_dashboard(self) -> Dict[str, Any]:
         """Get comprehensive orchestration dashboard."""
         try:
             # Service summary
+
             total_services = len(self.service_registry)
+
+
             healthy_services = len([
                 s for s in self.service_instances.values()
+
                 if any(i.status == ServiceStatus.HEALTHY for i in s)
             ])
             
             # Workflow summary
+
             total_workflows = len(self.workflows)
+
+
             active_workflows = len([w for w in self.workflows.values() if w.status == OrchestrationStatus.RUNNING])
+
+
             completed_workflows = len([w for w in self.workflows.values() if w.status == OrchestrationStatus.COMPLETED])
             
             # Circuit breaker summary
+
             open_circuit_breakers = len([cb for cb in self.circuit_breakers.values() if cb["state"] == "open"])
             
             # Task queue summary
+
             pending_tasks = self.task_queue.qsize()
+
             
             return {
                 "orchestration_status": "active" if self.is_orchestrating else "inactive",
@@ -862,6 +966,7 @@ class ServiceOrchestrator:
             
         except Exception as e:
             self.logger.error(f"Error getting orchestration dashboard: {str(e)}")
+
             return {"error": str(e)}
     
     def get_orchestration_summary(self) -> Dict[str, Any]:
@@ -876,10 +981,12 @@ class ServiceOrchestrator:
                 "orchestration_statuses": [os.value for os in OrchestrationStatus],
                 "services_by_type": {
                     st.value: len([s for s in self.service_registry.values() if s.service_type == st])
+
                     for st in ServiceType
                 },
                 "workflows_by_status": {
                     status.value: len([w for w in self.workflows.values() if w.status == status])
+
                     for status in OrchestrationStatus
                 },
                 "circuit_breakers_by_state": {
@@ -890,4 +997,5 @@ class ServiceOrchestrator:
             }
         except Exception as e:
             self.logger.error(f"Error getting orchestration summary: {str(e)}")
+
             return {}

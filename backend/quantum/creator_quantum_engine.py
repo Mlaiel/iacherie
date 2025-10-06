@@ -38,7 +38,8 @@ logger = logging.getLogger(__name__)
 # ========================================
 
 class CreatorType(Enum):
-    """Types de créateurs supportés"""
+    """
+        Types de créateurs supportés"""
     BLOGGER = "blogger"
     MUSICIAN = "musician"
     PHOTOGRAPHER = "photographer"
@@ -112,7 +113,8 @@ class CreatorProfile:
 
 @dataclass
 class CreatorQuantumRequest:
-    """Requête d'amélioration quantique créateur"""
+    """
+        Requête d'amélioration quantique créateur"""
     request_id: str
     creator_profile: CreatorProfile
     content_data: Dict[str, Any]
@@ -143,7 +145,8 @@ class CreatorEnhancementResult:
 
 @dataclass
 class CreatorIntelligenceMetrics:
-    """Métriques d'intelligence créateur"""
+    """
+        Métriques d'intelligence créateur"""
     creativity_score: float
     technical_competency: float
     audience_understanding: float
@@ -158,7 +161,8 @@ class CreatorIntelligenceMetrics:
 # ========================================
 
 class CreatorTypeAnalyzer(ABC):
-    """Interface pour analyseur de type créateur"""
+    """
+        Interface pour analyseur de type créateur"""
     
     @abstractmethod
     async def analyze_creator_type(self, profile: CreatorProfile) -> Dict[str, Any]:
@@ -169,7 +173,8 @@ class CreatorTypeAnalyzer(ABC):
         pass
 
 class MultiFormatOptimizer(ABC):
-    """Interface pour optimiseur multi-format"""
+    """
+        Interface pour optimiseur multi-format"""
     
     @abstractmethod
     async def optimize_content_format(self, content: Dict[str, Any], target_format: ContentFormat) -> Dict[str, Any]:
@@ -180,7 +185,8 @@ class MultiFormatOptimizer(ABC):
         pass
 
 class CreatorIntelligenceEngine(ABC):
-    """Interface pour moteur d'intelligence créateur"""
+    """
+        Interface pour moteur d'intelligence créateur"""
     
     @abstractmethod
     async def analyze_creator_intelligence(self, profile: CreatorProfile) -> CreatorIntelligenceMetrics:
@@ -243,55 +249,68 @@ class CreatorQuantumEngine:
         """
         try:
             start_time = datetime.utcnow()
+
             logger.info(f"🚀 Enhancing creator {request.creator_profile.creator_id} with level {request.enhancement_level.value}")
             
             # Mise en cache du profil créateur
             self.creator_profiles_cache[request.creator_profile.creator_id] = request.creator_profile
             
             # Analyse approfondie du type créateur
+
             creator_analysis = await self._analyze_creator_comprehensive(request.creator_profile)
             
             # Génération de la stratégie d'amélioration
+
             enhancement_strategy = await self._generate_enhancement_strategy(
                 request.creator_profile, request.optimization_objectives
             )
             
             # Optimisation multi-format du contenu
+
             format_enhancements = await self._optimize_multi_format_content(
                 request.content_data, request.target_formats, request.creator_profile
             )
             
             # Application de l'intelligence créateur quantique
+
             intelligence_insights = await self._apply_creator_intelligence(
                 request.creator_profile, creator_analysis, enhancement_strategy
             )
             
             # Prédictions de performance quantiques
+
             performance_predictions = await self._predict_quantum_performance(
                 request.creator_profile, format_enhancements, intelligence_insights
             )
             
             # Génération de recommandations personnalisées
+
             recommendations = await self._generate_personalized_recommendations(
                 request.creator_profile, creator_analysis, performance_predictions
             )
             
             # Calcul du score d'amélioration global
+
             enhancement_score = await self._calculate_enhancement_score(
                 creator_analysis, format_enhancements, intelligence_insights
             )
             
             # Calcul de l'avantage quantique
+
             quantum_advantage = await self._calculate_creator_quantum_advantage(
                 request.creator_profile, enhancement_score, format_enhancements
             )
             
             # Calcul de la satisfaction créateur
+
             creator_satisfaction = await self._calculate_creator_satisfaction(
                 request.creator_profile, enhancement_score, recommendations
             )
+
+
             
             processing_time = (datetime.utcnow() - start_time).total_seconds() * 1000
+
             
             result = CreatorEnhancementResult(
                 request_id=request.request_id,
@@ -310,13 +329,17 @@ class CreatorQuantumEngine:
             
             # Stockage dans l'historique pour apprentissage
             self.enhancement_history.append(result)
+
             
             logger.info(f"✅ Creator enhancement completed with {enhancement_score:.2f} score and {quantum_advantage:.2f}x advantage")
+
             
             return result
             
         except Exception as e:
             logger.error(f"❌ Failed to enhance creator {request.creator_profile.creator_id}: {e}")
+
+
             
             processing_time = (datetime.utcnow() - start_time).total_seconds() * 1000
             
@@ -355,25 +378,34 @@ class CreatorQuantumEngine:
             logger.info(f"🔍 Analyzing creator type for {profile.creator_id} - Type: {profile.creator_type.value}")
             
             # Analyse du type créateur principal
+
             primary_type_analysis = await self._analyze_primary_creator_type(profile)
             
             # Analyse de la personnalité créative
+
             personality_analysis = await self._analyze_creator_personality(profile)
             
             # Analyse des compétences et spécialisations
+
             skills_analysis = await self._analyze_creator_skills(profile)
             
             # Analyse du potentiel de croissance
+
             growth_potential = await self._analyze_growth_potential(profile)
             
             # Analyse de compatibilité collaboration
+
             collaboration_compatibility = await self._analyze_collaboration_compatibility(profile)
             
             # Prédiction des formats optimaux
+
             optimal_formats = await self._predict_optimal_formats(profile)
             
             # Score d'adaptabilité multi-format
+
             adaptability_score = await self._calculate_format_adaptability(profile)
+
+
             
             analysis_result = {
                 "primary_type_analysis": primary_type_analysis,
@@ -392,11 +424,13 @@ class CreatorQuantumEngine:
             }
             
             logger.info(f"✅ Creator type analysis completed with adaptability score: {adaptability_score:.2f}")
+
             
             return analysis_result
             
         except Exception as e:
             logger.error(f"❌ Failed to analyze creator type: {e}")
+
             raise
     
     # ========================================
@@ -421,29 +455,36 @@ class CreatorQuantumEngine:
         """
         try:
             logger.info(f"🎯 Optimizing content for {len(target_formats)} formats for creator {creator_profile.creator_id}")
+
+
             
             format_optimizations = {}
             
             for target_format in target_formats:
                 # Optimisation spécifique au format
+
                 format_optimization = await self._optimize_single_format(
                     content_data, target_format, creator_profile
                 )
                 
                 # Enhancement quantique du format
+
                 quantum_enhancement = await self._apply_quantum_format_enhancement(
                     format_optimization, target_format, creator_profile
                 )
                 
                 # Optimisation audience pour le format
+
                 audience_optimization = await self._optimize_format_for_audience(
                     quantum_enhancement, target_format, creator_profile
                 )
                 
                 # Score de performance prédite
+
                 performance_score = await self._predict_format_performance(
                     audience_optimization, target_format, creator_profile
                 )
+
                 
                 format_optimizations[target_format] = {
                     "optimized_content": audience_optimization,
@@ -462,6 +503,7 @@ class CreatorQuantumEngine:
                 }
             
             # Cross-format synergy optimization
+
             synergy_optimization = await self._optimize_cross_format_synergy(
                 format_optimizations, creator_profile
             )
@@ -469,13 +511,16 @@ class CreatorQuantumEngine:
             # Ajout des insights synergy à chaque format
             for format_key in format_optimizations:
                 format_optimizations[format_key]["cross_format_synergy"] = synergy_optimization.get(format_key.value, {})
+
             
             logger.info(f"✅ Multi-format optimization completed for {len(format_optimizations)} formats")
+
             
             return format_optimizations
             
         except Exception as e:
             logger.error(f"❌ Failed to optimize multi-format content: {e}")
+
             raise
     
     # ========================================
@@ -498,24 +543,31 @@ class CreatorQuantumEngine:
             logger.info(f"🧠 Analyzing creator intelligence for {profile.creator_id}")
             
             # Analyse des capacités cognitives
+
             cognitive_analysis = await self._analyze_cognitive_capabilities(profile)
             
             # Analyse de l'intelligence créative
+
             creative_intelligence = await self._analyze_creative_intelligence(profile)
             
             # Analyse de l'intelligence émotionnelle
+
             emotional_intelligence = await self._analyze_emotional_intelligence(profile)
             
             # Analyse de l'intelligence technique
+
             technical_intelligence = await self._analyze_technical_intelligence(profile)
             
             # Analyse de l'intelligence business
+
             business_intelligence = await self._analyze_business_intelligence(profile)
             
             # Analyse de l'intelligence collaborative
+
             collaborative_intelligence = await self._analyze_collaborative_intelligence(profile)
             
             # Génération des métriques d'intelligence globales
+
             intelligence_metrics = CreatorIntelligenceMetrics(
                 creativity_score=creative_intelligence.get("creativity_score", 0.8),
                 technical_competency=technical_intelligence.get("competency_score", 0.75),
@@ -528,9 +580,12 @@ class CreatorQuantumEngine:
             )
             
             # Insights quantiques avancés
+
             quantum_intelligence_insights = await self._generate_quantum_intelligence_insights(
                 intelligence_metrics, profile
             )
+
+
             
             intelligence_analysis = {
                 "intelligence_metrics": intelligence_metrics,
@@ -548,11 +603,13 @@ class CreatorQuantumEngine:
             }
             
             logger.info(f"✅ Creator intelligence analysis completed with overall score: {intelligence_analysis['overall_intelligence_score']:.2f}")
+
             
             return intelligence_analysis
             
         except Exception as e:
             logger.error(f"❌ Failed to analyze creator intelligence: {e}")
+
             raise
     
     # ========================================
@@ -562,7 +619,9 @@ class CreatorQuantumEngine:
     async def _analyze_creator_comprehensive(self, profile: CreatorProfile) -> Dict[str, Any]:
         """Analyse comprehensive du créateur"""
         type_analysis = await self.analyze_creator_type_quantum(profile)
+
         intelligence_analysis = await self.analyze_creator_intelligence_quantum(profile)
+
         
         return {
             "type_analysis": type_analysis,
@@ -617,8 +676,11 @@ class CreatorQuantumEngine:
         creator_analysis: Dict[str, Any],
         enhancement_strategy: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Application de l'intelligence créateur"""
+        """
+        Application de l'intelligence créateur"""
         intelligence_insights = creator_analysis.get("intelligence_analysis", {})
+
+
         
         applied_intelligence = {
             "cognitive_enhancements": {
@@ -774,13 +836,17 @@ class CreatorQuantumEngine:
         }
         
         # Tri par score et retour des 3 meilleurs
+
         sorted_formats = sorted(format_scores.items(), key=lambda x: x[1], reverse=True)
         return [fmt for fmt, score in sorted_formats[:3]]
     
     async def _calculate_format_adaptability(self, profile: CreatorProfile) -> float:
-        """Calcul du score d'adaptabilité format"""
+        """
+        Calcul du score d'adaptabilité format"""
         base_score = 0.7
+
         experience_bonus = min(profile.experience_years * 0.02, 0.2)
+
         format_diversity_bonus = len(profile.primary_formats) * 0.05
         
         return min(base_score + experience_bonus + format_diversity_bonus, 1.0)
@@ -795,7 +861,8 @@ class CreatorQuantumEngine:
         target_format: ContentFormat,
         creator_profile: CreatorProfile
     ) -> Dict[str, Any]:
-        """Optimisation d'un format spécifique"""
+        """
+        Optimisation d'un format spécifique"""
         optimization = {
             "original_content": content_data,
             "format": target_format.value,
@@ -855,7 +922,9 @@ class CreatorQuantumEngine:
     ) -> float:
         """Prédiction performance format"""
         base_performance = 0.75
+
         format_suitability = 0.85 if target_format in creator_profile.primary_formats else 0.65
+
         audience_match = 0.82
         
         return (base_performance + format_suitability + audience_match) / 3
@@ -865,7 +934,8 @@ class CreatorQuantumEngine:
         target_format: ContentFormat, 
         creator_profile: CreatorProfile
     ) -> List[str]:
-        """Recommandations spécifiques au format"""
+        """
+        Recommandations spécifiques au format"""
         format_recommendations = {
             ContentFormat.TEXT: [
                 "Use compelling headlines and subheadings",
@@ -1007,23 +1077,28 @@ class CreatorQuantumEngine:
         metrics: CreatorIntelligenceMetrics, 
         profile: CreatorProfile
     ) -> List[str]:
-        """Génération recommandations croissance intelligence"""
+        """
+        Génération recommandations croissance intelligence"""
         recommendations = []
         
         if metrics.technical_competency < 0.8:
             recommendations.append("Develop advanced technical skills in your domain")
+
         
         if metrics.market_awareness < 0.8:
             recommendations.append("Enhance market research and trend analysis capabilities")
+
         
         if metrics.collaboration_potential < 0.85:
             recommendations.append("Build stronger networking and partnership skills")
+
         
         recommendations.extend([
             "Implement continuous learning practices",
             "Leverage AI and quantum tools for intelligence amplification",
             "Focus on developing predictive analytics skills"
         ])
+
         
         return recommendations[:5]
     
@@ -1039,14 +1114,20 @@ class CreatorQuantumEngine:
     ) -> float:
         """Calcul du score d'amélioration global"""
         analysis_score = creator_analysis.get("comprehensive_score", 0.8)
+
+
         
         format_scores = [
-            enhancement.get("performance_score", 0.75) 
+            enhancement.get("performance_score", 0.75)
+ 
             for enhancement in format_enhancements.values()
         ]
+
         format_avg = np.mean(format_scores) if format_scores else 0.75
+
         
         intelligence_score = intelligence_insights.get("performance_optimizations", {}).get("content_quality_improvement", 0.79)
+
         
         return (analysis_score + format_avg + intelligence_score) / 3
     
@@ -1058,9 +1139,14 @@ class CreatorQuantumEngine:
     ) -> float:
         """Calcul de l'avantage quantique créateur"""
         base_advantage = 1.0
+
         enhancement_multiplier = 1 + (enhancement_score - 0.5) * 2
+
         format_diversity_bonus = 1 + (len(format_enhancements) * 0.1)
+
         experience_factor = 1 + (profile.experience_years * 0.02)
+
+
         
         quantum_advantage = base_advantage * enhancement_multiplier * format_diversity_bonus * experience_factor
         
@@ -1072,10 +1158,14 @@ class CreatorQuantumEngine:
         enhancement_score: float,
         recommendations: List[str]
     ) -> float:
-        """Calcul de la satisfaction créateur"""
+        """
+        Calcul de la satisfaction créateur"""
         base_satisfaction = 0.75
+
         enhancement_bonus = enhancement_score * 0.3
+
         recommendation_bonus = min(len(recommendations) * 0.02, 0.1)
+
         
         return min(base_satisfaction + enhancement_bonus + recommendation_bonus, 1.0)
 
@@ -1085,24 +1175,31 @@ class CreatorQuantumEngine:
 # ========================================
 
 class CreatorQuantumEnhancementEngine(CreatorQuantumEngine):
-    """Alias pour compatibilité - Creator Enhancement Engine"""
+    """
+        Alias pour compatibilité - Creator Enhancement Engine"""
     pass
 
 class CreatorQuantumIntelligence(CreatorQuantumEngine):
-    """Alias pour compatibilité - Creator Intelligence"""
+    """
+        Alias pour compatibilité - Creator Intelligence"""
     pass
 
 class CreatorTypeQuantumAnalyzer(CreatorQuantumEngine):
-    """Alias pour compatibilité - Creator Type Analyzer"""
+    """
+        Alias pour compatibilité - Creator Type Analyzer"""
     pass
 
 class MultiFormatQuantumOptimizer(CreatorQuantumEngine):
-    """Alias pour compatibilité - Multi-Format Optimizer"""
+    """
+        Alias pour compatibilité - Multi-Format Optimizer"""
     pass
 
 # ========================================
 # EXPORT INTERFACES
 # ========================================
+
+# Enterprise aliases
+CreatorRequest = CreatorQuantumRequest
 
 __all__ = [
     "CreatorQuantumEngine",
@@ -1112,6 +1209,7 @@ __all__ = [
     "MultiFormatQuantumOptimizer",
     "CreatorProfile",
     "CreatorQuantumRequest",
+    "CreatorRequest",  # Alias
     "CreatorEnhancementResult",
     "CreatorIntelligenceMetrics",
     "CreatorType",

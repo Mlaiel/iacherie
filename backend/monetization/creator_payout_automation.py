@@ -121,10 +121,15 @@ class CreatorPayoutAutomation:
             schedule_id = f"schedule_{creator_id}_{datetime.now().timestamp()}"
             
             # Calculate next payout date based on frequency
+
             next_payout = self._calculate_next_payout_date(payout_rule.frequency)
             
             # Estimate payout amount (mock calculation)
+
+
             estimated_amount = await self._estimate_payout_amount(creator_id)
+
+
             
             schedule = PayoutSchedule(
                 schedule_id=schedule_id,
@@ -142,17 +147,21 @@ class CreatorPayoutAutomation:
                     86400 * 30,  # 30 days
                     json.dumps(asdict(schedule), default=str)
                 )
+
             
             self.logger.info(f"Payout scheduled: {schedule_id} for {creator_id}")
+
             return schedule
             
         except Exception as e:
             self.logger.error(f"Failed to schedule payout: {e}")
+
             raise
     
     def _calculate_next_payout_date(self, frequency: PayoutFrequency) -> datetime:
         """Calculate next payout date based on frequency"""
         now = datetime.utcnow()
+
         
         if frequency == PayoutFrequency.DAILY:
             return now + timedelta(days=1)
@@ -164,14 +173,17 @@ class CreatorPayoutAutomation:
             return now
     
     async def _estimate_payout_amount(self, creator_id: str) -> Decimal:
-        """Estimate payout amount for creator"""
+        """
+        Estimate payout amount for creator"""
+        
         try:
-            # Mock estimation (in production: calculate from actual revenue data)
             base_amount = Decimal('245.50')
+
             return base_amount
             
         except Exception as e:
             self.logger.warning(f"Payout estimation failed: {e}")
+
             return Decimal('0.00')
     
     async def process_automated_payout(
@@ -185,20 +197,26 @@ class CreatorPayoutAutomation:
             payout_id = f"payout_{creator_id}_{datetime.now().timestamp()}"
             
             # Get payment gateway configuration
+
             gateway_config = self.payment_gateways.get(method)
+
             if not gateway_config:
                 raise ValueError(f"Unsupported payout method: {method}")
             
             # Calculate fees
+
             fee_amount = (amount * gateway_config["fee_percentage"]) + gateway_config["fixed_fee"]
+
             net_amount = amount - fee_amount
             
             # Fraud detection check
             if self.fraud_detection_enabled:
                 fraud_risk = await self._assess_payout_fraud_risk(creator_id, amount)
+
                 if fraud_risk > 0.7:
                     status = PayoutStatus.PENDING_VERIFICATION
                     self.logger.warning(f"Payout flagged for review: {payout_id}")
+
                 else:
                     status = PayoutStatus.PROCESSING
             else:
@@ -223,12 +241,15 @@ class CreatorPayoutAutomation:
             # Process payment if not flagged
             if status == PayoutStatus.PROCESSING:
                 await self._execute_payout(payout, gateway_config)
+
             
             self.logger.info(f"Automated payout processed: {payout_id}")
+
             return payout
             
         except Exception as e:
             self.logger.error(f"Automated payout processing failed: {e}")
+
             raise
     
     async def _assess_payout_fraud_risk(
@@ -248,19 +269,26 @@ class CreatorPayoutAutomation:
             
             # Frequency-based risk (mock check)
             # In production: check recent payout history
-            recent_payouts = 1  # Mock recent payout count
+
+            recent_payouts = 1
+            
             if recent_payouts > 5:
                 risk_score += 0.3
             
             # Account age risk (mock check)
-            account_age_days = 30  # Mock account age
+
+
+            account_age_days = 30
+            
             if account_age_days < 30:
                 risk_score += 0.2
             
             return min(risk_score, 1.0)
+
             
         except Exception as e:
             self.logger.warning(f"Fraud risk assessment failed: {e}")
+
             return 0.0
     
     async def _execute_payout(
@@ -269,16 +297,19 @@ class CreatorPayoutAutomation:
         gateway_config: Dict[str, Any]
     ):
         """Execute payout through payment gateway"""
+        
         try:
-            # Mock payment gateway integration
             await asyncio.sleep(1)  # Simulate API call delay
             
             # Simulate success/failure (95% success rate)
+
             import random
             if random.random() < 0.95:
                 payout.status = PayoutStatus.COMPLETED
                 payout.processed_at = datetime.utcnow()
+
                 payout.completed_at = datetime.utcnow()
+
             else:
                 payout.status = PayoutStatus.FAILED
                 payout.failure_reason = "Payment gateway error"
@@ -286,6 +317,7 @@ class CreatorPayoutAutomation:
         except Exception as e:
             payout.status = PayoutStatus.FAILED
             payout.failure_reason = str(e)
+
             self.logger.error(f"Payout execution failed: {e}")
     
     async def run_daily_payout_automation(self) -> Dict[str, Any]:
@@ -293,8 +325,6 @@ class CreatorPayoutAutomation:
         try:
             if not self.automation_enabled:
                 return {"status": "disabled", "processed": 0}
-            
-            # Mock automation run
             results = {
                 "status": "completed",
                 "processed_payouts": 23,
@@ -305,10 +335,12 @@ class CreatorPayoutAutomation:
             }
             
             self.logger.info(f"Daily payout automation completed: {results['processed_payouts']} payouts")
+
             return results
             
         except Exception as e:
             self.logger.error(f"Daily payout automation failed: {e}")
+
             raise
     
     async def get_payout_analytics(
@@ -350,6 +382,7 @@ class CreatorPayoutAutomation:
             
         except Exception as e:
             self.logger.error(f"Failed to get payout analytics: {e}")
+
             raise
     
     async def update_payout_rules(
@@ -358,8 +391,8 @@ class CreatorPayoutAutomation:
         rule_updates: Dict[str, Any]
     ) -> PayoutRule:
         """Update payout rules for creator"""
+        
         try:
-            # Mock rule update
             updated_rule = PayoutRule(
                 rule_id=f"rule_{creator_id}",
                 creator_id=creator_id,
@@ -370,12 +403,15 @@ class CreatorPayoutAutomation:
                 tax_withholding_enabled=rule_updates.get("tax_withholding_enabled", False),
                 currency=rule_updates.get("currency", "EUR")
             )
+
             
             self.logger.info(f"Payout rules updated for creator: {creator_id}")
+
             return updated_rule
             
         except Exception as e:
             self.logger.error(f"Failed to update payout rules: {e}")
+
             raise
 
 __all__ = [

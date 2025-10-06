@@ -48,7 +48,8 @@ Base = declarative_base()
 # ================================
 
 class RevenueSource(Enum):
-    """Revenue source types."""
+    """
+        Revenue source types."""
     STREAMING = "streaming"
     DOWNLOADS = "downloads"
     LICENSING = "licensing"
@@ -248,7 +249,8 @@ class MonetizationStrategy(Base):
 # ================================
 
 class PaymentProvider(Base):
-    """Payment provider configurations and credentials."""
+    """
+        Payment provider configurations and credentials."""
     __tablename__ = 'payment_providers'
     __table_args__ = (
         Index('idx_payment_provider_type', 'provider_type'),
@@ -688,7 +690,8 @@ class PricingOptimization(Base):
 # ================================
 
 def get_monetization_enterprise_models():
-    """Get all monetization and enterprise models."""
+    """
+        Get all monetization and enterprise models."""
     return [
         RevenueTracking,
         MonetizationStrategy,
@@ -704,7 +707,8 @@ def get_monetization_enterprise_models():
 
 
 def create_monetization_enterprise_tables(engine):
-    """Create all monetization and enterprise tables."""
+    """
+        Create all monetization and enterprise tables."""
     try:
         Base.metadata.create_all(engine, tables=[model.__table__ for model in get_monetization_enterprise_models()])
         logger.info("Successfully created monetization and enterprise tables")

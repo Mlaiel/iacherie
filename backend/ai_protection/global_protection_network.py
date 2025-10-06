@@ -26,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 
 class Region(Enum):
-    """Global regions for protection network"""
+    """
+        Global regions for protection network"""
     NORTH_AMERICA = "north_america"
     EUROPE = "europe"
     ASIA_PACIFIC = "asia_pacific"
@@ -99,7 +100,8 @@ class CountryConfiguration:
 
 @dataclass
 class NetworkNode:
-    """Global network node specification"""
+    """
+        Global network node specification"""
     node_id: str
     node_type: NetworkNodeType
     country_config: CountryConfiguration
@@ -115,7 +117,8 @@ class NetworkNode:
 
 @dataclass
 class GlobalViolation:
-    """Global violation with international context"""
+    """
+        Global violation with international context"""
     global_violation_id: str
     local_violations: List[ViolationDetection]
     affected_countries: List[CountryCode]
@@ -131,7 +134,8 @@ class GlobalViolation:
 
 @dataclass
 class InternationalCase:
-    """International legal case coordination"""
+    """
+        International legal case coordination"""
     international_case_id: str
     local_cases: List[LegalCase]
     coordinating_jurisdiction: LegalJurisdiction
@@ -149,7 +153,8 @@ class InternationalCase:
 
 @dataclass
 class GlobalThreatIntelligence:
-    """Global threat intelligence sharing"""
+    """
+        Global threat intelligence sharing"""
     intelligence_id: str
     threat_type: str
     threat_level: str
@@ -164,7 +169,8 @@ class GlobalThreatIntelligence:
 
 
 class CountryProtectionNode:
-    """Individual country protection node"""
+    """
+        Individual country protection node"""
     
     def __init__(self, country_config: CountryConfiguration):
         self.config = country_config
@@ -188,10 +194,13 @@ class CountryProtectionNode:
             # Check jurisdiction compatibility
             if not self._is_jurisdiction_compatible(violation):
                 result['actions_taken'].append('jurisdiction_incompatible')
+
                 return result
             
             # Apply local compliance frameworks
+
             compliance_result = await self._apply_local_compliance(violation)
+
             result.update(compliance_result)
             
             # Estimate resolution time based on local factors
@@ -202,12 +211,14 @@ class CountryProtectionNode:
             
             # Track violation
             self.violation_history.append(violation)
+
             
             result['success'] = True
             return result
             
         except Exception as e:
             logger.error(f"Country node processing failed for {self.config.country_code.value}: {e}")
+
             return {'success': False, 'error': str(e)}
     
     def _is_jurisdiction_compatible(self, violation: ViolationDetection) -> bool:
@@ -216,7 +227,8 @@ class CountryProtectionNode:
         return True  # Most violations can be processed with appropriate frameworks
     
     async def _apply_local_compliance(self, violation: ViolationDetection) -> Dict[str, Any]:
-        """Apply local compliance frameworks"""
+        """
+        Apply local compliance frameworks"""
         compliance_result = {
             'compliance_framework_used': [],
             'actions_taken': [],
@@ -227,26 +239,37 @@ class CountryProtectionNode:
         for framework in self.config.compliance_frameworks:
             if framework == ComplianceFramework.DMCA:
                 compliance_result['actions_taken'].append('dmca_takedown_initiated')
+
                 compliance_result['legal_basis'].append('Digital Millennium Copyright Act')
+
                 compliance_result['compliance_framework_used'].append(framework.value)
+
             
             elif framework == ComplianceFramework.EU_COPYRIGHT:
                 compliance_result['actions_taken'].append('eu_copyright_claim_filed')
+
                 compliance_result['legal_basis'].append('EU Copyright Directive')
+
                 compliance_result['compliance_framework_used'].append(framework.value)
+
             
             elif framework == ComplianceFramework.BERNE_CONVENTION:
                 compliance_result['actions_taken'].append('international_copyright_protection_invoked')
+
                 compliance_result['legal_basis'].append('Berne Convention for the Protection of Literary and Artistic Works')
+
                 compliance_result['compliance_framework_used'].append(framework.value)
+
         
         return compliance_result
     
     def _estimate_local_resolution_time(self, violation: ViolationDetection) -> int:
-        """Estimate resolution time in hours based on local factors"""
+        """
+        Estimate resolution time in hours based on local factors"""
         base_time = self.config.response_times.get('standard_violation', 48)
         
         # Adjust based on violation severity
+
         severity_multipliers = {
             'informational': 0.5,
             'low': 0.8,
@@ -255,17 +278,21 @@ class CountryProtectionNode:
             'critical': 2.0,
             'emergency': 0.25  # Emergency gets priority
         }
+
         
         severity = violation.severity.value if hasattr(violation, 'severity') else 'medium'
         multiplier = severity_multipliers.get(severity, 1.0)
+
         
         return int(base_time * multiplier)
     
     def _calculate_local_costs(self, violation: ViolationDetection) -> float:
-        """Calculate local processing costs"""
+        """
+        Calculate local processing costs"""
         base_cost = self.config.processing_fees.get('standard_case', 100.0)
         
         # Adjust based on complexity
+
         complexity_factors = {
             'simple': 1.0,
             'medium': 1.5,
@@ -274,6 +301,7 @@ class CountryProtectionNode:
         }
         
         # Determine complexity (simplified)
+
         complexity = 'medium'  # Default
         if hasattr(violation, 'confidence_score') and violation.confidence_score > 0.9:
             complexity = 'simple'
@@ -282,7 +310,8 @@ class CountryProtectionNode:
         return base_cost * factor
     
     async def get_node_status(self) -> Dict[str, Any]:
-        """Get comprehensive node status"""
+        """
+        Get comprehensive node status"""
         return {
             'node_id': f"{self.config.country_code.value}_protection_node",
             'country': self.config.country_name,
@@ -313,11 +342,14 @@ class GlobalCoordinationCenter:
         
         # Initialize country nodes
         self._initialize_country_nodes()
+
         
     def _initialize_country_nodes(self):
-        """Initialize country-specific protection nodes"""
+        """
+        Initialize country-specific protection nodes"""
         
         # Define country configurations
+
         country_configs = {
             CountryCode.US: CountryConfiguration(
                 country_code=CountryCode.US,
@@ -510,6 +542,7 @@ class GlobalCoordinationCenter:
         # Create country nodes
         for country_code, config in country_configs.items():
             self.country_nodes[country_code] = CountryProtectionNode(config)
+
             
         logger.info(f"Initialized {len(self.country_nodes)} country protection nodes")
     
@@ -519,30 +552,40 @@ class GlobalCoordinationCenter:
             global_violation_id = str(uuid.uuid4())
             
             # Analyze affected countries
+
             affected_countries = self._identify_affected_countries(violations)
             
             # Determine primary jurisdiction
+
             primary_jurisdiction = self._determine_primary_jurisdiction(violations, affected_countries)
             
             # Assess coordination requirements
+
             coordination_required = len(affected_countries) > 1
+
             cross_border_enforcement = self._requires_cross_border_enforcement(violations)
             
             # Identify applicable international treaties
+
             applicable_treaties = self._identify_applicable_treaties(affected_countries)
             
             # Calculate coordination complexity
+
             coordination_complexity = self._calculate_coordination_complexity(
                 affected_countries, violations, applicable_treaties
             )
             
             # Estimate resolution time
+
             estimated_resolution_time = self._estimate_global_resolution_time(
                 coordination_complexity, affected_countries
             )
             
             # Assign global priority
+
             global_priority = self._assign_global_priority(violations, coordination_complexity)
+
+
             
             global_violation = GlobalViolation(
                 global_violation_id=global_violation_id,
@@ -564,43 +607,56 @@ class GlobalCoordinationCenter:
             # Initiate coordination process
             if coordination_required:
                 await self._initiate_international_coordination(global_violation)
+
             
             return global_violation
             
         except Exception as e:
             logger.error(f"Global violation coordination failed: {e}")
+
             raise
     
     def _identify_affected_countries(self, violations: List[ViolationDetection]) -> List[CountryCode]:
         """Identify countries affected by violations"""
         affected_countries = set()
+
         
         for violation in violations:
             # Extract country from platform or URL (simplified)
+
+
             url = violation.detected_url
             
             # Simple country identification based on TLD or known platforms
             if '.com' in url or 'youtube' in url or 'facebook' in url:
                 affected_countries.add(CountryCode.US)
+
             elif '.de' in url or 'german' in url.lower():
                 affected_countries.add(CountryCode.DE)
+
             elif '.co.uk' in url or 'british' in url.lower():
                 affected_countries.add(CountryCode.GB)
+
             elif '.fr' in url or 'french' in url.lower():
                 affected_countries.add(CountryCode.FR)
+
             elif '.jp' in url or 'japanese' in url.lower():
                 affected_countries.add(CountryCode.JP)
+
             else:
                 # Default to US for unknown
                 affected_countries.add(CountryCode.US)
+
         
         return list(affected_countries)
     
     def _determine_primary_jurisdiction(self, violations: List[ViolationDetection], 
                                       affected_countries: List[CountryCode]) -> LegalJurisdiction:
-        """Determine primary jurisdiction for case coordination"""
+        """
+        Determine primary jurisdiction for case coordination"""
         
         # Priority order for jurisdictions
+
         jurisdiction_priority = {
             CountryCode.US: LegalJurisdiction.US_FEDERAL,
             CountryCode.DE: LegalJurisdiction.GERMAN_COURTS,
@@ -616,13 +672,16 @@ class GlobalCoordinationCenter:
         return LegalJurisdiction.INTERNATIONAL
     
     def _requires_cross_border_enforcement(self, violations: List[ViolationDetection]) -> bool:
-        """Determine if cross-border enforcement is required"""
+        """
+        Determine if cross-border enforcement is required"""
         # Simplified: require cross-border if multiple platforms/countries involved
+
         platforms = set(v.platform_id for v in violations)
         return len(platforms) > 2
     
     def _identify_applicable_treaties(self, affected_countries: List[CountryCode]) -> List[ComplianceFramework]:
-        """Identify applicable international treaties"""
+        """
+        Identify applicable international treaties"""
         treaties = []
         
         # Berne Convention applies to most countries
@@ -632,6 +691,7 @@ class GlobalCoordinationCenter:
         treaties.append(ComplianceFramework.WIPO_TREATIES)
         
         # EU countries get EU copyright
+
         eu_countries = [CountryCode.DE, CountryCode.FR, CountryCode.GB]  # Simplified
         if any(country in affected_countries for country in eu_countries):
             treaties.append(ComplianceFramework.EU_COPYRIGHT)
@@ -639,63 +699,82 @@ class GlobalCoordinationCenter:
         # US gets DMCA
         if CountryCode.US in affected_countries:
             treaties.append(ComplianceFramework.DMCA)
+
         
         return treaties
     
     def _calculate_coordination_complexity(self, affected_countries: List[CountryCode],
                                          violations: List[ViolationDetection],
                                          treaties: List[ComplianceFramework]) -> float:
-        """Calculate coordination complexity score"""
+        """
+        Calculate coordination complexity score"""
         base_complexity = 0.3
         
         # Country complexity
+
         country_complexity = len(affected_countries) * 0.2
         
         # Legal system complexity
+
         legal_systems = set()
         for country in affected_countries:
             if country in self.country_nodes:
                 legal_systems.add(self.country_nodes[country].config.legal_system)
+
         legal_complexity = len(legal_systems) * 0.15
         
         # Treaty complexity
+
         treaty_complexity = len(treaties) * 0.1
         
         # Violation complexity
+
         violation_complexity = len(violations) * 0.05
+
         
         total_complexity = min(1.0, base_complexity + country_complexity + 
                              legal_complexity + treaty_complexity + violation_complexity)
+
         
         return round(total_complexity, 3)
     
     def _estimate_global_resolution_time(self, coordination_complexity: float,
                                        affected_countries: List[CountryCode]) -> int:
-        """Estimate global resolution time in hours"""
+        """
+        Estimate global resolution time in hours"""
         
         # Base time for simple coordination
+
         base_time = 48  # hours
         
         # Complexity multiplier
+
         complexity_multiplier = 1.0 + (coordination_complexity * 2.0)
         
         # Country-specific delays
+
         max_response_time = 0
         for country in affected_countries:
             if country in self.country_nodes:
                 country_response = self.country_nodes[country].config.response_times.get('standard_violation', 48)
+
+
                 max_response_time = max(max_response_time, country_response)
         
         # Coordination overhead
+
         coordination_overhead = len(affected_countries) * 6  # 6 hours per additional country
+
         
         total_time = int(base_time * complexity_multiplier + max_response_time + coordination_overhead)
+
         
         return min(total_time, 720)  # Cap at 30 days
     
     def _assign_global_priority(self, violations: List[ViolationDetection], 
                               coordination_complexity: float) -> int:
-        """Assign global priority (1-10, 10 being highest)"""
+        """
+        Assign global priority (1-10, 10 being highest)"""
         
         base_priority = 5
         
@@ -720,17 +799,20 @@ class GlobalCoordinationCenter:
         return min(10, max(1, base_priority))
     
     async def _initiate_international_coordination(self, global_violation: GlobalViolation):
-        """Initiate international coordination process"""
+        """
+        Initiate international coordination process"""
         try:
             international_case_id = str(uuid.uuid4())
             
             # Create local cases in each affected country
+
             local_cases = []
             for country in global_violation.affected_countries:
                 if country in self.country_nodes:
                     node = self.country_nodes[country]
                     for violation in global_violation.local_violations:
                         local_result = await node.process_violation(violation)
+
                         if local_result.get('success'):
                             local_cases.append({
                                 'country': country.value,
@@ -739,9 +821,11 @@ class GlobalCoordinationCenter:
                             })
             
             # Select coordination framework
+
             treaty_framework = global_violation.international_treaties_applicable[0] if global_violation.international_treaties_applicable else ComplianceFramework.BERNE_CONVENTION
             
             # Create international case
+
             international_case = InternationalCase(
                 international_case_id=international_case_id,
                 local_cases=local_cases,
@@ -762,6 +846,7 @@ class GlobalCoordinationCenter:
             self.international_cases[international_case_id] = international_case
             
             logger.info(f"International coordination initiated for case {international_case_id}")
+
             
         except Exception as e:
             logger.error(f"International coordination initiation failed: {e}")
@@ -769,22 +854,29 @@ class GlobalCoordinationCenter:
     def _allocate_resources(self, global_violation: GlobalViolation) -> Dict[str, float]:
         """Allocate resources across countries"""
         total_countries = len(global_violation.affected_countries)
+
         base_allocation = 1.0 / total_countries
+
         
         resource_allocation = {}
         for country in global_violation.affected_countries:
             # Equal allocation with adjustments based on capabilities
+
             allocation = base_allocation
             
             if country in self.country_nodes:
                 node = self.country_nodes[country]
                 # Boost allocation for countries with higher success rates
+
                 avg_success_rate = sum(node.config.success_rates.values()) / len(node.config.success_rates)
+
                 allocation *= (0.8 + avg_success_rate * 0.4)
+
             
             resource_allocation[country.value] = round(allocation, 3)
         
         # Normalize to ensure total is 1.0
+
         total_allocation = sum(resource_allocation.values())
         for country in resource_allocation:
             resource_allocation[country] /= total_allocation
@@ -792,25 +884,32 @@ class GlobalCoordinationCenter:
         return resource_allocation
     
     def _calculate_international_success_probability(self, global_violation: GlobalViolation) -> float:
-        """Calculate probability of successful international coordination"""
+        """
+        Calculate probability of successful international coordination"""
         
         base_probability = 0.7
         
         # Adjust based on complexity
+
         complexity_factor = 1.0 - (global_violation.coordination_complexity * 0.3)
         
         # Adjust based on number of countries
+
         country_factor = max(0.5, 1.0 - (len(global_violation.affected_countries) - 1) * 0.1)
         
         # Adjust based on treaty coverage
+
         treaty_factor = 0.8 + (len(global_violation.international_treaties_applicable) * 0.05)
+
+
         
         final_probability = base_probability * complexity_factor * country_factor * treaty_factor
         
         return round(min(0.95, max(0.2, final_probability)), 3)
     
     def _estimate_international_costs(self, global_violation: GlobalViolation) -> Dict[str, float]:
-        """Estimate costs for international coordination"""
+        """
+        Estimate costs for international coordination"""
         costs = {
             'coordination_overhead': 500.0,
             'translation_services': 200.0 * len(global_violation.affected_countries),
@@ -823,14 +922,19 @@ class GlobalCoordinationCenter:
         for country in global_violation.affected_countries:
             if country in self.country_nodes:
                 node = self.country_nodes[country]
+
                 country_cost = node.config.processing_fees.get('complex_case', 500.0)
+
                 costs[f'{country.value}_processing'] = country_cost
         
         return costs
     
     def _create_coordination_timeline(self, global_violation: GlobalViolation) -> Dict[str, datetime]:
-        """Create coordination timeline"""
+        """
+        Create coordination timeline"""
         now = datetime.utcnow()
+
+
         
         timeline = {
             'coordination_start': now,
@@ -844,7 +948,8 @@ class GlobalCoordinationCenter:
         return timeline
     
     async def share_threat_intelligence(self, intelligence: GlobalThreatIntelligence):
-        """Share threat intelligence across the network"""
+        """
+        Share threat intelligence across the network"""
         try:
             # Store intelligence
             self.threat_intelligence[intelligence.intelligence_id] = intelligence
@@ -852,13 +957,16 @@ class GlobalCoordinationCenter:
             # Distribute to relevant country nodes
             for region in intelligence.affected_regions:
                 relevant_countries = self._get_countries_in_region(region)
+
                 
                 for country in relevant_countries:
                     if country in self.country_nodes:
                         # Notify country node of threat intelligence
                         await self._notify_country_node_of_threat(country, intelligence)
+
             
             logger.info(f"Threat intelligence {intelligence.intelligence_id} shared across network")
+
             
         except Exception as e:
             logger.error(f"Threat intelligence sharing failed: {e}")
@@ -876,7 +984,8 @@ class GlobalCoordinationCenter:
     
     async def _notify_country_node_of_threat(self, country: CountryCode, 
                                            intelligence: GlobalThreatIntelligence):
-        """Notify country node of threat intelligence"""
+        """
+        Notify country node of threat intelligence"""
         try:
             if country in self.country_nodes:
                 node = self.country_nodes[country]
@@ -889,23 +998,31 @@ class GlobalCoordinationCenter:
         """Get comprehensive network status"""
         
         # Collect node statuses
+
         node_statuses = {}
         for country, node in self.country_nodes.items():
             node_statuses[country.value] = await node.get_node_status()
         
         # Calculate network metrics
+
         total_active_cases = sum(
             status['active_cases'] for status in node_statuses.values()
         )
+
+
         
         total_violations_24h = sum(
             status['violations_processed_24h'] for status in node_statuses.values()
         )
+
+
         
         operational_nodes = sum(
-            1 for status in node_statuses.values() 
+            1 for status in node_statuses.values()
+ 
             if status['status'] == 'operational'
         )
+
         
         return {
             'network_id': 'global_protection_network',
@@ -931,7 +1048,8 @@ class GlobalProtectionNetwork:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize global protection network"""
+        """
+        Initialize global protection network"""
         self.config = config or {}
         
         # Core components
@@ -944,6 +1062,7 @@ class GlobalProtectionNetwork:
         
         # Initialize network
         self._initialize_network()
+
         
         logger.info("Global Protection Network initialized")
     
@@ -962,9 +1081,11 @@ class GlobalProtectionNetwork:
             }
             
             logger.info("Global protection network fully operational")
+
             
         except Exception as e:
             logger.error(f"Network initialization failed: {e}")
+
             self.network_status = "degraded"
     
     async def coordinate_global_enforcement(self, violations: List[ViolationDetection]) -> GlobalViolation:
@@ -973,6 +1094,7 @@ class GlobalProtectionNetwork:
             return await self.coordination_center.coordinate_global_violation(violations)
         except Exception as e:
             logger.error(f"Global enforcement coordination failed: {e}")
+
             raise
     
     async def share_threat_intelligence(self, threat_type: str, threat_level: str,
@@ -997,12 +1119,15 @@ class GlobalProtectionNetwork:
                 intelligence_timestamp=datetime.utcnow(),
                 expiration_date=datetime.utcnow() + timedelta(days=30)
             )
+
             
             await self.coordination_center.share_threat_intelligence(intelligence)
+
             return intelligence
             
         except Exception as e:
             logger.error(f"Threat intelligence sharing failed: {e}")
+
             raise
     
     async def get_global_coverage_report(self) -> Dict[str, Any]:
@@ -1011,6 +1136,7 @@ class GlobalProtectionNetwork:
             network_status = await self.coordination_center.get_network_status()
             
             # Calculate coverage metrics
+
             coverage_report = {
                 'geographic_coverage': {
                     'countries_covered': network_status['total_nodes'],
@@ -1026,6 +1152,7 @@ class GlobalProtectionNetwork:
                     )),
                     'treaties_implemented': len(set(
                         framework for node in self.coordination_center.country_nodes.values()
+
                         for framework in node.config.compliance_frameworks
                     )),
                     'compliance_frameworks_active': [
@@ -1046,6 +1173,7 @@ class GlobalProtectionNetwork:
             
         except Exception as e:
             logger.error(f"Coverage report generation failed: {e}")
+
             raise
     
     async def optimize_network_performance(self) -> Dict[str, Any]:
@@ -1058,38 +1186,46 @@ class GlobalProtectionNetwork:
             }
             
             # Analyze network performance
+
             network_status = await self.coordination_center.get_network_status()
             
             # Optimize coordination efficiency
             if self.performance_metrics['avg_coordination_time'] > 48:
                 optimization_result['optimizations_applied'].append('coordination_time_optimization')
+
                 self.performance_metrics['avg_coordination_time'] *= 0.9
                 optimization_result['performance_improvements']['coordination_time'] = -10
             
             # Optimize success rates
             if self.performance_metrics['cross_border_success_rate'] < 0.9:
                 optimization_result['recommendations'].append('enhance_cross_border_cooperation')
+
                 optimization_result['recommendations'].append('strengthen_treaty_implementation')
             
             # Check node health
+
             unhealthy_nodes = [
                 country.value for country, node in self.coordination_center.country_nodes.items()
+
                 if node.node_status != 'operational'
             ]
             
             if unhealthy_nodes:
                 optimization_result['recommendations'].append(f'repair_nodes: {unhealthy_nodes}')
+
             
             return optimization_result
             
         except Exception as e:
             logger.error(f"Network optimization failed: {e}")
+
             raise
     
     async def get_network_status(self) -> Dict[str, Any]:
         """Get comprehensive network status"""
         try:
             coordination_status = await self.coordination_center.get_network_status()
+
             
             return {
                 'network_id': 'global_protection_network',
@@ -1108,6 +1244,7 @@ class GlobalProtectionNetwork:
             
         except Exception as e:
             logger.error(f"Network status retrieval failed: {e}")
+
             raise
 
 

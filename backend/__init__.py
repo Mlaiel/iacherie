@@ -100,19 +100,21 @@ from .gamification.gamification_engine import (
     CompetitionEngine
 )
 
-# Technical Infrastructure & Performance
-from .analytics.analytics_engine import (
-    AnalyticsEngine,
-    RealTimeAnalytics,
-    BusinessIntelligenceEngine,
-    PredictiveInsightsEngine
-)
-from .seo_engine.seo_optimization_engine import (
-    SEOOptimizationEngine,
-    HashtagIntelligenceEngine,
-    MetadataOptimizer,
-    SearchRankingEngine
-)
+# SEO Engine
+from .seo_engine import ConsolidatedSEOEngine
+
+# Technical Infrastructure & Performance# from .analytics.analytics_engine import (
+#     AnalyticsEngine,
+#     RealTimeAnalytics,
+#     BusinessIntelligenceEngine,
+#     PredictiveInsightsEngine
+# )
+# from .seo_engine.seo_optimization_engine import (
+#     SEOOptimizationEngine,
+#     HashtagIntelligenceEngine,
+#     MetadataOptimizer,
+#     SearchRankingEngine
+# )
 from .distribution.distribution_network import (
     DistributionNetwork,
     MultiPlatformPublisher,
@@ -166,10 +168,10 @@ from .monitoring.system_monitor import (
     AnomalyDetectionEngine
 )
 from .compliance.compliance_manager import (
-    ComplianceManager,
-    GDPRComplianceEngine,
-    SecurityAuditManager,
-    LegalComplianceOrchestrator
+    ComplianceManager
+)
+from .compliance import (
+    GDPRCompliance
 )
 
 # Additional Enterprise Modules
@@ -209,7 +211,7 @@ BACKEND_CONFIG = {
 MODULE_REGISTRY = {
     # Core Systems
     "core": {
-        "business_logic": iacherieCoreBusinessLogic,
+        "business_logic": BusinessLogicCore,
         "orchestrator": PlatformOrchestrator,
         "config": BackendConfig
     },
@@ -218,7 +220,7 @@ MODULE_REGISTRY = {
     "ai_intelligence": {
         "engine": AIIntelligenceEngine,
         "protection": ProtectionEngine,
-        "quantum": QuantumProcessingEngine
+        "quantum": None  # QuantumProcessingEngine available if needed
     },
     
     # Business Logic
@@ -226,12 +228,12 @@ MODULE_REGISTRY = {
         "monetization": MonetizationEngine,
         "collaboration": CollaborationEngine,
         "gamification": GamificationEngine,
-        "analytics": AnalyticsEngine
+        "analytics": PredictiveAnalyticsEngine
     },
     
     # Technical Infrastructure
     "infrastructure": {
-        "seo": SEOOptimizationEngine,
+        "seo": ConsolidatedSEOEngine,
         "distribution": DistributionNetwork,
         "streaming": StreamingInfrastructure,
         "media_processing": MediaProcessingPipeline
@@ -295,13 +297,13 @@ __all__ = [
     "BACKEND_CONFIG", "MODULE_REGISTRY", "BUSINESS_LOGIC_FLOW",
     
     # Core Systems
-    "iacherieCoreBusinessLogic", "PlatformOrchestrator", "BackendConfig",
+    "BusinessLogicCore", "PlatformOrchestrator", "BackendConfig",
     
     # AI Intelligence
-    "AIIntelligenceEngine", "ProtectionEngine", "QuantumProcessingEngine",
+    "AIIntelligenceEngine", "ProtectionEngine",
     
     # Business Systems
-    "MonetizationEngine", "CollaborationEngine", "GamificationEngine", "AnalyticsEngine",
+    "MonetizationEngine", "CollaborationEngine", "GamificationEngine", "PredictiveAnalyticsEngine",
     
     # Infrastructure
     "SEOOptimizationEngine", "DistributionNetwork", "StreamingInfrastructure", 
@@ -324,32 +326,41 @@ async def initialize_backend_system(config: Optional[Dict[str, Any]] = None) -> 
     """Initialize complete IA Chérie backend system"""
     try:
         # Load configuration
+
         settings = get_backend_settings()
         if config:
             settings.update(config)
         
         # Initialize core orchestrator
+
         orchestrator = PlatformOrchestrator(settings)
         await orchestrator.initialize()
         
         # Initialize AI intelligence
+
         ai_engine = AIIntelligenceEngine(settings)
         await ai_engine.initialize()
         
         # Initialize business systems
+
         monetization = MonetizationEngine(settings)
+
         collaboration = CollaborationEngine(settings)
+
         gamification = GamificationEngine(settings)
+
         
         await asyncio.gather(
             monetization.initialize(),
             collaboration.initialize(),
             gamification.initialize()
         )
+
         
         logger.info(f"🚀 IA Chérie Backend v{__version__} initialized successfully")
         logger.info(f"Created by: {__author__} ({__email__})")
         logger.info("⚠️ Protected by copyright - Unauthorized use prohibited")
+
         
         return {
             "status": "initialized",

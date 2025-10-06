@@ -37,6 +37,7 @@ except ImportError:
         def virtual_memory():
             class Memory:
                 percent = 67.0
+
                 available = 8 * 1024**3  # 8GB
                 total = 16 * 1024**3     # 16GB
                 used = 8 * 1024**3       # 8GB
@@ -58,8 +59,11 @@ except ImportError:
                 bytes_sent = 1024**6     # 1MB
                 bytes_recv = 2 * 1024**6 # 2MB
                 packets_sent = 1000
+
                 packets_recv = 2000
+
                 errin = 0
+
                 errout = 0
             return Network()
         
@@ -69,8 +73,10 @@ except ImportError:
                 read_bytes = 1024**7     # 10MB
                 write_bytes = 1024**6    # 1MB
                 read_time = 100
+
                 write_time = 50
             return DiskIO()
+
     
     psutil = DummyPsutil()
 
@@ -78,7 +84,8 @@ logger = logging.getLogger(__name__)
 
 
 class HealthStatus(Enum):
-    """Health status levels"""
+    """
+        Health status levels"""
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -130,7 +137,8 @@ class ServiceHealthMetrics:
 
 @dataclass
 class SLATarget:
-    """SLA target definition"""
+    """
+        SLA target definition"""
     name: str
     metric: str
     target_value: float
@@ -140,7 +148,8 @@ class SLATarget:
 
 
 class CircuitBreaker:
-    """Circuit breaker implementation for service health"""
+    """
+        Circuit breaker implementation for service health"""
     
     def __init__(self, 
                  failure_threshold: int = 5,
@@ -157,7 +166,8 @@ class CircuitBreaker:
         self.last_success_time = None
     
     async def call(self, func: Callable, *args, **kwargs) -> Any:
-        """Execute function with circuit breaker protection"""
+        """
+        Execute function with circuit breaker protection"""
         
         if self.state == CircuitBreakerState.OPEN:
             # Check if timeout has passed
@@ -166,6 +176,7 @@ class CircuitBreaker:
                 self.success_count = 0
             else:
                 raise Exception(f"Circuit breaker is OPEN - service unavailable")
+
         
         try:
             result = await func(*args, **kwargs) if asyncio.iscoroutinefunction(func) else func(*args, **kwargs)
@@ -173,6 +184,7 @@ class CircuitBreaker:
             # Success - reset failure count
             self.failure_count = 0
             self.last_success_time = time.time()
+
             
             if self.state == CircuitBreakerState.HALF_OPEN:
                 self.success_count += 1
@@ -184,6 +196,7 @@ class CircuitBreaker:
         except Exception as e:
             self.failure_count += 1
             self.last_failure_time = time.time()
+
             
             if self.failure_count >= self.failure_threshold:
                 self.state = CircuitBreakerState.OPEN
@@ -209,7 +222,8 @@ class HealthCheckRegistry:
         self.circuit_breakers: Dict[str, CircuitBreaker] = {}
     
     def register(self, name: str, check_func: Callable, use_circuit_breaker: bool = True):
-        """Register a health check function"""
+        """
+        Register a health check function"""
         self.checks[name] = check_func
         if use_circuit_breaker:
             self.circuit_breakers[name] = CircuitBreaker()
@@ -224,8 +238,11 @@ class HealthCheckRegistry:
                 check_type=HealthCheckType.SERVICE,
                 message=f"Health check '{name}' not found"
             )
+
+
         
         start_time = time.time()
+
         
         try:
             check_func = self.checks[name]
@@ -233,8 +250,11 @@ class HealthCheckRegistry:
             # Use circuit breaker if available
             if name in self.circuit_breakers:
                 result = await self.circuit_breakers[name].call(check_func)
+
             else:
                 result = await check_func() if asyncio.iscoroutinefunction(check_func) else check_func()
+
+
             
             response_time = (time.time() - start_time) * 1000
             
@@ -249,6 +269,7 @@ class HealthCheckRegistry:
                     check_type=HealthCheckType.SERVICE,
                     response_time_ms=response_time
                 )
+
             elif isinstance(result, dict):
                 return HealthCheck(
                     name=name,
@@ -258,6 +279,7 @@ class HealthCheckRegistry:
                     details=result.get("details", {}),
                     response_time_ms=response_time
                 )
+
             else:
                 return HealthCheck(
                     name=name,
@@ -266,10 +288,12 @@ class HealthCheckRegistry:
                     message=str(result),
                     response_time_ms=response_time
                 )
+
                 
         except Exception as e:
             response_time = (time.time() - start_time) * 1000
             logger.error(f"Health check '{name}' failed: {e}")
+
             
             return HealthCheck(
                 name=name,
@@ -291,7 +315,8 @@ class SLAMonitor:
         self._initialize_default_targets()
     
     def _initialize_default_targets(self):
-        """Initialize default SLA targets"""
+        """
+        Initialize default SLA targets"""
         default_targets = [
             SLATarget(
                 name="system_availability",
@@ -342,8 +367,10 @@ class SLAMonitor:
         """Get SLA status for a specific target"""
         if target_name not in self.targets:
             return {"error": f"SLA target '{target_name}' not found"}
+
         
         target = self.targets[target_name]
+
         measurements = self.measurements[target_name]
         
         if not measurements:
@@ -356,7 +383,9 @@ class SLAMonitor:
             }
         
         # Calculate current value based on measurement window
+
         cutoff_time = datetime.now() - timedelta(hours=target.measurement_window_hours)
+
         recent_measurements = [
             m for m in measurements 
             if m["timestamp"] >= cutoff_time
@@ -372,7 +401,9 @@ class SLAMonitor:
             }
         
         # Calculate average value
+
         values = [m["value"] for m in recent_measurements]
+
         current_value = sum(values) / len(values)
         
         # Determine compliance status
@@ -386,6 +417,7 @@ class SLAMonitor:
                 status = "critical"
         else:
             # Lower is better (response time, error rate)
+
             if current_value <= target.target_value:
                 status = "compliant"
             elif current_value <= target.threshold_warning:
@@ -409,6 +441,7 @@ class SLAMonitor:
         """Get SLA status for all targets"""
         return {
             target_name: self.get_sla_status(target_name)
+
             for target_name in self.targets.keys()
         }
 
@@ -435,7 +468,8 @@ class UnifiedHealthManager:
         self._register_default_checks()
     
     def _register_default_checks(self):
-        """Register default health checks"""
+        """
+        Register default health checks"""
         # System health checks
         self.registry.register("system_cpu", self._check_system_cpu)
         self.registry.register("system_memory", self._check_system_memory)
@@ -457,13 +491,17 @@ class UnifiedHealthManager:
         self.monitoring_active = True
         self.check_interval = interval
         logger.info(f"Starting health monitoring with {interval}s interval")
+
         
         while self.monitoring_active:
             try:
                 await self.run_all_checks()
+
                 await asyncio.sleep(interval)
+
             except Exception as e:
                 logger.error(f"Error in health monitoring loop: {e}")
+
                 await asyncio.sleep(interval)
     
     async def stop_monitoring(self):
@@ -474,11 +512,14 @@ class UnifiedHealthManager:
     async def run_all_checks(self) -> Dict[str, HealthCheck]:
         """Run all registered health checks"""
         results = {}
+
         check_timestamp = datetime.now()
+
         
         for check_name in self.registry.checks.keys():
             try:
                 result = await self.registry.execute_check(check_name)
+
                 results[check_name] = result
                 self.last_check_results[check_name] = result
                 
@@ -487,6 +528,7 @@ class UnifiedHealthManager:
                 
                 # Record SLA measurements
                 self._record_sla_measurements(result)
+
                 
             except Exception as e:
                 logger.error(f"Failed to execute health check '{check_name}': {e}")
@@ -497,6 +539,7 @@ class UnifiedHealthManager:
             "results": results.copy(),
             "overall_status": self._calculate_overall_status(results)
         })
+
         
         logger.debug(f"Completed health checks: {len(results)} checks")
         return results
@@ -514,6 +557,8 @@ class UnifiedHealthManager:
                 avg_response_time_ms=0,
                 success_rate=0
             )
+
+
         
         metrics = self.service_metrics[service_name]
         metrics.last_check = check_result.timestamp
@@ -533,20 +578,24 @@ class UnifiedHealthManager:
                 (metrics.avg_response_time_ms * (metrics.checks_total - 1) + check_result.response_time_ms) / 
                 metrics.checks_total
             )
+
         
         metrics.status = check_result.status
     
     def _record_sla_measurements(self, check_result: HealthCheck):
-        """Record measurements for SLA monitoring"""
+        """
+        Record measurements for SLA monitoring"""
         # Record response time
         if check_result.response_time_ms > 0:
             self.sla_monitor.record_measurement("api_response_time", check_result.response_time_ms)
         
         # Record availability
+
         availability = 100.0 if check_result.status == HealthStatus.HEALTHY else 0.0
         self.sla_monitor.record_measurement("system_availability", availability)
         
         # Record error rate
+
         error_rate = 0.0 if check_result.status == HealthStatus.HEALTHY else 100.0
         self.sla_monitor.record_measurement("error_rate", error_rate)
     
@@ -574,9 +623,11 @@ class UnifiedHealthManager:
     # System health check implementations
     
     async def _check_system_cpu(self) -> HealthCheck:
-        """Check system CPU usage"""
+        """
+        Check system CPU usage"""
         try:
             cpu_percent = psutil.cpu_percent(interval=1)
+
             
             if cpu_percent <= 70:
                 status = HealthStatus.HEALTHY
@@ -607,6 +658,8 @@ class UnifiedHealthManager:
         """Check system memory usage"""
         try:
             memory = psutil.virtual_memory()
+
+
             memory_percent = memory.percent
             
             if memory_percent <= 75:
@@ -642,6 +695,8 @@ class UnifiedHealthManager:
         """Check system disk usage"""
         try:
             disk = psutil.disk_usage('/')
+
+
             disk_percent = (disk.used / disk.total) * 100
             
             if disk_percent <= 80:
@@ -713,6 +768,7 @@ class UnifiedHealthManager:
         try:
             # Simulate database check
             await asyncio.sleep(0.01)
+
             
             return HealthCheck(
                 name="database_postgresql",
@@ -738,6 +794,7 @@ class UnifiedHealthManager:
         try:
             # Simulate Redis check
             await asyncio.sleep(0.005)
+
             
             return HealthCheck(
                 name="database_redis",
@@ -763,6 +820,7 @@ class UnifiedHealthManager:
         try:
             # Simulate API health check
             await asyncio.sleep(0.02)
+
             
             return HealthCheck(
                 name="service_api",
@@ -788,6 +846,7 @@ class UnifiedHealthManager:
         try:
             # Simulate AI service check
             await asyncio.sleep(0.03)
+
             
             return HealthCheck(
                 name="service_ai",
@@ -813,6 +872,7 @@ class UnifiedHealthManager:
         try:
             # Simulate payment service check
             await asyncio.sleep(0.05)
+
             
             return HealthCheck(
                 name="external_payment",
@@ -837,6 +897,7 @@ class UnifiedHealthManager:
         try:
             # Simulate email service check
             await asyncio.sleep(0.02)
+
             
             return HealthCheck(
                 name="external_email",
@@ -867,8 +928,10 @@ class UnifiedHealthManager:
                 "checks": {},
                 "timestamp": datetime.now().isoformat()
             }
+
         
         overall_status = self._calculate_overall_status(self.last_check_results)
+
         
         return {
             "overall_status": overall_status.value,
@@ -890,25 +953,34 @@ class UnifiedHealthManager:
         return self.service_metrics.copy()
     
     def get_sla_status(self) -> Dict[str, Any]:
-        """Get SLA status for all targets"""
+        """
+        Get SLA status for all targets"""
         return self.sla_monitor.get_all_sla_status()
     
     def get_circuit_breaker_status(self) -> Dict[str, Any]:
-        """Get circuit breaker status for all services"""
+        """
+        Get circuit breaker status for all services"""
         return {
             name: breaker.get_status()
+
             for name, breaker in self.registry.circuit_breakers.items()
         }
     
     def get_health_summary(self) -> Dict[str, Any]:
-        """Get comprehensive health summary"""
+        """
+        Get comprehensive health summary"""
         health_status = self.get_health_status()
         
         # Calculate statistics
+
         total_checks = len(self.last_check_results)
+
         healthy_checks = sum(1 for check in self.last_check_results.values() if check.status == HealthStatus.HEALTHY)
+
         degraded_checks = sum(1 for check in self.last_check_results.values() if check.status == HealthStatus.DEGRADED)
+
         unhealthy_checks = sum(1 for check in self.last_check_results.values() if check.status == HealthStatus.UNHEALTHY)
+
         
         return {
             "overall_status": health_status["overall_status"],
@@ -941,25 +1013,30 @@ async def start_health_monitoring(interval: int = 30):
 
 
 async def stop_health_monitoring():
-    """Stop the global health monitoring"""
+    """
+        Stop the global health monitoring"""
     await health_manager.stop_monitoring()
 
 
 async def run_health_checks() -> Dict[str, HealthCheck]:
-    """Run all health checks once"""
+    """
+        Run all health checks once"""
     return await health_manager.run_all_checks()
 
 
 def get_health_status() -> Dict[str, Any]:
-    """Get current health status"""
+    """
+        Get current health status"""
     return health_manager.get_health_status()
 
 
 def get_health_summary() -> Dict[str, Any]:
-    """Get health summary"""
+    """
+        Get health summary"""
     return health_manager.get_health_summary()
 
 
 def get_sla_status() -> Dict[str, Any]:
-    """Get SLA status"""
+    """
+        Get SLA status"""
     return health_manager.get_sla_status()

@@ -21,7 +21,8 @@ import time
 logger = logging.getLogger(__name__)
 
 class APIProtocol(Enum):
-    """API protocols"""
+    """
+        API protocols"""
     REST = "rest"
     GRAPHQL = "graphql"
     WEBSOCKET = "websocket"
@@ -68,7 +69,8 @@ class APIRequest:
 
 @dataclass
 class APIResponse:
-    """API response structure"""
+    """
+        API response structure"""
     request_id: str
     status_code: int
     headers: Dict[str, str]
@@ -80,7 +82,8 @@ class APIResponse:
 
 @dataclass
 class RateLimitConfig:
-    """Rate limiting configuration"""
+    """
+        Rate limiting configuration"""
     limit_type: RateLimitType
     max_requests: int
     window_size: int  # seconds
@@ -89,7 +92,8 @@ class RateLimitConfig:
 
 @dataclass
 class APIMetrics:
-    """API performance metrics"""
+    """
+        API performance metrics"""
     total_requests: int
     successful_requests: int
     failed_requests: int
@@ -98,10 +102,12 @@ class APIMetrics:
     rate_limit_violations: int
 
 class MobileAPIOrchestrator:
-    """Advanced mobile API orchestrator"""
+    """
+        Advanced mobile API orchestrator"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize mobile API orchestrator"""
+        """
+        Initialize mobile API orchestrator"""
         self.config = config or {}
         self.api_gateway = APIGateway(self.config)
         self.request_router = RequestRouter(self.config)
@@ -128,6 +134,7 @@ class MobileAPIOrchestrator:
         
         # Initialize API endpoints
         self._initialize_api_endpoints()
+
         
         logger.info("🌐 Mobile API Orchestrator initialized with comprehensive API management capabilities")
     
@@ -137,17 +144,21 @@ class MobileAPIOrchestrator:
             start_time = time.time()
             
             # Check rate limiting
+
             rate_limit_result = await self.rate_limiter.check_rate_limit(
                 api_request.endpoint, api_request.mobile_request
             )
+
             
             if not rate_limit_result["allowed"]:
                 return self._create_rate_limit_response(api_request, rate_limit_result)
             
             # Route request
+
             routing_result = await self.request_router.route_request(api_request)
             
             # Process through API gateway
+
             gateway_response = await self.api_gateway.process_request(
                 api_request, routing_result["target_service"]
             )
@@ -159,6 +170,7 @@ class MobileAPIOrchestrator:
                 )
             
             # Calculate processing time
+
             processing_time = time.time() - start_time
             gateway_response.processing_time = processing_time
             
@@ -177,15 +189,19 @@ class MobileAPIOrchestrator:
             
         except Exception as e:
             logger.error(f"API request processing failed: {e}")
+
             return self._create_error_response(api_request, str(e))
     
     async def get_api_metrics(self) -> APIMetrics:
         """Get comprehensive API metrics"""
         total_requests = self.orchestrator_metrics["requests_processed"]
+
         mobile_requests = sum(
             1 for req_data in self.active_requests.values()
+
             if req_data["request"].mobile_request
         )
+
         
         return APIMetrics(
             total_requests=total_requests,
@@ -201,14 +217,17 @@ class MobileAPIOrchestrator:
         optimization_results = {}
         
         # Analyze endpoint performance
+
         performance_analysis = await self._analyze_endpoint_performance(endpoint)
         optimization_results["performance_analysis"] = performance_analysis
         
         # Apply mobile optimizations
+
         mobile_optimizations = await self.response_optimizer.apply_mobile_optimizations(endpoint)
         optimization_results["mobile_optimizations"] = mobile_optimizations
         
         # Optimize rate limiting
+
         rate_limit_optimization = await self.rate_limiter.optimize_for_mobile(endpoint)
         optimization_results["rate_limit_optimization"] = rate_limit_optimization
         
@@ -282,6 +301,7 @@ class MobileAPIOrchestrator:
     def _update_response_time_metric(self, processing_time: float):
         """Update average response time metric"""
         current_avg = self.orchestrator_metrics["average_response_time"]
+
         total_requests = self.orchestrator_metrics["requests_processed"]
         
         self.orchestrator_metrics["average_response_time"] = (
@@ -292,6 +312,7 @@ class MobileAPIOrchestrator:
         """Count failed requests"""
         return sum(
             1 for req_data in self.active_requests.values()
+
             if req_data["response"].status_code >= 400
         )
     
@@ -316,13 +337,16 @@ class APIGateway:
         self.config = config
         
     async def process_request(self, request: APIRequest, target_service: str) -> APIResponse:
-        """Process API request through gateway"""
+        """
+        Process API request through gateway"""
         # Simulate request processing
+
         response_body = json.dumps({
             "data": f"Response from {target_service}",
             "mobile_optimized": request.mobile_request,
             "timestamp": datetime.utcnow().isoformat()
         })
+
         
         return APIResponse(
             request_id=request.request_id,
@@ -351,7 +375,8 @@ class RequestRouter:
         self.config = config
         
     async def route_request(self, request: APIRequest) -> Dict[str, Any]:
-        """Route API request to appropriate service"""
+        """
+        Route API request to appropriate service"""
         # Determine target service based on endpoint
         if "/content" in request.endpoint:
             target_service = "content_service"
@@ -384,22 +409,26 @@ class ResponseOptimizer:
         self.config = config
         
     async def optimize_for_mobile(self, response: APIResponse, request: APIRequest) -> APIResponse:
-        """Optimize response for mobile consumption"""
+        """
+        Optimize response for mobile consumption"""
         if not request.mobile_request:
             return response
         
         # Apply mobile optimizations
+
         optimized_response = response
         
         # Compress response if large
         if len(response.body) > 1024:
             optimized_response.body = await self._compress_response(response.body)
+
             optimized_response.headers["Content-Encoding"] = "gzip"
         
         # Optimize format for mobile
         if response.format == ResponseFormat.JSON:
             optimized_response.format = ResponseFormat.MOBILE_OPTIMIZED
             optimized_response.body = await self._optimize_json_for_mobile(response.body)
+
         
         optimized_response.mobile_optimized = True
         
@@ -417,10 +446,11 @@ class ResponseOptimizer:
     async def _compress_response(self, response_body: str) -> str:
         """Compress response body"""
         # Simulate compression (would use gzip in real implementation)
-        return response_body  # Placeholder
+        return response_body
     
-    async def _optimize_json_for_mobile(self, json_body: str) -> str:
-        """Optimize JSON response for mobile"""
+    async def _optimize_json_response(self, json_body: str) -> str:
+        """
+        Optimize JSON response for mobile"""
         try:
             data = json.loads(json_body)
             
@@ -444,15 +474,19 @@ class RateLimiter:
         self.violation_count = 0
         
     async def check_rate_limit(self, endpoint: str, mobile_request: bool = False) -> Dict[str, Any]:
-        """Check if request is within rate limits"""
+        """
+        Check if request is within rate limits"""
         # Simplified rate limiting implementation
+
         current_time = time.time()
+
         
         if endpoint not in self.rate_limits:
             self.rate_limits[endpoint] = {
                 "requests": [],
                 "last_reset": current_time
             }
+
         
         endpoint_limits = self.rate_limits[endpoint]
         
@@ -463,10 +497,12 @@ class RateLimiter:
         ]
         
         # Check limit (100 requests per minute, 120 for mobile)
+
         max_requests = 120 if mobile_request else 100
         
         if len(endpoint_limits["requests"]) < max_requests:
             endpoint_limits["requests"].append(current_time)
+
             return {"allowed": True}
         else:
             self.violation_count += 1
@@ -481,7 +517,8 @@ class RateLimiter:
         return self.violation_count
     
     async def optimize_for_mobile(self, endpoint: str) -> Dict[str, Any]:
-        """Optimize rate limiting for mobile"""
+        """
+        Optimize rate limiting for mobile"""
         return {
             "mobile_boost_applied": True,
             "burst_allowance_enabled": True,

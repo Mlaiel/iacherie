@@ -30,7 +30,8 @@ import random
 
 
 def percentile(data, percent):
-    """Calculate percentile of a dataset"""
+    """
+        Calculate percentile of a dataset"""
     if not data:
         return 0
     data = sorted(data)
@@ -48,7 +49,8 @@ logger = logging.getLogger(__name__)
 
 
 class CompetitorTier(Enum):
-    """Competitor tier classifications"""
+    """
+        Competitor tier classifications"""
     DIRECT = "direct"           # Same niche, similar audience size
     INDIRECT = "indirect"       # Related niche, different approach
     ASPIRATIONAL = "aspirational"  # Higher tier, target to reach
@@ -113,7 +115,8 @@ class CompetitorProfile:
 
 @dataclass
 class CompetitiveAnalysisRequest:
-    """Competitive analysis request data structure"""
+    """
+        Competitive analysis request data structure"""
     analysis_id: str
     creator_id: str
     competitor_ids: List[str]
@@ -128,7 +131,8 @@ class CompetitiveAnalysisRequest:
 
 @dataclass
 class CompetitiveGap:
-    """Competitive gap data structure"""
+    """
+        Competitive gap data structure"""
     gap_id: str
     gap_type: str
     description: str
@@ -143,7 +147,8 @@ class CompetitiveGap:
 
 @dataclass
 class MarketOpportunity:
-    """Market opportunity data structure"""
+    """
+        Market opportunity data structure"""
     opportunity_id: str
     opportunity_type: str
     description: str
@@ -158,7 +163,8 @@ class MarketOpportunity:
 
 @dataclass
 class CompetitiveIntelligenceResult:
-    """Competitive intelligence analysis result"""
+    """
+        Competitive intelligence analysis result"""
     analysis_id: str
     creator_id: str
     analysis_date: datetime
@@ -265,74 +271,93 @@ class CompetitorIntelligence:
         """
         try:
             # Check cache first
+
             cache_key = self._generate_cache_key(request)
+
+
             cached_result = await self._get_cached_analysis(cache_key)
+
             if cached_result:
                 self.logger.debug(f"✅ Returning cached analysis: {request.analysis_id}")
+
                 return cached_result
             
             self.logger.info(f"🔍 Starting competitive analysis for {request.analysis_id}")
             
             # Load competitor profiles
+
             competitor_profiles = await self._load_competitor_profiles(request.competitor_ids)
             
             # Analyze market position
+
             market_position = await self._analyze_market_position(
                 request.creator_id, competitor_profiles, request.benchmark_metrics
             )
             
             # Rank competitors
+
             competitor_rankings = await self._rank_competitors(
                 competitor_profiles, request.benchmark_metrics
             )
             
             # Calculate performance benchmarks
+
             performance_benchmarks = await self._calculate_performance_benchmarks(
                 competitor_profiles, request.benchmark_metrics
             )
             
             # Analyze content gaps
+
             content_gap_analysis = await self._analyze_content_gaps(
                 request.creator_id, competitor_profiles, request.target_platforms
             )
             
             # Analyze engagement patterns
+
             engagement_insights = await self._analyze_engagement_patterns(competitor_profiles)
             
             # Analyze monetization strategies
+
             monetization_analysis = await self._analyze_monetization_strategies(competitor_profiles)
             
             # Calculate audience overlap
+
             audience_overlap = await self._calculate_audience_overlap(
                 request.creator_id, competitor_profiles
             )
             
             # Identify growth opportunities
+
             growth_opportunities = await self._identify_growth_opportunities(
                 request.creator_id, competitor_profiles, market_position
             )
             
             # Identify competitive gaps
+
             competitive_gaps = await self._identify_competitive_gaps(
                 request.creator_id, competitor_profiles, performance_benchmarks
             )
             
             # Generate strategic recommendations
+
             strategic_recommendations = await self._generate_strategic_recommendations(
                 market_position, competitive_gaps, growth_opportunities
             )
             
             # Assess threats
+
             threat_assessment = await self._assess_threats(
                 request.creator_id, competitor_profiles
             )
             
             # Analyze market trends
+
             market_trends = await self._analyze_market_trends(
                 competitor_profiles, request.time_period
             )
             
             # Create result
+
             result = CompetitiveIntelligenceResult(
                 analysis_id=request.analysis_id,
                 creator_id=request.creator_id,
@@ -360,17 +385,20 @@ class CompetitorIntelligence:
             
             # Cache result
             await self._cache_analysis(cache_key, result)
+
             
             self.logger.info(
                 f"✅ Competitive analysis completed for {request.analysis_id}: "
                 f"{len(competitor_profiles)} competitors analyzed, "
                 f"{len(growth_opportunities)} opportunities identified"
             )
+
             
             return result
             
         except Exception as e:
             self.logger.error(f"❌ Competitive analysis failed for {request.analysis_id}: {str(e)}")
+
             raise
     
     async def monitor_competitor_changes(self, 
@@ -391,12 +419,18 @@ class CompetitorIntelligence:
             
             for competitor_id in competitor_ids:
                 # Load current and historical profiles (simulated)
+
+
                 current_profile = await self._load_competitor_profile(competitor_id)
+
                 if not current_profile:
                     continue
                 
                 # Detect changes (simplified analysis)
+
+
                 changes = await self._detect_profile_changes(competitor_id, monitoring_period)
+
                 
                 if changes:
                     changes_detected[competitor_id] = {
@@ -407,11 +441,13 @@ class CompetitorIntelligence:
                     }
             
             # Rank by significance
+
             significant_changes = sorted(
                 changes_detected.items(),
                 key=lambda x: x[1]["change_score"],
                 reverse=True
             )
+
             
             return {
                 "monitoring_period": str(monitoring_period),
@@ -424,6 +460,7 @@ class CompetitorIntelligence:
             
         except Exception as e:
             self.logger.error(f"❌ Competitor monitoring failed: {str(e)}")
+
             raise
     
     async def benchmark_performance(self, 
@@ -445,12 +482,15 @@ class CompetitorIntelligence:
             benchmarks = {}
             
             # Industry benchmarks
+
             industry_benchmarks = self.niche_benchmarks.get(niche, {})
             
             # Compare against industry
+
             industry_comparison = {}
             for metric, value in creator_metrics.items():
                 industry_avg = industry_benchmarks.get(metric, 0)
+
                 if industry_avg > 0:
                     performance_ratio = value / industry_avg
                     industry_comparison[metric.value] = {
@@ -465,16 +505,22 @@ class CompetitorIntelligence:
             # Competitor comparison
             if competitor_ids:
                 competitor_profiles = await self._load_competitor_profiles(competitor_ids)
+
+
                 competitor_comparison = await self._compare_against_competitors(
                     creator_metrics, competitor_profiles
                 )
+
                 benchmarks["competitor_comparison"] = competitor_comparison
             
             # Calculate overall performance score
+
             overall_score = statistics.mean([
-                comp.get("performance_ratio", 1.0) 
+                comp.get("performance_ratio", 1.0)
+ 
                 for comp in industry_comparison.values()
             ])
+
             
             benchmarks["overall_performance"] = {
                 "score": round(overall_score, 2),
@@ -487,11 +533,13 @@ class CompetitorIntelligence:
             benchmarks["improvement_recommendations"] = await self._generate_improvement_recommendations(
                 industry_comparison, creator_metrics, niche
             )
+
             
             return benchmarks
             
         except Exception as e:
             self.logger.error(f"❌ Performance benchmarking failed: {str(e)}")
+
             raise
     
     async def _load_competitor_profiles(self, competitor_ids: List[str]) -> List[CompetitorProfile]:
@@ -500,15 +548,19 @@ class CompetitorIntelligence:
         
         for competitor_id in competitor_ids:
             profile = await self._load_competitor_profile(competitor_id)
+
             if profile:
                 profiles.append(profile)
+
         
         return profiles
     
     async def _load_competitor_profile(self, competitor_id: str) -> Optional[CompetitorProfile]:
-        """Load single competitor profile (simulated)"""
+        """
+        Load single competitor profile (simulated)"""
         # This would connect to actual data sources in production
         # For now, return simulated data
+
         
         simulated_profiles = {
             "competitor_001": CompetitorProfile(
@@ -569,18 +621,21 @@ class CompetitorIntelligence:
                                      metrics: List[MetricType]) -> Dict[str, Any]:
         """Analyze creator's market position relative to competitors"""
         # Simulated creator data
+
         creator_metrics = {
             MetricType.FOLLOWERS: 150000,
             MetricType.ENGAGEMENT_RATE: 0.055,
             MetricType.CONTENT_FREQUENCY: 4.0,
             MetricType.GROWTH_RATE: 0.15
         }
+
         
         position_analysis = {}
         
         for metric in metrics:
             if metric in creator_metrics:
                 creator_value = creator_metrics[metric]
+
                 competitor_values = [
                     comp.metrics.get(metric, 0) for comp in competitors
                     if metric in comp.metrics
@@ -589,6 +644,7 @@ class CompetitorIntelligence:
                 if competitor_values:
                     percentile = (sum(1 for v in competitor_values if v < creator_value) / 
                                 len(competitor_values) * 100)
+
                     
                     position_analysis[metric.value] = {
                         "creator_value": creator_value,
@@ -600,10 +656,12 @@ class CompetitorIntelligence:
                     }
         
         # Overall market position
+
         avg_percentile = statistics.mean([
             analysis["market_percentile"] 
             for analysis in position_analysis.values()
         ])
+
         
         position_analysis["overall_position"] = {
             "average_percentile": round(avg_percentile, 1),
@@ -622,12 +680,17 @@ class CompetitorIntelligence:
         
         for competitor in competitors:
             # Calculate composite score
+
             metric_scores = []
             for metric in metrics:
                 if metric in competitor.metrics:
                     # Normalize scores (simplified)
+
+
                     score = min(competitor.metrics[metric] / 1000000, 1.0)  # Cap at 1M for followers
                     metric_scores.append(score)
+
+
             
             composite_score = statistics.mean(metric_scores) if metric_scores else 0
             
@@ -638,6 +701,7 @@ class CompetitorIntelligence:
                 "composite_score": round(composite_score, 3),
                 "key_metrics": {
                     metric.value: competitor.metrics.get(metric, 0)
+
                     for metric in metrics if metric in competitor.metrics
                 },
                 "strengths": competitor.strengths[:3],  # Top 3
@@ -684,21 +748,28 @@ class CompetitorIntelligence:
                                   platforms: List[PlatformChannel]) -> Dict[str, Any]:
         """Analyze content strategy gaps"""
         # Simulated creator content strategy
+
         creator_strategy = {
             "content_types": ["tutorials", "reviews"],
             "posting_frequency": 4,
             "platform_presence": [PlatformChannel.YOUTUBE, PlatformChannel.INSTAGRAM]
         }
+
         
         gap_analysis = {}
         
         # Content type gaps
+
         competitor_content_types = set()
         for competitor in competitors:
             content_mix = competitor.content_strategy.get("content_mix", [])
+
             competitor_content_types.update(content_mix)
+
+
         
         creator_content_types = set(creator_strategy["content_types"])
+
         missing_content_types = competitor_content_types - creator_content_types
         
         gap_analysis["content_type_gaps"] = {
@@ -708,11 +779,15 @@ class CompetitorIntelligence:
         }
         
         # Platform presence gaps
+
         competitor_platforms = set()
         for competitor in competitors:
             competitor_platforms.update(competitor.platforms.keys())
+
+
         
         creator_platforms = set(creator_strategy["platform_presence"])
+
         missing_platforms = competitor_platforms - creator_platforms
         
         gap_analysis["platform_gaps"] = {
@@ -722,10 +797,13 @@ class CompetitorIntelligence:
         }
         
         # Frequency gaps
+
         competitor_frequencies = [
             comp.metrics.get(MetricType.CONTENT_FREQUENCY, 0) for comp in competitors
         ]
+
         avg_competitor_frequency = statistics.mean(competitor_frequencies) if competitor_frequencies else 0
+
         creator_frequency = creator_strategy["posting_frequency"]
         
         gap_analysis["frequency_analysis"] = {
@@ -743,6 +821,7 @@ class CompetitorIntelligence:
         engagement_analysis = {}
         
         # Engagement rate analysis
+
         engagement_rates = [
             comp.metrics.get(MetricType.ENGAGEMENT_RATE, 0) for comp in competitors
         ]
@@ -759,9 +838,11 @@ class CompetitorIntelligence:
             }
         
         # Content strategy patterns
+
         content_strategies = defaultdict(int)
         for competitor in competitors:
             strategy = competitor.content_strategy.get("posting_schedule", "unknown")
+
             content_strategies[strategy] += 1
         
         engagement_analysis["content_patterns"] = {
@@ -770,11 +851,15 @@ class CompetitorIntelligence:
         }
         
         # Platform performance
+
         platform_performance = defaultdict(list)
         for competitor in competitors:
             for platform, data in competitor.platforms.items():
                 engagement_rate = competitor.metrics.get(MetricType.ENGAGEMENT_RATE, 0)
+
                 platform_performance[platform.value].append(engagement_rate)
+
+
         
         platform_avg = {
             platform: statistics.mean(rates) if rates else 0
@@ -794,11 +879,15 @@ class CompetitorIntelligence:
         monetization_analysis = {}
         
         # Revenue stream analysis
+
         all_streams = []
         for competitor in competitors:
             all_streams.extend(competitor.monetization_streams)
+
+
         
         stream_popularity = Counter(all_streams)
+
         
         monetization_analysis["revenue_stream_analysis"] = {
             "popular_streams": dict(stream_popularity.most_common()),
@@ -810,9 +899,11 @@ class CompetitorIntelligence:
         }
         
         # Monetization sophistication
+
         sophistication_scores = []
         for competitor in competitors:
             # Simple scoring based on number and type of streams
+
             score = len(competitor.monetization_streams) * 0.3
             if "sponsorships" in competitor.monetization_streams:
                 score += 0.2
@@ -822,6 +913,7 @@ class CompetitorIntelligence:
                 score += 0.2
             
             sophistication_scores.append(score)
+
         
         monetization_analysis["sophistication_analysis"] = {
             "average_sophistication": round(statistics.mean(sophistication_scores), 2) if sophistication_scores else 0,
@@ -841,13 +933,16 @@ class CompetitorIntelligence:
                                         competitors: List[CompetitorProfile]) -> Dict[str, float]:
         """Calculate estimated audience overlap"""
         # Simulated audience overlap calculation
+
         overlap_scores = {}
         
         for competitor in competitors:
             # Simplified overlap calculation based on demographics similarity
             # In production, this would use actual audience data
+
             overlap_score = random.uniform(0.1, 0.4)  # 10-40% overlap
             overlap_scores[competitor.competitor_id] = round(overlap_score, 3)
+
         
         return overlap_scores
     
@@ -855,16 +950,20 @@ class CompetitorIntelligence:
                                            creator_id: str,
                                            competitors: List[CompetitorProfile],
                                            market_position: Dict[str, Any]) -> List[MarketOpportunity]:
-        """Identify growth opportunities based on competitive analysis"""
+        """
+        Identify growth opportunities based on competitive analysis"""
         opportunities = []
         
         # Platform expansion opportunities
+
         competitor_platforms = set()
         for competitor in competitors:
             competitor_platforms.update(competitor.platforms.keys())
         
         # Simulated creator platforms
+
         creator_platforms = {PlatformChannel.YOUTUBE, PlatformChannel.INSTAGRAM}
+
         missing_platforms = competitor_platforms - creator_platforms
         
         for platform in missing_platforms:
@@ -908,6 +1007,7 @@ class CompetitorIntelligence:
             resource_requirements=["Platform setup", "Marketing"],
             potential_revenue="$1,000-5,000/month"
         ))
+
         
         return opportunities[:5]  # Top 5 opportunities
     
@@ -919,6 +1019,7 @@ class CompetitorIntelligence:
         gaps = []
         
         # Simulated creator metrics
+
         creator_metrics = {
             MetricType.ENGAGEMENT_RATE: 0.055,
             MetricType.CONTENT_FREQUENCY: 4.0,
@@ -927,7 +1028,10 @@ class CompetitorIntelligence:
         
         for metric, creator_value in creator_metrics.items():
             benchmark = benchmarks.get(metric.value, {})
+
+
             market_average = benchmark.get("average", 0)
+
             
             if market_average > creator_value:
                 gap_size = (market_average - creator_value) / market_average
@@ -938,7 +1042,9 @@ class CompetitorIntelligence:
                     description=f"Below market average in {metric.value}",
                     impact_score=gap_size,
                     difficulty_score=0.6,  # Moderate difficulty
+
                     priority_score=gap_size * 0.8,  # High priority for large gaps
+
                     recommendations=[
                         f"Analyze top performers in {metric.value}",
                         f"Implement improvement strategies for {metric.value}",
@@ -954,6 +1060,7 @@ class CompetitorIntelligence:
         
         # Sort by priority score
         gaps.sort(key=lambda x: x.priority_score, reverse=True)
+
         
         return gaps[:5]  # Top 5 gaps
     
@@ -965,31 +1072,41 @@ class CompetitorIntelligence:
         recommendations = []
         
         # Position-based recommendations
+
         overall_position = market_position.get("overall_position", {})
+
         percentile = overall_position.get("average_percentile", 50)
+
         
         if percentile < 25:
             recommendations.append("Focus on fundamental improvements in content quality and consistency")
+
             recommendations.append("Study and model successful competitors in your tier")
         elif percentile < 50:
             recommendations.append("Identify 2-3 key areas for competitive improvement")
+
             recommendations.append("Consider strategic partnerships with higher-tier creators")
         elif percentile < 75:
             recommendations.append("Focus on differentiation and unique value proposition")
+
             recommendations.append("Explore premium monetization strategies")
         else:
             recommendations.append("Maintain market leadership through innovation")
+
             recommendations.append("Consider mentoring or collaborative opportunities")
         
         # Gap-based recommendations
+
         top_gaps = sorted(gaps, key=lambda x: x.priority_score, reverse=True)[:2]
         for gap in top_gaps:
             recommendations.extend(gap.recommendations[:1])  # Top recommendation per gap
         
         # Opportunity-based recommendations
+
         top_opportunities = sorted(opportunities, key=lambda x: x.success_probability, reverse=True)[:2]
         for opportunity in top_opportunities:
             recommendations.append(f"Pursue {opportunity.opportunity_type}: {opportunity.description}")
+
         
         return recommendations[:8]  # Limit to 8 recommendations
     
@@ -1000,12 +1117,14 @@ class CompetitorIntelligence:
         threat_assessment = {}
         
         # Identify direct threats
+
         direct_threats = [
             comp for comp in competitors 
             if comp.tier in [CompetitorTier.DIRECT, CompetitorTier.EMERGING]
         ]
         
         # Growth rate threats
+
         high_growth_competitors = [
             comp for comp in competitors
             if comp.metrics.get(MetricType.GROWTH_RATE, 0) > 0.2  # >20% growth
@@ -1047,6 +1166,7 @@ class CompetitorIntelligence:
         trends = {}
         
         # Platform trends
+
         platform_adoption = defaultdict(int)
         for competitor in competitors:
             for platform in competitor.platforms.keys():
@@ -1059,12 +1179,17 @@ class CompetitorIntelligence:
         }
         
         # Content trends
+
         content_types = []
         for competitor in competitors:
             content_mix = competitor.content_strategy.get("content_mix", [])
+
             content_types.extend(content_mix)
+
+
         
         content_popularity = Counter(content_types)
+
         
         trends["content_trends"] = {
             "trending_content": dict(content_popularity.most_common(5)),
@@ -1073,11 +1198,15 @@ class CompetitorIntelligence:
         }
         
         # Monetization trends
+
         monetization_streams = []
         for competitor in competitors:
             monetization_streams.extend(competitor.monetization_streams)
+
+
         
         monetization_popularity = Counter(monetization_streams)
+
         
         trends["monetization_trends"] = {
             "popular_streams": dict(monetization_popularity.most_common(5)),
@@ -1139,9 +1268,11 @@ class CompetitorIntelligence:
                                competitors: List[CompetitorProfile]) -> str:
         """Assess growth potential"""
         creator_growth = creator_metrics.get(MetricType.GROWTH_RATE, 0)
+
         competitor_growth_rates = [
             comp.metrics.get(MetricType.GROWTH_RATE, 0) for comp in competitors
         ]
+
         avg_competitor_growth = statistics.mean(competitor_growth_rates) if competitor_growth_rates else 0
         
         if creator_growth > avg_competitor_growth * 1.2:
@@ -1159,23 +1290,28 @@ class CompetitorIntelligence:
         
         for platform in platforms:
             # Count competitors on platform
+
             competitor_count = sum(
                 1 for comp in competitors if platform in comp.platforms
             )
             
             # Simple scoring (more competitors = higher opportunity)
+
             platform_scores[platform.value] = competitor_count
         
         # Sort by score
+
         sorted_platforms = sorted(platform_scores.items(), key=lambda x: x[1], reverse=True)
         return [platform for platform, score in sorted_platforms]
     
     async def _detect_profile_changes(self, 
                                     competitor_id: str,
                                     period: timedelta) -> List[Dict[str, Any]]:
-        """Detect changes in competitor profile (simulated)"""
+        """
+        Detect changes in competitor profile (simulated)"""
         # This would compare historical data in production
         # For now, return simulated changes
+
         changes = [
             {
                 "change_type": "follower_growth",
@@ -1196,11 +1332,14 @@ class CompetitorIntelligence:
     async def _summarize_changes(self, changes: Dict[str, Any]) -> Dict[str, Any]:
         """Summarize detected changes"""
         total_changes = sum(len(data["changes"]) for data in changes.values())
+
         high_impact_changes = sum(
             1 for data in changes.values()
+
             for change in data["changes"]
             if change.get("impact", 0) > 0.6
         )
+
         
         return {
             "total_changes": total_changes,
@@ -1251,7 +1390,8 @@ class CompetitorIntelligence:
             return 15.0
     
     def _assign_performance_grade(self, score: float) -> str:
-        """Assign performance grade"""
+        """
+        Assign performance grade"""
         if score >= 1.8:
             return "A+"
         elif score >= 1.5:
@@ -1275,16 +1415,20 @@ class CompetitorIntelligence:
         recommendations = []
         
         # Find lowest performing metrics
+
         underperforming_metrics = [
             metric for metric, data in industry_comparison.items()
+
             if data.get("performance_ratio", 1.0) < 0.8
         ]
         
         for metric in underperforming_metrics[:3]:  # Top 3 issues
             if metric == "engagement_rate":
                 recommendations.append("Focus on creating more engaging content and improving call-to-actions")
+
             elif metric == "content_frequency":
                 recommendations.append("Increase posting consistency and frequency")
+
             elif metric == "growth_rate":
                 recommendations.append("Implement growth strategies like collaborations and cross-platform promotion")
         
@@ -1295,6 +1439,7 @@ class CompetitorIntelligence:
             recommendations.append("Focus on high-quality visuals and storytelling")
         elif niche == "education":
             recommendations.append("Create comprehensive tutorials and course content")
+
         
         return recommendations[:5]
     
@@ -1314,13 +1459,17 @@ class CompetitorIntelligence:
         return None
     
     async def _cache_analysis(self, cache_key: str, result: CompetitiveIntelligenceResult) -> None:
-        """Cache analysis result"""
+        """
+        Cache analysis result"""
         self.analysis_cache[cache_key] = result
         
         # Clean up expired cache entries
+
         current_time = datetime.now()
+
         expired_keys = [
             key for key, cached_result in self.analysis_cache.items()
+
             if current_time >= cached_result.expires_at
         ]
         for key in expired_keys:

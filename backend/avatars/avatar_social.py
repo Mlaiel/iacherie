@@ -21,7 +21,8 @@ from dataclasses import dataclass, field
 
 
 class RelationshipType(Enum):
-    """Types de relations entre utilisateurs"""
+    """
+        Types de relations entre utilisateurs"""
     FOLLOWER = "follower"
     FOLLOWING = "following"
     FRIEND = "friend"
@@ -206,7 +207,8 @@ class AvatarSocialNetwork:
         self.feed_cache: Dict[str, List[str]] = {}
     
     async def create_user_profile(self, profile_data: Dict[str, Any]) -> UserProfile:
-        """Création d'un profil utilisateur"""
+        """
+        Création d'un profil utilisateur"""
         try:
             profile = UserProfile(
                 user_id=profile_data['user_id'],
@@ -227,13 +229,16 @@ class AvatarSocialNetwork:
                     'show_activity': True
                 })
             )
+
             
             self.users[profile.user_id] = profile
             self.logger.info(f"Profil créé: {profile.username} ({profile.user_id})")
+
             return profile
             
         except Exception as e:
             self.logger.error(f"Erreur création profil: {e}")
+
             raise
     
     async def follow_user(self, follower_id: str, following_id: str) -> Relationship:
@@ -248,10 +253,12 @@ class AvatarSocialNetwork:
             
             # Vérifier si la relation existe déjà
             existing_rel = await self._find_relationship(follower_id, following_id, RelationshipType.FOLLOWING)
+
             if existing_rel:
                 raise ValueError("Relation déjà existante")
             
             # Créer la relation de suivi
+
             follow_rel = Relationship(
                 relationship_id=str(uuid.uuid4()),
                 user_a_id=follower_id,
@@ -260,12 +267,15 @@ class AvatarSocialNetwork:
             )
             
             # Créer la relation inverse (follower)
+
+
             follower_rel = Relationship(
                 relationship_id=str(uuid.uuid4()),
                 user_a_id=following_id,
                 user_b_id=follower_id,
                 relationship_type=RelationshipType.FOLLOWER
             )
+
             
             self.relationships[follow_rel.relationship_id] = follow_rel
             self.relationships[follower_rel.relationship_id] = follower_rel
@@ -279,10 +289,12 @@ class AvatarSocialNetwork:
                 del self.feed_cache[follower_id]
             
             self.logger.info(f"{follower_id} suit maintenant {following_id}")
+
             return follow_rel
             
         except Exception as e:
             self.logger.error(f"Erreur suivi utilisateur: {e}")
+
             raise
     
     async def _find_relationship(self, user_a: str, user_b: str, 
@@ -295,11 +307,16 @@ class AvatarSocialNetwork:
         return None
     
     async def unfollow_user(self, follower_id: str, following_id: str) -> bool:
-        """Arrêter de suivre un utilisateur"""
+        """
+        Arrêter de suivre un utilisateur"""
         try:
             # Trouver les relations à supprimer
+
             follow_rel = await self._find_relationship(follower_id, following_id, RelationshipType.FOLLOWING)
+
+
             follower_rel = await self._find_relationship(following_id, follower_id, RelationshipType.FOLLOWER)
+
             
             if not follow_rel or not follower_rel:
                 return False
@@ -317,10 +334,12 @@ class AvatarSocialNetwork:
                 del self.feed_cache[follower_id]
             
             self.logger.info(f"{follower_id} ne suit plus {following_id}")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Erreur arrêt suivi: {e}")
+
             return False
     
     async def create_content(self, content_data: Dict[str, Any]) -> SocialContent:
@@ -339,20 +358,25 @@ class AvatarSocialNetwork:
                 visibility=content_data.get('visibility', 'public'),
                 collaboration_data=content_data.get('collaboration_data')
             )
+
             
             self.content[content.content_id] = content
             
             # Invalider les caches de feed des followers
+
             followers = await self.get_followers(content.author_id)
+
             for follower_id in followers:
                 if follower_id in self.feed_cache:
                     del self.feed_cache[follower_id]
             
             self.logger.info(f"Contenu créé: {content.title} par {content.author_id}")
+
             return content
             
         except Exception as e:
             self.logger.error(f"Erreur création contenu: {e}")
+
             raise
     
     async def get_followers(self, user_id: str) -> List[str]:
@@ -384,10 +408,13 @@ class AvatarSocialNetwork:
                 return [self.content[cid] for cid in cached_content_ids if cid in self.content]
             
             # Récupérer les utilisateurs suivis
+
             following = await self.get_following(user_id)
+
             following.append(user_id)  # Inclure son propre contenu
             
             # Récupérer le contenu pertinent
+
             relevant_content = []
             for content in self.content.values():
                 if (content.author_id in following and 
@@ -396,12 +423,17 @@ class AvatarSocialNetwork:
                     relevant_content.append(content)
             
             # Tri par pertinence (score basé sur interactions et date)
+
             def calculate_relevance_score(content: SocialContent) -> float:
                 time_factor = 1.0 / (1 + (datetime.now() - content.created_at).days)
+
+
                 interaction_factor = (content.likes_count * 1.0 + 
                                     content.comments_count * 2.0 + 
                                     content.shares_count * 3.0)
+
                 return time_factor * (1 + interaction_factor)
+
             
             relevant_content.sort(key=calculate_relevance_score, reverse=True)
             
@@ -412,6 +444,7 @@ class AvatarSocialNetwork:
             
         except Exception as e:
             self.logger.error(f"Erreur génération feed: {e}")
+
             return []
     
     async def like_content(self, user_id: str, content_id: str) -> bool:
@@ -419,27 +452,34 @@ class AvatarSocialNetwork:
         try:
             if content_id not in self.content:
                 return False
+
             
             content = self.content[content_id]
             content.likes_count += 1
             
             # Enregistrer l'interaction dans la relation
+
             author_rel = await self._find_relationship(user_id, content.author_id, RelationshipType.FOLLOWING)
+
             if author_rel:
                 author_rel.interaction_count += 1
                 author_rel.last_interaction = datetime.now()
+
             
             return True
             
         except Exception as e:
             self.logger.error(f"Erreur like contenu: {e}")
+
             return False
     
     async def search_users(self, query: str, filters: Optional[Dict[str, Any]] = None) -> List[UserProfile]:
         """Recherche d'utilisateurs"""
         try:
             results = []
+
             query_lower = query.lower()
+
             
             for user in self.users.values():
                 if not user.privacy_settings.get('profile_visible', True):
@@ -464,11 +504,14 @@ class AvatarSocialNetwork:
                     results.append(user)
             
             # Tri par pertinence (followers + reputation)
+
             results.sort(key=lambda u: u.total_followers + u.reputation_score * 100, reverse=True)
+
             return results
             
         except Exception as e:
             self.logger.error(f"Erreur recherche utilisateurs: {e}")
+
             return []
 
 
@@ -481,7 +524,8 @@ class CollaborationEngine:
         self.collaboration_history: Dict[str, List[str]] = {}
     
     async def create_collaboration(self, collaboration_data: Dict[str, Any]) -> Collaboration:
-        """Création d'une collaboration"""
+        """
+        Création d'une collaboration"""
         try:
             collaboration = Collaboration(
                 collaboration_id=str(uuid.uuid4()),
@@ -495,6 +539,7 @@ class CollaborationEngine:
                 budget=collaboration_data.get('budget'),
                 deadline=collaboration_data.get('deadline')
             )
+
             
             self.collaborations[collaboration.collaboration_id] = collaboration
             
@@ -502,12 +547,15 @@ class CollaborationEngine:
             if collaboration.creator_id not in self.collaboration_history:
                 self.collaboration_history[collaboration.creator_id] = []
             self.collaboration_history[collaboration.creator_id].append(collaboration.collaboration_id)
+
             
             self.logger.info(f"Collaboration créée: {collaboration.title}")
+
             return collaboration
             
         except Exception as e:
             self.logger.error(f"Erreur création collaboration: {e}")
+
             raise
     
     async def join_collaboration(self, collaboration_id: str, user_id: str) -> bool:
@@ -515,6 +563,7 @@ class CollaborationEngine:
         try:
             if collaboration_id not in self.collaborations:
                 return False
+
             
             collaboration = self.collaborations[collaboration_id]
             
@@ -530,12 +579,15 @@ class CollaborationEngine:
             if user_id not in self.collaboration_history:
                 self.collaboration_history[user_id] = []
             self.collaboration_history[user_id].append(collaboration_id)
+
             
             self.logger.info(f"Utilisateur {user_id} a rejoint la collaboration {collaboration.title}")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Erreur rejoindre collaboration: {e}")
+
             return False
     
     async def invite_to_collaboration(self, collaboration_id: str, inviter_id: str, 
@@ -544,6 +596,7 @@ class CollaborationEngine:
         try:
             if collaboration_id not in self.collaborations:
                 return False
+
             
             collaboration = self.collaborations[collaboration_id]
             
@@ -553,12 +606,15 @@ class CollaborationEngine:
             
             if invited_user_id not in collaboration.invited_users:
                 collaboration.invited_users.append(invited_user_id)
+
             
             self.logger.info(f"Invitation envoyée à {invited_user_id} pour {collaboration.title}")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Erreur invitation collaboration: {e}")
+
             return False
     
     async def get_collaboration_opportunities(self, user_id: str) -> List[Collaboration]:
@@ -573,11 +629,14 @@ class CollaborationEngine:
                     opportunities.append(collaboration)
             
             # Tri par date de création (plus récent en premier)
+
             opportunities.sort(key=lambda c: c.created_at, reverse=True)
+
             return opportunities
             
         except Exception as e:
             self.logger.error(f"Erreur récupération opportunités: {e}")
+
             return []
     
     async def complete_collaboration(self, collaboration_id: str, 
@@ -586,6 +645,7 @@ class CollaborationEngine:
         try:
             if collaboration_id not in self.collaborations:
                 return False
+
             
             collaboration = self.collaborations[collaboration_id]
             collaboration.status = "completed"
@@ -595,12 +655,15 @@ class CollaborationEngine:
                 'success_rating': completion_data.get('rating', 5.0),
                 'feedback': completion_data.get('feedback', '')
             })
+
             
             self.logger.info(f"Collaboration complétée: {collaboration.title}")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Erreur finalisation collaboration: {e}")
+
             return False
 
 
@@ -613,7 +676,8 @@ class AvatarMatching:
         self.match_history: Dict[str, List[Dict[str, Any]]] = {}
     
     async def create_matching_profile(self, profile_data: Dict[str, Any]) -> MatchingProfile:
-        """Création d'un profil de matching"""
+        """
+        Création d'un profil de matching"""
         try:
             profile = MatchingProfile(
                 user_id=profile_data['user_id'],
@@ -632,12 +696,14 @@ class AvatarMatching:
                 communication_style=profile_data.get('communication_style', 'balanced'),
                 preferred_project_size=profile_data.get('project_size', 'medium')
             )
+
             
             self.matching_profiles[profile.user_id] = profile
             return profile
             
         except Exception as e:
             self.logger.error(f"Erreur création profil matching: {e}")
+
             raise
     
     async def find_matches(self, user_id: str, match_type: str = "collaboration") -> List[Dict[str, Any]]:
@@ -645,15 +711,19 @@ class AvatarMatching:
         try:
             if user_id not in self.matching_profiles:
                 return []
+
             
             user_profile = self.matching_profiles[user_id]
+
             matches = []
             
             for other_user_id, other_profile in self.matching_profiles.items():
                 if other_user_id == user_id:
                     continue
+
                 
                 match_score = await self._calculate_match_score(user_profile, other_profile, match_type)
+
                 
                 if match_score > 0.3:  # Seuil de compatibilité
                     matches.append({
@@ -667,10 +737,12 @@ class AvatarMatching:
             
             # Tri par score de compatibilité
             matches.sort(key=lambda m: m['match_score'], reverse=True)
+
             return matches[:10]  # Top 10 matches
             
         except Exception as e:
             self.logger.error(f"Erreur recherche matches: {e}")
+
             return []
     
     async def _calculate_match_score(self, profile1: MatchingProfile, 
@@ -679,20 +751,24 @@ class AvatarMatching:
         score = 0.0
         
         # Intérêts de collaboration communs
+
         common_interests = set(profile1.collaboration_interests) & set(profile2.collaboration_interests)
         if common_interests:
             score += len(common_interests) * 0.2
         
         # Complémentarité des compétences
+
         skill_complement = abs(profile1.portfolio_strength - profile2.portfolio_strength)
         if 0.2 <= skill_complement <= 0.6:  # Complémentarité idéale
             score += 0.3
         
         # Préférences de style similaires
+
         style_similarity = await self._calculate_style_similarity(profile1, profile2)
         score += style_similarity * 0.2
         
         # Disponibilité compatible
+
         availability_match = await self._check_availability_compatibility(profile1, profile2)
         score += availability_match * 0.15
         
@@ -710,28 +786,35 @@ class AvatarMatching:
     
     async def _calculate_style_similarity(self, profile1: MatchingProfile, 
                                         profile2: MatchingProfile) -> float:
-        """Calcul de la similarité de style"""
+        """
+        Calcul de la similarité de style"""
         if not profile1.style_preferences or not profile2.style_preferences:
             return 0.0
+
         
         common_styles = set(profile1.style_preferences.keys()) & set(profile2.style_preferences.keys())
         if not common_styles:
             return 0.0
+
         
         similarity_sum = 0.0
         for style in common_styles:
             diff = abs(profile1.style_preferences[style] - profile2.style_preferences[style])
+
             similarity_sum += 1.0 - diff
         
         return similarity_sum / len(common_styles)
     
     async def _check_availability_compatibility(self, profile1: MatchingProfile, 
                                               profile2: MatchingProfile) -> float:
-        """Vérification de la compatibilité de disponibilité"""
+        """
+        Vérification de la compatibilité de disponibilité"""
         if not profile1.availability or not profile2.availability:
             return 0.5  # Score neutre si pas d'info
+
         
         common_slots = 0
+
         total_slots = 0
         
         for time_slot in set(profile1.availability.keys()) | set(profile2.availability.keys()):
@@ -744,23 +827,31 @@ class AvatarMatching:
     
     async def _get_match_reasons(self, profile1: MatchingProfile, 
                                profile2: MatchingProfile) -> List[str]:
-        """Raisons du match"""
+        """
+        Raisons du match"""
         reasons = []
+
         
         common_interests = set(profile1.collaboration_interests) & set(profile2.collaboration_interests)
         if common_interests:
             reasons.append(f"Intérêts communs: {', '.join([i.value for i in common_interests])}")
+
+
         
         skill_complement = abs(profile1.portfolio_strength - profile2.portfolio_strength)
         if 0.2 <= skill_complement <= 0.6:
             reasons.append("Compétences complémentaires")
+
+
         
         style_similarity = await self._calculate_style_similarity(profile1, profile2)
         if style_similarity > 0.7:
             reasons.append("Styles artistiques similaires")
+
         
         if profile1.communication_style == profile2.communication_style:
             reasons.append("Style de communication compatible")
+
         
         return reasons
     
@@ -778,7 +869,8 @@ class AvatarMatching:
 
 
 class CommunityManager:
-    """Gestion communautés avatars"""
+    """
+        Gestion communautés avatars"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -786,7 +878,8 @@ class CommunityManager:
         self._initialize_default_communities()
     
     def _initialize_default_communities(self):
-        """Initialisation des communautés par défaut"""
+        """
+        Initialisation des communautés par défaut"""
         default_communities = [
             {
                 'name': 'Fashion Avatars',
@@ -836,10 +929,12 @@ class CommunityManager:
                 rules=comm_data['rules'],
                 featured=comm_data.get('featured', False)
             )
+
             self.communities[community.community_id] = community
     
     async def create_community(self, community_data: Dict[str, Any]) -> Community:
-        """Création d'une communauté"""
+        """
+        Création d'une communauté"""
         try:
             community = Community(
                 community_id=str(uuid.uuid4()),
@@ -852,13 +947,16 @@ class CommunityManager:
                 tags=community_data.get('tags', []),
                 privacy=community_data.get('privacy', 'public')
             )
+
             
             self.communities[community.community_id] = community
             self.logger.info(f"Communauté créée: {community.name}")
+
             return community
             
         except Exception as e:
             self.logger.error(f"Erreur création communauté: {e}")
+
             raise
     
     async def join_community(self, community_id: str, user_id: str) -> bool:
@@ -866,6 +964,7 @@ class CommunityManager:
         try:
             if community_id not in self.communities:
                 return False
+
             
             community = self.communities[community_id]
             
@@ -873,13 +972,17 @@ class CommunityManager:
                 return False  # Déjà membre
             
             community.members.add(user_id)
+
             community.member_count = len(community.members)
+
             
             self.logger.info(f"Utilisateur {user_id} a rejoint {community.name}")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Erreur rejoindre communauté: {e}")
+
             return False
     
     async def get_community_recommendations(self, user_id: str, 
@@ -899,6 +1002,7 @@ class CommunityManager:
                 score = 0.0
                 
                 # Correspondance d'intérêts
+
                 community_keywords = [community.name.lower(), community.description.lower()] + community.tags
                 for interest in user_interests:
                     if any(interest.lower() in keyword for keyword in community_keywords):
@@ -916,10 +1020,12 @@ class CommunityManager:
             
             # Tri par score
             recommendations.sort(key=lambda x: x[1], reverse=True)
+
             return [comm for comm, score in recommendations[:5]]
             
         except Exception as e:
             self.logger.error(f"Erreur recommandations communautés: {e}")
+
             return []
 
 

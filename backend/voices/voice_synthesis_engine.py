@@ -36,7 +36,8 @@ import aiofiles
 logger = logging.getLogger(__name__)
 
 class VoiceEmotion(Enum):
-    """Voice emotion enumeration"""
+    """
+        Voice emotion enumeration"""
     NEUTRAL = "neutral"
     HAPPY = "happy"
     SAD = "sad"
@@ -150,7 +151,8 @@ class EmotionProfile:
 
 @dataclass
 class AgeProfile:
-    """Age profile configuration"""
+    """
+        Age profile configuration"""
     age_category: VoiceAge
     age_years: int
     vocal_characteristics: Dict[str, float]
@@ -161,7 +163,8 @@ class AgeProfile:
 
 @dataclass
 class CelebrityProfile:
-    """Celebrity profile configuration"""
+    """
+        Celebrity profile configuration"""
     celebrity_id: str
     name: str
     category: CelebrityVoice
@@ -173,7 +176,8 @@ class CelebrityProfile:
 
 @dataclass
 class SynthesisRequest:
-    """Voice synthesis request"""
+    """
+        Voice synthesis request"""
     text: str
     voice_config: Dict[str, Any]
     synthesis_model: VoiceSynthesisModel
@@ -183,7 +187,8 @@ class SynthesisRequest:
 
 @dataclass
 class SynthesisResult:
-    """Voice synthesis result"""
+    """
+        Voice synthesis result"""
     success: bool
     audio_data: Optional[np.ndarray]
     sample_rate: int
@@ -193,10 +198,12 @@ class SynthesisResult:
     errors: List[str]
 
 class EmotionVoiceGenerator:
-    """Advanced emotional voice generation system"""
+    """
+        Advanced emotional voice generation system"""
     
     def __init__(self):
-        """Initialize emotion voice generator"""
+        """
+        Initialize emotion voice generator"""
         self.emotion_models = {}
         self.emotion_profiles = {}
         self.prosody_controllers = {}
@@ -204,6 +211,7 @@ class EmotionVoiceGenerator:
         
         # Load emotion models
         asyncio.create_task(self._load_emotion_models())
+
         
         logger.info("😊 Emotion Voice Generator initialized")
     
@@ -218,12 +226,15 @@ class EmotionVoiceGenerator:
         """Generate voice with specific emotion"""
         try:
             # Get emotion profile
+
             emotion_profile = await self._get_emotion_profile(emotion, intensity, tone)
             
             # Load base voice model
+
             base_model = await self._load_base_voice_model(base_voice_id)
             
             # Apply emotional modifications
+
             modified_model = await self._apply_emotional_modifications(
                 base_model, emotion_profile
             )
@@ -234,14 +245,17 @@ class EmotionVoiceGenerator:
             )
             
             # Evaluate synthesis quality
+
             quality = await self._evaluate_emotional_synthesis_quality(
                 audio_data, sample_rate, emotion, intensity
             )
+
             
             return audio_data, quality
             
         except Exception as e:
             logger.error(f"Failed to generate emotional voice: {e}")
+
             raise
     
     async def generate_emotion_progression(
@@ -255,7 +269,9 @@ class EmotionVoiceGenerator:
             results = []
             
             # Split text for emotion sequence
+
             text_segments = await self._split_text_for_emotions(text, emotion_sequence)
+
             
             for i, ((emotion, intensity), text_segment) in enumerate(
                 zip(emotion_sequence, text_segments)
@@ -264,37 +280,46 @@ class EmotionVoiceGenerator:
                 audio_data, quality = await self.generate_emotional_voice(
                     text_segment, emotion, intensity, base_voice_id=base_voice_id
                 )
+
                 
                 results.append((audio_data, emotion, intensity))
+
             
             return results
             
         except Exception as e:
             logger.error(f"Failed to generate emotion progression: {e}")
+
             raise
     
     async def analyze_text_emotions(self, text: str) -> List[Tuple[str, VoiceEmotion, float]]:
         """Analyze text and suggest emotions for different segments"""
         try:
             # Segment text into emotional units
+
             segments = await self._segment_text_emotionally(text)
             
             # Analyze each segment
+
             emotion_suggestions = []
             for segment in segments:
                 emotion, confidence = await self._analyze_segment_emotion(segment)
+
                 emotion_suggestions.append((segment, emotion, confidence))
+
             
             return emotion_suggestions
             
         except Exception as e:
             logger.error(f"Failed to analyze text emotions: {e}")
+
             return [(text, VoiceEmotion.NEUTRAL, 0.5)]
     
     async def _load_emotion_models(self):
         """Load emotion-specific voice models"""
         try:
             # Load pre-trained emotion models
+
             emotion_model_paths = {
                 VoiceEmotion.HAPPY: "/models/emotions/happy_model.pt",
                 VoiceEmotion.SAD: "/models/emotions/sad_model.pt",
@@ -307,6 +332,7 @@ class EmotionVoiceGenerator:
             for emotion, model_path in emotion_model_paths.items():
                 if Path(model_path).exists():
                     # Load model (placeholder for actual model loading)
+
                     self.emotion_models[emotion] = {
                         "model_path": model_path,
                         "loaded": False,
@@ -314,6 +340,7 @@ class EmotionVoiceGenerator:
                     }
             
             logger.info(f"✅ Loaded {len(self.emotion_models)} emotion models")
+
             
         except Exception as e:
             logger.error(f"Failed to load emotion models: {e}")
@@ -327,6 +354,7 @@ class EmotionVoiceGenerator:
         """Get emotion profile configuration"""
         try:
             # Define emotion characteristics
+
             emotion_characteristics = {
                 VoiceEmotion.HAPPY: {
                     "pitch_modifier": 1.2,
@@ -361,9 +389,11 @@ class EmotionVoiceGenerator:
             }
             
             # Get base characteristics
+
             base_chars = emotion_characteristics.get(emotion, emotion_characteristics[VoiceEmotion.NEUTRAL])
             
             # Apply intensity scaling
+
             scaled_chars = {}
             for key, value in base_chars.items():
                 if key == "duration_modifier":
@@ -374,6 +404,7 @@ class EmotionVoiceGenerator:
                     scaled_chars[key] = 1.0 + (value - 1.0) * intensity
             
             # Create emotion profile
+
             profile = EmotionProfile(
                 emotion=emotion,
                 intensity=intensity,
@@ -384,11 +415,13 @@ class EmotionVoiceGenerator:
                 formant_modifiers=scaled_chars["formant_modifiers"],
                 prosody_patterns=await self._generate_prosody_patterns(emotion, intensity)
             )
+
             
             return profile
             
         except Exception as e:
             logger.error(f"Failed to get emotion profile: {e}")
+
             raise
     
     async def _generate_prosody_patterns(
@@ -399,6 +432,7 @@ class EmotionVoiceGenerator:
         """Generate prosody patterns for emotion"""
         try:
             # Define base prosody patterns
+
             base_patterns = {
                 VoiceEmotion.HAPPY: {
                     "intonation_range": 1.3,
@@ -421,6 +455,7 @@ class EmotionVoiceGenerator:
             }
             
             # Get base pattern
+
             pattern = base_patterns.get(emotion, base_patterns.get(VoiceEmotion.NEUTRAL, {
                 "intonation_range": 1.0,
                 "rhythm_variability": 1.0,
@@ -429,6 +464,7 @@ class EmotionVoiceGenerator:
             }))
             
             # Scale by intensity
+
             scaled_pattern = {}
             for key, value in pattern.items():
                 scaled_pattern[key] = 1.0 + (value - 1.0) * intensity
@@ -437,6 +473,7 @@ class EmotionVoiceGenerator:
             
         except Exception as e:
             logger.error(f"Failed to generate prosody patterns: {e}")
+
             return {}
     
     # Additional emotion generation methods would continue here...
@@ -445,7 +482,8 @@ class AgeVoiceGenerator:
     """Advanced age-specific voice generation system"""
     
     def __init__(self):
-        """Initialize age voice generator"""
+        """
+        Initialize age voice generator"""
         self.age_models = {}
         self.age_profiles = {}
         self.growth_patterns = {}
@@ -453,6 +491,7 @@ class AgeVoiceGenerator:
         
         # Load age models
         asyncio.create_task(self._load_age_models())
+
         
         logger.info("👶👵 Age Voice Generator initialized")
     
@@ -466,15 +505,19 @@ class AgeVoiceGenerator:
         """Generate voice for specific age"""
         try:
             # Determine age category
+
             age_category = await self._determine_age_category(target_age)
             
             # Get age profile
+
             age_profile = await self._get_age_profile(age_category, target_age, gender)
             
             # Load base voice model
+
             base_model = await self._load_base_voice_model(base_voice_id)
             
             # Apply age modifications
+
             aged_model = await self._apply_age_modifications(base_model, age_profile)
             
             # Generate age-specific speech
@@ -483,14 +526,17 @@ class AgeVoiceGenerator:
             )
             
             # Evaluate synthesis quality
+
             quality = await self._evaluate_age_synthesis_quality(
                 audio_data, sample_rate, target_age, gender
             )
+
             
             return audio_data, quality
             
         except Exception as e:
             logger.error(f"Failed to generate age voice: {e}")
+
             raise
     
     async def generate_age_progression(
@@ -507,6 +553,7 @@ class AgeVoiceGenerator:
             results = []
             
             # Calculate age steps
+
             age_steps = await self._calculate_age_progression(
                 start_age, end_age, steps
             )
@@ -516,13 +563,16 @@ class AgeVoiceGenerator:
                 audio_data, quality = await self.generate_age_voice(
                     text, base_voice_id, age_step, gender
                 )
+
                 
                 results.append((audio_data, age_step, quality))
+
             
             return results
             
         except Exception as e:
             logger.error(f"Failed to generate age progression: {e}")
+
             raise
     
     async def _determine_age_category(self, age: int) -> VoiceAge:
@@ -543,6 +593,7 @@ class AgeVoiceGenerator:
             
         except Exception as e:
             logger.error(f"Failed to determine age category: {e}")
+
             return VoiceAge.ADULT
     
     async def _get_age_profile(
@@ -554,6 +605,7 @@ class AgeVoiceGenerator:
         """Get age profile configuration"""
         try:
             # Define age-specific characteristics
+
             age_characteristics = {
                 VoiceAge.CHILD: {
                     "vocal_tract_length": 0.7,
@@ -594,6 +646,7 @@ class AgeVoiceGenerator:
             }
             
             # Get base characteristics
+
             base_chars = age_characteristics[age_category]
             
             # Adjust for gender
@@ -605,10 +658,13 @@ class AgeVoiceGenerator:
                 base_chars["formant_frequencies"] = [f * 0.9 for f in base_chars["formant_frequencies"]]
             
             # Calculate pitch range
+
             f0 = base_chars["fundamental_frequency"]
+
             pitch_range = (f0 * 0.7, f0 * 1.5)
             
             # Create age profile
+
             profile = AgeProfile(
                 age_category=age_category,
                 age_years=age_years,
@@ -618,11 +674,13 @@ class AgeVoiceGenerator:
                 voice_quality=base_chars["voice_quality"],
                 speech_patterns=await self._generate_age_speech_patterns(age_category)
             )
+
             
             return profile
             
         except Exception as e:
             logger.error(f"Failed to get age profile: {e}")
+
             raise
     
     # Additional age generation methods would continue here...
@@ -631,7 +689,8 @@ class CelebrityVoiceCloner:
     """Advanced celebrity voice cloning system"""
     
     def __init__(self):
-        """Initialize celebrity voice cloner"""
+        """
+        Initialize celebrity voice cloner"""
         self.celebrity_models = {}
         self.voice_encoders = {}
         self.cloning_algorithms = {}
@@ -639,6 +698,7 @@ class CelebrityVoiceCloner:
         
         # Load celebrity models
         asyncio.create_task(self._load_celebrity_models())
+
         
         logger.info("🌟 Celebrity Voice Cloner initialized")
     
@@ -656,10 +716,12 @@ class CelebrityVoiceCloner:
                 ethical_result = await self._perform_ethical_check(
                     celebrity_id, text
                 )
+
                 if not ethical_result["approved"]:
                     raise ValueError(f"Ethical check failed: {ethical_result['reason']}")
             
             # Get celebrity model
+
             celebrity_model = await self._get_celebrity_model(celebrity_id)
             
             # Generate cloned voice
@@ -668,22 +730,27 @@ class CelebrityVoiceCloner:
             )
             
             # Verify similarity
+
             similarity_score = await self._calculate_voice_similarity(
                 audio_data, celebrity_model
             )
+
             
             if similarity_score < similarity_threshold:
                 logger.warning(f"Low similarity score: {similarity_score}")
             
             # Evaluate quality
+
             quality = await self._evaluate_celebrity_synthesis_quality(
                 audio_data, sample_rate, celebrity_id, similarity_score
             )
+
             
             return audio_data, quality
             
         except Exception as e:
             logger.error(f"Failed to clone celebrity voice: {e}")
+
             raise
     
     async def train_custom_voice(
@@ -699,31 +766,39 @@ class CelebrityVoiceCloner:
             await self._validate_training_samples(audio_samples, sample_rates)
             
             # Preprocess training data
+
             processed_data = await self._preprocess_training_data(
                 audio_samples, sample_rates
             )
             
             # Extract speaker embeddings
+
             speaker_embeddings = await self._extract_speaker_embeddings(
                 processed_data
             )
             
             # Train voice model
+
             model_id = await self._train_voice_model(
                 processed_data, speaker_embeddings, speaker_name, training_config or {}
             )
             
             # Validate trained model
+
             validation_result = await self._validate_trained_model(model_id)
+
             
             if not validation_result["success"]:
                 raise ValueError(f"Model validation failed: {validation_result['errors']}")
+
             
             logger.info(f"Successfully trained custom voice model: {model_id}")
+
             return model_id
             
         except Exception as e:
             logger.error(f"Failed to train custom voice: {e}")
+
             raise
     
     # Additional celebrity cloning methods would continue here...
@@ -732,7 +807,8 @@ class VoiceSynthesisEngine:
     """Unified voice synthesis engine"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize voice synthesis engine"""
+        """
+        Initialize voice synthesis engine"""
         self.config = config or {}
         self.emotion_generator = EmotionVoiceGenerator()
         self.age_generator = AgeVoiceGenerator()
@@ -741,6 +817,7 @@ class VoiceSynthesisEngine:
         
         # Initialize synthesis models
         asyncio.create_task(self._initialize_synthesis_models())
+
         
         logger.info("🎤 Voice Synthesis Engine initialized")
     
@@ -754,6 +831,7 @@ class VoiceSynthesisEngine:
         """Synthesize voice with comprehensive configuration"""
         try:
             # Parse voice configuration
+
             synthesis_type = voice_config.get("type", "basic")
             
             # Route to appropriate synthesis method
@@ -761,25 +839,30 @@ class VoiceSynthesisEngine:
                 audio_data, quality_metrics = await self._synthesize_emotional_voice(
                     text, voice_config
                 )
+
             elif synthesis_type == "age_specific":
                 audio_data, quality_metrics = await self._synthesize_age_voice(
                     text, voice_config
                 )
+
             elif synthesis_type == "celebrity":
                 audio_data, quality_metrics = await self._synthesize_celebrity_voice(
                     text, voice_config
                 )
+
             else:
                 audio_data, quality_metrics = await self._synthesize_basic_voice(
                     text, voice_config
                 )
             
             # Apply post-processing
+
             processed_audio = await self._apply_post_processing(
                 audio_data, voice_config, quality
             )
             
             # Generate metadata
+
             metadata = {
                 "synthesis_type": synthesis_type,
                 "quality_metrics": quality_metrics.__dict__ if hasattr(quality_metrics, '__dict__') else {},
@@ -792,6 +875,7 @@ class VoiceSynthesisEngine:
             
         except Exception as e:
             logger.error(f"Failed to synthesize voice: {e}")
+
             raise
     
     async def _synthesize_emotional_voice(
@@ -802,16 +886,25 @@ class VoiceSynthesisEngine:
         """Synthesize emotional voice"""
         try:
             emotion = VoiceEmotion(voice_config.get("emotion", "neutral"))
+
+
             intensity = voice_config.get("intensity", 0.7)
+
+
             tone = EmotionalTone(voice_config.get("tone", "warm"))
+
+
             base_voice_id = voice_config.get("base_voice_id", "default")
+
             
             return await self.emotion_generator.generate_emotional_voice(
                 text, emotion, intensity, tone, base_voice_id
             )
+
             
         except Exception as e:
             logger.error(f"Failed to synthesize emotional voice: {e}")
+
             raise
     
     async def _synthesize_age_voice(
@@ -822,15 +915,22 @@ class VoiceSynthesisEngine:
         """Synthesize age-specific voice"""
         try:
             age = voice_config.get("age", 30)
+
+
             gender = VoiceGender(voice_config.get("gender", "neutral"))
+
+
             base_voice_id = voice_config.get("base_voice_id", "default")
+
             
             return await self.age_generator.generate_age_voice(
                 text, base_voice_id, age, gender
             )
+
             
         except Exception as e:
             logger.error(f"Failed to synthesize age voice: {e}")
+
             raise
     
     async def _synthesize_celebrity_voice(
@@ -841,18 +941,26 @@ class VoiceSynthesisEngine:
         """Synthesize celebrity voice"""
         try:
             celebrity_id = voice_config.get("celebrity_id")
+
             if not celebrity_id:
                 raise ValueError("Celebrity ID required for celebrity voice synthesis")
+
+
             
             similarity_threshold = voice_config.get("similarity_threshold", 0.85)
+
+
             ethical_check = voice_config.get("ethical_check", True)
+
             
             return await self.celebrity_cloner.clone_celebrity_voice(
                 text, celebrity_id, similarity_threshold, ethical_check
             )
+
             
         except Exception as e:
             logger.error(f"Failed to synthesize celebrity voice: {e}")
+
             raise
     
     # Additional synthesis methods would continue here...

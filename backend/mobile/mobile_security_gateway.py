@@ -26,7 +26,8 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 logger = logging.getLogger(__name__)
 
 class BiometricType(Enum):
-    """Biometric authentication types"""
+    """
+        Biometric authentication types"""
     FINGERPRINT = "fingerprint"
     FACE_ID = "face_id"
     VOICE_RECOGNITION = "voice_recognition"
@@ -74,7 +75,8 @@ class SecurityPolicy:
 
 @dataclass
 class BiometricAuthResult:
-    """Biometric authentication result"""
+    """
+        Biometric authentication result"""
     auth_id: str
     biometric_type: BiometricType
     success: bool
@@ -85,7 +87,8 @@ class BiometricAuthResult:
 
 @dataclass
 class ThreatDetectionResult:
-    """Threat detection result"""
+    """
+        Threat detection result"""
     detection_id: str
     threat_type: str
     threat_level: ThreatLevel
@@ -95,10 +98,12 @@ class ThreatDetectionResult:
     mobile_specific: bool = True
 
 class MobileSecurityGateway:
-    """Advanced mobile security gateway system"""
+    """
+        Advanced mobile security gateway system"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize mobile security gateway"""
+        """
+        Initialize mobile security gateway"""
         self.config = config or {}
         self.biometric_auth = BiometricAuth(self.config)
         self.encryption_manager = EncryptionManager(self.config)
@@ -126,6 +131,7 @@ class MobileSecurityGateway:
         
         # Initialize default security policies
         self._initialize_default_policies()
+
         
         logger.info("🔐 Mobile Security Gateway initialized with comprehensive security capabilities")
     
@@ -145,11 +151,13 @@ class MobileSecurityGateway:
             # Create security session if authentication successful
             if auth_result.success:
                 await self._create_security_session(user_id, device_id, auth_result)
+
             
             return auth_result
             
         except Exception as e:
             logger.error(f"Biometric authentication failed: {e}")
+
             raise
     
     async def encrypt_data(self, data: str, encryption_type: EncryptionType = EncryptionType.AES_256,
@@ -159,12 +167,14 @@ class MobileSecurityGateway:
             encryption_result = await self.encryption_manager.encrypt_data(
                 data, encryption_type, mobile_optimized
             )
+
             
             self.security_metrics["encryption_operations"] += 1
             return encryption_result
             
         except Exception as e:
             logger.error(f"Data encryption failed: {e}")
+
             raise
     
     async def decrypt_data(self, encrypted_data: str, encryption_key: str, 
@@ -174,11 +184,13 @@ class MobileSecurityGateway:
             decrypted_data = await self.encryption_manager.decrypt_data(
                 encrypted_data, encryption_key, encryption_type
             )
+
             
             return decrypted_data
             
         except Exception as e:
             logger.error(f"Data decryption failed: {e}")
+
             raise
     
     async def validate_security(self, device_id: str, user_id: str, 
@@ -188,11 +200,13 @@ class MobileSecurityGateway:
             validation_result = await self.security_validator.validate_security(
                 device_id, user_id, security_context
             )
+
             
             return validation_result
             
         except Exception as e:
             logger.error(f"Security validation failed: {e}")
+
             raise
     
     async def detect_threats(self, device_id: str, activity_data: Dict[str, Any]) -> List[ThreatDetectionResult]:
@@ -200,6 +214,7 @@ class MobileSecurityGateway:
         try:
             if not self.threat_monitoring_enabled:
                 return []
+
             
             threats = await self.threat_detection.analyze_activity(device_id, activity_data)
             
@@ -211,11 +226,13 @@ class MobileSecurityGateway:
                 if device_id not in self.threat_history:
                     self.threat_history[device_id] = []
                 self.threat_history[device_id].append(threat)
+
             
             return threats
             
         except Exception as e:
             logger.error(f"Threat detection failed: {e}")
+
             return []
     
     async def apply_security_policy(self, policy_id: str, device_id: str, user_id: str) -> bool:
@@ -223,16 +240,20 @@ class MobileSecurityGateway:
         try:
             if policy_id not in self.security_policies:
                 raise ValueError(f"Security policy {policy_id} not found")
+
+
             
             policy = self.security_policies[policy_id]
             
             # Apply policy settings
             await self._apply_policy_settings(policy, device_id, user_id)
+
             
             return True
             
         except Exception as e:
             logger.error(f"Failed to apply security policy: {e}")
+
             return False
     
     async def get_security_status(self, device_id: str, user_id: str) -> Dict[str, Any]:
@@ -308,18 +329,22 @@ class MobileSecurityGateway:
         # Apply policy-specific settings
         if policy.biometric_required:
             await self.biometric_auth.enable_biometric_requirement(device_id)
+
         
         if policy.encryption_required:
             await self.encryption_manager.enable_encryption_requirement(device_id)
+
         
         if policy.threat_monitoring:
             await self.threat_detection.enable_monitoring(device_id)
     
     async def _assess_threat_level(self, device_id: str) -> str:
-        """Assess current threat level for device"""
+        """
+        Assess current threat level for device"""
         recent_threats = self.threat_history.get(device_id, [])
         
         # Filter threats from last 24 hours
+
         recent_threats = [
             threat for threat in recent_threats
             if (datetime.utcnow() - threat.timestamp) < timedelta(hours=24)
@@ -329,12 +354,15 @@ class MobileSecurityGateway:
             return ThreatLevel.NONE.value
         
         # Determine highest threat level
+
         max_threat_level = max(threat.threat_level for threat in recent_threats)
         return max_threat_level.value
     
     async def _analyze_threats(self) -> Dict[str, Any]:
-        """Analyze threat patterns and statistics"""
+        """
+        Analyze threat patterns and statistics"""
         total_threats = sum(len(threats) for threats in self.threat_history.values())
+
         
         return {
             "total_threats_detected": total_threats,
@@ -354,11 +382,14 @@ class BiometricAuth:
         
     async def authenticate(self, device_id: str, biometric_type: BiometricType, 
                           biometric_data: str, user_id: str) -> BiometricAuthResult:
-        """Authenticate using biometric data"""
+        """
+        Authenticate using biometric data"""
         auth_id = f"auth_{uuid.uuid4().hex[:8]}"
         
         # Simulate biometric authentication
+
         success = await self._verify_biometric(user_id, biometric_type, biometric_data)
+
         confidence_score = 0.95 if success else 0.0
         
         return BiometricAuthResult(
@@ -396,13 +427,14 @@ class BiometricAuth:
     
     async def _verify_biometric(self, user_id: str, biometric_type: BiometricType, 
                                biometric_data: str) -> bool:
-        """Verify biometric data against stored template"""
+        """
+        Verify biometric data against stored template"""
         # Simulated biometric verification
-        return True  # Placeholder
+        return True
 
-
-class EncryptionManager:
-    """Encryption management system"""
+class MobileEncryptionManager:
+    """
+    Encryption management system"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -410,7 +442,8 @@ class EncryptionManager:
         
     async def encrypt_data(self, data: str, encryption_type: EncryptionType, 
                           mobile_optimized: bool = True) -> Dict[str, Any]:
-        """Encrypt data with specified encryption type"""
+        """
+        Encrypt data with specified encryption type"""
         if encryption_type == EncryptionType.AES_256:
             return await self._encrypt_aes_256(data, mobile_optimized)
         else:
@@ -448,13 +481,18 @@ class EncryptionManager:
         pass
     
     async def _encrypt_aes_256(self, data: str, mobile_optimized: bool) -> Dict[str, Any]:
-        """Encrypt data using AES-256"""
+        """
+        Encrypt data using AES-256"""
         # Generate key
+
         key = Fernet.generate_key()
+
         fernet = Fernet(key)
         
         # Encrypt data
+
         encrypted_data = fernet.encrypt(data.encode())
+
         
         return {
             "encrypted_data": base64.b64encode(encrypted_data).decode(),
@@ -466,25 +504,32 @@ class EncryptionManager:
     async def _decrypt_aes_256(self, encrypted_data: str, encryption_key: str) -> str:
         """Decrypt AES-256 encrypted data"""
         # Decode key and data
+
         key = base64.b64decode(encryption_key.encode())
+
         encrypted_bytes = base64.b64decode(encrypted_data.encode())
         
         # Decrypt
+
         fernet = Fernet(key)
+
         decrypted_data = fernet.decrypt(encrypted_bytes)
+
         
         return decrypted_data.decode()
 
 
 class SecurityValidator:
-    """Security validation system"""
+    """
+        Security validation system"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         
     async def validate_security(self, device_id: str, user_id: str, 
                               security_context: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate security for device and user"""
+        """
+        Validate security for device and user"""
         validation_results = {
             "device_security": await self._validate_device_security(device_id),
             "user_security": await self._validate_user_security(user_id),
@@ -493,12 +538,14 @@ class SecurityValidator:
         }
         
         # Calculate overall security score
+
         scores = [
             validation_results["device_security"]["score"],
             validation_results["user_security"]["score"],
             validation_results["session_security"]["score"]
         ]
         validation_results["overall_security_score"] = sum(scores) / len(scores)
+
         
         return validation_results
     
@@ -541,7 +588,8 @@ class ThreatDetection:
         self.threat_patterns = {}
         
     async def analyze_activity(self, device_id: str, activity_data: Dict[str, Any]) -> List[ThreatDetectionResult]:
-        """Analyze activity for threats"""
+        """
+        Analyze activity for threats"""
         threats = []
         
         # Check for suspicious patterns
@@ -554,6 +602,7 @@ class ThreatDetection:
                 recommended_actions=["Quarantine suspicious app", "Run full device scan"],
                 timestamp=datetime.utcnow()
             ))
+
         
         if await self._detect_phishing_attempt(activity_data):
             threats.append(ThreatDetectionResult(
@@ -564,6 +613,7 @@ class ThreatDetection:
                 recommended_actions=["Block suspicious URL", "Educate user"],
                 timestamp=datetime.utcnow()
             ))
+
         
         return threats
     
@@ -573,11 +623,13 @@ class ThreatDetection:
         pass
     
     async def _detect_malware_pattern(self, activity_data: Dict[str, Any]) -> bool:
-        """Detect malware patterns in activity"""
+        """
+        Detect malware patterns in activity"""
         # Simulated malware detection
-        return False  # Placeholder
+        return False
     
     async def _detect_phishing_attempt(self, activity_data: Dict[str, Any]) -> bool:
-        """Detect phishing attempts in activity"""
+        """
+        Detect phishing attempts in activity"""
         # Simulated phishing detection
         return False  # Placeholder

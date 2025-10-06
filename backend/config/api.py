@@ -17,7 +17,8 @@ import os
 # ===== API ENDPOINTS CONFIGURATION =====
 
 class HTTPMethod(str, Enum):
-    """HTTP methods"""
+    """
+        HTTP methods"""
     GET = "GET"
     POST = "POST"
     PUT = "PUT"
@@ -79,7 +80,8 @@ class MiddlewareConfig:
 # ===== MICROSERVICES CONFIGURATION =====
 
 class ServiceType(str, Enum):
-    """Microservice types"""
+    """
+        Microservice types"""
     AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization" 
     CONTENT_ANALYSIS = "content_analysis"
@@ -285,7 +287,8 @@ class APITestingConfig:
 
 @dataclass
 class APIMonitoringConfig:
-    """API monitoring configuration"""
+    """
+        API monitoring configuration"""
     enabled: bool = True
     metrics_collection: bool = True
     distributed_tracing: bool = True
@@ -300,7 +303,8 @@ class APIMonitoringConfig:
 # ===== ENVIRONMENT-SPECIFIC CONFIGURATIONS =====
 
 def get_development_api_config() -> Dict[str, Any]:
-    """Get development API configuration"""
+    """
+        Get development API configuration"""
     return {
         "endpoints": APIEndpointsConfig(
             enable_swagger=True,
@@ -313,6 +317,7 @@ def get_development_api_config() -> Dict[str, Any]:
         ),
         "microservices": MicroservicesConfig(
             enabled=False,  # Monolithic in dev
+
             service_discovery_enabled=False
         ),
         "jwt": JWTConfig(
@@ -337,6 +342,7 @@ def get_production_api_config() -> Dict[str, Any]:
     return {
         "endpoints": APIEndpointsConfig(
             enable_swagger=False,  # Disable in production
+
             enable_redoc=False,
             cors_enabled=True
         ),

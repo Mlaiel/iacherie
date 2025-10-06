@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class AuditTrailCore:
-    """Advanced Audit Trail Core System"""
+    """
+Advanced Audit Trail Core System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class AuditTrailCore:
 # Module exports
 __all__ = ["AuditTrailCore"]
 
-logger.info("📋 Audit Trail Core module loaded")
+logger.info("📋 Audit Trail Core module initialized")

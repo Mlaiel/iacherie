@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class PipelineSchedulerCore:
-    """Advanced PipelineSchedulerCore System"""
+    """
+Advanced PipelineSchedulerCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class PipelineSchedulerCore:
 # Module exports
 __all__ = ["PipelineSchedulerCore"]
 
-logger.info("📅 PipelineSchedulerCore module loaded")
+logger.info("📅 PipelineSchedulerCore module initialized")

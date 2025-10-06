@@ -32,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 
 class TextDirection(Enum):
-    """Text direction types"""
+    """
+        Text direction types"""
     LTR = "ltr"  # Left-to-Right
     RTL = "rtl"  # Right-to-Left
     AUTO = "auto"  # Automatic detection
@@ -85,7 +86,8 @@ class RTLProcessingOptions:
 
 @dataclass
 class BiDiSpan:
-    """Bidirectional text span with direction information"""
+    """
+        Bidirectional text span with direction information"""
     text: str
     direction: TextDirection
     start_pos: int
@@ -96,7 +98,8 @@ class BiDiSpan:
 
 @dataclass
 class RTLProcessingResult:
-    """Result of RTL text processing"""
+    """
+        Result of RTL text processing"""
     processed_text: str
     original_text: str
     detected_direction: TextDirection
@@ -114,7 +117,8 @@ class RTLProcessor:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize RTL processor"""
+        """
+        Initialize RTL processor"""
         self.config = config or {}
         self.rtl_languages = self._load_rtl_language_data()
         self.bidi_mappings = self._load_bidi_character_mappings()
@@ -144,24 +148,33 @@ class RTLProcessor:
         """
         try:
             start_time = datetime.now(timezone.utc)
+
             
             if not text or not text.strip():
                 raise ValueError("Empty text provided for RTL processing")
+
+
             
             options = options or RTLProcessingOptions()
             
             # Detect overall text direction
+
             detected_direction = await self._detect_text_direction(text)
             
             # Analyze BiDi character types
+
             bidi_analysis = await self._analyze_bidi_characters(text)
             
             # Apply BiDi algorithm if enabled
             if options.enable_bidi_algorithm:
                 bidi_spans = await self._apply_bidi_algorithm(text, bidi_analysis)
+
+
                 processed_text = await self._reorder_text(text, bidi_spans)
+
             else:
                 bidi_spans = [BiDiSpan(text, detected_direction, 0, len(text), 0)]
+
                 processed_text = text
             
             # Mirror characters if needed
@@ -169,17 +182,22 @@ class RTLProcessor:
                 processed_text = await self._mirror_characters(processed_text)
             
             # Generate CSS styles
+
             css_styles = {}
             if options.generate_css:
                 css_styles = await self._generate_css_styles(detected_direction, bidi_spans)
             
             # Calculate layout adjustments
+
             layout_adjustments = []
             if options.adjust_layout:
                 layout_adjustments = await self._calculate_layout_adjustments(detected_direction, bidi_spans)
             
             # Create result
+
             processing_time = (datetime.now(timezone.utc) - start_time).total_seconds()
+
+
             
             result = RTLProcessingResult(
                 processed_text=processed_text,
@@ -198,14 +216,17 @@ class RTLProcessor:
             
             # Update statistics
             await self._update_processing_stats(result)
+
             
             logger.info(f"RTL processing completed: {detected_direction.value} direction detected "
                        f"({len(bidi_spans)} BiDi spans)")
+
             
             return result
             
         except Exception as e:
             logger.error(f"RTL processing failed: {e}")
+
             return await self._create_fallback_result(text)
     
     async def detect_rtl_language(self, text: str) -> Optional[RTLLanguage]:
@@ -219,10 +240,12 @@ class RTLProcessor:
             RTLLanguage if detected, None otherwise
         """
         # Count RTL characters by script
+
         script_counts = {}
         
         for char in text:
             script = self._get_character_script(char)
+
             if script in ["Arabic", "Hebrew", "Syriac", "Thaana"]:
                 script_counts[script] = script_counts.get(script, 0) + 1
         
@@ -230,9 +253,11 @@ class RTLProcessor:
             return None
         
         # Determine most common RTL script
+
         dominant_script = max(script_counts.items(), key=lambda x: x[1])[0]
         
         # Map script to RTL language
+
         script_to_language = {
             "Arabic": RTLLanguage.ARABIC,
             "Hebrew": RTLLanguage.HEBREW,
@@ -257,30 +282,38 @@ class RTLProcessor:
         result = await self.process_text(text)
         
         # Determine language and direction attributes
+
         direction = result.detected_direction.value
+
         lang_attr = f'lang="{language_code}"' if language_code else ""
         
         # Build HTML with proper attributes
+
         html_parts = []
         html_parts.append(f'<div dir="{direction}" {lang_attr} class="rtl-content">')
         
         # Add CSS if needed
         if result.css_styles:
             html_parts.append('<style>')
+
             for selector, styles in result.css_styles.items():
                 html_parts.append(f'{selector} {{ {styles} }}')
+
             html_parts.append('</style>')
         
         # Add processed text with span elements for different directions
         if len(result.bidi_spans) > 1:
             for span in result.bidi_spans:
                 span_dir = span.direction.value
+
                 span_class = f"bidi-span-{span_dir}"
                 html_parts.append(f'<span dir="{span_dir}" class="{span_class}">{span.text}</span>')
         else:
             html_parts.append(result.processed_text)
+
         
         html_parts.append('</div>')
+
         
         return '\n'.join(html_parts)
     
@@ -376,22 +409,27 @@ class RTLProcessor:
         }
     
     async def _detect_text_direction(self, text: str) -> TextDirection:
-        """Detect overall text direction using Unicode BiDi algorithm"""
+        """
+        Detect overall text direction using Unicode BiDi algorithm"""
         rtl_count = 0
+
         ltr_count = 0
         
         for char in text:
             bidi_type = unicodedata.bidirectional(char)
+
             
             if bidi_type in ['R', 'AL']:  # Right-to-Left or Arabic Letter
                 rtl_count += 1
             elif bidi_type == 'L':  # Left-to-Right
                 ltr_count += 1
+
         
         total_directional = rtl_count + ltr_count
         
         if total_directional == 0:
             return TextDirection.LTR  # Default for neutral text
+
         
         rtl_ratio = rtl_count / total_directional
         
@@ -403,12 +441,16 @@ class RTLProcessor:
             return TextDirection.MIXED
     
     async def _analyze_bidi_characters(self, text: str) -> List[Dict[str, Any]]:
-        """Analyze bidirectional character types in text"""
+        """
+        Analyze bidirectional character types in text"""
         analysis = []
         
         for i, char in enumerate(text):
             bidi_type = unicodedata.bidirectional(char)
+
+
             script = self._get_character_script(char)
+
             
             analysis.append({
                 "char": char,
@@ -417,18 +459,23 @@ class RTLProcessor:
                 "script": script,
                 "code_point": ord(char)
             })
+
         
         return analysis
     
     async def _apply_bidi_algorithm(self, text: str, bidi_analysis: List[Dict[str, Any]]) -> List[BiDiSpan]:
         """Apply Unicode Bidirectional Algorithm to determine text spans"""
         spans = []
+
         current_direction = None
+
         current_start = 0
+
         current_text = ""
         
         for i, char_info in enumerate(bidi_analysis):
             bidi_type = char_info["bidi_type"]
+
             char = char_info["char"]
             
             # Determine character direction
@@ -452,8 +499,11 @@ class RTLProcessor:
                     ))
                 
                 # Start new span
+
                 current_direction = char_direction
+
                 current_start = i
+
                 current_text = char
             else:
                 current_text += char
@@ -467,6 +517,7 @@ class RTLProcessor:
                 end_pos=len(text),
                 bidi_level=0
             ))
+
         
         return spans
     
@@ -474,6 +525,7 @@ class RTLProcessor:
         """Reorder text based on BiDi spans for proper display"""
         # For complex BiDi reordering, this is a simplified implementation
         # In production, would use full Unicode BiDi algorithm
+
         
         reordered_parts = []
         
@@ -482,13 +534,16 @@ class RTLProcessor:
                 # Reverse character order for RTL spans (simplified)
                 # In reality, this needs more sophisticated handling
                 reordered_parts.append(span.text)
+
             else:
                 reordered_parts.append(span.text)
+
         
         return ''.join(reordered_parts)
     
     async def _mirror_characters(self, text: str) -> str:
-        """Mirror symmetric characters for RTL display"""
+        """
+        Mirror symmetric characters for RTL display"""
         mirrored_text = ""
         
         for char in text:
@@ -504,6 +559,7 @@ class RTLProcessor:
         styles = {}
         
         # Base container styles
+
         base_styles = f"direction: {direction.value}; "
         
         if direction == TextDirection.RTL:
@@ -541,6 +597,7 @@ class RTLProcessor:
                 "Adjust text alignment: right-aligned text",
                 "Adjust navigation: reverse menu order"
             ])
+
         
         if any(span.direction == TextDirection.RTL for span in spans):
             adjustments.extend([
@@ -548,6 +605,7 @@ class RTLProcessor:
                 "Adjust line height for proper RTL rendering",
                 "Consider RTL-specific typography rules"
             ])
+
         
         return adjustments
     
@@ -557,7 +615,9 @@ class RTLProcessor:
             return unicodedata.name(char).split()[0] if unicodedata.name(char, None) else "UNKNOWN"
         except (ValueError, TypeError):
             # Fallback to basic script detection
+
             code_point = ord(char)
+
             
             if 0x0600 <= code_point <= 0x06FF or 0x0750 <= code_point <= 0x077F:
                 return "Arabic"
@@ -574,6 +634,7 @@ class RTLProcessor:
         """Calculate percentage of RTL characters in text"""
         rtl_count = sum(1 for char_info in bidi_analysis 
                        if char_info["bidi_type"] in ['R', 'AL'])
+
         
         return rtl_count / len(bidi_analysis) if bidi_analysis else 0.0
     
@@ -587,7 +648,9 @@ class RTLProcessor:
             self.processing_stats["mixed_direction"] += 1
         
         # Update average processing time
+
         total = self.processing_stats["total_processed"]
+
         current_avg = self.processing_stats["average_processing_time"]
         self.processing_stats["average_processing_time"] = (
             (current_avg * (total - 1) + result.processing_time) / total

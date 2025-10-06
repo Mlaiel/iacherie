@@ -171,7 +171,8 @@ class MediaInfo:
 
 @dataclass
 class TranscodingProfile:
-    """Transcoding profile specification"""
+    """
+        Transcoding profile specification"""
     profile_id: str
     name: str
     description: str
@@ -202,7 +203,8 @@ class TranscodingProfile:
 
 @dataclass
 class TranscodingJob:
-    """Transcoding job specification"""
+    """
+        Transcoding job specification"""
     job_id: str
     input_file: str
     output_file: str
@@ -233,7 +235,8 @@ class TranscodingJob:
 
 
 class MediaAnalyzer:
-    """Media file analysis and information extraction"""
+    """
+        Media file analysis and information extraction"""
     
     def __init__(self):
         self.supported_video_formats = {'.mp4', '.avi', '.mov', '.mkv', '.wmv', '.flv', '.webm'}
@@ -246,13 +249,18 @@ class MediaAnalyzer:
         """Analyze media file and extract information"""
         try:
             file_path_obj = Path(file_path)
+
+
             file_size = file_path_obj.stat().st_size
+
             file_extension = file_path_obj.suffix.lower()
             
             # Determine media type
+
             media_type = self._determine_media_type(file_extension)
             
             # Initialize media info
+
             media_info = MediaInfo(
                 file_path=file_path,
                 media_type=media_type,
@@ -262,10 +270,13 @@ class MediaAnalyzer:
             # Extract format-specific information
             if media_type == MediaType.VIDEO and HAS_OPENCV:
                 await self._analyze_video(media_info)
+
             elif media_type == MediaType.AUDIO and HAS_LIBROSA:
                 await self._analyze_audio(media_info)
+
             elif media_type == MediaType.IMAGE and HAS_PIL:
                 await self._analyze_image(media_info)
+
             
             return media_info
             
@@ -275,6 +286,7 @@ class MediaAnalyzer:
             return MediaInfo(
                 file_path=file_path,
                 media_type=MediaType.VIDEO,  # Default fallback
+
                 file_size=Path(file_path).stat().st_size if Path(file_path).exists() else 0
             )
     
@@ -290,27 +302,38 @@ class MediaAnalyzer:
             return MediaType.DOCUMENT  # Default fallback
     
     async def _analyze_video(self, media_info: MediaInfo):
-        """Analyze video file properties"""
+        """
+        Analyze video file properties"""
         try:
             cap = cv2.VideoCapture(media_info.file_path)
+
             
             if cap.isOpened():
                 # Video properties
                 media_info.width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+
                 media_info.height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
                 media_info.fps = cap.get(cv2.CAP_PROP_FPS)
                 
                 # Calculate duration
+
                 frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
                 if media_info.fps > 0:
                     media_info.duration = frame_count / media_info.fps
                 
                 # Try to get codec information
+
                 fourcc = int(cap.get(cv2.CAP_PROP_FOURCC))
+
+
                 codec = "".join([chr((fourcc >> 8 * i) & 0xFF) for i in range(4)])
+
                 media_info.video_codec = codec
             
             cap.release()
+
             
         except Exception as e:
             logger.error(f"Video analysis failed: {e}")
@@ -320,15 +343,20 @@ class MediaAnalyzer:
         try:
             # Load audio file
             y, sr = librosa.load(media_info.file_path, sr=None)
+
             
             media_info.duration = librosa.get_duration(y=y, sr=sr)
+
             media_info.sample_rate = sr
             media_info.channels = 1 if len(y.shape) == 1 else y.shape[0]
             
             # Estimate bitrate (rough calculation)
+
             if media_info.duration > 0:
                 estimated_bitrate = (media_info.file_size * 8) / (media_info.duration * 1000)
+
                 media_info.audio_bitrate = int(estimated_bitrate)
+
             
         except Exception as e:
             logger.error(f"Audio analysis failed: {e}")
@@ -348,6 +376,7 @@ class MediaAnalyzer:
                 # Extract metadata
                 if hasattr(img, '_getexif') and img._getexif():
                     media_info.metadata = dict(img._getexif())
+
             
         except Exception as e:
             logger.error(f"Image analysis failed: {e}")
@@ -363,6 +392,7 @@ class TranscodingEngine:
         # Create directories
         Path(self.config.temp_directory).mkdir(parents=True, exist_ok=True)
         Path(self.config.output_directory).mkdir(parents=True, exist_ok=True)
+
         
         logger.info("⚙️ Transcoding Engine initialized")
     
@@ -379,17 +409,21 @@ class TranscodingEngine:
                 raise RuntimeError("Subprocess not available for video transcoding")
             
             # Build ffmpeg command
+
             cmd = await self._build_video_transcode_command(input_file, output_file, profile)
             
             # Execute transcoding
+
             success = await self._execute_transcode_command(
                 cmd, progress_callback, input_file
             )
+
             
             return success
             
         except Exception as e:
             logger.error(f"Video transcoding failed: {e}")
+
             return False
     
     async def transcode_audio(
@@ -403,11 +437,14 @@ class TranscodingEngine:
         try:
             if HAS_LIBROSA:
                 return await self._transcode_audio_librosa(input_file, output_file, profile)
+
             else:
                 return await self._transcode_audio_ffmpeg(input_file, output_file, profile)
+
             
         except Exception as e:
             logger.error(f"Audio transcoding failed: {e}")
+
             return False
     
     async def transcode_image(
@@ -421,22 +458,29 @@ class TranscodingEngine:
         try:
             if not HAS_PIL:
                 raise RuntimeError("PIL not available for image transcoding")
+
             
             with Image.open(input_file) as img:
                 # Apply transformations based on profile
+
                 processed_img = await self._process_image(img, profile)
                 
                 # Save with appropriate settings
+
                 save_kwargs = self._get_image_save_options(profile)
+
                 processed_img.save(output_file, **save_kwargs)
+
                 
                 if progress_callback:
                     await progress_callback(100.0)
+
             
             return True
             
         except Exception as e:
             logger.error(f"Image transcoding failed: {e}")
+
             return False
     
     async def _build_video_transcode_command(
@@ -452,10 +496,13 @@ class TranscodingEngine:
         if profile.video_codec:
             if profile.video_codec == VideoCodec.H264:
                 cmd.extend(['-c:v', 'libx264'])
+
             elif profile.video_codec == VideoCodec.H265:
                 cmd.extend(['-c:v', 'libx265'])
+
             elif profile.video_codec == VideoCodec.VP9:
                 cmd.extend(['-c:v', 'libvpx-vp9'])
+
             elif profile.video_codec == VideoCodec.AV1:
                 cmd.extend(['-c:v', 'libaom-av1'])
         
@@ -476,8 +523,10 @@ class TranscodingEngine:
         if profile.audio_codec:
             if profile.audio_codec == AudioCodec.AAC:
                 cmd.extend(['-c:a', 'aac'])
+
             elif profile.audio_codec == AudioCodec.MP3:
                 cmd.extend(['-c:a', 'libmp3lame'])
+
             elif profile.audio_codec == AudioCodec.OPUS:
                 cmd.extend(['-c:a', 'libopus'])
         
@@ -522,13 +571,18 @@ class TranscodingEngine:
         progress_callback: Optional[Callable],
         input_file: str
     ) -> bool:
-        """Execute transcoding command and track progress"""
+        """
+        Execute transcoding command and track progress"""
         try:
             # Get input duration for progress calculation
+
             input_info = await self.media_analyzer.analyze_media(input_file)
+
+
             duration = input_info.duration or 0
             
             # Start subprocess
+
             process = subprocess.Popen(
                 cmd,
                 stdout=subprocess.PIPE,
@@ -539,37 +593,52 @@ class TranscodingEngine:
             # Monitor progress
             while True:
                 output = process.stderr.readline()
+
                 if output == '' and process.poll() is not None:
                     break
                 
                 if output and progress_callback and duration > 0:
                     # Parse ffmpeg progress (simplified)
+
                     if 'time=' in output:
                         try:
                             time_str = output.split('time=')[1].split()[0]
+
                             time_parts = time_str.split(':')
+
                             if len(time_parts) == 3:
                                 hours, minutes, seconds = map(float, time_parts)
+
+
                                 current_time = hours * 3600 + minutes * 60 + seconds
+
                                 progress = min(100.0, (current_time / duration) * 100)
+
                                 await progress_callback(progress)
+
                         except:
                             pass
             
             # Check result
+
             return_code = process.poll()
+
             
             if return_code == 0:
                 if progress_callback:
                     await progress_callback(100.0)
+
                 return True
             else:
                 error_output = process.stderr.read()
+
                 logger.error(f"Transcoding failed with code {return_code}: {error_output}")
+
                 return False
             
         except Exception as e:
             logger.error(f"Command execution failed: {e}")
+
             return False
     
     async def _transcode_audio_librosa(
@@ -589,11 +658,13 @@ class TranscodingEngine:
             
             # Save audio
             sf.write(output_file, y, sr)
+
             
             return True
             
         except Exception as e:
             logger.error(f"Librosa audio transcoding failed: {e}")
+
             return False
     
     async def _transcode_audio_ffmpeg(
@@ -624,31 +695,39 @@ class TranscodingEngine:
         # Channels
         if profile.channels:
             cmd.extend(['-ac', str(profile.channels)])
+
         
         cmd.extend(['-y', output_file])
+
         
         return await self._execute_transcode_command(cmd, None, input_file)
     
     async def _process_image(self, img: Image.Image, profile: TranscodingProfile) -> Image.Image:
-        """Process image based on profile settings"""
+        """
+        Process image based on profile settings"""
         processed_img = img.copy()
         
         # Resize if resolution specified
         if profile.resolution:
             width, height = profile.resolution
+
             processed_img = processed_img.resize((width, height), Image.Resampling.LANCZOS)
         
         # Convert color space if needed
         if profile.output_format.lower() == 'jpeg' and processed_img.mode == 'RGBA':
             # Convert RGBA to RGB for JPEG
             background = Image.new('RGB', processed_img.size, (255, 255, 255))
+
             background.paste(processed_img, mask=processed_img.split()[-1])
+
+
             processed_img = background
         
         return processed_img
     
     def _get_image_save_options(self, profile: TranscodingProfile) -> Dict[str, Any]:
-        """Get image save options based on profile"""
+        """
+        Get image save options based on profile"""
         options = {}
         
         if profile.output_format.lower() in ['jpeg', 'jpg']:
@@ -680,10 +759,12 @@ class TranscodingEngine:
 
 
 class TranscodingPipeline:
-    """Main transcoding pipeline orchestrating batch processing"""
+    """
+        Main transcoding pipeline orchestrating batch processing"""
     
     def __init__(self, config: Optional[TranscodingConfig] = None):
-        """Initialize transcoding pipeline"""
+        """
+        Initialize transcoding pipeline"""
         self.config = config or TranscodingConfig()
         self.transcoding_engine = TranscodingEngine(self.config)
         
@@ -698,6 +779,7 @@ class TranscodingPipeline:
         
         # Predefined profiles
         self.profiles = self._initialize_profiles()
+
         
         logger.info("🔄 Media Transcoding Pipeline initialized")
     
@@ -723,6 +805,7 @@ class TranscodingPipeline:
             sample_rate=44100,
             channels=2
         )
+
         
         profiles['video_web'] = TranscodingProfile(
             profile_id='video_web',
@@ -755,6 +838,7 @@ class TranscodingPipeline:
             sample_rate=44100,
             channels=2
         )
+
         
         profiles['audio_podcast'] = TranscodingProfile(
             profile_id='audio_podcast',
@@ -779,6 +863,7 @@ class TranscodingPipeline:
             output_extension='.jpg',
             video_quality=Quality.HIGH
         )
+
         
         profiles['image_thumbnail'] = TranscodingProfile(
             profile_id='image_thumbnail',
@@ -790,6 +875,7 @@ class TranscodingPipeline:
             resolution=(320, 240),
             video_quality=Quality.MEDIUM
         )
+
         
         return profiles
     
@@ -801,13 +887,19 @@ class TranscodingPipeline:
         priority: int = 1,
         metadata: Optional[Dict[str, Any]] = None
     ) -> TranscodingJob:
-        """Create transcoding job"""
+        """
+        Create transcoding job"""
         try:
             profile = self.profiles.get(profile_id)
+
             if not profile:
                 raise ValueError(f"Profile {profile_id} not found")
+
+
             
             job_id = str(uuid.uuid4())
+
+
             
             job = TranscodingJob(
                 job_id=job_id,
@@ -820,13 +912,17 @@ class TranscodingPipeline:
             
             # Add to queue
             self.job_queue.append(job)
+
             self._sort_queue_by_priority()
+
             
             logger.info(f"Created transcoding job {job_id}")
+
             return job
             
         except Exception as e:
             logger.error(f"Failed to create transcoding job: {e}")
+
             raise
     
     async def submit_batch_jobs(
@@ -845,13 +941,17 @@ class TranscodingPipeline:
                     priority=request.get('priority', 1),
                     metadata=request.get('metadata')
                 )
+
                 jobs.append(job)
+
             
             logger.info(f"Submitted {len(jobs)} batch transcoding jobs")
+
             return jobs
             
         except Exception as e:
             logger.error(f"Failed to submit batch jobs: {e}")
+
             return []
     
     async def start_processing(self) -> bool:
@@ -859,18 +959,22 @@ class TranscodingPipeline:
         try:
             if self.is_processing:
                 logger.warning("Pipeline is already processing")
+
                 return True
             
             self.is_processing = True
             
             # Start processing loop
             asyncio.create_task(self._process_queue())
+
             
             logger.info("Transcoding pipeline started")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to start processing: {e}")
+
             return False
     
     async def stop_processing(self) -> bool:
@@ -881,12 +985,15 @@ class TranscodingPipeline:
             # Wait for active jobs to complete
             while self.active_jobs:
                 await asyncio.sleep(1)
+
             
             logger.info("Transcoding pipeline stopped")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to stop processing: {e}")
+
             return False
     
     async def get_job_status(self, job_id: str) -> Dict[str, Any]:
@@ -904,7 +1011,9 @@ class TranscodingPipeline:
                 }
             
             # Check completed jobs
+
             completed_job = next((j for j in self.completed_jobs if j.job_id == job_id), None)
+
             if completed_job:
                 return {
                     'job_id': job_id,
@@ -917,7 +1026,9 @@ class TranscodingPipeline:
                 }
             
             # Check queued jobs
+
             queued_job = next((j for j in self.job_queue if j.job_id == job_id), None)
+
             if queued_job:
                 position = self.job_queue.index(queued_job) + 1
                 return {
@@ -931,6 +1042,7 @@ class TranscodingPipeline:
             
         except Exception as e:
             logger.error(f"Failed to get job status: {e}")
+
             return {'error': str(e)}
     
     async def get_pipeline_status(self) -> Dict[str, Any]:
@@ -952,6 +1064,7 @@ class TranscodingPipeline:
             
         except Exception as e:
             logger.error(f"Failed to get pipeline status: {e}")
+
             return {'error': str(e)}
     
     def _sort_queue_by_priority(self):
@@ -959,22 +1072,26 @@ class TranscodingPipeline:
         self.job_queue.sort(key=lambda job: (-job.priority, job.created_at))
     
     async def _process_queue(self):
-        """Process job queue continuously"""
+        """
+        Process job queue continuously"""
         while self.is_processing:
             try:
                 # Check if we can process more jobs
                 if len(self.active_jobs) < self.config.max_concurrent_jobs and self.job_queue:
                     # Get next job
+
                     job = self.job_queue.pop(0)
                     
                     # Start processing job
                     self.active_jobs[job.job_id] = job
                     asyncio.create_task(self._process_job(job))
+
                 
                 await asyncio.sleep(1)  # Check every second
                 
             except Exception as e:
                 logger.error(f"Queue processing error: {e}")
+
                 await asyncio.sleep(5)  # Wait longer on error
     
     async def _process_job(self, job: TranscodingJob):
@@ -988,18 +1105,22 @@ class TranscodingPipeline:
                 job.progress_percent = progress
             
             # Get input file info
+
             input_info = await self.transcoding_engine.media_analyzer.analyze_media(job.input_file)
             
             # Perform transcoding based on media type
+
             success = False
             if job.profile.media_type == MediaType.VIDEO:
                 success = await self.transcoding_engine.transcode_video(
                     job.input_file, job.output_file, job.profile, progress_callback
                 )
+
             elif job.profile.media_type == MediaType.AUDIO:
                 success = await self.transcoding_engine.transcode_audio(
                     job.input_file, job.output_file, job.profile, progress_callback
                 )
+
             elif job.profile.media_type == MediaType.IMAGE:
                 success = await self.transcoding_engine.transcode_image(
                     job.input_file, job.output_file, job.profile, progress_callback
@@ -1007,7 +1128,9 @@ class TranscodingPipeline:
             
             # Update job status
             job.completed_at = datetime.now(timezone.utc)
+
             job.processing_time = (job.completed_at - job.started_at).total_seconds()
+
             
             if success and Path(job.output_file).exists():
                 job.status = TranscodingStatus.COMPLETED
@@ -1027,11 +1150,15 @@ class TranscodingPipeline:
         except Exception as e:
             job.status = TranscodingStatus.FAILED
             job.error_message = str(e)
+
             job.completed_at = datetime.now(timezone.utc)
+
             if job.started_at:
                 job.processing_time = (job.completed_at - job.started_at).total_seconds()
+
             
             logger.error(f"Job {job.job_id} failed: {e}")
+
         
         finally:
             # Move job from active to completed
@@ -1056,9 +1183,11 @@ class MediaTranscodingPipeline:
     """Main interface for the media transcoding pipeline system"""
     
     def __init__(self, config: Optional[TranscodingConfig] = None):
-        """Initialize media transcoding pipeline"""
+        """
+        Initialize media transcoding pipeline"""
         self.config = config or TranscodingConfig()
         self.pipeline = TranscodingPipeline(self.config)
+
         
         logger.info("🎞️ Media Transcoding Pipeline System initialized")
     
@@ -1067,7 +1196,8 @@ class MediaTranscodingPipeline:
         return await self.pipeline.start_processing()
     
     async def stop(self) -> bool:
-        """Stop the transcoding pipeline"""
+        """
+        Stop the transcoding pipeline"""
         return await self.pipeline.stop_processing()
     
     async def transcode_file(
@@ -1077,22 +1207,26 @@ class MediaTranscodingPipeline:
         profile_id: str,
         priority: int = 1
     ) -> TranscodingJob:
-        """Transcode single file"""
+        """
+        Transcode single file"""
         return await self.pipeline.create_job(input_file, output_file, profile_id, priority)
     
     async def transcode_batch(
         self, 
         job_requests: List[Dict[str, Any]]
     ) -> List[TranscodingJob]:
-        """Transcode multiple files"""
+        """
+        Transcode multiple files"""
         return await self.pipeline.submit_batch_jobs(job_requests)
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get pipeline status"""
+        """
+        Get pipeline status"""
         return await self.pipeline.get_pipeline_status()
     
     def get_available_profiles(self) -> Dict[str, TranscodingProfile]:
-        """Get available transcoding profiles"""
+        """
+        Get available transcoding profiles"""
         return self.pipeline.profiles
 
 

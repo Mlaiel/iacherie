@@ -1,4 +1,5 @@
-"""IA Chérie Core Workflow Engine - Enterprise Business Process Automation
+"""
+IA Chérie Core Workflow Engine - Enterprise Business Process Automation
 ====================================================================
 
 Advanced workflow engine providing business process orchestration, state machines,
@@ -22,7 +23,8 @@ from datetime import datetime, timedelta
 logger = logging.getLogger(__name__)
 
 class WorkflowStatus(str, Enum):
-    """Workflow execution status"""
+    """
+Workflow execution status"""
     DRAFT = "draft"
     ACTIVE = "active"
     RUNNING = "running"
@@ -32,7 +34,8 @@ class WorkflowStatus(str, Enum):
     CANCELLED = "cancelled"
 
 class TaskStatus(str, Enum):
-    """Task execution status"""
+    """
+Task execution status"""
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -41,7 +44,8 @@ class TaskStatus(str, Enum):
     RETRYING = "retrying"
 
 class TaskType(str, Enum):
-    """Task types"""
+    """
+Task types"""
     HUMAN = "human"
     AUTOMATED = "automated"
     API_CALL = "api_call"
@@ -53,7 +57,8 @@ class TaskType(str, Enum):
     NOTIFICATION = "notification"
 
 class TriggerType(str, Enum):
-    """Workflow trigger types"""
+    """
+Workflow trigger types"""
     MANUAL = "manual"
     SCHEDULED = "scheduled"
     EVENT = "event"
@@ -62,7 +67,8 @@ class TriggerType(str, Enum):
 
 @dataclass
 class TaskCondition:
-    """Task execution condition"""
+    """
+Task execution condition"""
     field: str
     operator: str  # eq, ne, gt, lt, gte, lte, contains
     value: Any
@@ -70,7 +76,8 @@ class TaskCondition:
 
 @dataclass
 class TaskConfig:
-    """Task configuration"""
+    """
+Task configuration"""
     task_id: str
     name: str
     task_type: TaskType
@@ -86,7 +93,8 @@ class TaskConfig:
 
 @dataclass
 class TaskInstance:
-    """Running task instance"""
+    """
+Running task instance"""
     instance_id: str
     task_id: str
     workflow_instance_id: str
@@ -102,7 +110,8 @@ class TaskInstance:
 
 @dataclass
 class WorkflowDefinition:
-    """Workflow definition"""
+    """
+Workflow definition"""
     workflow_id: str
     name: str
     description: str
@@ -117,7 +126,8 @@ class WorkflowDefinition:
 
 @dataclass
 class WorkflowInstance:
-    """Running workflow instance"""
+    """
+Running workflow instance"""
     instance_id: str
     workflow_id: str
     status: WorkflowStatus
@@ -134,7 +144,8 @@ class WorkflowInstance:
 
 @dataclass
 class WorkflowMetrics:
-    """Workflow engine metrics"""
+    """
+Workflow engine metrics"""
     workflows_created: int = 0
     instances_started: int = 0
     instances_completed: int = 0
@@ -148,10 +159,12 @@ class WorkflowMetrics:
     last_health_check: float = field(default_factory=time.time)
 
 class WorkflowEngineCore:
-    """Enterprise workflow engine core management system"""
+    """
+Enterprise workflow engine core management system"""
     
     def __init__(self, level: str = "enterprise"):
-        """Initialize workflow engine core"""
+        """
+Initialize workflow engine core"""
         self.level = level
         self.metrics = WorkflowMetrics()
         self.start_time = time.time()
@@ -178,7 +191,8 @@ class WorkflowEngineCore:
         logger.info("⚙️ Workflow Engine Core initialized")
     
     async def initialize(self) -> bool:
-        """Initialize workflow engine"""
+        """
+Initialize workflow engine"""
         try:
             logger.info("🚀 Initializing workflow engine core")
             
@@ -196,7 +210,8 @@ class WorkflowEngineCore:
             return False
     
     def _register_default_handlers(self):
-        """Register default task handlers"""
+        """
+Register default task handlers"""
         self.task_handlers = {
             "log": self._handle_log_task,
             "delay": self._handle_delay_task,
@@ -208,7 +223,8 @@ class WorkflowEngineCore:
         }
     
     async def _create_sample_workflows(self):
-        """Create sample workflow definitions"""
+        """
+Create sample workflow definitions"""
         # Content approval workflow
         content_approval_tasks = [
             TaskConfig(
@@ -316,7 +332,8 @@ class WorkflowEngineCore:
         self.metrics.workflows_created += 2
     
     async def start(self) -> bool:
-        """Start workflow engine"""
+        """
+Start workflow engine"""
         try:
             if not hasattr(self, '_initialized'):
                 await self.initialize()
@@ -343,7 +360,8 @@ class WorkflowEngineCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop workflow engine"""
+        """
+Stop workflow engine"""
         try:
             logger.info("🛑 Stopping workflow engine core")
             
@@ -368,7 +386,8 @@ class WorkflowEngineCore:
             return False
     
     async def create_workflow(self, definition: WorkflowDefinition) -> bool:
-        """Create new workflow definition"""
+        """
+Create new workflow definition"""
         try:
             self.workflow_definitions[definition.workflow_id] = definition
             self.metrics.workflows_created += 1
@@ -382,7 +401,8 @@ class WorkflowEngineCore:
     
     async def start_workflow(self, workflow_id: str, inputs: Optional[Dict[str, Any]] = None, 
                            started_by: str = "") -> Optional[str]:
-        """Start workflow instance"""
+        """
+Start workflow instance"""
         try:
             if workflow_id not in self.workflow_definitions:
                 logger.error(f"Workflow '{workflow_id}' not found")
@@ -446,7 +466,8 @@ class WorkflowEngineCore:
             return None
     
     def _resolve_task_inputs(self, task: TaskConfig, instance: WorkflowInstance) -> Dict[str, Any]:
-        """Resolve task inputs from workflow variables and context"""
+        """
+Resolve task inputs from workflow variables and context"""
         resolved_inputs = {}
         
         for input_name, input_value in task.inputs.items():
@@ -465,7 +486,8 @@ class WorkflowEngineCore:
         return resolved_inputs
     
     async def _execution_worker(self, worker_id: str):
-        """Background task execution worker"""
+        """
+Background task execution worker"""
         logger.info(f"Worker {worker_id} started")
         
         while not self._shutdown_event.is_set():
@@ -485,7 +507,8 @@ class WorkflowEngineCore:
         logger.info(f"Worker {worker_id} stopped")
     
     async def _execute_task(self, instance_id: str, task_id: str):
-        """Execute a single task"""
+        """
+Execute a single task"""
         try:
             instance = self.workflow_instances.get(instance_id)
             if not instance:
@@ -573,7 +596,8 @@ class WorkflowEngineCore:
             logger.error(f"Task execution error: {str(e)}")
     
     def _check_task_conditions(self, task_config: TaskConfig, instance: WorkflowInstance) -> bool:
-        """Check if task conditions are met"""
+        """
+Check if task conditions are met"""
         if not task_config.conditions:
             return True
         
@@ -604,7 +628,8 @@ class WorkflowEngineCore:
         return True
     
     async def _execute_automated_task(self, task_config: TaskConfig, task_instance: TaskInstance, instance: WorkflowInstance):
-        """Execute automated task"""
+        """
+Execute automated task"""
         # Simulate automated task execution
         await asyncio.sleep(0.1)
         
@@ -615,12 +640,14 @@ class WorkflowEngineCore:
         task_instance.status = TaskStatus.COMPLETED
     
     async def _execute_human_task(self, task_config: TaskConfig, task_instance: TaskInstance, instance: WorkflowInstance):
-        """Execute human task (mark as pending user action)"""
+        """
+Execute human task (mark as pending user action)"""
         task_instance.status = TaskStatus.PENDING
         # Human tasks require manual completion via API
     
     async def _execute_wait_task(self, task_config: TaskConfig, task_instance: TaskInstance, instance: WorkflowInstance):
-        """Execute wait task"""
+        """
+Execute wait task"""
         wait_seconds = task_config.inputs.get("seconds", 1)
         await asyncio.sleep(wait_seconds)
         
@@ -628,7 +655,8 @@ class WorkflowEngineCore:
         task_instance.status = TaskStatus.COMPLETED
     
     async def _complete_task(self, instance_id: str, task_id: str):
-        """Complete task and trigger next tasks"""
+        """
+Complete task and trigger next tasks"""
         instance = self.workflow_instances.get(instance_id)
         if not instance:
             return
@@ -676,7 +704,8 @@ class WorkflowEngineCore:
             await self._complete_workflow(instance_id)
     
     async def _complete_workflow(self, instance_id: str):
-        """Complete workflow instance"""
+        """
+Complete workflow instance"""
         instance = self.workflow_instances.get(instance_id)
         if not instance:
             return
@@ -710,7 +739,8 @@ class WorkflowEngineCore:
         logger.info(f"✅ Workflow instance '{instance_id}' {instance.status.value}")
     
     async def _handle_task_failure(self, instance_id: str, task_id: str):
-        """Handle task failure"""
+        """
+Handle task failure"""
         instance = self.workflow_instances.get(instance_id)
         if not instance:
             return
@@ -735,19 +765,22 @@ class WorkflowEngineCore:
     
     # Task handlers
     async def _handle_log_task(self, task_config: TaskConfig, task_instance: TaskInstance, instance: WorkflowInstance) -> Dict[str, Any]:
-        """Handle log task"""
+        """
+Handle log task"""
         message = task_instance.inputs.get("message", "Log message")
         logger.info(f"📝 Workflow log: {message}")
         return {"logged": True, "message": message}
     
     async def _handle_delay_task(self, task_config: TaskConfig, task_instance: TaskInstance, instance: WorkflowInstance) -> Dict[str, Any]:
-        """Handle delay task"""
+        """
+Handle delay task"""
         seconds = task_instance.inputs.get("seconds", 1)
         await asyncio.sleep(seconds)
         return {"delayed_seconds": seconds}
     
     async def _handle_http_request_task(self, task_config: TaskConfig, task_instance: TaskInstance, instance: WorkflowInstance) -> Dict[str, Any]:
-        """Handle HTTP request task"""
+        """
+Handle HTTP request task"""
         # Simulate HTTP request
         url = task_instance.inputs.get("url", "")
         method = task_instance.inputs.get("method", "GET")
@@ -762,7 +795,8 @@ class WorkflowEngineCore:
         }
     
     async def _handle_email_task(self, task_config: TaskConfig, task_instance: TaskInstance, instance: WorkflowInstance) -> Dict[str, Any]:
-        """Handle email task"""
+        """
+Handle email task"""
         to_email = task_instance.inputs.get("to", "")
         subject = task_instance.inputs.get("subject", "")
         
@@ -773,12 +807,14 @@ class WorkflowEngineCore:
         return {"email_sent": True, "to": to_email}
     
     async def _handle_condition_task(self, task_config: TaskConfig, task_instance: TaskInstance, instance: WorkflowInstance) -> Dict[str, Any]:
-        """Handle conditional task"""
+        """
+Handle conditional task"""
         condition = task_instance.inputs.get("condition", True)
         return {"condition_result": bool(condition)}
     
     async def _handle_transformation_task(self, task_config: TaskConfig, task_instance: TaskInstance, instance: WorkflowInstance) -> Dict[str, Any]:
-        """Handle data transformation task"""
+        """
+Handle data transformation task"""
         data = task_instance.inputs.get("data", {})
         transform_rule = task_instance.inputs.get("transform", "")
         
@@ -792,7 +828,8 @@ class WorkflowEngineCore:
         return {"transformed_data": transformed_data}
     
     async def _handle_notification_task(self, task_config: TaskConfig, task_instance: TaskInstance, instance: WorkflowInstance) -> Dict[str, Any]:
-        """Handle notification task"""
+        """
+Handle notification task"""
         message = task_instance.inputs.get("message", "")
         recipient = task_instance.inputs.get("recipient", "")
         
@@ -800,7 +837,8 @@ class WorkflowEngineCore:
         return {"notification_sent": True, "recipient": recipient}
     
     async def _scheduler_loop(self):
-        """Process scheduled tasks and retries"""
+        """
+Process scheduled tasks and retries"""
         while not self._shutdown_event.is_set():
             try:
                 current_time = time.time()
@@ -824,7 +862,8 @@ class WorkflowEngineCore:
                 await asyncio.sleep(60)
     
     async def _emit_event(self, event_type: str, data: Dict[str, Any]):
-        """Emit workflow event"""
+        """
+Emit workflow event"""
         event = {
             "event_type": event_type,
             "data": data,
@@ -843,7 +882,8 @@ class WorkflowEngineCore:
                 logger.error(f"Event listener error: {str(e)}")
     
     async def complete_human_task(self, instance_id: str, task_id: str, outputs: Dict[str, Any]) -> bool:
-        """Complete human task with outputs"""
+        """
+Complete human task with outputs"""
         try:
             instance = self.workflow_instances.get(instance_id)
             if not instance:
@@ -867,7 +907,8 @@ class WorkflowEngineCore:
             return False
     
     async def health_check(self) -> bool:
-        """Perform workflow engine health check"""
+        """
+Perform workflow engine health check"""
         try:
             # Check if execution workers are responsive
             if len(self.task_queue) > 1000:  # Too many pending tasks
@@ -893,7 +934,8 @@ class WorkflowEngineCore:
             return False
     
     async def _health_monitor_loop(self):
-        """Health monitoring loop"""
+        """
+Health monitoring loop"""
         while not self._shutdown_event.is_set():
             try:
                 await self.health_check()
@@ -907,7 +949,8 @@ class WorkflowEngineCore:
                 await asyncio.sleep(600)
     
     def get_workflow_status(self, instance_id: str) -> Optional[Dict[str, Any]]:
-        """Get workflow instance status"""
+        """
+Get workflow instance status"""
         instance = self.workflow_instances.get(instance_id)
         if not instance:
             return None
@@ -925,7 +968,8 @@ class WorkflowEngineCore:
         }
     
     def get_metrics_summary(self) -> Dict[str, Any]:
-        """Get workflow engine metrics"""
+        """
+Get workflow engine metrics"""
         return {
             "workflows_created": self.metrics.workflows_created,
             "instances_started": self.metrics.instances_started,

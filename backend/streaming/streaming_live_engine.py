@@ -35,14 +35,7 @@ import cv2
 import numpy as np
 from concurrent.futures import ThreadPoolExecutor
 # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+from protection.utils.redis_compat import aioredis, REDIS_AVAILABLE, MockRedis
 import aiofiles
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, delete, and_
@@ -50,7 +43,8 @@ from sqlalchemy import select, update, delete, and_
 logger = logging.getLogger(__name__)
 
 class StreamFormat(Enum):
-    """Streaming format enumeration"""
+    """
+        Streaming format enumeration"""
     RTMP = "rtmp"
     WEBRTC = "webrtc"
     HLS = "hls"
@@ -109,7 +103,8 @@ class QualityProfile:
 
 @dataclass
 class BitrateConfig:
-    """Bitrate configuration for adaptive streaming"""
+    """
+        Bitrate configuration for adaptive streaming"""
     video_bitrate: int
     audio_bitrate: int
     min_bitrate: int
@@ -121,7 +116,8 @@ class BitrateConfig:
 
 @dataclass
 class LiveStreamSession:
-    """Live stream session data"""
+    """
+        Live stream session data"""
     session_id: str
     creator_id: str
     stream_key: str
@@ -145,7 +141,8 @@ class LiveStreamSession:
 
 @dataclass
 class StreamMetrics:
-    """Real-time stream metrics"""
+    """
+        Real-time stream metrics"""
     session_id: str
     timestamp: datetime
     current_viewers: int
@@ -164,7 +161,8 @@ class StreamMetrics:
 
 @dataclass
 class TranscodingJob:
-    """Transcoding job configuration"""
+    """
+        Transcoding job configuration"""
     job_id: str
     session_id: str
     input_format: StreamFormat
@@ -178,9 +176,10 @@ class TranscodingJob:
     resource_allocation: Dict[str, Any]
 
 class RTMPServer:
-    """RTMP server implementation for live streaming"""
+    """
+        RTMP server implementation for live streaming"""
     
-    def __init__(self, host: str = "0.0.0.0", port: int = 1935, redis_client: aioredis.Redis = None):
+    def __init__(self, host: str = "0.0.0.0", port: int = 1935, redis_client: Optional[Any] = None):
         self.host = host
         self.port = port
         self.redis = redis_client
@@ -197,27 +196,34 @@ class RTMPServer:
             
             # Start background monitoring
             asyncio.create_task(self._monitor_connections())
+
             
             return True
         except Exception as e:
             logger.error(f"Failed to start RTMP server: {e}")
+
             raise
 
     async def handle_rtmp_stream(self, stream_key: str, input_data: bytes) -> Dict[str, Any]:
         """Handle incoming RTMP stream"""
         try:
             # Validate stream key
+
             session = await self._validate_stream_key(stream_key)
+
             if not session:
                 raise ValueError(f"Invalid stream key: {stream_key}")
             
             # Process RTMP stream data
+
             processed_data = await self._process_rtmp_data(input_data, session)
             
             # Apply real-time enhancements
+
             enhanced_data = await self._apply_stream_enhancements(processed_data, session)
             
             # Distribute to CDN and platforms
+
             distribution_result = await self._distribute_rtmp_stream(enhanced_data, session)
             
             # Update metrics
@@ -226,6 +232,7 @@ class RTMPServer:
                 'enhancement_applied': True,
                 'distribution_success': distribution_result['success']
             })
+
             
             return {
                 'success': True,
@@ -236,6 +243,7 @@ class RTMPServer:
             
         except Exception as e:
             logger.error(f"Failed to handle RTMP stream: {e}")
+
             raise
 
     async def _validate_stream_key(self, stream_key: str) -> Optional[Dict[str, Any]]:
@@ -243,11 +251,14 @@ class RTMPServer:
         try:
             if self.redis:
                 session_data = await self.redis.get(f"stream_key:{stream_key}")
+
                 if session_data:
                     return json.loads(session_data)
+
             return None
         except Exception as e:
             logger.error(f"Failed to validate stream key: {e}")
+
             return None
 
     async def _process_rtmp_data(self, data: bytes, session: Dict[str, Any]) -> bytes:
@@ -260,6 +271,7 @@ class RTMPServer:
             return data  # Simplified for now
         except Exception as e:
             logger.error(f"Failed to process RTMP data: {e}")
+
             raise
 
 class WebRTCHandler:
@@ -277,6 +289,7 @@ class WebRTCHandler:
         """Create WebRTC peer connection"""
         try:
             # Create peer connection configuration
+
             pc_config = {
                 "iceServers": self.ice_servers,
                 "iceCandidatePoolSize": 10
@@ -286,6 +299,7 @@ class WebRTCHandler:
             # Set remote description with offer
             # Create answer
             # Set local description
+
             
             answer = {
                 "type": "answer",
@@ -306,6 +320,7 @@ class WebRTCHandler:
             
         except Exception as e:
             logger.error(f"Failed to create peer connection: {e}")
+
             raise
 
     async def handle_ice_candidate(self, session_id: str, candidate: Dict[str, Any]) -> bool:
@@ -314,10 +329,12 @@ class WebRTCHandler:
             if session_id in self.peer_connections:
                 # Add ICE candidate to peer connection
                 logger.info(f"ICE candidate added for session {session_id}")
+
                 return True
             return False
         except Exception as e:
             logger.error(f"Failed to handle ICE candidate: {e}")
+
             return False
 
     async def process_webrtc_stream(self, session_id: str, media_stream: bytes) -> Dict[str, Any]:
@@ -335,12 +352,13 @@ class WebRTCHandler:
             
         except Exception as e:
             logger.error(f"Failed to process WebRTC stream: {e}")
+
             raise
 
 class LiveStreamManager:
     """Live stream session management"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.active_sessions = {}
@@ -358,28 +376,36 @@ class LiveStreamManager:
         """Create new live stream session"""
         try:
             session_id = str(uuid.uuid4())
+
+
             stream_key = hashlib.sha256(f"{creator_id}:{session_id}:{datetime.utcnow()}".encode()).hexdigest()[:32]
             
             # Get quality profile
+
             quality_profile = self._get_quality_profile(quality)
             
             # Configure adaptive bitrate
+
             bitrate_config = self._create_bitrate_config(quality_profile)
             
             # Create platform streams
+
             platform_streams = {}
             if platforms:
                 for platform in platforms:
                     platform_url = await self._create_platform_stream(platform, session_id)
+
                     platform_streams[platform] = platform_url
             
             # Generate endpoints
+
             ingest_endpoint = f"rtmp://stream.iacherie.com/live/{stream_key}"
             playback_urls = {
                 "hls": f"https://stream.iacherie.com/hls/{session_id}/index.m3u8",
                 "dash": f"https://stream.iacherie.com/dash/{session_id}/manifest.mpd",
                 "rtmp": f"rtmp://stream.iacherie.com/play/{session_id}"
             }
+
             
             session = LiveStreamSession(
                 session_id=session_id,
@@ -407,13 +433,17 @@ class LiveStreamManager:
             # Store session
             self.active_sessions[session_id] = session
             await self._store_session_redis(session)
+
             await self._store_session_db(session)
+
             
             logger.info(f"Live stream session created: {session_id}")
+
             return session
             
         except Exception as e:
             logger.error(f"Failed to create session: {e}")
+
             raise
 
     def _get_quality_profile(self, quality: StreamingQuality) -> QualityProfile:
@@ -497,10 +527,11 @@ class LiveStreamManager:
 class RealTimeContentStreamer:
     """Real-time content streaming processor"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Optional[Any]):
         self.redis = redis_client
         self.processing_queue = asyncio.Queue()
         self.encoder_pool = ThreadPoolExecutor(max_workers=50)
+
         
     async def process_real_time_content(
         self,
@@ -508,27 +539,35 @@ class RealTimeContentStreamer:
         input_stream: bytes,
         format_type: StreamFormat = StreamFormat.RTMP
     ) -> Dict[str, Any]:
-        """Process real-time streaming content"""
+        """
+        Process real-time streaming content"""
         try:
             # Get session configuration
+
             session_config = await self._get_session_config(session_id)
+
             if not session_config:
                 raise ValueError(f"Session {session_id} not found")
             
             # Process based on format
             if format_type == StreamFormat.RTMP:
                 processed_stream = await self._process_rtmp_stream(input_stream, session_config)
+
             elif format_type == StreamFormat.WEBRTC:
                 processed_stream = await self._process_webrtc_stream(input_stream, session_config)
+
             elif format_type == StreamFormat.HLS:
                 processed_stream = await self._process_hls_stream(input_stream, session_config)
+
             else:
                 processed_stream = await self._process_generic_stream(input_stream, session_config, format_type)
             
             # Apply real-time enhancements
+
             enhanced_stream = await self._apply_real_time_enhancements(processed_stream, session_config)
             
             # Distribute to outputs
+
             distribution_result = await self._distribute_stream(enhanced_stream, session_config)
             
             # Update real-time metrics
@@ -539,6 +578,7 @@ class RealTimeContentStreamer:
                 "latency_ms": distribution_result.get("latency_ms", 0),
                 "processing_time_ms": distribution_result.get("processing_time_ms", 0)
             })
+
             
             return {
                 "success": True,
@@ -550,12 +590,13 @@ class RealTimeContentStreamer:
             
         except Exception as e:
             logger.error(f"Failed to process real-time content: {e}")
+
             raise
 
 class MultiFormatStreamingEngine:
     """Multi-format streaming engine with transcoding"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Optional[Any]):
         self.redis = redis_client
         self.transcoding_jobs = {}
         self.format_processors = {
@@ -572,11 +613,15 @@ class MultiFormatStreamingEngine:
         input_formats: List[StreamFormat],
         output_formats: List[StreamFormat]
     ) -> Dict[str, Any]:
-        """Handle multi-format streaming with transcoding"""
+        """
+        Handle multi-format streaming with transcoding"""
         try:
             session_config = await self._get_session_config(session_id)
+
             if not session_config:
                 raise ValueError(f"Session {session_id} not found")
+
+
             
             transcoding_jobs = []
             
@@ -587,16 +632,20 @@ class MultiFormatStreamingEngine:
                         job = await self._create_transcoding_job(
                             session_id, input_format, output_format, session_config
                         )
+
                         transcoding_jobs.append(job)
             
             # Execute transcoding jobs in parallel
+
             transcoding_results = await asyncio.gather(
                 *[self._execute_transcoding_job(job) for job in transcoding_jobs],
                 return_exceptions=True
             )
             
             # Process results
+
             successful_jobs = []
+
             failed_jobs = []
             
             for job, result in zip(transcoding_jobs, transcoding_results):
@@ -605,6 +654,7 @@ class MultiFormatStreamingEngine:
                         "job_id": job.job_id,
                         "error": str(result)
                     })
+
                 else:
                     successful_jobs.append({
                         "job_id": job.job_id,
@@ -613,6 +663,7 @@ class MultiFormatStreamingEngine:
             
             # Update session with format capabilities
             await self._update_session_format_capabilities(session_id, input_formats, output_formats)
+
             
             return {
                 "success": len(failed_jobs) == 0,
@@ -625,14 +676,15 @@ class MultiFormatStreamingEngine:
             
         except Exception as e:
             logger.error(f"Failed to handle multi-format streaming: {e}")
+
             raise
 
 class StreamingLiveEngine:
-    """Unified live streaming engine - Main service class"""
+    """Unified streaming live engine orchestrator"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
-        self.db = db_session
+        self.db_session = db_session
         
         # Initialize components
         self.rtmp_server = RTMPServer(redis_client=redis_client)
@@ -651,21 +703,28 @@ class StreamingLiveEngine:
         """Initialize streaming live engine"""
         try:
             # Start RTMP server
+
             rtmp_started = await self.rtmp_server.start_server()
             
             # Initialize WebRTC signaling
+
             webrtc_ready = await self._initialize_webrtc()
             
             # Setup performance monitoring
+
             monitoring_started = await self._setup_performance_monitoring()
             
             # Configure quality profiles
+
             quality_profiles = await self._configure_quality_profiles()
             
             # Initialize platform integrations
+
             platform_integrations = await self._initialize_platform_integrations()
+
             
             logger.info("🎥 Streaming Live Engine fully initialized")
+
             
             return {
                 "engine_status": "initialized",
@@ -686,6 +745,7 @@ class StreamingLiveEngine:
             
         except Exception as e:
             logger.error(f"Failed to initialize streaming engine: {e}")
+
             raise
     
     # Additional helper methods implementation...
@@ -698,6 +758,7 @@ class StreamingLiveEngine:
             return True
         except Exception as e:
             logger.error(f"Failed to initialize WebRTC: {e}")
+
             return False
 
     async def _setup_performance_monitoring(self) -> bool:
@@ -709,6 +770,7 @@ class StreamingLiveEngine:
             return True
         except Exception as e:
             logger.error(f"Failed to setup monitoring: {e}")
+
             return False
 
 # Export main classes

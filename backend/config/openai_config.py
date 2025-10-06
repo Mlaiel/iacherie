@@ -7,7 +7,8 @@ from typing import Optional, Dict, Any
 from pydantic import BaseSettings, Field
 
 class Settings(BaseSettings):
-    """Application settings"""
+    """
+        Application settings"""
     
     # Basic settings
     app_name: str = "IA Chérie Platform"
@@ -35,6 +36,7 @@ class Settings(BaseSettings):
     
     class Config:
         env_file = [".env", ".env.local", ".env.openai"]
+
         env_file_encoding = "utf-8"
 
 # Global settings instance

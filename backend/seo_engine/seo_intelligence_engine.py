@@ -40,7 +40,8 @@ from textblob import TextBlob
 logger = logging.getLogger(__name__)
 
 class SEOIntelligenceLevel(Enum):
-    """Niveaux d'intelligence SEO disponibles"""
+    """
+        Niveaux d'intelligence SEO disponibles"""
     BASIC = "basic"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
@@ -109,7 +110,8 @@ class CompetitorProfile:
 
 @dataclass
 class SEOInsight:
-    """Insight SEO généré par l'IA"""
+    """
+        Insight SEO généré par l'IA"""
     insight_id: str
     title: str
     description: str
@@ -126,7 +128,8 @@ class SEOInsight:
 
 @dataclass
 class PredictionResult:
-    """Résultat de prédiction SEO"""
+    """
+        Résultat de prédiction SEO"""
     metric: str
     current_value: float
     predicted_value: float
@@ -151,7 +154,8 @@ class SEOIntelligenceEngine:
     """
     
     def __init__(self, config: Optional[SEOIntelligenceConfig] = None):
-        """Initialise le moteur d'intelligence SEO"""
+        """
+        Initialise le moteur d'intelligence SEO"""
         self.config = config or SEOIntelligenceConfig()
         self.competitors: Dict[str, CompetitorProfile] = {}
         self.insights: List[SEOInsight] = []
@@ -191,11 +195,14 @@ class SEOIntelligenceEngine:
             
             # Configuration des analyseurs NLP
             await self._setup_nlp_processors()
+
             
             logger.info("✅ Moteur d'intelligence SEO initialisé avec succès")
+
             
         except Exception as e:
             logger.error(f"❌ Erreur lors de l'initialisation: {e}")
+
             raise
     
     async def _load_ml_models(self) -> None:
@@ -215,11 +222,14 @@ class SEOIntelligenceEngine:
                 n_clusters=10,
                 random_state=42
             )
+
             
             logger.info("🤖 Modèles ML chargés avec succès")
+
             
         except Exception as e:
             logger.error(f"❌ Erreur chargement modèles ML: {e}")
+
             raise
     
     async def _initialize_data_cache(self) -> None:
@@ -236,15 +246,19 @@ class SEOIntelligenceEngine:
         }
     
     async def _setup_nlp_processors(self) -> None:
-        """Configure les processeurs de traitement du langage naturel"""
+        """
+        Configure les processeurs de traitement du langage naturel"""
         try:
             # Téléchargement des ressources NLTK si nécessaire
             try:
                 nltk.data.find('vader_lexicon')
+
             except LookupError:
                 nltk.download('vader_lexicon')
+
             
             logger.info("🔤 Processeurs NLP configurés")
+
             
         except Exception as e:
             logger.warning(f"⚠️ Configuration NLP partielle: {e}")
@@ -265,38 +279,48 @@ class SEOIntelligenceEngine:
             Dictionnaire des profils de concurrents
         """
         start_time = time.time()
+
         max_competitors = max_competitors or self.config.max_competitors
         
         try:
             logger.info(f"🔍 Analyse concurrentielle pour {len(target_keywords)} mots-clés")
             
             # Identification des concurrents principaux
+
             competitors = await self._identify_top_competitors(target_keywords, max_competitors)
             
             # Analyse détaillée de chaque concurrent
+
             competitor_profiles = {}
             for competitor_domain in competitors:
                 profile = await self._analyze_competitor_profile(
                     competitor_domain,
                     target_keywords
                 )
+
                 competitor_profiles[competitor_domain] = profile
                 self.competitors[competitor_domain] = profile
             
             # Analyse comparative
+
             competitive_landscape = await self._analyze_competitive_landscape(
                 competitor_profiles,
                 target_keywords
             )
             
             # Génération d'insights concurrentiels
+
             insights = await self._generate_competitive_insights(
                 competitor_profiles,
                 competitive_landscape
             )
+
             
             self.insights.extend(insights)
+
             self.performance_metrics['competitors_analyzed'] += len(competitor_profiles)
+
+
             
             processing_time = time.time() - start_time
             self.performance_metrics['processing_time_avg'] = (
@@ -304,10 +328,12 @@ class SEOIntelligenceEngine:
             ) / 2
             
             logger.info(f"✅ Analyse concurrentielle terminée en {processing_time:.2f}s")
+
             return competitor_profiles
             
         except Exception as e:
             logger.error(f"❌ Erreur analyse concurrentielle: {e}")
+
             raise
     
     async def _identify_top_competitors(
@@ -332,6 +358,7 @@ class SEOIntelligenceEngine:
         try:
             # Simulation d'analyse de concurrent
             # Dans la réalité, cela analyserait vraiment le site concurrent
+
             
             profile = CompetitorProfile(
                 domain=domain,
@@ -339,6 +366,7 @@ class SEOIntelligenceEngine:
                 industry="Digital Marketing",
                 size_category="Medium",
                 keywords=target_keywords[:5],  # Top 5 keywords
+
                 content_topics=["SEO", "Marketing", "Digital Strategy"],
                 backlink_count=np.random.randint(1000, 50000),
                 domain_authority=np.random.uniform(30, 90),
@@ -352,13 +380,17 @@ class SEOIntelligenceEngine:
             
             # Analyse SWOT automatisée
             profile.strengths = await self._analyze_competitor_strengths(profile)
+
             profile.weaknesses = await self._analyze_competitor_weaknesses(profile)
+
             profile.opportunities = await self._identify_competitor_opportunities(profile)
+
             
             return profile
             
         except Exception as e:
             logger.error(f"❌ Erreur analyse profil {domain}: {e}")
+
             raise
     
     async def _analyze_competitor_strengths(
@@ -370,15 +402,19 @@ class SEOIntelligenceEngine:
         
         if profile.domain_authority > 70:
             strengths.append("Autorité de domaine élevée")
+
         
         if profile.backlink_count > 10000:
             strengths.append("Profil de backlinks solide")
+
         
         if profile.traffic_estimate > 100000:
             strengths.append("Trafic organique important")
+
         
         if len(profile.keywords) > 3:
             strengths.append("Portefeuille de mots-clés diversifié")
+
         
         return strengths
     
@@ -391,12 +427,15 @@ class SEOIntelligenceEngine:
         
         if profile.domain_authority < 40:
             weaknesses.append("Autorité de domaine faible")
+
         
         if profile.backlink_count < 5000:
             weaknesses.append("Profil de backlinks limité")
+
         
         if profile.traffic_estimate < 50000:
             weaknesses.append("Trafic organique faible")
+
         
         return weaknesses
     
@@ -409,12 +448,15 @@ class SEOIntelligenceEngine:
         
         if profile.domain_authority < 60:
             opportunities.append("Possibilité de surpasser en autorité")
+
         
         if len(profile.content_topics) < 5:
             opportunities.append("Niche de contenu à exploiter")
+
         
         if profile.social_presence.get('linkedin', 0) < 10000:
             opportunities.append("Opportunité marketing LinkedIn")
+
         
         return opportunities
     
@@ -437,8 +479,10 @@ class SEOIntelligenceEngine:
         for domain, profile in competitors.items():
             if profile.domain_authority > 70 and profile.traffic_estimate > 500000:
                 landscape['market_leaders'].append(domain)
+
             elif profile.domain_authority > 50:
                 landscape['market_followers'].append(domain)
+
             else:
                 landscape['niche_players'].append(domain)
         
@@ -447,6 +491,7 @@ class SEOIntelligenceEngine:
             80.0,  # Score maximum
             100.0 - (len(landscape['market_leaders']) * 20)
         )
+
         
         return landscape
     
@@ -455,7 +500,8 @@ class SEOIntelligenceEngine:
         competitors: Dict[str, CompetitorProfile],
         landscape: Dict[str, Any]
     ) -> List[SEOInsight]:
-        """Génère des insights basés sur l'analyse concurrentielle"""
+        """
+        Génère des insights basés sur l'analyse concurrentielle"""
         insights = []
         
         # Insight sur les leaders du marché
@@ -495,6 +541,7 @@ class SEOIntelligenceEngine:
                     "Accélérer la production de contenu"
                 ]
             ))
+
         
         return insights
     
@@ -516,10 +563,12 @@ class SEOIntelligenceEngine:
             Prédictions pour chaque métrique
         """
         prediction_days = prediction_days or self.config.prediction_horizon_days
+
         predictions = {}
         
         try:
             logger.info(f"🔮 Prédiction SEO pour {len(metrics)} métriques sur {prediction_days} jours")
+
             
             for metric in metrics:
                 if metric in historical_data and len(historical_data[metric]) > 10:
@@ -528,16 +577,20 @@ class SEOIntelligenceEngine:
                         historical_data[metric],
                         prediction_days
                     )
+
                     predictions[metric] = prediction
                     self.predictions[metric] = prediction
             
             self.performance_metrics['predictions_made'] += len(predictions)
+
             logger.info(f"✅ {len(predictions)} prédictions générées")
+
             
             return predictions
             
         except Exception as e:
             logger.error(f"❌ Erreur prédiction SEO: {e}")
+
             raise
     
     async def _predict_metric(
@@ -549,28 +602,39 @@ class SEOIntelligenceEngine:
         """Prédit une métrique spécifique"""
         try:
             # Préparation des données
+
             X = np.array(range(len(historical_values))).reshape(-1, 1)
+
+
             y = np.array(historical_values)
             
             # Entraînement du modèle
+
             model = self.ml_models.get('traffic_predictor', LinearRegression())
+
             model.fit(X, y)
             
             # Prédiction
             future_X = np.array([len(historical_values) + days_ahead]).reshape(-1, 1)
+
+
             predicted_value = model.predict(future_X)[0]
             
             # Calcul de la confiance
+
             confidence = self._calculate_prediction_confidence(
                 historical_values,
                 predicted_value
             )
             
             # Détermination de la tendance
+
             trend = self._determine_trend(historical_values, predicted_value)
             
             # Facteurs d'influence
+
             factors = self._identify_influencing_factors(metric, historical_values)
+
             
             return PredictionResult(
                 metric=metric,
@@ -587,9 +651,11 @@ class SEOIntelligenceEngine:
                     trend
                 )
             )
+
             
         except Exception as e:
             logger.error(f"❌ Erreur prédiction {metric}: {e}")
+
             raise
     
     def _calculate_prediction_confidence(
@@ -599,13 +665,20 @@ class SEOIntelligenceEngine:
     ) -> float:
         """Calcule la confiance de la prédiction"""
         # Calcul basé sur la variance et la stabilité des données
+
         variance = np.var(historical_values)
+
         stability = 1.0 / (1.0 + variance / np.mean(historical_values))
         
         # Ajustement selon la plausibilité de la prédiction
+
         mean_value = np.mean(historical_values)
+
         deviation = abs(predicted_value - mean_value) / mean_value
+
         plausibility = max(0.1, 1.0 - deviation)
+
+
         
         confidence = min(0.95, stability * plausibility * 0.9)
         return confidence
@@ -615,7 +688,8 @@ class SEOIntelligenceEngine:
         historical_values: List[float],
         predicted_value: float
     ) -> str:
-        """Détermine la direction de la tendance"""
+        """
+        Détermine la direction de la tendance"""
         current_value = historical_values[-1]
         
         if predicted_value > current_value * 1.05:
@@ -697,25 +771,33 @@ class SEOIntelligenceEngine:
             logger.info(f"🧠 Génération d'insights IA pour {len(data_sources)} sources")
             
             # Collecte et agrégation des données
+
             aggregated_data = await self._aggregate_data_sources(data_sources)
             
             # Analyse des patterns avec ML
             patterns = await self._detect_patterns(aggregated_data, focus_areas)
             
             # Génération d'insights basés sur les patterns
+
             insights = await self._generate_insights_from_patterns(patterns)
             
             # Scoring et priorisation des insights
+
             scored_insights = await self._score_and_prioritize_insights(insights)
+
             
             self.insights.extend(scored_insights)
+
             self.performance_metrics['insights_generated'] += len(scored_insights)
+
             
             logger.info(f"✅ {len(scored_insights)} insights IA générés")
+
             return scored_insights
             
         except Exception as e:
             logger.error(f"❌ Erreur génération insights IA: {e}")
+
             raise
     
     async def _aggregate_data_sources(
@@ -748,23 +830,28 @@ class SEOIntelligenceEngine:
         data: Dict[str, Any],
         focus_areas: Optional[List[str]] = None
     ) -> List[Dict[str, Any]]:
-        """Détecte des patterns dans les données avec ML"""
+        """
+        Détecte des patterns dans les données avec ML"""
         patterns = []
         
         # Pattern de trafic
         if 'traffic_data' in data:
             traffic_pattern = await self._analyze_traffic_patterns(data['traffic_data'])
+
             patterns.append(traffic_pattern)
         
         # Pattern de contenu
         if 'content_data' in data:
             content_pattern = await self._analyze_content_patterns(data['content_data'])
+
             patterns.append(content_pattern)
         
         # Pattern de comportement utilisateur
         if 'user_behavior' in data:
             behavior_pattern = await self._analyze_behavior_patterns(data['user_behavior'])
+
             patterns.append(behavior_pattern)
+
         
         return patterns
     
@@ -772,7 +859,8 @@ class SEOIntelligenceEngine:
         self,
         traffic_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyse les patterns de trafic"""
+        """
+        Analyse les patterns de trafic"""
         return {
             'type': 'traffic',
             'pattern': 'seasonal_growth',
@@ -788,7 +876,8 @@ class SEOIntelligenceEngine:
         self,
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyse les patterns de contenu"""
+        """
+        Analyse les patterns de contenu"""
         return {
             'type': 'content',
             'pattern': 'topic_clustering',
@@ -804,7 +893,8 @@ class SEOIntelligenceEngine:
         self,
         behavior_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyse les patterns de comportement"""
+        """
+        Analyse les patterns de comportement"""
         return {
             'type': 'behavior',
             'pattern': 'engagement_optimization',
@@ -820,7 +910,8 @@ class SEOIntelligenceEngine:
         self,
         patterns: List[Dict[str, Any]]
     ) -> List[SEOInsight]:
-        """Génère des insights à partir des patterns détectés"""
+        """
+        Génère des insights à partir des patterns détectés"""
         insights = []
         
         for i, pattern in enumerate(patterns):
@@ -838,7 +929,9 @@ class SEOIntelligenceEngine:
                 recommendations=pattern.get('recommendations', []),
                 metrics_affected=[pattern['type']]
             )
+
             insights.append(insight)
+
         
         return insights
     
@@ -854,6 +947,7 @@ class SEOIntelligenceEngine:
                 (1.0 if insight.priority == "High" else 0.5) * 0.3 +
                 (1.0 if insight.impact_estimate == "High" else 0.5) * 0.3
             )
+
             insight.priority = "Critical" if score > 0.8 else insight.priority
         
         # Tri par score décroissant
@@ -882,6 +976,7 @@ class SEOIntelligenceEngine:
             logger.info(f"🎯 Optimisation intelligente du contenu - Niveau: {level.value}")
             
             # Analyse du contenu actuel
+
             content_analysis = await self._analyze_content_comprehensively(
                 content,
                 target_keywords
@@ -896,16 +991,20 @@ class SEOIntelligenceEngine:
             )
             
             # Génération de recommandations avancées
+
             recommendations = await self._generate_optimization_recommendations(
                 content_analysis,
                 level
             )
             
             # Calcul du score d'amélioration
+
             improvement_score = await self._calculate_improvement_score(
                 content_analysis,
                 optimized_content
             )
+
+
             
             result = {
                 'original_content': content,
@@ -920,10 +1019,12 @@ class SEOIntelligenceEngine:
             self.performance_metrics['optimizations_applied'] += 1
             
             logger.info(f"✅ Contenu optimisé - Score d'amélioration: {improvement_score:.1f}%")
+
             return result
             
         except Exception as e:
             logger.error(f"❌ Erreur optimisation contenu: {e}")
+
             raise
     
     async def _analyze_content_comprehensively(
@@ -946,11 +1047,13 @@ class SEOIntelligenceEngine:
         # Analyse de densité des mots-clés
         for keyword in keywords:
             occurrences = content.lower().count(keyword.lower())
+
             analysis['keyword_density'][keyword] = (
                 occurrences / analysis['word_count']
             ) * 100 if analysis['word_count'] > 0 else 0
         
         # Analyse de sentiment
+
         sentiment_scores = self.sentiment_analyzer.polarity_scores(content)
         analysis['sentiment_score'] = sentiment_scores['compound']
         
@@ -965,26 +1068,31 @@ class SEOIntelligenceEngine:
         # Identification des opportunités
         if analysis['word_count'] < 300:
             analysis['optimization_opportunities'].append("Contenu trop court - étendre")
+
         
         for keyword, density in analysis['keyword_density'].items():
             if density < 0.5:
                 analysis['optimization_opportunities'].append(
                     f"Densité faible pour '{keyword}' - augmenter"
                 )
+
             elif density > 3.0:
                 analysis['optimization_opportunities'].append(
                     f"Sur-optimisation pour '{keyword}' - réduire"
                 )
+
         
         return analysis
     
     def _calculate_avg_sentence_length(self, content: str) -> float:
         """Calcule la longueur moyenne des phrases"""
         sentences = re.split(r'[.!?]+', content)
+
         sentences = [s.strip() for s in sentences if s.strip()]
         
         if not sentences:
             return 0.0
+
         
         total_words = sum(len(sentence.split()) for sentence in sentences)
         return total_words / len(sentences)
@@ -996,12 +1104,14 @@ class SEOIntelligenceEngine:
         keywords: List[str],
         level: SEOIntelligenceLevel
     ) -> str:
-        """Applique les optimisations IA au contenu"""
+        """
+        Applique les optimisations IA au contenu"""
         optimized = content
         
         # Optimisations basées sur le niveau
         if level in [SEOIntelligenceLevel.ADVANCED, SEOIntelligenceLevel.AI_POWERED]:
             # Insertion intelligente de mots-clés
+
             optimized = await self._insert_keywords_intelligently(
                 optimized,
                 keywords,
@@ -1009,14 +1119,18 @@ class SEOIntelligenceEngine:
             )
             
             # Amélioration de la structure
+
             optimized = await self._improve_content_structure(optimized)
             
             # Optimisation de la lisibilité
             optimized = await self._optimize_readability(optimized)
+
         
         if level == SEOIntelligenceLevel.AI_POWERED:
             # Enrichissement sémantique
+
             optimized = await self._add_semantic_enrichment(optimized, keywords)
+
         
         return optimized
     
@@ -1026,15 +1140,19 @@ class SEOIntelligenceEngine:
         keywords: List[str],
         analysis: Dict[str, Any]
     ) -> str:
-        """Insère les mots-clés de manière intelligente et naturelle"""
+        """
+        Insère les mots-clés de manière intelligente et naturelle"""
         optimized = content
         
         for keyword in keywords:
             current_density = analysis['keyword_density'].get(keyword, 0)
+
             
             if current_density < 1.0:  # Densité cible: ~1%
                 # Trouver des emplacements naturels pour insérer le mot-clé
                 sentences = optimized.split('.')
+
+
                 target_sentence_idx = len(sentences) // 3  # Milieu du contenu
                 
                 if target_sentence_idx < len(sentences):
@@ -1043,12 +1161,14 @@ class SEOIntelligenceEngine:
                         # Insertion naturelle du mot-clé
                         sentences[target_sentence_idx] = sentence + f" {keyword}"
                         optimized = '.'.join(sentences)
+
         
         return optimized
     
     async def _improve_content_structure(self, content: str) -> str:
         """Améliore la structure du contenu"""
         lines = content.split('\n')
+
         improved_lines = []
         
         for line in lines:
@@ -1058,26 +1178,36 @@ class SEOIntelligenceEngine:
                     line = f"## {line}"
             
             improved_lines.append(line)
+
         
         return '\n'.join(improved_lines)
     
     async def _optimize_readability(self, content: str) -> str:
         """Optimise la lisibilité du contenu"""
         # Séparation des longs paragraphes
+
         paragraphs = content.split('\n\n')
+
         optimized_paragraphs = []
         
         for paragraph in paragraphs:
             if len(paragraph.split()) > 100:  # Paragraphe trop long
+
                 sentences = paragraph.split('.')
+
+
                 mid_point = len(sentences) // 2
+
                 
                 first_half = '.'.join(sentences[:mid_point]) + '.'
                 second_half = '.'.join(sentences[mid_point:])
+
                 
                 optimized_paragraphs.extend([first_half, second_half])
+
             else:
                 optimized_paragraphs.append(paragraph)
+
         
         return '\n\n'.join(optimized_paragraphs)
     
@@ -1086,8 +1216,10 @@ class SEOIntelligenceEngine:
         content: str,
         keywords: List[str]
     ) -> str:
-        """Ajoute un enrichissement sémantique au contenu"""
+        """
+        Ajoute un enrichissement sémantique au contenu"""
         # Génération de termes sémantiquement liés
+
         semantic_terms = {}
         
         for keyword in keywords:
@@ -1099,6 +1231,7 @@ class SEOIntelligenceEngine:
             ]
         
         # Insertion naturelle des termes sémantiques
+
         enriched = content
         for keyword, terms in semantic_terms.items():
             for term in terms[:1]:  # Limiter à 1 terme par mot-clé
@@ -1121,11 +1254,13 @@ class SEOIntelligenceEngine:
             recommendations.append(
                 "Étendre le contenu à au moins 500 mots pour améliorer la couverture thématique"
             )
+
         
         if not analysis['structure_analysis']['has_headings']:
             recommendations.append(
                 "Ajouter des titres et sous-titres pour améliorer la structure"
             )
+
         
         if analysis['sentiment_score'] < 0:
             recommendations.append(
@@ -1139,6 +1274,7 @@ class SEOIntelligenceEngine:
                 "Optimiser pour les featured snippets",
                 "Ajouter des FAQ pour capturer les recherches vocales"
             ])
+
         
         if level == SEOIntelligenceLevel.AI_POWERED:
             recommendations.extend([
@@ -1146,6 +1282,7 @@ class SEOIntelligenceEngine:
                 "Implémenter un A/B testing automatisé",
                 "Optimiser pour l'intention de recherche avec ML"
             ])
+
         
         return recommendations
     
@@ -1157,16 +1294,21 @@ class SEOIntelligenceEngine:
         """Calcule le score d'amélioration du contenu"""
         # Analyse du contenu optimisé
         optimized_word_count = len(optimized_content.split())
+
         original_word_count = analysis['word_count']
         
         # Score basé sur l'extension du contenu
+
         content_score = min(100, (optimized_word_count / max(500, original_word_count)) * 100)
         
         # Score basé sur les opportunités résolues
+
         opportunities_count = len(analysis['optimization_opportunities'])
+
         structure_score = 80 if opportunities_count > 0 else 100
         
         # Score global
+
         improvement_score = (content_score + structure_score) / 2
         
         return min(100, improvement_score)
@@ -1188,6 +1330,8 @@ class SEOIntelligenceEngine:
         """
         try:
             logger.info(f"📊 Surveillance temps réel - {len(metrics_to_monitor)} métriques")
+
+
             
             monitoring_results = {
                 'status': 'active',
@@ -1202,6 +1346,7 @@ class SEOIntelligenceEngine:
             # Collecte des valeurs actuelles
             for metric in metrics_to_monitor:
                 current_value = await self._get_current_metric_value(metric)
+
                 monitoring_results['current_values'][metric] = current_value
                 
                 # Vérification des seuils d'alerte
@@ -1219,7 +1364,9 @@ class SEOIntelligenceEngine:
                         monitoring_results['alerts'].append(alert)
                 
                 # Analyse de tendance
+
                 trend = await self._analyze_metric_trend(metric)
+
                 monitoring_results['trends'][metric] = trend
             
             # Génération de recommandations
@@ -1227,19 +1374,23 @@ class SEOIntelligenceEngine:
                 recommendations = await self._generate_monitoring_recommendations(
                     monitoring_results['alerts']
                 )
+
                 monitoring_results['recommendations'] = recommendations
             
             logger.info(f"✅ Surveillance active - {len(monitoring_results['alerts'])} alertes")
+
             return monitoring_results
             
         except Exception as e:
             logger.error(f"❌ Erreur surveillance temps réel: {e}")
+
             raise
     
     async def _get_current_metric_value(self, metric: str) -> float:
         """Récupère la valeur actuelle d'une métrique"""
         # Simulation de récupération de métrique en temps réel
         # Dans la réalité, cela se connecterait aux vraies APIs
+
         base_values = {
             'traffic': 10000,
             'rankings': 15.5,
@@ -1247,15 +1398,19 @@ class SEOIntelligenceEngine:
             'bounce_rate': 45.2,
             'page_speed': 2.1
         }
+
         
         base_value = base_values.get(metric, 100.0)
         # Ajout de variation aléatoire
+
         variation = np.random.uniform(0.8, 1.2)
         return base_value * variation
     
     async def _analyze_metric_trend(self, metric: str) -> Dict[str, Any]:
-        """Analyse la tendance d'une métrique"""
+        """
+        Analyse la tendance d'une métrique"""
         # Simulation d'analyse de tendance
+
         trend_directions = ['increasing', 'decreasing', 'stable']
         
         return {
@@ -1269,25 +1424,30 @@ class SEOIntelligenceEngine:
         self,
         alerts: List[Dict[str, Any]]
     ) -> List[str]:
-        """Génère des recommandations basées sur les alertes"""
+        """
+        Génère des recommandations basées sur les alertes"""
         recommendations = []
         
         for alert in alerts:
             metric = alert['metric']
+
             severity = alert['severity']
             
             if metric == 'traffic' and severity == 'high':
                 recommendations.append(
                     "Trafic critique: Lancer une campagne de contenu d'urgence"
                 )
+
             elif metric == 'conversion_rate':
                 recommendations.append(
                     "Taux de conversion faible: Optimiser les landing pages"
                 )
+
             elif metric == 'page_speed':
                 recommendations.append(
                     "Vitesse de page lente: Optimiser les images et scripts"
                 )
+
         
         return recommendations
     
@@ -1309,11 +1469,13 @@ class SEOIntelligenceEngine:
         if self.performance_metrics['predictions_made'] > 0:
             # Simulation du calcul d'accuracy
             summary['metrics']['accuracy_score'] = np.random.uniform(0.75, 0.95)
+
         
         return summary
     
     def _calculate_cache_efficiency(self) -> float:
-        """Calcule l'efficacité du cache"""
+        """
+        Calcule l'efficacité du cache"""
         total_entries = sum(len(cache) for cache in self.data_cache.values())
         if total_entries == 0:
             return 0.0
@@ -1322,27 +1484,33 @@ class SEOIntelligenceEngine:
         return min(95.0, total_entries * 2.5)
     
     async def cleanup(self) -> None:
-        """Nettoie les ressources du moteur d'intelligence"""
+        """
+        Nettoie les ressources du moteur d'intelligence"""
         try:
             if self.session:
                 await self.session.close()
             
             # Sauvegarde des insights critiques
+
             critical_insights = [
                 insight for insight in self.insights
                 if insight.priority in ['Critical', 'High']
             ]
             
             # Nettoyage du cache ancien
+
             cutoff_time = datetime.now() - timedelta(hours=self.config.cache_duration_hours)
+
             for cache_key in self.data_cache:
                 # Simulation du nettoyage
                 pass
             
             logger.info(f"🧹 Nettoyage terminé - {len(critical_insights)} insights critiques conservés")
+
             
         except Exception as e:
             logger.error(f"❌ Erreur lors du nettoyage: {e}")
+
             raise
 
 # Instance globale du moteur d'intelligence SEO
@@ -1368,29 +1536,36 @@ if __name__ == "__main__":
         await engine.initialize()
         
         # Test d'analyse concurrentielle
+
         competitors = await engine.analyze_competitors(
             target_keywords=['seo', 'marketing', 'optimization']
         )
         
         # Test de prédiction
+
         mock_data = {
             'traffic': [1000, 1100, 1200, 1150, 1300, 1400, 1350, 1500]
         }
+
         predictions = await engine.predict_seo_performance(
             metrics=['traffic'],
             historical_data=mock_data
         )
         
         # Test de génération d'insights
+
         insights = await engine.generate_ai_insights(
             data_sources=['analytics', 'search_console']
         )
         
         # Résumé des performances
+
         summary = await engine.get_performance_summary()
+
         
         print(f"✅ Moteur testé: {len(competitors)} concurrents, {len(predictions)} prédictions, {len(insights)} insights")
         print(f"📊 Summary: {summary['metrics']}")
+
         
         await engine.cleanup()
     

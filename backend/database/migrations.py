@@ -62,7 +62,8 @@ logger = logging.getLogger(__name__)
 
 
 class MigrationType(Enum):
-    """Migration type enumeration."""
+    """
+        Migration type enumeration."""
     SCHEMA = "schema"
     DATA = "data"
     INDEX = "index"
@@ -93,7 +94,8 @@ class MigrationPriority(Enum):
 
 @dataclass
 class MigrationRecord:
-    """Migration execution record."""
+    """
+        Migration execution record."""
     migration_id: str
     migration_type: MigrationType
     version: str
@@ -130,10 +132,13 @@ class EnterpriseMigrationManager:
         self._connection_manager = get_connection_manager()
         self._alembic_config: Optional[Config] = None
         self._metadata = MetaData()
+
         
     async def initialize(self, alembic_ini_path: Optional[str] = None):
-        """Initialize the migration manager."""
+        """
+        Initialize the migration manager."""
         logger.info("🚀 Initializing Enterprise Migration Manager...")
+
         
         if ALEMBIC_AVAILABLE and alembic_ini_path:
             self._alembic_config = Config(alembic_ini_path)
@@ -143,6 +148,7 @@ class EnterpriseMigrationManager:
         
         # Load migration history
         await self._load_migration_history()
+
         
         logger.info("✅ Enterprise Migration Manager initialized")
     
@@ -174,21 +180,26 @@ class EnterpriseMigrationManager:
                     CREATE INDEX IF NOT EXISTS idx_iacherie_migrations_status 
                     ON iacherie_migrations(status)
                 """))
+
                 
                 await session.execute(text("""
                     CREATE INDEX IF NOT EXISTS idx_iacherie_migrations_type 
                     ON iacherie_migrations(migration_type)
                 """))
+
                 
                 await session.execute(text("""
                     CREATE INDEX IF NOT EXISTS idx_iacherie_migrations_version 
                     ON iacherie_migrations(version)
                 """))
+
                 
                 logger.info("✅ Migration tracking table created")
+
                 
         except Exception as e:
             logger.error(f"❌ Failed to create migration tracking table: {e}")
+
             raise
     
     async def _load_migration_history(self):
@@ -202,8 +213,11 @@ class EnterpriseMigrationManager:
                     FROM iacherie_migrations 
                     ORDER BY created_at ASC
                 """))
+
+
                 
                 rows = result.fetchall()
+
                 self._migration_history = []
                 
                 for row in rows:
@@ -221,9 +235,12 @@ class EnterpriseMigrationManager:
                         dependencies=json.loads(row[10]) if row[10] else [],
                         tags=json.loads(row[11]) if row[11] else []
                     )
+
                     self._migration_history.append(migration)
+
                 
                 logger.info(f"📚 Loaded {len(self._migration_history)} migration records")
+
                 
         except Exception as e:
             logger.error(f"❌ Failed to load migration history: {e}")
@@ -232,19 +249,25 @@ class EnterpriseMigrationManager:
         """Register a new migration."""
         try:
             # Check if migration already exists
+
             existing = await self._get_migration_by_id(migration.migration_id)
+
             if existing:
                 logger.warning(f"⚠️ Migration {migration.migration_id} already exists")
+
                 return False
             
             # Create checksum
+
             checksum = self._calculate_migration_checksum(migration)
+
             
             async with self._connection_manager.get_postgres_session() as session:
                 await session.execute(text("""
                     INSERT INTO iacherie_migrations 
                     (migration_id, migration_type, version, description, status, priority,
                      dependencies, tags, checksum)
+
                     VALUES (:migration_id, :migration_type, :version, :description, :status,
                             :priority, :dependencies, :tags, :checksum)
                 """), {
@@ -258,18 +281,24 @@ class EnterpriseMigrationManager:
                     "tags": json.dumps(migration.tags),
                     "checksum": checksum
                 })
+
             
             self._pending_migrations.append(migration)
+
             logger.info(f"✅ Migration {migration.migration_id} registered")
+
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to register migration {migration.migration_id}: {e}")
+
             return False
     
     async def execute_pending_migrations(self) -> Dict[str, Any]:
         """Execute all pending migrations in dependency order."""
         logger.info("🔄 Executing pending migrations...")
+
+
         
         execution_results = {
             "total": len(self._pending_migrations),
@@ -279,11 +308,15 @@ class EnterpriseMigrationManager:
         }
         
         # Sort migrations by priority and dependencies
+
         sorted_migrations = self._resolve_migration_dependencies(self._pending_migrations)
+
         
         for migration in sorted_migrations:
             result = await self._execute_single_migration(migration)
+
             execution_results["results"].append(result)
+
             
             if result["success"]:
                 execution_results["successful"] += 1
@@ -293,6 +326,7 @@ class EnterpriseMigrationManager:
                 # Stop on critical failure
                 if migration.priority == MigrationPriority.CRITICAL:
                     logger.error(f"🚨 Critical migration failed: {migration.migration_id}")
+
                     break
         
         # Clear pending migrations
@@ -304,6 +338,8 @@ class EnterpriseMigrationManager:
     async def _execute_single_migration(self, migration: MigrationRecord) -> Dict[str, Any]:
         """Execute a single migration."""
         logger.info(f"⚡ Executing migration: {migration.migration_id}")
+
+
         
         result = {
             "migration_id": migration.migration_id,
@@ -311,6 +347,7 @@ class EnterpriseMigrationManager:
             "error": None,
             "duration": 0
         }
+
         
         start_time = datetime.now(timezone.utc)
         migration.started_at = start_time
@@ -323,36 +360,49 @@ class EnterpriseMigrationManager:
             # Execute migration based on type
             if migration.migration_type == MigrationType.SCHEMA:
                 await self._execute_schema_migration(migration)
+
             elif migration.migration_type == MigrationType.DATA:
                 await self._execute_data_migration(migration)
+
             elif migration.migration_type == MigrationType.INDEX:
                 await self._execute_index_migration(migration)
+
             elif migration.migration_type == MigrationType.CONTENT_PROTECTION:
                 await self._execute_content_protection_migration(migration)
+
             elif migration.migration_type == MigrationType.MONETIZATION:
                 await self._execute_monetization_migration(migration)
+
             elif migration.migration_type == MigrationType.AI_ANALYTICS:
                 await self._execute_ai_analytics_migration(migration)
+
             else:
                 await self._execute_generic_migration(migration)
             
             # Mark as completed
             migration.status = MigrationStatus.COMPLETED
             migration.completed_at = datetime.now(timezone.utc)
+
             result["success"] = True
             
             logger.info(f"✅ Migration {migration.migration_id} completed successfully")
+
             
         except Exception as e:
             migration.status = MigrationStatus.FAILED
             migration.error_message = str(e)
+
             result["error"] = str(e)
+
             
             logger.error(f"❌ Migration {migration.migration_id} failed: {e}")
+
             
         finally:
             result["duration"] = (datetime.now(timezone.utc) - start_time).total_seconds()
+
             await self._update_migration_status(migration)
+
             
         return result
     
@@ -415,7 +465,8 @@ class EnterpriseMigrationManager:
             """))
     
     async def _create_monetization_tables(self):
-        """Create monetization tables."""
+        """
+        Create monetization tables."""
         async with self._connection_manager.get_postgres_session() as session:
             # Revenue tracking table
             await session.execute(text("""
@@ -434,7 +485,8 @@ class EnterpriseMigrationManager:
             """))
     
     async def _create_ai_analytics_tables(self):
-        """Create AI analytics tables."""
+        """
+        Create AI analytics tables."""
         async with self._connection_manager.get_postgres_session() as session:
             # AI analysis table
             await session.execute(text("""
@@ -451,7 +503,8 @@ class EnterpriseMigrationManager:
             """))
     
     async def _create_platform_integration_tables(self):
-        """Create platform integration tables."""
+        """
+        Create platform integration tables."""
         async with self._connection_manager.get_postgres_session() as session:
             # Platform integrations table
             await session.execute(text("""
@@ -470,12 +523,14 @@ class EnterpriseMigrationManager:
             """))
     
     def _resolve_migration_dependencies(self, migrations: List[MigrationRecord]) -> List[MigrationRecord]:
-        """Resolve migration dependencies and return sorted list."""
+        """
+        Resolve migration dependencies and return sorted list."""
         # Simple topological sort by priority for now
         return sorted(migrations, key=lambda m: m.priority.value, reverse=True)
     
     def _calculate_migration_checksum(self, migration: MigrationRecord) -> str:
-        """Calculate checksum for migration integrity."""
+        """
+        Calculate checksum for migration integrity."""
         content = f"{migration.migration_id}{migration.version}{migration.description}"
         return hashlib.sha256(content.encode()).hexdigest()
     
@@ -487,7 +542,8 @@ class EnterpriseMigrationManager:
         return None
     
     async def _update_migration_status(self, migration: MigrationRecord):
-        """Update migration status in database."""
+        """
+        Update migration status in database."""
         try:
             async with self._connection_manager.get_postgres_session() as session:
                 await session.execute(text("""
@@ -546,8 +602,11 @@ class EnterpriseMigrationManager:
     async def get_migration_status(self) -> Dict[str, Any]:
         """Get overall migration status."""
         completed = sum(1 for m in self._migration_history if m.status == MigrationStatus.COMPLETED)
+
         failed = sum(1 for m in self._migration_history if m.status == MigrationStatus.FAILED)
+
         pending = len(self._pending_migrations)
+
         
         return {
             "total_migrations": len(self._migration_history),
@@ -572,7 +631,8 @@ def get_migration_manager() -> EnterpriseMigrationManager:
 
 # Migration functions that were originally in database.schema
 async def create_tables():
-    """Create all database tables - consolidated from original database.schema."""
+    """
+        Create all database tables - consolidated from original database.schema."""
     logger.info("🏗️ Creating database tables...")
     
     # Register core schema migrations

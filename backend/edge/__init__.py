@@ -28,7 +28,7 @@ from .edge_intelligence_engine import (
     CreatorType,
     ContentFormat,
     ProcessingPriority,
-    PerformanceMetric,
+    # PerformanceMetric,  # Class doesn't exist
     create_edge_intelligence_engine
 )
 
@@ -36,13 +36,22 @@ from .edge_intelligence_engine import (
 from .edge_content_optimizer import (
     EdgeContentOptimizer,
     ContentOptimizationEngine,
-    MultiFormatProcessor,
-    QualityEnhancer,
     ContentFormat as ContentOptimizerFormat,
     DeviceType,
+    create_edge_content_optimizer
+)
+
+# Enterprise Content Processing Engine - Multi-format processing with ML
+from .content_processing_engine import (
+    MultiFormatProcessor,
+    QualityEnhancer,
     OptimizationStrategy,
     CompressionProfile,
-    create_edge_content_optimizer
+    ProcessingFormat,
+    CompressionAlgorithm,
+    QualityLevel,
+    ProcessingConfig,
+    ProcessingResult
 )
 
 # Edge MEC Enterprise - Consolidation Mobile Edge Computing (8 fichiers → 1)
@@ -235,7 +244,8 @@ from .edge_resource_manager import (
 # ============================================================================
 
 class IaCheriesEdgeComputingPlatform:
-    """Plateforme Edge Computing unifiée pour l'écosystème iacherie."""
+    """
+        Plateforme Edge Computing unifiée pour l'écosystème iacherie."""
     
     def __init__(self):
         # Composants consolidés
@@ -253,13 +263,16 @@ class IaCheriesEdgeComputingPlatform:
         self.gamification_engine = create_edge_gamification_engine()
         self.cache_intelligence = create_edge_cache_intelligence()
         self.resource_manager = create_edge_resource_manager()
+
         
         self.is_initialized = False
     
     async def initialize_platform(self) -> bool:
-        """Initialise la plateforme edge computing complète."""
+        """
+        Initialise la plateforme edge computing complète."""
         try:
             # Initialisation de tous les composants
+
             components = [
                 self.intelligence_engine,
                 self.content_optimizer,
@@ -280,6 +293,7 @@ class IaCheriesEdgeComputingPlatform:
             for component in components:
                 if hasattr(component, 'initialize'):
                     success = await component.initialize()
+
                     if not success:
                         return False
             
@@ -291,7 +305,8 @@ class IaCheriesEdgeComputingPlatform:
     
     async def process_creator_content(self, creator_id: str, creator_type: str, 
                                     content_data: dict) -> dict:
-        """Pipeline complet de traitement contenu créateur."""
+        """
+        Pipeline complet de traitement contenu créateur."""
         try:
             # 1. Intelligence IA
             ai_result = await self.intelligence_engine.process_multiformat_content(
@@ -299,29 +314,35 @@ class IaCheriesEdgeComputingPlatform:
             )
             
             # 2. Optimisation contenu
+
             optimized_content = await self.content_optimizer.optimize_content(
                 ai_result, creator_type
             )
             
             # 3. Allocation ressources
+
             resource_allocation = await self.resource_manager.allocate_resources_for_creator(
                 creator_id, creator_type, "content_processing"
             )
             
             # 4. Distribution multi-plateforme
+
             distribution_result = await self.distribution_gateway.distribute_content(
                 optimized_content, creator_id
             )
             
             # 5. Mise en cache intelligente
+
             cache_result = await self.cache_intelligence.store_content(
                 content_data['id'], optimized_content, content_data['type'], creator_id
             )
             
             # 6. Tracking gamification
+
             gamification_result = await self.gamification_engine.process_user_action(
                 creator_id, "content_published", content_data
             )
+
             
             return {
                 "ai_processing": ai_result,
@@ -359,7 +380,7 @@ __all__ = [
     "CreatorType",
     "ContentFormat",
     "ProcessingPriority",
-    "PerformanceMetric",
+    # "PerformanceMetric",  # Class doesn't exist
     "create_edge_intelligence_engine",
     
     # ⚡ Edge Content Optimizer

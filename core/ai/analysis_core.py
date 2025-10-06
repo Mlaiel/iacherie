@@ -1,4 +1,5 @@
-"""Intelligent Analysis Core - Enterprise AI Content Intelligence Engine
+"""
+Intelligent Analysis Core - Enterprise AI Content Intelligence Engine
 
 Central intelligent analysis core for advanced content understanding, semantic analysis,
 and business intelligence insights with enterprise AI capabilities.
@@ -30,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 # Analysis Types
 class AnalysisType(Enum):
-    """Content analysis types"""
+    """
+Content analysis types"""
     SEMANTIC = "semantic"
     SENTIMENT = "sentiment"
     TREND = "trend"
@@ -42,7 +44,8 @@ class AnalysisType(Enum):
 
 # Intelligence Levels
 class IntelligenceLevel(Enum):
-    """AI intelligence processing levels"""
+    """
+AI intelligence processing levels"""
     BASIC = "basic"           # Simple rule-based analysis
     STANDARD = "standard"     # ML-powered analysis
     ADVANCED = "advanced"     # Deep learning analysis
@@ -50,7 +53,8 @@ class IntelligenceLevel(Enum):
 
 # Confidence Levels
 class ConfidenceLevel(Enum):
-    """Analysis confidence levels"""
+    """
+Analysis confidence levels"""
     VERY_HIGH = "very_high"   # >95% confidence
     HIGH = "high"             # 85-95% confidence
     MEDIUM = "medium"         # 70-85% confidence
@@ -59,7 +63,8 @@ class ConfidenceLevel(Enum):
 
 # Insight Categories
 class InsightCategory(Enum):
-    """Business insight categories"""
+    """
+Business insight categories"""
     CONTENT_OPTIMIZATION = "content_optimization"
     AUDIENCE_TARGETING = "audience_targeting"
     MONETIZATION = "monetization"
@@ -70,7 +75,8 @@ class InsightCategory(Enum):
 
 @dataclass
 class AnalysisRequest:
-    """Content analysis request"""
+    """
+Content analysis request"""
     request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str = ""
     content_type: str = ""  # text, audio, video, image
@@ -85,7 +91,8 @@ class AnalysisRequest:
 
 @dataclass
 class SemanticAnalysis:
-    """Semantic analysis results"""
+    """
+Semantic analysis results"""
     content_id: str
     main_topics: List[Dict[str, float]] = field(default_factory=list)
     entities: List[Dict[str, Any]] = field(default_factory=list)
@@ -100,7 +107,8 @@ class SemanticAnalysis:
 
 @dataclass
 class SentimentAnalysis:
-    """Sentiment analysis results"""
+    """
+Sentiment analysis results"""
     content_id: str
     overall_sentiment: str = "neutral"  # positive, negative, neutral
     sentiment_score: float = 0.0  # -1.0 to 1.0
@@ -114,7 +122,8 @@ class SentimentAnalysis:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis results"""
+    """
+Trend analysis results"""
     content_id: str
     trending_topics: List[Dict[str, Any]] = field(default_factory=list)
     trend_alignment: float = 0.0
@@ -128,7 +137,8 @@ class TrendAnalysis:
 
 @dataclass
 class QualityAssessment:
-    """Content quality assessment"""
+    """
+Content quality assessment"""
     content_id: str
     overall_quality: float = 0.0  # 0.0 to 1.0
     quality_dimensions: Dict[str, float] = field(default_factory=dict)
@@ -141,7 +151,8 @@ class QualityAssessment:
 
 @dataclass
 class EngagementPrediction:
-    """Engagement prediction analysis"""
+    """
+Engagement prediction analysis"""
     content_id: str
     predicted_engagement: float = 0.0
     engagement_factors: Dict[str, float] = field(default_factory=dict)
@@ -154,7 +165,8 @@ class EngagementPrediction:
 
 @dataclass
 class BusinessInsight:
-    """Business intelligence insight"""
+    """
+Business intelligence insight"""
     insight_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     category: InsightCategory
     title: str = ""
@@ -170,7 +182,8 @@ class BusinessInsight:
 
 @dataclass
 class IntelligentAnalysisResult:
-    """Complete intelligent analysis result"""
+    """
+Complete intelligent analysis result"""
     request_id: str
     content_id: str
     analysis_timestamp: datetime = field(default_factory=datetime.utcnow)
@@ -208,7 +221,8 @@ class IntelligentAnalysisCore:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Intelligent Analysis Core"""
+        """
+Initialize Intelligent Analysis Core"""
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -254,7 +268,8 @@ class IntelligentAnalysisCore:
         self.logger.info("Intelligent Analysis Core initialized")
         
     def _initialize_models(self):
-        """Initialize AI models"""
+        """
+Initialize AI models"""
         try:
             # Initialize spaCy model
             if self.enable_spacy:
@@ -370,7 +385,8 @@ class IntelligentAnalysisCore:
                 del self.active_analyses[request.request_id]
                 
     async def _perform_analysis(self, request: AnalysisRequest) -> IntelligentAnalysisResult:
-        """Perform the actual analysis"""
+        """
+Perform the actual analysis"""
         
         result = IntelligentAnalysisResult(
             request_id=request.request_id,
@@ -458,7 +474,8 @@ class IntelligentAnalysisCore:
             return result
             
     async def _preprocess_content(self, content_data: Any, content_type: str) -> str:
-        """Preprocess content for analysis"""
+        """
+Preprocess content for analysis"""
         
         if content_type == "text":
             return str(content_data)
@@ -475,7 +492,8 @@ class IntelligentAnalysisCore:
             return str(content_data)
             
     async def _assess_data_quality(self, content: str) -> float:
-        """Assess content data quality"""
+        """
+Assess content data quality"""
         
         quality_score = 1.0
         
@@ -499,7 +517,8 @@ class IntelligentAnalysisCore:
     async def _perform_semantic_analysis(
         self, content: str, request: AnalysisRequest
     ) -> SemanticAnalysis:
-        """Perform semantic analysis"""
+        """
+Perform semantic analysis"""
         
         analysis = SemanticAnalysis(content_id=request.content_id)
         
@@ -595,7 +614,8 @@ class IntelligentAnalysisCore:
     async def _perform_sentiment_analysis(
         self, content: str, request: AnalysisRequest
     ) -> SentimentAnalysis:
-        """Perform sentiment analysis"""
+        """
+Perform sentiment analysis"""
         
         analysis = SentimentAnalysis(content_id=request.content_id)
         
@@ -685,7 +705,8 @@ class IntelligentAnalysisCore:
     async def _perform_trend_analysis(
         self, content: str, request: AnalysisRequest
     ) -> TrendAnalysis:
-        """Perform trend analysis"""
+        """
+Perform trend analysis"""
         
         analysis = TrendAnalysis(content_id=request.content_id)
         
@@ -786,7 +807,8 @@ class IntelligentAnalysisCore:
     async def _perform_quality_assessment(
         self, content: str, request: AnalysisRequest
     ) -> QualityAssessment:
-        """Perform content quality assessment"""
+        """
+Perform content quality assessment"""
         
         assessment = QualityAssessment(content_id=request.content_id)
         
@@ -938,7 +960,8 @@ class IntelligentAnalysisCore:
     async def _perform_engagement_prediction(
         self, content: str, request: AnalysisRequest
     ) -> EngagementPrediction:
-        """Perform engagement prediction"""
+        """
+Perform engagement prediction"""
         
         prediction = EngagementPrediction(content_id=request.content_id)
         
@@ -1093,7 +1116,8 @@ class IntelligentAnalysisCore:
     async def _generate_business_insights(
         self, result: IntelligentAnalysisResult, request: AnalysisRequest
     ) -> List[BusinessInsight]:
-        """Generate business intelligence insights"""
+        """
+Generate business intelligence insights"""
         
         insights = []
         
@@ -1201,7 +1225,8 @@ class IntelligentAnalysisCore:
     async def _generate_optimization_recommendations(
         self, result: IntelligentAnalysisResult
     ) -> List[str]:
-        """Generate optimization recommendations"""
+        """
+Generate optimization recommendations"""
         
         recommendations = []
         
@@ -1225,7 +1250,8 @@ class IntelligentAnalysisCore:
         return recommendations[:10]  # Limit to top 10
         
     async def _generate_risk_assessments(self, result: IntelligentAnalysisResult) -> List[str]:
-        """Generate risk assessments"""
+        """
+Generate risk assessments"""
         
         risks = []
         
@@ -1245,7 +1271,8 @@ class IntelligentAnalysisCore:
         return risks
         
     async def _generate_opportunity_alerts(self, result: IntelligentAnalysisResult) -> List[str]:
-        """Generate opportunity alerts"""
+        """
+Generate opportunity alerts"""
         
         opportunities = []
         
@@ -1265,7 +1292,8 @@ class IntelligentAnalysisCore:
         return opportunities
         
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word (simplified)"""
+        """
+Count syllables in a word (simplified)"""
         word = word.lower()
         vowels = "aeiouy"
         syllable_count = 0
@@ -1284,7 +1312,8 @@ class IntelligentAnalysisCore:
         return max(syllable_count, 1)
         
     def _detect_formal_tone(self, content: str) -> float:
-        """Detect formal tone in content"""
+        """
+Detect formal tone in content"""
         formal_indicators = [
             "furthermore", "therefore", "consequently", "nevertheless",
             "however", "moreover", "nonetheless", "thus", "hence"
@@ -1293,7 +1322,8 @@ class IntelligentAnalysisCore:
         return min(score / max(len(content.split()) / 100, 1), 1.0)
         
     def _detect_casual_tone(self, content: str) -> float:
-        """Detect casual tone in content"""
+        """
+Detect casual tone in content"""
         casual_indicators = [
             "hey", "hi", "yeah", "okay", "cool", "awesome", "great",
             "you're", "i'm", "we're", "isn't", "won't", "can't"
@@ -1302,7 +1332,8 @@ class IntelligentAnalysisCore:
         return min(score / max(len(content.split()) / 50, 1), 1.0)
         
     def _detect_professional_tone(self, content: str) -> float:
-        """Detect professional tone in content"""
+        """
+Detect professional tone in content"""
         professional_indicators = [
             "strategy", "analysis", "solution", "implementation", "optimize",
             "efficiency", "performance", "results", "objectives", "goals"
@@ -1311,19 +1342,22 @@ class IntelligentAnalysisCore:
         return min(score / max(len(content.split()) / 100, 1), 1.0)
         
     def _generate_cache_key(self, request: AnalysisRequest) -> str:
-        """Generate cache key for request"""
+        """
+Generate cache key for request"""
         content_hash = hashlib.md5(str(request.content_data).encode()).hexdigest()
         analysis_types = sorted([t.value for t in request.analysis_types])
         key_data = f"{content_hash}_{request.intelligence_level.value}_{'_'.join(analysis_types)}"
         return hashlib.md5(key_data.encode()).hexdigest()
         
     def _is_cache_valid(self, result: IntelligentAnalysisResult) -> bool:
-        """Check if cached result is still valid"""
+        """
+Check if cached result is still valid"""
         age = (datetime.utcnow() - result.analysis_timestamp).total_seconds()
         return age < self.cache_ttl
         
     def _calculate_overall_confidence(self, result: IntelligentAnalysisResult) -> float:
-        """Calculate overall confidence score"""
+        """
+Calculate overall confidence score"""
         confidences = []
         
         if result.sentiment_analysis:
@@ -1338,7 +1372,8 @@ class IntelligentAnalysisCore:
     def _calculate_analysis_completeness(
         self, result: IntelligentAnalysisResult, request: AnalysisRequest
     ) -> float:
-        """Calculate analysis completeness"""
+        """
+Calculate analysis completeness"""
         requested_analyses = len(request.analysis_types)
         completed_analyses = 0
         
@@ -1356,7 +1391,8 @@ class IntelligentAnalysisCore:
         return completed_analyses / max(requested_analyses, 1)
         
     def _update_analysis_statistics(self, result: IntelligentAnalysisResult, processing_time: float):
-        """Update analysis statistics"""
+        """
+Update analysis statistics"""
         self.analysis_stats["total_analyses"] += 1
         
         if not result.errors:
@@ -1378,7 +1414,8 @@ class IntelligentAnalysisCore:
             )
             
     async def get_analysis_status(self, request_id: str) -> Optional[Dict[str, Any]]:
-        """Get analysis status"""
+        """
+Get analysis status"""
         if request_id in self.active_analyses:
             task = self.active_analyses[request_id]
             return {
@@ -1389,7 +1426,8 @@ class IntelligentAnalysisCore:
         return None
         
     def get_analysis_statistics(self) -> Dict[str, Any]:
-        """Get analysis statistics"""
+        """
+Get analysis statistics"""
         success_rate = 0
         if self.analysis_stats["total_analyses"] > 0:
             success_rate = (

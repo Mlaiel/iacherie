@@ -24,7 +24,8 @@ from ._base_generator import BaseContentGenerator, ContentGenerationContext
 
 
 class AnimationType(Enum):
-    """Types of animations supported"""
+    """
+        Types of animations supported"""
     FACIAL = "facial"
     BODY = "body"
     GESTURE = "gesture"
@@ -100,7 +101,8 @@ class AnimationSequence:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def add_keyframe(self, keyframe: KeyFrame) -> None:
-        """Add keyframe to sequence"""
+        """
+        Add keyframe to sequence"""
         self.keyframes.append(keyframe)
         self.keyframes.sort(key=lambda k: k.timestamp)
     
@@ -165,9 +167,11 @@ class AnimationConfig:
         self.export_format = kwargs.get('export_format', 'fbx')  # fbx, bvh, json
         self.include_metadata = kwargs.get('include_metadata', True)
         self.compress_animation = kwargs.get('compress_animation', True)
+
         
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""
+        """
+        Convert configuration to dictionary"""
         return {
             "animation_type": self.animation_type.value if isinstance(self.animation_type, AnimationType) else self.animation_type,
             "style": self.style.value if isinstance(self.style, AnimationStyle) else self.style,
@@ -209,9 +213,11 @@ class AvatarAnimationSystem(BaseContentGenerator):
         self._setup_animation_engine()
         self._setup_motion_library()
         self._setup_blend_shapes()
+
         
     def _setup_animation_engine(self) -> None:
-        """Setup animation generation engine"""
+        """
+        Setup animation generation engine"""
         try:
             # Initialize animation models
             self.models = {
@@ -242,9 +248,11 @@ class AvatarAnimationSystem(BaseContentGenerator):
             }
             
             self.logger.info("Animation engine initialized successfully")
+
             
         except Exception as e:
             self.logger.error(f"Failed to initialize animation engine: {str(e)}")
+
             raise
     
     def _setup_motion_library(self) -> None:
@@ -298,7 +306,8 @@ class AvatarAnimationSystem(BaseContentGenerator):
         }
     
     def _setup_blend_shapes(self) -> None:
-        """Setup facial blend shape definitions"""
+        """
+        Setup facial blend shape definitions"""
         self.blend_shapes_library = {
             # Basic expressions
             'smile': {
@@ -362,18 +371,23 @@ class AvatarAnimationSystem(BaseContentGenerator):
             Dict containing animation data and metadata
         """
         start_time = datetime.now()
+
         
         try:
             # Create animation config
+
             config = self._create_config_from_options(prompt, options or {})
             
             # Generate animation sequence
+
             animation_data = await self._generate_animation_sequence(prompt, config, context)
             
             # Post-process animation
+
             processed_data = await self._post_process_animation(animation_data, config)
             
             # Package results
+
             result = {
                 'content': processed_data,
                 'metadata': {
@@ -391,25 +405,31 @@ class AvatarAnimationSystem(BaseContentGenerator):
             }
             
             self.logger.info(f"Animation generated successfully in {result['metadata']['generation_time']:.2f}s")
+
             return result
             
         except Exception as e:
             self.logger.error(f"Animation generation failed: {str(e)}")
+
             raise
     
     def _create_config_from_options(self, prompt: str, options: Dict[str, Any]) -> AnimationConfig:
         """Create animation config from prompt and options"""
         # Extract animation type from prompt
+
         extracted_config = self._extract_animation_type_from_prompt(prompt)
         
         # Merge with options
+
         config_data = {**extracted_config, **options}
         
         return AnimationConfig(**config_data)
     
     def _extract_animation_type_from_prompt(self, prompt: str) -> Dict[str, Any]:
-        """Extract animation parameters from text prompt"""
+        """
+        Extract animation parameters from text prompt"""
         prompt_lower = prompt.lower()
+
         config = {}
         
         # Animation type detection
@@ -428,6 +448,7 @@ class AvatarAnimationSystem(BaseContentGenerator):
             config['animation_type'] = AnimationType.IDLE
         
         # Emotion detection
+
         emotion_keywords = {
             'happy': ['happy', 'smile', 'joy', 'cheerful'],
             'sad': ['sad', 'cry', 'tear', 'melancholy'],
@@ -443,6 +464,7 @@ class AvatarAnimationSystem(BaseContentGenerator):
         for emotion, keywords in emotion_keywords.items():
             if any(word in prompt_lower for word in keywords):
                 config['emotion'] = EmotionType(emotion)
+
                 break
         
         # Style detection
@@ -456,6 +478,7 @@ class AvatarAnimationSystem(BaseContentGenerator):
             config['style'] = AnimationStyle.CASUAL
         
         # Duration detection
+
         duration_keywords = {
             'quick': 1.0, 'fast': 2.0, 'brief': 1.5,
             'slow': 8.0, 'long': 10.0, 'extended': 15.0,
@@ -475,22 +498,27 @@ class AvatarAnimationSystem(BaseContentGenerator):
         config: AnimationConfig,
         context: ContentGenerationContext
     ) -> Dict[str, Any]:
-        """Generate animation sequence based on configuration"""
+        """
+        Generate animation sequence based on configuration"""
         
         # Create main animation sequence
+
         main_sequence = await self._create_main_sequence(prompt, config)
         
         # Add facial animations if needed
+
         facial_sequence = None
         if config.animation_type in [AnimationType.FACIAL, AnimationType.EMOTION, AnimationType.SPEAKING]:
             facial_sequence = await self._create_facial_sequence(prompt, config)
         
         # Add body animations if needed
+
         body_sequence = None
         if config.animation_type in [AnimationType.BODY, AnimationType.GESTURE]:
             body_sequence = await self._create_body_sequence(prompt, config)
         
         # Combine sequences
+
         animation_data = {
             'sequences': [main_sequence],
             'facial_sequence': facial_sequence,
@@ -502,8 +530,10 @@ class AvatarAnimationSystem(BaseContentGenerator):
         return animation_data
     
     async def _create_main_sequence(self, prompt: str, config: AnimationConfig) -> AnimationSequence:
-        """Create main animation sequence"""
+        """
+        Create main animation sequence"""
         await asyncio.sleep(0.1)  # Simulate processing
+
         
         sequence = AnimationSequence(
             name=f"{config.animation_type.value}_main",
@@ -522,6 +552,7 @@ class AvatarAnimationSystem(BaseContentGenerator):
         else:
             # Default simple animation
             await self._add_basic_keyframes(sequence, config)
+
         
         return sequence
     
@@ -531,6 +562,7 @@ class AvatarAnimationSystem(BaseContentGenerator):
             return None
         
         await asyncio.sleep(0.05)  # Simulate processing
+
         
         sequence = AnimationSequence(
             name="facial_animation",
@@ -544,6 +576,7 @@ class AvatarAnimationSystem(BaseContentGenerator):
         # Add speech animation if needed
         if config.speech_text and config.lip_sync:
             await self._add_speech_animation(sequence, config)
+
         
         return sequence
     
@@ -553,6 +586,7 @@ class AvatarAnimationSystem(BaseContentGenerator):
             return None
         
         await asyncio.sleep(0.05)  # Simulate processing
+
         
         sequence = AnimationSequence(
             name="body_animation",
@@ -562,18 +596,23 @@ class AvatarAnimationSystem(BaseContentGenerator):
         
         # Add body movement keyframes
         await self._add_body_movement_keyframes(sequence, config)
+
         
         return sequence
     
     async def _add_idle_keyframes(self, sequence: AnimationSequence, config: AnimationConfig) -> None:
         """Add subtle idle animation keyframes"""
         frame_count = int(config.duration * config.fps)
+
         
         for i in range(0, frame_count, 30):  # Every second
+
             timestamp = i / config.fps
             
             # Subtle breathing animation
+
             breathing_offset = math.sin(timestamp * 0.3) * 0.02
+
             
             keyframe = KeyFrame(
                 timestamp=timestamp,
@@ -584,15 +623,18 @@ class AvatarAnimationSystem(BaseContentGenerator):
                 },
                 easing="ease_in_out"
             )
+
             
             sequence.add_keyframe(keyframe)
     
     async def _add_gesture_keyframes(self, sequence: AnimationSequence, config: AnimationConfig) -> None:
         """Add gesture animation keyframes"""
         gesture_data = self.motion_library.get(config.body_movement.value, {})
+
         
         if config.body_movement == BodyMovement.HAND_WAVE:
             # Hand wave gesture
+
             keyframes = [
                 (0.0, {'right_arm_raise': 0.0, 'hand_rotation': 0.0}),
                 (0.5, {'right_arm_raise': 0.8, 'hand_rotation': 0.0}),
@@ -602,6 +644,7 @@ class AvatarAnimationSystem(BaseContentGenerator):
             ]
         elif config.body_movement == BodyMovement.NODDING:
             # Nodding gesture
+
             keyframes = [
                 (0.0, {'head_rotation_x': 0.0}),
                 (0.3, {'head_rotation_x': 0.2}),
@@ -611,6 +654,7 @@ class AvatarAnimationSystem(BaseContentGenerator):
             ]
         else:
             # Default gesture
+
             keyframes = [(0.0, {}), (config.duration, {})]
         
         for timestamp, values in keyframes:
@@ -619,6 +663,7 @@ class AvatarAnimationSystem(BaseContentGenerator):
                 values=values,
                 easing="ease_in_out"
             )
+
             sequence.add_keyframe(keyframe)
     
     async def _add_emotion_keyframes(self, sequence: AnimationSequence, config: AnimationConfig) -> None:
@@ -626,8 +671,11 @@ class AvatarAnimationSystem(BaseContentGenerator):
         emotion_data = self.motion_library.get(f"{config.emotion.value}_expression", {})
         
         # Basic emotion keyframes
+
         start_values = {}
+
         peak_values = {}
+
         end_values = {}
         
         if config.emotion == EmotionType.HAPPY:
@@ -638,6 +686,7 @@ class AvatarAnimationSystem(BaseContentGenerator):
             peak_values = {'body_energy': 0.3, 'micro_bounce': 0.1}
         
         # Create emotion progression
+
         keyframes = [
             (0.0, start_values),
             (config.duration * 0.3, peak_values),
@@ -650,28 +699,38 @@ class AvatarAnimationSystem(BaseContentGenerator):
                 values=values,
                 easing="ease_in_out"
             )
+
             sequence.add_keyframe(keyframe)
     
     async def _add_basic_keyframes(self, sequence: AnimationSequence, config: AnimationConfig) -> None:
         """Add basic animation keyframes"""
         # Simple start and end keyframes
+
         start_keyframe = KeyFrame(timestamp=0.0, values={})
+
         end_keyframe = KeyFrame(timestamp=config.duration, values={})
+
         
         sequence.add_keyframe(start_keyframe)
         sequence.add_keyframe(end_keyframe)
     
     async def _add_emotion_blend_shapes(self, sequence: AnimationSequence, config: AnimationConfig) -> None:
-        """Add emotion-based facial blend shapes"""
+        """
+        Add emotion-based facial blend shapes"""
         if config.emotion == EmotionType.NEUTRAL:
             return
+
         
         emotion_shapes = self._get_emotion_blend_shapes(config.emotion, config.intensity)
         
         # Emotion build-up
+
         build_time = config.duration * 0.2
+
         hold_time = config.duration * 0.6
+
         fade_time = config.duration * 0.2
+
         
         keyframes = [
             (0.0, {shape: 0.0 for shape in emotion_shapes}),
@@ -686,6 +745,7 @@ class AvatarAnimationSystem(BaseContentGenerator):
                 values=values,
                 easing="ease_in_out"
             )
+
             sequence.add_keyframe(keyframe)
     
     async def _add_speech_animation(self, sequence: AnimationSequence, config: AnimationConfig) -> None:
@@ -694,38 +754,49 @@ class AvatarAnimationSystem(BaseContentGenerator):
             return
         
         # Simple phoneme-to-viseme mapping
+
         phoneme_timeline = self._generate_phoneme_timeline(config.speech_text, config.speech_speed)
+
         
         for timestamp, phoneme in phoneme_timeline:
             viseme_shape = self._phoneme_to_viseme(phoneme)
+
             if viseme_shape:
                 keyframe = KeyFrame(
                     timestamp=timestamp,
                     values={f'viseme_{phoneme}': 0.8},
                     easing="linear"
                 )
+
                 sequence.add_keyframe(keyframe)
     
     async def _add_body_movement_keyframes(self, sequence: AnimationSequence, config: AnimationConfig) -> None:
         """Add body movement animation keyframes"""
         movement_data = self.motion_library.get(config.body_movement.value, {})
+
         
         if not movement_data:
             return
+
         
         movements = movement_data.get('movements', [])
+
         intensity = movement_data.get('intensity', 0.5) * config.intensity
         
         # Create movement keyframes
         for i, movement in enumerate(movements):
             timestamp = (i / len(movements)) * config.duration
+
             values = self._get_movement_values(movement, intensity)
+
+
             
             keyframe = KeyFrame(
                 timestamp=timestamp,
                 values=values,
                 easing="ease_in_out"
             )
+
             sequence.add_keyframe(keyframe)
     
     def _get_emotion_blend_shapes(self, emotion: EmotionType, intensity: float) -> Dict[str, float]:
@@ -738,15 +809,20 @@ class AvatarAnimationSystem(BaseContentGenerator):
             EmotionType.FEARFUL: {'eye_widen': 0.8, 'mouth_tension': 0.4},
             EmotionType.DISGUSTED: {'nose_wrinkle': 0.7, 'upper_lip_raise': 0.6}
         }
+
         
         base_shapes = emotion_mappings.get(emotion, {})
         return {shape: value * intensity for shape, value in base_shapes.items()}
     
     def _generate_phoneme_timeline(self, text: str, speech_speed: float) -> List[Tuple[float, str]]:
-        """Generate phoneme timeline for speech"""
+        """
+        Generate phoneme timeline for speech"""
         # Simplified phoneme generation
+
         words = text.split()
+
         timeline = []
+
         current_time = 0.0
         
         for word in words:
@@ -755,13 +831,16 @@ class AvatarAnimationSystem(BaseContentGenerator):
             for char in word.lower():
                 if char in 'aeiou':
                     timeline.append((current_time, char))
+
                 current_time += word_duration / len(word)
+
             current_time += 0.1  # Pause between words
         
         return timeline
     
     def _phoneme_to_viseme(self, phoneme: str) -> Optional[str]:
-        """Map phoneme to viseme shape"""
+        """
+        Map phoneme to viseme shape"""
         phoneme_map = {
             'a': 'viseme_a', 'e': 'viseme_e', 'i': 'viseme_i',
             'o': 'viseme_o', 'u': 'viseme_u'
@@ -769,7 +848,8 @@ class AvatarAnimationSystem(BaseContentGenerator):
         return phoneme_map.get(phoneme)
     
     def _get_movement_values(self, movement: str, intensity: float) -> Dict[str, float]:
-        """Get animation values for movement"""
+        """
+        Get animation values for movement"""
         movement_mappings = {
             'right_hand_raise': {'right_shoulder_lift': 0.8 * intensity},
             'wave_motion': {'right_hand_wave': 0.6 * intensity},
@@ -784,7 +864,8 @@ class AvatarAnimationSystem(BaseContentGenerator):
         return movement_mappings.get(movement, {})
     
     async def _post_process_animation(self, animation_data: Dict[str, Any], config: AnimationConfig) -> bytes:
-        """Post-process and export animation data"""
+        """
+        Post-process and export animation data"""
         await asyncio.sleep(0.1)  # Simulate processing
         
         # In production, this would:
@@ -792,9 +873,8 @@ class AvatarAnimationSystem(BaseContentGenerator):
         # - Apply compression
         # - Export to requested format (FBX, BVH, etc.)
         # - Optimize file size
-        
-        # Mock processed animation data
         processed_data = json.dumps(animation_data).encode('utf-8')
+
         
         self.logger.info(f"Post-processed animation ({len(processed_data)} bytes)")
         return processed_data
@@ -805,12 +885,15 @@ class AvatarAnimationSystem(BaseContentGenerator):
             return False
         
         # Check required fields
+
         required_fields = ['content', 'metadata']
         if not all(field in content for field in required_fields):
             return False
         
         # Check metadata
+
         metadata = content.get('metadata', {})
+
         required_metadata = ['type', 'animation_type', 'duration', 'fps']
         if not all(field in metadata for field in required_metadata):
             return False
@@ -822,7 +905,8 @@ class AvatarAnimationSystem(BaseContentGenerator):
         return True
     
     def _supports_content_type(self, content_type: str) -> bool:
-        """Check if this generator supports the content type"""
+        """
+        Check if this generator supports the content type"""
         supported_types = [
             'avatar_animation',
             'facial_animation',

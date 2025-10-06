@@ -36,7 +36,8 @@ logger = logging.getLogger(__name__)
 # =============================================================================
 
 class DeFiProtocol(Enum):
-    """Supported DeFi protocols"""
+    """
+        Supported DeFi protocols"""
     UNISWAP_V3 = "uniswap_v3"
     UNISWAP_V2 = "uniswap_v2"
     SUSHISWAP = "sushiswap"
@@ -96,7 +97,8 @@ class DeFiProtocolConfig:
 
 @dataclass
 class YieldFarmManager:
-    """Yield farming position manager"""
+    """
+        Yield farming position manager"""
     farm_id: str
     protocol: DeFiProtocol
     strategy: YieldStrategy
@@ -112,7 +114,8 @@ class YieldFarmManager:
 
 @dataclass
 class FlashLoanManager:
-    """Flash loan execution manager"""
+    """
+        Flash loan execution manager"""
     loan_id: str
     protocol: DeFiProtocol
     amount: Decimal
@@ -128,7 +131,8 @@ class FlashLoanManager:
 
 @dataclass
 class LiquidityPosition:
-    """Liquidity pool position"""
+    """
+        Liquidity pool position"""
     position_id: str
     protocol: DeFiProtocol
     pool_address: str
@@ -145,7 +149,8 @@ class LiquidityPosition:
 
 @dataclass
 class DeFiPortfolio:
-    """User's DeFi portfolio"""
+    """
+        User's DeFi portfolio"""
     user_address: str
     total_value_locked: Decimal
     total_rewards_earned: Decimal
@@ -161,7 +166,8 @@ class DeFiPortfolio:
 # =============================================================================
 
 class DeFiIntegrator:
-    """Enterprise DeFi protocol integrator"""
+    """
+        Enterprise DeFi protocol integrator"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -173,7 +179,8 @@ class DeFiIntegrator:
         self.price_feeds: Dict[str, Decimal] = {}
         
     async def initialize(self) -> bool:
-        """Initialize DeFi integrator"""
+        """
+        Initialize DeFi integrator"""
         try:
             logger.info("Initializing DeFi Integration Hub...")
             
@@ -185,12 +192,15 @@ class DeFiIntegrator:
             
             # Setup yield strategies
             await self._setup_yield_strategies()
+
             
             logger.info("DeFi Integration Hub initialized successfully")
+
             return True
             
         except Exception as e:
             logger.error(f"Error initializing DeFi integrator: {str(e)}")
+
             return False
 
     async def _setup_protocol_configs(self):
@@ -239,6 +249,7 @@ class DeFiIntegrator:
                 max_slippage=Decimal("0.5"),
                 gas_estimate=300000
             )
+
             
         except Exception as e:
             logger.error(f"Error setting up protocol configs: {str(e)}")
@@ -247,6 +258,7 @@ class DeFiIntegrator:
         """Initialize token price feeds"""
         try:
             # Simulate price feeds (in production, would connect to Chainlink or other oracles)
+
             self.price_feeds = {
                 "USDC": Decimal("1.00"),
                 "USDT": Decimal("1.00"),
@@ -279,6 +291,8 @@ class DeFiIntegrator:
         try:
             if protocol not in self.protocols:
                 raise ValueError(f"Unsupported protocol: {protocol}")
+
+
             
             protocol_config = self.protocols[protocol]
             
@@ -291,10 +305,14 @@ class DeFiIntegrator:
             estimated_apy = await self._calculate_yield_apy(protocol, strategy, token_pair)
             
             # Assess risk level
+
             risk_level = await self._assess_strategy_risk(protocol, strategy)
             
             # Create yield farm position
+
             farm_id = str(uuid.uuid4())
+
+
             farm = YieldFarmManager(
                 farm_id=farm_id,
                 protocol=protocol,
@@ -302,22 +320,27 @@ class DeFiIntegrator:
                 token_pair=token_pair,
                 deposited_amount=amount,
                 current_value=amount,  # Initially same as deposited
+
                 accumulated_rewards=Decimal('0'),
                 apy=estimated_apy,
                 risk_level=risk_level,
                 status=PositionStatus.ACTIVE
             )
+
             
             self.yield_farms[farm_id] = farm
             
             # Update user portfolio
             await self._update_user_portfolio(user_address, farm_id, "yield_farm")
+
             
             logger.info(f"Yield farm position created: {farm_id}")
+
             return farm_id
             
         except Exception as e:
             logger.error(f"Error creating yield farm position: {str(e)}")
+
             raise
 
     async def _calculate_yield_apy(
@@ -329,6 +352,8 @@ class DeFiIntegrator:
         """Calculate estimated APY for yield strategy"""
         try:
             # Base APYs for different protocols (simplified)
+
+
             base_apys = {
                 DeFiProtocol.UNISWAP_V3: Decimal("15.0"),
                 DeFiProtocol.COMPOUND: Decimal("5.0"),
@@ -338,6 +363,7 @@ class DeFiIntegrator:
             }
             
             # Strategy multipliers
+
             strategy_multipliers = {
                 YieldStrategy.SIMPLE_STAKING: Decimal("1.0"),
                 YieldStrategy.LIQUIDITY_MINING: Decimal("1.5"),
@@ -345,12 +371,18 @@ class DeFiIntegrator:
                 YieldStrategy.LEVERAGED_FARMING: Decimal("2.0"),
                 YieldStrategy.DELTA_NEUTRAL: Decimal("0.8")
             }
+
             
             base_apy = base_apys.get(protocol, Decimal("5.0"))
+
+
             multiplier = strategy_multipliers.get(strategy, Decimal("1.0"))
             
             # Token pair bonus (more popular pairs might have lower APY due to competition)
+
+
             pair_bonus = Decimal("1.0")
+
             if "USDC" in token_pair or "USDT" in token_pair:
                 pair_bonus = Decimal("0.9")  # Stable pairs typically have lower yield
             
@@ -358,6 +390,7 @@ class DeFiIntegrator:
             
         except Exception as e:
             logger.error(f"Error calculating yield APY: {str(e)}")
+
             return Decimal("5.0")  # Default APY
 
     async def _assess_strategy_risk(
@@ -368,6 +401,7 @@ class DeFiIntegrator:
         """Assess risk level of yield strategy"""
         try:
             # Protocol risk scores
+
             protocol_risks = {
                 DeFiProtocol.COMPOUND: 1,  # Low risk
                 DeFiProtocol.AAVE: 1,
@@ -378,6 +412,7 @@ class DeFiIntegrator:
             }
             
             # Strategy risk scores
+
             strategy_risks = {
                 YieldStrategy.SIMPLE_STAKING: 1,
                 YieldStrategy.LIQUIDITY_MINING: 2,
@@ -386,9 +421,14 @@ class DeFiIntegrator:
                 YieldStrategy.DELTA_NEUTRAL: 3,
                 YieldStrategy.ARBITRAGE: 3
             }
+
             
             protocol_risk = protocol_risks.get(protocol, 2)
+
+
             strategy_risk = strategy_risks.get(strategy, 2)
+
+
             
             total_risk = protocol_risk + strategy_risk
             
@@ -403,6 +443,7 @@ class DeFiIntegrator:
                 
         except Exception as e:
             logger.error(f"Error assessing strategy risk: {str(e)}")
+
             return RiskLevel.MEDIUM
 
     async def execute_flash_loan(
@@ -417,23 +458,33 @@ class DeFiIntegrator:
         try:
             if protocol not in self.protocols:
                 raise ValueError(f"Unsupported protocol: {protocol}")
+
+
             
             protocol_config = self.protocols[protocol]
             
             # Calculate flash loan fee
+
             fee_percentage = protocol_config.fee_structure.get("flash_loan", Decimal("0.09"))
+
+
             fee = amount * (fee_percentage / Decimal("100"))
             
             # Estimate profit potential
+
             expected_profit = await self._estimate_flash_loan_profit(
                 amount, token, execution_strategy
             )
+
             
             if expected_profit <= fee:
                 raise ValueError("Expected profit is less than flash loan fee")
             
             # Create flash loan record
+
             loan_id = str(uuid.uuid4())
+
+
             flash_loan = FlashLoanManager(
                 loan_id=loan_id,
                 protocol=protocol,
@@ -444,23 +495,29 @@ class DeFiIntegrator:
                 expected_profit=expected_profit,
                 status=FlashLoanStatus.INITIATED
             )
+
             
             self.flash_loans[loan_id] = flash_loan
             
             # Execute flash loan strategy
+
             success = await self._execute_flash_loan_strategy(loan_id)
+
             
             if success:
                 flash_loan.status = FlashLoanStatus.COMPLETED
                 logger.info(f"Flash loan completed successfully: {loan_id}")
+
             else:
                 flash_loan.status = FlashLoanStatus.FAILED
                 logger.warning(f"Flash loan failed: {loan_id}")
+
             
             return loan_id
             
         except Exception as e:
             logger.error(f"Error executing flash loan: {str(e)}")
+
             raise
 
     async def _estimate_flash_loan_profit(
@@ -475,15 +532,19 @@ class DeFiIntegrator:
             if strategy == "arbitrage":
                 # Assume 0.5% arbitrage opportunity
                 return amount * Decimal("0.005")
+
             elif strategy == "liquidation":
                 # Assume 5% liquidation bonus
                 return amount * Decimal("0.05")
+
             else:
                 # Conservative estimate
                 return amount * Decimal("0.001")
+
                 
         except Exception as e:
             logger.error(f"Error estimating flash loan profit: {str(e)}")
+
             return Decimal("0")
 
     async def _execute_flash_loan_strategy(self, loan_id: str) -> bool:
@@ -491,6 +552,7 @@ class DeFiIntegrator:
         try:
             if loan_id not in self.flash_loans:
                 return False
+
             
             flash_loan = self.flash_loans[loan_id]
             flash_loan.status = FlashLoanStatus.EXECUTED
@@ -501,21 +563,26 @@ class DeFiIntegrator:
             # Simulate profit/loss
             if flash_loan.execution_strategy == "arbitrage":
                 # 80% success rate for arbitrage
+
                 success = hash(loan_id) % 10 < 8
                 if success:
                     flash_loan.actual_profit = flash_loan.expected_profit * Decimal("0.9")
+
                 else:
                     flash_loan.actual_profit = -flash_loan.fee
             else:
                 flash_loan.actual_profit = flash_loan.expected_profit * Decimal("0.7")
+
             
             flash_loan.completed_at = datetime.utcnow()
+
             flash_loan.gas_used = 500000  # Simulated gas usage
             
             return flash_loan.actual_profit > 0
             
         except Exception as e:
             logger.error(f"Error executing flash loan strategy: {str(e)}")
+
             return False
 
     async def add_liquidity_position(
@@ -533,19 +600,29 @@ class DeFiIntegrator:
                 raise ValueError(f"Unsupported protocol: {protocol}")
             
             # Calculate pool address (simplified)
+
+
             pool_address = f"0x{hashlib.sha256(f'{token_a}_{token_b}_{protocol.value}'.encode()).hexdigest()[:40]}"
             
             # Calculate liquidity tokens received (simplified)
+
+
             total_value = (amount_a * self.price_feeds.get(token_a, Decimal("1"))) + \
                          (amount_b * self.price_feeds.get(token_b, Decimal("1")))
+
+
             
             liquidity_tokens = total_value  # Simplified 1:1 ratio
             
             # Estimate APY for liquidity provision
+
             estimated_apy = await self._calculate_liquidity_apy(protocol, token_a, token_b)
             
             # Create liquidity position
+
             position_id = str(uuid.uuid4())
+
+
             position = LiquidityPosition(
                 position_id=position_id,
                 protocol=protocol,
@@ -560,17 +637,21 @@ class DeFiIntegrator:
                 apy=estimated_apy,
                 status=PositionStatus.ACTIVE
             )
+
             
             self.liquidity_positions[position_id] = position
             
             # Update user portfolio
             await self._update_user_portfolio(user_address, position_id, "liquidity")
+
             
             logger.info(f"Liquidity position created: {position_id}")
+
             return position_id
             
         except Exception as e:
             logger.error(f"Error adding liquidity position: {str(e)}")
+
             raise
 
     async def _calculate_liquidity_apy(
@@ -582,6 +663,7 @@ class DeFiIntegrator:
         """Calculate estimated APY for liquidity provision"""
         try:
             # Base liquidity APYs
+
             base_apys = {
                 DeFiProtocol.UNISWAP_V3: Decimal("20.0"),
                 DeFiProtocol.UNISWAP_V2: Decimal("15.0"),
@@ -589,6 +671,7 @@ class DeFiIntegrator:
                 DeFiProtocol.CURVE: Decimal("10.0"),
                 DeFiProtocol.BALANCER: Decimal("12.0")
             }
+
             
             base_apy = base_apys.get(protocol, Decimal("10.0"))
             
@@ -596,14 +679,17 @@ class DeFiIntegrator:
             if token_a in ["USDC", "USDT", "DAI"] and token_b in ["USDC", "USDT", "DAI"]:
                 # Stable-stable pairs have lower but more stable yields
                 return base_apy * Decimal("0.4")
+
             elif "WETH" in [token_a, token_b]:
                 # ETH pairs typically have higher volume
                 return base_apy * Decimal("1.2")
+
             else:
                 return base_apy
                 
         except Exception as e:
             logger.error(f"Error calculating liquidity APY: {str(e)}")
+
             return Decimal("10.0")
 
     async def _update_user_portfolio(
@@ -625,17 +711,22 @@ class DeFiIntegrator:
                     average_apy=Decimal('0'),
                     risk_score=0.0
                 )
+
+
             
             portfolio = self.portfolios[user_address]
             portfolio.active_positions.append(position_id)
+
             
             if position_type == "yield_farm":
                 portfolio.yield_farms.append(position_id)
+
             elif position_type == "liquidity":
                 portfolio.liquidity_positions.append(position_id)
             
             # Recalculate portfolio metrics
             await self._recalculate_portfolio_metrics(user_address)
+
             
         except Exception as e:
             logger.error(f"Error updating user portfolio: {str(e)}")
@@ -645,12 +736,20 @@ class DeFiIntegrator:
         try:
             if user_address not in self.portfolios:
                 return
+
             
             portfolio = self.portfolios[user_address]
+
             
             total_value = Decimal('0')
+
+
             total_rewards = Decimal('0')
+
+
             weighted_apy = Decimal('0')
+
+
             total_risk_score = 0.0
             
             # Calculate from yield farms
@@ -662,6 +761,7 @@ class DeFiIntegrator:
                     weighted_apy += farm.apy * farm.current_value
                     
                     # Risk score mapping
+
                     risk_scores = {
                         RiskLevel.LOW: 1.0,
                         RiskLevel.MEDIUM: 2.0,
@@ -674,8 +774,10 @@ class DeFiIntegrator:
             for position_id in portfolio.liquidity_positions:
                 if position_id in self.liquidity_positions:
                     position = self.liquidity_positions[position_id]
+
                     position_value = (position.amount_a * self.price_feeds.get(position.token_a, Decimal("1"))) + \
                                    (position.amount_b * self.price_feeds.get(position.token_b, Decimal("1")))
+
                     
                     total_value += position_value
                     total_rewards += position.fees_earned
@@ -686,8 +788,10 @@ class DeFiIntegrator:
             portfolio.total_value_locked = total_value
             portfolio.total_rewards_earned = total_rewards
             portfolio.average_apy = weighted_apy / total_value if total_value > 0 else Decimal('0')
+
             portfolio.risk_score = total_risk_score / len(portfolio.active_positions) if portfolio.active_positions else 0.0
             portfolio.last_updated = datetime.utcnow()
+
             
         except Exception as e:
             logger.error(f"Error recalculating portfolio metrics: {str(e)}")
@@ -697,6 +801,8 @@ class DeFiIntegrator:
         try:
             if farm_id not in self.yield_farms:
                 raise ValueError(f"Yield farm not found: {farm_id}")
+
+
             
             farm = self.yield_farms[farm_id]
             
@@ -704,22 +810,31 @@ class DeFiIntegrator:
                 raise ValueError(f"Farm is not active: {farm.status}")
             
             # Calculate rewards since last harvest
+
             time_since_harvest = datetime.utcnow() - (farm.last_harvest or farm.created_at)
+
+
             days_since_harvest = time_since_harvest.total_seconds() / 86400
             
             # Calculate daily rewards
+
             daily_reward_rate = farm.apy / Decimal('365') / Decimal('100')
+
+
             new_rewards = farm.current_value * daily_reward_rate * Decimal(str(days_since_harvest))
             
             # Update farm
             farm.accumulated_rewards += new_rewards
             farm.last_harvest = datetime.utcnow()
+
             
             logger.info(f"Harvested {new_rewards} rewards from farm {farm_id}")
+
             return new_rewards
             
         except Exception as e:
             logger.error(f"Error harvesting yield rewards: {str(e)}")
+
             raise
 
     async def get_defi_analytics(self, user_address: Optional[str] = None) -> Dict[str, Any]:
@@ -727,6 +842,7 @@ class DeFiIntegrator:
         try:
             if user_address and user_address in self.portfolios:
                 # User-specific analytics
+
                 portfolio = self.portfolios[user_address]
                 
                 return {
@@ -743,30 +859,43 @@ class DeFiIntegrator:
             
             else:
                 # Platform-wide analytics
+
                 total_yield_farms = len(self.yield_farms)
+
+
                 total_liquidity_positions = len(self.liquidity_positions)
+
+
                 total_flash_loans = len(self.flash_loans)
                 
                 # Calculate totals
+
                 total_tvl = sum(
                     farm.current_value for farm in self.yield_farms.values()
                 ) + sum(
                     (pos.amount_a * self.price_feeds.get(pos.token_a, Decimal("1"))) + 
                     (pos.amount_b * self.price_feeds.get(pos.token_b, Decimal("1")))
+
                     for pos in self.liquidity_positions.values()
                 )
+
+
                 
                 total_rewards = sum(
                     farm.accumulated_rewards for farm in self.yield_farms.values()
                 ) + sum(
                     pos.fees_earned for pos in self.liquidity_positions.values()
                 )
+
+
                 
                 successful_flash_loans = len([
                     loan for loan in self.flash_loans.values()
+
                     if loan.status == FlashLoanStatus.COMPLETED and 
                     loan.actual_profit and loan.actual_profit > 0
                 ])
+
                 
                 return {
                     'platform_analytics': {
@@ -783,13 +912,15 @@ class DeFiIntegrator:
                     },
                     'protocol_distribution': {
                         protocol.value: len([
-                            f for f in self.yield_farms.values() 
+                            f for f in self.yield_farms.values()
+ 
                             if f.protocol == protocol
                         ]) for protocol in self.protocols.keys()
                     },
                     'risk_distribution': {
                         risk.value: len([
-                            f for f in self.yield_farms.values() 
+                            f for f in self.yield_farms.values()
+ 
                             if f.risk_level == risk
                         ]) for risk in RiskLevel
                     }
@@ -797,6 +928,7 @@ class DeFiIntegrator:
                 
         except Exception as e:
             logger.error(f"Error getting DeFi analytics: {str(e)}")
+
             return {}
 
     async def optimize_portfolio(self, user_address: str) -> Dict[str, Any]:
@@ -804,8 +936,10 @@ class DeFiIntegrator:
         try:
             if user_address not in self.portfolios:
                 return {"error": "Portfolio not found"}
+
             
             portfolio = self.portfolios[user_address]
+
             recommendations = []
             
             # Risk analysis
@@ -825,11 +959,13 @@ class DeFiIntegrator:
                 })
             
             # Diversification analysis
+
             protocol_count = len(set(
                 self.yield_farms[farm_id].protocol 
                 for farm_id in portfolio.yield_farms 
                 if farm_id in self.yield_farms
             ))
+
             
             if protocol_count < 3:
                 recommendations.append({
@@ -839,6 +975,7 @@ class DeFiIntegrator:
                 })
             
             # Harvest recommendations
+
             harvestable_farms = []
             for farm_id in portfolio.yield_farms:
                 if farm_id in self.yield_farms:
@@ -847,6 +984,7 @@ class DeFiIntegrator:
                         days_since_harvest = (datetime.utcnow() - farm.last_harvest).days
                         if days_since_harvest >= 7:  # Weekly harvest recommendation
                             harvestable_farms.append(farm_id)
+
             
             if harvestable_farms:
                 recommendations.append({
@@ -855,6 +993,7 @@ class DeFiIntegrator:
                     "priority": "low",
                     "farms": harvestable_farms
                 })
+
             
             return {
                 "user_address": user_address,
@@ -869,6 +1008,7 @@ class DeFiIntegrator:
             
         except Exception as e:
             logger.error(f"Error optimizing portfolio: {str(e)}")
+
             return {"error": str(e)}
 
 # =============================================================================

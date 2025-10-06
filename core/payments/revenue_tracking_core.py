@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class RevenueTrackingCore:
-    """Advanced RevenueTrackingCore System"""
+    """
+Advanced RevenueTrackingCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class RevenueTrackingCore:
 # Module exports
 __all__ = ["RevenueTrackingCore"]
 
-logger.info("💰 RevenueTrackingCore module loaded")
+logger.info("💰 RevenueTrackingCore module initialized")

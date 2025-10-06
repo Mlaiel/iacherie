@@ -22,7 +22,8 @@ logger = logging.getLogger(__name__)
 
 
 class IntelligenceType(Enum):
-    """Types of content intelligence"""
+    """
+        Types of content intelligence"""
     CONTENT_ANALYSIS = "content_analysis"
     AUDIENCE_INSIGHTS = "audience_insights"
     PERFORMANCE_INTELLIGENCE = "performance_intelligence"
@@ -62,7 +63,8 @@ class InsightPriority(Enum):
 
 @dataclass
 class ContentMetadata:
-    """Content metadata for intelligence analysis"""
+    """
+        Content metadata for intelligence analysis"""
     content_id: str
     content_type: str
     format: str
@@ -81,7 +83,8 @@ class ContentMetadata:
 
 @dataclass
 class AudienceData:
-    """Audience data for intelligence analysis"""
+    """
+        Audience data for intelligence analysis"""
     audience_id: str
     demographics: Dict[str, Any]
     engagement_patterns: Dict[str, float]
@@ -94,7 +97,8 @@ class AudienceData:
 
 @dataclass
 class IntelligenceRequest:
-    """Content intelligence analysis request"""
+    """
+        Content intelligence analysis request"""
     request_id: str
     creator_id: str
     content_metadata: ContentMetadata
@@ -110,7 +114,8 @@ class IntelligenceRequest:
 
 @dataclass
 class ContentInsight:
-    """Individual content insight"""
+    """
+        Individual content insight"""
     insight_id: str
     insight_type: IntelligenceType
     title: str
@@ -126,7 +131,8 @@ class ContentInsight:
 
 @dataclass
 class IntelligenceExecution:
-    """Content intelligence execution tracking"""
+    """
+        Content intelligence execution tracking"""
     execution_id: str
     request: IntelligenceRequest
     generated_insights: List[ContentInsight]
@@ -171,15 +177,22 @@ class ContentIntelligenceOrchestrator:
         """Initialize the content intelligence orchestrator"""
         try:
             await self._setup_intelligence_engines()
+
             await self._setup_analysis_models()
+
             await self._setup_insight_templates()
+
             await self._setup_business_rules()
+
             await self._setup_performance_baselines()
+
             self.initialized = True
             logger.info("✅ Content Intelligence Orchestrator initialization complete")
+
             return True
         except Exception as e:
             logger.error(f"❌ Failed to initialize Content Intelligence Orchestrator: {e}")
+
             return False
 
     async def _setup_intelligence_engines(self):
@@ -424,11 +437,13 @@ class ContentIntelligenceOrchestrator:
         """Create a new content intelligence analysis request"""
         
         request_id = str(uuid.uuid4())
+
         
         if analysis_config is None:
             analysis_config = self._get_default_analysis_config(content_metadata)
 
         # Create intelligence request
+
         request = IntelligenceRequest(
             request_id=request_id,
             creator_id=creator_id,
@@ -505,10 +520,13 @@ class ContentIntelligenceOrchestrator:
         if request_id not in self.intelligence_requests:
             raise ValueError(f"Intelligence request {request_id} not found")
 
+
         request = self.intelligence_requests[request_id]
+
         execution_id = str(uuid.uuid4())
 
         # Initialize intelligence execution
+
         execution = IntelligenceExecution(
             execution_id=execution_id,
             request=request,
@@ -552,11 +570,14 @@ class ContentIntelligenceOrchestrator:
             
             # Generate business intelligence
             await self._generate_business_intelligence(execution)
+
             
             execution.status = "completed"
             execution.end_time = datetime.now()
+
             
             logger.info(f"✅ Content intelligence analysis {execution.execution_id} completed successfully")
+
             
         except Exception as e:
             execution.status = "failed"
@@ -632,6 +653,7 @@ class ContentIntelligenceOrchestrator:
             template = self.insight_templates.get(template_key, {})
             
             # Create insight
+
             insight = ContentInsight(
                 insight_id=str(uuid.uuid4()),
                 insight_type=intelligence_type,
@@ -645,8 +667,10 @@ class ContentIntelligenceOrchestrator:
                 implementation_complexity="medium",
                 expected_outcomes=template.get("expected_impact", {})
             )
+
             
             insights.append(insight)
+
         
         execution.generated_insights = insights
 
@@ -654,11 +678,17 @@ class ContentIntelligenceOrchestrator:
         """Calculate overall intelligence scores"""
         
         # Calculate intelligence scores
+
         total_confidence = sum(insight.confidence_score for insight in execution.generated_insights)
+
         total_business_impact = sum(insight.business_impact for insight in execution.generated_insights)
+
         total_relevance = sum(insight.relevance_score for insight in execution.generated_insights)
+
+
         
         num_insights = len(execution.generated_insights)
+
         
         if num_insights > 0:
             execution.intelligence_scores = {
@@ -715,6 +745,7 @@ class ContentIntelligenceOrchestrator:
         if execution_id not in self.active_executions:
             raise ValueError(f"Intelligence execution {execution_id} not found")
 
+
         execution = self.active_executions[execution_id]
         
         return {
@@ -737,7 +768,9 @@ class ContentIntelligenceOrchestrator:
         if execution_id not in self.active_executions:
             raise ValueError(f"Intelligence execution {execution_id} not found")
 
+
         execution = self.active_executions[execution_id]
+
         
         insights_data = []
         for insight in execution.generated_insights:
@@ -753,6 +786,7 @@ class ContentIntelligenceOrchestrator:
                 "expected_outcomes": insight.expected_outcomes,
                 "implementation_complexity": insight.implementation_complexity
             })
+
         
         return insights_data
 
@@ -762,13 +796,17 @@ class ContentIntelligenceOrchestrator:
         if execution_id not in self.active_executions:
             raise ValueError(f"Intelligence execution {execution_id} not found")
 
+
         execution = self.active_executions[execution_id]
         
         # Analyze current intelligence quality
+
         current_score = execution.overall_intelligence_score
+
         current_business_value = execution.business_value
         
         # Apply optimization strategies
+
         optimization_results = {
             "original_intelligence_score": current_score,
             "original_business_value": current_business_value,
@@ -780,16 +818,19 @@ class ContentIntelligenceOrchestrator:
         # Insight quality optimization
         if current_score < 0.85:
             optimization_results["optimizations_applied"].append("insight_quality_enhancement")
+
             optimization_results["intelligence_improvements"]["insight_quality"] = 0.08
 
         # Business value optimization
         if current_business_value < 0.80:
             optimization_results["optimizations_applied"].append("business_value_optimization")
+
             optimization_results["business_value_improvements"]["actionability"] = 0.12
 
         # Recommendation refinement
         if len(execution.optimization_recommendations) < 5:
             optimization_results["optimizations_applied"].append("recommendation_enhancement")
+
             execution.optimization_recommendations.extend([
                 "Implement audience feedback loops",
                 "Develop content performance tracking"
@@ -798,6 +839,7 @@ class ContentIntelligenceOrchestrator:
         # Update execution with optimizations
         execution.overall_intelligence_score = min(1.0, current_score + 0.05)
         execution.business_value = min(1.0, current_business_value + 0.07)
+
         
         logger.info(f"✅ Applied optimizations to intelligence execution {execution_id}")
         return optimization_results
@@ -806,13 +848,18 @@ class ContentIntelligenceOrchestrator:
         """Get comprehensive intelligence analytics"""
         
         total_executions = len(self.active_executions)
+
         completed_executions = sum(1 for e in self.active_executions.values() if e.status == "completed")
+
         
         if total_executions == 0:
             return {"message": "No intelligence executions to analyze"}
 
+
         avg_intelligence_score = sum(e.overall_intelligence_score for e in self.active_executions.values()) / total_executions
+
         avg_business_value = sum(e.business_value for e in self.active_executions.values()) / total_executions
+
         total_insights = sum(len(e.generated_insights) for e in self.active_executions.values())
 
         return {

@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class PrivacyProtectionCore:
-    """Advanced PrivacyProtectionCore System"""
+    """
+Advanced PrivacyProtectionCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class PrivacyProtectionCore:
 # Module exports
 __all__ = ["PrivacyProtectionCore"]
 
-logger.info("🛡️ PrivacyProtectionCore module loaded")
+logger.info("🛡️ PrivacyProtectionCore module initialized")

@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class RoleBasedAccessCore:
-    """Advanced RoleBasedAccessCore System"""
+    """
+Advanced RoleBasedAccessCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class RoleBasedAccessCore:
 # Module exports
 __all__ = ["RoleBasedAccessCore"]
 
-logger.info("🔐 RoleBasedAccessCore module loaded")
+logger.info("🔐 RoleBasedAccessCore module initialized")

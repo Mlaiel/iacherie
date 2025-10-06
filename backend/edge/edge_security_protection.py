@@ -21,7 +21,8 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(str, Enum):
-    """Frameworks de conformité."""
+    """
+        Frameworks de conformité."""
     GDPR = "gdpr"
     CCPA = "ccpa"
     SOC2 = "soc2"
@@ -33,6 +34,22 @@ class ComplianceLevel(str, Enum):
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
+
+
+class SecurityPolicy(str, Enum):
+    """Politiques de sécurité."""
+    STRICT = "strict"
+    BALANCED = "balanced"
+    PERMISSIVE = "permissive"
+    CUSTOM = "custom"
+
+
+class ThreatLevel(str, Enum):
+    """Niveaux de menace."""
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    CRITICAL = "critical"
 
 
 @dataclass
@@ -48,7 +65,8 @@ class ComplianceRule:
 
 
 class ComplianceValidationEngine:
-    """Moteur validation conformité."""
+    """
+        Moteur validation conformité."""
     
     def __init__(self):
         self.rules: Dict[str, ComplianceRule] = {}
@@ -57,7 +75,8 @@ class ComplianceValidationEngine:
         self._load_default_rules()
     
     def _load_default_rules(self):
-        """Charge les règles de conformité par défaut."""
+        """
+        Charge les règles de conformité par défaut."""
         default_rules = [
             ComplianceRule(
                 rule_id="gdpr_data_encryption",
@@ -76,10 +95,12 @@ class ComplianceValidationEngine:
     async def validate_compliance(self, resource_data: Dict[str, Any]) -> Dict[str, Any]:
         """Valide la conformité d'une ressource."""
         resource_id = resource_data.get("resource_id", "unknown")
+
         violations = []
         
         for rule in self.rules.values():
             is_compliant = await self._check_rule_compliance(rule, resource_data)
+
             
             if not is_compliant:
                 violations.append({
@@ -89,9 +110,14 @@ class ComplianceValidationEngine:
                 })
         
         # Calculate compliance score
+
         total_rules = len(self.rules)
+
         violations_count = len(violations)
+
         compliance_score = max(0, (total_rules - violations_count) / total_rules)
+
+
         
         result = {
             "resource_id": resource_id,
@@ -114,6 +140,7 @@ class ComplianceValidationEngine:
             return resource_data.get("encrypted", False)
         elif check_function == "check_retention":
             retention_days = resource_data.get("retention_days", 0)
+
             return retention_days <= 365
         
         return True
@@ -165,10 +192,13 @@ class DDoSProtectionAdvanced:
     async def detect_ddos_attack(self, traffic_data: Dict[str, Any]) -> Optional[DDoSAttack]:
         """Détecte une attaque DDoS."""
         source_ip = traffic_data.get("source_ip", "unknown")
+
         request_rate = traffic_data.get("requests_per_second", 0)
+
         bandwidth = traffic_data.get("bandwidth_mbps", 0)
         
         # Detection logic
+
         attack_type = None
         
         if request_rate > self.detection_thresholds["requests_per_second"]:
@@ -186,9 +216,11 @@ class DDoSProtectionAdvanced:
                 peak_traffic=bandwidth,
                 current_traffic=bandwidth
             )
+
             
             self.active_attacks[attack.attack_id] = attack
             logger.warning(f"DDoS attack detected: {attack_type.value} from {source_ip}")
+
             
             return attack
         
@@ -198,20 +230,28 @@ class DDoSProtectionAdvanced:
         """Mitigue une attaque DDoS."""
         if attack_id not in self.active_attacks:
             return {"error": "Attack not found"}
+
         
         attack = self.active_attacks[attack_id]
+
         mitigation_results = []
         
         # Apply mitigation strategies
         if attack.attack_type == DDoSAttackType.APPLICATION:
             await self._apply_rate_limiting(attack)
+
             mitigation_results.append("rate_limiting_applied")
+
             attack.mitigation_applied.append(MitigationStrategy.RATE_LIMITING)
+
         
         elif attack.attack_type == DDoSAttackType.VOLUMETRIC:
             await self._apply_ip_blocking(attack)
+
             mitigation_results.append("ip_blocking_applied")
+
             attack.mitigation_applied.append(MitigationStrategy.IP_BLOCKING)
+
         
         attack.status = "mitigated"
         self.mitigation_stats[attack.attack_type.value] += 1
@@ -238,7 +278,8 @@ class DDoSProtectionAdvanced:
             self.blocked_ips.add(ip)
     
     async def get_protection_stats(self) -> Dict[str, Any]:
-        """Récupère les statistiques de protection."""
+        """
+        Récupère les statistiques de protection."""
         return {
             "active_attacks": len(self.active_attacks),
             "blocked_ips": len(self.blocked_ips),
@@ -254,6 +295,7 @@ class EdgeSecurityProtection:
     def __init__(self):
         self.compliance_engine = ComplianceValidationEngine()
         self.ddos_protection = DDoSProtectionAdvanced()
+
         
         self.security_metrics = {
             "total_threats_blocked": 0,
@@ -271,9 +313,11 @@ class EdgeSecurityProtection:
     async def protect_against_ddos(self, traffic_data: Dict[str, Any]) -> Dict[str, Any]:
         """Protège contre les attaques DDoS."""
         attack = await self.ddos_protection.detect_ddos_attack(traffic_data)
+
         
         if attack:
             mitigation_result = await self.ddos_protection.mitigate_ddos_attack(attack.attack_id)
+
             self.security_metrics["total_threats_blocked"] += 1
             return {
                 "attack_detected": True,
@@ -286,7 +330,9 @@ class EdgeSecurityProtection:
     async def get_security_metrics(self) -> Dict[str, Any]:
         """Récupère les métriques de sécurité globales."""
         compliance_stats = await self.compliance_engine.validate_compliance({"resource_id": "global"})
+
         ddos_stats = await self.ddos_protection.get_protection_stats()
+
         
         return {
             "global_metrics": self.security_metrics,
@@ -310,12 +356,37 @@ def create_edge_security_protection() -> EdgeSecurityProtection:
     return EdgeSecurityProtection()
 
 
+# ============================================================================
+# ALIASES FOR COMPATIBILITY
+# ============================================================================
+
+# Créer des alias pour les noms attendus par d'autres modules
+ComplianceValidator = ComplianceValidationEngine
+DDoSProtector = DDoSProtectionAdvanced
+EdgeFirewall = EdgeSecurityProtection  # Alias principal
+IntrusionDetector = EdgeSecurityProtection
+KeyManager = EdgeSecurityProtection
+SecureTunnel = EdgeSecurityProtection
+ThreatIntelligence = EdgeSecurityProtection
+
+
 __all__ = [
     "EdgeSecurityProtection",
     "ComplianceValidationEngine",
-    "DDoSProtectionAdvanced", 
+    "DDoSProtectionAdvanced",
+    # Aliases
+    "ComplianceValidator",
+    "DDoSProtector",
+    "EdgeFirewall",
+    "IntrusionDetector",
+    "KeyManager",
+    "SecureTunnel",
+    "ThreatIntelligence",
+    # Enums & Data classes
     "ComplianceFramework",
     "ComplianceLevel",
+    "SecurityPolicy",
+    "ThreatLevel",
     "DDoSAttackType",
     "MitigationStrategy",
     "create_edge_security_protection"

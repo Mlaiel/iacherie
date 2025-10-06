@@ -24,7 +24,8 @@ from .technical_agents import TechnicalAgents
 logger = logging.getLogger(__name__)
 
 class AgentCategory(Enum):
-    """Agent category enumeration"""
+    """
+        Agent category enumeration"""
     CORE_BUSINESS = "core_business"
     CONTENT = "content"
     TECHNICAL = "technical"
@@ -68,23 +69,31 @@ class AgentRegistry:
         self._initialize_agents()
     
     def _initialize_agents(self):
-        """Initialize all agent categories"""
+        """
+        Initialize all agent categories"""
         try:
             # Initialize agent collections
             self._categories[AgentCategory.CORE_BUSINESS] = CoreBusinessAgents()
+
             self._categories[AgentCategory.CONTENT] = ContentAgents()
+
             self._categories[AgentCategory.TECHNICAL] = TechnicalAgents()
             
             # Register all agents
             self._register_core_business_agents()
+
             self._register_content_agents()
+
             self._register_technical_agents()
+
             
             self._initialized = True
             logger.info("✅ Agent registry initialized with 53 agents")
+
             
         except Exception as e:
             logger.error(f"❌ Failed to initialize agent registry: {e}")
+
             raise
     
     def _register_core_business_agents(self):
@@ -186,16 +195,22 @@ class AgentRegistry:
         """Get agent instance by name"""
         if not self._initialized:
             raise RuntimeError("Agent registry not initialized")
+
         
         if agent_name not in self._agent_info:
             logger.warning(f"Agent {agent_name} not found in registry")
+
             return None
+
         
         agent_info = self._agent_info[agent_name]
+
         category_manager = self._categories.get(agent_info.category)
+
         
         if not category_manager:
             logger.error(f"Category manager for {agent_info.category} not found")
+
             return None
         
         # Return the category manager itself, as it contains all the agent functionality
@@ -209,15 +224,18 @@ class AgentRegistry:
         return list(self._agent_info.values())
     
     def get_agent_info(self, agent_name: str) -> Optional[AgentInfo]:
-        """Get agent information"""
+        """
+        Get agent information"""
         return self._agent_info.get(agent_name)
     
     def get_category_manager(self, category: AgentCategory) -> Optional[Any]:
-        """Get category manager instance"""
+        """
+        Get category manager instance"""
         return self._categories.get(category)
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get registry statistics"""
+        """
+        Get registry statistics"""
         stats = {
             "total_agents": len(self._agent_info),
             "categories": {
@@ -231,6 +249,7 @@ class AgentRegistry:
         # Count agents by status
         for status in AgentStatus:
             count = len([a for a in self._agent_info.values() if a.status == status])
+
             stats["status_distribution"][status.value] = count
         
         return stats
@@ -271,17 +290,21 @@ def get_registry() -> AgentRegistry:
     return _registry
 
 def get_agent(agent_name: str) -> Optional[Any]:
-    """Get agent by name from global registry"""
+    """
+        Get agent by name from global registry"""
     return get_registry().get_agent(agent_name)
 
 def list_agents(category: Optional[AgentCategory] = None) -> List[AgentInfo]:
-    """List agents from global registry"""
+    """
+        List agents from global registry"""
     return get_registry().list_agents(category)
 
 def get_agent_info(agent_name: str) -> Optional[AgentInfo]:
-    """Get agent information from global registry"""
+    """
+        Get agent information from global registry"""
     return get_registry().get_agent_info(agent_name)
 
 async def health_check() -> Dict[str, Any]:
-    """Perform health check on global registry"""
+    """
+        Perform health check on global registry"""
     return await get_registry().health_check()

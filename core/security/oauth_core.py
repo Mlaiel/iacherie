@@ -1,4 +1,5 @@
-"""IA Chérie Core Security - OAuth Core
+"""
+IA Chérie Core Security - OAuth Core
 ===================================
 
 Enterprise-grade OAuth 2.0/OIDC implementation providing secure authentication,
@@ -32,7 +33,8 @@ from cryptography.hazmat.primitives.asymmetric import rsa, padding
 logger = logging.getLogger(__name__)
 
 class GrantType(str, Enum):
-    """OAuth 2.0 grant types"""
+    """
+OAuth 2.0 grant types"""
     AUTHORIZATION_CODE = "authorization_code"
     CLIENT_CREDENTIALS = "client_credentials"
     RESOURCE_OWNER_PASSWORD = "password"
@@ -42,13 +44,15 @@ class GrantType(str, Enum):
     JWT_BEARER = "urn:ietf:params:oauth:grant-type:jwt-bearer"
 
 class TokenType(str, Enum):
-    """Token types"""
+    """
+Token types"""
     BEARER = "Bearer"
     MAC = "MAC"
     BASIC = "Basic"
 
 class ResponseType(str, Enum):
-    """OAuth response types"""
+    """
+OAuth response types"""
     CODE = "code"
     TOKEN = "token"
     ID_TOKEN = "id_token"
@@ -58,12 +62,14 @@ class ResponseType(str, Enum):
     CODE_TOKEN_ID_TOKEN = "code token id_token"
 
 class ClientType(str, Enum):
-    """OAuth client types"""
+    """
+OAuth client types"""
     CONFIDENTIAL = "confidential"
     PUBLIC = "public"
 
 class TokenStatus(str, Enum):
-    """Token status"""
+    """
+Token status"""
     ACTIVE = "active"
     EXPIRED = "expired"
     REVOKED = "revoked"
@@ -71,7 +77,8 @@ class TokenStatus(str, Enum):
 
 @dataclass
 class OAuthScope:
-    """OAuth scope definition"""
+    """
+OAuth scope definition"""
     name: str
     description: str
     resource: str
@@ -81,7 +88,8 @@ class OAuthScope:
 
 @dataclass
 class OAuthClient:
-    """OAuth client registration"""
+    """
+OAuth client registration"""
     client_id: str
     client_secret: str
     client_type: ClientType
@@ -106,7 +114,8 @@ class OAuthClient:
 
 @dataclass
 class AccessToken:
-    """Access token data"""
+    """
+Access token data"""
     token: str
     token_type: TokenType = TokenType.BEARER
     client_id: str = ""
@@ -124,7 +133,8 @@ class AccessToken:
 
 @dataclass
 class RefreshToken:
-    """Refresh token data"""
+    """
+Refresh token data"""
     token: str
     client_id: str
     user_id: Optional[str] = None
@@ -137,7 +147,8 @@ class RefreshToken:
 
 @dataclass
 class AuthorizationCode:
-    """Authorization code data"""
+    """
+Authorization code data"""
     code: str
     client_id: str
     user_id: str
@@ -152,7 +163,8 @@ class AuthorizationCode:
 
 @dataclass
 class IDToken:
-    """OpenID Connect ID Token"""
+    """
+OpenID Connect ID Token"""
     token: str
     issuer: str
     subject: str
@@ -167,7 +179,8 @@ class IDToken:
     claims: Dict[str, Any] = field(default_factory=dict)
 
 class TokenStore(ABC):
-    """Abstract token store interface"""
+    """
+Abstract token store interface"""
     
     @abstractmethod
     async def store_access_token(self, token: AccessToken) -> bool:
@@ -206,7 +219,8 @@ class TokenStore(ABC):
         pass
 
 class InMemoryTokenStore(TokenStore):
-    """In-memory token store implementation"""
+    """
+In-memory token store implementation"""
     
     def __init__(self):
         self.access_tokens: Dict[str, AccessToken] = {}
@@ -266,7 +280,8 @@ class InMemoryTokenStore(TokenStore):
         return False
 
 class ClientStore(ABC):
-    """Abstract client store interface"""
+    """
+Abstract client store interface"""
     
     @abstractmethod
     async def get_client(self, client_id: str) -> Optional[OAuthClient]:
@@ -285,7 +300,8 @@ class ClientStore(ABC):
         pass
 
 class InMemoryClientStore(ClientStore):
-    """In-memory client store implementation"""
+    """
+In-memory client store implementation"""
     
     def __init__(self):
         self.clients: Dict[str, OAuthClient] = {}
@@ -311,7 +327,8 @@ class InMemoryClientStore(ClientStore):
         return False
 
 class JWTHandler:
-    """JWT token handler"""
+    """
+JWT token handler"""
     
     def __init__(self, private_key: str, public_key: str, algorithm: str = "RS256"):
         self.private_key = private_key
@@ -319,19 +336,23 @@ class JWTHandler:
         self.algorithm = algorithm
     
     def create_access_token(self, payload: Dict[str, Any]) -> str:
-        """Create JWT access token"""
+        """
+Create JWT access token"""
         return jwt.encode(payload, self.private_key, algorithm=self.algorithm)
     
     def create_id_token(self, payload: Dict[str, Any]) -> str:
-        """Create OpenID Connect ID token"""
+        """
+Create OpenID Connect ID token"""
         return jwt.encode(payload, self.private_key, algorithm=self.algorithm)
     
     def decode_token(self, token: str) -> Dict[str, Any]:
-        """Decode and verify JWT token"""
+        """
+Decode and verify JWT token"""
         return jwt.decode(token, self.public_key, algorithms=[self.algorithm])
     
     def verify_token(self, token: str) -> bool:
-        """Verify JWT token signature"""
+        """
+Verify JWT token signature"""
         try:
             jwt.decode(token, self.public_key, algorithms=[self.algorithm])
             return True
@@ -339,16 +360,19 @@ class JWTHandler:
             return False
 
 class PKCEHandler:
-    """PKCE (Proof Key for Code Exchange) handler"""
+    """
+PKCE (Proof Key for Code Exchange) handler"""
     
     @staticmethod
     def generate_code_verifier() -> str:
-        """Generate code verifier"""
+        """
+Generate code verifier"""
         return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode('utf-8').rstrip('=')
     
     @staticmethod
     def generate_code_challenge(code_verifier: str, method: str = "S256") -> str:
-        """Generate code challenge"""
+        """
+Generate code challenge"""
         if method == "S256":
             digest = hashlib.sha256(code_verifier.encode('utf-8')).digest()
             return base64.urlsafe_b64encode(digest).decode('utf-8').rstrip('=')
@@ -359,12 +383,14 @@ class PKCEHandler:
     
     @staticmethod
     def verify_code_challenge(code_verifier: str, code_challenge: str, method: str = "S256") -> bool:
-        """Verify code challenge"""
+        """
+Verify code challenge"""
         expected_challenge = PKCEHandler.generate_code_challenge(code_verifier, method)
         return hmac.compare_digest(expected_challenge, code_challenge)
 
 class OAuthCore:
-    """Core OAuth 2.0/OIDC authorization server"""
+    """
+Core OAuth 2.0/OIDC authorization server"""
     
     def __init__(self, level: str = "enterprise"):
         self.level = level
@@ -393,7 +419,8 @@ class OAuthCore:
         logger.info(f"OAuth Core initialized - Level: {level}")
     
     async def initialize(self) -> bool:
-        """Initialize OAuth system"""
+        """
+Initialize OAuth system"""
         try:
             # Generate RSA key pair for JWT signing
             private_key = rsa.generate_private_key(
@@ -428,7 +455,8 @@ class OAuthCore:
             return False
     
     async def start(self) -> bool:
-        """Start OAuth system"""
+        """
+Start OAuth system"""
         try:
             logger.info("OAuth Core started")
             return True
@@ -437,7 +465,8 @@ class OAuthCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop OAuth system"""
+        """
+Stop OAuth system"""
         try:
             logger.info("OAuth Core stopped")
             return True
@@ -446,7 +475,8 @@ class OAuthCore:
             return False
     
     async def health_check(self) -> bool:
-        """Check system health"""
+        """
+Check system health"""
         try:
             # Verify JWT handler is working
             if not self.jwt_handler:
@@ -463,7 +493,8 @@ class OAuthCore:
             return False
     
     def _initialize_default_scopes(self):
-        """Initialize default OAuth scopes"""
+        """
+Initialize default OAuth scopes"""
         self.scopes = {
             "read": OAuthScope("read", "Read access to basic resources", "api", ["read"]),
             "write": OAuthScope("write", "Write access to resources", "api", ["write"]),
@@ -475,7 +506,8 @@ class OAuthCore:
         }
     
     async def _register_default_client(self):
-        """Register default OAuth client"""
+        """
+Register default OAuth client"""
         client = OAuthClient(
             client_id="iacherie_web_app",
             client_secret=secrets.token_urlsafe(32),
@@ -492,7 +524,8 @@ class OAuthCore:
         self.metrics['client_registrations'] += 1
     
     async def register_client(self, client_data: Dict[str, Any]) -> OAuthClient:
-        """Register new OAuth client"""
+        """
+Register new OAuth client"""
         try:
             client = OAuthClient(
                 client_id=client_data.get('client_id', f"client_{uuid.uuid4().hex[:16]}"),
@@ -526,7 +559,8 @@ class OAuthCore:
                        code_challenge: Optional[str] = None,
                        code_challenge_method: Optional[str] = None,
                        user_id: Optional[str] = None) -> str:
-        """Handle authorization request"""
+        """
+Handle authorization request"""
         try:
             # Validate client
             client = await self.client_store.get_client(client_id)
@@ -580,7 +614,8 @@ class OAuthCore:
             raise
     
     async def token(self, grant_type: str, **kwargs) -> Dict[str, Any]:
-        """Handle token request"""
+        """
+Handle token request"""
         try:
             if grant_type == GrantType.AUTHORIZATION_CODE.value:
                 return await self._handle_authorization_code_grant(**kwargs)
@@ -598,7 +633,8 @@ class OAuthCore:
     async def _handle_authorization_code_grant(self, client_id: str, client_secret: str,
                                              code: str, redirect_uri: str,
                                              code_verifier: Optional[str] = None) -> Dict[str, Any]:
-        """Handle authorization code grant"""
+        """
+Handle authorization code grant"""
         # Validate client
         client = await self.client_store.get_client(client_id)
         if not client or client.client_secret != client_secret:
@@ -650,7 +686,8 @@ class OAuthCore:
     
     async def _handle_refresh_token_grant(self, client_id: str, client_secret: str,
                                         refresh_token: str) -> Dict[str, Any]:
-        """Handle refresh token grant"""
+        """
+Handle refresh token grant"""
         # Validate client
         client = await self.client_store.get_client(client_id)
         if not client or client.client_secret != client_secret:
@@ -678,7 +715,8 @@ class OAuthCore:
     
     async def _handle_client_credentials_grant(self, client_id: str, client_secret: str,
                                              scope: Optional[str] = None) -> Dict[str, Any]:
-        """Handle client credentials grant"""
+        """
+Handle client credentials grant"""
         # Validate client
         client = await self.client_store.get_client(client_id)
         if not client or client.client_secret != client_secret:
@@ -709,7 +747,8 @@ class OAuthCore:
     
     async def _create_access_token(self, client_id: str, user_id: Optional[str], 
                                  scopes: List[str]) -> AccessToken:
-        """Create access token"""
+        """
+Create access token"""
         now = datetime.utcnow()
         expires_at = now + timedelta(hours=1)
         
@@ -744,7 +783,8 @@ class OAuthCore:
     
     async def _create_refresh_token(self, client_id: str, user_id: Optional[str],
                                   scopes: List[str]) -> RefreshToken:
-        """Create refresh token"""
+        """
+Create refresh token"""
         token = secrets.token_urlsafe(32)
         
         refresh_token = RefreshToken(
@@ -758,7 +798,8 @@ class OAuthCore:
         return refresh_token
     
     async def _create_id_token(self, client_id: str, user_id: str, scopes: List[str]) -> IDToken:
-        """Create OpenID Connect ID token"""
+        """
+Create OpenID Connect ID token"""
         now = datetime.utcnow()
         expires_at = now + timedelta(hours=1)
         
@@ -797,7 +838,8 @@ class OAuthCore:
         )
     
     async def introspect_token(self, token: str, client_id: str, client_secret: str) -> Dict[str, Any]:
-        """Introspect access token"""
+        """
+Introspect access token"""
         try:
             # Validate client
             client = await self.client_store.get_client(client_id)
@@ -827,7 +869,8 @@ class OAuthCore:
             return {"active": False}
     
     async def revoke_token(self, token: str, client_id: str, client_secret: str) -> bool:
-        """Revoke access or refresh token"""
+        """
+Revoke access or refresh token"""
         try:
             # Validate client
             client = await self.client_store.get_client(client_id)
@@ -850,7 +893,8 @@ class OAuthCore:
             return False
     
     def get_jwks(self) -> Dict[str, Any]:
-        """Get JSON Web Key Set"""
+        """
+Get JSON Web Key Set"""
         # In a real implementation, this would return the public keys
         # For now, return a placeholder
         return {
@@ -865,7 +909,8 @@ class OAuthCore:
         }
     
     def get_system_metrics(self) -> Dict[str, Any]:
-        """Get system metrics"""
+        """
+Get system metrics"""
         return {
             'level': self.level,
             'issuer': self.issuer,
@@ -891,16 +936,19 @@ oauth_core = OAuthCore()
 
 # Convenience functions
 async def register_oauth_client(client_data: Dict[str, Any]) -> OAuthClient:
-    """Register OAuth client"""
+    """
+Register OAuth client"""
     return await oauth_core.register_client(client_data)
 
 async def authorize_request(client_id: str, redirect_uri: str, response_type: str,
                           scope: str, user_id: str, state: Optional[str] = None) -> str:
-    """Handle authorization request"""
+    """
+Handle authorization request"""
     return await oauth_core.authorize(client_id, redirect_uri, response_type, scope, state, user_id=user_id)
 
 async def token_request(grant_type: str, **kwargs) -> Dict[str, Any]:
-    """Handle token request"""
+    """
+Handle token request"""
     return await oauth_core.token(grant_type, **kwargs)
 
 # Module exports
@@ -911,4 +959,4 @@ __all__ = [
     "oauth_core", "register_oauth_client", "authorize_request", "token_request"
 ]
 
-logger.info("OAuth Core module loaded")
+logger.info("OAuth Core module initialized")

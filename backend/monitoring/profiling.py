@@ -41,6 +41,7 @@ except ImportError:
         def virtual_memory():
             class Memory:
                 percent = 67.0
+
                 available = 8 * 1024**3  # 8GB
                 total = 16 * 1024**3     # 16GB
                 used = 8 * 1024**3       # 8GB
@@ -62,8 +63,11 @@ except ImportError:
                 bytes_sent = 1024**6     # 1MB
                 bytes_recv = 2 * 1024**6 # 2MB
                 packets_sent = 1000
+
                 packets_recv = 2000
+
                 errin = 0
+
                 errout = 0
             return Network()
         
@@ -73,6 +77,7 @@ except ImportError:
                 read_bytes = 1024**7     # 10MB
                 write_bytes = 1024**6    # 1MB
                 read_time = 100
+
                 write_time = 50
             return DiskIO()
             
@@ -84,7 +89,9 @@ except ImportError:
         def cpu_freq():
             class CPUFreq:
                 current = 2800
+
                 min = 1200
+
                 max = 3600
                 def _asdict(self):
                     return {"current": self.current, "min": self.min, "max": self.max}
@@ -93,6 +100,7 @@ except ImportError:
         @staticmethod
         def getloadavg():
             return (1.2, 1.1, 1.0)
+
     
     psutil = DummyPsutil()
 
@@ -136,7 +144,8 @@ class PerformanceProfile:
 
 @dataclass
 class ResourceUsage:
-    """Resource usage snapshot"""
+    """
+        Resource usage snapshot"""
     timestamp: datetime
     resource_type: ResourceType
     current_usage: float
@@ -147,7 +156,8 @@ class ResourceUsage:
 
 @dataclass
 class CapacityForecast:
-    """Capacity planning forecast"""
+    """
+        Capacity planning forecast"""
     resource_type: ResourceType
     current_usage: float
     forecasted_usage: float
@@ -158,7 +168,8 @@ class CapacityForecast:
 
 
 class FunctionProfiler:
-    """Function-level performance profiler"""
+    """
+        Function-level performance profiler"""
     
     def __init__(self):
         self.profiles: Dict[str, cProfile.Profile] = {}
@@ -167,22 +178,29 @@ class FunctionProfiler:
     
     @contextmanager
     def profile_function(self, name: str):
-        """Context manager for profiling functions"""
+        """
+        Context manager for profiling functions"""
         profile_id = f"{name}_{int(time.time())}"
         profiler = cProfile.Profile()
+
+
         
         start_time = datetime.now()
         self.active_profiles[profile_id] = start_time
         
         try:
             profiler.enable()
+
             yield profile_id
         finally:
             profiler.disable()
+
+
             end_time = datetime.now()
             
             # Process profile results
             self._process_profile_results(profile_id, name, profiler, start_time, end_time)
+
             
             if profile_id in self.active_profiles:
                 del self.active_profiles[profile_id]
@@ -198,10 +216,12 @@ class FunctionProfiler:
         """Process profile results and extract insights"""
         
         # Create stats object
+
         stats = pstats.Stats(profiler)
         stats.sort_stats('cumulative')
         
         # Extract function statistics
+
         function_stats = {}
         for func, (cc, nc, tt, ct, callers) in stats.stats.items():
             filename, line, func_name = func
@@ -213,13 +233,17 @@ class FunctionProfiler:
             }
         
         # Identify bottlenecks (functions taking > 10% of total time)
+
         total_time = sum(stat["total_time"] for stat in function_stats.values())
+
         bottlenecks = [
             func for func, stat in function_stats.items()
+
             if stat["total_time"] > total_time * 0.1
         ]
         
         # Generate recommendations
+
         recommendations = []
         if bottlenecks:
             recommendations.append(f"Optimize {len(bottlenecks)} performance bottleneck(s)")
@@ -227,6 +251,7 @@ class FunctionProfiler:
             recommendations.append("Consider async/await for long-running operations")
         
         # Create performance profile
+
         profile = PerformanceProfile(
             id=profile_id,
             name=name,
@@ -243,6 +268,7 @@ class FunctionProfiler:
             recommendations=recommendations,
             function_stats=function_stats
         )
+
         
         self.completed_profiles.append(profile)
         logger.info(f"Completed profiling for {name}: {len(bottlenecks)} bottlenecks found")
@@ -255,7 +281,8 @@ class FunctionProfiler:
 
 
 class ResourceMonitor:
-    """System resource monitoring"""
+    """
+        System resource monitoring"""
     
     def __init__(self):
         self.usage_history: Dict[ResourceType, deque] = {
@@ -265,17 +292,22 @@ class ResourceMonitor:
         self.monitor_interval = 30  # seconds
     
     async def start_monitoring(self, interval: int = 30):
-        """Start resource monitoring"""
+        """
+        Start resource monitoring"""
         self.monitoring_active = True
         self.monitor_interval = interval
         logger.info(f"Starting resource monitoring with {interval}s interval")
+
         
         while self.monitoring_active:
             try:
                 await self.collect_resource_usage()
+
                 await asyncio.sleep(interval)
+
             except Exception as e:
                 logger.error(f"Error in resource monitoring: {e}")
+
                 await asyncio.sleep(interval)
     
     async def stop_monitoring(self):
@@ -288,7 +320,9 @@ class ResourceMonitor:
         timestamp = datetime.now()
         
         # CPU usage
+
         cpu_percent = psutil.cpu_percent(interval=1)
+
         cpu_usage = ResourceUsage(
             timestamp=timestamp,
             resource_type=ResourceType.CPU,
@@ -304,7 +338,9 @@ class ResourceMonitor:
         self.usage_history[ResourceType.CPU].append(cpu_usage)
         
         # Memory usage
+
         memory = psutil.virtual_memory()
+
         memory_usage = ResourceUsage(
             timestamp=timestamp,
             resource_type=ResourceType.MEMORY,
@@ -320,8 +356,11 @@ class ResourceMonitor:
         self.usage_history[ResourceType.MEMORY].append(memory_usage)
         
         # Disk usage
+
         disk = psutil.disk_usage('/')
+
         disk_io = psutil.disk_io_counters()
+
         disk_usage = ResourceUsage(
             timestamp=timestamp,
             resource_type=ResourceType.DISK,
@@ -339,13 +378,17 @@ class ResourceMonitor:
         self.usage_history[ResourceType.DISK].append(disk_usage)
         
         # Network usage
+
         network = psutil.net_io_counters()
+
         network_usage = ResourceUsage(
             timestamp=timestamp,
             resource_type=ResourceType.NETWORK,
             current_usage=network.bytes_sent + network.bytes_recv if network else 0,
             max_capacity=float('inf'),  # No fixed capacity for network
+
             utilization_percent=0.0,  # Cannot calculate without knowing capacity
+
             details={
                 "bytes_sent": network.bytes_sent if network else 0,
                 "bytes_recv": network.bytes_recv if network else 0,
@@ -363,9 +406,12 @@ class ResourceMonitor:
         return history[-1] if history else None
     
     def get_usage_history(self, resource_type: ResourceType, hours: int = 24) -> List[ResourceUsage]:
-        """Get resource usage history"""
+        """
+        Get resource usage history"""
         cutoff_time = datetime.now() - timedelta(hours=hours)
+
         history = self.usage_history.get(resource_type, deque())
+
         
         return [
             usage for usage in history
@@ -373,11 +419,14 @@ class ResourceMonitor:
         ]
     
     def get_usage_statistics(self, resource_type: ResourceType, hours: int = 24) -> Dict[str, Any]:
-        """Get usage statistics for a resource"""
+        """
+        Get usage statistics for a resource"""
         history = self.get_usage_history(resource_type, hours)
+
         
         if not history:
             return {"error": "No data available"}
+
         
         utilizations = [usage.utilization_percent for usage in history]
         
@@ -399,11 +448,17 @@ class ResourceMonitor:
             return "insufficient_data"
         
         # Simple linear trend calculation
+
         first_half = values[:len(values)//2]
+
         second_half = values[len(values)//2:]
+
         
         first_avg = statistics.mean(first_half)
+
         second_avg = statistics.mean(second_half)
+
+
         
         change_percent = ((second_avg - first_avg) / first_avg) * 100 if first_avg > 0 else 0
         
@@ -427,9 +482,11 @@ class CapacityPlanner:
         resource_type: ResourceType,
         forecast_days: int = 30
     ) -> CapacityForecast:
-        """Generate capacity forecast for a resource"""
+        """
+        Generate capacity forecast for a resource"""
         
         # Get historical usage data
+
         history = self.resource_monitor.get_usage_history(resource_type, hours=24*7)  # 7 days
         
         if len(history) < 10:
@@ -443,14 +500,19 @@ class CapacityPlanner:
             )
         
         # Calculate trend
+
         utilizations = [usage.utilization_percent for usage in history]
+
         current_usage = utilizations[-1]
         
         # Simple linear regression for trend
+
         growth_rate = self._calculate_growth_rate(utilizations)
+
         forecasted_usage = current_usage + (growth_rate * forecast_days)
         
         # Calculate when capacity might be exhausted
+
         capacity_exhaustion_date = None
         if growth_rate > 0 and current_usage < 100:
             days_to_exhaustion = (100 - current_usage) / growth_rate
@@ -458,12 +520,15 @@ class CapacityPlanner:
                 capacity_exhaustion_date = datetime.now() + timedelta(days=days_to_exhaustion)
         
         # Generate recommendations
+
         recommendations = self._generate_capacity_recommendations(
             resource_type, current_usage, forecasted_usage, growth_rate
         )
         
         # Calculate confidence score
+
         confidence_score = min(len(history) / 100, 1.0)  # More data = higher confidence
+
         
         forecast = CapacityForecast(
             resource_type=resource_type,
@@ -474,6 +539,7 @@ class CapacityPlanner:
             recommendations=recommendations,
             confidence_score=confidence_score
         )
+
         
         self.forecasts[resource_type] = forecast
         return forecast
@@ -484,10 +550,13 @@ class CapacityPlanner:
             return 0.0
         
         # Simple linear trend
+
         first_value = statistics.mean(values[:len(values)//3])
+
         last_value = statistics.mean(values[-len(values)//3:])
         
         # Growth rate per day (assuming values are collected daily)
+
         growth_rate = (last_value - first_value) / (len(values) / 24)  # Assuming hourly data
         
         return growth_rate
@@ -499,14 +568,17 @@ class CapacityPlanner:
         forecasted_usage: float,
         growth_rate: float
     ) -> List[str]:
-        """Generate capacity planning recommendations"""
+        """
+        Generate capacity planning recommendations"""
         recommendations = []
         
         if current_usage > 80:
             recommendations.append(f"{resource_type.value.upper()} usage is high ({current_usage:.1f}%)")
+
         
         if forecasted_usage > 90:
             recommendations.append(f"Predicted {resource_type.value} exhaustion in forecast period")
+
         
         if growth_rate > 2:  # Growing more than 2% per day
             recommendations.append(f"{resource_type.value.upper()} usage growing rapidly ({growth_rate:.1f}%/day)")
@@ -515,23 +587,30 @@ class CapacityPlanner:
         if resource_type == ResourceType.CPU:
             if current_usage > 70:
                 recommendations.append("Consider CPU scaling or optimization")
+
             if growth_rate > 1:
                 recommendations.append("Monitor for CPU-intensive processes")
+
         
         elif resource_type == ResourceType.MEMORY:
             if current_usage > 75:
                 recommendations.append("Consider memory scaling or optimization")
+
             if growth_rate > 1:
                 recommendations.append("Check for memory leaks")
+
         
         elif resource_type == ResourceType.DISK:
             if current_usage > 80:
                 recommendations.append("Consider disk cleanup or expansion")
+
             if growth_rate > 1:
                 recommendations.append("Implement log rotation and data archiving")
+
         
         if not recommendations:
             recommendations.append(f"{resource_type.value.upper()} capacity is adequate")
+
         
         return recommendations
     
@@ -558,7 +637,8 @@ class UnifiedProfilingManager:
         self.profiling_enabled = True
     
     async def start_monitoring(self, interval: int = 30):
-        """Start all monitoring components"""
+        """
+        Start all monitoring components"""
         self.active_monitoring = True
         logger.info("Starting unified profiling and monitoring")
         
@@ -575,6 +655,7 @@ class UnifiedProfilingManager:
         """Profile a function"""
         if not self.profiling_enabled:
             return self.function_profiler.profile_function(f"disabled_{name}")
+
         
         return self.function_profiler.profile_function(name)
     
@@ -582,16 +663,21 @@ class UnifiedProfilingManager:
         """Get comprehensive performance summary"""
         
         # Get resource statistics
+
         resource_stats = {}
         for resource_type in ResourceType:
             if resource_type in [ResourceType.DATABASE, ResourceType.CACHE]:
                 continue  # Skip non-system resources
+
             
             stats = self.resource_monitor.get_usage_statistics(resource_type)
+
             resource_stats[resource_type.value] = stats
         
         # Get profiling statistics
+
         profiles = self.function_profiler.get_profile_results()
+
         profiling_stats = {
             "total_profiles": len(profiles),
             "total_bottlenecks": sum(len(p.bottlenecks) for p in profiles),
@@ -607,12 +693,15 @@ class UnifiedProfilingManager:
         }
         
         # Get capacity forecasts
+
         forecasts = self.capacity_planner.get_all_forecasts()
+
         capacity_summary = {
             resource_type.value: {
                 "current_usage": forecast.current_usage,
                 "forecasted_usage": forecast.forecasted_usage,
-                "exhaustion_date": forecast.capacity_exhaustion_date.isoformat() 
+                "exhaustion_date": forecast.capacity_exhaustion_date.isoformat()
+ 
                     if forecast.capacity_exhaustion_date else None,
                 "recommendation_count": len(forecast.recommendations)
             }
@@ -635,15 +724,18 @@ class UnifiedProfilingManager:
         # From resource monitoring
         for resource_type in [ResourceType.CPU, ResourceType.MEMORY, ResourceType.DISK]:
             stats = self.resource_monitor.get_usage_statistics(resource_type)
+
             if stats.get("avg_utilization", 0) > 80:
                 recommendations.append(f"High {resource_type.value} usage detected - consider optimization")
         
         # From capacity planning
+
         forecasts = self.capacity_planner.get_all_forecasts()
         for forecast in forecasts.values():
             recommendations.extend(forecast.recommendations)
         
         # From profiling
+
         profiles = self.function_profiler.get_profile_results()
         for profile in profiles[-5:]:  # Recent profiles
             recommendations.extend(profile.recommendations)
@@ -663,25 +755,30 @@ async def start_performance_monitoring(interval: int = 30):
 
 
 async def stop_performance_monitoring():
-    """Stop performance monitoring"""
+    """
+        Stop performance monitoring"""
     await profiling_manager.stop_monitoring()
 
 
 def profile_function(name: str):
-    """Profile a function"""
+    """
+        Profile a function"""
     return profiling_manager.profile_function(name)
 
 
 def get_performance_summary() -> Dict[str, Any]:
-    """Get performance summary"""
+    """
+        Get performance summary"""
     return profiling_manager.get_performance_summary()
 
 
 def get_optimization_recommendations() -> List[str]:
-    """Get optimization recommendations"""
+    """
+        Get optimization recommendations"""
     return profiling_manager.get_optimization_recommendations()
 
 
 def get_capacity_forecast(resource_type: ResourceType, days: int = 30) -> CapacityForecast:
-    """Get capacity forecast"""
+    """
+        Get capacity forecast"""
     return profiling_manager.capacity_planner.generate_capacity_forecast(resource_type, days)

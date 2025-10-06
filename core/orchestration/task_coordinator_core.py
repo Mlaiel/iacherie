@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class TaskCoordinatorCore:
-    """Advanced TaskCoordinatorCore System"""
+    """
+Advanced TaskCoordinatorCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class TaskCoordinatorCore:
 # Module exports
 __all__ = ["TaskCoordinatorCore"]
 
-logger.info("🎯 TaskCoordinatorCore module loaded")
+logger.info("🎯 TaskCoordinatorCore module initialized")

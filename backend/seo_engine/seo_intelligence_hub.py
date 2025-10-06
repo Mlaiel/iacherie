@@ -25,7 +25,8 @@ import hashlib
 # === ÉNUMÉRATIONS ===
 
 class IntelligenceType(Enum):
-    """Types d'intelligence SEO"""
+    """
+        Types d'intelligence SEO"""
     PREDICTIVE = "predictive"
     COMPETITIVE = "competitive"
     MARKET = "market"
@@ -84,7 +85,8 @@ class IntelligenceAnalysis:
 
 @dataclass
 class AIIntelligenceInsight:
-    """Insight généré par l'IA"""
+    """
+        Insight généré par l'IA"""
     insight_id: str
     category: str
     priority: str
@@ -98,7 +100,8 @@ class AIIntelligenceInsight:
 
 @dataclass
 class PredictiveIntelligence:
-    """Intelligence prédictive SEO"""
+    """
+        Intelligence prédictive SEO"""
     prediction_id: str
     prediction_type: str
     timeframe: str
@@ -112,7 +115,8 @@ class PredictiveIntelligence:
 
 @dataclass
 class CompetitiveIntelligence:
-    """Intelligence concurrentielle SEO"""
+    """
+        Intelligence concurrentielle SEO"""
     analysis_id: str
     competitor_profiles: List[Dict[str, Any]]
     competitive_gaps: List[Dict[str, Any]]
@@ -126,7 +130,8 @@ class CompetitiveIntelligence:
 
 @dataclass
 class MarketIntelligence:
-    """Intelligence de marché SEO"""
+    """
+        Intelligence de marché SEO"""
     market_id: str
     market_size: Dict[str, float]
     growth_trends: Dict[str, float]
@@ -206,6 +211,7 @@ class SEOIntelligenceHub:
     def _generate_analysis_id(self, content_type: str, data: str = "") -> str:
         """Génère un ID unique pour l'analyse"""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
         data_hash = hashlib.md5(str(data).encode()).hexdigest()[:8]
         return f"{content_type}_{timestamp}_{data_hash}"
     
@@ -232,12 +238,15 @@ class SEOIntelligenceHub:
             # Insight sur le score SEO
             if content_analysis.get("seo_score", 0) < 70:
                 insight = await self._generate_seo_improvement_insight(content_analysis)
+
                 insights.append(insight)
             
             # Insight sur la performance prédite
+
             performance_insight = await self._generate_performance_prediction_insight(
                 content_analysis, target_keywords or []
             )
+
             insights.append(performance_insight)
             
             # Insight concurrentiel si contexte créateur fourni
@@ -245,27 +254,36 @@ class SEOIntelligenceHub:
                 competitive_insight = await self._generate_competitive_insight(
                     content_analysis, creator_context
                 )
+
                 insights.append(competitive_insight)
             
             # Insight sur les opportunités de mots-clés
+
             keyword_insight = await self._generate_keyword_opportunity_insight(
                 content_analysis, target_keywords or []
             )
+
             insights.append(keyword_insight)
             
             # Insight sur l'optimisation technique
+
             technical_insight = await self._generate_technical_optimization_insight(
                 content_analysis
             )
+
             insights.append(technical_insight)
+
             
             self.stats["total_insights"] += len(insights)
+
             self.logger.info(f"Généré {len(insights)} insights IA")
+
             
             return insights
             
         except Exception as e:
             self.logger.error(f"Erreur génération insights: {str(e)}")
+
             return []
     
     async def predict_content_performance(
@@ -295,29 +313,38 @@ class SEOIntelligenceHub:
         
         try:
             # Sélection du modèle IA optimal
+
             selected_model = self._select_optimal_ai_model("performance_prediction")
             
             # Analyse des facteurs influents
+
             influencing_factors = self._analyze_performance_factors(content_data)
             
             # Prédictions de métriques clés
+
             predicted_metrics = await self._predict_key_metrics(
                 content_data, influencing_factors, prediction_timeframe
             )
             
             # Intervalles de confiance
+
             confidence_intervals = self._calculate_confidence_intervals(predicted_metrics)
             
             # Analyse de scénarios
+
             scenario_analysis = await self._generate_scenario_analysis(
                 content_data, predicted_metrics
             )
             
             # Identification des risques
+
             risk_factors = self._identify_risk_factors(content_data, predicted_metrics)
             
             # Stratégies de mitigation
+
             mitigation_strategies = self._generate_mitigation_strategies(risk_factors)
+
+
             
             prediction = PredictiveIntelligence(
                 prediction_id=prediction_id,
@@ -335,10 +362,12 @@ class SEOIntelligenceHub:
             self.prediction_cache[prediction_id] = prediction
             
             self.logger.info(f"Prédiction générée: {prediction_id}")
+
             return prediction
             
         except Exception as e:
             self.logger.error(f"Erreur prédiction performance: {str(e)}")
+
             raise
     
     async def analyze_competitive_landscape(
@@ -370,19 +399,23 @@ class SEOIntelligenceHub:
         
         try:
             # Profils des concurrents
+
             competitor_profiles = await self._analyze_competitor_profiles(
                 competitor_ids, analysis_depth
             )
             
             # Analyse des gaps concurrentiels
+
             competitive_gaps = await self._identify_competitive_gaps(
                 creator_id, competitor_profiles
             )
             
             # Évaluation des menaces
+
             threat_assessment = self._assess_competitive_threats(competitor_profiles)
             
             # Matrice d'opportunités
+
             opportunity_matrix = self._create_opportunity_matrix(
                 competitive_gaps, competitor_profiles
             )
@@ -393,19 +426,24 @@ class SEOIntelligenceHub:
             )
             
             # Avantages concurrentiels
+
             competitive_advantages = self._identify_competitive_advantages(
                 creator_id, competitor_profiles
             )
             
             # Vulnérabilités
+
             vulnerabilities = self._identify_vulnerabilities(
                 creator_id, competitor_profiles
             )
             
             # Recommandations stratégiques
+
             strategic_recommendations = self._generate_strategic_recommendations(
                 competitive_gaps, threat_assessment, opportunity_matrix
             )
+
+
             
             intelligence = CompetitiveIntelligence(
                 analysis_id=analysis_id,
@@ -423,10 +461,12 @@ class SEOIntelligenceHub:
             self.competitive_cache[analysis_id] = intelligence
             
             self.logger.info(f"Intelligence concurrentielle générée: {analysis_id}")
+
             return intelligence
             
         except Exception as e:
             self.logger.error(f"Erreur intelligence concurrentielle: {str(e)}")
+
             raise
     
     async def generate_market_intelligence(
@@ -445,18 +485,22 @@ class SEOIntelligenceHub:
             Intelligence de marché complète
         """
         market_id = self._generate_analysis_id("market", market_segment)
+
         
         try:
             # Taille du marché
             market_size = await self._estimate_market_size(market_segment)
             
             # Tendances de croissance
+
             growth_trends = await self._analyze_growth_trends(market_segment)
             
             # Patterns saisonniers
+
             seasonal_patterns = self._identify_seasonal_patterns(market_segment)
             
             # Opportunités émergentes
+
             emerging_opportunities = await self._identify_emerging_opportunities(
                 market_segment, analysis_scope or []
             )
@@ -465,13 +509,18 @@ class SEOIntelligenceHub:
             market_saturation = self._calculate_market_saturation(market_segment)
             
             # Comportement consommateur
+
             consumer_behavior = await self._analyze_consumer_behavior(market_segment)
             
             # Tendances technologiques
+
             technology_trends = self._identify_technology_trends(market_segment)
             
             # Facteurs réglementaires
+
             regulatory_factors = self._identify_regulatory_factors(market_segment)
+
+
             
             intelligence = MarketIntelligence(
                 market_id=market_id,
@@ -484,12 +533,15 @@ class SEOIntelligenceHub:
                 technology_trends=technology_trends,
                 regulatory_factors=regulatory_factors
             )
+
             
             self.logger.info(f"Intelligence de marché générée: {market_id}")
+
             return intelligence
             
         except Exception as e:
             self.logger.error(f"Erreur intelligence de marché: {str(e)}")
+
             raise
     
     # === MÉTHODES PRIVÉES - GÉNÉRATION D'INSIGHTS ===
@@ -497,6 +549,7 @@ class SEOIntelligenceHub:
     async def _generate_seo_improvement_insight(self, analysis: Dict[str, Any]) -> AIIntelligenceInsight:
         """Génère un insight d'amélioration SEO"""
         seo_score = analysis.get("seo_score", 0)
+
         improvement_potential = 100 - seo_score
         
         return AIIntelligenceInsight(
@@ -647,15 +700,19 @@ class SEOIntelligenceHub:
         
         if content_data.get("content_length", 0) > 1000:
             factors.append("Contenu long et détaillé")
+
         
         if content_data.get("seo_score", 0) > 70:
             factors.append("Score SEO élevé")
+
         
         if content_data.get("readability_score", 0) > 60:
             factors.append("Bonne lisibilité")
+
         
         if content_data.get("keyword_density"):
             factors.append("Mots-clés optimisés")
+
         
         factors.extend([
             "Tendances saisonnières",
@@ -663,6 +720,7 @@ class SEOIntelligenceHub:
             "Algorithmes de recherche",
             "Concurrence du marché"
         ])
+
         
         return factors
     
@@ -673,8 +731,11 @@ class SEOIntelligenceHub:
         base_multiplier = timeframe.days / 30.0
         
         # Simulations basées sur les facteurs
+
         traffic_prediction = random.uniform(10, 50) * base_multiplier
+
         engagement_prediction = random.uniform(5, 30) * base_multiplier
+
         conversion_prediction = random.uniform(2, 15) * base_multiplier
         
         return {
@@ -693,13 +754,15 @@ class SEOIntelligenceHub:
         for metric, value in metrics.items():
             margin = value * 0.2  # Marge de 20%
             intervals[metric] = (max(0, value - margin), value + margin)
+
         
         return intervals
     
     async def _generate_scenario_analysis(
         self, content_data: Dict[str, Any], base_metrics: Dict[str, float]
     ) -> Dict[str, Dict[str, float]]:
-        """Génère une analyse de scénarios"""
+        """
+        Génère une analyse de scénarios"""
         return {
             "optimistic": {k: v * 1.3 for k, v in base_metrics.items()},
             "realistic": base_metrics,
@@ -715,9 +778,11 @@ class SEOIntelligenceHub:
         
         if content_data.get("seo_score", 0) < 50:
             risks.append("Score SEO faible - risque de mauvais classement")
+
         
         if content_data.get("competitive_intensity", 0) > 0.7:
             risks.append("Concurrence élevée dans le secteur")
+
         
         risks.extend([
             "Changements d'algorithmes de recherche",
@@ -725,6 +790,7 @@ class SEOIntelligenceHub:
             "Saisonnalité du contenu",
             "Saturation des mots-clés cibles"
         ])
+
         
         return risks
     
@@ -735,10 +801,13 @@ class SEOIntelligenceHub:
         for risk in risks:
             if "seo" in risk.lower():
                 strategies.append("Améliorer l'optimisation SEO avant publication")
+
             elif "concurrence" in risk.lower():
                 strategies.append("Développer une stratégie de différenciation")
+
             elif "algorithme" in risk.lower():
                 strategies.append("Diversifier les sources de trafic")
+
             elif "tendance" in risk.lower():
                 strategies.append("Surveiller les tendances en temps réel")
         
@@ -748,6 +817,7 @@ class SEOIntelligenceHub:
             "Développer des partenariats stratégiques",
             "Optimiser pour multiple canaux de distribution"
         ])
+
         
         return list(set(strategies))  # Supprime les doublons
     
@@ -772,6 +842,7 @@ class SEOIntelligenceHub:
                 "content_quality_score": random.uniform(65, 90)
             }
             profiles.append(profile)
+
         
         return profiles
     
@@ -782,6 +853,7 @@ class SEOIntelligenceHub:
         gaps = []
         
         # Simulation de gaps
+
         gap_types = [
             "keyword_opportunity",
             "content_type_gap",
@@ -800,6 +872,7 @@ class SEOIntelligenceHub:
                 "timeline": random.choice(["2-4 weeks", "1-2 months", "3-6 months"])
             }
             gaps.append(gap)
+
         
         return gaps
     
@@ -813,6 +886,7 @@ class SEOIntelligenceHub:
             competitor_id = profile["competitor_id"]
             
             # Calcul du niveau de menace basé sur les métriques
+
             threat_score = (
                 profile["domain_authority"] * 0.3 +
                 profile["traffic_estimate"] / 10000 * 0.2 +
@@ -957,7 +1031,8 @@ class SEOIntelligenceHub:
         ]
     
     def _calculate_market_saturation(self, segment: str) -> Dict[str, float]:
-        """Calcule la saturation du marché"""
+        """
+        Calcule la saturation du marché"""
         return {
             "overall_saturation": random.uniform(0.3, 0.8),
             "keyword_saturation": random.uniform(0.4, 0.9),
@@ -1027,14 +1102,37 @@ class SEOIntelligenceHub:
 
 
 # === EXPORTS ===
+
+# Aliases pour backward compatibility
+AIContentSEOEnhancement = SEOIntelligenceHub
+IntelligentKeywordDiscovery = SEOIntelligenceHub
+TrendPredictor = SEOIntelligenceHub
+MarketAnalyzer = SEOIntelligenceHub
+SEOIntelligenceResult = IntelligenceAnalysis
+KeywordIntelligence = AIIntelligenceInsight
+ContentIntelligence = AIIntelligenceInsight
+IntelligenceLevel = IntelligenceType
+SEOInsights = PredictiveIntelligence
+CompetitiveAdvantage = CompetitiveIntelligence
+
 __all__ = [
     'SEOIntelligenceHub',
+    'AIContentSEOEnhancement',
+    'IntelligentKeywordDiscovery',
+    'TrendPredictor',
+    'MarketAnalyzer',
     'IntelligenceAnalysis',
+    'SEOIntelligenceResult',
     'AIIntelligenceInsight',
+    'KeywordIntelligence',
+    'ContentIntelligence',
     'PredictiveIntelligence',
+    'SEOInsights',
     'CompetitiveIntelligence',
+    'CompetitiveAdvantage',
     'MarketIntelligence',
     'IntelligenceType',
+    'IntelligenceLevel',
     'PredictionConfidence',
     'CompetitorThreatLevel',
     'MarketOpportunity',

@@ -48,12 +48,14 @@ class MetricsCollector:
 metrics_collector = MetricsCollector()
 
 async def track_api_usage(endpoint: str, user_id: str, usage_data: Dict[str, Any]):
-    """Track API usage for monitoring and billing purposes"""
+    """
+        Track API usage for monitoring and billing purposes"""
     try:
         await metrics_collector.increment_counter(
             "api_requests_total",
             {"endpoint": endpoint, "user_id": user_id}
         )
+
         
         if "total_tokens" in usage_data:
             await metrics_collector.record_histogram(
@@ -61,6 +63,7 @@ async def track_api_usage(endpoint: str, user_id: str, usage_data: Dict[str, Any
                 usage_data["total_tokens"],
                 {"endpoint": endpoint, "user_id": user_id}
             )
+
         
         if "duration_seconds" in usage_data:
             await metrics_collector.record_histogram(
@@ -68,8 +71,10 @@ async def track_api_usage(endpoint: str, user_id: str, usage_data: Dict[str, Any
                 usage_data["duration_seconds"],
                 {"endpoint": endpoint}
             )
+
         
         logger.info(f"Tracked usage for {endpoint}: user={user_id}, data={usage_data}")
+
         
     except Exception as e:
         logger.error(f"Failed to track API usage: {e}")

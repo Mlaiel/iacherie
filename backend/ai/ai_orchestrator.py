@@ -148,7 +148,8 @@ class ContentAnalysisResult:
 
 @dataclass
 class DistributionStrategy:
-    """AI-generated distribution strategy for content"""
+    """
+        AI-generated distribution strategy for content"""
     strategy_id: str
     content_id: str
     target_platforms: List[str]
@@ -162,7 +163,8 @@ class DistributionStrategy:
 
 
 class EnhancedAIOrchestrator:
-    """Enhanced AI Orchestrator with 53 specialized agents"""
+    """
+        Enhanced AI Orchestrator with 53 specialized agents"""
     
     def __init__(self):
         self.agents: Dict[str, AIAgentConfig] = {}
@@ -173,12 +175,15 @@ class EnhancedAIOrchestrator:
         self.active_tasks: Dict[str, asyncio.Task] = {}
         self.metrics_collector = defaultdict(list)
         self.initialize_specialized_agents()
+
         
     def initialize_specialized_agents(self):
-        """Initialize all 53 specialized AI agents"""
+        """
+        Initialize all 53 specialized AI agents"""
         logger.info("Initializing 53 specialized AI agents for enterprise distribution")
         
         # Content Adaptation Agents (15)
+
         content_agents = [
             ("format_adapter_01", AIAgentType.FORMAT_ADAPTER, ["instagram", "tiktok", "youtube"]),
             ("resolution_optimizer_01", AIAgentType.RESOLUTION_OPTIMIZER, ["youtube", "vimeo"]),
@@ -198,6 +203,7 @@ class EnhancedAIOrchestrator:
         ]
         
         # Audience Intelligence Agents (12)
+
         audience_agents = [
             ("demographic_analyzer_01", AIAgentType.DEMOGRAPHIC_ANALYZER, ["facebook", "instagram", "linkedin"]),
             ("behavioral_predictor_01", AIAgentType.BEHAVIORAL_PREDICTOR, ["tiktok", "youtube", "twitch"]),
@@ -214,6 +220,7 @@ class EnhancedAIOrchestrator:
         ]
         
         # Viral Optimization Agents (10)
+
         viral_agents = [
             ("virality_predictor_01", AIAgentType.VIRALITY_PREDICTOR, ["tiktok", "instagram", "youtube"]),
             ("hashtag_optimizer_01", AIAgentType.HASHTAG_OPTIMIZER, ["instagram", "twitter", "tiktok"]),
@@ -228,6 +235,7 @@ class EnhancedAIOrchestrator:
         ]
         
         # Performance Optimization Agents (8)
+
         performance_agents = [
             ("performance_monitor_01", AIAgentType.PERFORMANCE_MONITOR, ["all_platforms"]),
             ("load_balancer_01", AIAgentType.LOAD_BALANCER, ["all_platforms"]),
@@ -240,6 +248,7 @@ class EnhancedAIOrchestrator:
         ]
         
         # Crisis Management Agents (8)
+
         crisis_agents = [
             ("crisis_detector_01", AIAgentType.CRISIS_DETECTOR, ["all_platforms"]),
             ("reputation_monitor_01", AIAgentType.REPUTATION_MONITOR, ["all_platforms"]),
@@ -252,6 +261,7 @@ class EnhancedAIOrchestrator:
         ]
         
         # Register all agents
+
         all_agents = content_agents + audience_agents + viral_agents + performance_agents + crisis_agents
         
         for agent_id, agent_type, platforms in all_agents:
@@ -262,11 +272,13 @@ class EnhancedAIOrchestrator:
                 confidence_threshold=0.8,
                 timeout_seconds=30
             )
+
             self.agents[agent_id] = config
             
             # Update platform specialists mapping
             for platform in platforms:
                 self.platform_specialists[platform].append(agent_id)
+
         
         logger.info(f"Successfully initialized {len(self.agents)} specialized AI agents")
         logger.info(f"Platform coverage: {len(self.platform_specialists)} platforms supported")
@@ -278,31 +290,40 @@ class EnhancedAIOrchestrator:
     ) -> Dict[str, ContentAnalysisResult]:
         """Analyze content using specialized agents for optimal distribution"""
         content_id = content_data.get('id', str(uuid.uuid4()))
+
         
         logger.info(f"Starting content analysis for {content_id} targeting {len(target_platforms)} platforms")
         
         # Select relevant agents for each platform
+
         selected_agents = set()
         for platform in target_platforms:
             agents_for_platform = self.platform_specialists.get(platform, [])
+
             selected_agents.update(agents_for_platform)
             
             # Add agents for "all_platforms"
             selected_agents.update(self.platform_specialists.get("all_platforms", []))
         
         # Parallel analysis using selected agents
+
         analysis_tasks = []
         for agent_id in selected_agents:
             task = self._analyze_with_agent(agent_id, content_data, target_platforms)
+
             analysis_tasks.append(task)
         
         # Execute all analyses concurrently
+
         results = {}
+
         completed_analyses = await asyncio.gather(*analysis_tasks, return_exceptions=True)
+
         
         for i, result in enumerate(completed_analyses):
             if isinstance(result, Exception):
                 logger.error(f"Agent analysis failed: {result}")
+
                 continue
             
             if result:
@@ -321,26 +342,32 @@ class EnhancedAIOrchestrator:
         agent = self.agents.get(agent_id)
         if not agent:
             return None
+
         
         start_time = time.time()
+
         
         try:
-            # Mock AI processing (in real implementation, this would call actual AI services)
             await asyncio.sleep(0.1)  # Simulate processing time
             
             # Generate mock analysis based on agent type
+
             analysis_result = self._generate_mock_analysis(agent, content_data, target_platforms)
+
+
             
             processing_time = (time.time() - start_time) * 1000
             analysis_result.processing_time_ms = processing_time
             
             # Update agent performance metrics
             self._update_agent_metrics(agent_id, processing_time, analysis_result.confidence)
+
             
             return analysis_result
             
         except Exception as e:
             logger.error(f"Agent {agent_id} analysis failed: {e}")
+
             return None
     
     def _generate_mock_analysis(
@@ -353,6 +380,7 @@ class EnhancedAIOrchestrator:
         content_id = content_data.get('id', 'unknown')
         
         # Base confidence varies by agent type
+
         base_confidence = {
             AIAgentType.VIRALITY_PREDICTOR: 0.85,
             AIAgentType.ENGAGEMENT_FORECASTER: 0.82,
@@ -362,12 +390,15 @@ class EnhancedAIOrchestrator:
         }.get(agent.agent_type, 0.75)
         
         # Generate recommendations based on agent type
+
         recommendations = self._generate_agent_recommendations(agent.agent_type, target_platforms)
         
         # Calculate scores
+
         virality_score = base_confidence * 0.9 if agent.agent_type in [
             AIAgentType.VIRALITY_PREDICTOR, AIAgentType.TREND_AMPLIFIER
         ] else 0.0
+
         
         audience_match_score = base_confidence * 0.95 if agent.agent_type in [
             AIAgentType.DEMOGRAPHIC_ANALYZER, AIAgentType.AUDIENCE_SEGMENTER
@@ -384,6 +415,7 @@ class EnhancedAIOrchestrator:
                 "timestamp": datetime.now().isoformat()
             },
             processing_time_ms=0.0,  # Will be set by caller
+
             agent_used=agent.agent_id,
             virality_score=virality_score,
             audience_match_score=audience_match_score
@@ -407,6 +439,7 @@ class EnhancedAIOrchestrator:
                         "optimal_count": 5 if platform == "instagram" else 3,
                         "confidence": 0.9
                     })
+
         
         elif agent_type == AIAgentType.TIMING_OPTIMIZER:
             for platform in target_platforms:
@@ -418,6 +451,7 @@ class EnhancedAIOrchestrator:
                     "timezone": "UTC",
                     "confidence": 0.85
                 })
+
         
         elif agent_type == AIAgentType.FORMAT_ADAPTER:
             for platform in target_platforms:
@@ -429,6 +463,7 @@ class EnhancedAIOrchestrator:
                     "duration_limit": 60 if platform == "tiktok" else None,
                     "confidence": 0.95
                 })
+
         
         return recommendations
     
@@ -457,17 +492,22 @@ class EnhancedAIOrchestrator:
         content_data: Dict[str, Any], 
         analysis_results: Dict[str, ContentAnalysisResult]
     ) -> DistributionStrategy:
-        """Generate optimal distribution strategy based on AI analysis"""
+        """
+        Generate optimal distribution strategy based on AI analysis"""
         content_id = content_data.get('id', str(uuid.uuid4()))
         
         # Aggregate insights from all agent analyses
+
         platform_scores = defaultdict(float)
+
         timing_recommendations = {}
+
         optimization_settings = {}
         
         for agent_id, result in analysis_results.items():
             for recommendation in result.recommendations:
                 platform = recommendation.get('platform')
+
                 if platform:
                     platform_scores[platform] += result.confidence * recommendation.get('confidence', 1.0)
                 
@@ -483,9 +523,11 @@ class EnhancedAIOrchestrator:
                     }
         
         # Select top platforms based on AI scores
+
         top_platforms = sorted(platform_scores.keys(), key=lambda p: platform_scores[p], reverse=True)[:10]
         
         # Calculate expected performance
+
         expected_performance = {}
         for platform in top_platforms:
             base_score = platform_scores[platform]
@@ -504,6 +546,7 @@ class EnhancedAIOrchestrator:
             optimization_settings=optimization_settings,
             expected_performance=expected_performance,
             risk_assessment={platform: 0.1 for platform in top_platforms},  # Low risk
+
             budget_allocation={platform: 1.0/len(top_platforms) for platform in top_platforms},
             monitoring_requirements=["engagement_rate", "reach", "conversions", "sentiment"]
         )
@@ -521,13 +564,17 @@ class EnhancedAIOrchestrator:
                 "total_executions": 0
             }
         }
+
         
         total_latency = 0
+
         total_confidence = 0
+
         total_executions = 0
         
         for agent_id, metrics in self.agent_performance.items():
             agent_config = self.agents.get(agent_id)
+
             if agent_config:
                 report["agent_details"][agent_id] = {
                     "type": agent_config.agent_type.value,
@@ -536,10 +583,13 @@ class EnhancedAIOrchestrator:
                 }
                 
                 total_latency += metrics.get('avg_latency_ms', 0)
+
                 total_confidence += metrics.get('avg_confidence', 0)
+
                 total_executions += metrics.get('executions', 0)
         
         # Calculate summary averages
+
         active_count = len(self.agent_performance)
         if active_count > 0:
             report["performance_summary"]["avg_latency_ms"] = total_latency / active_count
@@ -552,33 +602,45 @@ class EnhancedAIOrchestrator:
     async def optimize_agent_selection(self, content_type: str, target_platforms: List[str]) -> List[str]:
         """Intelligently select the best agents for given content and platforms"""
         # Get agents for target platforms
+
         candidate_agents = set()
         for platform in target_platforms:
             candidate_agents.update(self.platform_specialists.get(platform, []))
+
             candidate_agents.update(self.platform_specialists.get("all_platforms", []))
         
         # Rank agents by performance and relevance
+
         agent_scores = {}
         for agent_id in candidate_agents:
             agent = self.agents.get(agent_id)
+
             if not agent:
                 continue
             
             # Base score from performance metrics
+
             metrics = self.agent_performance.get(agent_id, {})
+
+
             confidence_score = metrics.get('avg_confidence', 0.5)
+
+
             latency_score = max(0, 1 - (metrics.get('avg_latency_ms', 100) / 1000))  # Prefer faster agents
             
             # Relevance score based on content type and platforms
+
             relevance_score = self._calculate_agent_relevance(agent, content_type, target_platforms)
             
             # Combined score
             agent_scores[agent_id] = (confidence_score * 0.4 + latency_score * 0.3 + relevance_score * 0.3)
         
         # Select top performing agents
+
         selected_agents = sorted(agent_scores.keys(), key=lambda a: agent_scores[a], reverse=True)
         
         # Ensure we have at least one agent from each category for comprehensive analysis
+
         essential_types = [
             AIAgentType.VIRALITY_PREDICTOR,
             AIAgentType.DEMOGRAPHIC_ANALYZER,
@@ -590,9 +652,12 @@ class EnhancedAIOrchestrator:
             type_agents = [aid for aid, agent in self.agents.items() if agent.agent_type == agent_type]
             if type_agents and not any(aid in selected_agents[:10] for aid in type_agents):
                 # Add the best agent of this type
+
                 best_type_agent = max(type_agents, key=lambda a: agent_scores.get(a, 0))
+
                 if best_type_agent not in selected_agents[:10]:
                     selected_agents.insert(0, best_type_agent)
+
         
         return selected_agents[:15]  # Return top 15 agents for balanced performance
     
@@ -606,23 +671,30 @@ class EnhancedAIOrchestrator:
         relevance_score = 0.0
         
         # Platform relevance
+
         agent_platforms = set(agent.platform_specialization)
+
         target_platforms_set = set(target_platforms)
+
         
         if "all_platforms" in agent_platforms:
             relevance_score += 0.5
         else:
             platform_overlap = len(agent_platforms.intersection(target_platforms_set))
+
+
             platform_relevance = platform_overlap / len(target_platforms_set) if target_platforms_set else 0
             relevance_score += platform_relevance * 0.7
         
         # Content type relevance
+
         content_type_mapping = {
             "video": [AIAgentType.FORMAT_ADAPTER, AIAgentType.DURATION_OPTIMIZER, AIAgentType.QUALITY_ENHANCER],
             "image": [AIAgentType.RESOLUTION_OPTIMIZER, AIAgentType.COLOR_CORRECTOR, AIAgentType.ASPECT_RATIO_ADJUSTER],
             "audio": [AIAgentType.AUDIO_ENHANCER, AIAgentType.COMPRESSION_OPTIMIZER],
             "text": [AIAgentType.SENTIMENT_ANALYZER, AIAgentType.HASHTAG_OPTIMIZER, AIAgentType.CAPTION_ENHANCER]
         }
+
         
         relevant_types = content_type_mapping.get(content_type, [])
         if agent.agent_type in relevant_types:

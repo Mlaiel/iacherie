@@ -22,7 +22,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentFormat(Enum):
-    """Content formats supported by the platform"""
+    """
+        Content formats supported by the platform"""
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -59,7 +60,8 @@ class FormatPriority(Enum):
 
 @dataclass
 class FormatProcessingConfig:
-    """Configuration for format-specific processing"""
+    """
+        Configuration for format-specific processing"""
     format: ContentFormat
     quality: ProcessingQuality
     priority: FormatPriority
@@ -71,7 +73,8 @@ class FormatProcessingConfig:
 
 @dataclass
 class MultiFormatContent:
-    """Multi-format content data structure"""
+    """
+        Multi-format content data structure"""
     content_id: str
     creator_id: str
     primary_format: ContentFormat
@@ -85,7 +88,8 @@ class MultiFormatContent:
 
 @dataclass
 class WorkflowExecution:
-    """Multi-format workflow execution tracking"""
+    """
+        Multi-format workflow execution tracking"""
     execution_id: str
     content_id: str
     workflow_mode: WorkflowMode
@@ -100,7 +104,8 @@ class WorkflowExecution:
 
 
 class MultiFormatWorkflowOrchestrator:
-    """Multi-format content workflow orchestrator providing enterprise-grade coordination.
+    """
+        Multi-format content workflow orchestrator providing enterprise-grade coordination.
     
     Capabilities:
     - Unified workflow management across Audio, Video, Image, Text, Voice, Avatar formats
@@ -125,14 +130,20 @@ class MultiFormatWorkflowOrchestrator:
         """Initialize the multi-format workflow orchestrator"""
         try:
             await self._setup_format_strategies()
+
             await self._setup_workflow_templates()
+
             await self._setup_cross_format_rules()
+
             await self._initialize_format_processors()
+
             self.initialized = True
             logger.info("✅ Multi-Format Workflow Orchestrator initialization complete")
+
             return True
         except Exception as e:
             logger.error(f"❌ Failed to initialize Multi-Format Workflow Orchestrator: {e}")
+
             return False
 
     async def _setup_format_strategies(self):
@@ -316,9 +327,7 @@ class MultiFormatWorkflowOrchestrator:
         logger.info(f"✅ Setup {len(self.cross_format_rules)} cross-format coordination rules")
 
     async def _initialize_format_processors(self):
-        """Initialize format-specific processors"""
-        # Placeholder for format processor initialization
-        # In a real implementation, these would be actual processor instances
+        """Initialize format-specific processors"""        # In a real implementation, these would be actual processor instances
         self.format_processors = {
             ContentFormat.AUDIO: "AudioProcessor",
             ContentFormat.VIDEO: "VideoProcessor", 
@@ -342,7 +351,10 @@ class MultiFormatWorkflowOrchestrator:
         # Use template or custom configuration
         if workflow_template and workflow_template in self.workflow_templates:
             template = self.workflow_templates[workflow_template]
+
             workflow_mode = WorkflowMode(template["workflow_mode"])
+
+
             processing_quality = ProcessingQuality(template["processing_quality"])
         else:
             workflow_mode = WorkflowMode.HYBRID
@@ -351,10 +363,14 @@ class MultiFormatWorkflowOrchestrator:
         # Override with custom config if provided
         if custom_config:
             workflow_mode = WorkflowMode(custom_config.get("workflow_mode", workflow_mode.value))
+
+
             processing_quality = ProcessingQuality(custom_config.get("processing_quality", processing_quality.value))
 
         # Create format configurations
+
         format_configs = {}
+
         formats_to_process = [content.primary_format] + content.secondary_formats
         
         for format in formats_to_process:
@@ -370,6 +386,7 @@ class MultiFormatWorkflowOrchestrator:
                 )
 
         # Create workflow execution
+
         execution = WorkflowExecution(
             execution_id=execution_id,
             content_id=content.content_id,
@@ -383,6 +400,7 @@ class MultiFormatWorkflowOrchestrator:
 
         self.active_executions[execution_id] = execution
         logger.info(f"🎭 Created multi-format workflow {execution_id} with {len(format_configs)} formats")
+
         
         return execution_id
 
@@ -392,35 +410,46 @@ class MultiFormatWorkflowOrchestrator:
         execution = self.active_executions.get(execution_id)
         if not execution:
             logger.error(f"❌ Workflow execution {execution_id} not found")
+
             return False
 
         try:
             execution.start_time = datetime.utcnow()
+
             logger.info(f"🚀 Executing multi-format workflow {execution_id} in {execution.workflow_mode.value} mode")
 
             # Execute based on workflow mode
             if execution.workflow_mode == WorkflowMode.SEQUENTIAL:
                 success = await self._execute_sequential(execution)
+
             elif execution.workflow_mode == WorkflowMode.PARALLEL:
                 success = await self._execute_parallel(execution)
+
             elif execution.workflow_mode == WorkflowMode.HYBRID:
                 success = await self._execute_hybrid(execution)
+
             else:  # OPTIMIZED
                 success = await self._execute_optimized(execution)
 
             # Apply cross-format optimizations
             if success:
                 await self._apply_cross_format_optimizations(execution)
+
                 await self._calculate_final_metrics(execution)
 
+
             execution.end_time = datetime.utcnow()
+
             execution.total_execution_time = int((execution.end_time - execution.start_time).total_seconds() * 1000)
+
             
             logger.info(f"✅ Multi-format workflow {execution_id} completed in {execution.total_execution_time}ms")
+
             return success
 
         except Exception as e:
             logger.error(f"❌ Failed to execute multi-format workflow {execution_id}: {e}")
+
             return False
 
     async def _execute_sequential(self, execution: WorkflowExecution) -> bool:
@@ -430,38 +459,49 @@ class MultiFormatWorkflowOrchestrator:
             key=lambda x: x[1].priority.value, 
             reverse=True
         )
+
         
         for format, config in sorted_formats:
             success = await self._process_format(execution, format, config)
+
             if not success:
                 return False
         return True
 
     async def _execute_parallel(self, execution: WorkflowExecution) -> bool:
-        """Execute all formats in parallel"""
+        """
+        Execute all formats in parallel"""
         tasks = []
         for format, config in execution.format_configs.items():
             task = asyncio.create_task(self._process_format(execution, format, config))
+
             tasks.append(task)
+
+
         
         results = await asyncio.gather(*tasks, return_exceptions=True)
         return all(result is True for result in results if not isinstance(result, Exception))
 
     async def _execute_hybrid(self, execution: WorkflowExecution) -> bool:
-        """Execute with hybrid strategy - critical formats first, then parallel"""
+        """
+        Execute with hybrid strategy - critical formats first, then parallel"""
         critical_formats = [
             (format, config) for format, config in execution.format_configs.items()
+
             if config.priority.value >= FormatPriority.HIGH.value
         ]
+
         
         regular_formats = [
             (format, config) for format, config in execution.format_configs.items()
+
             if config.priority.value < FormatPriority.HIGH.value
         ]
 
         # Process critical formats sequentially
         for format, config in critical_formats:
             success = await self._process_format(execution, format, config)
+
             if not success:
                 return False
 
@@ -469,48 +509,64 @@ class MultiFormatWorkflowOrchestrator:
         if regular_formats:
             tasks = [
                 asyncio.create_task(self._process_format(execution, format, config))
+
                 for format, config in regular_formats
             ]
+
             results = await asyncio.gather(*tasks, return_exceptions=True)
+
             if not all(result is True for result in results if not isinstance(result, Exception)):
                 return False
 
         return True
 
     async def _execute_optimized(self, execution: WorkflowExecution) -> bool:
-        """Execute with AI-optimized strategy based on content analysis"""
+        """
+        Execute with AI-optimized strategy based on content analysis"""
         # Analyze content to determine optimal execution order
+
         execution_plan = await self._create_optimal_execution_plan(execution)
+
         
         for phase in execution_plan:
             if len(phase) == 1:
                 # Single format - execute directly
                 format, config = phase[0]
+
                 success = await self._process_format(execution, format, config)
+
                 if not success:
                     return False
             else:
                 # Multiple formats - execute in parallel
+
                 tasks = [
                     asyncio.create_task(self._process_format(execution, format, config))
+
                     for format, config in phase
                 ]
+
                 results = await asyncio.gather(*tasks, return_exceptions=True)
+
                 if not all(result is True for result in results if not isinstance(result, Exception)):
                     return False
 
         return True
 
     async def _process_format(self, execution: WorkflowExecution, format: ContentFormat, config: FormatProcessingConfig) -> bool:
-        """Process a single format with its configuration"""
+        """
+        Process a single format with its configuration"""
         try:
             execution.execution_status[format] = "processing"
             logger.info(f"🎯 Processing {format.value} format with {config.quality.value} quality")
 
             # Simulate format processing (in real implementation, this would call actual processors)
+
+
             processing_time = await self._simulate_format_processing(format, config)
             
             # Create result
+
             result = {
                 "format": format.value,
                 "quality": config.quality.value,
@@ -525,11 +581,13 @@ class MultiFormatWorkflowOrchestrator:
             execution.execution_status[format] = "completed"
             
             logger.info(f"✅ {format.value} processing completed in {processing_time}ms")
+
             return True
 
         except Exception as e:
             execution.execution_status[format] = "failed"
             logger.error(f"❌ Failed to process {format.value}: {e}")
+
             return False
 
     async def _simulate_format_processing(self, format: ContentFormat, config: FormatProcessingConfig) -> int:
@@ -542,6 +600,7 @@ class MultiFormatWorkflowOrchestrator:
             ContentFormat.VOICE: 800,
             ContentFormat.AVATAR: 3000
         }
+
         
         quality_multiplier = {
             ProcessingQuality.BASIC: 0.5,
@@ -551,25 +610,31 @@ class MultiFormatWorkflowOrchestrator:
             ProcessingQuality.ULTRA: 3.0
         }
 
+
         processing_time = int(base_time[format] * quality_multiplier[config.quality])
         await asyncio.sleep(processing_time / 1000)  # Simulate processing
         return processing_time
 
     async def _apply_cross_format_optimizations(self, execution: WorkflowExecution):
-        """Apply cross-format optimizations and detect synergies"""
+        """
+        Apply cross-format optimizations and detect synergies"""
         processed_formats = list(execution.format_results.keys())
         
         # Find applicable cross-format rules
+
         applicable_rules = []
         for rule_name, rule in self.cross_format_rules.items():
             rule_formats = set(rule["formats"])
+
             if rule_formats.issubset(set(processed_formats)):
                 applicable_rules.append((rule_name, rule))
 
         # Apply optimizations
+
         synergies = {}
         for rule_name, rule in applicable_rules:
             synergy_result = await self._apply_cross_format_rule(execution, rule)
+
             synergies[rule_name] = synergy_result
             logger.info(f"🔄 Applied cross-format rule: {rule_name}")
 
@@ -588,9 +653,11 @@ class MultiFormatWorkflowOrchestrator:
     async def _calculate_final_metrics(self, execution: WorkflowExecution):
         """Calculate final optimization metrics for the workflow"""
         total_processing_time = sum(
-            result.get("processing_time_ms", 0) 
+            result.get("processing_time_ms", 0)
+ 
             for result in execution.format_results.values()
         )
+
         
         execution.optimization_metrics = {
             "overall_efficiency": 0.88,
@@ -612,7 +679,8 @@ class MultiFormatWorkflowOrchestrator:
             return FormatPriority.MEDIUM
 
     def _calculate_resource_allocation(self, format: ContentFormat, quality: ProcessingQuality) -> Dict[str, float]:
-        """Calculate resource allocation for format processing"""
+        """
+        Calculate resource allocation for format processing"""
         base_allocation = {
             ContentFormat.AUDIO: {"cpu": 0.3, "memory": 0.2, "gpu": 0.1},
             ContentFormat.VIDEO: {"cpu": 0.5, "memory": 0.6, "gpu": 0.8},
@@ -621,6 +689,7 @@ class MultiFormatWorkflowOrchestrator:
             ContentFormat.VOICE: {"cpu": 0.4, "memory": 0.3, "gpu": 0.2},
             ContentFormat.AVATAR: {"cpu": 0.6, "memory": 0.5, "gpu": 0.9}
         }
+
         
         quality_multiplier = {
             ProcessingQuality.BASIC: 0.5,
@@ -630,7 +699,9 @@ class MultiFormatWorkflowOrchestrator:
             ProcessingQuality.ULTRA: 3.0
         }
 
+
         allocation = base_allocation[format].copy()
+
         multiplier = quality_multiplier[quality]
         
         return {resource: value * multiplier for resource, value in allocation.items()}
@@ -638,15 +709,20 @@ class MultiFormatWorkflowOrchestrator:
     async def _create_optimal_execution_plan(self, execution: WorkflowExecution) -> List[List[Tuple[ContentFormat, FormatProcessingConfig]]]:
         """Create optimal execution plan based on dependencies and resources"""
         # Simplified optimal planning - group by dependencies and resource requirements
+
         high_priority = [
             (format, config) for format, config in execution.format_configs.items()
+
             if config.priority.value >= FormatPriority.HIGH.value
         ]
+
         
         low_priority = [
             (format, config) for format, config in execution.format_configs.items()
+
             if config.priority.value < FormatPriority.HIGH.value
         ]
+
 
         execution_plan = []
         if high_priority:
@@ -657,7 +733,8 @@ class MultiFormatWorkflowOrchestrator:
         return execution_plan
 
     async def get_execution_status(self, execution_id: str) -> Optional[Dict[str, Any]]:
-        """Get comprehensive execution status"""
+        """
+        Get comprehensive execution status"""
         execution = self.active_executions.get(execution_id)
         if not execution:
             return None
@@ -687,17 +764,19 @@ class MultiFormatWorkflowOrchestrator:
             
             # Apply real-time optimizations
             await self._apply_real_time_optimizations(execution)
+
             
             logger.info(f"✅ Execution {execution_id} optimization complete")
+
             return True
 
         except Exception as e:
             logger.error(f"❌ Failed to optimize execution {execution_id}: {e}")
+
             return False
 
     async def _apply_real_time_optimizations(self, execution: WorkflowExecution):
         """Apply real-time optimizations to running execution"""
-        # Placeholder for real-time optimization logic
         await asyncio.sleep(0.1)
 
 
@@ -706,7 +785,8 @@ multi_format_workflow_orchestrator = MultiFormatWorkflowOrchestrator()
 
 
 async def get_multi_format_workflow_orchestrator() -> MultiFormatWorkflowOrchestrator:
-    """Get the global multi-format workflow orchestrator instance"""
+    """
+        Get the global multi-format workflow orchestrator instance"""
     if not multi_format_workflow_orchestrator.initialized:
         await multi_format_workflow_orchestrator.initialize()
     return multi_format_workflow_orchestrator

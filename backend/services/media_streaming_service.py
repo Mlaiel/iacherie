@@ -110,7 +110,8 @@ class StreamConfiguration:
 
 @dataclass
 class StreamSession:
-    """Session de streaming"""
+    """
+        Session de streaming"""
     session_id: str
     stream_id: str
     user_id: str
@@ -127,7 +128,8 @@ class StreamSession:
 
 @dataclass
 class LiveStream:
-    """Streaming en direct"""
+    """
+        Streaming en direct"""
     live_stream_id: str
     creator_id: str
     title: str
@@ -149,7 +151,8 @@ class LiveStream:
 
 @dataclass
 class AdaptiveBitrateConfig:
-    """Configuration de débit adaptatif"""
+    """
+        Configuration de débit adaptatif"""
     config_id: str
     stream_id: str
     quality_ladder: List[Dict[str, Any]]
@@ -163,7 +166,8 @@ class AdaptiveBitrateConfig:
 
 @dataclass
 class StreamingMetrics:
-    """Métriques de streaming"""
+    """
+        Métriques de streaming"""
     metrics_id: str
     stream_id: str
     timestamp: datetime
@@ -178,7 +182,8 @@ class StreamingMetrics:
     geographic_distribution: Dict[str, int]
 
 class StreamingEngine:
-    """Moteur principal de streaming"""
+    """
+        Moteur principal de streaming"""
     
     def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
         self.redis = redis_client
@@ -189,7 +194,8 @@ class StreamingEngine:
         self.adaptive_algorithms = {}
         
     async def initialize_streaming_engine(self) -> Dict[str, Any]:
-        """Initialiser le moteur de streaming"""
+        """
+        Initialiser le moteur de streaming"""
         try:
             # Configurer les profils de qualité
             quality_profiles = await self._configure_quality_profiles()
@@ -198,15 +204,20 @@ class StreamingEngine:
             cdn_endpoints = await self._initialize_cdn_endpoints()
             
             # Configurer les algorithmes adaptatifs
+
             adaptive_algorithms = await self._configure_adaptive_algorithms()
             
             # Préparer l'infrastructure de streaming
+
             streaming_infrastructure = await self._prepare_streaming_infrastructure()
             
             # Initialiser les serveurs de streaming
+
             streaming_servers = await self._initialize_streaming_servers()
+
             
             logger.info("🎥 Streaming engine initialized successfully")
+
             
             return {
                 "quality_profiles": len(quality_profiles),
@@ -221,6 +232,7 @@ class StreamingEngine:
             
         except Exception as e:
             logger.error(f"Failed to initialize streaming engine: {e}")
+
             raise
     
     async def create_stream(
@@ -232,19 +244,24 @@ class StreamingEngine:
             stream_id = stream_config.stream_id
             
             # Phase 1: Validation et préparation
+
             validation_result = await self._validate_stream_configuration(stream_config)
+
             if not validation_result["valid"]:
                 raise ValueError(f"Invalid stream configuration: {validation_result['reason']}")
             
             # Phase 2: Préparation du contenu source
+
             source_preparation = await self._prepare_source_content(stream_config)
             
             # Phase 3: Configuration des formats de sortie
+
             output_formats = await self._configure_output_formats(
                 stream_config, source_preparation
             )
             
             # Phase 4: Configuration du débit adaptatif
+
             adaptive_config = None
             if stream_config.adaptive_bitrate:
                 adaptive_config = await self._configure_adaptive_bitrate(
@@ -259,19 +276,23 @@ class StreamingEngine:
                 )
             
             # Phase 6: Sécurité et encryption
+
             security_config = await self._configure_stream_security(stream_config)
             
             # Phase 7: Initialisation des endpoints
+
             streaming_endpoints = await self._initialize_streaming_endpoints(
                 stream_config, output_formats, cdn_config
             )
             
             # Phase 8: Démarrage des processus de streaming
+
             streaming_processes = await self._start_streaming_processes(
                 stream_config, streaming_endpoints
             )
             
             # Créer l'objet stream complet
+
             stream_data = {
                 "stream_id": stream_id,
                 "configuration": stream_config,
@@ -297,8 +318,10 @@ class StreamingEngine:
             
             # Initialiser le monitoring
             await self._initialize_stream_monitoring(stream_id)
+
             
             logger.info(f"Stream created successfully: {stream_id}")
+
             
             return {
                 "success": True,
@@ -313,6 +336,7 @@ class StreamingEngine:
             
         except Exception as e:
             logger.error(f"Failed to create stream: {e}")
+
             raise
 
     async def start_live_stream(
@@ -324,6 +348,7 @@ class StreamingEngine:
             live_stream_id = str(uuid.uuid4())
             
             # Créer la configuration de stream
+
             stream_config = StreamConfiguration(
                 stream_id=live_stream_id,
                 stream_type=StreamType.LIVE,
@@ -341,9 +366,11 @@ class StreamingEngine:
             )
             
             # Créer le stream de base
+
             stream_result = await self.create_stream(stream_config)
             
             # Générer la clé de streaming
+
             stream_key = await self._generate_stream_key(live_stream_id)
             
             # Configurer le serveur RTMP
@@ -352,6 +379,7 @@ class StreamingEngine:
             )
             
             # Créer l'objet live stream
+
             live_stream = LiveStream(
                 live_stream_id=live_stream_id,
                 creator_id=live_stream_config["creator_id"],
@@ -374,11 +402,13 @@ class StreamingEngine:
             )
             
             # Initialiser le chat en temps réel
+
             chat_config = None
             if live_stream.chat_enabled:
                 chat_config = await self._initialize_live_chat(live_stream_id)
             
             # Configurer l'enregistrement
+
             recording_config = None
             if live_stream.recording_enabled:
                 recording_config = await self._configure_stream_recording(live_stream_id)
@@ -388,8 +418,10 @@ class StreamingEngine:
             
             # Démarrer le monitoring en temps réel
             await self._start_live_stream_monitoring(live_stream_id)
+
             
             logger.info(f"Live stream ready: {live_stream_id}")
+
             
             return {
                 "success": True,
@@ -408,6 +440,7 @@ class StreamingEngine:
             
         except Exception as e:
             logger.error(f"Failed to start live stream: {e}")
+
             raise
 
 class AdaptiveBitrateManager:
@@ -423,24 +456,29 @@ class AdaptiveBitrateManager:
         session: StreamSession,
         network_conditions: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimiser la qualité du stream"""
+        """
+        Optimiser la qualité du stream"""
         try:
             # Analyser les conditions réseau
+
             network_analysis = await self._analyze_network_conditions(
                 session, network_conditions
             )
             
             # Prédire la bande passante disponible
+
             bandwidth_prediction = await self._predict_available_bandwidth(
                 session, network_analysis
             )
             
             # Calculer la qualité optimale
+
             optimal_quality = await self._calculate_optimal_quality(
                 session, bandwidth_prediction, network_analysis
             )
             
             # Vérifier si un changement est nécessaire
+
             quality_change_needed = optimal_quality != session.quality
             
             if quality_change_needed:
@@ -450,9 +488,11 @@ class AdaptiveBitrateManager:
                 )
                 
                 # Exécuter le changement
+
                 switch_result = await self._execute_quality_switch(
                     session, quality_switch
                 )
+
                 
                 return {
                     "quality_changed": True,
@@ -474,6 +514,7 @@ class AdaptiveBitrateManager:
                 
         except Exception as e:
             logger.error(f"Failed to optimize stream quality: {e}")
+
             raise
 
 class CDNOptimizer:
@@ -490,35 +531,43 @@ class CDNOptimizer:
         viewer_locations: List[Dict[str, Any]],
         content_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimiser la distribution de contenu"""
+        """
+        Optimiser la distribution de contenu"""
         try:
             # Analyser la distribution géographique des viewers
+
             geo_analysis = await self._analyze_viewer_distribution(viewer_locations)
             
             # Sélectionner les serveurs edge optimaux
+
             optimal_edges = await self._select_optimal_edge_servers(
                 geo_analysis, content_metadata
             )
             
             # Configurer la distribution
+
             distribution_config = await self._configure_cdn_distribution(
                 stream_id, optimal_edges
             )
             
             # Pré-positionner le contenu
+
             content_positioning = await self._pre_position_content(
                 stream_id, optimal_edges, content_metadata
             )
             
             # Optimiser le cache
+
             cache_optimization = await self._optimize_cdn_caching(
                 stream_id, geo_analysis, content_metadata
             )
             
             # Configurer l'équilibrage de charge
+
             load_balancing = await self._configure_load_balancing(
                 stream_id, optimal_edges
             )
+
             
             return {
                 "optimization_applied": True,
@@ -533,6 +582,7 @@ class CDNOptimizer:
             
         except Exception as e:
             logger.error(f"Failed to optimize content delivery: {e}")
+
             raise
 
 class StreamingAnalytics:
@@ -547,35 +597,42 @@ class StreamingAnalytics:
         self,
         stream_id: str
     ) -> Dict[str, Any]:
-        """Collecter les métriques en temps réel"""
+        """
+        Collecter les métriques en temps réel"""
         try:
             # Métriques de viewers
+
             viewer_metrics = await self._collect_viewer_metrics(stream_id)
             
             # Métriques de qualité
             quality_metrics = await self._collect_quality_metrics(stream_id)
             
             # Métriques de performance réseau
+
             network_metrics = await self._collect_network_metrics(stream_id)
             
             # Métriques CDN
             cdn_metrics = await self._collect_cdn_metrics(stream_id)
             
             # Métriques d'engagement
+
             engagement_metrics = await self._collect_engagement_metrics(stream_id)
             
             # Calculer les KPIs
+
             kpis = await self._calculate_streaming_kpis(
                 viewer_metrics, quality_metrics, network_metrics,
                 cdn_metrics, engagement_metrics
             )
             
             # Détecter les anomalies
+
             anomalies = await self._detect_streaming_anomalies(
                 stream_id, kpis
             )
             
             # Créer le rapport de métriques
+
             metrics_report = StreamingMetrics(
                 metrics_id=str(uuid.uuid4()),
                 stream_id=stream_id,
@@ -593,6 +650,7 @@ class StreamingAnalytics:
             
             # Sauvegarder les métriques
             await self._save_streaming_metrics(metrics_report)
+
             
             return {
                 "timestamp": metrics_report.timestamp.isoformat(),
@@ -608,6 +666,7 @@ class StreamingAnalytics:
             
         except Exception as e:
             logger.error(f"Failed to collect streaming metrics: {e}")
+
             raise
 
 class MediaStreamingService:
@@ -620,29 +679,38 @@ class MediaStreamingService:
         self.adaptive_manager = AdaptiveBitrateManager(redis_client)
         self.cdn_optimizer = CDNOptimizer(redis_client)
         self.analytics = StreamingAnalytics(redis_client, db_session)
+
         
     async def initialize_service(self) -> Dict[str, Any]:
-        """Initialiser le service de streaming"""
+        """
+        Initialiser le service de streaming"""
         try:
             # Initialiser le moteur de streaming
+
             engine_status = await self.streaming_engine.initialize_streaming_engine()
             
             # Configurer l'adaptation du débit
+
             adaptive_config = await self._configure_adaptive_streaming()
             
             # Initialiser l'optimisation CDN
             cdn_config = await self._initialize_cdn_optimization()
             
             # Configurer l'analytique en temps réel
+
             analytics_config = await self._configure_real_time_analytics()
             
             # Démarrer les services de monitoring
+
             monitoring_services = await self._start_monitoring_services()
             
             # Configurer les webhooks
+
             webhook_config = await self._configure_streaming_webhooks()
+
             
             logger.info("🎥 Media Streaming Service initialized successfully")
+
             
             return {
                 "service": "MediaStreamingService",
@@ -662,6 +730,7 @@ class MediaStreamingService:
             
         except Exception as e:
             logger.error(f"Failed to initialize media streaming service: {e}")
+
             raise
     
     # Méthodes privées pour l'implémentation détaillée...

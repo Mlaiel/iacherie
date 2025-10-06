@@ -16,7 +16,8 @@ logger = get_logger("auth")
 
 
 class User:
-    """User model for authentication"""
+    """
+User model for authentication"""
     
     def __init__(self, user_id: str, email: str, username: str, roles: Optional[List[str]] = None):
         self.user_id = user_id
@@ -29,7 +30,8 @@ class User:
         self.metadata = {}
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert user to dictionary"""
+        """
+Convert user to dictionary"""
         return {
             'user_id': self.user_id,
             'email': self.email,
@@ -43,7 +45,8 @@ class User:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'User':
-        """Create user from dictionary"""
+        """
+Create user from dictionary"""
         user = cls(
             user_id=data['user_id'],
             email=data['email'],
@@ -58,7 +61,8 @@ class User:
 
 
 class AuthenticationManager:
-    """Manages user authentication and sessions"""
+    """
+Manages user authentication and sessions"""
     
     def __init__(self):
         self.security_manager = SecurityManager()
@@ -68,7 +72,8 @@ class AuthenticationManager:
         self.user_credentials: Dict[str, str] = {}  # username -> hashed_password
     
     def create_user(self, email: str, username: str, password: str, roles: Optional[List[str]] = None) -> Optional[User]:
-        """Create a new user account"""
+        """
+Create a new user account"""
         try:
             # Check if user already exists
             if any(user.email == email or user.username == username for user in self.users.values()):
@@ -97,7 +102,8 @@ class AuthenticationManager:
             return None
     
     def authenticate_user(self, username: str, password: str) -> Optional[str]:
-        """Authenticate user and return token"""
+        """
+Authenticate user and return token"""
         try:
             # Find user by username
             user = self._get_user_by_username(username)
@@ -136,7 +142,8 @@ class AuthenticationManager:
             return None
     
     def validate_token(self, token: str) -> Optional[User]:
-        """Validate token and return user"""
+        """
+Validate token and return user"""
         token_data = self.token_manager.validate_token(token)
         if not token_data:
             return None
@@ -145,11 +152,13 @@ class AuthenticationManager:
         return self.users.get(user_id)
     
     def logout_user(self, token: str) -> bool:
-        """Logout user by revoking token"""
+        """
+Logout user by revoking token"""
         return self.token_manager.revoke_token(token)
     
     def update_user_password(self, user_id: str, old_password: str, new_password: str) -> bool:
-        """Update user password"""
+        """
+Update user password"""
         try:
             user = self.users.get(user_id)
             if not user:
@@ -173,18 +182,21 @@ class AuthenticationManager:
             return False
     
     def _get_user_by_username(self, username: str) -> Optional[User]:
-        """Find user by username"""
+        """
+Find user by username"""
         for user in self.users.values():
             if user.username == username:
                 return user
         return None
     
     def get_user_by_id(self, user_id: str) -> Optional[User]:
-        """Get user by ID"""
+        """
+Get user by ID"""
         return self.users.get(user_id)
     
     def deactivate_user(self, user_id: str) -> bool:
-        """Deactivate a user account"""
+        """
+Deactivate a user account"""
         user = self.users.get(user_id)
         if user:
             user.is_active = False
@@ -194,7 +206,8 @@ class AuthenticationManager:
 
 
 class AuthorizationManager:
-    """Manages user permissions and role-based access control"""
+    """
+Manages user permissions and role-based access control"""
     
     def __init__(self):
         self.logger = get_logger("authz_manager")
@@ -206,7 +219,8 @@ class AuthorizationManager:
         }
     
     def check_permission(self, user: User, permission: str, resource: Optional[str] = None) -> bool:
-        """Check if user has permission for a resource"""
+        """
+Check if user has permission for a resource"""
         try:
             if not user.is_active:
                 return False
@@ -234,7 +248,8 @@ class AuthorizationManager:
             return False
     
     def add_role_permission(self, role: str, permission: str) -> bool:
-        """Add permission to a role"""
+        """
+Add permission to a role"""
         try:
             if role not in self.permissions:
                 self.permissions[role] = []
@@ -250,7 +265,8 @@ class AuthorizationManager:
             return False
     
     def remove_role_permission(self, role: str, permission: str) -> bool:
-        """Remove permission from a role"""
+        """
+Remove permission from a role"""
         try:
             if role in self.permissions and permission in self.permissions[role]:
                 self.permissions[role].remove(permission)
@@ -264,17 +280,20 @@ class AuthorizationManager:
 
 # Factory functions
 def create_authentication_manager() -> AuthenticationManager:
-    """Create an authentication manager instance"""
+    """
+Create an authentication manager instance"""
     return AuthenticationManager()
 
 
 def create_authorization_manager() -> AuthorizationManager:
-    """Create an authorization manager instance"""
+    """
+Create an authorization manager instance"""
     return AuthorizationManager()
 
 
 def create_auth_system() -> Dict[str, Any]:
-    """Create a complete authentication system"""
+    """
+Create a complete authentication system"""
     return {
         'auth_manager': create_authentication_manager(),
         'authz_manager': create_authorization_manager()

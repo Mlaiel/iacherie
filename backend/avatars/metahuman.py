@@ -23,7 +23,8 @@ from ._base_generator import BaseContentGenerator, ContentGenerationContext
 
 
 class MetaHumanQuality(Enum):
-    """Quality levels for MetaHuman generation"""
+    """
+        Quality levels for MetaHuman generation"""
     PREVIEW = "preview"
     STANDARD = "standard"
     HIGH = "high"
@@ -141,9 +142,11 @@ class MetaHumanConfig:
         # Custom prompts and overrides
         self.custom_prompt = kwargs.get('custom_prompt', '')
         self.reference_images = kwargs.get('reference_images', [])
+
         
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""
+        """
+        Convert configuration to dictionary"""
         return {
             "quality": self.quality.value if isinstance(self.quality, MetaHumanQuality) else self.quality,
             "age_category": self.age_category.value if isinstance(self.age_category, AgeCategory) else self.age_category,
@@ -183,9 +186,11 @@ class MetaHumanGenerator(BaseContentGenerator):
         self.logger = logging.getLogger(__name__)
         self._setup_metahuman_pipeline()
         self._setup_quality_presets()
+
         
     def _setup_metahuman_pipeline(self) -> None:
-        """Setup MetaHuman generation pipeline"""
+        """
+        Setup MetaHuman generation pipeline"""
         try:
             # Initialize 3D generation models
             self.models = {
@@ -217,9 +222,11 @@ class MetaHumanGenerator(BaseContentGenerator):
             }
             
             self.logger.info("MetaHuman pipeline initialized successfully")
+
             
         except Exception as e:
             self.logger.error(f"Failed to initialize MetaHuman pipeline: {str(e)}")
+
             raise
     
     def _setup_quality_presets(self) -> None:
@@ -269,18 +276,23 @@ class MetaHumanGenerator(BaseContentGenerator):
             Dict containing avatar data and metadata
         """
         start_time = datetime.now()
+
         
         try:
             # Parse options and create config
+
             config = self._create_config_from_options(prompt, options or {})
             
             # Generate avatar components
+
             avatar_data = await self._generate_metahuman_avatar(prompt, config, context)
             
             # Post-process and optimize
+
             processed_data = await self._post_process_metahuman(avatar_data, config)
             
             # Package results
+
             result = {
                 'content': processed_data,
                 'metadata': {
@@ -297,25 +309,31 @@ class MetaHumanGenerator(BaseContentGenerator):
             }
             
             self.logger.info(f"MetaHuman avatar generated successfully in {result['metadata']['generation_time']:.2f}s")
+
             return result
             
         except Exception as e:
             self.logger.error(f"MetaHuman generation failed: {str(e)}")
+
             raise
     
     def _create_config_from_options(self, prompt: str, options: Dict[str, Any]) -> MetaHumanConfig:
         """Create MetaHuman config from prompt and options"""
         # Extract features from prompt
+
         extracted_features = self._extract_features_from_prompt(prompt)
         
         # Merge with options
+
         config_data = {**extracted_features, **options}
         
         return MetaHumanConfig(**config_data)
     
     def _extract_features_from_prompt(self, prompt: str) -> Dict[str, Any]:
-        """Extract facial and body features from text prompt"""
+        """
+        Extract facial and body features from text prompt"""
         prompt_lower = prompt.lower()
+
         features = {}
         
         # Age detection
@@ -354,14 +372,18 @@ class MetaHumanGenerator(BaseContentGenerator):
         config: MetaHumanConfig,
         context: ContentGenerationContext
     ) -> Dict[str, Any]:
-        """Generate the core MetaHuman avatar"""
+        """
+        Generate the core MetaHuman avatar"""
         # Enhanced prompt building
+
         enhanced_prompt = await self._build_metahuman_prompt(prompt, config, context)
         
         # Generate facial mesh and textures
+
         face_data = await self._generate_facial_components(enhanced_prompt, config)
         
         # Generate body if needed
+
         body_data = None
         if config.camera_angle != 'headshot':
             body_data = await self._generate_body_components(enhanced_prompt, config)
@@ -380,7 +402,8 @@ class MetaHumanGenerator(BaseContentGenerator):
         config: MetaHumanConfig,
         context: ContentGenerationContext
     ) -> str:
-        """Build enhanced prompt for MetaHuman generation"""
+        """
+        Build enhanced prompt for MetaHuman generation"""
         prompt_parts = [base_prompt]
         
         # Add quality descriptors
@@ -388,7 +411,9 @@ class MetaHumanGenerator(BaseContentGenerator):
             prompt_parts.append("photorealistic, high-fidelity, detailed skin texture")
         
         # Add facial feature descriptors
+
         facial_desc = []
+
         features = config.facial_features
         
         if features.face_shape != "oval":
@@ -399,11 +424,13 @@ class MetaHumanGenerator(BaseContentGenerator):
             facial_desc.append(f"{features.skin_tone} skin tone")
         if features.facial_hair:
             facial_desc.append(f"with {features.facial_hair}")
+
         
         if facial_desc:
             prompt_parts.append(", ".join(facial_desc))
         
         # Add technical requirements
+
         tech_parts = []
         if config.enable_subsurface_scattering:
             tech_parts.append("subsurface scattering")
@@ -411,11 +438,13 @@ class MetaHumanGenerator(BaseContentGenerator):
             tech_parts.append("skin pore details, micro-expressions")
         if config.hair_simulation:
             tech_parts.append("realistic hair simulation")
+
         
         if tech_parts:
             prompt_parts.append(f"technical: {', '.join(tech_parts)}")
         
         # Add lighting setup
+
         lighting_desc = {
             'studio': 'professional studio lighting, soft key light',
             'natural': 'natural daylight, outdoor lighting',
@@ -424,6 +453,7 @@ class MetaHumanGenerator(BaseContentGenerator):
         
         if config.lighting_setup in lighting_desc:
             prompt_parts.append(lighting_desc[config.lighting_setup])
+
         
         return " | ".join(prompt_parts)
     
@@ -431,10 +461,9 @@ class MetaHumanGenerator(BaseContentGenerator):
         """Generate facial mesh and textures"""
         # Simulate facial generation (in production would use actual 3D generation models)
         await asyncio.sleep(0.2)  # Simulate processing time
+
         
         quality_settings = self.quality_settings.get(config.quality.value, self.quality_settings['high'])
-        
-        # Mock facial data
         facial_data = {
             'mesh_vertices': quality_settings['mesh_resolution'],
             'texture_resolution': quality_settings['texture_size'],
@@ -451,6 +480,7 @@ class MetaHumanGenerator(BaseContentGenerator):
         """Generate body mesh and textures"""
         # Simulate body generation
         await asyncio.sleep(0.3)  # Simulate processing time
+
         
         body_data = {
             'body_mesh': True,
@@ -474,8 +504,6 @@ class MetaHumanGenerator(BaseContentGenerator):
         # - Apply material shaders
         # - Compress textures
         # - Export in requested format
-        
-        # Mock processed data (base64 encoded placeholder)
         processed_data = b"metahuman_avatar_data_placeholder"
         
         self.logger.info(f"Post-processed MetaHuman avatar ({len(processed_data)} bytes)")
@@ -484,6 +512,7 @@ class MetaHumanGenerator(BaseContentGenerator):
     def _get_technical_specs(self, config: MetaHumanConfig) -> Dict[str, Any]:
         """Get technical specifications for generated avatar"""
         quality_settings = self.quality_settings.get(config.quality.value, self.quality_settings['high'])
+
         
         return {
             'mesh_resolution': quality_settings['mesh_resolution'],
@@ -497,17 +526,21 @@ class MetaHumanGenerator(BaseContentGenerator):
         }
     
     async def validate_output(self, content: Any) -> bool:
-        """Validate generated MetaHuman content"""
+        """
+        Validate generated MetaHuman content"""
         if not isinstance(content, dict):
             return False
         
         # Check required fields
+
         required_fields = ['content', 'metadata']
         if not all(field in content for field in required_fields):
             return False
         
         # Check metadata
+
         metadata = content.get('metadata', {})
+
         required_metadata = ['type', 'resolution', 'quality', 'format']
         if not all(field in metadata for field in required_metadata):
             return False
@@ -519,7 +552,8 @@ class MetaHumanGenerator(BaseContentGenerator):
         return True
     
     def _supports_content_type(self, content_type: str) -> bool:
-        """Check if this generator supports the content type"""
+        """
+        Check if this generator supports the content type"""
         supported_types = [
             'metahuman_avatar',
             '3d_avatar',

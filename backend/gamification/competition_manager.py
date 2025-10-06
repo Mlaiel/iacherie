@@ -47,7 +47,8 @@ Base = declarative_base()
 # ==============================================
 
 class CompetitionType(Enum):
-    """Competition types supported"""
+    """
+        Competition types supported"""
     TOURNAMENT = "tournament"
     CHALLENGE = "challenge"
     SEASONAL = "seasonal"
@@ -95,7 +96,8 @@ class CompetitionMetrics:
 
 @dataclass
 class MatchResult:
-    """Individual match result"""
+    """
+        Individual match result"""
     match_id: str
     participant_1_id: str
     participant_2_id: str
@@ -111,7 +113,8 @@ class MatchResult:
 # ==============================================
 
 class Competition(Base):
-    """Competition database model"""
+    """
+        Competition database model"""
     __tablename__ = 'competitions'
     
     id = Column(String, primary_key=True, default=lambda: str(uuid4()))
@@ -171,17 +174,21 @@ class CompetitionMatch(Base):
     competition_id = Column(String, ForeignKey('competitions.id'))
     round_number = Column(Integer, nullable=False)
     match_number = Column(Integer, nullable=False)
+
     
     participant_1_id = Column(String, nullable=False)
     participant_2_id = Column(String, nullable=False)
     winner_id = Column(String)
+
     
     score_1 = Column(Float, default=0.0)
     score_2 = Column(Float, default=0.0)
+
     
     scheduled_time = Column(DateTime)
     actual_start_time = Column(DateTime)
     actual_end_time = Column(DateTime)
+
     
     status = Column(String, default="scheduled")  # scheduled, in_progress, completed, cancelled
     meta_data = Column(JSON)
@@ -234,12 +241,15 @@ class CompetitionManager:
             # Cache competition for fast access
             self.active_competitions[competition.id] = competition
             await self._cache_competition(competition)
+
             
             logger.info(f"Created competition: {title} ({competition.id})")
+
             return competition
             
         except Exception as e:
             logger.error(f"Failed to create competition: {e}")
+
             raise
     
     async def register_participant(
@@ -255,6 +265,8 @@ class CompetitionManager:
             # Validate registration eligibility
             if not await self._validate_registration(competition, creator_id, skill_level):
                 raise ValueError("Registration validation failed")
+
+
             
             participant = CompetitionParticipant(
                 competition_id=competition_id,
@@ -264,34 +276,42 @@ class CompetitionManager:
             
             # Update analytics
             await self.analytics_engine.track_registration(competition_id, creator_id)
+
             
             logger.info(f"Registered participant {creator_id} for competition {competition_id}")
+
             return participant
             
         except Exception as e:
             logger.error(f"Failed to register participant: {e}")
+
             raise
     
     async def start_competition(self, competition_id: str) -> bool:
         """Start competition and initialize bracket system"""
         try:
             competition = await self._get_competition(competition_id)
+
             
             if competition.status != CompetitionStatus.REGISTRATION_CLOSED.value:
                 raise ValueError("Competition must be in registration_closed status")
             
             # Generate brackets based on participants
+
             participants = await self._get_participants(competition_id)
+
             if len(participants) < 2:
                 raise ValueError("Minimum 2 participants required")
             
             # Create tournament bracket
+
             bracket = await self.bracket_engine.generate_bracket(
                 participants, 
                 BracketType(competition.bracket_type)
             )
             
             # Schedule initial matches
+
             matches = await self._schedule_matches(competition, bracket)
             
             # Update competition status
@@ -300,12 +320,15 @@ class CompetitionManager:
             
             # Start real-time analytics
             await self.analytics_engine.start_competition_tracking(competition_id)
+
             
             logger.info(f"Started competition {competition_id} with {len(participants)} participants")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to start competition: {e}")
+
             raise
     
     async def submit_match_result(
@@ -316,7 +339,9 @@ class CompetitionManager:
         """Submit match result and update bracket progression"""
         try:
             # Validate and record result
+
             match = await self._get_match(match_id)
+
             if not await self._validate_match_result(match, result):
                 raise ValueError("Invalid match result")
             
@@ -324,6 +349,7 @@ class CompetitionManager:
             await self._update_match_result(match, result)
             
             # Progress bracket if needed
+
             next_matches = await self.bracket_engine.progress_bracket(
                 match.competition_id, result
             )
@@ -338,12 +364,15 @@ class CompetitionManager:
             
             # Update real-time analytics
             await self.analytics_engine.track_match_result(match_id, result)
+
             
             logger.info(f"Submitted result for match {match_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to submit match result: {e}")
+
             raise
     
     async def get_competition_leaderboard(
@@ -354,16 +383,22 @@ class CompetitionManager:
         """Get real-time competition leaderboard"""
         try:
             # Check cache first
+
             cached_leaderboard = await self._get_cached_leaderboard(competition_id)
+
             if cached_leaderboard:
                 return cached_leaderboard[:limit]
             
             # Generate fresh leaderboard
+
             participants = await self._get_participants(competition_id)
+
+
             leaderboard = []
             
             for participant in participants:
                 stats = await self._calculate_participant_stats(participant)
+
                 leaderboard.append({
                     'creator_id': participant.creator_id,
                     'rank': 0,  # Will be calculated after sorting
@@ -377,16 +412,19 @@ class CompetitionManager:
             
             # Sort by score and assign ranks
             leaderboard.sort(key=lambda x: x['score'], reverse=True)
+
             for i, entry in enumerate(leaderboard):
                 entry['rank'] = i + 1
             
             # Cache result
             await self._cache_leaderboard(competition_id, leaderboard)
+
             
             return leaderboard[:limit]
             
         except Exception as e:
             logger.error(f"Failed to get leaderboard: {e}")
+
             raise
     
     async def get_competition_metrics(self, competition_id: str) -> CompetitionMetrics:
@@ -395,6 +433,7 @@ class CompetitionManager:
             return await self.analytics_engine.get_real_time_metrics(competition_id)
         except Exception as e:
             logger.error(f"Failed to get competition metrics: {e}")
+
             raise
     
     # ==============================================
@@ -407,9 +446,11 @@ class CompetitionManager:
             return self.active_competitions[competition_id]
         
         # Load from cache/database
+
         cached = await self.redis.get(f"competition:{competition_id}")
         if cached:
             return Competition(**json.loads(cached))
+
         
         raise ValueError(f"Competition {competition_id} not found")
     
@@ -421,6 +462,7 @@ class CompetitionManager:
     ) -> bool:
         """Validate if creator can register for competition"""
         # Check registration window
+
         now = datetime.utcnow()
         if competition.registration_start and now < competition.registration_start:
             return False
@@ -428,9 +470,13 @@ class CompetitionManager:
             return False
         
         # Check skill level requirements
+
         min_skill = SkillLevel(competition.min_skill_level)
+
         max_skill = SkillLevel(competition.max_skill_level)
+
         skill_order = list(SkillLevel)
+
         
         if skill_order.index(skill_level) < skill_order.index(min_skill):
             return False
@@ -438,6 +484,7 @@ class CompetitionManager:
             return False
         
         # Check participant limit
+
         current_participants = await self._count_participants(competition.id)
         if current_participants >= competition.max_participants:
             return False
@@ -445,7 +492,8 @@ class CompetitionManager:
         return True
     
     async def _cache_competition(self, competition: Competition):
-        """Cache competition data for fast access"""
+        """
+        Cache competition data for fast access"""
         await self.redis.setex(
             f"competition:{competition.id}",
             3600,  # 1 hour TTL
@@ -454,32 +502,29 @@ class CompetitionManager:
     
     async def _get_participants(self, competition_id: str) -> List[CompetitionParticipant]:
         """Get all participants for a competition"""
-        # Implementation would query database
-        # Placeholder for now
-        return []
+        # Implementation would query database        return []
     
     async def _schedule_matches(
         self,
         competition: Competition,
         bracket: Dict[str, Any]
     ) -> List[CompetitionMatch]:
-        """Schedule matches based on bracket"""
-        # Implementation would create match schedule
-        # Placeholder for now
-        return []
+        """
+        Schedule matches based on bracket"""
+        # Implementation would create match schedule        return []
     
     async def _get_match(self, match_id: str) -> CompetitionMatch:
-        """Get match by ID"""
-        # Implementation would query database
-        # Placeholder for now
-        pass
+        """
+        Get match by ID"""
+        # Implementation would query database        pass
     
     async def _validate_match_result(
         self,
         match: CompetitionMatch,
         result: MatchResult
     ) -> bool:
-        """Validate submitted match result"""
+        """
+        Validate submitted match result"""
         # Check if match is in correct status
         if match.status != "in_progress":
             return False
@@ -512,11 +557,13 @@ class CompetitionManager:
         return False
     
     async def _finalize_competition(self, competition_id: str):
-        """Finalize competition and distribute prizes"""
+        """
+        Finalize competition and distribute prizes"""
         competition = await self._get_competition(competition_id)
         competition.status = CompetitionStatus.COMPLETED.value
         
         # Calculate final rankings
+
         leaderboard = await self.get_competition_leaderboard(competition_id)
         
         # Distribute prizes
@@ -524,6 +571,7 @@ class CompetitionManager:
         
         # Update achievements
         await self._award_achievements(competition_id, leaderboard)
+
         
         logger.info(f"Finalized competition {competition_id}")
 
@@ -547,23 +595,32 @@ class SkillBasedMatchmaking:
         """Find optimal match based on skill and compatibility"""
         try:
             creator_rating = await self._get_skill_rating(creator_id)
+
+
             best_match = None
+
             best_score = float('inf')
+
             
             for candidate_id in available_creators:
                 candidate_rating = await self._get_skill_rating(candidate_id)
+
+
                 compatibility_score = await self._calculate_compatibility(
                     creator_rating, candidate_rating, skill_level
                 )
+
                 
                 if compatibility_score < best_score:
                     best_score = compatibility_score
+
                     best_match = candidate_id
             
             return best_match
             
         except Exception as e:
             logger.error(f"Failed to find optimal match: {e}")
+
             return None
     
     async def update_skill_rating(
@@ -577,21 +634,30 @@ class SkillBasedMatchmaking:
             current_rating = await self._get_skill_rating(creator_id)
             
             # Determine if creator won
+
             is_winner = (match_result.winner_id == creator_id)
             
             # Calculate rating change using modified ELO
             k_factor = 32  # Sensitivity factor
+
             expected_score = 1 / (1 + 10 ** ((opponent_rating - current_rating) / 400))
+
+
             actual_score = 1.0 if is_winner else 0.0
+
             
             rating_change = k_factor * (actual_score - expected_score)
+
+
             new_rating = current_rating + rating_change
             
             # Store updated rating
             self.skill_ratings[creator_id] = new_rating
             await self._persist_skill_rating(creator_id, new_rating)
+
             
             logger.info(f"Updated skill rating for {creator_id}: {current_rating} -> {new_rating}")
+
             
         except Exception as e:
             logger.error(f"Failed to update skill rating: {e}")
@@ -610,11 +676,14 @@ class SkillBasedMatchmaking:
         rating2: float,
         skill_level: SkillLevel
     ) -> float:
-        """Calculate compatibility score between two creators"""
+        """
+        Calculate compatibility score between two creators"""
         # Lower score = better compatibility
+
         rating_diff = abs(rating1 - rating2)
         
         # Skill level multiplier
+
         skill_multiplier = {
             SkillLevel.BEGINNER: 1.0,
             SkillLevel.INTERMEDIATE: 0.8,
@@ -626,7 +695,8 @@ class SkillBasedMatchmaking:
         return rating_diff * skill_multiplier.get(skill_level, 1.0)
     
     async def _persist_skill_rating(self, creator_id: str, rating: float):
-        """Persist skill rating to database"""
+        """
+        Persist skill rating to database"""
         # Database persistence would happen here
         pass
 
@@ -635,7 +705,8 @@ class SkillBasedMatchmaking:
 # ==============================================
 
 class TournamentBracket:
-    """Advanced tournament bracket generation and management"""
+    """
+        Advanced tournament bracket generation and management"""
     
     def __init__(self):
         logger.info("Tournament bracket engine initialized")
@@ -649,17 +720,23 @@ class TournamentBracket:
         try:
             if bracket_type == BracketType.SINGLE_ELIMINATION:
                 return await self._generate_single_elimination(participants)
+
             elif bracket_type == BracketType.DOUBLE_ELIMINATION:
                 return await self._generate_double_elimination(participants)
+
             elif bracket_type == BracketType.ROUND_ROBIN:
                 return await self._generate_round_robin(participants)
+
             elif bracket_type == BracketType.SWISS_SYSTEM:
                 return await self._generate_swiss_system(participants)
+
             else:
                 raise ValueError(f"Unsupported bracket type: {bracket_type}")
+
                 
         except Exception as e:
             logger.error(f"Failed to generate bracket: {e}")
+
             raise
     
     async def progress_bracket(
@@ -670,21 +747,26 @@ class TournamentBracket:
         """Progress bracket based on match result"""
         try:
             # Load current bracket state
+
             bracket = await self._load_bracket(competition_id)
             
             # Update bracket with result
+
             updated_bracket = await self._update_bracket(bracket, match_result)
             
             # Generate next round matches
+
             next_matches = await self._generate_next_matches(updated_bracket)
             
             # Save updated bracket
             await self._save_bracket(competition_id, updated_bracket)
+
             
             return next_matches
             
         except Exception as e:
             logger.error(f"Failed to progress bracket: {e}")
+
             raise
     
     async def _generate_single_elimination(
@@ -698,7 +780,10 @@ class TournamentBracket:
         
         # Calculate rounds needed
         import math
+
         rounds_needed = math.ceil(math.log2(len(participants)))
+
+
         
         bracket = {
             'type': 'single_elimination',
@@ -726,6 +811,7 @@ class TournamentBracket:
     ) -> Dict[str, Any]:
         """Generate double elimination bracket"""
         # More complex bracket with winner and loser brackets
+
         bracket = {
             'type': 'double_elimination',
             'participants': [p.creator_id for p in participants],
@@ -741,7 +827,8 @@ class TournamentBracket:
         self,
         participants: List[CompetitionParticipant]
     ) -> Dict[str, Any]:
-        """Generate round robin bracket (everyone plays everyone)"""
+        """
+        Generate round robin bracket (everyone plays everyone)"""
         bracket = {
             'type': 'round_robin',
             'participants': [p.creator_id for p in participants],
@@ -749,6 +836,7 @@ class TournamentBracket:
         }
         
         # Generate all possible pairings
+
         match_num = 1
         for i, p1 in enumerate(participants):
             for j, p2 in enumerate(participants[i+1:], i+1):
@@ -768,6 +856,7 @@ class TournamentBracket:
     ) -> Dict[str, Any]:
         """Generate Swiss system bracket"""
         # Swiss system pairs participants with similar scores
+
         bracket = {
             'type': 'swiss_system',
             'participants': [p.creator_id for p in participants],
@@ -784,7 +873,8 @@ class TournamentBracket:
 # ==============================================
 
 class CompetitionAnalytics:
-    """Real-time competition analytics and insights"""
+    """
+        Real-time competition analytics and insights"""
     
     def __init__(self, redis_client: redis.Redis):
         self.redis = redis_client
@@ -802,8 +892,10 @@ class CompetitionAnalytics:
                     'total_engagement': 0
                 }
             )
+
             
             logger.info(f"Started analytics tracking for competition {competition_id}")
+
             
         except Exception as e:
             logger.error(f"Failed to start competition tracking: {e}")
@@ -816,6 +908,7 @@ class CompetitionAnalytics:
                 'participants_count',
                 1
             )
+
             
             await self.redis.lpush(
                 f"competition_registrations:{competition_id}",
@@ -824,6 +917,7 @@ class CompetitionAnalytics:
                     'timestamp': datetime.utcnow().isoformat()
                 })
             )
+
             
         except Exception as e:
             logger.error(f"Failed to track registration: {e}")
@@ -832,7 +926,9 @@ class CompetitionAnalytics:
         """Track match result for analytics"""
         try:
             # Extract competition ID from match
+
             competition_id = result.metadata.get('competition_id')
+
             if not competition_id:
                 return
             
@@ -855,6 +951,7 @@ class CompetitionAnalytics:
                     'timestamp': result.match_date.isoformat()
                 })
             )
+
             
         except Exception as e:
             logger.error(f"Failed to track match result: {e}")
@@ -863,6 +960,7 @@ class CompetitionAnalytics:
         """Get real-time competition metrics"""
         try:
             analytics_data = await self.redis.hgetall(f"competition_analytics:{competition_id}")
+
             
             if not analytics_data:
                 return CompetitionMetrics(
@@ -875,19 +973,29 @@ class CompetitionAnalytics:
                 )
             
             # Calculate derived metrics
+
             participants_count = int(analytics_data.get(b'participants_count', 0))
+
+
             completed_matches = int(analytics_data.get(b'matches_completed', 0))
             
             # Get match data for averages
+
             matches_data = await self.redis.lrange(f"competition_matches:{competition_id}", 0, -1)
+
+
             
             total_score = 0.0
+
             match_count = len(matches_data)
+
             
             if match_count > 0:
                 for match_json in matches_data:
                     match_data = json.loads(match_json)
+
                     total_score += (match_data['score_1'] + match_data['score_2']) / 2
+
                 
                 average_score = total_score / match_count
             else:
@@ -896,14 +1004,18 @@ class CompetitionAnalytics:
             return CompetitionMetrics(
                 participants_count=participants_count,
                 active_matches=0,  # Would be calculated from current match states
+
                 completed_matches=completed_matches,
                 average_score=average_score,
                 engagement_rate=0.85,  # Would be calculated from participation data
+
                 prize_pool_total=1000.0  # Would be loaded from competition data
             )
+
             
         except Exception as e:
             logger.error(f"Failed to get real-time metrics: {e}")
+
             return CompetitionMetrics(
                 participants_count=0,
                 active_matches=0,
@@ -934,8 +1046,14 @@ class SeasonalCompetition:
         """Create new competition season"""
         try:
             season_id = str(uuid4())
+
+
             season_start = datetime.utcnow()
+
+
             season_end = season_start + timedelta(days=duration_months * 30)
+
+
             
             season_config = {
                 'id': season_id,
@@ -950,11 +1068,13 @@ class SeasonalCompetition:
             
             self.current_season = season_config
             logger.info(f"Created season: {season_name} ({season_id})")
+
             
             return season_id
             
         except Exception as e:
             logger.error(f"Failed to create season: {e}")
+
             raise
     
     async def add_competition_to_season(
@@ -971,8 +1091,10 @@ class SeasonalCompetition:
                     'points_multiplier': points_multiplier,
                     'added_date': datetime.utcnow().isoformat()
                 })
+
                 
                 logger.info(f"Added competition {competition_id} to season {season_id}")
+
             
         except Exception as e:
             logger.error(f"Failed to add competition to season: {e}")
@@ -986,12 +1108,18 @@ class SeasonalCompetition:
         try:
             if not self.current_season:
                 return
+
             
             season_id = self.current_season['id']
             
             # Calculate points based on placement and competition tier
+
             base_points = self._calculate_base_points(competition_result)
+
+
             tier_multiplier = competition_result.get('tier_multiplier', 1.0)
+
+
             final_points = base_points * tier_multiplier
             
             # Update creator's seasonal progress
@@ -1002,6 +1130,7 @@ class SeasonalCompetition:
                     'best_placement': 999,
                     'tier': 'Bronze'
                 }
+
             
             participant = self.current_season['participants'][creator_id]
             participant['total_points'] += final_points
@@ -1012,10 +1141,13 @@ class SeasonalCompetition:
             )
             
             # Update tier based on points
+
             new_tier = self._calculate_tier(participant['total_points'])
+
             participant['tier'] = new_tier
             
             logger.info(f"Updated seasonal points for {creator_id}: +{final_points} (total: {participant['total_points']})")
+
             
         except Exception as e:
             logger.error(f"Failed to update seasonal points: {e}")
@@ -1023,6 +1155,7 @@ class SeasonalCompetition:
     def _calculate_base_points(self, competition_result: Dict[str, Any]) -> float:
         """Calculate base points from competition result"""
         placement = competition_result.get('placement', 999)
+
         total_participants = competition_result.get('total_participants', 1)
         
         # Points based on placement (higher is better)
@@ -1042,7 +1175,8 @@ class SeasonalCompetition:
             return 5.0  # Participation points
     
     def _calculate_tier(self, total_points: float) -> str:
-        """Calculate tier based on total points"""
+        """
+        Calculate tier based on total points"""
         if total_points >= 2000:
             return 'Master'
         elif total_points >= 1500:
@@ -1085,4 +1219,4 @@ __all__ = [
 ]
 
 # Initialize logging
-logger.info("Competition Manager module loaded successfully - All components ready for enterprise deployment")
+logger.info("Competition Manager module initialized successfully - All components ready for enterprise deployment")

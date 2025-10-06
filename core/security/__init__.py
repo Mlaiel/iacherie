@@ -1,4 +1,5 @@
-"""IA Chérie Core Security - Enterprise Security & Protection
+"""
+IA Chérie Core Security - Enterprise Security & Protection
 =======================================================
 
 Core security providing authentication, authorization, protection systems,

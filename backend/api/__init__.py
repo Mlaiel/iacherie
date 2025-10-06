@@ -19,10 +19,63 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
+from typing import Dict, List, Any
+from datetime import datetime
+import logging
+
+# Create logger for this module
+logger = logging.getLogger(__name__)
+
 # Core API routers for backward compatibility
 from .core_api import core_router, enterprise_processor
 from .business_api import business_router
 from .public import public_router
+
+# Import all specialized routes from routes/ directory
+try:
+    from .routes.collaboration_routes import router as collaboration_router
+    from .routes.gamification_routes import router as gamification_router
+    from .routes.seo_optimization_routes import router as seo_router
+    from .routes.analytics_routes import router as analytics_router
+    from .routes.infrastructure_routes import router as infrastructure_router
+    from .routes.ai_agents_routes import router as ai_agents_router
+    from .routes.blockchain_nft_routes import router as blockchain_router
+    from .routes.business_intelligence_routes import router as business_intelligence_router
+    from .routes.chat_websocket_routes import router as chat_router
+    from .routes.crawlers_routes import router as crawlers_router
+    from .routes.edge_quantum_routes import router as edge_quantum_router
+    from .routes.languages_translation_routes import router as languages_router
+    from .routes.marketplace_monetization_routes import router as marketplace_router
+    from .routes.mlops_routes import router as mlops_router
+    from .routes.notifications_routes import router as notifications_router
+    from .routes.security_protection_routes import router as security_router
+    from .routes.streaming_routes import router as streaming_router
+    from .routes.studios_generators_routes import router as studios_router
+    ROUTES_AVAILABLE = True
+except ImportError as e:
+    import logging
+    logging.warning(f"Could not import specialized routes: {e}")
+    ROUTES_AVAILABLE = False
+    # Create dummy routers if imports fail
+    from fastapi import APIRouter
+    collaboration_router = APIRouter()
+    gamification_router = APIRouter()
+    seo_router = APIRouter()
+    analytics_router = APIRouter()
+    infrastructure_router = APIRouter()
+    ai_agents_router = APIRouter()
+    blockchain_router = APIRouter()
+    business_intelligence_router = APIRouter()
+    chat_router = APIRouter()
+    crawlers_router = APIRouter()
+    edge_quantum_router = APIRouter()
+    languages_router = APIRouter()
+    marketplace_router = APIRouter()
+    mlops_router = APIRouter()
+    notifications_router = APIRouter()
+    security_router = APIRouter()
+    streaming_router = APIRouter()
+    studios_router = APIRouter()
 
 # Consolidated modules - importing from existing files only
 from .middleware import (
@@ -84,16 +137,31 @@ from .websockets import (
     get_high_concurrency_manager,
     ChannelNames
 )
-from .graphql import (
-    schema as graphql_schema,
-    enterprise_schema,
-    Query,
-    Mutation,
-    Subscription,
-    EnterpriseQuery,
-    EnterpriseMutation,
-    EnterpriseSubscription
-)
+
+# Import GraphQL - optional (requires strawberry-graphql installed)
+try:
+    from .graphql import (
+        schema as graphql_schema,
+        enterprise_schema,
+        Query,
+        Mutation,
+        Subscription,
+        EnterpriseQuery,
+        EnterpriseMutation,
+        EnterpriseSubscription
+    )
+except (ImportError, AttributeError) as e:
+    logger.warning(f"⚠️ GraphQL imports not available: {e}")
+    # Create mock objects so code doesn't break
+    graphql_schema = None
+    enterprise_schema = None
+    Query = None
+    Mutation = None
+    Subscription = None
+    EnterpriseQuery = None
+    EnterpriseMutation = None
+    EnterpriseSubscription = None
+
 from .versioning import (
     VersioningService,
     SemanticVersionManager,
@@ -129,7 +197,8 @@ from .public import (
 # ========================================
 
 class EnterpriseRouterManager:
-    """Enterprise router management with advanced features"""
+    """
+        Enterprise router management with advanced features"""
     
     def __init__(self):
         self.registered_routers = {}
@@ -145,7 +214,8 @@ class EnterpriseRouterManager:
         health_check_endpoint: str = None,
         priority: int = 1
     ):
-        """Register a router with the management system"""
+        """
+        Register a router with the management system"""
         self.registered_routers[name] = {
             "router": router,
             "health_check": health_check_endpoint,
@@ -186,11 +256,13 @@ class EnterpriseRouterManager:
         """Get performance metrics for all routers"""
         return {
             "total_requests": sum(
-                metrics.get("request_count", 0) 
+                metrics.get("request_count", 0)
+ 
                 for metrics in self.performance_metrics.values()
             ),
             "average_response_time": sum(
-                metrics.get("avg_response_time", 0) 
+                metrics.get("avg_response_time", 0)
+ 
                 for metrics in self.performance_metrics.values()
             ) / len(self.performance_metrics) if self.performance_metrics else 0,
             "router_metrics": self.performance_metrics,
@@ -207,6 +279,7 @@ class EnterpriseRouterManager:
                 "request_count": metrics.get("request_count", 0),
                 "error_rate": metrics.get("error_rate", 0)
             })
+
         
         return sorted(router_performance, key=lambda x: x["avg_response_time"])[:5]
 
@@ -287,10 +360,12 @@ class APIHealthCheckSystem:
         }
         
         # Check all components
+
         unhealthy_components = 0
         for component_name, checker in self.health_checkers.items():
             try:
                 component_health = await checker.check_health()
+
                 health_results["components"][component_name] = component_health
                 
                 if component_health["status"] != "healthy":
@@ -317,6 +392,7 @@ class APIHealthCheckSystem:
         
         # Add performance metrics
         health_results["performance_metrics"] = await self._get_performance_metrics()
+
         
         return health_results
     
@@ -345,7 +421,8 @@ class DatabaseHealthChecker:
     """Database health checker"""
     
     async def check_health(self) -> Dict[str, Any]:
-        """Check database health"""
+        """
+        Check database health"""
         return {
             "status": "healthy",
             "response_time_ms": 12,
@@ -359,7 +436,8 @@ class CacheHealthChecker:
     """Cache health checker"""
     
     async def check_health(self) -> Dict[str, Any]:
-        """Check cache health"""
+        """
+        Check cache health"""
         return {
             "status": "healthy",
             "hit_rate_percent": 87.5,
@@ -373,7 +451,8 @@ class ExternalAPIHealthChecker:
     """External API health checker"""
     
     async def check_health(self) -> Dict[str, Any]:
-        """Check external APIs health"""
+        """
+        Check external APIs health"""
         return {
             "status": "healthy",
             "apis_checked": 15,
@@ -387,7 +466,8 @@ class MLModelHealthChecker:
     """ML model health checker"""
     
     async def check_health(self) -> Dict[str, Any]:
-        """Check ML models health"""
+        """
+        Check ML models health"""
         return {
             "status": "healthy",
             "models_loaded": 8,
@@ -401,7 +481,8 @@ class MessageQueueHealthChecker:
     """Message queue health checker"""
     
     async def check_health(self) -> Dict[str, Any]:
-        """Check message queue health"""
+        """
+        Check message queue health"""
         return {
             "status": "healthy",
             "queue_depth": 45,
@@ -412,8 +493,6 @@ class MessageQueueHealthChecker:
 
 
 # Create global instances
-from datetime import datetime
-
 enterprise_router_manager = EnterpriseRouterManager()
 api_health_system = APIHealthCheckSystem()
 
@@ -421,6 +500,31 @@ api_health_system = APIHealthCheckSystem()
 enterprise_router_manager.register_router("core", core_router, "/health", priority=1)
 enterprise_router_manager.register_router("business", business_router, "/health", priority=1)
 enterprise_router_manager.register_router("public", public_router, "/health", priority=2)
+
+# Register specialized routes from routes/ directory
+if ROUTES_AVAILABLE:
+    enterprise_router_manager.register_router("collaboration", collaboration_router, "/health", priority=1)
+    enterprise_router_manager.register_router("gamification", gamification_router, "/health", priority=1)
+    enterprise_router_manager.register_router("seo", seo_router, "/health", priority=1)
+    enterprise_router_manager.register_router("analytics", analytics_router, "/health", priority=1)
+    enterprise_router_manager.register_router("infrastructure", infrastructure_router, "/health", priority=1)
+    enterprise_router_manager.register_router("ai_agents", ai_agents_router, "/health", priority=1)
+    enterprise_router_manager.register_router("blockchain", blockchain_router, "/health", priority=1)
+    enterprise_router_manager.register_router("business_intelligence", business_intelligence_router, "/health", priority=1)
+    enterprise_router_manager.register_router("chat", chat_router, "/health", priority=1)
+    enterprise_router_manager.register_router("crawlers", crawlers_router, "/health", priority=1)
+    enterprise_router_manager.register_router("edge_quantum", edge_quantum_router, "/health", priority=1)
+    enterprise_router_manager.register_router("languages", languages_router, "/health", priority=1)
+    enterprise_router_manager.register_router("marketplace", marketplace_router, "/health", priority=1)
+    enterprise_router_manager.register_router("mlops", mlops_router, "/health", priority=1)
+    enterprise_router_manager.register_router("notifications", notifications_router, "/health", priority=1)
+    enterprise_router_manager.register_router("security", security_router, "/health", priority=1)
+    enterprise_router_manager.register_router("streaming", streaming_router, "/health", priority=1)
+    enterprise_router_manager.register_router("studios", studios_router, "/health", priority=1)
+    logging.info("✅ Successfully registered 18 specialized route modules")
+else:
+    logging.warning("⚠️ Specialized routes not available - using fallback routers")
+
 
 # ========================================
 # ENHANCED EXPORTS
@@ -431,6 +535,27 @@ __all__ = [
     "core_router", 
     "business_router",
     "public_router",
+    
+    # Specialized routes from routes/ directory
+    "collaboration_router",
+    "gamification_router",
+    "seo_router",
+    "analytics_router",
+    "infrastructure_router",
+    "ai_agents_router",
+    "blockchain_router",
+    "business_intelligence_router",
+    "chat_router",
+    "crawlers_router",
+    "edge_quantum_router",
+    "languages_router",
+    "marketplace_router",
+    "mlops_router",
+    "notifications_router",
+    "security_router",
+    "streaming_router",
+    "studios_router",
+    "ROUTES_AVAILABLE",
     
     # Middleware
     "setup_middleware",

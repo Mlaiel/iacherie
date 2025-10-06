@@ -77,7 +77,8 @@ logger = logging.getLogger(__name__)
 
 
 class ConnectionStatus(Enum):
-    """Database connection status enumeration."""
+    """
+        Database connection status enumeration."""
     DISCONNECTED = "disconnected"
     CONNECTING = "connecting"
     CONNECTED = "connected"
@@ -136,17 +137,22 @@ class DatabaseConnectionManager:
         self._session_makers: Dict[DatabaseType, Any] = {}
         
     async def initialize(self, configs: Dict[DatabaseType, ConnectionConfig]):
-        """Initialize all database connections."""
+        """
+        Initialize all database connections."""
         logger.info("🚀 Initializing enterprise database connections...")
+
         
         self._configs = configs
         
         for db_type, config in configs.items():
             try:
                 await self._connect_database(db_type, config)
+
                 logger.info(f"✅ {db_type.value} connection established")
+
             except Exception as e:
                 logger.error(f"❌ Failed to connect to {db_type.value}: {e}")
+
                 self._status[db_type] = ConnectionStatus.ERROR
         
         # Start health monitoring
@@ -169,6 +175,7 @@ class DatabaseConnectionManager:
             await self._connect_object_storage(config)
         else:
             raise ValueError(f"Unsupported database type: {db_type}")
+
         
         self._status[db_type] = ConnectionStatus.CONNECTED
     
@@ -185,6 +192,7 @@ class DatabaseConnectionManager:
             echo=config.echo,
             **config.extra_params
         )
+
         
         self._connections[DatabaseType.POSTGRESQL] = engine
         self._session_makers[DatabaseType.POSTGRESQL] = async_sessionmaker(
@@ -228,6 +236,7 @@ class DatabaseConnectionManager:
             'use_ssl': config.ssl_mode == "require",
             **config.extra_params
         }
+
         
         client = AsyncElasticsearch(**es_config)
         
@@ -238,6 +247,8 @@ class DatabaseConnectionManager:
     async def _connect_object_storage(self, config: ConnectionConfig):
         """Connect to object storage (S3/MinIO)."""
         session = aioboto3.Session()
+
+
         
         client = session.client(
             's3',
@@ -246,6 +257,7 @@ class DatabaseConnectionManager:
             aws_secret_access_key=config.password,
             **config.extra_params
         )
+
         
         self._connections[DatabaseType.OBJECT_STORAGE] = client
     
@@ -254,14 +266,18 @@ class DatabaseConnectionManager:
         """Get PostgreSQL session context manager."""
         if DatabaseType.POSTGRESQL not in self._session_makers:
             raise RuntimeError("PostgreSQL connection not initialized")
+
+
         
         session_maker = self._session_makers[DatabaseType.POSTGRESQL]
         async with session_maker() as session:
             try:
                 yield session
                 await session.commit()
+
             except Exception:
                 await session.rollback()
+
                 raise
     
     async def get_redis_client(self):
@@ -269,19 +285,23 @@ class DatabaseConnectionManager:
         return self._connections.get(DatabaseType.REDIS)
     
     async def get_mongodb_client(self):
-        """Get MongoDB client."""
+        """
+        Get MongoDB client."""
         return self._connections.get(DatabaseType.MONGODB)
     
     async def get_elasticsearch_client(self):
-        """Get Elasticsearch client."""
+        """
+        Get Elasticsearch client."""
         return self._connections.get(DatabaseType.ELASTICSEARCH)
     
     async def get_object_storage_client(self):
-        """Get object storage client."""
+        """
+        Get object storage client."""
         return self._connections.get(DatabaseType.OBJECT_STORAGE)
     
     async def _health_monitor(self):
-        """Monitor database health and handle reconnections."""
+        """
+        Monitor database health and handle reconnections."""
         while True:
             try:
                 await asyncio.sleep(30)  # Check every 30 seconds
@@ -289,9 +309,11 @@ class DatabaseConnectionManager:
                 for db_type, connection in self._connections.items():
                     try:
                         await self._check_connection_health(db_type, connection)
+
                         if self._status[db_type] != ConnectionStatus.CONNECTED:
                             self._status[db_type] = ConnectionStatus.CONNECTED
                             logger.info(f"✅ {db_type.value} connection restored")
+
                     except Exception as e:
                         self._status[db_type] = ConnectionStatus.ERROR
                         logger.error(f"🔥 {db_type.value} health check failed: {e}")
@@ -299,11 +321,15 @@ class DatabaseConnectionManager:
                         # Attempt reconnection
                         try:
                             config = self._configs.get(db_type)
+
                             if config:
                                 await self._connect_database(db_type, config)
+
                                 logger.info(f"🔄 {db_type.value} reconnection successful")
+
                         except Exception as reconnect_error:
                             logger.error(f"🚨 {db_type.value} reconnection failed: {reconnect_error}")
+
                             
             except asyncio.CancelledError:
                 break
@@ -327,15 +353,19 @@ class DatabaseConnectionManager:
         return self._status.get(db_type, ConnectionStatus.DISCONNECTED)
     
     def get_all_statuses(self) -> Dict[str, str]:
-        """Get all connection statuses."""
+        """
+        Get all connection statuses."""
         return {db_type.value: status.value for db_type, status in self._status.items()}
     
     async def close_all_connections(self):
-        """Close all database connections."""
+        """
+        Close all database connections."""
         logger.info("🔌 Closing all database connections...")
+
         
         if self._health_monitor_task:
             self._health_monitor_task.cancel()
+
             try:
                 await self._health_monitor_task
             except asyncio.CancelledError:
@@ -345,18 +375,25 @@ class DatabaseConnectionManager:
             try:
                 if db_type == DatabaseType.POSTGRESQL:
                     await connection.dispose()
+
                 elif db_type == DatabaseType.REDIS:
                     await connection.close()
+
                 elif db_type == DatabaseType.MONGODB:
                     connection.close()
+
                 elif db_type == DatabaseType.ELASTICSEARCH:
                     await connection.close()
+
                 elif db_type == DatabaseType.OBJECT_STORAGE:
                     await connection.close()
+
                 
                 logger.info(f"✅ {db_type.value} connection closed")
+
             except Exception as e:
                 logger.error(f"❌ Error closing {db_type.value}: {e}")
+
         
         self._connections.clear()
         self._status.clear()
@@ -377,7 +414,8 @@ def get_connection_manager() -> DatabaseConnectionManager:
 
 # Consolidation of key functions from original database/connections/ modules
 async def create_tables():
-    """Create all database tables (migrated from database.schema)."""
+    """
+        Create all database tables (migrated from database.schema)."""
     try:
         manager = get_connection_manager()
         async with manager.get_postgres_session() as session:
@@ -398,6 +436,7 @@ async def create_tables():
                     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
             """))
+
             
             logger.info("✅ Database tables created successfully")
     except Exception as e:

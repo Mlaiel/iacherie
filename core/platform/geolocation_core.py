@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class GeolocationCore:
-    """Advanced GeolocationCore System"""
+    """
+Advanced GeolocationCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class GeolocationCore:
 # Module exports
 __all__ = ["GeolocationCore"]
 
-logger.info("🌍 GeolocationCore module loaded")
+logger.info("🌍 GeolocationCore module initialized")

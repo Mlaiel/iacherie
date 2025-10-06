@@ -28,7 +28,7 @@ import tempfile
 import zipfile
 import hashlib
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union, Set, Callable, AsyncGenerator, Tuple
 from dataclasses import dataclass, field
@@ -53,6 +53,10 @@ from sqlalchemy.orm import sessionmaker
 import aiofiles
 import aiohttp
 
+# Configure logging AVANT les imports optionnels
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 # Advanced export formats
 try:
     import pyarrow as pa
@@ -67,13 +71,18 @@ try:
 except ImportError:
     HAS_HDF5 = False
 
-try:
-    # Utilisation du gestionnaire TensorFlow centralisé
-    from core.tensorflow_singleton import get_tensorflow
-    tf_manager = get_tensorflow()
-    tf = tf_manager.tf
-    HAS_TENSORFLOW = tf_manager.is_available
+    import h5py
+    HAS_HDF5 = True
 except ImportError:
+    HAS_HDF5 = False
+
+try:
+    # Utilisation du gestionnaire TensorFlow centralisé singleton
+    from core.tensorflow_singleton import get_tensorflow, is_tensorflow_available
+    tf = get_tensorflow()
+    HAS_TENSORFLOW = is_tensorflow_available()
+except ImportError as e:
+    logger.warning(f"TensorFlow singleton non disponible: {e}")
     HAS_TENSORFLOW = False
     tf = None
 
@@ -106,10 +115,6 @@ try:
     HAS_CLOUD = True
 except ImportError:
     HAS_CLOUD = False
-
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 class ExportFormat(Enum):
     """Formats d'export supportés - Enterprise Grade"""

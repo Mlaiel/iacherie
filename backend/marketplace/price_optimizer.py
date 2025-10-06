@@ -33,7 +33,8 @@ import statistics
 logger = logging.getLogger(__name__)
 
 class PricingStrategy(Enum):
-    """Pricing strategy enumeration"""
+    """
+        Pricing strategy enumeration"""
     DYNAMIC = "dynamic"              # AI-driven dynamic pricing
     COMPETITIVE = "competitive"      # Competitor-based pricing
     VALUE_BASED = "value_based"      # Value-based pricing
@@ -95,7 +96,8 @@ class MarketData:
 
 @dataclass
 class PriceOptimizationRequest:
-    """Price optimization request"""
+    """
+        Price optimization request"""
     request_id: str
     product_id: str
     product_category: str
@@ -110,7 +112,8 @@ class PriceOptimizationRequest:
 
 @dataclass
 class PriceRecommendation:
-    """Price optimization recommendation"""
+    """
+        Price optimization recommendation"""
     recommendation_id: str
     request_id: str
     product_id: str
@@ -162,7 +165,8 @@ class PriceOptimizer:
         self._initialize_default_models()
     
     def _initialize_default_models(self):
-        """Initialize default pricing models"""
+        """
+        Initialize default pricing models"""
         default_models = [
             PricingModel(
                 model_id="demand_elasticity_model",
@@ -206,6 +210,7 @@ class PriceOptimizer:
             request_id = f"price_req_{uuid.uuid4().hex[:12]}"
             
             # Create optimization request
+
             request = PriceOptimizationRequest(
                 request_id=request_id,
                 product_id=product_id,
@@ -217,25 +222,32 @@ class PriceOptimizer:
                 constraints=constraints or {},
                 context=context or {}
             )
+
             
             self.optimization_requests[request_id] = request
             
             # Gather market data
+
             market_data = await self._gather_market_data(product_category)
             
             # Apply pricing strategy
             if strategy == PricingStrategy.DYNAMIC:
                 recommendation = await self._dynamic_pricing(request, market_data)
+
             elif strategy == PricingStrategy.COMPETITIVE:
                 recommendation = await self._competitive_pricing(request, market_data)
+
             elif strategy == PricingStrategy.VALUE_BASED:
                 recommendation = await self._value_based_pricing(request, market_data)
+
             elif strategy == PricingStrategy.PSYCHOLOGICAL:
                 recommendation = await self._psychological_pricing(request, market_data)
+
             else:
                 recommendation = await self._default_pricing(request, market_data)
             
             # Apply constraints
+
             recommendation = await self._apply_constraints(recommendation, request.constraints)
             
             # Calculate risk assessment
@@ -246,26 +258,28 @@ class PriceOptimizer:
             
             # Determine if A/B test candidate
             recommendation.a_b_test_candidate = await self._should_ab_test(recommendation)
+
             
             self.recommendations[recommendation.recommendation_id] = recommendation
             
             logger.info(f"Price optimization completed: {product_id} -> {recommendation.recommended_price}")
+
             return recommendation
             
         except Exception as e:
             logger.error(f"Error optimizing price: {e}")
+
             raise
     
     async def _gather_market_data(self, product_category: str) -> MarketData:
         """Gather and analyze market data"""
         data_id = f"market_{uuid.uuid4().hex[:12]}"
-        
-        # Mock market data - in production would fetch from real market sources
         market_data = MarketData(
             data_id=data_id,
             product_category=product_category,
             timestamp=datetime.utcnow(),
             demand_score=random.uniform(0.3, 0.9),  # Random for demo
+
             competition_level=random.uniform(0.2, 0.8),
             market_condition=random.choice(list(MarketCondition)),
             average_market_price=Decimal(str(random.uniform(50, 500))),
@@ -274,6 +288,7 @@ class PriceOptimizer:
             volume_trend=random.uniform(-0.3, 0.5),
             seasonality_factor=random.uniform(0.8, 1.3)
         )
+
         
         self.market_data[data_id] = market_data
         return market_data
@@ -285,6 +300,7 @@ class PriceOptimizer:
     ) -> PriceRecommendation:
         """Apply dynamic pricing strategy using ML"""
         # Simulate ML model prediction
+
         features = {
             "current_price": float(request.current_price),
             "demand_score": market_data.demand_score,
@@ -295,26 +311,33 @@ class PriceOptimizer:
         }
         
         # ML prediction (simplified)
+
         price_multiplier = await self._predict_optimal_multiplier(features, request.optimization_goal)
+
         recommended_price = request.current_price * Decimal(str(price_multiplier))
         
         # Calculate expected impacts
+
         revenue_impact = await self._calculate_revenue_impact(
             request.current_price, recommended_price, market_data
         )
+
         volume_impact = await self._calculate_volume_impact(
             request.current_price, recommended_price, market_data
         )
         
         # Calculate price sensitivity
+
         price_sensitivity = await self._calculate_price_sensitivity(market_data)
         
         # Determine market position
+
         market_position = await self._determine_market_position(
             recommended_price, market_data.average_market_price
         )
         
         # Generate reasoning
+
         reasoning = f"Dynamic pricing based on {market_data.market_condition.value} market conditions. "
         reasoning += f"Demand score: {market_data.demand_score:.2f}, "
         reasoning += f"Competition level: {market_data.competition_level:.2f}"
@@ -326,6 +349,7 @@ class PriceOptimizer:
             current_price=request.current_price,
             recommended_price=recommended_price,
             confidence_score=0.85,  # Would be calculated by ML model
+
             expected_revenue_impact=revenue_impact,
             expected_volume_impact=volume_impact,
             price_sensitivity=price_sensitivity,
@@ -333,6 +357,7 @@ class PriceOptimizer:
             strategy_used=PricingStrategy.DYNAMIC,
             reasoning=reasoning
         )
+
         
         return recommendation
     
@@ -345,23 +370,34 @@ class PriceOptimizer:
         # Position relative to market average
         if request.optimization_goal == PriceOptimizationGoal.MAXIMIZE_MARKET_SHARE:
             # Price below market average
+
             recommended_price = market_data.average_market_price * Decimal("0.95")
+
+
             market_position = "competitive"
         elif request.optimization_goal == PriceOptimizationGoal.MAXIMIZE_PROFIT:
             # Price slightly above market average
+
             recommended_price = market_data.average_market_price * Decimal("1.05")
+
+
             market_position = "premium"
         else:
             # Match market average
+
             recommended_price = market_data.average_market_price
+
             market_position = "competitive"
         
         revenue_impact = await self._calculate_revenue_impact(
             request.current_price, recommended_price, market_data
         )
+
         volume_impact = await self._calculate_volume_impact(
             request.current_price, recommended_price, market_data
         )
+
+
         
         reasoning = f"Competitive positioning at {market_position} level relative to market average of {market_data.average_market_price}"
         
@@ -387,6 +423,7 @@ class PriceOptimizer:
     ) -> PriceRecommendation:
         """Apply value-based pricing strategy"""
         # Value-based pricing considers customer perceived value
+
         value_multiplier = 1.0
         
         # Adjust based on market conditions
@@ -402,15 +439,21 @@ class PriceOptimizer:
             value_multiplier *= 1.1  # Low competition, can charge more
         elif market_data.competition_level > 0.7:
             value_multiplier *= 0.95  # High competition, need to be competitive
+
         
         recommended_price = request.current_price * Decimal(str(value_multiplier))
+
+
         
         revenue_impact = await self._calculate_revenue_impact(
             request.current_price, recommended_price, market_data
         )
+
         volume_impact = await self._calculate_volume_impact(
             request.current_price, recommended_price, market_data
         )
+
+
         
         market_position = "premium" if value_multiplier > 1.05 else "competitive"
         reasoning = f"Value-based pricing considering {market_data.market_condition.value} conditions and {market_data.competition_level:.1%} competition level"
@@ -437,10 +480,14 @@ class PriceOptimizer:
     ) -> PriceRecommendation:
         """Apply psychological pricing strategy"""
         # Start with value-based price
+
         base_rec = await self._value_based_pricing(request, market_data)
         
         # Apply psychological pricing rules
+
         recommended_price = self._apply_psychological_rules(base_rec.recommended_price)
+
+
         
         reasoning = f"Psychological pricing applied to value-based recommendation. "
         reasoning += "Price adjusted for psychological appeal (e.g., ending in .99)"
@@ -454,6 +501,7 @@ class PriceOptimizer:
             confidence_score=0.65,
             expected_revenue_impact=base_rec.expected_revenue_impact,
             expected_volume_impact=base_rec.expected_volume_impact + 5.0,  # Boost from psychological pricing
+
             price_sensitivity=base_rec.price_sensitivity,
             market_position=base_rec.market_position,
             strategy_used=PricingStrategy.PSYCHOLOGICAL,
@@ -467,16 +515,21 @@ class PriceOptimizer:
         # Apply .99 ending for prices under 1000
         if price_float < 1000:
             # Round to nearest dollar and subtract 0.01
+
             rounded_price = round(price_float)
+
             if rounded_price > price_float:
                 return Decimal(str(rounded_price - 0.01))
+
             else:
                 return Decimal(str(rounded_price + 0.99))
         else:
             # For higher prices, use round numbers ending in 5 or 0
+
             rounded_price = round(price_float / 10) * 10
             if rounded_price % 10 == 0:
                 return Decimal(str(rounded_price - 5))
+
             else:
                 return Decimal(str(rounded_price))
     
@@ -485,17 +538,21 @@ class PriceOptimizer:
         request: PriceOptimizationRequest,
         market_data: MarketData
     ) -> PriceRecommendation:
-        """Apply default pricing strategy"""
+        """
+        Apply default pricing strategy"""
         # Simple cost-plus if cost is available
         if request.cost_price:
             target_margin = request.target_margin or 0.3  # 30% default margin
+
             recommended_price = request.cost_price * Decimal(str(1 + target_margin))
         else:
             # Small adjustment based on market conditions
             if market_data.demand_score > 0.7:
                 recommended_price = request.current_price * Decimal("1.05")
+
             elif market_data.demand_score < 0.4:
                 recommended_price = request.current_price * Decimal("0.95")
+
             else:
                 recommended_price = request.current_price
         
@@ -521,13 +578,16 @@ class PriceOptimizer:
     ) -> float:
         """Predict optimal price multiplier using ML (simulated)"""
         # Simplified ML prediction - in production would use trained models
+
         base_multiplier = 1.0
         
         # Adjust based on demand
+
         demand_adjustment = (features["demand_score"] - 0.5) * 0.2
         base_multiplier += demand_adjustment
         
         # Adjust based on competition
+
         competition_adjustment = (0.5 - features["competition_level"]) * 0.15
         base_multiplier += competition_adjustment
         
@@ -552,10 +612,13 @@ class PriceOptimizer:
         price_change = float((new_price - current_price) / current_price)
         
         # Simple elasticity model
+
         price_elasticity = market_data.demand_score * -1.5  # Higher demand = less elastic
+
         volume_change = price_change * price_elasticity
         
         # Revenue impact = (1 + price_change) * (1 + volume_change) - 1
+
         revenue_impact = (1 + price_change) * (1 + volume_change) - 1
         
         return revenue_impact * 100  # Return as percentage
@@ -566,20 +629,27 @@ class PriceOptimizer:
         new_price: Decimal,
         market_data: MarketData
     ) -> float:
-        """Calculate expected volume impact percentage"""
+        """
+        Calculate expected volume impact percentage"""
         price_change = float((new_price - current_price) / current_price)
         
         # Volume impact based on price elasticity
+
         price_elasticity = market_data.demand_score * -1.2
+
         volume_impact = price_change * price_elasticity
         
         return volume_impact * 100  # Return as percentage
     
     async def _calculate_price_sensitivity(self, market_data: MarketData) -> float:
-        """Calculate price sensitivity measure"""
+        """
+        Calculate price sensitivity measure"""
         # Higher competition and lower demand = higher price sensitivity
+
         base_sensitivity = 0.5
+
         competition_factor = market_data.competition_level * 0.3
+
         demand_factor = (1 - market_data.demand_score) * 0.2
         
         return min(1.0, base_sensitivity + competition_factor + demand_factor)
@@ -589,8 +659,10 @@ class PriceOptimizer:
         recommended_price: Decimal,
         market_average: Decimal
     ) -> str:
-        """Determine market position based on price relative to market"""
+        """
+        Determine market position based on price relative to market"""
         ratio = float(recommended_price / market_average)
+
         
         if ratio > 1.1:
             return "premium"
@@ -618,28 +690,40 @@ class PriceOptimizer:
         recommendation: PriceRecommendation,
         constraints: Dict[str, Any]
     ) -> PriceRecommendation:
-        """Apply pricing constraints to recommendation"""
+        """
+        Apply pricing constraints to recommendation"""
         if not constraints:
             return recommendation
+
         
         adjusted_price = recommendation.recommended_price
         
         # Apply minimum price constraint
         if "min_price" in constraints:
             min_price = Decimal(str(constraints["min_price"]))
+
+
             adjusted_price = max(adjusted_price, min_price)
         
         # Apply maximum price constraint
         if "max_price" in constraints:
             max_price = Decimal(str(constraints["max_price"]))
+
+
             adjusted_price = min(adjusted_price, max_price)
         
         # Apply maximum change constraint
         if "max_change_percent" in constraints:
             max_change = float(constraints["max_change_percent"]) / 100
+
             current_price = recommendation.current_price
+
             max_increase = current_price * Decimal(str(1 + max_change))
+
+
             max_decrease = current_price * Decimal(str(1 - max_change))
+
+
             adjusted_price = max(max_decrease, min(max_increase, adjusted_price))
         
         # Update recommendation if price was adjusted
@@ -659,6 +743,7 @@ class PriceOptimizer:
         risk_factors = 0
         
         # Large price changes are risky
+
         price_change = abs(float((recommendation.recommended_price - recommendation.current_price) / recommendation.current_price))
         if price_change > 0.2:
             risk_factors += 2
@@ -687,7 +772,9 @@ class PriceOptimizer:
     async def _should_ab_test(self, recommendation: PriceRecommendation) -> bool:
         """Determine if recommendation should be A/B tested"""
         # A/B test for significant price changes with medium confidence
+
         price_change = abs(float((recommendation.recommended_price - recommendation.current_price) / recommendation.current_price))
+
         
         return (price_change > 0.05 and 
                 recommendation.confidence_score < 0.9 and 
@@ -702,32 +789,41 @@ class PriceOptimizer:
         """Create A/B test for price recommendation"""
         try:
             recommendation = self.recommendations.get(recommendation_id)
+
             if not recommendation:
                 raise ValueError(f"Recommendation {recommendation_id} not found")
+
+
             
             test_id = f"test_{uuid.uuid4().hex[:12]}"
             
             # In production, would set up actual A/B test infrastructure
             logger.info(f"A/B test created: {test_id} for product {recommendation.product_id}")
+
             
             return test_id
             
         except Exception as e:
             logger.error(f"Error creating A/B test: {e}")
+
             raise
     
     async def analyze_ab_test(self, test_id: str) -> PriceTestResult:
         """Analyze A/B test results"""
         try:
-            # Mock test results - in production would fetch actual test data
             control_revenue = Decimal(str(random.uniform(10000, 15000)))
             test_revenue = Decimal(str(random.uniform(9000, 16000)))
             control_volume = int(random.uniform(100, 200))
             test_volume = int(random.uniform(90, 210))
             
             # Statistical significance (simplified)
+
+
             revenue_lift = float((test_revenue - control_revenue) / control_revenue * 100)
+
+
             statistical_significance = min(0.99, abs(revenue_lift) / 10)  # Simplified calculation
+
             
             winner = "test" if test_revenue > control_revenue and statistical_significance > 0.8 else \
                     "control" if control_revenue > test_revenue and statistical_significance > 0.8 else \
@@ -747,14 +843,17 @@ class PriceOptimizer:
                 lift_percentage=revenue_lift,
                 test_duration_days=14
             )
+
             
             self.price_tests[test_id] = result
             
             logger.info(f"A/B test analyzed: {test_id} - Winner: {winner}")
+
             return result
             
         except Exception as e:
             logger.error(f"Error analyzing A/B test: {e}")
+
             raise
     
     def get_recommendation(self, recommendation_id: str) -> Optional[PriceRecommendation]:
@@ -762,38 +861,48 @@ class PriceOptimizer:
         return self.recommendations.get(recommendation_id)
     
     def get_test_result(self, test_id: str) -> Optional[PriceTestResult]:
-        """Get A/B test result by ID"""
+        """
+        Get A/B test result by ID"""
         return self.price_tests.get(test_id)
     
     async def get_pricing_analytics(self) -> Dict[str, Any]:
-        """Get pricing analytics and insights"""
+        """
+        Get pricing analytics and insights"""
         total_recommendations = len(self.recommendations)
+
         
         if total_recommendations == 0:
             return {"total_recommendations": 0}
         
         # Calculate average confidence
+
         avg_confidence = statistics.mean(
             rec.confidence_score for rec in self.recommendations.values()
         )
         
         # Strategy breakdown
+
         strategy_breakdown = {}
         for rec in self.recommendations.values():
             strategy = rec.strategy_used.value
             strategy_breakdown[strategy] = strategy_breakdown.get(strategy, 0) + 1
         
         # Risk distribution
+
         risk_distribution = {}
         for rec in self.recommendations.values():
             risk = rec.risk_assessment
             risk_distribution[risk] = risk_distribution.get(risk, 0) + 1
         
         # Price change distribution
+
         price_changes = []
         for rec in self.recommendations.values():
             change = float((rec.recommended_price - rec.current_price) / rec.current_price * 100)
+
             price_changes.append(change)
+
+
         
         avg_price_change = statistics.mean(price_changes) if price_changes else 0
         

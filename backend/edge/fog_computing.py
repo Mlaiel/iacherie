@@ -25,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 
 class ProcessingTier(str, Enum):
-    """Fog computing processing tiers."""
+    """
+        Fog computing processing tiers."""
     DEVICE_TIER = "device_tier"        # IoT devices and sensors
     FOG_TIER = "fog_tier"             # Edge servers and gateways
     CLOUD_TIER = "cloud_tier"         # Central cloud infrastructure
@@ -106,7 +107,8 @@ class FogNode:
 
 @dataclass
 class ProcessingTask:
-    """Distributed processing task."""
+    """
+        Distributed processing task."""
     task_id: str
     task_name: str
     workload_type: WorkloadType
@@ -128,7 +130,8 @@ class ProcessingTask:
 
 @dataclass
 class TaskExecution:
-    """Task execution tracking."""
+    """
+        Task execution tracking."""
     execution_id: str
     task_id: str
     assigned_node_id: str
@@ -144,7 +147,8 @@ class TaskExecution:
 
 @dataclass
 class FogComputingConfig:
-    """Configuration for fog computing orchestrator."""
+    """
+        Configuration for fog computing orchestrator."""
     orchestrator_name: str = "iacherie-fog"
     load_balancing_strategy: LoadBalancingStrategy = LoadBalancingStrategy.RESOURCE_AWARE
     enable_auto_scaling: bool = True
@@ -209,6 +213,7 @@ class FogComputingOrchestrator:
         """Start the fog computing orchestrator."""
         if self.running:
             logger.warning("Fog computing orchestrator already running")
+
             return
         
         self.running = True
@@ -221,16 +226,19 @@ class FogComputingOrchestrator:
             asyncio.create_task(self._health_monitor()),
             asyncio.create_task(self._cleanup_manager())
         ])
+
         
         if self.config.enable_auto_scaling:
             self.background_tasks.append(
                 asyncio.create_task(self._auto_scaler())
             )
+
         
         if self.config.enable_task_migration:
             self.background_tasks.append(
                 asyncio.create_task(self._migration_manager())
             )
+
         
         logger.info("Fog computing orchestrator started")
     
@@ -244,6 +252,7 @@ class FogComputingOrchestrator:
         # Cancel background tasks
         for task in self.background_tasks:
             task.cancel()
+
             try:
                 await task
             except asyncio.CancelledError:
@@ -253,6 +262,7 @@ class FogComputingOrchestrator:
         
         # Shutdown thread pool
         self.thread_pool.shutdown(wait=True)
+
         
         logger.info("Fog computing orchestrator stopped")
     
@@ -269,6 +279,8 @@ class FogComputingOrchestrator:
     ) -> str:
         """Register a fog computing node."""
         node_id = str(uuid.uuid4())
+
+
         
         fog_node = FogNode(
             node_id=node_id,
@@ -282,6 +294,7 @@ class FogComputingOrchestrator:
             network_bandwidth_mbps=network_bandwidth_mbps,
             metadata=metadata or {}
         )
+
         
         self.fog_nodes[node_id] = fog_node
         
@@ -292,21 +305,27 @@ class FogComputingOrchestrator:
         """Unregister a fog computing node."""
         if node_id not in self.fog_nodes:
             logger.warning(f"Fog node {node_id} not found")
+
             return False
+
         
         node = self.fog_nodes.pop(node_id)
         
         # Cancel running tasks on this node
+
         tasks_to_cancel = [
             execution for execution in self.running_tasks.values()
+
             if execution.assigned_node_id == node_id
         ]
         
         for execution in tasks_to_cancel:
             execution.status = TaskStatus.CANCELLED
             execution.completed_at = datetime.now()
+
             self.completed_tasks[execution.execution_id] = execution
             self.running_tasks.pop(execution.execution_id)
+
         
         logger.info(f"Unregistered fog node: {node.node_name}")
         return True
@@ -330,12 +349,15 @@ class FogComputingOrchestrator:
         task_id = str(uuid.uuid4())
         
         # Calculate data size
+
         data_size_mb = 0.0
         if input_data is not None:
             try:
                 data_size_mb = len(pickle.dumps(input_data)) / (1024 * 1024)
+
             except:
                 data_size_mb = 1.0  # Default estimate
+
         
         task = ProcessingTask(
             task_id=task_id,
@@ -353,12 +375,15 @@ class FogComputingOrchestrator:
             deadline=deadline,
             metadata=metadata or {}
         )
+
         
         self.pending_tasks[task_id] = task
         
         # Add to priority queue (lower number = higher priority)
+
         priority_value = self._get_priority_value(priority)
         await self.task_queue.put((priority_value, time.time(), task_id))
+
         
         self.metrics["total_tasks"] += 1
         
@@ -370,7 +395,9 @@ class FogComputingOrchestrator:
         # Check pending tasks
         if task_id in self.pending_tasks:
             task = self.pending_tasks.pop(task_id)
+
             logger.info(f"Cancelled pending task: {task.task_name}")
+
             return True
         
         # Check running tasks
@@ -378,9 +405,12 @@ class FogComputingOrchestrator:
             if execution.task_id == task_id:
                 execution.status = TaskStatus.CANCELLED
                 execution.completed_at = datetime.now()
+
                 self.completed_tasks[execution_id] = execution
                 self.running_tasks.pop(execution_id)
+
                 logger.info(f"Cancelled running task: {task_id}")
+
                 return True
         
         logger.warning(f"Task {task_id} not found for cancellation")
@@ -412,14 +442,18 @@ class FogComputingOrchestrator:
         """Get the status of a fog node."""
         if node_id not in self.fog_nodes:
             return None
+
         
         node = self.fog_nodes[node_id]
         
         # Count running tasks on this node
+
         running_tasks_count = sum(
             1 for execution in self.running_tasks.values()
+
             if execution.assigned_node_id == node_id
         )
+
         
         return {
             "node_info": asdict(node),
@@ -428,6 +462,7 @@ class FogComputingOrchestrator:
                 resource_type.value: 1.0 - (available / total) if total > 0 else 0.0
                 for resource_type, (available, total) in [
                     (rt, (node.available_resources.get(rt, 0), node.resources.get(rt, 0)))
+
                     for rt in ResourceType
                 ]
             }
@@ -436,7 +471,10 @@ class FogComputingOrchestrator:
     def get_orchestrator_status(self) -> Dict[str, Any]:
         """Get comprehensive orchestrator status."""
         # Update metrics
+
         active_nodes = sum(1 for node in self.fog_nodes.values() if node.is_online)
+
+
         
         total_utilization = 0.0
         if self.fog_nodes:
@@ -444,9 +482,11 @@ class FogComputingOrchestrator:
                 if node.is_online:
                     node_utilization = sum(
                         1.0 - (node.available_resources.get(rt, 0) / node.resources.get(rt, 1))
+
                         for rt in ResourceType
                         if node.resources.get(rt, 0) > 0
                     ) / len(ResourceType)
+
                     total_utilization += node_utilization
             total_utilization /= active_nodes if active_nodes > 0 else 1
         
@@ -455,6 +495,7 @@ class FogComputingOrchestrator:
             "active_nodes": active_nodes,
             "total_resource_utilization": total_utilization
         })
+
         
         return {
             "orchestrator_info": {
@@ -472,6 +513,7 @@ class FogComputingOrchestrator:
                 "total": len(self.fog_nodes),
                 "by_tier": {
                     tier.value: sum(1 for node in self.fog_nodes.values() if node.tier == tier)
+
                     for tier in ProcessingTier
                 }
             },
@@ -493,7 +535,8 @@ class FogComputingOrchestrator:
         return priority_map.get(priority, 3)
     
     async def _task_scheduler(self):
-        """Main task scheduling loop."""
+        """
+        Main task scheduling loop."""
         while self.running:
             try:
                 # Get next task from queue
@@ -501,27 +544,34 @@ class FogComputingOrchestrator:
                     priority, submit_time, task_id = await asyncio.wait_for(
                         self.task_queue.get(), timeout=1.0
                     )
+
                 except asyncio.TimeoutError:
                     continue
                 
                 if task_id not in self.pending_tasks:
                     continue  # Task was cancelled
+
                 
                 task = self.pending_tasks[task_id]
                 
                 # Find suitable node
+
                 suitable_node = await self._find_suitable_node(task)
+
                 
                 if suitable_node:
                     # Schedule task
                     await self._schedule_task_on_node(task, suitable_node)
+
                 else:
                     # No suitable node found, put back in queue
                     await self.task_queue.put((priority, submit_time, task_id))
+
                     await asyncio.sleep(1)  # Wait before retry
                 
             except Exception as e:
                 logger.error(f"Task scheduler error: {e}")
+
                 await asyncio.sleep(1)
     
     async def _find_suitable_node(self, task: ProcessingTask) -> Optional[str]:
@@ -545,15 +595,19 @@ class FogComputingOrchestrator:
                 continue
             
             # Check current load
+
             running_tasks_count = sum(
                 1 for execution in self.running_tasks.values()
+
                 if execution.assigned_node_id == node_id
             )
+
             
             if running_tasks_count >= self.config.max_concurrent_tasks_per_node:
                 continue
             
             suitable_nodes.append(node_id)
+
         
         if not suitable_nodes:
             return None
@@ -562,71 +616,91 @@ class FogComputingOrchestrator:
         return self._select_node_by_strategy(suitable_nodes, task)
     
     def _node_has_resources(self, node: FogNode, requirements: Dict[ResourceType, float]) -> bool:
-        """Check if node has sufficient resources."""
+        """
+        Check if node has sufficient resources."""
         for resource_type, required_amount in requirements.items():
             available = node.available_resources.get(resource_type, 0)
+
             if available < required_amount:
                 return False
         return True
     
     def _select_node_by_strategy(self, node_ids: List[str], task: ProcessingTask) -> str:
-        """Select node based on load balancing strategy."""
+        """
+        Select node based on load balancing strategy."""
         if not node_ids:
             return None
         
         if len(node_ids) == 1:
             return node_ids[0]
+
         
         strategy = self.config.load_balancing_strategy
         
         if strategy == LoadBalancingStrategy.ROUND_ROBIN:
             # Simple round-robin based on task count
+
             task_counts = {
                 node_id: sum(1 for ex in self.running_tasks.values() if ex.assigned_node_id == node_id)
+
                 for node_id in node_ids
             }
             return min(task_counts, key=task_counts.get)
+
         
         elif strategy == LoadBalancingStrategy.LEAST_LOADED:
             # Select node with lowest current load
             return min(node_ids, key=lambda nid: self.fog_nodes[nid].current_load)
+
         
         elif strategy == LoadBalancingStrategy.RESOURCE_AWARE:
             # Select node with best resource availability for this task
+
             scores = {}
             for node_id in node_ids:
                 node = self.fog_nodes[node_id]
+
                 score = 0.0
                 
                 for resource_type, required in task.resource_requirements.items():
                     available = node.available_resources.get(resource_type, 0)
+
+
                     total = node.resources.get(resource_type, 1)
+
                     if total > 0:
                         score += (available / total) * (required / sum(task.resource_requirements.values()))
+
                 
                 scores[node_id] = score
             
             return max(scores, key=scores.get)
+
         
         elif strategy == LoadBalancingStrategy.LATENCY_OPTIMIZED:
             # Select node with lowest network latency
             return min(node_ids, key=lambda nid: self.fog_nodes[nid].network_latency_ms)
+
         
         else:
             # Default to first available
             return node_ids[0]
     
     async def _schedule_task_on_node(self, task: ProcessingTask, node_id: str):
-        """Schedule a task on a specific node."""
+        """
+        Schedule a task on a specific node."""
         node = self.fog_nodes[node_id]
+
         execution_id = str(uuid.uuid4())
         
         # Reserve resources
         for resource_type, amount in task.resource_requirements.items():
             current_available = node.available_resources.get(resource_type, 0)
+
             node.available_resources[resource_type] = max(0, current_available - amount)
         
         # Create execution record
+
         execution = TaskExecution(
             execution_id=execution_id,
             task_id=task.task_id,
@@ -641,6 +715,7 @@ class FogComputingOrchestrator:
         
         # Execute task asynchronously
         asyncio.create_task(self._execute_task(task, execution))
+
         
         logger.info(f"Scheduled task {task.task_name} on node {node.node_name}")
     
@@ -657,13 +732,16 @@ class FogComputingOrchestrator:
                         task.processing_function(task.input_data),
                         timeout=task.max_execution_time_seconds
                     )
+
                 else:
                     # Run CPU-bound function in thread pool
+
                     result = await asyncio.get_event_loop().run_in_executor(
                         self.thread_pool,
                         task.processing_function,
                         task.input_data
                     )
+
             else:
                 result = f"Task {task.task_name} completed"
             
@@ -671,11 +749,13 @@ class FogComputingOrchestrator:
             execution.status = TaskStatus.COMPLETED
             execution.result = result
             execution.completed_at = datetime.now()
+
             execution.actual_duration_seconds = time.time() - start_time
             
             # Cache result if enabled
             if self.config.enable_result_caching:
                 cache_key = hashlib.md5(f"{task.task_id}_{task.input_data}".encode()).hexdigest()
+
                 self.result_cache[cache_key] = {
                     "result": result,
                     "timestamp": datetime.now(),
@@ -685,31 +765,42 @@ class FogComputingOrchestrator:
             self.metrics["completed_tasks"] += 1
             
             logger.info(f"Task {task.task_name} completed successfully")
+
             
         except asyncio.TimeoutError:
             execution.status = TaskStatus.TIMEOUT
             execution.error_message = "Task execution timeout"
             execution.completed_at = datetime.now()
+
             self.metrics["failed_tasks"] += 1
             logger.error(f"Task {task.task_name} timed out")
+
             
         except Exception as e:
             execution.status = TaskStatus.FAILED
             execution.error_message = str(e)
+
             execution.completed_at = datetime.now()
+
             self.metrics["failed_tasks"] += 1
             logger.error(f"Task {task.task_name} failed: {e}")
+
         
         finally:
             # Release resources
+
             node = self.fog_nodes[execution.assigned_node_id]
             for resource_type, amount in task.resource_requirements.items():
                 current_available = node.available_resources.get(resource_type, 0)
+
+
                 total_available = node.resources.get(resource_type, 0)
+
                 node.available_resources[resource_type] = min(total_available, current_available + amount)
             
             # Move from running to completed
             self.running_tasks.pop(execution.execution_id)
+
             self.completed_tasks[execution.execution_id] = execution
     
     async def _resource_monitor(self):
@@ -718,18 +809,24 @@ class FogComputingOrchestrator:
             try:
                 for node_id, node in self.fog_nodes.items():
                     # Update current load based on running tasks
+
                     running_tasks_count = sum(
                         1 for execution in self.running_tasks.values()
+
                         if execution.assigned_node_id == node_id
                     )
+
+
                     
                     max_tasks = self.config.max_concurrent_tasks_per_node
                     node.current_load = running_tasks_count / max_tasks if max_tasks > 0 else 0.0
                 
                 await asyncio.sleep(self.config.resource_monitoring_interval_seconds)
+
                 
             except Exception as e:
                 logger.error(f"Resource monitor error: {e}")
+
                 await asyncio.sleep(30)
     
     async def _load_balancer(self):
@@ -741,9 +838,11 @@ class FogComputingOrchestrator:
                 # and potentially trigger task migrations
                 
                 await asyncio.sleep(self.config.load_balancing_interval_seconds)
+
                 
             except Exception as e:
                 logger.error(f"Load balancer error: {e}")
+
                 await asyncio.sleep(60)
     
     async def _health_monitor(self):
@@ -751,24 +850,31 @@ class FogComputingOrchestrator:
         while self.running:
             try:
                 current_time = datetime.now()
+
                 
                 for node_id, node in self.fog_nodes.items():
                     # Check heartbeat
+
                     time_since_heartbeat = (current_time - node.last_heartbeat).total_seconds()
+
                     
                     if time_since_heartbeat > self.config.heartbeat_interval_seconds * 3:
                         if node.is_online:
                             node.is_online = False
                             logger.warning(f"Node {node.node_name} marked as offline")
+
                     else:
                         if not node.is_online:
                             node.is_online = True
                             logger.info(f"Node {node.node_name} is back online")
+
                 
                 await asyncio.sleep(self.config.heartbeat_interval_seconds)
+
                 
             except Exception as e:
                 logger.error(f"Health monitor error: {e}")
+
                 await asyncio.sleep(60)
     
     async def _cleanup_manager(self):
@@ -776,16 +882,21 @@ class FogComputingOrchestrator:
         while self.running:
             try:
                 current_time = datetime.now()
+
+
                 cleanup_threshold = current_time - timedelta(hours=self.config.cleanup_completed_tasks_hours)
                 
                 # Clean up old completed tasks
+
                 old_executions = [
                     execution_id for execution_id, execution in self.completed_tasks.items()
+
                     if execution.completed_at and execution.completed_at < cleanup_threshold
                 ]
                 
                 for execution_id in old_executions:
                     self.completed_tasks.pop(execution_id)
+
                 
                 if old_executions:
                     logger.info(f"Cleaned up {len(old_executions)} old task executions")
@@ -794,16 +905,19 @@ class FogComputingOrchestrator:
                 if self.config.enable_result_caching:
                     expired_cache_keys = [
                         key for key, value in self.result_cache.items()
+
                         if value["ttl"] < current_time
                     ]
                     
                     for key in expired_cache_keys:
                         self.result_cache.pop(key)
+
                 
                 await asyncio.sleep(3600)  # Run cleanup every hour
                 
             except Exception as e:
                 logger.error(f"Cleanup manager error: {e}")
+
                 await asyncio.sleep(3600)
     
     async def _auto_scaler(self):
@@ -820,6 +934,7 @@ class FogComputingOrchestrator:
                 
             except Exception as e:
                 logger.error(f"Auto-scaler error: {e}")
+
                 await asyncio.sleep(300)
     
     async def _migration_manager(self):
@@ -836,6 +951,7 @@ class FogComputingOrchestrator:
                 
             except Exception as e:
                 logger.error(f"Migration manager error: {e}")
+
                 await asyncio.sleep(120)
 
 
@@ -849,7 +965,8 @@ async def create_fog_computing_orchestrator(config: Optional[FogComputingConfig]
 
 # Example processing functions
 def cpu_intensive_task(data: Any) -> str:
-    """Example CPU-intensive processing function."""
+    """
+        Example CPU-intensive processing function."""
     import math
     result = 0
     for i in range(1000000):
@@ -872,6 +989,7 @@ async def main():
     """Example usage of the fog computing orchestrator."""
     try:
         # Create configuration
+
         config = FogComputingConfig(
             orchestrator_name="iacherie-fog-demo",
             load_balancing_strategy=LoadBalancingStrategy.RESOURCE_AWARE,
@@ -879,10 +997,13 @@ async def main():
         )
         
         # Create and start orchestrator
+
         orchestrator = await create_fog_computing_orchestrator(config)
+
         
         try:
             # Register fog nodes
+
             edge_node_id = await orchestrator.register_fog_node(
                 node_name="edge-server-1",
                 tier=ProcessingTier.FOG_TIER,
@@ -894,6 +1015,8 @@ async def main():
                 },
                 network_latency_ms=5.0
             )
+
+
             
             cloud_node_id = await orchestrator.register_fog_node(
                 node_name="cloud-instance-1",
@@ -908,6 +1031,7 @@ async def main():
             )
             
             # Submit tasks
+
             task1_id = await orchestrator.submit_task(
                 task_name="cpu-intensive-analysis",
                 workload_type=WorkloadType.BATCH_PROCESSING,
@@ -916,6 +1040,8 @@ async def main():
                 priority=TaskPriority.HIGH,
                 estimated_duration_seconds=30.0
             )
+
+
             
             task2_id = await orchestrator.submit_task(
                 task_name="async-data-processing",
@@ -930,21 +1056,33 @@ async def main():
             await asyncio.sleep(5)
             
             # Check task status
+
             status1 = await orchestrator.get_task_status(task1_id)
+
+
             status2 = await orchestrator.get_task_status(task2_id)
+
             
             print("Task 1 Status:")
+
             print(json.dumps(status1, indent=2, default=str))
+
             print("\nTask 2 Status:")
+
             print(json.dumps(status2, indent=2, default=str))
             
             # Get orchestrator status
+
             orchestrator_status = orchestrator.get_orchestrator_status()
+
             print("\nFog Computing Orchestrator Status:")
+
             print(json.dumps(orchestrator_status, indent=2, default=str))
+
             
         finally:
             await orchestrator.stop()
+
             
     except Exception as e:
         logger.error(f"Example failed: {e}")

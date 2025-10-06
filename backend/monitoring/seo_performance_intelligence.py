@@ -27,7 +27,8 @@ logger = std_logging.getLogger(__name__)
 
 
 class SEOOptimizationType(Enum):
-    """Types of SEO optimization"""
+    """
+        Types of SEO optimization"""
     KEYWORD_OPTIMIZATION = "keyword_optimization"
     CONTENT_OPTIMIZATION = "content_optimization"
     TECHNICAL_SEO = "technical_seo"
@@ -267,9 +268,11 @@ class SEOPerformanceIntelligence:
         """
         try:
             # Collect SEO data
+
             raw_data = await self._collect_seo_data(content_id, content_type, timeframe)
             
             # Calculate SEO performance metrics
+
             metrics = await self._calculate_seo_metrics(
                 content_id, content_type, optimization_type, raw_data
             )
@@ -292,10 +295,12 @@ class SEOPerformanceIntelligence:
                 self.seo_metrics[content_id] = self.seo_metrics[content_id][-40:]
             
             logger.info(f"SEO performance analysis completed for {content_id}")
+
             return metrics
             
         except Exception as e:
             logger.error(f"Error analyzing SEO performance for {content_id}: {e}")
+
             return SEOPerformanceMetrics(
                 content_id=content_id,
                 content_type=content_type,
@@ -313,20 +318,24 @@ class SEOPerformanceIntelligence:
         """
         try:
             # Calculate keyword analytics
+
             analytics = await self._calculate_keyword_analytics(keyword, content_id, tracking_data)
             
             # Update trend analysis
             await self._update_keyword_trends(analytics)
             
             # Store analytics
+
             keyword_key = f"{keyword}_{content_id}"
             self.keyword_analytics[keyword_key] = analytics
             
             logger.info(f"Keyword performance tracking completed for '{keyword}' on {content_id}")
+
             return analytics
             
         except Exception as e:
             logger.error(f"Error tracking keyword performance for '{keyword}': {e}")
+
             return KeywordPerformanceAnalytics(keyword=keyword, content_id=content_id)
     
     async def get_seo_dashboard(
@@ -339,7 +348,9 @@ class SEOPerformanceIntelligence:
         """
         try:
             # Filter metrics by creator and timeframe
+
             cutoff_time = datetime.now() - timeframe
+
             relevant_metrics = []
             
             for content_id, metrics_list in self.seo_metrics.items():
@@ -347,11 +358,13 @@ class SEOPerformanceIntelligence:
                     if (metric.timestamp >= cutoff_time and 
                         (creator_id is None or metric.creator_id == creator_id)):
                         relevant_metrics.append(metric)
+
             
             if not relevant_metrics:
                 return {"error": "No SEO data available for the specified criteria"}
             
             # Calculate dashboard data
+
             dashboard_data = {
                 "timeframe": str(timeframe),
                 "creator_id": creator_id,
@@ -396,6 +409,7 @@ class SEOPerformanceIntelligence:
             
         except Exception as e:
             logger.error(f"Error generating SEO dashboard: {e}")
+
             return {"error": str(e)}
     
     async def optimize_seo_strategy(
@@ -408,25 +422,31 @@ class SEOPerformanceIntelligence:
         """
         try:
             # Get current SEO performance
+
             current_metrics = await self._get_current_seo_metrics(content_id)
+
             
             if not current_metrics:
                 return {"error": "No SEO performance data available for optimization"}
             
             # Analyze optimization opportunities
+
             opportunities = await self._identify_seo_opportunities(
                 current_metrics, optimization_goals
             )
             
             # Generate optimization strategy
+
             strategy = await self._generate_seo_optimization_strategy(
                 content_id, current_metrics, opportunities, optimization_goals
             )
             
             # Calculate expected impact
+
             expected_impact = await self._calculate_seo_optimization_impact(
                 current_metrics, strategy
             )
+
             
             return {
                 "content_id": content_id,
@@ -446,6 +466,7 @@ class SEOPerformanceIntelligence:
             
         except Exception as e:
             logger.error(f"Error optimizing SEO strategy for {content_id}: {e}")
+
             return {"error": str(e), "success": False}
     
     # Helper methods for data collection and analysis
@@ -458,7 +479,9 @@ class SEOPerformanceIntelligence:
     ) -> Dict[str, Any]:
         """Collect SEO performance data"""
         # Simulate SEO data collection - in production this would integrate with SEO tools
+
         content_hash = hash(content_id)
+
         
         return {
             "average_position": 15.5 + (content_hash % 20),
@@ -497,67 +520,106 @@ class SEOPerformanceIntelligence:
         """Calculate comprehensive SEO performance metrics"""
         
         # Basic ranking metrics
+
         average_position = raw_data.get("average_position", 50.0)
+
         best_position = raw_data.get("best_position", 50)
+
         worst_position = max(best_position + 20, 100)
         
         # Traffic metrics
+
         organic_traffic = raw_data.get("organic_traffic", 0)
+
         organic_sessions = raw_data.get("organic_sessions", 0)
+
         organic_users = raw_data.get("organic_users", 0)
+
         click_through_rate = raw_data.get("click_through_rate", 0.0)
         
         # Keyword metrics
+
         target_keywords = raw_data.get("target_keywords", [])
+
         ranking_keywords = raw_data.get("ranking_keywords", 0)
+
         top_10_keywords = raw_data.get("top_10_keywords", 0)
+
         top_3_keywords = raw_data.get("top_3_keywords", 0)
         
         # Calculate keyword difficulty score
+
         keyword_difficulty_score = min(100.0, (len(target_keywords) * 10) + (ranking_keywords * 2))
         
         # Content quality scores (simulated based on content type and optimization)
+
         content_weight = self.content_type_weights.get(content_type, 1.0)
+
         base_score = 70.0 * content_weight
+
         
         content_score = min(100.0, base_score + (ranking_keywords * 2))
+
         readability_score = min(100.0, base_score + 10)
+
         uniqueness_score = min(100.0, base_score + 5)
+
         relevance_score = min(100.0, base_score + (top_10_keywords * 3))
         
         # Technical SEO metrics
+
         page_speed_score = raw_data.get("page_speed_score", 80.0)
+
         mobile_friendliness = raw_data.get("mobile_friendliness", 85.0)
+
         core_web_vitals_score = raw_data.get("core_web_vitals", 75.0)
+
         accessibility_score = min(100.0, (page_speed_score + mobile_friendliness) / 2)
         
         # Engagement metrics
+
         bounce_rate = raw_data.get("bounce_rate", 0.35)
+
         time_on_page = raw_data.get("time_on_page", 120.0)
+
         pages_per_session = max(1.0, organic_sessions / max(organic_users, 1))
+
         conversion_rate = max(0.0, click_through_rate * 0.1)  # Simplified conversion rate
         
         # Backlink metrics
+
         total_backlinks = raw_data.get("total_backlinks", 0)
+
         referring_domains = raw_data.get("referring_domains", 0)
+
         domain_authority = min(100.0, 20 + (referring_domains * 0.8))
+
         link_quality_score = min(100.0, domain_authority * 0.9)
         
         # SERP features
+
         featured_snippets = raw_data.get("featured_snippets", 0)
+
         image_pack_appearances = raw_data.get("image_pack", 0)
+
         video_pack_appearances = raw_data.get("video_pack", 0)
+
         local_pack_appearances = raw_data.get("local_pack", 0)
         
         # Revenue attribution
+
         seo_attributed_revenue = Decimal(str(raw_data.get("seo_revenue", 0)))
+
         cost_per_acquisition = seo_attributed_revenue / max(organic_users, 1)
+
         return_on_ad_spend = float(seo_attributed_revenue) / max(float(cost_per_acquisition * organic_users), 1)
         
         # Performance by search engine
+
         performance_by_engine = raw_data.get("performance_by_engine", {})
         
         # Geographic performance (simulated)
+
         performance_by_region = {
             "US": {"position": average_position - 2, "traffic_share": 0.4},
             "EU": {"position": average_position + 1, "traffic_share": 0.35},
@@ -655,6 +717,7 @@ class SEOPerformanceIntelligence:
                 "Enhance content structure with proper headings",
                 "Include more authoritative sources and references"
             ])
+
             recommendations.high_impact_actions.append("Content quality improvement")
         
         # Keyword optimization
@@ -665,6 +728,7 @@ class SEOPerformanceIntelligence:
                 "Create content clusters around main topics",
                 "Improve keyword density and semantic relevance"
             ])
+
             recommendations.high_impact_actions.append("Keyword strategy optimization")
         
         # Technical SEO improvements
@@ -675,6 +739,7 @@ class SEOPerformanceIntelligence:
                 "Minimize CSS and JavaScript",
                 "Use Content Delivery Network (CDN)"
             ])
+
             recommendations.quick_wins.append("Page speed optimization")
         
         # Mobile optimization
@@ -685,6 +750,7 @@ class SEOPerformanceIntelligence:
                 "Reduce mobile page load times",
                 "Test and fix mobile usability issues"
             ])
+
             recommendations.high_impact_actions.append("Mobile optimization")
         
         # Link building opportunities
@@ -695,6 +761,7 @@ class SEOPerformanceIntelligence:
                 "Guest posting on authoritative sites",
                 "Build relationships with industry influencers"
             ])
+
             recommendations.long_term_strategies.append("Link building campaign")
         
         # SERP feature opportunities
@@ -705,12 +772,14 @@ class SEOPerformanceIntelligence:
                 "Optimize for voice search queries",
                 "Create comprehensive how-to guides"
             ])
+
             recommendations.quick_wins.append("Featured snippet optimization")
         
         # Calculate expected impact
         recommendations.estimated_traffic_increase = int(metrics.organic_traffic * 0.4)  # 40% increase
         recommendations.estimated_ranking_improvement = max(5, int(metrics.average_position * 0.3))
         recommendations.estimated_revenue_impact = metrics.seo_attributed_revenue * Decimal("0.5")
+
         
         self.optimization_recommendations[content_id] = recommendations
     
@@ -764,8 +833,10 @@ class SEOPerformanceIntelligence:
         """Calculate keyword performance insights"""
         if not self.keyword_analytics:
             return {}
+
         
         keywords_list = list(self.keyword_analytics.values())
+
         
         return {
             "total_tracked_keywords": len(keywords_list),
@@ -790,14 +861,20 @@ class SEOPerformanceIntelligence:
     async def _analyze_content_seo_performance(self, metrics: List[SEOPerformanceMetrics]) -> Dict[str, Dict]:
         """Analyze SEO performance by content type"""
         content_performance = defaultdict(list)
+
         
         for metric in metrics:
             content_performance[metric.content_type.value].append(metric)
+
+
         
         analysis = {}
         for content_type, type_metrics in content_performance.items():
             avg_position = statistics.mean([m.average_position for m in type_metrics])
+
+
             total_traffic = sum(m.organic_traffic for m in type_metrics)
+
             
             analysis[content_type] = {
                 "average_position": avg_position,
@@ -811,11 +888,15 @@ class SEOPerformanceIntelligence:
     async def _calculate_search_engine_performance(self, metrics: List[SEOPerformanceMetrics]) -> Dict[str, Dict]:
         """Calculate performance by search engine"""
         engine_performance = defaultdict(lambda: {"traffic": 0, "positions": []})
+
         
         for metric in metrics:
             for engine, data in metric.performance_by_engine.items():
                 engine_performance[engine]["traffic"] += metric.organic_traffic * data.get("traffic_share", 0)
+
                 engine_performance[engine]["positions"].append(data.get("position", 50))
+
+
         
         summary = {}
         for engine, data in engine_performance.items():
@@ -830,11 +911,15 @@ class SEOPerformanceIntelligence:
     async def _calculate_geographic_seo_performance(self, metrics: List[SEOPerformanceMetrics]) -> Dict[str, Dict]:
         """Calculate geographic SEO performance"""
         geographic_performance = defaultdict(lambda: {"traffic": 0, "positions": []})
+
         
         for metric in metrics:
             for region, data in metric.performance_by_region.items():
                 geographic_performance[region]["traffic"] += metric.organic_traffic * data.get("traffic_share", 0)
+
                 geographic_performance[region]["positions"].append(data.get("position", 50))
+
+
         
         summary = {}
         for region, data in geographic_performance.items():
@@ -849,15 +934,23 @@ class SEOPerformanceIntelligence:
     async def _generate_seo_trends(self, metrics: List[SEOPerformanceMetrics]) -> Dict[str, List]:
         """Generate SEO trend data for charts"""
         # Sort metrics by timestamp
+
         sorted_metrics = sorted(metrics, key=lambda m: m.timestamp)
         
         # Group by week for trend analysis
+
         weekly_data = defaultdict(list)
         for metric in sorted_metrics:
             # Get start of week
+
             week_start = metric.timestamp - timedelta(days=metric.timestamp.weekday())
+
+
             week_key = week_start.date()
+
             weekly_data[week_key].append(metric)
+
+
         
         trend_data = {
             "weeks": [],
@@ -869,10 +962,15 @@ class SEOPerformanceIntelligence:
         
         for week, week_metrics in sorted(weekly_data.items()):
             trend_data["weeks"].append(week.isoformat())
+
             trend_data["average_positions"].append(statistics.mean([m.average_position for m in week_metrics]))
+
             trend_data["organic_traffic"].append(sum(m.organic_traffic for m in week_metrics))
+
             trend_data["click_through_rates"].append(statistics.mean([m.click_through_rate for m in week_metrics]))
+
             trend_data["content_scores"].append(statistics.mean([m.content_score for m in week_metrics]))
+
         
         return trend_data
     
@@ -880,8 +978,10 @@ class SEOPerformanceIntelligence:
         """Get SEO optimization opportunities summary"""
         if not self.optimization_recommendations:
             return {}
+
         
         recommendations_list = list(self.optimization_recommendations.values())
+
         
         return {
             "total_optimization_opportunities": len(recommendations_list),
@@ -896,6 +996,7 @@ class SEOPerformanceIntelligence:
         alerts = []
         
         # Check for ranking drops
+
         poor_rankings = [m for m in metrics if m.average_position > 30]
         if poor_rankings:
             alerts.append({
@@ -906,6 +1007,7 @@ class SEOPerformanceIntelligence:
             })
         
         # Check for low organic traffic
+
         low_traffic = [m for m in metrics if m.organic_traffic < 100]
         if len(low_traffic) > len(metrics) * 0.3:  # More than 30% have low traffic
             alerts.append({
@@ -916,6 +1018,7 @@ class SEOPerformanceIntelligence:
             })
         
         # Check for technical issues
+
         slow_pages = [m for m in metrics if m.page_speed_score < 60]
         if slow_pages:
             alerts.append({
@@ -924,6 +1027,7 @@ class SEOPerformanceIntelligence:
                 "message": f"{len(slow_pages)} pages have slow loading speeds",
                 "recommendation": "Optimize page speed and Core Web Vitals"
             })
+
         
         return alerts
     
@@ -939,6 +1043,7 @@ class SEOPerformanceIntelligence:
                     "recommendation": action,
                     "estimated_traffic_impact": f"+{rec.estimated_traffic_increase:,} visits"
                 })
+
         
         return recommendations[:5]  # Return top 5 recommendations
     
@@ -954,23 +1059,31 @@ class SEOPerformanceIntelligence:
         metrics: SEOPerformanceMetrics,
         optimization_goals: Dict[str, Any]
     ) -> List[str]:
-        """Identify SEO optimization opportunities"""
+        """
+        Identify SEO optimization opportunities"""
         opportunities = []
+
         
         target_position = optimization_goals.get("target_position", 10)
         if metrics.average_position > target_position:
             opportunities.append("Improve search rankings")
+
+
         
         target_traffic = optimization_goals.get("target_organic_traffic", 5000)
         if metrics.organic_traffic < target_traffic:
             opportunities.append("Increase organic traffic")
+
+
         
         target_ctr = optimization_goals.get("target_click_through_rate", 0.05)
         if metrics.click_through_rate < target_ctr:
             opportunities.append("Optimize click-through rates")
+
         
         if metrics.page_speed_score < 85:
             opportunities.append("Improve page speed and technical SEO")
+
         
         return opportunities
     
@@ -1014,7 +1127,9 @@ class SEOPerformanceIntelligence:
         """Calculate keyword performance analytics"""
         
         current_position = tracking_data.get("position", 50)
+
         previous_position = tracking_data.get("previous_position", current_position)
+
         position_change = previous_position - current_position  # Positive is improvement
         
         return KeywordPerformanceAnalytics(
@@ -1066,7 +1181,8 @@ async def track_keyword_performance(
     content_id: str,
     tracking_data: Dict[str, Any]
 ) -> KeywordPerformanceAnalytics:
-    """Track keyword performance"""
+    """
+        Track keyword performance"""
     return await seo_performance_intelligence.track_keyword_performance(keyword, content_id, tracking_data)
 
 
@@ -1074,7 +1190,8 @@ async def get_seo_dashboard(
     creator_id: Optional[str] = None,
     timeframe: timedelta = timedelta(days=30)
 ) -> Dict[str, Any]:
-    """Get SEO performance dashboard"""
+    """
+        Get SEO performance dashboard"""
     return await seo_performance_intelligence.get_seo_dashboard(creator_id, timeframe)
 
 
@@ -1082,16 +1199,19 @@ async def optimize_seo_strategy(
     content_id: str,
     optimization_goals: Dict[str, Any]
 ) -> Dict[str, Any]:
-    """Optimize SEO strategy for content"""
+    """
+        Optimize SEO strategy for content"""
     return await seo_performance_intelligence.optimize_seo_strategy(content_id, optimization_goals)
 
 
 def get_seo_metrics(content_id: str) -> Optional[List[SEOPerformanceMetrics]]:
-    """Get SEO metrics history for content"""
+    """
+        Get SEO metrics history for content"""
     return seo_performance_intelligence.seo_metrics.get(content_id)
 
 
 def get_keyword_analytics(keyword: str, content_id: str) -> Optional[KeywordPerformanceAnalytics]:
-    """Get keyword analytics"""
+    """
+        Get keyword analytics"""
     keyword_key = f"{keyword}_{content_id}"
     return seo_performance_intelligence.keyword_analytics.get(keyword_key)

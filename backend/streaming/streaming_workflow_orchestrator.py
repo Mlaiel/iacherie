@@ -29,14 +29,7 @@ from enum import Enum
 import json
 import uuid
 # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+from protection.utils.redis_compat import aioredis, REDIS_AVAILABLE
 from sqlalchemy.ext.asyncio import AsyncSession
 from collections import defaultdict, deque
 import hashlib
@@ -44,7 +37,8 @@ import hashlib
 logger = logging.getLogger(__name__)
 
 class WorkflowType(Enum):
-    """Workflow type classification"""
+    """
+        Workflow type classification"""
     CONTENT_PROCESSING = "content_processing"
     LIVE_STREAMING = "live_streaming"
     CONTENT_APPROVAL = "content_approval"
@@ -89,7 +83,8 @@ class Priority(Enum):
     CRITICAL = 5
 
 class TriggerType(Enum):
-    """Workflow trigger types"""
+    """
+        Workflow trigger types"""
     MANUAL = "manual"
     SCHEDULED = "scheduled"
     EVENT_DRIVEN = "event_driven"
@@ -133,7 +128,8 @@ class WorkflowTask:
 
 @dataclass
 class WorkflowDefinition:
-    """Complete workflow definition"""
+    """
+        Complete workflow definition"""
     workflow_id: str
     workflow_name: str
     workflow_type: WorkflowType
@@ -158,7 +154,8 @@ class WorkflowDefinition:
 
 @dataclass
 class WorkflowInstance:
-    """Workflow execution instance"""
+    """
+        Workflow execution instance"""
     instance_id: str
     workflow_id: str
     workflow_definition: WorkflowDefinition
@@ -183,7 +180,8 @@ class WorkflowInstance:
 
 @dataclass
 class ApprovalRequest:
-    """Workflow approval request"""
+    """
+        Workflow approval request"""
     request_id: str
     workflow_instance_id: str
     approval_type: str
@@ -204,7 +202,8 @@ class ApprovalRequest:
 
 @dataclass
 class TaskExecution:
-    """Task execution context"""
+    """
+        Task execution context"""
     execution_id: str
     task_id: str
     workflow_instance_id: str
@@ -224,36 +223,46 @@ class TaskExecution:
     execution_log: List[str]
 
 class TaskExecutor:
-    """Task execution engine"""
+    """
+        Task execution engine"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.task_registry = {}
         self.worker_pools = {}
         
     async def initialize_task_executor(self) -> Dict[str, Any]:
-        """Initialize task execution engine"""
+        """
+        Initialize task execution engine"""
         try:
             # Setup task registry
+
             task_registry = await self._setup_task_registry()
             
             # Initialize worker pools
+
             worker_pools = await self._initialize_worker_pools()
             
             # Configure resource management
+
             resource_management = await self._configure_resource_management()
             
             # Setup task scheduling
+
             task_scheduling = await self._setup_task_scheduling()
             
             # Configure error handling
+
             error_handling = await self._configure_error_handling()
             
             # Setup performance monitoring
+
             performance_monitoring = await self._setup_performance_monitoring()
+
             
             logger.info(f"⚙️ Task Executor initialized with {len(task_registry)} task types")
+
             
             return {
                 "task_registry": len(task_registry),
@@ -273,6 +282,7 @@ class TaskExecutor:
             
         except Exception as e:
             logger.error(f"Failed to initialize task executor: {e}")
+
             raise
 
     async def execute_task(
@@ -284,9 +294,12 @@ class TaskExecutor:
         """Execute individual workflow task"""
         try:
             execution_id = str(uuid.uuid4())
+
+
             start_time = datetime.utcnow()
             
             # Create task execution context
+
             task_execution = TaskExecution(
                 execution_id=execution_id,
                 task_id=task.task_id,
@@ -308,9 +321,11 @@ class TaskExecutor:
             )
             
             # Validate task prerequisites
+
             validation_result = await self._validate_task_prerequisites(
                 task, workflow_context, execution_context
             )
+
             
             if not validation_result["valid"]:
                 task_execution.status = TaskStatus.FAILED
@@ -318,26 +333,33 @@ class TaskExecutor:
                 return {"success": False, "task_execution": task_execution}
             
             # Allocate resources
+
             resource_allocation = await self._allocate_task_resources(
                 task, execution_context
             )
             
             # Execute task function
+
             execution_result = await self._execute_task_function(
                 task, workflow_context, execution_context, resource_allocation
             )
             
             # Validate task results
+
             result_validation = await self._validate_task_results(
                 task, execution_result, workflow_context
             )
             
             # Update task execution
             task_execution.end_time = datetime.utcnow()
+
             task_execution.duration = task_execution.end_time - start_time
             task_execution.output_data = execution_result.get("output_data", {})
+
             task_execution.resource_usage = execution_result.get("resource_usage", {})
+
             task_execution.performance_metrics = execution_result.get("performance_metrics", {})
+
             
             if result_validation["valid"]:
                 task_execution.status = TaskStatus.COMPLETED
@@ -346,10 +368,13 @@ class TaskExecutor:
                 task_execution.error_message = result_validation["error"]
             
             # Release resources
+
             resource_release = await self._release_task_resources(resource_allocation)
             
             # Store execution results
+
             storage_result = await self._store_task_execution_results(task_execution)
+
             
             return {
                 "success": task_execution.status == TaskStatus.COMPLETED,
@@ -362,40 +387,51 @@ class TaskExecutor:
             
         except Exception as e:
             logger.error(f"Failed to execute task {task.task_id}: {e}")
+
             raise
 
 class WorkflowEngine:
     """Core workflow orchestration engine"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.active_workflows = {}
         self.workflow_queue = deque()
         self.task_executor = TaskExecutor(redis_client, db_session)
+
         
     async def initialize_workflow_engine(self) -> Dict[str, Any]:
-        """Initialize workflow orchestration engine"""
+        """
+        Initialize workflow orchestration engine"""
         try:
             # Initialize task executor
+
             executor_status = await self.task_executor.initialize_task_executor()
             
             # Setup workflow registry
+
             workflow_registry = await self._setup_workflow_registry()
             
             # Configure dependency management
+
             dependency_management = await self._configure_dependency_management()
             
             # Setup workflow scheduling
+
             workflow_scheduling = await self._setup_workflow_scheduling()
             
             # Configure state management
+
             state_management = await self._configure_state_management()
             
             # Setup workflow monitoring
+
             workflow_monitoring = await self._setup_workflow_monitoring()
+
             
             logger.info(f"🔄 Workflow Engine initialized with {len(workflow_registry)} workflows")
+
             
             return {
                 "executor_status": executor_status,
@@ -415,6 +451,7 @@ class WorkflowEngine:
             
         except Exception as e:
             logger.error(f"Failed to initialize workflow engine: {e}")
+
             raise
 
     async def execute_workflow(
@@ -426,9 +463,12 @@ class WorkflowEngine:
         """Execute complete workflow"""
         try:
             instance_id = str(uuid.uuid4())
+
+
             start_time = datetime.utcnow()
             
             # Create workflow instance
+
             workflow_instance = WorkflowInstance(
                 instance_id=instance_id,
                 workflow_id=workflow_definition.workflow_id,
@@ -458,6 +498,7 @@ class WorkflowEngine:
                 approval_result = await self._handle_workflow_approval(
                     workflow_instance, execution_context
                 )
+
                 
                 if not approval_result["approved"]:
                     workflow_instance.status = WorkflowStatus.PAUSED
@@ -469,22 +510,26 @@ class WorkflowEngine:
                     }
             
             # Build task execution graph
+
             execution_graph = await self._build_task_execution_graph(
                 workflow_definition.tasks
             )
             
             # Execute workflow tasks
+
             execution_results = await self._execute_workflow_tasks(
                 workflow_instance, execution_graph
             )
             
             # Calculate workflow results
+
             workflow_results = await self._calculate_workflow_results(
                 workflow_instance, execution_results
             )
             
             # Update workflow instance
             workflow_instance.end_time = datetime.utcnow()
+
             workflow_instance.total_duration = workflow_instance.end_time - start_time
             workflow_instance.output_data = workflow_results.get("output_data", {})
             
@@ -497,12 +542,15 @@ class WorkflowEngine:
                 workflow_instance.status = WorkflowStatus.PAUSED
             
             # Store workflow results
+
             storage_result = await self._store_workflow_results(workflow_instance)
             
             # Send notifications
+
             notification_result = await self._send_workflow_notifications(
                 workflow_instance, workflow_definition.notification_settings
             )
+
             
             return {
                 "success": workflow_instance.status == WorkflowStatus.COMPLETED,
@@ -515,16 +563,18 @@ class WorkflowEngine:
             
         except Exception as e:
             logger.error(f"Failed to execute workflow: {e}")
+
             raise
 
 class ApprovalSystem:
     """Workflow approval and review system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.approval_workflows = {}
         self.approval_queue = deque()
+
         
     async def create_approval_request(
         self,
@@ -533,11 +583,13 @@ class ApprovalSystem:
         approval_data: Dict[str, Any],
         approvers: List[str]
     ) -> Dict[str, Any]:
-        """Create workflow approval request"""
+        """
+        Create workflow approval request"""
         try:
             request_id = str(uuid.uuid4())
             
             # Create approval request
+
             approval_request = ApprovalRequest(
                 request_id=request_id,
                 workflow_instance_id=workflow_instance.instance_id,
@@ -559,15 +611,19 @@ class ApprovalSystem:
             )
             
             # Store approval request
+
             storage_result = await self._store_approval_request(approval_request)
             
             # Send approval notifications
+
             notification_result = await self._send_approval_notifications(
                 approval_request, approvers
             )
             
             # Setup approval tracking
+
             tracking_setup = await self._setup_approval_tracking(approval_request)
+
             
             return {
                 "success": True,
@@ -579,12 +635,13 @@ class ApprovalSystem:
             
         except Exception as e:
             logger.error(f"Failed to create approval request: {e}")
+
             raise
 
 class ContentProcessingPipeline:
     """Content processing workflow pipeline"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.processing_pipelines = {}
@@ -594,34 +651,41 @@ class ContentProcessingPipeline:
         content_data: Dict[str, Any],
         processing_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute content processing workflow"""
+        """
+        Execute content processing workflow"""
         try:
             pipeline_id = str(uuid.uuid4())
             
             # Create content processing workflow
+
             processing_workflow = await self._create_content_processing_workflow(
                 content_data, processing_config
             )
             
             # Execute content analysis
+
             analysis_result = await self._execute_content_analysis(
                 content_data, processing_config
             )
             
             # Perform content enhancement
+
             enhancement_result = await self._perform_content_enhancement(
                 content_data, analysis_result, processing_config
             )
             
             # Execute quality validation
+
             quality_validation = await self._execute_quality_validation(
                 enhancement_result, processing_config
             )
             
             # Prepare for distribution
+
             distribution_prep = await self._prepare_content_for_distribution(
                 enhancement_result, quality_validation, processing_config
             )
+
             
             return {
                 "success": True,
@@ -636,12 +700,13 @@ class ContentProcessingPipeline:
             
         except Exception as e:
             logger.error(f"Failed to process content workflow: {e}")
+
             raise
 
 class StreamingWorkflowOrchestrator:
     """Unified streaming workflow orchestrator - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         
@@ -660,24 +725,32 @@ class StreamingWorkflowOrchestrator:
         """Initialize workflow orchestration system"""
         try:
             # Initialize workflow engine
+
             engine_status = await self.workflow_engine.initialize_workflow_engine()
             
             # Setup workflow templates
+
             workflow_templates = await self._setup_workflow_templates()
             
             # Configure orchestration rules
+
             orchestration_rules = await self._configure_orchestration_rules()
             
             # Setup business process automation
+
             process_automation = await self._setup_business_process_automation()
             
             # Configure workflow analytics
+
             workflow_analytics = await self._configure_workflow_analytics()
             
             # Setup integration points
+
             integration_points = await self._setup_integration_points()
+
             
             logger.info("🔄 Streaming Workflow Orchestrator fully initialized")
+
             
             return {
                 "orchestrator_status": "initialized",
@@ -699,6 +772,7 @@ class StreamingWorkflowOrchestrator:
             
         except Exception as e:
             logger.error(f"Failed to initialize workflow orchestrator: {e}")
+
             raise
     
     async def orchestrate_streaming_workflow(
@@ -710,11 +784,13 @@ class StreamingWorkflowOrchestrator:
             orchestration_id = str(uuid.uuid4())
             
             # Create workflow definition
+
             workflow_definition = await self._create_workflow_definition(
                 orchestration_request
             )
             
             # Execute workflow
+
             workflow_execution = await self.workflow_engine.execute_workflow(
                 workflow_definition,
                 orchestration_request.get("input_data", {}),
@@ -722,6 +798,7 @@ class StreamingWorkflowOrchestrator:
             )
             
             # Handle approvals if needed
+
             approval_handling = None
             if workflow_definition.approval_required:
                 approval_handling = await self.approval_system.create_approval_request(
@@ -732,6 +809,7 @@ class StreamingWorkflowOrchestrator:
                 )
             
             # Process content if applicable
+
             content_processing = None
             if orchestration_request.get("process_content", False):
                 content_processing = await self.content_pipeline.process_content_workflow(
@@ -740,9 +818,11 @@ class StreamingWorkflowOrchestrator:
                 )
             
             # Monitor workflow progress
+
             progress_monitoring = await self._monitor_workflow_progress(
                 workflow_execution["workflow_instance"]
             )
+
             
             return {
                 "success": True,
@@ -757,6 +837,7 @@ class StreamingWorkflowOrchestrator:
             
         except Exception as e:
             logger.error(f"Failed to orchestrate streaming workflow: {e}")
+
             raise
     
     # Additional helper methods implementation...
@@ -771,6 +852,7 @@ class StreamingWorkflowOrchestrator:
             }
         except Exception as e:
             logger.error(f"Failed to setup workflow templates: {e}")
+
             return {}
 
     async def _configure_orchestration_rules(self) -> Dict[str, Any]:
@@ -784,6 +866,7 @@ class StreamingWorkflowOrchestrator:
             }
         except Exception as e:
             logger.error(f"Failed to configure orchestration rules: {e}")
+
             return {}
 
 # Export main classes

@@ -25,10 +25,10 @@ try:
     from ...ai_engine.content_processor import content_processor
     from ...ai_engine.fingerprinting import fingerprint_engine
 except ImportError:
-    # Mock dependencies for standalone operation
     class MockManager:
         def __getattr__(self, name):
             return lambda *args, **kwargs: {"status": "mocked"}
+
     
     database_manager = MockManager()
     security_manager = MockManager()
@@ -56,7 +56,8 @@ class ApiKeyResponse(BaseModel):
     expires_at: Optional[datetime]
 
 class SandboxTestRequest(BaseModel):
-    """Request model for sandbox testing"""
+    """
+        Request model for sandbox testing"""
     endpoint: str = Field(..., description="Endpoint to test")
     method: str = Field(default="GET", pattern="^(GET|POST|PUT|DELETE)$")
     payload: Optional[Dict[str, Any]] = Field(None, description="Test payload")
@@ -73,7 +74,8 @@ class SandboxTestResponse(BaseModel):
     timestamp: datetime
 
 class PublicContentInfo(BaseModel):
-    """Public content information model"""
+    """
+        Public content information model"""
     content_id: str
     title: str
     content_type: str
@@ -82,7 +84,8 @@ class PublicContentInfo(BaseModel):
     fingerprint_available: bool
 
 class SDKInfoResponse(BaseModel):
-    """SDK information response"""
+    """
+        SDK information response"""
     sdk_version: str
     supported_languages: List[str]
     endpoints: List[str]
@@ -91,7 +94,8 @@ class SDKInfoResponse(BaseModel):
     download_urls: Dict[str, str]
 
 class APIHealthResponse(BaseModel):
-    """API health check response"""
+    """
+        API health check response"""
     status: str
     version: str
     timestamp: datetime
@@ -121,13 +125,17 @@ async def get_api_key_user(credentials: HTTPAuthorizationCredentials = Depends(s
                 "SELECT user_id, permissions, rate_limit FROM api_keys WHERE key_hash = %s AND is_active = true",
                 (security_manager.hash_api_key(credentials.credentials),)
             )
+
+
             api_key_data = result.fetchone()
+
             
             if not api_key_data:
                 raise HTTPException(
                     status_code=status.HTTP_401_UNAUTHORIZED,
                     detail="Invalid API key"
                 )
+
             
             return {
                 "user_id": api_key_data[0],
@@ -150,6 +158,7 @@ async def get_api_key_user(credentials: HTTPAuthorizationCredentials = Depends(s
 async def get_api_health():
     """Get API health status"""
     start_time = datetime.utcnow()
+
     
     services_status = {
         "database": "healthy",
@@ -295,22 +304,25 @@ async def test_endpoint(
     try:
         # Simulate endpoint testing
         await asyncio.sleep(0.1)  # Simulate processing time
-        
-        # Mock responses based on endpoint
         if test_request.endpoint == "/public/health":
             mock_response = {"status": "healthy", "timestamp": datetime.utcnow().isoformat()}
+
             status_code = 200
         elif test_request.endpoint == "/public/info":
             mock_response = {"sdk_version": "1.0.0", "supported_languages": ["Python"]}
+
             status_code = 200
         else:
             mock_response = {"message": "Sandbox test completed", "endpoint": test_request.endpoint}
+
             status_code = 200
+
         
         response_time = (datetime.utcnow() - start_time).total_seconds() * 1000
         
         # Log sandbox test
         logger.info(f"Sandbox test executed: {test_id} by user {api_user['user_id']}")
+
         
         return SandboxTestResponse(
             test_id=test_id,
@@ -321,6 +333,7 @@ async def test_endpoint(
             response_data=mock_response,
             timestamp=datetime.utcnow()
         )
+
         
     except Exception as e:
         logger.error(f"Sandbox test failed: {str(e)}")
@@ -348,9 +361,11 @@ async def analyze_content(
             )
         
         # Read file content
+
         content = await file.read()
         
         # Basic analysis (simplified for public API)
+
         analysis_result = {
             "content_id": str(uuid.uuid4()),
             "filename": file.filename,
@@ -368,6 +383,7 @@ async def analyze_content(
         }
         
         logger.info(f"Content analyzed via public API: {analysis_result['content_id']} by user {api_user['user_id']}")
+
         
         return analysis_result
         
@@ -396,6 +412,8 @@ async def generate_content_fingerprint(
         
         # Generate simplified fingerprint for public API
         fingerprint_id = str(uuid.uuid4())
+
+
         
         fingerprint_result = {
             "fingerprint_id": fingerprint_id,
@@ -412,6 +430,7 @@ async def generate_content_fingerprint(
         }
         
         logger.info(f"Fingerprint generated via public API: {fingerprint_id} by user {api_user['user_id']}")
+
         
         return fingerprint_result
         
@@ -435,6 +454,7 @@ async def download_python_sdk():
         # Read SDK file
         with open("/home/runner/work/iacherie/iacherie/sdk/python/iacherie_sdk.py", "r") as f:
             sdk_content = f.read()
+
         
         return JSONResponse(
             content={
@@ -445,6 +465,7 @@ async def download_python_sdk():
                 "documentation": "/public/docs"
             }
         )
+
         
     except Exception as e:
         logger.error(f"SDK download failed: {str(e)}")
@@ -550,6 +571,7 @@ async def rate_limit_middleware(request, call_next):
     
     # Implement basic rate limiting logic here
     # This is a simplified version - in production, use Redis or similar
+
     
     response = await call_next(request)
     
@@ -575,7 +597,8 @@ class SEOMetadata(BaseModel):
     schema_markup: Optional[Dict[str, Any]] = None
 
 class CreatorProfile(BaseModel):
-    """Public creator profile"""
+    """
+        Public creator profile"""
     creator_id: str
     username: str
     display_name: str
@@ -602,7 +625,6 @@ async def discover_creators(
 ):
     """Discover creators with SEO-optimized profiles"""
     try:
-        # Mock creator discovery - would query actual database
         creators = []
         for i in range(min(limit, 20)):
             creator = CreatorProfile(
@@ -623,7 +645,9 @@ async def discover_creators(
                     canonical_url=f"https://iacherie.com/creators/creator{i + offset}"
                 )
             )
+
             creators.append(creator)
+
         
         return creators
         
@@ -638,7 +662,6 @@ async def discover_creators(
 async def get_creator_profile(creator_id: str):
     """Get SEO-optimized creator profile"""
     try:
-        # Mock profile data - would fetch from database
         profile = CreatorProfile(
             creator_id=creator_id,
             username=creator_id,
@@ -676,6 +699,7 @@ async def get_creator_profile(creator_id: str):
                 }
             )
         )
+
         
         return profile
         
@@ -690,7 +714,6 @@ async def get_creator_profile(creator_id: str):
 async def generate_sitemap():
     """Generate SEO sitemap"""
     try:
-        # Mock sitemap generation
         sitemap_content = """<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
@@ -716,8 +739,10 @@ async def generate_sitemap():
             datetime.utcnow().strftime("%Y-%m-%d"),
             datetime.utcnow().strftime("%Y-%m-%d")
         )
+
         
         return HTMLResponse(content=sitemap_content, media_type="application/xml")
+
         
     except Exception as e:
         logger.error(f"Sitemap generation failed: {str(e)}")
@@ -734,7 +759,6 @@ async def search_creators(
 ):
     """Search creators with SEO optimization"""
     try:
-        # Mock search results - would use Elasticsearch in production
         results = []
         for i in range(min(limit, 10)):
             results.append({
@@ -746,6 +770,7 @@ async def search_creators(
                 "follower_count": 5000 + (i * 1000),
                 "verified": i < 3
             })
+
         
         return {
             "query": q,
@@ -761,6 +786,72 @@ async def search_creators(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Search failed"
         )
+
+
+# ========================================
+# HELPER CLASSES FOR CREATOR DISCOVERY
+# ========================================
+
+class TrendingAnalyzer:
+    """Analyzes trending creators and content"""
+    
+    async def get_trending_creators(
+        self,
+        filters: Optional[Dict[str, Any]] = None,
+        limit: int = 20
+    ) -> List[Dict[str, Any]]:
+        """Get trending creators based on engagement metrics"""
+        # Mock implementation - in production would query analytics database
+        trending = [
+            {
+                "creator_id": f"creator_{i}",
+                "username": f"trending_creator_{i}",
+                "trending_score": 95 - i * 2,
+                "growth_rate": 150 + i * 10,
+                "engagement_rate": 8.5 - i * 0.2,
+                "category": ["music", "art", "video"][i % 3]
+            }
+            for i in range(min(limit, 20))
+        ]
+        return trending
+
+
+class SocialGraphAnalyzer:
+    """Analyzes social connections and collaboration networks"""
+    
+    async def analyze_connections(
+        self,
+        user_id: str,
+        depth: int = 2
+    ) -> Dict[str, Any]:
+        """Analyze social graph connections"""
+        return {
+            "user_id": user_id,
+            "direct_connections": 245,
+            "second_degree": 18750,
+            "collaboration_potential": 0.87,
+            "network_clusters": ["music_producers", "visual_artists", "content_creators"]
+        }
+    
+    async def find_collaboration_matches(
+        self,
+        user_context: Dict[str, Any],
+        filters: Optional[Dict[str, Any]] = None,
+        limit: int = 20
+    ) -> List[Dict[str, Any]]:
+        """Find potential collaboration matches"""
+        matches = [
+            {
+                "creator_id": f"match_{i}",
+                "username": f"collab_creator_{i}",
+                "match_score": 92 - i * 3,
+                "shared_interests": ["music", "production"],
+                "collaboration_history": i * 2,
+                "compatibility": 0.88 - i * 0.02
+            }
+            for i in range(min(limit, 15))
+        ]
+        return matches
 
 
 # ========================================
@@ -787,26 +878,33 @@ class CreatorDiscoveryEngine:
         try:
             if discovery_type == "trending":
                 creators = await self.trending_analyzer.get_trending_creators(filters, limit)
+
             elif discovery_type == "recommended":
                 creators = await self.recommendation_engine.get_personalized_recommendations(
                     user_context, filters, limit
                 )
+
             elif discovery_type == "similar":
                 creators = await self.recommendation_engine.find_similar_creators(
                     user_context.get("creator_id"), filters, limit
                 )
+
             elif discovery_type == "collaborative":
                 creators = await self.social_graph.find_collaboration_candidates(
                     user_context.get("creator_id"), filters, limit
                 )
+
             else:
                 creators = await self.search_index.search_creators(filters, limit)
             
             # Enhance results with additional metadata
+
             enhanced_creators = []
             for creator in creators:
                 enhanced_creator = await self._enhance_creator_profile(creator)
+
                 enhanced_creators.append(enhanced_creator)
+
             
             return {
                 "discovery_type": discovery_type,
@@ -834,9 +932,11 @@ class CreatorDiscoveryEngine:
             )
             
             # Apply AI ranking
+
             ranked_results = await self.recommendation_engine.rank_search_results(
                 search_results, query
             )
+
             
             return {
                 "query": query,
@@ -870,6 +970,7 @@ class CreatorDiscoveryEngine:
         
         # Add social proof
         enhanced["social_proof"] = await self._get_social_proof(creator["id"])
+
         
         return enhanced
     
@@ -886,10 +987,10 @@ class CreatorDiscoveryEngine:
     
     async def _calculate_collaboration_score(self, creator_id: str) -> float:
         """Calculate collaboration potential score"""
-        return 8.5  # Mock score
-    
+        return 8.5    
     async def _get_trending_indicators(self, creator_id: str) -> Dict[str, Any]:
-        """Get trending indicators for creator"""
+        """
+        Get trending indicators for creator"""
         return {
             "is_trending": True,
             "trend_velocity": "high",
@@ -920,8 +1021,8 @@ class CreatorSearchIndex:
         sort_by: str,
         limit: int
     ) -> List[Dict[str, Any]]:
-        """Perform advanced creator search"""
-        # Mock advanced search results
+        """
+        Perform advanced creator search"""
         return [
             {
                 "id": f"creator_{i}",
@@ -950,8 +1051,8 @@ class CreatorRecommendationEngine:
         filters: Dict[str, Any],
         limit: int
     ) -> List[Dict[str, Any]]:
-        """Get personalized creator recommendations"""
-        # Mock personalized recommendations
+        """
+        Get personalized creator recommendations"""
         return [
             {
                 "id": f"recommended_creator_{i}",
@@ -972,7 +1073,6 @@ class CreatorRecommendationEngine:
         limit: int
     ) -> List[Dict[str, Any]]:
         """Find creators similar to given creator"""
-        # Mock similar creators
         return [
             {
                 "id": f"similar_creator_{i}",
@@ -1022,26 +1122,33 @@ class SEOOptimizationEngine:
         creator_data: Dict[str, Any],
         target_keywords: List[str] = None
     ) -> Dict[str, Any]:
-        """Optimize creator page for SEO"""
+        """
+        Optimize creator page for SEO"""
         try:
             # Analyze current content
+
             content_analysis = await self.content_optimizer.analyze_content(creator_data)
             
             # Generate keyword recommendations
+
             keyword_recommendations = await self.keyword_analyzer.recommend_keywords(
                 creator_data, target_keywords
             )
             
             # Generate meta tags
+
             meta_tags = await self._generate_meta_tags(creator_data, keyword_recommendations)
             
             # Generate structured data
+
             structured_data = await self.structured_data.generate_person_schema(creator_data)
             
             # Generate social media optimization
+
             social_optimization = await self.social_media_optimizer.optimize_social_sharing(
                 creator_data
             )
+
             
             return {
                 "meta_tags": meta_tags,
@@ -1078,7 +1185,9 @@ class SEOOptimizationEngine:
     ) -> Dict[str, str]:
         """Generate optimized meta tags"""
         name = creator_data.get("name", "Creator")
+
         bio = creator_data.get("bio", "Content creator")
+
         
         return {
             "title": f"{name} - Content Creator | iacherie Platform",
@@ -1117,6 +1226,84 @@ class SEOOptimizationEngine:
         return min(score, 100.0)
 
 
+class ContentOptimizer:
+    """Content optimization for SEO and engagement"""
+    
+    async def analyze_content(
+        self,
+        creator_data: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Analyze content quality and optimization opportunities"""
+        content = {
+            "bio": creator_data.get("bio", ""),
+            "title": creator_data.get("name", ""),
+            "description": creator_data.get("description", "")
+        }
+        
+        # Calculate metrics
+        word_count = sum(len(str(v).split()) for v in content.values())
+        keyword_density = self._calculate_keyword_density(content)
+        readability_score = self._calculate_readability(content)
+        
+        return {
+            "word_count": word_count,
+            "keyword_density": keyword_density,
+            "readability_score": readability_score,
+            "optimization_score": min((word_count / 100 + readability_score) / 2, 100),
+            "recommendations": self._generate_recommendations(content, word_count)
+        }
+    
+    def _calculate_keyword_density(self, content: Dict[str, str]) -> float:
+        """Calculate keyword density"""
+        text = " ".join(content.values()).lower()
+        words = text.split()
+        if not words:
+            return 0.0
+        
+        # Count common creator keywords
+        keywords = ["creator", "artist", "music", "video", "content", "influencer"]
+        keyword_count = sum(1 for word in words if word in keywords)
+        return (keyword_count / len(words)) * 100
+    
+    def _calculate_readability(self, content: Dict[str, str]) -> float:
+        """Calculate readability score (simplified Flesch)"""
+        text = " ".join(content.values())
+        if not text:
+            return 0.0
+        
+        sentences = text.count('.') + text.count('!') + text.count('?') + 1
+        words = len(text.split())
+        if words == 0:
+            return 0.0
+        
+        avg_words_per_sentence = words / sentences
+        # Ideal: 15-20 words per sentence = 80 score
+        if 15 <= avg_words_per_sentence <= 20:
+            return 80.0
+        elif avg_words_per_sentence < 15:
+            return 60.0 + (avg_words_per_sentence / 15) * 20
+        else:
+            return max(40.0, 80.0 - (avg_words_per_sentence - 20) * 2)
+    
+    def _generate_recommendations(
+        self,
+        content: Dict[str, str],
+        word_count: int
+    ) -> List[str]:
+        """Generate content optimization recommendations"""
+        recommendations = []
+        
+        if word_count < 50:
+            recommendations.append("Add more descriptive content (target: 150-300 words)")
+        if not content.get("bio"):
+            recommendations.append("Add a compelling bio")
+        if not any(keyword in " ".join(content.values()).lower() 
+                  for keyword in ["create", "artist", "music", "video"]):
+            recommendations.append("Include relevant keywords about your craft")
+        
+        return recommendations if recommendations else ["Content is well optimized"]
+
+
 class KeywordAnalyzer:
     """Keyword analysis and recommendation engine"""
     
@@ -1125,12 +1312,16 @@ class KeywordAnalyzer:
         creator_data: Dict[str, Any],
         target_keywords: List[str] = None
     ) -> List[str]:
-        """Recommend SEO keywords for creator"""
+        """
+        Recommend SEO keywords for creator"""
         keywords = []
         
         # Extract from bio and content
+
         bio = creator_data.get("bio", "")
+
         name = creator_data.get("name", "")
+
         categories = creator_data.get("categories", [])
         
         # Add name-based keywords
@@ -1156,6 +1347,7 @@ class KeywordAnalyzer:
         # Add target keywords if provided
         if target_keywords:
             keywords.extend(target_keywords)
+
         
         return list(set(keywords))[:20]  # Return unique keywords, max 20
 
@@ -1164,7 +1356,8 @@ class StructuredDataGenerator:
     """Generate structured data for SEO"""
     
     async def generate_person_schema(self, creator_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate Person schema for creator"""
+        """
+        Generate Person schema for creator"""
         return {
             "@context": "https://schema.org",
             "@type": "Person",
@@ -1195,7 +1388,8 @@ class SocialMediaOptimizer:
     """Optimize content for social media sharing"""
     
     async def optimize_social_sharing(self, creator_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate social media optimization"""
+        """
+        Generate social media optimization"""
         return {
             "open_graph": {
                 "og:site_name": "iacherie",
@@ -1242,7 +1436,6 @@ async def discover_creators_endpoint(
 @public_router.get("/creators/{creator_id}/seo", response_model=Dict[str, Any])
 async def get_creator_seo_data(creator_id: str):
     """Get SEO optimization data for creator"""
-    # Mock creator data - would fetch from database
     creator_data = {
         "id": creator_id,
         "name": f"Creator {creator_id}",

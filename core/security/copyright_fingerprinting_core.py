@@ -1,4 +1,5 @@
-"""Copyright Fingerprinting Core - Enterprise Content Protection Engine
+"""
+Copyright Fingerprinting Core - Enterprise Content Protection Engine
 
 Central copyright fingerprinting core for advanced content identification, perceptual hashing,
 and copyright matching with enterprise-grade accuracy and performance standards.
@@ -36,7 +37,8 @@ logger = logging.getLogger(__name__)
 
 # Fingerprint Types
 class FingerprintType(Enum):
-    """Content fingerprint types"""
+    """
+Content fingerprint types"""
     AUDIO_CHROMAPRINT = "audio_chromaprint"
     AUDIO_MFCC = "audio_mfcc"
     IMAGE_PHASH = "image_phash"
@@ -48,7 +50,8 @@ class FingerprintType(Enum):
 
 # Match Types
 class MatchType(Enum):
-    """Content match types"""
+    """
+Content match types"""
     EXACT = "exact"           # 100% identical
     NEAR_EXACT = "near_exact" # >98% similarity
     SIMILAR = "similar"       # 85-98% similarity
@@ -57,7 +60,8 @@ class MatchType(Enum):
 
 # Detection Sensitivity
 class DetectionSensitivity(Enum):
-    """Fingerprint detection sensitivity levels"""
+    """
+Fingerprint detection sensitivity levels"""
     VERY_HIGH = "very_high"   # 95%+ accuracy, may have false positives
     HIGH = "high"             # 90%+ accuracy, balanced
     STANDARD = "standard"     # 85%+ accuracy, fewer false positives
@@ -65,7 +69,8 @@ class DetectionSensitivity(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint structure"""
+    """
+Content fingerprint structure"""
     fingerprint_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str = ""
     content_type: str = ""  # audio, video, image, text
@@ -83,7 +88,8 @@ class ContentFingerprint:
 
 @dataclass
 class FingerprintMatch:
-    """Fingerprint match result"""
+    """
+Fingerprint match result"""
     match_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     source_fingerprint_id: str = ""
     target_fingerprint_id: str = ""
@@ -98,7 +104,8 @@ class FingerprintMatch:
 
 @dataclass
 class FingerprintingRequest:
-    """Fingerprinting request"""
+    """
+Fingerprinting request"""
     request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_data: Any = None
     content_type: str = ""
@@ -113,7 +120,8 @@ class FingerprintingRequest:
 
 @dataclass
 class MatchingRequest:
-    """Content matching request"""
+    """
+Content matching request"""
     source_fingerprint: ContentFingerprint
     request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     target_fingerprints: List[ContentFingerprint] = field(default_factory=list)
@@ -132,7 +140,8 @@ class CopyrightFingerprintingCore:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Copyright Fingerprinting Core"""
+        """
+Initialize Copyright Fingerprinting Core"""
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -282,7 +291,8 @@ class CopyrightFingerprintingCore:
                 del self.active_operations[request.request_id]
                 
     async def _generate_fingerprints(self, request: FingerprintingRequest) -> List[ContentFingerprint]:
-        """Generate fingerprints for content"""
+        """
+Generate fingerprints for content"""
         
         fingerprints = []
         
@@ -308,7 +318,8 @@ class CopyrightFingerprintingCore:
             raise
             
     async def _generate_audio_fingerprints(self, request: FingerprintingRequest) -> List[ContentFingerprint]:
-        """Generate audio fingerprints"""
+        """
+Generate audio fingerprints"""
         
         fingerprints = []
         
@@ -343,7 +354,8 @@ class CopyrightFingerprintingCore:
         self, audio_data: np.ndarray, sample_rate: int, 
         request: FingerprintingRequest, duration: float
     ) -> Optional[ContentFingerprint]:
-        """Generate chromaprint fingerprint"""
+        """
+Generate chromaprint fingerprint"""
         
         try:
             # Simplified chromaprint generation
@@ -375,7 +387,8 @@ class CopyrightFingerprintingCore:
         self, audio_data: np.ndarray, sample_rate: int,
         request: FingerprintingRequest, duration: float
     ) -> Optional[ContentFingerprint]:
-        """Generate MFCC fingerprint"""
+        """
+Generate MFCC fingerprint"""
         
         try:
             # Simplified MFCC generation
@@ -403,7 +416,8 @@ class CopyrightFingerprintingCore:
             return None
             
     async def _generate_image_fingerprints(self, request: FingerprintingRequest) -> List[ContentFingerprint]:
-        """Generate image fingerprints"""
+        """
+Generate image fingerprints"""
         
         fingerprints = []
         
@@ -441,7 +455,8 @@ class CopyrightFingerprintingCore:
         self, request: FingerprintingRequest,
         dimensions: Tuple[int, int], file_size: int
     ) -> Optional[ContentFingerprint]:
-        """Generate perceptual hash fingerprint"""
+        """
+Generate perceptual hash fingerprint"""
         
         try:
             # Simplified perceptual hash
@@ -474,7 +489,8 @@ class CopyrightFingerprintingCore:
         self, request: FingerprintingRequest,
         dimensions: Tuple[int, int], file_size: int
     ) -> Optional[ContentFingerprint]:
-        """Generate difference hash fingerprint"""
+        """
+Generate difference hash fingerprint"""
         
         try:
             # Simplified difference hash
@@ -507,7 +523,8 @@ class CopyrightFingerprintingCore:
         self, request: FingerprintingRequest,
         dimensions: Tuple[int, int], file_size: int
     ) -> Optional[ContentFingerprint]:
-        """Generate wavelet hash fingerprint"""
+        """
+Generate wavelet hash fingerprint"""
         
         try:
             # Simplified wavelet hash
@@ -537,7 +554,8 @@ class CopyrightFingerprintingCore:
             return None
             
     async def _generate_video_fingerprints(self, request: FingerprintingRequest) -> List[ContentFingerprint]:
-        """Generate video fingerprints"""
+        """
+Generate video fingerprints"""
         
         fingerprints = []
         
@@ -554,13 +572,12 @@ class CopyrightFingerprintingCore:
         return fingerprints
         
     async def _generate_video_frame_hash(self, request: FingerprintingRequest) -> Optional[ContentFingerprint]:
-        """Generate video frame hash fingerprint"""
+        """
+Generate video frame hash fingerprint"""
         
         try:
             # Simplified video fingerprinting
-            fingerprint_data = np.random.rand(1024)  # Placeholder
-            hash_value = hashlib.sha256(fingerprint_data.tobytes()).hexdigest()
-            
+            fingerprint_data = np.random.rand(1024)            
             return ContentFingerprint(
                 content_id=request.content_id,
                 content_type="video",
@@ -581,7 +598,8 @@ class CopyrightFingerprintingCore:
             return None
             
     async def _generate_text_fingerprints(self, request: FingerprintingRequest) -> List[ContentFingerprint]:
-        """Generate text fingerprints"""
+        """
+Generate text fingerprints"""
         
         fingerprints = []
         
@@ -609,7 +627,8 @@ class CopyrightFingerprintingCore:
         return fingerprints
         
     async def _generate_text_shingle(self, text: str, request: FingerprintingRequest) -> Optional[ContentFingerprint]:
-        """Generate text shingle fingerprint"""
+        """
+Generate text shingle fingerprint"""
         
         try:
             # Create shingles (n-grams)
@@ -653,7 +672,8 @@ class CopyrightFingerprintingCore:
             return None
             
     async def _generate_semantic_fingerprint(self, text: str, request: FingerprintingRequest) -> Optional[ContentFingerprint]:
-        """Generate semantic text fingerprint"""
+        """
+Generate semantic text fingerprint"""
         
         try:
             # Simplified semantic fingerprinting
@@ -755,7 +775,8 @@ class CopyrightFingerprintingCore:
         self, source_fp: ContentFingerprint, target_fp: ContentFingerprint,
         sensitivity: DetectionSensitivity
     ) -> FingerprintMatch:
-        """Compare two fingerprints"""
+        """
+Compare two fingerprints"""
         
         start_time = datetime.utcnow()
         
@@ -825,7 +846,8 @@ class CopyrightFingerprintingCore:
     def _update_fingerprinting_statistics(
         self, fingerprints: List[ContentFingerprint], processing_time: float, success: bool
     ):
-        """Update fingerprinting statistics"""
+        """
+Update fingerprinting statistics"""
         
         self.fingerprinting_stats["total_fingerprints"] += len(fingerprints)
         
@@ -850,7 +872,8 @@ class CopyrightFingerprintingCore:
             )
             
     def _update_matching_statistics(self, matches: List[FingerprintMatch], processing_time: float):
-        """Update matching statistics"""
+        """
+Update matching statistics"""
         
         self.fingerprinting_stats["total_matches"] += len(matches)
         
@@ -858,11 +881,13 @@ class CopyrightFingerprintingCore:
         self.fingerprinting_stats["positive_matches"] += positive_matches
         
     async def get_fingerprint(self, fingerprint_id: str) -> Optional[ContentFingerprint]:
-        """Get fingerprint by ID"""
+        """
+Get fingerprint by ID"""
         return self.fingerprint_database.get(fingerprint_id)
         
     async def delete_fingerprint(self, fingerprint_id: str) -> bool:
-        """Delete fingerprint"""
+        """
+Delete fingerprint"""
         
         if fingerprint_id in self.fingerprint_database:
             fingerprint = self.fingerprint_database[fingerprint_id]
@@ -879,7 +904,8 @@ class CopyrightFingerprintingCore:
         return False
         
     def get_fingerprinting_statistics(self) -> Dict[str, Any]:
-        """Get fingerprinting statistics"""
+        """
+Get fingerprinting statistics"""
         
         total_fps = max(self.fingerprinting_stats["total_fingerprints"], 1)
         success_rate = self.fingerprinting_stats["successful_fingerprints"] / total_fps * 100
@@ -899,7 +925,8 @@ class CopyrightFingerprintingCore:
         match_threshold: float = 0.85,
         sensitivity: DetectionSensitivity = DetectionSensitivity.STANDARD
     ) -> Dict[str, List[FingerprintMatch]]:
-        """Perform bulk matching for multiple fingerprints"""
+        """
+Perform bulk matching for multiple fingerprints"""
         
         results = {}
         

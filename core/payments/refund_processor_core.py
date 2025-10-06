@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class RefundProcessorCore:
-    """Advanced RefundProcessorCore System"""
+    """
+Advanced RefundProcessorCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class RefundProcessorCore:
 # Module exports
 __all__ = ["RefundProcessorCore"]
 
-logger.info("↩️ RefundProcessorCore module loaded")
+logger.info("↩️ RefundProcessorCore module initialized")

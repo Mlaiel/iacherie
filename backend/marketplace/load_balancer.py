@@ -35,7 +35,8 @@ import json
 logger = logging.getLogger(__name__)
 
 class LoadBalancingAlgorithm(Enum):
-    """Load balancing algorithm enumeration"""
+    """
+        Load balancing algorithm enumeration"""
     ROUND_ROBIN = "round_robin"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     LEAST_CONNECTIONS = "least_connections"
@@ -102,7 +103,8 @@ class CircuitBreaker:
 
 @dataclass
 class LoadBalancerStats:
-    """Load balancer statistics"""
+    """
+        Load balancer statistics"""
     total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
@@ -114,7 +116,8 @@ class LoadBalancerStats:
 
 @dataclass
 class TrafficRule:
-    """Traffic routing rule"""
+    """
+        Traffic routing rule"""
     rule_id: str
     name: str
     condition: str  # e.g., "path=/api/*", "geo=US", "user_type=premium"
@@ -160,8 +163,10 @@ class LoadBalancer:
         try:
             # Start health check monitoring
             self._health_check_task = asyncio.create_task(self._health_check_loop())
+
             
             logger.info("✅ Load balancer health checks started")
+
             
         except Exception as e:
             logger.error(f"Load balancer initialization error: {e}")
@@ -180,6 +185,7 @@ class LoadBalancer:
                 health_check_url=server_config.get("health_check_url", "/health"),
                 metadata=server_config.get("metadata", {})
             )
+
             
             self.servers[server.server_id] = server
             
@@ -189,12 +195,15 @@ class LoadBalancer:
                 failure_threshold=self.config.get('circuit_breaker_threshold', 5),
                 recovery_timeout_seconds=self.config.get('circuit_breaker_timeout', 60)
             )
+
             
             logger.info(f"Server added to load balancer: {server.server_id} ({server.host}:{server.port})")
+
             return server
             
         except Exception as e:
             logger.error(f"Add server error: {e}")
+
             raise
     
     async def remove_server(self, server_id: str) -> bool:
@@ -206,36 +215,45 @@ class LoadBalancer:
                     del self.circuit_breakers[server_id]
                 
                 logger.info(f"Server removed from load balancer: {server_id}")
+
                 return True
             
             return False
             
         except Exception as e:
             logger.error(f"Remove server error: {e}")
+
             return False
     
     async def get_server(self, request_context: Dict[str, Any] = None) -> Optional[ServerInstance]:
         """Get server for request using configured load balancing algorithm"""
         try:
             # Get healthy servers
+
             healthy_servers = [
                 server for server in self.servers.values()
+
                 if server.status == ServerStatus.HEALTHY and
                    self._is_circuit_breaker_closed(server.server_id)
             ]
             
             if not healthy_servers:
                 logger.warning("No healthy servers available")
+
                 return None
             
             # Apply traffic rules if any
+
             filtered_servers = self._apply_traffic_rules(healthy_servers, request_context or {})
+
             
             if not filtered_servers:
                 filtered_servers = healthy_servers
             
             # Select server based on algorithm
+
             selected_server = await self._select_server(filtered_servers, request_context or {})
+
             
             if selected_server:
                 selected_server.current_connections += 1
@@ -250,6 +268,7 @@ class LoadBalancer:
             
         except Exception as e:
             logger.error(f"Server selection error: {e}")
+
             return None
     
     async def _select_server(self, servers: List[ServerInstance], 
@@ -258,72 +277,90 @@ class LoadBalancer:
         try:
             if self.algorithm == LoadBalancingAlgorithm.ROUND_ROBIN:
                 return self._round_robin_selection(servers)
+
             
             elif self.algorithm == LoadBalancingAlgorithm.WEIGHTED_ROUND_ROBIN:
                 return self._weighted_round_robin_selection(servers)
+
             
             elif self.algorithm == LoadBalancingAlgorithm.LEAST_CONNECTIONS:
                 return self._least_connections_selection(servers)
+
             
             elif self.algorithm == LoadBalancingAlgorithm.WEIGHTED_LEAST_CONNECTIONS:
                 return self._weighted_least_connections_selection(servers)
+
             
             elif self.algorithm == LoadBalancingAlgorithm.IP_HASH:
                 return self._ip_hash_selection(servers, request_context.get('client_ip', ''))
+
             
             elif self.algorithm == LoadBalancingAlgorithm.RANDOM:
                 return random.choice(servers)
+
             
             elif self.algorithm == LoadBalancingAlgorithm.GEOGRAPHIC:
                 return self._geographic_selection(servers, request_context)
+
             
             elif self.algorithm == LoadBalancingAlgorithm.RESPONSE_TIME:
                 return self._response_time_selection(servers)
+
             
             else:
                 # Default to round robin
                 return self._round_robin_selection(servers)
+
                 
         except Exception as e:
             logger.error(f"Server selection algorithm error: {e}")
+
             return random.choice(servers) if servers else None
     
     def _round_robin_selection(self, servers: List[ServerInstance]) -> ServerInstance:
         """Round robin server selection"""
         if not servers:
             return None
+
         
         server = servers[self._round_robin_index % len(servers)]
         self._round_robin_index = (self._round_robin_index + 1) % len(servers)
         return server
     
     def _weighted_round_robin_selection(self, servers: List[ServerInstance]) -> ServerInstance:
-        """Weighted round robin server selection"""
+        """
+        Weighted round robin server selection"""
         if not servers:
             return None
         
         # Create weighted list
+
         weighted_servers = []
         for server in servers:
             weighted_servers.extend([server] * server.weight)
+
         
         if not weighted_servers:
             return servers[0]
+
         
         server = weighted_servers[self._round_robin_index % len(weighted_servers)]
         self._round_robin_index = (self._round_robin_index + 1) % len(weighted_servers)
         return server
     
     def _least_connections_selection(self, servers: List[ServerInstance]) -> ServerInstance:
-        """Least connections server selection"""
+        """
+        Least connections server selection"""
         return min(servers, key=lambda s: s.current_connections)
     
     def _weighted_least_connections_selection(self, servers: List[ServerInstance]) -> ServerInstance:
-        """Weighted least connections server selection"""
+        """
+        Weighted least connections server selection"""
         return min(servers, key=lambda s: s.current_connections / s.weight)
     
     def _ip_hash_selection(self, servers: List[ServerInstance], client_ip: str) -> ServerInstance:
-        """IP hash-based server selection for session affinity"""
+        """
+        IP hash-based server selection for session affinity"""
         if not client_ip:
             return self._round_robin_selection(servers)
         
@@ -333,10 +370,12 @@ class LoadBalancer:
     
     def _geographic_selection(self, servers: List[ServerInstance], 
                             request_context: Dict[str, Any]) -> ServerInstance:
-        """Geographic-based server selection"""
+        """
+        Geographic-based server selection"""
         client_region = request_context.get('geo_region', 'default')
         
         # Prefer servers in same region
+
         regional_servers = [s for s in servers if s.region == client_region]
         if regional_servers:
             return self._least_connections_selection(regional_servers)
@@ -345,12 +384,14 @@ class LoadBalancer:
         return self._least_connections_selection(servers)
     
     def _response_time_selection(self, servers: List[ServerInstance]) -> ServerInstance:
-        """Response time-based server selection"""
+        """
+        Response time-based server selection"""
         return min(servers, key=lambda s: s.response_time_ms)
     
     def _apply_traffic_rules(self, servers: List[ServerInstance], 
                            request_context: Dict[str, Any]) -> List[ServerInstance]:
-        """Apply traffic routing rules"""
+        """
+        Apply traffic routing rules"""
         try:
             applicable_rules = []
             
@@ -360,14 +401,17 @@ class LoadBalancer:
                 
                 if self._matches_traffic_rule(rule, request_context):
                     applicable_rules.append(rule)
+
             
             if not applicable_rules:
                 return servers
             
             # Use highest weight rule
+
             selected_rule = max(applicable_rules, key=lambda r: r.weight)
             
             # Filter servers based on rule
+
             target_servers = [
                 server for server in servers
                 if server.server_id in selected_rule.target_servers
@@ -377,19 +421,25 @@ class LoadBalancer:
             
         except Exception as e:
             logger.error(f"Traffic rules application error: {e}")
+
             return servers
     
     def _matches_traffic_rule(self, rule: TrafficRule, request_context: Dict[str, Any]) -> bool:
         """Check if request matches traffic rule condition"""
         try:
             # Simple condition matching - in production, use more sophisticated parser
+
             condition = rule.condition.lower()
+
             
             if condition.startswith('path='):
                 path_pattern = condition.split('=', 1)[1]
+
                 request_path = request_context.get('path', '').lower()
+
                 if path_pattern.endswith('*'):
                     return request_path.startswith(path_pattern[:-1])
+
                 else:
                     return request_path == path_pattern
             
@@ -405,6 +455,7 @@ class LoadBalancer:
             
         except Exception as e:
             logger.error(f"Traffic rule matching error: {e}")
+
             return False
     
     def _is_circuit_breaker_closed(self, server_id: str) -> bool:
@@ -430,7 +481,8 @@ class LoadBalancer:
     
     async def record_request_result(self, server_id: str, success: bool, 
                                   response_time_ms: float):
-        """Record request result for monitoring and circuit breaker"""
+        """
+        Record request result for monitoring and circuit breaker"""
         try:
             # Update server stats
             if server_id in self.servers:
@@ -438,6 +490,7 @@ class LoadBalancer:
                 server.current_connections = max(0, server.current_connections - 1)
                 
                 # Update response time (moving average)
+
                 if server.response_time_ms == 0:
                     server.response_time_ms = response_time_ms
                 else:
@@ -446,10 +499,12 @@ class LoadBalancer:
             # Update global stats
             self.stats.total_requests += 1
             self.stats.active_connections = max(0, self.stats.active_connections - 1)
+
             
             if success:
                 self.stats.successful_requests += 1
                 await self._record_circuit_breaker_success(server_id)
+
             else:
                 self.stats.failed_requests += 1
                 await self._record_circuit_breaker_failure(server_id)
@@ -485,6 +540,7 @@ class LoadBalancer:
             return
         
         circuit_breaker.last_success_time = datetime.utcnow()
+
         
         if circuit_breaker.state == CircuitBreakerState.HALF_OPEN:
             # Check if we have enough successes to close circuit
@@ -495,13 +551,15 @@ class LoadBalancer:
             circuit_breaker.failure_count = 0
     
     async def _record_circuit_breaker_failure(self, server_id: str):
-        """Record failed request for circuit breaker"""
+        """
+        Record failed request for circuit breaker"""
         circuit_breaker = self.circuit_breakers.get(server_id)
         if not circuit_breaker:
             return
         
         circuit_breaker.failure_count += 1
         circuit_breaker.last_failure_time = datetime.utcnow()
+
         
         if circuit_breaker.failure_count >= circuit_breaker.failure_threshold:
             circuit_breaker.state = CircuitBreakerState.OPEN
@@ -511,11 +569,14 @@ class LoadBalancer:
                 self.servers[server_id].status = ServerStatus.UNHEALTHY
     
     async def _health_check_loop(self):
-        """Background health check loop"""
+        """
+        Background health check loop"""
         while True:
             try:
                 await asyncio.sleep(self.health_check_config.interval_seconds)
+
                 await self._perform_health_checks()
+
             except asyncio.CancelledError:
                 break
             except Exception as e:
@@ -527,29 +588,26 @@ class LoadBalancer:
             tasks = []
             for server in self.servers.values():
                 tasks.append(self._check_server_health(server))
-            
+
             if tasks:
                 await asyncio.gather(*tasks, return_exceptions=True)
-                
+
         except Exception as e:
             logger.error(f"Health checks error: {e}")
     
     async def _check_server_health(self, server: ServerInstance):
         """Check health of individual server"""
         try:
-            # Mock health check - in production, make actual HTTP request
             start_time = time.time()
             
             # Simulate health check
             await asyncio.sleep(0.01)  # Simulate network delay
-            
+
             response_time = (time.time() - start_time) * 1000
-            
-            # Mock health check result
             is_healthy = random.random() > 0.05  # 95% success rate
             
             server.last_health_check = datetime.utcnow()
-            
+
             if is_healthy and response_time < self.health_check_config.expected_response_time_ms:
                 if server.status != ServerStatus.HEALTHY:
                     server.status = ServerStatus.HEALTHY
@@ -562,11 +620,14 @@ class LoadBalancer:
                 
                 # Trigger circuit breaker
                 await self._record_circuit_breaker_failure(server.server_id)
+
             
             logger.debug(f"Health check completed for {server.server_id}: {server.status.value}")
+
             
         except Exception as e:
             logger.error(f"Server health check error for {server.server_id}: {e}")
+
             server.status = ServerStatus.UNHEALTHY
     
     async def add_traffic_rule(self, rule_config: Dict[str, Any]) -> TrafficRule:
@@ -580,14 +641,17 @@ class LoadBalancer:
                 weight=rule_config.get("weight", 1),
                 active=rule_config.get("active", True)
             )
+
             
             self.traffic_rules[rule.rule_id] = rule
             
             logger.info(f"Traffic rule added: {rule.name} ({rule.condition})")
+
             return rule
             
         except Exception as e:
             logger.error(f"Add traffic rule error: {e}")
+
             raise
     
     async def get_load_balancer_stats(self) -> LoadBalancerStats:
@@ -602,10 +666,12 @@ class LoadBalancer:
                 self.stats.requests_per_second = len(recent_requests) / 60.0
             
             self.stats.last_updated = datetime.utcnow()
+
             return self.stats
             
         except Exception as e:
             logger.error(f"Load balancer stats error: {e}")
+
             return self.stats
     
     async def get_server_status(self) -> List[Dict[str, Any]]:
@@ -615,6 +681,8 @@ class LoadBalancer:
             
             for server in self.servers.values():
                 circuit_breaker = self.circuit_breakers.get(server.server_id)
+
+
                 
                 status_info = {
                     "server_id": server.server_id,
@@ -630,11 +698,13 @@ class LoadBalancer:
                 }
                 
                 server_status.append(status_info)
+
             
             return server_status
             
         except Exception as e:
             logger.error(f"Server status retrieval error: {e}")
+
             return []
     
     async def shutdown(self):
@@ -642,12 +712,14 @@ class LoadBalancer:
         try:
             if self._health_check_task:
                 self._health_check_task.cancel()
+
                 try:
                     await self._health_check_task
                 except asyncio.CancelledError:
                     pass
             
             logger.info("⚖️ Load balancer shutdown completed")
+
             
         except Exception as e:
             logger.error(f"Load balancer shutdown error: {e}")
@@ -666,4 +738,4 @@ __all__ = [
 ]
 
 # Module initialization
-logger.info("⚖️ Load Balancer module loaded")
+logger.info("⚖️ Load Balancer module initialized")

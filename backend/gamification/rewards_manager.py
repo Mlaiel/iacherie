@@ -44,7 +44,8 @@ logger = logging.getLogger(__name__)
 
 
 class RewardType(str, Enum):
-    """Types of rewards."""
+    """
+        Types of rewards."""
     CURRENCY = "currency"
     EXPERIENCE = "experience"
     BADGE = "badge"
@@ -102,7 +103,8 @@ class RewardCalculationContext:
 
 @dataclass
 class Reward:
-    """Individual reward definition."""
+    """
+        Individual reward definition."""
     id: str
     user_id: str
     reward_type: RewardType
@@ -120,7 +122,8 @@ class Reward:
 
 @dataclass
 class RewardBundle:
-    """Collection of rewards awarded together."""
+    """
+        Collection of rewards awarded together."""
     id: str
     user_id: str
     source: RewardSource
@@ -132,7 +135,8 @@ class RewardBundle:
 
 @dataclass
 class RewardMultiplier:
-    """Reward multiplier configuration."""
+    """
+        Reward multiplier configuration."""
     name: str
     multiplier: float
     condition: str
@@ -148,7 +152,8 @@ class RewardsManager:
     """
     
     def __init__(self, database_connection=None, cache_client=None):
-        """Initialize the rewards manager."""
+        """
+        Initialize the rewards manager."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.db = database_connection
         self.cache = cache_client
@@ -156,6 +161,7 @@ class RewardsManager:
         self.reward_multipliers: Dict[str, RewardMultiplier] = {}
         self.base_reward_configs = self._initialize_base_rewards()
         self.daily_limits = self._initialize_daily_limits()
+
         
         self.logger.info("RewardsManager initialized")
     
@@ -248,49 +254,65 @@ class RewardsManager:
         """
         try:
             rewards = []
+
             bundle_id = str(uuid4())
             
             # Get base reward configuration
+
             base_config = self.base_reward_configs.get(context.source, {})
+
             
             if context.source == RewardSource.CONTENT_UPLOAD:
                 rewards.extend(await self._calculate_content_upload_rewards(context, base_config))
+
             
             elif context.source == RewardSource.ACHIEVEMENT_UNLOCK:
                 rewards.extend(await self._calculate_achievement_rewards(context, base_config))
+
             
             elif context.source == RewardSource.COLLABORATION_COMPLETE:
                 rewards.extend(await self._calculate_collaboration_rewards(context, base_config))
+
             
             elif context.source == RewardSource.DAILY_LOGIN:
                 rewards.extend(await self._calculate_login_rewards(context, base_config))
+
             
             elif context.source == RewardSource.QUALITY_MILESTONE:
                 rewards.extend(await self._calculate_quality_rewards(context, base_config))
+
             
             elif context.source == RewardSource.ENGAGEMENT_BONUS:
                 rewards.extend(await self._calculate_engagement_rewards(context, base_config))
+
             
             elif context.source == RewardSource.REFERRAL:
                 rewards.extend(await self._calculate_referral_rewards(context, base_config))
+
             
             elif context.source == RewardSource.CHALLENGE_COMPLETE:
                 rewards.extend(await self._calculate_challenge_rewards(context, base_config))
+
             
             elif context.source == RewardSource.TIER_PROMOTION:
                 rewards.extend(await self._calculate_tier_promotion_rewards(context, base_config))
             
             # Apply global multipliers
+
             rewards = await self._apply_multipliers(rewards, context)
             
             # Check daily limits
+
             rewards = await self._apply_daily_limits(rewards, context)
             
             # Calculate total value
+
             total_value = sum(
                 Decimal(str(reward.amount)) for reward in rewards 
                 if reward.reward_type == RewardType.CURRENCY
             )
+
+
             
             bundle = RewardBundle(
                 id=bundle_id,
@@ -299,13 +321,16 @@ class RewardsManager:
                 rewards=rewards,
                 total_value=total_value
             )
+
             
             self.logger.info(f"💰 Calculated {len(rewards)} rewards for {context.user_id} ({context.source.value})")
+
             
             return bundle
             
         except Exception as e:
             self.logger.error(f"Error calculating rewards: {e}")
+
             return RewardBundle(
                 id=str(uuid4()),
                 user_id=context.user_id,
@@ -324,23 +349,38 @@ class RewardsManager:
         
         try:
             # Base credits reward
+
             base_credits = config.get("base_credits", 50)
             
             # Quality bonus
+
             quality_score = context.base_data.get("quality_score", 0)
+
+
             quality_multiplier = 1 + (quality_score / 10) * config.get("quality_bonus_multiplier", 2.0)
             
             # View bonus
+
             views = context.base_data.get("views", 0)
+
+
             view_bonus = (views // 1000) * config.get("view_bonus_per_1k", 5)
             
             # Engagement bonus
+
             engagement_rate = context.base_data.get("engagement_rate", 0)
+
+
             engagement_bonus = engagement_rate * config.get("engagement_bonus_multiplier", 1.5)
             
             # Platform diversity bonus
+
             platforms_count = len(context.base_data.get("platforms", []))
+
+
             platform_bonus = platforms_count * config.get("platform_diversity_bonus", 10)
+
+
             
             total_credits = int(
                 (base_credits * quality_multiplier) + view_bonus + engagement_bonus + platform_bonus
@@ -364,7 +404,9 @@ class RewardsManager:
             ))
             
             # Experience points
+
             exp_points = max(10, int(total_credits * 0.5))
+
             rewards.append(Reward(
                 id=str(uuid4()),
                 user_id=context.user_id,
@@ -378,6 +420,7 @@ class RewardsManager:
             # Quality crystals for high-quality content
             if quality_score >= 8:
                 quality_crystals = int((quality_score - 7) * 5)
+
                 rewards.append(Reward(
                     id=str(uuid4()),
                     user_id=context.user_id,
@@ -387,9 +430,11 @@ class RewardsManager:
                     source=context.source,
                     description=f"High quality content bonus ({quality_score}/10)"
                 ))
+
             
         except Exception as e:
             self.logger.error(f"Error calculating content upload rewards: {e}")
+
         
         return rewards
     
@@ -403,9 +448,12 @@ class RewardsManager:
         
         try:
             achievement_tier = context.base_data.get("tier", "bronze")
+
+
             achievement_points = context.base_data.get("points", 0)
             
             # Base credits based on tier
+
             tier_credits = {
                 "bronze": config.get("bronze_credits", 100),
                 "silver": config.get("silver_credits", 250),
@@ -414,6 +462,7 @@ class RewardsManager:
                 "diamond": config.get("diamond_credits", 2500),
                 "legendary": config.get("legendary_credits", 5000)
             }
+
             
             base_credits = tier_credits.get(achievement_tier, 100)
             
@@ -430,7 +479,9 @@ class RewardsManager:
             ))
             
             # Experience points
+
             exp_points = achievement_points or (base_credits // 2)
+
             rewards.append(Reward(
                 id=str(uuid4()),
                 user_id=context.user_id,
@@ -466,9 +517,11 @@ class RewardsManager:
                     description="Legendary Achievement NFT",
                     metadata={"nft_type": "legendary_achievement"}
                 ))
+
         
         except Exception as e:
             self.logger.error(f"Error calculating achievement rewards: {e}")
+
         
         return rewards
     
@@ -482,14 +535,27 @@ class RewardsManager:
         
         try:
             base_coins = config.get("base_collab_coins", 25)
+
+
             success_score = context.base_data.get("success_score", 5)
+
+
             duration_days = context.base_data.get("duration_days", 1)
+
+
             partner_rating = context.base_data.get("partner_rating", 5)
             
             # Calculate bonus multipliers
+
             success_multiplier = 1 + (success_score / 10) * config.get("success_bonus_multiplier", 2.0)
+
+
             duration_bonus = duration_days * config.get("duration_bonus_per_day", 5)
+
+
             rating_bonus = partner_rating * config.get("partner_rating_bonus", 15)
+
+
             
             total_coins = int(base_coins * success_multiplier + duration_bonus + rating_bonus)
             
@@ -510,7 +576,9 @@ class RewardsManager:
             ))
             
             # Experience points
+
             exp_points = int(total_coins * 0.8)
+
             rewards.append(Reward(
                 id=str(uuid4()),
                 user_id=context.user_id,
@@ -520,9 +588,11 @@ class RewardsManager:
                 source=context.source,
                 description="Collaboration experience"
             ))
+
         
         except Exception as e:
             self.logger.error(f"Error calculating collaboration rewards: {e}")
+
         
         return rewards
     
@@ -536,10 +606,15 @@ class RewardsManager:
         
         try:
             base_credits = config.get("base_credits", 10)
+
+
             login_streak = context.base_data.get("login_streak", 1)
             
             # Streak multiplier
+
             streak_multiplier = 1 + (login_streak * config.get("streak_multiplier", 0.1))
+
+
             total_credits = int(base_credits * streak_multiplier)
             
             # Daily login reward
@@ -557,6 +632,7 @@ class RewardsManager:
             # Weekly bonus
             if login_streak % 7 == 0:
                 weekly_bonus = config.get("weekly_bonus", 50)
+
                 rewards.append(Reward(
                     id=str(uuid4()),
                     user_id=context.user_id,
@@ -570,6 +646,7 @@ class RewardsManager:
             # Monthly bonus
             if login_streak % 30 == 0:
                 monthly_bonus = config.get("monthly_bonus", 200)
+
                 rewards.append(Reward(
                     id=str(uuid4()),
                     user_id=context.user_id,
@@ -579,9 +656,11 @@ class RewardsManager:
                     source=context.source,
                     description=f"Monthly streak bonus (Month {login_streak // 30})"
                 ))
+
         
         except Exception as e:
             self.logger.error(f"Error calculating login rewards: {e}")
+
         
         return rewards
     
@@ -595,7 +674,11 @@ class RewardsManager:
         
         try:
             quality_points = context.base_data.get("quality_points", 0)
+
+
             crystals_per_point = config.get("quality_crystals_per_point", 10)
+
+
             
             total_crystals = quality_points * crystals_per_point
             
@@ -609,9 +692,11 @@ class RewardsManager:
                 description=f"Quality milestone: {quality_points} points",
                 metadata={"quality_points": quality_points}
             ))
+
         
         except Exception as e:
             self.logger.error(f"Error calculating quality rewards: {e}")
+
         
         return rewards
     
@@ -625,10 +710,17 @@ class RewardsManager:
         
         try:
             engagement_rate = context.base_data.get("engagement_rate", 0)
+
+
             total_views = context.base_data.get("total_views", 0)
+
+
             
             credits_per_percent = config.get("credits_per_percent", 2)
+
+
             base_credits = int(engagement_rate * credits_per_percent)
+
             
             rewards.append(Reward(
                 id=str(uuid4()),
@@ -642,9 +734,12 @@ class RewardsManager:
             ))
             
             # Viral bonus
+
             viral_threshold = config.get("viral_threshold", 100000)
+
             if total_views >= viral_threshold:
                 viral_bonus = config.get("viral_bonus", 1000)
+
                 rewards.append(Reward(
                     id=str(uuid4()),
                     user_id=context.user_id,
@@ -654,9 +749,11 @@ class RewardsManager:
                     source=context.source,
                     description=f"Viral content bonus ({total_views:,} views)"
                 ))
+
         
         except Exception as e:
             self.logger.error(f"Error calculating engagement rewards: {e}")
+
         
         return rewards
     
@@ -670,7 +767,10 @@ class RewardsManager:
         
         try:
             base_credits = config.get("base_credits", 100)
+
+
             referral_success = context.base_data.get("referral_success", False)
+
             
             rewards.append(Reward(
                 id=str(uuid4()),
@@ -681,9 +781,11 @@ class RewardsManager:
                 source=context.source,
                 description="Referral bonus"
             ))
+
             
             if referral_success:
                 success_bonus = config.get("successful_referral_bonus", 500)
+
                 rewards.append(Reward(
                     id=str(uuid4()),
                     user_id=context.user_id,
@@ -693,9 +795,11 @@ class RewardsManager:
                     source=context.source,
                     description="Successful referral bonus"
                 ))
+
         
         except Exception as e:
             self.logger.error(f"Error calculating referral rewards: {e}")
+
         
         return rewards
     
@@ -709,17 +813,30 @@ class RewardsManager:
         
         try:
             base_credits = config.get("base_credits", 200)
+
+
             difficulty = context.base_data.get("difficulty", "medium")
+
+
             completion_time = context.base_data.get("completion_time_hours", 24)
+
+
             
             difficulty_multipliers = config.get("difficulty_multiplier", {
                 "easy": 1.0, "medium": 1.5, "hard": 2.0, "expert": 3.0
             })
+
+
             
             difficulty_mult = difficulty_multipliers.get(difficulty, 1.0)
+
+
             time_bonus_mult = max(0.5, 2.0 - (completion_time / 24))
+
+
             
             total_credits = int(base_credits * difficulty_mult * time_bonus_mult)
+
             
             rewards.append(Reward(
                 id=str(uuid4()),
@@ -734,9 +851,11 @@ class RewardsManager:
                     "completion_time_hours": completion_time
                 }
             ))
+
         
         except Exception as e:
             self.logger.error(f"Error calculating challenge rewards: {e}")
+
         
         return rewards
     
@@ -750,6 +869,8 @@ class RewardsManager:
         
         try:
             new_tier = context.base_data.get("new_tier", "rising")
+
+
             
             tier_bonuses = {
                 "rising": config.get("rising_bonus", 500),
@@ -759,8 +880,10 @@ class RewardsManager:
                 "legend": config.get("legend_bonus", 50000),
                 "champion": config.get("champion_bonus", 150000)
             }
+
             
             bonus_amount = tier_bonuses.get(new_tier, 500)
+
             
             rewards.append(Reward(
                 id=str(uuid4()),
@@ -784,9 +907,11 @@ class RewardsManager:
                 description=f"{new_tier.title()} Tier Badge",
                 metadata={"badge_type": f"{new_tier}_tier"}
             ))
+
         
         except Exception as e:
             self.logger.error(f"Error calculating tier promotion rewards: {e}")
+
         
         return rewards
     
@@ -804,6 +929,7 @@ class RewardsManager:
                     if multiplier_key in context.multipliers:
                         multiplier = context.multipliers[multiplier_key]
                         reward.amount = int(float(reward.amount) * multiplier)
+
                         reward.metadata["applied_multiplier"] = multiplier
             
             # Apply active global multipliers
@@ -812,10 +938,12 @@ class RewardsManager:
                     for reward in rewards:
                         if reward.reward_type == RewardType.CURRENCY:
                             reward.amount = int(float(reward.amount) * multiplier_config.multiplier)
+
                             reward.metadata[f"global_multiplier_{multiplier_name}"] = multiplier_config.multiplier
         
         except Exception as e:
             self.logger.error(f"Error applying multipliers: {e}")
+
         
         return rewards
     
@@ -827,25 +955,34 @@ class RewardsManager:
         """Apply daily limits to rewards."""
         try:
             daily_limit = self.daily_limits.get(context.source, float('inf'))
+
             
             if daily_limit < float('inf'):
                 # In a real implementation, would check current daily total from database
-                current_daily_total = 0  # Mock value
+
+                current_daily_total = 0
                 
                 remaining_limit = max(0, daily_limit - current_daily_total)
+
+
                 
                 currency_rewards = [r for r in rewards if r.reward_type == RewardType.CURRENCY]
+
                 total_currency = sum(float(r.amount) for r in currency_rewards)
+
                 
                 if total_currency > remaining_limit:
                     # Scale down rewards proportionally
+
                     scale_factor = remaining_limit / total_currency
                     for reward in currency_rewards:
                         reward.amount = int(float(reward.amount) * scale_factor)
+
                         reward.metadata["daily_limit_applied"] = True
         
         except Exception as e:
             self.logger.error(f"Error applying daily limits: {e}")
+
         
         return rewards
     
@@ -871,6 +1008,7 @@ class RewardsManager:
         
         except Exception as e:
             self.logger.error(f"Error checking multiplier active status: {e}")
+
             return False
     
     async def award_rewards(self, reward_bundle: RewardBundle) -> bool:
@@ -884,16 +1022,19 @@ class RewardsManager:
             for reward in reward_bundle.rewards:
                 reward.status = RewardStatus.AWARDED
                 reward.awarded_at = datetime.utcnow()
+
             
             self.pending_rewards[reward_bundle.user_id].extend(reward_bundle.rewards)
             
             # In a real implementation, would save to database
             self.logger.info(f"✅ Awarded {len(reward_bundle.rewards)} rewards to {reward_bundle.user_id}")
+
             
             return True
         
         except Exception as e:
             self.logger.error(f"Error awarding rewards: {e}")
+
             return False
     
     async def claim_reward(self, user_id: str, reward_id: str) -> bool:
@@ -908,15 +1049,19 @@ class RewardsManager:
                     reward.claimed_at = datetime.utcnow()
                     
                     # Process the reward (add to user balance, etc.)
+
                     await self._process_claimed_reward(reward)
+
                     
                     self.logger.info(f"🎁 Reward claimed: {user_id} - {reward.description}")
+
                     return True
             
             return False
         
         except Exception as e:
             self.logger.error(f"Error claiming reward: {e}")
+
             return False
     
     async def _process_claimed_reward(self, reward: Reward) -> bool:
@@ -939,6 +1084,7 @@ class RewardsManager:
         
         except Exception as e:
             self.logger.error(f"Error processing claimed reward: {e}")
+
             return False
     
     async def get_user_pending_rewards(self, user_id: str) -> List[Reward]:
@@ -954,6 +1100,7 @@ class RewardsManager:
         
         except Exception as e:
             self.logger.error(f"Error getting user pending rewards: {e}")
+
             return []
     
     async def get_reward_analytics(self, user_id: str) -> Dict[str, Any]:
@@ -961,8 +1108,10 @@ class RewardsManager:
         try:
             if user_id not in self.pending_rewards:
                 return {}
+
             
             user_rewards = self.pending_rewards[user_id]
+
             
             analytics = {
                 "total_rewards": len(user_rewards),
@@ -989,6 +1138,7 @@ class RewardsManager:
                     analytics["by_currency"][currency] += float(reward.amount)
                 
                 # Group by source
+
                 source = reward.source.value
                 if source not in analytics["by_source"]:
                     analytics["by_source"][source] = 0
@@ -998,6 +1148,7 @@ class RewardsManager:
         
         except Exception as e:
             self.logger.error(f"Error getting reward analytics: {e}")
+
             return {}
 
 
@@ -1021,8 +1172,10 @@ async def calculate_and_award_rewards(
     base_data: Dict[str, Any],
     user_profile: Optional[Dict[str, Any]] = None
 ) -> RewardBundle:
-    """Convenience function to calculate and award rewards."""
+    """
+        Convenience function to calculate and award rewards."""
     manager = await get_rewards_manager()
+
     
     context = RewardCalculationContext(
         user_id=user_id,
@@ -1030,6 +1183,7 @@ async def calculate_and_award_rewards(
         base_data=base_data,
         user_profile=user_profile or {}
     )
+
     
     reward_bundle = await manager.calculate_rewards(context)
     await manager.award_rewards(reward_bundle)

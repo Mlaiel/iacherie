@@ -24,7 +24,8 @@ from abc import ABC, abstractmethod
 logger = logging.getLogger(__name__)
 
 class CDNProvider(Enum):
-    """CDN providers"""
+    """
+CDN providers"""
     CLOUDFLARE = "cloudflare"
     AWS_CLOUDFRONT = "aws_cloudfront"
     AZURE_CDN = "azure_cdn"
@@ -34,7 +35,8 @@ class CDNProvider(Enum):
     KEYCDN = "keycdn"
 
 class CacheStrategy(Enum):
-    """Cache strategies"""
+    """
+Cache strategies"""
     STATIC = "static"
     DYNAMIC = "dynamic"
     ADAPTIVE = "adaptive"
@@ -42,7 +44,8 @@ class CacheStrategy(Enum):
     CONTENT_BASED = "content_based"
 
 class ContentType(Enum):
-    """Content types"""
+    """
+Content types"""
     IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
@@ -53,7 +56,8 @@ class ContentType(Enum):
 
 @dataclass
 class CDNEndpoint:
-    """CDN endpoint configuration"""
+    """
+CDN endpoint configuration"""
     endpoint_id: str
     provider: CDNProvider
     domain: str
@@ -69,7 +73,8 @@ class CDNEndpoint:
 
 @dataclass
 class CacheRule:
-    """Cache rule configuration"""
+    """
+Cache rule configuration"""
     rule_id: str
     endpoint_id: str
     path_pattern: str
@@ -83,7 +88,8 @@ class CacheRule:
 
 @dataclass
 class CDNMetrics:
-    """CDN performance metrics"""
+    """
+CDN performance metrics"""
     endpoint_id: str
     timestamp: datetime
     requests_count: int
@@ -95,7 +101,8 @@ class CDNMetrics:
     content_type_distribution: Dict[str, int]
 
 class CDNManagerCore:
-    """Advanced CDN Manager Core System"""
+    """
+Advanced CDN Manager Core System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -112,7 +119,8 @@ class CDNManagerCore:
         logger.info(f"CDN Manager Core initialized - Level: {level}")
 
     def _initialize_providers(self):
-        """Initialize CDN provider configurations"""
+        """
+Initialize CDN provider configurations"""
         self.providers_config = {
             CDNProvider.CLOUDFLARE: {
                 "api_endpoint": "https://api.cloudflare.com/client/v4",
@@ -141,7 +149,8 @@ class CDNManagerCore:
         }
 
     async def create_cdn_endpoint(self, endpoint_config: Dict[str, Any]) -> str:
-        """Create CDN endpoint"""
+        """
+Create CDN endpoint"""
         try:
             endpoint_id = f"cdn_{uuid.uuid4().hex[:12]}"
             
@@ -173,7 +182,8 @@ class CDNManagerCore:
             return ""
 
     async def _create_default_cache_rules(self, endpoint_id: str):
-        """Create default cache rules for endpoint"""
+        """
+Create default cache rules for endpoint"""
         default_rules = [
             {
                 "path_pattern": "*.jpg,*.png,*.gif,*.webp",
@@ -209,7 +219,8 @@ class CDNManagerCore:
             await self.create_cache_rule(endpoint_id, rule_config)
 
     async def create_cache_rule(self, endpoint_id: str, rule_config: Dict[str, Any]) -> str:
-        """Create cache rule for endpoint"""
+        """
+Create cache rule for endpoint"""
         try:
             if endpoint_id not in self.endpoints:
                 return ""
@@ -243,7 +254,8 @@ class CDNManagerCore:
 
     async def cache_content(self, endpoint_id: str, content_path: str, content_data: bytes, 
                            content_type: ContentType = ContentType.STATIC_ASSET) -> bool:
-        """Cache content at CDN edge locations"""
+        """
+Cache content at CDN edge locations"""
         try:
             if endpoint_id not in self.endpoints:
                 return False
@@ -288,7 +300,8 @@ class CDNManagerCore:
 
     def _find_applicable_cache_rule(self, endpoint_id: str, content_path: str, 
                                    content_type: ContentType) -> Optional[CacheRule]:
-        """Find applicable cache rule for content"""
+        """
+Find applicable cache rule for content"""
         endpoint_rules = self.cache_rules.get(endpoint_id, {})
         
         if not endpoint_rules:
@@ -308,7 +321,8 @@ class CDNManagerCore:
         return max(matching_rules, key=lambda r: r.priority)
 
     def _path_matches_pattern(self, path: str, pattern: str) -> bool:
-        """Check if path matches pattern"""
+        """
+Check if path matches pattern"""
         # Simple pattern matching (supports * wildcard)
         if pattern == "*":
             return True
@@ -326,13 +340,15 @@ class CDNManagerCore:
             return path == pattern
 
     def _generate_cache_key(self, endpoint_id: str, content_path: str, content_type: ContentType) -> str:
-        """Generate cache key"""
+        """
+Generate cache key"""
         key_data = f"{endpoint_id}:{content_path}:{content_type.value}"
         return hashlib.sha256(key_data.encode()).hexdigest()
 
     async def get_cached_content(self, endpoint_id: str, content_path: str, 
                                 content_type: ContentType = ContentType.STATIC_ASSET) -> Optional[bytes]:
-        """Get cached content"""
+        """
+Get cached content"""
         try:
             cache_key = self._generate_cache_key(endpoint_id, content_path, content_type)
             
@@ -359,7 +375,8 @@ class CDNManagerCore:
             return None
 
     async def invalidate_cache(self, endpoint_id: str, content_paths: List[str] = None) -> bool:
-        """Invalidate cached content"""
+        """
+Invalidate cached content"""
         try:
             if endpoint_id not in self.cache_storage:
                 return True
@@ -394,7 +411,8 @@ class CDNManagerCore:
             return False
 
     async def collect_metrics(self, endpoint_id: str) -> CDNMetrics:
-        """Collect CDN metrics for endpoint"""
+        """
+Collect CDN metrics for endpoint"""
         try:
             if endpoint_id not in self.endpoints:
                 return None
@@ -408,8 +426,6 @@ class CDNManagerCore:
             
             total_bandwidth = sum(entry["content_size"] * entry["access_count"] for entry in endpoint_cache.values())
             bandwidth_mb = total_bandwidth / (1024 * 1024)
-            
-            # Mock additional metrics
             response_time_ms = 50.0 + (100 - cache_hit_ratio) * 2  # Better cache hit = better response time
             error_rate = max(0, 5 - cache_hit_ratio / 10)  # Better cache hit = lower error rate
             
@@ -450,7 +466,8 @@ class CDNManagerCore:
             return None
 
     async def get_performance_report(self, endpoint_id: str, time_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Get performance report for endpoint"""
+        """
+Get performance report for endpoint"""
         try:
             if endpoint_id not in self.metrics_history:
                 return {}
@@ -496,7 +513,8 @@ class CDNManagerCore:
             return {}
 
     def _generate_performance_recommendations(self, cache_hit_ratio: float, response_time: float, error_rate: float) -> List[str]:
-        """Generate performance recommendations"""
+        """
+Generate performance recommendations"""
         recommendations = []
         
         if cache_hit_ratio < 70:
@@ -536,4 +554,4 @@ __all__ = [
     "CDNMetrics"
 ]
 
-logger.info("🌐 CDN Manager Core module loaded")
+logger.info("🌐 CDN Manager Core module initialized")

@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class APICompositionCore:
-    """Advanced APICompositionCore System"""
+    """
+Advanced APICompositionCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class APICompositionCore:
 # Module exports
 __all__ = ["APICompositionCore"]
 
-logger.info("🧩 APICompositionCore module loaded")
+logger.info("🧩 APICompositionCore module initialized")

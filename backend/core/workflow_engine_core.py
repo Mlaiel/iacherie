@@ -32,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowStatus(Enum):
-    """Status of workflow execution"""
+    """
+        Status of workflow execution"""
     PENDING = "pending"
     RUNNING = "running"
     PAUSED = "paused"
@@ -91,7 +92,8 @@ class WorkflowTask:
 
 @dataclass
 class WorkflowDefinition:
-    """Definition of a complete workflow"""
+    """
+        Definition of a complete workflow"""
     workflow_id: str
     workflow_name: str
     description: str
@@ -105,7 +107,8 @@ class WorkflowDefinition:
 
 @dataclass
 class WorkflowExecution:
-    """Running instance of a workflow"""
+    """
+        Running instance of a workflow"""
     execution_id: str
     workflow_id: str
     status: WorkflowStatus = WorkflowStatus.PENDING
@@ -126,7 +129,8 @@ class BusinessProcessAutomator:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the Business Process Automator"""
+        """
+        Initialize the Business Process Automator"""
         self.config = config or {}
         self.process_definitions: Dict[str, Dict[str, Any]] = {}
         self.active_processes: Dict[str, Dict[str, Any]] = {}
@@ -154,7 +158,8 @@ class BusinessProcessAutomator:
                            process_name: str,
                            steps: List[Dict[str, Any]],
                            triggers: List[str] = None) -> bool:
-        """Define a new business process"""
+        """
+        Define a new business process"""
         
         try:
             process_definition = {
@@ -173,10 +178,12 @@ class BusinessProcessAutomator:
                 self.process_definitions[process_id] = process_definition
             
             self.logger.info(f"Process {process_name} defined successfully")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Failed to define process {process_name}: {e}")
+
             return False
     
     async def start_process(self, 
@@ -187,11 +194,15 @@ class BusinessProcessAutomator:
         
         if process_id not in self.process_definitions:
             raise ValueError(f"Process {process_id} not defined")
+
+
         
         execution_id = str(uuid.uuid4())
+
         
         try:
             process_def = self.process_definitions[process_id]
+
             
             process_execution = {
                 'execution_id': execution_id,
@@ -210,18 +221,22 @@ class BusinessProcessAutomator:
             
             # Start process execution asynchronously
             asyncio.create_task(self._execute_process(execution_id))
+
             
             self.logger.info(f"Process {process_id} started with execution ID {execution_id}")
+
             return execution_id
             
         except Exception as e:
             self.logger.error(f"Failed to start process {process_id}: {e}")
+
             raise
     
     async def _execute_process(self, execution_id: str):
         """Execute business process steps"""
         
         execution = self.active_processes[execution_id]
+
         process_def = self.process_definitions[execution['process_id']]
         
         try:
@@ -229,14 +244,17 @@ class BusinessProcessAutomator:
             
             for step_index, step in enumerate(steps):
                 execution['current_step'] = step_index
+
                 
                 step_result = await self._execute_process_step(step, execution['context'])
+
                 execution['step_results'].append(step_result)
                 
                 # Check if step failed
                 if not step_result.get('success', True):
                     execution['status'] = 'failed'
                     execution['error_message'] = step_result.get('error')
+
                     process_def['failure_count'] += 1
                     break
                 
@@ -249,22 +267,30 @@ class BusinessProcessAutomator:
                 process_def['success_count'] += 1
             
             # Calculate duration and update average
+
             duration = (datetime.now(timezone.utc) - execution['started_at']).total_seconds()
+
             execution['duration'] = duration
             
             # Update average duration
+
             total_executions = process_def['execution_count']
+
             current_avg = process_def['average_duration']
             process_def['average_duration'] = (
                 (current_avg * (total_executions - 1) + duration) / total_executions
             )
+
             
             execution['completed_at'] = datetime.now(timezone.utc)
+
             
         except Exception as e:
             execution['status'] = 'failed'
             execution['error_message'] = str(e)
+
             execution['completed_at'] = datetime.now(timezone.utc)
+
             process_def['failure_count'] += 1
             
             self.logger.error(f"Process execution {execution_id} failed: {e}")
@@ -275,24 +301,32 @@ class BusinessProcessAutomator:
         """Execute a single process step"""
         
         step_type = step.get('type')
+
         step_config = step.get('config', {})
+
         
         try:
             if step_type == 'approval':
                 return await self._process_approval_step(step_config, context)
+
             elif step_type == 'notification':
                 return await self._process_notification_step(step_config, context)
+
             elif step_type == 'data_processing':
                 return await self._process_data_step(step_config, context)
+
             elif step_type == 'validation':
                 return await self._process_validation_step(step_config, context)
+
             elif step_type == 'integration':
                 return await self._process_integration_step(step_config, context)
+
             else:
                 # Custom process handler
                 if step_type in self.process_handlers:
                     handler = self.process_handlers[step_type]
                     return await handler(step_config, context)
+
                 else:
                     return {
                         'success': False,
@@ -308,11 +342,15 @@ class BusinessProcessAutomator:
     async def _process_approval_step(self, 
                                    config: Dict[str, Any],
                                    context: Dict[str, Any]) -> Dict[str, Any]:
-        """Process approval step"""
+        """
+        Process approval step"""
         
         # Simplified approval logic
+
         approval_required = config.get('approval_required', True)
+
         auto_approve = config.get('auto_approve', False)
+
         
         if not approval_required or auto_approve:
             return {
@@ -330,13 +368,17 @@ class BusinessProcessAutomator:
     async def _process_notification_step(self, 
                                        config: Dict[str, Any],
                                        context: Dict[str, Any]) -> Dict[str, Any]:
-        """Process notification step"""
+        """
+        Process notification step"""
         
         recipients = config.get('recipients', [])
+
         message_template = config.get('message_template', 'Process notification')
         
         # Simulate sending notifications
+
         notifications_sent = len(recipients)
+
         
         return {
             'success': True,
@@ -349,13 +391,17 @@ class BusinessProcessAutomator:
     async def _process_data_step(self, 
                                config: Dict[str, Any],
                                context: Dict[str, Any]) -> Dict[str, Any]:
-        """Process data processing step"""
+        """
+        Process data processing step"""
         
         operation = config.get('operation', 'transform')
+
         data_source = config.get('data_source')
         
         # Simulate data processing
+
         processed_records = context.get('record_count', 100)
+
         
         return {
             'success': True,
@@ -369,22 +415,29 @@ class BusinessProcessAutomator:
     async def _process_validation_step(self, 
                                      config: Dict[str, Any],
                                      context: Dict[str, Any]) -> Dict[str, Any]:
-        """Process validation step"""
+        """
+        Process validation step"""
         
         validation_rules = config.get('rules', [])
+
         data_to_validate = context.get('data', {})
         
         # Simplified validation
+
         validation_passed = True
+
         failed_rules = []
         
         for rule in validation_rules:
             rule_type = rule.get('type')
+
             if rule_type == 'required_field':
                 field = rule.get('field')
+
                 if field not in data_to_validate:
                     validation_passed = False
                     failed_rules.append(f"Required field missing: {field}")
+
         
         return {
             'success': validation_passed,
@@ -401,6 +454,7 @@ class BusinessProcessAutomator:
         """Process integration step"""
         
         integration_type = config.get('integration_type')
+
         endpoint = config.get('endpoint')
         
         # Simulate external integration
@@ -419,13 +473,17 @@ class BusinessProcessAutomator:
     async def _handle_content_approval_process(self, 
                                              config: Dict[str, Any],
                                              context: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle content approval process"""
+        """
+        Handle content approval process"""
         
         content_id = context.get('content_id')
+
         content_type = context.get('content_type', 'unknown')
         
         # Simulate content approval logic
+
         approval_score = hash(content_id) % 100 / 100 if content_id else 0.5
+
         approved = approval_score > 0.7
         
         return {
@@ -440,10 +498,13 @@ class BusinessProcessAutomator:
     async def _handle_user_onboarding_process(self, 
                                             config: Dict[str, Any],
                                             context: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle user onboarding process"""
+        """
+        Handle user onboarding process"""
         
         user_id = context.get('user_id')
+
         onboarding_steps = config.get('steps', ['welcome', 'setup', 'tutorial'])
+
         
         return {
             'success': True,
@@ -457,12 +518,15 @@ class BusinessProcessAutomator:
     async def _handle_payment_processing(self, 
                                        config: Dict[str, Any],
                                        context: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle payment processing"""
+        """
+        Handle payment processing"""
         
         amount = context.get('amount', 0)
+
         currency = context.get('currency', 'USD')
         
         # Simulate payment processing
+
         payment_successful = amount > 0
         
         return {
@@ -479,13 +543,17 @@ class BusinessProcessAutomator:
     async def _handle_content_moderation(self, 
                                        config: Dict[str, Any],
                                        context: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle content moderation"""
+        """
+        Handle content moderation"""
         
         content_id = context.get('content_id')
+
         moderation_level = config.get('level', 'standard')
         
         # Simulate content moderation
+
         moderation_score = hash(content_id) % 100 / 100 if content_id else 0.8
+
         approved = moderation_score > 0.6
         
         return {
@@ -500,10 +568,13 @@ class BusinessProcessAutomator:
     async def _handle_analytics_reporting(self, 
                                         config: Dict[str, Any],
                                         context: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle analytics reporting"""
+        """
+        Handle analytics reporting"""
         
         report_type = config.get('report_type', 'summary')
+
         time_period = config.get('time_period', 'daily')
+
         
         return {
             'success': True,
@@ -518,10 +589,13 @@ class BusinessProcessAutomator:
     async def _handle_backup_process(self, 
                                    config: Dict[str, Any],
                                    context: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle backup process"""
+        """
+        Handle backup process"""
         
         backup_type = config.get('backup_type', 'full')
+
         destination = config.get('destination', 'cloud')
+
         
         return {
             'success': True,
@@ -534,10 +608,12 @@ class BusinessProcessAutomator:
         }
     
     async def get_process_status(self, execution_id: str) -> Dict[str, Any]:
-        """Get status of process execution"""
+        """
+        Get status of process execution"""
         
         if execution_id not in self.active_processes:
             return {'error': 'Process execution not found'}
+
         
         execution = self.active_processes[execution_id]
         
@@ -562,7 +638,8 @@ class WorkflowOrchestrator:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the Workflow Orchestrator"""
+        """
+        Initialize the Workflow Orchestrator"""
         self.config = config or {}
         self.workflow_definitions: Dict[str, WorkflowDefinition] = {}
         self.active_executions: Dict[str, WorkflowExecution] = {}
@@ -593,23 +670,29 @@ class WorkflowOrchestrator:
         }
     
     async def create_workflow(self, workflow_def: WorkflowDefinition) -> bool:
-        """Create a new workflow definition"""
+        """
+        Create a new workflow definition"""
         
         try:
             # Validate workflow definition
+
             validation_result = await self._validate_workflow_definition(workflow_def)
+
             if not validation_result['valid']:
                 self.logger.error(f"Workflow validation failed: {validation_result['error']}")
+
                 return False
             
             with self._orchestrator_lock:
                 self.workflow_definitions[workflow_def.workflow_id] = workflow_def
             
             self.logger.info(f"Workflow {workflow_def.workflow_name} created successfully")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Failed to create workflow {workflow_def.workflow_name}: {e}")
+
             return False
     
     async def _validate_workflow_definition(self, workflow_def: WorkflowDefinition) -> Dict[str, Any]:
@@ -617,6 +700,7 @@ class WorkflowOrchestrator:
         
         try:
             # Check for circular dependencies
+
             task_ids = {task.task_id for task in workflow_def.tasks}
             
             for task in workflow_def.tasks:
@@ -630,9 +714,13 @@ class WorkflowOrchestrator:
             # Check for circular dependencies using DFS
             def has_cycle(task_id: str, visited: Set[str], rec_stack: Set[str]) -> bool:
                 visited.add(task_id)
+
                 rec_stack.add(task_id)
+
+
                 
                 task = next((t for t in workflow_def.tasks if t.task_id == task_id), None)
+
                 if task:
                     for dep in task.dependencies:
                         if dep not in visited:
@@ -642,9 +730,12 @@ class WorkflowOrchestrator:
                             return True
                 
                 rec_stack.remove(task_id)
+
                 return False
+
             
             visited = set()
+
             for task in workflow_def.tasks:
                 if task.task_id not in visited:
                     if has_cycle(task.task_id, visited, set()):
@@ -665,12 +756,16 @@ class WorkflowOrchestrator:
                            workflow_id: str,
                            context: Dict[str, Any] = None,
                            triggered_by: str = None) -> str:
-        """Start workflow execution"""
+        """
+        Start workflow execution"""
         
         if workflow_id not in self.workflow_definitions:
             raise ValueError(f"Workflow {workflow_id} not defined")
+
+
         
         execution_id = str(uuid.uuid4())
+
         
         try:
             execution = WorkflowExecution(
@@ -679,16 +774,20 @@ class WorkflowOrchestrator:
                 context=context or {},
                 triggered_by=triggered_by
             )
+
             
             with self._orchestrator_lock:
                 self.active_executions[execution_id] = execution
                 self.execution_queue.append(execution_id)
+
             
             self.logger.info(f"Workflow {workflow_id} started with execution ID {execution_id}")
+
             return execution_id
             
         except Exception as e:
             self.logger.error(f"Failed to start workflow {workflow_id}: {e}")
+
             raise
     
     async def _orchestrator_worker(self):
@@ -700,14 +799,18 @@ class WorkflowOrchestrator:
                 if self.execution_queue:
                     with self._orchestrator_lock:
                         execution_id = self.execution_queue.popleft()
+
                     
                     await self._process_workflow_execution(execution_id)
+
                 else:
                     # Sleep briefly if no work
                     await asyncio.sleep(0.1)
+
                     
             except Exception as e:
                 self.logger.error(f"Orchestrator worker error: {e}")
+
                 await asyncio.sleep(1)  # Prevent tight error loop
     
     async def _process_workflow_execution(self, execution_id: str):
@@ -715,8 +818,10 @@ class WorkflowOrchestrator:
         
         if execution_id not in self.active_executions:
             return
+
         
         execution = self.active_executions[execution_id]
+
         workflow_def = self.workflow_definitions[execution.workflow_id]
         
         try:
@@ -726,22 +831,31 @@ class WorkflowOrchestrator:
                 execution.started_at = datetime.now(timezone.utc)
             
             # Find ready tasks
+
             ready_tasks = await self._find_ready_tasks(workflow_def, execution)
+
             
             if not ready_tasks:
                 # Check if workflow is complete
+
                 all_tasks = {task.task_id: task for task in workflow_def.tasks}
+
                 completed_tasks = set(execution.task_results.keys())
+
                 
                 if len(completed_tasks) == len(all_tasks):
                     execution.status = WorkflowStatus.COMPLETED
                     execution.completed_at = datetime.now(timezone.utc)
+
                     self.logger.info(f"Workflow execution {execution_id} completed")
+
                 elif any(result.get('status') == TaskStatus.FAILED.value 
                         for result in execution.task_results.values()):
                     execution.status = WorkflowStatus.FAILED
                     execution.completed_at = datetime.now(timezone.utc)
+
                     self.logger.error(f"Workflow execution {execution_id} failed")
+
                 
                 return
             
@@ -753,11 +867,14 @@ class WorkflowOrchestrator:
             if execution.status == WorkflowStatus.RUNNING:
                 with self._orchestrator_lock:
                     self.execution_queue.append(execution_id)
+
                     
         except Exception as e:
             execution.status = WorkflowStatus.FAILED
             execution.error_message = str(e)
+
             execution.completed_at = datetime.now(timezone.utc)
+
             self.logger.error(f"Workflow execution {execution_id} failed: {e}")
     
     async def _find_ready_tasks(self, 
@@ -766,7 +883,9 @@ class WorkflowOrchestrator:
         """Find tasks that are ready to execute"""
         
         ready_tasks = []
+
         completed_tasks = set(execution.task_results.keys())
+
         
         for task in workflow_def.tasks:
             # Skip if already completed or failed
@@ -774,24 +893,31 @@ class WorkflowOrchestrator:
                 continue
             
             # Check if all dependencies are completed
+
             dependencies_met = all(dep in completed_tasks for dep in task.dependencies)
+
             
             if dependencies_met:
                 task.status = TaskStatus.READY
                 ready_tasks.append(task)
+
         
         return ready_tasks
     
     async def _execute_task(self, task: WorkflowTask, execution: WorkflowExecution):
-        """Execute a single task"""
+        """
+        Execute a single task"""
         
         task.status = TaskStatus.RUNNING
         task.started_at = datetime.now(timezone.utc)
+
         
         try:
             # Get task executor
             if task.task_type not in self.task_executors:
                 raise ValueError(f"Unknown task type: {task.task_type}")
+
+
             
             executor = self.task_executors[task.task_type]
             
@@ -801,12 +927,14 @@ class WorkflowOrchestrator:
                     executor(task, execution.context),
                     timeout=task.timeout_seconds
                 )
+
             else:
                 result = await executor(task, execution.context)
             
             # Update task status
             task.status = TaskStatus.COMPLETED
             task.completed_at = datetime.now(timezone.utc)
+
             task.result = result
             
             # Store result in execution
@@ -819,11 +947,13 @@ class WorkflowOrchestrator:
             # Update execution context with task outputs
             if isinstance(result, dict) and 'output' in result:
                 execution.context.update(result['output'])
+
             
         except asyncio.TimeoutError:
             task.status = TaskStatus.FAILED
             task.error_message = "Task timeout"
             task.completed_at = datetime.now(timezone.utc)
+
             
             execution.task_results[task.task_id] = {
                 'status': TaskStatus.FAILED.value,
@@ -847,7 +977,9 @@ class WorkflowOrchestrator:
             else:
                 task.status = TaskStatus.FAILED
                 task.error_message = str(e)
+
                 task.completed_at = datetime.now(timezone.utc)
+
                 
                 execution.task_results[task.task_id] = {
                     'status': TaskStatus.FAILED.value,
@@ -862,10 +994,12 @@ class WorkflowOrchestrator:
         """Execute HTTP request task"""
         
         url = task.parameters.get('url')
+
         method = task.parameters.get('method', 'GET')
         
         # Simulate HTTP request
         await asyncio.sleep(0.1)
+
         
         return {
             'success': True,
@@ -878,17 +1012,21 @@ class WorkflowOrchestrator:
     async def _execute_data_transform_task(self, 
                                          task: WorkflowTask,
                                          context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute data transformation task"""
+        """
+        Execute data transformation task"""
         
         transformation = task.parameters.get('transformation', 'identity')
+
         input_data = context.get('data', {})
         
         # Simulate data transformation
+
         transformed_data = input_data.copy()
         if transformation == 'uppercase':
             for key, value in transformed_data.items():
                 if isinstance(value, str):
                     transformed_data[key] = value.upper()
+
         
         return {
             'success': True,
@@ -901,10 +1039,13 @@ class WorkflowOrchestrator:
     async def _execute_file_operation_task(self, 
                                          task: WorkflowTask,
                                          context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute file operation task"""
+        """
+        Execute file operation task"""
         
         operation = task.parameters.get('operation', 'read')
+
         file_path = task.parameters.get('file_path')
+
         
         return {
             'success': True,
@@ -918,10 +1059,13 @@ class WorkflowOrchestrator:
     async def _execute_notification_task(self, 
                                        task: WorkflowTask,
                                        context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute notification task"""
+        """
+        Execute notification task"""
         
         recipients = task.parameters.get('recipients', [])
+
         message = task.parameters.get('message', 'Workflow notification')
+
         
         return {
             'success': True,
@@ -934,9 +1078,11 @@ class WorkflowOrchestrator:
     async def _execute_approval_task(self, 
                                    task: WorkflowTask,
                                    context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute approval task"""
+        """
+        Execute approval task"""
         
         auto_approve = task.parameters.get('auto_approve', True)
+
         
         return {
             'success': True,
@@ -949,11 +1095,13 @@ class WorkflowOrchestrator:
     async def _execute_conditional_task(self, 
                                       task: WorkflowTask,
                                       context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute conditional task"""
+        """
+        Execute conditional task"""
         
         condition = task.parameters.get('condition', 'true')
         
         # Simple condition evaluation
+
         condition_result = True  # Simplified
         
         return {
@@ -967,9 +1115,11 @@ class WorkflowOrchestrator:
     async def _execute_loop_task(self, 
                                task: WorkflowTask,
                                context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute loop task"""
+        """
+        Execute loop task"""
         
         iterations = task.parameters.get('iterations', 1)
+
         
         return {
             'success': True,
@@ -982,10 +1132,12 @@ class WorkflowOrchestrator:
     async def _execute_delay_task(self, 
                                 task: WorkflowTask,
                                 context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute delay task"""
+        """
+        Execute delay task"""
         
         delay_seconds = task.parameters.get('delay_seconds', 1)
         await asyncio.sleep(delay_seconds)
+
         
         return {
             'success': True,
@@ -996,12 +1148,15 @@ class WorkflowOrchestrator:
         }
     
     async def get_execution_status(self, execution_id: str) -> Dict[str, Any]:
-        """Get workflow execution status"""
+        """
+        Get workflow execution status"""
         
         if execution_id not in self.active_executions:
             return {'error': 'Execution not found'}
+
         
         execution = self.active_executions[execution_id]
+
         workflow_def = self.workflow_definitions[execution.workflow_id]
         
         return {
@@ -1026,7 +1181,8 @@ class WorkflowEngineCore:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the Workflow Engine Core"""
+        """
+        Initialize the Workflow Engine Core"""
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -1051,19 +1207,23 @@ class WorkflowEngineCore:
             
             # Initialize default workflows and processes
             await self._initialize_default_workflows()
+
             
             self.is_initialized = True
             self.logger.info("Workflow Engine Core initialized successfully")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Workflow Engine Core initialization failed: {e}")
+
             return False
     
     async def _initialize_default_workflows(self):
         """Initialize default workflows and processes"""
         
         # Define default content processing workflow
+
         content_workflow = WorkflowDefinition(
             workflow_id="content_processing",
             workflow_name="Content Processing Workflow",
@@ -1098,6 +1258,7 @@ class WorkflowEngineCore:
                 )
             ]
         )
+
         
         await self.workflow_orchestrator.create_workflow(content_workflow)
         self.workflow_stats['workflows_created'] += 1
@@ -1134,12 +1295,14 @@ class WorkflowEngineCore:
 # =============================================================================
 
 def create_workflow_engine_core(config: Optional[Dict[str, Any]] = None) -> WorkflowEngineCore:
-    """Factory function to create Workflow Engine Core"""
+    """
+        Factory function to create Workflow Engine Core"""
     return WorkflowEngineCore(config)
 
 
 async def quick_workflow_setup() -> WorkflowEngineCore:
-    """Quick setup for development environment"""
+    """
+        Quick setup for development environment"""
     core = create_workflow_engine_core({
         'automation': {},
         'orchestration': {}

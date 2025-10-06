@@ -26,7 +26,8 @@ import redis.asyncio as redis
 
 # Enums
 class ProtectionLevel(Enum):
-    """Content protection levels"""
+    """
+        Content protection levels"""
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -108,7 +109,8 @@ class ComplianceReport:
 
 @dataclass
 class ProtectionWorkflow:
-    """Protection workflow state"""
+    """
+        Protection workflow state"""
     workflow_id: str
     content_id: str
     current_stage: str
@@ -121,19 +123,23 @@ class ProtectionWorkflow:
 
 # Exceptions
 class ProtectionError(Exception):
-    """Base protection system error"""
+    """
+        Base protection system error"""
     pass
 
 class ComplianceError(ProtectionError):
-    """Compliance check error"""
+    """
+        Compliance check error"""
     pass
 
 class RightsValidationError(ProtectionError):
-    """Rights validation error"""
+    """
+        Rights validation error"""
     pass
 
 class WorkflowError(ProtectionError):
-    """Workflow processing error"""
+    """
+        Workflow processing error"""
     pass
 
 # Core Protection Manager
@@ -195,6 +201,7 @@ class EnterpriseProtectionManager:
     def _init_encryption(self):
         """Initialize encryption for sensitive data"""
         # In production: Load from secure key management system
+
         password = b"iacherie_protection_key_2025"
         salt = b"iacherie_salt_2025_secure"
         kdf = PBKDF2HMAC(
@@ -203,6 +210,7 @@ class EnterpriseProtectionManager:
             salt=salt,
             iterations=100000,
         )
+
         key = kdf.derive(password)
         self.cipher_suite = Fernet(Fernet.generate_key())
     
@@ -210,10 +218,13 @@ class EnterpriseProtectionManager:
         """Initialize Redis connection for caching and state management"""
         try:
             self.redis_client = redis.from_url(self.config.redis_url)
+
             await self.redis_client.ping()
+
             self.logger.info("Redis connection established")
         except Exception as e:
             self.logger.error(f"Redis connection failed: {e}")
+
             self.redis_client = None
 
     async def start_protection_workflow(
@@ -237,9 +248,11 @@ class EnterpriseProtectionManager:
         """
         try:
             protection_level = protection_level or self.config.protection_level
+
             workflow_id = str(uuid.uuid4())
             
             # Create workflow
+
             workflow = ProtectionWorkflow(
                 workflow_id=workflow_id,
                 content_id=content_id,
@@ -268,12 +281,15 @@ class EnterpriseProtectionManager:
             
             # Execute workflow asynchronously
             asyncio.create_task(self._execute_workflow(workflow))
+
             
             self.logger.info(f"Protection workflow started: {workflow_id}")
+
             return workflow
             
         except Exception as e:
             self.logger.error(f"Failed to start protection workflow: {e}")
+
             raise WorkflowError(f"Workflow initialization failed: {e}")
 
     async def _execute_workflow(self, workflow: ProtectionWorkflow):
@@ -281,18 +297,23 @@ class EnterpriseProtectionManager:
         try:
             while workflow.stages_pending:
                 current_stage = workflow.stages_pending.pop(0)
+
                 workflow.current_stage = current_stage
                 
                 self.logger.info(f"Executing stage: {current_stage}")
                 
                 # Execute stage
+
                 stage_result = await self._execute_stage(workflow, current_stage)
+
                 
                 if stage_result['success']:
                     workflow.stages_completed.append(current_stage)
+
                     workflow.metadata[f'{current_stage}_result'] = stage_result
                 else:
                     self.logger.error(f"Stage failed: {current_stage}")
+
                     workflow.metadata[f'{current_stage}_error'] = stage_result
                     break
                 
@@ -307,9 +328,11 @@ class EnterpriseProtectionManager:
             # Mark workflow as completed
             workflow.current_stage = "completed"
             self.logger.info(f"Protection workflow completed: {workflow.workflow_id}")
+
             
         except Exception as e:
             self.logger.error(f"Workflow execution failed: {e}")
+
             workflow.current_stage = "failed"
             workflow.metadata['error'] = str(e)
 
@@ -322,33 +345,46 @@ class EnterpriseProtectionManager:
         try:
             if stage == "content_analysis":
                 return await self._analyze_content(workflow)
+
             elif stage == "basic_rights_check":
                 return await self._basic_rights_check(workflow)
+
             elif stage == "rights_validation":
                 return await self._validate_rights(workflow)
+
             elif stage == "comprehensive_rights_check":
                 return await self._comprehensive_rights_check(workflow)
+
             elif stage == "compliance_check":
                 return await self._check_compliance(workflow)
+
             elif stage == "multi_jurisdiction_compliance":
                 return await self._multi_jurisdiction_compliance(workflow)
+
             elif stage == "legal_precedent_analysis":
                 return await self._legal_precedent_analysis(workflow)
+
             elif stage == "watermarking":
                 return await self._apply_watermarking(workflow)
+
             elif stage == "advanced_watermarking":
                 return await self._apply_advanced_watermarking(workflow)
+
             elif stage == "fingerprinting":
                 return await self._generate_fingerprint(workflow)
+
             elif stage == "blockchain_registration":
                 return await self._register_on_blockchain(workflow)
+
             elif stage == "continuous_monitoring":
                 return await self._setup_monitoring(workflow)
+
             else:
                 return {'success': False, 'error': f'Unknown stage: {stage}'}
                 
         except Exception as e:
             self.logger.error(f"Stage execution failed {stage}: {e}")
+
             return {'success': False, 'error': str(e)}
 
     async def _analyze_content(self, workflow: ProtectionWorkflow) -> Dict[str, Any]:
@@ -357,6 +393,7 @@ class EnterpriseProtectionManager:
             content_path = Path(workflow.metadata['content_path'])
             
             # Basic content analysis
+
             analysis = {
                 'file_size': content_path.stat().st_size,
                 'file_type': content_path.suffix.lower(),
@@ -371,16 +408,19 @@ class EnterpriseProtectionManager:
                     'frame_fingerprinting',
                     'audio_fingerprinting'
                 ])
+
             elif analysis['file_type'] in ['.mp3', '.wav', '.flac', '.aac']:
                 analysis['protection_requirements'].extend([
                     'audio_watermarking',
                     'audio_fingerprinting'
                 ])
+
             elif analysis['file_type'] in ['.jpg', '.png', '.gif', '.bmp']:
                 analysis['protection_requirements'].extend([
                     'image_watermarking',
                     'image_fingerprinting'
                 ])
+
             
             return {
                 'success': True,
@@ -392,12 +432,15 @@ class EnterpriseProtectionManager:
             return {'success': False, 'error': str(e)}
 
     async def _validate_rights(self, workflow: ProtectionWorkflow) -> Dict[str, Any]:
-        """Validate content rights and ownership"""
+        """
+        Validate content rights and ownership"""
         try:
             owner_id = workflow.metadata['owner_id']
+
             content_id = workflow.content_id
             
             # Create rights record
+
             rights = ContentRights(
                 content_id=content_id,
                 owner_id=owner_id,
@@ -408,7 +451,9 @@ class EnterpriseProtectionManager:
             
             # Validate ownership (simplified for demo)
             # In production: Check against user database, verify identity
+
             ownership_valid = await self._verify_ownership(owner_id, content_id)
+
             
             if not ownership_valid:
                 return {
@@ -431,29 +476,44 @@ class EnterpriseProtectionManager:
         """Check content compliance with various regulations"""
         try:
             content_id = workflow.content_id
+
             checks_performed = []
+
             violations_found = []
+
             recommendations = []
             
             # DMCA Compliance Check
+
             dmca_result = await self._check_dmca_compliance(workflow)
+
             checks_performed.append('dmca')
+
             if not dmca_result['compliant']:
                 violations_found.extend(dmca_result.get('violations', []))
+
                 recommendations.extend(dmca_result.get('recommendations', []))
             
             # Copyright Compliance Check
+
             copyright_result = await self._check_copyright_compliance(workflow)
+
             checks_performed.append('copyright')
+
             if not copyright_result['compliant']:
                 violations_found.extend(copyright_result.get('violations', []))
+
                 recommendations.extend(copyright_result.get('recommendations', []))
             
             # Privacy Compliance Check
+
             privacy_result = await self._check_privacy_compliance(workflow)
+
             checks_performed.append('privacy')
+
             if not privacy_result['compliant']:
                 violations_found.extend(privacy_result.get('violations', []))
+
                 recommendations.extend(privacy_result.get('recommendations', []))
             
             # Determine overall compliance status
@@ -466,6 +526,7 @@ class EnterpriseProtectionManager:
             else:
                 status = ComplianceStatus.NON_COMPLIANT
                 confidence_score = 0.30
+
             
             compliance_report = ComplianceReport(
                 content_id=content_id,
@@ -477,6 +538,7 @@ class EnterpriseProtectionManager:
                 check_timestamp=datetime.utcnow(),
                 expires_at=datetime.utcnow() + timedelta(days=30)
             )
+
             
             return {
                 'success': True,
@@ -488,7 +550,8 @@ class EnterpriseProtectionManager:
             return {'success': False, 'error': str(e)}
 
     async def _check_dmca_compliance(self, workflow: ProtectionWorkflow) -> Dict[str, Any]:
-        """Check DMCA compliance"""
+        """
+        Check DMCA compliance"""
         # Simplified DMCA check
         # In production: Integrate with actual DMCA services
         return {
@@ -498,7 +561,8 @@ class EnterpriseProtectionManager:
         }
 
     async def _check_copyright_compliance(self, workflow: ProtectionWorkflow) -> Dict[str, Any]:
-        """Check copyright compliance"""
+        """
+        Check copyright compliance"""
         # Simplified copyright check
         # In production: Integrate with copyright databases
         return {
@@ -508,7 +572,8 @@ class EnterpriseProtectionManager:
         }
 
     async def _check_privacy_compliance(self, workflow: ProtectionWorkflow) -> Dict[str, Any]:
-        """Check privacy compliance (GDPR, CCPA, etc.)"""
+        """
+        Check privacy compliance (GDPR, CCPA, etc.)"""
         # Simplified privacy check
         # In production: Implement comprehensive privacy analysis
         return {
@@ -518,11 +583,14 @@ class EnterpriseProtectionManager:
         }
 
     async def _apply_watermarking(self, workflow: ProtectionWorkflow) -> Dict[str, Any]:
-        """Apply digital watermarking"""
+        """
+        Apply digital watermarking"""
         try:
             # Basic watermarking implementation
             # In production: Use advanced watermarking libraries
+
             watermark_id = str(uuid.uuid4())
+
             
             return {
                 'success': True,
@@ -535,15 +603,18 @@ class EnterpriseProtectionManager:
             return {'success': False, 'error': str(e)}
 
     async def _generate_fingerprint(self, workflow: ProtectionWorkflow) -> Dict[str, Any]:
-        """Generate content fingerprint"""
+        """
+        Generate content fingerprint"""
         try:
             content_hash = workflow.metadata['file_hash']
             
             # Generate perceptual fingerprint
             # In production: Use advanced fingerprinting algorithms
+
             fingerprint = hashlib.sha256(
                 f"{content_hash}_{workflow.content_id}".encode()
             ).hexdigest()
+
             
             return {
                 'success': True,
@@ -563,9 +634,11 @@ class EnterpriseProtectionManager:
             
             # Simplified blockchain registration
             # In production: Integrate with actual blockchain networks
+
             transaction_hash = hashlib.sha256(
                 f"{workflow.content_id}_{datetime.utcnow().isoformat()}".encode()
             ).hexdigest()
+
             
             return {
                 'success': True,
@@ -581,10 +654,14 @@ class EnterpriseProtectionManager:
         """Calculate SHA-256 hash of file"""
         def _hash_file():
             hasher = hashlib.sha256()
+
             with open(file_path, 'rb') as f:
                 for chunk in iter(lambda: f.read(4096), b""):
                     hasher.update(chunk)
+
             return hasher.hexdigest()
+
+
         
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(self.executor, _hash_file)
@@ -596,18 +673,23 @@ class EnterpriseProtectionManager:
         return True
 
     async def get_workflow_status(self, workflow_id: str) -> Optional[ProtectionWorkflow]:
-        """Get current workflow status"""
+        """
+        Get current workflow status"""
         try:
             if self.redis_client:
                 workflow_data = await self.redis_client.get(
                     f"protection_workflow:{workflow_id}"
                 )
+
                 if workflow_data:
                     data = json.loads(workflow_data)
+
                     return ProtectionWorkflow(**data)
+
             return None
         except Exception as e:
             self.logger.error(f"Failed to get workflow status: {e}")
+
             return None
 
     async def validate_content_rights(
@@ -630,7 +712,9 @@ class EnterpriseProtectionManager:
         try:
             # Get content rights from database/cache
             # In production: Query actual rights database
+
             content_rights = await self._get_content_rights(content_id)
+
             
             if not content_rights:
                 return {
@@ -649,14 +733,18 @@ class EnterpriseProtectionManager:
                 }
             
             # Check specific permissions
+
             granted_rights = []
+
             denied_rights = []
             
             for right in requested_rights:
                 if content_rights.usage_permissions.get(right, False):
                     granted_rights.append(right)
+
                 else:
                     denied_rights.append(right)
+
             
             return {
                 'valid': len(denied_rights) == 0,
@@ -668,6 +756,7 @@ class EnterpriseProtectionManager:
             
         except Exception as e:
             self.logger.error(f"Rights validation failed: {e}")
+
             return {
                 'valid': False,
                 'error': str(e),
@@ -691,28 +780,34 @@ class EnterpriseProtectionManager:
         return {'success': True, 'message': 'Basic rights check completed'}
 
     async def _comprehensive_rights_check(self, workflow: ProtectionWorkflow) -> Dict[str, Any]:
-        """Comprehensive rights check"""
+        """
+        Comprehensive rights check"""
         return {'success': True, 'message': 'Comprehensive rights check completed'}
 
     async def _multi_jurisdiction_compliance(self, workflow: ProtectionWorkflow) -> Dict[str, Any]:
-        """Multi-jurisdiction compliance check"""
+        """
+        Multi-jurisdiction compliance check"""
         return {'success': True, 'message': 'Multi-jurisdiction compliance check completed'}
 
     async def _legal_precedent_analysis(self, workflow: ProtectionWorkflow) -> Dict[str, Any]:
-        """Legal precedent analysis"""
+        """
+        Legal precedent analysis"""
         return {'success': True, 'message': 'Legal precedent analysis completed'}
 
     async def _apply_advanced_watermarking(self, workflow: ProtectionWorkflow) -> Dict[str, Any]:
-        """Apply advanced watermarking"""
+        """
+        Apply advanced watermarking"""
         return {'success': True, 'message': 'Advanced watermarking applied'}
 
     async def _setup_monitoring(self, workflow: ProtectionWorkflow) -> Dict[str, Any]:
-        """Setup continuous monitoring"""
+        """
+        Setup continuous monitoring"""
         return {'success': True, 'message': 'Continuous monitoring setup completed'}
 
 # Rights Validator (Legacy Integration)
 class RightsValidator:
-    """Legacy rights validation interface"""
+    """
+        Legacy rights validation interface"""
     
     def __init__(self, protection_manager: EnterpriseProtectionManager):
         self.manager = protection_manager
@@ -723,7 +818,8 @@ class RightsValidator:
         rights: List[str],
         user_id: str
     ) -> bool:
-        """Validate content rights"""
+        """
+        Validate content rights"""
         result = await self.manager.validate_content_rights(
             content_id, rights, user_id
         )
@@ -731,13 +827,15 @@ class RightsValidator:
 
 # Copyright Compliance Checker (Legacy Integration)
 class CopyrightComplianceChecker:
-    """Legacy copyright compliance interface"""
+    """
+        Legacy copyright compliance interface"""
     
     def __init__(self, protection_manager: EnterpriseProtectionManager):
         self.manager = protection_manager
     
     async def check_compliance(self, content_id: str) -> ComplianceReport:
-        """Check copyright compliance"""
+        """
+        Check copyright compliance"""
         workflow = ProtectionWorkflow(
             workflow_id=str(uuid.uuid4()),
             content_id=content_id,
@@ -749,6 +847,8 @@ class CopyrightComplianceChecker:
             estimated_completion=datetime.utcnow(),
             metadata={}
         )
+
+
         
         result = await self.manager._check_compliance(workflow)
         if result['success']:
@@ -762,12 +862,14 @@ class ProtectionManagerFactory:
     
     @staticmethod
     def create_standard_manager() -> EnterpriseProtectionManager:
-        """Create standard protection manager"""
+        """
+        Create standard protection manager"""
         return EnterpriseProtectionManager()
     
     @staticmethod
     def create_enterprise_manager() -> EnterpriseProtectionManager:
-        """Create enterprise protection manager"""
+        """
+        Create enterprise protection manager"""
         config = ProtectionConfig(
             protection_level=ProtectionLevel.ENTERPRISE,
             enable_blockchain=True,

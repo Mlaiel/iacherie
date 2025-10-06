@@ -44,7 +44,8 @@ logger = logging.getLogger(__name__)
 # ============================================================================
 
 class OptimizationMode(str, Enum):
-    """Modes d'optimisation."""
+    """
+        Modes d'optimisation."""
     AGGRESSIVE = "aggressive"
     BALANCED = "balanced"
     CONSERVATIVE = "conservative"
@@ -83,7 +84,8 @@ class BandwidthMetrics:
 
 
 class BandwidthOptimizerSuite:
-    """Suite d'optimisation bande passante."""
+    """
+        Suite d'optimisation bande passante."""
     
     def __init__(self, mode: OptimizationMode = OptimizationMode.BALANCED):
         self.mode = mode
@@ -101,23 +103,29 @@ class BandwidthOptimizerSuite:
     async def optimize_bandwidth(self, data: bytes, content_type: str = "application/octet-stream") -> BandwidthMetrics:
         """Optimise la bande passante."""
         start_time = time.time()
+
         original_size = len(data)
         
         # Sélection automatique de l'algorithme optimal
+
         algorithm = self._select_optimal_algorithm(data, content_type)
         
         # Application de la compression
         compressed_data, compression_ratio = await self._apply_compression(data, algorithm)
         
         # Calcul des métriques
+
         compressed_size = len(compressed_data)
+
         bytes_saved = original_size - compressed_size
         
         # Mise à jour des statistiques
         self.total_bytes_processed += original_size
         self.total_bytes_saved += bytes_saved
+
         
         optimization_time = time.time() - start_time
+
         
         metrics = BandwidthMetrics(
             total_bytes=original_size,
@@ -134,6 +142,7 @@ class BandwidthOptimizerSuite:
             "ratio": compression_ratio,
             "time": optimization_time
         })
+
         
         return metrics
     
@@ -157,15 +166,20 @@ class BandwidthOptimizerSuite:
     async def _apply_compression(self, data: bytes, algorithm: CompressionAlgorithm) -> Tuple[bytes, float]:
         """Applique la compression."""
         # Simulation de compression
+
         algo_config = self.compression_algorithms[algorithm]
+
         compression_ratio = algo_config["ratio"]
         
         # Simulation du temps de compression
+
         processing_time = len(data) / (1000000 * algo_config["speed"])  # Simulate processing
         await asyncio.sleep(min(0.01, processing_time))  # Cap simulation time
         
         # Simulation de la compression
+
         compressed_size = int(len(data) * (1 - compression_ratio))
+
         compressed_data = data[:compressed_size]  # Simplified simulation
         
         return compressed_data, compression_ratio
@@ -199,7 +213,8 @@ class EdgeNode:
 
 @dataclass
 class ContentCache:
-    """Cache de contenu."""
+    """
+        Cache de contenu."""
     content_id: str
     content_type: str
     size_bytes: int
@@ -210,7 +225,8 @@ class ContentCache:
 
 
 class CDNEdgeAcceleration:
-    """Accélération CDN edge."""
+    """
+        Accélération CDN edge."""
     
     def __init__(self):
         self.edge_nodes: Dict[str, EdgeNode] = {}
@@ -233,6 +249,7 @@ class CDNEdgeAcceleration:
         """Trouve le noeud edge optimal."""
         suitable_nodes = [
             node for node in self.edge_nodes.values()
+
             if node.status == CDNStatus.ACTIVE and node.current_load < 0.8
         ]
         
@@ -240,22 +257,29 @@ class CDNEdgeAcceleration:
             return None
         
         # Scoring basé sur latence et charge
+
         best_node = None
+
         best_score = float('inf')
+
         
         for node in suitable_nodes:
             # Score composite: latence + facteur de charge
+
             score = node.latency_ms * (1 + node.current_load)
+
             
             if score < best_score:
                 best_score = score
+
                 best_node = node
         
         return best_node
     
     async def cache_content(self, content_id: str, content_type: str, 
                           size_bytes: int, node_id: str) -> bool:
-        """Met en cache du contenu."""
+        """
+        Met en cache du contenu."""
         cache_item = ContentCache(
             content_id=content_id,
             content_type=content_type,
@@ -263,12 +287,14 @@ class CDNEdgeAcceleration:
             hit_count=0,
             last_accessed=datetime.utcnow()
         )
+
         
         self.content_cache[content_id] = cache_item
         return True
     
     async def get_cached_content(self, content_id: str) -> Optional[ContentCache]:
-        """Récupère du contenu en cache."""
+        """
+        Récupère du contenu en cache."""
         if content_id in self.content_cache:
             cache_item = self.content_cache[content_id]
             cache_item.hit_count += 1
@@ -287,10 +313,13 @@ class CDNEdgeAcceleration:
                                       client_location: str) -> Dict[str, Any]:
         """Optimise la livraison de contenu."""
         # Vérification du cache
+
         cached_content = await self.get_cached_content(content_id)
+
         
         if cached_content:
             edge_node = await self.find_optimal_edge(client_location, cached_content.content_type)
+
             
             return {
                 "cache_hit": True,
@@ -321,7 +350,8 @@ class DNSRecord:
 
 
 class DNSResolutionOptimization:
-    """Optimisation résolution DNS."""
+    """
+        Optimisation résolution DNS."""
     
     def __init__(self):
         self.dns_cache: Dict[str, DNSRecord] = {}
@@ -341,8 +371,11 @@ class DNSResolutionOptimization:
                 return record.value
         
         # Résolution DNS réelle (simulée)
+
         start_time = time.time()
+
         resolved_value = await self._perform_dns_lookup(domain, record_type)
+
         resolution_time = time.time() - start_time
         
         # Mise en cache
@@ -353,10 +386,12 @@ class DNSResolutionOptimization:
                 value=resolved_value,
                 ttl=300  # 5 minutes
             )
+
             self.dns_cache[cache_key] = dns_record
         
         # Enregistrement des performances
         self.resolution_times[domain].append(resolution_time)
+
         
         return resolved_value
     
@@ -375,6 +410,7 @@ class DNSResolutionOptimization:
             return None
         except Exception as e:
             logger.error(f"DNS resolution failed for {domain}: {e}")
+
             return None
     
     async def prefetch_domains(self, domains: List[str]):
@@ -385,7 +421,8 @@ class DNSResolutionOptimization:
             asyncio.create_task(self.resolve_domain(domain))
     
     async def get_dns_performance_stats(self) -> Dict[str, Any]:
-        """Récupère les statistiques de performance DNS."""
+        """
+        Récupère les statistiques de performance DNS."""
         stats = {
             "cache_size": len(self.dns_cache),
             "prefetch_domains": len(self.prefetch_domains),
@@ -427,7 +464,8 @@ class LatencyMetrics:
 
 
 class LatencyMinimizationEngine:
-    """Moteur minimisation latence."""
+    """
+        Moteur minimisation latence."""
     
     def __init__(self):
         self.latency_history: deque = deque(maxlen=1000)
@@ -441,9 +479,13 @@ class LatencyMinimizationEngine:
         self.connection_pools = {}
         
     async def optimize_request_latency(self, request_data: Dict[str, Any]) -> LatencyMetrics:
-        """Optimise la latence d'une requête."""
+        """
+        Optimise la latence d'une requête."""
         request_id = request_data.get("request_id", str(uuid.uuid4()))
+
         start_time = time.time()
+
+
         
         optimizations_applied = []
         
@@ -452,15 +494,22 @@ class LatencyMinimizationEngine:
             if await self._should_apply_strategy(strategy, request_data):
                 optimizer = self.optimization_strategies[strategy]
                 await optimizer(request_data)
+
                 optimizations_applied.append(strategy.value)
         
         # Simulation du traitement
+
         processing_time = 0.01  # Base processing time
+
         network_time = 0.02     # Base network time
         
         # Réduction basée sur les optimisations
+
         latency_reduction = len(optimizations_applied) * 0.002
+
         total_latency = max(0.001, processing_time + network_time - latency_reduction)
+
+
         
         metrics = LatencyMetrics(
             request_id=request_id,
@@ -469,6 +518,7 @@ class LatencyMinimizationEngine:
             processing_latency=processing_time,
             optimization_applied=optimizations_applied
         )
+
         
         self.latency_history.append(metrics)
         return metrics
@@ -491,25 +541,31 @@ class LatencyMinimizationEngine:
         await asyncio.sleep(0.001)
     
     async def _optimize_predictive_caching(self, request_data: Dict[str, Any]):
-        """Optimise le cache prédictif."""
+        """
+        Optimise le cache prédictif."""
         await asyncio.sleep(0.001)
     
     async def _optimize_connection_pooling(self, request_data: Dict[str, Any]):
-        """Optimise le pooling de connexions."""
+        """
+        Optimise le pooling de connexions."""
         await asyncio.sleep(0.001)
     
     async def _optimize_request_batching(self, request_data: Dict[str, Any]):
-        """Optimise le batching de requêtes."""
+        """
+        Optimise le batching de requêtes."""
         await asyncio.sleep(0.001)
     
     async def _optimize_protocol(self, request_data: Dict[str, Any]):
-        """Optimise le protocole."""
+        """
+        Optimise le protocole."""
         await asyncio.sleep(0.001)
     
     async def get_latency_analytics(self) -> Dict[str, Any]:
-        """Récupère les analytics de latence."""
+        """
+        Récupère les analytics de latence."""
         if not self.latency_history:
             return {"message": "No latency data available"}
+
         
         latencies = [m.total_latency for m in self.latency_history]
         
@@ -553,7 +609,8 @@ class ServerNode:
 
 
 class LoadBalancingIntelligence:
-    """Intelligence répartition charge."""
+    """
+        Intelligence répartition charge."""
     
     def __init__(self, algorithm: LoadBalancingAlgorithm = LoadBalancingAlgorithm.LEAST_RESPONSE_TIME):
         self.algorithm = algorithm
@@ -564,7 +621,8 @@ class LoadBalancingIntelligence:
         self.last_health_check = datetime.utcnow()
     
     async def add_server(self, server: ServerNode) -> bool:
-        """Ajoute un serveur au pool."""
+        """
+        Ajoute un serveur au pool."""
         self.servers[server.node_id] = server
         logger.info(f"Added server {server.node_id} to load balancer")
         return True
@@ -574,6 +632,7 @@ class LoadBalancingIntelligence:
         if node_id in self.servers:
             del self.servers[node_id]
             logger.info(f"Removed server {node_id} from load balancer")
+
             return True
         return False
     
@@ -581,6 +640,7 @@ class LoadBalancingIntelligence:
         """Sélectionne le serveur optimal."""
         healthy_servers = [
             server for server in self.servers.values()
+
             if server.health_status == "healthy" and 
                server.current_connections < server.max_connections
         ]
@@ -602,6 +662,7 @@ class LoadBalancingIntelligence:
             return self._geographic_select(healthy_servers, request_data)
         elif self.algorithm == LoadBalancingAlgorithm.AI_BASED:
             return await self._ai_based_select(healthy_servers, request_data)
+
         
         return healthy_servers[0]  # Fallback
     
@@ -612,9 +673,12 @@ class LoadBalancingIntelligence:
         return server
     
     def _weighted_round_robin_select(self, servers: List[ServerNode]) -> ServerNode:
-        """Sélection round-robin pondérée."""
+        """
+        Sélection round-robin pondérée."""
         total_weight = sum(server.weight for server in servers)
+
         target = self.round_robin_counter % total_weight
+
         
         current_weight = 0
         for server in servers:
@@ -626,16 +690,20 @@ class LoadBalancingIntelligence:
         return servers[0]
     
     def _least_connections_select(self, servers: List[ServerNode]) -> ServerNode:
-        """Sélection par le moins de connexions."""
+        """
+        Sélection par le moins de connexions."""
         return min(servers, key=lambda s: s.current_connections)
     
     def _least_response_time_select(self, servers: List[ServerNode]) -> ServerNode:
-        """Sélection par le temps de réponse le plus faible."""
+        """
+        Sélection par le temps de réponse le plus faible."""
         return min(servers, key=lambda s: s.response_time_ms)
     
     def _ip_hash_select(self, servers: List[ServerNode], request_data: Dict[str, Any]) -> ServerNode:
-        """Sélection par hash IP."""
+        """
+        Sélection par hash IP."""
         client_ip = request_data.get("client_ip", "127.0.0.1")
+
         hash_value = hash(client_ip) % len(servers)
         return servers[hash_value]
     
@@ -657,38 +725,52 @@ class LoadBalancingIntelligence:
                              request_data: Dict[str, Any]) -> ServerNode:
         """Sélection basée IA."""
         # Scoring composite basé sur plusieurs facteurs
+
         best_server = None
+
         best_score = float('inf')
+
         
         for server in servers:
             # Score composite: charge + temps de réponse + capacité restante
+
             load_factor = server.current_connections / server.max_connections
+
             response_factor = server.response_time_ms / 100  # Normalize to ~1
+
             capacity_factor = 1 - (server.current_connections / server.max_connections)
+
+
             
             score = (load_factor * 0.4 + response_factor * 0.4 + (1 - capacity_factor) * 0.2)
+
             
             if score < best_score:
                 best_score = score
+
                 best_server = server
         
         return best_server or servers[0]
     
     async def update_server_metrics(self, node_id: str, connections: int, 
                                   response_time: float):
-        """Met à jour les métriques serveur."""
+        """
+        Met à jour les métriques serveur."""
         if node_id in self.servers:
             server = self.servers[node_id]
             server.current_connections = connections
             server.response_time_ms = response_time
     
     async def health_check_servers(self) -> Dict[str, str]:
-        """Vérifie la santé des serveurs."""
+        """
+        Vérifie la santé des serveurs."""
         health_status = {}
         
         for server in self.servers.values():
             # Simulation du health check
+
             is_healthy = await self._check_server_health(server)
+
             server.health_status = "healthy" if is_healthy else "unhealthy"
             health_status[server.node_id] = server.health_status
         
@@ -708,7 +790,8 @@ class LoadBalancingIntelligence:
 # ============================================================================
 
 class QoSLevel(str, Enum):
-    """Niveaux de QoS."""
+    """
+        Niveaux de QoS."""
     PREMIUM = "premium"
     STANDARD = "standard"
     BASIC = "basic"
@@ -737,7 +820,8 @@ class QoSPolicy:
 
 
 class QoSManagementEnterprise:
-    """Gestion QoS entreprise."""
+    """
+        Gestion QoS entreprise."""
     
     def __init__(self):
         self.policies: Dict[str, QoSPolicy] = {}
@@ -765,6 +849,7 @@ class QoSManagementEnterprise:
         """Applique une politique QoS."""
         if policy_id not in self.policies:
             return {"error": "Policy not found"}
+
         
         policy = self.policies[policy_id]
         
@@ -778,6 +863,7 @@ class QoSManagementEnterprise:
             }
         
         # Application de la politique
+
         qos_applied = {
             "status": "applied",
             "policy_id": policy_id,
@@ -789,6 +875,7 @@ class QoSManagementEnterprise:
         
         # Mise à jour des statistiques
         self._update_traffic_stats(policy.traffic_class, qos_applied)
+
         
         return qos_applied
     
@@ -806,10 +893,12 @@ class QoSManagementEnterprise:
                 "bandwidth_used": 0,
                 "successful_applications": 0
             }
+
         
         stats = self.traffic_stats[traffic_class.value]
         stats["total_sessions"] += 1
         stats["bandwidth_used"] += qos_applied.get("bandwidth_allocated", 0)
+
         
         if qos_applied["status"] == "applied":
             stats["successful_applications"] += 1
@@ -852,7 +941,8 @@ class TrafficShapingRule:
 
 
 class TrafficShapingOptimization:
-    """Optimisation façonnage trafic."""
+    """
+        Optimisation façonnage trafic."""
     
     def __init__(self):
         self.shaping_rules: Dict[str, TrafficShapingRule] = {}
@@ -860,7 +950,8 @@ class TrafficShapingOptimization:
         self.shaping_stats = defaultdict(dict)
     
     async def create_shaping_rule(self, rule: TrafficShapingRule) -> bool:
-        """Crée une règle de façonnage."""
+        """
+        Crée une règle de façonnage."""
         self.shaping_rules[rule.rule_id] = rule
         
         # Initialisation du bucket selon la stratégie
@@ -880,6 +971,7 @@ class TrafficShapingOptimization:
         """Façonne le trafic selon la règle."""
         if rule_id not in self.shaping_rules:
             return {"error": "Shaping rule not found"}
+
         
         rule = self.shaping_rules[rule_id]
         
@@ -898,19 +990,25 @@ class TrafficShapingOptimization:
                                 rule_id: str) -> Dict[str, Any]:
         """Applique l'algorithme token bucket."""
         bucket = self.traffic_buckets[rule_id]
+
         rule = self.shaping_rules[rule_id]
+
         
         current_time = time.time()
+
         time_elapsed = current_time - bucket["last_refill"]
         
         # Remplissage des tokens
+
         tokens_to_add = time_elapsed * rule.rate_limit
         bucket["tokens"] = min(bucket["max_tokens"], 
                              bucket["tokens"] + tokens_to_add)
         bucket["last_refill"] = current_time
         
         # Consommation des tokens
+
         traffic_size = traffic_data.get("size_mb", 1)
+
         
         if bucket["tokens"] >= traffic_size:
             bucket["tokens"] -= traffic_size
@@ -947,6 +1045,7 @@ class TrafficShapingOptimization:
         
         for rule_id, rule in self.shaping_rules.items():
             bucket = self.traffic_buckets.get(rule_id, {})
+
             stats["rule_stats"][rule_id] = {
                 "strategy": rule.strategy.value,
                 "rate_limit": rule.rate_limit,
@@ -996,7 +1095,8 @@ class EdgeNetworkOptimization:
         return await self.cdn_accelerator.optimize_content_delivery(content_id, client_location)
     
     async def register_edge_node(self, node: EdgeNode) -> bool:
-        """Enregistre un noeud edge CDN."""
+        """
+        Enregistre un noeud edge CDN."""
         return await self.cdn_accelerator.register_edge_node(node)
     
     # DNS Resolution Optimization
@@ -1005,12 +1105,14 @@ class EdgeNetworkOptimization:
         return await self.dns_optimizer.resolve_domain(domain, record_type)
     
     async def prefetch_popular_domains(self, domains: List[str]):
-        """Précharge les domaines populaires."""
+        """
+        Précharge les domaines populaires."""
         await self.dns_optimizer.prefetch_domains(domains)
     
     # Latency Minimization Engine
     async def minimize_request_latency(self, request_data: Dict[str, Any]) -> LatencyMetrics:
-        """Minimise la latence des requêtes."""
+        """
+        Minimise la latence des requêtes."""
         metrics = await self.latency_engine.optimize_request_latency(request_data)
         self.network_metrics["latency_improvements"] += 1
         return metrics
@@ -1021,30 +1123,36 @@ class EdgeNetworkOptimization:
         return await self.load_balancer.select_server(request_data)
     
     async def add_server_to_pool(self, server: ServerNode) -> bool:
-        """Ajoute un serveur au pool."""
+        """
+        Ajoute un serveur au pool."""
         return await self.load_balancer.add_server(server)
     
     # QoS Management Enterprise
     async def manage_qos_policy(self, traffic_data: Dict[str, Any], policy_id: str) -> Dict[str, Any]:
-        """Gère les politiques QoS."""
+        """
+        Gère les politiques QoS."""
         return await self.qos_manager.apply_qos_policy(traffic_data, policy_id)
     
     async def create_qos_policy(self, policy: QoSPolicy) -> bool:
-        """Crée une politique QoS."""
+        """
+        Crée une politique QoS."""
         return await self.qos_manager.create_qos_policy(policy)
     
     # Traffic Shaping Optimization
     async def shape_network_traffic(self, traffic_data: Dict[str, Any], rule_id: str) -> Dict[str, Any]:
-        """Façonne le trafic réseau."""
+        """
+        Façonne le trafic réseau."""
         return await self.traffic_shaper.shape_traffic(traffic_data, rule_id)
     
     async def create_traffic_shaping_rule(self, rule: TrafficShapingRule) -> bool:
-        """Crée une règle de façonnage."""
+        """
+        Crée une règle de façonnage."""
         return await self.traffic_shaper.create_shaping_rule(rule)
     
     # Unified network optimization
     async def optimize_network_request(self, request_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimise une requête réseau de bout en bout."""
+        """
+        Optimise une requête réseau de bout en bout."""
         optimization_results = {
             "request_id": request_data.get("request_id", str(uuid.uuid4())),
             "optimizations_applied": [],
@@ -1055,51 +1163,70 @@ class EdgeNetworkOptimization:
             # 1. DNS Optimization
             if "domain" in request_data:
                 dns_result = await self.optimize_dns_resolution(request_data["domain"])
+
                 if dns_result:
                     optimization_results["optimizations_applied"].append("dns_optimization")
+
                     optimization_results["dns_resolution"] = dns_result
             
             # 2. Load Balancing
+
             server = await self.balance_server_load(request_data)
+
             if server:
                 optimization_results["optimizations_applied"].append("load_balancing")
+
                 optimization_results["selected_server"] = server.node_id
             
             # 3. Latency Optimization
+
             latency_metrics = await self.minimize_request_latency(request_data)
+
             optimization_results["optimizations_applied"].extend(latency_metrics.optimization_applied)
+
             optimization_results["performance_improvements"]["latency"] = latency_metrics.total_latency
             
             # 4. QoS Management
             if "qos_policy" in request_data:
                 qos_result = await self.manage_qos_policy(request_data, request_data["qos_policy"])
+
                 if qos_result.get("status") == "applied":
                     optimization_results["optimizations_applied"].append("qos_management")
+
                     optimization_results["qos_applied"] = qos_result
             
             # 5. Traffic Shaping
             if "traffic_rule" in request_data:
                 shaping_result = await self.shape_network_traffic(request_data, request_data["traffic_rule"])
+
                 if shaping_result.get("status") in ["allowed", "shaped"]:
                     optimization_results["optimizations_applied"].append("traffic_shaping")
+
                     optimization_results["traffic_shaping"] = shaping_result
             
             optimization_results["status"] = "success"
             optimization_results["total_optimizations"] = len(optimization_results["optimizations_applied"])
+
             
         except Exception as e:
             optimization_results["status"] = "error"
             optimization_results["error"] = str(e)
+
             logger.error(f"Network optimization failed: {e}")
+
         
         return optimization_results
     
     async def get_network_performance_metrics(self) -> Dict[str, Any]:
         """Récupère les métriques de performance réseau."""
         dns_stats = await self.dns_optimizer.get_dns_performance_stats()
+
         latency_stats = await self.latency_engine.get_latency_analytics()
+
         qos_stats = await self.qos_manager.monitor_qos_compliance()
+
         traffic_stats = await self.traffic_shaper.get_shaping_statistics()
+
         
         return {
             "global_metrics": self.network_metrics,
@@ -1125,6 +1252,22 @@ def create_edge_network_optimization() -> EdgeNetworkOptimization:
     return EdgeNetworkOptimization()
 
 
+# ============================================================================
+# ALIASES FOR COMPATIBILITY
+# ============================================================================
+
+# Créer des alias pour les noms attendus par d'autres modules
+BandwidthOptimizer = BandwidthOptimizerSuite
+CDNAccelerator = CDNEdgeAcceleration
+DNSResolver = DNSResolutionOptimization
+LatencyOptimizer = LatencyMinimizationEngine
+LatencyMinimizer = LatencyMinimizationEngine  # Alias alternatif
+LoadBalancer = LoadBalancingIntelligence
+QoSManager = QoSManagementEnterprise
+TrafficShaper = TrafficShapingOptimization
+OptimizationPolicy = OptimizationMode  # Alias pour politique
+
+
 # Exports principaux
 __all__ = [
     "EdgeNetworkOptimization",
@@ -1135,6 +1278,17 @@ __all__ = [
     "LoadBalancingIntelligence",
     "QoSManagementEnterprise",
     "TrafficShapingOptimization",
+    # Aliases
+    "BandwidthOptimizer",
+    "CDNAccelerator",
+    "DNSResolver",
+    "LatencyOptimizer",
+    "LatencyMinimizer",
+    "LoadBalancer",
+    "QoSManager",
+    "TrafficShaper",
+    "OptimizationPolicy",
+    # Enums & Data classes
     "OptimizationMode",
     "CompressionAlgorithm",
     "NetworkProtocol",

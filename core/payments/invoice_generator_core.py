@@ -23,7 +23,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class InvoiceStatus(str, Enum):
-    """Invoice status"""
+    """
+Invoice status"""
     DRAFT = "draft"
     PENDING = "pending"
     SENT = "sent"
@@ -33,7 +34,8 @@ class InvoiceStatus(str, Enum):
     REFUNDED = "refunded"
 
 class InvoiceType(str, Enum):
-    """Invoice types"""
+    """
+Invoice types"""
     STANDARD = "standard"
     RECURRING = "recurring"
     PROFORMA = "proforma"
@@ -42,7 +44,8 @@ class InvoiceType(str, Enum):
 
 @dataclass
 class InvoiceItem:
-    """Invoice line item"""
+    """
+Invoice line item"""
     item_id: str
     description: str
     quantity: Decimal
@@ -72,7 +75,8 @@ class InvoiceItem:
 
 @dataclass
 class Invoice:
-    """Invoice entity"""
+    """
+Invoice entity"""
     invoice_id: str
     invoice_number: str
     invoice_type: InvoiceType
@@ -106,10 +110,12 @@ class Invoice:
         return sum(item.total for item in self.items)
 
 class InvoiceGeneratorCore:
-    """Enterprise invoice generation system"""
+    """
+Enterprise invoice generation system"""
     
     def __init__(self, level: str = "enterprise"):
-        """Initialize invoice generator core"""
+        """
+Initialize invoice generator core"""
         self.level = level
         self.invoices: Dict[str, Invoice] = {}
         self.templates: Dict[str, Dict[str, Any]] = {}
@@ -136,7 +142,8 @@ class InvoiceGeneratorCore:
         logger.info(f"📄 Invoice Generator Core initialized - Level: {level}")
 
     def _initialize_templates(self):
-        """Initialize default invoice templates"""
+        """
+Initialize default invoice templates"""
         
         self.templates["standard"] = {
             "name": "Standard Invoice",
@@ -171,7 +178,8 @@ class InvoiceGeneratorCore:
         terms: str = "",
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Create new invoice"""
+        """
+Create new invoice"""
         
         try:
             # Generate invoice ID and number
@@ -225,7 +233,8 @@ class InvoiceGeneratorCore:
         invoice_id: str,
         template: str = "standard"
     ) -> bytes:
-        """Generate PDF for invoice"""
+        """
+Generate PDF for invoice"""
         
         invoice = self.invoices.get(invoice_id)
         if not invoice:
@@ -244,7 +253,8 @@ class InvoiceGeneratorCore:
         invoice_id: str,
         template: str = "standard"
     ) -> str:
-        """Generate HTML for invoice"""
+        """
+Generate HTML for invoice"""
         
         invoice = self.invoices.get(invoice_id)
         if not invoice:
@@ -323,7 +333,8 @@ class InvoiceGeneratorCore:
         return html
 
     def _format_address(self, address: Dict[str, str]) -> str:
-        """Format address for display"""
+        """
+Format address for display"""
         if not address:
             return ""
         
@@ -344,7 +355,8 @@ class InvoiceGeneratorCore:
         return "".join(parts)
 
     def _format_invoice_items(self, items: List[InvoiceItem], currency: str) -> str:
-        """Format invoice items as HTML table rows"""
+        """
+Format invoice items as HTML table rows"""
         rows = []
         
         for item in items:
@@ -362,7 +374,8 @@ class InvoiceGeneratorCore:
         return "".join(rows)
 
     def _format_currency(self, amount: Decimal, currency: str) -> str:
-        """Format currency amount"""
+        """
+Format currency amount"""
         symbols = {
             "USD": "$",
             "EUR": "€",
@@ -374,12 +387,14 @@ class InvoiceGeneratorCore:
         return f"{symbol}{amount:.2f}"
 
     def _html_to_pdf(self, html_content: str) -> bytes:
-        """Convert HTML to PDF (placeholder)"""
+        """
+Convert HTML to PDF (placeholder)"""
         # In production, would use library like weasyprint or pdfkit
         return html_content.encode('utf-8')
 
     async def update_invoice_status(self, invoice_id: str, status: InvoiceStatus):
-        """Update invoice status"""
+        """
+Update invoice status"""
         
         invoice = self.invoices.get(invoice_id)
         if not invoice:
@@ -391,7 +406,8 @@ class InvoiceGeneratorCore:
         logger.info(f"Updated invoice {invoice.invoice_number} status: {old_status.value} -> {status.value}")
 
     async def send_invoice(self, invoice_id: str, recipient_email: str = None) -> bool:
-        """Send invoice to customer"""
+        """
+Send invoice to customer"""
         
         invoice = self.invoices.get(invoice_id)
         if not invoice:
@@ -425,7 +441,8 @@ class InvoiceGeneratorCore:
         payment_method: str,
         transaction_id: str
     ) -> bool:
-        """Process payment for invoice"""
+        """
+Process payment for invoice"""
         
         invoice = self.invoices.get(invoice_id)
         if not invoice:
@@ -455,7 +472,8 @@ class InvoiceGeneratorCore:
             return False
 
     async def get_overdue_invoices(self) -> List[Invoice]:
-        """Get overdue invoices"""
+        """
+Get overdue invoices"""
         
         overdue = []
         current_date = datetime.utcnow()
@@ -471,7 +489,8 @@ class InvoiceGeneratorCore:
         return overdue
 
     async def calculate_late_fees(self, invoice_id: str) -> Decimal:
-        """Calculate late fees for overdue invoice"""
+        """
+Calculate late fees for overdue invoice"""
         
         invoice = self.invoices.get(invoice_id)
         if not invoice:
@@ -491,7 +510,8 @@ class InvoiceGeneratorCore:
         return late_fee
 
     def get_invoice(self, invoice_id: str) -> Optional[Invoice]:
-        """Get invoice by ID"""
+        """
+Get invoice by ID"""
         return self.invoices.get(invoice_id)
 
     def list_invoices(
@@ -500,7 +520,8 @@ class InvoiceGeneratorCore:
         status: Optional[InvoiceStatus] = None,
         limit: int = 100
     ) -> List[Invoice]:
-        """List invoices with filters"""
+        """
+List invoices with filters"""
         
         invoices = list(self.invoices.values())
         
@@ -517,7 +538,8 @@ class InvoiceGeneratorCore:
         return invoices[:limit]
 
     async def health_check(self) -> bool:
-        """Health check for invoice generator"""
+        """
+Health check for invoice generator"""
         try:
             # Test invoice creation
             test_items = [{
@@ -547,4 +569,4 @@ __all__ = [
     "InvoiceStatus", "InvoiceType"
 ]
 
-logger.info("📄 Invoice Generator Core module loaded")
+logger.info("📄 Invoice Generator Core module initialized")

@@ -37,7 +37,8 @@ import librosa
 logger = logging.getLogger(__name__)
 
 class MobileProtectionMode(Enum):
-    """Mobile protection modes"""
+    """
+        Mobile protection modes"""
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -136,6 +137,126 @@ class MobileAlertChannel(Enum):
     API = "api"
 
 @dataclass
+class MobileProtectionConfiguration:
+    """
+    Mobile Protection System Configuration
+    ======================================
+    Configuration centrale pour le système de protection mobile.
+    Définit les paramètres de sécurité, performance et optimisation mobile.
+    
+    Business Logic:
+    Configuration → Protection Mode → Device Optimization → Security Level → 
+    Performance Tuning → Alert Settings → Monitoring Parameters
+    """
+    # Protection Settings
+    protection_mode: MobileProtectionMode = MobileProtectionMode.STANDARD
+    enable_fingerprinting: bool = True
+    enable_watermarking: bool = True
+    enable_real_time_monitoring: bool = True
+    enable_violation_detection: bool = True
+    
+    # Mobile Optimization
+    mobile_optimized: bool = True
+    device_type: MobileDeviceType = MobileDeviceType.SMARTPHONE
+    network_type: MobileNetworkType = MobileNetworkType.WIFI
+    battery_optimization: bool = True
+    bandwidth_optimization: bool = True
+    
+    # Security Levels
+    fingerprint_quality: MobileFingerprintQuality = MobileFingerprintQuality.HIGH
+    watermark_strength: MobileWatermarkStrength = MobileWatermarkStrength.MODERATE
+    minimum_confidence_score: float = 0.85
+    security_level: str = "standard"  # basic, standard, high, enterprise
+    
+    # Performance Settings
+    max_processing_time: float = 5.0  # seconds
+    enable_caching: bool = True
+    enable_compression: bool = True
+    parallel_processing: bool = True
+    max_concurrent_operations: int = 5
+    
+    # Alert Configuration
+    alert_channels: List[MobileAlertChannel] = field(default_factory=lambda: [
+        MobileAlertChannel.PUSH_NOTIFICATION,
+        MobileAlertChannel.IN_APP
+    ])
+    alert_severity_threshold: MobileAlertSeverity = MobileAlertSeverity.MEDIUM
+    enable_automatic_response: bool = True
+    
+    # Monitoring Settings
+    monitoring_interval: float = 60.0  # seconds
+    enable_analytics: bool = True
+    store_evidence: bool = True
+    evidence_retention_days: int = 90
+    
+    # Advanced Features
+    enable_ai_detection: bool = True
+    enable_blockchain_verification: bool = False
+    enable_forensic_watermarking: bool = True
+    enable_adaptive_protection: bool = True  # S'adapte au contexte mobile
+    
+    # Rate Limiting
+    max_requests_per_minute: int = 100
+    max_fingerprint_operations_per_hour: int = 1000
+    max_watermark_operations_per_hour: int = 500
+    
+    # Storage Configuration
+    cache_size_mb: int = 500
+    temp_storage_path: str = "./temp/mobile_protection"
+    backup_enabled: bool = True
+    
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert configuration to dictionary"""
+        return {
+            "protection_mode": self.protection_mode.value,
+            "mobile_optimized": self.mobile_optimized,
+            "security_level": self.security_level,
+            "fingerprint_quality": self.fingerprint_quality.value,
+            "watermark_strength": self.watermark_strength.value,
+            "enable_ai_detection": self.enable_ai_detection,
+            "alert_channels": [ch.value for ch in self.alert_channels],
+            "performance": {
+                "max_processing_time": self.max_processing_time,
+                "parallel_processing": self.parallel_processing,
+                "max_concurrent_operations": self.max_concurrent_operations
+            },
+            "monitoring": {
+                "interval": self.monitoring_interval,
+                "analytics_enabled": self.enable_analytics,
+                "evidence_retention_days": self.evidence_retention_days
+            }
+        }
+    
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> 'MobileProtectionConfiguration':
+        """Create configuration from dictionary"""
+        config = cls()
+        if "protection_mode" in data:
+            config.protection_mode = MobileProtectionMode(data["protection_mode"])
+        if "security_level" in data:
+            config.security_level = data["security_level"]
+        if "mobile_optimized" in data:
+            config.mobile_optimized = data["mobile_optimized"]
+        # Add more fields as needed
+        return config
+    
+    def validate(self) -> Tuple[bool, Optional[str]]:
+        """Validate configuration parameters"""
+        if self.max_processing_time <= 0:
+            return False, "max_processing_time must be positive"
+        
+        if self.minimum_confidence_score < 0 or self.minimum_confidence_score > 1:
+            return False, "minimum_confidence_score must be between 0 and 1"
+        
+        if self.max_concurrent_operations < 1:
+            return False, "max_concurrent_operations must be at least 1"
+        
+        if self.evidence_retention_days < 1:
+            return False, "evidence_retention_days must be at least 1"
+        
+        return True, None
+
+@dataclass
 class MobileProtectionRequest:
     """Mobile protection request structure"""
     content_id: str
@@ -152,7 +273,8 @@ class MobileProtectionRequest:
 
 @dataclass
 class MobileProtectionResult:
-    """Mobile protection result structure"""
+    """
+        Mobile protection result structure"""
     protection_id: str
     content_id: str
     fingerprint_result: Dict[str, Any]
@@ -165,7 +287,8 @@ class MobileProtectionResult:
 
 @dataclass
 class MobileFingerprintRequest:
-    """Mobile fingerprint request"""
+    """
+        Mobile fingerprint request"""
     content_id: str
     content_path: str
     content_type: MobileContentType
@@ -176,7 +299,8 @@ class MobileFingerprintRequest:
 
 @dataclass
 class MobileFingerprintResult:
-    """Mobile fingerprint result"""
+    """
+        Mobile fingerprint result"""
     fingerprint_id: str
     content_id: str
     fingerprints: Dict[MobileFingerprintType, str]
@@ -187,7 +311,8 @@ class MobileFingerprintResult:
 
 @dataclass
 class MobileWatermarkRequest:
-    """Mobile watermark request"""
+    """
+        Mobile watermark request"""
     content_id: str
     content_path: str
     content_type: MobileContentType
@@ -199,7 +324,8 @@ class MobileWatermarkRequest:
 
 @dataclass
 class MobileWatermarkResult:
-    """Mobile watermark result"""
+    """
+        Mobile watermark result"""
     watermark_id: str
     content_id: str
     watermarked_content_path: str
@@ -210,7 +336,8 @@ class MobileWatermarkResult:
 
 @dataclass
 class MobileViolationEvent:
-    """Mobile violation event"""
+    """
+        Mobile violation event"""
     event_id: str
     content_id: str
     violation_type: MobileViolationType
@@ -223,7 +350,8 @@ class MobileViolationEvent:
 
 @dataclass
 class MobileAlertRequest:
-    """Mobile alert request"""
+    """
+        Mobile alert request"""
     violation_event: MobileViolationEvent
     alert_channels: List[MobileAlertChannel]
     priority: MobileAlertSeverity
@@ -232,7 +360,8 @@ class MobileAlertRequest:
 
 @dataclass
 class MobileAlertResult:
-    """Mobile alert result"""
+    """
+        Mobile alert result"""
     alert_id: str
     violation_event_id: str
     alerts_sent: Dict[MobileAlertChannel, bool]
@@ -241,10 +370,12 @@ class MobileAlertResult:
     delivery_confirmation: bool
 
 class MobileProtectionSystem:
-    """Unified mobile protection system consolidating fingerprinting, watermarking, orchestration, and monitoring"""
+    """
+        Unified mobile protection system consolidating fingerprinting, watermarking, orchestration, and monitoring"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize mobile protection system with comprehensive capabilities"""
+        """
+        Initialize mobile protection system with comprehensive capabilities"""
         self.config = config or {}
         self.fingerprint_engine = MobileFingerprintEngine(self.config)
         self.watermark_processor = MobileWatermarkProcessor(self.config)
@@ -276,9 +407,12 @@ class MobileProtectionSystem:
             start_time = datetime.utcnow()
             
             # Initialize protection workflow
+
             orchestration_result = await self.protection_orchestrator.orchestrate_protection(
                 protection_request, protection_id
             )
+
+
             
             results = {}
             
@@ -295,10 +429,13 @@ class MobileProtectionSystem:
                     ],
                     mobile_optimized=protection_request.mobile_optimized
                 )
+
+
                 
                 fingerprint_result = await self.fingerprint_engine.generate_mobile_fingerprint(
                     fingerprint_request
                 )
+
                 results["fingerprint_result"] = fingerprint_result.__dict__
             
             # Apply watermarking if enabled
@@ -310,10 +447,13 @@ class MobileProtectionSystem:
                     watermark_type=MobileWatermarkType.INVISIBLE,
                     mobile_optimized=protection_request.mobile_optimized
                 )
+
+
                 
                 watermark_result = await self.watermark_processor.apply_mobile_watermark(
                     watermark_request
                 )
+
                 results["watermark_result"] = watermark_result.__dict__
             
             # Setup monitoring if enabled
@@ -323,12 +463,15 @@ class MobileProtectionSystem:
                     protection_request.creator_id,
                     protection_request.mobile_optimized
                 )
+
                 results["monitoring_result"] = monitoring_result
             
             # Calculate protection level
+
             protection_level = self._calculate_protection_level(results)
             
             # Create comprehensive protection result
+
             protection_result = MobileProtectionResult(
                 protection_id=protection_id,
                 content_id=protection_request.content_id,
@@ -347,11 +490,13 @@ class MobileProtectionSystem:
             # Update metrics
             self.protection_metrics["protections_applied"] += 1
             self._update_protection_metrics(protection_result)
+
             
             return protection_result
             
         except Exception as e:
             logger.error(f"Mobile content protection failed: {e}")
+
             raise
     
     async def detect_violations(self, content_id: str, monitoring_data: Dict[str, Any]) -> List[MobileViolationEvent]:
@@ -360,31 +505,39 @@ class MobileProtectionSystem:
             violations = []
             
             # Check for fingerprint matches
+
             fingerprint_violations = await self._detect_fingerprint_violations(
                 content_id, monitoring_data
             )
+
             violations.extend(fingerprint_violations)
             
             # Check for watermark tampering
+
             watermark_violations = await self._detect_watermark_violations(
                 content_id, monitoring_data
             )
+
             violations.extend(watermark_violations)
             
             # Check for unauthorized distribution
+
             distribution_violations = await self._detect_distribution_violations(
                 content_id, monitoring_data
             )
+
             violations.extend(distribution_violations)
             
             # Process detected violations
             for violation in violations:
                 await self._process_violation(violation)
+
             
             return violations
             
         except Exception as e:
             logger.error(f"Violation detection failed: {e}")
+
             return []
     
     async def send_violation_alert(self, violation_event: MobileViolationEvent, 
@@ -397,17 +550,22 @@ class MobileProtectionSystem:
             mobile_format=True,
             immediate=violation_event.severity in [MobileAlertSeverity.HIGH, MobileAlertSeverity.CRITICAL]
         )
+
         
         return await self.violation_alert_system.send_mobile_alert(alert_request)
     
     async def get_protection_status(self, content_id: str) -> Dict[str, Any]:
-        """Get comprehensive protection status for content"""
+        """
+        Get comprehensive protection status for content"""
         protection_records = [
-            p for p in self.active_protections.values() 
+            p for p in self.active_protections.values()
+ 
             if p.content_id == content_id
         ]
+
         
         violation_history = self.violation_history.get(content_id, [])
+
         
         return {
             "content_id": content_id,
@@ -435,28 +593,37 @@ class MobileProtectionSystem:
         
         if "fingerprint_result" in results:
             fingerprint_confidence = results["fingerprint_result"].get("confidence_score", 0.0)
+
             protection_factors.append(fingerprint_confidence * 0.4)
+
         
         if "watermark_result" in results:
             watermark_robustness = results["watermark_result"].get("robustness_score", 0.0)
+
             protection_factors.append(watermark_robustness * 0.4)
+
         
         if "monitoring_result" in results:
             monitoring_coverage = results["monitoring_result"].get("coverage_score", 0.0)
+
             protection_factors.append(monitoring_coverage * 0.2)
+
         
         return sum(protection_factors) if protection_factors else 0.0
     
     def _update_protection_metrics(self, protection_result: MobileProtectionResult):
         """Update protection system metrics"""
         current_success_rate = self.protection_metrics["success_rate"]
+
         total_protections = self.protection_metrics["protections_applied"]
         
         # Calculate new success rate based on protection level
+
         success = 1.0 if protection_result.protection_level > 0.7 else 0.0
         self.protection_metrics["success_rate"] = (
             (current_success_rate * (total_protections - 1) + success) / total_protections
         )
+
         
         self.protection_metrics["mobile_optimization_score"] = (
             1.0 if protection_result.mobile_optimization_applied else 0.0
@@ -466,24 +633,31 @@ class MobileProtectionSystem:
         """Calculate mobile optimization effectiveness score"""
         if not self.active_protections:
             return 0.0
+
         
         mobile_optimized_count = sum(
-            1 for p in self.active_protections.values() 
+            1 for p in self.active_protections.values()
+ 
             if p.mobile_optimization_applied
         )
+
         
         return mobile_optimized_count / len(self.active_protections)
     
     async def _detect_fingerprint_violations(self, content_id: str, 
                                            monitoring_data: Dict[str, Any]) -> List[MobileViolationEvent]:
-        """Detect fingerprint-based violations"""
+        """
+        Detect fingerprint-based violations"""
         violations = []
         
         # Check for fingerprint matches in monitoring data
+
         fingerprint_matches = monitoring_data.get("fingerprint_matches", [])
+
         
         for match in fingerprint_matches:
             if match.get("similarity_score", 0.0) > 0.8:  # High similarity threshold
+
                 violation = MobileViolationEvent(
                     event_id=f"violation_{uuid.uuid4().hex[:8]}",
                     content_id=content_id,
@@ -495,7 +669,9 @@ class MobileProtectionSystem:
                     confidence_score=match.get("similarity_score", 0.0),
                     mobile_specific=True
                 )
+
                 violations.append(violation)
+
         
         return violations
     
@@ -505,7 +681,9 @@ class MobileProtectionSystem:
         violations = []
         
         # Check for watermark removal or tampering
+
         watermark_status = monitoring_data.get("watermark_status", {})
+
         
         if not watermark_status.get("watermark_present", True):
             violation = MobileViolationEvent(
@@ -519,7 +697,9 @@ class MobileProtectionSystem:
                 confidence_score=0.95,
                 mobile_specific=True
             )
+
             violations.append(violation)
+
         
         return violations
     
@@ -529,8 +709,11 @@ class MobileProtectionSystem:
         violations = []
         
         # Check for unauthorized distribution
+
         distribution_data = monitoring_data.get("distribution_analysis", {})
+
         unauthorized_sources = distribution_data.get("unauthorized_sources", [])
+
         
         for source in unauthorized_sources:
             violation = MobileViolationEvent(
@@ -544,7 +727,9 @@ class MobileProtectionSystem:
                 confidence_score=source.get("confidence", 0.8),
                 mobile_specific=source.get("mobile_platform", False)
             )
+
             violations.append(violation)
+
         
         return violations
     
@@ -575,24 +760,32 @@ class MobileFingerprintEngine:
         self.fingerprint_cache = {}
         
     async def generate_mobile_fingerprint(self, request: MobileFingerprintRequest) -> MobileFingerprintResult:
-        """Generate mobile-optimized content fingerprint"""
+        """
+        Generate mobile-optimized content fingerprint"""
         fingerprints = {}
+
         quality_scores = {}
         
         for fingerprint_type in request.fingerprint_types:
             try:
                 if fingerprint_type == MobileFingerprintType.PERCEPTUAL_HASH:
                     fingerprint, quality = await self._generate_perceptual_hash(request)
+
                 elif fingerprint_type == MobileFingerprintType.FEATURE_VECTOR:
                     fingerprint, quality = await self._generate_feature_vector(request)
+
                 elif fingerprint_type == MobileFingerprintType.SPECTRAL_FINGERPRINT:
                     fingerprint, quality = await self._generate_spectral_fingerprint(request)
+
                 elif fingerprint_type == MobileFingerprintType.VISUAL_FINGERPRINT:
                     fingerprint, quality = await self._generate_visual_fingerprint(request)
+
                 elif fingerprint_type == MobileFingerprintType.AUDIO_FINGERPRINT:
                     fingerprint, quality = await self._generate_audio_fingerprint(request)
+
                 elif fingerprint_type == MobileFingerprintType.COMPOSITE_FINGERPRINT:
                     fingerprint, quality = await self._generate_composite_fingerprint(request)
+
                 else:
                     continue
                 
@@ -601,8 +794,10 @@ class MobileFingerprintEngine:
                 
             except Exception as e:
                 logger.error(f"Failed to generate {fingerprint_type.value} fingerprint: {e}")
+
                 fingerprints[fingerprint_type] = ""
                 quality_scores[fingerprint_type] = 0.0
+
         
         overall_confidence = sum(quality_scores.values()) / len(quality_scores) if quality_scores else 0.0
         
@@ -612,9 +807,7 @@ class MobileFingerprintEngine:
             fingerprints=fingerprints,
             quality_scores=quality_scores,
             mobile_compatibility=request.mobile_optimized,
-            processing_time=0.5,  # Placeholder
-            confidence_score=overall_confidence
-        )
+            processing_time=0.5,        )
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
         """Get fingerprint engine performance metrics"""
@@ -628,36 +821,42 @@ class MobileFingerprintEngine:
     async def _generate_perceptual_hash(self, request: MobileFingerprintRequest) -> Tuple[str, float]:
         """Generate perceptual hash fingerprint"""
         # Mobile-optimized perceptual hashing implementation
+
         hash_value = hashlib.md5(f"perceptual_{request.content_id}".encode()).hexdigest()
         return hash_value, 0.85
     
     async def _generate_feature_vector(self, request: MobileFingerprintRequest) -> Tuple[str, float]:
         """Generate feature vector fingerprint"""
         # Mobile-optimized feature extraction implementation
+
         feature_vector = f"features_{request.content_id}"
         return base64.b64encode(feature_vector.encode()).decode(), 0.82
     
     async def _generate_spectral_fingerprint(self, request: MobileFingerprintRequest) -> Tuple[str, float]:
         """Generate spectral fingerprint"""
         # Mobile-optimized spectral analysis implementation
+
         spectral_data = f"spectral_{request.content_id}"
         return base64.b64encode(spectral_data.encode()).decode(), 0.78
     
     async def _generate_visual_fingerprint(self, request: MobileFingerprintRequest) -> Tuple[str, float]:
         """Generate visual fingerprint"""
         # Mobile-optimized visual feature extraction
+
         visual_features = f"visual_{request.content_id}"
         return base64.b64encode(visual_features.encode()).decode(), 0.80
     
     async def _generate_audio_fingerprint(self, request: MobileFingerprintRequest) -> Tuple[str, float]:
         """Generate audio fingerprint"""
         # Mobile-optimized audio feature extraction
+
         audio_features = f"audio_{request.content_id}"
         return base64.b64encode(audio_features.encode()).decode(), 0.83
     
     async def _generate_composite_fingerprint(self, request: MobileFingerprintRequest) -> Tuple[str, float]:
         """Generate composite fingerprint combining multiple techniques"""
         # Mobile-optimized composite fingerprinting
+
         composite_data = f"composite_{request.content_id}"
         return base64.b64encode(composite_data.encode()).decode(), 0.88
 
@@ -670,27 +869,39 @@ class MobileWatermarkProcessor:
         self.watermark_cache = {}
         
     async def apply_mobile_watermark(self, request: MobileWatermarkRequest) -> MobileWatermarkResult:
-        """Apply mobile-optimized watermark to content"""
+        """
+        Apply mobile-optimized watermark to content"""
         try:
             watermark_id = f"watermark_{uuid.uuid4().hex[:8]}"
             
             if request.watermark_type == MobileWatermarkType.VISIBLE:
                 watermarked_path = await self._apply_visible_watermark(request)
+
+
                 robustness_score = 0.7
             elif request.watermark_type == MobileWatermarkType.INVISIBLE:
                 watermarked_path = await self._apply_invisible_watermark(request)
+
+
                 robustness_score = 0.9
             elif request.watermark_type == MobileWatermarkType.AUDIO_WATERMARK:
                 watermarked_path = await self._apply_audio_watermark(request)
+
+
                 robustness_score = 0.85
             elif request.watermark_type == MobileWatermarkType.METADATA_WATERMARK:
                 watermarked_path = await self._apply_metadata_watermark(request)
+
+
                 robustness_score = 0.6
             elif request.watermark_type == MobileWatermarkType.STEGANOGRAPHIC:
                 watermarked_path = await self._apply_steganographic_watermark(request)
+
+
                 robustness_score = 0.95
             else:
                 watermarked_path = request.content_path
+
                 robustness_score = 0.0
             
             return MobileWatermarkResult(
@@ -700,11 +911,12 @@ class MobileWatermarkProcessor:
                 watermark_applied=True,
                 mobile_visibility_optimized=request.mobile_optimized,
                 robustness_score=robustness_score,
-                processing_time=0.8  # Placeholder
+                processing_time=0.8
             )
             
         except Exception as e:
             logger.error(f"Watermarking failed: {e}")
+
             raise
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
@@ -719,30 +931,35 @@ class MobileWatermarkProcessor:
     async def _apply_visible_watermark(self, request: MobileWatermarkRequest) -> str:
         """Apply visible watermark optimized for mobile viewing"""
         # Mobile-optimized visible watermarking implementation
+
         output_path = f"{request.content_path}_watermarked_visible"
         return output_path
     
     async def _apply_invisible_watermark(self, request: MobileWatermarkRequest) -> str:
         """Apply invisible watermark with mobile compatibility"""
         # Mobile-optimized invisible watermarking implementation
+
         output_path = f"{request.content_path}_watermarked_invisible"
         return output_path
     
     async def _apply_audio_watermark(self, request: MobileWatermarkRequest) -> str:
         """Apply audio watermark optimized for mobile playback"""
         # Mobile-optimized audio watermarking implementation
+
         output_path = f"{request.content_path}_watermarked_audio"
         return output_path
     
     async def _apply_metadata_watermark(self, request: MobileWatermarkRequest) -> str:
         """Apply metadata watermark"""
         # Mobile-optimized metadata watermarking implementation
+
         output_path = f"{request.content_path}_watermarked_metadata"
         return output_path
     
     async def _apply_steganographic_watermark(self, request: MobileWatermarkRequest) -> str:
         """Apply steganographic watermark"""
         # Mobile-optimized steganographic watermarking implementation
+
         output_path = f"{request.content_path}_watermarked_steganographic"
         return output_path
 
@@ -756,7 +973,8 @@ class MobileProtectionOrchestrator:
         
     async def orchestrate_protection(self, request: MobileProtectionRequest, 
                                    protection_id: str) -> Dict[str, Any]:
-        """Orchestrate comprehensive protection workflow"""
+        """
+        Orchestrate comprehensive protection workflow"""
         workflow = {
             "protection_id": protection_id,
             "request": request,
@@ -766,20 +984,25 @@ class MobileProtectionOrchestrator:
         }
         
         # Stage 1: Content analysis and optimization
+
         analysis_result = await self._analyze_content_for_protection(request)
         workflow["stages"].append({"stage": "content_analysis", "result": analysis_result})
         
         # Stage 2: Protection strategy selection
+
         strategy_result = await self._select_protection_strategy(request, analysis_result)
         workflow["stages"].append({"stage": "strategy_selection", "result": strategy_result})
         
         # Stage 3: Mobile optimization configuration
+
         mobile_config = await self._configure_mobile_optimizations(request)
         workflow["stages"].append({"stage": "mobile_optimization", "result": mobile_config})
         
         # Stage 4: Resource allocation
+
         resource_allocation = await self._allocate_protection_resources(request)
         workflow["stages"].append({"stage": "resource_allocation", "result": resource_allocation})
+
         
         workflow["completed_at"] = datetime.utcnow()
         workflow["status"] = "completed"
@@ -845,7 +1068,8 @@ class MobileViolationAlertSystem:
         
     async def setup_content_monitoring(self, content_id: str, creator_id: str, 
                                      mobile_optimized: bool = True) -> Dict[str, Any]:
-        """Setup comprehensive content monitoring"""
+        """
+        Setup comprehensive content monitoring"""
         monitoring_id = f"monitoring_{uuid.uuid4().hex[:8]}"
         
         monitoring_session = {
@@ -877,28 +1101,36 @@ class MobileViolationAlertSystem:
         """Send violation alert through mobile channels"""
         alert_id = f"alert_{uuid.uuid4().hex[:8]}"
         start_time = datetime.utcnow()
+
+
         
         alerts_sent = {}
+
         mobile_notifications_delivered = 0
         
         for channel in alert_request.alert_channels:
             try:
                 if channel == MobileAlertChannel.PUSH_NOTIFICATION:
                     success = await self._send_push_notification(alert_request)
+
                     if success:
                         mobile_notifications_delivered += 1
                 elif channel == MobileAlertChannel.EMAIL:
                     success = await self._send_email_alert(alert_request)
+
                 elif channel == MobileAlertChannel.SMS:
                     success = await self._send_sms_alert(alert_request)
+
                     if success:
                         mobile_notifications_delivered += 1
                 elif channel == MobileAlertChannel.IN_APP:
                     success = await self._send_in_app_alert(alert_request)
+
                     if success:
                         mobile_notifications_delivered += 1
                 elif channel == MobileAlertChannel.WEBHOOK:
                     success = await self._send_webhook_alert(alert_request)
+
                 else:
                     success = False
                 
@@ -906,6 +1138,7 @@ class MobileViolationAlertSystem:
                 
             except Exception as e:
                 logger.error(f"Failed to send alert via {channel.value}: {e}")
+
                 alerts_sent[channel] = False
         
         # Store alert in history
@@ -918,6 +1151,7 @@ class MobileViolationAlertSystem:
             "alerts_sent": alerts_sent,
             "sent_at": datetime.utcnow().isoformat()
         })
+
         
         return MobileAlertResult(
             alert_id=alert_id,
@@ -931,6 +1165,7 @@ class MobileViolationAlertSystem:
     async def get_performance_metrics(self) -> Dict[str, Any]:
         """Get violation alert system performance metrics"""
         total_alerts = sum(len(alerts) for alerts in self.alert_history.values())
+
         
         return {
             "total_alerts_sent": total_alerts,
@@ -946,21 +1181,25 @@ class MobileViolationAlertSystem:
         return True
     
     async def _send_email_alert(self, alert_request: MobileAlertRequest) -> bool:
-        """Send email alert"""
+        """
+        Send email alert"""
         # Email alert implementation
         return True
     
     async def _send_sms_alert(self, alert_request: MobileAlertRequest) -> bool:
-        """Send SMS alert"""
+        """
+        Send SMS alert"""
         # SMS alert implementation
         return True
     
     async def _send_in_app_alert(self, alert_request: MobileAlertRequest) -> bool:
-        """Send in-app alert"""
+        """
+        Send in-app alert"""
         # In-app alert implementation
         return True
     
     async def _send_webhook_alert(self, alert_request: MobileAlertRequest) -> bool:
-        """Send webhook alert"""
+        """
+        Send webhook alert"""
         # Webhook alert implementation
         return True

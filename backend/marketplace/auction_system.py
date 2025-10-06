@@ -28,7 +28,8 @@ import json
 logger = logging.getLogger(__name__)
 
 class AuctionType(Enum):
-    """Auction type enumeration"""
+    """
+        Auction type enumeration"""
     STANDARD = "standard"              # Highest bid wins
     REVERSE = "reverse"                # Lowest bid wins
     DUTCH = "dutch"                    # Price decreases over time
@@ -111,10 +112,12 @@ class Auction:
             self.current_price = self.starting_price
 
 class AuctionEngine:
-    """Core auction processing engine"""
+    """
+        Core auction processing engine"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize auction engine"""
+        """
+        Initialize auction engine"""
         self.config = config or {}
         self.active_auctions: Dict[str, Auction] = {}
         self.completed_auctions: Dict[str, Auction] = {}
@@ -125,6 +128,7 @@ class AuctionEngine:
         self.max_auction_duration = self.config.get('max_auction_duration', 168)  # 7 days
         self.auto_extend_minutes = self.config.get('auto_extend_minutes', 10)
         self.fraud_detection_enabled = self.config.get('fraud_detection_enabled', True)
+
         
         logger.info("🏛️ Auction Engine initialized")
     
@@ -135,6 +139,8 @@ class AuctionEngine:
             
             # Validate auction data
             await self._validate_auction_data(auction_data)
+
+
             
             auction = Auction(
                 auction_id=auction_id,
@@ -149,16 +155,20 @@ class AuctionEngine:
                 currency=auction_data.get('currency', 'USD'),
                 duration_hours=auction_data.get('duration_hours', 24),
                 status=AuctionStatus.ACTIVE,  # Set as active by default
+
                 metadata=auction_data.get('metadata', {})
             )
+
             
             self.active_auctions[auction_id] = auction
             
             logger.info(f"Created auction: {auction_id} for item: {auction.item_id}")
+
             return auction
             
         except Exception as e:
             logger.error(f"Failed to create auction: {e}")
+
             raise
     
     async def place_bid(self, auction_id: str, bidder_id: str, amount: Decimal, 
@@ -167,13 +177,19 @@ class AuctionEngine:
         try:
             if auction_id not in self.active_auctions:
                 raise ValueError(f"Auction {auction_id} not found or not active")
+
+
             
             auction = self.active_auctions[auction_id]
             
             # Validate bid
             await self._validate_bid(auction, bidder_id, amount)
+
+
             
             bid_id = str(uuid.uuid4())
+
+
             bid = AuctionBid(
                 bid_id=bid_id,
                 auction_id=auction_id,
@@ -188,6 +204,7 @@ class AuctionEngine:
             
             # Store bid
             auction.bids.append(bid)
+
             auction.bid_count += 1
             
             if auction_id not in self.bid_history:
@@ -196,12 +213,15 @@ class AuctionEngine:
             
             # Check for auto-extension
             await self._check_auto_extension(auction, bid)
+
             
             logger.info(f"Bid placed: {bid_id} for auction: {auction_id} - Amount: {amount}")
+
             return bid
             
         except Exception as e:
             logger.error(f"Failed to place bid: {e}")
+
             raise
     
     async def end_auction(self, auction_id: str, force: bool = False) -> Optional[AuctionBid]:
@@ -209,6 +229,8 @@ class AuctionEngine:
         try:
             if auction_id not in self.active_auctions:
                 raise ValueError(f"Auction {auction_id} not found or not active")
+
+
             
             auction = self.active_auctions[auction_id]
             
@@ -216,7 +238,9 @@ class AuctionEngine:
                 raise ValueError("Auction has not reached end time")
             
             # Determine winner based on auction type
+
             winning_bid = await self._determine_winner(auction)
+
             
             if winning_bid:
                 auction.winner_id = winning_bid.bidder_id
@@ -235,10 +259,12 @@ class AuctionEngine:
             del self.active_auctions[auction_id]
             
             logger.info(f"Auction ended: {auction_id} - Winner: {auction.winner_id if winning_bid else 'None'}")
+
             return winning_bid
             
         except Exception as e:
             logger.error(f"Failed to end auction: {e}")
+
             raise
     
     async def get_auction(self, auction_id: str) -> Optional[Auction]:
@@ -250,8 +276,10 @@ class AuctionEngine:
         return None
     
     async def get_active_auctions(self, filters: Dict[str, Any] = None) -> List[Auction]:
-        """Get active auctions with optional filters"""
+        """
+        Get active auctions with optional filters"""
         auctions = list(self.active_auctions.values())
+
         
         if filters:
             # Apply filters
@@ -261,20 +289,26 @@ class AuctionEngine:
                 auctions = [a for a in auctions if a.auction_type.value == filters['auction_type']]
             if 'max_price' in filters:
                 max_price = Decimal(str(filters['max_price']))
+
+
                 auctions = [a for a in auctions if a.current_price <= max_price]
         
         return auctions
     
     async def _validate_auction_data(self, data: Dict[str, Any]) -> None:
-        """Validate auction creation data"""
+        """
+        Validate auction creation data"""
         required_fields = ['item_id', 'seller_id', 'title', 'description', 'auction_type', 'starting_price']
         
         for field in required_fields:
             if field not in data:
                 raise ValueError(f"Missing required field: {field}")
+
         
         if data.get('duration_hours', 24) > self.max_auction_duration:
             raise ValueError(f"Auction duration cannot exceed {self.max_auction_duration} hours")
+
+
         
         starting_price = Decimal(str(data['starting_price']))
         if starting_price <= 0:
@@ -284,12 +318,15 @@ class AuctionEngine:
         """Validate bid placement"""
         if auction.status != AuctionStatus.ACTIVE:
             raise ValueError("Auction is not active")
+
         
         if datetime.utcnow() > auction.end_time:
             raise ValueError("Auction has ended")
+
         
         if bidder_id == auction.seller_id:
             raise ValueError("Seller cannot bid on own auction")
+
         
         if auction.auction_type == AuctionType.STANDARD:
             min_amount = auction.current_price + self.min_bid_increment
@@ -317,17 +354,21 @@ class AuctionEngine:
             pass
     
     async def _check_auto_extension(self, auction: Auction, bid: AuctionBid) -> None:
-        """Check if auction should be auto-extended"""
+        """
+        Check if auction should be auto-extended"""
         time_remaining = auction.end_time - datetime.utcnow()
+
         
         if time_remaining.total_seconds() < self.auto_extend_minutes * 60:
             auction.end_time += timedelta(minutes=self.auto_extend_minutes)
+
             logger.info(f"Auto-extended auction {auction.auction_id} by {self.auto_extend_minutes} minutes")
     
     async def _determine_winner(self, auction: Auction) -> Optional[AuctionBid]:
         """Determine auction winner based on type"""
         if not auction.bids:
             return None
+
         
         valid_bids = [bid for bid in auction.bids if bid.status == BidStatus.ACTIVE]
         
@@ -336,6 +377,7 @@ class AuctionEngine:
         
         if auction.auction_type == AuctionType.STANDARD:
             # Highest bid wins
+
             winning_bid = max(valid_bids, key=lambda b: b.amount)
             
             # Check reserve price
@@ -347,16 +389,20 @@ class AuctionEngine:
         elif auction.auction_type == AuctionType.REVERSE:
             # Lowest bid wins
             return min(valid_bids, key=lambda b: b.amount)
+
         
         elif auction.auction_type == AuctionType.SEALED_BID:
             # Highest sealed bid wins
             return max(valid_bids, key=lambda b: b.amount)
+
         
         return None
     
     async def _detect_bid_fraud(self, auction: Auction, bidder_id: str, amount: Decimal) -> None:
-        """Detect potential bid fraud"""
+        """
+        Detect potential bid fraud"""
         # Check for excessive bidding frequency
+
         recent_bids = [
             bid for bid in auction.bids
             if bid.bidder_id == bidder_id and 
@@ -375,7 +421,8 @@ class AuctionSystem:
     """High-level auction system interface"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize auction system"""
+        """
+        Initialize auction system"""
         self.config = config or {}
         self.engine = AuctionEngine(self.config.get('engine', {}))
         
@@ -383,9 +430,11 @@ class AuctionSystem:
         try:
             from ...ai_agents.marketplace_agent.core.advanced_bidding_system import AdvancedBiddingSystem
             self.bidding_system = AdvancedBiddingSystem()
+
             self.has_bidding_integration = True
         except ImportError:
             logger.warning("Advanced bidding system not available - running in standalone mode")
+
             self.has_bidding_integration = False
         
         logger.info("🏛️ Auction System initialized")
@@ -403,21 +452,25 @@ class AuctionSystem:
     
     async def place_bid(self, auction_id: str, bidder_id: str, amount: Decimal, 
                        metadata: Dict[str, Any] = None) -> AuctionBid:
-        """Place bid on auction"""
+        """
+        Place bid on auction"""
         bid = await self.engine.place_bid(auction_id, bidder_id, amount, metadata)
         
         # Integrate with advanced bidding system if available
         if self.has_bidding_integration:
             try:
                 await self._sync_with_bidding_system(auction_id, bid)
+
             except Exception as e:
                 logger.warning(f"Failed to sync with bidding system: {e}")
+
         
         return bid
     
     async def get_auction_status(self, auction_id: str) -> Dict[str, Any]:
         """Get comprehensive auction status"""
         auction = await self.engine.get_auction(auction_id)
+
         
         if not auction:
             return {"error": "Auction not found"}
@@ -435,6 +488,7 @@ class AuctionSystem:
     async def get_marketplace_auctions(self, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
         """Get marketplace auctions for display"""
         auctions = await self.engine.get_active_auctions(filters)
+
         
         return [
             {
@@ -460,11 +514,13 @@ class AuctionSystem:
                 for auction_id, auction in list(self.engine.active_auctions.items()):
                     if current_time >= auction.end_time and auction.status == AuctionStatus.ACTIVE:
                         await self.engine.end_auction(auction_id)
+
                 
                 await asyncio.sleep(30)  # Check every 30 seconds
                 
             except Exception as e:
                 logger.error(f"Error in auction monitor: {e}")
+
                 await asyncio.sleep(60)  # Wait longer on error
     
     async def _sync_with_bidding_system(self, auction_id: str, bid: AuctionBid) -> None:

@@ -28,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 # Individual platform collector classes
 class InstagramCollector(BaseCollector):
-    """Instagram content collector."""
+    """
+        Instagram content collector."""
     def __init__(self, **kwargs):
         super().__init__("instagram", rate_limit=60)
     
@@ -62,10 +63,13 @@ class InstagramCollector(BaseCollector):
                         "shares": 10 + (i * 2)
                     }
                 )
+
                 results.append(result)
+
             return results
         except Exception as e:
             logger.error(f"Instagram search error: {e}")
+
             return []
     
     async def get_content_details(self, content_id: str) -> Optional[CollectorResult]:
@@ -114,10 +118,13 @@ class TikTokCollector(BaseCollector):
                         "comments": 25 + (i * 5)
                     }
                 )
+
                 results.append(result)
+
             return results
         except Exception as e:
             logger.error(f"TikTok search error: {e}")
+
             return []
     
     async def get_content_details(self, content_id: str) -> Optional[CollectorResult]:
@@ -164,10 +171,13 @@ class TwitterCollector(BaseCollector):
                         "replies": 25 + (i * 3)
                     }
                 )
+
                 results.append(result)
+
             return results
         except Exception as e:
             logger.error(f"Twitter search error: {e}")
+
             return []
     
     async def get_content_details(self, content_id: str) -> Optional[CollectorResult]:
@@ -214,10 +224,13 @@ class FacebookCollector(BaseCollector):
                         "comments": 10 + (i * 1)
                     }
                 )
+
                 results.append(result)
+
             return results
         except Exception as e:
             logger.error(f"Facebook search error: {e}")
+
             return []
     
     async def get_content_details(self, content_id: str) -> Optional[CollectorResult]:
@@ -264,10 +277,13 @@ class LinkedInCollector(BaseCollector):
                         "shares": 3 + (i * 1)
                     }
                 )
+
                 results.append(result)
+
             return results
         except Exception as e:
             logger.error(f"LinkedIn search error: {e}")
+
             return []
     
     async def get_content_details(self, content_id: str) -> Optional[CollectorResult]:
@@ -314,6 +330,7 @@ class SocialMediaCollector(BaseCollector):
             self.collectors = {
                 platform: collector 
                 for platform, collector in self.collectors.items()
+
                 if platform in platforms
             }
         
@@ -323,6 +340,7 @@ class SocialMediaCollector(BaseCollector):
         """Search content across all configured social media platforms."""
         try:
             all_results = []
+
             tasks = []
             
             # Create tasks for parallel execution
@@ -331,21 +349,25 @@ class SocialMediaCollector(BaseCollector):
                     collector.search_content(query, config),
                     name=f"search_{platform_name}"
                 )
+
                 tasks.append(task)
             
             # Execute all searches in parallel
+
             results_by_platform = await asyncio.gather(*tasks, return_exceptions=True)
             
             # Combine results from all platforms
             for results in results_by_platform:
                 if isinstance(results, Exception):
                     logger.error(f"Platform search failed: {results}")
+
                     continue
                 
                 if isinstance(results, list):
                     all_results.extend(results)
             
             # Sort by engagement score (simplified)
+
             all_results.sort(
                 key=lambda x: sum(x.engagement_metrics.values()) if x.engagement_metrics else 0,
                 reverse=True
@@ -356,6 +378,7 @@ class SocialMediaCollector(BaseCollector):
             
         except Exception as e:
             logger.error(f"Social media search error: {e}")
+
             return []
     
     async def get_content_details(self, content_id: str, platform: str = None) -> Optional[CollectorResult]:
@@ -367,6 +390,7 @@ class SocialMediaCollector(BaseCollector):
             # Try all platforms if platform not specified
             for collector in self.collectors.values():
                 result = await collector.get_content_details(content_id)
+
                 if result:
                     return result
             
@@ -374,6 +398,7 @@ class SocialMediaCollector(BaseCollector):
             
         except Exception as e:
             logger.error(f"Content details error: {e}")
+
             return None
     
     async def get_user_content(self, user_id: str, config: CollectionConfig, platform: str = None) -> List[CollectorResult]:
@@ -383,7 +408,9 @@ class SocialMediaCollector(BaseCollector):
                 return await self.collectors[platform].get_user_content(user_id, config)
             
             # Collect from all platforms
+
             all_results = []
+
             tasks = []
             
             for platform_name, collector in self.collectors.items():
@@ -391,18 +418,24 @@ class SocialMediaCollector(BaseCollector):
                     collector.get_user_content(user_id, config),
                     name=f"user_content_{platform_name}"
                 )
+
                 tasks.append(task)
+
+
             
             results_by_platform = await asyncio.gather(*tasks, return_exceptions=True)
+
             
             for results in results_by_platform:
                 if isinstance(results, list):
                     all_results.extend(results)
+
             
             return all_results[:config.max_results]
             
         except Exception as e:
             logger.error(f"User content error: {e}")
+
             return []
     
     async def monitor_hashtags(self, hashtags: List[str], config: CollectionConfig) -> AsyncGenerator[CollectorResult, None]:
@@ -423,6 +456,7 @@ class SocialMediaCollector(BaseCollector):
                         metadata={"hashtag": hashtag},
                         raw_data={"platform": platform_name}
                     )
+
                     await asyncio.sleep(0.1)  # Rate limiting
                 
         except Exception as e:
@@ -432,6 +466,7 @@ class SocialMediaCollector(BaseCollector):
         """Get trending content from all social media platforms."""
         try:
             all_results = []
+
             tasks = []
             
             for platform_name, collector in self.collectors.items():
@@ -439,18 +474,24 @@ class SocialMediaCollector(BaseCollector):
                     collector.get_trending_content(config),
                     name=f"trending_{platform_name}"
                 )
+
                 tasks.append(task)
+
+
             
             results_by_platform = await asyncio.gather(*tasks, return_exceptions=True)
+
             
             for results in results_by_platform:
                 if isinstance(results, list):
                     all_results.extend(results)
+
             
             return all_results[:config.max_results]
             
         except Exception as e:
             logger.error(f"Trending content error: {e}")
+
             return []
     
     async def get_platform_analytics(self, platform: str = None) -> Dict[str, Any]:
@@ -477,6 +518,7 @@ class SocialMediaCollector(BaseCollector):
             
         except Exception as e:
             logger.error(f"Analytics error: {e}")
+
             return {}
     
     def get_supported_platforms(self) -> List[str]:
@@ -484,7 +526,8 @@ class SocialMediaCollector(BaseCollector):
         return list(self.collectors.keys())
     
     def is_platform_supported(self, platform: str) -> bool:
-        """Check if a platform is supported."""
+        """
+        Check if a platform is supported."""
         return platform in self.collectors
 
 

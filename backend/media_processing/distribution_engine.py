@@ -23,7 +23,8 @@ import redis.asyncio as redis
 
 # Enums
 class DistributionPlatform(Enum):
-    """Supported distribution platforms"""
+    """
+        Supported distribution platforms"""
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -117,7 +118,8 @@ class PlatformOptimization:
 
 @dataclass
 class ContentVariant:
-    """Content variant for specific platform"""
+    """
+        Content variant for specific platform"""
     platform: DistributionPlatform
     content_format: ContentFormat
     file_path: str
@@ -129,7 +131,8 @@ class ContentVariant:
 
 @dataclass
 class DistributionJob:
-    """Distribution job configuration"""
+    """
+        Distribution job configuration"""
     job_id: str
     content_id: str
     original_content_path: str
@@ -144,7 +147,8 @@ class DistributionJob:
 
 @dataclass
 class DistributionResult:
-    """Result of content distribution"""
+    """
+        Result of content distribution"""
     job_id: str
     platform: DistributionPlatform
     success: bool
@@ -156,7 +160,8 @@ class DistributionResult:
 
 @dataclass
 class DistributionReport:
-    """Complete distribution report"""
+    """
+        Complete distribution report"""
     job_id: str
     content_id: str
     total_platforms: int
@@ -169,15 +174,18 @@ class DistributionReport:
 
 # Exceptions
 class DistributionError(Exception):
-    """Base distribution error"""
+    """
+        Base distribution error"""
     pass
 
 class PlatformOptimizationError(DistributionError):
-    """Platform optimization error"""
+    """
+        Platform optimization error"""
     pass
 
 class UploadError(DistributionError):
-    """Content upload error"""
+    """
+        Content upload error"""
     pass
 
 # Core Distribution Engine
@@ -206,12 +214,14 @@ class EnterpriseDistributionEngine:
         self._initialize_platform_apis()
     
     def _initialize_platform_optimizations(self):
-        """Initialize platform-specific optimization settings"""
+        """
+        Initialize platform-specific optimization settings"""
         self.platform_optimizations = {
             DistributionPlatform.YOUTUBE: PlatformOptimization(
                 platform=DistributionPlatform.YOUTUBE,
                 optimal_resolution=(1920, 1080),
                 max_duration=43200,  # 12 hours
+
                 supported_formats=['mp4', 'avi', 'mov', 'wmv'],
                 aspect_ratios=[16/9, 4/3],
                 max_file_size=128 * 1024 * 1024 * 1024,  # 128GB
@@ -224,6 +234,7 @@ class EnterpriseDistributionEngine:
                 platform=DistributionPlatform.TIKTOK,
                 optimal_resolution=(1080, 1920),
                 max_duration=180,  # 3 minutes
+
                 supported_formats=['mp4', 'mov'],
                 aspect_ratios=[9/16],
                 max_file_size=287 * 1024 * 1024,  # 287MB
@@ -248,6 +259,7 @@ class EnterpriseDistributionEngine:
                 platform=DistributionPlatform.FACEBOOK,
                 optimal_resolution=(1920, 1080),
                 max_duration=7200,  # 2 hours
+
                 supported_formats=['mp4', 'avi', 'mov'],
                 aspect_ratios=[16/9, 1/1, 4/5],
                 max_file_size=10 * 1024 * 1024 * 1024,  # 10GB
@@ -260,6 +272,7 @@ class EnterpriseDistributionEngine:
                 platform=DistributionPlatform.TWITTER,
                 optimal_resolution=(1920, 1080),
                 max_duration=140,  # 2 minutes 20 seconds
+
                 supported_formats=['mp4', 'mov'],
                 aspect_ratios=[16/9, 1/1],
                 max_file_size=512 * 1024 * 1024,  # 512MB
@@ -271,7 +284,8 @@ class EnterpriseDistributionEngine:
         }
 
     def _initialize_platform_apis(self):
-        """Initialize platform API clients"""
+        """
+        Initialize platform API clients"""
         self.platform_clients = {
             DistributionPlatform.YOUTUBE: None,  # YouTube Data API v3
             DistributionPlatform.TIKTOK: None,   # TikTok for Developers API
@@ -282,13 +296,17 @@ class EnterpriseDistributionEngine:
         # In production: Initialize actual API clients
 
     async def initialize_redis(self):
-        """Initialize Redis connection for job tracking"""
+        """
+        Initialize Redis connection for job tracking"""
         try:
             self.redis_client = redis.from_url(self.config.redis_url)
+
             await self.redis_client.ping()
+
             self.logger.info("Redis connection established for distribution engine")
         except Exception as e:
             self.logger.error(f"Redis connection failed: {e}")
+
             self.redis_client = None
 
     async def distribute_content(
@@ -307,6 +325,7 @@ class EnterpriseDistributionEngine:
             content_path: Path to original content file
             target_platforms: Platforms to distribute to
             metadata: Content metadata (title, description, tags, etc.)
+
             scheduling: Platform-specific scheduling
             
         Returns:
@@ -314,18 +333,23 @@ class EnterpriseDistributionEngine:
         """
         try:
             content_path = Path(content_path)
+
+
             target_platforms = target_platforms or self.config.default_platforms
+
             metadata = metadata or {}
             
             # Generate job ID
             job_id = f"dist_{content_id}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             
             # Step 1: Create platform-optimized variants
+
             content_variants = await self._create_platform_variants(
                 content_path, target_platforms, metadata
             )
             
             # Step 2: Create distribution job
+
             job = DistributionJob(
                 job_id=job_id,
                 content_id=content_id,
@@ -349,12 +373,15 @@ class EnterpriseDistributionEngine:
             
             # Step 4: Start distribution process
             asyncio.create_task(self._execute_distribution_job(job))
+
             
             self.logger.info(f"Distribution job created: {job_id}")
+
             return job
             
         except Exception as e:
             self.logger.error(f"Distribution initiation failed: {e}")
+
             raise DistributionError(f"Failed to initiate distribution: {e}")
 
     async def _create_platform_variants(
@@ -369,19 +396,25 @@ class EnterpriseDistributionEngine:
         for platform in target_platforms:
             try:
                 optimization = self.platform_optimizations.get(platform)
+
                 if not optimization:
                     self.logger.warning(f"No optimization settings for {platform}")
+
                     continue
+
                 
                 variant = await self._optimize_content_for_platform(
                     content_path, platform, optimization, metadata
                 )
+
                 
                 if variant:
                     variants.append(variant)
+
                     
             except Exception as e:
                 self.logger.error(f"Failed to create variant for {platform}: {e}")
+
                 continue
         
         return variants
@@ -396,32 +429,47 @@ class EnterpriseDistributionEngine:
         """Optimize content for specific platform"""
         try:
             # Determine content format based on file type and platform
+
             content_format = self._determine_content_format(content_path, platform)
             
             # Create optimized version
+
             optimized_path = await self._create_optimized_version(
                 content_path, platform, optimization, content_format
             )
+
             
             if not optimized_path:
                 return None
             
             # Get file information
+
             file_size = optimized_path.stat().st_size
             
             # Extract media properties
+
             duration = None
+
             resolution = (0, 0)
+
             
             if content_format in [ContentFormat.VIDEO_LONG, ContentFormat.VIDEO_SHORT, ContentFormat.VIDEO_STORY]:
                 media_info = await self._get_video_info(optimized_path)
+
+
                 duration = media_info.get('duration')
+
+
                 resolution = media_info.get('resolution', (0, 0))
+
             elif content_format in [ContentFormat.IMAGE_POST, ContentFormat.IMAGE_CAROUSEL]:
                 image_info = await self._get_image_info(optimized_path)
+
+
                 resolution = image_info.get('resolution', (0, 0))
             
             # Create variant
+
             variant = ContentVariant(
                 platform=platform,
                 content_format=content_format,
@@ -436,11 +484,13 @@ class EnterpriseDistributionEngine:
                 ],
                 metadata=self._optimize_metadata_for_platform(metadata, platform, optimization)
             )
+
             
             return variant
             
         except Exception as e:
             self.logger.error(f"Content optimization failed for {platform}: {e}")
+
             return None
 
     def _determine_content_format(
@@ -450,6 +500,7 @@ class EnterpriseDistributionEngine:
     ) -> ContentFormat:
         """Determine appropriate content format for platform"""
         extension = content_path.suffix.lower()
+
         
         if extension in ['.mp4', '.avi', '.mov', '.mkv', '.wmv']:
             # Video content - determine length-based format
@@ -480,26 +531,34 @@ class EnterpriseDistributionEngine:
         optimization: PlatformOptimization,
         content_format: ContentFormat
     ) -> Optional[Path]:
-        """Create platform-optimized version of content"""
+        """
+        Create platform-optimized version of content"""
         try:
             output_dir = content_path.parent / "optimized" / platform.value
             output_dir.mkdir(parents=True, exist_ok=True)
+
+
             
             output_path = output_dir / f"{content_path.stem}_optimized{content_path.suffix}"
             
             if content_format in [ContentFormat.VIDEO_LONG, ContentFormat.VIDEO_SHORT, ContentFormat.VIDEO_STORY]:
                 return await self._optimize_video(content_path, output_path, optimization)
+
             elif content_format in [ContentFormat.IMAGE_POST, ContentFormat.IMAGE_CAROUSEL]:
                 return await self._optimize_image(content_path, output_path, optimization)
+
             elif content_format in [ContentFormat.AUDIO_PODCAST, ContentFormat.AUDIO_SHORT]:
                 return await self._optimize_audio(content_path, output_path, optimization)
+
             else:
                 # Copy original file for text content
                 output_path.write_bytes(content_path.read_bytes())
+
                 return output_path
                 
         except Exception as e:
             self.logger.error(f"Content optimization failed: {e}")
+
             return None
 
     async def _optimize_video(
@@ -515,9 +574,11 @@ class EnterpriseDistributionEngine:
                 width, height = optimization.optimal_resolution
                 
                 # FFmpeg optimization
+
                 stream = ffmpeg.input(str(input_path))
                 
                 # Video filters
+
                 video_filters = []
                 
                 # Scale to optimal resolution
@@ -528,6 +589,7 @@ class EnterpriseDistributionEngine:
                     stream = ffmpeg.filter(stream, 'video', ','.join(video_filters))
                 
                 # Output with optimization
+
                 stream = ffmpeg.output(
                     stream,
                     str(output_path),
@@ -541,12 +603,15 @@ class EnterpriseDistributionEngine:
                 
                 # Run FFmpeg
                 ffmpeg.run(stream, overwrite_output=True, quiet=True)
+
                 
                 return output_path
                 
             except Exception as e:
                 self.logger.error(f"Video optimization failed: {e}")
+
                 return None
+
         
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(self.executor, _optimize)
@@ -566,6 +631,7 @@ class EnterpriseDistributionEngine:
                         img = img.convert('RGB')
                     
                     # Resize to optimal resolution
+
                     img_resized = img.resize(
                         optimization.optimal_resolution,
                         Image.Resampling.LANCZOS
@@ -578,12 +644,15 @@ class EnterpriseDistributionEngine:
                         quality=85,
                         optimize=True
                     )
+
                 
                 return output_path
                 
             except Exception as e:
                 self.logger.error(f"Image optimization failed: {e}")
+
                 return None
+
         
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(self.executor, _optimize)
@@ -598,7 +667,10 @@ class EnterpriseDistributionEngine:
         def _optimize():
             try:
                 # FFmpeg audio optimization
+
                 stream = ffmpeg.input(str(input_path))
+
+
                 stream = ffmpeg.output(
                     stream,
                     str(output_path),
@@ -606,13 +678,17 @@ class EnterpriseDistributionEngine:
                     audio_bitrate='128k',
                     ar=44100
                 )
+
                 
                 ffmpeg.run(stream, overwrite_output=True, quiet=True)
+
                 return output_path
                 
             except Exception as e:
                 self.logger.error(f"Audio optimization failed: {e}")
+
                 return None
+
         
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(self.executor, _optimize)
@@ -627,16 +703,19 @@ class EnterpriseDistributionEngine:
         optimized = metadata.copy()
         
         # Optimize title
+
         title = metadata.get('title', '')
         if len(title) > optimization.title_limit:
             optimized['title'] = title[:optimization.title_limit-3] + "..."
         
         # Optimize description
+
         description = metadata.get('description', '')
         if len(description) > optimization.description_limit:
             optimized['description'] = description[:optimization.description_limit-3] + "..."
         
         # Optimize hashtags
+
         tags = metadata.get('tags', [])
         if len(tags) > optimization.hashtag_limit:
             optimized['tags'] = tags[:optimization.hashtag_limit]
@@ -644,12 +723,15 @@ class EnterpriseDistributionEngine:
         # Platform-specific optimizations
         if platform == DistributionPlatform.TIKTOK:
             # Add trending TikTok hashtags
+
             tiktok_tags = ['#fyp', '#viral', '#trending']
             optimized['tags'] = tiktok_tags + optimized.get('tags', [])
+
             
         elif platform == DistributionPlatform.YOUTUBE:
             # Optimize for YouTube SEO
             optimized['category'] = metadata.get('category', 'Entertainment')
+
             optimized['privacy_status'] = 'public'
             
         elif platform == DistributionPlatform.INSTAGRAM:
@@ -663,10 +745,13 @@ class EnterpriseDistributionEngine:
         """Get video file information"""
         try:
             probe = ffmpeg.probe(str(video_path))
+
+
             video_stream = next(
                 (stream for stream in probe['streams'] if stream['codec_type'] == 'video'),
                 None
             )
+
             
             if video_stream:
                 return {
@@ -680,6 +765,7 @@ class EnterpriseDistributionEngine:
                 }
         except Exception as e:
             self.logger.error(f"Video info extraction failed: {e}")
+
         
         return {}
 
@@ -694,6 +780,7 @@ class EnterpriseDistributionEngine:
                 }
         except Exception as e:
             self.logger.error(f"Image info extraction failed: {e}")
+
         
         return {}
 
@@ -704,10 +791,12 @@ class EnterpriseDistributionEngine:
             results = []
             
             # Create upload tasks for all platforms
+
             upload_tasks = []
             for variant in job.content_variants:
                 if job.scheduling and variant.platform in job.scheduling:
                     # Schedule for later
+
                     scheduled_time = job.scheduling[variant.platform]
                     if scheduled_time > datetime.utcnow():
                         self.logger.info(f"Scheduling upload for {variant.platform} at {scheduled_time}")
@@ -715,16 +804,20 @@ class EnterpriseDistributionEngine:
                         continue
                 
                 # Upload immediately
+
                 task = self._upload_to_platform(job, variant)
+
                 upload_tasks.append(task)
             
             # Execute uploads
             if upload_tasks:
                 upload_results = await asyncio.gather(*upload_tasks, return_exceptions=True)
+
                 
                 for result in upload_results:
                     if isinstance(result, DistributionResult):
                         results.append(result)
+
                     elif isinstance(result, Exception):
                         self.logger.error(f"Upload failed: {result}")
             
@@ -733,6 +826,7 @@ class EnterpriseDistributionEngine:
             job.completed_at = datetime.utcnow()
             
             # Generate distribution report
+
             report = await self._generate_distribution_report(job, results)
             
             # Cache results
@@ -742,11 +836,14 @@ class EnterpriseDistributionEngine:
                     86400 * 30,  # 30 days
                     json.dumps(asdict(report), default=str)
                 )
+
             
             self.logger.info(f"Distribution job completed: {job.job_id}")
+
             
         except Exception as e:
             self.logger.error(f"Distribution job failed: {e}")
+
             job.status = DistributionStatus.FAILED
 
     async def _upload_to_platform(
@@ -761,22 +858,30 @@ class EnterpriseDistributionEngine:
             # Platform-specific upload logic
             if platform == DistributionPlatform.YOUTUBE:
                 result = await self._upload_to_youtube(job, variant)
+
             elif platform == DistributionPlatform.TIKTOK:
                 result = await self._upload_to_tiktok(job, variant)
+
             elif platform == DistributionPlatform.INSTAGRAM:
                 result = await self._upload_to_instagram(job, variant)
+
             elif platform == DistributionPlatform.FACEBOOK:
                 result = await self._upload_to_facebook(job, variant)
+
             elif platform == DistributionPlatform.TWITTER:
                 result = await self._upload_to_twitter(job, variant)
+
             else:
                 # Generic upload simulation
+
                 result = await self._simulate_upload(job, variant)
+
             
             return result
             
         except Exception as e:
             self.logger.error(f"Upload to {variant.platform} failed: {e}")
+
             return DistributionResult(
                 job_id=job.job_id,
                 platform=variant.platform,
@@ -818,6 +923,7 @@ class EnterpriseDistributionEngine:
         """Upload to TikTok"""
         # Simplified TikTok upload simulation
         await asyncio.sleep(1.5)
+
         
         return DistributionResult(
             job_id=job.job_id,
@@ -840,6 +946,7 @@ class EnterpriseDistributionEngine:
         """Upload to Instagram"""
         # Simplified Instagram upload simulation
         await asyncio.sleep(1)
+
         
         return DistributionResult(
             job_id=job.job_id,
@@ -861,6 +968,7 @@ class EnterpriseDistributionEngine:
     ) -> DistributionResult:
         """Upload to Facebook"""
         await asyncio.sleep(1.8)
+
         
         return DistributionResult(
             job_id=job.job_id,
@@ -882,6 +990,7 @@ class EnterpriseDistributionEngine:
     ) -> DistributionResult:
         """Upload to Twitter"""
         await asyncio.sleep(0.8)
+
         
         return DistributionResult(
             job_id=job.job_id,
@@ -903,6 +1012,7 @@ class EnterpriseDistributionEngine:
     ) -> DistributionResult:
         """Simulate upload for unsupported platforms"""
         await asyncio.sleep(1)
+
         
         return DistributionResult(
             job_id=job.job_id,
@@ -920,16 +1030,20 @@ class EnterpriseDistributionEngine:
     ) -> DistributionReport:
         """Generate comprehensive distribution report"""
         successful_uploads = len([r for r in results if r.success])
+
         failed_uploads = len([r for r in results if not r.success])
         
         # Calculate total reach estimate
+
         total_reach = sum(
             result.analytics_data.get('estimated_reach', 0)
+
             for result in results
             if result.success and result.analytics_data
         )
         
         # Generate performance predictions
+
         performance_predictions = {}
         for result in results:
             if result.success and result.analytics_data:
@@ -955,16 +1069,21 @@ class EnterpriseDistributionEngine:
         )
 
     async def get_distribution_status(self, job_id: str) -> Optional[DistributionJob]:
-        """Get distribution job status"""
+        """
+        Get distribution job status"""
         try:
             if self.redis_client:
                 job_data = await self.redis_client.get(f"distribution_job:{job_id}")
+
                 if job_data:
                     data = json.loads(job_data)
+
                     return DistributionJob(**data)
+
             return None
         except Exception as e:
             self.logger.error(f"Failed to get distribution status: {e}")
+
             return None
 
     async def get_distribution_report(self, job_id: str) -> Optional[DistributionReport]:
@@ -972,12 +1091,16 @@ class EnterpriseDistributionEngine:
         try:
             if self.redis_client:
                 report_data = await self.redis_client.get(f"distribution_report:{job_id}")
+
                 if report_data:
                     data = json.loads(report_data)
+
                     return DistributionReport(**data)
+
             return None
         except Exception as e:
             self.logger.error(f"Failed to get distribution report: {e}")
+
             return None
 
 # Legacy Integration Classes
@@ -994,20 +1117,24 @@ class ContentDistributionOrchestrator:
         platforms: List[str],
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Distribute content using legacy interface"""
+        """
+        Distribute content using legacy interface"""
         platform_enums = [
             DistributionPlatform(platform) for platform in platforms
             if platform in [p.value for p in DistributionPlatform]
         ]
+
         
         job = await self.engine.distribute_content(
             content_id, content_path, platform_enums, metadata
         )
+
         
         return asdict(job)
 
 class PlatformOptimizationEngine:
-    """Legacy platform optimization interface"""
+    """
+        Legacy platform optimization interface"""
     
     def __init__(self, engine: EnterpriseDistributionEngine):
         self.engine = engine
@@ -1020,29 +1147,36 @@ class PlatformOptimizationEngine:
     ) -> Dict[str, Any]:
         """Optimize content for platform using legacy interface"""
         platform_enum = DistributionPlatform(platform)
+
         optimization = self.engine.platform_optimizations.get(platform_enum)
+
         
         if not optimization:
             return {'success': False, 'error': f'Platform {platform} not supported'}
+
         
         variant = await self.engine._optimize_content_for_platform(
             Path(content_path), platform_enum, optimization, {}
         )
+
         
         return asdict(variant) if variant else {'success': False, 'error': 'Optimization failed'}
 
 # Factory Pattern
 class DistributionEngineFactory:
-    """Factory for creating distribution engines"""
+    """
+        Factory for creating distribution engines"""
     
     @staticmethod
     def create_standard_engine() -> EnterpriseDistributionEngine:
-        """Create standard distribution engine"""
+        """
+        Create standard distribution engine"""
         return EnterpriseDistributionEngine()
     
     @staticmethod
     def create_enterprise_engine() -> EnterpriseDistributionEngine:
-        """Create enterprise distribution engine"""
+        """
+        Create enterprise distribution engine"""
         config = DistributionConfig(
             optimization_level=OptimizationLevel.ENTERPRISE,
             enable_cross_posting=True,
@@ -1059,8 +1193,10 @@ async def distribute_content_enterprise(
     platforms: List[str],
     metadata: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """Enterprise content distribution interface"""
+    """
+        Enterprise content distribution interface"""
     engine = DistributionEngineFactory.create_standard_engine()
+
     
     platform_enums = [DistributionPlatform(p) for p in platforms]
     job = await engine.distribute_content(

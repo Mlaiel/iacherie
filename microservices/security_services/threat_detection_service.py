@@ -75,15 +75,18 @@ class ThreatDetectionService:
         self.request_counters = defaultdict(lambda: defaultdict(int))
         self.failed_login_attempts = defaultdict(list)
         self.suspicious_patterns = defaultdict(int)
+        self._cleanup_task = None  # Lazy init
         
         # Initialize default rules
         self._initialize_default_rules()
         
         # Initialize IP reputation
         self._initialize_ip_reputation()
-        
-        # Start background tasks
-        asyncio.create_task(self._cleanup_old_data())
+    
+    async def ensure_initialized(self):
+        """Ensure async components are initialized"""
+        if self._cleanup_task is None:
+            self._cleanup_task = asyncio.create_task(self._cleanup_old_data())
 
     def _initialize_default_rules(self):
         """Initialize default security rules"""

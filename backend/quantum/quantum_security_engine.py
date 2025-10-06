@@ -50,7 +50,8 @@ logger = logging.getLogger(__name__)
 # ========================================
 
 class SecurityLevel(Enum):
-    """Niveaux de sécurité"""
+    """
+        Niveaux de sécurité"""
     LOW = "low_security_level"
     MEDIUM = "medium_security_level"
     HIGH = "high_security_level"
@@ -140,7 +141,8 @@ class SecurityRequest:
 
 @dataclass
 class EncryptionRequest:
-    """Requête de chiffrement"""
+    """
+        Requête de chiffrement"""
     data: Union[str, bytes, Dict[str, Any]]
     algorithm: EncryptionAlgorithm
     security_level: SecurityLevel
@@ -149,7 +151,8 @@ class EncryptionRequest:
 
 @dataclass
 class ThreatAnalysisRequest:
-    """Requête analyse menaces"""
+    """
+        Requête analyse menaces"""
     event_data: Dict[str, Any]
     threat_types: List[ThreatType]
     analysis_depth: str = "comprehensive"
@@ -180,7 +183,8 @@ class SecurityResult:
 
 @dataclass
 class EncryptionResult:
-    """Résultat chiffrement"""
+    """
+        Résultat chiffrement"""
     encrypted_data: Union[str, bytes]
     encryption_key_id: str
     algorithm_used: EncryptionAlgorithm
@@ -190,7 +194,8 @@ class EncryptionResult:
 
 @dataclass
 class ThreatAnalysisResult:
-    """Résultat analyse menaces"""
+    """
+        Résultat analyse menaces"""
     threat_score: float
     detected_threats: List[Dict[str, Any]]
     threat_classification: str
@@ -203,7 +208,8 @@ class ThreatAnalysisResult:
 # ========================================
 
 class CryptographyProcessor(ABC):
-    """Interface processeur cryptographique"""
+    """
+        Interface processeur cryptographique"""
     
     @abstractmethod
     async def encrypt_data(self, request: EncryptionRequest) -> EncryptionResult:
@@ -214,7 +220,8 @@ class CryptographyProcessor(ABC):
         pass
 
 class ThreatDetector(ABC):
-    """Interface détecteur menaces"""
+    """
+        Interface détecteur menaces"""
     
     @abstractmethod
     async def analyze_threat(self, request: ThreatAnalysisRequest) -> ThreatAnalysisResult:
@@ -225,7 +232,8 @@ class ThreatDetector(ABC):
         pass
 
 class ComplianceValidator(ABC):
-    """Interface validateur conformité"""
+    """
+        Interface validateur conformité"""
     
     @abstractmethod
     async def validate_compliance(self, request: ComplianceAuditRequest) -> Dict[str, Any]:
@@ -236,7 +244,8 @@ class ComplianceValidator(ABC):
         pass
 
 class PrivacyProtector(ABC):
-    """Interface protecteur confidentialité"""
+    """
+        Interface protecteur confidentialité"""
     
     @abstractmethod
     async def protect_privacy(self, data: Dict[str, Any], privacy_level: PrivacyLevel) -> Dict[str, Any]:
@@ -247,7 +256,8 @@ class PrivacyProtector(ABC):
         pass
 
 class AccessController(ABC):
-    """Interface contrôleur accès"""
+    """
+        Interface contrôleur accès"""
     
     @abstractmethod
     async def validate_access(self, user_id: str, resource_id: str, action: str) -> bool:
@@ -298,6 +308,7 @@ class QuantumSecurityEngine:
         
         # Configuration par défaut
         self._initialize_default_security_policies()
+
         
         logger.info("🔐 Quantum Security Engine initialized with comprehensive security capabilities")
     
@@ -324,15 +335,19 @@ class QuantumSecurityEngine:
         """
         try:
             start_time = datetime.utcnow()
+
             logger.info(f"🔒 Processing security request: {request.action} for user {request.user_id}")
             
             # Validation authentification
+
             auth_validation = await self._validate_authentication(request)
             
             # Contrôle accès
+
             access_validation = await self._validate_access_control(request)
             
             # Analyse menaces en temps réel
+
             threat_analysis = await self._analyze_security_threats(request)
             
             # Validation conformité
@@ -342,16 +357,19 @@ class QuantumSecurityEngine:
             privacy_protection = await self._apply_privacy_protection(request)
             
             # Chiffrement si requis
+
             encryption_status = {}
             if request.encryption_required:
                 encryption_status = await self._apply_encryption_protection(request)
             
             # Calcul score risque global
+
             risk_score = await self._calculate_global_risk_score(
                 auth_validation, access_validation, threat_analysis, compliance_validation
             )
             
             # Détermination niveau menace
+
             threat_level = await self._determine_threat_level(threat_analysis, risk_score)
             
             # Génération recommandations sécurité
@@ -360,11 +378,13 @@ class QuantumSecurityEngine:
             )
             
             # Vérification protection quantique
+
             quantum_protection = await self._verify_quantum_protection(
                 request.security_level, encryption_status
             )
             
             # Décision accès final
+
             access_granted = (
                 auth_validation.get("valid", False) and
                 access_validation.get("granted", False) and
@@ -378,8 +398,11 @@ class QuantumSecurityEngine:
                 "risk_score": risk_score,
                 "threat_level": threat_level
             })
+
+
             
             response_time = (datetime.utcnow() - start_time).total_seconds() * 1000
+
             
             result = SecurityResult(
                 request_id=request.request_id,
@@ -393,8 +416,10 @@ class QuantumSecurityEngine:
                 quantum_protection_applied=quantum_protection,
                 response_time_ms=response_time
             )
+
             
             logger.info(f"✅ Security processing completed: {result.security_status} (risk: {risk_score:.2%}, time: {response_time:.1f}ms)")
+
             
             return result
             
@@ -438,30 +463,37 @@ class QuantumSecurityEngine:
             logger.info(f"🔐 Encrypting data with {request.algorithm.value}")
             
             # Sélection ou création processeur cryptographique
+
             processor = await self._get_or_create_cryptography_processor(request.algorithm)
             
             # Chiffrement principal
+
             encryption_result = await processor.encrypt_data(request)
             
             # Validation force chiffrement
+
             encryption_strength = await self._validate_encryption_strength(
                 request.algorithm, request.security_level
             )
             
             # Génération clé de chiffrement
+
             encryption_key_id = await self._generate_encryption_key(
                 request.algorithm, request.security_level
             )
             
             # Création métadonnées chiffrement
+
             encryption_metadata = await self._create_encryption_metadata(
                 request, encryption_strength, encryption_key_id
             )
             
             # Vérification résistance quantique
+
             quantum_safe = await self._verify_quantum_resistance(request.algorithm)
             
             # Instructions déchiffrement
+
             decryption_instructions = await self._generate_decryption_instructions(
                 encryption_key_id, request.algorithm
             )
@@ -473,6 +505,8 @@ class QuantumSecurityEngine:
                 "created_at": datetime.utcnow().isoformat(),
                 "quantum_safe": quantum_safe
             })
+
+
             
             result = EncryptionResult(
                 encrypted_data=encryption_result.encrypted_data,
@@ -482,13 +516,16 @@ class QuantumSecurityEngine:
                 quantum_safe=quantum_safe,
                 decryption_instructions=decryption_instructions
             )
+
             
             logger.info(f"✅ Data encryption completed: {request.algorithm.value} (quantum-safe: {quantum_safe})")
+
             
             return result
             
         except Exception as e:
             logger.error(f"❌ Failed to encrypt data: {e}")
+
             raise
     
     async def decrypt_sensitive_data(
@@ -502,28 +539,37 @@ class QuantumSecurityEngine:
             
             # Récupération informations clé
             key_info = await self._retrieve_encryption_key(key_id)
+
             if not key_info:
                 raise ValueError(f"Encryption key not found: {key_id}")
             
             # Sélection processeur cryptographique
+
             algorithm = EncryptionAlgorithm(key_info["algorithm"])
+
+
             processor = await self._get_or_create_cryptography_processor(algorithm)
             
             # Déchiffrement
+
             decrypted_data = await processor.decrypt_data(encrypted_data, key_id)
             
             # Validation intégrité
             integrity_valid = await self._validate_data_integrity(decrypted_data, key_info)
+
             
             if not integrity_valid:
                 raise ValueError("Data integrity validation failed")
+
             
             logger.info(f"✅ Data decryption completed successfully")
+
             
             return decrypted_data
             
         except Exception as e:
             logger.error(f"❌ Failed to decrypt data: {e}")
+
             raise
     
     # ========================================
@@ -551,46 +597,58 @@ class QuantumSecurityEngine:
             logger.info(f"🎯 Analyzing security threats: {len(request.threat_types)} types")
             
             # Sélection détecteur menaces
+
             detector = await self._get_or_create_threat_detector("advanced")
             
             # Analyse menaces principale
+
             threat_analysis = await detector.analyze_threat(request)
             
             # Détection anomalies comportementales
+
             behavioral_anomalies = await detector.detect_anomalies(request.event_data)
             
             # Analyse patterns d'attaque
+
             attack_patterns = await self._analyze_attack_patterns(request.event_data)
             
             # Corrélation avec intelligence menaces
+
             threat_correlation = await self._correlate_threat_intelligence(
                 threat_analysis, request.threat_types
             )
             
             # Classification sophistication attaque
+
             attack_sophistication = await self._classify_attack_sophistication(
                 threat_analysis, attack_patterns
             )
             
             # Calcul score menace global
+
             global_threat_score = await self._calculate_global_threat_score(
                 threat_analysis, behavioral_anomalies, attack_sophistication
             )
             
             # Génération recommandations mitigation
+
             mitigation_recommendations = await self._generate_mitigation_recommendations(
                 threat_analysis, attack_patterns
             )
             
             # Actions immédiates requises
+
             immediate_actions = await self._determine_immediate_actions(
                 global_threat_score, attack_sophistication
             )
             
             # Calcul niveau confiance
+
             confidence_level = await self._calculate_threat_confidence_level(
                 threat_analysis, threat_correlation
             )
+
+
             
             result = ThreatAnalysisResult(
                 threat_score=global_threat_score,
@@ -603,13 +661,16 @@ class QuantumSecurityEngine:
             
             # Mise à jour intelligence menaces
             await self._update_threat_intelligence(result, request)
+
             
             logger.info(f"✅ Threat analysis completed: {global_threat_score:.2%} threat score (confidence: {confidence_level:.2%})")
+
             
             return result
             
         except Exception as e:
             logger.error(f"❌ Failed to detect security threats: {e}")
+
             raise
     
     # ========================================
@@ -635,34 +696,43 @@ class QuantumSecurityEngine:
         """
         try:
             logger.info(f"📋 Validating compliance for frameworks: {[f.value for f in request.frameworks]}")
+
+
             
             compliance_results = {}
             
             # Validation pour chaque framework
             for framework in request.frameworks:
                 validator = await self._get_or_create_compliance_validator(framework)
+
+
                 framework_compliance = await validator.validate_compliance(request)
+
                 compliance_results[framework.value] = framework_compliance
             
             # Analyse gap conformité
             compliance_gaps = await self._analyze_compliance_gaps(compliance_results)
             
             # Génération plan remédiation
+
             remediation_plan = await self._generate_remediation_plan(
                 compliance_gaps, request.automated_remediation
             )
             
             # Calcul score conformité global
+
             global_compliance_score = await self._calculate_global_compliance_score(
                 compliance_results
             )
             
             # Recommandations amélioration
+
             improvement_recommendations = await self._generate_compliance_improvement_recommendations(
                 compliance_results, compliance_gaps
             )
             
             # Prédiction conformité future
+
             future_compliance_prediction = await self._predict_future_compliance(
                 compliance_results, remediation_plan
             )
@@ -671,6 +741,8 @@ class QuantumSecurityEngine:
             compliance_risk_assessment = await self._assess_compliance_risks(
                 compliance_results, compliance_gaps
             )
+
+
             
             result = {
                 "audit_id": request.audit_id,
@@ -686,11 +758,13 @@ class QuantumSecurityEngine:
             }
             
             logger.info(f"✅ Compliance validation completed: {global_compliance_score:.2%} compliance score")
+
             
             return result
             
         except Exception as e:
             logger.error(f"❌ Failed to validate compliance: {e}")
+
             raise
     
     # ========================================
@@ -716,6 +790,7 @@ class QuantumSecurityEngine:
         """
         try:
             logger.info(f"🛡️ Protecting user privacy: {privacy_level.value}")
+
             
             if protection_options is None:
                 protection_options = {}
@@ -724,19 +799,23 @@ class QuantumSecurityEngine:
             protector = await self._get_or_create_privacy_protector(privacy_level)
             
             # Application protection principale
+
             protected_data = await protector.protect_privacy(data, privacy_level)
             
             # Anonymisation données sensibles
             if protection_options.get("anonymize", True):
                 anonymized_data = await protector.anonymize_data(protected_data)
+
                 protected_data.update(anonymized_data)
             
             # Masquage informations personnelles
+
             masked_data = await self._apply_data_masking(protected_data, privacy_level)
             
             # Pseudonymisation si requis
             if protection_options.get("pseudonymize", False):
                 pseudonymized_data = await self._apply_pseudonymization(masked_data)
+
                 masked_data.update(pseudonymized_data)
             
             # Chiffrement niveau confidentialité
@@ -746,7 +825,11 @@ class QuantumSecurityEngine:
                     algorithm=EncryptionAlgorithm.LATTICE_BASED if privacy_level == PrivacyLevel.QUANTUM_PROTECTED else EncryptionAlgorithm.AES_256_GCM,
                     security_level=SecurityLevel.QUANTUM_SAFE if privacy_level == PrivacyLevel.QUANTUM_PROTECTED else SecurityLevel.HIGH
                 )
+
+
                 encryption_result = await self.encrypt_sensitive_data(encryption_request)
+
+
                 
                 masked_data = {
                     "encrypted_data": encryption_result.encrypted_data,
@@ -756,6 +839,7 @@ class QuantumSecurityEngine:
                 }
             
             # Génération trace audit
+
             privacy_audit_trail = await self._create_privacy_audit_trail(
                 data, masked_data, privacy_level, protection_options
             )
@@ -764,6 +848,8 @@ class QuantumSecurityEngine:
             privacy_compliance = await self._validate_privacy_compliance(
                 masked_data, privacy_level
             )
+
+
             
             result = {
                 "protected_data": masked_data,
@@ -778,11 +864,13 @@ class QuantumSecurityEngine:
             }
             
             logger.info(f"✅ Privacy protection completed: {privacy_level.value}")
+
             
             return result
             
         except Exception as e:
             logger.error(f"❌ Failed to protect user privacy: {e}")
+
             raise
     
     # ========================================
@@ -811,34 +899,43 @@ class QuantumSecurityEngine:
             logger.info(f"🔑 Validating access authorization: {user_id} -> {resource_id} ({action})")
             
             # Sélection contrôleur accès
+
             controller = await self._get_or_create_access_controller("rbac")
             
             # Validation accès principal
+
             access_valid = await controller.validate_access(user_id, resource_id, action)
             
             # Vérification permissions utilisateur
+
             permissions_valid = await controller.check_permissions(user_id, required_level)
             
             # Validation contexte temporel
+
             temporal_validation = await self._validate_temporal_access(user_id, resource_id)
             
             # Vérification contraintes géographiques
+
             geographical_validation = await self._validate_geographical_access(user_id, resource_id)
             
             # Analyse comportement utilisateur
+
             behavioral_analysis = await self._analyze_user_behavior(user_id, action)
             
             # Validation multi-facteur si requis
+
             mfa_validation = await self._validate_multi_factor_authentication(
                 user_id, required_level
             )
             
             # Calcul score confiance utilisateur
+
             user_trust_score = await self._calculate_user_trust_score(
                 user_id, behavioral_analysis, temporal_validation
             )
             
             # Décision autorisation finale
+
             authorization_granted = (
                 access_valid and
                 permissions_valid and
@@ -850,6 +947,8 @@ class QuantumSecurityEngine:
             
             # Enregistrement tentative accès
             await self._log_access_attempt(user_id, resource_id, action, authorization_granted)
+
+
             
             result = {
                 "user_id": user_id,
@@ -868,11 +967,13 @@ class QuantumSecurityEngine:
             }
             
             logger.info(f"✅ Access authorization completed: {'granted' if authorization_granted else 'denied'} (trust: {user_trust_score:.2%})")
+
             
             return result
             
         except Exception as e:
             logger.error(f"❌ Failed to validate access authorization: {e}")
+
             raise
     
     # ========================================
@@ -886,19 +987,25 @@ class QuantumSecurityEngine:
         return self.cryptography_processors[algorithm]
     
     async def _create_cryptography_processor(self, algorithm: EncryptionAlgorithm):
-        """Création processeur cryptographique"""
+        """
+        Création processeur cryptographique"""
         class MockCryptographyProcessor(CryptographyProcessor):
             async def encrypt_data(self, request: EncryptionRequest) -> EncryptionResult:
                 # Simulation chiffrement
                 if isinstance(request.data, str):
                     data_bytes = request.data.encode('utf-8')
+
                 elif isinstance(request.data, dict):
                     data_bytes = json.dumps(request.data).encode('utf-8')
+
                 else:
                     data_bytes = request.data
                 
                 # Chiffrement simulé (base64 pour démonstration)
+
+
                 encrypted_data = base64.b64encode(data_bytes).decode('utf-8')
+
                 
                 return EncryptionResult(
                     encrypted_data=encrypted_data,
@@ -918,15 +1025,20 @@ class QuantumSecurityEngine:
                         "requires_key": True
                     }
                 )
+
             
             async def decrypt_data(self, encrypted_data: str, key_id: str) -> Dict[str, Any]:
                 # Simulation déchiffrement
                 try:
                     decrypted_bytes = base64.b64decode(encrypted_data.encode('utf-8'))
+
+
                     decrypted_str = decrypted_bytes.decode('utf-8')
+
                     
                     try:
                         return json.loads(decrypted_str)
+
                     except json.JSONDecodeError:
                         return {"data": decrypted_str}
                 except Exception:
@@ -939,18 +1051,23 @@ class QuantumSecurityEngine:
         key_id = str(uuid.uuid4())
         
         # Génération clé selon algorithme
+
         key_length = {
             EncryptionAlgorithm.AES_256_GCM: 32,
             EncryptionAlgorithm.RSA_4096: 512,
             EncryptionAlgorithm.LATTICE_BASED: 64
         }.get(algorithm, 32)
+
+
         
         encryption_key = secrets.token_bytes(key_length)
+
         
         return key_id
     
     async def _verify_quantum_resistance(self, algorithm: EncryptionAlgorithm) -> bool:
-        """Vérification résistance quantique"""
+        """
+        Vérification résistance quantique"""
         quantum_safe_algorithms = [
             EncryptionAlgorithm.LATTICE_BASED,
             EncryptionAlgorithm.CODE_BASED,
@@ -965,19 +1082,22 @@ class QuantumSecurityEngine:
     # ========================================
     
     async def _get_or_create_threat_detector(self, detector_type: str):
-        """Récupération ou création détecteur menaces"""
+        """
+        Récupération ou création détecteur menaces"""
         if detector_type not in self.threat_detectors:
             self.threat_detectors[detector_type] = await self._create_threat_detector(detector_type)
         return self.threat_detectors[detector_type]
     
     async def _create_threat_detector(self, detector_type: str):
-        """Création détecteur menaces"""
+        """
+        Création détecteur menaces"""
         class MockThreatDetector(ThreatDetector):
             async def analyze_threat(self, request: ThreatAnalysisRequest) -> ThreatAnalysisResult:
                 detected_threats = []
                 
                 for threat_type in request.threat_types:
                     threat_score = np.random.uniform(0.1, 0.9)
+
                     if threat_score > 0.6:  # Seuil détection
                         detected_threats.append({
                             "threat_type": threat_type.value,
@@ -988,6 +1108,8 @@ class QuantumSecurityEngine:
                                 f"{threat_type.value}_indicator_2"
                             ]
                         })
+
+
                 
                 overall_score = np.mean([t["threat_score"] for t in detected_threats]) if detected_threats else 0.1
                 
@@ -1005,6 +1127,7 @@ class QuantumSecurityEngine:
                     ],
                     confidence_level=np.random.uniform(0.7, 0.95)
                 )
+
             
             async def detect_anomalies(self, event_data: Dict[str, Any]) -> List[Dict[str, Any]]:
                 anomalies = []
@@ -1017,6 +1140,7 @@ class QuantumSecurityEngine:
                         "description": "Unusual access pattern detected",
                         "confidence": np.random.uniform(0.6, 0.9)
                     })
+
                 
                 return anomalies
         
@@ -1043,10 +1167,12 @@ class QuantumSecurityEngine:
         return self.compliance_validators[framework]
     
     async def _create_compliance_validator(self, framework: ComplianceFramework):
-        """Création validateur conformité"""
+        """
+        Création validateur conformité"""
         class MockComplianceValidator(ComplianceValidator):
             async def validate_compliance(self, request: ComplianceAuditRequest) -> Dict[str, Any]:
                 compliance_score = np.random.uniform(0.7, 0.95)
+
                 
                 return {
                     "framework": framework.value,
@@ -1079,7 +1205,8 @@ class QuantumSecurityEngine:
         return self.privacy_protectors[privacy_level]
     
     async def _create_privacy_protector(self, privacy_level: PrivacyLevel):
-        """Création protecteur confidentialité"""
+        """
+        Création protecteur confidentialité"""
         class MockPrivacyProtector(PrivacyProtector):
             async def protect_privacy(self, data: Dict[str, Any], privacy_level: PrivacyLevel) -> Dict[str, Any]:
                 protected_data = data.copy()
@@ -1089,6 +1216,7 @@ class QuantumSecurityEngine:
                     return protected_data
                 
                 # Masquage données sensibles
+
                 sensitive_fields = ["email", "phone", "ssn", "credit_card"]
                 for field in sensitive_fields:
                     if field in protected_data:
@@ -1100,6 +1228,7 @@ class QuantumSecurityEngine:
                 anonymized = data.copy()
                 
                 # Suppression identifiants directs
+
                 identifiers = ["name", "id", "user_id", "email"]
                 for identifier in identifiers:
                     if identifier in anonymized:
@@ -1120,7 +1249,8 @@ class QuantumSecurityEngine:
         return self.access_controllers[controller_type]
     
     async def _create_access_controller(self, controller_type: str):
-        """Création contrôleur accès"""
+        """
+        Création contrôleur accès"""
         class MockAccessController(AccessController):
             async def validate_access(self, user_id: str, resource_id: str, action: str) -> bool:
                 # Simulation validation accès
@@ -1137,7 +1267,8 @@ class QuantumSecurityEngine:
     # ========================================
     
     def _initialize_default_security_policies(self):
-        """Initialisation politiques sécurité par défaut"""
+        """
+        Initialisation politiques sécurité par défaut"""
         self.security_policies = {
             "password_policy": {
                 "min_length": 12,
@@ -1171,11 +1302,15 @@ class QuantumSecurityEngine:
     async def _calculate_global_risk_score(self, auth: Dict, access: Dict, threat: ThreatAnalysisResult, compliance: Dict) -> float:
         """Calcul score risque global"""
         auth_score = 0.0 if auth.get("valid", False) else 0.3
+
         access_score = 0.0 if access.get("granted", False) else 0.4
+
         threat_score = threat.threat_score if threat else 0.0
+
         compliance_score = np.mean([v.get("compliance_score", 0.8) for v in compliance.values()]) if compliance else 0.8
         
         # Score risque global (0-1, plus haut = plus risqué)
+
         risk_score = (auth_score + access_score + threat_score + (1 - compliance_score)) / 4
         return min(1.0, max(0.0, risk_score))
     
@@ -1208,32 +1343,41 @@ class QuantumCryptographyEngine(QuantumSecurityEngine):
     pass
 
 class QuantumThreatDetectionSystem(QuantumSecurityEngine):
-    """Alias pour compatibilité - Threat Detection System"""
+    """
+        Alias pour compatibilité - Threat Detection System"""
     pass
 
 class QuantumComplianceManager(QuantumSecurityEngine):
-    """Alias pour compatibilité - Compliance Manager"""
+    """
+        Alias pour compatibilité - Compliance Manager"""
     pass
 
 class QuantumPrivacyProtectionEngine(QuantumSecurityEngine):
-    """Alias pour compatibilité - Privacy Protection Engine"""
+    """
+        Alias pour compatibilité - Privacy Protection Engine"""
     pass
 
 class QuantumSecurityMonitoringSystem(QuantumSecurityEngine):
-    """Alias pour compatibilité - Security Monitoring System"""
+    """
+        Alias pour compatibilité - Security Monitoring System"""
     pass
 
 class QuantumAccessControlManager(QuantumSecurityEngine):
-    """Alias pour compatibilité - Access Control Manager"""
+    """
+        Alias pour compatibilité - Access Control Manager"""
     pass
 
 # ========================================
 # EXPORT INTERFACES
 # ========================================
 
+# Enterprise aliases
+PostQuantumCrypto = QuantumCryptographyEngine
+
 __all__ = [
     "QuantumSecurityEngine",
     "QuantumCryptographyEngine",
+    "PostQuantumCrypto",  # Alias
     "QuantumThreatDetectionSystem",
     "QuantumComplianceManager",
     "QuantumPrivacyProtectionEngine",

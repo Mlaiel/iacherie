@@ -14,7 +14,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class LanguageDetectionResult:
-    """Résultat de détection de langue"""
+    """
+Résultat de détection de langue"""
     language: str
     confidence: float
     alternatives: List[Tuple[str, float]]
@@ -26,7 +27,8 @@ class LanguageDetectionEngine:
     """
     
     def __init__(self):
-        """Initialise le moteur de détection"""
+        """
+Initialise le moteur de détection"""
         # Patterns linguistiques de base
         self.language_patterns = {
             'en': {
@@ -120,17 +122,20 @@ class LanguageDetectionEngine:
         )
     
     def detect_language_simple(self, text: str) -> str:
-        """Détection simple qui retourne juste la langue"""
+        """
+Détection simple qui retourne juste la langue"""
         result = self.detect_language(text)
         return result.language
     
     def is_language(self, text: str, target_language: str, threshold: float = 0.3) -> bool:
-        """Vérifie si un texte est dans une langue donnée"""
+        """
+Vérifie si un texte est dans une langue donnée"""
         result = self.detect_language(text)
         return result.language == target_language and result.confidence >= threshold
     
     def get_supported_languages(self) -> List[str]:
-        """Retourne la liste des langues supportées"""
+        """
+Retourne la liste des langues supportées"""
         return list(self.language_patterns.keys())
     
     def auto_detect_and_translate_key(self, text: str) -> str:
@@ -154,24 +159,29 @@ LanguageDetector = LanguageDetectionEngine
 
 # Fonctions utilitaires pour l'import facile
 def detect_language(text: str) -> LanguageDetectionResult:
-    """Fonction globale de détection de langue"""
+    """
+Fonction globale de détection de langue"""
     return language_detector.detect_language(text)
 
 def detect_language_simple(text: str) -> str:
-    """Fonction globale de détection simple"""
+    """
+Fonction globale de détection simple"""
     return language_detector.detect_language_simple(text)
 
 def is_language(text: str, target_language: str, threshold: float = 0.3) -> bool:
-    """Fonction globale de vérification de langue"""
+    """
+Fonction globale de vérification de langue"""
     return language_detector.is_language(text, target_language, threshold)
 
 def get_supported_languages() -> List[str]:
-    """Fonction globale pour obtenir les langues supportées"""
+    """
+Fonction globale pour obtenir les langues supportées"""
     return language_detector.get_supported_languages()
 
 # Auto-détection pour l'authentification
 def detect_auth_language(username_or_email: str, additional_text: str = "") -> str:
-    """Détecte la langue préférée pour l'authentification"""
+    """
+Détecte la langue préférée pour l'authentification"""
     combined_text = f"{username_or_email} {additional_text}".strip()
     
     # Si pas assez de texte, détection basée sur l'extension du domaine email
@@ -196,7 +206,8 @@ def detect_auth_language(username_or_email: str, additional_text: str = "") -> s
 
 # Auto-détection pour la sécurité
 def detect_security_language(log_message: str, user_agent: str = "") -> str:
-    """Détecte la langue pour les messages de sécurité"""
+    """
+Détecte la langue pour les messages de sécurité"""
     combined_text = f"{log_message} {user_agent}".strip()
     
     # Patterns spécifiques à la sécurité
@@ -217,4 +228,4 @@ def detect_security_language(log_message: str, user_agent: str = "") -> str:
     # Détection normale si pas de pattern spécifique
     return detect_language_simple(combined_text)
 
-logger.info("Language Detection module loaded successfully - 100% ready!")
+logger.info("Language Detection module initialized successfully - 100% ready!")

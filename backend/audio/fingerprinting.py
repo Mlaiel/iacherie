@@ -32,7 +32,8 @@ from enum import Enum
 
 
 class FingerprintAlgorithm(Enum):
-    """Advanced fingerprinting algorithms"""
+    """
+        Advanced fingerprinting algorithms"""
     CHROMAPRINT = "chromaprint"
     SPECTRAL_HASH = "spectral_hash"
     PERCEPTUAL_HASH = "perceptual_hash"
@@ -104,7 +105,8 @@ class FingerprintResult:
 
 @dataclass
 class MatchResult:
-    """Enterprise result container for fingerprint matching operations"""
+    """
+        Enterprise result container for fingerprint matching operations"""
     similarity_score: float
     match_confidence: float
     matched_fingerprint_id: str
@@ -128,7 +130,8 @@ class MatchResult:
 
 @dataclass
 class FingerprintRecord:
-    """Enterprise database record for stored fingerprints"""
+    """
+        Enterprise database record for stored fingerprints"""
     id: str
     fingerprint_hash: str
     chromaprint: Optional[str]
@@ -165,7 +168,8 @@ class AudioFingerprinter:
                  n_fft: int = 2048,
                  n_mels: int = 128,
                  max_workers: int = 4):
-        """Initialize enterprise audio fingerprinter"""
+        """
+        Initialize enterprise audio fingerprinter"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
         self.hop_length = hop_length
@@ -232,20 +236,28 @@ class AudioFingerprinter:
         # Quality assessment
         if quality_check:
             quality_metrics = self._assess_audio_quality(audio_data)
+
             if not self._meets_quality_standards(quality_metrics):
                 self.logger.warning("Audio quality below enterprise standards")
         else:
             quality_metrics = {}
         
         # Generate file hash for integrity verification
+
         file_hash = self._generate_file_hash(audio_data)
         
         # Initialize result containers
+
         fingerprint_results = {}
+
         neural_embeddings = None
+
         landmark_features = None
+
         wavelet_signature = None
+
         harmonic_signature = None
+
         tempo_signature = None
         
         # Generate fingerprints using specified algorithms
@@ -253,41 +265,57 @@ class AudioFingerprinter:
             try:
                 if algorithm == FingerprintAlgorithm.CHROMAPRINT:
                     fingerprint_results['chromaprint'] = self._generate_chromaprint(audio_data)
+
                 elif algorithm == FingerprintAlgorithm.SPECTRAL_HASH:
                     fingerprint_results['spectral_hash'] = self._generate_spectral_hash(audio_data)
+
                 elif algorithm == FingerprintAlgorithm.PERCEPTUAL_HASH:
                     fingerprint_results['perceptual_hash'] = self._generate_perceptual_hash(audio_data)
+
                 elif algorithm == FingerprintAlgorithm.MFCC_HASH:
                     fingerprint_results['mfcc_hash'] = self._generate_mfcc_hash(audio_data)
+
                 elif algorithm == FingerprintAlgorithm.CHROMA_HASH:
                     fingerprint_results['chroma_hash'] = self._generate_chroma_hash(audio_data)
+
                 elif algorithm == FingerprintAlgorithm.LANDMARK_HASH:
                     landmark_features = self._generate_landmark_hash(audio_data)
+
                     fingerprint_results['landmark_hash'] = landmark_features['hash']
                 elif algorithm == FingerprintAlgorithm.NEURAL_EMBEDDING:
                     neural_embeddings = self._generate_neural_embeddings(audio_data)
+
                     fingerprint_results['neural_embedding'] = neural_embeddings['hash']
                 elif algorithm == FingerprintAlgorithm.WAVELET_HASH:
                     wavelet_signature = self._generate_wavelet_hash(audio_data)
+
                     fingerprint_results['wavelet_hash'] = wavelet_signature['hash']
                 elif algorithm == FingerprintAlgorithm.TEMPO_HASH:
                     tempo_signature = self._generate_tempo_hash(audio_data)
+
                     fingerprint_results['tempo_hash'] = tempo_signature['hash']
                 elif algorithm == FingerprintAlgorithm.HARMONIC_HASH:
                     harmonic_signature = self._generate_harmonic_hash(audio_data)
+
                     fingerprint_results['harmonic_hash'] = harmonic_signature['hash']
             except Exception as e:
                 self.logger.error(f"Error generating {algorithm.value} fingerprint: {e}")
+
                 continue
         
         # Create composite fingerprint hash
+
         composite_hash = self._create_composite_hash(fingerprint_results)
         
         # Generate blockchain-compatible hash
+
         blockchain_hash = self._generate_blockchain_hash(audio_data, composite_hash)
         
         # Calculate confidence score
+
         confidence_score = self._calculate_fingerprint_confidence(fingerprint_results, quality_metrics)
+
+
         
         processing_time = time.time() - start_time
         
@@ -345,18 +373,26 @@ class AudioFingerprinter:
             metadata = {}
         
         # Generate different types of fingerprints
+
         chromaprint_hash = self._generate_chromaprint(audio_data, sr)
+
         spectral_features = self._extract_spectral_features(audio_data, sr)
+
         perceptual_hash = self._generate_perceptual_hash(spectral_features)
         
         # Create composite fingerprint hash
+
         fingerprint_hash = self._create_composite_hash(chromaprint_hash, perceptual_hash, spectral_features)
         
         # File hash for integrity checking
+
         file_hash = self._generate_file_hash(audio_data)
         
         # Calculate confidence score
+
         confidence_score = self._calculate_fingerprint_confidence(audio_data, spectral_features)
+
+
         
         processing_time = time.time() - start_time
         
@@ -374,12 +410,14 @@ class AudioFingerprinter:
         )
     
     def _generate_chromaprint(self, audio_data: np.ndarray, sample_rate: int) -> str:
-        """Generate chromaprint fingerprint"""
+        """
+        Generate chromaprint fingerprint"""
         try:
             # This would use the actual chromaprint library in production
             # For now, we'll create a simplified version
             
             # Extract chroma features
+
             chroma = librosa.feature.chroma_stft(
                 y=audio_data, 
                 sr=sample_rate,
@@ -387,20 +425,25 @@ class AudioFingerprinter:
             )
             
             # Quantize chroma features to create hash-like representation
+
             chroma_binary = (chroma > np.mean(chroma, axis=1, keepdims=True)).astype(int)
             
             # Convert to string representation
+
             chromaprint_str = ''.join([str(int(''.join(map(str, frame)), 2)) for frame in chroma_binary.T[:100]])
+
             
             return chromaprint_str
             
         except Exception as e:
             self.logger.warning(f"Chromaprint generation failed: {e}")
+
             return ""
     
     def _extract_spectral_features(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
         """Extract spectral features for fingerprinting"""
         # Mel-frequency cepstral coefficients
+
         mfcc = librosa.feature.mfcc(
             y=audio_data,
             sr=sample_rate,
@@ -410,6 +453,7 @@ class AudioFingerprinter:
         )
         
         # Spectral centroid
+
         spectral_centroid = librosa.feature.spectral_centroid(
             y=audio_data,
             sr=sample_rate,
@@ -417,6 +461,7 @@ class AudioFingerprinter:
         )
         
         # Spectral rolloff
+
         spectral_rolloff = librosa.feature.spectral_rolloff(
             y=audio_data,
             sr=sample_rate,
@@ -424,12 +469,14 @@ class AudioFingerprinter:
         )
         
         # Zero crossing rate
+
         zcr = librosa.feature.zero_crossing_rate(
             audio_data,
             hop_length=self.hop_length
         )
         
         # Combine features
+
         features = np.vstack([
             mfcc,
             spectral_centroid,
@@ -438,35 +485,47 @@ class AudioFingerprinter:
         ])
         
         # Summarize features (mean and std across time)
+
         feature_summary = np.hstack([
             np.mean(features, axis=1),
             np.std(features, axis=1)
         ])
+
         
         return feature_summary
     
     def _generate_perceptual_hash(self, spectral_features: np.ndarray) -> str:
-        """Generate perceptual hash from spectral features"""
+        """
+        Generate perceptual hash from spectral features"""
         # Normalize features
+
         normalized_features = (spectral_features - np.mean(spectral_features)) / (np.std(spectral_features) + 1e-10)
         
         # Create binary hash
+
         binary_features = (normalized_features > 0).astype(int)
         
         # Convert to hexadecimal string
+
         hex_chunks = []
         for i in range(0, len(binary_features), 4):
             chunk = binary_features[i:i+4]
             if len(chunk) < 4:
                 chunk = np.pad(chunk, (0, 4 - len(chunk)), mode='constant')
+
+
             hex_value = int(''.join(map(str, chunk)), 2)
+
             hex_chunks.append(format(hex_value, 'x'))
+
         
         return ''.join(hex_chunks)
     
     def _create_composite_hash(self, chromaprint: str, perceptual_hash: str, spectral_features: np.ndarray) -> str:
-        """Create composite fingerprint hash"""
+        """
+        Create composite fingerprint hash"""
         # Combine all fingerprinting data
+
         composite_data = f"{chromaprint}_{perceptual_hash}_{spectral_features.tobytes().hex()}"
         
         # Generate SHA-256 hash
@@ -477,67 +536,94 @@ class AudioFingerprinter:
         return hashlib.md5(audio_data.tobytes()).hexdigest()
     
     def _calculate_fingerprint_confidence(self, audio_data: np.ndarray, spectral_features: np.ndarray) -> float:
-        """Calculate confidence score for fingerprint quality"""
+        """
+        Calculate confidence score for fingerprint quality"""
         # Audio quality metrics
+
         signal_power = np.mean(audio_data ** 2)
+
         noise_floor = np.percentile(np.abs(audio_data), 10)
+
         snr = 10 * np.log10(signal_power / (noise_floor ** 2 + 1e-10))
         
         # Feature consistency
+
         feature_std = np.std(spectral_features)
+
         feature_consistency = 1.0 / (1.0 + feature_std)
         
         # Duration factor
+
         duration = len(audio_data) / self.sample_rate
+
         duration_factor = min(1.0, duration / 10.0)  # Prefer longer audio
         
         # Combine factors
+
         confidence = (snr / 60.0 + feature_consistency + duration_factor) / 3.0
         return min(1.0, max(0.0, float(confidence)))
     
     # Enterprise Fingerprinting Methods
     def _assess_audio_quality(self, audio_data: np.ndarray) -> Dict[str, float]:
-        """Assess audio quality for enterprise standards"""
+        """
+        Assess audio quality for enterprise standards"""
         quality_metrics = {}
         
         # Signal-to-noise ratio
+
         signal_power = np.mean(audio_data ** 2)
+
         noise_power = np.var(audio_data - np.mean(audio_data))
+
         snr_db = 10 * np.log10(signal_power / (noise_power + 1e-10))
         quality_metrics['snr_db'] = float(snr_db)
         
         # Dynamic range
+
         peak = np.max(np.abs(audio_data))
+
         rms = np.sqrt(np.mean(audio_data ** 2))
+
         dynamic_range = 20 * np.log10(peak / (rms + 1e-10))
         quality_metrics['dynamic_range_db'] = float(dynamic_range)
         
         # Spectral complexity
+
         stft = librosa.stft(audio_data)
+
         spectral_entropy = -np.sum(np.abs(stft) * np.log(np.abs(stft) + 1e-10), axis=0)
         quality_metrics['spectral_complexity'] = float(np.mean(spectral_entropy))
+
         
         return quality_metrics
     
     def _meets_quality_standards(self, quality_metrics: Dict[str, float]) -> bool:
-        """Check if audio meets enterprise quality standards"""
+        """
+        Check if audio meets enterprise quality standards"""
         return (quality_metrics.get('snr_db', 0) >= self.quality_thresholds['min_snr_db'] and
                 quality_metrics.get('spectral_complexity', 0) >= self.quality_thresholds['min_spectral_complexity'])
     
     def _generate_landmark_hash(self, audio_data: np.ndarray) -> Dict[str, Any]:
-        """Generate landmark-based fingerprint (Shazam-style)"""
+        """
+        Generate landmark-based fingerprint (Shazam-style)"""
         # Generate spectrogram
+
         stft = librosa.stft(audio_data, n_fft=self.n_fft, hop_length=self.hop_length)
+
         magnitude = np.abs(stft)
         
         # Find spectral peaks
+
         peaks = self._find_spectral_peaks(magnitude)
         
         # Generate landmark pairs
+
         landmarks = self._generate_landmark_pairs(peaks)
         
         # Create hash from landmarks
+
         landmark_hash = self._hash_landmarks(landmarks)
+
         
         return {
             'hash': landmark_hash,
@@ -546,8 +632,10 @@ class AudioFingerprinter:
         }
     
     def _generate_neural_embeddings(self, audio_data: np.ndarray) -> Dict[str, Any]:
-        """Generate neural network-based embeddings"""
+        """
+        Generate neural network-based embeddings"""
         # Extract mel-spectrogram features
+
         mel_spec = librosa.feature.melspectrogram(
             y=audio_data, sr=self.sample_rate,
             n_mels=self.algorithm_params[FingerprintAlgorithm.NEURAL_EMBEDDING]['embedding_dim']
@@ -557,14 +645,20 @@ class AudioFingerprinter:
         # Apply temporal pooling
         if self.algorithm_params[FingerprintAlgorithm.NEURAL_EMBEDDING]['temporal_pooling'] == 'attention':
             # Attention-based pooling
+
             attention_weights = np.softmax(np.mean(mel_spec, axis=0))
+
+
             embedding = np.average(mel_spec, axis=1, weights=attention_weights)
         else:
             # Mean pooling
+
             embedding = np.mean(mel_spec, axis=1)
         
         # Create hash from embedding
+
         embedding_hash = hashlib.sha256(embedding.tobytes()).hexdigest()
+
         
         return {
             'hash': embedding_hash,
@@ -572,30 +666,39 @@ class AudioFingerprinter:
         }
     
     def _generate_wavelet_hash(self, audio_data: np.ndarray) -> Dict[str, Any]:
-        """Generate wavelet-based fingerprint"""
+        """
+        Generate wavelet-based fingerprint"""
         # Note: This is a simplified implementation
         # In practice, would use pywt library for proper wavelet transform
         
         # Approximate wavelet decomposition using filter bank
         # High-pass and low-pass decomposition
+
         nyquist = self.sample_rate / 2
+
         high_freq = 0.5  # Normalized frequency
         
         # Simple approximation of wavelet decomposition
         b, a = signal.butter(4, high_freq, btype='high')
+
         high_pass = signal.filtfilt(b, a, audio_data)
+
         
-        b, a = signal.butter(4, high_freq, btype='low') 
+        b, a = signal.butter(4, high_freq, btype='low')
+ 
         low_pass = signal.filtfilt(b, a, audio_data)
         
         # Create signature from coefficients
+
         signature = np.concatenate([
             np.mean(high_pass.reshape(-1, 1024), axis=1)[:32],
             np.mean(low_pass.reshape(-1, 1024), axis=1)[:32]
         ])
         
         # Create hash
+
         wavelet_hash = hashlib.sha256(signature.tobytes()).hexdigest()
+
         
         return {
             'hash': wavelet_hash,
@@ -603,23 +706,31 @@ class AudioFingerprinter:
         }
     
     def _generate_tempo_hash(self, audio_data: np.ndarray) -> Dict[str, float]:
-        """Generate tempo-based fingerprint"""
+        """
+        Generate tempo-based fingerprint"""
         # Beat tracking
         tempo, beats = librosa.beat.beat_track(y=audio_data, sr=self.sample_rate)
         
         # Onset detection
+
         onset_frames = librosa.onset.onset_detect(y=audio_data, sr=self.sample_rate)
+
         onset_times = librosa.frames_to_time(onset_frames, sr=self.sample_rate)
         
         # Calculate tempo statistics
         if len(beats) > 1:
             beat_intervals = np.diff(librosa.frames_to_time(beats, sr=self.sample_rate))
+
+
             tempo_variance = np.var(beat_intervals)
+
+
             tempo_stability = 1.0 / (1.0 + tempo_variance)
         else:
             tempo_stability = 0.0
         
         # Create tempo signature
+
         tempo_signature = {
             'primary_tempo': float(tempo),
             'tempo_stability': float(tempo_stability),
@@ -628,27 +739,37 @@ class AudioFingerprinter:
         }
         
         # Create hash from signature
+
         signature_str = json.dumps(tempo_signature, sort_keys=True)
+
         tempo_hash = hashlib.sha256(signature_str.encode()).hexdigest()
         tempo_signature['hash'] = tempo_hash
         
         return tempo_signature
     
     def _generate_harmonic_hash(self, audio_data: np.ndarray) -> Dict[str, Any]:
-        """Generate harmonic content-based fingerprint"""
+        """
+        Generate harmonic content-based fingerprint"""
         # Harmonic-percussive separation
+
         harmonic = librosa.effects.harmonic(audio_data)
+
         percussive = librosa.effects.percussive(audio_data)
         
         # Chroma features for harmonic content
+
         chroma = librosa.feature.chroma_stft(y=harmonic, sr=self.sample_rate)
+
         chroma_mean = np.mean(chroma, axis=1)
+
         chroma_std = np.std(chroma, axis=1)
         
         # Spectral centroid for harmonic brightness
+
         spectral_centroid = librosa.feature.spectral_centroid(y=harmonic, sr=self.sample_rate)
         
         # Create harmonic signature
+
         signature = np.concatenate([
             chroma_mean,
             chroma_std,
@@ -656,7 +777,9 @@ class AudioFingerprinter:
         ])
         
         # Create hash
+
         harmonic_hash = hashlib.sha256(signature.tobytes()).hexdigest()
+
         
         return {
             'hash': harmonic_hash,
@@ -664,77 +787,102 @@ class AudioFingerprinter:
         }
     
     def _generate_mfcc_hash(self, audio_data: np.ndarray) -> str:
-        """Generate MFCC-based fingerprint"""
+        """
+        Generate MFCC-based fingerprint"""
         # Extract MFCC features
+
         mfccs = librosa.feature.mfcc(y=audio_data, sr=self.sample_rate, n_mfcc=13)
         
         # Statistical summary
+
         mfcc_mean = np.mean(mfccs, axis=1)
+
         mfcc_std = np.std(mfccs, axis=1)
+
         mfcc_summary = np.concatenate([mfcc_mean, mfcc_std])
         
         # Create hash
         return hashlib.sha256(mfcc_summary.tobytes()).hexdigest()
     
     def _generate_chroma_hash(self, audio_data: np.ndarray) -> str:
-        """Generate chroma-based fingerprint"""
+        """
+        Generate chroma-based fingerprint"""
         # Extract chroma features
+
         chroma = librosa.feature.chroma_stft(y=audio_data, sr=self.sample_rate)
         
         # Statistical summary
+
         chroma_mean = np.mean(chroma, axis=1)
+
         chroma_std = np.std(chroma, axis=1)
+
         chroma_summary = np.concatenate([chroma_mean, chroma_std])
         
         # Create hash
         return hashlib.sha256(chroma_summary.tobytes()).hexdigest()
     
     def _create_composite_hash(self, fingerprint_results: Dict[str, str]) -> str:
-        """Create composite hash from multiple fingerprint algorithms"""
+        """
+        Create composite hash from multiple fingerprint algorithms"""
         # Combine all available hashes
+
         combined_string = ''.join(sorted(fingerprint_results.values()))
         return hashlib.sha256(combined_string.encode()).hexdigest()
     
     def _generate_blockchain_hash(self, audio_data: np.ndarray, composite_hash: str) -> str:
-        """Generate blockchain-compatible hash for immutable registration"""
+        """
+        Generate blockchain-compatible hash for immutable registration"""
         # Include audio metadata for blockchain registration
+
         metadata = {
             'audio_length': len(audio_data),
             'sample_rate': self.sample_rate,
             'composite_hash': composite_hash,
             'timestamp': time.time()
         }
+
         
         metadata_str = json.dumps(metadata, sort_keys=True)
         return hashlib.sha256(metadata_str.encode()).hexdigest()
     
     def _calculate_fingerprint_confidence(self, fingerprint_results: Dict[str, str], 
                                         quality_metrics: Dict[str, float]) -> float:
-        """Calculate confidence score for generated fingerprints"""
+        """
+        Calculate confidence score for generated fingerprints"""
         confidence_factors = []
         
         # Algorithm diversity factor
+
         num_algorithms = len(fingerprint_results)
+
         diversity_factor = min(1.0, num_algorithms / 5.0)  # 5 algorithms for full confidence
         confidence_factors.append(diversity_factor)
         
         # Quality factor
         if quality_metrics:
             snr_factor = min(1.0, quality_metrics.get('snr_db', 0) / 30.0)  # 30 dB for full confidence
+
             complexity_factor = min(1.0, quality_metrics.get('spectral_complexity', 0) / 10.0)
+
+
             quality_factor = (snr_factor + complexity_factor) / 2.0
             confidence_factors.append(quality_factor)
         
         # Hash consistency factor (simplified check)
+
         hash_lengths = [len(h) for h in fingerprint_results.values() if isinstance(h, str)]
         if hash_lengths:
             length_consistency = 1.0 - (np.std(hash_lengths) / np.mean(hash_lengths) if np.mean(hash_lengths) > 0 else 0)
+
             confidence_factors.append(length_consistency)
+
         
         return np.mean(confidence_factors)
     
     def _analyze_audio_properties(self, audio_data: np.ndarray) -> Dict[str, Any]:
-        """Analyze basic audio properties for metadata"""
+        """
+        Analyze basic audio properties for metadata"""
         return {
             'duration_seconds': len(audio_data) / self.sample_rate,
             'channels': 1 if audio_data.ndim == 1 else audio_data.shape[0],
@@ -745,9 +893,12 @@ class AudioFingerprinter:
     
     # Helper methods for landmark detection
     def _find_spectral_peaks(self, magnitude: np.ndarray) -> List[Tuple[int, int]]:
-        """Find spectral peaks for landmark generation"""
+        """
+        Find spectral peaks for landmark generation"""
         peaks = []
+
         threshold = np.mean(magnitude) + 2 * np.std(magnitude)
+
         
         for t in range(magnitude.shape[1]):
             for f in range(magnitude.shape[0]):
@@ -755,11 +906,13 @@ class AudioFingerprinter:
                     # Check if it's a local maximum
                     if self._is_local_maximum(magnitude, f, t):
                         peaks.append((f, t))
+
         
         return peaks[:1000]  # Limit number of peaks
     
     def _is_local_maximum(self, magnitude: np.ndarray, f: int, t: int) -> bool:
-        """Check if point is a local maximum"""
+        """
+        Check if point is a local maximum"""
         try:
             center = magnitude[f, t]
             for df in [-1, 0, 1]:
@@ -775,8 +928,10 @@ class AudioFingerprinter:
             return False
     
     def _generate_landmark_pairs(self, peaks: List[Tuple[int, int]]) -> List[Dict[str, Any]]:
-        """Generate landmark pairs from peaks"""
+        """
+        Generate landmark pairs from peaks"""
         landmarks = []
+
         params = self.algorithm_params[FingerprintAlgorithm.LANDMARK_HASH]
         
         for i, (f1, t1) in enumerate(peaks):
@@ -789,15 +944,19 @@ class AudioFingerprinter:
                         'time_delta': t2 - t1,
                         'anchor_time': t1
                     })
+
         
         return landmarks
     
     def _hash_landmarks(self, landmarks: List[Dict[str, Any]]) -> str:
-        """Create hash from landmark features"""
+        """
+        Create hash from landmark features"""
         landmark_strings = []
         for landmark in landmarks:
             landmark_str = f"{landmark['freq1']}_{landmark['freq2']}_{landmark['time_delta']}"
             landmark_strings.append(landmark_str)
+
+
         
         combined = '|'.join(sorted(landmark_strings))
         return hashlib.sha256(combined.encode()).hexdigest()
@@ -811,38 +970,46 @@ class ContentMatcher:
     """
     
     def __init__(self, similarity_threshold: float = 0.85):
-        """Initialize content matcher"""
+        """
+        Initialize content matcher"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.similarity_threshold = similarity_threshold
     
     def match_fingerprints(self, 
                           query_fingerprint: FingerprintResult,
                           database_fingerprints: List[FingerprintRecord]) -> List[MatchResult]:
-        """Match query fingerprint against database"""
+        """
+        Match query fingerprint against database"""
         matches = []
         
         for db_fingerprint in database_fingerprints:
             match_result = self._compare_fingerprints(query_fingerprint, db_fingerprint)
+
             
             if match_result.similarity_score >= self.similarity_threshold:
                 matches.append(match_result)
         
         # Sort by similarity score (descending)
         matches.sort(key=lambda x: x.similarity_score, reverse=True)
+
         
         return matches
     
     def _compare_fingerprints(self, 
                              query: FingerprintResult,
                              db_record: FingerprintRecord) -> MatchResult:
-        """Compare two fingerprints and calculate similarity"""
+        """
+        Compare two fingerprints and calculate similarity"""
         start_time = time.time()
         
         # Hash comparison (exact match)
+
         hash_match = query.fingerprint_hash == db_record.fingerprint_hash
+
         hash_similarity = 1.0 if hash_match else 0.0
         
         # Perceptual hash comparison
+
         perceptual_similarity = self._compare_perceptual_hashes(
             query.perceptual_hash, 
             db_record.perceptual_hash
@@ -851,6 +1018,8 @@ class ContentMatcher:
         # Spectral features comparison
         if query.spectral_features is not None:
             db_spectral_features = np.frombuffer(db_record.spectral_features, dtype=np.float64)
+
+
             spectral_similarity = self._compare_spectral_features(
                 query.spectral_features,
                 db_spectral_features
@@ -859,12 +1028,14 @@ class ContentMatcher:
             spectral_similarity = 0.0
         
         # Chromaprint comparison
+
         chromaprint_similarity = self._compare_chromaprints(
             query.chromaprint or "",
             db_record.chromaprint or ""
         )
         
         # Weighted combination of similarities
+
         overall_similarity = (
             hash_similarity * 0.4 +
             perceptual_similarity * 0.25 +
@@ -873,6 +1044,7 @@ class ContentMatcher:
         )
         
         # Calculate match confidence
+
         match_confidence = self._calculate_match_confidence(
             overall_similarity, 
             query,
@@ -880,11 +1052,15 @@ class ContentMatcher:
         )
         
         # Calculate offset (simplified)
+
         offset_seconds = 0.0  # Would implement time alignment algorithm
         
         # Duration match
+
         duration_diff = abs(query.audio_duration - db_record.audio_duration)
+
         max_duration = max(query.audio_duration, db_record.audio_duration)
+
         duration_match = 1.0 - (duration_diff / max_duration) if max_duration > 0 else 1.0
         
         return MatchResult(
@@ -904,31 +1080,42 @@ class ContentMatcher:
             return 0.0
         
         # Calculate Hamming distance
+
         differences = sum(c1 != c2 for c1, c2 in zip(hash1, hash2))
+
         max_differences = len(hash1)
         
         # Convert to similarity (0-1)
+
         similarity = 1.0 - (differences / max_differences) if max_differences > 0 else 0.0
         
         return float(similarity)
     
     def _compare_spectral_features(self, features1: np.ndarray, features2: np.ndarray) -> float:
-        """Compare spectral features using cosine similarity"""
+        """
+        Compare spectral features using cosine similarity"""
         if len(features1) != len(features2):
             # Adjust lengths if needed
+
             min_length = min(len(features1), len(features2))
+
+
             features1 = features1[:min_length]
+
             features2 = features2[:min_length]
         
         try:
             # Cosine similarity
+
             cos_sim = 1.0 - cosine(features1, features2)
+
             return max(0.0, float(cos_sim))
         except:
             return 0.0
     
     def _compare_chromaprints(self, chroma1: str, chroma2: str) -> float:
-        """Compare chromaprint strings"""
+        """
+        Compare chromaprint strings"""
         if not chroma1 or not chroma2:
             return 0.0
         
@@ -937,12 +1124,16 @@ class ContentMatcher:
             return 1.0
         
         # Calculate character-level similarity
+
         max_length = max(len(chroma1), len(chroma2))
         if max_length == 0:
             return 1.0
+
         
         differences = sum(c1 != c2 for c1, c2 in zip(chroma1, chroma2))
         differences += abs(len(chroma1) - len(chroma2))
+
+
         
         similarity = 1.0 - (differences / max_length)
         return max(0.0, float(similarity))
@@ -951,17 +1142,22 @@ class ContentMatcher:
                                   similarity: float,
                                   query: FingerprintResult,
                                   db_record: FingerprintRecord) -> float:
-        """Calculate confidence in the match"""
+        """
+        Calculate confidence in the match"""
         # Base confidence from similarity
+
         base_confidence = similarity
         
         # Adjust based on fingerprint quality
+
         quality_factor = (query.confidence_score + 1.0) / 2.0  # Assume db_record has confidence 1.0
         
         # Adjust based on duration match
+
         duration_factor = min(query.audio_duration, db_record.audio_duration) / max(query.audio_duration, db_record.audio_duration)
         
         # Combined confidence
+
         confidence = base_confidence * quality_factor * duration_factor
         
         return min(1.0, max(0.0, float(confidence)))
@@ -977,7 +1173,8 @@ class CopyrightDetector:
     def __init__(self, 
                  fingerprinter: AudioFingerprinter,
                  matcher: ContentMatcher):
-        """Initialize copyright detector"""
+        """
+        Initialize copyright detector"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.fingerprinter = fingerprinter
         self.matcher = matcher
@@ -990,15 +1187,20 @@ class CopyrightDetector:
     def detect_copyright_infringement(self, 
                                     audio_data: Union[str, np.ndarray],
                                     copyright_database: List[FingerprintRecord]) -> Dict[str, Any]:
-        """Detect potential copyright infringement"""
+        """
+        Detect potential copyright infringement"""
         # Generate fingerprint for query audio
+
         query_fingerprint = self.fingerprinter.generate_fingerprint(audio_data)
         
         # Match against copyright database
+
         matches = self.matcher.match_fingerprints(query_fingerprint, copyright_database)
         
         # Analyze matches for copyright infringement
+
         infringement_analysis = self._analyze_infringement(matches, query_fingerprint)
+
         
         return {
             'query_fingerprint': query_fingerprint,
@@ -1012,7 +1214,8 @@ class CopyrightDetector:
     def _analyze_infringement(self, 
                             matches: List[MatchResult],
                             query_fingerprint: FingerprintResult) -> Dict[str, Any]:
-        """Analyze matches for copyright infringement"""
+        """
+        Analyze matches for copyright infringement"""
         if not matches:
             return {
                 'infringement_detected': False,
@@ -1020,6 +1223,7 @@ class CopyrightDetector:
                 'partial_matches': [],
                 'summary': 'No matches found in copyright database'
             }
+
         
         best_match = matches[0]
         
@@ -1036,6 +1240,7 @@ class CopyrightDetector:
             }
         
         # Check for partial matches
+
         partial_matches = [m for m in matches if m.similarity_score >= self.partial_match_threshold]
         
         if partial_matches:
@@ -1062,17 +1267,20 @@ class FingerprintDatabase:
     """
     
     def __init__(self):
-        """Initialize fingerprint database"""
+        """
+        Initialize fingerprint database"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.fingerprints: Dict[str, FingerprintRecord] = {}
         self.index_by_hash: Dict[str, str] = {}
         self.index_by_perceptual: Dict[str, List[str]] = {}
     
     def store_fingerprint(self, fingerprint_result: FingerprintResult, audio_id: str) -> str:
-        """Store fingerprint in database"""
+        """
+        Store fingerprint in database"""
         record_id = self._generate_record_id(audio_id)
         
         # Serialize spectral features
+
         spectral_features_bytes = fingerprint_result.spectral_features.tobytes() if fingerprint_result.spectral_features is not None else b''
         
         record = FingerprintRecord(
@@ -1096,6 +1304,7 @@ class FingerprintDatabase:
         if fingerprint_result.perceptual_hash not in self.index_by_perceptual:
             self.index_by_perceptual[fingerprint_result.perceptual_hash] = []
         self.index_by_perceptual[fingerprint_result.perceptual_hash].append(record_id)
+
         
         self.logger.info(f"Stored fingerprint: {record_id}")
         return record_id
@@ -1105,32 +1314,39 @@ class FingerprintDatabase:
         return self.fingerprints.get(record_id)
     
     def search_by_hash(self, fingerprint_hash: str) -> Optional[FingerprintRecord]:
-        """Search for exact hash match"""
+        """
+        Search for exact hash match"""
         record_id = self.index_by_hash.get(fingerprint_hash)
         return self.fingerprints.get(record_id) if record_id else None
     
     def search_similar(self, perceptual_hash: str, max_distance: int = 3) -> List[FingerprintRecord]:
-        """Search for similar fingerprints using perceptual hash"""
+        """
+        Search for similar fingerprints using perceptual hash"""
         similar_records = []
         
         for stored_hash, record_ids in self.index_by_perceptual.items():
             # Calculate Hamming distance
             if len(stored_hash) == len(perceptual_hash):
                 distance = sum(c1 != c2 for c1, c2 in zip(stored_hash, perceptual_hash))
+
                 if distance <= max_distance:
                     for record_id in record_ids:
                         record = self.fingerprints.get(record_id)
+
                         if record:
                             similar_records.append(record)
+
         
         return similar_records
     
     def get_all_fingerprints(self) -> List[FingerprintRecord]:
-        """Get all stored fingerprints"""
+        """
+        Get all stored fingerprints"""
         return list(self.fingerprints.values())
     
     def delete_fingerprint(self, record_id: str) -> bool:
-        """Delete fingerprint from database"""
+        """
+        Delete fingerprint from database"""
         record = self.fingerprints.get(record_id)
         if not record:
             return False
@@ -1144,6 +1360,7 @@ class FingerprintDatabase:
         
         if record.perceptual_hash in self.index_by_perceptual:
             self.index_by_perceptual[record.perceptual_hash].remove(record_id)
+
             if not self.index_by_perceptual[record.perceptual_hash]:
                 del self.index_by_perceptual[record.perceptual_hash]
         
@@ -1173,19 +1390,24 @@ class SimilarityEngine:
     """
     
     def __init__(self):
-        """Initialize similarity engine"""
+        """
+        Initialize similarity engine"""
         self.logger = logging.getLogger(self.__class__.__name__)
     
     def calculate_similarity(self, 
                            audio1: Union[str, np.ndarray],
                            audio2: Union[str, np.ndarray],
                            fingerprinter: AudioFingerprinter) -> Dict[str, float]:
-        """Calculate comprehensive similarity between two audio files"""
+        """
+        Calculate comprehensive similarity between two audio files"""
         # Generate fingerprints
+
         fp1 = fingerprinter.generate_fingerprint(audio1)
+
         fp2 = fingerprinter.generate_fingerprint(audio2)
         
         # Create temporary database records for comparison
+
         record1 = FingerprintRecord(
             id="temp1",
             fingerprint_hash=fp1.fingerprint_hash,
@@ -1199,8 +1421,11 @@ class SimilarityEngine:
         )
         
         # Use content matcher
+
         matcher = ContentMatcher()
+
         match_result = matcher._compare_fingerprints(fp1, record1)
+
         
         return {
             'overall_similarity': match_result.similarity_score,
@@ -1221,7 +1446,8 @@ class DuplicateDetector:
     def __init__(self, 
                  fingerprinter: AudioFingerprinter,
                  database: FingerprintDatabase):
-        """Initialize duplicate detector"""
+        """
+        Initialize duplicate detector"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.fingerprinter = fingerprinter
         self.database = database
@@ -1231,24 +1457,30 @@ class DuplicateDetector:
         self.near_duplicate_threshold = 0.95
     
     def detect_duplicates(self, audio_collection: List[Union[str, np.ndarray]]) -> Dict[str, Any]:
-        """Detect duplicates in audio collection"""
+        """
+        Detect duplicates in audio collection"""
         fingerprints = []
         
         # Generate fingerprints for all audio files
         for i, audio in enumerate(audio_collection):
             try:
                 fp = self.fingerprinter.generate_fingerprint(audio, metadata={'collection_index': i})
+
                 fingerprints.append((i, fp))
+
             except Exception as e:
                 self.logger.warning(f"Failed to fingerprint audio {i}: {e}")
         
         # Find duplicates
+
         exact_duplicates = []
+
         near_duplicates = []
         
         for i, (idx1, fp1) in enumerate(fingerprints):
             for j, (idx2, fp2) in enumerate(fingerprints[i+1:], i+1):
                 similarity = self._calculate_duplicate_similarity(fp1, fp2)
+
                 
                 if similarity >= self.exact_duplicate_threshold:
                     exact_duplicates.append({
@@ -1256,12 +1488,14 @@ class DuplicateDetector:
                         'audio2_index': idx2,
                         'similarity': similarity
                     })
+
                 elif similarity >= self.near_duplicate_threshold:
                     near_duplicates.append({
                         'audio1_index': idx1,
                         'audio2_index': idx2,
                         'similarity': similarity
                     })
+
         
         return {
             'exact_duplicates': exact_duplicates,
@@ -1277,6 +1511,7 @@ class DuplicateDetector:
             return 1.0
         
         # Perceptual hash comparison
+
         perceptual_sim = ContentMatcher()._compare_perceptual_hashes(fp1.perceptual_hash, fp2.perceptual_hash)
         
         # Spectral features comparison
@@ -1289,39 +1524,51 @@ class DuplicateDetector:
         return perceptual_sim * 0.6 + spectral_sim * 0.4
     
     def _group_duplicates(self, duplicates: List[Dict]) -> List[List[int]]:
-        """Group duplicate indices into clusters"""
+        """
+        Group duplicate indices into clusters"""
         if not duplicates:
             return []
         
         # Create adjacency list
+
         graph = {}
         for dup in duplicates:
             idx1, idx2 = dup['audio1_index'], dup['audio2_index']
             if idx1 not in graph:
                 graph[idx1] = set()
+
             if idx2 not in graph:
                 graph[idx2] = set()
+
             graph[idx1].add(idx2)
+
             graph[idx2].add(idx1)
         
         # Find connected components
+
         visited = set()
+
         groups = []
         
         def dfs(node, group):
             if node in visited:
                 return
             visited.add(node)
+
             group.append(node)
+
             for neighbor in graph.get(node, []):
                 dfs(neighbor, group)
+
         
         for node in graph:
             if node not in visited:
                 group = []
                 dfs(node, group)
+
                 if len(group) > 1:
                     groups.append(sorted(group))
+
         
         return groups
 
@@ -1335,48 +1582,64 @@ class PerceptualHashGenerator:
     """
     
     def __init__(self, hash_size: int = 64):
-        """Initialize perceptual hash generator"""
+        """
+        Initialize perceptual hash generator"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.hash_size = hash_size
     
     def generate_hash(self, audio_data: np.ndarray, sample_rate: int = 22050) -> str:
-        """Generate perceptual hash from audio data"""
+        """
+        Generate perceptual hash from audio data"""
         # Extract robust features
+
         features = self._extract_robust_features(audio_data, sample_rate)
         
         # Generate binary hash
+
         binary_hash = self._features_to_binary(features)
         
         # Convert to hex string
+
         hex_hash = self._binary_to_hex(binary_hash)
+
         
         return hex_hash
     
     def _extract_robust_features(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract features robust to minor modifications"""
+        """
+        Extract features robust to minor modifications"""
         # Chromagram (robust to tempo changes)
+
         chroma = librosa.feature.chroma_cqt(y=audio_data, sr=sample_rate)
         
         # Tonnetz (harmonic network, robust to transposition)
+
         tonnetz = librosa.feature.tonnetz(y=audio_data, sr=sample_rate)
         
         # Spectral contrast (robust to noise)
+
         spectral_contrast = librosa.feature.spectral_contrast(y=audio_data, sr=sample_rate)
         
         # Combine and summarize features
+
         combined_features = np.vstack([chroma, tonnetz, spectral_contrast])
         
         # Use median to reduce noise sensitivity
+
         robust_features = np.median(combined_features, axis=1)
+
         
         return robust_features
     
     def _features_to_binary(self, features: np.ndarray) -> np.ndarray:
-        """Convert features to binary representation"""
+        """
+        Convert features to binary representation"""
         # Normalize features
+
         normalized = (features - np.mean(features)) / (np.std(features) + 1e-10)
         
         # Threshold to binary
+
         binary = (normalized > 0).astype(int)
         
         # Ensure fixed size
@@ -1384,18 +1647,24 @@ class PerceptualHashGenerator:
             binary = binary[:self.hash_size]
         elif len(binary) < self.hash_size:
             binary = np.pad(binary, (0, self.hash_size - len(binary)), mode='constant')
+
         
         return binary
     
     def _binary_to_hex(self, binary_hash: np.ndarray) -> str:
-        """Convert binary hash to hexadecimal string"""
+        """
+        Convert binary hash to hexadecimal string"""
         hex_chars = []
         for i in range(0, len(binary_hash), 4):
             chunk = binary_hash[i:i+4]
             if len(chunk) < 4:
                 chunk = np.pad(chunk, (0, 4 - len(chunk)), mode='constant')
+
+
             hex_value = int(''.join(map(str, chunk)), 2)
+
             hex_chars.append(format(hex_value, 'x'))
+
         
         return ''.join(hex_chars)
 
@@ -1408,28 +1677,34 @@ class FingerprintMatchingEngine:
     """
     
     def __init__(self):
-        """Initialize fingerprint matching engine"""
+        """
+        Initialize fingerprint matching engine"""
         self.logger = logging.getLogger(self.__class__.__name__)
     
     def match_fingerprints(self, 
                           query_fp: FingerprintResult,
                           database_fps: List[FingerprintRecord],
                           max_results: int = 10) -> List[MatchResult]:
-        """Match fingerprints with advanced algorithms"""
+        """
+        Match fingerprints with advanced algorithms"""
         matches = []
         
         for db_fp in database_fps:
             match_result = self._detailed_match(query_fp, db_fp)
+
             matches.append(match_result)
         
         # Sort by similarity score
         matches.sort(key=lambda x: x.similarity_score, reverse=True)
+
         
         return matches[:max_results]
     
     def _detailed_match(self, query_fp: FingerprintResult, db_fp: FingerprintRecord) -> MatchResult:
-        """Perform detailed fingerprint matching"""
+        """
+        Perform detailed fingerprint matching"""
         # Use ContentMatcher for core comparison
+
         matcher = ContentMatcher()
         return matcher._compare_fingerprints(query_fp, db_fp)
 
@@ -1442,7 +1717,8 @@ class EnterpriseContentIdentificationSystem:
     """
     
     def __init__(self, sample_rate: int = 44100):
-        """Initialize enterprise content identification system"""
+        """
+        Initialize enterprise content identification system"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
         
@@ -1470,26 +1746,34 @@ class EnterpriseContentIdentificationSystem:
         start_time = time.time()
         
         # Generate multiple fingerprint types for robustness
+
         fingerprints = self._generate_comprehensive_fingerprints(audio_data)
         
         # Search for matches across multiple databases
+
         match_results = self._search_multiple_databases(fingerprints)
         
         # Rights verification
+
         rights_info = {}
         if enable_rights_check and match_results['matches']:
             rights_info = self._verify_rights_ownership(match_results['matches'])
         
         # Blockchain verification
+
         blockchain_verification = {}
         if enable_blockchain_verification and match_results['matches']:
             blockchain_verification = self._verify_blockchain_rights(match_results['matches'])
         
         # Generate compliance report
+
         compliance_report = self._generate_compliance_report(match_results, rights_info, blockchain_verification)
         
         # Risk assessment
+
         risk_assessment = self._assess_copyright_risk(match_results, rights_info)
+
+
         
         processing_time = time.time() - start_time
         
@@ -1505,57 +1789,73 @@ class EnterpriseContentIdentificationSystem:
         }
     
     def _generate_comprehensive_fingerprints(self, audio_data: np.ndarray) -> Dict[str, Any]:
-        """Generate multiple types of fingerprints for robust identification"""
+        """
+        Generate multiple types of fingerprints for robust identification"""
         fingerprints = {}
         
         # Standard audio fingerprint
+
         standard_fp = self.fingerprinter.generate_fingerprint(audio_data)
         fingerprints['standard'] = standard_fp.fingerprint_data
         
         # Perceptual hash for similarity matching
+
         perceptual_hash = PerceptualHashGenerator().generate_hash(audio_data)
         fingerprints['perceptual_hash'] = perceptual_hash
         
         # Spectral fingerprint
+
         spectral_fp = self._generate_spectral_fingerprint(audio_data)
         fingerprints['spectral'] = spectral_fp
         
         # Rhythmic fingerprint
+
         rhythmic_fp = self._generate_rhythmic_fingerprint(audio_data)
         fingerprints['rhythmic'] = rhythmic_fp
         
         # Harmonic fingerprint
+
         harmonic_fp = self._generate_harmonic_fingerprint(audio_data)
         fingerprints['harmonic'] = harmonic_fp
         
         return fingerprints
     
     def _generate_spectral_fingerprint(self, audio_data: np.ndarray) -> np.ndarray:
-        """Generate spectral fingerprint for frequency domain identification"""
+        """
+        Generate spectral fingerprint for frequency domain identification"""
         # High-resolution spectrogram
+
         stft = librosa.stft(audio_data, n_fft=4096, hop_length=1024)
+
         magnitude = np.abs(stft)
         
         # Extract spectral peaks
+
         spectral_peaks = []
         for frame in range(magnitude.shape[1]):
             frame_spectrum = magnitude[:, frame]
             peaks, _ = scipy.signal.find_peaks(frame_spectrum, height=np.max(frame_spectrum) * 0.1)
             
             # Store top 10 peaks with their frequencies and magnitudes
+
             peak_magnitudes = frame_spectrum[peaks]
+
             top_peaks = peaks[np.argsort(peak_magnitudes)[-10:]]
             
             for peak in top_peaks:
                 freq = peak * self.sample_rate / 4096
                 spectral_peaks.append([frame, freq, frame_spectrum[peak]])
+
         
         return np.array(spectral_peaks)
     
     def _generate_rhythmic_fingerprint(self, audio_data: np.ndarray) -> Dict[str, Any]:
-        """Generate rhythmic fingerprint for tempo-based identification"""
+        """
+        Generate rhythmic fingerprint for tempo-based identification"""
         # Onset detection
+
         onset_envelope = librosa.onset.onset_strength(y=audio_data, sr=self.sample_rate)
+
         onsets = librosa.onset.onset_detect(onset_envelope=onset_envelope, sr=self.sample_rate, units='time')
         
         # Tempo and beat tracking
@@ -1564,9 +1864,12 @@ class EnterpriseContentIdentificationSystem:
         # Inter-onset intervals
         if len(onsets) > 1:
             intervals = np.diff(onsets)
+
+
             interval_histogram = np.histogram(intervals, bins=50)[0]
         else:
             interval_histogram = np.zeros(50)
+
         
         return {
             'tempo': float(tempo),
@@ -1576,25 +1879,33 @@ class EnterpriseContentIdentificationSystem:
         }
     
     def _generate_harmonic_fingerprint(self, audio_data: np.ndarray) -> Dict[str, Any]:
-        """Generate harmonic fingerprint for tonal identification"""
+        """
+        Generate harmonic fingerprint for tonal identification"""
         # Chroma features for harmonic content
+
         chroma = librosa.feature.chroma_stft(y=audio_data, sr=self.sample_rate)
+
         chroma_mean = np.mean(chroma, axis=1)
+
         chroma_std = np.std(chroma, axis=1)
         
         # Pitch tracking
         pitches, magnitudes = librosa.piptrack(y=audio_data, sr=self.sample_rate)
         
         # Extract dominant pitches
+
         dominant_pitches = []
         for frame in range(pitches.shape[1]):
             frame_pitches = pitches[:, frame]
+
             frame_magnitudes = magnitudes[:, frame]
             
             if np.any(frame_magnitudes > 0):
                 max_idx = np.argmax(frame_magnitudes)
+
                 if frame_pitches[max_idx] > 0:
                     dominant_pitches.append(frame_pitches[max_idx])
+
         
         return {
             'chroma_mean': chroma_mean.tolist(),
@@ -1604,28 +1915,36 @@ class EnterpriseContentIdentificationSystem:
         }
     
     def _search_multiple_databases(self, fingerprints: Dict[str, Any]) -> Dict[str, Any]:
-        """Search across multiple content databases"""
+        """
+        Search across multiple content databases"""
         all_matches = []
+
         search_results = {}
         
         # Search standard fingerprint database
+
         standard_matches = self.matcher.find_matches(fingerprints['standard'])
         all_matches.extend(standard_matches)
         search_results['standard_database'] = len(standard_matches)
         
         # Search perceptual hash database (simplified)
+
         perceptual_matches = self._search_perceptual_database(fingerprints['perceptual_hash'])
         all_matches.extend(perceptual_matches)
         search_results['perceptual_database'] = len(perceptual_matches)
         
         # Search spectral database
+
         spectral_matches = self._search_spectral_database(fingerprints['spectral'])
         all_matches.extend(spectral_matches)
         search_results['spectral_database'] = len(spectral_matches)
         
         # Deduplicate and rank matches
+
         unique_matches = self._deduplicate_matches(all_matches)
+
         ranked_matches = self._rank_matches(unique_matches)
+
         
         return {
             'matches': ranked_matches,
@@ -1635,31 +1954,40 @@ class EnterpriseContentIdentificationSystem:
         }
     
     def _search_perceptual_database(self, perceptual_hash: str) -> List[Dict[str, Any]]:
-        """Search perceptual hash database (placeholder)"""
-        # Placeholder implementation - would connect to actual database
+        """
+        Search perceptual hash database (placeholder)"""
+        
         return []
     
     def _search_spectral_database(self, spectral_fingerprint: np.ndarray) -> List[Dict[str, Any]]:
-        """Search spectral fingerprint database (placeholder)"""
-        # Placeholder implementation - would use advanced spectral matching
+        """
+        Search spectral fingerprint database (placeholder)"""
+        
         return []
     
     def _deduplicate_matches(self, matches: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Remove duplicate matches across databases"""
+        """
+        Remove duplicate matches across databases"""
         seen_content = set()
+
         unique_matches = []
         
         for match in matches:
             content_id = match.get('content_id', match.get('track_id', str(hash(str(match)))))
+
             if content_id not in seen_content:
                 seen_content.add(content_id)
+
                 unique_matches.append(match)
+
         
         return unique_matches
     
     def _rank_matches(self, matches: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Rank matches by confidence and relevance"""
+        """
+        Rank matches by confidence and relevance"""
         # Sort by confidence score (descending)
+
         ranked = sorted(matches, key=lambda x: x.get('confidence', 0.0), reverse=True)
         
         # Add ranking information
@@ -1670,7 +1998,8 @@ class EnterpriseContentIdentificationSystem:
         return ranked
     
     def _verify_rights_ownership(self, matches: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Verify rights ownership for matched content"""
+        """
+        Verify rights ownership for matched content"""
         rights_verification = {
             'verified_matches': [],
             'rights_holders': set(),
@@ -1683,7 +2012,10 @@ class EnterpriseContentIdentificationSystem:
             content_id = match.get('content_id', 'unknown')
             
             # Query rights database (placeholder)
+
+
             rights_info = self._query_rights_database(content_id)
+
             
             if rights_info:
                 rights_verification['verified_matches'].append({
@@ -1692,23 +2024,30 @@ class EnterpriseContentIdentificationSystem:
                     'license_type': rights_info.get('license_type'),
                     'usage_restrictions': rights_info.get('restrictions', [])
                 })
+
                 
                 rights_verification['rights_holders'].add(rights_info.get('rights_holder'))
+
                 
                 if rights_info.get('license_type') == 'public_domain':
                     rights_verification['public_domain'].append(content_id)
+
                 elif rights_info.get('license_type') in ['copyright', 'exclusive']:
                     rights_verification['licensing_required'].append(content_id)
+
             else:
                 rights_verification['unknown_rights'].append(content_id)
+
         
         rights_verification['rights_holders'] = list(rights_verification['rights_holders'])
+
         
         return rights_verification
     
     def _query_rights_database(self, content_id: str) -> Dict[str, Any]:
-        """Query rights management database (placeholder)"""
-        # Placeholder - would connect to actual rights database
+        """
+        Query rights management database (placeholder)"""
+        
         return {
             'rights_holder': 'Example Music Corp',
             'license_type': 'copyright',
@@ -1716,7 +2055,8 @@ class EnterpriseContentIdentificationSystem:
         }
     
     def _verify_blockchain_rights(self, matches: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Verify rights using blockchain technology"""
+        """
+        Verify rights using blockchain technology"""
         blockchain_results = {
             'blockchain_verified': [],
             'blockchain_protected': [],
@@ -1728,7 +2068,10 @@ class EnterpriseContentIdentificationSystem:
             content_id = match.get('content_id', 'unknown')
             
             # Check blockchain registry (placeholder)
+
+
             blockchain_record = self._check_blockchain_registry(content_id)
+
             
             if blockchain_record:
                 blockchain_results['blockchain_verified'].append({
@@ -1737,9 +2080,11 @@ class EnterpriseContentIdentificationSystem:
                     'timestamp': blockchain_record.get('timestamp'),
                     'owner_address': blockchain_record.get('owner')
                 })
+
                 
                 if blockchain_record.get('protected'):
                     blockchain_results['blockchain_protected'].append(content_id)
+
                 
                 if blockchain_record.get('smart_contract'):
                     blockchain_results['smart_contracts'].append({
@@ -1747,12 +2092,14 @@ class EnterpriseContentIdentificationSystem:
                         'contract_address': blockchain_record.get('contract_address'),
                         'licensing_terms': blockchain_record.get('licensing_terms')
                     })
+
         
         return blockchain_results
     
     def _check_blockchain_registry(self, content_id: str) -> Dict[str, Any]:
-        """Check blockchain registry for content (placeholder)"""
-        # Placeholder - would integrate with actual blockchain
+        """
+        Check blockchain registry for content (placeholder)"""
+        
         return {
             'hash': f'0x{hash(content_id) % 0xFFFFFFFF:08x}',
             'timestamp': '2025-01-01T00:00:00Z',
@@ -1764,7 +2111,8 @@ class EnterpriseContentIdentificationSystem:
         }
     
     def _generate_compliance_report(self, match_results: Dict, rights_info: Dict, blockchain_verification: Dict) -> Dict[str, Any]:
-        """Generate comprehensive compliance report"""
+        """
+        Generate comprehensive compliance report"""
         report = {
             'compliance_status': 'compliant',
             'risk_level': 'low',
@@ -1779,10 +2127,12 @@ class EnterpriseContentIdentificationSystem:
                 report['compliance_status'] = 'requires_licensing'
                 report['risk_level'] = 'high'
                 report['required_actions'].append('Obtain proper licensing for copyrighted content')
+
             
             if rights_info.get('unknown_rights'):
                 report['risk_level'] = 'medium'
                 report['recommendations'].append('Verify rights status for unidentified content')
+
             
             if blockchain_verification.get('blockchain_protected'):
                 report['legal_considerations'].append('Content is blockchain-protected - verify smart contract terms')
@@ -1792,12 +2142,14 @@ class EnterpriseContentIdentificationSystem:
             report['recommendations'].append('No matches found - content appears to be original')
         else:
             report['recommendations'].append(f"Found {match_results['total_matches']} potential matches - review carefully")
+
         
         return report
     
     def _assess_copyright_risk(self, match_results: Dict, rights_info: Dict) -> Dict[str, Any]:
         """Assess copyright infringement risk"""
         risk_factors = []
+
         risk_score = 0.0
         
         # Match-based risk factors
@@ -1806,6 +2158,7 @@ class EnterpriseContentIdentificationSystem:
             risk_factors.append(f"{match_results['total_matches']} content matches found")
             
             # High confidence matches increase risk
+
             high_confidence_matches = [m for m in match_results['matches'] if m.get('confidence', 0) > 0.8]
             if high_confidence_matches:
                 risk_score += 0.4
@@ -1815,6 +2168,7 @@ class EnterpriseContentIdentificationSystem:
         if rights_info.get('licensing_required'):
             risk_score += 0.5
             risk_factors.append('Copyrighted content requires licensing')
+
         
         if rights_info.get('unknown_rights'):
             risk_score += 0.2
@@ -1859,16 +2213,20 @@ class EnterpriseContentIdentificationSystem:
                 'Maintain documentation of content sources',
                 'Consider preventive licensing for commercial use'
             ])
+
         
         return strategies
     
     def _calculate_identification_confidence(self, match_results: Dict) -> float:
-        """Calculate overall confidence in identification results"""
+        """
+        Calculate overall confidence in identification results"""
         if not match_results['matches']:
             return 0.0
         
         # Average confidence of top matches
+
         top_matches = match_results['matches'][:5]  # Top 5 matches
+
         confidences = [m.get('confidence', 0.0) for m in top_matches]
         
         return float(np.mean(confidences))
@@ -1882,7 +2240,8 @@ class BlockchainRightsManager:
     """
     
     def __init__(self):
-        """Initialize blockchain rights manager"""
+        """
+        Initialize blockchain rights manager"""
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Blockchain configuration (placeholder)
@@ -1893,7 +2252,7 @@ class BlockchainRightsManager:
     
     def register_content_rights(self, content_hash: str, rights_info: Dict[str, Any]) -> Dict[str, Any]:
         """Register content rights on blockchain"""
-        # Placeholder implementation
+        
         return {
             'transaction_hash': f'0x{hash(content_hash) % 0xFFFFFFFFFFFFFFFF:016x}',
             'block_number': 12345678,
@@ -1903,8 +2262,9 @@ class BlockchainRightsManager:
         }
     
     def verify_rights_ownership(self, content_hash: str) -> Dict[str, Any]:
-        """Verify rights ownership on blockchain"""
-        # Placeholder implementation
+        """
+        Verify rights ownership on blockchain"""
+        
         return {
             'is_registered': True,
             'owner_address': '0x1234567890abcdef',
@@ -1921,7 +2281,8 @@ class RealTimeContentMonitor:
     """
     
     def __init__(self, sample_rate: int = 44100, monitoring_window_ms: int = 5000):
-        """Initialize real-time content monitor"""
+        """
+        Initialize real-time content monitor"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
         self.monitoring_window_samples = int(monitoring_window_ms * sample_rate / 1000)
@@ -1957,14 +2318,17 @@ class RealTimeContentMonitor:
         self.audio_buffer[-len(audio_chunk):] = audio_chunk
         
         # Generate fingerprint for current buffer
+
         fingerprint = self.fingerprinter.generate_fingerprint(self.audio_buffer)
         
         # Search for matches
+
         matches = self.matcher.find_matches(fingerprint.fingerprint_data)
         
         # Check for alerts
         if matches:
             alert_info = self._trigger_content_alert(matches)
+
             return {
                 'monitoring_active': True,
                 'matches_found': len(matches),
@@ -1980,7 +2344,8 @@ class RealTimeContentMonitor:
         }
     
     def _trigger_content_alert(self, matches: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Trigger alert for detected content"""
+        """
+        Trigger alert for detected content"""
         alert_info = {
             'timestamp': time.time(),
             'match_count': len(matches),
@@ -1992,8 +2357,10 @@ class RealTimeContentMonitor:
         for callback in self.alert_callbacks:
             try:
                 callback(alert_info, matches)
+
             except Exception as e:
                 self.logger.error(f"Alert callback error: {e}")
+
         
         return alert_info
     
@@ -2010,7 +2377,8 @@ class RightsManagementDatabase:
     """
     
     def __init__(self):
-        """Initialize rights management database"""
+        """
+        Initialize rights management database"""
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Database connections (placeholder)
@@ -2039,11 +2407,13 @@ class RightsManagementDatabase:
         return self.rights_db.get(content_id, {})
     
     def search_by_rights_holder(self, rights_holder: str) -> List[str]:
-        """Search content by rights holder"""
+        """
+        Search content by rights holder"""
         matching_content = []
         for content_id, rights_info in self.rights_db.items():
             if rights_info.get('rights_holder') == rights_holder:
                 matching_content.append(content_id)
+
         
         return matching_content
 

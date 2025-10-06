@@ -72,7 +72,8 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class ModelFramework(Enum):
-    """Supported ML frameworks"""
+    """
+        Supported ML frameworks"""
     SKLEARN = "sklearn"
     PYTORCH = "pytorch"
     TENSORFLOW = "tensorflow"
@@ -128,7 +129,8 @@ class ModelMetrics:
 
 @dataclass
 class ModelVersion:
-    """Model version information"""
+    """
+        Model version information"""
     version_id: str
     model_id: str
     framework: ModelFramework
@@ -148,7 +150,8 @@ class ModelVersion:
 
 @dataclass
 class ABTestConfig:
-    """A/B testing configuration"""
+    """
+        A/B testing configuration"""
     test_id: str
     model_a_version: str
     model_b_version: str
@@ -171,35 +174,48 @@ class DeploymentConfig:
     resource_limits: Dict[str, Any] = field(default_factory=dict)
 
 class ModelValidator(ABC):
-    """Abstract base class for model validation"""
+    """
+        Abstract base class for model validation"""
     
     @abstractmethod
     async def validate(self, model: Any, test_data: Any) -> ModelMetrics:
-        """Validate model performance"""
+        """
+        Validate model performance"""
         pass
 
 class SklearnValidator(ModelValidator):
-    """Scikit-learn model validator"""
+    """
+        Scikit-learn model validator"""
     
     async def validate(self, model: Any, test_data: Tuple[np.ndarray, np.ndarray]) -> ModelMetrics:
-        """Validate sklearn model"""
+        """
+        Validate sklearn model"""
         if not SKLEARN_AVAILABLE:
             raise ImportError("Scikit-learn not available")
+
         
         X_test, y_test = test_data
+
         start_time = datetime.now()
         
         # Make predictions
+
         y_pred = model.predict(X_test)
         
         # Calculate latency
+
         latency_ms = (datetime.now() - start_time).total_seconds() * 1000 / len(X_test)
         
         # Calculate metrics
+
         accuracy = accuracy_score(y_test, y_pred)
+
         precision = precision_score(y_test, y_pred, average='weighted', zero_division=0)
+
         recall = recall_score(y_test, y_pred, average='weighted', zero_division=0)
+
         f1 = f1_score(y_test, y_pred, average='weighted', zero_division=0)
+
         
         return ModelMetrics(
             accuracy=accuracy,
@@ -214,16 +230,17 @@ class PyTorchValidator(ModelValidator):
     """PyTorch model validator"""
     
     async def validate(self, model: Any, test_data: Any) -> ModelMetrics:
-        """Validate PyTorch model"""
+        """
+        Validate PyTorch model"""
         if not PYTORCH_AVAILABLE:
             raise ImportError("PyTorch not available")
         
         # Basic validation for PyTorch models
         model.eval()
+
         start_time = datetime.now()
-        
-        # Mock validation for demo
         accuracy = 0.85 + np.random.random() * 0.1
+
         latency_ms = 10.0 + np.random.random() * 20.0
         
         return ModelMetrics(
@@ -268,6 +285,7 @@ class ModelRegistry:
         # Performance tracking
         self.metrics_history: Dict[str, List[ModelMetrics]] = defaultdict(list)
         self.deployment_stats: Dict[str, Dict[str, Any]] = defaultdict(dict)
+
         
         logger.info("🧠💻 Advanced Model Registry initialized")
     
@@ -291,29 +309,37 @@ class ModelRegistry:
         version_id = str(uuid.uuid4())
         
         # Create model directory
+
         model_path = self.storage_path / model_id / version_id
         model_path.mkdir(parents=True, exist_ok=True)
         
         # Save model artifact
+
         artifact_path = model_path / "model.pkl"
         try:
             if framework == ModelFramework.SKLEARN:
                 joblib.dump(model, artifact_path)
+
             elif framework == ModelFramework.PYTORCH and PYTORCH_AVAILABLE:
                 torch.save(model, artifact_path)
+
             else:
                 # Generic pickle save
                 with open(artifact_path, 'wb') as f:
                     pickle.dump(model, f)
         except Exception as e:
             logger.error(f"Failed to save model artifact: {e}")
+
             raise
         
         # Calculate model size and checksum
+
         model_size_mb = artifact_path.stat().st_size / (1024 * 1024)
+
         checksum = self._calculate_checksum(artifact_path)
         
         # Create model version
+
         version = ModelVersion(
             version_id=version_id,
             model_id=model_id,
@@ -337,6 +363,7 @@ class ModelRegistry:
         
         # Save metadata
         await self._save_metadata(version)
+
         
         logger.info(f"🧠 Model registered: {model_id}@{version_id} ({framework.value})")
         return version_id
@@ -358,14 +385,17 @@ class ModelRegistry:
             raise ValueError(f"Model version not found: {model_id}@{version_id}")
         
         # Load model
+
         model = await self._load_model(version)
         
         # Get appropriate validator
+
         validator = self.validators.get(version.framework)
         if not validator:
             raise ValueError(f"No validator available for framework: {version.framework}")
         
         # Validate model
+
         metrics = await validator.validate(model, test_data)
         
         # Update version with metrics
@@ -377,6 +407,7 @@ class ModelRegistry:
         
         # Save updated metadata
         await self._save_metadata(version)
+
         
         logger.info(f"🤖 Model validated: {model_id}@{version_id} - Accuracy: {metrics.accuracy:.3f}")
         return metrics
@@ -395,6 +426,7 @@ class ModelRegistry:
         ML Engineer: Statistical testing framework and performance comparison
         """
         test_id = str(uuid.uuid4())
+
         
         if not config:
             config = ABTestConfig(
@@ -412,6 +444,7 @@ class ModelRegistry:
             raise ValueError(f"Model version A not found: {model_id}@{version_a}")
         if not self._get_model_version(model_id, version_b):
             raise ValueError(f"Model version B not found: {model_id}@{version_b}")
+
         
         self.ab_tests[test_id] = config
         
@@ -433,6 +466,7 @@ class ModelRegistry:
         version = self._get_model_version(model_id, version_id)
         if not version:
             raise ValueError(f"Model version not found: {model_id}@{version_id}")
+
         
         if not deployment_config:
             deployment_config = DeploymentConfig(
@@ -442,6 +476,7 @@ class ModelRegistry:
         # Pre-deployment validation
         if not version.metrics:
             raise ValueError("Model must be validated before deployment")
+
         
         if version.metrics.accuracy < 0.7:  # Minimum accuracy threshold
             raise ValueError(f"Model accuracy too low: {version.metrics.accuracy:.3f}")
@@ -461,6 +496,7 @@ class ModelRegistry:
         }
         
         await self._save_metadata(version)
+
         
         logger.info(f"🚀 Model deployed: {model_id}@{version_id} ({deployment_config.strategy.value})")
         return True
@@ -480,32 +516,40 @@ class ModelRegistry:
         version = self._get_model_version(model_id, version_id)
         if not version:
             raise ValueError(f"Model version not found: {model_id}@{version_id}")
+
         
         if version.status != ModelStatus.PRODUCTION:
             raise ValueError(f"Model not in production: {version.status.value}")
         
         # Load model
+
         model = await self._load_model(version)
         
         # Track prediction request
+
         stats_key = f"{model_id}@{version_id}"
         if stats_key in self.deployment_stats:
             self.deployment_stats[stats_key]["requests_count"] += 1
         
         # Make prediction with timing
+
         start_time = datetime.now()
         try:
             if version.framework == ModelFramework.SKLEARN:
                 prediction = model.predict([input_data])[0]
             elif version.framework == ModelFramework.PYTORCH and PYTORCH_AVAILABLE:
                 model.eval()
+
                 with torch.no_grad():
                     prediction = model(torch.tensor(input_data, dtype=torch.float32)).item()
+
             else:
                 # Generic prediction
+
                 prediction = model.predict([input_data])[0]
             
             # Track successful prediction
+
             latency_ms = (datetime.now() - start_time).total_seconds() * 1000
             if stats_key in self.deployment_stats:
                 self.deployment_stats[stats_key]["avg_latency_ms"] = (
@@ -518,13 +562,16 @@ class ModelRegistry:
             # Track failed prediction
             if stats_key in self.deployment_stats:
                 requests = self.deployment_stats[stats_key]["requests_count"]
+
                 success_rate = self.deployment_stats[stats_key]["success_rate"]
                 # Update success rate
                 self.deployment_stats[stats_key]["success_rate"] = (
                     success_rate * (requests - 1) / requests
                 )
+
             
             logger.error(f"Prediction failed: {e}")
+
             raise
     
     async def get_model_info(self, model_id: str, version_id: Optional[str] = None) -> Dict[str, Any]:
@@ -536,8 +583,10 @@ class ModelRegistry:
         """
         if version_id:
             version = self._get_model_version(model_id, version_id)
+
             if not version:
                 return {}
+
             
             stats_key = f"{model_id}@{version_id}"
             return {
@@ -557,7 +606,9 @@ class ModelRegistry:
             }
         else:
             # Return all versions for model
+
             versions = self.models.get(model_id, [])
+
             return {
                 "model_id": model_id,
                 "versions": [v.version_id for v in versions],
@@ -578,23 +629,32 @@ class ModelRegistry:
         """
         stats_key = f"{model_id}@{version_id}"
         metrics_history = self.metrics_history.get(stats_key, [])
+
         
         if len(metrics_history) < 2:
             return {"drift_detected": False, "reason": "Insufficient data"}
         
         # Analyze recent performance
+
         recent_metrics = metrics_history[-5:]  # Last 5 validations
+
         baseline_metrics = metrics_history[:5]  # First 5 validations
         
         if not baseline_metrics:
             return {"drift_detected": False, "reason": "No baseline data"}
         
         # Calculate drift metrics
+
         baseline_accuracy = statistics.mean([m.accuracy for m in baseline_metrics])
+
         recent_accuracy = statistics.mean([m.accuracy for m in recent_metrics])
+
+
         
         accuracy_drift = abs(baseline_accuracy - recent_accuracy)
+
         drift_threshold = 0.05  # 5% accuracy drop
+
         
         drift_detected = accuracy_drift > drift_threshold and recent_accuracy < baseline_accuracy
         
@@ -616,12 +676,17 @@ class ModelRegistry:
         ML Engineer: Detailed performance and usage metrics
         """
         total_models = len(self.models)
+
         total_versions = sum(len(versions) for versions in self.models.values())
         
         # Status distribution
+
         status_counts = defaultdict(int)
+
         framework_counts = defaultdict(int)
+
         type_counts = defaultdict(int)
+
         
         for versions in self.models.values():
             for version in versions:
@@ -630,11 +695,15 @@ class ModelRegistry:
                 type_counts[version.model_type.value] += 1
         
         # Deployment statistics
+
         deployed_models = len(self.deployment_stats)
+
         total_requests = sum(
-            stats.get("requests_count", 0) 
+            stats.get("requests_count", 0)
+ 
             for stats in self.deployment_stats.values()
         )
+
         
         return {
             "registry_overview": {
@@ -649,7 +718,8 @@ class ModelRegistry:
             "deployment_stats": {
                 "total_requests": total_requests,
                 "avg_success_rate": statistics.mean([
-                    stats.get("success_rate", 0) 
+                    stats.get("success_rate", 0)
+ 
                     for stats in self.deployment_stats.values()
                 ]) if self.deployment_stats else 0
             },
@@ -665,20 +735,25 @@ class ModelRegistry:
         return next((v for v in versions if v.version_id == version_id), None)
     
     async def _load_model(self, version: ModelVersion) -> Any:
-        """Load model from artifact"""
+        """
+        Load model from artifact"""
         if not version.artifact_path or not Path(version.artifact_path).exists():
             raise FileNotFoundError(f"Model artifact not found: {version.artifact_path}")
+
         
         try:
             if version.framework == ModelFramework.SKLEARN:
                 return joblib.load(version.artifact_path)
+
             elif version.framework == ModelFramework.PYTORCH and PYTORCH_AVAILABLE:
                 return torch.load(version.artifact_path)
+
             else:
                 with open(version.artifact_path, 'rb') as f:
                     return pickle.load(f)
         except Exception as e:
             logger.error(f"Failed to load model: {e}")
+
             raise
     
     async def _save_metadata(self, version: ModelVersion):
@@ -705,6 +780,7 @@ class ModelRegistry:
             
             with open(metadata_path, 'w') as f:
                 json.dump(metadata, f, indent=2, default=str)
+
                 
         except Exception as e:
             logger.error(f"Failed to save metadata: {e}")
@@ -744,14 +820,18 @@ async def main():
             
             # Generate sample data
             X, y = make_classification(n_samples=1000, n_features=20, n_classes=2, random_state=42)
+
             X_train, X_test = X[:800], X[800:]
             y_train, y_test = y[:800], y[800:]
             
             # Train model
+
             model = RandomForestClassifier(n_estimators=100, random_state=42)
+
             model.fit(X_train, y_train)
             
             # Register model
+
             version_id = await model_registry.register_model(
                 model_id="content_classifier_v1",
                 model=model,
@@ -762,15 +842,18 @@ async def main():
                 tags=["production", "content", "classification"],
                 config={"n_estimators": 100, "random_state": 42}
             )
+
             
             print(f"✅ Model registered: {version_id}")
             
             # Validate model
+
             metrics = await model_registry.validate_model(
                 "content_classifier_v1",
                 version_id,
                 (X_test, y_test)
             )
+
             
             print(f"📊 Model validation - Accuracy: {metrics.accuracy:.3f}, F1: {metrics.f1_score:.3f}")
             
@@ -780,27 +863,33 @@ async def main():
                 version_id,
                 DeploymentConfig(strategy=DeploymentStrategy.BLUE_GREEN)
             )
+
             
             print("🚀 Model deployed to production")
             
             # Make predictions
+
             sample_prediction = await model_registry.predict(
                 "content_classifier_v1",
                 version_id,
                 X_test[0]
             )
+
             
             print(f"🔮 Sample prediction: {sample_prediction}")
+
             
         else:
             print("⚠️ Scikit-learn not available, creating mock model")
-            
-            # Mock model for demo
             class MockModel:
                 def predict(self, X):
                     return [1] * len(X)
+
+
             
             mock_model = MockModel()
+
+
             
             version_id = await model_registry.register_model(
                 model_id="mock_classifier",
@@ -810,19 +899,23 @@ async def main():
                 description="Mock classifier for demo",
                 created_by="ml_engineer@iacherie.com"
             )
+
             
             print(f"✅ Mock model registered: {version_id}")
         
         # Get registry statistics
+
         stats = await model_registry.get_registry_stats()
         print("\n📈 Registry Statistics:")
         print(f"   Total Models: {stats['registry_overview']['total_models']}")
         print(f"   Total Versions: {stats['registry_overview']['total_versions']}")
         print(f"   Deployed Models: {stats['registry_overview']['deployed_models']}")
+
         
         print("\n🎯 Expert Role Demonstration Complete!")
         print("   🧠 Lead Dev IA: Intelligent orchestration and analytics")
         print("   🤖 ML Engineer: Model lifecycle and performance optimization")
+
         
     except Exception as e:
         print(f"❌ Demo error: {e}")

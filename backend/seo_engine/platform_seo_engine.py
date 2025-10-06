@@ -34,7 +34,8 @@ from textblob import TextBlob
 logger = logging.getLogger(__name__)
 
 class Platform(Enum):
-    """Plateformes supportées avec leurs spécificités"""
+    """
+        Plateformes supportées avec leurs spécificités"""
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -102,7 +103,8 @@ class PlatformMetrics:
 
 @dataclass
 class PlatformOptimization:
-    """Résultat d'optimisation pour une plateforme"""
+    """
+        Résultat d'optimisation pour une plateforme"""
     platform: Platform
     content_type: ContentType
     optimization_score: float
@@ -117,7 +119,8 @@ class PlatformOptimization:
 
 @dataclass
 class SemanticAnalysis:
-    """Analyse sémantique du contenu"""
+    """
+        Analyse sémantique du contenu"""
     semantic_score: float
     entities: List[Dict[str, Any]]
     concepts: List[str]
@@ -131,7 +134,8 @@ class SemanticAnalysis:
 
 @dataclass
 class CrossPlatformStrategy:
-    """Stratégie cross-platform"""
+    """
+        Stratégie cross-platform"""
     strategy_id: str
     platforms: List[Platform]
     content_variations: Dict[Platform, Dict[str, Any]]
@@ -157,7 +161,8 @@ class PlatformSEOEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialise le moteur SEO multi-plateforme"""
+        """
+        Initialise le moteur SEO multi-plateforme"""
         self.config = config or {}
         self.session: Optional[aiohttp.ClientSession] = None
         
@@ -204,11 +209,14 @@ class PlatformSEOEngine:
             
             # Chargement des données historiques
             await self._load_historical_data()
+
             
             logger.info("✅ Moteur multi-plateforme initialisé")
+
             
         except Exception as e:
             logger.error(f"❌ Erreur initialisation plateforme: {e}")
+
             raise
     
     def _setup_platform_configurations(self) -> Dict[Platform, Dict[str, Any]]:
@@ -298,7 +306,8 @@ class PlatformSEOEngine:
         }
     
     async def _load_optimization_models(self) -> None:
-        """Charge les modèles d'optimisation ML"""
+        """
+        Charge les modèles d'optimisation ML"""
         # Simulation de chargement de modèles ML
         self.optimization_models = {
             'hashtag_predictor': {
@@ -350,6 +359,7 @@ class PlatformSEOEngine:
             logger.info(f"🎯 Optimisation pour {platform.value} - Type: {content_type.value}")
             
             # Configuration de la plateforme
+
             platform_config = self.platform_configs.get(platform, {})
             
             # Validation du type de contenu
@@ -357,34 +367,41 @@ class PlatformSEOEngine:
                 logger.warning(f"⚠️ Type de contenu {content_type.value} non optimal pour {platform.value}")
             
             # Analyse sémantique du contenu
+
             semantic_analysis = await self._analyze_content_semantics(content, target_keywords)
             
             # Optimisation du contenu principal
+
             optimized_content = await self._optimize_content_for_platform(
                 content, platform, content_type, semantic_analysis
             )
             
             # Génération des hashtags intelligents
+
             hashtags = await self._generate_intelligent_hashtags(
                 content, platform, target_keywords, semantic_analysis
             )
             
             # Génération des métadonnées optimisées
+
             metadata = await self._generate_optimized_metadata(
                 content, platform, content_type, semantic_analysis
             )
             
             # Planification optimale de publication
+
             posting_schedule = await self._optimize_posting_schedule(
                 platform, target_audience, optimization_goal
             )
             
             # Prédiction de performance
+
             performance_prediction = await self._predict_content_performance(
                 optimized_content, platform, hashtags, semantic_analysis
             )
             
             # Génération des recommandations
+
             recommendations = await self._generate_platform_recommendations(
                 platform, content_type, semantic_analysis, performance_prediction
             )
@@ -395,11 +412,13 @@ class PlatformSEOEngine:
             )
             
             # Calcul du score d'optimisation
+
             optimization_score = await self._calculate_optimization_score(
                 platform, optimized_content, hashtags, metadata, semantic_analysis
             )
             
             # Création du résultat d'optimisation
+
             optimization = PlatformOptimization(
                 platform=platform,
                 content_type=content_type,
@@ -415,17 +434,21 @@ class PlatformSEOEngine:
             )
             
             # Mise en cache
+
             cache_key = hashlib.md5(f"{content}_{platform.value}_{content_type.value}".encode()).hexdigest()
+
             self.optimization_cache[cache_key] = optimization
             
             # Mise à jour des métriques
             self.global_metrics['total_optimizations'] += 1
             
             logger.info(f"✅ Optimisation terminée - Score: {optimization_score:.1f}%")
+
             return optimization
             
         except Exception as e:
             logger.error(f"❌ Erreur optimisation plateforme: {e}")
+
             raise
     
     async def _analyze_content_semantics(
@@ -436,7 +459,10 @@ class PlatformSEOEngine:
         """Analyse sémantique approfondie du contenu"""
         try:
             # Analyse de sentiment avec TextBlob
+
             blob = TextBlob(content)
+
+
             sentiment = {
                 'polarity': blob.sentiment.polarity,
                 'subjectivity': blob.sentiment.subjectivity,
@@ -444,31 +470,43 @@ class PlatformSEOEngine:
             }
             
             # Extraction d'entités (simulation NLP)
+
+
             entities = await self._extract_entities(content)
             
             # Analyse des concepts principaux
+
             concepts = await self._extract_concepts(content)
             
             # Détection de l'intention
+
             intent = await self._detect_content_intent(content)
             
             # Analyse des topics (simulation LDA)
+
+
             topics = await self._analyze_topics(content)
             
             # Score de lisibilité
             readability_score = await self._calculate_readability_score(content)
             
             # Densité des mots-clés
+
             keyword_density = await self._calculate_keyword_density(content, target_keywords or [])
             
             # Mots-clés sémantiques suggérés
+
             semantic_keywords = await self._generate_semantic_keywords(content, concepts)
             
             # Identification des gaps de contenu
+
             content_gaps = await self._identify_content_gaps(content, concepts)
+
+
             
             semantic_analysis = SemanticAnalysis(
                 semantic_score=np.random.uniform(70, 95),  # Score global sémantique
+
                 entities=entities,
                 concepts=concepts,
                 intent=intent,
@@ -479,6 +517,7 @@ class PlatformSEOEngine:
                 semantic_keywords=semantic_keywords,
                 content_gaps=content_gaps
             )
+
             
             return semantic_analysis
             
@@ -502,6 +541,7 @@ class PlatformSEOEngine:
         """Extrait les entités nommées du contenu"""
         # Simulation d'extraction d'entités avec NLP
         words = content.split()
+
         entities = []
         
         # Simulation de détection d'entités
@@ -513,16 +553,21 @@ class PlatformSEOEngine:
                     'confidence': np.random.uniform(0.8, 0.95),
                     'position': i
                 })
+
         
         return entities[:10]  # Limiter à 10 entités
     
     async def _extract_concepts(self, content: str) -> List[str]:
-        """Extrait les concepts principaux du contenu"""
+        """
+        Extrait les concepts principaux du contenu"""
         # Simulation d'extraction de concepts
+
         words = content.lower().split()
         
         # Concepts techniques courants
+
         tech_concepts = ['seo', 'marketing', 'digital', 'optimization', 'content', 'strategy', 'analytics', 'social media']
+
         
         found_concepts = []
         for concept in tech_concepts:
@@ -530,16 +575,20 @@ class PlatformSEOEngine:
                 found_concepts.append(concept)
         
         # Ajout de concepts dérivés des mots-clés principaux
+
         important_words = [word for word in words if len(word) > 5 and word.isalpha()]
         found_concepts.extend(important_words[:5])
+
         
         return list(set(found_concepts))[:10]
     
     async def _detect_content_intent(self, content: str) -> SemanticContext:
-        """Détecte l'intention du contenu"""
+        """
+        Détecte l'intention du contenu"""
         content_lower = content.lower()
         
         # Mots-clés indicateurs d'intention
+
         intent_indicators = {
             SemanticContext.COMMERCIAL: ['buy', 'purchase', 'price', 'cost', 'sale', 'discount'],
             SemanticContext.TRANSACTIONAL: ['how to', 'tutorial', 'guide', 'step', 'instructions'],
@@ -549,27 +598,33 @@ class PlatformSEOEngine:
             SemanticContext.EDUCATIONAL: ['course', 'training', 'education', 'study', 'learn'],
             SemanticContext.ENTERTAINMENT: ['fun', 'entertainment', 'funny', 'game', 'video']
         }
+
         
         intent_scores = {}
         for intent, keywords in intent_indicators.items():
             score = sum(1 for keyword in keywords if keyword in content_lower)
+
             intent_scores[intent] = score
         
         # Retourner l'intention avec le score le plus élevé
         if intent_scores:
             best_intent = max(intent_scores, key=intent_scores.get)
+
             return best_intent if intent_scores[best_intent] > 0 else SemanticContext.INFORMATIONAL
         
         return SemanticContext.INFORMATIONAL
     
     async def _analyze_topics(self, content: str) -> List[Dict[str, float]]:
-        """Analyse les topics du contenu avec LDA simulé"""
+        """
+        Analyse les topics du contenu avec LDA simulé"""
         # Simulation d'analyse de topics
+
         possible_topics = [
             'Marketing Digital', 'SEO Technique', 'Réseaux Sociaux', 'Content Marketing',
             'Analytics', 'E-commerce', 'Brand Building', 'Lead Generation',
             'Automation', 'AI/ML', 'User Experience', 'Growth Hacking'
         ]
+
         
         topics = []
         for topic in np.random.choice(possible_topics, size=3, replace=False):
@@ -578,20 +633,26 @@ class PlatformSEOEngine:
                 'relevance': np.random.uniform(0.6, 0.9),
                 'keywords': [f"keyword_{i}" for i in range(3)]
             })
+
         
         return topics
     
     async def _calculate_readability_score(self, content: str) -> float:
         """Calcule le score de lisibilité"""
         # Simulation de calcul de lisibilité (Flesch-Kincaid)
+
         sentences = content.count('.') + content.count('!') + content.count('?')
+
         words = len(content.split())
+
         syllables = sum(max(1, len(re.findall(r'[aeiouAEIOU]', word))) for word in content.split())
+
         
         if sentences == 0 or words == 0:
             return 50.0
         
         # Formule Flesch simplifiée
+
         score = 206.835 - (1.015 * (words / sentences)) - (84.6 * (syllables / words))
         return max(0, min(100, score))
     
@@ -600,17 +661,25 @@ class PlatformSEOEngine:
         content: str,
         keywords: List[str]
     ) -> Dict[str, float]:
-        """Calcule la densité des mots-clés"""
+        """
+        Calcule la densité des mots-clés"""
         words = content.lower().split()
+
         total_words = len(words)
+
         
         if total_words == 0:
             return {}
+
         
         keyword_density = {}
         for keyword in keywords:
             keyword_lower = keyword.lower()
+
+
             count = content.lower().count(keyword_lower)
+
+
             density = (count / total_words) * 100
             keyword_density[keyword] = density
         
@@ -621,12 +690,14 @@ class PlatformSEOEngine:
         content: str,
         concepts: List[str]
     ) -> List[str]:
-        """Génère des mots-clés sémantiques suggérés"""
+        """
+        Génère des mots-clés sémantiques suggérés"""
         semantic_keywords = []
         
         # Expansion basée sur les concepts
         for concept in concepts:
             # Simulation d'expansion sémantique
+
             related_terms = [
                 f"{concept} optimization",
                 f"{concept} strategy",
@@ -637,8 +708,10 @@ class PlatformSEOEngine:
             semantic_keywords.extend(related_terms[:2])
         
         # Ajout de synonymes et variations
+
         content_words = [word for word in content.split() if len(word) > 4]
         semantic_keywords.extend(content_words[:5])
+
         
         return list(set(semantic_keywords))[:15]
     
@@ -658,12 +731,15 @@ class PlatformSEOEngine:
         # Vérification de structures courantes
         if 'conclusion' not in content.lower():
             gaps.append("Ajouter une conclusion")
+
         
         if '?' not in content:
             gaps.append("Ajouter des questions pour engager l'audience")
+
         
         if len(content.split()) < 100:
             gaps.append("Contenu trop court, développer davantage")
+
         
         return gaps[:5]
     
@@ -676,20 +752,25 @@ class PlatformSEOEngine:
     ) -> Dict[str, Any]:
         """Optimise le contenu selon les spécificités de la plateforme"""
         platform_config = self.platform_configs.get(platform, {})
+
         optimized_content = {'original': content}
         
         # Optimisation selon la plateforme
         if platform == Platform.TWITTER:
             optimized_content['tweet'] = await self._optimize_for_twitter(content, platform_config)
+
             
         elif platform == Platform.INSTAGRAM:
             optimized_content['caption'] = await self._optimize_for_instagram(content, platform_config)
+
             
         elif platform == Platform.LINKEDIN:
             optimized_content['post'] = await self._optimize_for_linkedin(content, platform_config, semantic_analysis)
+
             
         elif platform == Platform.YOUTUBE:
             optimized_content.update(await self._optimize_for_youtube(content, platform_config))
+
             
         elif platform == Platform.TIKTOK:
             optimized_content['caption'] = await self._optimize_for_tiktok(content, platform_config)
@@ -697,18 +778,23 @@ class PlatformSEOEngine:
         # Optimisations communes
         optimized_content['call_to_action'] = await self._generate_platform_cta(platform, content_type)
         optimized_content['engagement_hooks'] = await self._generate_engagement_hooks(platform, semantic_analysis)
+
         
         return optimized_content
     
     async def _optimize_for_twitter(self, content: str, config: Dict[str, Any]) -> str:
-        """Optimise le contenu pour Twitter"""
+        """
+        Optimise le contenu pour Twitter"""
         max_length = config.get('tweet_max_length', 280)
+
         
         if len(content) <= max_length:
             return content
         
         # Troncature intelligente
+
         sentences = content.split('. ')
+
         optimized = sentences[0]
         
         # Ajout d'un hook si possible
@@ -726,12 +812,16 @@ class PlatformSEOEngine:
         max_length = config.get('caption_max_length', 2200)
         
         # Ajout d'emojis et de structure
+
         optimized = content
         
         # Structure avec line breaks pour la lisibilité
         if len(content) > 200:
             sentences = content.split('. ')
+
+
             optimized = '\n\n'.join(sentences[:3])
+
             
             if len(sentences) > 3:
                 optimized += '\n\n... (voir plus en commentaire)'
@@ -751,6 +841,7 @@ class PlatformSEOEngine:
         max_length = config.get('post_max_length', 3000)
         
         # Structure professionnelle
+
         optimized = content
         
         # Ajout d'une introduction accrocheuse si manquante
@@ -770,6 +861,7 @@ class PlatformSEOEngine:
     async def _optimize_for_youtube(self, content: str, config: Dict[str, Any]) -> Dict[str, str]:
         """Optimise le contenu pour YouTube"""
         title_max = config.get('title_max_length', 100)
+
         desc_max = config.get('description_max_length', 5000)
         
         # Génération du titre optimisé
@@ -778,6 +870,7 @@ class PlatformSEOEngine:
             title = f"🔥 {title}"
         
         # Description optimisée
+
         description = content
         
         # Ajout de timestamps simulés
@@ -801,11 +894,15 @@ class PlatformSEOEngine:
         max_length = config.get('caption_max_length', 300)
         
         # Style TikTok avec emojis et hooks
+
         optimized = content[:max_length-50]
         
         # Ajout d'un hook TikTok
+
         hooks = ["POV:", "Tell me why", "This is why", "Nobody talks about", "Fun fact:"]
+
         hook = np.random.choice(hooks)
+
         
         if not any(h in content for h in hooks):
             optimized = f"{hook} {optimized}"
@@ -844,6 +941,7 @@ class PlatformSEOEngine:
                 "🔥 Share with friends !"
             ]
         }
+
         
         platform_ctas = cta_templates.get(platform, ["Likez et partagez !"])
         return np.random.choice(platform_ctas)
@@ -883,6 +981,7 @@ class PlatformSEOEngine:
                 "Ce que 5 ans d'expérience m'ont appris...",
                 "Controverse : Je pense que..."
             ])
+
         
         return hooks[:5]
     
@@ -893,12 +992,15 @@ class PlatformSEOEngine:
                 await self.session.close()
             
             # Sauvegarde des métriques finales
+
             total_optimizations = self.global_metrics['total_optimizations']
             
             logger.info(f"🧹 Nettoyage plateforme - {total_optimizations} optimisations effectuées")
+
             
         except Exception as e:
             logger.error(f"❌ Erreur nettoyage: {e}")
+
             raise
 
 class HashtagIntelligenceEngine:
@@ -915,8 +1017,10 @@ class HashtagIntelligenceEngine:
         target_keywords: List[str],
         semantic_analysis: SemanticAnalysis
     ) -> List[str]:
-        """Génère des hashtags optimaux pour le contenu"""
+        """
+        Génère des hashtags optimaux pour le contenu"""
         # Simulation de génération intelligente de hashtags
+
         hashtags = []
         
         # Hashtags basés sur les mots-clés
@@ -928,18 +1032,22 @@ class HashtagIntelligenceEngine:
             hashtags.append(f"#{concept.replace(' ', '').lower()}")
         
         # Hashtags trending simulés
+
         trending = await self._get_trending_hashtags(platform)
         hashtags.extend(trending[:3])
         
         # Hashtags de niche
+
         niche_hashtags = await self._generate_niche_hashtags(platform, semantic_analysis)
         hashtags.extend(niche_hashtags)
+
         
         return list(set(hashtags))[:30]  # Limite Instagram
     
     async def _get_trending_hashtags(self, platform: Platform) -> List[str]:
         """Récupère les hashtags trending pour la plateforme"""
         # Simulation de hashtags trending
+
         trending_by_platform = {
             Platform.INSTAGRAM: ["#instagood", "#photooftheday", "#love", "#beautiful", "#happy"],
             Platform.TIKTOK: ["#fyp", "#viral", "#trending", "#foryou", "#tiktok"],
@@ -966,6 +1074,7 @@ class HashtagIntelligenceEngine:
         # Basé sur le sentiment
         if semantic_analysis.sentiment['classification'] == 'positive':
             niche_hashtags.extend(["#motivation", "#inspiration", "#success"])
+
         
         return niche_hashtags[:5]
 
@@ -980,7 +1089,8 @@ class SemanticSearchOptimization:
         content: str,
         target_concepts: List[str]
     ) -> Dict[str, Any]:
-        """Optimize for semantic search"""
+        """
+        Optimize for semantic search"""
         try:
             return {
                 "semantic_score": 0.8,
@@ -993,12 +1103,26 @@ class SemanticSearchOptimization:
             }
         except Exception as e:
             logger.error(f"Semantic optimization failed: {str(e)}")
+
             raise
 
 # Export classes
+# === ALIASES COMPATIBILITÉ IMPORTS ===
+MultiPlatformSEOSynchronizer = PlatformSEOEngine
+SemanticOptimization = SemanticSearchOptimization
+PlatformSynchronization = PlatformOptimization
+DistributionStrategy = CrossPlatformStrategy  # Réutilise classe existante ligne 133
+PlatformAdaptation = PlatformOptimization
+
 __all__ = [
     'PlatformSEOEngine',
+    'MultiPlatformSEOSynchronizer',
     'SemanticSearchOptimization',
+    'SemanticOptimization',
     'PlatformOptimization',
+    'PlatformSynchronization',
+    'DistributionStrategy',
+    'PlatformAdaptation',
+    'CrossPlatformStrategy',
     'Platform'
 ]

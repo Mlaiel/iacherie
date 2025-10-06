@@ -29,7 +29,8 @@ import json
 logger = logging.getLogger(__name__)
 
 class RevenueSource(Enum):
-    """Revenue source enumeration"""
+    """
+        Revenue source enumeration"""
     CONTENT_SALES = "content_sales"
     STREAMING_ROYALTIES = "streaming_royalties"
     LICENSING_FEES = "licensing_fees"
@@ -86,16 +87,21 @@ class ShareRule:
     is_active: bool = True
     
     def calculate_share(self, total_revenue: Decimal, performance_data: Dict[str, Any] = None) -> Decimal:
-        """Calculate share amount based on rules"""
+        """
+        Calculate share amount based on rules"""
         if not self.is_active:
             return Decimal('0.00')
+
+
         
         share_amount = Decimal('0.00')
+
         
         try:
             if self.share_type == ShareType.PERCENTAGE:
                 if self.percentage:
                     share_amount = total_revenue * (self.percentage / Decimal('100'))
+
             
             elif self.share_type == ShareType.FIXED_AMOUNT:
                 if self.fixed_amount:
@@ -103,6 +109,7 @@ class ShareRule:
             
             elif self.share_type == ShareType.TIERED_PERCENTAGE:
                 share_amount = self._calculate_tiered_share(total_revenue)
+
             
             elif self.share_type == ShareType.PERFORMANCE_BASED:
                 share_amount = self._calculate_performance_share(total_revenue, performance_data or {})
@@ -110,55 +117,74 @@ class ShareRule:
             # Apply limits
             if share_amount < self.minimum_amount:
                 share_amount = Decimal('0.00')
+
             
             if self.maximum_amount and share_amount > self.maximum_amount:
                 share_amount = self.maximum_amount
             
             return share_amount.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+
             
         except Exception as e:
             logger.error(f"Error calculating share for rule {self.rule_id}: {e}")
+
             return Decimal('0.00')
     
     def _calculate_tiered_share(self, total_revenue: Decimal) -> Decimal:
         """Calculate tiered percentage share"""
         share_amount = Decimal('0.00')
+
         remaining_revenue = total_revenue
         
         for tier in sorted(self.tiered_rules, key=lambda x: x.get('threshold', 0)):
             threshold = Decimal(str(tier.get('threshold', 0)))
+
+
             percentage = Decimal(str(tier.get('percentage', 0)))
+
             
             if remaining_revenue <= 0:
                 break
+
             
             tier_amount = min(remaining_revenue, threshold) if threshold > 0 else remaining_revenue
             share_amount += tier_amount * (percentage / Decimal('100'))
+
             remaining_revenue -= tier_amount
         
         return share_amount
     
     def _calculate_performance_share(self, total_revenue: Decimal, performance_data: Dict[str, Any]) -> Decimal:
-        """Calculate performance-based share"""
+        """
+        Calculate performance-based share"""
         base_percentage = self.percentage or Decimal('0.00')
         
         # Performance multiplier based on metrics
+
         multiplier = Decimal('1.00')
+
         
         for metric, config in self.performance_metrics.items():
             if metric in performance_data:
                 value = Decimal(str(performance_data[metric]))
+
+
                 target = Decimal(str(config.get('target', 1)))
+
+
                 bonus_percentage = Decimal(str(config.get('bonus_percentage', 0)))
+
                 
                 if value >= target:
                     multiplier += bonus_percentage / Decimal('100')
+
         
         return total_revenue * (base_percentage / Decimal('100')) * multiplier
 
 @dataclass
 class RevenueTransaction:
-    """Revenue transaction record"""
+    """
+        Revenue transaction record"""
     transaction_id: str
     project_id: str
     source: RevenueSource
@@ -189,7 +215,8 @@ class RevenueDistribution:
 
 @dataclass
 class SharePayment:
-    """Individual share payment record"""
+    """
+        Individual share payment record"""
     payment_id: str
     distribution_id: str
     recipient_id: str
@@ -207,11 +234,13 @@ class ShareCalculator:
     """Advanced share calculation engine"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize share calculator"""
+        """
+        Initialize share calculator"""
         self.config = config or {}
         self.platform_fee_percentage = Decimal(str(self.config.get('platform_fee_percentage', '10.0')))
         self.processing_fee_percentage = Decimal(str(self.config.get('processing_fee_percentage', '2.5')))
         self.minimum_payout_amount = Decimal(str(self.config.get('minimum_payout_amount', '1.00')))
+
         
     async def calculate_distributions(
         self, 
@@ -219,19 +248,27 @@ class ShareCalculator:
         share_rules: List[ShareRule],
         performance_data: Dict[str, Any] = None
     ) -> RevenueDistribution:
-        """Calculate revenue distributions based on share rules"""
+        """
+        Calculate revenue distributions based on share rules"""
         try:
             distribution_id = str(uuid.uuid4())
             
             # Calculate net amount after fees
+
             net_amount = transaction.gross_amount - transaction.platform_fees - transaction.processing_fees - transaction.tax_amount
+
             
             distributions = {}
+
             total_distributed = Decimal('0.00')
+
+
             errors = []
             
             # Sort rules by priority
+
             sorted_rules = sorted(share_rules, key=lambda r: r.priority, reverse=True)
+
             
             for rule in sorted_rules:
                 try:
@@ -241,8 +278,10 @@ class ShareCalculator:
                     # Check if rule applies to this revenue source
                     if rule.conditions.get('revenue_sources') and transaction.source.value not in rule.conditions['revenue_sources']:
                         continue
+
                     
                     share_amount = rule.calculate_share(net_amount, performance_data)
+
                     
                     if share_amount >= self.minimum_payout_amount:
                         distributions[rule.recipient_id] = distributions.get(rule.recipient_id, Decimal('0.00')) + share_amount
@@ -251,17 +290,22 @@ class ShareCalculator:
                 except Exception as e:
                     error_msg = f"Error calculating share for rule {rule.rule_id}: {e}"
                     errors.append(error_msg)
+
                     logger.error(error_msg)
             
             # Check if total distributed exceeds available amount
             if total_distributed > net_amount:
                 # Proportionally reduce distributions
+
                 reduction_factor = net_amount / total_distributed
                 for recipient_id in distributions:
                     distributions[recipient_id] *= reduction_factor
+
                 total_distributed = net_amount
                 
                 errors.append(f"Total distributions exceeded available amount, reduced proportionally by factor {reduction_factor}")
+
+
             
             distribution = RevenueDistribution(
                 distribution_id=distribution_id,
@@ -273,19 +317,23 @@ class ShareCalculator:
                 status=DistributionStatus.PENDING_APPROVAL if not errors else DistributionStatus.FAILED,
                 errors=errors
             )
+
             
             logger.info(f"Calculated distributions for transaction {transaction.transaction_id}: {len(distributions)} recipients, {total_distributed} total")
+
             return distribution
             
         except Exception as e:
             logger.error(f"Failed to calculate distributions: {e}")
+
             raise
 
 class RevenueShareManager:
     """Advanced revenue sharing management system"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize revenue share manager"""
+        """
+        Initialize revenue share manager"""
         self.config = config or {}
         self.transactions: Dict[str, RevenueTransaction] = {}
         self.distributions: Dict[str, RevenueDistribution] = {}
@@ -300,9 +348,11 @@ class RevenueShareManager:
         try:
             from ...database.collaboration.revenue_sharing import RevenueShareManager as DatabaseRevenueManager
             self.database_manager = DatabaseRevenueManager()
+
             self.has_database_integration = True
         except ImportError:
             logger.warning("Database revenue sharing not available")
+
         
         logger.info("💰 Revenue Share Manager initialized")
     
@@ -322,13 +372,17 @@ class RevenueShareManager:
             
             # Validate rule doesn't conflict with existing rules
             await self._validate_share_rule(project_id, rule)
+
             
             self.share_rules[project_id].append(rule)
+
             
             logger.info(f"Added share rule {rule.rule_id} for project {project_id}")
+
             
         except Exception as e:
             logger.error(f"Failed to add share rule: {e}")
+
             raise
     
     async def process_revenue(
@@ -341,6 +395,7 @@ class RevenueShareManager:
             transaction_id = str(uuid.uuid4())
             
             # Create revenue transaction
+
             transaction = RevenueTransaction(
                 transaction_id=transaction_id,
                 project_id=revenue_data['project_id'],
@@ -354,14 +409,18 @@ class RevenueShareManager:
                 source_reference=revenue_data.get('source_reference'),
                 metadata=revenue_data.get('metadata', {})
             )
+
             
             self.transactions[transaction_id] = transaction
             
             # Get share rules for project
+
             project_rules = self.share_rules.get(transaction.project_id, [])
+
             
             if not project_rules:
                 logger.warning(f"No share rules found for project {transaction.project_id}")
+
                 return RevenueDistribution(
                     distribution_id=str(uuid.uuid4()),
                     project_id=transaction.project_id,
@@ -372,9 +431,11 @@ class RevenueShareManager:
                 )
             
             # Calculate distributions
+
             distribution = await self.calculator.calculate_distributions(
                 transaction, project_rules, performance_data
             )
+
             
             self.distributions[distribution.distribution_id] = distribution
             
@@ -384,12 +445,15 @@ class RevenueShareManager:
             # Sync with database if available
             if self.has_database_integration:
                 await self._sync_with_database(transaction, distribution)
+
             
             logger.info(f"Processed revenue for project {transaction.project_id}: {transaction.gross_amount} -> {distribution.total_distributed} distributed")
+
             return distribution
             
         except Exception as e:
             logger.error(f"Failed to process revenue: {e}")
+
             raise
     
     async def approve_distribution(self, distribution_id: str) -> None:
@@ -397,11 +461,14 @@ class RevenueShareManager:
         try:
             if distribution_id not in self.distributions:
                 raise ValueError(f"Distribution {distribution_id} not found")
+
+
             
             distribution = self.distributions[distribution_id]
             
             if distribution.status != DistributionStatus.PENDING_APPROVAL:
                 raise ValueError(f"Distribution must be in pending approval status")
+
             
             distribution.status = DistributionStatus.APPROVED
             distribution.distribution_timestamp = datetime.utcnow()
@@ -412,9 +479,11 @@ class RevenueShareManager:
                     payment.status = PaymentStatus.PROCESSING
             
             logger.info(f"Approved distribution {distribution_id}")
+
             
         except Exception as e:
             logger.error(f"Failed to approve distribution: {e}")
+
             raise
     
     async def get_revenue_analytics(self, project_id: str, period_days: int = 30) -> Dict[str, Any]:
@@ -423,8 +492,10 @@ class RevenueShareManager:
             cutoff_date = datetime.utcnow() - timedelta(days=period_days)
             
             # Filter transactions for project and period
+
             project_transactions = [
                 t for t in self.transactions.values()
+
                 if t.project_id == project_id and t.timestamp >= cutoff_date
             ]
             
@@ -432,33 +503,45 @@ class RevenueShareManager:
                 return {"error": "No transactions found for specified period"}
             
             # Calculate metrics
+
             total_revenue = sum(t.gross_amount for t in project_transactions)
+
+
             total_fees = sum(t.platform_fees + t.processing_fees for t in project_transactions)
+
+
             net_revenue = sum(t.net_amount for t in project_transactions)
             
             # Revenue by source
+
             revenue_by_source = {}
             for source in RevenueSource:
                 source_revenue = sum(
                     t.gross_amount for t in project_transactions
                     if t.source == source
                 )
+
                 if source_revenue > 0:
                     revenue_by_source[source.value] = float(source_revenue)
             
             # Distribution analytics
+
             project_distributions = [
                 d for d in self.distributions.values()
+
                 if d.project_id == project_id
             ]
+
             
             total_distributed = sum(d.total_distributed for d in project_distributions)
             
             # Recipient analytics
+
             recipient_earnings = {}
             for distribution in project_distributions:
                 for recipient_id, amount in distribution.distributions.items():
                     recipient_earnings[recipient_id] = recipient_earnings.get(recipient_id, 0) + float(amount)
+
             
             return {
                 "project_id": project_id,
@@ -477,12 +560,14 @@ class RevenueShareManager:
             
         except Exception as e:
             logger.error(f"Failed to get revenue analytics: {e}")
+
             return {"error": f"Analytics calculation failed: {e}"}
     
     async def get_recipient_payments(self, recipient_id: str, status: PaymentStatus = None) -> List[SharePayment]:
         """Get payments for recipient"""
         payments = [
             payment for payment in self.payments.values()
+
             if payment.recipient_id == recipient_id
         ]
         
@@ -492,7 +577,8 @@ class RevenueShareManager:
         return payments
     
     async def _validate_share_rule(self, project_id: str, new_rule: ShareRule) -> None:
-        """Validate share rule doesn't conflict with existing rules"""
+        """
+        Validate share rule doesn't conflict with existing rules"""
         existing_rules = self.share_rules.get(project_id, [])
         
         # Check for duplicate recipient with conflicting rules
@@ -507,6 +593,7 @@ class RevenueShareManager:
                 rule.percentage for rule in existing_rules
                 if rule.is_active and rule.share_type == ShareType.PERCENTAGE and rule.percentage
             )
+
             
             if total_percentage + new_rule.percentage > Decimal('100.0'):
                 raise ValueError(f"Total percentage would exceed 100%: {total_percentage + new_rule.percentage}%")
@@ -516,6 +603,8 @@ class RevenueShareManager:
         try:
             for recipient_id, amount in distribution.distributions.items():
                 payment_id = str(uuid.uuid4())
+
+
                 
                 payment = SharePayment(
                     payment_id=payment_id,
@@ -524,11 +613,13 @@ class RevenueShareManager:
                     amount=amount,
                     status=PaymentStatus.PENDING if distribution.status == DistributionStatus.APPROVED else PaymentStatus.PENDING
                 )
+
                 
                 self.payments[payment_id] = payment
             
         except Exception as e:
             logger.error(f"Failed to create payments: {e}")
+
             raise
     
     async def _sync_with_database(self, transaction: RevenueTransaction, distribution: RevenueDistribution) -> None:
@@ -551,11 +642,13 @@ class RevenueShareManager:
                         await asyncio.sleep(0.1)  # Simulate processing
                         payment.status = PaymentStatus.COMPLETED
                         payment.processed_date = datetime.utcnow()
+
                 
                 await asyncio.sleep(60)  # Check every minute
                 
             except Exception as e:
                 logger.error(f"Error in payment processor: {e}")
+
                 await asyncio.sleep(300)  # Wait longer on error
     
     async def _analytics_updater(self) -> None:
@@ -567,6 +660,7 @@ class RevenueShareManager:
                 
             except Exception as e:
                 logger.error(f"Error in analytics updater: {e}")
+
                 await asyncio.sleep(3600)
 
 

@@ -15,7 +15,8 @@ from enum import Enum
 # ===== PLATFORM INTEGRATIONS =====
 
 class PlatformType(str, Enum):
-    """Platform types"""
+    """
+        Platform types"""
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -45,7 +46,8 @@ class PlatformConfig:
 
 @dataclass
 class PlatformIntegrationsConfig:
-    """Platform integrations configuration"""
+    """
+        Platform integrations configuration"""
     enabled: bool = True
     platforms: List[PlatformConfig] = field(default_factory=list)
     auto_sync_enabled: bool = True
@@ -127,7 +129,8 @@ class AnalyticsIntegrationConfig:
 # ===== CLOUD STORAGE INTEGRATIONS =====
 
 class CloudProvider(str, Enum):
-    """Cloud storage providers"""
+    """
+        Cloud storage providers"""
     AWS = "aws"
     AZURE = "azure"
     GCP = "gcp"
@@ -219,7 +222,8 @@ class CommunicationIntegrationConfig:
 
 @dataclass
 class IntegrationsConfig:
-    """Main integrations configuration"""
+    """
+        Main integrations configuration"""
     platforms: PlatformIntegrationsConfig = field(default_factory=PlatformIntegrationsConfig)
     payments: List[PaymentIntegrationConfig] = field(default_factory=list)
     email: List[EmailIntegrationConfig] = field(default_factory=list)
@@ -235,10 +239,12 @@ class IntegrationsConfig:
 # ===== ENVIRONMENT-SPECIFIC CONFIGURATIONS =====
 
 def get_development_integrations_config() -> IntegrationsConfig:
-    """Get development integrations configuration"""
+    """
+        Get development integrations configuration"""
     return IntegrationsConfig(
         platforms=PlatformIntegrationsConfig(
             enabled=False,  # Disable in dev
+
             auto_sync_enabled=False
         ),
         payments=[
@@ -254,6 +260,7 @@ def get_development_integrations_config() -> IntegrationsConfig:
             )
         ],
         analytics=[],  # No analytics in dev
+
         ai=[
             AIIntegrationConfig(
                 provider=AIProvider.OPENAI,
@@ -304,8 +311,11 @@ def get_testing_integrations_config() -> IntegrationsConfig:
             enabled=False
         ),
         payments=[],  # No payments in testing
+
         email=[],     # No email in testing
+
         analytics=[], # No analytics in testing
+
         ai=[
             AIIntegrationConfig(
                 provider=AIProvider.OPENAI,
@@ -317,7 +327,8 @@ def get_testing_integrations_config() -> IntegrationsConfig:
 # ===== INTEGRATIONS CONFIGURATION FACTORY =====
 
 class IntegrationsConfigurationFactory:
-    """Factory for creating integrations configurations"""
+    """
+        Factory for creating integrations configurations"""
     
     @staticmethod
     def create_config(environment: str = "development") -> IntegrationsConfig:

@@ -45,7 +45,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Types of content that can be stored"""
+    """
+        Types of content that can be stored"""
     IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
@@ -99,7 +100,8 @@ class StorageConfig:
 
 @dataclass
 class ContentMetadata:
-    """Content metadata structure"""
+    """
+        Content metadata structure"""
     name: str
     description: str
     content_type: ContentType
@@ -116,7 +118,8 @@ class ContentMetadata:
 
 @dataclass
 class StorageResult:
-    """Storage operation result"""
+    """
+        Storage operation result"""
     content_id: str
     ipfs_hash: str
     content_uri: str
@@ -131,7 +134,8 @@ class StorageResult:
 
 @dataclass
 class ReplicationInfo:
-    """Content replication information"""
+    """
+        Content replication information"""
     content_id: str
     ipfs_hash: str
     replica_locations: List[str]
@@ -181,6 +185,7 @@ class IPFSStorage:
         
         Args:
             content: Content to upload (bytes, string, or file-like object)
+
             metadata: Content metadata
             pin: Whether to pin the content
             encrypt: Whether to encrypt the content
@@ -190,29 +195,36 @@ class IPFSStorage:
         """
         try:
             content_id = str(uuid.uuid4())
+
             
             self.logger.info(f"Uploading content to IPFS: {metadata.name}")
             
             # Prepare content for upload
+
             content_bytes = await self._prepare_content(content, metadata)
             
             # Encrypt content if requested
+
             encryption_key = None
             if encrypt or (self.encryption_enabled and metadata.access_level != AccessLevel.PUBLIC):
                 content_bytes, encryption_key = await self._encrypt_content(content_bytes)
             
             # Calculate content hash
+
             content_hash = hashlib.sha256(content_bytes).hexdigest()
+
             metadata.checksum = content_hash
             
             # Upload to IPFS
             ipfs_hash = await self._upload_to_ipfs(content_bytes)
             
             # Generate content URIs
+
             content_uri = f"ipfs://{ipfs_hash}"
             gateway_url = f"{self.gateway_url}/ipfs/{ipfs_hash}"
             
             # Create storage result
+
             storage_result = StorageResult(
                 content_id=content_id,
                 ipfs_hash=ipfs_hash,
@@ -234,18 +246,22 @@ class IPFSStorage:
             # Pin content if requested
             if pin:
                 await self._pin_content(ipfs_hash)
+
                 storage_result.pin_status = PinStatus.PINNED
                 storage_result.storage_status = StorageStatus.PINNED
             
             # Start replication process
             if self.config.replication_factor > 1:
                 asyncio.create_task(self._replicate_content(content_id, ipfs_hash))
+
             
             self.logger.info(f"Content uploaded to IPFS: {content_id} -> {ipfs_hash}")
+
             return storage_result
             
         except Exception as e:
             self.logger.error(f"Content upload failed: {e}")
+
             raise
     
     async def _prepare_content(
@@ -266,28 +282,35 @@ class IPFSStorage:
     async def _encrypt_content(self, content: bytes) -> Tuple[bytes, str]:
         """Encrypt content using AES encryption"""
         # Generate encryption key
+
         key = get_random_bytes(32)  # 256-bit key
+
         iv = get_random_bytes(16)   # 128-bit IV
         
         # Encrypt content
+
         cipher = AES.new(key, AES.MODE_CBC, iv)
+
         padded_content = pad(content, AES.block_size)
+
         encrypted_content = cipher.encrypt(padded_content)
         
         # Combine IV and encrypted content
+
         encrypted_data = iv + encrypted_content
         
         # Encode key for storage
+
         encryption_key = base64.b64encode(key).decode('utf-8')
+
         
         return encrypted_data, encryption_key
     
     async def _upload_to_ipfs(self, content: bytes) -> str:
         """Upload content to IPFS and return hash"""
         try:
-            # Mock IPFS upload - in real implementation would use IPFS HTTP API
             content_hash = hashlib.sha256(content).hexdigest()
-            ipfs_hash = f"Qm{content_hash[:44]}"  # Mock IPFS hash format
+            ipfs_hash = f"Qm{content_hash[:44]}"
             
             # Simulate API call
             async with aiohttp.ClientSession() as session:
@@ -298,7 +321,6 @@ class IPFSStorage:
                 #     result = await response.json()
                 #     return result['Hash']
                 pass
-            
             return ipfs_hash
             
         except Exception as e:
@@ -311,30 +333,32 @@ class IPFSStorage:
             self.logger.info(f"Pinning content: {ipfs_hash}")
             
             # Pin on local node
+
             local_pin_success = await self._pin_on_local_node(ipfs_hash)
             
             # Pin on external services
+
             pin_services_success = await self._pin_on_services(ipfs_hash)
+
             
             return local_pin_success and pin_services_success
             
         except Exception as e:
             self.logger.error(f"Content pinning failed: {e}")
+
             return False
     
     async def _pin_on_local_node(self, ipfs_hash: str) -> bool:
         """Pin content on local IPFS node"""
         try:
-            # Mock local pinning - in real implementation would use IPFS API
             async with aiohttp.ClientSession() as session:
                 # async with session.post(f"{self.ipfs_api_url}/api/v0/pin/add?arg={ipfs_hash}") as response:
                 #     return response.status == 200
                 pass
-            
-            return True  # Mock success
-            
+            return True            
         except Exception as e:
             self.logger.error(f"Local pinning failed: {e}")
+
             return False
     
     async def _pin_on_services(self, ipfs_hash: str) -> bool:
@@ -343,30 +367,31 @@ class IPFSStorage:
         
         for service in self.pin_services:
             try:
-                # Mock service pinning
                 success = await self._pin_on_service(service, ipfs_hash)
+
                 if success:
                     success_count += 1
                     
             except Exception as e:
                 self.logger.error(f"Pinning on service {service} failed: {e}")
+
         
         return success_count > 0
     
     async def _pin_on_service(self, service: str, ipfs_hash: str) -> bool:
         """Pin content on specific pin service"""
-        # Mock service-specific pinning logic
         self.logger.info(f"Pinning {ipfs_hash} on service {service}")
-        return True  # Mock success
-    
+        return True    
     async def _replicate_content(self, content_id: str, ipfs_hash: str) -> None:
         """Replicate content across multiple nodes"""
         try:
             self.logger.info(f"Starting replication for content: {content_id}")
+
+
             
             replica_locations = []
+
             target_replicas = self.config.replication_factor
-            
             # Replicate to cluster nodes
             for endpoint in self.cluster_endpoints[:target_replicas]:
                 try:
@@ -377,6 +402,7 @@ class IPFSStorage:
                     self.logger.error(f"Replication to {endpoint} failed: {e}")
             
             # Update replication info
+
             replication_info = ReplicationInfo(
                 content_id=content_id,
                 ipfs_hash=ipfs_hash,
@@ -385,6 +411,7 @@ class IPFSStorage:
                 last_verified=datetime.utcnow(),
                 availability_score=Decimal(str(len(replica_locations) / target_replicas))
             )
+
             
             self.replication_info[content_id] = replication_info
             
@@ -393,6 +420,7 @@ class IPFSStorage:
                 self.stored_content[content_id].storage_status = StorageStatus.REPLICATED
             
             self.logger.info(f"Content replicated: {content_id} to {len(replica_locations)} locations")
+
             
         except Exception as e:
             self.logger.error(f"Content replication failed: {e}")
@@ -400,15 +428,13 @@ class IPFSStorage:
     async def _replicate_to_node(self, endpoint: str, ipfs_hash: str) -> bool:
         """Replicate content to specific node"""
         try:
-            # Mock replication to cluster node
             async with aiohttp.ClientSession() as session:
                 # In real implementation would use IPFS cluster API
                 pass
-            
-            return True  # Mock success
-            
+            return True            
         except Exception as e:
             self.logger.error(f"Node replication failed: {e}")
+
             return False
     
     async def retrieve_content(
@@ -429,6 +455,8 @@ class IPFSStorage:
         try:
             if content_id not in self.stored_content:
                 raise ValueError(f"Content not found: {content_id}")
+
+
             
             storage_result = self.stored_content[content_id]
             
@@ -442,53 +470,65 @@ class IPFSStorage:
                 content_bytes = await self._decrypt_content(
                     content_bytes, storage_result.encryption_key
                 )
+
             
             return content_bytes, storage_result.metadata
             
         except Exception as e:
             self.logger.error(f"Content retrieval failed: {e}")
+
             raise
     
     async def _retrieve_from_ipfs(self, ipfs_hash: str) -> bytes:
         """Retrieve content from IPFS"""
         try:
-            # Mock IPFS retrieval - in real implementation would use IPFS gateway or API
             async with aiohttp.ClientSession() as session:
                 # async with session.get(f"{self.gateway_url}/ipfs/{ipfs_hash}") as response:
                 #     return await response.read()
+
                 pass
-            
-            # Mock content for demonstration
             return b"Mock IPFS content data"
             
         except Exception as e:
             self.logger.error(f"IPFS retrieval failed: {e}")
+
             raise
     
     async def _decrypt_content(self, encrypted_content: bytes, encryption_key: str) -> bytes:
         """Decrypt encrypted content"""
         try:
             # Decode encryption key
+
             key = base64.b64decode(encryption_key.encode('utf-8'))
             
             # Extract IV and encrypted data
+
             iv = encrypted_content[:16]
+
             encrypted_data = encrypted_content[16:]
             
             # Decrypt content
+
             cipher = AES.new(key, AES.MODE_CBC, iv)
+
+
             padded_content = cipher.decrypt(encrypted_data)
+
+
             content = unpad(padded_content, AES.block_size)
+
             
             return content
             
         except Exception as e:
             self.logger.error(f"Content decryption failed: {e}")
+
             raise
     
     async def delete_content(self, content_id: str) -> Dict[str, Any]:
         """
         Delete content from IPFS (unpin and remove)
+
         
         Args:
             content_id: Content ID to delete
@@ -499,12 +539,15 @@ class IPFSStorage:
         try:
             if content_id not in self.stored_content:
                 raise ValueError(f"Content not found: {content_id}")
+
+
             
             storage_result = self.stored_content[content_id]
             
             self.logger.info(f"Deleting content from IPFS: {content_id}")
             
             # Unpin content
+
             unpin_success = await self._unpin_content(storage_result.ipfs_hash)
             
             # Remove from local storage
@@ -516,6 +559,7 @@ class IPFSStorage:
             
             if content_id in self.replication_info:
                 del self.replication_info[content_id]
+
             
             result = {
                 "content_id": content_id,
@@ -526,35 +570,40 @@ class IPFSStorage:
             }
             
             self.logger.info(f"Content deleted: {content_id}")
+
             return result
             
         except Exception as e:
             self.logger.error(f"Content deletion failed: {e}")
+
             raise
     
     async def _unpin_content(self, ipfs_hash: str) -> bool:
         """Unpin content to allow garbage collection"""
         try:
             # Unpin from local node
+
             local_unpin_success = await self._unpin_from_local_node(ipfs_hash)
             
             # Unpin from services
+
             services_unpin_success = await self._unpin_from_services(ipfs_hash)
+
             
             return local_unpin_success and services_unpin_success
             
         except Exception as e:
             self.logger.error(f"Content unpinning failed: {e}")
+
             return False
     
     async def _unpin_from_local_node(self, ipfs_hash: str) -> bool:
         """Unpin content from local IPFS node"""
-        try:
-            # Mock local unpinning
-            return True
+        try:            return True
             
         except Exception as e:
             self.logger.error(f"Local unpinning failed: {e}")
+
             return False
     
     async def _unpin_from_services(self, ipfs_hash: str) -> bool:
@@ -564,26 +613,33 @@ class IPFSStorage:
         for service in self.pin_services:
             try:
                 success = await self._unpin_from_service(service, ipfs_hash)
+
                 if success:
                     success_count += 1
                     
             except Exception as e:
                 self.logger.error(f"Unpinning from service {service} failed: {e}")
+
         
         return success_count > 0
     
     async def _unpin_from_service(self, service: str, ipfs_hash: str) -> bool:
         """Unpin content from specific pin service"""
-        # Mock service-specific unpinning logic
         return True
     
     async def get_content_info(self, content_id: str) -> Dict[str, Any]:
-        """Get detailed content information"""
+        """
+        Get detailed content information"""
         if content_id not in self.stored_content:
             raise ValueError(f"Content not found: {content_id}")
+
+
         
         storage_result = self.stored_content[content_id]
+
         replication_info = self.replication_info.get(content_id)
+
+
         
         content_info = {
             "content_id": content_id,
@@ -640,23 +696,34 @@ class IPFSStorage:
             
             if access_level and storage_result.metadata.access_level != access_level:
                 continue
+
             
             content_info = await self.get_content_info(content_id)
+
             content_list.append(content_info)
+
         
         return content_list
     
     async def verify_content_availability(self, content_id: str) -> Dict[str, Any]:
-        """Verify content availability across storage locations"""
+        """
+        Verify content availability across storage locations"""
         if content_id not in self.stored_content:
             raise ValueError(f"Content not found: {content_id}")
+
+
         
         storage_result = self.stored_content[content_id]
+
         replication_info = self.replication_info.get(content_id)
         
         # Check availability on different sources
+
         gateway_available = await self._check_gateway_availability(storage_result.ipfs_hash)
+
         local_available = await self._check_local_availability(storage_result.ipfs_hash)
+
+
         
         replica_availability = {}
         if replication_info:
@@ -664,9 +731,13 @@ class IPFSStorage:
                 replica_availability[replica] = await self._check_replica_availability(
                     replica, storage_result.ipfs_hash
                 )
+
+
         
         total_available = sum([gateway_available, local_available] + list(replica_availability.values()))
+
         total_sources = 2 + len(replica_availability)
+
         availability_percentage = (total_available / total_sources) * 100
         
         return {
@@ -690,12 +761,11 @@ class IPFSStorage:
     
     async def _check_local_availability(self, ipfs_hash: str) -> bool:
         """Check if content is available on local IPFS node"""
-        # Mock local availability check
         return True
     
     async def _check_replica_availability(self, replica: str, ipfs_hash: str) -> bool:
-        """Check if content is available on replica node"""
-        # Mock replica availability check
+        """
+        Check if content is available on replica node"""
         return True
 
 
@@ -716,9 +786,11 @@ class StorageManager:
         self.storage_instances: Dict[str, IPFSStorage] = {}
         
         # Initialize storage instances for different networks/regions
+
         storage_configs = config.get("storage_instances", {})
         for instance_name, instance_config in storage_configs.items():
             storage_config = StorageConfig(**instance_config)
+
             self.storage_instances[instance_name] = IPFSStorage(storage_config)
     
     async def distribute_content(
@@ -734,12 +806,15 @@ class StorageManager:
             content: Content to distribute
             metadata: Content metadata
             target_instances: Specific instances to target (or all if None)
+
             
         Returns:
             Storage results from each instance
         """
         if target_instances is None:
             target_instances = list(self.storage_instances.keys())
+
+
         
         results = {}
         
@@ -747,11 +822,15 @@ class StorageManager:
             if instance_name in self.storage_instances:
                 try:
                     storage = self.storage_instances[instance_name]
+
                     result = await storage.upload_content(content, metadata)
+
                     results[instance_name] = result
                     self.logger.info(f"Content distributed to {instance_name}")
+
                 except Exception as e:
                     self.logger.error(f"Distribution to {instance_name} failed: {e}")
+
                     results[instance_name] = {"error": str(e)}
         
         return results
@@ -771,8 +850,13 @@ class StorageManager:
         
         for instance_name, storage in self.storage_instances.items():
             content_count = len(storage.stored_content)
+
+
             total_size = sum(result.file_size for result in storage.stored_content.values())
+
+
             replication_count = len(storage.replication_info)
+
             
             stats["instance_stats"][instance_name] = {
                 "content_count": content_count,

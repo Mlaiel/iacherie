@@ -33,7 +33,8 @@ import multiprocessing as mp
 
 
 class CompressionFormat(Enum):
-    """Extended audio compression formats for enterprise"""
+    """
+        Extended audio compression formats for enterprise"""
     # Lossless Formats
     WAV = "wav"
     FLAC = "flac" 
@@ -76,7 +77,8 @@ class CompressionQuality(IntEnum):
 
 
 class CompressionProfile(Enum):
-    """Compression profiles for different use cases"""
+    """
+        Compression profiles for different use cases"""
     PODCAST = "podcast"
     MUSIC_STREAMING = "music_streaming"
     BROADCAST = "broadcast"
@@ -150,7 +152,8 @@ class CompressionSettings:
 
 @dataclass
 class CompressionResult:
-    """Compression operation result"""
+    """
+        Compression operation result"""
     success: bool
     compressed_data: Optional[bytes] = None
     original_size: int = 0
@@ -165,7 +168,8 @@ class CompressionResult:
     
     @property
     def compression_efficiency(self) -> float:
-        """Calculate compression efficiency"""
+        """
+        Calculate compression efficiency"""
         if self.original_size == 0:
             return 0.0
         return (1.0 - self.compressed_size / self.original_size) * 100
@@ -179,40 +183,54 @@ class PerceptualAnalyzer:
     
     def analyze_content(self, audio_data: np.ndarray, 
                        sample_rate: int = 44100) -> Dict[str, float]:
-        """Analyze audio content for compression optimization"""
+        """
+        Analyze audio content for compression optimization"""
         try:
             # Ensure mono for analysis
             if len(audio_data.shape) > 1:
                 audio_mono = librosa.to_mono(audio_data.T)
+
             else:
                 audio_mono = audio_data
+
             
             analysis = {}
             
             # Spectral analysis
+
             stft = librosa.stft(audio_mono)
+
+
             magnitude = np.abs(stft)
             
             # Spectral centroid (brightness)
+
+
             spectral_centroids = librosa.feature.spectral_centroid(
                 y=audio_mono, sr=sample_rate)[0]
             analysis['spectral_centroid'] = np.mean(spectral_centroids)
             
             # Spectral rolloff
+
             rolloff = librosa.feature.spectral_rolloff(
                 y=audio_mono, sr=sample_rate)[0]
             analysis['spectral_rolloff'] = np.mean(rolloff)
             
             # Zero crossing rate (speech/music discrimination)
+
+
             zcr = librosa.feature.zero_crossing_rate(audio_mono)[0]
             analysis['zero_crossing_rate'] = np.mean(zcr)
             
             # MFCCs for timbral content
+
             mfccs = librosa.feature.mfcc(y=audio_mono, sr=sample_rate, n_mfcc=13)
+
             analysis['mfcc_variance'] = np.var(mfccs)
             
             # Tempo and rhythm
             tempo, beats = librosa.beat.beat_track(y=audio_mono, sr=sample_rate)
+
             analysis['tempo'] = tempo
             analysis['rhythm_regularity'] = self._calculate_rhythm_regularity(beats)
             
@@ -220,13 +238,23 @@ class PerceptualAnalyzer:
             analysis['dynamic_range'] = np.max(audio_mono) - np.min(audio_mono)
             
             # Frequency content distribution
+
             freqs = librosa.fft_frequencies(sr=sample_rate)
+
+
             magnitude_mean = np.mean(magnitude, axis=1)
             
             # Low, mid, high frequency energy
+
             low_freq_energy = np.sum(magnitude_mean[freqs < 250])
+
+
             mid_freq_energy = np.sum(magnitude_mean[(freqs >= 250) & (freqs < 4000)])
+
+
             high_freq_energy = np.sum(magnitude_mean[freqs >= 4000])
+
+
             
             total_energy = low_freq_energy + mid_freq_energy + high_freq_energy
             if total_energy > 0:
@@ -240,28 +268,34 @@ class PerceptualAnalyzer:
             
             # Harmonic-percussive separation
             harmonic, percussive = librosa.effects.hpss(audio_mono)
+
             analysis['harmonic_ratio'] = np.sum(np.abs(harmonic)) / np.sum(np.abs(audio_mono))
+
             analysis['percussive_ratio'] = np.sum(np.abs(percussive)) / np.sum(np.abs(audio_mono))
             
             # Complexity score
             analysis['complexity_score'] = self._calculate_complexity_score(analysis)
+
             
             return analysis
             
         except Exception as e:
             self.logger.error(f"Content analysis failed: {e}")
+
             return self._get_default_analysis()
     
     def _calculate_rhythm_regularity(self, beats: np.ndarray) -> float:
         """Calculate rhythm regularity from beat positions"""
         if len(beats) < 3:
             return 0.0
+
         
         intervals = np.diff(beats)
         return 1.0 / (1.0 + np.std(intervals))
     
     def _calculate_complexity_score(self, analysis: Dict[str, float]) -> float:
-        """Calculate overall audio complexity score"""
+        """
+        Calculate overall audio complexity score"""
         weights = {
             'spectral_centroid': 0.2,
             'mfcc_variance': 0.3,
@@ -269,17 +303,20 @@ class PerceptualAnalyzer:
             'high_freq_ratio': 0.15,
             'rhythm_regularity': 0.15
         }
+
         
         score = 0.0
         for feature, weight in weights.items():
             if feature in analysis:
                 normalized_value = min(analysis[feature] / 1000, 1.0)
+
                 score += normalized_value * weight
         
         return min(score, 1.0)
     
     def _get_default_analysis(self) -> Dict[str, float]:
-        """Return default analysis values"""
+        """
+        Return default analysis values"""
         return {
             'spectral_centroid': 1000.0,
             'spectral_rolloff': 5000.0,
@@ -331,49 +368,64 @@ class BitrateOptimizer:
     def optimize_bitrate(self, audio_data: np.ndarray, 
                         settings: CompressionSettings,
                         sample_rate: int = 44100) -> int:
-        """Optimize bitrate based on content analysis and settings"""
+        """
+        Optimize bitrate based on content analysis and settings"""
         try:
             # Analyze audio content
+
             analysis = self.analyzer.analyze_content(audio_data, sample_rate)
             
             # Get base bitrate from platform/quality
+
             base_bitrate = self._get_base_bitrate(settings)
             
             # Apply content-based adjustments
+
             complexity_factor = analysis.get('complexity_score', 0.5)
             
             # Adjust based on content type
             if analysis.get('zero_crossing_rate', 0) > 0.15:  # Speech-like
                 # Speech content can use lower bitrates
+
                 bitrate_multiplier = 0.7
             elif analysis.get('harmonic_ratio', 0) > 0.8:  # Harmonic music
                 # Classical/acoustic music benefits from higher bitrates
+
                 bitrate_multiplier = 1.2
             elif analysis.get('percussive_ratio', 0) > 0.6:  # Percussive
                 # Electronic/percussion heavy can use standard bitrates
+
                 bitrate_multiplier = 1.0
             else:
                 bitrate_multiplier = 1.0
             
             # Apply complexity scaling
+
             complexity_multiplier = 0.8 + (complexity_factor * 0.4)
             
             # Calculate optimized bitrate
+
             optimized_bitrate = int(base_bitrate * bitrate_multiplier * complexity_multiplier)
             
             # Ensure bitrate is within reasonable bounds
+
             min_bitrate = 64 if settings.format in [CompressionFormat.OPUS, CompressionFormat.AAC] else 96
+
             max_bitrate = 320 if settings.format != CompressionFormat.FLAC else 1411
+
             
             optimized_bitrate = max(min_bitrate, min(optimized_bitrate, max_bitrate))
+
             
             self.logger.info(f"Optimized bitrate: {optimized_bitrate} kbps "
                            f"(complexity: {complexity_factor:.2f})")
+
             
             return optimized_bitrate
             
         except Exception as e:
             self.logger.error(f"Bitrate optimization failed: {e}")
+
             return self._get_fallback_bitrate(settings)
     
     def _get_base_bitrate(self, settings: CompressionSettings) -> int:
@@ -387,6 +439,7 @@ class BitrateOptimizer:
                 return preset[settings.quality]
         
         # Default quality-based bitrates
+
         quality_bitrates = {
             CompressionQuality.DRAFT: 64,
             CompressionQuality.PREVIEW: 96,
@@ -403,7 +456,8 @@ class BitrateOptimizer:
         return quality_bitrates.get(settings.quality, 192)
     
     def _get_fallback_bitrate(self, settings: CompressionSettings) -> int:
-        """Get fallback bitrate when optimization fails"""
+        """
+        Get fallback bitrate when optimization fails"""
         return self._get_base_bitrate(settings)
 
 
@@ -416,7 +470,8 @@ class CodecManager:
         self.encoder_cache = {}
     
     def _initialize_codec_support(self) -> Dict[CompressionFormat, Dict[str, Any]]:
-        """Initialize comprehensive codec support information"""
+        """
+        Initialize comprehensive codec support information"""
         return {
             # Lossless formats
             CompressionFormat.WAV: {
@@ -505,6 +560,7 @@ class CodecManager:
                           settings: CompressionSettings) -> Tuple[bool, str]:
         """Check if format is suitable for given settings"""
         codec_info = self.get_codec_info(format)
+
         
         if not codec_info.get("name", "").startswith("Unknown"):
             # Check sample rate compatibility
@@ -573,7 +629,8 @@ class AudioCompressor:
     async def compress_async(self, audio_data: np.ndarray, 
                            settings: CompressionSettings,
                            sample_rate: int = 44100) -> CompressionResult:
-        """Asynchronous audio compression"""
+        """
+        Asynchronous audio compression"""
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
@@ -586,8 +643,10 @@ class AudioCompressor:
     def compress(self, audio_data: np.ndarray, 
                 settings: CompressionSettings,
                 sample_rate: int = 44100) -> CompressionResult:
-        """Compress audio data with enterprise features"""
+        """
+        Compress audio data with enterprise features"""
         start_time = time.time()
+
         
         try:
             # Validate input
@@ -601,6 +660,7 @@ class AudioCompressor:
             format_suitable, message = self.codec_manager.is_format_suitable(
                 settings.format, settings
             )
+
             if not format_suitable:
                 return CompressionResult(
                     success=False,
@@ -618,29 +678,40 @@ class AudioCompressor:
                 # Mono to stereo if needed
                 if settings.channels == 2:
                     audio_data = np.column_stack([audio_data, audio_data])
+
             elif len(audio_data.shape) == 2:
                 # Handle channel configuration
                 if audio_data.shape[1] != settings.channels:
                     if settings.channels == 1:
                         # Stereo to mono
+
                         audio_data = librosa.to_mono(audio_data.T)
+
                     elif settings.channels == 2 and audio_data.shape[1] == 1:
                         # Mono to stereo
+
                         audio_data = np.column_stack([audio_data, audio_data])
             
             # Apply preprocessing based on profile
+
             audio_data = self._apply_preprocessing(audio_data, settings, sample_rate)
             
             # Perform compression
+
             compressed_data = self._perform_compression(audio_data, settings, sample_rate)
             
             # Calculate metrics
+
             original_size = audio_data.nbytes
+
             compressed_size = len(compressed_data) if compressed_data else 0
+
             compression_ratio = compressed_size / original_size if original_size > 0 else 0
+
             encoding_time = time.time() - start_time
             
             # Quality assessment
+
             quality_score = self._assess_quality(
                 audio_data, compressed_data, settings, sample_rate
             )
@@ -649,6 +720,7 @@ class AudioCompressor:
             self._update_stats(settings, original_size, compressed_size, encoding_time)
             
             # Create result
+
             result = CompressionResult(
                 success=True,
                 compressed_data=compressed_data,
@@ -661,11 +733,13 @@ class AudioCompressor:
                 format_used=settings.format,
                 metadata=self._extract_compression_metadata(settings, encoding_time)
             )
+
             
             return result
             
         except Exception as e:
             self.logger.error(f"Compression failed: {e}")
+
             return CompressionResult(
                 success=False,
                 error_message=str(e),
@@ -683,44 +757,57 @@ class AudioCompressor:
                 pass
             elif settings.normalize_loudness:
                 # Apply loudness normalization
+
                 audio_data = self._normalize_loudness(audio_data, settings.target_lufs)
             
             # Profile-specific processing
             if settings.profile == CompressionProfile.VOICE:
                 # Voice optimization: high-pass filter, noise reduction
+
                 audio_data = self._optimize_for_voice(audio_data, sample_rate)
+
             elif settings.profile == CompressionProfile.CLASSICAL:
                 # Preserve dynamics and frequency response
                 pass
             elif settings.profile == CompressionProfile.ELECTRONIC:
                 # Optimize for electronic music characteristics
+
                 audio_data = self._optimize_for_electronic(audio_data, sample_rate)
+
             
             return audio_data
             
         except Exception as e:
             self.logger.warning(f"Preprocessing failed, using original audio: {e}")
+
             return audio_data
     
     def _normalize_loudness(self, audio_data: np.ndarray, target_lufs: float) -> np.ndarray:
         """Normalize loudness to target LUFS"""
         # Simplified loudness normalization
         # In practice, would use pyloudnorm or similar
+
         current_rms = np.sqrt(np.mean(audio_data ** 2))
+
         target_rms = 10 ** (target_lufs / 20)
+
         
         if current_rms > 0:
             gain = target_rms / current_rms
             # Prevent clipping
+
             gain = min(gain, 1.0 / np.max(np.abs(audio_data)))
+
             return audio_data * gain
         
         return audio_data
     
     def _optimize_for_voice(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Optimize audio for voice content"""
+        """
+        Optimize audio for voice content"""
         # High-pass filter to remove low-frequency noise
         from scipy import signal
+
         sos = signal.butter(4, 80, btype='high', fs=sample_rate, output='sos')
         if len(audio_data.shape) == 1:
             return signal.sosfilt(sos, audio_data)
@@ -728,7 +815,8 @@ class AudioCompressor:
             return np.array([signal.sosfilt(sos, channel) for channel in audio_data.T]).T
     
     def _optimize_for_electronic(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Optimize audio for electronic music"""
+        """
+        Optimize audio for electronic music"""
         # Slight high-frequency enhancement for electronic music
         # This is a simplified approach
         return audio_data * 1.02  # Slight gain boost
@@ -736,7 +824,8 @@ class AudioCompressor:
     def _perform_compression(self, audio_data: np.ndarray, 
                            settings: CompressionSettings,
                            sample_rate: int) -> bytes:
-        """Perform the actual compression"""
+        """
+        Perform the actual compression"""
         try:
             # Create temporary file for compression
             with tempfile.NamedTemporaryFile(suffix=f'.{settings.format.value}') as temp_file:
@@ -745,9 +834,11 @@ class AudioCompressor:
                 if settings.format == CompressionFormat.WAV:
                     sf.write(temp_file.name, audio_data, sample_rate, 
                             subtype=f'PCM_{settings.bit_depth}')
+
                 elif settings.format == CompressionFormat.FLAC:
                     sf.write(temp_file.name, audio_data, sample_rate, 
                             subtype=f'PCM_{settings.bit_depth}')
+
                 else:
                     # For lossy formats, use default PCM_16 for compatibility
                     sf.write(temp_file.name, audio_data, sample_rate, subtype='PCM_16')
@@ -755,9 +846,11 @@ class AudioCompressor:
                 # Read compressed data
                 with open(temp_file.name, 'rb') as f:
                     return f.read()
+
                     
         except Exception as e:
             self.logger.error(f"Compression encoding failed: {e}")
+
             raise
     
     def _assess_quality(self, original: np.ndarray, compressed_data: bytes,
@@ -769,27 +862,36 @@ class AudioCompressor:
                 return 1.0
             
             # For lossy formats, estimate quality based on bitrate and content
+
             codec_info = self.codec_manager.get_codec_info(settings.format)
             
             # Base quality from bitrate
+
             max_bitrate = 320  # kbps
+
             base_quality = min(settings.bitrate / max_bitrate, 1.0)
             
             # Adjust for codec efficiency
+
             codec_efficiency = {
                 CompressionFormat.OPUS: 1.2,
                 CompressionFormat.AAC: 1.1,
                 CompressionFormat.OGG: 1.05,
                 CompressionFormat.MP3: 1.0
             }
+
             
             efficiency = codec_efficiency.get(settings.format, 1.0)
+
+
             quality_score = min(base_quality * efficiency, 1.0)
+
             
             return quality_score
             
         except Exception as e:
             self.logger.warning(f"Quality assessment failed: {e}")
+
             return 0.8  # Default quality estimate
     
     def _extract_compression_metadata(self, settings: CompressionSettings, 
@@ -813,25 +915,30 @@ class AudioCompressor:
     def _update_stats(self, settings: CompressionSettings, 
                      input_size: int, output_size: int, 
                      encoding_time: float):
-        """Update compression statistics"""
+        """
+        Update compression statistics"""
         self.compression_stats['total_compressions'] += 1
         self.compression_stats['total_time'] += encoding_time
         self.compression_stats['total_input_size'] += input_size
         self.compression_stats['total_output_size'] += output_size
         
         # Track format usage
+
         format_name = settings.format.value
         self.compression_stats['format_usage'][format_name] = \
             self.compression_stats['format_usage'].get(format_name, 0) + 1
         
         # Track quality distribution
+
         quality_name = settings.quality.name
         self.compression_stats['quality_distribution'][quality_name] = \
             self.compression_stats['quality_distribution'].get(quality_name, 0) + 1
     
     def get_compression_stats(self) -> Dict[str, Any]:
-        """Get compression statistics"""
+        """
+        Get compression statistics"""
         stats = self.compression_stats.copy()
+
         
         if stats['total_compressions'] > 0:
             stats['average_encoding_time'] = stats['total_time'] / stats['total_compressions']
@@ -841,29 +948,36 @@ class AudioCompressor:
                 (stats['total_input_size'] - stats['total_output_size']) / 
                 stats['total_input_size'] * 100
             )
+
         
         return stats
     
     def compress_batch(self, audio_files: List[Tuple[np.ndarray, CompressionSettings]], 
                       sample_rate: int = 44100) -> List[CompressionResult]:
-        """Compress multiple audio files in parallel"""
+        """
+        Compress multiple audio files in parallel"""
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             futures = [
                 executor.submit(self.compress, audio_data, settings, sample_rate)
+
                 for audio_data, settings in audio_files
             ]
+
             
             results = []
             for future in futures:
                 try:
                     result = future.result(timeout=300)  # 5 minute timeout
                     results.append(result)
+
                 except Exception as e:
                     self.logger.error(f"Batch compression failed: {e}")
+
                     results.append(CompressionResult(
                         success=False,
                         error_message=str(e)
                     ))
+
             
             return results
     
@@ -880,12 +994,15 @@ class MetadataPreserver:
         self.logger = logging.getLogger(self.__class__.__name__)
     
     def extract_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract comprehensive metadata from audio file"""
+        """
+        Extract comprehensive metadata from audio file"""
         try:
             metadata = {}
             
             # Use soundfile for basic metadata
+
             info = sf.info(file_path)
+
             metadata.update({
                 'sample_rate': info.samplerate,
                 'channels': info.channels,
@@ -897,11 +1014,13 @@ class MetadataPreserver:
             
             # Additional metadata extraction would go here
             # (using mutagen, eyed3, or similar libraries)
+
             
             return metadata
             
         except Exception as e:
             self.logger.error(f"Metadata extraction failed: {e}")
+
             return {}
     
     def preserve_metadata(self, source_path: str, target_path: str, 
@@ -909,6 +1028,7 @@ class MetadataPreserver:
         """Preserve metadata from source to target file"""
         try:
             # Extract metadata from source
+
             metadata = self.extract_metadata(source_path)
             
             # Add additional metadata if provided
@@ -922,6 +1042,7 @@ class MetadataPreserver:
             
         except Exception as e:
             self.logger.error(f"Metadata preservation failed: {e}")
+
             return False
 
 
@@ -945,8 +1066,10 @@ class QualityController:
     
     def validate_quality(self, result: CompressionResult, 
                         target_quality: CompressionQuality) -> Tuple[bool, str]:
-        """Validate compression quality against target"""
+        """
+        Validate compression quality against target"""
         threshold = self.quality_thresholds.get(target_quality, 0.8)
+
         
         if result.quality_score >= threshold:
             return True, f"Quality acceptable: {result.quality_score:.3f} >= {threshold:.3f}"
@@ -959,12 +1082,15 @@ class QualityController:
         
         if result.quality_score < 0.8:
             recommendations.append("Consider increasing bitrate for better quality")
+
             
         if result.compression_ratio > 0.9:
             recommendations.append("Compression ratio is very high, consider lossless format")
+
             
         if result.encoding_time > 60:
             recommendations.append("Encoding time is high, consider optimizing settings")
+
             
         return recommendations
 
@@ -988,27 +1114,34 @@ class CompressionOrchestrator:
                                           audio_data: np.ndarray,
                                           settings: CompressionSettings,
                                           sample_rate: int = 44100) -> CompressionResult:
-        """Compress with automatic quality control and retry"""
+        """
+        Compress with automatic quality control and retry"""
         max_attempts = 3
+
         attempt = 0
         
         while attempt < max_attempts:
             attempt += 1
             
             # Perform compression
+
             result = await self.compressor.compress_async(audio_data, settings, sample_rate)
+
             
             if not result.success:
                 self.logger.warning(f"Compression attempt {attempt} failed: {result.error_message}")
+
                 continue
             
             # Validate quality
             quality_ok, quality_message = self.quality_controller.validate_quality(
                 result, settings.quality
             )
+
             
             if quality_ok:
                 self.logger.info(f"Compression successful on attempt {attempt}: {quality_message}")
+
                 return result
             else:
                 self.logger.warning(f"Quality validation failed on attempt {attempt}: {quality_message}")

@@ -50,7 +50,8 @@ logger = logging.getLogger(__name__)
 # ========================================
 
 class MediaType(Enum):
-    """Types de médias"""
+    """
+        Types de médias"""
     IMAGE = "image_content_type"
     VIDEO = "video_content_type"
     AUDIO = "audio_content_type"
@@ -138,7 +139,8 @@ class MultimediaContent:
 
 @dataclass
 class ProcessingRequest:
-    """Requête de traitement"""
+    """
+        Requête de traitement"""
     request_id: str
     content: MultimediaContent
     target_formats: List[ContentFormat]
@@ -150,7 +152,8 @@ class ProcessingRequest:
 
 @dataclass
 class ContentFingerprint:
-    """Empreinte contenu"""
+    """
+        Empreinte contenu"""
     fingerprint_id: str
     content_id: str
     perceptual_hash: str
@@ -161,7 +164,8 @@ class ContentFingerprint:
 
 @dataclass
 class RecommendationRequest:
-    """Requête de recommandation"""
+    """
+        Requête de recommandation"""
     user_id: str
     user_preferences: Dict[str, Any]
     content_history: List[str]
@@ -171,7 +175,8 @@ class RecommendationRequest:
 
 @dataclass
 class MultimediaResult:
-    """Résultat multimédia"""
+    """
+        Résultat multimédia"""
     request_id: str
     processing_success: bool
     processed_content: List[MultimediaContent]
@@ -188,7 +193,8 @@ class MultimediaResult:
 # ========================================
 
 class ContentProcessor(ABC):
-    """Interface processeur contenu"""
+    """
+        Interface processeur contenu"""
     
     @abstractmethod
     async def process_content(self, content: MultimediaContent, options: Dict[str, Any]) -> MultimediaContent:
@@ -199,7 +205,8 @@ class ContentProcessor(ABC):
         pass
 
 class FormatOptimizer(ABC):
-    """Interface optimiseur format"""
+    """
+        Interface optimiseur format"""
     
     @abstractmethod
     async def optimize_format(self, content: MultimediaContent, target_format: ContentFormat) -> MultimediaContent:
@@ -210,7 +217,8 @@ class FormatOptimizer(ABC):
         pass
 
 class ContentAnalyzer(ABC):
-    """Interface analyseur contenu"""
+    """
+        Interface analyseur contenu"""
     
     @abstractmethod
     async def analyze_content(self, content: MultimediaContent) -> Dict[str, Any]:
@@ -221,7 +229,8 @@ class ContentAnalyzer(ABC):
         pass
 
 class RecommendationEngine(ABC):
-    """Interface moteur recommandation"""
+    """
+        Interface moteur recommandation"""
     
     @abstractmethod
     async def generate_recommendations(self, request: RecommendationRequest) -> List[Dict[str, Any]]:
@@ -232,7 +241,8 @@ class RecommendationEngine(ABC):
         pass
 
 class AudienceTargeter(ABC):
-    """Interface ciblage audience"""
+    """
+        Interface ciblage audience"""
     
     @abstractmethod
     async def analyze_audience_match(self, content: MultimediaContent, audience: AudienceSegment) -> float:
@@ -307,30 +317,37 @@ class QuantumMultimediaEngine:
         """
         try:
             start_time = datetime.utcnow()
+
             logger.info(f"🎬 Processing multimedia content: {request.content.media_type.value}")
             
             # 1. Validation et analyse contenu initial
+
             content_validation = await self._validate_multimedia_content(request.content)
+
             if not content_validation.get("valid", False):
                 raise ValueError(f"Invalid content: {content_validation.get('issues', [])}")
             
             # 2. Extraction métadonnées automatique
+
             extracted_metadata = await self._extract_content_metadata(request.content)
             
             # 3. Analyse contenu avec IA
             content_analysis = await self._analyze_multimedia_content(request.content)
             
             # 4. Enhancement qualité quantique
+
             enhanced_content = await self._enhance_content_quality(
                 request.content, request.target_quality, request.quantum_enhancement
             )
             
             # 5. Optimisation formats multiples
+
             optimized_formats = await self._optimize_content_formats(
                 enhanced_content, request.target_formats
             )
             
             # 6. Génération fingerprint unique
+
             content_fingerprint = await self._generate_content_fingerprint(enhanced_content)
             
             # 7. Détection doublons et similarité
@@ -342,6 +359,7 @@ class QuantumMultimediaEngine:
             )
             
             # 9. Génération recommandations si requis
+
             recommendations = []
             if request.audience_targeting:
                 recommendation_request = RecommendationRequest(
@@ -350,22 +368,29 @@ class QuantumMultimediaEngine:
                     content_history=[request.content.content_id],
                     quantum_personalization=request.quantum_enhancement
                 )
+
+
                 recommendations = await self._generate_content_recommendations(recommendation_request)
             
             # 10. Ciblage audience intelligent
+
             audience_targeting = await self._perform_audience_targeting(
                 enhanced_content, content_analysis
             )
             
             # 11. Optimisations appliquées
+
             optimizations_applied = await self._identify_applied_optimizations(
                 request, enhanced_content, optimized_formats
             )
             
             # 12. Consolidation contenu final
+
             final_processed_content = [enhanced_content] + optimized_formats
+
             
             processing_time = (datetime.utcnow() - start_time).total_seconds() * 1000
+
             
             result = MultimediaResult(
                 request_id=request.request_id,
@@ -382,13 +407,16 @@ class QuantumMultimediaEngine:
             
             # Mise à jour cache et métadonnées
             await self._update_content_cache(request.content.content_id, result)
+
             await self._store_content_metadata(request.content.content_id, {
                 "extracted_metadata": extracted_metadata,
                 "content_analysis": content_analysis,
                 "fingerprint": content_fingerprint
             })
+
             
             logger.info(f"✅ Multimedia processing completed: {len(final_processed_content)} formats in {processing_time:.1f}ms")
+
             
             return result
             
@@ -433,9 +461,11 @@ class QuantumMultimediaEngine:
             logger.info(f"⚡ Enhancing content quality: {content.media_type.value} to {target_quality.value}")
             
             # Sélection ou création processeur contenu
+
             processor = await self._get_or_create_content_processor(content.media_type)
             
             # Enhancement principal
+
             enhanced_content = await processor.enhance_quality(content, target_quality)
             
             # Application enhancement quantique si activé
@@ -445,20 +475,25 @@ class QuantumMultimediaEngine:
             # Optimisations spécifiques par type média
             if content.media_type == MediaType.IMAGE:
                 enhanced_content = await self._enhance_image_quality(enhanced_content, target_quality)
+
             elif content.media_type == MediaType.VIDEO:
                 enhanced_content = await self._enhance_video_quality(enhanced_content, target_quality)
+
             elif content.media_type == MediaType.AUDIO:
                 enhanced_content = await self._enhance_audio_quality(enhanced_content, target_quality)
             
             # Validation amélioration qualité
             quality_validation = await self._validate_quality_enhancement(content, enhanced_content)
+
             
             logger.info(f"✅ Quality enhancement completed: {quality_validation.get('improvement_percentage', 0):.1f}% improvement")
+
             
             return enhanced_content
             
         except Exception as e:
             logger.error(f"❌ Failed to enhance content quality: {e}")
+
             return content  # Retour contenu original en cas d'erreur
     
     # ========================================
@@ -480,40 +515,51 @@ class QuantumMultimediaEngine:
         """
         try:
             logger.info(f"🔄 Optimizing content formats: {len(target_formats)} target formats")
+
+
             
             optimized_contents = []
             
             for target_format in target_formats:
                 try:
                     # Sélection optimiseur format
+
                     optimizer = await self._get_or_create_format_optimizer(target_format)
                     
                     # Optimisation format
+
                     optimized_content = await optimizer.optimize_format(content, target_format)
                     
                     # Compression intelligente
+
                     compressed_content = await self._apply_intelligent_compression(
                         optimized_content, target_format
                     )
                     
                     # Validation optimisation
+
                     optimization_validation = await self._validate_format_optimization(
                         content, compressed_content
                     )
+
                     
                     if optimization_validation.get("valid", False):
                         optimized_contents.append(compressed_content)
+
                     
                 except Exception as format_error:
                     logger.warning(f"Failed to optimize format {target_format.value}: {format_error}")
+
                     continue
             
             logger.info(f"✅ Format optimization completed: {len(optimized_contents)} formats generated")
+
             
             return optimized_contents
             
         except Exception as e:
             logger.error(f"❌ Failed to optimize content formats: {e}")
+
             return []
     
     # ========================================
@@ -536,16 +582,21 @@ class QuantumMultimediaEngine:
             logger.info(f"🔍 Generating content fingerprint: {content.content_id}")
             
             # Génération hash perceptuel
+
             perceptual_hash = await self._generate_perceptual_hash(content)
             
             # Extraction vecteur caractéristiques
+
             feature_vector = await self._extract_content_features(content)
             
             # Génération signature quantique
+
             quantum_signature = await self._generate_quantum_signature(content)
             
             # Calcul seuil similarité
             similarity_threshold = await self._calculate_similarity_threshold(content.media_type)
+
+
             
             fingerprint = ContentFingerprint(
                 fingerprint_id=str(uuid.uuid4()),
@@ -561,11 +612,13 @@ class QuantumMultimediaEngine:
             self.content_fingerprints[content.content_id] = fingerprint
             
             logger.info(f"✅ Content fingerprint generated: {fingerprint.fingerprint_id}")
+
             
             return fingerprint
             
         except Exception as e:
             logger.error(f"❌ Failed to generate content fingerprint: {e}")
+
             raise
     
     async def detect_content_duplicates(
@@ -577,8 +630,10 @@ class QuantumMultimediaEngine:
         try:
             if content_id not in self.content_fingerprints:
                 return []
+
             
             target_fingerprint = self.content_fingerprints[content_id]
+
             duplicates = []
             
             for other_id, other_fingerprint in self.content_fingerprints.items():
@@ -589,6 +644,7 @@ class QuantumMultimediaEngine:
                 similarity = await self._calculate_fingerprint_similarity(
                     target_fingerprint, other_fingerprint
                 )
+
                 
                 if similarity >= similarity_threshold:
                     duplicates.append({
@@ -599,13 +655,16 @@ class QuantumMultimediaEngine:
             
             # Tri par similarité décroissante
             duplicates.sort(key=lambda x: x["similarity_score"], reverse=True)
+
             
             logger.info(f"✅ Duplicate detection completed: {len(duplicates)} duplicates found")
+
             
             return duplicates
             
         except Exception as e:
             logger.error(f"❌ Failed to detect content duplicates: {e}")
+
             return []
     
     # ========================================
@@ -630,12 +689,15 @@ class QuantumMultimediaEngine:
             logger.info(f"🎯 Generating personalized recommendations for user: {request.user_id}")
             
             # Sélection ou création moteur recommandations
+
             engine = await self._get_or_create_recommendation_engine("hybrid")
             
             # Génération recommandations principales
+
             recommendations = await engine.generate_recommendations(request)
             
             # Amélioration diversité recommandations
+
             diversified_recommendations = await self._diversify_recommendations(
                 recommendations, request.diversity_factor
             )
@@ -645,9 +707,12 @@ class QuantumMultimediaEngine:
                 quantum_recommendations = await self._apply_quantum_personalization(
                     diversified_recommendations, request.user_preferences
                 )
+
+
                 diversified_recommendations = quantum_recommendations
             
             # Scoring et classement final
+
             scored_recommendations = await self._score_and_rank_recommendations(
                 diversified_recommendations, request.user_preferences
             )
@@ -656,16 +721,20 @@ class QuantumMultimediaEngine:
             final_recommendations = scored_recommendations[:request.recommendation_count]
             
             # Enrichissement métadonnées
+
             enriched_recommendations = await self._enrich_recommendations_metadata(
                 final_recommendations
             )
+
             
             logger.info(f"✅ Recommendations generated: {len(enriched_recommendations)} items")
+
             
             return enriched_recommendations
             
         except Exception as e:
             logger.error(f"❌ Failed to generate recommendations: {e}")
+
             return []
     
     # ========================================
@@ -694,31 +763,40 @@ class QuantumMultimediaEngine:
             logger.info(f"🎯 Optimizing for target audience: {target_audience.value}")
             
             # Sélection ou création cibleur audience
+
             targeter = await self._get_or_create_audience_targeter(target_audience)
             
             # Analyse correspondance audience
+
             audience_match = await targeter.analyze_audience_match(content, target_audience)
             
             # Optimisation contenu pour audience
+
             optimized_content = await targeter.optimize_for_audience(content, target_audience)
             
             # Analyse démographique audience
+
             demographic_analysis = await self._analyze_audience_demographics(target_audience)
             
             # Recommandations optimisation
+
             optimization_recommendations = await self._generate_audience_optimization_recommendations(
                 content, target_audience, audience_match
             )
             
             # Prédiction engagement audience
+
             engagement_prediction = await self._predict_audience_engagement(
                 optimized_content, target_audience
             )
             
             # Stratégie distribution optimale
+
             distribution_strategy = await self._optimize_distribution_strategy(
                 optimized_content, target_audience
             )
+
+
             
             result = {
                 "target_audience": target_audience.value,
@@ -732,11 +810,13 @@ class QuantumMultimediaEngine:
             }
             
             logger.info(f"✅ Audience targeting completed: {audience_match:.2%} match score")
+
             
             return result
             
         except Exception as e:
             logger.error(f"❌ Failed to optimize for target audience: {e}")
+
             return {}
     
     # ========================================
@@ -750,10 +830,12 @@ class QuantumMultimediaEngine:
         return self.content_processors[media_type]
     
     async def _create_content_processor(self, media_type: MediaType):
-        """Création processeur contenu"""
+        """
+        Création processeur contenu"""
         class MockContentProcessor(ContentProcessor):
             async def process_content(self, content: MultimediaContent, options: Dict[str, Any]) -> MultimediaContent:
                 # Simulation traitement contenu
+
                 processed_content = MultimediaContent(
                     content_id=content.content_id + "_processed",
                     media_type=content.media_type,
@@ -765,6 +847,7 @@ class QuantumMultimediaEngine:
                     quality_level=QualityLevel.HIGH,
                     metadata={**content.metadata, "processed": True}
                 )
+
                 return processed_content
             
             async def enhance_quality(self, content: MultimediaContent, target_quality: QualityLevel) -> MultimediaContent:
@@ -780,6 +863,7 @@ class QuantumMultimediaEngine:
                     quality_level=target_quality,
                     metadata={**content.metadata, "enhanced": True, "target_quality": target_quality.value}
                 )
+
                 return enhanced_content
         
         return MockContentProcessor()
@@ -791,10 +875,12 @@ class QuantumMultimediaEngine:
         return self.format_optimizers[target_format]
     
     async def _create_format_optimizer(self, target_format: ContentFormat):
-        """Création optimiseur format"""
+        """
+        Création optimiseur format"""
         class MockFormatOptimizer(FormatOptimizer):
             async def optimize_format(self, content: MultimediaContent, target_format: ContentFormat) -> MultimediaContent:
                 # Simulation optimisation format
+
                 optimized_content = MultimediaContent(
                     content_id=content.content_id + f"_{target_format.value}",
                     media_type=content.media_type,
@@ -806,10 +892,12 @@ class QuantumMultimediaEngine:
                     quality_level=content.quality_level,
                     metadata={**content.metadata, "optimized_format": target_format.value}
                 )
+
                 return optimized_content
             
             async def compress_content(self, content: MultimediaContent, compression_ratio: float) -> MultimediaContent:
                 # Simulation compression
+
                 compressed_content = MultimediaContent(
                     content_id=content.content_id + "_compressed",
                     media_type=content.media_type,
@@ -821,6 +909,7 @@ class QuantumMultimediaEngine:
                     quality_level=content.quality_level,
                     metadata={**content.metadata, "compression_ratio": compression_ratio}
                 )
+
                 return compressed_content
         
         return MockFormatOptimizer()
@@ -831,12 +920,15 @@ class QuantumMultimediaEngine:
         
         if content.size_bytes <= 0:
             issues.append("Invalid file size")
+
         
         if not content.file_path:
             issues.append("Missing file path")
+
         
         if content.media_type == MediaType.VIDEO and not content.duration_seconds:
             issues.append("Missing duration for video content")
+
         
         return {
             "valid": len(issues) == 0,
@@ -847,6 +939,7 @@ class QuantumMultimediaEngine:
     async def _extract_content_metadata(self, content: MultimediaContent) -> Dict[str, Any]:
         """Extraction métadonnées contenu"""
         # Simulation extraction métadonnées
+
         metadata = {
             "content_type": content.media_type.value,
             "format": content.format.value,
@@ -876,6 +969,7 @@ class QuantumMultimediaEngine:
                 "bit_rate": np.random.randint(128, 320),
                 "channels": np.random.choice([1, 2])
             })
+
         
         return metadata
     
@@ -886,6 +980,7 @@ class QuantumMultimediaEngine:
     async def _generate_perceptual_hash(self, content: MultimediaContent) -> str:
         """Génération hash perceptuel"""
         # Simulation génération hash perceptuel
+
         content_data = f"{content.content_id}_{content.media_type.value}_{content.size_bytes}"
         return hashlib.sha256(content_data.encode()).hexdigest()[:32]
     
@@ -906,8 +1001,10 @@ class QuantumMultimediaEngine:
             return [np.random.uniform(0, 1) for _ in range(32)]
     
     async def _generate_quantum_signature(self, content: MultimediaContent) -> str:
-        """Génération signature quantique"""
+        """
+        Génération signature quantique"""
         # Simulation signature quantique
+
         quantum_data = f"quantum_{content.content_id}_{datetime.utcnow().timestamp()}"
         return base64.b64encode(quantum_data.encode()).decode()[:24]
     
@@ -918,9 +1015,13 @@ class QuantumMultimediaEngine:
             return 0.0
         
         # Calcul distance euclidienne normalisée
+
         distance = np.linalg.norm(np.array(fp1.feature_vector) - np.array(fp2.feature_vector))
+
         max_distance = np.sqrt(len(fp1.feature_vector))
+
         similarity = 1.0 - (distance / max_distance)
+
         
         return max(0.0, min(1.0, similarity))
     
@@ -929,13 +1030,15 @@ class QuantumMultimediaEngine:
     # ========================================
     
     async def _get_or_create_recommendation_engine(self, engine_type: str):
-        """Récupération ou création moteur recommandations"""
+        """
+        Récupération ou création moteur recommandations"""
         if engine_type not in self.recommendation_engines:
             self.recommendation_engines[engine_type] = await self._create_recommendation_engine(engine_type)
         return self.recommendation_engines[engine_type]
     
     async def _create_recommendation_engine(self, engine_type: str):
-        """Création moteur recommandations"""
+        """
+        Création moteur recommandations"""
         class MockRecommendationEngine(RecommendationEngine):
             async def generate_recommendations(self, request: RecommendationRequest) -> List[Dict[str, Any]]:
                 recommendations = []
@@ -951,12 +1054,14 @@ class QuantumMultimediaEngine:
                         "freshness_score": np.random.uniform(0.3, 0.8),
                         "engagement_prediction": np.random.uniform(0.5, 0.85)
                     })
+
                 
                 return recommendations
             
             async def calculate_content_similarity(self, content1: str, content2: str) -> float:
                 # Simulation calcul similarité contenu
                 return np.random.uniform(0.1, 0.9)
+
         
         return MockRecommendationEngine()
     
@@ -966,11 +1071,15 @@ class QuantumMultimediaEngine:
             return recommendations
         
         # Tri par score pertinence
+
         sorted_recommendations = sorted(recommendations, key=lambda x: x["relevance_score"], reverse=True)
         
         # Application diversification
+
         diversified = []
+
         used_categories = set()
+
         
         for rec in sorted_recommendations:
             category = rec.get("category", "unknown")
@@ -978,7 +1087,9 @@ class QuantumMultimediaEngine:
             # Ajout si catégorie pas encore utilisée ou factor diversité faible
             if category not in used_categories or np.random.random() > diversity_factor:
                 diversified.append(rec)
+
                 used_categories.add(category)
+
         
         return diversified
     
@@ -993,10 +1104,12 @@ class QuantumMultimediaEngine:
         return self.audience_targeters[audience_segment]
     
     async def _create_audience_targeter(self, audience_segment: AudienceSegment):
-        """Création cibleur audience"""
+        """
+        Création cibleur audience"""
         class MockAudienceTargeter(AudienceTargeter):
             async def analyze_audience_match(self, content: MultimediaContent, audience: AudienceSegment) -> float:
                 # Simulation analyse correspondance audience
+
                 base_match = 0.5
                 
                 # Bonus selon type contenu et audience
@@ -1008,9 +1121,11 @@ class QuantumMultimediaEngine:
                     base_match += 0.25
                 
                 return min(1.0, base_match + np.random.uniform(-0.1, 0.2))
+
             
             async def optimize_for_audience(self, content: MultimediaContent, target_audience: AudienceSegment) -> MultimediaContent:
                 # Simulation optimisation pour audience
+
                 optimized_content = MultimediaContent(
                     content_id=content.content_id + f"_opt_{target_audience.value}",
                     media_type=content.media_type,
@@ -1022,6 +1137,7 @@ class QuantumMultimediaEngine:
                     quality_level=content.quality_level,
                     metadata={**content.metadata, "optimized_for_audience": target_audience.value}
                 )
+
                 return optimized_content
         
         return MockAudienceTargeter()
@@ -1041,10 +1157,12 @@ class QuantumMultimediaEngine:
         # Limitation taille cache
         if len(self.processing_cache) > 10000:
             # Suppression entrées les plus anciennes
+
             sorted_cache = sorted(
                 self.processing_cache.items(),
                 key=lambda x: x[1]["timestamp"]
             )
+
             self.processing_cache = dict(sorted_cache[-5000:])
     
     async def _store_content_metadata(self, content_id: str, metadata: Dict[str, Any]):
@@ -1064,32 +1182,41 @@ class QuantumContentProcessingAccelerator(QuantumMultimediaEngine):
     pass
 
 class MultiFormatQuantumOptimizer(QuantumMultimediaEngine):
-    """Alias pour compatibilité - Multi-Format Optimizer"""
+    """
+        Alias pour compatibilité - Multi-Format Optimizer"""
     pass
 
 class QuantumContentFingerprinting(QuantumMultimediaEngine):
-    """Alias pour compatibilité - Content Fingerprinting"""
+    """
+        Alias pour compatibilité - Content Fingerprinting"""
     pass
 
 class QuantumMetadataProcessor(QuantumMultimediaEngine):
-    """Alias pour compatibilité - Metadata Processor"""
+    """
+        Alias pour compatibilité - Metadata Processor"""
     pass
 
 class QuantumContentRankingPredictor(QuantumMultimediaEngine):
-    """Alias pour compatibilité - Content Ranking Predictor"""
+    """
+        Alias pour compatibilité - Content Ranking Predictor"""
     pass
 
 class QuantumContentRecommendationEngine(QuantumMultimediaEngine):
-    """Alias pour compatibilité - Content Recommendation Engine"""
+    """
+        Alias pour compatibilité - Content Recommendation Engine"""
     pass
 
 class QuantumAudienceTargetingAccelerator(QuantumMultimediaEngine):
-    """Alias pour compatibilité - Audience Targeting Accelerator"""
+    """
+        Alias pour compatibilité - Audience Targeting Accelerator"""
     pass
 
 # ========================================
 # EXPORT INTERFACES
 # ========================================
+
+# Enterprise aliases
+MultimediaRequest = ProcessingRequest
 
 __all__ = [
     "QuantumMultimediaEngine",
@@ -1102,6 +1229,7 @@ __all__ = [
     "QuantumAudienceTargetingAccelerator",
     "MultimediaContent",
     "ProcessingRequest",
+    "MultimediaRequest",  # Alias
     "ContentFingerprint",
     "RecommendationRequest",
     "MultimediaResult",

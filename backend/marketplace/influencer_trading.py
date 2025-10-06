@@ -30,7 +30,8 @@ import hashlib
 logger = logging.getLogger(__name__)
 
 class AssetType(Enum):
-    """Trading asset type enumeration"""
+    """
+        Trading asset type enumeration"""
     INFLUENCER_PROFILE = "influencer_profile"
     COLLABORATION_CONTRACT = "collaboration_contract"
     CONTENT_RIGHTS = "content_rights"
@@ -87,7 +88,8 @@ class InfluencerMetrics:
     timestamp: datetime = field(default_factory=datetime.utcnow)
     
     def calculate_influence_score(self) -> Decimal:
-        """Calculate overall influence score"""
+        """
+        Calculate overall influence score"""
         weights = {
             'engagement': Decimal('0.25'),
             'reach': Decimal('0.20'),
@@ -98,12 +100,19 @@ class InfluencerMetrics:
         }
         
         # Normalize metrics to 0-100 scale
+
         normalized_engagement = min(self.engagement_rate, Decimal('20.0')) * Decimal('5.0')
+
         normalized_reach = min(Decimal(str(self.reach_per_post / 1000)), Decimal('100.0'))
+
         normalized_quality = self.content_quality_score
+
         normalized_reliability = self.collaboration_completion_rate
+
         normalized_growth = min(self.growth_rate_monthly * Decimal('10.0'), Decimal('100.0'))
+
         normalized_safety = self.brand_safety_score
+
         
         influence_score = (
             normalized_engagement * weights['engagement'] +
@@ -113,12 +122,14 @@ class InfluencerMetrics:
             normalized_growth * weights['growth'] +
             normalized_safety * weights['safety']
         )
+
         
         return min(influence_score, Decimal('100.0'))
 
 @dataclass
 class TradableAsset:
-    """Tradable influencer asset"""
+    """
+        Tradable influencer asset"""
     asset_id: str
     asset_type: AssetType
     owner_id: str
@@ -144,21 +155,26 @@ class TradableAsset:
         """Calculate current market value based on metrics"""
         if not self.metrics:
             return self.base_value
+
         
         influence_score = self.metrics.calculate_influence_score()
         
         # Value multiplier based on influence score
+
         multiplier = Decimal('1.0') + (influence_score / Decimal('100.0'))
         
         # Apply risk adjustment
+
         risk_adjustments = {
             RiskLevel.LOW: Decimal('1.1'),
             RiskLevel.MEDIUM: Decimal('1.0'),
             RiskLevel.HIGH: Decimal('0.9'),
             RiskLevel.CRITICAL: Decimal('0.7')
         }
+
         
         risk_multiplier = risk_adjustments.get(self.risk_level, Decimal('1.0'))
+
         
         return (self.base_value * multiplier * risk_multiplier).quantize(
             Decimal('0.01'), rounding=ROUND_HALF_UP
@@ -166,7 +182,8 @@ class TradableAsset:
 
 @dataclass
 class TradingTransaction:
-    """Trading transaction record"""
+    """
+        Trading transaction record"""
     transaction_id: str
     asset_id: str
     buyer_id: str
@@ -195,7 +212,8 @@ class TradingTransaction:
 
 @dataclass
 class MarketOrder:
-    """Market order for trading"""
+    """
+        Market order for trading"""
     order_id: str
     user_id: str
     asset_id: str
@@ -214,7 +232,8 @@ class RiskAssessment:
     """Risk assessment engine for trading"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize risk assessment"""
+        """
+        Initialize risk assessment"""
         self.config = config or {}
         self.risk_thresholds = {
             'high_value_transaction': Decimal('10000.0'),
@@ -229,36 +248,44 @@ class RiskAssessment:
         asset: TradableAsset,
         trader_history: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Assess risk for trading transaction"""
+        """
+        Assess risk for trading transaction"""
         risk_factors = []
+
         risk_score = 0
         
         try:
             # High value transaction risk
             if transaction.total_amount > self.risk_thresholds['high_value_transaction']:
                 risk_factors.append("High value transaction")
+
                 risk_score += 20
             
             # New trader risk
             if trader_history.get('total_trades', 0) < 5:
                 risk_factors.append("Limited trading history")
+
                 risk_score += 15
             
             # Asset volatility risk
             if asset.performance_history:
                 price_changes = [
                     float(record.get('price_change_percentage', 0))
+
                     for record in asset.performance_history[-10:]  # Last 10 records
                 ]
                 if price_changes:
                     volatility = Decimal(str(abs(sum(price_changes) / len(price_changes))))
+
                     if volatility > self.risk_thresholds['volatility_threshold']:
                         risk_factors.append("High asset volatility")
+
                         risk_score += 25
             
             # Compliance risk
             if not asset.compliance_data.get('verified', False):
                 risk_factors.append("Unverified asset compliance")
+
                 risk_score += 10
             
             # Determine risk level
@@ -281,6 +308,7 @@ class RiskAssessment:
             
         except Exception as e:
             logger.error(f"Risk assessment failed: {e}")
+
             return {
                 "risk_level": RiskLevel.CRITICAL.value,
                 "risk_score": 100,
@@ -304,22 +332,30 @@ class MarketMaker:
     """Market making engine for liquidity provision"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize market maker"""
+        """
+        Initialize market maker"""
         self.config = config or {}
         self.spread_percentage = Decimal(str(self.config.get('spread_percentage', '2.0')))
         self.max_position_size = Decimal(str(self.config.get('max_position_size', '100000.0')))
         self.inventory_target = Decimal(str(self.config.get('inventory_target', '50.0')))
+
         
         self.positions: Dict[str, Decimal] = {}  # asset_id -> quantity
         self.quotes: Dict[str, Dict[str, Decimal]] = {}  # asset_id -> {bid, ask}
     
     async def provide_liquidity(self, asset_id: str, current_price: Decimal) -> Dict[str, Decimal]:
-        """Provide liquidity by quoting bid/ask prices"""
+        """
+        Provide liquidity by quoting bid/ask prices"""
         try:
             spread = current_price * (self.spread_percentage / Decimal('100'))
+
+
             
             bid_price = current_price - (spread / Decimal('2'))
+
+
             ask_price = current_price + (spread / Decimal('2'))
+
             
             self.quotes[asset_id] = {
                 'bid': bid_price,
@@ -333,6 +369,7 @@ class MarketMaker:
             
         except Exception as e:
             logger.error(f"Failed to provide liquidity for {asset_id}: {e}")
+
             return {}
     
     async def execute_market_making_trade(
@@ -345,6 +382,7 @@ class MarketMaker:
         """Execute market making trade"""
         try:
             current_position = self.positions.get(asset_id, Decimal('0'))
+
             
             if side == "buy":
                 new_position = current_position + quantity
@@ -358,17 +396,20 @@ class MarketMaker:
             self.positions[asset_id] = new_position
             
             logger.info(f"Market maker executed {side} of {quantity} {asset_id} at {price}")
+
             return True
             
         except Exception as e:
             logger.error(f"Market making trade failed: {e}")
+
             return False
 
 class InfluencerTradingEngine:
     """Core influencer trading engine"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize trading engine"""
+        """
+        Initialize trading engine"""
         self.config = config or {}
         
         # Core components
@@ -385,6 +426,7 @@ class InfluencerTradingEngine:
         self.trading_enabled = self.config.get('trading_enabled', True)
         self.max_transaction_size = Decimal(str(self.config.get('max_transaction_size', '1000000.0')))
         self.minimum_trade_amount = Decimal(str(self.config.get('minimum_trade_amount', '1.0')))
+
         
         logger.info("🎯 Influencer Trading Engine initialized")
     
@@ -403,9 +445,11 @@ class InfluencerTradingEngine:
             asset_id = str(uuid.uuid4())
             
             # Parse metrics if provided
+
             metrics = None
             if 'metrics' in asset_data:
                 metrics_data = asset_data['metrics']
+
                 metrics = InfluencerMetrics(
                     follower_count=metrics_data.get('follower_count', 0),
                     engagement_rate=Decimal(str(metrics_data.get('engagement_rate', '0.0'))),
@@ -421,6 +465,8 @@ class InfluencerTradingEngine:
                     content_quality_score=Decimal(str(metrics_data.get('content_quality_score', '100.0'))),
                     niche_authority_score=Decimal(str(metrics_data.get('niche_authority_score', '100.0')))
                 )
+
+
             
             asset = TradableAsset(
                 asset_id=asset_id,
@@ -444,6 +490,7 @@ class InfluencerTradingEngine:
             
             # Update current price based on metrics
             asset.current_price = asset.calculate_market_value()
+
             
             self.assets[asset_id] = asset
             
@@ -452,12 +499,15 @@ class InfluencerTradingEngine:
                 self.user_portfolios[asset.owner_id] = {}
             
             self.user_portfolios[asset.owner_id][asset_id] = Decimal('1.0') if not asset.divisible else Decimal(str(asset_data.get('initial_quantity', '1.0')))
+
             
             logger.info(f"Created tradable asset: {asset_id} - {asset.title}")
+
             return asset
             
         except Exception as e:
             logger.error(f"Failed to create tradable asset: {e}")
+
             raise
     
     async def create_trade(self, trade_data: Dict[str, Any]) -> TradingTransaction:
@@ -465,20 +515,33 @@ class InfluencerTradingEngine:
         try:
             if not self.trading_enabled:
                 raise ValueError("Trading is currently disabled")
+
+
             
             transaction_id = str(uuid.uuid4())
+
+
             asset_id = trade_data['asset_id']
             
             if asset_id not in self.assets:
                 raise ValueError(f"Asset {asset_id} not found")
+
+
             
             asset = self.assets[asset_id]
+
             quantity = Decimal(str(trade_data['quantity']))
+
+
             unit_price = Decimal(str(trade_data['unit_price']))
+
+
             total_amount = quantity * unit_price
             
             # Validate trade
             await self._validate_trade(trade_data, asset, total_amount)
+
+
             
             transaction = TradingTransaction(
                 transaction_id=transaction_id,
@@ -496,22 +559,29 @@ class InfluencerTradingEngine:
             )
             
             # Risk assessment
+
             trader_history = await self._get_trader_history(transaction.buyer_id)
+
+
             risk_assessment = await self.risk_assessor.assess_transaction_risk(
                 transaction, asset, trader_history
             )
+
             transaction.risk_assessment = risk_assessment
             
             # Generate smart contract hash
             transaction.smart_contract_hash = self._generate_contract_hash(transaction)
+
             
             self.transactions[transaction_id] = transaction
             
             logger.info(f"Created trade: {transaction_id} - {asset.title}")
+
             return transaction
             
         except Exception as e:
             logger.error(f"Failed to create trade: {e}")
+
             raise
     
     async def execute_trade(self, transaction_id: str) -> bool:
@@ -519,16 +589,23 @@ class InfluencerTradingEngine:
         try:
             if transaction_id not in self.transactions:
                 raise ValueError(f"Transaction {transaction_id} not found")
+
+
             
             transaction = self.transactions[transaction_id]
+
             asset = self.assets[transaction.asset_id]
             
             if transaction.status != TradingStatus.AGREED:
                 raise ValueError("Transaction must be agreed before execution")
             
             # Check seller has sufficient quantity
+
             seller_portfolio = self.user_portfolios.get(transaction.seller_id, {})
+
+
             seller_quantity = seller_portfolio.get(transaction.asset_id, Decimal('0'))
+
             
             if seller_quantity < transaction.quantity:
                 raise ValueError("Insufficient asset quantity for sale")
@@ -553,13 +630,16 @@ class InfluencerTradingEngine:
             # Complete transaction
             transaction.status = TradingStatus.COMPLETED
             transaction.execution_date = datetime.utcnow()
+
             transaction.settlement_date = datetime.utcnow() + timedelta(days=1)  # T+1 settlement
             
             logger.info(f"Executed trade: {transaction_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to execute trade: {e}")
+
             transaction.status = TradingStatus.DISPUTED
             return False
     
@@ -568,12 +648,15 @@ class InfluencerTradingEngine:
         try:
             if asset_id not in self.assets:
                 return {"error": "Asset not found"}
+
             
             asset = self.assets[asset_id]
             
             # Get recent transactions
+
             recent_transactions = [
                 t for t in self.transactions.values()
+
                 if t.asset_id == asset_id and t.status == TradingStatus.COMPLETED
                 and (datetime.utcnow() - t.execution_date).days <= 30
             ]
@@ -581,7 +664,10 @@ class InfluencerTradingEngine:
             # Calculate market metrics
             if recent_transactions:
                 recent_prices = [float(t.unit_price) for t in recent_transactions]
+
                 volume = sum(float(t.quantity) for t in recent_transactions)
+
+
                 
                 market_data = {
                     "asset_id": asset_id,
@@ -614,24 +700,30 @@ class InfluencerTradingEngine:
                 }
             
             # Add market maker quotes if available
+
             quotes = await self.market_maker.provide_liquidity(asset_id, asset.current_price)
+
             if quotes:
                 market_data.update({
                     "bid": float(quotes['bid']),
                     "ask": float(quotes['ask']),
                     "spread": float(quotes['spread'])
                 })
+
             
             return market_data
             
         except Exception as e:
             logger.error(f"Failed to get market data: {e}")
+
             return {"error": f"Market data unavailable: {e}"}
     
     async def get_user_portfolio(self, user_id: str) -> Dict[str, Any]:
         """Get user's trading portfolio"""
         try:
             portfolio = self.user_portfolios.get(user_id, {})
+
+
             
             portfolio_data = {
                 "user_id": user_id,
@@ -639,13 +731,18 @@ class InfluencerTradingEngine:
                 "total_value": 0.0,
                 "timestamp": datetime.utcnow().isoformat()
             }
+
             
             total_value = Decimal('0.0')
+
             
             for asset_id, quantity in portfolio.items():
                 if asset_id in self.assets:
                     asset = self.assets[asset_id]
+
                     market_value = asset.calculate_market_value()
+
+
                     position_value = quantity * market_value
                     total_value += position_value
                     
@@ -658,13 +755,16 @@ class InfluencerTradingEngine:
                         "position_value": float(position_value),
                         "currency": asset.currency
                     })
+
             
             portfolio_data["total_value"] = float(total_value)
+
             
             return portfolio_data
             
         except Exception as e:
             logger.error(f"Failed to get user portfolio: {e}")
+
             return {"error": f"Portfolio unavailable: {e}"}
     
     async def _validate_trade(self, trade_data: Dict[str, Any], asset: TradableAsset, total_amount: Decimal) -> None:
@@ -672,6 +772,7 @@ class InfluencerTradingEngine:
         # Check trading limits
         if total_amount > self.max_transaction_size:
             raise ValueError(f"Transaction size exceeds limit: {total_amount}")
+
         
         if total_amount < self.minimum_trade_amount:
             raise ValueError(f"Transaction size below minimum: {total_amount}")
@@ -681,6 +782,7 @@ class InfluencerTradingEngine:
             raise ValueError("Asset is not transferable")
         
         # Check minimum trade amount for asset
+
         quantity = Decimal(str(trade_data['quantity']))
         if quantity < asset.minimum_trade_amount:
             raise ValueError(f"Quantity below asset minimum: {asset.minimum_trade_amount}")
@@ -693,8 +795,10 @@ class InfluencerTradingEngine:
         """Get trader's historical data"""
         user_transactions = [
             t for t in self.transactions.values()
+
             if t.buyer_id == user_id or t.seller_id == user_id
         ]
+
         
         completed_transactions = [
             t for t in user_transactions
@@ -706,7 +810,7 @@ class InfluencerTradingEngine:
             "completed_trades": len(completed_transactions),
             "total_volume": sum(float(t.total_amount) for t in completed_transactions),
             "success_rate": len(completed_transactions) / len(user_transactions) if user_transactions else 1.0,
-            "account_age_days": 30  # Placeholder
+            "account_age_days": 30
         }
     
     def _generate_contract_hash(self, transaction: TradingTransaction) -> str:
@@ -720,6 +824,7 @@ class InfluencerTradingEngine:
             "unit_price": str(transaction.unit_price),
             "timestamp": transaction.created_at.isoformat()
         }
+
         
         contract_string = json.dumps(contract_data, sort_keys=True)
         return hashlib.sha256(contract_string.encode()).hexdigest()
@@ -732,10 +837,13 @@ class InfluencerTradingEngine:
         return total
     
     def _calculate_liquidity_score(self, asset_id: str) -> float:
-        """Calculate liquidity score for asset"""
+        """
+        Calculate liquidity score for asset"""
         # Simple liquidity score based on trading activity
+
         recent_transactions = [
             t for t in self.transactions.values()
+
             if t.asset_id == asset_id and t.status == TradingStatus.COMPLETED
             and (datetime.utcnow() - t.execution_date).days <= 7
         ]
@@ -743,14 +851,17 @@ class InfluencerTradingEngine:
         return min(len(recent_transactions) * 10, 100)  # Score 0-100
     
     async def _order_matching_engine(self) -> None:
-        """Background order matching"""
+        """
+        Background order matching"""
         while True:
             try:
                 # Match orders logic would go here
                 await asyncio.sleep(1)
+
                 
             except Exception as e:
                 logger.error(f"Error in order matching: {e}")
+
                 await asyncio.sleep(10)
     
     async def _market_data_updater(self) -> None:
@@ -760,14 +871,17 @@ class InfluencerTradingEngine:
                 # Update market prices based on trading activity
                 for asset_id, asset in self.assets.items():
                     new_price = asset.calculate_market_value()
+
                     if new_price != asset.current_price:
                         asset.current_price = new_price
                         asset.updated_at = datetime.utcnow()
+
                 
                 await asyncio.sleep(60)  # Update every minute
                 
             except Exception as e:
                 logger.error(f"Error updating market data: {e}")
+
                 await asyncio.sleep(300)
     
     async def _risk_monitor(self) -> None:
@@ -779,11 +893,13 @@ class InfluencerTradingEngine:
                     if (transaction.status in [TradingStatus.PENDING, TradingStatus.NEGOTIATING] and
                         transaction.risk_assessment.get('risk_level') == 'critical'):
                         logger.warning(f"High-risk transaction detected: {transaction.transaction_id}")
+
                 
                 await asyncio.sleep(300)  # Check every 5 minutes
                 
             except Exception as e:
                 logger.error(f"Error in risk monitoring: {e}")
+
                 await asyncio.sleep(600)
 
 

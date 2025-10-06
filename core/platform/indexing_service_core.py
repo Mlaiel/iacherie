@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class IndexingServiceCore:
-    """Advanced IndexingServiceCore System"""
+    """
+Advanced IndexingServiceCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class IndexingServiceCore:
 # Module exports
 __all__ = ["IndexingServiceCore"]
 
-logger.info("📇 IndexingServiceCore module loaded")
+logger.info("📇 IndexingServiceCore module initialized")

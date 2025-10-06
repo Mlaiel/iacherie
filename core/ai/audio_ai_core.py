@@ -45,7 +45,8 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class AudioFormat(str, Enum):
-    """Supported audio formats"""
+    """
+Supported audio formats"""
     WAV = "wav"
     MP3 = "mp3"
     FLAC = "flac"
@@ -54,7 +55,8 @@ class AudioFormat(str, Enum):
     AAC = "aac"
 
 class AudioTaskType(str, Enum):
-    """Audio AI task types"""
+    """
+Audio AI task types"""
     SPEECH_RECOGNITION = "speech_recognition"
     AUDIO_CLASSIFICATION = "audio_classification"
     MUSIC_GENERATION = "music_generation"
@@ -67,7 +69,8 @@ class AudioTaskType(str, Enum):
     AUDIO_SEPARATION = "audio_separation"
 
 class AudioQuality(str, Enum):
-    """Audio quality levels"""
+    """
+Audio quality levels"""
     LOW = "low"          # 16kHz, mono
     MEDIUM = "medium"    # 22kHz, stereo
     HIGH = "high"        # 44.1kHz, stereo
@@ -76,7 +79,8 @@ class AudioQuality(str, Enum):
 
 @dataclass
 class AudioFeatures:
-    """Extracted audio features"""
+    """
+Extracted audio features"""
     mfcc: Optional[np.ndarray] = None
     spectral_centroid: Optional[np.ndarray] = None
     spectral_rolloff: Optional[np.ndarray] = None
@@ -90,7 +94,8 @@ class AudioFeatures:
 
 @dataclass
 class AudioAnalysis:
-    """Complete audio analysis result"""
+    """
+Complete audio analysis result"""
     features: AudioFeatures
     classification: Dict[str, float] = field(default_factory=dict)
     transcription: Optional[str] = None
@@ -102,7 +107,8 @@ class AudioAnalysis:
 
 @dataclass
 class AudioMetrics:
-    """Audio AI processing metrics"""
+    """
+Audio AI processing metrics"""
     total_processed: int = 0
     total_duration_seconds: float = 0.0
     avg_processing_time: float = 0.0
@@ -112,10 +118,12 @@ class AudioMetrics:
     enhancements_applied: int = 0
 
 class AudioAICore:
-    """Enterprise audio AI processing system"""
+    """
+Enterprise audio AI processing system"""
     
     def __init__(self, level: str = "enterprise"):
-        """Initialize audio AI core"""
+        """
+Initialize audio AI core"""
         self.level = level
         self.metrics = AudioMetrics()
         
@@ -142,7 +150,8 @@ class AudioAICore:
         logger.info(f"🎵 Audio AI Core initialized - Level: {level}")
 
     def _initialize_models(self):
-        """Initialize audio AI models"""
+        """
+Initialize audio AI models"""
         try:
             if TRANSFORMERS_AVAILABLE:
                 self._load_speech_recognition_model()
@@ -157,7 +166,8 @@ class AudioAICore:
             logger.warning(f"Some audio models failed to load: {str(e)}")
 
     def _load_speech_recognition_model(self):
-        """Load speech recognition model"""
+        """
+Load speech recognition model"""
         try:
             self.models["speech_recognition"] = pipeline(
                 "automatic-speech-recognition",
@@ -168,7 +178,8 @@ class AudioAICore:
             logger.warning(f"Speech recognition model not available: {str(e)}")
 
     def _load_audio_classification_model(self):
-        """Load audio classification model"""
+        """
+Load audio classification model"""
         try:
             self.models["audio_classification"] = pipeline(
                 "audio-classification",
@@ -179,7 +190,8 @@ class AudioAICore:
             logger.warning(f"Audio classification model not available: {str(e)}")
 
     def _setup_torch_models(self):
-        """Setup PyTorch audio models"""
+        """
+Setup PyTorch audio models"""
         try:
             # Initialize voice activity detection
             if hasattr(torch.hub, 'load'):
@@ -198,7 +210,8 @@ class AudioAICore:
         tasks: List[AudioTaskType],
         quality: AudioQuality = AudioQuality.MEDIUM
     ) -> AudioAnalysis:
-        """Process audio with specified tasks"""
+        """
+Process audio with specified tasks"""
         
         start_time = time.time()
         
@@ -229,7 +242,8 @@ class AudioAICore:
             raise
 
     async def _load_audio(self, audio_data: Union[str, bytes, np.ndarray]) -> Tuple[np.ndarray, int]:
-        """Load audio from various sources"""
+        """
+Load audio from various sources"""
         
         if isinstance(audio_data, str):
             # File path
@@ -262,7 +276,8 @@ class AudioAICore:
         return audio_array, sample_rate
 
     async def _extract_features(self, audio_array: np.ndarray, sample_rate: int) -> AudioFeatures:
-        """Extract comprehensive audio features"""
+        """
+Extract comprehensive audio features"""
         
         features = AudioFeatures(
             duration=len(audio_array) / sample_rate,
@@ -323,7 +338,8 @@ class AudioAICore:
         sample_rate: int,
         analysis: AudioAnalysis
     ):
-        """Perform specific audio AI task"""
+        """
+Perform specific audio AI task"""
         
         try:
             if task == AudioTaskType.SPEECH_RECOGNITION:
@@ -354,7 +370,8 @@ class AudioAICore:
             logger.error(f"Task {task.value} failed: {str(e)}")
 
     async def _speech_recognition(self, audio_array: np.ndarray, sample_rate: int, analysis: AudioAnalysis):
-        """Perform speech recognition"""
+        """
+Perform speech recognition"""
         
         if "speech_recognition" not in self.models:
             logger.warning("Speech recognition model not available")
@@ -378,7 +395,8 @@ class AudioAICore:
             self.metrics.failed_transcriptions += 1
 
     async def _audio_classification(self, audio_array: np.ndarray, sample_rate: int, analysis: AudioAnalysis):
-        """Perform audio classification"""
+        """
+Perform audio classification"""
         
         if "audio_classification" not in self.models:
             logger.warning("Audio classification model not available")
@@ -400,7 +418,8 @@ class AudioAICore:
             logger.error(f"Audio classification failed: {str(e)}")
 
     async def _emotion_recognition(self, audio_array: np.ndarray, sample_rate: int, analysis: AudioAnalysis):
-        """Recognize emotions in audio"""
+        """
+Recognize emotions in audio"""
         
         try:
             # Simple emotion recognition based on acoustic features
@@ -428,7 +447,8 @@ class AudioAICore:
             logger.error(f"Emotion recognition failed: {str(e)}")
 
     async def _speaker_identification(self, audio_array: np.ndarray, sample_rate: int, analysis: AudioAnalysis):
-        """Identify speaker characteristics"""
+        """
+Identify speaker characteristics"""
         
         try:
             # Extract speaker-related features
@@ -453,7 +473,8 @@ class AudioAICore:
             logger.error(f"Speaker identification failed: {str(e)}")
 
     async def _beat_tracking(self, audio_array: np.ndarray, sample_rate: int, analysis: AudioAnalysis):
-        """Track beats and rhythm"""
+        """
+Track beats and rhythm"""
         
         if not AUDIO_LIBS_AVAILABLE:
             return
@@ -476,7 +497,8 @@ class AudioAICore:
             logger.error(f"Beat tracking failed: {str(e)}")
 
     async def _pitch_detection(self, audio_array: np.ndarray, sample_rate: int, analysis: AudioAnalysis):
-        """Detect pitch and musical notes"""
+        """
+Detect pitch and musical notes"""
         
         if not AUDIO_LIBS_AVAILABLE:
             return
@@ -508,7 +530,8 @@ class AudioAICore:
             logger.error(f"Pitch detection failed: {str(e)}")
 
     async def _audio_enhancement(self, audio_array: np.ndarray, sample_rate: int, analysis: AudioAnalysis):
-        """Apply audio enhancement techniques"""
+        """
+Apply audio enhancement techniques"""
         
         try:
             # Simple audio enhancement metrics
@@ -536,7 +559,8 @@ class AudioAICore:
             logger.error(f"Audio enhancement failed: {str(e)}")
 
     async def transcribe_audio(self, audio_data: Union[str, bytes, np.ndarray]) -> str:
-        """Transcribe audio to text"""
+        """
+Transcribe audio to text"""
         
         analysis = await self.process_audio(
             audio_data,
@@ -546,7 +570,8 @@ class AudioAICore:
         return analysis.transcription or ""
 
     async def classify_audio(self, audio_data: Union[str, bytes, np.ndarray]) -> Dict[str, float]:
-        """Classify audio content"""
+        """
+Classify audio content"""
         
         analysis = await self.process_audio(
             audio_data,
@@ -556,7 +581,8 @@ class AudioAICore:
         return analysis.classification
 
     async def analyze_music(self, audio_data: Union[str, bytes, np.ndarray]) -> Dict[str, Any]:
-        """Comprehensive music analysis"""
+        """
+Comprehensive music analysis"""
         
         analysis = await self.process_audio(
             audio_data,
@@ -566,7 +592,8 @@ class AudioAICore:
         return analysis.music_info
 
     async def detect_emotions(self, audio_data: Union[str, bytes, np.ndarray]) -> Dict[str, float]:
-        """Detect emotions in audio"""
+        """
+Detect emotions in audio"""
         
         analysis = await self.process_audio(
             audio_data,
@@ -576,7 +603,8 @@ class AudioAICore:
         return analysis.emotions
 
     def _update_metrics(self, analysis: AudioAnalysis):
-        """Update processing metrics"""
+        """
+Update processing metrics"""
         self.metrics.total_processed += 1
         self.metrics.total_duration_seconds += analysis.features.duration or 0
         
@@ -585,15 +613,18 @@ class AudioAICore:
         self.metrics.avg_processing_time = (total_time + analysis.processing_time) / self.metrics.total_processed
 
     def get_supported_formats(self) -> List[str]:
-        """Get list of supported audio formats"""
+        """
+Get list of supported audio formats"""
         return self.supported_formats
 
     def get_metrics(self) -> AudioMetrics:
-        """Get audio processing metrics"""
+        """
+Get audio processing metrics"""
         return self.metrics
 
     async def health_check(self) -> bool:
-        """Health check for audio AI system"""
+        """
+Health check for audio AI system"""
         try:
             # Test with a simple sine wave
             duration = 1.0  # 1 second
@@ -616,4 +647,4 @@ __all__ = [
     "AudioFeatures", "AudioAnalysis", "AudioMetrics"
 ]
 
-logger.info("🎵 Audio AI Core module loaded")
+logger.info("🎵 Audio AI Core module initialized")

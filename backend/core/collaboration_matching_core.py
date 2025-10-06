@@ -165,7 +165,8 @@ class GameLevel(IntEnum):
 
 @dataclass
 class CreatorProfile:
-    """Enhanced creator profile for matching"""
+    """
+        Enhanced creator profile for matching"""
     creator_id: str
     username: str
     display_name: str
@@ -398,9 +399,11 @@ class MatchingAlgorithm:
                     continue
                 
                 # Calculate match score
+
                 match_result = await self._calculate_match_score(
                     creator, collaboration_request
                 )
+
                 
                 if match_result.overall_score > 0:
                     matches.append(match_result)
@@ -413,6 +416,7 @@ class MatchingAlgorithm:
             
         except Exception as e:
             logger.error(f"Matching algorithm failed: {e}")
+
             return []
     
     async def _calculate_match_score(
@@ -475,11 +479,13 @@ class MatchingAlgorithm:
             
             # Set confidence level
             result.confidence_level = min(result.overall_score / 100, 1.0)
+
             
             return result
             
         except Exception as e:
             logger.error(f"Match score calculation failed: {e}")
+
             return MatchingResult(
                 creator_id=creator.creator_id,
                 request_id=request.request_id
@@ -489,12 +495,15 @@ class MatchingAlgorithm:
         """Calculate skill matching score"""
         try:
             score = 0.0
+
             total_required = len(request.required_skills)
+
             
             if total_required == 0:
                 return 100.0  # No specific requirements
             
             # Check required skills
+
             matched_required = 0
             for skill in request.required_skills:
                 if skill in creator.primary_skills:
@@ -512,7 +521,9 @@ class MatchingAlgorithm:
                     score += 5
             
             # Check complementary skills
+
             creator_skills = set([s.value for s in creator.primary_skills + creator.secondary_skills])
+
             for skill in creator_skills:
                 if skill in self.skill_compatibility_matrix:
                     complementary = self.skill_compatibility_matrix[skill]
@@ -521,14 +532,17 @@ class MatchingAlgorithm:
                             score += 5
             
             # Normalize score
+
             max_possible = total_required * 30 + len(request.preferred_skills) * 10
             if max_possible > 0:
                 score = min(score / max_possible * 100, 100)
+
             
             return score
             
         except Exception as e:
             logger.error(f"Skill score calculation failed: {e}")
+
             return 0.0
     
     async def _calculate_experience_score(self, creator: CreatorProfile, request: CollaborationRequest) -> float:
@@ -543,35 +557,47 @@ class MatchingAlgorithm:
                     return 85.0
             else:
                 # Underqualified - score decreases with gap
+
                 gap = request.experience_level_min - creator.experience_years
+
                 score = max(0, 100 - (gap * 20))
+
                 return score
             
         except Exception as e:
             logger.error(f"Experience score calculation failed: {e}")
+
             return 0.0
     
     async def _calculate_style_score(self, creator: CreatorProfile, request: CollaborationRequest) -> float:
         """Calculate style compatibility score"""
         try:
             # Simple style matching based on tags and genres
+
             creator_styles = set(creator.creative_style + creator.genres)
+
+
             request_tags = set(request.tags)
+
             
             if not request_tags:
                 return 100.0  # No style requirements
             
             # Calculate intersection
+
             common_styles = creator_styles.intersection(request_tags)
+
             
             if len(request_tags) > 0:
                 score = (len(common_styles) / len(request_tags)) * 100
                 return min(score, 100)
+
             
             return 100.0
             
         except Exception as e:
             logger.error(f"Style score calculation failed: {e}")
+
             return 50.0
     
     async def _calculate_availability_score(self, creator: CreatorProfile, request: CollaborationRequest) -> float:
@@ -582,7 +608,9 @@ class MatchingAlgorithm:
                 return 50.0  # Assume partial availability
             
             # Simple availability check - can be enhanced with detailed calendar integration
+
             days_available = len(creator.availability_hours)
+
             
             if days_available >= 5:  # Available most days
                 return 100.0
@@ -595,12 +623,14 @@ class MatchingAlgorithm:
             
         except Exception as e:
             logger.error(f"Availability score calculation failed: {e}")
+
             return 50.0
     
     async def _calculate_budget_score(self, creator: CreatorProfile, request: CollaborationRequest) -> float:
         """Calculate budget alignment score"""
         try:
             creator_min, creator_max = creator.budget_range
+
             project_budget = request.budget
             
             if project_budget == 0:
@@ -611,15 +641,21 @@ class MatchingAlgorithm:
                 return 100.0
             elif project_budget < creator_min:
                 # Project budget too low
+
                 gap = float((creator_min - project_budget) / creator_min)
+
+
                 score = max(0, 100 - (gap * 100))
+
                 return score
             else:
                 # Project budget higher than expected (good for creator)
+
                 return 100.0
             
         except Exception as e:
             logger.error(f"Budget score calculation failed: {e}")
+
             return 50.0
     
     async def _calculate_geographic_score(self, creator: CreatorProfile, request: CollaborationRequest) -> float:
@@ -640,6 +676,7 @@ class MatchingAlgorithm:
             
         except Exception as e:
             logger.error(f"Geographic score calculation failed: {e}")
+
             return 75.0
     
     async def _generate_recommendations(
@@ -675,11 +712,13 @@ class MatchingAlgorithm:
             # Positive recommendations for high scores
             if match_result.overall_score > 80:
                 recommendations.append("Excellent match - highly recommended to proceed")
+
             
             return recommendations
             
         except Exception as e:
             logger.error(f"Recommendation generation failed: {e}")
+
             return ["Review match details carefully before proceeding"]
 
 
@@ -704,7 +743,8 @@ class MarketplaceEngine:
         collaboration_type: CollaborationType,
         **kwargs
     ) -> str:
-        """Create new collaboration request"""
+        """
+        Create new collaboration request"""
         try:
             request = CollaborationRequest(
                 request_id=f"collab_{uuid.uuid4().hex[:12]}",
@@ -714,14 +754,17 @@ class MarketplaceEngine:
                 collaboration_type=collaboration_type,
                 **kwargs
             )
+
             
             self.active_requests[request.request_id] = request
             
             logger.info(f"Collaboration request {request.request_id} created by {creator_id}")
+
             return request.request_id
             
         except Exception as e:
             logger.error(f"Collaboration request creation failed: {e}")
+
             raise
     
     async def register_creator_profile(self, profile: CreatorProfile) -> bool:
@@ -729,10 +772,12 @@ class MarketplaceEngine:
         try:
             self.creator_profiles[profile.creator_id] = profile
             logger.info(f"Creator profile registered: {profile.creator_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Creator profile registration failed: {e}")
+
             return False
     
     async def find_collaboration_matches(
@@ -744,11 +789,15 @@ class MarketplaceEngine:
         try:
             if request_id not in self.active_requests:
                 raise ValueError(f"Collaboration request {request_id} not found")
+
+
             
             request = self.active_requests[request_id]
+
             creators = list(self.creator_profiles.values())
             
             # Run matching algorithm
+
             matches = await self.matching_algorithm.find_matches(
                 request, creators, max_matches
             )
@@ -761,10 +810,12 @@ class MarketplaceEngine:
             request.matched_creators = [m.creator_id for m in matches]
             
             logger.info(f"Found {len(matches)} matches for request {request_id}")
+
             return matches
             
         except Exception as e:
             logger.error(f"Collaboration matching failed: {e}")
+
             return []
     
     async def get_marketplace_opportunities(
@@ -791,12 +842,14 @@ class MarketplaceEngine:
                         continue
                 
                 # Get match score if available
+
                 match_score = 0.0
                 if request.request_id in self.matching_results:
                     for match in self.matching_results[request.request_id]:
                         if match.creator_id == creator_id:
                             match_score = match.overall_score
                             break
+
                 
                 opportunity = {
                     "request_id": request.request_id,
@@ -820,11 +873,13 @@ class MarketplaceEngine:
                 key=lambda x: (x["match_score"], x["created_at"]), 
                 reverse=True
             )
+
             
             return opportunities
             
         except Exception as e:
             logger.error(f"Marketplace opportunities retrieval failed: {e}")
+
             return []
     
     def _matches_filters(self, request: CollaborationRequest, filters: Dict[str, Any]) -> bool:
@@ -852,7 +907,10 @@ class MarketplaceEngine:
             # Skills filter
             if "required_skills" in filters:
                 request_skills = set([s.value for s in request.required_skills])
+
+
                 filter_skills = set(filters["required_skills"])
+
                 if not request_skills.intersection(filter_skills):
                     return False
             
@@ -865,6 +923,7 @@ class MarketplaceEngine:
             
         except Exception as e:
             logger.error(f"Filter matching failed: {e}")
+
             return True
 
 
@@ -881,7 +940,8 @@ class GamificationEngine:
         self.point_rewards = self._initialize_point_rewards()
     
     def _initialize_achievements(self) -> Dict[str, Achievement]:
-        """Initialize achievement definitions"""
+        """
+        Initialize achievement definitions"""
         achievements = {}
         
         # Collaboration achievements
@@ -895,6 +955,7 @@ class GamificationEngine:
             badge_icon="🤝",
             rarity="common"
         )
+
         
         achievements["collaboration_veteran"] = Achievement(
             achievement_id="collaboration_veteran",
@@ -906,6 +967,7 @@ class GamificationEngine:
             badge_icon="🏆",
             rarity="rare"
         )
+
         
         achievements["perfect_rating"] = Achievement(
             achievement_id="perfect_rating",
@@ -941,6 +1003,7 @@ class GamificationEngine:
             badge_icon="💰",
             rarity="common"
         )
+
         
         achievements["high_earner"] = Achievement(
             achievement_id="high_earner",
@@ -952,6 +1015,7 @@ class GamificationEngine:
             badge_icon="💎",
             rarity="legendary"
         )
+
         
         return achievements
     
@@ -971,7 +1035,8 @@ class GamificationEngine:
         }
     
     def _initialize_point_rewards(self) -> Dict[str, int]:
-        """Initialize point rewards for actions"""
+        """
+        Initialize point rewards for actions"""
         return {
             "profile_completed": 100,
             "collaboration_completed": 200,
@@ -994,11 +1059,13 @@ class GamificationEngine:
         """Award experience points for actions"""
         try:
             points = amount or self.point_rewards.get(action, 0)
+
             
             if points <= 0:
                 return {"success": False, "error": "No points awarded for this action"}
             
             # In production, update creator profile in database
+
             result = {
                 "success": True,
                 "action": action,
@@ -1009,6 +1076,8 @@ class GamificationEngine:
             }
             
             # Check for level up (simplified)
+
+
             current_level = GameLevel.NEWCOMER
             for level, requirement in self.level_requirements.items():
                 if points >= requirement:
@@ -1017,10 +1086,12 @@ class GamificationEngine:
             result["current_level"] = current_level.name
             
             logger.info(f"Awarded {points} points to creator {creator_id} for {action}")
+
             return result
             
         except Exception as e:
             logger.error(f"Point awarding failed: {e}")
+
             return {"success": False, "error": str(e)}
     
     async def check_achievements(
@@ -1038,6 +1109,7 @@ class GamificationEngine:
                     continue
                 
                 # Check requirements
+
                 meets_requirements = True
                 for req_key, req_value in achievement.requirements.items():
                     if req_key not in creator_stats:
@@ -1050,13 +1122,16 @@ class GamificationEngine:
                 
                 if meets_requirements:
                     unlocked_achievements.append(achievement_id)
+
                     creator_profile.achievements.append(achievement_id)
+
                     creator_profile.experience_points += achievement.points_awarded
             
             return unlocked_achievements
             
         except Exception as e:
             logger.error(f"Achievement checking failed: {e}")
+
             return []
     
     async def get_leaderboard(
@@ -1068,6 +1143,7 @@ class GamificationEngine:
         try:
             # In production, query database for top creators
             # This is a simplified mock implementation
+
             
             leaderboard_data = [
                 {
@@ -1094,6 +1170,7 @@ class GamificationEngine:
             
         except Exception as e:
             logger.error(f"Leaderboard generation failed: {e}")
+
             return []
 
 
@@ -1131,10 +1208,12 @@ class CollaborationMatchingCore:
             await self.gamification.initialize() if hasattr(self.gamification, 'initialize') else None
             
             logger.info("✅ Collaboration Matching Core initialized successfully")
+
             return True
             
         except Exception as e:
             logger.error(f"❌ Collaboration Matching Core initialization failed: {e}")
+
             return False
     
     async def create_collaboration(
@@ -1148,6 +1227,8 @@ class CollaborationMatchingCore:
         """Create new collaboration opportunity"""
         try:
             collab_type = CollaborationType(collaboration_type)
+
+
             
             request_id = await self.marketplace.create_collaboration_request(
                 creator_id=creator_id,
@@ -1164,10 +1245,12 @@ class CollaborationMatchingCore:
             self.metrics["total_collaborations_created"] += 1
             
             logger.info(f"Collaboration {request_id} created successfully")
+
             return request_id
             
         except Exception as e:
             logger.error(f"Collaboration creation failed: {e}")
+
             raise
     
     async def register_creator(
@@ -1185,8 +1268,11 @@ class CollaborationMatchingCore:
                 display_name=display_name,
                 **profile_data
             )
+
+
             
             success = await self.marketplace.register_creator_profile(profile)
+
             
             if success:
                 # Award points for profile completion
@@ -1196,11 +1282,13 @@ class CollaborationMatchingCore:
                 self.metrics["active_creators"] += 1
                 
                 logger.info(f"Creator {creator_id} registered successfully")
+
             
             return success
             
         except Exception as e:
             logger.error(f"Creator registration failed: {e}")
+
             return False
     
     async def find_matches(
@@ -1215,6 +1303,7 @@ class CollaborationMatchingCore:
             )
             
             # Convert to serializable format
+
             match_data = []
             for match in matches:
                 match_data.append({
@@ -1232,15 +1321,19 @@ class CollaborationMatchingCore:
             
             # Update metrics
             self.metrics["total_matches_made"] += len(matches)
+
             if matches:
                 avg_score = sum(m.overall_score for m in matches) / len(matches)
+
                 self.metrics["average_match_score"] = avg_score
             
             logger.info(f"Found {len(matches)} matches for collaboration {request_id}")
+
             return match_data
             
         except Exception as e:
             logger.error(f"Match finding failed: {e}")
+
             return []
     
     async def get_opportunities(
@@ -1253,12 +1346,15 @@ class CollaborationMatchingCore:
             opportunities = await self.marketplace.get_marketplace_opportunities(
                 creator_id, filters
             )
+
             
             logger.info(f"Retrieved {len(opportunities)} opportunities for creator {creator_id}")
+
             return opportunities
             
         except Exception as e:
             logger.error(f"Opportunities retrieval failed: {e}")
+
             return []
     
     async def complete_collaboration(
@@ -1271,6 +1367,7 @@ class CollaborationMatchingCore:
         """Mark collaboration as completed"""
         try:
             # Award points for completion
+
             points_result = await self.gamification.award_points(
                 creator_id, "collaboration_completed"
             )
@@ -1283,6 +1380,7 @@ class CollaborationMatchingCore:
             
             # Update metrics
             self.metrics["successful_collaborations"] += 1
+
             
             result = {
                 "success": True,
@@ -1294,10 +1392,12 @@ class CollaborationMatchingCore:
             }
             
             logger.info(f"Collaboration {request_id} completed by {creator_id}")
+
             return result
             
         except Exception as e:
             logger.error(f"Collaboration completion failed: {e}")
+
             return {"success": False, "error": str(e)}
     
     async def get_creator_stats(self, creator_id: str) -> Dict[str, Any]:
@@ -1305,6 +1405,7 @@ class CollaborationMatchingCore:
         try:
             # In production, fetch from database
             # This is a simplified mock implementation
+
             
             creator_stats = {
                 "creator_id": creator_id,
@@ -1326,6 +1427,7 @@ class CollaborationMatchingCore:
             
         except Exception as e:
             logger.error(f"Creator stats retrieval failed: {e}")
+
             return {}
     
     async def get_leaderboard(
@@ -1336,10 +1438,12 @@ class CollaborationMatchingCore:
         """Get platform leaderboard"""
         try:
             leaderboard = await self.gamification.get_leaderboard(category, limit)
+
             return leaderboard
             
         except Exception as e:
             logger.error(f"Leaderboard retrieval failed: {e}")
+
             return []
     
     async def health_check(self) -> Dict[str, Any]:
@@ -1368,6 +1472,7 @@ class CollaborationMatchingCore:
             
         except Exception as e:
             logger.error(f"Collaboration health check failed: {e}")
+
             return {
                 "collaboration_core": {"healthy": False, "error": str(e)},
                 "components": {},
@@ -1396,7 +1501,8 @@ async def create_collaboration_opportunity(
     collaboration_type: str,
     **kwargs
 ) -> str:
-    """Convenience function to create collaboration"""
+    """
+        Convenience function to create collaboration"""
     collaboration_core = get_collaboration_core()
     return await collaboration_core.create_collaboration(
         creator_id=creator_id,
@@ -1447,12 +1553,15 @@ if __name__ == "__main__":
     async def main():
         print("🤝 Collaboration Matching Core Test")
         print("=" * 50)
+
         
         try:
             # Get collaboration core
+
             collaboration_core = get_collaboration_core()
             
             # Register test creator
+
             success = await collaboration_core.register_creator(
                 creator_id="test_creator_001",
                 username="musicproducer",
@@ -1461,9 +1570,11 @@ if __name__ == "__main__":
                 experience_years=5,
                 budget_range=(Decimal("500"), Decimal("5000"))
             )
+
             print(f"✅ Creator registered: {success}")
             
             # Create collaboration
+
             collab_id = await collaboration_core.create_collaboration(
                 creator_id="test_requester_001",
                 title="Music Video Production",
@@ -1472,25 +1583,36 @@ if __name__ == "__main__":
                 budget=Decimal("2000"),
                 required_skills=[CreatorSkill.MUSIC_PRODUCTION]
             )
+
             print(f"✅ Collaboration created: {collab_id}")
             
             # Find matches
+
             matches = await collaboration_core.find_matches(collab_id)
+
             print(f"🎯 Found {len(matches)} matches")
             
             # Get opportunities
+
             opportunities = await collaboration_core.get_opportunities("test_creator_001")
+
             print(f"📋 Found {len(opportunities)} opportunities")
             
             # Get creator stats
+
             stats = await collaboration_core.get_creator_stats("test_creator_001")
+
             print(f"📊 Creator level: {stats.get('level', 'Unknown')}")
             
             # Health check
+
             health = await collaboration_core.health_check()
+
             print(f"🏥 System healthy: {health['collaboration_core']['healthy']}")
+
             
             print("🎉 Collaboration Matching Core test completed successfully!")
+
             
         except Exception as e:
             print(f"❌ Collaboration Matching Core test failed: {e}")

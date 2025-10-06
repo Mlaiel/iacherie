@@ -283,6 +283,7 @@ class PaymentRequest:
         
         if not self.expires_at:
             self.expires_at = self.created_at + timedelta(minutes=30)
+
         
         if self.gross_amount == Decimal("0.00"):
             self.gross_amount = self.amount
@@ -338,6 +339,7 @@ class StripeProcessor:
         self.config = config
         if HAS_STRIPE:
             stripe.api_key = config.get("secret_key")
+
             stripe.api_version = config.get("api_version", "2023-10-16")
     
     async def process_payment(self, payment_request: PaymentRequest) -> Dict[str, Any]:
@@ -347,6 +349,7 @@ class StripeProcessor:
                 return {"success": False, "error": "Stripe SDK not available"}
             
             # Create payment intent
+
             intent_data = {
                 "amount": int(payment_request.amount * 100),  # Convert to cents
                 "currency": payment_request.currency.lower(),
@@ -364,7 +367,9 @@ class StripeProcessor:
                 intent_data["capture_method"] = "manual"
             
             # Create payment intent
+
             intent = stripe.PaymentIntent.create(**intent_data)
+
             
             return {
                 "success": True,
@@ -377,6 +382,7 @@ class StripeProcessor:
             
         except Exception as e:
             logger.error(f"Stripe payment processing failed: {e}")
+
             return {"success": False, "error": str(e)}
     
     async def confirm_payment(self, payment_id: str) -> Dict[str, Any]:
@@ -384,8 +390,10 @@ class StripeProcessor:
         try:
             if not HAS_STRIPE:
                 return {"success": False, "error": "Stripe SDK not available"}
+
             
             intent = stripe.PaymentIntent.retrieve(payment_id)
+
             
             return {
                 "success": True,
@@ -397,6 +405,7 @@ class StripeProcessor:
             
         except Exception as e:
             logger.error(f"Stripe payment confirmation failed: {e}")
+
             return {"success": False, "error": str(e)}
     
     async def refund_payment(self, payment_id: str, amount: Optional[Decimal] = None) -> Dict[str, Any]:
@@ -404,12 +413,16 @@ class StripeProcessor:
         try:
             if not HAS_STRIPE:
                 return {"success": False, "error": "Stripe SDK not available"}
+
             
             refund_data = {"payment_intent": payment_id}
             if amount:
                 refund_data["amount"] = int(amount * 100)
+
+
             
             refund = stripe.Refund.create(**refund_data)
+
             
             return {
                 "success": True,
@@ -421,6 +434,7 @@ class StripeProcessor:
             
         except Exception as e:
             logger.error(f"Stripe refund failed: {e}")
+
             return {"success": False, "error": str(e)}
 
 
@@ -443,6 +457,7 @@ class PayPalProcessor:
                 return {"success": False, "error": "PayPal SDK not available"}
             
             # Create PayPal payment
+
             payment_data = {
                 "intent": "sale",
                 "payer": {"payment_method": "paypal"},
@@ -467,8 +482,10 @@ class PayPalProcessor:
                     "description": payment_request.description
                 }]
             }
+
             
             payment = paypalrestsdk.Payment(payment_data)
+
             
             if payment.create():
                 # Find approval URL
@@ -491,6 +508,7 @@ class PayPalProcessor:
             
         except Exception as e:
             logger.error(f"PayPal payment processing failed: {e}")
+
             return {"success": False, "error": str(e)}
     
     async def confirm_payment(self, payment_id: str, payer_id: str) -> Dict[str, Any]:
@@ -498,8 +516,10 @@ class PayPalProcessor:
         try:
             if not HAS_PAYPAL:
                 return {"success": False, "error": "PayPal SDK not available"}
+
             
             payment = paypalrestsdk.Payment.find(payment_id)
+
             
             if payment.execute({"payer_id": payer_id}):
                 return {
@@ -514,6 +534,7 @@ class PayPalProcessor:
             
         except Exception as e:
             logger.error(f"PayPal payment confirmation failed: {e}")
+
             return {"success": False, "error": str(e)}
 
 
@@ -533,14 +554,17 @@ class CryptoProcessor:
             crypto_currency = payment_request.payment_provider.value.replace("crypto_", "")
             
             # Generate payment address
+
             payment_address = await self._generate_payment_address(crypto_currency)
             
             # Convert amount to crypto
+
             crypto_amount = await self._convert_to_crypto(
                 payment_request.amount, 
                 payment_request.currency, 
                 crypto_currency
             )
+
             
             return {
                 "success": True,
@@ -554,17 +578,20 @@ class CryptoProcessor:
             
         except Exception as e:
             logger.error(f"Crypto payment processing failed: {e}")
+
             return {"success": False, "error": str(e)}
     
     async def _generate_payment_address(self, crypto_currency: str) -> str:
         """Generate unique payment address"""
         # In production, use proper address generation
+
         base_addresses = {
             "bitcoin": self.config.get("bitcoin_address", "bc1qexampleaddress"),
             "ethereum": self.config.get("ethereum_address", "0xExampleAddress"),
             "usdc": self.config.get("ethereum_address", "0xExampleAddress"),
             "usdt": self.config.get("ethereum_address", "0xExampleAddress")
         }
+
         
         base_address = base_addresses.get(crypto_currency, "")
         # For demo purposes, return base address
@@ -580,13 +607,17 @@ class CryptoProcessor:
             "usdc": Decimal("1.09"),         # USDC per EUR
             "usdt": Decimal("1.09")          # USDT per EUR
         }
+
         
         crypto_rate = conversion_rates.get(to_crypto, Decimal("1.0"))
         
         # Convert to EUR first if needed
         if from_currency != "EUR":
             # Simplified conversion - in production use live rates
+
             eur_rate = Decimal("0.92") if from_currency == "USD" else Decimal("1.0")
+
+
             amount = amount * eur_rate
         
         return (amount * crypto_rate).quantize(Decimal("0.00000001"), rounding=ROUND_HALF_UP)
@@ -594,6 +625,7 @@ class CryptoProcessor:
     async def _estimate_network_fee(self, crypto_currency: str) -> Dict[str, Any]:
         """Estimate network transaction fee"""
         # Simplified fee estimation
+
         fees = {
             "bitcoin": {"slow": "0.00001", "medium": "0.00005", "fast": "0.0001"},
             "ethereum": {"slow": "0.002", "medium": "0.005", "fast": "0.01"},
@@ -610,16 +642,15 @@ class CryptoProcessor:
             # This is a simplified mock verification
             
             return {
-                "verified": True,  # Mock verification
-                "transaction_hash": f"0x{hashlib.sha256(payment_address.encode()).hexdigest()}",
+                "verified": True,                "transaction_hash": f"0x{hashlib.sha256(payment_address.encode()).hexdigest()}",
                 "confirmations": 6,
                 "amount_received": expected_amount,
-                "block_height": 850000,  # Mock block height
-                "timestamp": datetime.now(timezone.utc).isoformat()
+                "block_height": 850000,                "timestamp": datetime.now(timezone.utc).isoformat()
             }
             
         except Exception as e:
             logger.error(f"Crypto payment verification failed: {e}")
+
             return {"verified": False, "error": str(e)}
 
 
@@ -635,7 +666,8 @@ class TaxCalculator:
         self.vat_rates = self._initialize_vat_rates()
     
     def _initialize_tax_rates(self) -> Dict[str, Dict[str, Decimal]]:
-        """Initialize tax rates by region"""
+        """
+        Initialize tax rates by region"""
         return {
             "eu": {
                 "income_tax": Decimal("0.25"),      # 25% average
@@ -708,8 +740,11 @@ class TaxCalculator:
             }
             
             # VAT/GST calculation (for EU and applicable regions)
+
             if self._is_vat_applicable(creator_country, customer_country, is_business):
                 vat_rate = self.vat_rates.get(customer_country, Decimal("0.00"))
+
+
                 vat_amount = amount * vat_rate
                 
                 tax_calculation["vat_applicable"] = True
@@ -719,20 +754,28 @@ class TaxCalculator:
                 tax_calculation["total_taxes"] += vat_amount
             
             # Income tax estimation (for creator)
+
+
             tax_region = self._determine_tax_region(creator_country)
+
             if tax_region in self.tax_rates:
                 rates = self.tax_rates[tax_region]
                 
                 # Estimate income tax
+
                 income_tax_rate = rates.get("income_tax", Decimal("0.00"))
+
+
                 income_tax = amount * income_tax_rate
                 
                 tax_calculation["tax_breakdown"]["income_tax"] = income_tax
                 tax_calculation["estimated_income_tax"] = income_tax
             
             # Withholding tax (for international payments)
+
             if creator_country != customer_country:
                 withholding_rate = Decimal("0.05")  # 5% default
+
                 withholding_tax = amount * withholding_rate
                 
                 tax_calculation["withholding_tax"] = withholding_tax
@@ -746,6 +789,7 @@ class TaxCalculator:
             
         except Exception as e:
             logger.error(f"Tax calculation failed: {e}")
+
             return {
                 "gross_amount": amount,
                 "net_amount": amount,
@@ -777,6 +821,7 @@ class TaxCalculator:
         """Determine if VAT is applicable"""
         # Simplified VAT logic
         # In reality, much more complex rules apply
+
         
         eu_countries = [
             "DE", "FR", "IT", "ES", "NL", "BE", "AT", "SE", "DK", "FI",
@@ -858,12 +903,15 @@ class FraudDetector:
                 risk_analysis["risk_factors"].append("high_amount")
             
             # Check location
+
             customer_country = customer_data.get("country", "")
+
             if customer_country in self.blocked_countries:
                 risk_analysis["risk_score"] += 1.0
                 risk_analysis["risk_factors"].append("blocked_country")
             
             # Check payment velocity
+
             recent_payments = [
                 p for p in payment_history 
                 if (datetime.now(timezone.utc) - datetime.fromisoformat(p["created_at"].replace("Z", "+00:00"))).total_seconds() < 3600
@@ -874,13 +922,16 @@ class FraudDetector:
                 risk_analysis["risk_factors"].append("velocity_violation")
             
             # Check for card testing
+
             failed_payments = [p for p in recent_payments if p.get("status") == "failed"]
             if len(failed_payments) > 3:
                 risk_analysis["risk_score"] += self.risk_factors["card_testing"]
                 risk_analysis["risk_factors"].append("card_testing")
             
             # Check disposable email
+
             email = customer_data.get("email", "")
+
             if self._is_disposable_email(email):
                 risk_analysis["risk_score"] += self.risk_factors["disposable_email"]
                 risk_analysis["risk_factors"].append("disposable_email")
@@ -899,17 +950,20 @@ class FraudDetector:
             # Generate recommendations
             if risk_analysis["risk_level"] == "medium":
                 risk_analysis["recommendations"].append("additional_verification")
+
             elif risk_analysis["risk_level"] == "high":
                 risk_analysis["recommendations"].extend([
                     "manual_review_required",
                     "additional_documentation",
                     "payment_hold"
                 ])
+
             
             return risk_analysis
             
         except Exception as e:
             logger.error(f"Fraud analysis failed: {e}")
+
             return {
                 "risk_score": 1.0,
                 "risk_level": "unknown",
@@ -923,6 +977,7 @@ class FraudDetector:
             "10minutemail.com", "guerrillamail.com", "mailinator.com",
             "throwaway.email", "temp-mail.org"
         ]
+
         
         domain = email.split("@")[-1].lower() if "@" in email else ""
         return domain in disposable_domains
@@ -978,6 +1033,7 @@ class MonetizationPaymentsCore:
         """Create a new payment request"""
         try:
             # Create payment request
+
             payment_request = PaymentRequest(
                 request_id=f"pay_{uuid.uuid4().hex[:12]}",
                 creator_id=creator_id,
@@ -993,11 +1049,13 @@ class MonetizationPaymentsCore:
             await self._calculate_payment_breakdown(payment_request)
             
             # Fraud detection
+
             fraud_analysis = await self.fraud_detector.analyze_payment_risk(
                 payment_request,
                 customer_info,
                 []  # Payment history would be fetched from database
             )
+
             
             if not fraud_analysis["approved"]:
                 payment_request.status = PaymentStatus.FAILED
@@ -1010,18 +1068,22 @@ class MonetizationPaymentsCore:
             
             # Start async payment processing
             asyncio.create_task(self._process_payment(payment_request))
+
             
             logger.info(f"Payment {payment_request.request_id} created for creator {creator_id}")
+
             return payment_request.request_id
             
         except Exception as e:
             logger.error(f"Payment creation failed: {e}")
+
             raise
     
     async def _calculate_payment_breakdown(self, payment_request: PaymentRequest):
         """Calculate payment fees and taxes"""
         try:
             # Platform commission
+
             platform_fee = payment_request.amount * self.config.platform_commission_rate
             
             # Payment processing fee
@@ -1031,8 +1093,13 @@ class MonetizationPaymentsCore:
                 processing_fee = payment_request.amount * self.config.payment_processing_fee
             
             # Tax calculation
+
             creator_country = payment_request.metadata.get("creator_country", "DE")
+
+
             customer_country = payment_request.customer_info.get("country", "DE")
+
+
             
             tax_info = await self.tax_calculator.calculate_taxes(
                 payment_request.amount,
@@ -1045,12 +1112,14 @@ class MonetizationPaymentsCore:
             payment_request.platform_fee = platform_fee
             payment_request.payment_fee = processing_fee
             payment_request.tax_amount = tax_info.get("total_taxes", Decimal("0.00"))
+
             payment_request.net_amount = (
                 payment_request.amount - 
                 platform_fee - 
                 processing_fee - 
                 payment_request.tax_amount
             )
+
             
             payment_request.metadata["tax_calculation"] = tax_info
             
@@ -1058,8 +1127,11 @@ class MonetizationPaymentsCore:
             logger.error(f"Payment breakdown calculation failed: {e}")
             # Set defaults if calculation fails
             payment_request.platform_fee = Decimal("0.00")
+
             payment_request.payment_fee = Decimal("0.00")
+
             payment_request.tax_amount = Decimal("0.00")
+
             payment_request.net_amount = payment_request.amount
     
     async def _process_payment(self, payment_request: PaymentRequest):
@@ -1071,16 +1143,20 @@ class MonetizationPaymentsCore:
             # Select processor based on provider
             if payment_request.payment_provider == PaymentProvider.STRIPE:
                 result = await self.stripe_processor.process_payment(payment_request)
+
             elif payment_request.payment_provider == PaymentProvider.PAYPAL:
                 result = await self.paypal_processor.process_payment(payment_request)
+
             elif payment_request.payment_provider.value.startswith("crypto_"):
                 result = await self.crypto_processor.process_payment(payment_request)
+
             else:
                 result = {"success": False, "error": "Unsupported payment provider"}
             
             if result["success"]:
                 payment_request.status = PaymentStatus.COMPLETED
                 payment_request.provider_payment_id = result.get("payment_id")
+
                 payment_request.confirmation_code = result.get("confirmation_code")
                 
                 # Move to completed payments
@@ -1093,6 +1169,7 @@ class MonetizationPaymentsCore:
                 self.metrics["total_fees"] += payment_request.platform_fee + payment_request.payment_fee
                 
                 logger.info(f"Payment {payment_request.request_id} completed successfully")
+
                 
             else:
                 payment_request.status = PaymentStatus.FAILED
@@ -1103,10 +1180,12 @@ class MonetizationPaymentsCore:
                 self.failed_payments[payment_request.request_id] = payment_request
                 
                 logger.error(f"Payment {payment_request.request_id} failed: {result.get('error')}")
+
             
         except Exception as e:
             payment_request.status = PaymentStatus.FAILED
             payment_request.metadata["error"] = str(e)
+
             
             if payment_request.request_id in self.active_payments:
                 del self.active_payments[payment_request.request_id]
@@ -1177,8 +1256,10 @@ class MonetizationPaymentsCore:
             )
             
             # Get payments for creator in period
+
             creator_payments = [
                 p for p in self.completed_payments.values()
+
                 if p.creator_id == creator_id and
                 period_start <= p.created_at <= period_end
             ]
@@ -1192,34 +1273,43 @@ class MonetizationPaymentsCore:
                 analytics.total_taxes += payment.tax_amount
                 
                 # Revenue by stream
+
                 stream = payment.revenue_stream.value
                 if stream not in analytics.revenue_by_stream:
                     analytics.revenue_by_stream[stream] = Decimal("0.00")
+
                 analytics.revenue_by_stream[stream] += payment.amount
                 
                 # Revenue by currency
+
                 currency = payment.currency
                 if currency not in analytics.revenue_by_currency:
                     analytics.revenue_by_currency[currency] = Decimal("0.00")
+
                 analytics.revenue_by_currency[currency] += payment.amount
                 
                 # Revenue by provider
+
                 provider = payment.payment_provider.value
                 if provider not in analytics.revenue_by_provider:
                     analytics.revenue_by_provider[provider] = Decimal("0.00")
+
                 analytics.revenue_by_provider[provider] += payment.amount
             
             analytics.transaction_count = len(creator_payments)
+
             
             if analytics.transaction_count > 0:
                 analytics.average_transaction_value = (
                     analytics.total_gross_revenue / analytics.transaction_count
                 )
+
             
             return analytics
             
         except Exception as e:
             logger.error(f"Revenue analytics generation failed: {e}")
+
             return RevenueAnalytics(
                 creator_id=creator_id,
                 period_start=period_start,
@@ -1230,7 +1320,9 @@ class MonetizationPaymentsCore:
         """Monetization system health check"""
         try:
             # Calculate success rate
+
             total_payments = len(self.completed_payments) + len(self.failed_payments)
+
             if total_payments > 0:
                 self.metrics["success_rate"] = (len(self.completed_payments) / total_payments) * 100
             
@@ -1239,6 +1331,7 @@ class MonetizationPaymentsCore:
                 self.metrics["average_transaction_value"] = (
                     self.metrics["total_revenue"] / self.metrics["total_payments_processed"]
                 )
+
             
             return {
                 "monetization_core": {
@@ -1267,6 +1360,7 @@ class MonetizationPaymentsCore:
             
         except Exception as e:
             logger.error(f"Monetization health check failed: {e}")
+
             return {
                 "monetization_core": {"healthy": False, "error": str(e)},
                 "payment_processors": {},
@@ -1297,7 +1391,8 @@ async def process_payment(
     customer_info: Dict[str, str],
     **kwargs
 ) -> str:
-    """Convenience function to process payment"""
+    """
+        Convenience function to process payment"""
     monetization_core = get_monetization_core()
     return await monetization_core.create_payment(
         creator_id=creator_id,
@@ -1352,12 +1447,15 @@ if __name__ == "__main__":
     async def main():
         print("💰 Monetization Payments Core Test")
         print("=" * 50)
+
         
         try:
             # Get monetization core
+
             monetization_core = get_monetization_core()
             
             # Create test payment
+
             payment_id = await monetization_core.create_payment(
                 creator_id="creator_001",
                 amount=Decimal("29.99"),
@@ -1371,6 +1469,7 @@ if __name__ == "__main__":
                 },
                 description="Test payment for content"
             )
+
             
             print(f"✅ Created payment: {payment_id}")
             
@@ -1378,26 +1477,36 @@ if __name__ == "__main__":
             await asyncio.sleep(2)
             
             # Check payment status
+
             status = await monetization_core.get_payment_status(payment_id)
+
             if status:
                 print(f"💳 Payment status: {status['status']} ({status['amount']} {status['currency']})")
+
                 print(f"💰 Net amount: {status.get('net_amount', 0)}")
             
             # Generate revenue analytics
+
             analytics = await monetization_core.generate_revenue_analytics(
                 creator_id="creator_001",
                 period_start=datetime.now(timezone.utc) - timedelta(days=30),
                 period_end=datetime.now(timezone.utc)
             )
+
             
             print(f"📊 Revenue analytics: {analytics.transaction_count} transactions")
+
             print(f"💵 Total revenue: {analytics.total_gross_revenue}")
             
             # Health check
+
             health = await monetization_core.health_check()
+
             print(f"🏥 Monetization healthy: {health['monetization_core']['healthy']}")
+
             
             print("🎉 Monetization Payments Core test completed successfully!")
+
             
         except Exception as e:
             print(f"❌ Monetization Payments Core test failed: {e}")

@@ -22,7 +22,8 @@ logger = logging.getLogger(__name__)
 
 
 class Platform(str, Enum):
-    """Plateformes de distribution."""
+    """
+        Plateformes de distribution."""
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -70,7 +71,8 @@ class PlatformConfig:
 
 @dataclass
 class ContentAdaptation:
-    """Adaptation de contenu."""
+    """
+        Adaptation de contenu."""
     original_content: Any
     adapted_content: Any
     platform: Platform
@@ -81,7 +83,8 @@ class ContentAdaptation:
 
 @dataclass
 class DistributionTask:
-    """Tâche de distribution."""
+    """
+        Tâche de distribution."""
     task_id: str
     content_id: str
     platforms: List[Platform]
@@ -92,7 +95,8 @@ class DistributionTask:
 
 
 class MultiPlatformDistributor:
-    """Distributeur multi-plateformes."""
+    """
+        Distributeur multi-plateformes."""
     
     def __init__(self):
         self.platform_configs: Dict[Platform, PlatformConfig] = {}
@@ -101,7 +105,8 @@ class MultiPlatformDistributor:
         self.platform_specs = self._load_platform_specifications()
     
     def _load_platform_specifications(self) -> Dict[Platform, Dict[str, Any]]:
-        """Charge les spécifications des plateformes."""
+        """
+        Charge les spécifications des plateformes."""
         return {
             Platform.YOUTUBE: {
                 "video_formats": ["MP4", "MOV", "AVI"],
@@ -142,9 +147,11 @@ class MultiPlatformDistributor:
                                distribution_settings: Dict[str, Any] = None) -> str:
         """Distribue le contenu sur les plateformes cibles."""
         task_id = str(uuid.uuid4())
+
         content_id = content_data.get("content_id", str(uuid.uuid4()))
         
         # Création de la tâche de distribution
+
         distribution_task = DistributionTask(
             task_id=task_id,
             content_id=content_id,
@@ -153,6 +160,7 @@ class MultiPlatformDistributor:
             created_at=datetime.utcnow(),
             scheduled_time=distribution_settings.get("scheduled_time") if distribution_settings else None
         )
+
         
         self.active_distributions[task_id] = distribution_task
         
@@ -162,6 +170,7 @@ class MultiPlatformDistributor:
             "content_data": content_data,
             "settings": distribution_settings or {}
         })
+
         
         logger.info(f"Content distribution task created: {task_id}")
         return task_id
@@ -171,16 +180,21 @@ class MultiPlatformDistributor:
         while True:
             try:
                 distribution_item = await self.distribution_queue.get()
+
                 await self._process_distribution_task(distribution_item)
+
             except Exception as e:
                 logger.error(f"Distribution processing error: {e}")
+
             
             await asyncio.sleep(0.1)  # Prevent tight loop
     
     async def _process_distribution_task(self, distribution_item: Dict[str, Any]):
         """Traite une tâche de distribution."""
         task = distribution_item["task"]
+
         content_data = distribution_item["content_data"]
+
         settings = distribution_item["settings"]
         
         task.status = DistributionStatus.PROCESSING
@@ -190,10 +204,13 @@ class MultiPlatformDistributor:
         for platform in task.platforms:
             try:
                 # Adaptation du contenu pour la plateforme
+
                 adapted_content = await self._adapt_content_for_platform(content_data, platform)
                 
                 # Publication sur la plateforme
+
                 publication_result = await self._publish_to_platform(adapted_content, platform, settings)
+
                 
                 results.append({
                     "platform": platform.value,
@@ -202,9 +219,11 @@ class MultiPlatformDistributor:
                     "url": publication_result.get("url"),
                     "adapted_content": adapted_content
                 })
+
                 
             except Exception as e:
                 logger.error(f"Failed to distribute to {platform.value}: {e}")
+
                 results.append({
                     "platform": platform.value,
                     "status": "failed",
@@ -212,6 +231,7 @@ class MultiPlatformDistributor:
                 })
         
         # Mise à jour du statut
+
         failed_count = sum(1 for r in results if r["status"] == "failed")
         if failed_count == 0:
             task.status = DistributionStatus.PUBLISHED
@@ -227,9 +247,13 @@ class MultiPlatformDistributor:
                                          platform: Platform) -> ContentAdaptation:
         """Adapte le contenu pour une plateforme spécifique."""
         platform_specs = self.platform_specs.get(platform, {})
+
         content_type = ContentType(content_data.get("type", "video"))
+
+
         
         adaptations_applied = []
+
         adapted_content = content_data.copy()
         
         # Adaptation selon les spécifications de la plateforme
@@ -237,13 +261,16 @@ class MultiPlatformDistributor:
             # TikTok: format vertical, durée courte
             adapted_content["aspect_ratio"] = "9:16"
             adapted_content["max_duration"] = min(content_data.get("duration", 60), 600)
+
             adaptations_applied.extend(["vertical_format", "duration_optimization"])
+
             
         elif platform == Platform.YOUTUBE and content_type == ContentType.VIDEO:
             # YouTube: format horizontal, optimisation SEO
             adapted_content["aspect_ratio"] = "16:9"
             adapted_content["seo_optimization"] = True
             adaptations_applied.extend(["horizontal_format", "seo_optimization"])
+
             
         elif platform == Platform.INSTAGRAM:
             # Instagram: formats multiples selon le type
@@ -251,17 +278,22 @@ class MultiPlatformDistributor:
                 adapted_content["aspect_ratio"] = "9:16"
                 adapted_content["max_duration"] = 15
                 adaptations_applied.extend(["story_format", "duration_limit"])
+
             elif content_type == ContentType.REEL:
                 adapted_content["aspect_ratio"] = "9:16"
                 adapted_content["max_duration"] = 90
                 adaptations_applied.extend(["reel_format", "trending_audio"])
+
             else:
                 adapted_content["aspect_ratio"] = "1:1"
                 adaptations_applied.append("square_format")
         
         # Calcul du score de qualité et performance estimée
+
         quality_score = self._calculate_adaptation_quality(adapted_content, platform_specs)
+
         estimated_performance = self._estimate_platform_performance(adapted_content, platform)
+
         
         return ContentAdaptation(
             original_content=content_data,
@@ -289,10 +321,13 @@ class MultiPlatformDistributor:
     def _estimate_platform_performance(self, content: Dict[str, Any], platform: Platform) -> float:
         """Estime la performance sur la plateforme."""
         # Performance basée sur l'adaptation et les caractéristiques du contenu
+
         base_performance = 0.7
         
         # Bonus selon la plateforme et le type de contenu
+
         content_type = content.get("type", "video")
+
         
         if platform == Platform.TIKTOK and content_type == "video":
             if content.get("aspect_ratio") == "9:16":
@@ -308,6 +343,7 @@ class MultiPlatformDistributor:
         """Publie le contenu sur une plateforme."""
         # Simulation de publication (en réalité, utiliserait les APIs des plateformes)
         await asyncio.sleep(0.1)  # Simulate API call
+
         
         publication_id = f"{platform.value}_{uuid.uuid4()}"
         url = f"https://{platform.value}.com/content/{publication_id}"
@@ -329,8 +365,10 @@ class ContentAdaptationRealtime:
     
     async def adapt_content_realtime(self, content: Dict[str, Any], 
                                    target_platform: Platform) -> Dict[str, Any]:
-        """Adapte le contenu en temps réel pour une plateforme."""
+        """
+        Adapte le contenu en temps réel pour une plateforme."""
         content_id = content.get("content_id", str(uuid.uuid4()))
+
         cache_key = f"{content_id}_{target_platform.value}"
         
         # Vérification du cache
@@ -338,6 +376,7 @@ class ContentAdaptationRealtime:
             return self.adaptation_cache[cache_key]
         
         # Adaptation en temps réel
+
         adapted_content = await self._perform_realtime_adaptation(content, target_platform)
         
         # Mise en cache
@@ -354,6 +393,7 @@ class ContentAdaptationRealtime:
             "adaptations_applied": [],
             "processing_time": 0.0
         }
+
         
         start_time = time.time()
         
@@ -379,6 +419,7 @@ class ContentAdaptationRealtime:
                 "Story highlights preparation",
                 "Bio link optimization"
             ])
+
         
         adaptations["processing_time"] = time.time() - start_time
         return adaptations
@@ -393,10 +434,15 @@ class DeliveryOptimization:
     
     async def optimize_delivery(self, content_data: Dict[str, Any],
                               delivery_context: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimise la livraison de contenu."""
+        """
+        Optimise la livraison de contenu."""
         content_type = content_data.get("type", "video")
+
         audience_location = delivery_context.get("location", "global")
+
         network_conditions = delivery_context.get("network_quality", "good")
+
+
         
         optimizations = []
         
@@ -431,6 +477,7 @@ class DeliveryOptimization:
                 "WebP format conversion",
                 "Lazy loading implementation"
             ])
+
         
         return {
             "optimizations_applied": optimizations,
@@ -447,6 +494,7 @@ class EdgeDistributionGateway:
         self.multi_platform_distributor = MultiPlatformDistributor()
         self.content_adaptation = ContentAdaptationRealtime()
         self.delivery_optimization = DeliveryOptimization()
+
         
         self.distribution_stats = {
             "total_distributions": 0,
@@ -463,6 +511,7 @@ class EdgeDistributionGateway:
         task_id = await self.multi_platform_distributor.distribute_content(
             content_data, target_platforms, settings
         )
+
         
         self.distribution_stats["total_distributions"] += 1
         
@@ -477,19 +526,23 @@ class EdgeDistributionGateway:
     # Delivery Optimization
     async def optimize_content_delivery(self, content_data: Dict[str, Any],
                                       delivery_context: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimise la livraison de contenu."""
+        """
+        Optimise la livraison de contenu."""
         return await self.delivery_optimization.optimize_delivery(content_data, delivery_context)
     
     # Platform-specific Optimization
     async def optimize_for_platform(self, content: Dict[str, Any], platform: Platform,
                                   optimization_goals: List[str] = None) -> Dict[str, Any]:
-        """Optimise le contenu pour une plateforme avec des objectifs spécifiques."""
+        """
+        Optimise le contenu pour une plateforme avec des objectifs spécifiques."""
         goals = optimization_goals or ["engagement", "reach", "quality"]
         
         # Adaptation de base
+
         adapted_content = await self.adapt_content_for_platform(content, platform)
         
         # Optimisations supplémentaires selon les objectifs
+
         additional_optimizations = []
         
         if "engagement" in goals:
@@ -498,6 +551,7 @@ class EdgeDistributionGateway:
                 "Interactive elements enhancement",
                 "Engagement timing optimization"
             ])
+
         
         if "reach" in goals:
             additional_optimizations.extend([
@@ -505,6 +559,7 @@ class EdgeDistributionGateway:
                 "Cross-platform promotion",
                 "Viral potential enhancement"
             ])
+
         
         if "quality" in goals:
             additional_optimizations.extend([
@@ -512,6 +567,7 @@ class EdgeDistributionGateway:
                 "Format-specific enhancements",
                 "Brand consistency maintenance"
             ])
+
         
         return {
             "platform": platform.value,
@@ -526,6 +582,7 @@ class EdgeDistributionGateway:
                                  regions: List[str] = None) -> Dict[str, Any]:
         """Intègre avec le CDN global pour la distribution."""
         regions = regions or ["us-east", "eu-west", "asia-pacific"]
+
         
         cdn_integration = {
             "content_id": content_data.get("content_id", str(uuid.uuid4())),
@@ -551,7 +608,9 @@ class EdgeDistributionGateway:
     async def enable_edge_caching(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
         """Active le cache intelligent edge."""
         content_type = content_data.get("type", "video")
+
         content_size = content_data.get("size", 1000000)  # 1MB default
+
         
         caching_strategy = {
             "cache_levels": ["edge", "regional", "origin"],
@@ -595,14 +654,35 @@ def create_edge_distribution_gateway() -> EdgeDistributionGateway:
     return EdgeDistributionGateway()
 
 
+# Alias pour imports attendus
+ContentAdaptationEngine = ContentAdaptationRealtime
+DeliveryOptimizer = DeliveryOptimization
+PlatformSpecificOptimizer = EdgeDistributionGateway  # Alias pour optimisation plateforme
+GlobalCDNIntegrator = EdgeDistributionGateway  # Alias pour intégration CDN globale
+EdgeCacheManager = EdgeDistributionGateway  # Alias pour gestion cache edge
+
+# Alias enums
+PlatformType = Platform  # Alias enum
+DistributionStrategy = DistributionStatus  # Alias enum 
+AdaptationProfile = ContentType  # Alias enum
+
+
 __all__ = [
     "EdgeDistributionGateway",
     "MultiPlatformDistributor",
     "ContentAdaptationRealtime",
+    "ContentAdaptationEngine",  # Alias
     "DeliveryOptimization",
+    "DeliveryOptimizer",  # Alias
+    "PlatformSpecificOptimizer",  # Alias
+    "GlobalCDNIntegrator",  # Alias
+    "EdgeCacheManager",  # Alias
     "Platform",
+    "PlatformType",  # Alias enum
     "ContentType",
+    "AdaptationProfile",  # Alias enum
     "DistributionStatus",
+    "DistributionStrategy",  # Alias enum
     "PlatformConfig",
     "ContentAdaptation",
     "DistributionTask",

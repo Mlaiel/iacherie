@@ -25,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 
 class ResourceType(str, Enum):
-    """Types of edge resources."""
+    """
+        Types of edge resources."""
     CPU = "cpu"
     MEMORY = "memory"
     GPU = "gpu"
@@ -76,7 +77,8 @@ class ResourceSpec:
 
 @dataclass
 class ResourceAllocation:
-    """Resource allocation record."""
+    """
+        Resource allocation record."""
     allocation_id: str
     resource_type: ResourceType
     amount: float
@@ -89,7 +91,8 @@ class ResourceAllocation:
 
 @dataclass
 class ResourceUsage:
-    """Resource usage metrics."""
+    """
+        Resource usage metrics."""
     resource_type: ResourceType
     total_capacity: float
     allocated: float
@@ -101,7 +104,8 @@ class ResourceUsage:
 
 @dataclass
 class ResourceNode:
-    """Edge node resource information."""
+    """
+        Edge node resource information."""
     node_id: str
     node_type: str
     location: str
@@ -114,7 +118,8 @@ class ResourceNode:
 
 
 class EdgeResourceManager:
-    """Advanced resource manager for edge computing infrastructure."""
+    """
+        Advanced resource manager for edge computing infrastructure."""
     
     def __init__(self, 
                  default_strategy: AllocationStrategy = AllocationStrategy.BALANCED,
@@ -150,6 +155,7 @@ class EdgeResourceManager:
         
         # Thread-safe locks
         self._allocation_lock = threading.RLock()
+
         
         logger.info(f"EdgeResourceManager initialized with strategy: {default_strategy}")
     
@@ -157,6 +163,7 @@ class EdgeResourceManager:
         """Start the resource manager."""
         if self.running:
             logger.warning("Resource manager already running")
+
             return
         
         self.running = True
@@ -167,6 +174,7 @@ class EdgeResourceManager:
         
         # Initialize local node
         await self._initialize_local_node()
+
         
         logger.info("Edge resource manager started")
     
@@ -181,9 +189,11 @@ class EdgeResourceManager:
             self.cleanup_task.cancel()
         
         # Wait for tasks to complete
+
         tasks = [task for task in [self.monitoring_task, self.cleanup_task] if task]
         if tasks:
             await asyncio.gather(*tasks, return_exceptions=True)
+
         
         logger.info("Edge resource manager stopped")
     
@@ -194,12 +204,15 @@ class EdgeResourceManager:
             
             # Initialize resource pool for this node
             self.resource_pools[node.node_id] = node.resources.copy()
+
             
             logger.info(f"Registered edge node: {node.node_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to register node {node.node_id}: {e}")
+
             return False
     
     async def unregister_node(self, node_id: str) -> bool:
@@ -207,6 +220,7 @@ class EdgeResourceManager:
         try:
             if node_id not in self.nodes:
                 logger.warning(f"Node {node_id} not found for unregistration")
+
                 return False
             
             # Release all allocations on this node
@@ -218,10 +232,12 @@ class EdgeResourceManager:
                 del self.resource_pools[node_id]
             
             logger.info(f"Unregistered edge node: {node_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to unregister node {node_id}: {e}")
+
             return False
     
     async def allocate_resources(self, 
@@ -234,26 +250,34 @@ class EdgeResourceManager:
         """Allocate resources according to specifications."""
         
         allocation_strategy = strategy or self.default_strategy
+
         timeout = timeout or self.resource_timeout
         
         with self._allocation_lock:
             try:
                 # Find suitable nodes
+
                 candidate_nodes = await self._find_candidate_nodes(specs, node_constraints)
+
                 if not candidate_nodes:
                     logger.warning(f"No suitable nodes found for allocation request from {requester_id}")
+
                     return None
                 
                 # Apply allocation strategy
+
                 allocation_plan = await self.allocation_strategies[allocation_strategy](
                     specs, candidate_nodes, priority
                 )
+
                 
                 if not allocation_plan:
                     logger.warning(f"Allocation strategy failed for request from {requester_id}")
+
                     return None
                 
                 # Execute allocations
+
                 allocations = []
                 for node_id, resource_allocations in allocation_plan.items():
                     for spec, amount in resource_allocations:
@@ -270,17 +294,21 @@ class EdgeResourceManager:
                         # Update node resources
                         if await self._execute_allocation(node_id, allocation):
                             allocations.append(allocation)
+
                             self.allocations[allocation.allocation_id] = allocation
                         else:
                             # Rollback previous allocations
                             await self._rollback_allocations(allocations)
+
                             return None
                 
                 logger.info(f"Successfully allocated {len(allocations)} resources to {requester_id}")
+
                 return allocations
                 
             except Exception as e:
                 logger.error(f"Resource allocation failed: {e}")
+
                 return None
     
     async def release_resources(self, allocation_ids: List[str]) -> bool:
@@ -291,18 +319,26 @@ class EdgeResourceManager:
             for allocation_id in allocation_ids:
                 if allocation_id not in self.allocations:
                     logger.warning(f"Allocation {allocation_id} not found")
+
+
                     success = False
                     continue
+
                 
                 allocation = self.allocations[allocation_id]
                 
                 # Find the node with this allocation
+
                 node_id = await self._find_allocation_node(allocation_id)
+
                 if node_id and await self._execute_release(node_id, allocation):
                     del self.allocations[allocation_id]
                     logger.debug(f"Released allocation {allocation_id}")
+
                 else:
                     logger.error(f"Failed to release allocation {allocation_id}")
+
+
                     success = False
         
         return success
@@ -310,19 +346,26 @@ class EdgeResourceManager:
     async def get_resource_usage(self, node_id: Optional[str] = None) -> Dict[str, ResourceUsage]:
         """Get current resource usage statistics."""
         usage_stats = {}
+
         
         nodes_to_check = [node_id] if node_id else list(self.nodes.keys())
+
         
         for nid in nodes_to_check:
             if nid not in self.nodes:
                 continue
+
             
             node = self.nodes[nid]
             
             for resource_type, total_capacity in node.resources.items():
                 allocated = node.allocated_resources.get(resource_type, 0)
+
+
                 available = total_capacity - allocated
+
                 utilization = (allocated / total_capacity * 100) if total_capacity > 0 else 0
+
                 
                 usage = ResourceUsage(
                     resource_type=resource_type,
@@ -333,6 +376,7 @@ class EdgeResourceManager:
                     timestamp=datetime.now(),
                     node_id=nid
                 )
+
                 
                 usage_stats[f"{nid}_{resource_type.value}"] = usage
         
@@ -343,8 +387,10 @@ class EdgeResourceManager:
         return self.allocations.get(allocation_id)
     
     async def list_allocations(self, requester_id: Optional[str] = None) -> List[ResourceAllocation]:
-        """List current allocations, optionally filtered by requester."""
+        """
+        List current allocations, optionally filtered by requester."""
         allocations = list(self.allocations.values())
+
         
         if requester_id:
             allocations = [a for a in allocations if a.allocated_to == requester_id]
@@ -352,10 +398,12 @@ class EdgeResourceManager:
         return allocations
     
     async def update_node_status(self, node_id: str, status: ResourceStatus):
-        """Update the status of an edge node."""
+        """
+        Update the status of an edge node."""
         if node_id in self.nodes:
             self.nodes[node_id].status = status
             self.nodes[node_id].last_heartbeat = datetime.now()
+
             logger.info(f"Updated node {node_id} status to {status}")
         else:
             logger.warning(f"Cannot update status for unknown node {node_id}")
@@ -367,32 +415,39 @@ class EdgeResourceManager:
         """Reserve resources for future allocation."""
         
         reservation_id = str(uuid.uuid4())
+
         
         try:
             # Create temporary allocations for reservation
+
             allocations = await self.allocate_resources(
                 specs=specs,
                 requester_id=f"reservation_{requester_id}",
                 priority=ResourcePriority.HIGH,
                 timeout=reservation_duration
             )
+
             
             if allocations:
                 self.reserved_resources[reservation_id] = allocations
                 logger.info(f"Reserved resources for {requester_id}: {reservation_id}")
+
                 return reservation_id
             
             return None
             
         except Exception as e:
             logger.error(f"Resource reservation failed: {e}")
+
             return None
     
     async def claim_reservation(self, reservation_id: str, requester_id: str) -> Optional[List[ResourceAllocation]]:
         """Claim a previously made reservation."""
         if reservation_id not in self.reserved_resources:
             logger.warning(f"Reservation {reservation_id} not found")
+
             return None
+
         
         allocations = self.reserved_resources[reservation_id]
         
@@ -400,6 +455,7 @@ class EdgeResourceManager:
         for allocation in allocations:
             allocation.allocated_to = requester_id
             allocation.timestamp = datetime.now()
+
         
         del self.reserved_resources[reservation_id]
         
@@ -412,9 +468,16 @@ class EdgeResourceManager:
         """Initialize the local node as an edge resource node."""
         try:
             # Get system information
+
             cpu_count = psutil.cpu_count()
+
+
             memory_info = psutil.virtual_memory()
+
+
             disk_info = psutil.disk_usage('/')
+
+
             
             local_node = ResourceNode(
                 node_id="local_node",
@@ -439,8 +502,10 @@ class EdgeResourceManager:
                 capabilities=["compute", "storage", "networking"],
                 metadata={"is_local": True}
             )
+
             
             await self.register_node(local_node)
+
             
         except Exception as e:
             logger.error(f"Failed to initialize local node: {e}")
@@ -457,13 +522,16 @@ class EdgeResourceManager:
                 
                 # Update system metrics for local node
                 await self._update_local_metrics()
+
                 
                 await asyncio.sleep(self.monitoring_interval)
+
                 
             except asyncio.CancelledError:
                 break
             except Exception as e:
                 logger.error(f"Error in monitoring loop: {e}")
+
                 await asyncio.sleep(self.monitoring_interval)
     
     async def _cleanup_loop(self):
@@ -471,13 +539,16 @@ class EdgeResourceManager:
         while self.running:
             try:
                 await self._cleanup_expired_allocations()
+
                 await self._cleanup_expired_reservations()
+
                 await asyncio.sleep(60)  # Check every minute
                 
             except asyncio.CancelledError:
                 break
             except Exception as e:
                 logger.error(f"Error in cleanup loop: {e}")
+
                 await asyncio.sleep(60)
     
     async def _find_candidate_nodes(self, 
@@ -495,10 +566,12 @@ class EdgeResourceManager:
                 continue
             
             # Check if node has sufficient resources
+
             can_satisfy = True
             for spec in specs:
                 available = (node.resources.get(spec.resource_type, 0) - 
                            node.allocated_resources.get(spec.resource_type, 0))
+
                 
                 if available < spec.amount:
                     can_satisfy = False
@@ -506,11 +579,13 @@ class EdgeResourceManager:
             
             if can_satisfy:
                 candidate_nodes.append(node_id)
+
         
         return candidate_nodes
     
     async def _node_meets_constraints(self, node: ResourceNode, constraints: Dict[str, Any]) -> bool:
-        """Check if a node meets the specified constraints."""
+        """
+        Check if a node meets the specified constraints."""
         for constraint_type, constraint_value in constraints.items():
             if constraint_type == "location" and node.location != constraint_value:
                 return False
@@ -536,8 +611,10 @@ class EdgeResourceManager:
             allocated = False
             for node_id in candidate_nodes:
                 node = self.nodes[node_id]
+
                 available = (node.resources.get(spec.resource_type, 0) - 
                            node.allocated_resources.get(spec.resource_type, 0))
+
                 
                 if available >= spec.amount:
                     if node_id not in allocation_plan:
@@ -548,6 +625,8 @@ class EdgeResourceManager:
                     node.allocated_resources[spec.resource_type] = (
                         node.allocated_resources.get(spec.resource_type, 0) + spec.amount
                     )
+
+
                     allocated = True
                     break
             
@@ -560,20 +639,26 @@ class EdgeResourceManager:
                                   specs: List[ResourceSpec],
                                   candidate_nodes: List[str],
                                   priority: ResourcePriority) -> Optional[Dict[str, List[Tuple[ResourceSpec, float]]]]:
-        """Best-fit allocation strategy - allocate to node with least available resources."""
+        """
+        Best-fit allocation strategy - allocate to node with least available resources."""
         allocation_plan = {}
         
         for spec in specs:
             best_node = None
+
             best_available = float('inf')
+
             
             for node_id in candidate_nodes:
                 node = self.nodes[node_id]
+
                 available = (node.resources.get(spec.resource_type, 0) - 
                            node.allocated_resources.get(spec.resource_type, 0))
+
                 
                 if available >= spec.amount and available < best_available:
                     best_node = node_id
+
                     best_available = available
             
             if best_node:
@@ -582,10 +667,12 @@ class EdgeResourceManager:
                 allocation_plan[best_node].append((spec, spec.amount))
                 
                 # Update temporary allocation
+
                 node = self.nodes[best_node]
                 node.allocated_resources[spec.resource_type] = (
                     node.allocated_resources.get(spec.resource_type, 0) + spec.amount
                 )
+
             else:
                 return None
         
@@ -595,20 +682,25 @@ class EdgeResourceManager:
                                    specs: List[ResourceSpec],
                                    candidate_nodes: List[str],
                                    priority: ResourcePriority) -> Optional[Dict[str, List[Tuple[ResourceSpec, float]]]]:
-        """Worst-fit allocation strategy - allocate to node with most available resources."""
+        """
+        Worst-fit allocation strategy - allocate to node with most available resources."""
         allocation_plan = {}
         
         for spec in specs:
             best_node = None
+
             best_available = 0
             
             for node_id in candidate_nodes:
                 node = self.nodes[node_id]
+
                 available = (node.resources.get(spec.resource_type, 0) - 
                            node.allocated_resources.get(spec.resource_type, 0))
+
                 
                 if available >= spec.amount and available > best_available:
                     best_node = node_id
+
                     best_available = available
             
             if best_node:
@@ -617,10 +709,12 @@ class EdgeResourceManager:
                 allocation_plan[best_node].append((spec, spec.amount))
                 
                 # Update temporary allocation
+
                 node = self.nodes[best_node]
                 node.allocated_resources[spec.resource_type] = (
                     node.allocated_resources.get(spec.resource_type, 0) + spec.amount
                 )
+
             else:
                 return None
         
@@ -630,37 +724,50 @@ class EdgeResourceManager:
                                   specs: List[ResourceSpec],
                                   candidate_nodes: List[str],
                                   priority: ResourcePriority) -> Optional[Dict[str, List[Tuple[ResourceSpec, float]]]]:
-        """Balanced allocation strategy - distribute load evenly."""
+        """
+        Balanced allocation strategy - distribute load evenly."""
         allocation_plan = {}
         
         # Calculate current utilization for each node
+
         node_utilization = {}
         for node_id in candidate_nodes:
             node = self.nodes[node_id]
+
             total_util = 0
+
             resource_count = 0
             
             for resource_type, total_capacity in node.resources.items():
                 if total_capacity > 0:
                     allocated = node.allocated_resources.get(resource_type, 0)
+
+
                     util = allocated / total_capacity
                     total_util += util
                     resource_count += 1
             
             node_utilization[node_id] = total_util / max(resource_count, 1)
+
         
         for spec in specs:
             # Find node with lowest utilization that can handle the request
+
             best_node = None
+
             best_utilization = float('inf')
+
             
             for node_id in candidate_nodes:
                 node = self.nodes[node_id]
+
                 available = (node.resources.get(spec.resource_type, 0) - 
                            node.allocated_resources.get(spec.resource_type, 0))
+
                 
                 if available >= spec.amount and node_utilization[node_id] < best_utilization:
                     best_node = node_id
+
                     best_utilization = node_utilization[node_id]
             
             if best_node:
@@ -669,22 +776,28 @@ class EdgeResourceManager:
                 allocation_plan[best_node].append((spec, spec.amount))
                 
                 # Update temporary allocation and utilization
+
                 node = self.nodes[best_node]
                 node.allocated_resources[spec.resource_type] = (
                     node.allocated_resources.get(spec.resource_type, 0) + spec.amount
                 )
                 
                 # Recalculate utilization for this node
+
                 total_util = 0
+
                 resource_count = 0
                 for resource_type, total_capacity in node.resources.items():
                     if total_capacity > 0:
                         allocated = node.allocated_resources.get(resource_type, 0)
+
+
                         util = allocated / total_capacity
                         total_util += util
                         resource_count += 1
                 
                 node_utilization[best_node] = total_util / max(resource_count, 1)
+
             else:
                 return None
         
@@ -694,7 +807,8 @@ class EdgeResourceManager:
                                                specs: List[ResourceSpec],
                                                candidate_nodes: List[str],
                                                priority: ResourcePriority) -> Optional[Dict[str, List[Tuple[ResourceSpec, float]]]]:
-        """Performance-optimized allocation - prefer high-performance nodes."""
+        """
+        Performance-optimized allocation - prefer high-performance nodes."""
         # For now, use best-fit as a proxy for performance optimization
         return await self._best_fit_allocation(specs, candidate_nodes, priority)
     
@@ -702,22 +816,28 @@ class EdgeResourceManager:
                                           specs: List[ResourceSpec],
                                           candidate_nodes: List[str],
                                           priority: ResourcePriority) -> Optional[Dict[str, List[Tuple[ResourceSpec, float]]]]:
-        """Energy-optimized allocation - prefer nodes that minimize energy usage."""
+        """
+        Energy-optimized allocation - prefer nodes that minimize energy usage."""
         # For now, use worst-fit to consolidate workloads
         return await self._worst_fit_allocation(specs, candidate_nodes, priority)
     
     async def _execute_allocation(self, node_id: str, allocation: ResourceAllocation) -> bool:
-        """Execute a resource allocation on a specific node."""
+        """
+        Execute a resource allocation on a specific node."""
         try:
             if node_id not in self.nodes:
                 return False
+
             
             node = self.nodes[node_id]
+
             resource_type = allocation.resource_type
             
             # Check if resources are still available
+
             available = (node.resources.get(resource_type, 0) - 
                         node.allocated_resources.get(resource_type, 0))
+
             
             if available < allocation.amount:
                 return False
@@ -726,11 +846,13 @@ class EdgeResourceManager:
             node.allocated_resources[resource_type] = (
                 node.allocated_resources.get(resource_type, 0) + allocation.amount
             )
+
             
             return True
             
         except Exception as e:
             logger.error(f"Failed to execute allocation {allocation.allocation_id}: {e}")
+
             return False
     
     async def _execute_release(self, node_id: str, allocation: ResourceAllocation) -> bool:
@@ -738,23 +860,30 @@ class EdgeResourceManager:
         try:
             if node_id not in self.nodes:
                 return False
+
             
             node = self.nodes[node_id]
+
             resource_type = allocation.resource_type
             
             # Release resources
+
             current_allocated = node.allocated_resources.get(resource_type, 0)
+
             node.allocated_resources[resource_type] = max(0, current_allocated - allocation.amount)
+
             
             return True
             
         except Exception as e:
             logger.error(f"Failed to release allocation {allocation.allocation_id}: {e}")
+
             return False
     
     async def _find_allocation_node(self, allocation_id: str) -> Optional[str]:
         """Find which node contains a specific allocation."""
         # In a real implementation, this would be tracked more efficiently
+
         allocation = self.allocations.get(allocation_id)
         if not allocation:
             return None
@@ -767,35 +896,44 @@ class EdgeResourceManager:
         return None
     
     async def _rollback_allocations(self, allocations: List[ResourceAllocation]):
-        """Rollback a list of allocations."""
+        """
+        Rollback a list of allocations."""
         for allocation in allocations:
             node_id = await self._find_allocation_node(allocation.allocation_id)
+
             if node_id:
                 await self._execute_release(node_id, allocation)
+
                 if allocation.allocation_id in self.allocations:
                     del self.allocations[allocation.allocation_id]
     
     async def _release_node_allocations(self, node_id: str):
-        """Release all allocations on a specific node."""
+        """
+        Release all allocations on a specific node."""
         allocations_to_release = []
         
         for allocation_id, allocation in self.allocations.items():
             # Check if allocation belongs to this node
             if await self._find_allocation_node(allocation_id) == node_id:
                 allocations_to_release.append(allocation_id)
+
         
         await self.release_resources(allocations_to_release)
     
     async def _update_usage_statistics(self):
-        """Update resource usage statistics."""
+        """
+        Update resource usage statistics."""
         usage_stats = await self.get_resource_usage()
+
         
         for key, usage in usage_stats.items():
             self.usage_history[key].append(usage)
     
     async def _check_node_health(self):
-        """Check health of all registered nodes."""
+        """
+        Check health of all registered nodes."""
         current_time = datetime.now()
+
         
         for node_id, node in self.nodes.items():
             # Check if node has sent heartbeat recently
@@ -811,19 +949,27 @@ class EdgeResourceManager:
         
         try:
             # Update CPU usage
+
             cpu_percent = psutil.cpu_percent(interval=1)
             
             # Update memory usage
+
             memory_info = psutil.virtual_memory()
+
+
             memory_used_gb = (memory_info.total - memory_info.available) // (1024**3)
             
             # Update local node allocated resources based on actual system usage
+
             local_node = self.nodes["local_node"]
             local_node.allocated_resources[ResourceType.CPU] = (
                 local_node.resources[ResourceType.CPU] * cpu_percent / 100
             )
+
             local_node.allocated_resources[ResourceType.MEMORY] = float(memory_used_gb)
+
             local_node.last_heartbeat = datetime.now()
+
             
         except Exception as e:
             logger.error(f"Failed to update local metrics: {e}")
@@ -831,30 +977,37 @@ class EdgeResourceManager:
     async def _cleanup_expired_allocations(self):
         """Clean up expired resource allocations."""
         current_time = datetime.now()
+
         expired_allocations = []
         
         for allocation_id, allocation in self.allocations.items():
             if allocation.expires_at and current_time > allocation.expires_at:
                 expired_allocations.append(allocation_id)
+
         
         if expired_allocations:
             await self.release_resources(expired_allocations)
+
             logger.info(f"Cleaned up {len(expired_allocations)} expired allocations")
     
     async def _cleanup_expired_reservations(self):
         """Clean up expired resource reservations."""
         current_time = datetime.now()
+
         expired_reservations = []
         
         for reservation_id, allocations in self.reserved_resources.items():
             # Check if any allocation in the reservation has expired
             if any(a.expires_at and current_time > a.expires_at for a in allocations):
                 expired_reservations.append(reservation_id)
+
         
         for reservation_id in expired_reservations:
             allocations = self.reserved_resources[reservation_id]
+
             allocation_ids = [a.allocation_id for a in allocations]
             await self.release_resources(allocation_ids)
+
             del self.reserved_resources[reservation_id]
         
         if expired_reservations:
@@ -884,28 +1037,35 @@ if __name__ == "__main__":
         await manager.start()
         
         # Test resource allocation
+
         specs = [
             ResourceSpec(ResourceType.CPU, 2.0, "cores"),
             ResourceSpec(ResourceType.MEMORY, 4.0, "GB")
         ]
+
         
         allocations = await manager.allocate_resources(
             specs=specs,
             requester_id="test_service",
             priority=ResourcePriority.HIGH
         )
+
         
         if allocations:
             print(f"Allocated {len(allocations)} resources")
             
             # Get usage stats
+
             usage = await manager.get_resource_usage()
+
             for key, stat in usage.items():
                 print(f"{key}: {stat.utilization_percent:.1f}% utilized")
             
             # Release resources
+
             allocation_ids = [a.allocation_id for a in allocations]
             await manager.release_resources(allocation_ids)
+
             print("Resources released")
         
         # Stop manager

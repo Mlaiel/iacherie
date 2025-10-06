@@ -1,4 +1,5 @@
-"""Content Format Core - Enterprise Content Processing Engine
+"""
+Content Format Core - Enterprise Content Processing Engine
 
 Central content format processing core for multi-format content handling.
 Supports Audio, Video, Image, Text, Voice, Avatar processing with enterprise standards.
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 # Audio Formats
 class AudioFormat(Enum):
-    """Supported audio formats with processing capabilities"""
+    """
+Supported audio formats with processing capabilities"""
     MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
@@ -35,7 +37,8 @@ class AudioFormat(Enum):
 
 # Video Formats
 class VideoFormat(Enum):
-    """Supported video formats with processing capabilities"""
+    """
+Supported video formats with processing capabilities"""
     MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
@@ -45,7 +48,8 @@ class VideoFormat(Enum):
 
 # Image Formats
 class ImageFormat(Enum):
-    """Supported image formats with processing capabilities"""
+    """
+Supported image formats with processing capabilities"""
     JPEG = "jpeg"
     PNG = "png"
     SVG = "svg"
@@ -55,7 +59,8 @@ class ImageFormat(Enum):
 
 # Text Formats
 class TextFormat(Enum):
-    """Supported text formats with processing capabilities"""
+    """
+Supported text formats with processing capabilities"""
     MARKDOWN = "markdown"
     HTML = "html"
     TXT = "txt"
@@ -64,7 +69,8 @@ class TextFormat(Enum):
 
 # Processing Status
 class ProcessingStatus(Enum):
-    """Content processing status"""
+    """
+Content processing status"""
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -73,7 +79,8 @@ class ProcessingStatus(Enum):
 
 @dataclass
 class ContentMetadata:
-    """Content metadata with format-specific information"""
+    """
+Content metadata with format-specific information"""
     content_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     original_filename: str = ""
     content_type: str = ""
@@ -90,7 +97,8 @@ class ContentMetadata:
 
 @dataclass
 class ProcessingOptions:
-    """Content processing options"""
+    """
+Content processing options"""
     target_quality: str = "high"
     compression_level: int = 5
     optimization_enabled: bool = True
@@ -103,7 +111,8 @@ class ProcessingOptions:
 
 @dataclass
 class ContentProcessingTask:
-    """Content processing task with business context"""
+    """
+Content processing task with business context"""
     task_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_metadata: ContentMetadata = field(default_factory=ContentMetadata)
     processing_options: ProcessingOptions = field(default_factory=ProcessingOptions)
@@ -115,7 +124,8 @@ class ContentProcessingTask:
     result_data: Dict[str, Any] = field(default_factory=dict)
 
 class ContentFormatCore:
-    """Enterprise Content Format Processing Core
+    """
+Enterprise Content Format Processing Core
     
     Handles multi-format content processing with enterprise-grade performance,
     reliability, and quality standards. Supports audio, video, image, text processing.
@@ -131,7 +141,8 @@ class ContentFormatCore:
         logger.info("Content Format Core initialized")
     
     async def initialize(self) -> bool:
-        """Initialize the content format processing system"""
+        """
+Initialize the content format processing system"""
         try:
             await self._setup_format_processors()
             await self._setup_quality_standards()
@@ -146,7 +157,8 @@ class ContentFormatCore:
             return False
     
     async def _setup_format_processors(self):
-        """Setup format-specific processors"""
+        """
+Setup format-specific processors"""
         self.format_processors = {
             # Audio Processing Capabilities
             "audio": {
@@ -220,7 +232,8 @@ class ContentFormatCore:
         logger.info("✅ Format processors configured")
     
     async def _setup_quality_standards(self):
-        """Setup content quality standards"""
+        """
+Setup content quality standards"""
         self.quality_standards = {
             "processing_speed": {
                 "audio": {"max_time_ratio": 0.1},  # 10x real-time
@@ -244,7 +257,8 @@ class ContentFormatCore:
         logger.info("✅ Quality standards configured")
     
     async def _setup_performance_monitoring(self):
-        """Setup performance monitoring"""
+        """
+Setup performance monitoring"""
         self.performance_metrics = {
             "processing_speed_ms": 0.0,
             "success_rate": 100.0,
@@ -263,7 +277,8 @@ class ContentFormatCore:
         filename: str,
         processing_options: Optional[ProcessingOptions] = None
     ) -> ContentProcessingTask:
-        """Process content with format-specific optimizations"""
+        """
+Process content with format-specific optimizations"""
         start_time = datetime.utcnow()
         
         try:
@@ -327,7 +342,8 @@ class ContentFormatCore:
         content_type: str, 
         filename: str
     ) -> ContentMetadata:
-        """Extract content metadata"""
+        """
+Extract content metadata"""
         try:
             # Calculate checksum
             checksum = hashlib.sha256(content_data).hexdigest()
@@ -362,7 +378,8 @@ class ContentFormatCore:
             raise
     
     async def _determine_format_category(self, content_type: str) -> str:
-        """Determine content format category"""
+        """
+Determine content format category"""
         if content_type.startswith("audio/"):
             return "audio"
         elif content_type.startswith("video/"):
@@ -375,7 +392,8 @@ class ContentFormatCore:
             raise ValueError(f"Unsupported content type: {content_type}")
     
     async def _extract_audio_metadata(self, metadata: ContentMetadata, content_data: bytes) -> ContentMetadata:
-        """Extract audio-specific metadata"""
+        """
+Extract audio-specific metadata"""
         try:
             # Simulate audio metadata extraction
             # In real implementation, use libraries like mutagen, ffprobe
@@ -390,7 +408,8 @@ class ContentFormatCore:
             return metadata
     
     async def _extract_video_metadata(self, metadata: ContentMetadata, content_data: bytes) -> ContentMetadata:
-        """Extract video-specific metadata"""
+        """
+Extract video-specific metadata"""
         try:
             # Simulate video metadata extraction
             # In real implementation, use libraries like ffprobe, opencv
@@ -405,7 +424,8 @@ class ContentFormatCore:
             return metadata
     
     async def _extract_image_metadata(self, metadata: ContentMetadata, content_data: bytes) -> ContentMetadata:
-        """Extract image-specific metadata"""
+        """
+Extract image-specific metadata"""
         try:
             # Simulate image metadata extraction
             # In real implementation, use libraries like PIL, exifread
@@ -419,7 +439,8 @@ class ContentFormatCore:
             return metadata
     
     async def _extract_text_metadata(self, metadata: ContentMetadata, content_data: bytes) -> ContentMetadata:
-        """Extract text-specific metadata"""
+        """
+Extract text-specific metadata"""
         try:
             # Simulate text metadata extraction
             text_content = content_data.decode('utf-8', errors='ignore')
@@ -440,7 +461,8 @@ class ContentFormatCore:
         metadata: ContentMetadata,
         options: ProcessingOptions
     ) -> Dict[str, Any]:
-        """Process audio content with business logic"""
+        """
+Process audio content with business logic"""
         try:
             result = {
                 "format": "audio",
@@ -493,7 +515,8 @@ class ContentFormatCore:
         metadata: ContentMetadata,
         options: ProcessingOptions
     ) -> Dict[str, Any]:
-        """Process video content with business logic"""
+        """
+Process video content with business logic"""
         try:
             result = {
                 "format": "video",
@@ -544,7 +567,8 @@ class ContentFormatCore:
         metadata: ContentMetadata,
         options: ProcessingOptions
     ) -> Dict[str, Any]:
-        """Process image content with business logic"""
+        """
+Process image content with business logic"""
         try:
             result = {
                 "format": "image",
@@ -598,7 +622,8 @@ class ContentFormatCore:
         metadata: ContentMetadata,
         options: ProcessingOptions
     ) -> Dict[str, Any]:
-        """Process text content with business logic"""
+        """
+Process text content with business logic"""
         try:
             text_content = content_data.decode('utf-8', errors='ignore')
             
@@ -661,7 +686,8 @@ class ContentFormatCore:
         processing_time: float, 
         success: bool
     ):
-        """Update system performance metrics"""
+        """
+Update system performance metrics"""
         try:
             # Update processing speed
             self.performance_metrics["processing_speed_ms"] = (
@@ -690,11 +716,13 @@ class ContentFormatCore:
             logger.error(f"❌ Performance metrics update failed: {str(e)}")
     
     async def get_processing_status(self, task_id: str) -> Optional[ContentProcessingTask]:
-        """Get processing status for a task"""
+        """
+Get processing status for a task"""
         return self.processing_tasks.get(task_id)
     
     async def get_supported_formats(self) -> Dict[str, List[str]]:
-        """Get all supported formats by category"""
+        """
+Get all supported formats by category"""
         try:
             return {
                 "audio": [f.value for f in AudioFormat],
@@ -707,7 +735,8 @@ class ContentFormatCore:
             return {}
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get current performance metrics"""
+        """
+Get current performance metrics"""
         try:
             return {
                 "metrics": self.performance_metrics,

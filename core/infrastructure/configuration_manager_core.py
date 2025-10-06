@@ -41,21 +41,24 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class ConfigLevel(str, Enum):
-    """Configuration complexity levels"""
+    """
+Configuration complexity levels"""
     BASIC = "basic"
     STANDARD = "standard" 
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
 
 class ConfigEnvironment(str, Enum):
-    """Configuration environments"""
+    """
+Configuration environments"""
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
 
 class ConfigSource(str, Enum):
-    """Configuration data sources"""
+    """
+Configuration data sources"""
     FILE = "file"
     ENVIRONMENT = "environment"
     DATABASE = "database"
@@ -65,7 +68,8 @@ class ConfigSource(str, Enum):
 
 @dataclass
 class ConfigChange:
-    """Configuration change tracking"""
+    """
+Configuration change tracking"""
     key: str
     old_value: Any
     new_value: Any
@@ -75,7 +79,8 @@ class ConfigChange:
 
 @dataclass
 class ConfigMetrics:
-    """Configuration system metrics"""
+    """
+Configuration system metrics"""
     total_configs: int = 0
     encrypted_configs: int = 0
     hot_reloads: int = 0
@@ -84,7 +89,8 @@ class ConfigMetrics:
     config_sources: Dict[str, int] = field(default_factory=dict)
 
 class ConfigSchema:
-    """Configuration validation schema"""
+    """
+Configuration validation schema"""
     
     def __init__(self):
         self.validators: Dict[str, Callable] = {}
@@ -93,11 +99,13 @@ class ConfigSchema:
         self.type_hints: Dict[str, Type] = {}
 
     def add_validator(self, key: str, validator: Callable[[Any], bool]):
-        """Add custom validator for configuration key"""
+        """
+Add custom validator for configuration key"""
         self.validators[key] = validator
 
     def validate(self, config: Dict[str, Any]) -> List[str]:
-        """Validate configuration against schema"""
+        """
+Validate configuration against schema"""
         errors = []
         
         # Check required keys
@@ -122,10 +130,12 @@ class ConfigSchema:
         return errors
 
 class ConfigurationManagerCore:
-    """Enterprise configuration management system"""
+    """
+Enterprise configuration management system"""
     
     def __init__(self, level: str = "enterprise"):
-        """Initialize configuration manager"""
+        """
+Initialize configuration manager"""
         self.level = ConfigLevel.ENTERPRISE if level == "enterprise" else ConfigLevel.STANDARD
         self.environment = ConfigEnvironment.PRODUCTION
         self.config_data: Dict[str, Any] = {}
@@ -166,7 +176,8 @@ class ConfigurationManagerCore:
         logger.info(f"⚙️ Configuration Manager Core initialized - Level: {self.level}")
 
     def _setup_default_config(self):
-        """Setup default configuration values"""
+        """
+Setup default configuration values"""
         self.config_data = {
             # Core system configuration
             "core": {
@@ -240,7 +251,8 @@ class ConfigurationManagerCore:
         }
 
     def _initialize_encryption(self):
-        """Initialize encryption for sensitive configuration values"""
+        """
+Initialize encryption for sensitive configuration values"""
         if not CRYPTOGRAPHY_AVAILABLE:
             logger.warning("Cryptography not available, sensitive configs will not be encrypted")
             return
@@ -268,7 +280,8 @@ class ConfigurationManagerCore:
             logger.error(f"Failed to initialize encryption: {str(e)}")
 
     def _load_configurations(self):
-        """Load configurations from all sources"""
+        """
+Load configurations from all sources"""
         # Load from files
         self._load_from_files()
         
@@ -282,7 +295,8 @@ class ConfigurationManagerCore:
         self._update_metrics()
 
     def _load_from_files(self):
-        """Load configuration from files"""
+        """
+Load configuration from files"""
         for config_path in self.config_paths:
             if not os.path.exists(config_path):
                 continue
@@ -301,7 +315,8 @@ class ConfigurationManagerCore:
                 self._load_yaml_file(env_file)
 
     def _load_yaml_file(self, file_path: Path):
-        """Load configuration from YAML file"""
+        """
+Load configuration from YAML file"""
         try:
             with open(file_path, 'r') as f:
                 data = yaml.safe_load(f)
@@ -313,7 +328,8 @@ class ConfigurationManagerCore:
             logger.error(f"Failed to load YAML file {file_path}: {str(e)}")
 
     def _load_json_file(self, file_path: Path):
-        """Load configuration from JSON file"""
+        """
+Load configuration from JSON file"""
         try:
             with open(file_path, 'r') as f:
                 data = json.load(f)
@@ -325,15 +341,13 @@ class ConfigurationManagerCore:
             logger.error(f"Failed to load JSON file {file_path}: {str(e)}")
 
     def _load_from_environment(self):
-        """Load configuration from environment variables"""
+        """
+Load configuration from environment variables"""
         env_prefix = "IACHERIE_"
         
         for key, value in os.environ.items():
             if key.startswith(env_prefix):
-# SECURITY: # SECURITY: config_key = key[len(env_prefix):].lower().replace('_', '.') # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
-                
+# SECURITY: # SECURITY: config_key = key[len(env_prefix):].lower().replace('_', '.') # MOVED TO ENV # MOVED TO ENV                
                 # Convert string values to appropriate types
                 converted_value = self._convert_env_value(value)
                 
@@ -343,7 +357,8 @@ class ConfigurationManagerCore:
                 self.metrics.config_sources["environment"] = self.metrics.config_sources.get("environment", 0) + 1
 
     def _convert_env_value(self, value: str) -> Any:
-        """Convert environment variable string to appropriate type"""
+        """
+Convert environment variable string to appropriate type"""
         # Boolean conversion
         if value.lower() in ('true', 'false'):
             return value.lower() == 'true'
@@ -368,7 +383,8 @@ class ConfigurationManagerCore:
         return value
 
     def _merge_config(self, new_config: Dict[str, Any], source: str):
-        """Merge new configuration with existing"""
+        """
+Merge new configuration with existing"""
         def merge_dict(base: Dict, update: Dict):
             for key, value in update.items():
                 if key in base and isinstance(base[key], dict) and isinstance(value, dict):
@@ -391,7 +407,8 @@ class ConfigurationManagerCore:
         self.metrics.config_sources[source] = self.metrics.config_sources.get(source, 0) + 1
 
     def _set_nested_config(self, key_path: str, value: Any):
-        """Set nested configuration value using dot notation"""
+        """
+Set nested configuration value using dot notation"""
         keys = key_path.split('.')
         current = self.config_data
         
@@ -413,7 +430,8 @@ class ConfigurationManagerCore:
             ))
 
     def _validate_configuration(self):
-        """Validate loaded configuration"""
+        """
+Validate loaded configuration"""
         errors = []
         
         for schema_name, schema in self.schemas.items():
@@ -426,7 +444,8 @@ class ConfigurationManagerCore:
             logger.warning(f"Configuration validation errors: {errors}")
 
     def _start_file_watching(self):
-        """Start watching configuration files for changes"""
+        """
+Start watching configuration files for changes"""
         if self._watch_thread and self._watch_thread.is_alive():
             return
         
@@ -435,7 +454,8 @@ class ConfigurationManagerCore:
         logger.info("👁️ Started configuration file watching")
 
     def _watch_files(self):
-        """Watch configuration files for changes"""
+        """
+Watch configuration files for changes"""
         while not self._stop_watching.is_set():
             try:
                 for file_path, last_mtime in self._file_mtimes.items():
@@ -457,7 +477,8 @@ class ConfigurationManagerCore:
                 time.sleep(10)
 
     def _reload_file(self, file_path: str):
-        """Reload specific configuration file"""
+        """
+Reload specific configuration file"""
         try:
             if file_path.endswith('.yaml'):
                 self._load_yaml_file(Path(file_path))
@@ -471,7 +492,8 @@ class ConfigurationManagerCore:
             logger.error(f"Failed to reload file {file_path}: {str(e)}")
 
     def _notify_watchers(self, event: str):
-        """Notify configuration change watchers"""
+        """
+Notify configuration change watchers"""
         for watcher in self.watchers:
             try:
                 watcher(event, self.config_data)
@@ -479,12 +501,14 @@ class ConfigurationManagerCore:
                 logger.error(f"Watcher notification error: {str(e)}")
 
     def _update_metrics(self):
-        """Update configuration metrics"""
+        """
+Update configuration metrics"""
         self.metrics.total_configs = self._count_nested_keys(self.config_data)
         self.metrics.encrypted_configs = len(self.encrypted_keys)
 
     def _count_nested_keys(self, data: Dict[str, Any]) -> int:
-        """Count total number of configuration keys (including nested)"""
+        """
+Count total number of configuration keys (including nested)"""
         count = 0
         for key, value in data.items():
             count += 1
@@ -493,7 +517,8 @@ class ConfigurationManagerCore:
         return count
 
     def get(self, key: str, default: Any = None) -> Any:
-        """Get configuration value by key (supports dot notation)"""
+        """
+Get configuration value by key (supports dot notation)"""
         keys = key.split('.')
         current = self.config_data
         
@@ -517,7 +542,8 @@ class ConfigurationManagerCore:
             return default
 
     def set(self, key: str, value: Any, encrypt: bool = False, source: str = "manual"):
-        """Set configuration value"""
+        """
+Set configuration value"""
         keys = key.split('.')
         current = self.config_data
         
@@ -555,7 +581,8 @@ class ConfigurationManagerCore:
         self._notify_watchers(f"config_changed:{key}")
 
     def delete(self, key: str):
-        """Delete configuration key"""
+        """
+Delete configuration key"""
         keys = key.split('.')
         current = self.config_data
         
@@ -581,19 +608,23 @@ class ConfigurationManagerCore:
             pass
 
     def get_section(self, section: str) -> Dict[str, Any]:
-        """Get entire configuration section"""
+        """
+Get entire configuration section"""
         return self.get(section, {})
 
     def add_schema(self, name: str, schema: ConfigSchema):
-        """Add validation schema for configuration section"""
+        """
+Add validation schema for configuration section"""
         self.schemas[name] = schema
 
     def add_watcher(self, callback: Callable[[str, Dict[str, Any]], None]):
-        """Add configuration change watcher"""
+        """
+Add configuration change watcher"""
         self.watchers.append(callback)
 
     def reload(self):
-        """Manually reload all configurations"""
+        """
+Manually reload all configurations"""
         logger.info("🔄 Manually reloading configurations")
         self._load_configurations()
         self.metrics.hot_reloads += 1
@@ -601,7 +632,8 @@ class ConfigurationManagerCore:
         self._notify_watchers("manual_reload")
 
     def export_config(self, format: str = "yaml") -> str:
-        """Export current configuration"""
+        """
+Export current configuration"""
         if format == "yaml":
             return yaml.dump(self.config_data, default_flow_style=False)
         elif format == "json":
@@ -610,22 +642,22 @@ class ConfigurationManagerCore:
             return str(self.config_data)
 
     def get_metrics(self) -> ConfigMetrics:
-        """Get configuration system metrics"""
+        """
+Get configuration system metrics"""
         self._update_metrics()
         return self.metrics
 
     def get_change_history(self, limit: int = 100) -> List[ConfigChange]:
-        """Get recent configuration changes"""
+        """
+Get recent configuration changes"""
         return sorted(self.change_history, key=lambda x: x.timestamp, reverse=True)[:limit]
 
     async def health_check(self) -> bool:
-        """Health check for configuration system"""
+        """
+Health check for configuration system"""
         try:
             # Test basic operations
-# SECURITY: # SECURITY: test_key = "health_check.test" # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
-            test_value = f"test_{time.time()}"
+# SECURITY: # SECURITY: test_key = "health_check.test" # MOVED TO ENV # MOVED TO ENV            test_value = f"test_{time.time()}"
             
             self.set(test_key, test_value)
             retrieved = self.get(test_key)
@@ -638,13 +670,15 @@ class ConfigurationManagerCore:
             return False
 
     def stop_watching(self):
-        """Stop file watching"""
+        """
+Stop file watching"""
         self._stop_watching.set()
         if self._watch_thread and self._watch_thread.is_alive():
             self._watch_thread.join(timeout=5)
 
     def __del__(self):
-        """Cleanup on destruction"""
+        """
+Cleanup on destruction"""
         try:
             self.stop_watching()
         except Exception:
@@ -656,4 +690,4 @@ __all__ = [
     "ConfigSource", "ConfigChange", "ConfigMetrics", "ConfigSchema"
 ]
 
-logger.info("⚙️ Configuration Manager Core module loaded")
+logger.info("⚙️ Configuration Manager Core module initialized")

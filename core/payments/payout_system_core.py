@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class PayoutSystemCore:
-    """Advanced PayoutSystemCore System"""
+    """
+Advanced PayoutSystemCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class PayoutSystemCore:
 # Module exports
 __all__ = ["PayoutSystemCore"]
 
-logger.info("💸 PayoutSystemCore module loaded")
+logger.info("💸 PayoutSystemCore module initialized")

@@ -16,7 +16,8 @@ import os
 # ===== AI MODEL CONFIGURATION =====
 
 class ModelType(str, Enum):
-    """AI model types"""
+    """
+        AI model types"""
     TRANSFORMER = "transformer"
     CNN = "cnn"
     RNN = "rnn"
@@ -93,7 +94,8 @@ class FingerprintAIConfig:
 
 @dataclass
 class NLPConfig:
-    """Natural Language Processing configuration"""
+    """
+        Natural Language Processing configuration"""
     model_name: str = "bert-base-uncased"
     tokenizer_name: str = "bert-base-uncased"
     max_sequence_length: int = 512
@@ -184,7 +186,8 @@ class InferenceConfig:
 # ===== VECTOR STORE CONFIGURATION =====
 
 class VectorStoreType(str, Enum):
-    """Vector store types"""
+    """
+        Vector store types"""
     FAISS = "faiss"
     PINECONE = "pinecone"
     WEAVIATE = "weaviate"

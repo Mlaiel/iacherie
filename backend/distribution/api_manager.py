@@ -43,7 +43,8 @@ logger = logging.getLogger(__name__)
 
 
 class HTTPMethod(str, Enum):
-    """HTTP methods."""
+    """
+        HTTP methods."""
     GET = "GET"
     POST = "POST"
     PUT = "PUT"
@@ -108,7 +109,8 @@ class APICredentials:
 
 @dataclass
 class APIRequest:
-    """API request data."""
+    """
+        API request data."""
     id: str
     endpoint_id: str
     method: HTTPMethod
@@ -126,7 +128,8 @@ class APIRequest:
 
 @dataclass
 class APIResponse:
-    """API response data."""
+    """
+        API response data."""
     request_id: str
     status_code: int
     status: RequestStatus
@@ -141,7 +144,8 @@ class APIResponse:
 
 @dataclass
 class RateLimitConfig:
-    """Rate limiting configuration."""
+    """
+        Rate limiting configuration."""
     requests_per_minute: int
     requests_per_hour: int
     requests_per_day: int
@@ -160,7 +164,8 @@ class APIManager:
     """
     
     def __init__(self, cache_client=None):
-        """Initialize the API manager."""
+        """
+        Initialize the API manager."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.cache = cache_client
         self.endpoints: Dict[str, APIEndpoint] = {}
@@ -180,6 +185,7 @@ class APIManager:
                 timeout=aiohttp.ClientTimeout(total=60),
                 headers={"User-Agent": "iacherie-API-Manager/1.0"}
             )
+
             self.logger.info("✅ API Manager session initialized")
         except Exception as e:
             self.logger.error(f"❌ Failed to initialize API Manager: {e}")
@@ -202,12 +208,15 @@ class APIManager:
                 requests_per_hour=endpoint.rate_limit_per_minute * 60,
                 requests_per_day=endpoint.rate_limit_per_minute * 60 * 24
             )
+
             
             self.logger.info(f"✅ API endpoint registered: {endpoint.name}")
+
             return True
             
         except Exception as e:
             self.logger.error(f"❌ Failed to register endpoint: {e}")
+
             return False
     
     async def make_request(
@@ -228,6 +237,8 @@ class APIManager:
                     status=RequestStatus.FAILED,
                     error_message=f"Endpoint {endpoint_id} not found"
                 )
+
+
             
             endpoint = self.endpoints[endpoint_id]
             
@@ -243,13 +254,16 @@ class APIManager:
             # Check cache first
             if endpoint.cache_ttl > 0 and not override_cache:
                 cached_response = await self._get_cached_response(endpoint_id, params)
+
                 if cached_response:
                     return cached_response
             
             # Build request
+
             request = await self._build_request(endpoint, params, data, files, custom_headers)
             
             # Execute request with retries
+
             response = await self._execute_request_with_retries(request, endpoint)
             
             # Cache response if configured
@@ -258,15 +272,18 @@ class APIManager:
             
             # Store in history
             self.request_history.append(request)
+
             self.response_history.append(response)
             
             # Update rate limit counters
             await self._update_rate_limit_counters(endpoint_id)
+
             
             return response
             
         except Exception as e:
             self.logger.error(f"❌ Failed to make request: {e}")
+
             return APIResponse(
                 request_id=str(uuid4()),
                 status_code=500,
@@ -279,8 +296,10 @@ class APIManager:
         try:
             if endpoint_id not in self.rate_limits:
                 return True
+
             
             rate_limit = self.rate_limits[endpoint_id]
+
             now = datetime.utcnow()
             
             # Reset counters if needed
@@ -308,6 +327,7 @@ class APIManager:
             
         except Exception as e:
             self.logger.error(f"Error checking rate limit: {e}")
+
             return True
     
     async def _update_rate_limit_counters(self, endpoint_id: str):
@@ -332,14 +352,18 @@ class APIManager:
                 return None
             
             # Create cache key
+
             cache_key = self._create_cache_key(endpoint_id, params)
             
             # Get from cache
+
             cached_data = await self.cache.get(cache_key)
+
             if not cached_data:
                 return None
             
             # Reconstruct APIResponse from cached data
+
             response = APIResponse(
                 status_code=cached_data.get('status_code', 200),
                 data=cached_data.get('data'),
@@ -351,12 +375,15 @@ class APIManager:
                 rate_limit_remaining=cached_data.get('rate_limit_remaining'),
                 cache_hit=True  # Mark as cache hit
             )
+
             
             self.logger.debug(f"🎯 Cache hit for {endpoint_id}")
+
             return response
             
         except Exception as e:
             self.logger.error(f"Error getting cached response: {e}")
+
             return None
     
     async def _cache_response(
@@ -376,9 +403,11 @@ class APIManager:
                 return
             
             # Create cache key
+
             cache_key = self._create_cache_key(endpoint_id, params)
             
             # Prepare cache data
+
             cache_data = {
                 'status_code': response.status_code,
                 'data': response.data,
@@ -393,8 +422,10 @@ class APIManager:
             
             # Cache the response
             await self.cache.set(cache_key, cache_data, ttl)
+
             
             self.logger.debug(f"💾 Response cached for {endpoint_id} (TTL: {ttl}s)")
+
             
         except Exception as e:
             self.logger.error(f"Error caching response: {e}")
@@ -403,6 +434,7 @@ class APIManager:
         """Create cache key for request."""
         try:
             # Include user context and request specifics in cache key
+
             key_components = [
                 f"api_response",
                 endpoint_id,
@@ -412,18 +444,24 @@ class APIManager:
             # Add user context if available
             if hasattr(self, 'current_user_id') and self.current_user_id:
                 key_components.append(f"user:{self.current_user_id}")
+
+
             
             key_data = ":".join(key_components)
+
             return hashlib.md5(key_data.encode()).hexdigest()
+
             
         except Exception as e:
             self.logger.error(f"Error creating cache key: {e}")
+
             return f"api_response:{endpoint_id}:default"
     
     def _get_cache_ttl(self, endpoint_id: str, response: APIResponse) -> int:
         """Determine appropriate cache TTL for response."""
         try:
             # Default TTLs based on endpoint patterns
+
             default_ttls = {
                 'user_profile': 1800,      # 30 minutes
                 'content_list': 600,       # 10 minutes
@@ -440,10 +478,13 @@ class APIManager:
                     return ttl
             
             # Check response headers for cache control
+
             cache_control = response.headers.get('Cache-Control', '')
+
             if 'max-age=' in cache_control:
                 try:
                     max_age = int(cache_control.split('max-age=')[1].split(',')[0])
+
                     return min(max_age, 3600)  # Cap at 1 hour
                 except ValueError:
                     pass
@@ -453,6 +494,7 @@ class APIManager:
             
         except Exception as e:
             self.logger.error(f"Error determining cache TTL: {e}")
+
             return 600  # Default 10 minutes
     
     async def _should_cache_response(self, endpoint_id: str, response: APIResponse) -> bool:
@@ -463,7 +505,9 @@ class APIManager:
                 return False
             
             # Don't cache responses with no-cache header
+
             cache_control = response.headers.get('Cache-Control', '').lower()
+
             if 'no-cache' in cache_control or 'no-store' in cache_control:
                 return False
             
@@ -472,6 +516,7 @@ class APIManager:
                 return False
             
             # Cache patterns - endpoints that should be cached
+
             cacheable_patterns = [
                 'user_profile',
                 'content_list', 
@@ -492,6 +537,7 @@ class APIManager:
             
         except Exception as e:
             self.logger.error(f"Error checking if response should be cached: {e}")
+
             return False
     
     async def _build_request(
@@ -510,11 +556,13 @@ class APIManager:
             url = f"{endpoint.base_url.rstrip('/')}/{endpoint.path.lstrip('/')}"
             
             # Build headers
+
             headers = endpoint.headers.copy()
             
             # Add authentication headers
             if endpoint.id in self.credentials:
                 auth_headers = await self._build_auth_headers(endpoint, self.credentials[endpoint.id])
+
                 headers.update(auth_headers)
             
             # Add custom headers
@@ -522,9 +570,13 @@ class APIManager:
                 headers.update(custom_headers)
             
             # Merge params with endpoint query params
+
             final_params = endpoint.query_params.copy()
+
             if params:
                 final_params.update(params)
+
+
             
             request = APIRequest(
                 id=request_id,
@@ -538,11 +590,13 @@ class APIManager:
                 timeout=endpoint.timeout,
                 max_retries=endpoint.retry_count
             )
+
             
             return request
             
         except Exception as e:
             self.logger.error(f"Error building request: {e}")
+
             raise
     
     async def _build_auth_headers(
@@ -567,6 +621,7 @@ class APIManager:
                     auth_string = base64.b64encode(
                         f"{credentials.username}:{credentials.password}".encode()
                     ).decode()
+
                     headers["Authorization"] = f"Basic {auth_string}"
             
             elif endpoint.auth_type == APIAuthType.OAUTH2:
@@ -575,11 +630,13 @@ class APIManager:
             
             elif endpoint.auth_type == APIAuthType.CUSTOM:
                 headers.update(credentials.custom_headers)
+
             
             return headers
             
         except Exception as e:
             self.logger.error(f"Error building auth headers: {e}")
+
             return {}
     
     async def _execute_request_with_retries(
@@ -594,9 +651,13 @@ class APIManager:
             try:
                 if attempt > 0:
                     # Wait before retry
+
                     delay = endpoint.retry_delay * (2 ** (attempt - 1))  # Exponential backoff
                     await asyncio.sleep(delay)
+
                     self.logger.info(f"🔄 Retrying request {request.id}, attempt {attempt + 1}")
+
+
                 
                 response = await self._execute_single_request(request)
                 
@@ -629,10 +690,13 @@ class APIManager:
         try:
             if not self.session:
                 await self.initialize()
+
+
             
             start_time = time.time()
             
             # Prepare request parameters
+
             kwargs = {
                 "headers": request.headers,
                 "timeout": aiohttp.ClientTimeout(total=request.timeout)
@@ -646,12 +710,16 @@ class APIManager:
             if request.method in [HTTPMethod.POST, HTTPMethod.PUT, HTTPMethod.PATCH]:
                 if request.files:
                     # Handle file uploads
+
                     data = aiohttp.FormData()
+
                     if request.data:
                         for key, value in request.data.items():
                             data.add_field(key, str(value))
+
                     for key, file_data in request.files.items():
                         data.add_field(key, file_data)
+
                     kwargs["data"] = data
                 elif request.data:
                     kwargs["json"] = request.data
@@ -670,14 +738,18 @@ class APIManager:
                 response_time = time.time() - start_time
                 
                 # Read response
+
                 response_data = None
+
                 response_text = None
                 
                 try:
                     if response.content_type == "application/json":
                         response_data = await response.json()
+
                     else:
                         response_text = await response.text()
+
                 except:
                     response_text = await response.text()
                 
@@ -702,6 +774,7 @@ class APIManager:
                     headers=dict(response.headers),
                     response_time=response_time
                 )
+
                 
                 if status != RequestStatus.SUCCESS:
                     api_response.error_message = response_text or f"HTTP {response.status}"
@@ -728,25 +801,37 @@ class APIManager:
         self.middleware_functions.append(middleware_func)
     
     async def get_endpoint_statistics(self, endpoint_id: str) -> Dict[str, Any]:
-        """Get statistics for an endpoint."""
+        """
+        Get statistics for an endpoint."""
         try:
             if endpoint_id not in self.endpoints:
                 return {}
             
             # Filter requests and responses for this endpoint
+
             endpoint_requests = [r for r in self.request_history if r.endpoint_id == endpoint_id]
+
             endpoint_responses = [r for r in self.response_history if r.request_id in [req.id for req in endpoint_requests]]
             
             if not endpoint_responses:
                 return {"endpoint_id": endpoint_id, "total_requests": 0}
             
             # Calculate statistics
+
             success_count = len([r for r in endpoint_responses if r.status == RequestStatus.SUCCESS])
+
+
             failed_count = len([r for r in endpoint_responses if r.status == RequestStatus.FAILED])
+
+
             timeout_count = len([r for r in endpoint_responses if r.status == RequestStatus.TIMEOUT])
+
+
             
             response_times = [r.response_time for r in endpoint_responses if r.response_time > 0]
+
             avg_response_time = sum(response_times) / len(response_times) if response_times else 0
+
             
             stats = {
                 "endpoint_id": endpoint_id,
@@ -763,25 +848,36 @@ class APIManager:
             
         except Exception as e:
             self.logger.error(f"Error getting endpoint statistics: {e}")
+
             return {}
     
     async def get_overall_statistics(self) -> Dict[str, Any]:
         """Get overall API manager statistics."""
         try:
             total_requests = len(self.response_history)
+
             if total_requests == 0:
                 return {"total_requests": 0}
+
             
             success_count = len([r for r in self.response_history if r.status == RequestStatus.SUCCESS])
+
+
             failed_count = len([r for r in self.response_history if r.status == RequestStatus.FAILED])
+
+
             
             response_times = [r.response_time for r in self.response_history if r.response_time > 0]
+
             avg_response_time = sum(response_times) / len(response_times) if response_times else 0
             
             # Group by endpoint
+
             endpoint_stats = {}
             for endpoint_id in self.endpoints.keys():
                 endpoint_stats[endpoint_id] = await self.get_endpoint_statistics(endpoint_id)
+
+
             
             stats = {
                 "total_requests": total_requests,
@@ -797,6 +893,7 @@ class APIManager:
             
         except Exception as e:
             self.logger.error(f"Error getting overall statistics: {e}")
+
             return {}
     
     async def cleanup(self):
@@ -804,6 +901,7 @@ class APIManager:
         try:
             if self.session:
                 await self.session.close()
+
             self.logger.info("✅ API Manager cleaned up")
         except Exception as e:
             self.logger.error(f"Error during cleanup: {e}")

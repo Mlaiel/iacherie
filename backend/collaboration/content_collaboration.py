@@ -234,7 +234,8 @@ class ContentCollaborationManager:
         self._initialize_quality_analyzers()
     
     def _initialize_quality_analyzers(self):
-        """Initialise les analyseurs de qualité"""
+        """
+        Initialise les analyseurs de qualité"""
         self.quality_analyzers = {
             'text': {
                 'readability': True,
@@ -260,9 +261,11 @@ class ContentCollaborationManager:
         }
     
     async def create_content_project(self, creator_id: str, project_data: Dict) -> ContentProject:
-        """Crée un nouveau projet de contenu collaboratif"""
+        """
+        Crée un nouveau projet de contenu collaboratif"""
         try:
             # Créer le projet
+
             project = ContentProject(
                 name=project_data['name'],
                 description=project_data.get('description', ''),
@@ -289,12 +292,15 @@ class ContentCollaborationManager:
             # Persister
             if self.db_session:
                 await self._persist_content_project(project)
+
             
             logger.info(f"Projet de contenu créé: {project.name}")
+
             return project
             
         except Exception as e:
             logger.error(f"Erreur création projet contenu: {e}")
+
             raise
     
     async def create_content_piece(self, project_id: str, creator_id: str, 
@@ -302,11 +308,14 @@ class ContentCollaborationManager:
         """Crée une nouvelle pièce de contenu"""
         try:
             # Vérifier les permissions
+
             project = self.content_projects.get(project_id)
+
             if not project or creator_id not in project.collaborators:
                 raise PermissionError("Accès non autorisé au projet")
             
             # Créer la pièce de contenu
+
             content = ContentPiece(
                 title=content_data['title'],
                 description=content_data.get('description', ''),
@@ -322,6 +331,7 @@ class ContentCollaborationManager:
             content.collaborators[creator_id] = CollaborationRole.CREATOR
             
             # Créer la première version
+
             initial_version = {
                 'version': 1,
                 'content_data': content.content_data.copy(),
@@ -333,15 +343,21 @@ class ContentCollaborationManager:
             content.versions.append(initial_version)
             
             # Analyser la qualité initiale
+
             quality_score = await self._analyze_content_quality(content)
+
             content.quality_score = quality_score
             
             # Prédire l'engagement
+
             engagement_prediction = await self._predict_content_engagement(content)
+
             content.engagement_prediction = engagement_prediction
             
             # Vérifier la conformité aux guidelines
+
             compliance_score = await self._check_brand_guidelines_compliance(content, project)
+
             content.brand_guidelines_compliance = compliance_score
             
             # Stocker le contenu
@@ -353,12 +369,15 @@ class ContentCollaborationManager:
             # Persister
             if self.db_session:
                 await self._persist_content_piece(content)
+
             
             logger.info(f"Contenu créé: {content.title}")
+
             return content
             
         except Exception as e:
             logger.error(f"Erreur création contenu: {e}")
+
             raise
     
     async def start_collaboration_session(self, content_id: str, initiator_id: str,
@@ -366,6 +385,7 @@ class ContentCollaborationManager:
         """Démarre une session de collaboration"""
         try:
             content = self.content_pieces.get(content_id)
+
             if not content:
                 raise ValueError("Contenu introuvable")
             
@@ -374,6 +394,7 @@ class ContentCollaborationManager:
                 raise PermissionError("Accès non autorisé")
             
             # Créer la session
+
             session = CollaborationSession(
                 content_id=content_id,
                 session_type=session_type,
@@ -396,22 +417,29 @@ class ContentCollaborationManager:
             
             # Initialiser la synchronisation temps réel
             await self._initialize_real_time_sync(session.id)
+
             
             logger.info(f"Session de collaboration démarrée: {session_type} pour {content.title}")
+
             return session
             
         except Exception as e:
             logger.error(f"Erreur démarrage session collaboration: {e}")
+
             raise
     
     async def join_collaboration_session(self, session_id: str, user_id: str) -> bool:
         """Rejoint une session de collaboration"""
         try:
             session = self.active_sessions.get(session_id)
+
             if not session:
                 raise ValueError("Session introuvable")
+
+
             
             content = self.content_pieces.get(session.content_id)
+
             if not content:
                 raise ValueError("Contenu associé introuvable")
             
@@ -428,12 +456,15 @@ class ContentCollaborationManager:
             
             # Synchroniser l'état actuel
             await self._sync_session_state(session_id, user_id)
+
             
             logger.info(f"Utilisateur {user_id} a rejoint la session {session_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Erreur rejoindre session: {e}")
+
             return False
     
     async def apply_real_time_change(self, session_id: str, user_id: str, 
@@ -441,10 +472,14 @@ class ContentCollaborationManager:
         """Applique un changement en temps réel"""
         try:
             session = self.active_sessions.get(session_id)
+
             if not session or user_id not in session.participants:
                 raise PermissionError("Accès non autorisé à la session")
+
+
             
             content = self.content_pieces.get(session.content_id)
+
             if not content:
                 raise ValueError("Contenu introuvable")
             
@@ -453,6 +488,7 @@ class ContentCollaborationManager:
                 raise ValueError("Changement invalide")
             
             # Créer l'entrée de changement
+
             change_entry = {
                 'id': str(uuid.uuid4()),
                 'user_id': user_id,
@@ -465,6 +501,7 @@ class ContentCollaborationManager:
             
             # Appliquer le changement au contenu
             await self._apply_change_to_content(content, change_data)
+
             change_entry['applied'] = True
             
             # Ajouter à l'historique de session
@@ -475,12 +512,15 @@ class ContentCollaborationManager:
             
             # Mettre à jour les métriques de qualité
             await self._update_quality_metrics_incremental(content, change_data)
+
             
             logger.debug(f"Changement appliqué: {change_data['type']} par {user_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Erreur application changement temps réel: {e}")
+
             return False
     
     async def create_content_version(self, content_id: str, user_id: str, 
@@ -488,19 +528,26 @@ class ContentCollaborationManager:
         """Crée une nouvelle version du contenu"""
         try:
             content = self.content_pieces.get(content_id)
+
             if not content:
                 raise ValueError("Contenu introuvable")
             
             # Vérifier les permissions
+
             user_role = content.collaborators.get(user_id)
+
             if not user_role or user_role not in [CollaborationRole.CREATOR, CollaborationRole.CO_CREATOR, CollaborationRole.EDITOR]:
                 raise PermissionError("Permissions insuffisantes")
             
             # Créer la nouvelle version
+
             new_version_number = max([v['version'] for v in content.versions]) + 1
             
             # Calculer les changements depuis la dernière version
+
             changes = await self._calculate_changes_since_last_version(content)
+
+
             
             new_version = {
                 'version': new_version_number,
@@ -516,6 +563,7 @@ class ContentCollaborationManager:
             
             # Ajouter à l'historique
             content.versions.append(new_version)
+
             content.current_version = new_version_number
             content.updated_at = datetime.utcnow()
             
@@ -525,12 +573,15 @@ class ContentCollaborationManager:
             
             # Notifier les collaborateurs
             await self._notify_new_version_created(content, new_version)
+
             
             logger.info(f"Nouvelle version créée: v{new_version_number} pour {content.title}")
+
             return new_version_number
             
         except Exception as e:
             logger.error(f"Erreur création version: {e}")
+
             raise
     
     async def request_content_review(self, content_id: str, requester_id: str,
@@ -539,6 +590,7 @@ class ContentCollaborationManager:
         """Demande une révision de contenu"""
         try:
             content = self.content_pieces.get(content_id)
+
             if not content:
                 raise ValueError("Contenu introuvable")
             
@@ -547,6 +599,7 @@ class ContentCollaborationManager:
                 raise PermissionError("Accès non autorisé")
             
             # Créer la demande de révision
+
             review_request = ReviewRequest(
                 content_id=content_id,
                 reviewer_id=reviewer_id,
@@ -577,12 +630,15 @@ class ContentCollaborationManager:
             if content.status == ContentStatus.DRAFT:
                 content.status = ContentStatus.UNDER_REVIEW
                 content.updated_at = datetime.utcnow()
+
             
             logger.info(f"Révision demandée: {review_type.value} pour {content.title}")
+
             return review_request
             
         except Exception as e:
             logger.error(f"Erreur demande révision: {e}")
+
             raise
     
     async def submit_review_feedback(self, review_request_id: str, reviewer_id: str,
@@ -590,6 +646,7 @@ class ContentCollaborationManager:
         """Soumet un feedback de révision"""
         try:
             review_request = self.review_requests.get(review_request_id)
+
             if not review_request:
                 raise ValueError("Demande de révision introuvable")
             
@@ -598,6 +655,7 @@ class ContentCollaborationManager:
                 raise PermissionError("Non autorisé à réviser cette demande")
             
             # Structurer le feedback
+
             feedback = {
                 'id': str(uuid.uuid4()),
                 'reviewer_id': reviewer_id,
@@ -612,11 +670,14 @@ class ContentCollaborationManager:
             
             # Ajouter le feedback à la demande
             review_request.feedback.append(feedback)
+
             review_request.status = "completed"
             review_request.completed_at = datetime.utcnow()
             
             # Mettre à jour le contenu selon le feedback
+
             content = self.content_pieces.get(review_request.content_id)
+
             if content:
                 await self._process_review_feedback(content, feedback, review_request.review_type)
             
@@ -626,12 +687,15 @@ class ContentCollaborationManager:
             
             # Notifier le demandeur
             await self._notify_review_completed(review_request, feedback)
+
             
             logger.info(f"Feedback de révision soumis: {review_request.review_type.value}")
+
             return True
             
         except Exception as e:
             logger.error(f"Erreur soumission feedback révision: {e}")
+
             return False
 
 # ==========================================
@@ -656,39 +720,52 @@ class ContentQualityAnalyzer:
         self.benchmark_data = {}
         
     async def analyze_text_quality(self, content: ContentPiece) -> Dict[str, Any]:
-        """Analyse la qualité d'un contenu textuel"""
+        """
+        Analyse la qualité d'un contenu textuel"""
         try:
             text_data = content.content_data.get('text', '')
+
             if not text_data:
                 return {'overall_score': 0, 'analysis': {}}
+
             
             analysis = {}
             
             # Analyse de lisibilité
             readability_score = await self._calculate_readability_score(text_data)
+
             analysis['readability'] = {
                 'score': readability_score,
                 'level': self._get_readability_level(readability_score)
             }
             
             # Analyse grammaticale
+
             grammar_analysis = await self._analyze_grammar(text_data)
+
             analysis['grammar'] = grammar_analysis
             
             # Analyse de sentiment
+
             sentiment_analysis = await self._analyze_sentiment(text_data)
+
             analysis['sentiment'] = sentiment_analysis
             
             # Analyse SEO
             seo_analysis = await self._analyze_seo_factors(text_data, content.metadata)
+
             analysis['seo'] = seo_analysis
             
             # Analyse de la voix de marque
+
             brand_voice_analysis = await self._analyze_brand_voice(text_data, content)
+
             analysis['brand_voice'] = brand_voice_analysis
             
             # Score global
+
             overall_score = await self._calculate_overall_text_score(analysis)
+
             
             return {
                 'overall_score': overall_score,
@@ -699,6 +776,7 @@ class ContentQualityAnalyzer:
             
         except Exception as e:
             logger.error(f"Erreur analyse qualité texte: {e}")
+
             return {'overall_score': 0, 'analysis': {}}
     
     async def analyze_visual_quality(self, content: ContentPiece) -> Dict[str, Any]:
@@ -706,27 +784,38 @@ class ContentQualityAnalyzer:
         try:
             if content.type not in [ContentType.IMAGE, ContentType.VIDEO]:
                 return {'overall_score': 0, 'analysis': {}}
+
             
             analysis = {}
             
             # Analyse technique
+
             technical_analysis = await self._analyze_technical_quality(content)
+
             analysis['technical'] = technical_analysis
             
             # Analyse compositionnelle
+
             composition_analysis = await self._analyze_composition(content)
+
             analysis['composition'] = composition_analysis
             
             # Analyse de cohérence de marque
+
             brand_analysis = await self._analyze_visual_brand_compliance(content)
+
             analysis['brand_compliance'] = brand_analysis
             
             # Analyse de l'engagement visuel
+
             engagement_analysis = await self._analyze_visual_engagement(content)
+
             analysis['engagement_potential'] = engagement_analysis
             
             # Score global
+
             overall_score = await self._calculate_overall_visual_score(analysis)
+
             
             return {
                 'overall_score': overall_score,
@@ -737,6 +826,7 @@ class ContentQualityAnalyzer:
             
         except Exception as e:
             logger.error(f"Erreur analyse qualité visuelle: {e}")
+
             return {'overall_score': 0, 'analysis': {}}
 
 # ==========================================
@@ -759,25 +849,32 @@ class ContentTemplateEngine:
         self.collaboration_manager = collaboration_manager
         self.template_library = {}
         self.template_performance = defaultdict(dict)
+
         
     async def create_template_from_content(self, content_id: str, template_name: str,
                                          creator_id: str) -> ContentTemplate:
-        """Crée un template à partir d'un contenu existant"""
+        """
+        Crée un template à partir d'un contenu existant"""
         try:
             content = self.collaboration_manager.content_pieces.get(content_id)
+
             if not content:
                 raise ValueError("Contenu source introuvable")
             
             # Extraire les éléments templatables
+
             template_data = await self._extract_template_elements(content)
             
             # Identifier les variables
+
             variables = await self._identify_template_variables(content, template_data)
             
             # Créer le guide de style
+
             style_guide = await self._extract_style_guide(content)
             
             # Créer le template
+
             template = ContentTemplate(
                 name=template_name,
                 description=f"Template créé à partir de {content.title}",
@@ -796,12 +893,15 @@ class ContentTemplateEngine:
             # Persister
             if self.collaboration_manager.db_session:
                 await self._persist_template(template)
+
             
             logger.info(f"Template créé: {template_name} à partir de {content.title}")
+
             return template
             
         except Exception as e:
             logger.error(f"Erreur création template: {e}")
+
             raise
     
     async def generate_content_from_template(self, template_id: str, variables_data: Dict,
@@ -809,6 +909,7 @@ class ContentTemplateEngine:
         """Génère du contenu à partir d'un template"""
         try:
             template = self.template_library.get(template_id)
+
             if not template:
                 raise ValueError("Template introuvable")
             
@@ -816,9 +917,11 @@ class ContentTemplateEngine:
             await self._validate_template_variables(template, variables_data)
             
             # Générer le contenu
+
             content_data = await self._populate_template(template, variables_data)
             
             # Créer la pièce de contenu
+
             content = ContentPiece(
                 title=variables_data.get('title', f"Contenu généré depuis {template.name}"),
                 description=variables_data.get('description', ''),
@@ -837,7 +940,9 @@ class ContentTemplateEngine:
             await self._apply_style_guide(content, template.style_guide)
             
             # Analyser la qualité initiale
+
             quality_score = await self.collaboration_manager._analyze_content_quality(content)
+
             content.quality_score = quality_score
             
             # Mettre à jour les statistiques d'usage du template
@@ -847,6 +952,7 @@ class ContentTemplateEngine:
             
         except Exception as e:
             logger.error(f"Erreur génération contenu depuis template: {e}")
+
             raise
 
 # ==========================================
@@ -873,15 +979,18 @@ async def create_content_collaboration(redis_url: Optional[str] = None,
     if redis_url:
         try:
             # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+            try:
+                import aioredis
+                REDIS_AVAILABLE = True
+            except (ImportError, TypeError) as e:
+                # Handle Python 3.12 TimeoutError duplicate base class issue
+                from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+                import logging
+                logging.warning(f"Using Redis compatibility layer: {e}")
+
+
             redis_client = await aioredis.from_url(redis_url)
+            
         except Exception as e:
             logger.warning(f"Impossible de se connecter à Redis: {e}")
     

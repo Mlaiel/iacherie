@@ -243,9 +243,11 @@ class ServiceDiscovery:
         self.health_check_tasks: Dict[str, asyncio.Task] = {}
         self.cleanup_task: Optional[asyncio.Task] = None
         self.logger = logging.getLogger(f"{__name__}.ServiceDiscovery")
-        
-        # Start background cleanup task
-        self.cleanup_task = asyncio.create_task(self._periodic_cleanup())
+    
+    async def ensure_initialized(self):
+        """Ensure async components are initialized"""
+        if self.cleanup_task is None:
+            self.cleanup_task = asyncio.create_task(self._periodic_cleanup())
     
     async def register_local_service(
         self, 

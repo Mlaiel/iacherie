@@ -97,7 +97,8 @@ class PerformanceMetrics:
 
 @dataclass
 class CacheEntry:
-    """Cache entry with metadata"""
+    """
+        Cache entry with metadata"""
     key: str
     value: Any
     created_at: datetime
@@ -110,7 +111,8 @@ class CacheEntry:
 
 @dataclass
 class ConnectionPoolStats:
-    """Connection pool statistics"""
+    """
+        Connection pool statistics"""
     pool_name: str
     active_connections: int
     idle_connections: int
@@ -163,10 +165,12 @@ class BackendOptimizer:
         # Resource monitoring
         self.memory_tracker: deque = deque(maxlen=100)
         self.cpu_tracker: deque = deque(maxlen=100)
+
         
         self._initialize_caching_system()
         self._initialize_optimization_rules()
         self._initialize_error_handlers()
+
         
         logger.info("BackendOptimizer initialized - Backend Senior Engineer")
 
@@ -183,11 +187,14 @@ class BackendOptimizer:
                     pool_min_size=5,
                     pool_max_size=20
                 )
+
                 logger.info("L2 Redis cache initialized")
             
             # Initialize cache cleanup scheduler
             asyncio.create_task(self._cache_cleanup_scheduler())
+
             logger.info("Multi-layer caching system initialized")
+
             
         except Exception as e:
             logger.warning(f"Cache initialization failed: {str(e)}")
@@ -263,15 +270,20 @@ class BackendOptimizer:
         Backend Senior: Advanced request optimization with multi-layer strategies
         """
         start_time = time.time()
+
         
         try:
             # Generate cache key
+
             cache_key = self._generate_cache_key(request_data)
             
             # Try multi-layer cache lookup
+
             cached_result = await self._multi_layer_cache_get(cache_key)
+
             if cached_result is not None:
                 self._update_cache_stats(CacheLevel.L1_MEMORY, hit=True)
+
                 return {
                     "result": cached_result,
                     "cached": True,
@@ -282,13 +294,17 @@ class BackendOptimizer:
             # Execute request with optimizations
             if optimization_level == "aggressive":
                 result = await self._execute_optimized_aggressive(request_handler, request_data)
+
             elif optimization_level == "balanced":
                 result = await self._execute_optimized_balanced(request_handler, request_data)
+
             else:
                 result = await self._execute_optimized_standard(request_handler, request_data)
             
             # Cache the result
             await self._multi_layer_cache_set(cache_key, result, ttl=300)
+
+
             
             response_time = (time.time() - start_time) * 1000
             
@@ -298,6 +314,7 @@ class BackendOptimizer:
                 response_time_ms=response_time,
                 cached=False
             )
+
             
             return {
                 "result": result,
@@ -309,6 +326,7 @@ class BackendOptimizer:
         except Exception as e:
             # Advanced error handling
             await self._handle_request_error(e, request_handler, request_data)
+
             raise
 
     async def _multi_layer_cache_get(self, key: str) -> Optional[Any]:
@@ -319,8 +337,10 @@ class BackendOptimizer:
             entry = self.l1_cache[key]
             if not self._is_cache_entry_expired(entry):
                 entry.last_accessed = datetime.now()
+
                 entry.access_count += 1
                 self._update_cache_stats(CacheLevel.L1_MEMORY, hit=True)
+
                 return entry.value
             else:
                 del self.l1_cache[key]
@@ -329,10 +349,13 @@ class BackendOptimizer:
         if self.l2_cache:
             try:
                 cached_value = await self.l2_cache.get(key)
+
                 if cached_value is not None:
                     # Promote to L1 cache
                     await self._promote_to_l1_cache(key, cached_value)
+
                     self._update_cache_stats(CacheLevel.L2_REDIS, hit=True)
+
                     return cached_value
             except Exception as e:
                 logger.warning(f"L2 cache error: {str(e)}")
@@ -341,6 +364,7 @@ class BackendOptimizer:
         self._update_cache_stats(CacheLevel.L1_MEMORY, hit=False)
         if self.l2_cache:
             self._update_cache_stats(CacheLevel.L2_REDIS, hit=False)
+
         
         return None
 
@@ -355,6 +379,7 @@ class BackendOptimizer:
         
         # L1: Memory cache
         if value_size < 1024 * 1024:  # Only cache values < 1MB in memory
+
             cache_entry = CacheEntry(
                 key=key,
                 value=value,
@@ -368,37 +393,44 @@ class BackendOptimizer:
             
             # Ensure memory cache doesn't grow too large
             await self._ensure_memory_cache_size()
+
             self.l1_cache[key] = cache_entry
         
         # L2: Redis cache
         if self.l2_cache:
             try:
                 await self.l2_cache.set(key, value, ttl=ttl)
+
             except Exception as e:
                 logger.warning(f"L2 cache set error: {str(e)}")
 
     async def _ensure_memory_cache_size(self):
         """Ensure memory cache doesn't exceed size limits"""
         max_entries = 1000
+
         max_memory_mb = 100
         
         if len(self.l1_cache) > max_entries:
             # Remove LRU entries
+
             sorted_entries = sorted(
                 self.l1_cache.items(),
                 key=lambda x: (x[1].last_accessed, x[1].access_count)
             )
             
             # Remove 20% of entries
+
             entries_to_remove = len(sorted_entries) // 5
             for key, _ in sorted_entries[:entries_to_remove]:
                 del self.l1_cache[key]
                 self._update_cache_stats(CacheLevel.L1_MEMORY, eviction=True)
 
     async def _promote_to_l1_cache(self, key: str, value: Any):
-        """Promote frequently accessed items to L1 cache"""
+        """
+        Promote frequently accessed items to L1 cache"""
         try:
             value_size = len(pickle.dumps(value))
+
             if value_size < 512 * 1024:  # Only promote values < 512KB
                 cache_entry = CacheEntry(
                     key=key,
@@ -410,6 +442,7 @@ class BackendOptimizer:
                     size_bytes=value_size,
                     level=CacheLevel.L1_MEMORY
                 )
+
                 self.l1_cache[key] = cache_entry
         except Exception as e:
             logger.debug(f"Cache promotion failed: {str(e)}")
@@ -419,13 +452,16 @@ class BackendOptimizer:
         return (datetime.now() - entry.created_at).total_seconds() > entry.ttl_seconds
 
     def _generate_cache_key(self, request_data: Dict[str, Any]) -> str:
-        """Generate deterministic cache key from request data"""
+        """
+        Generate deterministic cache key from request data"""
         # Sort and serialize request data for consistent hashing
+
         sorted_data = json.dumps(request_data, sort_keys=True, default=str)
         return hashlib.md5(sorted_data.encode()).hexdigest()
 
     async def _execute_optimized_aggressive(self, handler: Callable, data: Dict) -> Any:
-        """Execute with aggressive optimization"""
+        """
+        Execute with aggressive optimization"""
         # Implement aggressive optimizations
         # - Parallel processing where possible
         # - Aggressive caching
@@ -473,20 +509,20 @@ class BackendOptimizer:
                 # Execute with connection context
                 if asyncio.iscoroutinefunction(handler):
                     return await handler(data, connection=conn)
+
                 else:
                     return handler(data, connection=conn)
         else:
             # Execute without connection optimization
             if asyncio.iscoroutinefunction(handler):
                 return await handler(data)
+
             else:
                 return handler(data)
 
     @asynccontextmanager
     async def _get_optimized_connection(self):
-        """Get optimized database connection from pool"""
-        # Mock connection - in real implementation would use actual connection pool
-        class MockConnection:
+        """Get optimized database connection from pool"""        class MockConnection:
             def __init__(self):
                 self.active = True
                 
@@ -505,11 +541,13 @@ class BackendOptimizer:
         cached: bool = False,
         error: bool = False
     ):
-        """Record performance metrics for monitoring"""
+        """
+        Record performance metrics for monitoring"""
         
         metrics = PerformanceMetrics(
             endpoint=endpoint,
             method="POST",  # Default
+
             response_time_ms=response_time_ms,
             memory_usage_mb=self._get_memory_usage(),
             cpu_usage_percent=self._get_cpu_usage(),
@@ -536,13 +574,16 @@ class BackendOptimizer:
         """Get current memory usage in MB"""
         try:
             import psutil
+
             process = psutil.Process()
+
             return process.memory_info().rss / 1024 / 1024
         except:
             return 0.0
 
     def _get_cpu_usage(self) -> float:
-        """Get current CPU usage percentage"""
+        """
+        Get current CPU usage percentage"""
         try:
             import psutil
             return psutil.cpu_percent(interval=None)
@@ -550,9 +591,12 @@ class BackendOptimizer:
             return 0.0
 
     def _calculate_cache_hit_ratio(self) -> float:
-        """Calculate overall cache hit ratio"""
+        """
+        Calculate overall cache hit ratio"""
         total_hits = sum(stats["hits"] for stats in self.cache_stats.values())
+
         total_requests = sum(stats["hits"] + stats["misses"] for stats in self.cache_stats.values())
+
         
         return total_hits / total_requests if total_requests > 0 else 0.0
 
@@ -566,16 +610,19 @@ class BackendOptimizer:
         return 0.001
 
     def _calculate_throughput(self) -> float:
-        """Calculate current throughput (requests per second)"""
+        """
+        Calculate current throughput (requests per second)"""
         recent_metrics = list(self.performance_history)[-60:]  # Last minute
         if len(recent_metrics) < 2:
             return 0.0
+
         
         time_span = (recent_metrics[-1].timestamp - recent_metrics[0].timestamp).total_seconds()
         return len(recent_metrics) / max(time_span, 1.0)
 
     async def _check_performance_thresholds(self, metrics: PerformanceMetrics):
-        """Check performance metrics against thresholds"""
+        """
+        Check performance metrics against thresholds"""
         
         # Response time check
         if metrics.response_time_ms > self.performance_thresholds["api_response_time"]["critical"]:
@@ -633,11 +680,13 @@ class BackendOptimizer:
         }
         
         # Record error pattern
+
         error_pattern = f"{type(error).__name__}_{handler.__name__}"
         self.error_patterns[error_pattern].append(error_info)
         
         # Check circuit breaker
         await self._update_circuit_breaker(error_pattern, failed=True)
+
         
         logger.error(f"Request error handled: {error_info}")
 
@@ -645,12 +694,14 @@ class BackendOptimizer:
         """Update circuit breaker state"""
         if service not in self.circuit_breakers:
             return
+
         
         breaker = self.circuit_breakers[service]
         
         if failed:
             breaker["failure_count"] += 1
             breaker["last_failure"] = datetime.now()
+
             
             if breaker["failure_count"] >= breaker["failure_threshold"]:
                 breaker["state"] = "open"
@@ -667,7 +718,9 @@ class BackendOptimizer:
             try:
                 await asyncio.sleep(300)  # Run every 5 minutes
                 await self._cleanup_expired_cache_entries()
+
                 await self._optimize_cache_performance()
+
             except Exception as e:
                 logger.error(f"Cache cleanup error: {str(e)}")
 
@@ -678,6 +731,7 @@ class BackendOptimizer:
         for key, entry in self.l1_cache.items():
             if self._is_cache_entry_expired(entry):
                 expired_keys.append(key)
+
         
         for key in expired_keys:
             del self.l1_cache[key]
@@ -688,13 +742,16 @@ class BackendOptimizer:
     async def _optimize_cache_performance(self):
         """Optimize cache performance based on usage patterns"""
         # Analyze cache access patterns
+
         access_patterns = defaultdict(int)
+
         
         for entry in self.l1_cache.values():
             access_patterns[entry.access_count] += 1
         
         # Adjust cache policies based on patterns
         # This is a simplified optimization - real implementation would be more sophisticated
+
         avg_access = statistics.mean([entry.access_count for entry in self.l1_cache.values()]) if self.l1_cache else 0
         
         if avg_access > 10:
@@ -711,29 +768,37 @@ class BackendOptimizer:
         pass
 
     async def _optimize_connection_pools(self):
-        """Optimize database connection pools"""
+        """
+        Optimize database connection pools"""
         # Implementation would monitor pool usage and adjust sizes
         pass
 
     async def _optimize_memory_usage(self):
-        """Optimize memory usage"""
+        """
+        Optimize memory usage"""
         current_memory = self._get_memory_usage()
         self.memory_tracker.append(current_memory)
+
         
         if len(self.memory_tracker) > 10:
             avg_memory = statistics.mean(list(self.memory_tracker)[-10:])
+
             if avg_memory > 80:  # 80% memory usage
                 await self._reduce_memory_footprint()
 
     async def _reduce_memory_footprint(self):
-        """Reduce memory footprint when usage is high"""
+        """
+        Reduce memory footprint when usage is high"""
         # Clear some cache entries
         if len(self.l1_cache) > 100:
             # Remove 25% of least accessed entries
+
             sorted_entries = sorted(
                 self.l1_cache.items(),
                 key=lambda x: x[1].access_count
             )
+
+
             entries_to_remove = len(sorted_entries) // 4
             
             for key, _ in sorted_entries[:entries_to_remove]:
@@ -747,13 +812,16 @@ class BackendOptimizer:
         pass
 
     async def _optimize_request_batching(self):
-        """Optimize request batching strategies"""
+        """
+        Optimize request batching strategies"""
         # Implementation would analyze request patterns and optimize batching
         pass
 
     def get_performance_report(self) -> Dict[str, Any]:
-        """Generate comprehensive performance report"""
+        """
+        Generate comprehensive performance report"""
         recent_metrics = list(self.performance_history)[-100:] if self.performance_history else []
+
         
         report = {
             "timestamp": datetime.now().isoformat(),
@@ -772,8 +840,7 @@ class BackendOptimizer:
                 endpoint: {
                     "avg_response_time": statistics.mean([m.response_time_ms for m in metrics]) if metrics else 0,
                     "request_count": len(metrics),
-                    "error_rate": 0.001  # Mock error rate
-                }
+                    "error_rate": 0.001                }
                 for endpoint, metrics in self.endpoint_metrics.items()
             },
             "optimizations_active": {
@@ -789,6 +856,7 @@ class BackendOptimizer:
     async def run_optimization_cycle(self):
         """Run full optimization cycle"""
         logger.info("Starting backend optimization cycle...")
+
         
         try:
             # Run all optimization rules
@@ -797,8 +865,10 @@ class BackendOptimizer:
             
             # Update performance metrics
             self.real_time_metrics["last_optimization"] = datetime.now().isoformat()
+
             
             logger.info("Backend optimization cycle completed successfully")
+
             
         except Exception as e:
             logger.error(f"Optimization cycle failed: {str(e)}")

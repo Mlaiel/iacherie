@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class PushNotificationCore:
-    """Advanced PushNotificationCore System"""
+    """
+Advanced PushNotificationCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class PushNotificationCore:
 # Module exports
 __all__ = ["PushNotificationCore"]
 
-logger.info("🔔 PushNotificationCore module loaded")
+logger.info("🔔 PushNotificationCore module initialized")

@@ -29,7 +29,8 @@ import hashlib
 logger = logging.getLogger(__name__)
 
 class ServiceType(Enum):
-    """Types of external services"""
+    """
+        Types of external services"""
     SOCIAL_MEDIA = "social_media"
     PAYMENT_PROCESSOR = "payment_processor"
     ANALYTICS_PLATFORM = "analytics_platform"
@@ -72,7 +73,8 @@ class ServiceCredentials:
 
 @dataclass
 class IntegrationConfig:
-    """Configuration for service integration"""
+    """
+        Configuration for service integration"""
     service_id: str
     service_type: ServiceType
     name: str
@@ -86,7 +88,8 @@ class IntegrationConfig:
 
 @dataclass
 class APIResponse:
-    """Response from external API"""
+    """
+        Response from external API"""
     service_id: str
     endpoint: str
     status_code: int
@@ -98,7 +101,8 @@ class APIResponse:
 
 @dataclass
 class WebhookEvent:
-    """Webhook event from external service"""
+    """
+        Webhook event from external service"""
     service_id: str
     event_type: str
     payload: Dict[str, Any]
@@ -108,7 +112,8 @@ class WebhookEvent:
     verified: bool = False
 
 class BaseServiceIntegration(ABC):
-    """Base class for service integrations"""
+    """
+        Base class for service integrations"""
     
     def __init__(self, config: IntegrationConfig):
         self.config = config
@@ -124,29 +129,37 @@ class BaseServiceIntegration(ABC):
     
     @abstractmethod
     async def test_connection(self) -> bool:
-        """Test connection to the service"""
+        """
+        Test connection to the service"""
         pass
     
     @abstractmethod
     async def refresh_authentication(self) -> bool:
-        """Refresh authentication if needed"""
+        """
+        Refresh authentication if needed"""
         pass
     
     async def make_request(self, method: str, endpoint: str, data: Any = None, 
                           headers: Dict[str, str] = None) -> APIResponse:
-        """Make authenticated request to service"""
+        """
+        Make authenticated request to service"""
         url = f"{self.config.base_url.rstrip('/')}/{endpoint.lstrip('/')}"
         
         # Prepare headers
+
         request_headers = self.config.custom_headers.copy()
         if headers:
             request_headers.update(headers)
         
         # Add authentication headers
+
         auth_headers = await self._get_auth_headers()
         request_headers.update(auth_headers)
+
+
         
         start_time = datetime.now()
+
         
         try:
             async with aiohttp.ClientSession() as session:
@@ -159,9 +172,13 @@ class BaseServiceIntegration(ABC):
                     timeout=aiohttp.ClientTimeout(total=self.config.timeout_seconds)
                 ) as response:
                     response_time = (datetime.now() - start_time).total_seconds()
+
+
                     response_data = await response.json() if response.content_type == 'application/json' else await response.text()
+
                     
                     self.last_activity = datetime.now()
+
                     
                     return APIResponse(
                         service_id=self.config.service_id,
@@ -171,10 +188,13 @@ class BaseServiceIntegration(ABC):
                         headers=dict(response.headers),
                         response_time=response_time
                     )
+
                     
         except Exception as e:
             self.error_count += 1
+
             response_time = (datetime.now() - start_time).total_seconds()
+
             
             return APIResponse(
                 service_id=self.config.service_id,
@@ -189,6 +209,7 @@ class BaseServiceIntegration(ABC):
     async def _get_auth_headers(self) -> Dict[str, str]:
         """Get authentication headers based on auth type"""
         auth_type = self.config.credentials.auth_type
+
         creds = self.config.credentials.credentials
         
         if auth_type == AuthenticationType.API_KEY:
@@ -197,8 +218,13 @@ class BaseServiceIntegration(ABC):
             return {"Authorization": f"Bearer {creds.get('token', '')}"}
         elif auth_type == AuthenticationType.BASIC_AUTH:
             username = creds.get("username", "")
+
+
             password = creds.get("password", "")
+
+
             credentials = base64.b64encode(f"{username}:{password}".encode()).decode()
+
             return {"Authorization": f"Basic {credentials}"}
         else:
             return {}
@@ -214,7 +240,9 @@ class SocialMediaIntegration(BaseServiceIntegration):
         """Authenticate with social media platform"""
         try:
             # Test authentication with a simple API call
+
             response = await self.make_request("GET", "/me")
+
             
             if response.status_code == 200:
                 self.status = IntegrationStatus.CONNECTED
@@ -225,6 +253,7 @@ class SocialMediaIntegration(BaseServiceIntegration):
                 
         except Exception as e:
             self.logger.error(f"Authentication failed: {e}")
+
             self.status = IntegrationStatus.ERROR
             return False
     
@@ -245,20 +274,28 @@ class SocialMediaIntegration(BaseServiceIntegration):
             return False
         
         # Refresh token logic (platform-specific)
+
         refresh_data = {
             "grant_type": "refresh_token",
             "refresh_token": self.config.credentials.refresh_token
         }
+
         
         response = await self.make_request("POST", "/oauth/token", refresh_data)
+
         
         if response.status_code == 200 and response.data:
             # Update credentials
+
             new_token = response.data.get("access_token")
+
+
             expires_in = response.data.get("expires_in", 3600)
+
             
             self.config.credentials.credentials["token"] = new_token
             self.config.credentials.expires_at = datetime.now() + timedelta(seconds=expires_in)
+
             
             return True
         
@@ -287,6 +324,7 @@ class PaymentProcessorIntegration(BaseServiceIntegration):
     async def authenticate(self) -> bool:
         """Authenticate with payment processor"""
         response = await self.make_request("GET", "/account")
+
         
         if response.status_code == 200:
             self.status = IntegrationStatus.CONNECTED
@@ -305,7 +343,8 @@ class PaymentProcessorIntegration(BaseServiceIntegration):
         return True
     
     async def create_payment_intent(self, amount: float, currency: str, metadata: Dict[str, Any] = None) -> APIResponse:
-        """Create payment intent"""
+        """
+        Create payment intent"""
         payment_data = {
             "amount": int(amount * 100),  # Convert to cents
             "currency": currency,
@@ -323,6 +362,7 @@ class PaymentProcessorIntegration(BaseServiceIntegration):
         refund_data = {"payment_intent": payment_id}
         if amount:
             refund_data["amount"] = int(amount * 100)
+
         
         return await self.make_request("POST", "/refunds", refund_data)
     
@@ -340,7 +380,9 @@ class AIServiceIntegration(BaseServiceIntegration):
     async def authenticate(self) -> bool:
         """Authenticate with AI service"""
         # Most AI services use API keys, test with a simple request
+
         response = await self.make_request("GET", "/models")
+
         
         if response.status_code == 200:
             self.status = IntegrationStatus.CONNECTED
@@ -389,6 +431,7 @@ class EmailServiceIntegration(BaseServiceIntegration):
     async def authenticate(self) -> bool:
         """Authenticate with email service"""
         response = await self.make_request("GET", "/user")
+
         
         if response.status_code == 200:
             self.status = IntegrationStatus.CONNECTED
@@ -408,7 +451,8 @@ class EmailServiceIntegration(BaseServiceIntegration):
     
     async def send_email(self, to_email: str, subject: str, content: str, 
                         from_email: str = None, html_content: str = None) -> APIResponse:
-        """Send email"""
+        """
+        Send email"""
         email_data = {
             "to": [{"email": to_email}],
             "subject": subject,
@@ -417,6 +461,7 @@ class EmailServiceIntegration(BaseServiceIntegration):
         
         if html_content:
             email_data["content"].append({"type": "text/html", "value": html_content})
+
         
         if from_email:
             email_data["from"] = {"email": from_email}
@@ -447,6 +492,7 @@ class AnalyticsIntegration(BaseServiceIntegration):
     async def authenticate(self) -> bool:
         """Authenticate with analytics platform"""
         response = await self.make_request("GET", "/account")
+
         
         if response.status_code == 200:
             self.status = IntegrationStatus.CONNECTED
@@ -466,7 +512,8 @@ class AnalyticsIntegration(BaseServiceIntegration):
     
     async def track_event(self, event_name: str, properties: Dict[str, Any], 
                          user_id: str = None) -> APIResponse:
-        """Track analytics event"""
+        """
+        Track analytics event"""
         event_data = {
             "event": event_name,
             "properties": properties
@@ -487,6 +534,7 @@ class AnalyticsIntegration(BaseServiceIntegration):
         
         if metrics:
             params["metrics"] = ",".join(metrics)
+
         
         return await self.make_request("GET", "/reports", params)
 
@@ -499,17 +547,21 @@ class WebhookManager:
         self.signature_validators: Dict[str, Callable] = {}
     
     def register_webhook_handler(self, service_id: str, handler: Callable):
-        """Register webhook handler for service"""
+        """
+        Register webhook handler for service"""
         self.webhook_handlers[service_id] = handler
         
     def register_signature_validator(self, service_id: str, validator: Callable):
-        """Register signature validator for service"""
+        """
+        Register signature validator for service"""
         self.signature_validators[service_id] = validator
     
     async def process_webhook(self, service_id: str, event_type: str, payload: Dict[str, Any], 
                             headers: Dict[str, str]) -> Dict[str, Any]:
-        """Process incoming webhook"""
+        """
+        Process incoming webhook"""
         # Create webhook event
+
         event = WebhookEvent(
             service_id=service_id,
             event_type=event_type,
@@ -536,7 +588,9 @@ class WebhookManager:
         # Process with handler if available
         if service_id in self.webhook_handlers and event.verified:
             handler = self.webhook_handlers[service_id]
+
             result = await handler(event)
+
             return {"status": "processed", "result": result}
         elif not event.verified:
             return {"status": "error", "message": "Signature verification failed"}
@@ -554,7 +608,8 @@ class WebhookManager:
         return events[-limit:]
 
 class IntegrationManager:
-    """Main manager for all external service integrations"""
+    """
+        Main manager for all external service integrations"""
     
     def __init__(self):
         self.integrations: Dict[str, BaseServiceIntegration] = {}
@@ -562,7 +617,8 @@ class IntegrationManager:
         self.rate_limiters: Dict[str, Dict[str, Any]] = {}
     
     async def add_integration(self, config: IntegrationConfig) -> bool:
-        """Add new service integration"""
+        """
+        Add new service integration"""
         service_type = config.service_type
         
         # Create appropriate integration instance
@@ -580,14 +636,18 @@ class IntegrationManager:
             integration = BaseServiceIntegration(config)
         
         # Test authentication
+
         authenticated = await integration.authenticate()
+
         
         if authenticated:
             self.integrations[config.service_id] = integration
             logger.info(f"Successfully added integration for {config.service_id}")
+
             return True
         else:
             logger.error(f"Failed to authenticate integration for {config.service_id}")
+
             return False
     
     async def remove_integration(self, service_id: str) -> bool:
@@ -595,6 +655,7 @@ class IntegrationManager:
         if service_id in self.integrations:
             del self.integrations[service_id]
             logger.info(f"Removed integration for {service_id}")
+
             return True
         return False
     
@@ -603,14 +664,17 @@ class IntegrationManager:
         return self.integrations.get(service_id)
     
     async def test_all_integrations(self) -> Dict[str, bool]:
-        """Test all integrations"""
+        """
+        Test all integrations"""
         results = {}
         
         for service_id, integration in self.integrations.items():
             try:
                 results[service_id] = await integration.test_connection()
+
             except Exception as e:
                 logger.error(f"Integration test failed for {service_id}: {e}")
+
                 results[service_id] = False
         
         return results
@@ -622,8 +686,10 @@ class IntegrationManager:
         for service_id, integration in self.integrations.items():
             try:
                 results[service_id] = await integration.refresh_authentication()
+
             except Exception as e:
                 logger.error(f"Authentication refresh failed for {service_id}: {e}")
+
                 results[service_id] = False
         
         return results
@@ -650,13 +716,17 @@ class IntegrationManager:
         for service_id in service_ids:
             if service_id not in self.integrations:
                 continue
+
             
             integration = self.integrations[service_id]
             
             try:
                 if hasattr(integration, operation):
                     method = getattr(integration, operation)
+
+
                     result = await method(**parameters)
+
                     results[service_id] = result
                 else:
                     results[service_id] = APIResponse(
@@ -668,6 +738,7 @@ class IntegrationManager:
                         response_time=0.0,
                         error_message=f"Operation {operation} not supported"
                     )
+
             except Exception as e:
                 results[service_id] = APIResponse(
                     service_id=service_id,
@@ -678,6 +749,7 @@ class IntegrationManager:
                     response_time=0.0,
                     error_message=str(e)
                 )
+
         
         return results
 
@@ -687,27 +759,33 @@ def create_integration_manager() -> IntegrationManager:
     return IntegrationManager()
 
 def create_webhook_manager() -> WebhookManager:
-    """Create webhook manager instance"""
+    """
+        Create webhook manager instance"""
     return WebhookManager()
 
 def create_social_media_integration(config: IntegrationConfig) -> SocialMediaIntegration:
-    """Create social media integration"""
+    """
+        Create social media integration"""
     return SocialMediaIntegration(config)
 
 def create_payment_processor_integration(config: IntegrationConfig) -> PaymentProcessorIntegration:
-    """Create payment processor integration"""
+    """
+        Create payment processor integration"""
     return PaymentProcessorIntegration(config)
 
 def create_ai_service_integration(config: IntegrationConfig) -> AIServiceIntegration:
-    """Create AI service integration"""
+    """
+        Create AI service integration"""
     return AIServiceIntegration(config)
 
 def create_email_service_integration(config: IntegrationConfig) -> EmailServiceIntegration:
-    """Create email service integration"""
+    """
+        Create email service integration"""
     return EmailServiceIntegration(config)
 
 def create_analytics_integration(config: IntegrationConfig) -> AnalyticsIntegration:
-    """Create analytics integration"""
+    """
+        Create analytics integration"""
     return AnalyticsIntegration(config)
 
 # Export all classes and functions

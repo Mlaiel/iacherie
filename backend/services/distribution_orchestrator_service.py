@@ -113,7 +113,8 @@ class ContentDistribution:
 
 @dataclass
 class PlatformDistribution:
-    """Distribution spécifique à une plateforme"""
+    """
+        Distribution spécifique à une plateforme"""
     platform_distribution_id: str
     distribution_id: str
     platform: PlatformType
@@ -129,7 +130,8 @@ class PlatformDistribution:
 
 @dataclass
 class DistributionStrategy:
-    """Stratégie de distribution"""
+    """
+        Stratégie de distribution"""
     strategy_id: str
     strategy_name: str
     target_audience: Dict[str, Any]
@@ -145,7 +147,8 @@ class DistributionStrategy:
 
 @dataclass
 class DistributionResult:
-    """Résultat de distribution"""
+    """
+        Résultat de distribution"""
     result_id: str
     distribution_id: str
     overall_status: DistributionStatus
@@ -158,7 +161,8 @@ class DistributionResult:
     completed_at: datetime
 
 class DistributionEngine:
-    """Moteur principal de distribution"""
+    """
+        Moteur principal de distribution"""
     
     def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
         self.redis = redis_client
@@ -168,21 +172,28 @@ class DistributionEngine:
         self.scheduling_optimizer = None
         
     async def initialize_distribution_engine(self) -> Dict[str, Any]:
-        """Initialiser le moteur de distribution"""
+        """
+        Initialiser le moteur de distribution"""
         try:
             # Configurer les APIs des plateformes
+
             platform_apis = await self._configure_platform_apis()
             
             # Initialiser les modèles d'optimisation
+
             optimization_models = await self._initialize_optimization_models()
             
             # Préparer l'optimiseur de scheduling
+
             scheduling_optimizer = await self._prepare_scheduling_optimizer()
             
             # Configurer le monitoring de performance
+
             performance_monitoring = await self._configure_performance_monitoring()
+
             
             logger.info("📡 Distribution engine initialized successfully")
+
             
             return {
                 "platform_apis_configured": len(platform_apis),
@@ -195,6 +206,7 @@ class DistributionEngine:
             
         except Exception as e:
             logger.error(f"Failed to initialize distribution engine: {e}")
+
             raise
     
     async def orchestrate_content_distribution(
@@ -207,26 +219,31 @@ class DistributionEngine:
             distribution_id = str(uuid.uuid4())
             
             # Analyser le contenu
+
             content_analysis = await self._analyze_content_for_distribution(
                 content_data
             )
             
             # Sélectionner la stratégie optimale
+
             optimal_strategy = await self._select_optimal_distribution_strategy(
                 content_analysis, distribution_preferences
             )
             
             # Optimiser le contenu pour chaque plateforme
+
             platform_optimizations = await self._optimize_content_for_platforms(
                 content_data, optimal_strategy.target_platforms
             )
             
             # Calculer le timing optimal
+
             optimal_timing = await self._calculate_optimal_distribution_timing(
                 content_analysis, optimal_strategy
             )
             
             # Créer la distribution
+
             content_distribution = ContentDistribution(
                 distribution_id=distribution_id,
                 content_id=content_data["content_id"],
@@ -247,16 +264,19 @@ class DistributionEngine:
             )
             
             # Exécuter la distribution
+
             distribution_execution = await self._execute_distribution(
                 content_distribution, platform_optimizations
             )
             
             # Monitorer la distribution
+
             monitoring_setup = await self._setup_distribution_monitoring(
                 distribution_id, content_distribution.target_platforms
             )
             
             # Créer le résultat
+
             distribution_result = DistributionResult(
                 result_id=str(uuid.uuid4()),
                 distribution_id=distribution_id,
@@ -264,7 +284,9 @@ class DistributionEngine:
                 platform_results=distribution_execution["platform_results"],
                 performance_summary=distribution_execution["performance_summary"],
                 engagement_metrics={},  # Will be populated by monitoring
+
                 revenue_impact={},      # Will be calculated later
+
                 optimization_insights=distribution_execution["insights"],
                 recommendations=distribution_execution["recommendations"],
                 completed_at=datetime.utcnow()
@@ -272,13 +294,16 @@ class DistributionEngine:
             
             # Sauvegarder les résultats
             await self._save_distribution_results(distribution_result)
+
             
             logger.info(f"Content distribution orchestrated: {distribution_id}")
+
             
             return distribution_result
             
         except Exception as e:
             logger.error(f"Failed to orchestrate content distribution: {e}")
+
             raise
 
     async def _analyze_content_for_distribution(
@@ -288,11 +313,13 @@ class DistributionEngine:
         """Analyser le contenu pour la distribution"""
         try:
             # Analyser les métadonnées audio/vidéo
+
             media_analysis = await self._analyze_media_characteristics(
                 content_data
             )
             
             # Analyser le contenu textuel
+
             text_analysis = await self._analyze_textual_content(
                 content_data.get("title", ""),
                 content_data.get("description", ""),
@@ -300,19 +327,23 @@ class DistributionEngine:
             )
             
             # Analyser l'audience cible
+
             audience_analysis = await self._analyze_target_audience(
                 content_data.get("creator_id"), content_data
             )
             
             # Analyser la performance historique similaire
+
             performance_prediction = await self._predict_content_performance(
                 content_data, media_analysis, text_analysis
             )
             
             # Analyser la compatibilité des plateformes
+
             platform_compatibility = await self._analyze_platform_compatibility(
                 content_data, media_analysis
             )
+
             
             return {
                 "content_id": content_data["content_id"],
@@ -335,6 +366,7 @@ class DistributionEngine:
             
         except Exception as e:
             logger.error(f"Failed to analyze content for distribution: {e}")
+
             raise
 
     async def _execute_distribution(
@@ -345,9 +377,11 @@ class DistributionEngine:
         """Exécuter la distribution sur les plateformes"""
         try:
             platform_results = []
+
             overall_status = DistributionStatus.IN_PROGRESS
             
             # Distribuer sur chaque plateforme en parallèle
+
             distribution_tasks = []
             
             for platform in content_distribution.target_platforms:
@@ -356,15 +390,19 @@ class DistributionEngine:
                     platform, 
                     platform_optimizations.get(platform.value, {})
                 )
+
                 distribution_tasks.append(task)
             
             # Exécuter les distributions en parallèle
+
             platform_distribution_results = await asyncio.gather(
                 *distribution_tasks, return_exceptions=True
             )
             
             # Analyser les résultats
+
             successful_distributions = 0
+
             failed_distributions = 0
             
             for i, result in enumerate(platform_distribution_results):
@@ -372,6 +410,7 @@ class DistributionEngine:
                 
                 if isinstance(result, Exception):
                     # Gestion des erreurs
+
                     platform_result = PlatformDistribution(
                         platform_distribution_id=str(uuid.uuid4()),
                         distribution_id=content_distribution.distribution_id,
@@ -389,6 +428,7 @@ class DistributionEngine:
                             "timestamp": datetime.utcnow().isoformat()
                         }]
                     )
+
                     failed_distributions += 1
                 else:
                     platform_result = result
@@ -408,6 +448,7 @@ class DistributionEngine:
                 overall_status = DistributionStatus.FAILED
             
             # Générer le résumé de performance
+
             performance_summary = {
                 "total_platforms": len(content_distribution.target_platforms),
                 "successful_distributions": successful_distributions,
@@ -419,14 +460,17 @@ class DistributionEngine:
             }
             
             # Générer des insights
+
             insights = await self._generate_distribution_insights(
                 platform_results, performance_summary
             )
             
             # Générer des recommandations
+
             recommendations = await self._generate_distribution_recommendations(
                 platform_results, insights
             )
+
             
             return {
                 "status": overall_status,
@@ -439,6 +483,7 @@ class DistributionEngine:
             
         except Exception as e:
             logger.error(f"Failed to execute distribution: {e}")
+
             raise
 
 class DistributionScheduler:
@@ -455,14 +500,17 @@ class DistributionScheduler:
         audience_data: Dict[str, Any],
         platform_analytics: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimiser le planning de distribution"""
+        """
+        Optimiser le planning de distribution"""
         try:
             # Analyser les patterns d'audience
+
             audience_patterns = await self._analyze_audience_patterns(
                 audience_data, content_distribution.target_platforms
             )
             
             # Analyser la performance historique par timing
+
             timing_performance = await self._analyze_timing_performance(
                 content_distribution.creator_id,
                 content_distribution.content_type,
@@ -470,6 +518,7 @@ class DistributionScheduler:
             )
             
             # Calculer les créneaux optimaux pour chaque plateforme
+
             optimal_slots = {}
             
             for platform in content_distribution.target_platforms:
@@ -478,22 +527,27 @@ class DistributionScheduler:
                     audience_patterns.get(platform.value, {}),
                     timing_performance.get(platform.value, {})
                 )
+
                 optimal_slots[platform.value] = platform_optimal
             
             # Optimiser la séquence de distribution
+
             distribution_sequence = await self._optimize_distribution_sequence(
                 optimal_slots, content_distribution
             )
             
             # Calculer l'impact des fuseaux horaires
+
             timezone_optimization = await self._optimize_for_timezones(
                 audience_patterns, distribution_sequence
             )
             
             # Générer le planning final
+
             final_schedule = await self._generate_final_schedule(
                 distribution_sequence, timezone_optimization
             )
+
             
             return {
                 "optimal_schedule": final_schedule,
@@ -512,6 +566,7 @@ class DistributionScheduler:
             
         except Exception as e:
             logger.error(f"Failed to optimize distribution schedule: {e}")
+
             raise
 
 class DistributionOrchestratorService:
@@ -526,24 +581,31 @@ class DistributionOrchestratorService:
         self.performance_tracker = {}
         
     async def initialize_service(self) -> Dict[str, Any]:
-        """Initialiser le service d'orchestration"""
+        """
+        Initialiser le service d'orchestration"""
         try:
             # Initialiser le moteur de distribution
+
             engine_status = await self.distribution_engine.initialize_distribution_engine()
             
             # Configurer le planificateur
+
             scheduler_config = await self._configure_distribution_scheduler()
             
             # Initialiser le suivi de performance
+
             performance_tracking = await self._initialize_performance_tracking()
             
             # Configurer les intégrations API
             api_integrations = await self._configure_api_integrations()
             
             # Démarrer les processus automatiques
+
             automated_processes = await self._start_automated_distribution_processes()
+
             
             logger.info("📡 Distribution Orchestrator Service initialized successfully")
+
             
             return {
                 "service": "DistributionOrchestratorService",
@@ -560,6 +622,7 @@ class DistributionOrchestratorService:
             
         except Exception as e:
             logger.error(f"Failed to initialize distribution orchestrator service: {e}")
+
             raise
     
     async def execute_intelligent_distribution(
@@ -570,29 +633,36 @@ class DistributionOrchestratorService:
         """Exécuter une distribution intelligente"""
         try:
             # Phase 1: Analyse et planification
+
             planning_result = await self._execute_distribution_planning(
                 content_data, distribution_preferences
             )
             
             # Phase 2: Optimisation
+
             optimization_result = await self._execute_distribution_optimization(
                 planning_result, content_data
             )
             
             # Phase 3: Distribution
+
             distribution_result = await self.distribution_engine.orchestrate_content_distribution(
                 content_data, optimization_result["optimized_preferences"]
             )
             
             # Phase 4: Monitoring
+
             monitoring_setup = await self._setup_intelligent_monitoring(
                 distribution_result.distribution_id
             )
             
             # Phase 5: Feedback loop
+
             feedback_system = await self._initialize_feedback_loop(
                 distribution_result, content_data
             )
+
+
             
             intelligent_distribution_result = {
                 "distribution_id": distribution_result.distribution_id,
@@ -611,8 +681,10 @@ class DistributionOrchestratorService:
             await self._save_intelligent_distribution_analytics(
                 intelligent_distribution_result
             )
+
             
             logger.info(f"Intelligent distribution executed: {distribution_result.distribution_id}")
+
             
             return {
                 "success": True,
@@ -623,6 +695,7 @@ class DistributionOrchestratorService:
             
         except Exception as e:
             logger.error(f"Failed to execute intelligent distribution: {e}")
+
             raise
     
     # Méthodes privées pour l'implémentation détaillée...

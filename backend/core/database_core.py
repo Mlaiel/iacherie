@@ -149,25 +149,33 @@ class DatabaseClusterManager:
         self._initialized = False
         
     async def initialize_cluster(self) -> bool:
-        """Initialize database cluster"""
+        """
+        Initialize database cluster"""
         try:
             logger.info(f"Initializing {self.config.cluster_type.value} cluster")
+
             
             if self.config.cluster_type == DatabaseClusterType.POSTGRES_XL:
                 await self._setup_postgres_xl()
+
             elif self.config.cluster_type == DatabaseClusterType.TIMESCALE_DB:
                 await self._setup_timescale_db()
+
             elif self.config.cluster_type == DatabaseClusterType.NEO4J_ENTERPRISE:
                 await self._setup_neo4j_cluster()
+
             elif self.config.cluster_type == DatabaseClusterType.PINECONE:
                 await self._setup_pinecone_cluster()
+
             
             self._initialized = True
             logger.info("Database cluster initialized successfully")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to initialize cluster: {e}")
+
             return False
     
     async def _setup_postgres_xl(self):
@@ -182,6 +190,7 @@ class DatabaseClusterManager:
                 cpu_cores=16,
                 memory_gb=64
             )
+
             self.nodes.append(coordinator)
         
         # Create data nodes (64 shards for massive scale)
@@ -195,6 +204,7 @@ class DatabaseClusterManager:
                 memory_gb=128,
                 storage_gb=10000  # 10TB per node
             )
+
             self.nodes.append(datanode)
         
         # Create GTM nodes for distributed transactions
@@ -205,6 +215,7 @@ class DatabaseClusterManager:
                 port=6666,
                 role="gtm"
             )
+
             self.nodes.append(gtm)
         
         # Setup connection pools for each coordinator
@@ -217,6 +228,7 @@ class DatabaseClusterManager:
                     pool_timeout=self.config.pool_timeout,
                     poolclass=NullPool if self.config.environment == DatabaseEnvironment.TESTING else None
                 )
+
                 self.engines[node.node_id] = engine
                 
                 SessionLocal = sessionmaker(
@@ -224,11 +236,13 @@ class DatabaseClusterManager:
                     class_=AsyncSession,
                     expire_on_commit=False
                 )
+
                 self.sessions[node.node_id] = SessionLocal
     
     async def _setup_timescale_db(self):
         """Setup TimescaleDB cluster for time-series analytics"""
         # Access node for queries
+
         access_node = ClusterNode(
             node_id="access_node",
             host="access.timescale.local",
@@ -250,15 +264,20 @@ class DatabaseClusterManager:
                 memory_gb=96,
                 storage_gb=20000  # 20TB per data node
             )
+
             self.nodes.append(data_node)
+
         
         if HAS_SQLALCHEMY:
             # Setup connection to access node
+
             engine = create_async_engine(
                 f"postgresql+asyncpg://{self.config.username}:{self.config.password}@{access_node.host}:{access_node.port}/{self.config.database}",
                 pool_size=20,  # Larger pool for analytics
+
                 max_overflow=50
             )
+
             self.engines["timescale"] = engine
     
     async def _setup_neo4j_cluster(self):
@@ -273,6 +292,7 @@ class DatabaseClusterManager:
                 cpu_cores=16,
                 memory_gb=64
             )
+
             self.nodes.append(core)
         
         # Read replicas for scaling read operations
@@ -285,6 +305,7 @@ class DatabaseClusterManager:
                 cpu_cores=32,
                 memory_gb=128
             )
+
             self.nodes.append(replica)
     
     async def _setup_pinecone_cluster(self):
@@ -297,6 +318,7 @@ class DatabaseClusterManager:
                 port=443,
                 role="vector_index"
             )
+
             self.nodes.append(index_node)
     
     async def get_engine(self, node_type: str = "coordinator") -> Optional[Any]:
@@ -316,6 +338,7 @@ class DatabaseClusterManager:
         """Get database session for specific node type"""
         if not self._initialized:
             await self.initialize_cluster()
+
         
         for node_id, session_class in self.sessions.items():
             if node_type in node_id:
@@ -324,11 +347,13 @@ class DatabaseClusterManager:
         # Return first available session if specific type not found
         if self.sessions:
             first_session_class = next(iter(self.sessions.values()))
+
             return first_session_class()
         return None
     
     async def health_check(self) -> Dict[str, Any]:
-        """Check cluster health status"""
+        """
+        Check cluster health status"""
         health_status = {
             "cluster_type": self.config.cluster_type.value,
             "environment": self.config.environment.value,
@@ -354,6 +379,7 @@ class DatabaseClusterManager:
                 node_status["healthy"] = False
             
             health_status["nodes"].append(node_status)
+
         
         health_status["cluster_healthy"] = health_status["active_nodes"] > 0
         return health_status
@@ -397,6 +423,7 @@ class SchemaDefinition:
             if col.get('default'):
                 col_def += f" DEFAULT {col['default']}"
             column_definitions.append(col_def)
+
         
         ddl += ",\n".join(column_definitions)
         ddl += "\n);"
@@ -416,9 +443,11 @@ class SchemaManager:
         self._initialize_core_schemas()
     
     def _initialize_core_schemas(self):
-        """Initialize core table schemas"""
+        """
+        Initialize core table schemas"""
         
         # Users table schema
+
         users_schema = SchemaDefinition(
             table_name="users",
             columns=[
@@ -445,7 +474,8 @@ class SchemaManager:
         )
         self.schemas["users"] = users_schema
         
-        # Content table schema  
+        # Content table schema
+  
         content_schema = SchemaDefinition(
             table_name="content",
             columns=[
@@ -482,6 +512,7 @@ class SchemaManager:
         self.schemas["content"] = content_schema
         
         # Analytics events table (TimescaleDB hypertable)
+
         analytics_schema = SchemaDefinition(
             table_name="analytics_events",
             columns=[
@@ -508,6 +539,7 @@ class SchemaManager:
         self.schemas["analytics_events"] = analytics_schema
         
         # Revenue tracking table
+
         revenue_schema = SchemaDefinition(
             table_name="revenue_tracking",
             columns=[
@@ -536,6 +568,7 @@ class SchemaManager:
         self.schemas["revenue_tracking"] = revenue_schema
         
         # Collaboration projects table
+
         collaboration_schema = SchemaDefinition(
             table_name="collaborations",
             columns=[
@@ -568,40 +601,53 @@ class SchemaManager:
         try:
             if schema_name not in self.schemas:
                 logger.error(f"Schema {schema_name} not found")
+
                 return False
+
             
             schema = self.schemas[schema_name]
+
             engine = await self.cluster_manager.get_engine()
+
             
             if not engine:
                 logger.error("No database engine available")
+
                 return False
+
             
             ddl = schema.generate_ddl()
+
             
             if HAS_SQLALCHEMY:
                 async with engine.begin() as conn:
                     await conn.execute(ddl)
+
                     logger.info(f"Created schema for table: {schema.table_name}")
                     
                     # Create indexes
                     for index in schema.indexes:
                         index_type = index.get('type', 'btree')
+
                         if index_type == 'gin':
                             index_ddl = f"CREATE INDEX IF NOT EXISTS {index['name']} ON {schema.table_name} USING gin ({','.join(index['columns'])})"
                         else:
                             index_ddl = f"CREATE INDEX IF NOT EXISTS {index['name']} ON {schema.table_name} ({','.join(index['columns'])})"
                         
                         await conn.execute(index_ddl)
+
                         logger.info(f"Created index: {index['name']}")
+
                 
                 return True
             else:
                 logger.warning("SQLAlchemy not available, cannot create schema")
+
                 return False
                 
         except Exception as e:
             logger.error(f"Failed to create schema {schema_name}: {e}")
+
             return False
     
     async def create_all_schemas(self) -> bool:
@@ -613,10 +659,13 @@ class SchemaManager:
                     success_count += 1
             
             logger.info(f"Created {success_count}/{len(self.schemas)} schemas successfully")
+
             return success_count == len(self.schemas)
+
             
         except Exception as e:
             logger.error(f"Failed to create schemas: {e}")
+
             return False
     
     def add_schema(self, schema: SchemaDefinition):
@@ -635,7 +684,8 @@ class SchemaManager:
 
 @dataclass
 class MigrationStep:
-    """Individual migration step"""
+    """
+        Individual migration step"""
     step_id: str
     description: str
     sql_up: str
@@ -684,9 +734,11 @@ class MigrationManager:
         self._initialize_core_migrations()
     
     def _initialize_core_migrations(self):
-        """Initialize core system migrations"""
+        """
+        Initialize core system migrations"""
         
         # Initial schema migration
+
         initial_migration = Migration(
             migration_id="001_initial_schema",
             version="1.0.0",
@@ -744,6 +796,7 @@ class MigrationManager:
         self.migrations.append(initial_migration)
         
         # Analytics hypertable migration
+
         analytics_migration = Migration(
             migration_id="002_analytics_hypertable",
             version="1.1.0", 
@@ -767,6 +820,7 @@ class MigrationManager:
                     );
                     
                     -- Create hypertable (TimescaleDB specific)
+
                     SELECT create_hypertable('analytics_events', 'time', if_not_exists => TRUE);
                     
                     -- Create indexes for efficient queries
@@ -781,6 +835,7 @@ class MigrationManager:
         self.migrations.append(analytics_migration)
         
         # Revenue tracking migration
+
         revenue_migration = Migration(
             migration_id="003_revenue_tracking",
             version="1.2.0",
@@ -819,28 +874,36 @@ class MigrationManager:
         """Apply a single migration"""
         try:
             logger.info(f"Applying migration: {migration.migration_id}")
+
             migration.status = MigrationStatus.RUNNING
             
             engine = await self.cluster_manager.get_engine()
+
             if not engine:
                 logger.error("No database engine available")
+
                 return False
             
             if HAS_SQLALCHEMY:
                 async with engine.begin() as conn:
                     for step in migration.steps:
                         logger.info(f"Executing step: {step.description}")
+
                         await conn.execute(step.sql_up)
+
             
             migration.status = MigrationStatus.COMPLETED
             migration.executed_at = datetime.now(timezone.utc)
+
             self.applied_migrations[migration.migration_id] = migration
             
             logger.info(f"Migration {migration.migration_id} applied successfully")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to apply migration {migration.migration_id}: {e}")
+
             migration.status = MigrationStatus.FAILED
             return False
     
@@ -849,14 +912,20 @@ class MigrationManager:
         try:
             if migration_id not in self.applied_migrations:
                 logger.error(f"Migration {migration_id} not found in applied migrations")
+
                 return False
+
             
             migration = self.applied_migrations[migration_id]
             logger.info(f"Rolling back migration: {migration_id}")
+
+
             
             engine = await self.cluster_manager.get_engine()
+
             if not engine:
                 logger.error("No database engine available")
+
                 return False
             
             if HAS_SQLALCHEMY:
@@ -864,22 +933,27 @@ class MigrationManager:
                     # Execute rollback steps in reverse order
                     for step in reversed(migration.steps):
                         logger.info(f"Rolling back step: {step.description}")
+
                         await conn.execute(step.sql_down)
+
             
             migration.status = MigrationStatus.ROLLED_BACK
             del self.applied_migrations[migration_id]
             
             logger.info(f"Migration {migration_id} rolled back successfully")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to rollback migration {migration_id}: {e}")
+
             return False
     
     async def apply_all_migrations(self) -> bool:
         """Apply all pending migrations"""
         try:
             pending_migrations = [m for m in self.migrations if m.status == MigrationStatus.PENDING]
+
             success_count = 0
             
             for migration in pending_migrations:
@@ -887,13 +961,17 @@ class MigrationManager:
                     success_count += 1
                 else:
                     logger.error(f"Migration failed, stopping at: {migration.migration_id}")
+
                     break
             
             logger.info(f"Applied {success_count}/{len(pending_migrations)} migrations")
+
             return success_count == len(pending_migrations)
+
             
         except Exception as e:
             logger.error(f"Failed to apply migrations: {e}")
+
             return False
     
     def add_migration(self, migration: Migration):
@@ -960,9 +1038,11 @@ class DataSeedManager:
         self._initialize_core_seeds()
     
     def _initialize_core_seeds(self):
-        """Initialize core data seeds"""
+        """
+        Initialize core data seeds"""
         
         # Development user seeds
+
         dev_users_seed = DataSeed(
             seed_id="dev_users",
             seed_type=SeedType.DEVELOPMENT,
@@ -1016,6 +1096,7 @@ class DataSeedManager:
         self.seeds["dev_users"] = dev_users_seed
         
         # Demo content seed
+
         demo_content_seed = DataSeed(
             seed_id="demo_content",
             seed_type=SeedType.DEMO,
@@ -1092,6 +1173,7 @@ class DataSeedManager:
         self.seeds["demo_content"] = demo_content_seed
         
         # Analytics demo data
+
         demo_analytics_seed = DataSeed(
             seed_id="demo_analytics",
             seed_type=SeedType.DEMO,
@@ -1138,44 +1220,62 @@ class DataSeedManager:
         try:
             if seed_id not in self.seeds:
                 logger.error(f"Seed {seed_id} not found")
+
                 return False
+
             
             seed = self.seeds[seed_id]
             logger.info(f"Applying seed: {seed_id} ({seed.description})")
+
+
             
             engine = await self.cluster_manager.get_engine()
+
             if not engine:
                 logger.error("No database engine available")
+
                 return False
             
             if HAS_SQLALCHEMY:
                 async with engine.begin() as conn:
                     for row in seed.data:
                         # Build INSERT statement
+
                         columns = list(row.keys())
+
+
                         values = list(row.values())
+
+
                         placeholders = [f"${i+1}" for i in range(len(values))]
+
                         
                         insert_sql = f"""
                         INSERT INTO {seed.table_name} ({', '.join(columns)})
+
                         VALUES ({', '.join(placeholders)})
+
                         ON CONFLICT DO NOTHING
                         """
                         
                         await conn.execute(insert_sql, values)
+
             
             self.applied_seeds[seed_id] = seed
             logger.info(f"Seed {seed_id} applied successfully")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to apply seed {seed_id}: {e}")
+
             return False
     
     async def apply_seeds_by_type(self, seed_type: SeedType) -> bool:
         """Apply all seeds of a specific type"""
         try:
             type_seeds = [seed_id for seed_id, seed in self.seeds.items() if seed.seed_type == seed_type]
+
             success_count = 0
             
             for seed_id in type_seeds:
@@ -1183,10 +1283,13 @@ class DataSeedManager:
                     success_count += 1
             
             logger.info(f"Applied {success_count}/{len(type_seeds)} {seed_type.value} seeds")
+
             return success_count == len(type_seeds)
+
             
         except Exception as e:
             logger.error(f"Failed to apply {seed_type.value} seeds: {e}")
+
             return False
     
     def add_seed(self, seed: DataSeed):
@@ -1200,6 +1303,7 @@ class DataSeedManager:
             # This is a dangerous operation - only for development/testing
             if self.cluster_manager.config.environment not in [DatabaseEnvironment.DEVELOPMENT, DatabaseEnvironment.TESTING]:
                 logger.warning("Clear table data only allowed in development/testing environments")
+
                 return False
             
             logger.warning(f"Clearing all data from table: {table_name}")
@@ -1208,6 +1312,7 @@ class DataSeedManager:
             
         except Exception as e:
             logger.error(f"Failed to clear table {table_name}: {e}")
+
             return False
 
 
@@ -1224,6 +1329,7 @@ class DatabaseCore:
         self.schema_manager = SchemaManager(self.cluster_manager)
         self.migration_manager = MigrationManager(self.cluster_manager)
         self.seed_manager = DataSeedManager(self.cluster_manager)
+
         
         self._initialized = False
         
@@ -1244,43 +1350,53 @@ class DatabaseCore:
             # 1. Initialize cluster
             if not await self.cluster_manager.initialize_cluster():
                 logger.error("Failed to initialize database cluster")
+
                 return False
             
             # 2. Apply all migrations  
             if not await self.migration_manager.apply_all_migrations():
                 logger.error("Failed to apply database migrations")
+
                 return False
             
             # 3. Create all schemas
             if not await self.schema_manager.create_all_schemas():
                 logger.error("Failed to create database schemas")
+
                 return False
             
             # 4. Apply development seeds if in development environment
             if self.config.environment == DatabaseEnvironment.DEVELOPMENT:
                 await self.seed_manager.apply_seeds_by_type(SeedType.DEVELOPMENT)
+
                 await self.seed_manager.apply_seeds_by_type(SeedType.DEMO)
+
             
             self._initialized = True
             logger.info("Database Core initialized successfully")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to initialize Database Core: {e}")
+
             return False
     
     async def get_session(self, node_type: str = "coordinator"):
         """Get database session"""
         if not self._initialized:
             await self.initialize()
+
         
         return await self.cluster_manager.get_session(node_type)
     
     async def execute_query(self, query: str, params: Optional[List] = None) -> Optional[Any]:
-        """Execute database query with metrics tracking"""
+        """
+        Execute database query with metrics tracking"""
         start_time = datetime.now()
         try:
             engine = await self.cluster_manager.get_engine()
+
             if not engine:
                 return None
             
@@ -1289,7 +1405,9 @@ class DatabaseCore:
                     result = await conn.execute(query, params or [])
                     
                     # Update metrics
+
                     query_time = (datetime.now() - start_time).total_seconds()
+
                     self.metrics["queries_executed"] += 1
                     self.metrics["total_query_time"] += query_time
                     
@@ -1300,6 +1418,7 @@ class DatabaseCore:
         except Exception as e:
             self.metrics["failed_queries"] += 1
             logger.error(f"Query execution failed: {e}")
+
             return None
     
     async def health_check(self) -> Dict[str, Any]:
@@ -1318,11 +1437,15 @@ class DatabaseCore:
             }
             
             # Cluster health
+
             cluster_health = await self.cluster_manager.health_check()
+
             health_status["cluster"] = cluster_health
             
             # Migration status
+
             migration_status = self.migration_manager.get_migration_status()
+
             health_status["migrations"] = migration_status
             
             # Schema status
@@ -1343,12 +1466,15 @@ class DatabaseCore:
                 cluster_health.get("cluster_healthy", False) and
                 migration_status.get("failed_migrations", 0) == 0
             )
+
             
             self.metrics["last_health_check"] = datetime.now().isoformat()
+
             return health_status
             
         except Exception as e:
             logger.error(f"Health check failed: {e}")
+
             return {
                 "database_core": {"initialized": False, "error": str(e)},
                 "overall_healthy": False
@@ -1359,12 +1485,15 @@ class DatabaseCore:
         try:
             if not backup_path:
                 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+
                 backup_path = f"/tmp/backup_iacherie_{timestamp}.sql"
             
             logger.info(f"Creating database backup: {backup_path}")
             
             # In production, this would use pg_dump or similar tools
             # For now, we'll simulate the backup process
+
             
             backup_info = {
                 "backup_path": backup_path,
@@ -1375,15 +1504,19 @@ class DatabaseCore:
             }
             
             # Write backup metadata
+
             metadata_path = f"{backup_path}.metadata.json"
             with open(metadata_path, 'w') as f:
                 json.dump(backup_info, f, indent=2)
+
             
             logger.info(f"Database backup created successfully: {backup_path}")
+
             return True
             
         except Exception as e:
             logger.error(f"Backup failed: {e}")
+
             return False
     
     def get_performance_metrics(self) -> Dict[str, Any]:
@@ -1422,6 +1555,7 @@ async def create_database_core(
         environment=environment,
         **kwargs
     )
+
     
     db_core = DatabaseCore(config)
     
@@ -1498,23 +1632,31 @@ if __name__ == "__main__":
     async def main():
         print("🎯 Database Core Module Test")
         print("=" * 50)
+
         
         try:
             # Create database core
+
             db_core = await create_database_core(
                 cluster_type=DatabaseClusterType.POSTGRES_XL,
                 environment=DatabaseEnvironment.DEVELOPMENT
             )
             
             # Health check
+
             health = await db_core.health_check()
+
             print(f"✅ Health check: {health['overall_healthy']}")
             
             # Performance metrics
+
             metrics = db_core.get_performance_metrics()
+
             print(f"📊 Queries executed: {metrics['queries_executed']}")
+
             
             print("🎉 Database Core test completed successfully!")
+
             
         except Exception as e:
             print(f"❌ Database Core test failed: {e}")

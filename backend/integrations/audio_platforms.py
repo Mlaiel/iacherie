@@ -26,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 
 class AudioPlatform(str, Enum):
-    """Supported audio streaming platforms."""
+    """
+        Supported audio streaming platforms."""
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     SOUNDCLOUD = "soundcloud"
@@ -99,7 +100,8 @@ class AudioPlatformAccount:
 
 @dataclass
 class AudioTrack:
-    """Audio track information."""
+    """
+        Audio track information."""
     track_id: str
     platform: AudioPlatform
     title: str
@@ -118,7 +120,8 @@ class AudioTrack:
 
 @dataclass
 class StreamingMetrics:
-    """Streaming metrics for audio content."""
+    """
+        Streaming metrics for audio content."""
     track_id: str
     platform: AudioPlatform
     period_start: datetime
@@ -138,7 +141,8 @@ class StreamingMetrics:
 
 @dataclass
 class RoyaltyPayment:
-    """Royalty payment information."""
+    """
+        Royalty payment information."""
     payment_id: str
     platform: AudioPlatform
     artist_id: str
@@ -157,7 +161,8 @@ class RoyaltyPayment:
 
 @dataclass
 class AudioAnalytics:
-    """Comprehensive audio analytics."""
+    """
+        Comprehensive audio analytics."""
     platform: AudioPlatform
     period_start: datetime
     period_end: datetime
@@ -173,7 +178,8 @@ class AudioAnalytics:
 
 
 class AudioPlatformsIntegration:
-    """Professional audio platforms integration."""
+    """
+        Professional audio platforms integration."""
     
     def __init__(
         self,
@@ -251,11 +257,13 @@ class AudioPlatformsIntegration:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+        Async context manager exit."""
         await self.close()
     
     async def _ensure_session(self):
-        """Ensure HTTP session is available."""
+        """
+        Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
                 "User-Agent": "iacherie/1.0 Audio Platform Hub",
@@ -274,17 +282,22 @@ class AudioPlatformsIntegration:
             await self.session.close()
     
     async def initialize_spotify_account(self) -> AudioPlatformAccount:
-        """Initialize Spotify artist account."""
+        """
+        Initialize Spotify artist account."""
         await self._ensure_session()
+
         
         if not self.spotify_client_id or not self.spotify_client_secret:
             raise ValueError("Spotify credentials not configured")
+
         
         try:
             # Get access token
+
             access_token = await self._get_spotify_access_token()
             
             # Get artist information
+
             headers = {"Authorization": f"Bearer {access_token}"}
             
             async with self.session.get(
@@ -293,11 +306,15 @@ class AudioPlatformsIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Spotify artist info error: {error_data}")
+
+
                 
                 artist_info = await response.json()
                 
                 # Get artist stats if available
+
                 stats = {}
                 if artist_info.get("type") == "artist":
                     async with self.session.get(
@@ -306,6 +323,8 @@ class AudioPlatformsIntegration:
                     ) as stats_response:
                         if stats_response.status == 200:
                             stats = await stats_response.json()
+
+
                 
                 account = AudioPlatformAccount(
                     platform=AudioPlatform.SPOTIFY,
@@ -315,36 +334,45 @@ class AudioPlatformsIntegration:
                     credentials={"access_token": access_token},
                     is_verified=artist_info.get("verified", False),
                     is_monetized=True,  # Spotify artists can be monetized
+
                     follower_count=stats.get("followers", {}).get("total", 0),
                     monthly_listeners=0,  # Would need Spotify for Artists API
                     total_streams=0,  # Would need detailed analytics API
                     royalty_settings={"rate_per_stream": Decimal("0.003")},  # Approximate rate
+
                     metadata={"artist_info": artist_info, "stats": stats}
                 )
+
                 
                 self.audio_accounts[f"{AudioPlatform.SPOTIFY}_{account.account_id}"] = account
                 self.platform_usage[AudioPlatform.SPOTIFY] = 0
                 self.request_count += 2
                 
                 logger.info(f"Spotify account initialized: {account.artist_name}")
+
                 return account
         
         except Exception as e:
             logger.error(f"Spotify account initialization failed: {e}")
+
             raise
     
     async def _get_spotify_access_token(self) -> str:
         """Get Spotify access token."""
         if self.spotify_refresh_token:
             # Use refresh token to get new access token
+
             auth = base64.b64encode(
                 f"{self.spotify_client_id}:{self.spotify_client_secret}".encode()
             ).decode()
+
+
             
             headers = {
                 "Authorization": f"Basic {auth}",
                 "Content-Type": "application/x-www-form-urlencoded"
             }
+
             
             data = {
                 "grant_type": "refresh_token",
@@ -358,20 +386,28 @@ class AudioPlatformsIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Spotify token error: {error_data}")
+
+
                 
                 token_data = await response.json()
+
                 return token_data["access_token"]
         else:
             # Use client credentials flow for public data
+
             auth = base64.b64encode(
                 f"{self.spotify_client_id}:{self.spotify_client_secret}".encode()
             ).decode()
+
+
             
             headers = {
                 "Authorization": f"Basic {auth}",
                 "Content-Type": "application/x-www-form-urlencoded"
             }
+
             
             data = "grant_type=client_credentials"
             
@@ -382,17 +418,23 @@ class AudioPlatformsIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Spotify token error: {error_data}")
+
+
                 
                 token_data = await response.json()
+
                 return token_data["access_token"]
     
     async def initialize_soundcloud_account(self) -> AudioPlatformAccount:
         """Initialize SoundCloud account."""
         await self._ensure_session()
+
         
         if not self.soundcloud_access_token:
             raise ValueError("SoundCloud access token not configured")
+
         
         try:
             headers = {"Authorization": f"OAuth {self.soundcloud_access_token}"}
@@ -404,9 +446,14 @@ class AudioPlatformsIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"SoundCloud user info error: {error_data}")
+
+
                 
                 user_info = await response.json()
+
+
                 
                 account = AudioPlatformAccount(
                     platform=AudioPlatform.SOUNDCLOUD,
@@ -418,28 +465,35 @@ class AudioPlatformsIntegration:
                     is_monetized=user_info.get("monetization_enabled", False),
                     follower_count=user_info.get("followers_count", 0),
                     monthly_listeners=0,  # Not directly available
+
                     total_streams=user_info.get("playback_count", 0),
                     royalty_settings={"rate_per_stream": Decimal("0.0025")},  # Approximate rate
+
                     metadata={"user_info": user_info}
                 )
+
                 
                 self.audio_accounts[f"{AudioPlatform.SOUNDCLOUD}_{account.account_id}"] = account
                 self.platform_usage[AudioPlatform.SOUNDCLOUD] = 0
                 self.request_count += 1
                 
                 logger.info(f"SoundCloud account initialized: {account.artist_name}")
+
                 return account
         
         except Exception as e:
             logger.error(f"SoundCloud account initialization failed: {e}")
+
             raise
     
     async def initialize_youtube_music_account(self) -> AudioPlatformAccount:
         """Initialize YouTube Music account."""
         await self._ensure_session()
+
         
         if not self.youtube_api_key or not self.youtube_channel_id:
             raise ValueError("YouTube Music credentials not configured")
+
         
         try:
             params = {
@@ -454,15 +508,24 @@ class AudioPlatformsIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"YouTube channel info error: {error_data}")
+
+
                 
                 channel_data = await response.json()
+
                 
                 if not channel_data.get("items"):
                     raise Exception("YouTube channel not found")
+
+
                 
                 channel = channel_data["items"][0]
+
                 stats = channel.get("statistics", {})
+
+
                 
                 account = AudioPlatformAccount(
                     platform=AudioPlatform.YOUTUBE_MUSIC,
@@ -472,22 +535,28 @@ class AudioPlatformsIntegration:
                     credentials={"api_key": self.youtube_api_key},
                     is_verified=channel["snippet"].get("verified", False),
                     is_monetized=True,  # Assume monetized if API key provided
+
                     follower_count=int(stats.get("subscriberCount", 0)),
                     monthly_listeners=0,  # Not directly available
+
                     total_streams=int(stats.get("viewCount", 0)),
                     royalty_settings={"rate_per_stream": Decimal("0.001")},  # Approximate rate
+
                     metadata={"channel": channel}
                 )
+
                 
                 self.audio_accounts[f"{AudioPlatform.YOUTUBE_MUSIC}_{account.account_id}"] = account
                 self.platform_usage[AudioPlatform.YOUTUBE_MUSIC] = 0
                 self.request_count += 1
                 
                 logger.info(f"YouTube Music account initialized: {account.artist_name}")
+
                 return account
         
         except Exception as e:
             logger.error(f"YouTube Music account initialization failed: {e}")
+
             raise
     
     async def upload_track(
@@ -504,8 +573,11 @@ class AudioPlatformsIntegration:
     ) -> AudioTrack:
         """Upload audio track to platform."""
         await self._ensure_session()
+
+
         
         track_id = str(uuid.uuid4())
+
         
         if platform == AudioPlatform.SOUNDCLOUD:
             return await self._upload_soundcloud_track(
@@ -540,11 +612,17 @@ class AudioPlatformsIntegration:
                 raise ValueError("SoundCloud not configured")
             
             # Prepare form data for upload
+
             form_data = aiohttp.FormData()
+
             form_data.add_field('oauth_token', self.soundcloud_access_token)
+
             form_data.add_field('track[title]', title)
+
             form_data.add_field('track[genre]', genre or 'Other')
+
             form_data.add_field('track[description]', f"By {artist}")
+
             
             if album:
                 form_data.add_field('track[tag_list]', album)
@@ -559,6 +637,7 @@ class AudioPlatformsIntegration:
                     with open(artwork_path, 'rb') as artwork_file:
                         form_data.add_field('track[artwork_data]', artwork_file,
                                           filename=f"{title}_artwork.jpg", content_type='image/jpeg')
+
                 
                 async with self.session.post(
                     self.platform_urls[AudioPlatform.SOUNDCLOUD]['upload'],
@@ -566,9 +645,14 @@ class AudioPlatformsIntegration:
                 ) as response:
                     if response.status not in [200, 201]:
                         error_data = await response.json()
+
                         raise Exception(f"SoundCloud upload error: {error_data}")
+
+
                     
                     result = await response.json()
+
+
                     
                     track = AudioTrack(
                         track_id=str(result["id"]),
@@ -577,6 +661,7 @@ class AudioPlatformsIntegration:
                         artist=artist,
                         album=album,
                         duration_seconds=result.get("duration", 0) // 1000,  # SoundCloud returns milliseconds
+
                         genre=genre or "Other",
                         release_date=release_date or datetime.now(),
                         isrc=None,
@@ -586,6 +671,7 @@ class AudioPlatformsIntegration:
                         status=ReleaseStatus.PUBLISHED,
                         metadata=metadata or {}
                     )
+
                     
                     self.uploaded_tracks[track.track_id] = track
                     self.total_uploads += 1
@@ -593,10 +679,12 @@ class AudioPlatformsIntegration:
                     self.platform_usage[AudioPlatform.SOUNDCLOUD] = self.platform_usage.get(AudioPlatform.SOUNDCLOUD, 0) + 1
                     
                     logger.info(f"SoundCloud track uploaded: {title} ({track.track_id})")
+
                     return track
         
         except Exception as e:
             logger.error(f"SoundCloud track upload failed: {e}")
+
             raise
     
     async def _upload_youtube_track(
@@ -615,6 +703,7 @@ class AudioPlatformsIntegration:
         try:
             # Note: This is a simplified example. Real YouTube upload requires OAuth and video file
             # For audio-only content, you'd typically create a video with static artwork
+
             
             track = AudioTrack(
                 track_id=track_id,
@@ -623,6 +712,7 @@ class AudioPlatformsIntegration:
                 artist=artist,
                 album=album,
                 duration_seconds=0,  # Would be determined from audio file
+
                 genre=genre or "Music",
                 release_date=release_date or datetime.now(),
                 isrc=None,
@@ -630,18 +720,22 @@ class AudioPlatformsIntegration:
                 artwork_url=artwork_path,
                 lyrics=None,
                 status=ReleaseStatus.PENDING_REVIEW,  # YouTube content goes through review
+
                 metadata=metadata or {}
             )
+
             
             self.uploaded_tracks[track.track_id] = track
             self.total_uploads += 1
             self.platform_usage[AudioPlatform.YOUTUBE_MUSIC] = self.platform_usage.get(AudioPlatform.YOUTUBE_MUSIC, 0) + 1
             
             logger.info(f"YouTube Music track prepared: {title} ({track.track_id})")
+
             return track
         
         except Exception as e:
             logger.error(f"YouTube Music track upload failed: {e}")
+
             raise
     
     async def get_streaming_metrics(
@@ -653,6 +747,7 @@ class AudioPlatformsIntegration:
     ) -> StreamingMetrics:
         """Get streaming metrics for a track."""
         await self._ensure_session()
+
         
         if platform == AudioPlatform.SPOTIFY:
             return await self._get_spotify_metrics(track_id, start_date, end_date)
@@ -672,6 +767,8 @@ class AudioPlatformsIntegration:
         """Get Spotify streaming metrics."""
         try:
             access_token = await self._get_spotify_access_token()
+
+
             headers = {"Authorization": f"Bearer {access_token}"}
             
             # Get track details
@@ -681,40 +778,43 @@ class AudioPlatformsIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Spotify track error: {error_data}")
+
+
                 
                 track_data = await response.json()
                 
                 # Note: Real metrics would require Spotify for Artists API
                 # This is a simplified example with mock data
+
                 
                 metrics = StreamingMetrics(
                     track_id=track_id,
                     platform=AudioPlatform.SPOTIFY,
                     period_start=start_date,
                     period_end=end_date,
-                    streams=track_data.get("popularity", 0) * 1000,  # Mock calculation
-                    unique_listeners=int(track_data.get("popularity", 0) * 800),
-                    skip_rate=0.15,  # Mock data
-                    completion_rate=0.75,  # Mock data
-                    geographical_data={"US": 40, "GB": 20, "CA": 15, "AU": 10, "DE": 15},
+                    streams=track_data.get("popularity", 0) * 1000,                    unique_listeners=int(track_data.get("popularity", 0) * 800),
+                    skip_rate=0.15,                    completion_rate=0.75,                    geographical_data={"US": 40, "GB": 20, "CA": 15, "AU": 10, "DE": 15},
                     demographic_data={"18-24": 30, "25-34": 35, "35-44": 20, "45+": 15},
                     playlist_additions=int(track_data.get("popularity", 0) * 50),
                     saves=int(track_data.get("popularity", 0) * 30),
                     shares=int(track_data.get("popularity", 0) * 10),
-                    revenue_generated=Decimal(str(track_data.get("popularity", 0) * 3)),  # Mock revenue
-                    metadata={"track_data": track_data}
+                    revenue_generated=Decimal(str(track_data.get("popularity", 0) * 3)),                    metadata={"track_data": track_data}
                 )
+
                 
                 self.total_streams_tracked += metrics.streams
                 self.total_revenue_tracked += metrics.revenue_generated
                 self.request_count += 1
                 
                 logger.info(f"Spotify metrics retrieved for track: {track_id}")
+
                 return metrics
         
         except Exception as e:
             logger.error(f"Spotify metrics retrieval failed: {e}")
+
             raise
     
     async def _get_soundcloud_metrics(
@@ -734,9 +834,14 @@ class AudioPlatformsIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"SoundCloud track error: {error_data}")
+
+
                 
                 track_data = await response.json()
+
+
                 
                 metrics = StreamingMetrics(
                     track_id=track_id,
@@ -745,26 +850,29 @@ class AudioPlatformsIntegration:
                     period_end=end_date,
                     streams=track_data.get("playback_count", 0),
                     unique_listeners=int(track_data.get("playback_count", 0) * 0.8),  # Estimate
-                    skip_rate=0.20,  # Mock data
-                    completion_rate=0.70,  # Mock data
-                    geographical_data={"US": 35, "GB": 15, "DE": 20, "FR": 15, "Other": 15},
+
+                    skip_rate=0.20,                    completion_rate=0.70,                    geographical_data={"US": 35, "GB": 15, "DE": 20, "FR": 15, "Other": 15},
                     demographic_data={"18-24": 40, "25-34": 30, "35-44": 20, "45+": 10},
                     playlist_additions=track_data.get("reposts_count", 0),
                     saves=track_data.get("favoritings_count", 0),
                     shares=track_data.get("reposts_count", 0),
                     revenue_generated=Decimal(str(track_data.get("playback_count", 0) * 0.0025)),  # Estimated revenue
+
                     metadata={"track_data": track_data}
                 )
+
                 
                 self.total_streams_tracked += metrics.streams
                 self.total_revenue_tracked += metrics.revenue_generated
                 self.request_count += 1
                 
                 logger.info(f"SoundCloud metrics retrieved for track: {track_id}")
+
                 return metrics
         
         except Exception as e:
             logger.error(f"SoundCloud metrics retrieval failed: {e}")
+
             raise
     
     async def _get_youtube_metrics(
@@ -787,14 +895,22 @@ class AudioPlatformsIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"YouTube video error: {error_data}")
+
+
                 
                 video_data = await response.json()
+
                 
                 if not video_data.get("items"):
                     raise Exception("YouTube video not found")
+
+
                 
                 stats = video_data["items"][0].get("statistics", {})
+
+
                 
                 metrics = StreamingMetrics(
                     track_id=track_id,
@@ -803,26 +919,31 @@ class AudioPlatformsIntegration:
                     period_end=end_date,
                     streams=int(stats.get("viewCount", 0)),
                     unique_listeners=int(int(stats.get("viewCount", 0)) * 0.85),  # Estimate
-                    skip_rate=0.25,  # Mock data
-                    completion_rate=0.65,  # Mock data
-                    geographical_data={"US": 30, "IN": 20, "BR": 15, "GB": 10, "Other": 25},
+
+                    skip_rate=0.25,                    completion_rate=0.65,                    geographical_data={"US": 30, "IN": 20, "BR": 15, "GB": 10, "Other": 25},
                     demographic_data={"18-24": 45, "25-34": 25, "35-44": 20, "45+": 10},
                     playlist_additions=0,  # Not directly available
+
                     saves=int(stats.get("likeCount", 0)),
                     shares=0,  # Not directly available
+
                     revenue_generated=Decimal(str(int(stats.get("viewCount", 0)) * 0.001)),  # Estimated revenue
+
                     metadata={"video_data": video_data["items"][0]}
                 )
+
                 
                 self.total_streams_tracked += metrics.streams
                 self.total_revenue_tracked += metrics.revenue_generated
                 self.request_count += 1
                 
                 logger.info(f"YouTube Music metrics retrieved for track: {track_id}")
+
                 return metrics
         
         except Exception as e:
             logger.error(f"YouTube Music metrics retrieval failed: {e}")
+
             raise
     
     async def calculate_royalty_payments(
@@ -835,22 +956,31 @@ class AudioPlatformsIntegration:
         """Calculate royalty payments for period."""
         
         # Get account for royalty rates
+
         account_key = f"{platform}_{artist_id}"
         if account_key not in self.audio_accounts:
             raise ValueError(f"Account not found: {platform} - {artist_id}")
+
+
         
         account = self.audio_accounts[account_key]
+
         rate_per_stream = account.royalty_settings.get("rate_per_stream", Decimal("0.003"))
         
         # Get all tracks for this artist and calculate total
+
         total_streams = 0
+
         total_revenue = Decimal('0')
+
         breakdown = {}
         
         for track_id, track in self.uploaded_tracks.items():
             if track.platform == platform:
                 try:
                     metrics = await self.get_streaming_metrics(platform, track_id, start_date, end_date)
+
+
                     track_revenue = Decimal(str(metrics.streams)) * rate_per_stream
                     
                     total_streams += metrics.streams
@@ -859,9 +989,13 @@ class AudioPlatformsIntegration:
                 
                 except Exception as e:
                     logger.warning(f"Failed to get metrics for track {track_id}: {e}")
+
                     continue
+
         
         payment_id = str(uuid.uuid4())
+
+
         
         royalty_payment = RoyaltyPayment(
             payment_id=payment_id,
@@ -875,10 +1009,12 @@ class AudioPlatformsIntegration:
             rate_per_stream=rate_per_stream,
             currency="USD",
             payment_date=datetime.now() + timedelta(days=30),  # Typical payment delay
+
             payment_status="pending",
             breakdown=breakdown,
             metadata={"calculation_date": datetime.now().isoformat()}
         )
+
         
         logger.info(f"Royalty payment calculated: {payment_id} - ${total_revenue}")
         return royalty_payment
@@ -892,19 +1028,26 @@ class AudioPlatformsIntegration:
         """Get comprehensive analytics across platforms."""
         
         total_streams = 0
+
         total_revenue = Decimal('0')
+
         platform_breakdown = {}
+
         top_tracks = []
         
         for platform in platforms:
             platform_streams = 0
+
             platform_revenue = Decimal('0')
+
+
             platform_tracks = []
             
             for track_id, track in self.uploaded_tracks.items():
                 if track.platform == platform:
                     try:
                         metrics = await self.get_streaming_metrics(platform, track_id, start_date, end_date)
+
                         platform_streams += metrics.streams
                         platform_revenue += metrics.revenue_generated
                         
@@ -914,9 +1057,11 @@ class AudioPlatformsIntegration:
                             "streams": metrics.streams,
                             "revenue": float(metrics.revenue_generated)
                         })
+
                     
                     except Exception as e:
                         logger.warning(f"Failed to get metrics for track {track_id}: {e}")
+
                         continue
             
             platform_breakdown[platform.value] = {
@@ -931,25 +1076,29 @@ class AudioPlatformsIntegration:
         
         # Sort top tracks by streams
         top_tracks.sort(key=lambda x: x["streams"], reverse=True)
+
         top_tracks = top_tracks[:10]  # Top 10 tracks
         
         # Calculate growth metrics (simplified)
+
         growth_metrics = {
-            "streams_growth": 15.5,  # Mock data - would calculate from historical data
-            "revenue_growth": 12.3,
+            "streams_growth": 15.5,            "revenue_growth": 12.3,
             "new_listeners_growth": 8.7
         }
         
         # Generate recommendations
+
         recommendations = [
             "Focus on promoting your top-performing tracks on social media",
             "Consider releasing similar content to your most successful tracks",
             "Optimize release timing based on your audience engagement patterns",
             "Explore playlist placement opportunities for better discovery"
         ]
+
         
         analytics = AudioAnalytics(
             platform=AudioPlatform.SPOTIFY,  # Primary platform
+
             period_start=start_date,
             period_end=end_date,
             total_streams=total_streams,
@@ -966,6 +1115,7 @@ class AudioPlatformsIntegration:
             recommendations=recommendations,
             metadata={"analysis_date": datetime.now().isoformat()}
         )
+
         
         logger.info(f"Comprehensive analytics generated: {total_streams} streams, ${total_revenue} revenue")
         return analytics
@@ -979,10 +1129,10 @@ class AudioPlatformsIntegration:
         """Optimize release strategy based on platform analytics."""
         
         # Analyze historical performance by genre and platform
+
         platform_performance = {}
         
         for platform in target_platforms:
-            # Mock analysis - would use real historical data
             performance_score = 0.75  # Base score
             
             if platform == AudioPlatform.SPOTIFY:
@@ -1000,7 +1150,10 @@ class AudioPlatformsIntegration:
             }
         
         # Generate release strategy
+
         best_platform = max(platform_performance.items(), key=lambda x: x[1]["performance_score"])
+
+
         
         strategy = {
             "recommended_primary_platform": best_platform[0],
@@ -1031,11 +1184,13 @@ class AudioPlatformsIntegration:
         return list(self.audio_accounts.values())
     
     async def get_uploaded_tracks(self) -> List[AudioTrack]:
-        """Get all uploaded tracks."""
+        """
+        Get all uploaded tracks."""
         return list(self.uploaded_tracks.values())
     
     def get_usage_stats(self) -> Dict[str, Any]:
-        """Get audio platforms usage statistics."""
+        """
+        Get audio platforms usage statistics."""
         return {
             "total_requests": self.request_count,
             "total_uploads": self.total_uploads,
@@ -1072,10 +1227,12 @@ async def track_multi_platform_performance(
     platforms: List[AudioPlatform],
     period_days: int = 30
 ) -> Dict[str, Any]:
-    """Track performance of the same track across multiple platforms."""
+    """
+        Track performance of the same track across multiple platforms."""
     
     end_date = datetime.now()
     start_date = end_date - timedelta(days=period_days)
+
     
     platform_metrics = {}
     total_streams = 0
@@ -1084,6 +1241,7 @@ async def track_multi_platform_performance(
     for platform in platforms:
         platform_tracks = [
             track for track in integration.uploaded_tracks.values()
+
             if track.platform == platform and track.title == track_title
         ]
         
@@ -1093,6 +1251,7 @@ async def track_multi_platform_performance(
                 metrics = await integration.get_streaming_metrics(
                     platform, track.track_id, start_date, end_date
                 )
+
                 
                 platform_metrics[platform.value] = {
                     "streams": metrics.streams,
@@ -1108,6 +1267,7 @@ async def track_multi_platform_performance(
             
             except Exception as e:
                 logger.warning(f"Failed to get metrics for {track_title} on {platform}: {e}")
+
                 platform_metrics[platform.value] = None
         else:
             platform_metrics[platform.value] = None
@@ -1117,7 +1277,10 @@ async def track_multi_platform_performance(
     
     if valid_platforms:
         best_performing = max(valid_platforms.items(), key=lambda x: x[1]["streams"])
+
         worst_performing = min(valid_platforms.items(), key=lambda x: x[1]["streams"])
+
+
         
         performance_analysis = {
             "track_title": track_title,
@@ -1167,7 +1330,9 @@ if __name__ == "__main__":
             try:
                 if audio.spotify_client_id:
                     spotify_account = await audio.initialize_spotify_account()
+
                     print(f"Spotify account: {spotify_account.artist_name}")
+
             except Exception as e:
                 print(f"Spotify initialization failed: {e}")
             
@@ -1178,13 +1343,18 @@ if __name__ == "__main__":
                     start_date=datetime.now() - timedelta(days=30),
                     end_date=datetime.now()
                 )
+
                 print(f"Total streams: {analytics.total_streams}")
+
                 print(f"Total revenue: ${analytics.total_revenue}")
+
             except Exception as e:
                 print(f"Analytics failed: {e}")
             
             # Check usage stats
+
             stats = audio.get_usage_stats()
+
             print(f"Usage stats: {stats}")
     
     asyncio.run(main())

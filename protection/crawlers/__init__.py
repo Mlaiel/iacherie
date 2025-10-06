@@ -52,6 +52,9 @@ All crawler activities are logged and legally monitored.
 """
 import asyncio
 import logging
+import time
+import hashlib
+import aiohttp
 from typing import Dict, List, Optional, Any, Set, Callable
 from dataclasses import dataclass
 from datetime import datetime, timedelta
@@ -66,6 +69,81 @@ from .index import (
     quick_revenue_check,
     quick_violation_scan
 )
+
+# Import all enhanced crawler modules
+from .base_crawler import (
+    BasePlatformCrawler, CrawlResult, CrawlerStatus, ContentType, Priority
+)
+from .youtube_crawler import (
+    YouTubeCrawler, YouTubeAPIClient, YouTubeSeleniumCrawler
+)
+from .revenue_monitoring_crawler import (
+    RevenueMonitoringCrawler, RevenueMetrics, UnauthorizedUsageAlert,
+    MonetizationType, RevenueStatus, RevenueCalculator, UnauthorizedUsageDetector
+)
+from .legal_violation_crawler import (
+    LegalViolationCrawler, LegalViolationAlert, DMCANotice, ViolationType,
+    ViolationSeverity, LegalStatus, LegalJurisdiction, LegalAnalyzer
+)
+from .collaboration_discovery_crawler import (
+    CollaborationDiscoveryCrawler, CollaborationOpportunity, CreatorProfile,
+    BrandPartnershipOpportunity, CollaborationType, CreatorTier, MatchQuality
+)
+from .market_intelligence_crawler import (
+    MarketIntelligenceCrawler, TrendAnalysis, CompetitorAnalysis, MarketOpportunity,
+    HashtagAnalysis, TrendType, TrendStatus, MarketCategory, OpportunityType
+)
+from .tiktok_crawler import (
+    TikTokCrawler, TikTokSeleniumCrawler, TikTokAntiDetection
+)
+from .instagram_crawler import (
+    InstagramCrawler, InstagramAPIClient, InstagramSeleniumCrawler
+)
+from .twitter_crawler import (
+    TwitterCrawler, TwitterAPIClient
+)
+
+
+# ============================================================================
+# BACKWARD COMPATIBILITY ALIAS
+# ============================================================================
+
+# Main class alias for protection.crawlers module
+class ProtectionCrawlers:
+    """Main entry point for all protection crawlers - provides unified interface"""
+    
+    def __init__(self):
+        self.youtube = YouTubeCrawler
+        self.instagram = InstagramCrawler
+        self.tiktok = TikTokCrawler
+        self.twitter = TwitterCrawler
+        self.revenue = RevenueMonitoringCrawler
+        self.legal = LegalViolationCrawler
+        self.collaboration = CollaborationDiscoveryCrawler
+        self.market_intelligence = MarketIntelligenceCrawler
+        self.service_manager = CrawlerServiceManager
+        logger.info("ProtectionCrawlers initialized with all crawler modules")
+    
+    @staticmethod
+    def create_service():
+        """Create crawler service instance"""
+        return create_crawler_service()
+    
+    @staticmethod
+    async def quick_youtube_search(query: str):
+        """Quick YouTube search utility"""
+        return await quick_youtube_search(query)
+    
+    @staticmethod
+    async def quick_revenue_check(creator_id: str):
+        """Quick revenue monitoring check"""
+        return await quick_revenue_check(creator_id)
+    
+    @staticmethod
+    async def quick_violation_scan(content_id: str):
+        """Quick violation scan"""
+        return await quick_violation_scan(content_id)
+
 
 # Import all enhanced crawler modules
 from .base_crawler import (

@@ -27,7 +27,8 @@ import statistics
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Types of evaluation metrics"""
+    """
+        Types of evaluation metrics"""
     ACCURACY = "accuracy"
     PRECISION = "precision"
     RECALL = "recall"
@@ -76,7 +77,8 @@ class MetricResult:
 
 @dataclass
 class TestCase:
-    """Test case definition"""
+    """
+        Test case definition"""
     test_id: str
     test_type: TestType
     description: str
@@ -87,7 +89,8 @@ class TestCase:
 
 @dataclass
 class TestResult:
-    """Test execution result"""
+    """
+        Test execution result"""
     test_case: TestCase
     passed: bool
     actual_output: Any
@@ -98,7 +101,8 @@ class TestResult:
 
 @dataclass
 class EvaluationSuite:
-    """Collection of related test cases"""
+    """
+        Collection of related test cases"""
     suite_id: str
     name: str
     description: str
@@ -108,7 +112,8 @@ class EvaluationSuite:
 
 @dataclass
 class EvaluationReport:
-    """Comprehensive evaluation report"""
+    """
+        Comprehensive evaluation report"""
     evaluation_id: str
     suite_id: str
     started_at: datetime
@@ -119,15 +124,19 @@ class EvaluationReport:
     summary: Dict[str, Any] = field(default_factory=dict)
 
 class MetricsCalculator:
-    """Calculates various performance metrics"""
+    """
+        Calculates various performance metrics"""
     
     def __init__(self):
         self.calculation_cache: Dict[str, Any] = {}
     
     async def calculate_accuracy(self, predictions: List[Any], ground_truth: List[Any]) -> float:
-        """Calculate accuracy metric"""
+        """
+        Calculate accuracy metric"""
         if len(predictions) != len(ground_truth):
             raise ValueError("Predictions and ground truth must have same length")
+
+
         
         correct = sum(1 for p, g in zip(predictions, ground_truth) if p == g)
         return correct / len(predictions) if predictions else 0.0
@@ -135,26 +144,39 @@ class MetricsCalculator:
     async def calculate_precision_recall_f1(self, predictions: List[Any], ground_truth: List[Any], 
                                           positive_class: Any = 1) -> Tuple[float, float, float]:
         """Calculate precision, recall, and F1 score"""
-        true_positives = sum(1 for p, g in zip(predictions, ground_truth) 
+        true_positives = sum(1 for p, g in zip(predictions, ground_truth)
+ 
                            if p == positive_class and g == positive_class)
-        false_positives = sum(1 for p, g in zip(predictions, ground_truth) 
+
+        false_positives = sum(1 for p, g in zip(predictions, ground_truth)
+ 
                             if p == positive_class and g != positive_class)
-        false_negatives = sum(1 for p, g in zip(predictions, ground_truth) 
+
+        false_negatives = sum(1 for p, g in zip(predictions, ground_truth)
+ 
                             if p != positive_class and g == positive_class)
+
+
         
         precision = true_positives / (true_positives + false_positives) if (true_positives + false_positives) > 0 else 0.0
+
         recall = true_positives / (true_positives + false_negatives) if (true_positives + false_negatives) > 0 else 0.0
+
         f1 = 2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0.0
         
         return precision, recall, f1
     
     async def calculate_response_time_metrics(self, response_times: List[float]) -> Dict[str, float]:
-        """Calculate response time statistics"""
+        """
+        Calculate response time statistics"""
         if not response_times:
             return {"mean": 0.0, "median": 0.0, "p95": 0.0, "p99": 0.0}
+
         
         sorted_times = sorted(response_times)
+
         n = len(sorted_times)
+
         
         return {
             "mean": statistics.mean(response_times),
@@ -170,10 +192,14 @@ class MetricsCalculator:
         """Calculate engagement metrics"""
         if not interactions:
             return {"engagement_rate": 0.0, "average_session_length": 0.0, "bounce_rate": 0.0}
+
         
         total_interactions = len(interactions)
+
         engaged_interactions = sum(1 for i in interactions if i.get("engaged", False))
+
         session_lengths = [i.get("session_length", 0) for i in interactions]
+
         bounced_sessions = sum(1 for i in interactions if i.get("session_length", 0) < 30)  # Less than 30 seconds
         
         return {
@@ -185,6 +211,7 @@ class MetricsCalculator:
     async def calculate_conversation_quality_score(self, conversation_data: Dict[str, Any]) -> float:
         """Calculate conversation quality score"""
         # Factors that contribute to conversation quality
+
         factors = {
             "relevance": conversation_data.get("relevance_score", 0.5),
             "coherence": conversation_data.get("coherence_score", 0.5),
@@ -194,6 +221,7 @@ class MetricsCalculator:
         }
         
         # Weighted average
+
         weights = {
             "relevance": 0.25,
             "coherence": 0.20,
@@ -201,6 +229,7 @@ class MetricsCalculator:
             "naturalness": 0.15,
             "completeness": 0.15
         }
+
         
         quality_score = sum(factors[key] * weights[key] for key in factors)
         return min(1.0, max(0.0, quality_score))
@@ -213,24 +242,32 @@ class TestExecutor:
         self.metrics_calculator = MetricsCalculator()
     
     async def execute_test_case(self, test_case: TestCase, target_function: Callable) -> TestResult:
-        """Execute a single test case"""
+        """
+        Execute a single test case"""
         start_time = time.time()
+
         
         try:
             # Execute the test
+
             actual_output = await self._run_test_with_timeout(
                 target_function, 
                 test_case.input_data, 
                 test_case.timeout_seconds
             )
+
+
             
             execution_time = time.time() - start_time
             
             # Compare with expected output
+
             passed = await self._compare_outputs(actual_output, test_case.expected_output)
             
             # Calculate metrics
+
             metrics = await self._calculate_test_metrics(test_case, actual_output, execution_time)
+
             
             return TestResult(
                 test_case=test_case,
@@ -239,6 +276,7 @@ class TestExecutor:
                 execution_time=execution_time,
                 metrics=metrics
             )
+
             
         except Exception as e:
             execution_time = time.time() - start_time
@@ -251,12 +289,14 @@ class TestExecutor:
             )
     
     async def _run_test_with_timeout(self, target_function: Callable, input_data: Any, timeout: int) -> Any:
-        """Run test function with timeout"""
+        """
+        Run test function with timeout"""
         try:
             result = await asyncio.wait_for(
                 target_function(input_data),
                 timeout=timeout
             )
+
             return result
         except asyncio.TimeoutError:
             raise Exception(f"Test timed out after {timeout} seconds")
@@ -271,7 +311,8 @@ class TestExecutor:
             return actual == expected
     
     async def _compare_dict_outputs(self, actual: Dict, expected: Dict) -> bool:
-        """Compare dictionary outputs with tolerance for floating point numbers"""
+        """
+        Compare dictionary outputs with tolerance for floating point numbers"""
         if set(actual.keys()) != set(expected.keys()):
             return False
         
@@ -285,7 +326,8 @@ class TestExecutor:
         return True
     
     async def _compare_list_outputs(self, actual: List, expected: List) -> bool:
-        """Compare list outputs"""
+        """
+        Compare list outputs"""
         if len(actual) != len(expected):
             return False
         
@@ -296,7 +338,8 @@ class TestExecutor:
         return True
     
     async def _calculate_test_metrics(self, test_case: TestCase, output: Any, execution_time: float) -> List[MetricResult]:
-        """Calculate metrics for test execution"""
+        """
+        Calculate metrics for test execution"""
         metrics = []
         
         # Response time metric
@@ -309,7 +352,6 @@ class TestExecutor:
         
         # Test-specific metrics based on test type
         if test_case.test_type == TestType.NLP_ACCURACY_TEST:
-            # Mock NLP accuracy calculation
             accuracy = 0.85 + (hash(str(output)) % 20) / 100  # Simulated accuracy
             metrics.append(MetricResult(
                 metric_type=MetricType.INTENT_ACCURACY,
@@ -317,9 +359,9 @@ class TestExecutor:
                 unit="percentage",
                 timestamp=datetime.now()
             ))
+
         
         elif test_case.test_type == TestType.RESPONSE_QUALITY_TEST:
-            # Mock quality score calculation
             quality = 0.8 + (hash(str(output)) % 25) / 100  # Simulated quality
             metrics.append(MetricResult(
                 metric_type=MetricType.QUALITY_SCORE,
@@ -327,6 +369,7 @@ class TestExecutor:
                 unit="score",
                 timestamp=datetime.now()
             ))
+
         
         return metrics
 
@@ -340,7 +383,8 @@ class EvaluationEngine:
         self.evaluation_reports: Dict[str, EvaluationReport] = {}
     
     async def register_evaluation_suite(self, suite: EvaluationSuite):
-        """Register an evaluation suite"""
+        """
+        Register an evaluation suite"""
         self.evaluation_suites[suite.suite_id] = suite
         logger.info(f"Registered evaluation suite: {suite.suite_id}")
     
@@ -348,8 +392,11 @@ class EvaluationEngine:
         """Run evaluation suite and return evaluation ID"""
         if suite_id not in self.evaluation_suites:
             raise ValueError(f"Evaluation suite {suite_id} not found")
+
+
         
         suite = self.evaluation_suites[suite_id]
+
         evaluation_id = f"eval_{suite_id}_{datetime.now().timestamp()}"
         
         report = EvaluationReport(
@@ -358,6 +405,7 @@ class EvaluationEngine:
             started_at=datetime.now(),
             status=EvaluationStatus.RUNNING
         )
+
         
         self.evaluation_reports[evaluation_id] = report
         
@@ -372,6 +420,7 @@ class EvaluationEngine:
                     test_case, 
                     target_system
                 )
+
                 report.test_results.append(test_result)
             
             # Calculate overall metrics
@@ -383,16 +432,20 @@ class EvaluationEngine:
             # Run teardown if available
             if suite.teardown_function:
                 await suite.teardown_function()
+
             
             report.status = EvaluationStatus.COMPLETED
             report.completed_at = datetime.now()
+
             
             logger.info(f"Evaluation {evaluation_id} completed successfully")
+
             
         except Exception as e:
             report.status = EvaluationStatus.FAILED
             report.summary = {"error": str(e)}
             logger.error(f"Evaluation {evaluation_id} failed: {e}")
+
         
         return evaluation_id
     
@@ -401,8 +454,11 @@ class EvaluationEngine:
         overall_metrics = []
         
         # Calculate pass rate
+
         total_tests = len(test_results)
+
         passed_tests = sum(1 for result in test_results if result.passed)
+
         pass_rate = passed_tests / total_tests if total_tests > 0 else 0.0
         
         overall_metrics.append(MetricResult(
@@ -414,9 +470,11 @@ class EvaluationEngine:
         ))
         
         # Calculate average response time
+
         response_times = [result.execution_time for result in test_results]
         if response_times:
             avg_response_time = statistics.mean(response_times)
+
             overall_metrics.append(MetricResult(
                 metric_type=MetricType.RESPONSE_TIME,
                 value=avg_response_time,
@@ -427,22 +485,27 @@ class EvaluationEngine:
         # Calculate throughput (tests per second)
         if response_times:
             throughput = 1.0 / statistics.mean(response_times)
+
             overall_metrics.append(MetricResult(
                 metric_type=MetricType.THROUGHPUT,
                 value=throughput,
                 unit="tests_per_second",
                 timestamp=datetime.now()
             ))
+
         
         return overall_metrics
     
     async def _generate_evaluation_summary(self, report: EvaluationReport) -> Dict[str, Any]:
         """Generate evaluation summary"""
         total_tests = len(report.test_results)
+
         passed_tests = sum(1 for result in report.test_results if result.passed)
+
         failed_tests = total_tests - passed_tests
         
         # Group results by test type
+
         test_type_summary = {}
         for result in report.test_results:
             test_type = result.test_case.test_type.value
@@ -456,7 +519,9 @@ class EvaluationEngine:
                 test_type_summary[test_type]["failed"] += 1
         
         # Calculate execution statistics
+
         execution_times = [result.execution_time for result in report.test_results]
+
         duration = (report.completed_at - report.started_at).total_seconds() if report.completed_at else 0
         
         return {
@@ -478,8 +543,10 @@ class EvaluationEngine:
         return self.evaluation_reports.get(evaluation_id)
     
     async def list_evaluations(self, status_filter: Optional[EvaluationStatus] = None) -> List[Dict[str, Any]]:
-        """List evaluations with optional status filter"""
+        """
+        List evaluations with optional status filter"""
         evaluations = list(self.evaluation_reports.values())
+
         
         if status_filter:
             evaluations = [eval for eval in evaluations if eval.status == status_filter]
@@ -505,17 +572,23 @@ class PerformanceBenchmark:
     
     async def benchmark_function(self, function: Callable, input_data: Any, 
                                 iterations: int = 100) -> Dict[str, float]:
-        """Benchmark a function's performance"""
+        """
+        Benchmark a function's performance"""
         execution_times = []
         
         for _ in range(iterations):
             start_time = time.time()
+
             try:
                 await function(input_data)
+
+
                 execution_time = time.time() - start_time
                 execution_times.append(execution_time)
+
             except Exception as e:
                 logger.warning(f"Benchmark iteration failed: {e}")
+
         
         if not execution_times:
             return {"error": "All benchmark iterations failed"}
@@ -529,24 +602,29 @@ class PerformanceBenchmark:
         
         for name, implementation in implementations.items():
             results[name] = await self.benchmark_function(implementation, input_data, iterations)
+
         
         return results
 
 # Factory functions
 def create_evaluation_engine() -> EvaluationEngine:
-    """Create evaluation engine instance"""
+    """
+        Create evaluation engine instance"""
     return EvaluationEngine()
 
 def create_metrics_calculator() -> MetricsCalculator:
-    """Create metrics calculator instance"""
+    """
+        Create metrics calculator instance"""
     return MetricsCalculator()
 
 def create_test_executor() -> TestExecutor:
-    """Create test executor instance"""
+    """
+        Create test executor instance"""
     return TestExecutor()
 
 def create_performance_benchmark() -> PerformanceBenchmark:
-    """Create performance benchmark instance"""
+    """
+        Create performance benchmark instance"""
     return PerformanceBenchmark()
 
 # Export all classes and functions

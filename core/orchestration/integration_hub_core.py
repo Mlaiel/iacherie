@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class IntegrationHubCore:
-    """Advanced IntegrationHubCore System"""
+    """
+Advanced IntegrationHubCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class IntegrationHubCore:
 # Module exports
 __all__ = ["IntegrationHubCore"]
 
-logger.info("🔗 IntegrationHubCore module loaded")
+logger.info("🔗 IntegrationHubCore module initialized")

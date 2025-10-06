@@ -44,7 +44,8 @@ logger = logging.getLogger(__name__)
 # ============================================================================
 
 class DeviceType(str, Enum):
-    """Types d'appareils mobiles."""
+    """
+        Types d'appareils mobiles."""
     SMARTPHONE = "smartphone"
     TABLET = "tablet"
     IOT_SENSOR = "iot_sensor"
@@ -88,6 +89,83 @@ class NetworkType(str, Enum):
     SATELLITE = "satellite"
 
 
+class LocationMethod(str, Enum):
+    """Méthodes de géolocalisation."""
+    GPS = "gps"
+    NETWORK = "network"
+    CELL_TOWER = "cell_tower"
+    WIFI = "wifi"
+    BLUETOOTH_BEACON = "bluetooth_beacon"
+    HYBRID = "hybrid"
+
+
+class LocationAccuracy(str, Enum):
+    """Niveaux de précision de localisation."""
+    HIGH = "high"  # < 10m
+    MEDIUM = "medium"  # 10-100m
+    LOW = "low"  # 100-1000m
+    COARSE = "coarse"  # > 1000m
+
+
+class MovementPattern(str, Enum):
+    """Patterns de mouvement détectés."""
+    STATIONARY = "stationary"
+    WALKING = "walking"
+    RUNNING = "running"
+    DRIVING = "driving"
+    CYCLING = "cycling"
+    PUBLIC_TRANSPORT = "public_transport"
+    UNKNOWN = "unknown"
+
+
+class PredictionModel(str, Enum):
+    """Modèles de prédiction de mouvement."""
+    LINEAR = "linear"
+    KALMAN_FILTER = "kalman"
+    LSTM = "lstm"
+    MARKOV_CHAIN = "markov"
+    NEURAL_NETWORK = "neural"
+
+
+class SessionType(str, Enum):
+    """Types de sessions utilisateur."""
+    STREAMING = "streaming"
+    GAMING = "gaming"
+    BROWSING = "browsing"
+    VIDEO_CALL = "video_call"
+    FILE_TRANSFER = "file_transfer"
+    REAL_TIME_COLLAB = "real_time_collab"
+
+
+class ContinuityPolicy(str, Enum):
+    """Politiques de continuité de service."""
+    ALWAYS_ON = "always_on"
+    ENERGY_EFFICIENT = "energy_efficient"
+    QUALITY_FIRST = "quality_first"
+    COST_OPTIMIZED = "cost_optimized"
+    ADAPTIVE = "adaptive"
+
+
+class ContextType(str, Enum):
+    """Types de contexte utilisateur."""
+    LOCATION = "location"
+    TIME = "time"
+    ACTIVITY = "activity"
+    NETWORK = "network"
+    DEVICE_STATE = "device_state"
+    USER_PREFERENCE = "user_preference"
+    ENVIRONMENTAL = "environmental"
+
+
+class ContextRule(str, Enum):
+    """Règles contextuelles."""
+    IF_THEN = "if_then"
+    PRIORITY_BASED = "priority"
+    ML_PREDICTED = "ml_predicted"
+    THRESHOLD_BASED = "threshold"
+    TIME_BASED = "time"
+
+
 @dataclass
 class DeviceResources:
     """Ressources d'un appareil."""
@@ -103,7 +181,8 @@ class DeviceResources:
 
 @dataclass
 class LocationData:
-    """Données de localisation."""
+    """
+        Données de localisation."""
     latitude: float
     longitude: float
     altitude: Optional[float] = None
@@ -115,7 +194,8 @@ class LocationData:
 
 @dataclass
 class MobileDevice:
-    """Appareil mobile avec capacités étendues."""
+    """
+        Appareil mobile avec capacités étendues."""
     device_id: str
     device_type: DeviceType
     capabilities: List[DeviceCapability]
@@ -134,7 +214,8 @@ class MobileDevice:
 # ============================================================================
 
 class ContextType(str, Enum):
-    """Types de contexte."""
+    """
+        Types de contexte."""
     LOCATION = "location"
     TEMPORAL = "temporal"
     ACTIVITY = "activity"
@@ -167,7 +248,8 @@ class ContextData:
 
 @dataclass
 class UserActivity:
-    """Activité utilisateur."""
+    """
+        Activité utilisateur."""
     activity_id: str
     user_id: str
     activity_type: ActivityType
@@ -179,7 +261,8 @@ class UserActivity:
 
 
 class ContextAwarenessEngine:
-    """Moteur de conscience contextuelle."""
+    """
+        Moteur de conscience contextuelle."""
     
     def __init__(self):
         self.context_cache = {}
@@ -187,17 +270,21 @@ class ContextAwarenessEngine:
         self.context_rules = {}
     
     async def collect_context(self, device_id: str, sensors_data: Dict[str, Any]) -> ContextData:
-        """Collecte les données contextuelles."""
+        """
+        Collecte les données contextuelles."""
         # Analyse du contexte temporel
+
         temporal_context = self._analyze_temporal_context()
         
         # Analyse du contexte d'activité
         activity_context = self._analyze_activity_context(sensors_data)
         
         # Analyse du contexte environnemental
+
         environmental_context = self._analyze_environmental_context(sensors_data)
         
         # Fusion des contextes
+
         context_data = ContextData(
             context_type=ContextType.ACTIVITY,
             data={
@@ -217,7 +304,9 @@ class ContextAwarenessEngine:
     def _analyze_temporal_context(self) -> Dict[str, Any]:
         """Analyse le contexte temporel."""
         now = datetime.utcnow()
+
         hour = now.hour
+
         
         time_of_day = "morning" if 6 <= hour < 12 else \
                      "afternoon" if 12 <= hour < 18 else \
@@ -288,7 +377,8 @@ class MobilityPrediction:
 
 
 class MobilityPredictionAI:
-    """IA de prédiction de mobilité."""
+    """
+        IA de prédiction de mobilité."""
     
     def __init__(self):
         self.location_history = defaultdict(list)
@@ -297,15 +387,20 @@ class MobilityPredictionAI:
     
     async def predict_mobility(self, device_id: str, current_location: LocationData,
                              historical_data: List[LocationData]) -> MobilityPrediction:
-        """Prédit la mobilité future."""
+        """
+        Prédit la mobilité future."""
         # Analyse du pattern de mouvement
+
         movement_pattern = self._analyze_movement_pattern(historical_data)
         
         # Prédiction de la prochaine localisation
+
         predicted_location = self._predict_next_location(current_location, historical_data)
         
         # Calcul de la confiance
+
         confidence = self._calculate_prediction_confidence(historical_data, movement_pattern)
+
         
         return MobilityPrediction(
             device_id=device_id,
@@ -316,19 +411,26 @@ class MobilityPredictionAI:
         )
     
     def _analyze_movement_pattern(self, locations: List[LocationData]) -> MovementPattern:
-        """Analyse le pattern de mouvement."""
+        """
+        Analyse le pattern de mouvement."""
         if len(locations) < 2:
             return MovementPattern.STATIONARY
         
         # Calcul de la vitesse moyenne
+
         total_distance = 0
+
         total_time = 0
         
         for i in range(1, len(locations)):
             prev_loc = locations[i-1]
+
             curr_loc = locations[i]
+
             
             distance = self._calculate_distance(prev_loc, curr_loc)
+
+
             time_diff = (curr_loc.timestamp - prev_loc.timestamp).total_seconds() / 3600  # hours
             
             if time_diff > 0:
@@ -353,17 +455,23 @@ class MobilityPredictionAI:
     
     def _predict_next_location(self, current: LocationData, 
                              history: List[LocationData]) -> LocationData:
-        """Prédit la prochaine localisation."""
+        """
+        Prédit la prochaine localisation."""
         if len(history) < 2:
             return current
         
         # Simple linear prediction based on last movement
+
         last_loc = history[-1]
+
         lat_diff = current.latitude - last_loc.latitude
+
         lon_diff = current.longitude - last_loc.longitude
         
         # Project forward
+
         predicted_lat = current.latitude + lat_diff
+
         predicted_lon = current.longitude + lon_diff
         
         return LocationData(
@@ -373,28 +481,39 @@ class MobilityPredictionAI:
         )
     
     def _calculate_distance(self, loc1: LocationData, loc2: LocationData) -> float:
-        """Calcule la distance entre deux points (Haversine)."""
+        """
+        Calcule la distance entre deux points (Haversine)."""
         R = 6371  # Earth radius in km
+
         
         lat1_rad = math.radians(loc1.latitude)
+
         lat2_rad = math.radians(loc2.latitude)
+
         delta_lat = math.radians(loc2.latitude - loc1.latitude)
+
         delta_lon = math.radians(loc2.longitude - loc1.longitude)
+
+
         
         a = (math.sin(delta_lat/2) * math.sin(delta_lat/2) +
              math.cos(lat1_rad) * math.cos(lat2_rad) *
              math.sin(delta_lon/2) * math.sin(delta_lon/2))
+
         c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+
         
         return R * c
     
     def _calculate_prediction_confidence(self, history: List[LocationData],
                                        pattern: MovementPattern) -> float:
-        """Calcule la confiance de prédiction."""
+        """
+        Calcule la confiance de prédiction."""
         if len(history) < 3:
             return 0.3
         
         # Base confidence on pattern consistency and data quality
+
         base_confidence = 0.6
         
         if pattern == MovementPattern.STATIONARY:
@@ -405,7 +524,9 @@ class MobilityPredictionAI:
             base_confidence = 0.6
         
         # Adjust based on data quality
+
         data_quality = min(1.0, len(history) / 10)
+
         
         return min(0.95, base_confidence * data_quality)
 
@@ -415,7 +536,8 @@ class MobilityPredictionAI:
 # ============================================================================
 
 class HandoverType(str, Enum):
-    """Types de handover."""
+    """
+        Types de handover."""
     HORIZONTAL = "horizontal"  # Same technology
     VERTICAL = "vertical"      # Different technology
     SOFT = "soft"             # Make-before-break
@@ -444,7 +566,8 @@ class HandoverPolicy:
 
 @dataclass
 class HandoverRequest:
-    """Demande de handover."""
+    """
+        Demande de handover."""
     request_id: str
     device_id: str
     source_edge: str
@@ -457,7 +580,8 @@ class HandoverRequest:
 
 
 class HandoverController:
-    """Contrôleur de handover."""
+    """
+        Contrôleur de handover."""
     
     def __init__(self):
         self.active_handovers = {}
@@ -481,10 +605,12 @@ class HandoverController:
             # Check if handover is already in progress
             if request.device_id in self.active_handovers:
                 logger.warning(f"Handover already in progress for device {request.device_id}")
+
                 return False
             
             # Execute handover
             self.active_handovers[request.device_id] = request
+
             success = await self._execute_handover(request)
             
             # Update metrics
@@ -500,11 +626,13 @@ class HandoverController:
                 "success": success,
                 "completion_time": datetime.utcnow()
             })
+
             
             return success
             
         except Exception as e:
             logger.error(f"Handover failed for device {request.device_id}: {e}")
+
             return False
     
     async def _execute_handover(self, request: HandoverRequest) -> bool:
@@ -515,85 +643,104 @@ class HandoverController:
             return await self._execute_hard_handover(request)
     
     async def _execute_soft_handover(self, request: HandoverRequest) -> bool:
-        """Exécute un soft handover (make-before-break)."""
+        """
+        Exécute un soft handover (make-before-break)."""
         # 1. Establish connection to target
+
         target_connected = await self._connect_to_target(request.target_edge, request.device_id)
         if not target_connected:
             return False
         
         # 2. Transfer session state
+
         state_transferred = await self._transfer_session_state(request)
         if not state_transferred:
             await self._disconnect_from_target(request.target_edge, request.device_id)
+
             return False
         
         # 3. Switch traffic to target
+
         traffic_switched = await self._switch_traffic(request)
         if not traffic_switched:
             return False
         
         # 4. Release source connection
         await self._release_source_connection(request.source_edge, request.device_id)
+
         
         return True
     
     async def _execute_hard_handover(self, request: HandoverRequest) -> bool:
-        """Exécute un hard handover (break-before-make)."""
+        """
+        Exécute un hard handover (break-before-make)."""
         # 1. Release source connection
         await self._release_source_connection(request.source_edge, request.device_id)
         
         # 2. Connect to target
+
         target_connected = await self._connect_to_target(request.target_edge, request.device_id)
         if not target_connected:
             # Try to reconnect to source
             await self._connect_to_target(request.source_edge, request.device_id)
+
             return False
         
         # 3. Restore session state
         await self._restore_session_state(request)
+
         
         return True
     
     async def _connect_to_target(self, target_edge: str, device_id: str) -> bool:
-        """Connecte à l'edge cible."""
+        """
+        Connecte à l'edge cible."""
         # Simulation de connexion
         await asyncio.sleep(0.1)
         return True
     
     async def _disconnect_from_target(self, target_edge: str, device_id: str) -> bool:
-        """Déconnecte de l'edge cible."""
+        """
+        Déconnecte de l'edge cible."""
         await asyncio.sleep(0.05)
         return True
     
     async def _transfer_session_state(self, request: HandoverRequest) -> bool:
-        """Transfère l'état de session."""
+        """
+        Transfère l'état de session."""
         # Simulation de transfert d'état
         await asyncio.sleep(0.2)
         return True
     
     async def _switch_traffic(self, request: HandoverRequest) -> bool:
-        """Bascule le trafic."""
+        """
+        Bascule le trafic."""
         await asyncio.sleep(0.1)
         return True
     
     async def _release_source_connection(self, source_edge: str, device_id: str):
-        """Libère la connexion source."""
+        """
+        Libère la connexion source."""
         await asyncio.sleep(0.05)
     
     async def _restore_session_state(self, request: HandoverRequest):
-        """Restaure l'état de session."""
+        """
+        Restaure l'état de session."""
         await asyncio.sleep(0.1)
     
     def _validate_handover_request(self, request: HandoverRequest) -> bool:
-        """Valide la demande de handover."""
+        """
+        Valide la demande de handover."""
         if not request.device_id or not request.source_edge or not request.target_edge:
             return False
         return True
     
     def _update_handover_metrics(self, success: bool):
-        """Met à jour les métriques de handover."""
+        """
+        Met à jour les métriques de handover."""
         if success:
             # Update success rate (exponential moving average)
+
             self.performance_metrics["success_rate"] = (
                 0.9 * self.performance_metrics["success_rate"] + 0.1 * 1.0
             )
@@ -632,7 +779,8 @@ class SessionInfo:
 
 
 class SessionContinuityManager:
-    """Gestionnaire de continuité de session."""
+    """
+        Gestionnaire de continuité de session."""
     
     def __init__(self):
         self.active_sessions = {}
@@ -640,8 +788,11 @@ class SessionContinuityManager:
         self.recovery_policies = {}
     
     async def create_session(self, user_id: str, device_id: str, edge_node: str) -> str:
-        """Crée une nouvelle session."""
+        """
+        Crée une nouvelle session."""
         session_id = str(uuid.uuid4())
+
+
         
         session = SessionInfo(
             session_id=session_id,
@@ -652,9 +803,11 @@ class SessionContinuityManager:
             created_at=datetime.utcnow(),
             last_activity=datetime.utcnow()
         )
+
         
         self.active_sessions[session_id] = session
         logger.info(f"Created session {session_id} for user {user_id}")
+
         
         return session_id
     
@@ -662,11 +815,13 @@ class SessionContinuityManager:
         """Crée un checkpoint de session."""
         if session_id not in self.active_sessions:
             return False
+
         
         session = self.active_sessions[session_id]
         session.session_data = session_data
         
         # Serialize session data for checkpointing
+
         checkpoint_data = json.dumps(session_data).encode()
         session.checkpoint_data = checkpoint_data
         
@@ -679,27 +834,33 @@ class SessionContinuityManager:
         """Migre une session vers un autre edge."""
         if session_id not in self.active_sessions:
             return False
+
         
         session = self.active_sessions[session_id]
         session.state = SessionState.MIGRATING
         
         try:
             # Transfer session state to target edge
+
             success = await self._transfer_session_to_edge(session, target_edge)
+
             
             if success:
                 session.edge_node = target_edge
                 session.state = SessionState.ACTIVE
                 logger.info(f"Migrated session {session_id} to {target_edge}")
+
             else:
                 session.state = SessionState.ACTIVE  # Rollback
                 logger.error(f"Failed to migrate session {session_id}")
+
             
             return success
             
         except Exception as e:
             session.state = SessionState.ACTIVE  # Rollback
             logger.error(f"Session migration failed: {e}")
+
             return False
     
     async def recover_session(self, session_id: str) -> bool:
@@ -709,24 +870,31 @@ class SessionContinuityManager:
         
         try:
             session = self.active_sessions.get(session_id)
+
             if not session:
                 return False
             
             session.state = SessionState.RECOVERING
             
             # Restore session data from checkpoint
+
             checkpoint_data = self.session_checkpoints[session_id]
+
             session_data = json.loads(checkpoint_data.decode())
+
             session.session_data = session_data
             
             session.state = SessionState.ACTIVE
             session.last_activity = datetime.utcnow()
+
             
             logger.info(f"Recovered session {session_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Session recovery failed: {e}")
+
             return False
     
     async def _transfer_session_to_edge(self, session: SessionInfo, target_edge: str) -> bool:
@@ -741,7 +909,8 @@ class SessionContinuityManager:
 # ============================================================================
 
 class ProximityDetector:
-    """Détecteur de proximité."""
+    """
+        Détecteur de proximité."""
     
     def __init__(self, detection_radius: float = 100.0):  # meters
         self.detection_radius = detection_radius
@@ -749,9 +918,11 @@ class ProximityDetector:
     
     async def detect_nearby_devices(self, device: MobileDevice, 
                                   all_devices: List[MobileDevice]) -> List[MobileDevice]:
-        """Détecte les appareils à proximité."""
+        """
+        Détecte les appareils à proximité."""
         if not device.location:
             return []
+
         
         nearby_devices = []
         
@@ -761,48 +932,63 @@ class ProximityDetector:
                 other_device.status == DeviceStatus.ACTIVE):
                 
                 distance = self._calculate_distance(device.location, other_device.location)
+
                 if distance <= self.detection_radius:
                     nearby_devices.append(other_device)
+
         
         return nearby_devices
     
     def _calculate_distance(self, loc1: LocationData, loc2: LocationData) -> float:
-        """Calcule la distance entre deux points."""
+        """
+        Calcule la distance entre deux points."""
         R = 6371000  # Earth radius in meters
+
         
         lat1_rad = math.radians(loc1.latitude)
+
         lat2_rad = math.radians(loc2.latitude)
+
         delta_lat = math.radians(loc2.latitude - loc1.latitude)
+
         delta_lon = math.radians(loc2.longitude - loc1.longitude)
+
+
         
         a = (math.sin(delta_lat/2) * math.sin(delta_lat/2) +
              math.cos(lat1_rad) * math.cos(lat2_rad) *
              math.sin(delta_lon/2) * math.sin(delta_lon/2))
+
         c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+
         
         return R * c
 
 
 class LocationServices:
-    """Services de géolocalisation."""
+    """
+        Services de géolocalisation."""
     
     def __init__(self):
         self.location_cache = {}
         self.geofences = {}
     
     async def get_location(self, device_id: str) -> Optional[LocationData]:
-        """Récupère la localisation d'un appareil."""
+        """
+        Récupère la localisation d'un appareil."""
         return self.location_cache.get(device_id)
     
     async def update_location(self, device_id: str, location: LocationData):
-        """Met à jour la localisation d'un appareil."""
+        """
+        Met à jour la localisation d'un appareil."""
         self.location_cache[device_id] = location
         
         # Check geofences
         await self._check_geofences(device_id, location)
     
     async def _check_geofences(self, device_id: str, location: LocationData):
-        """Vérifie les geofences."""
+        """
+        Vérifie les geofences."""
         # Implementation for geofence checking
         pass
 
@@ -812,7 +998,8 @@ class LocationServices:
 # ============================================================================
 
 class EdgeMECEnterprise:
-    """Mobile Edge Computing Enterprise consolidé."""
+    """
+        Mobile Edge Computing Enterprise consolidé."""
     
     def __init__(self):
         # Device management
@@ -851,14 +1038,17 @@ class EdgeMECEnterprise:
             self.devices[device_id].last_seen = datetime.utcnow()
     
     async def get_device_info(self, device_id: str) -> Optional[MobileDevice]:
-        """Récupère les informations d'un appareil."""
+        """
+        Récupère les informations d'un appareil."""
         return self.devices.get(device_id)
     
     async def get_nearby_devices(self, device_id: str) -> List[MobileDevice]:
-        """Récupère les appareils à proximité."""
+        """
+        Récupère les appareils à proximité."""
         device = self.devices.get(device_id)
         if not device:
             return []
+
         
         all_devices = list(self.devices.values())
         return await self.proximity_detector.detect_nearby_devices(device, all_devices)
@@ -866,11 +1056,13 @@ class EdgeMECEnterprise:
     # Context Awareness Engine
     async def collect_device_context(self, device_id: str, 
                                    sensors_data: Dict[str, Any]) -> ContextData:
-        """Collecte le contexte d'un appareil."""
+        """
+        Collecte le contexte d'un appareil."""
         return await self.context_engine.collect_context(device_id, sensors_data)
     
     async def get_user_activity(self, user_id: str) -> Optional[UserActivity]:
-        """Récupère l'activité utilisateur actuelle."""
+        """
+        Récupère l'activité utilisateur actuelle."""
         # Search for current activity
         for activity in reversed(self.context_engine.activity_history):
             if (hasattr(activity, 'user_id') and 
@@ -881,12 +1073,14 @@ class EdgeMECEnterprise:
     
     # Mobility Prediction AI
     async def predict_device_mobility(self, device_id: str) -> Optional[MobilityPrediction]:
-        """Prédit la mobilité d'un appareil."""
+        """
+        Prédit la mobilité d'un appareil."""
         device = self.devices.get(device_id)
         if not device or not device.location:
             return None
         
         # Get location history (simplified)
+
         location_history = [device.location]  # In real implementation, fetch from history
         
         return await self.mobility_ai.predict_mobility(
@@ -896,10 +1090,12 @@ class EdgeMECEnterprise:
     # Handover Orchestration
     async def initiate_handover(self, device_id: str, target_edge: str, 
                                reason: HandoverReason = HandoverReason.NETWORK_OPTIMIZATION) -> bool:
-        """Initie un handover."""
+        """
+        Initie un handover."""
         device = self.devices.get(device_id)
         if not device:
             return False
+
         
         request = HandoverRequest(
             request_id=str(uuid.uuid4()),
@@ -910,6 +1106,7 @@ class EdgeMECEnterprise:
             reason=reason,
             priority=0.8
         )
+
         
         return await self.handover_controller.initiate_handover(request)
     
@@ -926,40 +1123,49 @@ class EdgeMECEnterprise:
         return await self.session_manager.checkpoint_session(session_id, session_data)
     
     async def migrate_session(self, session_id: str, target_edge: str) -> bool:
-        """Migre une session."""
+        """
+        Migre une session."""
         return await self.session_manager.migrate_session(session_id, target_edge)
     
     # Location Intelligence
     async def update_device_location(self, device_id: str, location: LocationData):
-        """Met à jour la localisation d'un appareil."""
+        """
+        Met à jour la localisation d'un appareil."""
         if device_id in self.devices:
             self.devices[device_id].location = location
             await self.location_services.update_location(device_id, location)
     
     async def get_device_location(self, device_id: str) -> Optional[LocationData]:
-        """Récupère la localisation d'un appareil."""
+        """
+        Récupère la localisation d'un appareil."""
         device = self.devices.get(device_id)
         return device.location if device else None
     
     # Proximity Optimization
     async def optimize_proximity_services(self, device_id: str) -> Dict[str, Any]:
-        """Optimise les services basés sur la proximité."""
+        """
+        Optimise les services basés sur la proximité."""
         nearby_devices = await self.get_nearby_devices(device_id)
+
+
         
         optimization_suggestions = []
         
         if nearby_devices:
             # Suggest collaborative processing
+
             collaboration_capable = [d for d in nearby_devices 
                                    if DeviceCapability.CONTENT_CREATION in d.capabilities]
             if collaboration_capable:
                 optimization_suggestions.append("Enable collaborative content creation")
             
             # Suggest resource sharing
+
             high_resource_devices = [d for d in nearby_devices 
                                    if d.resources.cpu_cores > 4]
             if high_resource_devices:
                 optimization_suggestions.append("Enable edge computing offloading")
+
         
         return {
             "nearby_devices_count": len(nearby_devices),
@@ -972,10 +1178,13 @@ class EdgeMECEnterprise:
     async def coordinate_edge_processing(self, task_data: Dict[str, Any]) -> Dict[str, Any]:
         """Coordonne le traitement edge."""
         # Analyze task requirements
+
         required_capabilities = task_data.get("required_capabilities", [])
+
         processing_requirements = task_data.get("processing_requirements", {})
         
         # Find suitable devices
+
         suitable_devices = []
         for device in self.devices.values():
             if (device.status == DeviceStatus.ACTIVE and
@@ -983,7 +1192,10 @@ class EdgeMECEnterprise:
                 suitable_devices.append(device)
         
         # Select optimal device
+
         optimal_device = self._select_optimal_device(suitable_devices, processing_requirements)
+
+
         
         coordination_result = {
             "selected_device": optimal_device.device_id if optimal_device else None,
@@ -1000,7 +1212,9 @@ class EdgeMECEnterprise:
             return None
         
         # Simple scoring based on resources
+
         best_device = None
+
         best_score = 0
         
         for device in devices:
@@ -1008,20 +1222,25 @@ class EdgeMECEnterprise:
                     device.resources.memory_gb * 0.2 +
                     device.resources.battery_level * 0.3 +
                     device.resources.network_bandwidth * 0.2)
+
             
             if score > best_score:
                 best_score = score
+
                 best_device = device
         
         return best_device
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Récupère les métriques de performance."""
+        """
+        Récupère les métriques de performance."""
         self.performance_metrics.update({
-            "active_devices": len([d for d in self.devices.values() 
+            "active_devices": len([d for d in self.devices.values()
+ 
                                  if d.status == DeviceStatus.ACTIVE]),
             "handover_success_rate": self.handover_controller.performance_metrics["success_rate"]
         })
+
         
         return self.performance_metrics
     

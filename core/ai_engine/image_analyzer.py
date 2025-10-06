@@ -22,7 +22,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class ImageAnalysisType(Enum):
-    """Image analysis types"""
+    """
+Image analysis types"""
     OBJECT_DETECTION = "object_detection"
     FACIAL_RECOGNITION = "facial_recognition"
     SCENE_ANALYSIS = "scene_analysis"
@@ -33,7 +34,8 @@ class ImageAnalysisType(Enum):
     AESTHETIC_SCORING = "aesthetic_scoring"
 
 class ImageFormat(Enum):
-    """Supported image formats"""
+    """
+Supported image formats"""
     JPEG = "jpeg"
     PNG = "png"
     GIF = "gif"
@@ -43,7 +45,8 @@ class ImageFormat(Enum):
     SVG = "svg"
 
 class ImageQuality(Enum):
-    """Image quality levels"""
+    """
+Image quality levels"""
     VERY_LOW = "very_low"
     LOW = "low"
     MEDIUM = "medium"
@@ -52,7 +55,8 @@ class ImageQuality(Enum):
 
 @dataclass
 class DetectedObject:
-    """Detected object in image"""
+    """
+Detected object in image"""
     object_id: str
     class_name: str
     confidence: float
@@ -61,7 +65,8 @@ class DetectedObject:
 
 @dataclass
 class DetectedFace:
-    """Detected face in image"""
+    """
+Detected face in image"""
     face_id: str
     confidence: float
     bounding_box: Tuple[int, int, int, int]
@@ -70,7 +75,8 @@ class DetectedFace:
 
 @dataclass
 class RecognizedText:
-    """Recognized text in image"""
+    """
+Recognized text in image"""
     text: str
     confidence: float
     bounding_box: Tuple[int, int, int, int]
@@ -78,7 +84,8 @@ class RecognizedText:
 
 @dataclass
 class ColorPalette:
-    """Color palette extracted from image"""
+    """
+Color palette extracted from image"""
     dominant_colors: List[str]
     color_distribution: Dict[str, float]
     color_harmony: str
@@ -86,7 +93,8 @@ class ColorPalette:
 
 @dataclass
 class ImageQualityMetrics:
-    """Image quality assessment metrics"""
+    """
+Image quality assessment metrics"""
     resolution: Tuple[int, int]
     aspect_ratio: float
     sharpness_score: float
@@ -98,7 +106,8 @@ class ImageQualityMetrics:
 
 @dataclass
 class SceneClassification:
-    """Scene classification result"""
+    """
+Scene classification result"""
     scene_type: str
     confidence: float
     scene_attributes: List[str]
@@ -107,7 +116,8 @@ class SceneClassification:
 
 @dataclass
 class AestheticScoring:
-    """Aesthetic scoring of image"""
+    """
+Aesthetic scoring of image"""
     overall_score: float
     composition_score: float
     color_harmony_score: float
@@ -117,7 +127,8 @@ class AestheticScoring:
 
 @dataclass
 class ContentModerationResult:
-    """Content moderation result"""
+    """
+Content moderation result"""
     is_safe: bool
     flagged_categories: List[str]
     confidence_scores: Dict[str, float]
@@ -125,7 +136,8 @@ class ContentModerationResult:
 
 @dataclass
 class ImageAnalysisResult:
-    """Comprehensive image analysis result"""
+    """
+Comprehensive image analysis result"""
     image_id: str
     analysis_types: List[ImageAnalysisType]
     image_format: ImageFormat
@@ -147,7 +159,8 @@ class ImageAnalyzer:
     """
     
     def __init__(self):
-        """Initialize image analyzer"""
+        """
+Initialize image analyzer"""
         self.supported_formats = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.webp', '.svg']
         self.max_image_size = 10 * 1024 * 1024  # 10MB
         self.min_confidence = 0.5
@@ -163,7 +176,8 @@ class ImageAnalyzer:
         logger.info("🖼️ Image Analyzer initialized successfully")
         
     def _init_object_detector(self):
-        """Initialize object detection engine"""
+        """
+Initialize object detection engine"""
         return {
             'model': 'yolo_v8',
             'classes': [
@@ -186,7 +200,8 @@ class ImageAnalyzer:
         }
     
     def _init_face_recognizer(self):
-        """Initialize face recognition engine"""
+        """
+Initialize face recognition engine"""
         return {
             'detection_model': 'mtcnn',
             'recognition_model': 'facenet',
@@ -198,7 +213,8 @@ class ImageAnalyzer:
         }
     
     def _init_text_recognizer(self):
-        """Initialize OCR text recognition"""
+        """
+Initialize OCR text recognition"""
         return {
             'ocr_engine': 'tesseract',
             'preprocessing': True,
@@ -209,7 +225,8 @@ class ImageAnalyzer:
         }
     
     def _init_scene_classifier(self):
-        """Initialize scene classification"""
+        """
+Initialize scene classification"""
         return {
             'model': 'places365_resnet50',
             'scene_categories': [
@@ -222,7 +239,8 @@ class ImageAnalyzer:
         }
     
     def _init_quality_assessor(self):
-        """Initialize image quality assessment"""
+        """
+Initialize image quality assessment"""
         return {
             'metrics': [
                 'sharpness', 'brightness', 'contrast', 'saturation',
@@ -236,7 +254,8 @@ class ImageAnalyzer:
         }
     
     def _init_content_moderator(self):
-        """Initialize content moderation"""
+        """
+Initialize content moderation"""
         return {
             'models': ['nsfw_classifier', 'violence_detector', 'hate_symbol_detector'],
             'categories': [
@@ -348,13 +367,15 @@ class ImageAnalyzer:
             )
     
     def _detect_image_format(self, image_data: Union[str, bytes]) -> ImageFormat:
-        """Detect image format"""
+        """
+Detect image format"""
         # Simulated format detection
         return ImageFormat.JPEG
     
     def _detect_objects(self, image_data: Union[str, bytes],
                        config: Optional[Dict[str, Any]]) -> List[DetectedObject]:
-        """Detect objects in image"""
+        """
+Detect objects in image"""
         # Simulated object detection
         detected_objects = []
         
@@ -384,7 +405,8 @@ class ImageAnalyzer:
     
     def _recognize_faces(self, image_data: Union[str, bytes],
                         config: Optional[Dict[str, Any]]) -> List[DetectedFace]:
-        """Recognize faces in image"""
+        """
+Recognize faces in image"""
         # Simulated face recognition
         detected_faces = []
         
@@ -412,7 +434,8 @@ class ImageAnalyzer:
     
     def _recognize_text(self, image_data: Union[str, bytes],
                        config: Optional[Dict[str, Any]]) -> List[RecognizedText]:
-        """Recognize text in image using OCR"""
+        """
+Recognize text in image using OCR"""
         # Simulated text recognition
         recognized_text = []
         
@@ -435,7 +458,8 @@ class ImageAnalyzer:
     
     def _analyze_colors(self, image_data: Union[str, bytes],
                        config: Optional[Dict[str, Any]]) -> Optional[ColorPalette]:
-        """Analyze color palette of image"""
+        """
+Analyze color palette of image"""
         # Simulated color analysis
         return ColorPalette(
             dominant_colors=['#2E5984', '#8FAADC', '#D9E2F3', '#F2F2F2', '#1F4E79'],
@@ -452,7 +476,8 @@ class ImageAnalyzer:
     
     def _assess_quality(self, image_data: Union[str, bytes],
                        config: Optional[Dict[str, Any]]) -> Optional[ImageQualityMetrics]:
-        """Assess image quality"""
+        """
+Assess image quality"""
         # Simulated quality assessment
         return ImageQualityMetrics(
             resolution=(1920, 1080),
@@ -467,7 +492,8 @@ class ImageAnalyzer:
     
     def _classify_scene(self, image_data: Union[str, bytes],
                        config: Optional[Dict[str, Any]]) -> Optional[SceneClassification]:
-        """Classify scene in image"""
+        """
+Classify scene in image"""
         # Simulated scene classification
         return SceneClassification(
             scene_type='outdoor',
@@ -479,7 +505,8 @@ class ImageAnalyzer:
     
     def _score_aesthetics(self, image_data: Union[str, bytes],
                          config: Optional[Dict[str, Any]]) -> Optional[AestheticScoring]:
-        """Score aesthetic quality of image"""
+        """
+Score aesthetic quality of image"""
         # Simulated aesthetic scoring
         return AestheticScoring(
             overall_score=0.76,
@@ -492,7 +519,8 @@ class ImageAnalyzer:
     
     def _moderate_content(self, image_data: Union[str, bytes],
                          config: Optional[Dict[str, Any]]) -> Optional[ContentModerationResult]:
-        """Moderate image content for safety"""
+        """
+Moderate image content for safety"""
         # Simulated content moderation
         return ContentModerationResult(
             is_safe=True,
@@ -508,7 +536,8 @@ class ImageAnalyzer:
         )
     
     def extract_metadata(self, image_data: Union[str, bytes]) -> Dict[str, Any]:
-        """Extract EXIF and other metadata from image"""
+        """
+Extract EXIF and other metadata from image"""
         return {
             'camera_make': 'Canon',
             'camera_model': 'EOS R5',
@@ -525,13 +554,15 @@ class ImageAnalyzer:
     
     def generate_thumbnail(self, image_data: Union[str, bytes],
                           size: Tuple[int, int] = (256, 256)) -> bytes:
-        """Generate thumbnail of image"""
+        """
+Generate thumbnail of image"""
         # Simulated thumbnail generation
         return b"simulated_thumbnail_data"
     
     def compare_images(self, image1_data: Union[str, bytes],
                       image2_data: Union[str, bytes]) -> Dict[str, float]:
-        """Compare similarity between two images"""
+        """
+Compare similarity between two images"""
         return {
             'structural_similarity': 0.82,
             'color_similarity': 0.76,
@@ -543,12 +574,14 @@ class ImageAnalyzer:
     
     def detect_duplicates(self, image_list: List[Union[str, bytes]],
                          threshold: float = 0.9) -> List[List[int]]:
-        """Detect duplicate or near-duplicate images"""
+        """
+Detect duplicate or near-duplicate images"""
         # Simulated duplicate detection
         return [[0, 1], [3, 5, 7]]  # Groups of similar image indices
     
     def enhance_image_analysis(self, result: ImageAnalysisResult) -> Dict[str, Any]:
-        """Enhance analysis with additional insights"""
+        """
+Enhance analysis with additional insights"""
         insights = {
             'content_type': self._determine_content_type(result),
             'complexity_score': self._calculate_complexity_score(result),
@@ -559,7 +592,8 @@ class ImageAnalyzer:
         return insights
     
     def _determine_content_type(self, result: ImageAnalysisResult) -> str:
-        """Determine content type based on analysis"""
+        """
+Determine content type based on analysis"""
         if len(result.detected_faces) > 0:
             return "portrait" if len(result.detected_faces) == 1 else "group_photo"
         
@@ -575,7 +609,8 @@ class ImageAnalyzer:
         return "general_image"
     
     def _calculate_complexity_score(self, result: ImageAnalysisResult) -> float:
-        """Calculate image complexity score"""
+        """
+Calculate image complexity score"""
         score = 0.0
         
         # Object complexity
@@ -594,7 +629,8 @@ class ImageAnalyzer:
         return min(score, 1.0)
     
     def _estimate_engagement_potential(self, result: ImageAnalysisResult) -> float:
-        """Estimate social media engagement potential"""
+        """
+Estimate social media engagement potential"""
         score = 0.5  # Base score
         
         # Faces boost engagement
@@ -616,7 +652,8 @@ class ImageAnalyzer:
         return min(max(score, 0.0), 1.0)
     
     def _assess_accessibility(self, result: ImageAnalysisResult) -> float:
-        """Assess image accessibility"""
+        """
+Assess image accessibility"""
         score = 0.5
         
         # Text recognition helps accessibility
@@ -630,7 +667,8 @@ class ImageAnalyzer:
         return min(max(score, 0.0), 1.0)
     
     def _get_optimization_suggestions(self, result: ImageAnalysisResult) -> List[str]:
-        """Get optimization suggestions"""
+        """
+Get optimization suggestions"""
         suggestions = []
         
         if result.quality_metrics:
@@ -648,7 +686,8 @@ class ImageAnalyzer:
         return suggestions
     
     def get_analysis_summary(self, result: ImageAnalysisResult) -> Dict[str, Any]:
-        """Get summary of image analysis results"""
+        """
+Get summary of image analysis results"""
         return {
             'image_id': result.image_id,
             'format': result.image_format.value,
@@ -690,5 +729,5 @@ __all__ = [
 ]
 
 # Log module initialization
-logger.info("🖼️ Image Analyzer module loaded successfully")
+logger.info("🖼️ Image Analyzer module initialized successfully")
 logger.info("✅ Ready for comprehensive image analysis and content classification")

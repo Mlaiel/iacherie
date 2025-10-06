@@ -32,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 
 class DetectionEngine(Enum):
-    """Language detection engines"""
+    """
+        Language detection engines"""
     STATISTICAL = "statistical"
     NEURAL = "neural"
     PATTERN = "pattern"
@@ -64,7 +65,8 @@ class LanguageCandidate:
 
 @dataclass
 class DetectionResult:
-    """Complete language detection result"""
+    """
+        Complete language detection result"""
     primary_language: LanguageCandidate
     candidates: List[LanguageCandidate]
     overall_confidence: DetectionConfidence
@@ -81,7 +83,8 @@ class LanguageDetector:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize language detector"""
+        """
+        Initialize language detector"""
         self.config = config or {}
         self.engines = {
             DetectionEngine.STATISTICAL: self._statistical_detection,
@@ -108,6 +111,7 @@ class LanguageDetector:
         Args:
             text: Input text for language detection
             engines: List of detection engines to use (default: all)
+
             
         Returns:
             DetectionResult with primary language and alternatives
@@ -118,15 +122,22 @@ class LanguageDetector:
             # Input validation
             if not text or not text.strip():
                 raise ValueError("Empty text provided for language detection")
+
+
             
             text = text.strip()
+
+
             text_length = len(text)
             
             # Check cache
+
             cache_key = self._generate_cache_key(text)
+
             if cache_key in self.cache:
                 cached_result = self.cache[cache_key]
                 logger.debug(f"Cache hit for language detection")
+
                 return cached_result
             
             # Use all engines if none specified
@@ -134,26 +145,33 @@ class LanguageDetector:
                 engines = [DetectionEngine.STATISTICAL, DetectionEngine.NEURAL, DetectionEngine.PATTERN]
             
             # Collect results from all engines
+
             all_candidates = []
             for engine in engines:
                 if engine in self.engines:
                     candidates = await self.engines[engine](text)
+
                     all_candidates.extend(candidates)
             
             # Apply consensus algorithm
+
             consensus_result = await self._apply_consensus(all_candidates, text)
             
             # Enhance with dialect detection
             if consensus_result.primary_language:
                 dialect_info = await self._detect_dialect(text, consensus_result.primary_language.language_code)
+
                 if dialect_info:
                     consensus_result.primary_language.dialect = dialect_info.get("dialect")
+
                     consensus_result.primary_language.region = dialect_info.get("region")
             
             # Calculate processing time
+
             processing_time = (datetime.now(timezone.utc) - start_time).total_seconds()
             
             # Create final result
+
             result = DetectionResult(
                 primary_language=consensus_result.primary_language,
                 candidates=consensus_result.candidates,
@@ -176,6 +194,7 @@ class LanguageDetector:
             
             logger.info(f"Language detected: {result.primary_language.language_code} "
                        f"(Confidence: {result.overall_confidence.value})")
+
             
             return result
             
@@ -198,13 +217,17 @@ class LanguageDetector:
             results = []
             for text in texts:
                 result = await self.detect_language(text)
+
                 results.append(result)
+
             
             logger.info(f"Batch language detection completed: {len(texts)} texts processed")
+
             return results
             
         except Exception as e:
             logger.error(f"Batch language detection failed: {e}")
+
             return [await self._fallback_detection(text) for text in texts]
     
     async def get_supported_languages(self) -> List[Dict[str, Any]]:
@@ -225,6 +248,7 @@ class LanguageDetector:
                 "rtl": patterns.get("rtl", False),
                 "detection_accuracy": patterns.get("accuracy", 0.85)
             })
+
         
         return sorted(languages, key=lambda x: x["name"])
     
@@ -236,6 +260,7 @@ class LanguageDetector:
             Dictionary with detection statistics
         """
         total_detections = sum(self.detection_stats.values())
+
         
         return {
             "total_detections": total_detections,
@@ -250,10 +275,13 @@ class LanguageDetector:
         candidates = []
         
         # Simple statistical approach using character frequency analysis
+
         char_freq = Counter(text.lower())
+
         
         for lang_code, patterns in self.language_patterns.items():
             score = 0.0
+
             char_patterns = patterns.get("char_frequency", {})
             
             # Calculate similarity to known character patterns
@@ -279,24 +307,33 @@ class LanguageDetector:
         """Neural network based language detection"""
         # This would implement actual neural detection
         # For now, returning pattern-based detection with neural scoring
+
         
         candidates = []
         
         # Use word patterns and morphological analysis
+
         words = re.findall(r'\b\w+\b', text.lower())
+
         word_features = self._extract_word_features(words)
+
         
         for lang_code, patterns in self.language_patterns.items():
             score = 0.0
             
             # Check for language-specific word patterns
+
             word_patterns = patterns.get("word_patterns", [])
+
             for pattern in word_patterns:
                 matches = len([w for w in words if re.search(pattern, w)])
+
                 score += matches / max(len(words), 1)
             
             # Morphological feature scoring
+
             morph_features = patterns.get("morphological_features", {})
+
             for feature, weight in morph_features.items():
                 if feature in word_features:
                     score += word_features[feature] * weight
@@ -310,6 +347,7 @@ class LanguageDetector:
                     script=patterns.get("script"),
                     evidence={"neural_score": score, "word_count": len(words)}
                 ))
+
         
         candidates.sort(key=lambda x: x.confidence_score, reverse=True)
         return candidates[:5]
@@ -319,11 +357,13 @@ class LanguageDetector:
         candidates = []
         
         # Detect script first
+
         script_scores = {}
         for script, patterns in self.script_patterns.items():
             score = 0
             for pattern in patterns["regex_patterns"]:
                 matches = len(re.findall(pattern, text))
+
                 score += matches
             
             if score > 0:
@@ -332,15 +372,20 @@ class LanguageDetector:
         # Map scripts to languages
         for lang_code, lang_patterns in self.language_patterns.items():
             lang_script = lang_patterns.get("script", "latin")
+
             
             if lang_script in script_scores:
                 confidence = script_scores[lang_script]
                 
                 # Boost confidence with language-specific patterns
+
                 specific_patterns = lang_patterns.get("specific_patterns", [])
+
                 for pattern in specific_patterns:
                     matches = len(re.findall(pattern, text, re.IGNORECASE))
+
                     confidence += matches / len(text)
+
                 
                 if confidence > 0:
                     candidates.append(LanguageCandidate(
@@ -351,6 +396,7 @@ class LanguageDetector:
                         script=lang_script,
                         evidence={"script_score": script_scores.get(lang_script, 0), "pattern_matches": len(specific_patterns)}
                     ))
+
         
         candidates.sort(key=lambda x: x.confidence_score, reverse=True)
         return candidates[:5]
@@ -358,11 +404,15 @@ class LanguageDetector:
     async def _hybrid_detection(self, text: str) -> List[LanguageCandidate]:
         """Hybrid detection combining multiple approaches"""
         # Combine statistical and pattern-based approaches
+
         statistical_candidates = await self._statistical_detection(text)
+
         pattern_candidates = await self._pattern_detection(text)
         
         # Merge and reweight candidates
+
         candidate_scores = defaultdict(float)
+
         candidate_info = {}
         
         for candidate in statistical_candidates:
@@ -375,6 +425,7 @@ class LanguageDetector:
                 candidate_info[candidate.language_code] = candidate
         
         # Create hybrid candidates
+
         hybrid_candidates = []
         for lang_code, score in candidate_scores.items():
             base_candidate = candidate_info[lang_code]
@@ -386,6 +437,7 @@ class LanguageDetector:
                 script=base_candidate.script,
                 evidence={"hybrid_score": score, "methods": ["statistical", "pattern"]}
             ))
+
         
         hybrid_candidates.sort(key=lambda x: x.confidence_score, reverse=True)
         return hybrid_candidates[:5]
@@ -409,21 +461,29 @@ class LanguageDetector:
             )
         
         # Group candidates by language
+
         language_scores = defaultdict(list)
         for candidate in candidates:
             language_scores[candidate.language_code].append(candidate.confidence_score)
         
         # Calculate consensus scores
+
         consensus_candidates = []
         for lang_code, scores in language_scores.items():
             # Use weighted average with engine diversity bonus
+
             avg_score = sum(scores) / len(scores)
+
+
             diversity_bonus = min(len(scores) * 0.1, 0.3)  # Bonus for multiple engine agreement
+
             final_score = min(avg_score + diversity_bonus, 1.0)
             
             # Find best candidate for this language
+
             best_candidate = max([c for c in candidates if c.language_code == lang_code], 
                                key=lambda x: x.confidence_score)
+
             
             consensus_candidates.append(LanguageCandidate(
                 language_code=lang_code,
@@ -436,6 +496,7 @@ class LanguageDetector:
         
         # Sort by consensus score
         consensus_candidates.sort(key=lambda x: x.confidence_score, reverse=True)
+
         
         return DetectionResult(
             primary_language=consensus_candidates[0] if consensus_candidates else None,
@@ -450,14 +511,17 @@ class LanguageDetector:
         """Detect dialect/variant within a language"""
         if language_code not in self.dialect_markers:
             return None
+
         
         dialect_info = self.dialect_markers[language_code]
+
         dialect_scores = {}
         
         for dialect, markers in dialect_info.items():
             score = 0
             for marker in markers.get("patterns", []):
                 matches = len(re.findall(marker, text, re.IGNORECASE))
+
                 score += matches
             
             if score > 0:
@@ -465,6 +529,7 @@ class LanguageDetector:
         
         if dialect_scores:
             best_dialect = max(dialect_scores.items(), key=lambda x: x[1])
+
             return {
                 "dialect": best_dialect[0],
                 "region": dialect_info[best_dialect[0]].get("region"),
@@ -477,21 +542,27 @@ class LanguageDetector:
         """Extract morphological and lexical features from words"""
         if not words:
             return {}
+
         
         features = {}
+
         total_words = len(words)
         
         # Average word length
         features["avg_word_length"] = sum(len(word) for word in words) / total_words
         
         # Common prefixes and suffixes
+
         prefixes = Counter(word[:2] for word in words if len(word) >= 2)
+
         suffixes = Counter(word[-2:] for word in words if len(word) >= 2)
+
         
         features["common_prefixes"] = len([p for p, count in prefixes.items() if count > 1])
         features["common_suffixes"] = len([s for s, count in suffixes.items() if count > 1])
         
         # Vowel ratio
+
         vowels = "aeiouAEIOU"
         vowel_count = sum(1 for word in words for char in word if char in vowels)
         features["vowel_ratio"] = vowel_count / sum(len(word) for word in words) if words else 0
@@ -512,13 +583,16 @@ class LanguageDetector:
             return DetectionConfidence.VERY_LOW
     
     def _generate_cache_key(self, text: str) -> str:
-        """Generate cache key for text"""
+        """
+        Generate cache key for text"""
         # Use hash of normalized text
+
         normalized = re.sub(r'\s+', ' ', text.lower().strip())
         return hashlib.md5(normalized.encode()).hexdigest()
     
     async def _fallback_detection(self, text: str) -> DetectionResult:
-        """Provide fallback result when detection fails"""
+        """
+        Provide fallback result when detection fails"""
         return DetectionResult(
             primary_language=LanguageCandidate(
                 language_code="en",

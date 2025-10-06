@@ -31,7 +31,8 @@ import json
 logger = logging.getLogger(__name__)
 
 class TaxType(Enum):
-    """Tax type enumeration"""
+    """
+        Tax type enumeration"""
     VAT = "vat"                    # Value Added Tax (EU)
     GST = "gst"                    # Goods and Services Tax
     SALES_TAX = "sales_tax"        # US Sales Tax
@@ -84,7 +85,8 @@ class TaxRate:
 
 @dataclass
 class TaxCalculation:
-    """Tax calculation result"""
+    """
+        Tax calculation result"""
     calculation_id: str
     transaction_id: str
     subtotal: Decimal
@@ -100,7 +102,8 @@ class TaxCalculation:
 
 @dataclass
 class TaxReport:
-    """Tax reporting data"""
+    """
+        Tax reporting data"""
     report_id: str
     jurisdiction: TaxJurisdiction
     period_start: datetime
@@ -127,7 +130,8 @@ class TaxIntegrationManager:
         self._initialize_default_rates()
     
     def _initialize_default_rates(self):
-        """Initialize default tax rates for major jurisdictions"""
+        """
+        Initialize default tax rates for major jurisdictions"""
         default_rates = [
             TaxRate("eu_vat_standard", TaxJurisdiction.EU, TaxType.VAT, Decimal("21.0")),
             TaxRate("us_sales_avg", TaxJurisdiction.US, TaxType.SALES_TAX, Decimal("8.25")),
@@ -155,14 +159,17 @@ class TaxIntegrationManager:
             calculation_id = f"tax_{uuid.uuid4().hex[:12]}"
             
             # Determine jurisdiction
+
             jurisdiction = await self._determine_jurisdiction(
                 buyer_location, seller_location, product_category
             )
             
             # Check for exemptions
+
             exemption_reason = await self._check_exemptions(
                 buyer_tax_id, amount, jurisdiction, product_category
             )
+
             
             if exemption_reason:
                 calculation = TaxCalculation(
@@ -175,14 +182,21 @@ class TaxIntegrationManager:
                     status=TaxStatus.EXEMPT,
                     exemption_reason=exemption_reason
                 )
+
             else:
                 # Calculate applicable taxes
+
                 tax_breakdowns = await self._calculate_applicable_taxes(
                     amount, jurisdiction, product_category
                 )
+
+
                 
                 total_tax = sum(breakdown["amount"] for breakdown in tax_breakdowns)
+
+
                 net_amount = amount + total_tax
+
                 
                 calculation = TaxCalculation(
                     calculation_id=calculation_id,
@@ -194,10 +208,12 @@ class TaxIntegrationManager:
                     jurisdiction=jurisdiction,
                     status=TaxStatus.CALCULATED
                 )
+
             
             self.calculations[calculation_id] = calculation
             
             logger.info(f"Tax calculated for transaction {transaction_id}: {calculation.total_tax}")
+
             return calculation
             
         except Exception as e:
@@ -218,12 +234,15 @@ class TaxIntegrationManager:
         try:
             if calculation_id not in self.calculations:
                 logger.error(f"Tax calculation {calculation_id} not found")
+
                 return False
+
             
             calculation = self.calculations[calculation_id]
             
             if calculation.status != TaxStatus.CALCULATED:
                 logger.error(f"Tax calculation {calculation_id} not in valid state")
+
                 return False
             
             # Apply the tax calculation
@@ -232,12 +251,15 @@ class TaxIntegrationManager:
             
             # Record for reporting
             await self._record_for_reporting(calculation)
+
             
             logger.info(f"Tax calculation {calculation_id} applied successfully")
+
             return True
             
         except Exception as e:
             logger.error(f"Error applying tax calculation {calculation_id}: {e}")
+
             return False
     
     async def _determine_jurisdiction(
@@ -248,7 +270,10 @@ class TaxIntegrationManager:
     ) -> TaxJurisdiction:
         """Determine tax jurisdiction based on transaction details"""
         # Simplified jurisdiction determination - in reality this would be more complex
+
         buyer_country = buyer_location.split(",")[-1].strip().upper()
+
+
         
         jurisdiction_mapping = {
             "DE": TaxJurisdiction.DE,
@@ -263,6 +288,7 @@ class TaxIntegrationManager:
         eu_countries = ["DE", "FR", "IT", "ES", "NL", "BE", "AT", "SE", "DK", "FI"]
         if buyer_country in eu_countries:
             return jurisdiction_mapping.get(buyer_country, TaxJurisdiction.EU)
+
         
         return jurisdiction_mapping.get(buyer_country, TaxJurisdiction.INTERNATIONAL)
     
@@ -296,10 +322,13 @@ class TaxIntegrationManager:
         tax_breakdowns = []
         
         # Find applicable tax rates
+
         applicable_rates = [
             rate for rate in self.tax_rates.values()
+
             if rate.jurisdiction in [jurisdiction, TaxJurisdiction.INTERNATIONAL]
             and (not rate.applicable_categories or product_category in rate.applicable_categories)
+
             and (not rate.threshold_amount or amount >= rate.threshold_amount)
         ]
         
@@ -307,6 +336,8 @@ class TaxIntegrationManager:
             tax_amount = (amount * rate.rate_percentage / Decimal("100")).quantize(
                 Decimal("0.01"), rounding=ROUND_HALF_UP
             )
+
+
             
             breakdown = {
                 "rate_id": rate.rate_id,
@@ -318,6 +349,7 @@ class TaxIntegrationManager:
             }
             
             tax_breakdowns.append(breakdown)
+
         
         return tax_breakdowns
     
@@ -337,8 +369,10 @@ class TaxIntegrationManager:
             report_id = f"report_{uuid.uuid4().hex[:12]}"
             
             # Filter calculations for period and jurisdiction
+
             period_calculations = [
                 calc for calc in self.calculations.values()
+
                 if calc.jurisdiction == jurisdiction
                 and calc.status == TaxStatus.APPLIED
                 and calc.applied_at
@@ -346,16 +380,23 @@ class TaxIntegrationManager:
             ]
             
             # Calculate totals
+
             total_revenue = sum(calc.subtotal for calc in period_calculations)
+
+
             total_tax_collected = sum(calc.total_tax for calc in period_calculations)
+
+
             transaction_count = len(period_calculations)
             
             # Break down by tax type
+
             tax_breakdown = {}
             for calc in period_calculations:
                 for breakdown in calc.tax_breakdowns:
                     tax_type = breakdown["tax_type"]
                     tax_breakdown[tax_type] = tax_breakdown.get(tax_type, Decimal("0")) + breakdown["amount"]
+
             
             report = TaxReport(
                 report_id=report_id,
@@ -367,14 +408,17 @@ class TaxIntegrationManager:
                 transaction_count=transaction_count,
                 tax_breakdown=tax_breakdown
             )
+
             
             self.reports[report_id] = report
             
             logger.info(f"Tax report generated for {jurisdiction.value}: {report_id}")
+
             return report
             
         except Exception as e:
             logger.error(f"Error generating tax report: {e}")
+
             raise
     
     async def file_tax_report(self, report_id: str) -> bool:
@@ -382,19 +426,24 @@ class TaxIntegrationManager:
         try:
             if report_id not in self.reports:
                 logger.error(f"Tax report {report_id} not found")
+
                 return False
+
             
             report = self.reports[report_id]
             
             # In production, this would submit to external tax authority APIs
             report.status = "filed"
             report.filed_at = datetime.utcnow()
+
             
             logger.info(f"Tax report {report_id} filed successfully")
+
             return True
             
         except Exception as e:
             logger.error(f"Error filing tax report {report_id}: {e}")
+
             return False
     
     def get_tax_calculation(self, calculation_id: str) -> Optional[TaxCalculation]:
@@ -402,17 +451,21 @@ class TaxIntegrationManager:
         return self.calculations.get(calculation_id)
     
     def get_tax_report(self, report_id: str) -> Optional[TaxReport]:
-        """Retrieve tax report by ID"""
+        """
+        Retrieve tax report by ID"""
         return self.reports.get(report_id)
     
     async def add_tax_rate(self, tax_rate: TaxRate) -> bool:
-        """Add or update tax rate configuration"""
+        """
+        Add or update tax rate configuration"""
         try:
             self.tax_rates[tax_rate.rate_id] = tax_rate
             logger.info(f"Tax rate {tax_rate.rate_id} added/updated")
+
             return True
         except Exception as e:
             logger.error(f"Error adding tax rate: {e}")
+
             return False
     
     async def get_applicable_rates(
@@ -423,13 +476,15 @@ class TaxIntegrationManager:
         """Get applicable tax rates for jurisdiction and category"""
         return [
             rate for rate in self.tax_rates.values()
+
             if rate.jurisdiction in [jurisdiction, TaxJurisdiction.INTERNATIONAL]
             and (not product_category or not rate.applicable_categories or product_category in rate.applicable_categories)
         ]
 
 # Example usage and integration
 async def main():
-    """Example usage of TaxIntegrationManager"""
+    """
+        Example usage of TaxIntegrationManager"""
     tax_manager = TaxIntegrationManager()
     
     # Calculate tax for a transaction
@@ -451,6 +506,7 @@ async def main():
     from datetime import datetime, timedelta
     period_start = datetime.utcnow() - timedelta(days=30)
     period_end = datetime.utcnow()
+
     
     report = await tax_manager.generate_tax_report(
         TaxJurisdiction.DE,

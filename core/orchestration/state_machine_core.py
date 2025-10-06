@@ -1,4 +1,5 @@
-"""IA Chérie Core Orchestration - State Machine Core
+"""
+IA Chérie Core Orchestration - State Machine Core
 ===============================================
 
 Enterprise-grade state machine implementation providing workflow orchestration,
@@ -25,7 +26,8 @@ import copy
 logger = logging.getLogger(__name__)
 
 class TransitionType(str, Enum):
-    """State transition types"""
+    """
+State transition types"""
     AUTOMATIC = "automatic"
     MANUAL = "manual"
     CONDITIONAL = "conditional"
@@ -33,7 +35,8 @@ class TransitionType(str, Enum):
     EVENT_DRIVEN = "event_driven"
 
 class ExecutionStatus(str, Enum):
-    """State execution status"""
+    """
+State execution status"""
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -43,7 +46,8 @@ class ExecutionStatus(str, Enum):
     PAUSED = "paused"
 
 class StateMachineStatus(str, Enum):
-    """State machine status"""
+    """
+State machine status"""
     CREATED = "created"
     RUNNING = "running"
     PAUSED = "paused"
@@ -53,7 +57,8 @@ class StateMachineStatus(str, Enum):
 
 @dataclass
 class StateContext:
-    """State execution context"""
+    """
+State execution context"""
     state_machine_id: str
     current_state: str
     data: Dict[str, Any] = field(default_factory=dict)
@@ -65,22 +70,26 @@ class StateContext:
     updated_at: datetime = field(default_factory=datetime.utcnow)
     
     def get(self, key: str, default: Any = None) -> Any:
-        """Get data value"""
+        """
+Get data value"""
         return self.data.get(key, default)
     
     def set(self, key: str, value: Any):
-        """Set data value"""
+        """
+Set data value"""
         self.data[key] = value
         self.updated_at = datetime.utcnow()
     
     def update(self, data: Dict[str, Any]):
-        """Update multiple data values"""
+        """
+Update multiple data values"""
         self.data.update(data)
         self.updated_at = datetime.utcnow()
 
 @dataclass
 class Transition:
-    """State transition definition"""
+    """
+State transition definition"""
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     from_state: str = ""
     to_state: str = ""
@@ -95,7 +104,8 @@ class Transition:
 
 @dataclass
 class StateDefinition:
-    """State definition"""
+    """
+State definition"""
     name: str
     description: str = ""
     entry_action: Optional[Callable[[StateContext], Any]] = None
@@ -108,7 +118,8 @@ class StateDefinition:
 
 @dataclass
 class StateMachineDefinition:
-    """State machine definition"""
+    """
+State machine definition"""
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
@@ -124,7 +135,8 @@ class StateMachineDefinition:
 
 @dataclass
 class StateExecution:
-    """State execution record"""
+    """
+State execution record"""
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     state_machine_id: str = ""
     state_name: str = ""
@@ -138,23 +150,28 @@ class StateExecution:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class StateAction(ABC):
-    """Abstract state action"""
+    """
+Abstract state action"""
     
     @abstractmethod
     async def execute(self, context: StateContext) -> Any:
-        """Execute state action"""
+        """
+Execute state action"""
         pass
     
     async def on_entry(self, context: StateContext) -> Any:
-        """Called when entering state"""
+        """
+Called when entering state"""
         pass
     
     async def on_exit(self, context: StateContext) -> Any:
-        """Called when exiting state"""
+        """
+Called when exiting state"""
         pass
 
 class StateMachineInstance:
-    """State machine instance"""
+    """
+State machine instance"""
     
     def __init__(self, definition: StateMachineDefinition, instance_id: Optional[str] = None):
         self.id = instance_id or str(uuid.uuid4())
@@ -171,7 +188,8 @@ class StateMachineInstance:
         self.lock = threading.Lock()
         
     async def start(self, initial_data: Optional[Dict[str, Any]] = None) -> bool:
-        """Start state machine execution"""
+        """
+Start state machine execution"""
         try:
             with self.lock:
                 if self.status != StateMachineStatus.CREATED:
@@ -196,7 +214,8 @@ class StateMachineInstance:
             return False
     
     async def trigger_event(self, event_name: str, event_data: Optional[Dict[str, Any]] = None) -> bool:
-        """Trigger event for state transitions"""
+        """
+Trigger event for state transitions"""
         try:
             event = {
                 'name': event_name,
@@ -218,7 +237,8 @@ class StateMachineInstance:
             return False
     
     async def transition_to(self, target_state: str, force: bool = False) -> bool:
-        """Transition to target state"""
+        """
+Transition to target state"""
         try:
             current_state = self.context.current_state
             
@@ -244,7 +264,8 @@ class StateMachineInstance:
             return False
     
     async def pause(self) -> bool:
-        """Pause state machine execution"""
+        """
+Pause state machine execution"""
         try:
             with self.lock:
                 if self.status == StateMachineStatus.RUNNING:
@@ -257,7 +278,8 @@ class StateMachineInstance:
             return False
     
     async def resume(self) -> bool:
-        """Resume state machine execution"""
+        """
+Resume state machine execution"""
         try:
             with self.lock:
                 if self.status == StateMachineStatus.PAUSED:
@@ -270,7 +292,8 @@ class StateMachineInstance:
             return False
     
     async def cancel(self) -> bool:
-        """Cancel state machine execution"""
+        """
+Cancel state machine execution"""
         try:
             with self.lock:
                 if self.status in [StateMachineStatus.RUNNING, StateMachineStatus.PAUSED]:
@@ -284,7 +307,8 @@ class StateMachineInstance:
             return False
     
     async def _execute_state(self, state_name: str) -> StateExecution:
-        """Execute state"""
+        """
+Execute state"""
         execution = StateExecution(
             state_machine_id=self.id,
             state_name=state_name,
@@ -339,7 +363,8 @@ class StateMachineInstance:
     
     async def _execute_transition(self, from_state: str, to_state: str, 
                                  transition: Optional[Transition] = None):
-        """Execute state transition"""
+        """
+Execute state transition"""
         try:
             # Execute exit action for current state
             current_state_def = self.definition.states.get(from_state)
@@ -363,7 +388,8 @@ class StateMachineInstance:
     
     async def _execute_action(self, action: Callable[[StateContext], Any], 
                              execution: Optional[StateExecution] = None):
-        """Execute action with context"""
+        """
+Execute action with context"""
         try:
             if asyncio.iscoroutinefunction(action):
                 result = await action(self.context)
@@ -380,7 +406,8 @@ class StateMachineInstance:
             raise
     
     async def _evaluate_condition(self, condition: Callable[[StateContext], bool]) -> bool:
-        """Evaluate transition condition"""
+        """
+Evaluate transition condition"""
         try:
             if asyncio.iscoroutinefunction(condition):
                 return await condition(self.context)
@@ -391,14 +418,16 @@ class StateMachineInstance:
             return False
     
     def _find_transition(self, from_state: str, to_state: str) -> Optional[Transition]:
-        """Find transition between states"""
+        """
+Find transition between states"""
         for transition in self.definition.transitions:
             if transition.from_state == from_state and transition.to_state == to_state:
                 return transition
         return None
     
     async def _process_event(self, event: Dict[str, Any]):
-        """Process event for transitions"""
+        """
+Process event for transitions"""
         try:
             current_state = self.context.current_state
             
@@ -420,11 +449,13 @@ class StateMachineInstance:
             logger.error(f"Event processing failed: {str(e)}")
     
     def get_current_state(self) -> str:
-        """Get current state"""
+        """
+Get current state"""
         return self.context.current_state
     
     def get_available_transitions(self) -> List[Transition]:
-        """Get available transitions from current state"""
+        """
+Get available transitions from current state"""
         current_state = self.context.current_state
         return [
             t for t in self.definition.transitions 
@@ -432,11 +463,13 @@ class StateMachineInstance:
         ]
     
     def get_execution_history(self) -> List[StateExecution]:
-        """Get execution history"""
+        """
+Get execution history"""
         return self.executions.copy()
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'id': self.id,
             'definition_id': self.definition.id,
@@ -450,7 +483,8 @@ class StateMachineInstance:
         }
 
 class StateMachineCore:
-    """Core state machine management system"""
+    """
+Core state machine management system"""
     
     def __init__(self, level: str = "enterprise"):
         self.level = level
@@ -474,7 +508,8 @@ class StateMachineCore:
         logger.info(f"State Machine Core initialized - Level: {level}")
     
     async def initialize(self) -> bool:
-        """Initialize state machine system"""
+        """
+Initialize state machine system"""
         try:
             logger.info("State Machine Core initialized successfully")
             return True
@@ -483,7 +518,8 @@ class StateMachineCore:
             return False
     
     async def start(self) -> bool:
-        """Start state machine system"""
+        """
+Start state machine system"""
         try:
             self.is_running = True
             
@@ -497,7 +533,8 @@ class StateMachineCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop state machine system"""
+        """
+Stop state machine system"""
         try:
             self.is_running = False
             
@@ -516,7 +553,8 @@ class StateMachineCore:
             return False
     
     async def health_check(self) -> bool:
-        """Check system health"""
+        """
+Check system health"""
         try:
             # Check if monitoring is running
             if self.is_running and (not self.monitoring_task or self.monitoring_task.done()):
@@ -541,7 +579,8 @@ class StateMachineCore:
             return False
     
     async def _monitor_instances(self):
-        """Monitor state machine instances"""
+        """
+Monitor state machine instances"""
         while self.is_running:
             try:
                 await self._check_timeouts()
@@ -554,7 +593,8 @@ class StateMachineCore:
                 await asyncio.sleep(60)
     
     async def _check_timeouts(self):
-        """Check for timed out instances"""
+        """
+Check for timed out instances"""
         now = datetime.utcnow()
         
         for instance in list(self.instances.values()):
@@ -575,7 +615,8 @@ class StateMachineCore:
                 logger.warning(f"State machine {instance.id} timed out")
     
     async def _update_metrics(self):
-        """Update system metrics"""
+        """
+Update system metrics"""
         total_exec_time = 0.0
         total_executions = 0
         
@@ -591,7 +632,8 @@ class StateMachineCore:
         self.metrics['total_state_executions'] = total_executions
     
     def _initialize_default_definitions(self):
-        """Initialize default state machine definitions"""
+        """
+Initialize default state machine definitions"""
         # Content approval workflow
         content_approval = StateMachineDefinition(
             id="content_approval_workflow",
@@ -661,7 +703,8 @@ class StateMachineCore:
         self.definitions[content_approval.id] = content_approval
     
     def register_definition(self, definition: StateMachineDefinition) -> bool:
-        """Register state machine definition"""
+        """
+Register state machine definition"""
         try:
             self.definitions[definition.id] = definition
             logger.info(f"Registered state machine definition: {definition.name}")
@@ -671,13 +714,15 @@ class StateMachineCore:
             return False
     
     def get_definition(self, definition_id: str) -> Optional[StateMachineDefinition]:
-        """Get state machine definition"""
+        """
+Get state machine definition"""
         return self.definitions.get(definition_id)
     
     async def create_instance(self, definition_id: str, 
                              initial_data: Optional[Dict[str, Any]] = None,
                              instance_id: Optional[str] = None) -> Optional[str]:
-        """Create state machine instance"""
+        """
+Create state machine instance"""
         try:
             definition = self.definitions.get(definition_id)
             if not definition:
@@ -696,7 +741,8 @@ class StateMachineCore:
     
     async def start_instance(self, instance_id: str, 
                            initial_data: Optional[Dict[str, Any]] = None) -> bool:
-        """Start state machine instance"""
+        """
+Start state machine instance"""
         try:
             instance = self.instances.get(instance_id)
             if not instance:
@@ -714,7 +760,8 @@ class StateMachineCore:
     
     async def trigger_event(self, instance_id: str, event_name: str, 
                           event_data: Optional[Dict[str, Any]] = None) -> bool:
-        """Trigger event on instance"""
+        """
+Trigger event on instance"""
         try:
             instance = self.instances.get(instance_id)
             if not instance:
@@ -727,7 +774,8 @@ class StateMachineCore:
             return False
     
     async def transition_instance(self, instance_id: str, target_state: str) -> bool:
-        """Transition instance to target state"""
+        """
+Transition instance to target state"""
         try:
             instance = self.instances.get(instance_id)
             if not instance:
@@ -740,11 +788,13 @@ class StateMachineCore:
             return False
     
     def get_instance(self, instance_id: str) -> Optional[StateMachineInstance]:
-        """Get state machine instance"""
+        """
+Get state machine instance"""
         return self.instances.get(instance_id)
     
     def get_instance_status(self, instance_id: str) -> Optional[Dict[str, Any]]:
-        """Get instance status"""
+        """
+Get instance status"""
         instance = self.instances.get(instance_id)
         if not instance:
             return None
@@ -772,7 +822,8 @@ class StateMachineCore:
     
     def list_instances(self, definition_id: Optional[str] = None, 
                       status: Optional[StateMachineStatus] = None) -> List[Dict[str, Any]]:
-        """List state machine instances"""
+        """
+List state machine instances"""
         instances = []
         
         for instance in self.instances.values():
@@ -794,7 +845,8 @@ class StateMachineCore:
         return instances
     
     def get_system_metrics(self) -> Dict[str, Any]:
-        """Get system metrics"""
+        """
+Get system metrics"""
         running_instances = len([i for i in self.instances.values() 
                                if i.status == StateMachineStatus.RUNNING])
         completed_instances = len([i for i in self.instances.values() 
@@ -839,7 +891,8 @@ state_machine_core = StateMachineCore()
 # Convenience functions
 async def create_state_machine(definition_id: str, 
                               initial_data: Optional[Dict[str, Any]] = None) -> Optional[str]:
-    """Create and start state machine instance"""
+    """
+Create and start state machine instance"""
     instance_id = await state_machine_core.create_instance(definition_id)
     if instance_id:
         await state_machine_core.start_instance(instance_id, initial_data)
@@ -847,11 +900,13 @@ async def create_state_machine(definition_id: str,
 
 async def trigger_state_machine_event(instance_id: str, event_name: str, 
                                      event_data: Optional[Dict[str, Any]] = None) -> bool:
-    """Trigger event on state machine"""
+    """
+Trigger event on state machine"""
     return await state_machine_core.trigger_event(instance_id, event_name, event_data)
 
 def get_state_machine_status(instance_id: str) -> Optional[Dict[str, Any]]:
-    """Get state machine status"""
+    """
+Get state machine status"""
     return state_machine_core.get_instance_status(instance_id)
 
 # Module exports
@@ -863,4 +918,4 @@ __all__ = [
     "get_state_machine_status"
 ]
 
-logger.info("State Machine Core module loaded")
+logger.info("State Machine Core module initialized")

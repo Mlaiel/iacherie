@@ -12,7 +12,8 @@ from typing import Optional, Any
 logger = logging.getLogger(__name__)
 
 class TransformersManager:
-    """Gestionnaire singleton thread-safe pour transformers"""
+    """
+Gestionnaire singleton thread-safe pour transformers"""
     
     _instance = None
     _lock = threading.Lock()
@@ -27,7 +28,8 @@ class TransformersManager:
         return cls._instance
     
     def _initialize_transformers(self):
-        """Initialise transformers de manière sécurisée"""
+        """
+Initialise transformers de manière sécurisée"""
         if self._initialized:
             return
             
@@ -97,64 +99,78 @@ class TransformersManager:
                 self._initialized = True  # Éviter les boucles infinies
     
     def get_module(self, module_name: str) -> Optional[Any]:
-        """Récupère un module transformers spécifique"""
+        """
+Récupère un module transformers spécifique"""
         if not self._initialized:
             self._initialize_transformers()
         return self._transformers_modules.get(module_name)
     
     def get_transformers(self):
-        """Récupère le module transformers principal"""
+        """
+Récupère le module transformers principal"""
         return self.get_module('transformers')
     
     def get_pipeline(self):
-        """Récupère la fonction pipeline"""
+        """
+Récupère la fonction pipeline"""
         return self.get_module('pipeline')
     
     def get_auto_tokenizer(self):
-        """Récupère AutoTokenizer"""
+        """
+Récupère AutoTokenizer"""
         return self.get_module('AutoTokenizer')
     
     def get_auto_model(self):
-        """Récupère AutoModel"""
+        """
+Récupère AutoModel"""
         return self.get_module('AutoModel')
     
     def get_auto_model_for_sequence_classification(self):
-        """Récupère AutoModelForSequenceClassification"""
+        """
+Récupère AutoModelForSequenceClassification"""
         return self.get_module('AutoModelForSequenceClassification')
     
     def get_auto_config(self):
-        """Récupère AutoConfig"""
+        """
+Récupère AutoConfig"""
         return self.get_module('AutoConfig')
 
 # Instance globale du gestionnaire
 _manager = TransformersManager()
 
 def get_transformers():
-    """Fonction de convenance pour obtenir transformers"""
+    """
+Fonction de convenance pour obtenir transformers"""
     return _manager.get_transformers()
 
 def get_pipeline():
-    """Fonction de convenance pour obtenir pipeline"""
+    """
+Fonction de convenance pour obtenir pipeline"""
     return _manager.get_pipeline()
 
 def get_auto_tokenizer():
-    """Fonction de convenance pour obtenir AutoTokenizer"""
+    """
+Fonction de convenance pour obtenir AutoTokenizer"""
     return _manager.get_auto_tokenizer()
 
 def get_auto_model():
-    """Fonction de convenance pour obtenir AutoModel"""
+    """
+Fonction de convenance pour obtenir AutoModel"""
     return _manager.get_auto_model()
 
 def get_auto_model_for_sequence_classification():
-    """Fonction de convenance pour obtenir AutoModelForSequenceClassification"""
+    """
+Fonction de convenance pour obtenir AutoModelForSequenceClassification"""
     return _manager.get_auto_model_for_sequence_classification()
 
 def get_auto_config():
-    """Fonction de convenance pour obtenir AutoConfig"""
+    """
+Fonction de convenance pour obtenir AutoConfig"""
     return _manager.get_auto_config()
 
 def is_transformers_available() -> bool:
-    """Vérifie si transformers est disponible"""
+    """
+Vérifie si transformers est disponible"""
     transformers_module = get_transformers()
     return transformers_module is not None
 

@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class SearchEngineCore:
-    """Advanced SearchEngineCore System"""
+    """
+Advanced SearchEngineCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class SearchEngineCore:
 # Module exports
 __all__ = ["SearchEngineCore"]
 
-logger.info("🔍 SearchEngineCore module loaded")
+logger.info("🔍 SearchEngineCore module initialized")

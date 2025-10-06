@@ -1,133 +1,66 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { orchestrate } from '@/lib/api-orchestrator';
+import { detectLanguage, translateText } from '@/lib/language-manager';
 
-// Configuration APIs - ORCHESTRATEUR INTELLIGENT MULTILINGUE
-const DISCORD_BOT_TOKEN = process.env.DISCORD_BOT_TOKEN;
-const MIDJOURNEY_CHANNEL_ID = '1297611734037291049';
-const MIDJOURNEY_BOT_ID = '936929561302675456';
+// Configuration APIs REELLES
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const LEONARDO_API_KEY = process.env.LEONARDO_API_KEY;
 const REPLICATE_API_TOKEN = process.env.REPLICATE_API_TOKEN;
-
-// APIs DE TRADUCTION MULTI-PROVIDER
 const DEEPL_API_KEY = process.env.DEEPL_API_KEY;
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-const GOOGLE_GEMINI_API_KEY = process.env.GOOGLE_GEMINI_API_KEY;
-const COHERE_API_KEY = process.env.COHERE_API_KEY;
+const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 
-// ORCHESTRATEUR INTELLIGENT - DÉTECTION AUTOMATIQUE DE LANGUE
-async function detectLanguageAndImprovePrompt(originalPrompt: string) {
-  console.log("🔍 ORCHESTRATEUR INTELLIGENT - Analyse multilingue...");
-  console.log("📝 Prompt original:", originalPrompt);
+console.log("🎨 CONFIGURATION APIs IMAGE:");
+console.log("OpenAI DALL-E 3:", OPENAI_API_KEY ? "✅" : "❌");
+console.log("Leonardo AI:", LEONARDO_API_KEY ? "✅" : "❌");
+console.log("Replicate:", REPLICATE_API_TOKEN ? "✅" : "❌");
 
+interface ImageGenerationRequest {
+  prompt: string;
+  style?: string;
+  quality?: 'draft' | 'standard' | 'premium' | 'ultra';
+  size?: string;
+  provider?: 'auto' | 'dalle3' | 'leonardo' | 'replicate';
+  model_id?: string; // ID du modèle spécifique (ex: internal-diffusion-xl)
+  model?: string; // Alias pour model_id
+  prefer_internal?: boolean;
+}
+
+async function enhancePromptWithAI(originalPrompt: string, style: string, quality: string) {
+  console.log("🧠 AMELIORATION INTELLIGENTE DU PROMPT");
+  
   try {
-    // 1. DÉTECTION DE LANGUE + AMÉLIORATION AVEC OPENAI GPT-4
-    if (OPENAI_API_KEY) {
-      console.log("🧠 Analyse intelligente avec OpenAI GPT-4...");
-      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    if (ANTHROPIC_API_KEY) {
+      console.log("🤖 Amelioration avec Claude...");
+      
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${OPENAI_API_KEY}`,
+          'x-api-key': ANTHROPIC_API_KEY,
+          'anthropic-version': '2023-06-01',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: "gpt-4o-mini",
+          model: 'claude-sonnet-4.5-20241022',
+          max_tokens: 500,
           messages: [{
-            role: "system",
-            content: `Tu es un expert en prompts d'IA pour génération d'images. Ton rôle:
-1. Détecter la langue du prompt (parmi 644+ langues/dialectes supportées)
-2. Améliorer le prompt pour être TRÈS précis et détaillé
-3. Traduire vers l'anglais optimisé pour Leonardo AI/Midjourney/Replicate
-4. Ajouter des détails techniques pour une meilleure qualité
-
-Réponds UNIQUEMENT avec un JSON:
-{
-  "detectedLanguage": "langue détectée",
-  "originalMeaning": "sens exact du prompt original",
-  "improvedPrompt": "prompt amélioré très détaillé en anglais",
-  "technicalTags": "tags techniques pour IA"
-}`
-          }, {
-            role: "user", 
-            content: originalPrompt
-          }],
-          temperature: 0.3
+            role: 'user',
+            content: `Improve this image prompt for ${style} style, ${quality} quality. Translate to English if needed. Add technical details. Return only JSON: {detectedLanguage, improvedPrompt, technicalDetails}\n\nPrompt: "${originalPrompt}"`
+          }]
         })
       });
 
       if (response.ok) {
         const data = await response.json();
-        const analysis = JSON.parse(data.choices[0].message.content);
-        console.log("✅ Analyse OpenAI réussie:", analysis);
-        return analysis;
+        const result = JSON.parse(data.content[0].text);
+        console.log("✅ Prompt ameliore:", result.improvedPrompt);
+        return result.improvedPrompt;
       }
     }
 
-    // 2. FALLBACK - TRADUCTION DEEPL + AMÉLIORATION BASIQUE
-    if (DEEPL_API_KEY) {
-      console.log("🔄 Fallback - Traduction DeepL...");
-      const response = await fetch('https://api-free.deepl.com/v2/translate', {
-        method: 'POST',
-        headers: {
-          'Authorization': `DeepL-Auth-Key ${DEEPL_API_KEY}`,
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `text=${encodeURIComponent(originalPrompt)}&target_lang=EN&source_lang=auto`
-      });
+    console.log("🔄 Amelioration basique...");
+    let enhanced = originalPrompt;
 
-      if (response.ok) {
-        const data = await response.json();
-        const translatedText = data.translations[0].text;
-        console.log("✅ Traduction DeepL:", translatedText);
-        
-        return {
-          detectedLanguage: data.translations[0].detected_source_language,
-          originalMeaning: originalPrompt,
-          improvedPrompt: `${translatedText}, highly detailed, professional quality, 8K resolution`,
-          technicalTags: "detailed, high-quality, professional"
-        };
-      }
-    }
-
-    // 3. FALLBACK FINAL - AMÉLIORATION BASIQUE
-    console.log("🔄 Fallback final - Amélioration basique...");
-    return {
-      detectedLanguage: "unknown",
-      originalMeaning: originalPrompt,
-      improvedPrompt: `${originalPrompt}, highly detailed, professional quality, 8K resolution`,
-      technicalTags: "detailed, high-quality"
-    };
-
-  } catch (error) {
-    console.error("❌ Erreur orchestrateur:", error);
-    return {
-      detectedLanguage: "unknown",
-      originalMeaning: originalPrompt,
-      improvedPrompt: originalPrompt,
-      technicalTags: ""
-    };
-  }
-}
-
-// SYSTÈME DE TRADUCTION ET AMÉLIORATION MULTILINGUE
-async function enhancePromptMultilingual(originalPrompt: string, style: string) {
-  try {
-    console.log("🌍 AMÉLIORATION MULTILINGUE - 644+ LANGUES SUPPORTÉES");
-    console.log("📝 Prompt original:", originalPrompt);
-    
-    // 1. Détecter si c'est déjà en anglais optimisé
-    const englishKeywords = ['detailed', 'professional', 'realistic', 'photorealistic', '8K', 'masterpiece'];
-    const isAlreadyOptimized = englishKeywords.some(keyword => 
-      originalPrompt.toLowerCase().includes(keyword.toLowerCase())
-    );
-    
-    if (isAlreadyOptimized) {
-      console.log("✅ Prompt déjà optimisé en anglais");
-      return originalPrompt;
-    }
-    
-    // 2. Traduire vers l'anglais avec DeepL si nécessaire
-    let englishPrompt = originalPrompt;
-    
-    if (DEEPL_API_KEY) {
+    if (DEEPL_API_KEY && /[\u0600-\u06FF\u0750-\u077F\u4E00-\u9FFF\u3040-\u309F\u30A0-\u30FF]/.test(originalPrompt)) {
       try {
         const translateResponse = await fetch('https://api-free.deepl.com/v2/translate', {
           method: 'POST',
@@ -135,147 +68,102 @@ async function enhancePromptMultilingual(originalPrompt: string, style: string) 
             'Authorization': `DeepL-Auth-Key ${DEEPL_API_KEY}`,
             'Content-Type': 'application/x-www-form-urlencoded',
           },
-          body: new URLSearchParams({
-            text: originalPrompt,
-            target_lang: 'EN',
-            preserve_formatting: '1'
-          })
+          body: `text=${encodeURIComponent(originalPrompt)}&target_lang=EN`
         });
-        
+
         if (translateResponse.ok) {
-          const translateData = await translateResponse.json();
-          if (translateData.translations && translateData.translations[0]) {
-            englishPrompt = translateData.translations[0].text;
-            console.log("🔄 Traduit en anglais:", englishPrompt);
-          }
+          const data = await translateResponse.json();
+          enhanced = data.translations[0].text;
+          console.log("🌍 Traduit:", enhanced);
         }
       } catch (error) {
-        console.log("⚠️ Traduction échouée, utilisation du prompt original");
+        console.log("⚠️ Traduction echouee");
       }
     }
-    
-    // 3. Améliorer le prompt selon le style demandé
-    let enhancedPrompt = englishPrompt;
-    
-    if (style === 'realistic') {
-      enhancedPrompt = `${englishPrompt}, highly detailed, photorealistic, professional photography, 8K resolution, sharp focus, perfect lighting, masterpiece quality`;
-    } else if (style === 'artistic') {
-      enhancedPrompt = `${englishPrompt}, artistic masterpiece, creative composition, vibrant colors, digital art, beautiful aesthetic, award-winning artwork`;
-    } else if (style === 'cartoon') {
-      enhancedPrompt = `${englishPrompt}, cartoon style, animated character design, colorful illustration, fun and playful, cartoon artwork`;
-    } else {
-      enhancedPrompt = `${englishPrompt}, high quality, detailed, professional artwork, beautiful composition`;
-    }
-    
-    console.log("✨ Prompt amélioré final:", enhancedPrompt);
-    return enhancedPrompt;
-    
+
+    const qualityEnhancements = {
+      draft: '',
+      standard: ', high quality, detailed',
+      premium: ', highly detailed, professional quality, perfect composition, 8K resolution',
+      ultra: ', masterpiece quality, ultra detailed, professional photography, perfect lighting, cinematic composition, 8K UHD, award-winning'
+    };
+
+    const styleEnhancements = {
+      realistic: ', photorealistic, professional photography, sharp focus',
+      artistic: ', digital art masterpiece, vibrant colors, artistic composition',
+      cinematic: ', cinematic lighting, movie quality, dramatic atmosphere',
+      minimalist: ', clean minimalist design, elegant simplicity',
+      '3d': ', 3D render, octane render, unreal engine 5'
+    };
+
+    enhanced += (styleEnhancements[style] || '');
+    enhanced += (qualityEnhancements[quality] || qualityEnhancements.standard);
+
+    console.log("✨ Prompt final:", enhanced);
+    return enhanced;
+
   } catch (error) {
-    console.error("❌ Erreur amélioration prompt:", error);
-    return originalPrompt; // Fallback vers l'original
+    console.error("❌ Erreur amelioration:", error);
+    return originalPrompt;
   }
 }
 
-// Provider 1: Midjourney via Discord
-async function generateWithMidjourneyDiscord(prompt: string, style: string) {
-  if (!DISCORD_BOT_TOKEN) {
-    return { success: false, error: "Discord bot token not configured" };
+async function generateWithDALLE3(prompt: string, quality: string, size: string = '1024x1024') {
+  if (!OPENAI_API_KEY) {
+    throw new Error('OpenAI API key non configuree');
   }
 
-  try {
-    console.log("🎨 PRIORITÉ 1: MIDJOURNEY AI GENERATION...");
-    
-    let enhancedPrompt = prompt;
-    if (style === 'realistic') {
-      enhancedPrompt = `${prompt} --style raw --quality 2 --ar 1:1 --v 6`;
-    } else if (style === 'artistic') {
-      enhancedPrompt = `${prompt} --style artistic --quality 2 --ar 1:1 --v 6`;
-    } else {
-      enhancedPrompt = `${prompt} --quality 2 --ar 1:1 --v 6`;
-    }
-    
-    console.log("✨ Prompt Midjourney:", enhancedPrompt);
+  console.log("🎨 DALL-E 3 GENERATION (PREMIUM)");
 
-    const imagineResponse = await fetch(`https://discord.com/api/v10/channels/${MIDJOURNEY_CHANNEL_ID}/messages`, {
+  try {
+    const response = await fetch('https://api.openai.com/v1/images/generations', {
       method: 'POST',
       headers: {
-        'Authorization': `Bot ${DISCORD_BOT_TOKEN}`,
+        'Authorization': `Bearer ${OPENAI_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        content: `/imagine prompt:${enhancedPrompt}`
+        model: 'dall-e-3',
+        prompt: prompt,
+        n: 1,
+        size: size,
+        quality: quality === 'ultra' || quality === 'premium' ? 'hd' : 'standard',
+        style: 'vivid'
       })
     });
 
-    if (!imagineResponse.ok) {
-      return { success: false, error: `Midjourney error: ${imagineResponse.status}` };
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(`DALL-E 3 error: ${response.status} - ${error}`);
     }
 
-    const messageData = await imagineResponse.json();
-    console.log("📤 Midjourney - Message envoyé:", messageData.id);
+    const data = await response.json();
+    console.log("✅ DALL-E 3 - Image generee avec succes");
+    
+    return {
+      success: true,
+      imageUrl: data.data[0].url,
+      revisedPrompt: data.data[0].revised_prompt,
+      provider: 'dalle3',
+      model: 'dall-e-3',
+      quality: quality,
+      cost: quality === 'ultra' || quality === 'premium' ? 0.08 : 0.04
+    };
 
-    // Polling réduit
-    let attempts = 0;
-    const maxAttempts = 3;
-
-    while (attempts < maxAttempts) {
-      await new Promise(resolve => setTimeout(resolve, 10000));
-      attempts++;
-
-      const messagesResponse = await fetch(`https://discord.com/api/v10/channels/${MIDJOURNEY_CHANNEL_ID}/messages?limit=10`, {
-        headers: { 'Authorization': `Bot ${DISCORD_BOT_TOKEN}` }
-      });
-
-      if (messagesResponse.ok) {
-        const messages = await messagesResponse.json();
-        for (const message of messages) {
-          if (message.author.id === MIDJOURNEY_BOT_ID &&
-              message.attachments &&
-              message.attachments.length > 0 &&
-              message.content.includes(prompt.substring(0, 15))) {
-            return {
-              success: true,
-              imageUrl: message.attachments[0].url,
-              provider: "Midjourney AI"
-            };
-          }
-        }
-      }
-    }
-
-    return { success: false, error: "Midjourney timeout" };
   } catch (error) {
-    return { success: false, error: String(error) };
+    console.error("❌ Erreur DALL-E 3:", error);
+    throw error;
   }
 }
 
-// Provider 2: Leonardo AI - PRÉCISION AMÉLIORÉE PAR ORCHESTRATION
-async function generateWithLeonardo(enhancedPrompt: string, style: string, analysisData: any) {
+async function generateWithLeonardo(prompt: string, quality: string) {
   if (!LEONARDO_API_KEY) {
-    return { success: false, error: "Leonardo API key not configured" };
+    throw new Error('Leonardo API key non configuree');
   }
 
-  try {
-    console.log("🎭 LEONARDO AI - Génération avec précision orchestrée...");
-    console.log("📝 Prompt orchestré:", enhancedPrompt);
-    console.log("🔍 Analyse intelligente:", analysisData);
-    
-    let modelId = "6bef9f1b-29cb-40c7-b9df-32b51c1f67d3";
-    
-    // Construction du prompt ultra-précis basé sur l'analyse intelligente
-    let precisePrompt = `${enhancedPrompt}`;
-    
-    // Ajouter les tags techniques de l'analyse
-    if (analysisData.technicalTags) {
-      precisePrompt += `, ${analysisData.technicalTags}`;
-    }
-    
-    if (style === 'realistic') {
-      precisePrompt = `${precisePrompt}, ultra realistic, photorealistic, high detail, 8K resolution, professional photography`;
-    } else if (style === 'artistic') {
-      precisePrompt = `${precisePrompt}, artistic masterpiece, vibrant colors, creative composition`;
-    }
+  console.log("🎨 LEONARDO AI GENERATION (OPTIMAL)");
 
+  try {
     const response = await fetch('https://cloud.leonardo.ai/api/rest/v1/generations', {
       method: 'POST',
       headers: {
@@ -283,70 +171,78 @@ async function generateWithLeonardo(enhancedPrompt: string, style: string, analy
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        prompt: precisePrompt,
-        modelId: modelId,
+        prompt: prompt,
+        modelId: 'b24e16ff-06e3-43eb-8d33-4416c2d75876',
         width: 1024,
         height: 1024,
         num_images: 1,
-        guidance_scale: 10, // Plus de guidance pour plus de précision
-        num_inference_steps: 30,
-        promptMagic: true,
-        photoReal: style === 'realistic',
-        alchemy: true
+        guidance_scale: quality === 'draft' ? 5 : quality === 'standard' ? 7 : 10,
+        num_inference_steps: quality === 'draft' ? 20 : quality === 'standard' ? 30 : 50
       })
     });
 
-    if (response.ok) {
-      const data = await response.json();
-      const generationId = data.sdGenerationJob?.generationId;
-      
-      if (generationId) {
-        // Polling pour récupérer l'image
-        let attempts = 0;
-        while (attempts < 20) {
-          await new Promise(resolve => setTimeout(resolve, 3000));
-          attempts++;
-          
-          const resultResponse = await fetch(`https://cloud.leonardo.ai/api/rest/v1/generations/${generationId}`, {
-            headers: { 'Authorization': `Bearer ${LEONARDO_API_KEY}` }
-          });
-          
-          if (resultResponse.ok) {
-            const resultData = await resultResponse.json();
-            if (resultData.generations_by_pk?.generated_images?.length > 0) {
-              return {
-                success: true,
-                imageUrl: resultData.generations_by_pk.generated_images[0].url,
-                provider: "Leonardo AI"
-              };
-            }
-          }
-        }
-      }
+    if (!response.ok) {
+      throw new Error(`Leonardo error: ${response.status}`);
     }
 
-    return { success: false, error: "Leonardo generation failed" };
+    const data = await response.json();
+    const generationId = data.sdGenerationJob.generationId;
+
+    console.log("⏳ Generation Leonardo en cours...");
+
+    let imageUrl = null;
+    let attempts = 0;
+    const maxAttempts = 30;
+
+    while (!imageUrl && attempts < maxAttempts) {
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      const checkResponse = await fetch(`https://cloud.leonardo.ai/api/rest/v1/generations/${generationId}`, {
+        headers: {
+          'Authorization': `Bearer ${LEONARDO_API_KEY}`,
+        }
+      });
+
+      if (checkResponse.ok) {
+        const checkData = await checkResponse.json();
+        
+        if (checkData.generations_by_pk?.status === 'COMPLETE' && checkData.generations_by_pk.generated_images?.length > 0) {
+          imageUrl = checkData.generations_by_pk.generated_images[0].url;
+        }
+      }
+
+      attempts++;
+    }
+
+    if (!imageUrl) {
+      throw new Error('Timeout: Leonardo generation took too long');
+    }
+
+    console.log("✅ Leonardo AI - Image generee avec succes");
+
+    return {
+      success: true,
+      imageUrl: imageUrl,
+      provider: 'leonardo',
+      model: 'Leonardo Kino XL',
+      quality: quality,
+      cost: 0.015
+    };
+
   } catch (error) {
-    return { success: false, error: String(error) };
+    console.error("❌ Erreur Leonardo:", error);
+    throw error;
   }
 }
 
-// Provider 3: Replicate
-async function generateWithReplicate(prompt: string, style: string) {
+async function generateWithReplicate(prompt: string, quality: string) {
   if (!REPLICATE_API_TOKEN) {
-    return { success: false, error: "Replicate API token not configured" };
+    throw new Error('Replicate API token non configure');
   }
 
-  try {
-    console.log("🤖 PRIORITÉ 3: REPLICATE AI MODELS...");
-    
-    let enhancedPrompt = prompt;
-    if (style === 'realistic') {
-      enhancedPrompt = `${prompt}, photorealistic, highly detailed, 8K`;
-    } else if (style === 'artistic') {
-      enhancedPrompt = `${prompt}, digital art, artistic style`;
-    }
+  console.log("🚀 REPLICATE GENERATION (ECONOMIQUE)");
 
+  try {
     const response = await fetch('https://api.replicate.com/v1/predictions', {
       method: 'POST',
       headers: {
@@ -354,144 +250,296 @@ async function generateWithReplicate(prompt: string, style: string) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        version: "stability-ai/sdxl:39ed52f2a78e934b3ba6e2a89f5b1c712de7dfea535525255b1aa35c5565e08b",
+        version: 'black-forest-labs/flux-1.1-pro',
         input: {
-          prompt: enhancedPrompt,
-          width: 1024,
-          height: 1024,
-          num_outputs: 1
+          prompt: prompt,
+          aspect_ratio: '1:1',
+          output_format: 'png',
+          output_quality: quality === 'draft' ? 70 : quality === 'standard' ? 85 : 95
         }
       })
     });
 
-    if (response.ok) {
-      const prediction = await response.json();
-      const predictionId = prediction.id;
-      
-      // Polling pour le résultat
-      let attempts = 0;
-      while (attempts < 30) {
-        await new Promise(resolve => setTimeout(resolve, 3000));
-        attempts++;
-        
-        const resultResponse = await fetch(`https://api.replicate.com/v1/predictions/${predictionId}`, {
-          headers: { 'Authorization': `Token ${REPLICATE_API_TOKEN}` }
-        });
-        
-        if (resultResponse.ok) {
-          const result = await resultResponse.json();
-          if (result.status === 'succeeded' && result.output && result.output.length > 0) {
-            return {
-              success: true,
-              imageUrl: result.output[0],
-              provider: "Replicate AI"
-            };
-          } else if (result.status === 'failed') {
-            break;
-          }
-        }
-      }
+    if (!response.ok) {
+      throw new Error(`Replicate error: ${response.status}`);
     }
 
-    return { success: false, error: "Replicate generation failed" };
+    const prediction = await response.json();
+    console.log("⏳ Generation Replicate en cours...");
+
+    let result = prediction;
+    let attempts = 0;
+    const maxAttempts = 30;
+
+    while (result.status !== 'succeeded' && result.status !== 'failed' && attempts < maxAttempts) {
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      const checkResponse = await fetch(`https://api.replicate.com/v1/predictions/${result.id}`, {
+        headers: {
+          'Authorization': `Token ${REPLICATE_API_TOKEN}`,
+        }
+      });
+
+      result = await checkResponse.json();
+      attempts++;
+    }
+
+    if (result.status === 'failed') {
+      throw new Error('Replicate generation failed');
+    }
+
+    if (!result.output) {
+      throw new Error('No output from Replicate');
+    }
+
+    console.log("✅ Replicate - Image generee avec succes");
+
+    return {
+      success: true,
+      imageUrl: result.output,
+      provider: 'replicate',
+      model: 'Flux 1.1 Pro',
+      quality: quality,
+      cost: 0.008
+    };
+
   } catch (error) {
-    return { success: false, error: String(error) };
+    console.error("❌ Erreur Replicate:", error);
+    throw error;
+  }
+}
+
+async function generateImageIntelligent(request: ImageGenerationRequest) {
+  const { prompt, style = 'realistic', quality = 'standard', size = '1024x1024', provider = 'auto', model_id, model } = request;
+
+  // Utiliser model_id ou model (compatibilité)
+  const selectedModel = model_id || model;
+
+  console.log("🎯 ORCHESTRATEUR INTELLIGENT");
+  console.log("📝 Prompt:", prompt);
+  console.log("🎨 Style:", style);
+  console.log("💎 Qualite:", quality);
+  console.log("🤖 Model:", selectedModel);
+
+  // ========================================
+  // 🆓 SI MODÈLE INTERNE SÉLECTIONNÉ
+  // ========================================
+  if (selectedModel && selectedModel.startsWith('internal-')) {
+    console.log("🆓 MODÈLE INTERNE GRATUIT SÉLECTIONNÉ:", selectedModel);
+    
+    try {
+      // Appeler le backend Python pour utiliser le modèle interne
+      const backendResponse = await fetch('http://localhost:8000/api/generate/image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt: prompt,
+          model: selectedModel,
+          style: style,
+          quality: quality,
+          size: size,
+          prefer_internal: true
+        })
+      });
+
+      if (backendResponse.ok) {
+        const data = await backendResponse.json();
+        console.log("✅ Modèle interne - Génération réussie:", data);
+        
+        return {
+          success: true,
+          imageUrl: data.images?.[0]?.url || data.url || data.image_url,
+          provider: 'internal',
+          model: selectedModel,
+          quality: quality,
+          cost: 0,
+          originalPrompt: prompt,
+          enhancedPrompt: data.images?.[0]?.revised_prompt || prompt,
+          internal: true,
+          timestamp: new Date().toISOString()
+        };
+      } else {
+        const errorData = await backendResponse.json();
+        console.log("⚠️ Modèle interne échoué:", errorData);
+        console.log("🔄 Fallback vers APIs externes...");
+      }
+    } catch (error) {
+      console.error("❌ Erreur modèle interne:", error);
+      console.log("🔄 Fallback vers APIs externes...");
+    }
+  }
+
+  const enhancedPrompt = await enhancePromptWithAI(prompt, style, quality);
+
+  let selectedProvider = provider;
+
+  // ========================================
+  // 🎼 ORCHESTRATION INTELLIGENTE
+  // ========================================
+  if (provider === 'auto') {
+    console.log('🎼 MAESTRO: Sélection intelligente du meilleur provider image...');
+    
+    // Déterminer le useCase basé sur le style
+    const useCaseMap: Record<string, string> = {
+      'realistic': 'hero-image',
+      'artistic': 'creative',
+      'cartoon': 'thumbnail',
+      'default': 'social-post'
+    };
+
+    const orchestrationResult = orchestrate({
+      contentType: 'image',
+      quality: quality as 'draft' | 'standard' | 'premium' | 'ultra',
+      useCase: useCaseMap[style] || 'social-post',
+      budget: quality === 'ultra' ? undefined : 0.05 // Budget flexible sauf ultra
+    });
+
+    console.log(`✅ MAESTRO IMAGE: ${orchestrationResult.provider} sélectionné`);
+    console.log(`💰 ${orchestrationResult.reasoning}`);
+    if (orchestrationResult.estimatedSavings) {
+      console.log(`💵 Économie: $${orchestrationResult.estimatedSavings.toFixed(3)} vs ${orchestrationResult.alternativeProvider}`);
+    }
+
+    // Mapper les providers de l'orchestrateur aux providers de l'API
+    const providerMap: Record<string, 'dalle3' | 'leonardo' | 'replicate'> = {
+      'replicate-flux': 'replicate',
+      'leonardo-xl': 'leonardo',
+      'leonardo-phoenix': 'leonardo',
+      'openai-dalle3': 'dalle3',
+      'openai-dalle3-hd': 'dalle3',
+      'pexels': 'dalle3', // Fallback à DALL-E si stock demandé
+      'unsplash': 'dalle3'
+    };
+
+    selectedProvider = providerMap[orchestrationResult.provider] || 'leonardo';
+  } else {
+    console.log(`🎯 Provider manuel: ${selectedProvider}`);
+  }
+
+  const fallbackOrder = {
+    dalle3: ['dalle3', 'leonardo', 'replicate'],
+    leonardo: ['leonardo', 'replicate', 'dalle3'],
+    replicate: ['replicate', 'leonardo', 'dalle3']
+  };
+
+  const tryOrder = fallbackOrder[selectedProvider] || ['dalle3', 'leonardo', 'replicate'];
+
+  for (const providerName of tryOrder) {
+    try {
+      console.log(`\n🔄 Tentative: ${providerName}`);
+      
+      let result;
+      if (providerName === 'dalle3') {
+        result = await generateWithDALLE3(enhancedPrompt, quality, size);
+      } else if (providerName === 'leonardo') {
+        result = await generateWithLeonardo(enhancedPrompt, quality);
+      } else {
+        result = await generateWithReplicate(enhancedPrompt, quality);
+      }
+
+      return {
+        ...result,
+        originalPrompt: prompt,
+        enhancedPrompt: enhancedPrompt,
+        requestedProvider: selectedProvider,
+        timestamp: new Date().toISOString()
+      };
+
+    } catch (error: any) {
+      console.error(`❌ ${providerName} echoue:`, error.message);
+      if (providerName === tryOrder[tryOrder.length - 1]) {
+        throw new Error('Tous les providers ont echoue');
+      }
+      console.log("🔄 Essai du provider suivant...");
+    }
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
-    console.log("🌍 SYSTÈME MULTILINGUE IA - 644+ LANGUES - ORCHESTRATION INTELLIGENTE ✅");
-
     const body = await request.json();
-    const { prompt, style = "realistic" } = body;
+    const result = await generateImageIntelligent(body);
 
-    if (!prompt) {
-      return NextResponse.json({
-        success: false,
-        error: "Prompt requis"
-      }, { status: 400 });
-    }
-
-    console.log("📝 Prompt original:", prompt);
-    console.log("🎨 Style:", style);
-    console.log("🔑 APIs configurées - Leonardo:", !!LEONARDO_API_KEY, "Replicate:", !!REPLICATE_API_TOKEN, "OpenAI:", !!OPENAI_API_KEY, "DeepL:", !!DEEPL_API_KEY);
-
-    // ÉTAPE 1: ORCHESTRATION INTELLIGENTE - Analyse et amélioration du prompt
-    console.log("� ORCHESTRATEUR INTELLIGENT - Analyse multilingue...");
-    const analysisData = await detectLanguageAndImprovePrompt(prompt);
-    
-    console.log("✅ Analyse terminée:", {
-      langue: analysisData.detectedLanguage,
-      prompt_amélioré: analysisData.improvedPrompt
+    return NextResponse.json({
+      success: true,
+      ...result,
+      realAPI: true,
+      intelligentSelection: true
     });
 
-    // ÉTAPE 2: GÉNÉRATION AVEC PRÉCISION AMÉLIORÉE
-
-    // 1. Midjourney avec prompt orchestré
-    const mjResult = await generateWithMidjourneyDiscord(analysisData.improvedPrompt, style);
-    if (mjResult.success && mjResult.imageUrl) {
-      return NextResponse.json({
-        success: true,
-        provider: "Midjourney AI Generation - Orchestrated",
-        quality: "premium_ai_orchestrated",
-        imageUrl: mjResult.imageUrl,
-        prompt: analysisData.improvedPrompt,
-        originalPrompt: prompt,
-        promptAnalysis: analysisData,
-        style: style,
-        realGeneration: true
-      });
-    }
-
-    // 2. Leonardo AI avec orchestration intelligente
-    const leonardoResult = await generateWithLeonardo(analysisData.improvedPrompt, style, analysisData);
-    if (leonardoResult.success && leonardoResult.imageUrl) {
-      return NextResponse.json({
-        success: true,
-        provider: "Leonardo AI Generation - Orchestrated",
-        quality: "premium_ai_orchestrated",
-        imageUrl: leonardoResult.imageUrl,
-        prompt: analysisData.improvedPrompt,
-        originalPrompt: prompt,
-        promptAnalysis: analysisData,
-        style: style,
-        realGeneration: true
-      });
-    }
-
-    // 3. Replicate AI avec orchestration
-    const replicateResult = await generateWithReplicate(analysisData.improvedPrompt, style);
-    if (replicateResult.success && replicateResult.imageUrl) {
-      return NextResponse.json({
-        success: true,
-        provider: "Replicate AI Models - Orchestrated",
-        quality: "premium_ai_orchestrated",
-        imageUrl: replicateResult.imageUrl,
-        prompt: analysisData.improvedPrompt,
-        originalPrompt: prompt,
-        promptAnalysis: analysisData,
-        style: style,
-        realGeneration: true
-      });
-    }
-
-    // Échec total - AUCUN FALLBACK DALLE
+  } catch (error: any) {
+    console.error("❌ Erreur generation image:", error);
+    
     return NextResponse.json({
       success: false,
-      error: "Services de génération IA temporairement indisponibles - Orchestration intelligente activée",
-      promptAnalysis: analysisData,
-      message: `Prompt analysé en ${analysisData.detectedLanguage}, amélioré mais génération échouée`,
-      providers_tried: ["Midjourney AI", "Leonardo AI", "Replicate AI"],
-      leonardo_configured: !!LEONARDO_API_KEY,
-      replicate_configured: !!REPLICATE_API_TOKEN
-    }, { status: 503 });
-
-  } catch (error) {
-    console.error('❌ Erreur générale:', error);
-    return NextResponse.json({
-      success: false,
-      error: "Erreur interne du serveur"
+      error: error.message || "Erreur lors de la generation",
+      realAPI: true
     }, { status: 500 });
   }
+}
+
+export async function GET() {
+  return NextResponse.json({
+    message: "API de generation d'images - OPTIMISATION INTELLIGENTE COUTS/QUALITE",
+    status: "OPERATIONAL",
+    
+    parameters: {
+      prompt: "string (required)",
+      style: "realistic | artistic | cinematic | minimalist | 3d",
+      quality: "draft | standard | premium | ultra (default: standard)",
+      size: "1024x1024 | 1024x1792 | 1792x1024 (DALL-E 3)",
+      provider: "auto | dalle3 | leonardo | replicate (default: auto)"
+    },
+
+    strategie_optimisation: {
+      ULTRA_PREMIUM: {
+        provider: "DALL-E 3",
+        cout: "$0.08/image",
+        usage: "Projets professionnels, qualite maximale"
+      },
+      STANDARD_OPTIMAL: {
+        provider: "Leonardo AI",
+        cout: "$0.015/image",
+        usage: "Production standard, rapport qualite/prix"
+      },
+      DRAFT_ECONOMIQUE: {
+        provider: "Replicate",
+        cout: "$0.008/image",
+        usage: "Tests, prototypes, volume eleve"
+      }
+    },
+
+    providers_disponibles: {
+      dalle3: {
+        configured: !!OPENAI_API_KEY,
+        models: ["dall-e-3"],
+        resolutions: ["1024x1024", "1024x1792", "1792x1024"],
+        cost: "$0.04-0.08"
+      },
+      leonardo: {
+        configured: !!LEONARDO_API_KEY,
+        models: ["Leonardo Kino XL"],
+        cost: "$0.01-0.02"
+      },
+      replicate: {
+        configured: !!REPLICATE_API_TOKEN,
+        models: ["Flux 1.1 Pro"],
+        cost: "$0.005-0.01"
+      }
+    },
+
+    amelioration_prompts: {
+      enabled: true,
+      ai_powered: !!ANTHROPIC_API_KEY,
+      traduction: !!DEEPL_API_KEY
+    },
+
+    exemples: [
+      { prompt: "un chat noir", quality: "draft", provider_selectionne: "Replicate", cout: "$0.008" },
+      { prompt: "portrait professionnel", quality: "standard", provider_selectionne: "Leonardo", cout: "$0.015" },
+      { prompt: "image marketing premium", quality: "ultra", provider_selectionne: "DALL-E 3", cout: "$0.08" }
+    ]
+  });
 }

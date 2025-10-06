@@ -46,7 +46,8 @@ Base = declarative_base()
 # ================================
 
 class AchievementType(Enum):
-    """Achievement types and categories."""
+    """
+        Achievement types and categories."""
     MILESTONE = "milestone"
     PROGRESSION = "progression"
     SOCIAL = "social"
@@ -807,7 +808,8 @@ class LoyaltyProgram(Base):
 # ================================
 
 def get_gamification_engagement_models():
-    """Get all gamification and engagement models."""
+    """
+        Get all gamification and engagement models."""
     return [
         UserGamification,
         Achievement,
@@ -824,7 +826,8 @@ def get_gamification_engagement_models():
 
 
 def create_gamification_engagement_tables(engine):
-    """Create all gamification and engagement tables."""
+    """
+        Create all gamification and engagement tables."""
     try:
         Base.metadata.create_all(engine, tables=[model.__table__ for model in get_gamification_engagement_models()])
         logger.info("Successfully created gamification and engagement tables")

@@ -45,19 +45,24 @@ from collections import defaultdict, deque
 try:
     import aiofiles
     # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+    try:
+        import aioredis
+        REDIS_AVAILABLE = True
+    except (ImportError, TypeError) as e:
+        # Handle Python 3.12 TimeoutError duplicate base class issue
+        from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+        import logging
+        logging.warning(f"Using Redis compatibility layer: {e}")
+    
     import websockets
     from sqlalchemy.ext.asyncio import AsyncSession
     from sqlalchemy import select, update, delete, and_, or_
     import boto3
     from twilio.rest import Client as TwilioClient
+except ImportError as e:
+    # Graceful degradation if optional dependencies not available
+    import logging
+    logging.warning(f"Some communication hub features will be limited: {e}")
     from zoom import ZoomAPI
     import cv2
     import numpy as np
@@ -247,7 +252,8 @@ class ActivityStream:
         self._setup_aggregation_rules()
     
     def _setup_aggregation_rules(self):
-        """Configure les règles d'agrégation d'événements"""
+        """
+        Configure les règles d'agrégation d'événements"""
         self.aggregation_rules = {
             ActivityType.MESSAGE_SENT: {
                 'window': timedelta(minutes=5),
@@ -262,11 +268,13 @@ class ActivityStream:
         }
     
     async def start_streaming(self):
-        """Démarre le streaming d'activités"""
+        """
+        Démarre le streaming d'activités"""
         self.running = True
         logger.info("ActivityStream: Streaming démarré")
         
         # Démarrer les tâches en arrière-plan
+
         tasks = [
             asyncio.create_task(self._process_activity_buffer()),
             asyncio.create_task(self._broadcast_activities()),
@@ -302,11 +310,14 @@ class ActivityStream:
             
             # Broadcast temps réel
             await self._broadcast_to_subscribers(activity)
+
             
             logger.debug(f"Activité ajoutée: {activity.activity_type} par {activity.user_id}")
+
             
         except Exception as e:
             logger.error(f"Erreur lors de l'ajout d'activité: {e}")
+
             raise
     
     async def _enrich_activity(self, activity: ActivityEvent) -> ActivityEvent:
@@ -318,12 +329,14 @@ class ActivityStream:
         # Géolocalisation si disponible
         if 'location' not in activity.context:
             activity.context['location'] = await self._get_user_location(activity.user_id)
+
         
         return activity
     
     async def get_user_activity_stream(self, user_id: str, limit: int = 50, 
                                      filters: Optional[Dict] = None) -> List[ActivityEvent]:
-        """Récupère le stream d'activités pour un utilisateur"""
+        """
+        Récupère le stream d'activités pour un utilisateur"""
         try:
             activities = []
             
@@ -332,10 +345,14 @@ class ActivityStream:
                 cached_activities = await self.redis_client.zrevrange(
                     f"activity_stream:{user_id}", 0, limit-1, withscores=True
                 )
+
                 
                 for activity_data, score in cached_activities:
                     activity_dict = json.loads(activity_data)
+
+
                     activity = ActivityEvent(**activity_dict)
+
                     
                     if self._match_filters(activity, filters):
                         activities.append(activity)
@@ -343,12 +360,15 @@ class ActivityStream:
             # Compléter depuis la base de données si nécessaire
             if len(activities) < limit and self.db_session:
                 db_activities = await self._get_activities_from_db(user_id, limit - len(activities), filters)
+
                 activities.extend(db_activities)
+
             
             return activities[:limit]
             
         except Exception as e:
             logger.error(f"Erreur lors de la récupération du stream: {e}")
+
             return []
     
     async def subscribe_to_activities(self, user_id: str, callback: Callable, filters: Optional[Dict] = None):
@@ -356,6 +376,7 @@ class ActivityStream:
         self.subscribers[user_id].add(callback)
         if filters:
             self.filters[user_id].append(filters)
+
         
         logger.info(f"Utilisateur {user_id} souscrit aux activités")
     
@@ -363,6 +384,7 @@ class ActivityStream:
         """Désabonnement des activités"""
         if user_id in self.subscribers:
             self.subscribers[user_id].discard(callback)
+
         
         logger.info(f"Utilisateur {user_id} désabonné des activités")
     
@@ -378,16 +400,19 @@ class ActivityStream:
                         activities_to_process.append(self.activity_buffer.popleft())
                     
                     # Agrégation d'activités similaires
+
                     aggregated_activities = await self._aggregate_activities(activities_to_process)
                     
                     # Persistence en base
                     if self.db_session:
                         await self._persist_activities(aggregated_activities)
+
                 
                 await asyncio.sleep(1)  # Process every second
                 
             except Exception as e:
                 logger.error(f"Erreur lors du traitement du buffer: {e}")
+
                 await asyncio.sleep(5)
     
     async def _aggregate_activities(self, activities: List[ActivityEvent]) -> List[ActivityEvent]:
@@ -399,12 +424,16 @@ class ActivityStream:
                 rule = self.aggregation_rules[activity.activity_type]
                 
                 # Créer une clé d'agrégation
+
                 group_values = []
                 for field in rule['group_by']:
                     if hasattr(activity, field):
                         group_values.append(str(getattr(activity, field)))
+
                     elif field in activity.context:
                         group_values.append(str(activity.context[field]))
+
+
                 
                 agg_key = f"{activity.activity_type}:{':'.join(group_values)}"
                 
@@ -428,6 +457,7 @@ class ActivityStream:
                 for callback in callbacks:
                     try:
                         await callback(activity)
+
                     except Exception as e:
                         logger.error(f"Erreur lors du callback pour {user_id}: {e}")
     
@@ -458,7 +488,8 @@ class ActivityStream:
         return True
     
     def _get_client_ip(self) -> str:
-        """Récupère l'IP du client"""
+        """
+        Récupère l'IP du client"""
         # Implémentation basique, à adapter selon le contexte
         return "127.0.0.1"
     
@@ -473,7 +504,8 @@ class ActivityStream:
         return None
     
     async def _can_user_see_activity(self, user_id: str, activity: ActivityEvent) -> bool:
-        """Vérifie si l'utilisateur peut voir cette activité"""
+        """
+        Vérifie si l'utilisateur peut voir cette activité"""
         # Implémentation des règles de visibilité
         if activity.visibility == "public":
             return True
@@ -482,6 +514,7 @@ class ActivityStream:
         elif activity.visibility == "team":
             # Vérifier l'appartenance à l'équipe
             return await self._is_user_in_same_team(user_id, activity.user_id)
+
         
         return False
     
@@ -524,9 +557,11 @@ class RealTimeUpdates:
             await self.handle_client_connection(websocket, path)
         
         # Démarrer le serveur WebSocket
+
         start_server = websockets.serve(handle_websocket, host, port)
         
         # Démarrer les tâches en arrière-plan
+
         tasks = [
             asyncio.create_task(start_server),
             asyncio.create_task(self._presence_heartbeat()),
@@ -545,6 +580,7 @@ class RealTimeUpdates:
         for user_id, connections in self.connections.items():
             for websocket in connections:
                 await websocket.close()
+
         
         logger.info("RealTimeUpdates: Service arrêté")
     
@@ -553,12 +589,19 @@ class RealTimeUpdates:
         user_id = None
         try:
             # Authentification
+
             auth_message = await websocket.recv()
+
+
             auth_data = json.loads(auth_message)
+
+
             user_id = await self._authenticate_user(auth_data)
+
             
             if not user_id:
                 await websocket.send(json.dumps({"error": "Authentication failed"}))
+
                 return
             
             # Enregistrer la connexion
@@ -580,10 +623,12 @@ class RealTimeUpdates:
             async for message in websocket:
                 try:
                     await self._handle_client_message(user_id, message)
+
                 except websockets.exceptions.ConnectionClosed:
                     break
                 except Exception as e:
                     logger.error(f"Erreur lors du traitement du message: {e}")
+
         
         except websockets.exceptions.ConnectionClosed:
             pass
@@ -594,6 +639,7 @@ class RealTimeUpdates:
             if user_id and user_id in self.connections:
                 if websocket in self.connections[user_id]:
                     self.connections[user_id].remove(websocket)
+
                 
                 if not self.connections[user_id]:
                     del self.connections[user_id]
@@ -602,31 +648,41 @@ class RealTimeUpdates:
     async def _authenticate_user(self, auth_data: Dict) -> Optional[str]:
         """Authentifie un utilisateur"""
         # Implémentation de l'authentification JWT/token
+
         token = auth_data.get('token')
         if token:
             # Valider le token et retourner l'user_id
-            # TODO: Intégrer avec le système d'authentification
             return auth_data.get('user_id')  # Temporaire
         return None
     
     async def _handle_client_message(self, user_id: str, message: str):
-        """Traite un message du client"""
+        """
+        Traite un message du client"""
         try:
             data = json.loads(message)
+
+
             message_type = data.get('type')
+
             
             if message_type == "typing_start":
                 await self._handle_typing_start(user_id, data.get('channel_id'))
+
             elif message_type == "typing_stop":
                 await self._handle_typing_stop(user_id, data.get('channel_id'))
+
             elif message_type == "presence_update":
                 await self.update_presence_status(user_id, data.get('status'))
+
             elif message_type == "subscribe_channel":
                 await self._subscribe_to_channel(user_id, data.get('channel_id'))
+
             elif message_type == "unsubscribe_channel":
                 await self._unsubscribe_from_channel(user_id, data.get('channel_id'))
+
             else:
                 logger.warning(f"Type de message non reconnu: {message_type}")
+
         
         except json.JSONDecodeError:
             logger.error("Message JSON invalide reçu")
@@ -637,7 +693,9 @@ class RealTimeUpdates:
         """Broadcast un événement à tous les utilisateurs d'un canal"""
         try:
             # Récupérer les participants du canal
+
             participants = await self._get_channel_participants(channel_id)
+
             
             for user_id in participants:
                 # Ne pas renvoyer à l'expéditeur si spécifié
@@ -645,6 +703,7 @@ class RealTimeUpdates:
                     continue
                 
                 await self.send_to_user(user_id, event_data)
+
         
         except Exception as e:
             logger.error(f"Erreur lors du broadcast au canal {channel_id}: {e}")
@@ -655,19 +714,24 @@ class RealTimeUpdates:
             message = json.dumps(data, default=str)
             
             # Envoyer à toutes les connexions de l'utilisateur
+
             connections_to_remove = []
             for websocket in self.connections[user_id]:
                 try:
                     await websocket.send(message)
+
                 except websockets.exceptions.ConnectionClosed:
                     connections_to_remove.append(websocket)
+
                 except Exception as e:
                     logger.error(f"Erreur lors de l'envoi à {user_id}: {e}")
+
                     connections_to_remove.append(websocket)
             
             # Nettoyer les connexions fermées
             for websocket in connections_to_remove:
                 self.connections[user_id].remove(websocket)
+
             
             if not self.connections[user_id]:
                 del self.connections[user_id]
@@ -703,8 +767,10 @@ class RealTimeUpdates:
         # Vérifier Redis
         if self.redis_client:
             presence_data = await self.redis_client.hget("user_presence", user_id)
+
             if presence_data:
                 return json.loads(presence_data)
+
         
         return None
     
@@ -735,7 +801,9 @@ class RealTimeUpdates:
     async def _notify_presence_change(self, user_id: str, new_status: str):
         """Notifie les contacts du changement de présence"""
         # Récupérer les contacts de l'utilisateur
+
         contacts = await self._get_user_contacts(user_id)
+
         
         for contact_id in contacts:
             await self.send_to_user(contact_id, {
@@ -747,15 +815,12 @@ class RealTimeUpdates:
     
     async def _get_channel_participants(self, channel_id: str) -> List[str]:
         """Récupère la liste des participants d'un canal"""
-        # Implémentation avec base de données
-        # TODO: Intégrer avec le système de gestion des canaux
-        return []
+        # Implémentation avec base de données        return []
     
     async def _get_user_contacts(self, user_id: str) -> List[str]:
-        """Récupère la liste des contacts d'un utilisateur"""
-        # Implémentation avec base de données
-        # TODO: Intégrer avec le système de contacts
-        return []
+        """
+        Récupère la liste des contacts d'un utilisateur"""
+        # Implémentation avec base de données        return []
 
 # ==========================================
 # COLLABORATION CHAT - CHAT COLLABORATIF
@@ -786,7 +851,8 @@ class CollaborationChat:
         self.integrations = {}
     
     async def create_channel(self, channel_data: Dict, creator_id: str) -> CommunicationChannel:
-        """Crée un nouveau canal de collaboration"""
+        """
+        Crée un nouveau canal de collaboration"""
         try:
             channel = CommunicationChannel(
                 name=channel_data.get('name', ''),
@@ -799,6 +865,7 @@ class CollaborationChat:
             
             # Ajouter le créateur comme admin et participant
             channel.admins.add(creator_id)
+
             channel.participants.add(creator_id)
             
             # Ajouter d'autres participants si spécifiés
@@ -815,12 +882,15 @@ class CollaborationChat:
             
             # Notifier la création
             await self._notify_channel_created(channel)
+
             
             logger.info(f"Canal créé: {channel.name} par {creator_id}")
+
             return channel
             
         except Exception as e:
             logger.error(f"Erreur lors de la création du canal: {e}")
+
             raise
     
     async def send_message(self, channel_id: str, sender_id: str, content: str, 
@@ -835,6 +905,7 @@ class CollaborationChat:
                 raise PermissionError("Utilisateur non autorisé à envoyer des messages")
             
             # Créer le message
+
             message = Message(
                 channel_id=channel_id,
                 sender_id=sender_id,
@@ -846,13 +917,17 @@ class CollaborationChat:
             )
             
             # Modération automatique
+
             moderation_result = await self._moderate_message(message)
+
             if not moderation_result['approved']:
                 message.content = moderation_result['modified_content']
                 message.metadata['moderation'] = moderation_result
             
             # Traitement des mentions
+
             mentions = await self._extract_mentions(content)
+
             message.mentions = mentions
             
             # Persister le message
@@ -878,12 +953,15 @@ class CollaborationChat:
             
             # Mettre à jour l'activité du canal
             await self._update_channel_activity(channel_id)
+
             
             logger.debug(f"Message envoyé dans {channel_id} par {sender_id}")
+
             return message
             
         except Exception as e:
             logger.error(f"Erreur lors de l'envoi du message: {e}")
+
             raise
     
     async def get_channel_messages(self, channel_id: str, user_id: str, 
@@ -894,6 +972,8 @@ class CollaborationChat:
             # Vérifier les permissions
             if not await self._can_user_read_channel(user_id, channel_id):
                 raise PermissionError("Utilisateur non autorisé à lire ce canal")
+
+
             
             messages = []
             
@@ -906,10 +986,14 @@ class CollaborationChat:
                 cached_messages = await self.redis_client.zrevrange(
                     cache_key, 0, limit-1, withscores=True
                 )
+
                 
                 for message_data, score in cached_messages:
                     message_dict = json.loads(message_data)
+
+
                     message = Message(**message_dict)
+
                     
                     if before and message.id == before:
                         break
@@ -921,12 +1005,15 @@ class CollaborationChat:
                 db_messages = await self._get_messages_from_db(
                     channel_id, limit - len(messages), before, thread_id
                 )
+
                 messages.extend(db_messages)
+
             
             return messages[:limit]
             
         except Exception as e:
             logger.error(f"Erreur lors de la récupération des messages: {e}")
+
             return []
     
     async def search_messages(self, query: str, user_id: str, 
@@ -935,6 +1022,7 @@ class CollaborationChat:
         """Recherche de messages avec indexation intelligente"""
         try:
             # Construire les critères de recherche
+
             search_criteria = {
                 'query': query.lower(),
                 'user_id': user_id,
@@ -943,6 +1031,7 @@ class CollaborationChat:
             }
             
             # Recherche dans l'index local
+
             matching_messages = []
             
             for message_id, indexed_content in self.search_index.items():
@@ -956,18 +1045,22 @@ class CollaborationChat:
             
             # Trier par pertinence et date
             matching_messages.sort(key=lambda m: m.timestamp, reverse=True)
+
             
             return matching_messages
             
         except Exception as e:
             logger.error(f"Erreur lors de la recherche: {e}")
+
             return []
     
     async def create_thread(self, parent_message_id: str, user_id: str) -> str:
         """Crée un thread de discussion"""
         try:
             # Vérifier que le message parent existe
+
             parent_message = await self._get_message_by_id(parent_message_id)
+
             if not parent_message:
                 raise ValueError("Message parent introuvable")
             
@@ -976,6 +1069,7 @@ class CollaborationChat:
                 raise PermissionError("Non autorisé")
             
             # Créer l'ID du thread
+
             thread_id = f"thread_{parent_message_id}_{int(time.time())}"
             
             # Notifier la création du thread
@@ -987,17 +1081,20 @@ class CollaborationChat:
                     "created_by": user_id,
                     "timestamp": datetime.utcnow().isoformat()
                 })
+
             
             return thread_id
             
         except Exception as e:
             logger.error(f"Erreur lors de la création du thread: {e}")
+
             raise
     
     async def add_reaction(self, message_id: str, user_id: str, emoji: str):
         """Ajoute une réaction à un message"""
         try:
             message = await self._get_message_by_id(message_id)
+
             if not message:
                 raise ValueError("Message introuvable")
             
@@ -1025,9 +1122,11 @@ class CollaborationChat:
                     "emoji": emoji,
                     "timestamp": datetime.utcnow().isoformat()
                 })
+
             
         except Exception as e:
             logger.error(f"Erreur lors de l'ajout de réaction: {e}")
+
             raise
     
     async def _moderate_message(self, message: Message) -> Dict:
@@ -1046,6 +1145,7 @@ class CollaborationChat:
                     if word.lower() in message.content.lower():
                         moderation_result['approved'] = False
                         moderation_result['flags'].append(f"banned_word: {word}")
+
                         moderation_result['modified_content'] = message.content.replace(word, "*" * len(word))
         
         # Vérifier la longueur
@@ -1053,18 +1153,19 @@ class CollaborationChat:
             moderation_result['flags'].append("message_too_long")
         
         # Détection de spam (messages répétés)
-        # TODO: Implémenter la détection de spam
         
         return moderation_result
     
     async def _extract_mentions(self, content: str) -> List[str]:
         """Extrait les mentions du contenu"""
         import re
+
         mentions = re.findall(r'@(\w+)', content)
         return mentions
     
     async def _index_message_for_search(self, message: Message):
-        """Indexe le message pour la recherche"""
+        """
+        Indexe le message pour la recherche"""
         indexed_content = {
             'content': message.content.lower(),
             'sender_id': message.sender_id,
@@ -1077,16 +1178,20 @@ class CollaborationChat:
         self.search_index[message.id] = indexed_content
     
     def _extract_keywords(self, content: str) -> List[str]:
-        """Extrait les mots-clés du contenu"""
+        """
+        Extrait les mots-clés du contenu"""
         # Implémentation basique - peut être améliorée avec NLP
         import re
+
         words = re.findall(r'\b\w+\b', content.lower())
         # Filtrer les mots courts et courants
+
         keywords = [word for word in words if len(word) > 3]
         return list(set(keywords))  # Dédoublonner
     
     def _message_matches_search(self, indexed_content: Dict, criteria: Dict) -> bool:
-        """Vérifie si un message correspond aux critères de recherche"""
+        """
+        Vérifie si un message correspond aux critères de recherche"""
         query = criteria['query']
         
         # Recherche dans le contenu
@@ -1127,7 +1232,8 @@ class TeamMessaging:
     
     async def create_team_channel(self, team_id: str, channel_name: str, 
                                 creator_id: str, team_members: List[str]) -> str:
-        """Crée un canal d'équipe avec gestion automatique des membres"""
+        """
+        Crée un canal d'équipe avec gestion automatique des membres"""
         try:
             channel_data = {
                 'name': f"Team-{team_id}-{channel_name}",
@@ -1141,6 +1247,7 @@ class TeamMessaging:
                     'escalation_enabled': True
                 }
             }
+
             
             channel = await self.collaboration_chat.create_channel(channel_data, creator_id)
             
@@ -1149,11 +1256,13 @@ class TeamMessaging:
                 self.teams[team_id] = {'channels': [], 'members': set(team_members)}
             
             self.teams[team_id]['channels'].append(channel.id)
+
             
             return channel.id
             
         except Exception as e:
             logger.error(f"Erreur lors de la création du canal d'équipe: {e}")
+
             raise
     
     async def broadcast_to_team(self, team_id: str, message: str, sender_id: str,
@@ -1162,16 +1271,20 @@ class TeamMessaging:
         try:
             if team_id not in self.teams:
                 raise ValueError(f"Équipe {team_id} introuvable")
+
+
             
             team_info = self.teams[team_id]
             
             # Filtrer par rôles si spécifié
             if target_roles:
                 recipients = await self._get_team_members_by_roles(team_id, target_roles)
+
             else:
                 recipients = list(team_info['members'])
             
             # Créer le message de broadcast
+
             broadcast_message = {
                 'type': 'team_broadcast',
                 'team_id': team_id,
@@ -1192,11 +1305,14 @@ class TeamMessaging:
             # Notifications directes pour messages urgents
             if priority in ['high', 'urgent', 'critical']:
                 await self._send_priority_notifications(recipients, broadcast_message)
+
             
             logger.info(f"Broadcast envoyé à l'équipe {team_id}")
+
             
         except Exception as e:
             logger.error(f"Erreur lors du broadcast d'équipe: {e}")
+
             raise
     
     async def add_member_to_team(self, team_id: str, user_id: str, role: str = "member"):
@@ -1210,6 +1326,7 @@ class TeamMessaging:
             # Ajouter aux canaux d'équipe existants
             for channel_id in self.teams[team_id]['channels']:
                 channel = self.collaboration_chat.channels.get(channel_id)
+
                 if channel:
                     channel.participants.add(user_id)
                     
@@ -1218,16 +1335,20 @@ class TeamMessaging:
                         await self.collaboration_chat._update_channel_participants(channel)
             
             # Envoyer message de bienvenue
+
             welcome_message = f"👋 {user_id} a rejoint l'équipe {team_id}"
             for channel_id in self.teams[team_id]['channels']:
                 await self.collaboration_chat.send_message(
                     channel_id, "system", welcome_message, MessageType.SYSTEM
                 )
+
             
             logger.info(f"Membre {user_id} ajouté à l'équipe {team_id}")
+
             
         except Exception as e:
             logger.error(f"Erreur lors de l'ajout du membre: {e}")
+
             raise
 
 # ==========================================
@@ -1257,9 +1378,12 @@ class CommentEngine:
         
     async def add_comment(self, entity_id: str, entity_type: str, user_id: str,
                          content: str, parent_comment_id: Optional[str] = None) -> str:
-        """Ajoute un commentaire à une entité"""
+        """
+        Ajoute un commentaire à une entité"""
         try:
             comment_id = str(uuid.uuid4())
+
+
             
             comment = {
                 'id': comment_id,
@@ -1280,7 +1404,9 @@ class CommentEngine:
             comment['sentiment_score'] = await self._analyze_sentiment(content)
             
             # Modération automatique
+
             moderation_result = await self._moderate_comment(comment)
+
             comment['is_moderated'] = not moderation_result['approved']
             
             if moderation_result['approved']:
@@ -1291,7 +1417,9 @@ class CommentEngine:
                 if parent_comment_id:
                     if parent_comment_id in self.comments:
                         self.comments[parent_comment_id]['replies'].append(comment_id)
+
                     self.comment_threads[parent_comment_id].append(comment_id)
+
                 else:
                     self.comment_threads[entity_id].append(comment_id)
                 
@@ -1301,15 +1429,19 @@ class CommentEngine:
                 
                 # Notifications
                 await self._notify_comment_stakeholders(comment)
+
                 
                 logger.info(f"Commentaire ajouté: {comment_id}")
+
             else:
                 logger.warning(f"Commentaire modéré: {comment_id}")
+
             
             return comment_id
             
         except Exception as e:
             logger.error(f"Erreur lors de l'ajout du commentaire: {e}")
+
             raise
     
     async def vote_comment(self, comment_id: str, user_id: str, vote_type: str):
@@ -1317,20 +1449,25 @@ class CommentEngine:
         try:
             if comment_id not in self.comments:
                 raise ValueError("Commentaire introuvable")
+
             
             if vote_type not in ['up', 'down']:
                 raise ValueError("Type de vote invalide")
+
+
             
             comment = self.comments[comment_id]
             
             # Vérifier si l'utilisateur a déjà voté
             if comment_id not in self.voting_system:
                 self.voting_system[comment_id] = {'up': set(), 'down': set()}
+
             
             user_votes = self.voting_system[comment_id]
             
             # Retirer les votes précédents
             user_votes['up'].discard(user_id)
+
             user_votes['down'].discard(user_id)
             
             # Ajouter le nouveau vote
@@ -1338,22 +1475,28 @@ class CommentEngine:
             
             # Mettre à jour les compteurs
             comment['votes']['up'] = len(user_votes['up'])
+
             comment['votes']['down'] = len(user_votes['down'])
             
             # Persister
             if self.db_session:
                 await self._update_comment_votes(comment)
+
             
             logger.debug(f"Vote {vote_type} ajouté au commentaire {comment_id}")
+
             
         except Exception as e:
             logger.error(f"Erreur lors du vote: {e}")
+
             raise
     
     async def get_comments(self, entity_id: str, sort_by: str = "timestamp") -> List[Dict]:
         """Récupère les commentaires d'une entité"""
         try:
             comment_ids = self.comment_threads.get(entity_id, [])
+
+
             comments = []
             
             for comment_id in comment_ids:
@@ -1362,29 +1505,38 @@ class CommentEngine:
                     
                     # Charger les réponses
                     comment['replies'] = await self._load_comment_replies(comment_id)
+
                     comments.append(comment)
             
             # Trier selon le critère
             if sort_by == "votes":
                 comments.sort(key=lambda c: c['votes']['up'] - c['votes']['down'], reverse=True)
+
             elif sort_by == "timestamp":
                 comments.sort(key=lambda c: c['timestamp'], reverse=True)
+
             
             return comments
             
         except Exception as e:
             logger.error(f"Erreur lors de la récupération des commentaires: {e}")
+
             return []
     
     async def _analyze_sentiment(self, content: str) -> float:
         """Analyse le sentiment du contenu"""
         # Implémentation basique - peut être améliorée avec des modèles ML
         positive_words = ['good', 'great', 'excellent', 'amazing', 'love', 'like']
+
         negative_words = ['bad', 'terrible', 'hate', 'awful', 'horrible', 'dislike']
+
         
         content_lower = content.lower()
+
         positive_count = sum(1 for word in positive_words if word in content_lower)
+
         negative_count = sum(1 for word in negative_words if word in content_lower)
+
         
         if positive_count + negative_count == 0:
             return 0.0
@@ -1392,12 +1544,14 @@ class CommentEngine:
         return (positive_count - negative_count) / (positive_count + negative_count)
     
     async def _moderate_comment(self, comment: Dict) -> Dict:
-        """Modère un commentaire"""
+        """
+        Modère un commentaire"""
         moderation_result = {
             'approved': True,
             'reasons': [],
             'confidence': 1.0
         }
+
         
         content = comment['content'].lower()
         
@@ -1407,6 +1561,7 @@ class CommentEngine:
             moderation_result['reasons'].append('too_long')
         
         # Mots interdits
+
         banned_words = ['spam', 'scam', 'fake']  # Liste basique
         for word in banned_words:
             if word in content:
@@ -1417,6 +1572,7 @@ class CommentEngine:
         if comment['sentiment_score'] < -0.8:
             moderation_result['approved'] = False
             moderation_result['reasons'].append('negative_sentiment')
+
         
         return moderation_result
 
@@ -1477,5 +1633,349 @@ async def create_communication_hub(redis_url: Optional[str] = None,
         'comment_engine': comment_engine,
         'redis_client': redis_client
     }
+
+
+class CommunicationHub:
+    """
+    🎯 ORCHESTRATOR PRINCIPAL - Hub Communication Enterprise
+    =========================================================
+    
+    Classe centrale coordonnant TOUS les systèmes de communication:
+    - Activity Stream & Real-time Updates
+    - Collaboration Chat & Team Messaging
+    - Comment Engine & Feedback
+    - Notifications & Alerts
+    - File Sharing & Meetings
+    
+    Utilisé par OpenAI, AILeaderAgent et tous les composants nécessitant
+    communication unifiée entre agents IA, utilisateurs et systèmes.
+    """
+    
+    def __init__(
+        self,
+        redis_client=None,
+        db_session=None,
+        config: Optional[Dict[str, Any]] = None
+    ):
+        """
+        Initialise le hub communication avec tous les sous-systèmes.
+        
+        Args:
+            redis_client: Client Redis pour pub/sub temps réel
+            db_session: Session database pour persistence
+            config: Configuration optionnelle
+        """
+        self.config = config or {}
+        self.redis_client = redis_client
+        self.db_session = db_session
+        
+        # Initialiser tous les sous-systèmes
+        self.activity_stream = ActivityStream(redis_client, db_session)
+        self.real_time_updates = RealTimeUpdates(redis_client)
+        self.collaboration_chat = CollaborationChat(
+            db_session, 
+            redis_client, 
+            self.real_time_updates
+        )
+        self.team_messaging = TeamMessaging(self.collaboration_chat, db_session)
+        self.comment_engine = CommentEngine(db_session, redis_client)
+
+        
+        self._initialized = True
+        logger.info("✅ CommunicationHub initialisé avec tous les sous-systèmes")
+    
+    async def broadcast_activity(
+        self,
+        activity_type: str,
+        user_id: str,
+        data: Dict[str, Any],
+        channels: Optional[List[str]] = None
+    ) -> Dict[str, Any]:
+        """
+        Diffuse une activité à travers tous les canaux appropriés.
+        
+        Args:
+            activity_type: Type d'activité (message, comment, file_share, etc.)
+
+            user_id: ID utilisateur source
+            data: Données activité
+            channels: Canaux cibles optionnels
+            
+        Returns:
+            Résultat diffusion avec statuts par canal
+        """
+        results = {
+            'activity_type': activity_type,
+            'user_id': user_id,
+            'timestamp': datetime.utcnow().isoformat(),
+            'channels': {}
+        }
+        
+        try:
+            # 1. Enregistrer dans activity stream
+
+            activity = self.activity_stream.log_activity(
+                user_id=user_id,
+                activity_type=activity_type,
+                content=data.get('content', ''),
+                metadata=data
+            )
+
+            results['channels']['activity_stream'] = {
+                'status': 'success',
+                'activity_id': activity.get('activity_id')
+            }
+            
+            # 2. Diffuser via real-time updates
+            await self.real_time_updates.publish_update(
+                channel=f"activity:{activity_type}",
+                message={
+                    'type': activity_type,
+                    'user_id': user_id,
+                    'data': data
+                }
+            )
+
+            results['channels']['real_time'] = {'status': 'published'}
+            
+            # 3. Si message/comment, router vers chat/comment engine
+            if activity_type in ['message', 'chat']:
+                msg = await self.collaboration_chat.send_message(
+                    sender_id=user_id,
+                    content=data.get('content', ''),
+                    channel_id=data.get('channel_id'),
+                    metadata=data.get('metadata', {})
+                )
+
+                results['channels']['chat'] = {
+                    'status': 'sent',
+                    'message_id': msg.get('message_id')
+                }
+            
+            elif activity_type == 'comment':
+                comment = self.comment_engine.add_comment(
+                    user_id=user_id,
+                    target_id=data.get('target_id'),
+                    target_type=data.get('target_type', 'content'),
+                    content=data.get('content', ''),
+                    metadata=data.get('metadata', {})
+                )
+
+                results['channels']['comments'] = {
+                    'status': 'added',
+                    'comment_id': comment.get('comment_id')
+                }
+            
+            return results
+            
+        except Exception as e:
+            logger.error(f"❌ Erreur broadcast_activity: {e}")
+
+            results['error'] = str(e)
+
+            return results
+    
+    async def get_unified_feed(
+        self,
+        user_id: str,
+        feed_type: str = 'all',
+        limit: int = 50,
+        filters: Optional[Dict[str, Any]] = None
+    ) -> List[Dict[str, Any]]:
+        """
+        Récupère un feed unifié combinant toutes les sources.
+        
+        Args:
+            user_id: ID utilisateur
+            feed_type: Type feed ('all', 'messages', 'activities', 'comments')
+
+            limit: Nombre max items
+            filters: Filtres optionnels
+            
+        Returns:
+            Liste unifiée items feed avec métadonnées source
+        """
+        unified_feed = []
+
+        filters = filters or {}
+        
+        try:
+            # 1. Activities
+            if feed_type in ['all', 'activities']:
+                activities = self.activity_stream.get_user_activities(
+                    user_id=user_id,
+                    limit=limit // 3 if feed_type == 'all' else limit
+                )
+
+                for activity in activities:
+                    unified_feed.append({
+                        'source': 'activity_stream',
+                        'type': 'activity',
+                        'data': activity,
+                        'timestamp': activity.get('timestamp')
+                    })
+            
+            # 2. Messages
+            if feed_type in ['all', 'messages']:
+                messages = self.team_messaging.get_user_messages(
+                    user_id=user_id,
+                    limit=limit // 3 if feed_type == 'all' else limit
+                )
+
+                for msg in messages:
+                    unified_feed.append({
+                        'source': 'messaging',
+                        'type': 'message',
+                        'data': msg,
+                        'timestamp': msg.get('timestamp')
+                    })
+            
+            # 3. Comments
+            if feed_type in ['all', 'comments']:
+                comments = self.comment_engine.get_user_comments(
+                    user_id=user_id,
+                    limit=limit // 3 if feed_type == 'all' else limit
+                )
+
+                for comment in comments:
+                    unified_feed.append({
+                        'source': 'comments',
+                        'type': 'comment',
+                        'data': comment,
+                        'timestamp': comment.get('created_at')
+                    })
+            
+            # Trier par timestamp DESC
+            unified_feed.sort(
+                key=lambda x: x.get('timestamp', ''),
+                reverse=True
+            )
+
+            
+            return unified_feed[:limit]
+            
+        except Exception as e:
+            logger.error(f"❌ Erreur get_unified_feed: {e}")
+
+            return []
+    
+    async def subscribe_to_updates(
+        self,
+        user_id: str,
+        channels: List[str],
+        callback: Optional[Any] = None
+    ) -> Dict[str, Any]:
+        """
+        Souscrit aux mises à jour temps réel pour canaux spécifiques.
+        
+        Args:
+            user_id: ID utilisateur
+            channels: Liste canaux à suivre
+            callback: Fonction callback optionnelle
+            
+        Returns:
+            Confirmation souscription avec détails canaux
+        """
+        subscriptions = []
+        
+        for channel in channels:
+            try:
+                await self.real_time_updates.subscribe(
+                    channel=channel,
+                    callback=callback
+                )
+
+                subscriptions.append({
+                    'channel': channel,
+                    'status': 'subscribed'
+                })
+
+            except Exception as e:
+                subscriptions.append({
+                    'channel': channel,
+                    'status': 'failed',
+                    'error': str(e)
+                })
+
+        
+        return {
+            'user_id': user_id,
+            'subscriptions': subscriptions,
+            'timestamp': datetime.utcnow().isoformat()
+        }
+    
+    def get_communication_stats(
+        self,
+        user_id: Optional[str] = None,
+        time_range: Optional[str] = '24h'
+    ) -> Dict[str, Any]:
+        """
+        Statistiques communication globales ou par utilisateur.
+        
+        Args:
+            user_id: ID utilisateur optionnel (None = stats globales)
+
+            time_range: Période ('1h', '24h', '7d', '30d')
+
+            
+        Returns:
+            Statistiques détaillées tous canaux
+        """
+        stats = {
+            'time_range': time_range,
+            'timestamp': datetime.utcnow().isoformat(),
+            'channels': {}
+        }
+        
+        try:
+            # Stats activity stream
+            stats['channels']['activity_stream'] = {
+                'total_activities': len(self.activity_stream.get_user_activities(
+                    user_id=user_id, 
+                    limit=1000
+                )) if user_id else 0
+            }
+            
+            # Stats messaging
+            stats['channels']['messaging'] = {
+                'total_messages': len(self.team_messaging.get_user_messages(
+                    user_id=user_id,
+                    limit=1000
+                )) if user_id else 0
+            }
+            
+            # Stats comments
+            stats['channels']['comments'] = {
+                'total_comments': len(self.comment_engine.get_user_comments(
+                    user_id=user_id,
+                    limit=1000
+                )) if user_id else 0
+            }
+            
+            return stats
+            
+        except Exception as e:
+            logger.error(f"❌ Erreur get_communication_stats: {e}")
+
+            stats['error'] = str(e)
+
+            return stats
+    
+    def shutdown(self):
+        """Arrêt propre de tous les sous-systèmes."""
+        logger.info("🛑 Arrêt CommunicationHub...")
+
+        
+        if self.redis_client:
+            try:
+                self.redis_client.close()
+
+            except Exception as e:
+                logger.warning(f"Erreur fermeture Redis: {e}")
+
+        
+        self._initialized = False
+        logger.info("✅ CommunicationHub arrêté")
+
 
 # Fin du module communication_hub.py

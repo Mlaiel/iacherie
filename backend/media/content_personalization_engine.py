@@ -141,7 +141,8 @@ class PersonalizationConfig:
 
 @dataclass
 class UserProfile:
-    """User profile for personalization"""
+    """
+        User profile for personalization"""
     user_id: str
     demographics: Dict[str, Any] = field(default_factory=dict)
     preferences: Dict[str, float] = field(default_factory=dict)  # category -> preference score
@@ -156,7 +157,8 @@ class UserProfile:
 
 @dataclass
 class UserInteraction:
-    """User interaction with content"""
+    """
+        User interaction with content"""
     interaction_id: str
     user_id: str
     content_id: str
@@ -171,7 +173,8 @@ class UserInteraction:
 
 @dataclass
 class ContentItem:
-    """Content item for personalization"""
+    """
+        Content item for personalization"""
     content_id: str
     title: str
     description: str
@@ -203,12 +206,14 @@ class PersonalizationResult:
 
 
 class UserBehaviorAnalyzer:
-    """Analyzes user behavior patterns for personalization"""
+    """
+        Analyzes user behavior patterns for personalization"""
     
     def __init__(self, config: PersonalizationConfig):
         self.config = config
         self.user_profiles: Dict[str, UserProfile] = {}
         self.interaction_cache = defaultdict(list)
+
         
         logger.info("👤 User Behavior Analyzer initialized")
     
@@ -216,20 +221,26 @@ class UserBehaviorAnalyzer:
         """Analyze user behavior patterns"""
         try:
             profile = self.user_profiles.get(user_id)
+
             if not profile:
                 return {'error': f'User profile {user_id} not found'}
             
             # Analyze interaction patterns
+
             patterns = await self._analyze_interaction_patterns(profile)
             
             # Analyze content preferences
+
             preferences = await self._analyze_content_preferences(profile)
             
             # Analyze temporal patterns
+
             temporal_patterns = await self._analyze_temporal_patterns(profile)
             
             # Calculate engagement metrics
+
             engagement_metrics = await self._calculate_engagement_metrics(profile)
+
             
             return {
                 'user_id': user_id,
@@ -243,6 +254,7 @@ class UserBehaviorAnalyzer:
             
         except Exception as e:
             logger.error(f"User behavior analysis failed for {user_id}: {e}")
+
             return {'error': str(e)}
     
     async def update_user_profile(self, interaction: UserInteraction):
@@ -253,6 +265,8 @@ class UserBehaviorAnalyzer:
             # Get or create user profile
             if user_id not in self.user_profiles:
                 self.user_profiles[user_id] = UserProfile(user_id=user_id)
+
+
             
             profile = self.user_profiles[user_id]
             
@@ -271,8 +285,10 @@ class UserBehaviorAnalyzer:
             
             # Update temporal patterns
             await self._update_temporal_patterns(profile, interaction)
+
             
             profile.updated_at = datetime.now(timezone.utc)
+
             profile.last_active = interaction.timestamp
             
         except Exception as e:
@@ -282,12 +298,17 @@ class UserBehaviorAnalyzer:
         """Analyze user interaction patterns"""
         if not profile.interaction_history:
             return {}
+
         
         interactions = profile.interaction_history
         
         # Interaction type distribution
+
         type_counts = Counter(i.interaction_type.value for i in interactions)
+
         total_interactions = len(interactions)
+
+
         
         type_distribution = {
             itype: count / total_interactions 
@@ -295,7 +316,9 @@ class UserBehaviorAnalyzer:
         }
         
         # Average session duration
+
         session_durations = [i.duration for i in interactions if i.duration]
+
         avg_duration = statistics.mean(session_durations) if session_durations else 0
         
         # Interaction frequency
@@ -303,7 +326,10 @@ class UserBehaviorAnalyzer:
             time_diffs = []
             for i in range(1, len(interactions)):
                 diff = (interactions[i].timestamp - interactions[i-1].timestamp).total_seconds()
+
                 time_diffs.append(diff)
+
+
             
             avg_frequency = statistics.mean(time_diffs) if time_diffs else 0
         else:
@@ -318,34 +344,48 @@ class UserBehaviorAnalyzer:
         }
     
     async def _analyze_content_preferences(self, profile: UserProfile) -> Dict[str, float]:
-        """Analyze user content preferences"""
+        """
+        Analyze user content preferences"""
         if not profile.interaction_history:
             return {}
         
         # Weight interactions by type and recency
+
         preference_scores = defaultdict(float)
+
         
         for interaction in profile.interaction_history:
             # Calculate weight based on interaction type
+
             weight = self._get_interaction_weight(interaction.interaction_type)
             
             # Apply recency decay
+
             days_ago = (datetime.now(timezone.utc) - interaction.timestamp).days
+
             recency_factor = math.exp(-days_ago * self.config.interaction_decay_rate)
             
             # Add duration factor
+
             duration_factor = 1.0
             if interaction.duration:
                 # Normalize duration (assuming 0-300 seconds is typical)
+
+
                 duration_factor = min(interaction.duration / 300, 2.0)
+
+
             
             final_weight = weight * recency_factor * duration_factor
             
             # Update preference scores (would use actual content category)
+
             preference_scores['general'] += final_weight
         
         # Normalize scores
+
         max_score = max(preference_scores.values()) if preference_scores else 1
+
         normalized_preferences = {
             category: score / max_score 
             for category, score in preference_scores.items()
@@ -354,23 +394,31 @@ class UserBehaviorAnalyzer:
         return normalized_preferences
     
     async def _analyze_temporal_patterns(self, profile: UserProfile) -> Dict[str, Any]:
-        """Analyze user temporal activity patterns"""
+        """
+        Analyze user temporal activity patterns"""
         if not profile.interaction_history:
             return {}
         
         # Hour of day distribution
+
         hour_counts = defaultdict(int)
+
         day_counts = defaultdict(int)
+
         
         for interaction in profile.interaction_history:
             hour = interaction.timestamp.hour
+
             day = interaction.timestamp.strftime('%A')
+
             
             hour_counts[hour] += 1
             day_counts[day] += 1
         
         # Find peak activity times
+
         peak_hour = max(hour_counts, key=hour_counts.get) if hour_counts else 12
+
         peak_day = max(day_counts, key=day_counts.get) if day_counts else 'Monday'
         
         return {
@@ -382,34 +430,46 @@ class UserBehaviorAnalyzer:
         }
     
     async def _calculate_engagement_metrics(self, profile: UserProfile) -> Dict[str, float]:
-        """Calculate user engagement metrics"""
+        """
+        Calculate user engagement metrics"""
         if not profile.interaction_history:
             return {'engagement_score': 0.0}
+
         
         interactions = profile.interaction_history
         
         # Calculate various engagement indicators
+
         positive_interactions = len([
             i for i in interactions 
             if i.interaction_type in [InteractionType.LIKE, InteractionType.SHARE, InteractionType.BOOKMARK]
         ])
+
+
         
         negative_interactions = len([
             i for i in interactions 
             if i.interaction_type in [InteractionType.DISLIKE, InteractionType.SKIP, InteractionType.REPORT]
         ])
+
+
         
         total_interactions = len(interactions)
         
         # Engagement rate
+
         engagement_rate = positive_interactions / total_interactions if total_interactions > 0 else 0
         
         # Activity level (interactions per day)
+
         days_active = (datetime.now(timezone.utc) - profile.created_at).days or 1
+
         activity_level = total_interactions / days_active
         
         # Overall engagement score
+
         engagement_score = (engagement_rate * 0.6 + min(activity_level / 10, 1.0) * 0.4)
+
         
         return {
             'engagement_score': engagement_score,
@@ -420,7 +480,8 @@ class UserBehaviorAnalyzer:
         }
     
     def _get_interaction_weight(self, interaction_type: InteractionType) -> float:
-        """Get weight for interaction type"""
+        """
+        Get weight for interaction type"""
         weights = {
             InteractionType.VIEW: 1.0,
             InteractionType.LIKE: 2.0,
@@ -435,28 +496,36 @@ class UserBehaviorAnalyzer:
         return weights.get(interaction_type, 1.0)
     
     def _calculate_activity_consistency(self, interactions: List[UserInteraction]) -> float:
-        """Calculate how consistent user activity is over time"""
+        """
+        Calculate how consistent user activity is over time"""
         if len(interactions) < 2:
             return 0.0
         
         # Calculate daily interaction counts
+
         daily_counts = defaultdict(int)
         for interaction in interactions:
             date_key = interaction.timestamp.date()
+
             daily_counts[date_key] += 1
         
         # Calculate consistency (inverse of variance)
+
         counts = list(daily_counts.values())
         if len(counts) < 2:
             return 1.0
+
         
         variance = statistics.variance(counts)
+
         consistency = 1.0 / (1.0 + variance)
+
         
         return consistency
     
     def _calculate_profile_completeness(self, profile: UserProfile) -> float:
-        """Calculate how complete a user profile is"""
+        """
+        Calculate how complete a user profile is"""
         completeness_factors = [
             1.0 if profile.demographics else 0.0,
             1.0 if profile.preferences else 0.0,
@@ -469,7 +538,8 @@ class UserBehaviorAnalyzer:
 
 
 class ContentRecommendationEngine:
-    """Content recommendation engine using various algorithms"""
+    """
+        Content recommendation engine using various algorithms"""
     
     def __init__(self, config: PersonalizationConfig):
         self.config = config
@@ -493,6 +563,7 @@ class ContentRecommendationEngine:
             recommendation_count = count or self.config.recommendation_count
             
             # Check cache first
+
             cache_key = f"{user_id}_{personalization_type.value}_{scope.value}_{recommendation_count}"
             if self.config.cache_recommendations and cache_key in self.recommendation_cache:
                 cached_result = self.recommendation_cache[cache_key]
@@ -502,24 +573,35 @@ class ContentRecommendationEngine:
             # Generate recommendations based on type
             if personalization_type == PersonalizationType.CONTENT_BASED:
                 recommendations = await self._content_based_recommendations(user_profile, recommendation_count)
+
             elif personalization_type == PersonalizationType.COLLABORATIVE:
                 recommendations = await self._collaborative_recommendations(user_profile, recommendation_count)
+
             elif personalization_type == PersonalizationType.BEHAVIORAL:
                 recommendations = await self._behavioral_recommendations(user_profile, recommendation_count)
+
             elif personalization_type == PersonalizationType.HYBRID:
                 recommendations = await self._hybrid_recommendations(user_profile, recommendation_count)
+
             else:
                 recommendations = await self._fallback_recommendations(recommendation_count)
             
             # Calculate quality metrics
+
             confidence_score = self._calculate_confidence_score(recommendations, user_profile)
+
+
             diversity_score = self._calculate_diversity_score(recommendations)
+
+
             freshness_score = self._calculate_freshness_score(recommendations)
             
             # Generate explanation
+
             explanation = self._generate_explanation(recommendations, personalization_type, user_profile)
             
             # Create result
+
             result = PersonalizationResult(
                 user_id=user_id,
                 recommendations=recommendations,
@@ -539,7 +621,9 @@ class ContentRecommendationEngine:
         except Exception as e:
             logger.error(f"Recommendation generation failed for user {user_id}: {e}")
             # Return fallback recommendations
+
             fallback_recs = await self._fallback_recommendations(recommendation_count)
+
             return PersonalizationResult(
                 user_id=user_id,
                 recommendations=fallback_recs,
@@ -559,6 +643,7 @@ class ContentRecommendationEngine:
         recommendations = []
         
         # Get user's interaction history
+
         interacted_content = {i.content_id for i in user_profile.interaction_history}
         
         # Calculate content similarities if sklearn available
@@ -568,9 +653,11 @@ class ContentRecommendationEngine:
             )
         else:
             # Fallback to simple content-based matching
+
             recommendations = await self._simple_content_recommendations(
                 user_profile, interacted_content, count
             )
+
         
         return recommendations
     
@@ -579,14 +666,18 @@ class ContentRecommendationEngine:
         user_profile: UserProfile, 
         count: int
     ) -> List[Dict[str, Any]]:
-        """Generate collaborative filtering recommendations"""
+        """
+        Generate collaborative filtering recommendations"""
         recommendations = []
         
         # Find similar users
+
         similar_users = await self._find_similar_users(user_profile)
         
         # Get content liked by similar users
+
         content_scores = defaultdict(float)
+
         interacted_content = {i.content_id for i in user_profile.interaction_history}
         
         for similar_user_id, similarity_score in similar_users[:10]:  # Top 10 similar users
@@ -597,10 +688,13 @@ class ContentRecommendationEngine:
                     content_scores[content_id] += similarity_score * content_item.popularity_score
         
         # Sort by score and select top recommendations
+
         sorted_content = sorted(content_scores.items(), key=lambda x: x[1], reverse=True)
+
         
         for content_id, score in sorted_content[:count]:
             content_item = self.content_catalog.get(content_id)
+
             if content_item:
                 recommendations.append({
                     'content_id': content_id,
@@ -609,6 +703,7 @@ class ContentRecommendationEngine:
                     'score': score,
                     'reason': 'collaborative_filtering'
                 })
+
         
         return recommendations
     
@@ -617,19 +712,24 @@ class ContentRecommendationEngine:
         user_profile: UserProfile, 
         count: int
     ) -> List[Dict[str, Any]]:
-        """Generate behavior-based recommendations"""
+        """
+        Generate behavior-based recommendations"""
         recommendations = []
         
         # Analyze user behavior patterns
+
         behavior_patterns = await self._analyze_behavior_patterns(user_profile)
         
         # Recommend content based on patterns
+
         interacted_content = {i.content_id for i in user_profile.interaction_history}
         
         for content_id, content_item in self.content_catalog.items():
             if content_id not in interacted_content and len(recommendations) < count:
                 # Score based on behavior patterns
+
                 score = self._calculate_behavioral_score(content_item, behavior_patterns)
+
                 
                 if score > 0.3:  # Threshold for inclusion
                     recommendations.append({
@@ -642,6 +742,7 @@ class ContentRecommendationEngine:
         
         # Sort by score
         recommendations.sort(key=lambda x: x['score'], reverse=True)
+
         
         return recommendations[:count]
     
@@ -650,13 +751,18 @@ class ContentRecommendationEngine:
         user_profile: UserProfile, 
         count: int
     ) -> List[Dict[str, Any]]:
-        """Generate hybrid recommendations combining multiple approaches"""
+        """
+        Generate hybrid recommendations combining multiple approaches"""
         # Get recommendations from different approaches
+
         content_based = await self._content_based_recommendations(user_profile, count // 2)
+
         collaborative = await self._collaborative_recommendations(user_profile, count // 2)
+
         behavioral = await self._behavioral_recommendations(user_profile, count // 2)
         
         # Combine and weight recommendations
+
         all_recommendations = {}
         
         # Weight content-based recommendations
@@ -675,11 +781,15 @@ class ContentRecommendationEngine:
             all_recommendations[content_id] = all_recommendations.get(content_id, 0) + rec['score'] * 0.2
         
         # Sort and format final recommendations
+
         sorted_recommendations = sorted(all_recommendations.items(), key=lambda x: x[1], reverse=True)
+
+
         
         final_recommendations = []
         for content_id, score in sorted_recommendations[:count]:
             content_item = self.content_catalog.get(content_id)
+
             if content_item:
                 final_recommendations.append({
                     'content_id': content_id,
@@ -688,19 +798,23 @@ class ContentRecommendationEngine:
                     'score': score,
                     'reason': 'hybrid_approach'
                 })
+
         
         return final_recommendations
     
     async def _fallback_recommendations(self, count: int) -> List[Dict[str, Any]]:
-        """Generate fallback recommendations when personalization fails"""
+        """
+        Generate fallback recommendations when personalization fails"""
         recommendations = []
         
         # Sort content by popularity and quality
+
         sorted_content = sorted(
             self.content_catalog.items(),
             key=lambda x: x[1].popularity_score * x[1].quality_score,
             reverse=True
         )
+
         
         for content_id, content_item in sorted_content[:count]:
             recommendations.append({
@@ -710,6 +824,7 @@ class ContentRecommendationEngine:
                 'score': content_item.popularity_score,
                 'reason': 'popular_content'
             })
+
         
         return recommendations
     
@@ -719,7 +834,8 @@ class ContentRecommendationEngine:
         interacted_content: Set[str], 
         count: int
     ) -> List[Dict[str, Any]]:
-        """Generate ML-based content recommendations"""
+        """
+        Generate ML-based content recommendations"""
         recommendations = []
         
         # Would implement TF-IDF and cosine similarity here
@@ -732,23 +848,28 @@ class ContentRecommendationEngine:
         interacted_content: Set[str], 
         count: int
     ) -> List[Dict[str, Any]]:
-        """Generate simple content-based recommendations"""
+        """
+        Generate simple content-based recommendations"""
         recommendations = []
         
         # Get user preferences
+
         user_preferences = user_profile.preferences
         
         for content_id, content_item in self.content_catalog.items():
             if content_id not in interacted_content and len(recommendations) < count:
                 # Calculate preference score
+
                 preference_score = user_preferences.get(content_item.category.value, 0.5)
                 
                 # Factor in content quality and popularity
+
                 final_score = (
                     preference_score * 0.5 +
                     content_item.quality_score * 0.3 +
                     content_item.popularity_score * 0.2
                 )
+
                 
                 recommendations.append({
                     'content_id': content_id,
@@ -760,20 +881,24 @@ class ContentRecommendationEngine:
         
         # Sort by score
         recommendations.sort(key=lambda x: x['score'], reverse=True)
+
         
         return recommendations[:count]
     
     async def _find_similar_users(self, user_profile: UserProfile) -> List[Tuple[str, float]]:
-        """Find users similar to the given user profile"""
+        """
+        Find users similar to the given user profile"""
         # Simplified similarity calculation
         # In production, would use sophisticated user similarity algorithms
+
         similar_users = []
         
         # For now, return empty list (would implement actual similarity calculation)
         return similar_users
     
     async def _analyze_behavior_patterns(self, user_profile: UserProfile) -> Dict[str, Any]:
-        """Analyze user behavior patterns"""
+        """
+        Analyze user behavior patterns"""
         patterns = {
             'preferred_time': 'evening',  # Would analyze actual patterns
             'session_length': 'medium',
@@ -788,8 +913,10 @@ class ContentRecommendationEngine:
         content_item: ContentItem, 
         behavior_patterns: Dict[str, Any]
     ) -> float:
-        """Calculate behavioral compatibility score"""
+        """
+        Calculate behavioral compatibility score"""
         # Simplified behavioral scoring
+
         base_score = content_item.quality_score * content_item.popularity_score
         
         # Apply behavioral modifiers (simplified)
@@ -803,36 +930,49 @@ class ContentRecommendationEngine:
         recommendations: List[Dict[str, Any]], 
         user_profile: UserProfile
     ) -> float:
-        """Calculate confidence in recommendations"""
+        """
+        Calculate confidence in recommendations"""
         if not recommendations:
             return 0.0
         
         # Base confidence on user profile completeness
+
         profile_completeness = len(user_profile.interaction_history) / self.config.max_user_history_items
+
         profile_completeness = min(profile_completeness, 1.0)
         
         # Factor in recommendation quality
+
         avg_score = sum(rec.get('score', 0) for rec in recommendations) / len(recommendations)
+
+
         
         confidence = (profile_completeness * 0.7 + avg_score * 0.3)
+
         
         return confidence
     
     def _calculate_diversity_score(self, recommendations: List[Dict[str, Any]]) -> float:
-        """Calculate diversity in recommendations"""
+        """
+        Calculate diversity in recommendations"""
         if not recommendations:
             return 0.0
         
         # Count unique categories
+
         categories = set(rec.get('category') for rec in recommendations)
+
         max_possible_categories = len(ContentCategory)
+
+
         
         diversity = len(categories) / max_possible_categories
         
         return diversity
     
     def _calculate_freshness_score(self, recommendations: List[Dict[str, Any]]) -> float:
-        """Calculate freshness of recommendations"""
+        """
+        Calculate freshness of recommendations"""
         if not recommendations:
             return 0.0
         
@@ -846,7 +986,8 @@ class ContentRecommendationEngine:
         personalization_type: PersonalizationType,
         user_profile: UserProfile
     ) -> Dict[str, Any]:
-        """Generate explanation for recommendations"""
+        """
+        Generate explanation for recommendations"""
         explanation = {
             'method': personalization_type.value,
             'factors': [],
@@ -873,7 +1014,8 @@ class ContentPersonalizationEngine:
     """Main content personalization engine orchestrating all components"""
     
     def __init__(self, config: Optional[PersonalizationConfig] = None):
-        """Initialize content personalization engine"""
+        """
+        Initialize content personalization engine"""
         self.config = config or PersonalizationConfig()
         
         # Initialize component engines
@@ -920,11 +1062,13 @@ class ContentPersonalizationEngine:
             # Real-time personalization updates
             if self.config.real_time_updates:
                 await self._invalidate_user_cache(user_id)
+
             
             return True
             
         except Exception as e:
             logger.error(f"Failed to record user interaction: {e}")
+
             return False
     
     async def get_personalized_recommendations(
@@ -937,19 +1081,25 @@ class ContentPersonalizationEngine:
         """Get personalized content recommendations for user"""
         try:
             # Get user profile
+
             user_profile = self.behavior_analyzer.user_profiles.get(user_id)
+
             
             if not user_profile:
                 # Create new user profile
+
                 user_profile = UserProfile(user_id=user_id)
+
                 self.behavior_analyzer.user_profiles[user_id] = user_profile
             
             # Check if user has enough interactions for personalization
             if len(user_profile.interaction_history) < self.config.min_interactions_for_personalization:
                 # Use fallback recommendations for new users
+
                 personalization_type = PersonalizationType.CONTENT_BASED
             
             # Generate recommendations
+
             result = await self.recommendation_engine.generate_recommendations(
                 user_id=user_id,
                 user_profile=user_profile,
@@ -961,13 +1111,16 @@ class ContentPersonalizationEngine:
             # Update metrics
             self.personalization_metrics['total_recommendations'] += 1
             self._update_average_metrics(result)
+
             
             return result
             
         except Exception as e:
             logger.error(f"Failed to get personalized recommendations for user {user_id}: {e}")
             # Return fallback recommendations
+
             fallback_recs = await self.recommendation_engine._fallback_recommendations(count or self.config.recommendation_count)
+
             return PersonalizationResult(
                 user_id=user_id,
                 recommendations=fallback_recs,
@@ -984,10 +1137,13 @@ class ContentPersonalizationEngine:
             self.recommendation_engine.content_catalog[content_item.content_id] = content_item
             
             # Extract features for ML (if available)
+
             if HAS_SKLEARN:
                 await self._extract_content_features(content_item)
+
             
             logger.info(f"Added content item {content_item.content_id} to catalog")
+
             
         except Exception as e:
             logger.error(f"Failed to add content item: {e}")
@@ -996,10 +1152,14 @@ class ContentPersonalizationEngine:
         """Get comprehensive user insights for personalization"""
         try:
             # Get behavior analysis
+
             behavior_analysis = await self.behavior_analyzer.analyze_user_behavior(user_id)
             
             # Get recent recommendations
+
             user_profile = self.behavior_analyzer.user_profiles.get(user_id)
+
+
             recent_recommendations = None
             
             if user_profile:
@@ -1008,6 +1168,7 @@ class ContentPersonalizationEngine:
                     user_profile=user_profile,
                     count=5
                 )
+
             
             return {
                 'user_id': user_id,
@@ -1027,21 +1188,29 @@ class ContentPersonalizationEngine:
             
         except Exception as e:
             logger.error(f"Failed to get user insights: {e}")
+
             return {'error': str(e)}
     
     async def get_personalization_analytics(self) -> Dict[str, Any]:
         """Get personalization system analytics"""
         try:
             total_users = len(self.behavior_analyzer.user_profiles)
+
+
             active_users = len([
                 profile for profile in self.behavior_analyzer.user_profiles.values()
+
                 if (datetime.now(timezone.utc) - profile.last_active).days <= 7
             ])
+
+
             
             personalized_users = len([
                 profile for profile in self.behavior_analyzer.user_profiles.values()
+
                 if len(profile.interaction_history) >= self.config.min_interactions_for_personalization
             ])
+
             
             return {
                 'system_metrics': self.personalization_metrics,
@@ -1065,12 +1234,14 @@ class ContentPersonalizationEngine:
             
         except Exception as e:
             logger.error(f"Failed to get personalization analytics: {e}")
+
             return {'error': str(e)}
     
     async def _extract_content_features(self, content_item: ContentItem):
         """Extract features from content for ML algorithms"""
         # Would implement feature extraction here
         # For now, create basic features
+
         features = {
             'category_numeric': hash(content_item.category.value) % 100,
             'title_length': len(content_item.title),
@@ -1083,10 +1254,13 @@ class ContentPersonalizationEngine:
         self.recommendation_engine.content_features[content_item.content_id] = features
     
     async def _invalidate_user_cache(self, user_id: str):
-        """Invalidate cache for specific user"""
+        """
+        Invalidate cache for specific user"""
         # Remove cached recommendations for user
+
         keys_to_remove = [
             key for key in self.recommendation_engine.recommendation_cache.keys()
+
             if key.startswith(user_id)
         ]
         
@@ -1094,16 +1268,21 @@ class ContentPersonalizationEngine:
             del self.recommendation_engine.recommendation_cache[key]
     
     def _update_average_metrics(self, result: PersonalizationResult):
-        """Update running average metrics"""
+        """
+        Update running average metrics"""
         total_recs = self.personalization_metrics['total_recommendations']
         
         # Update average confidence
+
         current_avg_confidence = self.personalization_metrics['average_confidence']
+
         new_avg_confidence = ((current_avg_confidence * (total_recs - 1)) + result.confidence_score) / total_recs
         self.personalization_metrics['average_confidence'] = new_avg_confidence
         
         # Update average diversity
+
         current_avg_diversity = self.personalization_metrics['average_diversity']
+
         new_avg_diversity = ((current_avg_diversity * (total_recs - 1)) + result.diversity_score) / total_recs
         self.personalization_metrics['average_diversity'] = new_avg_diversity
 

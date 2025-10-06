@@ -26,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(Enum):
-    """Types of creators supported by the platform"""
+    """
+        Types of creators supported by the platform"""
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -181,17 +182,21 @@ class CreatorPerformanceIntelligence:
         """
         try:
             # Collect raw performance data
+
             raw_data = await self._collect_creator_data(creator_id, timeframe)
             
             # Analyze by content format
+
             format_performance = {}
             for content_format in ContentFormat:
                 format_data = await self._analyze_format_performance(
                     creator_id, content_format, raw_data
                 )
+
                 format_performance[content_format.value] = format_data
             
             # Calculate overall performance metrics
+
             metrics = await self._calculate_performance_metrics(
                 creator_id, creator_type, format_performance, raw_data
             )
@@ -208,6 +213,7 @@ class CreatorPerformanceIntelligence:
                 self.performance_history[creator_id] = self.performance_history[creator_id][-30:]
             
             logger.info(f"Creator performance analysis completed for {creator_id}")
+
             return metrics
             
         except Exception as e:
@@ -229,32 +235,44 @@ class CreatorPerformanceIntelligence:
         """
         try:
             # Get creator performance history
+
             performance_history = self.performance_history.get(creator_id, [])
+
+
             current_metrics = self.performance_cache.get(creator_id)
+
             
             if not current_metrics:
                 logger.warning(f"No performance metrics found for creator {creator_id}")
+
                 return CreatorIntelligenceInsights(creator_id=creator_id)
             
             # Analyze performance trends
+
             trends = await self._analyze_performance_trends(performance_history)
             
             # Generate content optimization insights
+
             content_insights = await self._analyze_content_optimization(current_metrics, performance_history)
             
             # Analyze audience patterns
+
             audience_insights = await self._analyze_audience_patterns(creator_id, current_metrics)
             
             # Generate revenue optimization suggestions
+
             revenue_insights = await self._analyze_revenue_optimization(current_metrics, performance_history)
             
             # Analyze collaboration opportunities
+
             collaboration_insights = await self._analyze_collaboration_opportunities(creator_id, current_metrics)
             
             # Assess market position
+
             market_insights = await self._analyze_market_position(creator_id, current_metrics)
             
             # Create comprehensive intelligence insights
+
             intelligence = CreatorIntelligenceInsights(
                 creator_id=creator_id,
                 performance_trend=trends.get("overall_trend", "stable"),
@@ -276,10 +294,12 @@ class CreatorPerformanceIntelligence:
             self.intelligence_cache[creator_id] = intelligence
             
             logger.info(f"Creator intelligence generated for {creator_id}")
+
             return intelligence
             
         except Exception as e:
             logger.error(f"Error generating creator intelligence for {creator_id}: {e}")
+
             return CreatorIntelligenceInsights(creator_id=creator_id)
     
     async def get_creator_performance_dashboard(self, creator_id: str) -> Dict[str, Any]:
@@ -288,20 +308,30 @@ class CreatorPerformanceIntelligence:
         """
         try:
             current_metrics = self.performance_cache.get(creator_id)
+
+
             intelligence = self.intelligence_cache.get(creator_id)
+
+
             performance_history = self.performance_history.get(creator_id, [])
+
             
             if not current_metrics:
                 return {"error": "No performance data available"}
             
             # Calculate performance scores
+
             performance_scores = self._calculate_performance_scores(current_metrics)
             
             # Generate trend data for charts
+
             trend_data = self._generate_trend_data(performance_history)
             
             # Create optimization recommendations
+
             recommendations = await self._generate_optimization_recommendations(current_metrics, intelligence)
+
+
             
             dashboard_data = {
                 "creator_id": creator_id,
@@ -363,6 +393,7 @@ class CreatorPerformanceIntelligence:
             
         except Exception as e:
             logger.error(f"Error generating dashboard for creator {creator_id}: {e}")
+
             return {"error": str(e)}
     
     # Helper methods for data collection and analysis
@@ -393,6 +424,7 @@ class CreatorPerformanceIntelligence:
     ) -> Dict[str, Any]:
         """Analyze performance by content format"""
         # Format-specific analysis logic
+
         format_weights = {
             ContentFormat.VIDEO: 0.3,
             ContentFormat.IMAGE: 0.25,
@@ -400,8 +432,10 @@ class CreatorPerformanceIntelligence:
             ContentFormat.TEXT: 0.15,
             ContentFormat.LIVE_STREAM: 0.1
         }
+
         
         weight = format_weights.get(content_format, 0.1)
+
         
         return {
             "performance_score": min(1.0, raw_data.get("views", 0) * weight / 10000),
@@ -419,35 +453,51 @@ class CreatorPerformanceIntelligence:
         """Calculate comprehensive performance metrics"""
         
         total_views = raw_data.get("views", 0)
+
         total_likes = raw_data.get("likes", 0)
+
         total_shares = raw_data.get("shares", 0)
+
         total_comments = raw_data.get("comments", 0)
+
         total_followers = raw_data.get("followers", 1)  # Avoid division by zero
         
         # Calculate engagement rate
+
         total_engagement = total_likes + total_shares + total_comments
+
         engagement_rate = total_engagement / max(total_views, 1)
         
         # Calculate viral coefficient
+
         viral_coefficient = total_shares / max(total_views / 1000, 1)
         
         # Calculate quality score based on engagement patterns
+
         quality_score = min(1.0, (engagement_rate * 0.7) + (viral_coefficient * 0.3))
         
         # Calculate collaboration score (based on shares and network growth)
+
         collaboration_score = min(1.0, total_shares / max(total_followers / 100, 1))
         
         # Revenue calculations
+
         total_revenue = Decimal(str(raw_data.get("revenue", 0)))
+
         revenue_per_view = total_revenue / max(total_views, 1) if total_views > 0 else Decimal('0')
+
         monetization_rate = float(total_revenue) / max(total_views / 1000, 1) if total_views > 0 else 0
         
         # Growth calculations (simulated - would come from historical data)
+
         follower_growth_rate = 0.025  # 2.5% growth
+
         content_growth_rate = 0.035   # 3.5% content growth
+
         audience_retention_rate = 0.78  # 78% retention
         
         # Platform performance analysis
+
         platform_performance = {}
         for platform, data in raw_data.get("platforms", {}).items():
             platform_performance[platform] = {
@@ -458,10 +508,13 @@ class CreatorPerformanceIntelligence:
             }
         
         # AI optimization metrics (simulated)
+
         ai_optimization_score = min(1.0, quality_score * 0.8 + engagement_rate * 0.2)
+
         content_enhancement_impact = min(1.0, quality_score * 1.2)
         
         # Generate optimization suggestions
+
         optimization_suggestions = []
         if engagement_rate < self.analytics_config["engagement_threshold"]:
             optimization_suggestions.append("Improve content engagement through interactive elements")
@@ -469,11 +522,13 @@ class CreatorPerformanceIntelligence:
             optimization_suggestions.append("Optimize content for viral sharing potential")
         if quality_score < self.analytics_config["quality_threshold"]:
             optimization_suggestions.append("Enhance content quality through AI optimization")
+
         
         return CreatorPerformanceMetrics(
             creator_id=creator_id,
             creator_type=creator_type,
             content_format=ContentFormat.VIDEO,  # Primary format for analysis
+
             total_views=total_views,
             total_likes=total_likes,
             total_shares=total_shares,
@@ -481,6 +536,7 @@ class CreatorPerformanceIntelligence:
             engagement_rate=engagement_rate,
             viral_coefficient=viral_coefficient,
             reach_score=min(1.0, total_views / 50000),  # Normalized reach score
+
             quality_score=quality_score,
             collaboration_score=collaboration_score,
             total_revenue=total_revenue,
@@ -502,14 +558,19 @@ class CreatorPerformanceIntelligence:
         
         if metrics.engagement_rate < 0.03:  # Low engagement
             metrics.optimization_suggestions.append("Consider posting during peak audience hours")
+
             metrics.optimization_suggestions.append("Experiment with interactive content formats")
+
         
         if metrics.viral_coefficient > 2.0:  # High viral potential
             metrics.optimization_suggestions.append("Leverage viral content patterns in future posts")
+
             metrics.optimization_suggestions.append("Consider collaboration opportunities to amplify reach")
+
         
         if metrics.monetization_rate < 0.001:  # Low monetization
             metrics.optimization_suggestions.append("Explore additional monetization strategies")
+
             metrics.optimization_suggestions.append("Optimize content for revenue generation")
     
     def _calculate_performance_scores(self, metrics: CreatorPerformanceMetrics) -> Dict[str, float]:
@@ -529,6 +590,7 @@ class CreatorPerformanceIntelligence:
         """Generate trend data for charts from performance history"""
         if not performance_history:
             return {}
+
         
         trend_data = {
             "timestamps": [],
@@ -540,10 +602,15 @@ class CreatorPerformanceIntelligence:
         
         for metrics in performance_history[-14:]:  # Last 14 data points
             trend_data["timestamps"].append(metrics.timestamp.isoformat())
+
             trend_data["views"].append(metrics.total_views)
+
             trend_data["engagement_rate"].append(round(metrics.engagement_rate * 100, 2))
+
             trend_data["revenue"].append(float(metrics.total_revenue))
+
             trend_data["quality_score"].append(round(metrics.quality_score * 100, 2))
+
         
         return trend_data
     
@@ -564,6 +631,7 @@ class CreatorPerformanceIntelligence:
                 "description": "Your engagement rate is below optimal. Try adding questions, polls, or calls-to-action.",
                 "action": "Create interactive content"
             })
+
         
         if metrics.viral_coefficient < 1.0:
             recommendations.append({
@@ -573,6 +641,7 @@ class CreatorPerformanceIntelligence:
                 "description": "Content sharing could be improved. Consider trending topics and shareable formats.",
                 "action": "Optimize for sharing"
             })
+
         
         if float(metrics.revenue_per_view) < 0.001:
             recommendations.append({
@@ -593,6 +662,7 @@ class CreatorPerformanceIntelligence:
                     "description": "Your performance trend is declining. Consider refreshing your content strategy.",
                     "action": "Analyze and adjust content approach"
                 })
+
         
         return recommendations
     
@@ -604,12 +674,18 @@ class CreatorPerformanceIntelligence:
             return {"overall_trend": "insufficient_data"}
         
         # Calculate trend based on recent performance
+
         recent_scores = [p.quality_score for p in performance_history[-5:]]
+
         older_scores = [p.quality_score for p in performance_history[-10:-5]] if len(performance_history) >= 10 else []
         
         if older_scores:
             recent_avg = statistics.mean(recent_scores)
+
+
             older_avg = statistics.mean(older_scores)
+
+
             trend_change = (recent_avg - older_avg) / older_avg if older_avg > 0 else 0
             
             if trend_change > 0.1:
@@ -622,7 +698,9 @@ class CreatorPerformanceIntelligence:
             trend = "stable"
         
         # Find peak performance time
+
         peak_metrics = max(performance_history, key=lambda p: p.quality_score)
+
         
         return {
             "overall_trend": trend,
@@ -739,20 +817,24 @@ async def analyze_creator_performance(
 
 
 async def generate_creator_intelligence(creator_id: str) -> CreatorIntelligenceInsights:
-    """Generate creator intelligence insights"""
+    """
+        Generate creator intelligence insights"""
     return await creator_performance_intelligence.generate_creator_intelligence(creator_id)
 
 
 async def get_creator_dashboard(creator_id: str) -> Dict[str, Any]:
-    """Get creator performance dashboard"""
+    """
+        Get creator performance dashboard"""
     return await creator_performance_intelligence.get_creator_performance_dashboard(creator_id)
 
 
 def get_creator_metrics(creator_id: str) -> Optional[CreatorPerformanceMetrics]:
-    """Get current creator metrics"""
+    """
+        Get current creator metrics"""
     return creator_performance_intelligence.performance_cache.get(creator_id)
 
 
 def get_creator_insights(creator_id: str) -> Optional[CreatorIntelligenceInsights]:
-    """Get creator intelligence insights"""
+    """
+        Get creator intelligence insights"""
     return creator_performance_intelligence.intelligence_cache.get(creator_id)

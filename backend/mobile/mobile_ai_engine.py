@@ -30,10 +30,16 @@ import base64
 import hashlib
 from pathlib import Path
 
+try:
+    import aiofiles
+except ImportError:
+    aiofiles = None  # Fallback if not available
+
 logger = logging.getLogger(__name__)
 
 class AnalysisType(str, Enum):
-    """Types of AI analysis for mobile"""
+    """
+        Types of AI analysis for mobile"""
     VISUAL_ANALYSIS = "visual_analysis"
     AUDIO_ANALYSIS = "audio_analysis"
     TEXT_ANALYSIS = "text_analysis"
@@ -75,6 +81,15 @@ class ProcessingPriority(str, Enum):
     HIGH = "high"
     REAL_TIME = "real_time"
     BACKGROUND = "background"
+
+class AIProcessingType(str, Enum):
+    """AI processing types for mobile"""
+    GENERATION = "generation"
+    TRANSFORMATION = "transformation"
+    ANALYSIS = "analysis"
+    ENHANCEMENT = "enhancement"
+    OPTIMIZATION = "optimization"
+    RECOGNITION = "recognition"
 
 class CacheStrategy(str, Enum):
     """AI cache strategies for mobile"""
@@ -130,7 +145,8 @@ class AIProcessingRequest:
     metadata: Dict[str, Any] = field(default_factory=dict)
 @dataclass
 class ComprehensiveAnalysisResult:
-    """Comprehensive AI analysis result"""
+    """
+        Comprehensive AI analysis result"""
     analysis_id: str
     content_id: str
     analysis_types: List[AnalysisType]
@@ -236,7 +252,8 @@ class AIProcessingRequest:
 
 @dataclass
 class AIProcessingResult:
-    """AI processing result structure"""
+    """
+        AI processing result structure"""
     request_id: str
     content_id: str
     processing_type: AIProcessingType
@@ -251,7 +268,8 @@ class AIProcessingResult:
 
 @dataclass
 class AnalysisConfiguration:
-    """Analysis configuration for mobile AI"""
+    """
+        Analysis configuration for mobile AI"""
     enable_gpu: bool = False
     max_processing_time: int = 30  # seconds
     batch_size: int = 1
@@ -279,7 +297,8 @@ class CacheEntry:
 
 @dataclass
 class CacheConfiguration:
-    """Cache configuration for mobile AI"""
+    """
+        Cache configuration for mobile AI"""
     max_memory_cache: int = 100 * 1024 * 1024  # 100MB
     max_disk_cache: int = 1024 * 1024 * 1024   # 1GB
     cache_ttl: int = 3600  # 1 hour
@@ -290,7 +309,8 @@ class CacheConfiguration:
 
 @dataclass
 class CachePerformanceMetrics:
-    """Cache performance metrics"""
+    """
+        Cache performance metrics"""
     hit_rate: float
     miss_rate: float
     eviction_rate: float
@@ -300,10 +320,12 @@ class CachePerformanceMetrics:
     cache_efficiency: float
 
 class MobileAIEngine:
-    """Unified mobile AI engine consolidating analysis, orchestration, and cache management"""
+    """
+        Unified mobile AI engine consolidating analysis, orchestration, and cache management"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize mobile AI engine with comprehensive capabilities"""
+        """
+        Initialize mobile AI engine with comprehensive capabilities"""
         self.config = config or {}
         self.ai_analyzer = AIAnalysisMobile(self.config)
         self.ai_orchestrator = MobileAIOrchestrator(self.config)
@@ -334,31 +356,38 @@ class MobileAIEngine:
             start_time = datetime.utcnow()
             
             # Check cache first for performance optimization
+
             cache_result = None
             if analysis_request.cache_enabled:
                 cache_result = await self.cache_manager.get_cached_analysis(
                     analysis_request.content_path,
                     analysis_request.analysis_types[0] if analysis_request.analysis_types else AnalysisType.CONTENT_CLASSIFICATION
                 )
+
             
             if cache_result:
                 logger.info(f"Cache hit for analysis {analysis_id}")
+
                 self.performance_metrics["cache_hit_rate"] = (
                     self.performance_metrics["cache_hit_rate"] * 0.9 + 0.1
                 )
+
                 return cache_result
             
             # Orchestrate AI analysis workflow
+
             orchestration_result = await self.ai_orchestrator.orchestrate_ai_analysis(
                 analysis_request, analysis_id
             )
             
             # Perform comprehensive AI analysis
+
             analysis_result = await self.ai_analyzer.analyze_content_comprehensive(
                 analysis_request
             )
             
             # Merge orchestration and analysis results
+
             comprehensive_result = {
                 "analysis_id": analysis_id,
                 "content_id": analysis_request.content_id,
@@ -380,11 +409,13 @@ class MobileAIEngine:
             
             # Update performance metrics
             self._update_performance_metrics(comprehensive_result)
+
             
             return comprehensive_result
             
         except Exception as e:
             logger.error(f"Mobile AI analysis failed: {e}")
+
             self.performance_metrics["failed_analyses"] += 1
             raise
     
@@ -394,21 +425,25 @@ class MobileAIEngine:
             start_time = datetime.utcnow()
             
             # Orchestrate AI processing workflow
+
             orchestration_config = {
                 "mobile_optimized": processing_request.mobile_optimized,
                 "model_size": processing_request.model_size,
                 "priority": processing_request.priority,
                 "real_time_required": processing_request.real_time_required
             }
+
             
             orchestrated_request = await self.ai_orchestrator.orchestrate_ai_processing(
                 processing_request, orchestration_config
             )
             
             # Execute AI processing with mobile optimization
+
             processing_result = await self._execute_ai_processing(orchestrated_request)
             
             # Create comprehensive result
+
             result = AIProcessingResult(
                 request_id=processing_request.request_id,
                 content_id=processing_request.content_id,
@@ -420,16 +455,19 @@ class MobileAIEngine:
                 model_used=orchestrated_request.get("selected_model", "default"),
                 mobile_optimized=processing_request.mobile_optimized
             )
+
             
             return result
             
         except Exception as e:
             logger.error(f"AI processing failed: {e}")
+
             raise
     
     async def get_ai_performance_metrics(self) -> Dict[str, Any]:
         """Get comprehensive AI performance metrics"""
         cache_metrics = await self.cache_manager.get_cache_metrics()
+
         
         return {
             "ai_engine_metrics": self.performance_metrics,
@@ -466,6 +504,7 @@ class MobileAIEngine:
         
         # Apply optimizations
         await self._apply_mobile_optimizations(optimizations)
+
         
         return optimizations
     
@@ -479,8 +518,11 @@ class MobileAIEngine:
             self.performance_metrics["failed_analyses"] += 1
         
         # Update average processing time
+
         current_avg = self.performance_metrics["average_processing_time"]
+
         new_time = result.get("processing_time", 0)
+
         total_count = self.performance_metrics["total_analyses"]
         
         self.performance_metrics["average_processing_time"] = (
@@ -529,42 +571,58 @@ class AIAnalysisMobile:
         self.analysis_cache = {}
         
     async def analyze_content_comprehensive(self, analysis_request: AIAnalysisRequest) -> Dict[str, Any]:
-        """Perform comprehensive AI analysis optimized for mobile devices"""
+        """
+        Perform comprehensive AI analysis optimized for mobile devices"""
         analysis_results = {}
         
         for analysis_type in analysis_request.analysis_types:
             try:
                 if analysis_type == AnalysisType.VISUAL_ANALYSIS:
                     analysis_results[analysis_type.value] = await self._analyze_visual_content(analysis_request)
+
                 elif analysis_type == AnalysisType.AUDIO_ANALYSIS:
                     analysis_results[analysis_type.value] = await self._analyze_audio_content(analysis_request)
+
                 elif analysis_type == AnalysisType.TEXT_ANALYSIS:
                     analysis_results[analysis_type.value] = await self._analyze_text_content(analysis_request)
+
                 elif analysis_type == AnalysisType.PATTERN_RECOGNITION:
                     analysis_results[analysis_type.value] = await self._analyze_patterns(analysis_request)
+
                 elif analysis_type == AnalysisType.SENTIMENT_ANALYSIS:
                     analysis_results[analysis_type.value] = await self._analyze_sentiment(analysis_request)
+
                 elif analysis_type == AnalysisType.OBJECT_DETECTION:
                     analysis_results[analysis_type.value] = await self._detect_objects(analysis_request)
+
                 elif analysis_type == AnalysisType.FACE_ANALYSIS:
                     analysis_results[analysis_type.value] = await self._analyze_faces(analysis_request)
+
                 elif analysis_type == AnalysisType.SCENE_UNDERSTANDING:
                     analysis_results[analysis_type.value] = await self._understand_scene(analysis_request)
+
                 elif analysis_type == AnalysisType.SPEECH_ANALYSIS:
                     analysis_results[analysis_type.value] = await self._analyze_speech(analysis_request)
+
                 elif analysis_type == AnalysisType.MUSIC_ANALYSIS:
                     analysis_results[analysis_type.value] = await self._analyze_music(analysis_request)
+
                 elif analysis_type == AnalysisType.STYLE_ANALYSIS:
                     analysis_results[analysis_type.value] = await self._analyze_style(analysis_request)
+
                 elif analysis_type == AnalysisType.QUALITY_ANALYSIS:
                     analysis_results[analysis_type.value] = await self._analyze_quality(analysis_request)
+
                 elif analysis_type == AnalysisType.CONTENT_CLASSIFICATION:
                     analysis_results[analysis_type.value] = await self._classify_content(analysis_request)
+
                 elif analysis_type == AnalysisType.EMOTIONAL_ANALYSIS:
                     analysis_results[analysis_type.value] = await self._analyze_emotions(analysis_request)
+
                     
             except Exception as e:
                 logger.error(f"Analysis failed for {analysis_type.value}: {e}")
+
                 analysis_results[analysis_type.value] = {"error": str(e), "status": "failed"}
         
         return {
@@ -773,6 +831,7 @@ class AIAnalysisMobile:
         for result in analysis_results.values():
             if isinstance(result, dict) and "confidence" in result:
                 confidences.append(result["confidence"])
+
         
         return sum(confidences) / len(confidences) if confidences else 0.0
     
@@ -819,26 +878,32 @@ class MobileAIOrchestrator:
         }
         
         # Stage 1: Request preprocessing and optimization
+
         preprocessing_result = await self._preprocess_analysis_request(analysis_request)
         workflow["stages"].append({"stage": "preprocessing", "result": preprocessing_result})
         
         # Stage 2: Model selection and configuration
+
         model_config = await self._select_optimal_models(analysis_request)
         workflow["stages"].append({"stage": "model_selection", "result": model_config})
         
         # Stage 3: Resource allocation and scheduling
+
         resource_allocation = await self._allocate_processing_resources(analysis_request)
         workflow["stages"].append({"stage": "resource_allocation", "result": resource_allocation})
         
         # Stage 4: Mobile optimization application
+
         mobile_optimizations = await self._apply_mobile_optimizations(analysis_request)
         workflow["stages"].append({"stage": "mobile_optimization", "result": mobile_optimizations})
+
         
         workflow["completed_at"] = datetime.utcnow()
         workflow["status"] = "completed"
         
         self.active_workflows[analysis_id] = workflow
         self._update_orchestration_metrics(workflow)
+
         
         return {
             "workflow_id": workflow["workflow_id"],
@@ -853,13 +918,17 @@ class MobileAIOrchestrator:
                                        orchestration_config: Dict[str, Any]) -> Dict[str, Any]:
         """Orchestrate AI processing workflow with intelligent optimization"""
         # Determine optimal processing strategy
+
         processing_strategy = await self._determine_processing_strategy(processing_request, orchestration_config)
         
         # Select appropriate models
+
         model_selection = await self._select_processing_models(processing_request, processing_strategy)
         
         # Configure mobile optimizations
+
         mobile_config = await self._configure_mobile_processing(processing_request, orchestration_config)
+
         
         return {
             "processing_strategy": processing_strategy,
@@ -874,7 +943,8 @@ class MobileAIOrchestrator:
         return self.orchestration_metrics
     
     async def _preprocess_analysis_request(self, request: AIAnalysisRequest) -> Dict[str, Any]:
-        """Preprocess analysis request for optimal execution"""
+        """
+        Preprocess analysis request for optimal execution"""
         return {
             "request_optimized": True,
             "complexity_adjusted": request.complexity.value,
@@ -923,6 +993,7 @@ class MobileAIOrchestrator:
                 "memory_management",
                 "power_efficiency"
             ])
+
         
         if request.real_time:
             optimizations.extend([
@@ -930,9 +1001,11 @@ class MobileAIOrchestrator:
                 "cache_preloading",
                 "pipeline_parallelization"
             ])
+
         
         if request.complexity == AnalysisComplexity.BASIC:
             optimizations.append("lightweight_inference")
+
         
         return optimizations
     
@@ -971,9 +1044,12 @@ class MobileAIOrchestrator:
     def _update_orchestration_metrics(self, workflow: Dict[str, Any]):
         """Update orchestration performance metrics"""
         self.orchestration_metrics["workflows_completed"] += 1
+
         
         duration = (workflow["completed_at"] - workflow["started_at"]).total_seconds()
+
         current_avg = self.orchestration_metrics["average_orchestration_time"]
+
         total_count = self.orchestration_metrics["workflows_completed"]
         
         self.orchestration_metrics["average_orchestration_time"] = (
@@ -1001,6 +1077,7 @@ class MobileAICacheManager:
         
         # Ensure cache directory exists
         self.disk_cache_path.mkdir(parents=True, exist_ok=True)
+
         
     async def get_cached_analysis(self, content_path: str, analysis_type: AnalysisType) -> Optional[Dict[str, Any]]:
         """Get cached analysis result if available"""
@@ -1011,16 +1088,21 @@ class MobileAICacheManager:
             entry = self.memory_cache[cache_key]
             if self._is_cache_entry_valid(entry):
                 entry.last_accessed = datetime.utcnow()
+
                 entry.access_count += 1
                 self._update_cache_hit_metrics()
+
                 return entry.result_data
         
         # Check disk cache
+
         disk_result = await self._get_disk_cache(cache_key)
         if disk_result:
             # Promote to memory cache
             await self._promote_to_memory_cache(cache_key, disk_result)
+
             self._update_cache_hit_metrics()
+
             return disk_result
         
         self._update_cache_miss_metrics()
@@ -1028,10 +1110,15 @@ class MobileAICacheManager:
     
     async def cache_analysis_result(self, content_path: str, analysis_type: AnalysisType, 
                                   result: Dict[str, Any]) -> bool:
-        """Cache analysis result for future use"""
+        """
+        Cache analysis result for future use"""
         try:
             cache_key = self._generate_cache_key(content_path, analysis_type)
+
+
             content_hash = self._generate_content_hash(content_path)
+
+
             
             cache_entry = CacheEntry(
                 cache_id=cache_key,
@@ -1054,11 +1141,13 @@ class MobileAICacheManager:
             # Store in disk cache if configured
             if self.cache_config.strategy in [CacheStrategy.DISK_CACHE, CacheStrategy.HYBRID_CACHE]:
                 await self._store_in_disk_cache(cache_key, cache_entry)
+
             
             return True
             
         except Exception as e:
             logger.error(f"Failed to cache analysis result: {e}")
+
             return False
     
     async def get_cache_metrics(self) -> Dict[str, Any]:
@@ -1082,19 +1171,23 @@ class MobileAICacheManager:
         await self._apply_cache_configuration_changes()
     
     async def cleanup_cache(self):
-        """Cleanup expired cache entries"""
+        """
+        Cleanup expired cache entries"""
         current_time = datetime.utcnow()
+
         expired_keys = []
         
         for cache_key, entry in self.memory_cache.items():
             if entry.expiry_time and entry.expiry_time < current_time:
                 expired_keys.append(cache_key)
+
         
         for key in expired_keys:
             del self.memory_cache[key]
         
         # Cleanup disk cache
         await self._cleanup_disk_cache()
+
         
         logger.info(f"Cache cleanup completed. Removed {len(expired_keys)} expired entries.")
     
@@ -1109,22 +1202,26 @@ class MobileAICacheManager:
         return hashlib.sha256(content_path.encode()).hexdigest()[:16]
     
     def _is_cache_entry_valid(self, entry: CacheEntry) -> bool:
-        """Check if cache entry is still valid"""
+        """
+        Check if cache entry is still valid"""
         if entry.expiry_time and entry.expiry_time < datetime.utcnow():
             return False
         return True
     
     async def _store_in_memory_cache(self, cache_key: str, entry: CacheEntry):
-        """Store entry in memory cache with size management"""
+        """
+        Store entry in memory cache with size management"""
         # Check memory limit and evict if necessary
         while self._calculate_memory_usage() > self.cache_config.max_memory_cache:
             await self._evict_least_recently_used()
+
         
         self.memory_cache[cache_key] = entry
         self.cache_metrics.memory_usage = self._calculate_memory_usage()
     
     async def _store_in_disk_cache(self, cache_key: str, entry: CacheEntry):
-        """Store entry in disk cache"""
+        """
+        Store entry in disk cache"""
         try:
             cache_file = self.disk_cache_path / f"{cache_key}.json"
             
@@ -1135,15 +1232,19 @@ class MobileAICacheManager:
             
             # Convert datetime objects to strings for JSON serialization
             cache_data["entry"]["created_at"] = entry.created_at.isoformat()
+
             cache_data["entry"]["last_accessed"] = entry.last_accessed.isoformat()
+
             if entry.expiry_time:
                 cache_data["entry"]["expiry_time"] = entry.expiry_time.isoformat()
+
             cache_data["entry"]["analysis_type"] = entry.analysis_type.value
             cache_data["entry"]["cache_level"] = entry.cache_level.value
             cache_data["entry"]["priority"] = entry.priority.value
             
             async with aiofiles.open(cache_file, 'w') as f:
                 await f.write(json.dumps(cache_data, indent=2))
+
                 
         except Exception as e:
             logger.error(f"Failed to store disk cache: {e}")
@@ -1160,9 +1261,11 @@ class MobileAICacheManager:
                 cache_data = json.loads(await f.read())
             
             # Check expiry
+
             entry_data = cache_data["entry"]
             if entry_data.get("expiry_time"):
                 expiry_time = datetime.fromisoformat(entry_data["expiry_time"])
+
                 if expiry_time < datetime.utcnow():
                     cache_file.unlink()  # Remove expired file
                     return None
@@ -1171,15 +1274,18 @@ class MobileAICacheManager:
             
         except Exception as e:
             logger.error(f"Failed to get disk cache: {e}")
+
             return None
     
     async def _promote_to_memory_cache(self, cache_key: str, result_data: Dict[str, Any]):
         """Promote disk cache entry to memory cache"""
         # Create new memory cache entry
+
         cache_entry = CacheEntry(
             cache_id=cache_key,
             content_hash="",
             analysis_type=AnalysisType.CONTENT_CLASSIFICATION,  # Default
+
             result_data=result_data,
             confidence_score=result_data.get("overall_confidence", 0.0),
             created_at=datetime.utcnow(),
@@ -1189,6 +1295,7 @@ class MobileAICacheManager:
             cache_level=CacheLevel.L1_MEMORY,
             priority=CachePriority.NORMAL
         )
+
         
         await self._store_in_memory_cache(cache_key, cache_entry)
     
@@ -1196,19 +1303,23 @@ class MobileAICacheManager:
         """Evict least recently used entry from memory cache"""
         if not self.memory_cache:
             return
+
         
         lru_key = min(self.memory_cache.keys(), 
                      key=lambda k: self.memory_cache[k].last_accessed)
+
         
         del self.memory_cache[lru_key]
         self.cache_metrics.eviction_rate += 1
     
     def _calculate_memory_usage(self) -> int:
-        """Calculate current memory usage in bytes"""
+        """
+        Calculate current memory usage in bytes"""
         return sum(entry.size_bytes for entry in self.memory_cache.values())
     
     async def _get_disk_cache_size(self) -> int:
-        """Get disk cache size"""
+        """
+        Get disk cache size"""
         try:
             total_size = 0
             for cache_file in self.disk_cache_path.glob("*.json"):
@@ -1221,36 +1332,46 @@ class MobileAICacheManager:
         """Calculate cache efficiency score"""
         if self.cache_metrics.hit_rate + self.cache_metrics.miss_rate == 0:
             return 0.0
+
         
         hit_ratio = self.cache_metrics.hit_rate / (self.cache_metrics.hit_rate + self.cache_metrics.miss_rate)
         return hit_ratio * 0.8 + (1 - self.cache_metrics.eviction_rate / 100) * 0.2
     
     def _update_cache_hit_metrics(self):
-        """Update cache hit metrics"""
+        """
+        Update cache hit metrics"""
         self.cache_metrics.hit_rate += 1
     
     def _update_cache_miss_metrics(self):
-        """Update cache miss metrics"""
+        """
+        Update cache miss metrics"""
         self.cache_metrics.miss_rate += 1
     
     async def _cleanup_disk_cache(self):
-        """Cleanup expired disk cache files"""
+        """
+        Cleanup expired disk cache files"""
         try:
             current_time = datetime.utcnow()
+
             for cache_file in self.disk_cache_path.glob("*.json"):
                 try:
                     async with aiofiles.open(cache_file, 'r') as f:
                         cache_data = json.loads(await f.read())
+
+
                     
                     entry_data = cache_data["entry"]
                     if entry_data.get("expiry_time"):
                         expiry_time = datetime.fromisoformat(entry_data["expiry_time"])
+
                         if expiry_time < current_time:
                             cache_file.unlink()
+
                             
                 except Exception:
                     # Remove corrupted cache files
                     cache_file.unlink()
+
                     
         except Exception as e:
             logger.error(f"Failed to cleanup disk cache: {e}")

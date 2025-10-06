@@ -26,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 
 class PaymentGateway(str, Enum):
-    """Supported payment gateways."""
+    """
+        Supported payment gateways."""
     PAYPAL = "paypal"
     WISE = "wise"
     BANK_TRANSFER = "bank_transfer"
@@ -101,7 +102,8 @@ class PaymentAccount:
 
 @dataclass
 class PaymentTransaction:
-    """Payment transaction data."""
+    """
+        Payment transaction data."""
     transaction_id: str
     gateway: PaymentGateway
     transaction_type: TransactionType
@@ -122,7 +124,8 @@ class PaymentTransaction:
 
 @dataclass
 class PayoutRequest:
-    """Payout request data."""
+    """
+        Payout request data."""
     payout_id: str
     gateway: PaymentGateway
     recipient_account: str
@@ -138,7 +141,8 @@ class PayoutRequest:
 
 @dataclass
 class ExchangeRate:
-    """Currency exchange rate data."""
+    """
+        Currency exchange rate data."""
     from_currency: CurrencyCode
     to_currency: CurrencyCode
     rate: Decimal
@@ -149,7 +153,8 @@ class ExchangeRate:
 
 
 class PaymentGatewaysIntegration:
-    """Professional multi-gateway payment processing integration."""
+    """
+        Professional multi-gateway payment processing integration."""
     
     def __init__(
         self,
@@ -221,11 +226,13 @@ class PaymentGatewaysIntegration:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+        Async context manager exit."""
         await self.close()
     
     async def _ensure_session(self):
-        """Ensure HTTP session is available."""
+        """
+        Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
                 "User-Agent": "iacherie/1.0 Payment Gateway Hub",
@@ -244,18 +251,24 @@ class PaymentGatewaysIntegration:
             await self.session.close()
     
     async def initialize_paypal_account(self) -> PaymentAccount:
-        """Initialize PayPal payment account."""
+        """
+        Initialize PayPal payment account."""
         await self._ensure_session()
+
         
         if not self.paypal_client_id or not self.paypal_client_secret:
             raise ValueError("PayPal credentials not configured")
+
         
         try:
             # Get PayPal access token
+
             access_token = await self._get_paypal_access_token()
             
             # Get account information
+
             headers = {"Authorization": f"Bearer {access_token}"}
+
             base_url = self.gateway_urls[PaymentGateway.PAYPAL][self.environment]
             
             async with self.session.get(
@@ -264,9 +277,14 @@ class PaymentGatewaysIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"PayPal account info error: {error_data}")
+
+
                 
                 account_info = await response.json()
+
+
                 
                 account = PaymentAccount(
                     gateway=PaymentGateway.PAYPAL,
@@ -281,16 +299,19 @@ class PaymentGatewaysIntegration:
                     limits={"daily": Decimal("10000"), "monthly": Decimal("100000")},
                     metadata={"account_info": account_info}
                 )
+
                 
                 self.payment_accounts[f"{PaymentGateway.PAYPAL}_{account.account_id}"] = account
                 self.gateway_usage[PaymentGateway.PAYPAL] = 0
                 self.request_count += 2
                 
                 logger.info(f"PayPal account initialized: {account.account_id}")
+
                 return account
         
         except Exception as e:
             logger.error(f"PayPal account initialization failed: {e}")
+
             raise
     
     async def _get_paypal_access_token(self) -> str:
@@ -298,6 +319,8 @@ class PaymentGatewaysIntegration:
         credentials = base64.b64encode(
             f"{self.paypal_client_id}:{self.paypal_client_secret}".encode()
         ).decode()
+
+
         
         headers = {
             "Authorization": f"Basic {credentials}",
@@ -305,6 +328,7 @@ class PaymentGatewaysIntegration:
             "Accept-Language": "en_US",
             "Content-Type": "application/x-www-form-urlencoded"
         }
+
         
         data = "grant_type=client_credentials"
         base_url = self.gateway_urls[PaymentGateway.PAYPAL][self.environment]
@@ -316,20 +340,27 @@ class PaymentGatewaysIntegration:
         ) as response:
             if response.status != 200:
                 error_data = await response.json()
+
                 raise Exception(f"PayPal token error: {error_data}")
+
+
             
             token_data = await response.json()
+
             return token_data["access_token"]
     
     async def initialize_wise_account(self) -> PaymentAccount:
         """Initialize Wise payment account."""
         await self._ensure_session()
+
         
         if not self.wise_api_token:
             raise ValueError("Wise API token not configured")
+
         
         try:
             headers = {"Authorization": f"Bearer {self.wise_api_token}"}
+
             base_url = self.gateway_urls[PaymentGateway.WISE][self.environment]
             
             # Get user profile
@@ -339,10 +370,16 @@ class PaymentGatewaysIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Wise profile error: {error_data}")
+
+
                 
                 profiles = await response.json()
+
+
                 profile = profiles[0] if profiles else {}
+
                 
                 account = PaymentAccount(
                     gateway=PaymentGateway.WISE,
@@ -358,27 +395,33 @@ class PaymentGatewaysIntegration:
                     limits={"daily": Decimal("50000"), "monthly": Decimal("500000")},
                     metadata={"profile": profile}
                 )
+
                 
                 self.payment_accounts[f"{PaymentGateway.WISE}_{account.account_id}"] = account
                 self.gateway_usage[PaymentGateway.WISE] = 0
                 self.request_count += 1
                 
                 logger.info(f"Wise account initialized: {account.account_id}")
+
                 return account
         
         except Exception as e:
             logger.error(f"Wise account initialization failed: {e}")
+
             raise
     
     async def initialize_crypto_account(self) -> PaymentAccount:
         """Initialize cryptocurrency payment account."""
         await self._ensure_session()
+
         
         if not self.crypto_api_key or not self.crypto_secret:
             raise ValueError("Crypto API credentials not configured")
+
         
         try:
             # This is a simplified example - actual crypto integration would vary by provider
+
             account = PaymentAccount(
                 gateway=PaymentGateway.CRYPTO,
                 account_id="crypto_main",
@@ -392,15 +435,18 @@ class PaymentGatewaysIntegration:
                 limits={"daily": Decimal("10"), "monthly": Decimal("100")},  # In BTC
                 metadata={"supported_currencies": ["BTC", "ETH", "LTC"]}
             )
+
             
             self.payment_accounts[f"{PaymentGateway.CRYPTO}_{account.account_id}"] = account
             self.gateway_usage[PaymentGateway.CRYPTO] = 0
             
             logger.info(f"Crypto account initialized: {account.account_id}")
+
             return account
         
         except Exception as e:
             logger.error(f"Crypto account initialization failed: {e}")
+
             raise
     
     async def process_payment(
@@ -415,8 +461,11 @@ class PaymentGatewaysIntegration:
     ) -> PaymentTransaction:
         """Process payment through specified gateway."""
         await self._ensure_session()
+
+
         
         transaction_id = str(uuid.uuid4())
+
         
         if gateway == PaymentGateway.PAYPAL:
             return await self._process_paypal_payment(
@@ -449,8 +498,12 @@ class PaymentGatewaysIntegration:
         """Process PayPal payment."""
         try:
             access_token = await self._get_paypal_access_token()
+
+
             headers = {"Authorization": f"Bearer {access_token}"}
+
             base_url = self.gateway_urls[PaymentGateway.PAYPAL][self.environment]
+
             
             payment_data = {
                 "intent": "CAPTURE",
@@ -480,15 +533,26 @@ class PaymentGatewaysIntegration:
             ) as response:
                 if response.status not in [200, 201]:
                     error_data = await response.json()
+
                     raise Exception(f"PayPal payment error: {error_data}")
+
+
                 
                 result = await response.json()
                 
                 # Calculate fees
+
                 fee_rate = self.payment_accounts.get(f"{PaymentGateway.PAYPAL}_unknown", {}).get("fee_structure", {})
+
+
                 transaction_fee = amount * fee_rate.get("transaction", Decimal("0.029"))
+
+
                 fixed_fee = fee_rate.get("fixed", Decimal("0.30"))
+
+
                 total_fees = transaction_fee + fixed_fee
+
                 
                 transaction = PaymentTransaction(
                     transaction_id=result["id"],
@@ -508,6 +572,7 @@ class PaymentGatewaysIntegration:
                     completed_at=None,
                     metadata=metadata or {}
                 )
+
                 
                 self.total_transactions += 1
                 self.total_volume += amount
@@ -516,10 +581,12 @@ class PaymentGatewaysIntegration:
                 self.gateway_usage[PaymentGateway.PAYPAL] = self.gateway_usage.get(PaymentGateway.PAYPAL, 0) + 1
                 
                 logger.info(f"PayPal payment created: {transaction.transaction_id}")
+
                 return transaction
         
         except Exception as e:
             logger.error(f"PayPal payment processing failed: {e}")
+
             raise
     
     async def _process_wise_payment(
@@ -535,9 +602,11 @@ class PaymentGatewaysIntegration:
         """Process Wise payment."""
         try:
             headers = {"Authorization": f"Bearer {self.wise_api_token}"}
+
             base_url = self.gateway_urls[PaymentGateway.WISE][self.environment]
             
             # Create quote first
+
             quote_data = {
                 "sourceCurrency": currency.value,
                 "targetCurrency": currency.value,
@@ -552,15 +621,27 @@ class PaymentGatewaysIntegration:
             ) as response:
                 if response.status not in [200, 201]:
                     error_data = await response.json()
+
                     raise Exception(f"Wise quote error: {error_data}")
+
+
                 
                 quote = await response.json()
                 
                 # Calculate fees
+
                 fee_structure = self.payment_accounts.get(f"{PaymentGateway.WISE}_unknown", {}).get("fee_structure", {})
+
+
                 transaction_fee = amount * fee_structure.get("percentage", Decimal("0.005"))
+
+
                 minimum_fee = fee_structure.get("minimum", Decimal("1.00"))
+
+
                 total_fees = max(transaction_fee, minimum_fee)
+
+
                 
                 transaction = PaymentTransaction(
                     transaction_id=str(quote["id"]),
@@ -580,6 +661,7 @@ class PaymentGatewaysIntegration:
                     completed_at=None,
                     metadata=metadata or {}
                 )
+
                 
                 self.total_transactions += 1
                 self.total_volume += amount
@@ -588,10 +670,12 @@ class PaymentGatewaysIntegration:
                 self.gateway_usage[PaymentGateway.WISE] = self.gateway_usage.get(PaymentGateway.WISE, 0) + 1
                 
                 logger.info(f"Wise payment created: {transaction.transaction_id}")
+
                 return transaction
         
         except Exception as e:
             logger.error(f"Wise payment processing failed: {e}")
+
             raise
     
     async def _process_crypto_payment(
@@ -609,10 +693,18 @@ class PaymentGatewaysIntegration:
             # This is a simplified example - actual implementation would vary by crypto provider
             
             # Calculate network and exchange fees
+
             fee_structure = self.payment_accounts.get(f"{PaymentGateway.CRYPTO}_crypto_main", {}).get("fee_structure", {})
+
+
             network_fee = fee_structure.get("network", Decimal("0.0005"))
+
+
             exchange_fee = amount * fee_structure.get("exchange", Decimal("0.015"))
+
+
             total_fees = network_fee + exchange_fee
+
             
             transaction = PaymentTransaction(
                 transaction_id=transaction_id,
@@ -632,6 +724,7 @@ class PaymentGatewaysIntegration:
                 completed_at=None,
                 metadata=metadata or {}
             )
+
             
             self.total_transactions += 1
             self.total_volume += amount
@@ -639,10 +732,12 @@ class PaymentGatewaysIntegration:
             self.gateway_usage[PaymentGateway.CRYPTO] = self.gateway_usage.get(PaymentGateway.CRYPTO, 0) + 1
             
             logger.info(f"Crypto payment created: {transaction.transaction_id}")
+
             return transaction
         
         except Exception as e:
             logger.error(f"Crypto payment processing failed: {e}")
+
             raise
     
     async def create_payout(
@@ -655,8 +750,11 @@ class PaymentGatewaysIntegration:
     ) -> PayoutRequest:
         """Create payout request."""
         await self._ensure_session()
+
+
         
         payout_id = str(uuid.uuid4())
+
         
         if gateway == PaymentGateway.PAYPAL:
             return await self._create_paypal_payout(payout_id, recipient_account, amount, currency, metadata)
@@ -678,8 +776,12 @@ class PaymentGatewaysIntegration:
         """Create PayPal payout."""
         try:
             access_token = await self._get_paypal_access_token()
+
+
             headers = {"Authorization": f"Bearer {access_token}"}
+
             base_url = self.gateway_urls[PaymentGateway.PAYPAL][self.environment]
+
             
             payout_data = {
                 "sender_batch_header": {
@@ -706,13 +808,19 @@ class PaymentGatewaysIntegration:
             ) as response:
                 if response.status not in [200, 201]:
                     error_data = await response.json()
+
                     raise Exception(f"PayPal payout error: {error_data}")
+
+
                 
                 result = await response.json()
                 
                 # Calculate fees
+
                 fee_rate = Decimal("0.02")  # PayPal payout fee
+
                 fees = amount * fee_rate
+
                 
                 payout = PayoutRequest(
                     payout_id=result["batch_header"]["payout_batch_id"],
@@ -727,13 +835,16 @@ class PaymentGatewaysIntegration:
                     exchange_info=None,
                     metadata=metadata or {}
                 )
+
                 
                 self.request_count += 2
                 logger.info(f"PayPal payout created: {payout.payout_id}")
+
                 return payout
         
         except Exception as e:
             logger.error(f"PayPal payout creation failed: {e}")
+
             raise
     
     async def _create_wise_payout(
@@ -747,9 +858,12 @@ class PaymentGatewaysIntegration:
         """Create Wise payout."""
         try:
             headers = {"Authorization": f"Bearer {self.wise_api_token}"}
+
             base_url = self.gateway_urls[PaymentGateway.WISE][self.environment]
             
             # Create recipient first (simplified)
+
+
             recipient_data = {
                 "profile": int(self.wise_profile_id) if self.wise_profile_id else None,
                 "accountHolderName": metadata.get("recipient_name", "Unknown"),
@@ -767,13 +881,21 @@ class PaymentGatewaysIntegration:
             ) as response:
                 if response.status not in [200, 201]:
                     error_data = await response.json()
+
                     raise Exception(f"Wise recipient error: {error_data}")
+
+
                 
                 recipient = await response.json()
                 
                 # Calculate fees
+
                 fee_structure = self.payment_accounts.get(f"{PaymentGateway.WISE}_unknown", {}).get("fee_structure", {})
+
+
                 fees = amount * fee_structure.get("percentage", Decimal("0.005"))
+
+
                 
                 payout = PayoutRequest(
                     payout_id=payout_id,
@@ -788,13 +910,16 @@ class PaymentGatewaysIntegration:
                     exchange_info=None,
                     metadata=metadata or {}
                 )
+
                 
                 self.request_count += 1
                 logger.info(f"Wise payout created: {payout.payout_id}")
+
                 return payout
         
         except Exception as e:
             logger.error(f"Wise payout creation failed: {e}")
+
             raise
     
     async def _create_crypto_payout(
@@ -808,7 +933,9 @@ class PaymentGatewaysIntegration:
         """Create cryptocurrency payout."""
         try:
             # Calculate network fees
+
             network_fee = Decimal("0.0005")  # BTC network fee example
+
             
             payout = PayoutRequest(
                 payout_id=payout_id,
@@ -823,12 +950,15 @@ class PaymentGatewaysIntegration:
                 exchange_info=None,
                 metadata=metadata or {}
             )
+
             
             logger.info(f"Crypto payout created: {payout.payout_id}")
+
             return payout
         
         except Exception as e:
             logger.error(f"Crypto payout creation failed: {e}")
+
             raise
     
     async def get_exchange_rates(
@@ -839,21 +969,33 @@ class PaymentGatewaysIntegration:
     ) -> ExchangeRate:
         """Get current exchange rates between currencies."""
         await self._ensure_session()
+
         
         try:
             # Using a free exchange rate API (example)
+
             async with self.session.get(
                 f"https://api.exchangerate-api.com/v4/latest/{from_currency.value}"
             ) as response:
                 if response.status != 200:
                     raise Exception("Exchange rate API error")
+
+
                 
                 data = await response.json()
+
+
                 rate = Decimal(str(data["rates"].get(to_currency.value, 1.0)))
                 
                 # Calculate conversion fees (0.5% example)
+
+
                 fee_rate = Decimal("0.005")
+
+
                 fees = (amount or Decimal("1")) * fee_rate if amount else Decimal("0")
+
+
                 
                 exchange_rate = ExchangeRate(
                     from_currency=from_currency,
@@ -864,13 +1006,16 @@ class PaymentGatewaysIntegration:
                     fees=fees,
                     metadata={"raw_data": data}
                 )
+
                 
                 self.request_count += 1
                 logger.info(f"Exchange rate retrieved: {from_currency} -> {to_currency}: {rate}")
+
                 return exchange_rate
         
         except Exception as e:
             logger.error(f"Exchange rate retrieval failed: {e}")
+
             raise
     
     async def convert_currency(
@@ -883,11 +1028,17 @@ class PaymentGatewaysIntegration:
         """Convert currency using specified gateway."""
         if from_currency == to_currency:
             raise ValueError("Source and target currencies must be different")
+
+
         
         exchange_rate = await self.get_exchange_rates(from_currency, to_currency, amount)
+
         converted_amount = amount * exchange_rate.rate
+
         
         transaction_id = str(uuid.uuid4())
+
+
         
         transaction = PaymentTransaction(
             transaction_id=transaction_id,
@@ -907,6 +1058,7 @@ class PaymentGatewaysIntegration:
             completed_at=datetime.now(),
             metadata={"exchange_source": exchange_rate.source}
         )
+
         
         self.total_transactions += 1
         self.total_volume += converted_amount
@@ -922,6 +1074,7 @@ class PaymentGatewaysIntegration:
     ) -> PaymentStatus:
         """Get transaction status from gateway."""
         await self._ensure_session()
+
         
         if gateway == PaymentGateway.PAYPAL:
             return await self._get_paypal_transaction_status(transaction_id)
@@ -936,7 +1089,10 @@ class PaymentGatewaysIntegration:
         """Get PayPal transaction status."""
         try:
             access_token = await self._get_paypal_access_token()
+
+
             headers = {"Authorization": f"Bearer {access_token}"}
+
             base_url = self.gateway_urls[PaymentGateway.PAYPAL][self.environment]
             
             async with self.session.get(
@@ -947,7 +1103,11 @@ class PaymentGatewaysIntegration:
                     return PaymentStatus.FAILED
                 
                 data = await response.json()
+
+
                 status = data.get("status", "").upper()
+
+
                 
                 status_mapping = {
                     "CREATED": PaymentStatus.PENDING,
@@ -960,15 +1120,18 @@ class PaymentGatewaysIntegration:
                 
                 self.request_count += 2
                 return status_mapping.get(status, PaymentStatus.FAILED)
+
         
         except Exception as e:
             logger.error(f"PayPal status check failed: {e}")
+
             return PaymentStatus.FAILED
     
     async def _get_wise_transaction_status(self, transaction_id: str) -> PaymentStatus:
         """Get Wise transaction status."""
         try:
             headers = {"Authorization": f"Bearer {self.wise_api_token}"}
+
             base_url = self.gateway_urls[PaymentGateway.WISE][self.environment]
             
             async with self.session.get(
@@ -979,7 +1142,11 @@ class PaymentGatewaysIntegration:
                     return PaymentStatus.FAILED
                 
                 data = await response.json()
+
+
                 status = data.get("status", "").lower()
+
+
                 
                 status_mapping = {
                     "incoming_payment_waiting": PaymentStatus.PENDING,
@@ -992,9 +1159,11 @@ class PaymentGatewaysIntegration:
                 
                 self.request_count += 1
                 return status_mapping.get(status, PaymentStatus.FAILED)
+
         
         except Exception as e:
             logger.error(f"Wise status check failed: {e}")
+
             return PaymentStatus.FAILED
     
     async def _get_crypto_transaction_status(self, transaction_id: str) -> PaymentStatus:
@@ -1006,6 +1175,7 @@ class PaymentGatewaysIntegration:
         
         except Exception as e:
             logger.error(f"Crypto status check failed: {e}")
+
             return PaymentStatus.FAILED
     
     async def get_payment_accounts(self) -> List[PaymentAccount]:
@@ -1022,11 +1192,13 @@ class PaymentGatewaysIntegration:
         """Optimize payout routing based on cost, speed, and reliability."""
         
         # Route optimization logic
+
         routes = []
         
         # PayPal route
         if PaymentGateway.PAYPAL in self.gateway_usage:
             paypal_fee = amount * Decimal("0.02")
+
             routes.append({
                 "gateway": PaymentGateway.PAYPAL,
                 "fee": paypal_fee,
@@ -1038,6 +1210,7 @@ class PaymentGatewaysIntegration:
         # Wise route
         if PaymentGateway.WISE in self.gateway_usage:
             wise_fee = max(amount * Decimal("0.005"), Decimal("1.00"))
+
             routes.append({
                 "gateway": PaymentGateway.WISE,
                 "fee": wise_fee,
@@ -1054,10 +1227,13 @@ class PaymentGatewaysIntegration:
         else:
             # Balanced optimization
             routes.sort(key=lambda x: (x["total_cost"] * 0.5 + x["speed_hours"] * 0.3 - x["reliability_score"] * 0.2))
+
+
         
         recommendation = routes[0] if routes else None
         
         logger.info(f"Payout routing optimized for {amount} {currency} - Recommended: {recommendation}")
+
         
         return {
             "recommended_route": recommendation,
@@ -1105,9 +1281,11 @@ async def process_multi_gateway_payment(
     recipient_info: Dict[str, Any],
     backup_gateways: List[PaymentGateway] = None
 ) -> PaymentTransaction:
-    """Process payment with automatic failover to backup gateways."""
+    """
+        Process payment with automatic failover to backup gateways."""
     primary_gateway = PaymentGateway.PAYPAL
     backup_gateways = backup_gateways or [PaymentGateway.WISE, PaymentGateway.CRYPTO]
+
     
     gateways_to_try = [primary_gateway] + backup_gateways
     
@@ -1121,12 +1299,15 @@ async def process_multi_gateway_payment(
                 sender_info={"source": "iacherie_platform"},
                 recipient_info=recipient_info
             )
+
             
             logger.info(f"Payment successful via {gateway}: {transaction.transaction_id}")
+
             return transaction
         
         except Exception as e:
             logger.warning(f"Payment failed via {gateway}: {e}")
+
             continue
     
     raise Exception("All payment gateways failed")
@@ -1146,19 +1327,25 @@ if __name__ == "__main__":
             # Initialize accounts
             try:
                 paypal_account = await gateways.initialize_paypal_account()
+
                 print(f"PayPal account: {paypal_account.account_name}")
+
             except Exception as e:
                 print(f"PayPal initialization failed: {e}")
             
             # Get exchange rates
             try:
                 rate = await gateways.get_exchange_rates(CurrencyCode.USD, CurrencyCode.EUR)
+
                 print(f"USD to EUR rate: {rate.rate}")
+
             except Exception as e:
                 print(f"Exchange rate failed: {e}")
             
             # Check usage stats
+
             stats = gateways.get_usage_stats()
+
             print(f"Usage stats: {stats}")
     
     asyncio.run(main())

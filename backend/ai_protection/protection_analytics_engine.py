@@ -33,7 +33,8 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsMetric(Enum):
-    """Types of analytics metrics"""
+    """
+        Types of analytics metrics"""
     DETECTION_ACCURACY = "detection_accuracy"
     FALSE_POSITIVE_RATE = "false_positive_rate"
     RESPONSE_TIME = "response_time"
@@ -91,7 +92,8 @@ class AnalyticsDataPoint:
 
 @dataclass
 class ROIAnalysis:
-    """Return on Investment analysis"""
+    """
+        Return on Investment analysis"""
     analysis_id: str
     time_period: str
     total_investment: float
@@ -110,7 +112,8 @@ class ROIAnalysis:
 
 @dataclass
 class PerformanceMetrics:
-    """Comprehensive performance metrics"""
+    """
+        Comprehensive performance metrics"""
     metrics_id: str
     collection_period: str
     detection_metrics: Dict[str, float]
@@ -126,7 +129,8 @@ class PerformanceMetrics:
 
 
 class DataCollector:
-    """Analytics data collection engine"""
+    """
+        Analytics data collection engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -134,7 +138,8 @@ class DataCollector:
         self.collection_active = False
         
     async def start_collection(self):
-        """Start continuous data collection"""
+        """
+        Start continuous data collection"""
         self.collection_active = True
         logger.info("Analytics data collection started")
     
@@ -159,6 +164,8 @@ class DataCollector:
                 # Response time metrics
                 if hasattr(violation, 'detection_timestamp'):
                     current_time = datetime.utcnow()
+
+
                     response_time = (current_time - violation.detection_timestamp).total_seconds() / 3600
                     self._add_data_point(
                         AnalyticsMetric.RESPONSE_TIME,
@@ -166,6 +173,7 @@ class DataCollector:
                         {'severity': violation.severity.value, 'platform': violation.platform_id},
                         'violation_monitoring'
                     )
+
         
         except Exception as e:
             logger.error(f"Violation data collection failed: {e}")
@@ -175,6 +183,7 @@ class DataCollector:
         try:
             for result in legal_results:
                 # Success rate metrics
+
                 success_value = 1.0 if result.success else 0.0
                 self._add_data_point(
                     AnalyticsMetric.SUCCESS_RATE,
@@ -194,13 +203,16 @@ class DataCollector:
                     )
                 
                 # Enforcement efficiency
+
                 efficiency_score = (1.0 if result.success else 0.0) / max(result.execution_time, 1.0)
+
                 self._add_data_point(
                     AnalyticsMetric.ENFORCEMENT_EFFICIENCY,
                     efficiency_score,
                     {'action_type': result.action_type.value},
                     'legal_automation'
                 )
+
         
         except Exception as e:
             logger.error(f"Legal action data collection failed: {e}")
@@ -210,7 +222,10 @@ class DataCollector:
         try:
             for violation in global_violations:
                 # Coverage ratio metrics
+
                 countries_affected = len(violation.affected_countries)
+
+
                 coverage_ratio = min(1.0, countries_affected / 10.0)  # Normalized
                 self._add_data_point(
                     AnalyticsMetric.COVERAGE_RATIO,
@@ -220,6 +235,7 @@ class DataCollector:
                 )
                 
                 # Threat level assessment
+
                 threat_level = violation.global_priority / 10.0
                 self._add_data_point(
                     AnalyticsMetric.THREAT_LEVEL,
@@ -227,6 +243,7 @@ class DataCollector:
                     {'countries': countries_affected, 'coordination_required': violation.coordination_required},
                     'global_network'
                 )
+
         
         except Exception as e:
             logger.error(f"Global network data collection failed: {e}")
@@ -243,6 +260,7 @@ class DataCollector:
                 source=source,
                 confidence=0.9  # Default confidence
             )
+
             
             self.data_points.append(data_point)
             
@@ -268,20 +286,27 @@ class DataCollector:
             # Filter by time range
             if time_range or start_time or end_time:
                 now = datetime.utcnow()
+
                 
                 if time_range:
                     if time_range == TimeRange.LAST_HOUR:
                         start_time = now - timedelta(hours=1)
+
                     elif time_range == TimeRange.LAST_24_HOURS:
                         start_time = now - timedelta(hours=24)
+
                     elif time_range == TimeRange.LAST_WEEK:
                         start_time = now - timedelta(weeks=1)
+
                     elif time_range == TimeRange.LAST_MONTH:
                         start_time = now - timedelta(days=30)
+
                     elif time_range == TimeRange.LAST_QUARTER:
                         start_time = now - timedelta(days=90)
+
                     elif time_range == TimeRange.LAST_YEAR:
                         start_time = now - timedelta(days=365)
+
                 
                 if start_time:
                     filtered_points = [dp for dp in filtered_points if dp.timestamp >= start_time]
@@ -293,6 +318,7 @@ class DataCollector:
             
         except Exception as e:
             logger.error(f"Data point filtering failed: {e}")
+
             return []
 
 
@@ -305,7 +331,8 @@ class ProtectionAnalyticsEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize protection analytics engine"""
+        """
+        Initialize protection analytics engine"""
         self.config = config or {}
         
         # Core components
@@ -322,16 +349,19 @@ class ProtectionAnalyticsEngine:
         """Start analytics processing"""
         try:
             await self.data_collector.start_collection()
+
             self.analytics_active = True
             logger.info("Protection analytics started")
         except Exception as e:
             logger.error(f"Analytics startup failed: {e}")
+
             raise
     
     async def stop_analytics(self):
         """Stop analytics processing"""
         try:
             await self.data_collector.stop_collection()
+
             self.analytics_active = False
             logger.info("Protection analytics stopped")
         except Exception as e:
@@ -365,6 +395,7 @@ class ProtectionAnalyticsEngine:
             report_id = str(uuid.uuid4())
             
             # Check cache first
+
             cache_key = f"{report_type.value}_{time_range.value}"
             if cache_key in self.report_cache:
                 cached_report = self.report_cache[cache_key]
@@ -374,10 +405,13 @@ class ProtectionAnalyticsEngine:
             # Generate new report
             if report_type == ReportType.EXECUTIVE_SUMMARY:
                 report = await self._generate_executive_summary(time_range)
+
             elif report_type == ReportType.TECHNICAL_PERFORMANCE:
                 report = await self._generate_technical_performance_report(time_range)
+
             elif report_type == ReportType.FINANCIAL_ANALYSIS:
                 report = await self._generate_financial_analysis_report(time_range)
+
             else:
                 report = await self._generate_general_report(report_type, time_range)
             
@@ -397,15 +431,18 @@ class ProtectionAnalyticsEngine:
             
         except Exception as e:
             logger.error(f"Report generation failed: {e}")
+
             raise
     
     async def _generate_executive_summary(self, time_range: TimeRange) -> Dict[str, Any]:
         """Generate executive summary report"""
         try:
             # Get data for the time range
+
             all_data = self.data_collector.get_data_points(time_range=time_range)
             
             # Key metrics summary
+
             key_metrics = {}
             for metric in AnalyticsMetric:
                 metric_data = [dp for dp in all_data if dp.metric == metric]
@@ -419,13 +456,17 @@ class ProtectionAnalyticsEngine:
                     }
             
             # Overall system health
+
             system_health = self._calculate_system_health(key_metrics)
             
             # Key achievements
+
             achievements = self._identify_key_achievements(key_metrics)
             
             # Priority recommendations
+
             recommendations = self._generate_priority_recommendations(key_metrics)
+
             
             return {
                 'executive_summary': {
@@ -443,6 +484,7 @@ class ProtectionAnalyticsEngine:
             
         except Exception as e:
             logger.error(f"Executive summary generation failed: {e}")
+
             return {'executive_summary': {'error': str(e)}}
     
     async def _generate_technical_performance_report(self, time_range: TimeRange) -> Dict[str, Any]:
@@ -451,8 +493,11 @@ class ProtectionAnalyticsEngine:
             all_data = self.data_collector.get_data_points(time_range=time_range)
             
             # Performance metrics by category
+
             detection_data = [dp for dp in all_data if 'detection' in dp.metric.value]
+
             response_data = [dp for dp in all_data if 'response' in dp.metric.value]
+
             success_data = [dp for dp in all_data if 'success' in dp.metric.value]
             
             return {
@@ -474,17 +519,18 @@ class ProtectionAnalyticsEngine:
             
         except Exception as e:
             logger.error(f"Technical performance report generation failed: {e}")
+
             return {'technical_performance': {'error': str(e)}}
     
     async def _generate_financial_analysis_report(self, time_range: TimeRange) -> Dict[str, Any]:
         """Generate financial analysis report"""
         try:
-            # Mock financial data for demonstration
             investment_data = {
                 'total_investment': 50000.0,
                 'protection_costs': 30000.0,
                 'enforcement_costs': 20000.0
             }
+
             
             outcome_data = {
                 'prevention_savings': 75000.0,
@@ -495,6 +541,7 @@ class ProtectionAnalyticsEngine:
             
             # Calculate basic ROI
             total_benefits = outcome_data['prevention_savings'] + outcome_data['recovery_amount']
+
             roi_percentage = ((total_benefits - investment_data['total_investment']) / investment_data['total_investment']) * 100
             
             return {
@@ -512,12 +559,14 @@ class ProtectionAnalyticsEngine:
             
         except Exception as e:
             logger.error(f"Financial analysis report generation failed: {e}")
+
             return {'financial_analysis': {'error': str(e)}}
     
     async def _generate_general_report(self, report_type: ReportType, time_range: TimeRange) -> Dict[str, Any]:
         """Generate general report for other report types"""
         try:
             all_data = self.data_collector.get_data_points(time_range=time_range)
+
             
             return {
                 'general_report': {
@@ -533,6 +582,7 @@ class ProtectionAnalyticsEngine:
             
         except Exception as e:
             logger.error(f"General report generation failed: {e}")
+
             return {'general_report': {'error': str(e)}}
     
     def _calculate_system_health(self, key_metrics: Dict[str, Any]) -> float:
@@ -541,30 +591,40 @@ class ProtectionAnalyticsEngine:
             health_factors = []
             
             # Detection accuracy factor
+
             detection_metric = key_metrics.get('detection_accuracy', {})
+
             if detection_metric:
                 health_factors.append(detection_metric.get('current_value', 0.5))
             
             # Success rate factor
+
             success_metric = key_metrics.get('success_rate', {})
+
             if success_metric:
                 health_factors.append(success_metric.get('current_value', 0.5))
             
             # Response time factor (inverted - lower is better)
+
+
             response_metric = key_metrics.get('response_time', {})
+
             if response_metric:
                 response_time = response_metric.get('current_value', 24)
+
                 health_factors.append(max(0, 1 - (response_time / 48)))  # Normalize to 48 hours max
             
             # Calculate average
             if health_factors:
                 health_score = sum(health_factors) / len(health_factors)
+
                 return round(health_score * 100, 1)  # Convert to percentage
             else:
                 return 75.0  # Default moderate health
                 
         except Exception as e:
             logger.error(f"System health calculation failed: {e}")
+
             return 50.0
     
     def _identify_key_achievements(self, key_metrics: Dict[str, Any]) -> List[str]:
@@ -574,6 +634,8 @@ class ProtectionAnalyticsEngine:
         try:
             for metric_name, metric_data in key_metrics.items():
                 current_value = metric_data.get('current_value', 0)
+
+
                 trend = metric_data.get('trend', 'stable')
                 
                 # Detection accuracy achievements
@@ -591,11 +653,13 @@ class ProtectionAnalyticsEngine:
             # Default achievement if none found
             if not achievements:
                 achievements.append("System operating within normal parameters")
+
             
             return achievements
             
         except Exception as e:
             logger.error(f"Achievement identification failed: {e}")
+
             return ["Achievement analysis unavailable"]
     
     def _generate_priority_recommendations(self, key_metrics: Dict[str, Any]) -> List[str]:
@@ -624,17 +688,20 @@ class ProtectionAnalyticsEngine:
                 "Regular system performance reviews",
                 "Maintain proactive threat intelligence"
             ])
+
             
             return recommendations[:5]  # Limit to top 5
             
         except Exception as e:
             logger.error(f"Recommendation generation failed: {e}")
+
             return ["Regular system review and optimization recommended"]
     
     async def get_engine_status(self) -> Dict[str, Any]:
         """Get comprehensive engine status"""
         try:
             all_data = self.data_collector.get_data_points()
+
             
             return {
                 'engine_id': id(self),
@@ -655,6 +722,7 @@ class ProtectionAnalyticsEngine:
             
         except Exception as e:
             logger.error(f"Engine status retrieval failed: {e}")
+
             return {'error': str(e)}
 
 

@@ -1,4 +1,5 @@
-"""IA Chérie Core Payments - Fraud Detection Core
+"""
+IA Chérie Core Payments - Fraud Detection Core
 ============================================
 
 Enterprise-grade fraud detection system providing real-time transaction analysis,
@@ -26,7 +27,8 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 class RiskLevel(str, Enum):
-    """Risk levels for transactions"""
+    """
+Risk levels for transactions"""
     VERY_LOW = "very_low"    # 0.0 - 0.2
     LOW = "low"              # 0.2 - 0.4
     MEDIUM = "medium"        # 0.4 - 0.6
@@ -34,7 +36,8 @@ class RiskLevel(str, Enum):
     VERY_HIGH = "very_high"  # 0.8 - 1.0
 
 class FraudType(str, Enum):
-    """Types of fraud"""
+    """
+Types of fraud"""
     CARD_FRAUD = "card_fraud"
     ACCOUNT_TAKEOVER = "account_takeover"
     IDENTITY_THEFT = "identity_theft"
@@ -47,7 +50,8 @@ class FraudType(str, Enum):
     BEHAVIORAL_ANOMALY = "behavioral_anomaly"
 
 class ActionType(str, Enum):
-    """Fraud prevention actions"""
+    """
+Fraud prevention actions"""
     ALLOW = "allow"
     REVIEW = "review"
     BLOCK = "block"
@@ -57,7 +61,8 @@ class ActionType(str, Enum):
     MONITOR = "monitor"
 
 class TransactionStatus(str, Enum):
-    """Transaction processing status"""
+    """
+Transaction processing status"""
     PENDING = "pending"
     ANALYZING = "analyzing"
     APPROVED = "approved"
@@ -68,7 +73,8 @@ class TransactionStatus(str, Enum):
 
 @dataclass
 class TransactionData:
-    """Transaction data for fraud analysis"""
+    """
+Transaction data for fraud analysis"""
     transaction_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = ""
     amount: float = 0.0
@@ -89,7 +95,8 @@ class TransactionData:
 
 @dataclass
 class UserProfile:
-    """User profile for behavioral analysis"""
+    """
+User profile for behavioral analysis"""
     user_id: str
     account_age_days: int = 0
     total_transactions: int = 0
@@ -108,7 +115,8 @@ class UserProfile:
 
 @dataclass
 class FraudRule:
-    """Fraud detection rule"""
+    """
+Fraud detection rule"""
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
@@ -123,7 +131,8 @@ class FraudRule:
 
 @dataclass
 class FraudAnalysisResult:
-    """Result of fraud analysis"""
+    """
+Result of fraud analysis"""
     transaction_id: str
     overall_risk_score: float = 0.0
     risk_level: RiskLevel = RiskLevel.LOW
@@ -139,7 +148,8 @@ class FraudAnalysisResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class FraudDetectionModel(ABC):
-    """Abstract fraud detection model"""
+    """
+Abstract fraud detection model"""
     
     def __init__(self, name: str, version: str = "1.0.0"):
         self.name = name
@@ -150,22 +160,26 @@ class FraudDetectionModel(ABC):
     
     @abstractmethod
     async def load_model(self) -> bool:
-        """Load the fraud detection model"""
+        """
+Load the fraud detection model"""
         pass
     
     @abstractmethod
     async def predict(self, transaction_data: TransactionData, 
                      user_profile: UserProfile) -> float:
-        """Predict fraud probability"""
+        """
+Predict fraud probability"""
         pass
     
     @abstractmethod
     def get_feature_importance(self) -> Dict[str, float]:
-        """Get feature importance scores"""
+        """
+Get feature importance scores"""
         pass
 
 class VelocityFraudModel(FraudDetectionModel):
-    """Velocity-based fraud detection model"""
+    """
+Velocity-based fraud detection model"""
     
     def __init__(self):
         super().__init__("VelocityFraudModel", "1.0.0")
@@ -173,7 +187,8 @@ class VelocityFraudModel(FraudDetectionModel):
         self.accuracy = 0.85
     
     async def load_model(self) -> bool:
-        """Load velocity fraud model"""
+        """
+Load velocity fraud model"""
         try:
             # Simulate model loading
             await asyncio.sleep(0.1)
@@ -186,7 +201,8 @@ class VelocityFraudModel(FraudDetectionModel):
     
     async def predict(self, transaction_data: TransactionData, 
                      user_profile: UserProfile) -> float:
-        """Predict fraud based on transaction velocity"""
+        """
+Predict fraud based on transaction velocity"""
         if not self.loaded:
             raise Exception("Model not loaded")
         
@@ -223,7 +239,8 @@ class VelocityFraudModel(FraudDetectionModel):
         return min(risk_score, 1.0)
     
     def get_feature_importance(self) -> Dict[str, float]:
-        """Get feature importance for velocity model"""
+        """
+Get feature importance for velocity model"""
         return {
             'transaction_frequency': 0.4,
             'amount_velocity': 0.3,
@@ -232,14 +249,16 @@ class VelocityFraudModel(FraudDetectionModel):
         }
 
 class BehavioralFraudModel(FraudDetectionModel):
-    """Behavioral anomaly detection model"""
+    """
+Behavioral anomaly detection model"""
     
     def __init__(self):
         super().__init__("BehavioralFraudModel", "1.0.0")
         self.accuracy = 0.82
     
     async def load_model(self) -> bool:
-        """Load behavioral fraud model"""
+        """
+Load behavioral fraud model"""
         try:
             # Simulate model loading
             await asyncio.sleep(0.1)
@@ -252,7 +271,8 @@ class BehavioralFraudModel(FraudDetectionModel):
     
     async def predict(self, transaction_data: TransactionData, 
                      user_profile: UserProfile) -> float:
-        """Predict fraud based on behavioral patterns"""
+        """
+Predict fraud based on behavioral patterns"""
         if not self.loaded:
             raise Exception("Model not loaded")
         
@@ -290,7 +310,8 @@ class BehavioralFraudModel(FraudDetectionModel):
         return min(risk_score, 1.0)
     
     def get_feature_importance(self) -> Dict[str, float]:
-        """Get feature importance for behavioral model"""
+        """
+Get feature importance for behavioral model"""
         return {
             'amount_deviation': 0.3,
             'new_payment_method': 0.2,
@@ -300,14 +321,16 @@ class BehavioralFraudModel(FraudDetectionModel):
         }
 
 class RuleEngine:
-    """Rule-based fraud detection engine"""
+    """
+Rule-based fraud detection engine"""
     
     def __init__(self):
         self.rules: Dict[str, FraudRule] = {}
         self._initialize_default_rules()
     
     def _initialize_default_rules(self):
-        """Initialize default fraud detection rules"""
+        """
+Initialize default fraud detection rules"""
         default_rules = [
             FraudRule(
                 id="high_amount_new_user",
@@ -362,14 +385,16 @@ class RuleEngine:
             self.rules[rule.id] = rule
     
     def add_rule(self, rule: FraudRule):
-        """Add fraud detection rule"""
+        """
+Add fraud detection rule"""
         self.rules[rule.id] = rule
         logger.info(f"Added fraud rule: {rule.name}")
     
     def evaluate_rules(self, transaction_data: TransactionData, 
                       user_profile: UserProfile, 
                       analysis_context: Dict[str, Any]) -> Tuple[List[str], float]:
-        """Evaluate all rules against transaction"""
+        """
+Evaluate all rules against transaction"""
         matched_rules = []
         total_risk_impact = 0.0
         
@@ -385,7 +410,8 @@ class RuleEngine:
     
     def _evaluate_rule_conditions(self, rule: FraudRule, transaction_data: TransactionData,
                                  user_profile: UserProfile, context: Dict[str, Any]) -> bool:
-        """Evaluate if rule conditions are met"""
+        """
+Evaluate if rule conditions are met"""
         for field, condition in rule.conditions.items():
             operator = condition.get('operator')
             expected_value = condition.get('value')
@@ -404,7 +430,8 @@ class RuleEngine:
     
     def _get_field_value(self, field: str, transaction_data: TransactionData,
                         user_profile: UserProfile, context: Dict[str, Any]) -> Any:
-        """Get field value from data sources"""
+        """
+Get field value from data sources"""
         # Try transaction data first
         if hasattr(transaction_data, field):
             return getattr(transaction_data, field)
@@ -417,7 +444,8 @@ class RuleEngine:
         return context.get(field)
     
     def _evaluate_condition(self, actual_value: Any, operator: str, expected_value: Any) -> bool:
-        """Evaluate single condition"""
+        """
+Evaluate single condition"""
         try:
             if operator == '>':
                 return float(actual_value) > float(expected_value)
@@ -441,7 +469,8 @@ class RuleEngine:
         return False
 
 class FraudDetectionCore:
-    """Core fraud detection system"""
+    """
+Core fraud detection system"""
     
     def __init__(self, level: str = "enterprise"):
         self.level = level
@@ -470,7 +499,8 @@ class FraudDetectionCore:
         logger.info(f"Fraud Detection Core initialized - Level: {level}")
     
     async def initialize(self) -> bool:
-        """Initialize fraud detection system"""
+        """
+Initialize fraud detection system"""
         try:
             # Load all models
             load_tasks = []
@@ -493,7 +523,8 @@ class FraudDetectionCore:
             return False
     
     async def start(self) -> bool:
-        """Start fraud detection system"""
+        """
+Start fraud detection system"""
         try:
             self.is_running = True
             logger.info("Fraud Detection Core started")
@@ -503,7 +534,8 @@ class FraudDetectionCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop fraud detection system"""
+        """
+Stop fraud detection system"""
         try:
             self.is_running = False
             logger.info("Fraud Detection Core stopped")
@@ -513,7 +545,8 @@ class FraudDetectionCore:
             return False
     
     async def health_check(self) -> bool:
-        """Check system health"""
+        """
+Check system health"""
         try:
             # Check if models are loaded
             loaded_models = sum(1 for model in self.models.values() if model.loaded)
@@ -532,14 +565,16 @@ class FraudDetectionCore:
             return False
     
     def _initialize_models(self):
-        """Initialize fraud detection models"""
+        """
+Initialize fraud detection models"""
         self.models = {
             'velocity_fraud': VelocityFraudModel(),
             'behavioral_fraud': BehavioralFraudModel()
         }
     
     async def analyze_transaction(self, transaction_data: TransactionData) -> FraudAnalysisResult:
-        """Analyze transaction for fraud"""
+        """
+Analyze transaction for fraud"""
         start_time = time.time()
         
         try:
@@ -641,14 +676,16 @@ class FraudDetectionCore:
             raise
     
     def _get_or_create_user_profile(self, user_id: str) -> UserProfile:
-        """Get or create user profile"""
+        """
+Get or create user profile"""
         if user_id not in self.user_profiles:
             self.user_profiles[user_id] = UserProfile(user_id=user_id)
         return self.user_profiles[user_id]
     
     def _build_analysis_context(self, transaction_data: TransactionData, 
                                user_profile: UserProfile) -> Dict[str, Any]:
-        """Build analysis context"""
+        """
+Build analysis context"""
         context = {}
         
         # Calculate velocity metrics
@@ -670,7 +707,8 @@ class FraudDetectionCore:
         return context
     
     def _calculate_risk_level(self, risk_score: float) -> RiskLevel:
-        """Calculate risk level from score"""
+        """
+Calculate risk level from score"""
         if risk_score < 0.2:
             return RiskLevel.VERY_LOW
         elif risk_score < 0.4:
@@ -683,7 +721,8 @@ class FraudDetectionCore:
             return RiskLevel.VERY_HIGH
     
     def _determine_action(self, risk_score: float, matched_rules: List[str]) -> ActionType:
-        """Determine recommended action"""
+        """
+Determine recommended action"""
         if risk_score >= 0.9:
             return ActionType.BLOCK
         elif risk_score >= 0.7:
@@ -697,7 +736,8 @@ class FraudDetectionCore:
     
     def _identify_fraud_types(self, transaction_data: TransactionData, 
                              user_profile: UserProfile, context: Dict[str, Any]) -> List[FraudType]:
-        """Identify specific fraud types"""
+        """
+Identify specific fraud types"""
         fraud_types = []
         
         if context.get('transactions_last_hour', 0) > 5:
@@ -712,7 +752,8 @@ class FraudDetectionCore:
         return fraud_types
     
     def _update_metrics(self, result: FraudAnalysisResult):
-        """Update system metrics"""
+        """
+Update system metrics"""
         self.metrics['total_transactions_analyzed'] += 1
         
         if result.recommended_action == ActionType.BLOCK:
@@ -732,7 +773,8 @@ class FraudDetectionCore:
     def _update_user_profile(self, user_profile: UserProfile, 
                            transaction_data: TransactionData, 
                            result: FraudAnalysisResult):
-        """Update user profile with transaction data"""
+        """
+Update user profile with transaction data"""
         user_profile.total_transactions += 1
         user_profile.total_amount += transaction_data.amount
         user_profile.avg_transaction_amount = user_profile.total_amount / user_profile.total_transactions
@@ -758,7 +800,8 @@ class FraudDetectionCore:
         user_profile.updated_at = datetime.utcnow()
     
     def _store_transaction_history(self, transaction_data: TransactionData):
-        """Store transaction in history"""
+        """
+Store transaction in history"""
         if transaction_data.user_id not in self.transaction_history:
             self.transaction_history[transaction_data.user_id] = []
         
@@ -772,7 +815,8 @@ class FraudDetectionCore:
         ]
     
     def add_to_blacklist(self, item_type: str, value: str):
-        """Add item to blacklist"""
+        """
+Add item to blacklist"""
         if item_type == 'ip':
             self.blacklisted_ips.add(value)
         elif item_type == 'device':
@@ -780,16 +824,19 @@ class FraudDetectionCore:
         logger.info(f"Added {item_type} to blacklist: {value}")
     
     def add_to_whitelist(self, user_id: str):
-        """Add user to whitelist"""
+        """
+Add user to whitelist"""
         self.whitelisted_users.add(user_id)
         logger.info(f"Added user to whitelist: {user_id}")
     
     def get_analysis_result(self, transaction_id: str) -> Optional[FraudAnalysisResult]:
-        """Get fraud analysis result"""
+        """
+Get fraud analysis result"""
         return self.analysis_results.get(transaction_id)
     
     def get_user_risk_profile(self, user_id: str) -> Optional[Dict[str, Any]]:
-        """Get user risk profile"""
+        """
+Get user risk profile"""
         profile = self.user_profiles.get(user_id)
         if not profile:
             return None
@@ -808,7 +855,8 @@ class FraudDetectionCore:
         }
     
     def get_system_metrics(self) -> Dict[str, Any]:
-        """Get system metrics"""
+        """
+Get system metrics"""
         fraud_detection_rate = (
             self.metrics['fraudulent_transactions_detected'] / self.metrics['total_transactions_analyzed']
             if self.metrics['total_transactions_analyzed'] > 0 else 0
@@ -846,23 +894,28 @@ fraud_detection_core = FraudDetectionCore()
 
 # Convenience functions
 async def analyze_transaction_fraud(transaction_data: TransactionData) -> FraudAnalysisResult:
-    """Analyze transaction for fraud"""
+    """
+Analyze transaction for fraud"""
     return await fraud_detection_core.analyze_transaction(transaction_data)
 
 def get_fraud_analysis_result(transaction_id: str) -> Optional[FraudAnalysisResult]:
-    """Get fraud analysis result"""
+    """
+Get fraud analysis result"""
     return fraud_detection_core.get_analysis_result(transaction_id)
 
 def get_user_risk_profile(user_id: str) -> Optional[Dict[str, Any]]:
-    """Get user risk profile"""
+    """
+Get user risk profile"""
     return fraud_detection_core.get_user_risk_profile(user_id)
 
 def blacklist_ip(ip_address: str):
-    """Blacklist IP address"""
+    """
+Blacklist IP address"""
     fraud_detection_core.add_to_blacklist('ip', ip_address)
 
 def whitelist_user(user_id: str):
-    """Whitelist user"""
+    """
+Whitelist user"""
     fraud_detection_core.add_to_whitelist(user_id)
 
 # Module exports
@@ -874,4 +927,4 @@ __all__ = [
     "get_user_risk_profile", "blacklist_ip", "whitelist_user"
 ]
 
-logger.info("Fraud Detection Core module loaded")
+logger.info("Fraud Detection Core module initialized")

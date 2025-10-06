@@ -1,4 +1,5 @@
-"""IA Chérie Core Encryption - Enterprise Encryption & Cryptography
+"""
+IA Chérie Core Encryption - Enterprise Encryption & Cryptography
 ============================================================
 
 Advanced encryption management providing symmetric/asymmetric encryption,
@@ -47,7 +48,8 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class EncryptionAlgorithm(str, Enum):
-    """Encryption algorithms"""
+    """
+Encryption algorithms"""
     AES_256_GCM = "aes_256_gcm"
     AES_256_CBC = "aes_256_cbc"
     CHACHA20_POLY1305 = "chacha20_poly1305"
@@ -58,7 +60,8 @@ class EncryptionAlgorithm(str, Enum):
     ECC_P384 = "ecc_p384"
 
 class HashAlgorithm(str, Enum):
-    """Hash algorithms"""
+    """
+Hash algorithms"""
     SHA256 = "sha256"
     SHA384 = "sha384"
     SHA512 = "sha512"
@@ -66,7 +69,8 @@ class HashAlgorithm(str, Enum):
     BLAKE2S = "blake2s"
 
 class KeyDerivation(str, Enum):
-    """Key derivation functions"""
+    """
+Key derivation functions"""
     PBKDF2 = "pbkdf2"
     HKDF = "hkdf"
     SCRYPT = "scrypt"
@@ -74,7 +78,8 @@ class KeyDerivation(str, Enum):
 
 @dataclass
 class EncryptionConfig:
-    """Encryption configuration"""
+    """
+Encryption configuration"""
     default_algorithm: EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM
     hash_algorithm: HashAlgorithm = HashAlgorithm.SHA256
     key_derivation: KeyDerivation = KeyDerivation.PBKDF2
@@ -89,7 +94,8 @@ class EncryptionConfig:
 
 @dataclass
 class KeyMetadata:
-    """Encryption key metadata"""
+    """
+Encryption key metadata"""
     key_id: str
     algorithm: EncryptionAlgorithm
     created_at: float
@@ -101,7 +107,8 @@ class KeyMetadata:
 
 @dataclass
 class EncryptionMetrics:
-    """Encryption performance metrics"""
+    """
+Encryption performance metrics"""
     encryptions_performed: int = 0
     decryptions_performed: int = 0
     keys_generated: int = 0
@@ -114,10 +121,12 @@ class EncryptionMetrics:
     last_health_check: float = field(default_factory=time.time)
 
 class EncryptionCore:
-    """Enterprise encryption core management system"""
+    """
+Enterprise encryption core management system"""
     
     def __init__(self, config: Optional[EncryptionConfig] = None, level: str = "enterprise"):
-        """Initialize encryption core"""
+        """
+Initialize encryption core"""
         self.config = config or EncryptionConfig()
         self.level = level
         self.metrics = EncryptionMetrics()
@@ -142,7 +151,8 @@ class EncryptionCore:
         logger.info("🔐 Encryption Core initialized")
     
     async def initialize(self) -> bool:
-        """Initialize encryption system"""
+        """
+Initialize encryption system"""
         try:
             logger.info("🚀 Initializing encryption core")
             
@@ -170,7 +180,8 @@ class EncryptionCore:
             return False
     
     async def start(self) -> bool:
-        """Start encryption core"""
+        """
+Start encryption core"""
         try:
             if not self.is_initialized:
                 await self.initialize()
@@ -190,7 +201,8 @@ class EncryptionCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop encryption core"""
+        """
+Stop encryption core"""
         try:
             logger.info("🛑 Stopping encryption core")
             
@@ -216,19 +228,23 @@ class EncryptionCore:
             return False
     
     def _generate_secure_key(self, key_size: int) -> bytes:
-        """Generate cryptographically secure key"""
+        """
+Generate cryptographically secure key"""
         return secrets.token_bytes(key_size)
     
     def _generate_salt(self) -> bytes:
-        """Generate cryptographic salt"""
+        """
+Generate cryptographic salt"""
         return secrets.token_bytes(self.config.salt_size)
     
     def _generate_iv(self) -> bytes:
-        """Generate initialization vector"""
+        """
+Generate initialization vector"""
         return secrets.token_bytes(self.config.iv_size)
     
     async def generate_key(self, key_id: str, algorithm: EncryptionAlgorithm) -> bool:
-        """Generate symmetric encryption key"""
+        """
+Generate symmetric encryption key"""
         try:
             if algorithm == EncryptionAlgorithm.FERNET:
                 if Fernet:
@@ -259,7 +275,8 @@ class EncryptionCore:
             return False
     
     async def generate_asymmetric_key_pair(self, key_id: str, algorithm: EncryptionAlgorithm) -> bool:
-        """Generate asymmetric key pair"""
+        """
+Generate asymmetric key pair"""
         try:
             if not cryptography:
                 logger.warning("Cryptography not available for asymmetric keys")
@@ -306,7 +323,8 @@ class EncryptionCore:
             return False
     
     async def encrypt(self, data: Union[str, bytes], key_id: str = "default") -> Optional[Dict[str, Any]]:
-        """Encrypt data with specified key"""
+        """
+Encrypt data with specified key"""
         start_time = time.time()
         
         try:
@@ -376,7 +394,8 @@ class EncryptionCore:
             return None
     
     async def decrypt(self, encrypted_data: Dict[str, Any]) -> Optional[bytes]:
-        """Decrypt data"""
+        """
+Decrypt data"""
         start_time = time.time()
         
         try:
@@ -420,7 +439,8 @@ class EncryptionCore:
             return None
     
     async def sign_data(self, data: Union[str, bytes], key_id: str = "default_rsa") -> Optional[str]:
-        """Create digital signature"""
+        """
+Create digital signature"""
         try:
             if isinstance(data, str):
                 data = data.encode('utf-8')
@@ -454,7 +474,8 @@ class EncryptionCore:
             return None
     
     async def verify_signature(self, data: Union[str, bytes], signature: str, key_id: str = "default_rsa") -> bool:
-        """Verify digital signature"""
+        """
+Verify digital signature"""
         try:
             if isinstance(data, str):
                 data = data.encode('utf-8')
@@ -490,7 +511,8 @@ class EncryptionCore:
             return False
     
     def hash_data(self, data: Union[str, bytes], algorithm: HashAlgorithm = HashAlgorithm.SHA256) -> str:
-        """Hash data with specified algorithm"""
+        """
+Hash data with specified algorithm"""
         if isinstance(data, str):
             data = data.encode('utf-8')
         
@@ -508,7 +530,8 @@ class EncryptionCore:
             return hashlib.sha256(data).hexdigest()
     
     def _update_avg_time(self, operation: str, start_time: float):
-        """Update average operation time"""
+        """
+Update average operation time"""
         operation_time = time.time() - start_time
         
         if operation == 'encryption':
@@ -523,7 +546,8 @@ class EncryptionCore:
             )
     
     async def _key_rotation_loop(self):
-        """Automatic key rotation loop"""
+        """
+Automatic key rotation loop"""
         while not self._shutdown_event.is_set():
             try:
                 current_time = time.time()
@@ -542,7 +566,8 @@ class EncryptionCore:
                 await asyncio.sleep(3600)
     
     async def rotate_key(self, key_id: str) -> bool:
-        """Rotate encryption key"""
+        """
+Rotate encryption key"""
         try:
             if key_id not in self.key_metadata:
                 return False
@@ -573,7 +598,8 @@ class EncryptionCore:
             return False
     
     def _clear_sensitive_data(self):
-        """Clear sensitive data from memory"""
+        """
+Clear sensitive data from memory"""
         if self.config.secure_memory:
             self.symmetric_keys.clear()
             self.asymmetric_keys.clear()
@@ -581,7 +607,8 @@ class EncryptionCore:
             self.master_key = None
     
     async def health_check(self) -> bool:
-        """Perform encryption health check"""
+        """
+Perform encryption health check"""
         try:
             # Test encryption/decryption
             test_data = "health_check_test"
@@ -599,7 +626,8 @@ class EncryptionCore:
             return False
     
     async def _health_monitor_loop(self):
-        """Health monitoring loop"""
+        """
+Health monitoring loop"""
         while not self._shutdown_event.is_set():
             try:
                 await self.health_check()
@@ -611,11 +639,13 @@ class EncryptionCore:
                 await asyncio.sleep(600)  # Wait longer on error
     
     def get_metrics(self) -> EncryptionMetrics:
-        """Get current encryption metrics"""
+        """
+Get current encryption metrics"""
         return self.metrics
     
     def get_status_summary(self) -> Dict[str, Any]:
-        """Get encryption status summary"""
+        """
+Get encryption status summary"""
         return {
             "is_initialized": self.is_initialized,
             "active_keys": len([k for k, m in self.key_metadata.items() if m.is_active]),

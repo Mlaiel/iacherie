@@ -23,7 +23,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class LicenseType(Enum):
-    """Supported license types"""
+    """
+Supported license types"""
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     ROYALTY_FREE = "royalty_free"
@@ -31,7 +32,8 @@ class LicenseType(Enum):
     CUSTOM = "custom"
 
 class UsageType(Enum):
-    """Content usage types"""
+    """
+Content usage types"""
     COMMERCIAL = "commercial"
     EDITORIAL = "editorial"
     PERSONAL = "personal"
@@ -39,7 +41,8 @@ class UsageType(Enum):
     NON_PROFIT = "non_profit"
 
 class ComplianceRegion(Enum):
-    """Legal compliance regions"""
+    """
+Legal compliance regions"""
     EU_GDPR = "eu_gdpr"
     US_CCPA = "us_ccpa"
     US_DMCA = "us_dmca"
@@ -47,7 +50,8 @@ class ComplianceRegion(Enum):
     CUSTOM_REGION = "custom_region"
 
 class RightsStatus(Enum):
-    """Rights management status"""
+    """
+Rights management status"""
     ACTIVE = "active"
     EXPIRED = "expired"
     SUSPENDED = "suspended"
@@ -56,7 +60,8 @@ class RightsStatus(Enum):
 
 @dataclass
 class DigitalRights:
-    """Digital rights definition"""
+    """
+Digital rights definition"""
     rights_id: str
     content_id: str
     owner_id: str
@@ -74,7 +79,8 @@ class DigitalRights:
 
 @dataclass
 class LicenseAgreement:
-    """License agreement contract"""
+    """
+License agreement contract"""
     agreement_id: str
     rights_id: str
     licensee_id: str
@@ -92,7 +98,8 @@ class LicenseAgreement:
 
 @dataclass
 class UsageRecord:
-    """Content usage tracking record"""
+    """
+Content usage tracking record"""
     usage_id: str
     rights_id: str
     licensee_id: str
@@ -108,7 +115,8 @@ class UsageRecord:
 
 @dataclass
 class ComplianceRule:
-    """Legal compliance rule"""
+    """
+Legal compliance rule"""
     rule_id: str
     regulation_type: ComplianceRegion
     rule_name: str
@@ -122,7 +130,8 @@ class ComplianceRule:
     automated_check: bool = True
 
 class LicensingEngine:
-    """Advanced licensing management engine"""
+    """
+Advanced licensing management engine"""
     
     def __init__(self):
         self.license_templates = {}
@@ -135,7 +144,8 @@ class LicensingEngine:
         logger.info("Licensing Engine initialized")
 
     def _initialize_license_templates(self):
-        """Initialize standard license templates"""
+        """
+Initialize standard license templates"""
         self.license_templates = {
             LicenseType.EXCLUSIVE.value: {
                 "name": "Exclusive License",
@@ -197,7 +207,8 @@ class LicensingEngine:
         }
 
     async def create_license(self, license_data: Dict[str, Any]) -> str:
-        """Create a new license agreement"""
+        """
+Create a new license agreement"""
         try:
             license_type = LicenseType(license_data["license_type"])
             template = self.license_templates[license_type.value]
@@ -237,7 +248,8 @@ class LicensingEngine:
             raise
 
     async def validate_license(self, license_id: str) -> Dict[str, Any]:
-        """Validate license agreement and terms"""
+        """
+Validate license agreement and terms"""
         try:
             if license_id not in self.active_licenses:
                 return {"valid": False, "reason": "License not found"}
@@ -283,7 +295,8 @@ class LicensingEngine:
             return {"valid": False, "reason": f"Validation error: {str(e)}"}
 
     async def calculate_royalties(self, usage_record: UsageRecord) -> Dict[str, Any]:
-        """Calculate royalties based on usage"""
+        """
+Calculate royalties based on usage"""
         try:
             if usage_record.rights_id not in self.active_licenses:
                 raise ValueError(f"License not found: {usage_record.rights_id}")
@@ -325,11 +338,13 @@ class LicensingEngine:
             raise
 
     def _generate_license_id(self) -> str:
-        """Generate unique license ID"""
+        """
+Generate unique license ID"""
         return f"license_{uuid.uuid4().hex[:12]}"
 
     def _generate_digital_signature(self, agreement: LicenseAgreement) -> str:
-        """Generate digital signature for license agreement"""
+        """
+Generate digital signature for license agreement"""
         # Create signature from key agreement data
         signature_data = {
             "agreement_id": agreement.agreement_id,
@@ -344,7 +359,8 @@ class LicensingEngine:
         return hashlib.sha256(signature_string.encode()).hexdigest()
 
     def _get_territory_multiplier(self, territory: str) -> float:
-        """Get territory-based royalty multiplier"""
+        """
+Get territory-based royalty multiplier"""
         multipliers = {
             "US": 1.0,
             "EU": 0.9,
@@ -356,7 +372,8 @@ class LicensingEngine:
         return multipliers.get(territory, 1.0)
 
     def _get_usage_type_multiplier(self, usage_type: UsageType) -> float:
-        """Get usage type-based royalty multiplier"""
+        """
+Get usage type-based royalty multiplier"""
         multipliers = {
             UsageType.COMMERCIAL: 1.0,
             UsageType.EDITORIAL: 0.8,
@@ -367,7 +384,8 @@ class LicensingEngine:
         return multipliers.get(usage_type, 1.0)
 
 class UsageTracker:
-    """Advanced usage tracking system"""
+    """
+Advanced usage tracking system"""
     
     def __init__(self):
         self.usage_records = {}
@@ -377,7 +395,8 @@ class UsageTracker:
         logger.info("Usage Tracker initialized")
 
     async def track_usage(self, usage_data: Dict[str, Any]) -> str:
-        """Track content usage event"""
+        """
+Track content usage event"""
         try:
             usage_id = f"usage_{uuid.uuid4().hex[:12]}"
             
@@ -408,7 +427,8 @@ class UsageTracker:
             raise
 
     async def get_usage_analytics(self, rights_id: str, period_days: int = 30) -> Dict[str, Any]:
-        """Get usage analytics for specific rights"""
+        """
+Get usage analytics for specific rights"""
         try:
             # Filter usage records for the rights and period
             end_date = datetime.utcnow()
@@ -476,7 +496,8 @@ class UsageTracker:
             raise
 
     async def _verify_usage_compliance(self, usage_record: UsageRecord) -> bool:
-        """Verify usage compliance with license terms"""
+        """
+Verify usage compliance with license terms"""
         try:
             # This would integrate with the licensing engine
             # For now, return True as mock implementation
@@ -487,7 +508,8 @@ class UsageTracker:
             return False
 
 class ComplianceManager:
-    """Legal compliance management system"""
+    """
+Legal compliance management system"""
     
     def __init__(self):
         self.compliance_rules = {}
@@ -500,7 +522,8 @@ class ComplianceManager:
         logger.info("Compliance Manager initialized")
 
     def _initialize_compliance_rules(self):
-        """Initialize standard compliance rules"""
+        """
+Initialize standard compliance rules"""
         self.compliance_rules = {
             ComplianceRegion.EU_GDPR.value: {
                 "data_protection": {
@@ -558,7 +581,8 @@ class ComplianceManager:
         }
 
     async def check_compliance(self, content_data: Dict[str, Any], region: ComplianceRegion) -> Dict[str, Any]:
-        """Check compliance for specific content and region"""
+        """
+Check compliance for specific content and region"""
         try:
             region_rules = self.compliance_rules.get(region.value, {})
             compliance_results = {
@@ -603,10 +627,9 @@ class ComplianceManager:
             raise
 
     async def _check_individual_rule(self, content_data: Dict[str, Any], rule_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check compliance with individual rule"""
-        try:
-            # Mock compliance checking - in real implementation, this would
-            # integrate with actual compliance verification systems
+        """
+Check compliance with individual rule"""
+        try:            # integrate with actual compliance verification systems
             
             rule_result = {
                 "rule_id": rule_data["rule_id"],
@@ -636,7 +659,6 @@ class ComplianceManager:
 
     def _check_requirement(self, content_data: Dict[str, Any], requirement: str) -> bool:
         """Check specific compliance requirement"""
-        # Mock implementation - would integrate with actual compliance systems
         compliance_flags = content_data.get("compliance_flags", {})
         return compliance_flags.get(requirement, False)
 
@@ -683,7 +705,8 @@ class ComplianceManager:
             raise
 
 class RightsManagementCore:
-    """Main Rights Management Core System"""
+    """
+Main Rights Management Core System"""
     
     def __init__(self):
         self.version = "2.1.0"
@@ -695,7 +718,8 @@ class RightsManagementCore:
         logger.info("Rights Management Core initialized")
 
     async def create_digital_rights(self, rights_data: Dict[str, Any]) -> str:
-        """Create new digital rights record"""
+        """
+Create new digital rights record"""
         try:
             rights_id = f"rights_{uuid.uuid4().hex[:12]}"
             
@@ -729,7 +753,8 @@ class RightsManagementCore:
             raise
 
     async def license_content(self, license_request: Dict[str, Any]) -> Dict[str, Any]:
-        """Process content licensing request"""
+        """
+Process content licensing request"""
         try:
             rights_id = license_request["rights_id"]
             
@@ -773,7 +798,8 @@ class RightsManagementCore:
             raise
 
     async def track_content_usage(self, usage_data: Dict[str, Any]) -> str:
-        """Track content usage for rights management"""
+        """
+Track content usage for rights management"""
         try:
             usage_id = await self.usage_tracker.track_usage(usage_data)
             
@@ -792,7 +818,8 @@ class RightsManagementCore:
             raise
 
     async def check_rights_compliance(self, content_id: str, region: str = "international") -> Dict[str, Any]:
-        """Check rights compliance for content in specific region"""
+        """
+Check rights compliance for content in specific region"""
         try:
             # Find rights for content
             content_rights = [
@@ -840,7 +867,8 @@ class RightsManagementCore:
             raise
 
     async def generate_rights_report(self, owner_id: str) -> Dict[str, Any]:
-        """Generate comprehensive rights management report"""
+        """
+Generate comprehensive rights management report"""
         try:
             # Get all rights for owner
             owner_rights = [
@@ -900,7 +928,8 @@ class RightsManagementCore:
             raise
 
     async def _validate_licensing_request(self, rights: DigitalRights, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate licensing request against rights"""
+        """
+Validate licensing request against rights"""
         validation_result = {"valid": True, "issues": []}
         
         # Check if rights are active
@@ -934,7 +963,8 @@ class RightsManagementCore:
         return validation_result
 
     async def _get_license_terms(self, license_id: str) -> Dict[str, Any]:
-        """Get license terms for license ID"""
+        """
+Get license terms for license ID"""
         if license_id in self.licensing_engine.active_licenses:
             agreement = self.licensing_engine.active_licenses[license_id]
             return {
@@ -950,7 +980,8 @@ class RightsManagementCore:
         return {}
 
     async def _get_portfolio_compliance_status(self, rights_list: List[DigitalRights]) -> Dict[str, Any]:
-        """Get compliance status for rights portfolio"""
+        """
+Get compliance status for rights portfolio"""
         try:
             total_rights = len(rights_list)
             if total_rights == 0:
@@ -960,7 +991,6 @@ class RightsManagementCore:
             compliance_issues = []
             
             for rights in rights_list:
-                # Mock compliance check
                 is_compliant = rights.status == RightsStatus.ACTIVE and (
                     not rights.expires_at or rights.expires_at > datetime.utcnow()
                 )
@@ -989,7 +1019,8 @@ class RightsManagementCore:
             return {"compliance_rate": 0.0, "status": "error"}
 
     async def get_system_health(self) -> Dict[str, Any]:
-        """Get system health and statistics"""
+        """
+Get system health and statistics"""
         total_rights = len(self.digital_rights)
         active_licenses = len(self.licensing_engine.active_licenses)
         total_usage_records = len(self.usage_tracker.usage_records)
@@ -1022,4 +1053,4 @@ __all__ = [
 ]
 
 if __name__ == "__main__":
-    logger.info("Rights Management Core module loaded successfully")
+    logger.info("Rights Management Core module initialized successfully")

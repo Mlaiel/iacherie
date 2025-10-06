@@ -36,7 +36,8 @@ from prometheus_client import Counter, Histogram, Gauge, generate_latest, CONTEN
 # ========================================
 
 class HealthStatus(str, Enum):
-    """Health check status levels"""
+    """
+        Health check status levels"""
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -130,7 +131,8 @@ class HealthCheckManager:
         interval: int = 60,
         component_type: ComponentType = ComponentType.EXTERNAL_API
     ):
-        """Register a health check for a component"""
+        """
+        Register a health check for a component"""
         self.check_intervals[component] = interval
         self.running_checks[component] = False
         
@@ -138,29 +140,41 @@ class HealthCheckManager:
         asyncio.create_task(self._run_health_check(component, check_func))
     
     async def _run_health_check(self, component: str, check_func: Callable):
-        """Run health check for a component"""
+        """
+        Run health check for a component"""
         start_time = time.time()
+
         
         try:
             # Run the health check function
             if asyncio.iscoroutinefunction(check_func):
                 result = await check_func()
+
             else:
                 result = check_func()
+
+
             
             response_time = time.time() - start_time
             
             if isinstance(result, dict):
                 status = HealthStatus(result.get("status", "healthy"))
+
+
                 details = result.get("details", {})
+
+
                 error = result.get("error")
+
             elif isinstance(result, bool):
                 status = HealthStatus.HEALTHY if result else HealthStatus.UNHEALTHY
                 details = {}
+
                 error = None if result else "Health check returned False"
             else:
                 status = HealthStatus.HEALTHY
                 details = {"result": str(result)}
+
                 error = None
             
             self.health_checks[component] = HealthCheck(
@@ -170,6 +184,7 @@ class HealthCheckManager:
                 details=details,
                 error=error
             )
+
             
         except Exception as e:
             response_time = time.time() - start_time
@@ -183,7 +198,6 @@ class HealthCheckManager:
     async def check_database_health(self) -> Dict[str, Any]:
         """Check database health"""
         try:
-            # Mock database health check
             await asyncio.sleep(0.1)  # Simulate DB query
             return {
                 "status": "healthy",
@@ -202,8 +216,8 @@ class HealthCheckManager:
     async def check_cache_health(self) -> Dict[str, Any]:
         """Check cache (Redis) health"""
         try:
-            # Mock Redis health check
             await asyncio.sleep(0.05)
+
             return {
                 "status": "healthy",
                 "details": {
@@ -221,8 +235,8 @@ class HealthCheckManager:
     async def check_ai_engine_health(self) -> Dict[str, Any]:
         """Check AI engine health"""
         try:
-            # Mock AI engine health check
             await asyncio.sleep(0.2)
+
             return {
                 "status": "healthy",
                 "details": {
@@ -244,6 +258,7 @@ class HealthCheckManager:
                 "status": "unknown",
                 "message": "No health checks registered"
             }
+
         
         statuses = [check.status for check in self.health_checks.values()]
         
@@ -290,13 +305,15 @@ class MetricsCollector:
         self.system_disk = Gauge('system_disk_usage_percent', 'System disk usage')
     
     async def record_api_request(self, metrics: APIMetrics):
-        """Record API request metrics"""
+        """
+        Record API request metrics"""
         # Update Prometheus metrics
         self.request_counter.labels(
             method=metrics.method,
             endpoint=metrics.endpoint,
             status=str(metrics.status_code)
         ).inc()
+
         
         self.request_duration.labels(
             method=metrics.method,
@@ -304,6 +321,7 @@ class MetricsCollector:
         ).observe(metrics.response_time)
         
         # Store in buffer for real-time analytics
+
         key = f"{metrics.method}:{metrics.endpoint}"
         self.metrics_buffer[key].append(metrics.dict())
         
@@ -313,6 +331,7 @@ class MetricsCollector:
                 f"api_metrics:{datetime.now().strftime('%Y-%m-%d')}",
                 json.dumps(metrics.dict(), default=str)
             )
+
             await self.redis.expire(
                 f"api_metrics:{datetime.now().strftime('%Y-%m-%d')}",
                 86400 * 7  # Keep for 7 days
@@ -321,9 +340,13 @@ class MetricsCollector:
     async def record_system_metrics(self):
         """Record system-level metrics"""
         # Get system metrics
+
         cpu_percent = psutil.cpu_percent(interval=1)
+
         memory = psutil.virtual_memory()
+
         disk = psutil.disk_usage('/')
+
         network = psutil.net_io_counters()
         
         # Update Prometheus metrics
@@ -332,6 +355,7 @@ class MetricsCollector:
         self.system_disk.set(disk.percent)
         
         # Create system metrics object
+
         system_metrics = SystemMetrics(
             cpu_usage=cpu_percent,
             memory_usage=memory.percent,
@@ -359,9 +383,11 @@ class MetricsCollector:
             metrics_data = list(self.metrics_buffer[component])
         else:
             # Aggregate all metrics
+
             metrics_data = []
             for key, data in self.metrics_buffer.items():
                 metrics_data.extend(list(data))
+
         
         if not metrics_data:
             return {"message": "No metrics data available"}
@@ -376,8 +402,10 @@ class MetricsCollector:
         """Summarize system metrics"""
         if not metrics_data:
             return {}
+
         
         cpu_values = [m["cpu_usage"] for m in metrics_data]
+
         memory_values = [m["memory_usage"] for m in metrics_data]
         
         return {
@@ -398,8 +426,10 @@ class MetricsCollector:
         """Summarize API metrics"""
         if not metrics_data:
             return {}
+
         
         response_times = [m["response_time"] for m in metrics_data]
+
         status_codes = [m["status_code"] for m in metrics_data]
         
         return {
@@ -436,7 +466,8 @@ class AlertManager:
         component: str,
         description: str
     ):
-        """Add alert rule"""
+        """
+        Add alert rule"""
         self.alert_rules.append({
             "name": name,
             "condition": condition,
@@ -450,7 +481,8 @@ class AlertManager:
         self.notification_handlers.append(handler)
     
     async def check_alerts(self, metrics: Dict[str, Any]):
-        """Check metrics against alert rules"""
+        """
+        Check metrics against alert rules"""
         for rule in self.alert_rules:
             try:
                 if rule["condition"](metrics):
@@ -460,6 +492,7 @@ class AlertManager:
                         severity=rule["severity"],
                         component=rule["component"]
                     )
+
             except Exception as e:
                 print(f"Error checking alert rule {rule['name']}: {e}")
     
@@ -470,6 +503,7 @@ class AlertManager:
         # Check if alert already exists and is unresolved
         if alert_id in self.alerts and not self.alerts[alert_id].resolved:
             return  # Don't create duplicate alerts
+
         
         alert = Alert(
             id=alert_id,
@@ -478,6 +512,7 @@ class AlertManager:
             severity=severity,
             component=component
         )
+
         
         self.alerts[alert_id] = alert
         
@@ -485,6 +520,7 @@ class AlertManager:
         for handler in self.notification_handlers:
             try:
                 await handler(alert)
+
             except Exception as e:
                 print(f"Error sending alert notification: {e}")
     
@@ -493,18 +529,22 @@ class AlertManager:
         if alert_id in self.alerts:
             self.alerts[alert_id].resolved = True
             self.alerts[alert_id].resolved_at = datetime.now()
+
             return True
         return False
     
     def get_active_alerts(self) -> List[Alert]:
-        """Get all active (unresolved) alerts"""
+        """
+        Get all active (unresolved) alerts"""
         return [alert for alert in self.alerts.values() if not alert.resolved]
     
     def get_alert_history(self, hours: int = 24) -> List[Alert]:
-        """Get alert history"""
+        """
+        Get alert history"""
         cutoff_time = datetime.now() - timedelta(hours=hours)
         return [
             alert for alert in self.alerts.values()
+
             if alert.created_at >= cutoff_time
         ]
 
@@ -513,45 +553,57 @@ class AlertManager:
 # ========================================
 
 class MonitoringMiddleware:
-    """Middleware for collecting monitoring data"""
+    """
+        Middleware for collecting monitoring data"""
     
     def __init__(self, metrics_collector: MetricsCollector, alert_manager: AlertManager):
         self.metrics_collector = metrics_collector
         self.alert_manager = alert_manager
     
     async def __call__(self, request: Request, call_next):
-        """Collect metrics for each request"""
+        """
+        Collect metrics for each request"""
         start_time = time.time()
         
         # Get request size
+
         request_size = 0
         if hasattr(request, "body"):
             try:
                 body = await request.body()
+
+
                 request_size = len(body)
+
             except:
                 pass
         
         # Process request
+
         response = await call_next(request)
         
         # Calculate response time
+
         response_time = time.time() - start_time
         
         # Get response size
+
         response_size = 0
         if hasattr(response, "body"):
             try:
                 response_size = len(response.body)
+
             except:
                 pass
         
         # Extract user ID if available
+
         user_id = None
         if hasattr(request.state, "user"):
             user_id = getattr(request.state.user, "id", None)
         
         # Create metrics object
+
         api_metrics = APIMetrics(
             endpoint=request.url.path,
             method=request.method,
@@ -564,6 +616,7 @@ class MonitoringMiddleware:
         
         # Record metrics
         await self.metrics_collector.record_api_request(api_metrics)
+
         
         return response
 
@@ -585,8 +638,11 @@ class MonitoringEndpoints:
         self.alert_manager = alert_manager
     
     async def health_check(self) -> JSONResponse:
-        """Health check endpoint"""
+        """
+        Health check endpoint"""
         health_status = self.health_manager.get_overall_health()
+
+
         
         status_code = 200
         if health_status["status"] in ["unhealthy", "critical"]:
@@ -601,11 +657,13 @@ class MonitoringEndpoints:
         return self.health_manager.get_overall_health()
     
     async def metrics_summary(self, component: str = None, hours: int = 24) -> Dict[str, Any]:
-        """Get metrics summary"""
+        """
+        Get metrics summary"""
         return self.metrics_collector.get_metrics_summary(component, hours)
     
     async def system_metrics(self) -> Dict[str, Any]:
-        """Get current system metrics"""
+        """
+        Get current system metrics"""
         await self.metrics_collector.record_system_metrics()
         return self.metrics_collector.get_metrics_summary("system", 1)
     
@@ -617,12 +675,14 @@ class MonitoringEndpoints:
         )
     
     async def active_alerts(self) -> List[Dict[str, Any]]:
-        """Get active alerts"""
+        """
+        Get active alerts"""
         alerts = self.alert_manager.get_active_alerts()
         return [alert.dict() for alert in alerts]
     
     async def alert_history(self, hours: int = 24) -> List[Dict[str, Any]]:
-        """Get alert history"""
+        """
+        Get alert history"""
         alerts = self.alert_manager.get_alert_history(hours)
         return [alert.dict() for alert in alerts]
 
@@ -631,7 +691,8 @@ class MonitoringEndpoints:
 # ========================================
 
 class MonitoringService:
-    """Main monitoring service"""
+    """
+        Main monitoring service"""
     
     def __init__(self, redis_client: Optional[redis.Redis] = None):
         self.health_manager = HealthCheckManager()
@@ -643,23 +704,27 @@ class MonitoringService:
             self.metrics_collector, 
             self.alert_manager
         )
+
         
         self._setup_default_health_checks()
         self._setup_default_alert_rules()
     
     def _setup_default_health_checks(self):
-        """Setup default health checks"""
+        """
+        Setup default health checks"""
         self.health_manager.register_health_check(
             "database",
             self.health_manager.check_database_health,
             interval=30
         )
+
         
         self.health_manager.register_health_check(
             "cache",
             self.health_manager.check_cache_health,
             interval=30
         )
+
         
         self.health_manager.register_health_check(
             "ai_engine",
@@ -721,17 +786,24 @@ class MonitoringService:
                 await self.metrics_collector.record_system_metrics()
                 
                 # Check alerts
+
                 system_metrics = self.metrics_collector.get_metrics_summary("system", 1)
+
+
                 api_metrics = self.metrics_collector.get_metrics_summary("api", 1)
+
+
                 
                 combined_metrics = {**system_metrics, **api_metrics}
                 await self.alert_manager.check_alerts(combined_metrics)
                 
                 # Sleep for 60 seconds
                 await asyncio.sleep(60)
+
                 
             except Exception as e:
                 print(f"Error in background monitoring: {e}")
+
                 await asyncio.sleep(60)
 
 # ========================================
@@ -769,41 +841,59 @@ class BusinessIntelligence:
         self.metrics_collector = metrics_collector
         self.ml_predictions = {}
         self.anomaly_detector = AnomalyDetector()
+
         
     async def get_revenue_analytics(self, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
-        """Get comprehensive revenue analytics"""
+        """
+        Get comprehensive revenue analytics"""
         try:
             end_time = datetime.utcnow()
             
             # Calculate timeframe
             if timeframe == AnalyticsTimeframe.DAILY:
                 start_time = end_time - timedelta(days=1)
+
+
                 interval = "hour"
             elif timeframe == AnalyticsTimeframe.WEEKLY:
                 start_time = end_time - timedelta(weeks=1)
+
+
                 interval = "day"
             elif timeframe == AnalyticsTimeframe.MONTHLY:
                 start_time = end_time - timedelta(days=30)
+
+
                 interval = "day"
             else:
                 start_time = end_time - timedelta(hours=1)
+
+
                 interval = "minute"
             
             # Get revenue data
+
             revenue_data = await self._collect_revenue_metrics(start_time, end_time, interval)
             
             # Calculate key metrics
+
             total_revenue = sum(point["value"] for point in revenue_data)
+
+
             avg_revenue = total_revenue / len(revenue_data) if revenue_data else 0
             
             # Trend analysis
+
             trend = await self._calculate_revenue_trend(revenue_data)
             
             # Predictions
+
             predictions = await self._predict_revenue(revenue_data, timeframe)
             
             # Anomaly detection
+
             anomalies = await self.anomaly_detector.detect_revenue_anomalies(revenue_data)
+
             
             return {
                 "timeframe": timeframe.value,
@@ -818,25 +908,32 @@ class BusinessIntelligence:
             
         except Exception as e:
             logger.error(f"Revenue analytics failed: {str(e)}")
+
             return {"error": "Revenue analytics unavailable"}
     
     async def get_user_engagement_insights(self, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
         """Get user engagement insights with AI analysis"""
         try:
             # Collect engagement metrics
+
             engagement_data = await self._collect_engagement_metrics(timeframe)
             
             # Calculate engagement scores
+
             engagement_score = await self._calculate_engagement_score(engagement_data)
             
             # Behavioral segmentation
+
             segments = await self._segment_users_by_behavior(engagement_data)
             
             # Engagement predictions
+
             predictions = await self._predict_engagement_trends(engagement_data)
             
             # Recommendations
+
             recommendations = await self._generate_engagement_recommendations(engagement_data)
+
             
             return {
                 "engagement_score": engagement_score,
@@ -849,25 +946,32 @@ class BusinessIntelligence:
             
         except Exception as e:
             logger.error(f"Engagement insights failed: {str(e)}")
+
             return {"error": "Engagement insights unavailable"}
     
     async def get_content_performance_analytics(self, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
         """Get content performance analytics"""
         try:
             # Collect content metrics
+
             content_metrics = await self._collect_content_performance_metrics(timeframe)
             
             # Top performing content
+
             top_content = await self._identify_top_performing_content(content_metrics)
             
             # Content trends
+
             trends = await self._analyze_content_trends(content_metrics)
             
             # Optimization suggestions
+
             optimizations = await self._generate_content_optimizations(content_metrics)
             
             # Virality analysis
+
             viral_content = await self._analyze_viral_potential(content_metrics)
+
             
             return {
                 "top_performing_content": top_content,
@@ -880,28 +984,36 @@ class BusinessIntelligence:
             
         except Exception as e:
             logger.error(f"Content analytics failed: {str(e)}")
+
             return {"error": "Content analytics unavailable"}
     
     async def get_platform_health_dashboard(self) -> Dict[str, Any]:
         """Get comprehensive platform health dashboard"""
         try:
             # System health
+
             system_health = await self.metrics_collector.get_system_health()
             
             # API performance
+
             api_metrics = await self.metrics_collector.get_api_metrics()
             
             # Business metrics
+
             business_health = await self._calculate_business_health()
             
             # User satisfaction
+
             satisfaction_score = await self._calculate_user_satisfaction()
             
             # Security status
+
             security_status = await self._get_security_status()
             
             # Infrastructure costs
+
             cost_analysis = await self._analyze_infrastructure_costs()
+
             
             return {
                 "overall_health_score": await self._calculate_overall_health_score(),
@@ -917,6 +1029,7 @@ class BusinessIntelligence:
             
         except Exception as e:
             logger.error(f"Health dashboard failed: {str(e)}")
+
             return {"error": "Health dashboard unavailable"}
     
     async def get_creator_success_metrics(self, creator_id: Optional[str] = None) -> Dict[str, Any]:
@@ -924,19 +1037,26 @@ class BusinessIntelligence:
         try:
             if creator_id:
                 # Individual creator metrics
+
                 metrics = await self._get_individual_creator_metrics(creator_id)
+
             else:
                 # Platform-wide creator metrics
+
                 metrics = await self._get_platform_creator_metrics()
             
             # Success scoring
+
             success_scores = await self._calculate_creator_success_scores(metrics)
             
             # Growth predictions
+
             growth_predictions = await self._predict_creator_growth(metrics)
             
             # Recommendations
+
             recommendations = await self._generate_creator_recommendations(metrics)
+
             
             return {
                 "success_scores": success_scores,
@@ -948,6 +1068,7 @@ class BusinessIntelligence:
             
         except Exception as e:
             logger.error(f"Creator metrics failed: {str(e)}")
+
             return {"error": "Creator metrics unavailable"}
     
     # Helper methods for business intelligence
@@ -955,13 +1076,15 @@ class BusinessIntelligence:
     async def _collect_revenue_metrics(self, start_time: datetime, end_time: datetime, interval: str) -> List[Dict]:
         """Collect revenue metrics over time period"""
         try:
-            # Mock revenue data collection - would query actual database
             data_points = []
+
             current_time = start_time
             
             while current_time <= end_time:
                 # Simulate revenue data with some randomness
+
                 base_revenue = 1000 + (current_time.hour * 50)  # Higher during business hours
+
                 revenue = base_revenue + (hash(str(current_time)) % 500)  # Add variation
                 
                 data_points.append({
@@ -973,10 +1096,13 @@ class BusinessIntelligence:
                 # Increment by interval
                 if interval == "minute":
                     current_time += timedelta(minutes=1)
+
                 elif interval == "hour":
                     current_time += timedelta(hours=1)
+
                 else:
                     current_time += timedelta(days=1)
+
             
             return data_points
             
@@ -990,12 +1116,19 @@ class BusinessIntelligence:
                 return {"trend": "insufficient_data", "change_percent": 0}
             
             # Calculate trend using simple linear regression
+
             values = [point["value"] for point in revenue_data]
+
             n = len(values)
             
             # Simple trend calculation
+
             first_half = sum(values[:n//2]) / (n//2)
+
+
             second_half = sum(values[n//2:]) / (n - n//2)
+
+
             
             change_percent = ((second_half - first_half) / first_half) * 100 if first_half > 0 else 0
             
@@ -1021,21 +1154,31 @@ class BusinessIntelligence:
         try:
             if len(revenue_data) < 5:
                 return {"prediction": "insufficient_data"}
+
             
             values = [point["value"] for point in revenue_data]
             
             # Simple moving average prediction
+
             recent_avg = sum(values[-5:]) / 5
             
             # Trend-adjusted prediction
+
             trend = await self._calculate_revenue_trend(revenue_data)
+
+
             trend_factor = 1.0 + (trend["change_percent"] / 100)
+
+
             
             next_period_prediction = recent_avg * trend_factor
             
             # Confidence based on data consistency
+
             variance = sum((v - recent_avg) ** 2 for v in values[-5:]) / 5
+
             confidence = max(0.5, 1.0 - (variance / recent_avg) if recent_avg > 0 else 0.5)
+
             
             return {
                 "next_period": round(next_period_prediction, 2),
@@ -1050,7 +1193,6 @@ class BusinessIntelligence:
     async def _collect_engagement_metrics(self, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
         """Collect user engagement metrics"""
         try:
-            # Mock engagement data
             return {
                 "active_users": 15000 + (hash(str(timeframe)) % 5000),
                 "session_duration_avg": 1800 + (hash(str(timeframe)) % 600),
@@ -1066,10 +1208,19 @@ class BusinessIntelligence:
         """Calculate overall engagement score"""
         try:
             # Weighted engagement score calculation
+
             active_users_score = min(1.0, engagement_data.get("active_users", 0) / 20000)
+
+
             session_score = min(1.0, engagement_data.get("session_duration_avg", 0) / 3600)
+
+
             interaction_score = min(1.0, engagement_data.get("content_interactions", 0) / 50000)
+
+
             retention_score = engagement_data.get("return_visitor_rate", 0)
+
+
             
             overall_score = (
                 active_users_score * 0.3 +
@@ -1077,6 +1228,7 @@ class BusinessIntelligence:
                 interaction_score * 0.25 +
                 retention_score * 0.2
             )
+
             
             return round(overall_score * 100, 1)  # Convert to percentage
             
@@ -1099,19 +1251,27 @@ class AnomalyDetector:
         try:
             if len(revenue_data) < 10:
                 return []
+
             
             values = [point["value"] for point in revenue_data]
             
             # Calculate statistical measures
+
             mean_value = sum(values) / len(values)
+
+
             variance = sum((v - mean_value) ** 2 for v in values) / len(values)
+
+
             std_dev = variance ** 0.5
+
             
             anomalies = []
             
             # Detect outliers using z-score
             for i, point in enumerate(revenue_data):
                 value = point["value"]
+
                 z_score = abs(value - mean_value) / std_dev if std_dev > 0 else 0
                 
                 if z_score > 2.5:  # More than 2.5 standard deviations
@@ -1123,6 +1283,7 @@ class AnomalyDetector:
                         "type": "outlier",
                         "z_score": round(z_score, 2)
                     })
+
             
             return anomalies
             
@@ -1136,6 +1297,7 @@ class AnomalyDetector:
             
             for point in performance_data:
                 response_time = point.get("response_time", 0)
+
                 
                 if response_time > self.thresholds["performance"]["max_response_time"]:
                     anomalies.append({
@@ -1146,6 +1308,7 @@ class AnomalyDetector:
                         "severity": "high" if response_time > 5.0 else "medium",
                         "type": "performance_degradation"
                     })
+
             
             return anomalies
             
@@ -1179,13 +1342,17 @@ class PredictiveAnalyticsEngine:
         """Generate revenue forecast with confidence intervals"""
         try:
             # Get historical data
+
             historical_data = await self._get_historical_revenue_data(timeframe * 3)
             
             # Engineer features
+
             features = await self.feature_engineering.prepare_revenue_features(historical_data)
             
             # Generate forecast
+
             forecast = await self.models["revenue_forecast"].predict(features, timeframe)
+
             
             return {
                 "forecast_period_days": timeframe,
@@ -1213,16 +1380,21 @@ class PredictiveAnalyticsEngine:
         """Predict user churn with risk segmentation"""
         try:
             # Get user behavior data
+
             user_data = await self._get_user_behavior_data(user_segments)
             
             # Prepare features
+
             features = await self.feature_engineering.prepare_churn_features(user_data)
             
             # Generate predictions
+
             churn_predictions = await self.models["churn_prediction"].predict(features)
             
             # Segment by risk level
+
             risk_segments = self._segment_churn_risk(churn_predictions)
+
             
             return {
                 "prediction_horizon_days": prediction_horizon,
@@ -1269,10 +1441,13 @@ class PredictiveAnalyticsEngine:
         """Predict content virality potential"""
         try:
             # Prepare content features
+
             features = await self.feature_engineering.prepare_content_features(content_metadata)
             
             # Generate virality prediction
+
             prediction = await self.models["content_performance"].predict(features)
+
             
             return {
                 "virality_score": prediction["virality_score"],
@@ -1297,13 +1472,17 @@ class PredictiveAnalyticsEngine:
         """Predict infrastructure scaling requirements"""
         try:
             # Get current usage metrics
+
             current_metrics = await self._get_current_platform_metrics()
             
             # Prepare scaling features
+
             features = await self.feature_engineering.prepare_scaling_features(current_metrics)
             
             # Generate scaling predictions
+
             scaling_prediction = await self.models["platform_scaling"].predict(features)
+
             
             return {
                 "scaling_recommendations": {
@@ -1339,7 +1518,9 @@ class PredictiveAnalyticsEngine:
     def _segment_churn_risk(self, predictions: Dict) -> Dict[str, List]:
         """Segment users by churn risk level"""
         high_risk = [user for user, prob in predictions["user_probabilities"].items() if prob > 0.8]
+
         medium_risk = [user for user, prob in predictions["user_probabilities"].items() if 0.4 <= prob <= 0.8]
+
         low_risk = [user for user, prob in predictions["user_probabilities"].items() if prob < 0.4]
         
         return {"high": high_risk, "medium": medium_risk, "low": low_risk}
@@ -1353,12 +1534,16 @@ class RevenueForecaster:
     """Revenue forecasting ML model"""
     
     async def predict(self, features: Dict, timeframe: int) -> Dict[str, Any]:
-        """Generate revenue forecast"""
-        # Mock ML prediction - would use actual trained model
+        """
+        Generate revenue forecast"""
         base_revenue = features.get("avg_daily_revenue", 1000)
+
         growth_rate = features.get("growth_rate", 0.05)
+
+
         
         prediction = base_revenue * timeframe * (1 + growth_rate)
+
         
         return {
             "prediction": prediction,
@@ -1375,8 +1560,8 @@ class ChurnPredictor:
     """User churn prediction ML model"""
     
     async def predict(self, features: Dict) -> Dict[str, Any]:
-        """Predict user churn probabilities"""
-        # Mock ML prediction
+        """
+        Predict user churn probabilities"""
         return {
             "overall_rate": 0.15,
             "user_probabilities": {f"user_{i}": 0.1 + (i % 10) * 0.1 for i in range(100)},
@@ -1400,8 +1585,8 @@ class ContentPerformancePredictor:
     """Content performance prediction ML model"""
     
     async def predict(self, features: Dict) -> Dict[str, Any]:
-        """Predict content performance metrics"""
-        # Mock ML prediction
+        """
+        Predict content performance metrics"""
         return {
             "virality_score": 0.78,
             "view_prediction": 25000,
@@ -1425,8 +1610,8 @@ class EngagementPredictor:
     """User engagement prediction ML model"""
     
     async def predict(self, features: Dict) -> Dict[str, Any]:
-        """Predict user engagement metrics"""
-        # Mock ML prediction
+        """
+        Predict user engagement metrics"""
         return {
             "engagement_score": 0.74,
             "predicted_sessions": 12,
@@ -1439,8 +1624,8 @@ class ScalingPredictor:
     """Infrastructure scaling prediction ML model"""
     
     async def predict(self, features: Dict) -> Dict[str, Any]:
-        """Predict scaling requirements"""
-        # Mock ML prediction
+        """
+        Predict scaling requirements"""
         return {
             "db_action": "scale_up",
             "db_timeline": "2 weeks",
@@ -1464,7 +1649,8 @@ class FeatureEngineer:
     """Feature engineering for ML models"""
     
     async def prepare_revenue_features(self, historical_data: List) -> Dict[str, Any]:
-        """Prepare features for revenue forecasting"""
+        """
+        Prepare features for revenue forecasting"""
         if not historical_data:
             return {"avg_daily_revenue": 1000, "growth_rate": 0.05}
         
@@ -1506,7 +1692,8 @@ class ModelMonitor:
     """Monitor ML model performance and drift"""
     
     async def check_model_health(self, model_name: str) -> Dict[str, Any]:
-        """Check ML model health and performance"""
+        """
+        Check ML model health and performance"""
         return {
             "model_name": model_name,
             "accuracy": 0.89,

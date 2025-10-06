@@ -21,7 +21,8 @@ from datetime import datetime
 logger = logging.getLogger(__name__)
 
 class CulturalDimension(Enum):
-    """Cultural dimensions for adaptation"""
+    """
+Cultural dimensions for adaptation"""
     POWER_DISTANCE = "power_distance"
     INDIVIDUALISM = "individualism"
     MASCULINITY = "masculinity"
@@ -30,7 +31,8 @@ class CulturalDimension(Enum):
     INDULGENCE = "indulgence"
 
 class CommunicationStyle(Enum):
-    """Communication style preferences"""
+    """
+Communication style preferences"""
     DIRECT = "direct"
     INDIRECT = "indirect"
     HIGH_CONTEXT = "high_context"
@@ -38,7 +40,8 @@ class CommunicationStyle(Enum):
 
 @dataclass
 class CulturalProfile:
-    """Cultural profile for a region/country"""
+    """
+Cultural profile for a region/country"""
     country_code: str
     region: str
     power_distance: float  # 0-100
@@ -56,7 +59,8 @@ class CulturalProfile:
 
 @dataclass
 class CulturalAdaptation:
-    """Cultural adaptation for content"""
+    """
+Cultural adaptation for content"""
     original_content: str
     adapted_content: str
     cultural_considerations: List[str]
@@ -72,7 +76,8 @@ class CulturalAdaptationEngine:
     """
     
     def __init__(self):
-        """Initialize Cultural Adaptation Engine"""
+        """
+Initialize Cultural Adaptation Engine"""
         self.cultural_profiles = self._initialize_cultural_profiles()
         self.adaptation_rules = self._initialize_adaptation_rules()
         self.color_mappings = self._initialize_color_mappings()
@@ -83,7 +88,8 @@ class CulturalAdaptationEngine:
         logger.info(f"📋 Configured {len(self.adaptation_rules)} adaptation rules")
     
     def _initialize_cultural_profiles(self) -> Dict[str, CulturalProfile]:
-        """Initialize cultural profiles for different countries/regions"""
+        """
+Initialize cultural profiles for different countries/regions"""
         profiles = {}
         
         # Western cultures
@@ -165,7 +171,8 @@ class CulturalAdaptationEngine:
         return profiles
     
     def _initialize_adaptation_rules(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize cultural adaptation rules"""
+        """
+Initialize cultural adaptation rules"""
         return {
             'high_power_distance': {
                 'ui_hierarchy': 'emphasized',
@@ -206,7 +213,8 @@ class CulturalAdaptationEngine:
         }
     
     def _initialize_color_mappings(self) -> Dict[str, Dict[str, str]]:
-        """Initialize cultural color mappings"""
+        """
+Initialize cultural color mappings"""
         return {
             'CN': {
                 'prosperity': 'red',
@@ -235,7 +243,8 @@ class CulturalAdaptationEngine:
         }
     
     def _initialize_content_filters(self) -> Dict[str, List[str]]:
-        """Initialize cultural content filters"""
+        """
+Initialize cultural content filters"""
         return {
             'religious_sensitivity': [
                 'religious_imagery_check',
@@ -324,7 +333,8 @@ class CulturalAdaptationEngine:
         )
     
     def _adapt_for_high_context(self, content: str, profile: CulturalProfile) -> str:
-        """Adapt content for high-context cultures"""
+        """
+Adapt content for high-context cultures"""
         # Add more context and indirect communication
         if "you should" in content.lower():
             content = content.replace("you should", "it might be beneficial to consider")
@@ -335,7 +345,8 @@ class CulturalAdaptationEngine:
         return content
     
     def _adapt_for_high_power_distance(self, content: str, profile: CulturalProfile) -> str:
-        """Adapt content for high power distance cultures"""
+        """
+Adapt content for high power distance cultures"""
         # Add more formal language and hierarchy respect
         if "we recommend" in content.lower():
             content = content.replace("we recommend", "our experts respectfully suggest")
@@ -346,7 +357,8 @@ class CulturalAdaptationEngine:
         return content
     
     def _adapt_for_uncertainty_avoidance(self, content: str, profile: CulturalProfile) -> str:
-        """Adapt content for uncertainty avoidance cultures"""
+        """
+Adapt content for uncertainty avoidance cultures"""
         # Add more details and security assurances
         if "easy" in content.lower():
             content = content.replace("easy", "thoroughly tested and reliable")
@@ -357,7 +369,8 @@ class CulturalAdaptationEngine:
         return content
     
     def _filter_taboos(self, content: str, taboos: List[str]) -> str:
-        """Filter content based on cultural taboos"""
+        """
+Filter content based on cultural taboos"""
         filtered_content = content
         
         for taboo in taboos:
@@ -371,7 +384,8 @@ class CulturalAdaptationEngine:
         return filtered_content
     
     def _calculate_adaptation_level(self, original: str, adapted: str, level: str) -> float:
-        """Calculate adaptation level score"""
+        """
+Calculate adaptation level score"""
         if original == adapted:
             return 0.0
         
@@ -385,7 +399,8 @@ class CulturalAdaptationEngine:
         return min(change_ratio * level_multipliers.get(level, 0.6), 1.0)
     
     def _calculate_confidence_score(self, profile: CulturalProfile, level: str) -> float:
-        """Calculate confidence score for adaptation"""
+        """
+Calculate confidence score for adaptation"""
         base_confidence = 0.8
         
         # Higher confidence for well-defined profiles
@@ -404,7 +419,8 @@ class CulturalAdaptationEngine:
         return min(base_confidence * level_confidence.get(level, 0.8), 1.0)
     
     def get_cultural_recommendations(self, target_culture: str) -> Dict[str, Any]:
-        """Get cultural recommendations for specific culture"""
+        """
+Get cultural recommendations for specific culture"""
         if target_culture not in self.cultural_profiles:
             return {}
         
@@ -428,7 +444,8 @@ class CulturalAdaptationEngine:
     
     def validate_cultural_appropriateness(self, content: str, 
                                         target_culture: str) -> Dict[str, Any]:
-        """Validate content for cultural appropriateness"""
+        """
+Validate content for cultural appropriateness"""
         if target_culture not in self.cultural_profiles:
             return {'valid': True, 'warnings': [], 'suggestions': []}
         
@@ -465,7 +482,8 @@ class CulturalAdaptationEngine:
         }
     
     def _contains_taboo_reference(self, content: str, taboo: str) -> bool:
-        """Check if content contains taboo references"""
+        """
+Check if content contains taboo references"""
         taboo_keywords = {
             'political_topics': ['election', 'government', 'politics', 'vote'],
             'religious_criticism': ['religion', 'god', 'faith', 'belief'],
@@ -477,12 +495,14 @@ class CulturalAdaptationEngine:
         return any(keyword in content.lower() for keyword in keywords)
     
     def _is_too_direct(self, content: str) -> bool:
-        """Check if content is too direct for high-context cultures"""
+        """
+Check if content is too direct for high-context cultures"""
         direct_phrases = ['you must', 'you should', 'buy now', 'act fast', 'limited time']
         return any(phrase in content.lower() for phrase in direct_phrases)
     
     def _check_color_appropriateness(self, content: str, culture: str) -> List[str]:
-        """Check color appropriateness for specific culture"""
+        """
+Check color appropriateness for specific culture"""
         warnings = []
         color_rules = self.color_mappings.get(culture, {})
         
@@ -512,5 +532,5 @@ __all__ = [
 ]
 
 # Log module initialization
-logger.info("🌍 Cultural Adaptation module loaded successfully")
+logger.info("🌍 Cultural Adaptation module initialized successfully")
 logger.info("✅ Ready for multicultural content adaptation and validation")

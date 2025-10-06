@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class StablecoinCore:
-    """Advanced StablecoinCore System"""
+    """
+Advanced StablecoinCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class StablecoinCore:
 # Module exports
 __all__ = ["StablecoinCore"]
 
-logger.info("💰 StablecoinCore module loaded")
+logger.info("💰 StablecoinCore module initialized")

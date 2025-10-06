@@ -34,7 +34,8 @@ import pandas as pd
 # ========================================
 
 class SerializationFormat(str, Enum):
-    """Supported serialization formats"""
+    """
+        Supported serialization formats"""
     JSON = "json"
     XML = "xml"
     CSV = "csv"
@@ -66,11 +67,13 @@ class BaseSerializationModel(BaseModel):
         }
         
     def to_dict(self, exclude_none: bool = True) -> Dict[str, Any]:
-        """Convert to dictionary with proper serialization"""
+        """
+        Convert to dictionary with proper serialization"""
         return self.dict(exclude_none=exclude_none, by_alias=True)
 
 class APIResponse(BaseSerializationModel):
-    """Standard API response format"""
+    """
+        Standard API response format"""
     success: bool = Field(default=True, description="Request success status")
     message: str = Field(default="Operation completed successfully", description="Response message")
     data: Optional[Dict[str, Any]] = Field(default=None, description="Response data")
@@ -187,7 +190,8 @@ class SerializationService:
         format_type: SerializationFormat = SerializationFormat.JSON,
         compression: CompressionType = CompressionType.NONE
     ) -> Union[str, bytes]:
-        """Serialize data to specified format"""
+        """
+        Serialize data to specified format"""
         
         if format_type == SerializationFormat.JSON:
             serialized = self._serialize_json(data)
@@ -203,6 +207,7 @@ class SerializationService:
         # Apply compression if requested
         if compression != CompressionType.NONE:
             serialized = self._compress_data(serialized, compression)
+
         
         return serialized
     
@@ -210,6 +215,7 @@ class SerializationService:
         """Serialize to JSON format"""
         if isinstance(data, BaseModel):
             return data.json(by_alias=True, exclude_none=True)
+
         
         return json.dumps(
             data,
@@ -220,12 +226,16 @@ class SerializationService:
         )
     
     def _serialize_xml(self, data: Any) -> str:
-        """Serialize to XML format"""
+        """
+        Serialize to XML format"""
         if isinstance(data, BaseModel):
             data = data.dict(by_alias=True, exclude_none=True)
+
+
         
         root = ET.Element("response")
         self._dict_to_xml(data, root)
+
         
         return ET.tostring(root, encoding='unicode', method='xml')
     
@@ -233,21 +243,31 @@ class SerializationService:
         """Serialize to CSV format"""
         if isinstance(data, BaseModel):
             data = data.dict(by_alias=True, exclude_none=True)
+
         
         if isinstance(data, list) and data and isinstance(data[0], dict):
             # List of dictionaries - create CSV
             output = StringIO()
+
             if data:
                 writer = csv.DictWriter(output, fieldnames=data[0].keys())
+
                 writer.writeheader()
+
                 writer.writerows(data)
+
             return output.getvalue()
         elif isinstance(data, dict):
             # Single dictionary - create simple CSV
             output = StringIO()
+
+
             writer = csv.writer(output)
+
             writer.writerow(data.keys())
+
             writer.writerow(data.values())
+
             return output.getvalue()
         else:
             raise ValueError("Data must be a list of dictionaries or a dictionary for CSV serialization")
@@ -256,17 +276,23 @@ class SerializationService:
         """Serialize to Excel format"""
         if isinstance(data, BaseModel):
             data = data.dict(by_alias=True, exclude_none=True)
+
+
         
         output = BytesIO()
+
         
         if isinstance(data, list) and data and isinstance(data[0], dict):
             df = pd.DataFrame(data)
+
             df.to_excel(output, index=False, engine='openpyxl')
         elif isinstance(data, dict):
             df = pd.DataFrame([data])
+
             df.to_excel(output, index=False, engine='openpyxl')
         else:
             raise ValueError("Data must be a list of dictionaries or a dictionary for Excel serialization")
+
         
         output.seek(0)
         return output.read()
@@ -275,16 +301,21 @@ class SerializationService:
         """Convert dictionary to XML elements"""
         for key, value in data.items():
             element = ET.SubElement(parent, str(key))
+
             
             if isinstance(value, dict):
                 self._dict_to_xml(value, element)
+
             elif isinstance(value, list):
                 for item in value:
                     item_element = ET.SubElement(element, "item")
+
                     if isinstance(item, dict):
                         self._dict_to_xml(item, item_element)
+
                     else:
                         item_element.text = str(item)
+
             else:
                 element.text = str(value)
     
@@ -302,6 +333,7 @@ class SerializationService:
             return list(obj)
         elif hasattr(obj, 'dict'):
             return obj.dict()
+
         
         raise TypeError(f"Object of type {type(obj)} is not JSON serializable")
     
@@ -309,6 +341,7 @@ class SerializationService:
         """Compress data using specified compression type"""
         if isinstance(data, str):
             data = data.encode('utf-8')
+
         
         if compression == CompressionType.GZIP:
             return gzip.compress(data)
@@ -318,6 +351,7 @@ class SerializationService:
         elif compression == CompressionType.BROTLI:
             import brotli
             return brotli.compress(data)
+
         
         return data
 
@@ -326,7 +360,8 @@ class SerializationService:
 # ========================================
 
 class ResponseBuilder:
-    """Builder for creating standardized API responses"""
+    """
+        Builder for creating standardized API responses"""
     
     def __init__(self, serialization_service: SerializationService = None):
         self.serializer = serialization_service or SerializationService()
@@ -347,6 +382,7 @@ class ResponseBuilder:
             meta=meta,
             request_id=request_id
         )
+
         
         return JSONResponse(
             status_code=status.HTTP_200_OK,
@@ -368,6 +404,7 @@ class ResponseBuilder:
             errors=errors or [],
             request_id=request_id
         )
+
         
         return JSONResponse(
             status_code=status_code,
@@ -386,8 +423,11 @@ class ResponseBuilder:
         """Create paginated response"""
         
         pages = (total + per_page - 1) // per_page
+
         has_next = page < pages
+
         has_prev = page > 1
+
         
         paginated_data = PaginatedResponse(
             items=items,
@@ -398,6 +438,8 @@ class ResponseBuilder:
             has_next=has_next,
             has_prev=has_prev
         )
+
+
         
         response_data = APIResponse(
             success=True,
@@ -405,6 +447,7 @@ class ResponseBuilder:
             data=paginated_data.dict(),
             request_id=request_id
         )
+
         
         return JSONResponse(
             status_code=status.HTTP_200_OK,
@@ -492,38 +535,52 @@ class HighPerformanceSerializer:
         compression: CompressionType = CompressionType.GZIP,
         optimization_level: int = 1
     ) -> Dict[str, Any]:
-        """Serialize data with performance optimizations"""
+        """
+        Serialize data with performance optimizations"""
         start_time = time.time()
+
         
         try:
             # Check cache first
+
             cache_key = self._generate_cache_key(data, format_type, compression)
+
             if cache_key in self.serialization_cache:
                 cached_result = self.serialization_cache[cache_key]
                 await self.performance_monitor.record_cache_hit(cache_key)
+
                 return cached_result
             
             # Serialize based on format
             if format_type == SerializationFormat.JSON:
                 serialized = await self._optimize_json_serialization(data, optimization_level)
+
             elif format_type == SerializationFormat.MSGPACK:
                 serialized = await self._optimize_msgpack_serialization(data)
+
             elif format_type == SerializationFormat.PROTOBUF:
                 serialized = await self._optimize_protobuf_serialization(data)
+
             elif format_type == SerializationFormat.AVRO:
                 serialized = await self._optimize_avro_serialization(data)
+
             else:
                 serialized = json.dumps(data, default=str).encode()
             
             # Apply compression if requested
             if compression != CompressionType.NONE:
                 compressed_data = await self.compression_engines[compression](serialized)
+
+
                 compression_ratio = len(serialized) / len(compressed_data)
+
             else:
                 compressed_data = serialized
+
                 compression_ratio = 1.0
             
             # Build result
+
             result = {
                 "data": compressed_data,
                 "format": format_type.value,
@@ -540,6 +597,7 @@ class HighPerformanceSerializer:
                 self.serialization_cache[cache_key] = result
             
             await self.performance_monitor.record_serialization(result)
+
             
             return result
             
@@ -557,6 +615,7 @@ class HighPerformanceSerializer:
             try:
                 import ujson
                 return ujson.dumps(data, ensure_ascii=False).encode('utf-8')
+
             except ImportError:
                 pass
         
@@ -568,7 +627,8 @@ class HighPerformanceSerializer:
         return json.dumps(data, default=str).encode('utf-8')
     
     async def _optimize_msgpack_serialization(self, data: Any) -> bytes:
-        """MessagePack serialization for binary efficiency"""
+        """
+        MessagePack serialization for binary efficiency"""
         try:
             import msgpack
             return msgpack.packb(data, use_bin_type=True)
@@ -577,22 +637,24 @@ class HighPerformanceSerializer:
             return json.dumps(data, default=str).encode('utf-8')
     
     async def _optimize_protobuf_serialization(self, data: Any) -> bytes:
-        """Protocol Buffers serialization for schema-based efficiency"""
-        # Mock implementation - would use actual protobuf schemas
+        """
+        Protocol Buffers serialization for schema-based efficiency"""
         return json.dumps(data, default=str).encode('utf-8')
     
     async def _optimize_avro_serialization(self, data: Any) -> bytes:
-        """Apache Avro serialization for schema evolution"""
-        # Mock implementation - would use actual Avro schemas
+        """
+        Apache Avro serialization for schema evolution"""
         return json.dumps(data, default=str).encode('utf-8')
     
     async def _gzip_compress(self, data: bytes) -> bytes:
-        """GZIP compression"""
+        """
+        GZIP compression"""
         import gzip
         return gzip.compress(data, compresslevel=6)
     
     async def _brotli_compress(self, data: bytes) -> bytes:
-        """Brotli compression for better ratios"""
+        """
+        Brotli compression for better ratios"""
         try:
             import brotli
             return brotli.compress(data, quality=6)
@@ -600,7 +662,8 @@ class HighPerformanceSerializer:
             return await self._gzip_compress(data)
     
     async def _lz4_compress(self, data: bytes) -> bytes:
-        """LZ4 compression for speed"""
+        """
+        LZ4 compression for speed"""
         try:
             import lz4.frame
             return lz4.frame.compress(data)
@@ -608,7 +671,8 @@ class HighPerformanceSerializer:
             return await self._gzip_compress(data)
     
     async def _zstd_compress(self, data: bytes) -> bytes:
-        """Zstandard compression for balanced speed/ratio"""
+        """
+        Zstandard compression for balanced speed/ratio"""
         try:
             import zstd
             return zstd.compress(data, level=6)
@@ -616,8 +680,10 @@ class HighPerformanceSerializer:
             return await self._gzip_compress(data)
     
     def _generate_cache_key(self, data: Any, format_type: SerializationFormat, compression: CompressionType) -> str:
-        """Generate cache key for serialization result"""
+        """
+        Generate cache key for serialization result"""
         import hashlib
+
         data_hash = hashlib.md5(str(data).encode()).hexdigest()
         return f"{format_type.value}_{compression.value}_{data_hash}"
 
@@ -635,19 +701,25 @@ class MultiFormatBatchSerializer:
         format_preferences: Dict[str, SerializationFormat] = None,
         compression_preferences: Dict[str, CompressionType] = None
     ) -> Dict[str, Any]:
-        """Serialize multiple items in batch with format-specific optimizations"""
+        """
+        Serialize multiple items in batch with format-specific optimizations"""
         try:
             # Group items by format requirements
+
             format_groups = self._group_by_format(data_items, format_preferences)
             
             # Process each format group
+
             results = {}
             for format_type, items in format_groups.items():
                 compression = compression_preferences.get(format_type.value, CompressionType.GZIP)
+
+
                 
                 batch_result = await self.batch_processor.process_format_batch(
                     items, format_type, compression
                 )
+
                 results[format_type.value] = batch_result
             
             return {
@@ -670,11 +742,15 @@ class MultiFormatBatchSerializer:
         
         for item in data_items:
             item_type = item.get("type", "default")
+
+
             format_type = format_preferences.get(item_type, SerializationFormat.JSON)
+
             
             if format_type not in groups:
                 groups[format_type] = []
             groups[format_type].append(item)
+
         
         return groups
 
@@ -701,15 +777,20 @@ class SerializationPerformanceMonitor:
         self.performance_stats["cache_misses"] += 1
         
         # Update average serialization time
+
         current_avg = self.performance_stats["avg_serialization_time"]
+
         total_count = self.performance_stats["total_serializations"]
+
         new_time = result.get("serialization_time_ms", 0)
+
         
         self.performance_stats["avg_serialization_time"] = (
             (current_avg * (total_count - 1) + new_time) / total_count
         )
         
         # Track compression efficiency
+
         compression_type = result.get("compression", "none")
         if compression_type not in self.performance_stats["compression_stats"]:
             self.performance_stats["compression_stats"][compression_type] = {
@@ -717,25 +798,32 @@ class SerializationPerformanceMonitor:
                 "avg_ratio": 0.0,
                 "total_size_saved": 0
             }
+
         
         compression_stat = self.performance_stats["compression_stats"][compression_type]
         compression_stat["usage_count"] += 1
         
         if "compression_ratio" in result:
             ratio = result["compression_ratio"]
+
             current_avg_ratio = compression_stat["avg_ratio"]
+
             usage_count = compression_stat["usage_count"]
             
             compression_stat["avg_ratio"] = (
                 (current_avg_ratio * (usage_count - 1) + ratio) / usage_count
             )
+
+
             
             size_saved = result.get("original_size", 0) - result.get("compressed_size", 0)
+
             compression_stat["total_size_saved"] += size_saved
     
     def get_performance_report(self) -> Dict[str, Any]:
         """Get comprehensive performance report"""
         total_requests = self.performance_stats["cache_hits"] + self.performance_stats["cache_misses"]
+
         cache_hit_rate = (self.performance_stats["cache_hits"] / total_requests * 100) if total_requests > 0 else 0
         
         return {
@@ -761,26 +849,39 @@ class BatchProcessor:
         format_type: SerializationFormat,
         compression: CompressionType
     ) -> Dict[str, Any]:
-        """Process a batch of items with the same format"""
+        """
+        Process a batch of items with the same format"""
         start_time = time.time()
+
         
         try:
             # Serialize all items in the batch
+
             serialized_items = []
+
             total_original_size = 0
+
             total_compressed_size = 0
             
             for item in items:
                 # Use high-performance serializer
+
                 high_perf_serializer = HighPerformanceSerializer()
+
+
                 result = await high_perf_serializer.serialize_with_optimization(
                     item, format_type, compression, optimization_level=2
                 )
+
                 
                 if "error" not in result:
                     serialized_items.append(result)
+
                     total_original_size += result.get("original_size", 0)
+
                     total_compressed_size += result.get("compressed_size", 0)
+
+
             
             processing_time = (time.time() - start_time) * 1000
             

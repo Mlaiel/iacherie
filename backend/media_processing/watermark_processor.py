@@ -63,7 +63,8 @@ logger = logging.getLogger(__name__)
 
 
 class WatermarkType(Enum):
-    """Watermark types"""
+    """
+        Watermark types"""
     INVISIBLE = "invisible"
     VISIBLE = "visible"
     AUDIO = "audio"
@@ -142,7 +143,8 @@ class WatermarkConfig:
 
 
 class WatermarkProcessor:
-    """Enterprise content watermarking system with multi-modal support"""
+    """
+        Enterprise content watermarking system with multi-modal support"""
     
     def __init__(self, config: WatermarkConfig = None):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -154,6 +156,7 @@ class WatermarkProcessor:
         
         # Encryption key for secure watermarking
         self.encryption_key = self._generate_encryption_key()
+
         
         self.logger.info("Watermark Processor initialized")
     
@@ -173,6 +176,7 @@ class WatermarkProcessor:
             self.logger.info(f"Embedding watermark into content: {content_id}")
             
             # Create watermark info
+
             watermark_info = WatermarkInfo(
                 content_id=content_id,
                 watermark_type=watermark_type,
@@ -188,23 +192,28 @@ class WatermarkProcessor:
             )
             
             # Embed watermark based on content type
+
             watermarked_content = None
+
             processing_details = {}
             
             if content_type == ContentType.IMAGE:
                 watermarked_content, processing_details = await self._embed_image_watermark(
                     content_data, watermark_info
                 )
+
             elif content_type == ContentType.AUDIO:
                 watermarked_content, processing_details = await self._embed_audio_watermark(
                     content_data, watermark_info
                 )
+
             elif content_type == ContentType.VIDEO:
                 watermarked_content, processing_details = await self._embed_video_watermark(
                     content_data, watermark_info
                 )
             
             # Create result
+
             result = WatermarkResult(
                 watermark_id=watermark_info.watermark_id,
                 content_id=content_id,
@@ -220,10 +229,12 @@ class WatermarkProcessor:
                 self.processing_results[result.result_id] = result
             
             self.logger.info(f"Watermark embedding completed for {content_id}: {result.success}")
+
             return result
             
         except Exception as e:
             self.logger.error(f"Watermark embedding failed for {content_id}: {str(e)}")
+
             return WatermarkResult(
                 content_id=content_id,
                 success=False,
@@ -242,29 +253,36 @@ class WatermarkProcessor:
             self.logger.info(f"Extracting watermark from content: {content_id}")
             
             # Get watermark info if available
+
             watermark_info = None
             if watermark_id:
                 watermark_info = self.watermark_database.get(watermark_id)
             
             # Extract watermark based on content type
+
             extracted_data = None
+
             processing_details = {}
+
             confidence = 0.0
             
             if content_type == ContentType.IMAGE:
                 extracted_data, confidence, processing_details = await self._extract_image_watermark(
                     content_data, watermark_info
                 )
+
             elif content_type == ContentType.AUDIO:
                 extracted_data, confidence, processing_details = await self._extract_audio_watermark(
                     content_data, watermark_info
                 )
+
             elif content_type == ContentType.VIDEO:
                 extracted_data, confidence, processing_details = await self._extract_video_watermark(
                     content_data, watermark_info
                 )
             
             # Create result
+
             result = WatermarkResult(
                 watermark_id=watermark_id or "unknown",
                 content_id=content_id,
@@ -278,10 +296,12 @@ class WatermarkProcessor:
             self.processing_results[result.result_id] = result
             
             self.logger.info(f"Watermark extraction completed for {content_id}: {result.success}")
+
             return result
             
         except Exception as e:
             self.logger.error(f"Watermark extraction failed for {content_id}: {str(e)}")
+
             return WatermarkResult(
                 content_id=content_id,
                 success=False,
@@ -301,6 +321,7 @@ class WatermarkProcessor:
             self.logger.info(f"Verifying watermark for content: {content_id}")
             
             # Extract watermark
+
             extraction_result = await self.extract_watermark(
                 content_id=content_id,
                 content_data=content_data,
@@ -309,6 +330,7 @@ class WatermarkProcessor:
             )
             
             # Verify extracted watermark
+
             verification_result = {
                 "content_id": content_id,
                 "watermark_present": extraction_result.success,
@@ -323,19 +345,23 @@ class WatermarkProcessor:
             
             if extraction_result.success and extraction_result.extraction_result:
                 # Compare extracted watermark with expected
+
                 match_score = await self._compare_watermarks(
                     extraction_result.extraction_result,
                     expected_watermark
                 )
+
                 
                 verification_result["watermark_valid"] = match_score > 0.8
                 verification_result["match_score"] = match_score
             
             self.logger.info(f"Watermark verification completed for {content_id}")
+
             return verification_result
             
         except Exception as e:
             self.logger.error(f"Watermark verification failed for {content_id}: {str(e)}")
+
             return {
                 "content_id": content_id,
                 "watermark_present": False,
@@ -356,26 +382,37 @@ class WatermarkProcessor:
         try:
             if not VISUAL_PROCESSING_AVAILABLE:
                 raise ValueError("Visual processing libraries not available")
+
             
             self.logger.info(f"Creating visible watermark for: {content_id}")
             
             # Load image
+
             image = Image.open(io.BytesIO(image_data))
             
             # Create watermark overlay
+
             overlay = Image.new('RGBA', image.size, (255, 255, 255, 0))
+
+
             draw = ImageDraw.Draw(overlay)
             
             # Try to load font, fallback to default
             try:
                 font = ImageFont.truetype("arial.ttf", font_size)
+
             except:
                 font = ImageFont.load_default()
             
             # Calculate text position
+
             text_bbox = draw.textbbox((0, 0), watermark_text, font=font)
+
+
             text_width = text_bbox[2] - text_bbox[0]
+
             text_height = text_bbox[3] - text_bbox[1]
+
             
             positions = {
                 "top_left": (10, 10),
@@ -384,24 +421,35 @@ class WatermarkProcessor:
                 "bottom_right": (image.width - text_width - 10, image.height - text_height - 10),
                 "center": ((image.width - text_width) // 2, (image.height - text_height) // 2)
             }
+
             
             pos = positions.get(position, positions["bottom_right"])
             
             # Draw text with semi-transparency
+
             alpha = int(255 * opacity)
+
             draw.text(pos, watermark_text, font=font, fill=(255, 255, 255, alpha))
             
             # Composite watermark onto image
+
             watermarked = Image.alpha_composite(image.convert('RGBA'), overlay)
+
+
             watermarked = watermarked.convert('RGB')
             
             # Convert back to bytes
             import io
+
             output_buffer = io.BytesIO()
+
             watermarked.save(output_buffer, format='JPEG', quality=95)
+
+
             watermarked_data = output_buffer.getvalue()
             
             # Create result
+
             result = WatermarkResult(
                 content_id=content_id,
                 success=True,
@@ -415,12 +463,15 @@ class WatermarkProcessor:
                     "font_size": font_size
                 }
             )
+
             
             self.logger.info(f"Visible watermark created for {content_id}")
+
             return result
             
         except Exception as e:
             self.logger.error(f"Visible watermark creation failed for {content_id}: {str(e)}")
+
             return WatermarkResult(
                 content_id=content_id,
                 success=False,
@@ -438,30 +489,47 @@ class WatermarkProcessor:
         
         try:
             # Load image
+
             image = Image.open(io.BytesIO(image_data))
+
+
             image_array = np.array(image)
             
             # Prepare watermark data
+
             watermark_bits = self._string_to_bits(watermark_info.watermark_data)
+
             
             if watermark_info.method == WatermarkMethod.LSB:
                 # LSB embedding
+
                 watermarked_array = await self._embed_lsb(image_array, watermark_bits)
+
             elif watermark_info.method == WatermarkMethod.DCT:
                 # DCT embedding (simplified)
+
+
                 watermarked_array = await self._embed_dct(image_array, watermark_bits)
+
             else:
                 # Default to LSB
                 watermarked_array = await self._embed_lsb(image_array, watermark_bits)
             
             # Convert back to image
+
             watermarked_image = Image.fromarray(watermarked_array.astype(np.uint8))
             
             # Save to bytes
             import io
+
             output_buffer = io.BytesIO()
+
             watermarked_image.save(output_buffer, format='PNG')
+
+
             watermarked_data = output_buffer.getvalue()
+
+
             
             processing_details = {
                 "method": watermark_info.method.value,
@@ -486,20 +554,31 @@ class WatermarkProcessor:
         
         try:
             # Load audio (simplified - in reality would need proper audio decoding)
+
+
             audio_array = np.frombuffer(audio_data, dtype=np.float32)
             
             # Prepare watermark
+
             watermark_bits = self._string_to_bits(watermark_info.watermark_data)
+
             
             if watermark_info.method == WatermarkMethod.SPECTRAL:
                 # Spectral domain embedding
+
                 watermarked_audio = await self._embed_spectral_audio(audio_array, watermark_bits)
+
             else:
                 # Default to simple amplitude modulation
+
                 watermarked_audio = await self._embed_amplitude_audio(audio_array, watermark_bits)
             
             # Convert back to bytes (simplified)
+
+
             watermarked_data = watermarked_audio.astype(np.float32).tobytes()
+
+
             
             processing_details = {
                 "method": watermark_info.method.value,
@@ -522,6 +601,7 @@ class WatermarkProcessor:
         try:
             # For video, we would extract frames, watermark them, and reassemble
             # This is a simplified implementation
+
             
             processing_details = {
                 "method": watermark_info.method.value,
@@ -548,21 +628,31 @@ class WatermarkProcessor:
         
         try:
             # Load image
+
             image = Image.open(io.BytesIO(image_data))
+
+
             image_array = np.array(image)
             
             # Extract based on method
             if watermark_info and watermark_info.method == WatermarkMethod.LSB:
                 extracted_bits = await self._extract_lsb(image_array)
+
             elif watermark_info and watermark_info.method == WatermarkMethod.DCT:
                 extracted_bits = await self._extract_dct(image_array)
+
             else:
                 # Try LSB extraction
+
                 extracted_bits = await self._extract_lsb(image_array)
             
             # Convert bits to string
+
             extracted_text = self._bits_to_string(extracted_bits)
+
+
             confidence = 0.8 if extracted_text else 0.0
+
             
             processing_details = {
                 "method": watermark_info.method.value if watermark_info else "lsb",
@@ -586,17 +676,23 @@ class WatermarkProcessor:
         
         try:
             # Load audio
+
             audio_array = np.frombuffer(audio_data, dtype=np.float32)
             
             # Extract based on method
             if watermark_info and watermark_info.method == WatermarkMethod.SPECTRAL:
                 extracted_bits = await self._extract_spectral_audio(audio_array)
+
             else:
                 extracted_bits = await self._extract_amplitude_audio(audio_array)
             
             # Convert to string
+
             extracted_text = self._bits_to_string(extracted_bits)
+
+
             confidence = 0.7 if extracted_text else 0.0
+
             
             processing_details = {
                 "method": watermark_info.method.value if watermark_info else "amplitude",
@@ -617,6 +713,7 @@ class WatermarkProcessor:
         """Extract watermark from video"""
         try:
             # Simplified video watermark extraction
+
             processing_details = {
                 "method": watermark_info.method.value if watermark_info else "unknown",
                 "frames_analyzed": 0,
@@ -631,6 +728,7 @@ class WatermarkProcessor:
     async def _embed_lsb(self, image_array: np.ndarray, watermark_bits: List[int]) -> np.ndarray:
         """Embed watermark using LSB method"""
         watermarked = image_array.copy()
+
         flat = watermarked.flatten()
         
         # Embed watermark bits
@@ -643,11 +741,12 @@ class WatermarkProcessor:
     async def _embed_dct(self, image_array: np.ndarray, watermark_bits: List[int]) -> np.ndarray:
         """Embed watermark using DCT method (simplified)"""
         # Simplified DCT embedding
-        return image_array  # Placeholder
+        return image_array
     
-    async def _embed_spectral_audio(self, audio_array: np.ndarray, watermark_bits: List[int]) -> np.ndarray:
+    async def _embed_spectral(self, audio_array: np.ndarray, watermark_bits: List[int]) -> np.ndarray:
         """Embed watermark in audio spectral domain"""
         # Simplified spectral embedding
+
         watermarked = audio_array.copy()
         
         # Add watermark to specific frequencies (simplified)
@@ -660,7 +759,8 @@ class WatermarkProcessor:
         return watermarked
     
     async def _embed_amplitude_audio(self, audio_array: np.ndarray, watermark_bits: List[int]) -> np.ndarray:
-        """Embed watermark using amplitude modulation"""
+        """
+        Embed watermark using amplitude modulation"""
         watermarked = audio_array.copy()
         
         # Simple amplitude embedding
@@ -672,24 +772,30 @@ class WatermarkProcessor:
         return watermarked
     
     async def _extract_lsb(self, image_array: np.ndarray) -> List[int]:
-        """Extract watermark using LSB method"""
+        """
+        Extract watermark using LSB method"""
         flat = image_array.flatten()
+
         bits = []
         
         # Extract LSBs
         for pixel in flat[:1000]:  # Limit extraction
             bits.append(pixel & 1)
+
         
         return bits
     
     async def _extract_dct(self, image_array: np.ndarray) -> List[int]:
-        """Extract watermark using DCT method"""
+        """
+        Extract watermark using DCT method"""
         # Simplified DCT extraction
         return []
     
     async def _extract_spectral_audio(self, audio_array: np.ndarray) -> List[int]:
-        """Extract watermark from audio spectral domain"""
+        """
+        Extract watermark from audio spectral domain"""
         # Simplified spectral extraction
+
         bits = []
         
         for i in range(min(100, len(audio_array) // 100)):
@@ -697,11 +803,13 @@ class WatermarkProcessor:
             if idx < len(audio_array):
                 # Check for amplitude above threshold
                 bits.append(1 if abs(audio_array[idx]) > 0.001 else 0)
+
         
         return bits
     
     async def _extract_amplitude_audio(self, audio_array: np.ndarray) -> List[int]:
-        """Extract watermark from audio amplitude"""
+        """
+        Extract watermark from audio amplitude"""
         bits = []
         
         for i in range(min(100, len(audio_array) // 1000)):
@@ -709,23 +817,30 @@ class WatermarkProcessor:
             if idx < len(audio_array):
                 # Check for amplitude modification
                 bits.append(1 if audio_array[idx] > 1.0 else 0)
+
         
         return bits
     
     def _string_to_bits(self, text: str) -> List[int]:
-        """Convert string to list of bits"""
+        """
+        Convert string to list of bits"""
         bits = []
         for char in text:
             byte = ord(char)
+
             for i in range(8):
                 bits.append((byte >> i) & 1)
         return bits
     
     def _bits_to_string(self, bits: List[int]) -> str:
-        """Convert list of bits to string"""
+        """
+        Convert list of bits to string"""
         if len(bits) % 8 != 0:
             # Pad with zeros
+
             bits = bits + [0] * (8 - len(bits) % 8)
+
+
         
         text = ""
         for i in range(0, len(bits), 8):
@@ -739,6 +854,7 @@ class WatermarkProcessor:
             
             try:
                 text += chr(byte)
+
             except ValueError:
                 break
         
@@ -754,13 +870,17 @@ class WatermarkProcessor:
             return 1.0
         
         # Calculate similarity ratio
+
         matches = sum(1 for a, b in zip(extracted, expected) if a == b)
+
         max_length = max(len(extracted), len(expected))
+
         
         return matches / max_length if max_length > 0 else 0.0
     
     def _generate_encryption_key(self) -> bytes:
-        """Generate encryption key for secure watermarking"""
+        """
+        Generate encryption key for secure watermarking"""
         if not CRYPTO_AVAILABLE:
             return b"default_key_for_watermarking_12345"
         
@@ -775,7 +895,8 @@ class WatermarkProcessor:
 _watermark_processor = None
 
 def get_watermark_processor() -> WatermarkProcessor:
-    """Get singleton watermark processor instance"""
+    """
+        Get singleton watermark processor instance"""
     global _watermark_processor
     if _watermark_processor is None:
         _watermark_processor = WatermarkProcessor()

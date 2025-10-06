@@ -39,7 +39,8 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueType(str, Enum):
-    """Types of revenue streams."""
+    """
+        Types of revenue streams."""
     AD_REVENUE = "ad_revenue"
     SUBSCRIPTION = "subscription"
     SPONSORSHIP = "sponsorship"
@@ -93,7 +94,8 @@ class RevenueEntry:
 
 @dataclass
 class RevenueAttribution:
-    """Revenue attribution analysis."""
+    """
+        Revenue attribution analysis."""
     content_id: str
     total_revenue: Decimal
     platform_breakdown: Dict[str, Decimal]
@@ -105,7 +107,8 @@ class RevenueAttribution:
 
 @dataclass
 class RevenuePerformanceMetrics:
-    """Revenue performance metrics."""
+    """
+        Revenue performance metrics."""
     total_revenue: Decimal
     revenue_per_view: Decimal
     revenue_per_engagement: Decimal
@@ -118,7 +121,8 @@ class RevenuePerformanceMetrics:
 
 @dataclass
 class RevenueInsight:
-    """Revenue-based insight."""
+    """
+        Revenue-based insight."""
     id: str
     title: str
     description: str
@@ -137,7 +141,8 @@ class RevenueTracker:
     """
     
     def __init__(self, database_connection=None, cache_client=None):
-        """Initialize the revenue tracker."""
+        """
+        Initialize the revenue tracker."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.db = database_connection
         self.cache = cache_client
@@ -145,6 +150,7 @@ class RevenueTracker:
         self.attribution_analyses: Dict[str, RevenueAttribution] = {}
         self.conversion_rates = self._initialize_conversion_rates()
         self.platform_fee_rates = self._initialize_platform_fees()
+
         
         self.logger.info("RevenueTracker initialized")
     
@@ -162,7 +168,8 @@ class RevenueTracker:
         }
     
     def _initialize_platform_fees(self) -> Dict[str, Decimal]:
-        """Initialize platform fee rates."""
+        """
+        Initialize platform fee rates."""
         return {
             "youtube": Decimal('0.45'),  # YouTube takes 45%
             "instagram": Decimal('0.30'),
@@ -193,14 +200,20 @@ class RevenueTracker:
                 amount = Decimal(str(amount))
             
             # Get conversion rate
+
             conversion_rate = self.conversion_rates.get(currency, Decimal('1.0'))
             
             # Calculate platform fees
+
             platform_fee_rate = self.platform_fee_rates.get(platform.lower(), Decimal('0.0'))
+
+
             fees_deducted = amount * platform_fee_rate
+
             net_amount = amount - fees_deducted
             
             # Create revenue entry
+
             revenue_entry = RevenueEntry(
                 id=revenue_id,
                 content_id=content_id,
@@ -220,13 +233,16 @@ class RevenueTracker:
             
             # Update attribution analysis
             await self._update_attribution_analysis(revenue_entry)
+
             
             self.logger.info(f"💰 Revenue tracked: {amount} {currency.value} for {content_id} on {platform}")
+
             
             return revenue_id
             
         except Exception as e:
             self.logger.error(f"Error tracking revenue: {e}")
+
             raise
     
     async def _update_attribution_analysis(self, revenue_entry: RevenueEntry):
@@ -243,6 +259,8 @@ class RevenueTracker:
                     revenue_type_breakdown={},
                     attribution_model=AttributionModel.LINEAR
                 )
+
+
             
             attribution = self.attribution_analyses[content_id]
             
@@ -253,18 +271,23 @@ class RevenueTracker:
             attribution.total_revenue += usd_amount
             
             # Update platform breakdown
+
             platform = revenue_entry.platform
             if platform not in attribution.platform_breakdown:
                 attribution.platform_breakdown[platform] = Decimal('0')
+
             attribution.platform_breakdown[platform] += usd_amount
             
             # Update revenue type breakdown
+
             revenue_type = revenue_entry.revenue_type.value
             if revenue_type not in attribution.revenue_type_breakdown:
                 attribution.revenue_type_breakdown[revenue_type] = Decimal('0')
+
             attribution.revenue_type_breakdown[revenue_type] += usd_amount
             
             # Add touchpoint contribution
+
             touchpoint = {
                 "platform": platform,
                 "revenue_type": revenue_type,
@@ -276,6 +299,7 @@ class RevenueTracker:
             
             # Recalculate contribution percentages
             await self._recalculate_contributions(attribution)
+
             
         except Exception as e:
             self.logger.error(f"Error updating attribution analysis: {e}")
@@ -288,8 +312,11 @@ class RevenueTracker:
             
             for touchpoint in attribution.touchpoint_contributions:
                 amount_usd = Decimal(str(touchpoint["amount_usd"]))
+
+
                 contribution_percentage = (amount_usd / attribution.total_revenue) * 100
                 touchpoint["contribution_percentage"] = float(contribution_percentage)
+
             
         except Exception as e:
             self.logger.error(f"Error recalculating contributions: {e}")
@@ -305,6 +332,7 @@ class RevenueTracker:
         """Get comprehensive revenue summary for the specified period."""
         try:
             # Filter revenue entries
+
             filtered_entries = []
             for entry in self.revenue_entries:
                 # Date filter
@@ -326,9 +354,14 @@ class RevenueTracker:
                 filtered_entries.append(entry)
             
             # Calculate summary metrics
+
             total_revenue_usd = Decimal('0')
+
+
             platform_revenue = {}
+
             revenue_type_revenue = {}
+
             currency_revenue = {}
             
             for entry in filtered_entries:
@@ -337,30 +370,40 @@ class RevenueTracker:
                 total_revenue_usd += usd_amount
                 
                 # Platform breakdown
+
                 platform = entry.platform
                 if platform not in platform_revenue:
                     platform_revenue[platform] = Decimal('0')
+
                 platform_revenue[platform] += usd_amount
                 
                 # Revenue type breakdown
+
                 rev_type = entry.revenue_type.value
                 if rev_type not in revenue_type_revenue:
                     revenue_type_revenue[rev_type] = Decimal('0')
+
                 revenue_type_revenue[rev_type] += usd_amount
                 
                 # Currency breakdown
+
                 currency = entry.currency.value
                 if currency not in currency_revenue:
                     currency_revenue[currency] = Decimal('0')
+
                 currency_revenue[currency] += entry.amount
             
             # Calculate growth rate
+
             growth_rate = await self._calculate_revenue_growth_rate(
                 start_date, end_date, platforms, content_ids, revenue_types
             )
             
             # Calculate performance metrics
+
             performance_metrics = await self._calculate_performance_metrics(filtered_entries)
+
+
             
             summary = {
                 "period": {
@@ -382,6 +425,7 @@ class RevenueTracker:
             
         except Exception as e:
             self.logger.error(f"Error getting revenue summary: {e}")
+
             return {}
     
     async def _calculate_revenue_growth_rate(
@@ -395,26 +439,36 @@ class RevenueTracker:
         """Calculate revenue growth rate compared to previous period."""
         try:
             # Calculate previous period
+
             period_duration = end_date - start_date
+
             prev_end_date = start_date
+
             prev_start_date = prev_end_date - period_duration
             
             # Get current period revenue
+
             current_summary = await self.get_revenue_summary(
                 start_date, end_date, platforms, content_ids, revenue_types
             )
+
+
             current_revenue = current_summary.get("total_revenue_usd", 0)
             
             # Get previous period revenue
+
             prev_summary = await self.get_revenue_summary(
                 prev_start_date, prev_end_date, platforms, content_ids, revenue_types
             )
+
+
             prev_revenue = prev_summary.get("total_revenue_usd", 0)
             
             # Calculate growth rate
             if prev_revenue > 0:
                 growth_rate = ((current_revenue - prev_revenue) / prev_revenue) * 100
                 return round(growth_rate, 2)
+
             elif current_revenue > 0:
                 return 100.0  # New revenue
             else:
@@ -422,6 +476,7 @@ class RevenueTracker:
                 
         except Exception as e:
             self.logger.error(f"Error calculating growth rate: {e}")
+
             return 0.0
     
     async def _calculate_performance_metrics(
@@ -440,6 +495,7 @@ class RevenueTracker:
             )
             
             # Group by content
+
             content_revenues = {}
             for entry in entries:
                 content_id = entry.content_id
@@ -448,6 +504,8 @@ class RevenueTracker:
                 content_revenues[content_id].append(entry)
             
             # Calculate metrics (simplified - would need additional data in real implementation)
+
+
             metrics = {
                 "average_revenue_per_content": float(total_revenue_usd / len(content_revenues)),
                 "total_transactions": len(entries),
@@ -460,6 +518,7 @@ class RevenueTracker:
             
         except Exception as e:
             self.logger.error(f"Error calculating performance metrics: {e}")
+
             return {}
     
     def _calculate_revenue_concentration(
@@ -472,37 +531,52 @@ class RevenueTracker:
                 return 0.0
             
             # Calculate revenue per content
+
             revenues = []
             for content_id, entries in content_revenues.items():
                 content_revenue = sum(
                     entry.net_amount * entry.conversion_rate_to_usd
                     for entry in entries
                 )
+
                 revenues.append(float(content_revenue))
             
             # Sort revenues
             revenues.sort()
+
+
             n = len(revenues)
+
             
             if n <= 1:
                 return 0.0
             
             # Simplified Gini coefficient calculation
+
             sum_of_absolute_differences = sum(
                 abs(revenues[i] - revenues[j])
+
                 for i in range(n)
+
                 for j in range(n)
             )
+
+
             
             mean_revenue = mean(revenues)
+
             if mean_revenue == 0:
                 return 0.0
+
             
             gini = sum_of_absolute_differences / (2 * n * n * mean_revenue)
+
             return round(gini, 3)
+
             
         except Exception as e:
             self.logger.error(f"Error calculating revenue concentration: {e}")
+
             return 0.0
     
     async def _get_top_performing_content(
@@ -513,6 +587,7 @@ class RevenueTracker:
         """Get top performing content by revenue."""
         try:
             # Group by content
+
             content_revenues = {}
             for entry in entries:
                 content_id = entry.content_id
@@ -523,14 +598,17 @@ class RevenueTracker:
                         "platforms": set(),
                         "revenue_types": set()
                     }
+
                 
                 usd_amount = entry.net_amount * entry.conversion_rate_to_usd
                 content_revenues[content_id]["total_revenue_usd"] += usd_amount
                 content_revenues[content_id]["transaction_count"] += 1
                 content_revenues[content_id]["platforms"].add(entry.platform)
+
                 content_revenues[content_id]["revenue_types"].add(entry.revenue_type.value)
             
             # Sort by revenue
+
             top_content = []
             for content_id, data in content_revenues.items():
                 top_content.append({
@@ -542,13 +620,16 @@ class RevenueTracker:
                     "platforms": list(data["platforms"]),
                     "revenue_types": list(data["revenue_types"])
                 })
+
             
             top_content.sort(key=lambda x: x["total_revenue_usd"], reverse=True)
+
             
             return top_content[:limit]
             
         except Exception as e:
             self.logger.error(f"Error getting top performing content: {e}")
+
             return []
     
     async def _calculate_revenue_trends(
@@ -561,23 +642,33 @@ class RevenueTracker:
                 return {}
             
             # Group by day
+
             daily_revenues = {}
             for entry in entries:
                 date_key = entry.timestamp.date().isoformat()
+
                 if date_key not in daily_revenues:
                     daily_revenues[date_key] = Decimal('0')
+
+
                 
                 usd_amount = entry.net_amount * entry.conversion_rate_to_usd
                 daily_revenues[date_key] += usd_amount
             
             # Calculate trend metrics
+
             revenues = list(daily_revenues.values())
+
             if len(revenues) < 2:
                 return {"trend": "insufficient_data"}
             
             # Simple trend analysis
+
             recent_avg = mean([float(r) for r in revenues[-3:]])  # Last 3 days
+
             overall_avg = mean([float(r) for r in revenues])
+
+
             
             trend_direction = "stable"
             if recent_avg > overall_avg * 1.1:
@@ -595,6 +686,7 @@ class RevenueTracker:
             
         except Exception as e:
             self.logger.error(f"Error calculating revenue trends: {e}")
+
             return {}
     
     async def generate_revenue_insights(
@@ -608,12 +700,16 @@ class RevenueTracker:
             insights = []
             
             # Get revenue summary
+
             summary = await self.get_revenue_summary(start_date, end_date)
             
             # High performing platform insight
+
             platform_breakdown = summary.get("platform_breakdown", {})
+
             if platform_breakdown:
                 top_platform = max(platform_breakdown.items(), key=lambda x: x[1])
+
                 if top_platform[1] >= min_impact_threshold:
                     insights.append(RevenueInsight(
                         id=str(uuid4()),
@@ -631,7 +727,9 @@ class RevenueTracker:
                     ))
             
             # Revenue growth insight
+
             growth_rate = summary.get("growth_rate_percentage", 0)
+
             if abs(growth_rate) > 10:  # Significant growth/decline
                 if growth_rate > 0:
                     insights.append(RevenueInsight(
@@ -648,6 +746,7 @@ class RevenueTracker:
                         ],
                         supporting_data={"growth_rate": growth_rate}
                     ))
+
                 else:
                     insights.append(RevenueInsight(
                         id=str(uuid4()),
@@ -666,7 +765,9 @@ class RevenueTracker:
                     ))
             
             # Revenue diversification insight
+
             revenue_type_breakdown = summary.get("revenue_type_breakdown", {})
+
             if len(revenue_type_breakdown) == 1:
                 insights.append(RevenueInsight(
                     id=str(uuid4()),
@@ -674,6 +775,7 @@ class RevenueTracker:
                     description="Revenue is concentrated in a single revenue type",
                     insight_type="diversification",
                     revenue_impact=Decimal('0'),  # Potential impact
+
                     confidence_score=0.7,
                     recommendations=[
                         "Explore additional revenue streams",
@@ -683,13 +785,16 @@ class RevenueTracker:
                     ],
                     supporting_data={"current_types": list(revenue_type_breakdown.keys())}
                 ))
+
             
             self.logger.info(f"💡 Generated {len(insights)} revenue insights")
+
             
             return insights
             
         except Exception as e:
             self.logger.error(f"Error generating revenue insights: {e}")
+
             return []
     
     async def get_attribution_analysis(self, content_id: str) -> Optional[RevenueAttribution]:
@@ -698,12 +803,14 @@ class RevenueTracker:
             return self.attribution_analyses.get(content_id)
         except Exception as e:
             self.logger.error(f"Error getting attribution analysis: {e}")
+
             return None
     
     async def update_conversion_rates(self, rates: Dict[Currency, Decimal]):
         """Update currency conversion rates."""
         try:
             self.conversion_rates.update(rates)
+
             self.logger.info("💱 Currency conversion rates updated")
         except Exception as e:
             self.logger.error(f"Error updating conversion rates: {e}")

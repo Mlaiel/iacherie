@@ -74,7 +74,8 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
+    """
+        Content protection levels"""
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -141,7 +142,8 @@ class ProtectionConfig:
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint structure"""
+    """
+        Content fingerprint structure"""
     fingerprint_id: str
     content_id: str
     fingerprint_type: FingerprintType
@@ -152,7 +154,8 @@ class ContentFingerprint:
 
 @dataclass
 class CopyrightEvidence:
-    """Copyright evidence model"""
+    """
+        Copyright evidence model"""
     evidence_type: str
     confidence_score: float
     source: str
@@ -161,7 +164,8 @@ class CopyrightEvidence:
 
 @dataclass
 class CopyrightValidationResult:
-    """Copyright validation result"""
+    """
+        Copyright validation result"""
     content_id: str
     status: CopyrightStatus
     confidence_score: float
@@ -177,7 +181,8 @@ class CopyrightValidationResult:
 
 @dataclass
 class ProtectionResult:
-    """Protection operation result"""
+    """
+        Protection operation result"""
     success: bool
     content_id: str
     protection_types_applied: List[ProtectionType]
@@ -189,10 +194,12 @@ class ProtectionResult:
     processing_time: float = 0.0
 
 class ContentProtectionSystem:
-    """Unified content protection system"""
+    """
+        Unified content protection system"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize content protection system"""
+        """
+        Initialize content protection system"""
         self.config = config or {}
         self.fingerprint_db = {}
         self.watermark_engines = {}
@@ -203,6 +210,7 @@ class ContentProtectionSystem:
         self._initialize_fingerprint_engines()
         self._initialize_watermark_engines()
         self._initialize_copyright_databases()
+
         
         logger.info("🛡️ Content Protection System initialized")
     
@@ -243,6 +251,7 @@ class ContentProtectionSystem:
     ) -> ProtectionResult:
         """Apply comprehensive protection to content"""
         start_time = datetime.now(timezone.utc)
+
         
         try:
             result = ProtectionResult(
@@ -256,8 +265,10 @@ class ContentProtectionSystem:
                 watermark_result = await self._apply_watermark(
                     content_data, config.watermark_config
                 )
+
                 result.watermark_applied = watermark_result['success']
                 result.protection_types_applied.append(ProtectionType.WATERMARK)
+
                 if watermark_result['success']:
                     content_data = watermark_result['watermarked_content']
             
@@ -266,8 +277,10 @@ class ContentProtectionSystem:
                 fingerprint_result = await self._generate_fingerprint(
                     content_data, content_id, config.fingerprint_config
                 )
+
                 result.fingerprint_generated = fingerprint_result['success']
                 result.protection_types_applied.append(ProtectionType.FINGERPRINT)
+
                 if fingerprint_result['success']:
                     result.protection_metadata['fingerprint'] = fingerprint_result['fingerprint']
             
@@ -276,8 +289,10 @@ class ContentProtectionSystem:
                 copyright_result = await self._validate_copyright(
                     content_data, content_id, config.copyright_config
                 )
+
                 result.copyright_validated = copyright_result['success']
                 result.protection_types_applied.append(ProtectionType.COPYRIGHT_VALIDATION)
+
                 if copyright_result['success']:
                     result.protection_metadata['copyright'] = copyright_result['validation']
             
@@ -286,21 +301,29 @@ class ContentProtectionSystem:
                 encryption_result = await self._apply_encryption(
                     content_data, config.encryption_config
                 )
+
                 if encryption_result['success']:
                     result.protection_types_applied.append(ProtectionType.ENCRYPTION)
+
                     result.protection_metadata['encryption'] = encryption_result['encryption_info']
             
             # Store protection metadata
             await self._store_protection_metadata(content_id, result)
+
+
             
             processing_time = (datetime.now(timezone.utc) - start_time).total_seconds()
+
             result.processing_time = processing_time
             
             return result
             
         except Exception as e:
             logger.error(f"Content protection failed for {content_id}: {e}")
+
+
             processing_time = (datetime.now(timezone.utc) - start_time).total_seconds()
+
             
             return ProtectionResult(
                 success=False,
@@ -319,13 +342,16 @@ class ContentProtectionSystem:
         """Generate content fingerprint"""
         try:
             engine = self.fingerprint_engines.get(fingerprint_type)
+
             if not engine:
                 raise ValueError(f"Fingerprint engine {fingerprint_type.value} not available")
             
             # Generate fingerprint hash
+
             hash_value = await engine(content_data)
             
             # Create fingerprint record
+
             fingerprint = ContentFingerprint(
                 fingerprint_id=str(uuid.uuid4()),
                 content_id=content_id,
@@ -345,6 +371,7 @@ class ContentProtectionSystem:
             
         except Exception as e:
             logger.error(f"Fingerprint generation failed: {e}")
+
             raise
     
     async def validate_copyright(
@@ -359,6 +386,7 @@ class ContentProtectionSystem:
         
         try:
             evidence = []
+
             confidence_scores = []
             
             # Perform validation using specified methods
@@ -366,18 +394,25 @@ class ContentProtectionSystem:
                 method_result = await self._perform_copyright_validation(
                     content_data, method
                 )
+
                 if method_result:
                     evidence.append(method_result['evidence'])
+
                     confidence_scores.append(method_result['confidence'])
             
             # Calculate overall confidence
+
             overall_confidence = np.mean(confidence_scores) if confidence_scores else 0.0
             
             # Determine copyright status
+
             status = await self._determine_copyright_status(evidence, overall_confidence)
             
             # Generate recommendations
+
             recommendations = await self._generate_copyright_recommendations(status, evidence)
+
+
             
             result = CopyrightValidationResult(
                 content_id=content_id,
@@ -388,11 +423,13 @@ class ContentProtectionSystem:
                 recommendations=recommendations,
                 human_review_required=overall_confidence < 0.7
             )
+
             
             return result
             
         except Exception as e:
             logger.error(f"Copyright validation failed: {e}")
+
             return CopyrightValidationResult(
                 content_id=content_id,
                 status=CopyrightStatus.UNKNOWN,
@@ -408,15 +445,18 @@ class ContentProtectionSystem:
         """Detect similar content using fingerprints"""
         try:
             # Generate fingerprint for input content
+
             test_fingerprint = await self._generate_test_fingerprint(content_data)
             
             # Compare against stored fingerprints
+
             matches = []
             for stored_id, stored_fingerprint in self.fingerprint_db.items():
                 if stored_fingerprint.fingerprint_type == test_fingerprint['type']:
                     similarity = await self._calculate_similarity(
                         test_fingerprint['hash'], stored_fingerprint.hash_value
                     )
+
                     
                     if similarity >= similarity_threshold:
                         matches.append({
@@ -428,11 +468,13 @@ class ContentProtectionSystem:
             
             # Sort by similarity score
             matches.sort(key=lambda x: x['similarity_score'], reverse=True)
+
             
             return matches
             
         except Exception as e:
             logger.error(f"Similarity detection failed: {e}")
+
             return []
     
     async def apply_watermark(
@@ -446,16 +488,25 @@ class ContentProtectionSystem:
     # Private helper methods
     
     async def _apply_watermark(self, content_data: Any, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply watermark to content"""
+        """
+        Apply watermark to content"""
         try:
             watermark_type = WatermarkType(config.get('type', 'visible'))
+
+
             watermark_text = config.get('text', 'Protected Content')
+
+
             
             engine = self.watermark_engines.get(watermark_type)
+
             if not engine:
                 raise ValueError(f"Watermark engine {watermark_type.value} not available")
+
+
             
             watermarked_content = await engine(content_data, watermark_text, config)
+
             
             return {
                 "success": True,
@@ -466,6 +517,7 @@ class ContentProtectionSystem:
             
         except Exception as e:
             logger.error(f"Watermark application failed: {e}")
+
             return {
                 "success": False,
                 "watermarked_content": content_data,
@@ -481,7 +533,10 @@ class ContentProtectionSystem:
         """Generate content fingerprint"""
         try:
             fingerprint_type = FingerprintType(config.get('type', 'perceptual_hash'))
+
+
             fingerprint = await self.generate_fingerprint(content_data, content_id, fingerprint_type)
+
             
             return {
                 "success": True,
@@ -494,6 +549,7 @@ class ContentProtectionSystem:
             
         except Exception as e:
             logger.error(f"Fingerprint generation failed: {e}")
+
             return {"success": False, "error": str(e)}
     
     async def _validate_copyright(
@@ -505,7 +561,9 @@ class ContentProtectionSystem:
         """Validate copyright for content"""
         try:
             methods = [ValidationMethod(m) for m in config.get('methods', ['ai_analysis'])]
+
             validation_result = await self.validate_copyright(content_data, content_id, methods)
+
             
             return {
                 "success": True,
@@ -518,20 +576,25 @@ class ContentProtectionSystem:
             
         except Exception as e:
             logger.error(f"Copyright validation failed: {e}")
+
             return {"success": False, "error": str(e)}
     
     async def _apply_encryption(self, content_data: Any, config: Dict[str, Any]) -> Dict[str, Any]:
         """Apply encryption to content"""
+        
         try:
-            # Placeholder encryption implementation
             encryption_key = config.get('key', 'default_key')
+
+
             algorithm = config.get('algorithm', 'AES256')
             
             # Simple base64 encoding as placeholder
             if isinstance(content_data, str):
                 encrypted_data = base64.b64encode(content_data.encode()).decode()
+
             else:
                 encrypted_data = base64.b64encode(str(content_data).encode()).decode()
+
             
             return {
                 "success": True,
@@ -544,6 +607,7 @@ class ContentProtectionSystem:
             
         except Exception as e:
             logger.error(f"Encryption failed: {e}")
+
             return {"success": False, "error": str(e)}
     
     async def _store_protection_metadata(self, content_id: str, result: ProtectionResult):
@@ -562,31 +626,34 @@ class ContentProtectionSystem:
         """Perform specific copyright validation method"""
         try:
             if method == ValidationMethod.AI_ANALYSIS:
-                # Placeholder AI analysis
                 confidence = 0.75
+
                 evidence = CopyrightEvidence(
                     evidence_type="ai_analysis",
                     confidence_score=confidence,
                     source="internal_ai_model",
                     details={"analysis_type": "content_similarity", "model_version": "1.0"}
                 )
+
                 return {"evidence": evidence, "confidence": confidence}
             
             elif method == ValidationMethod.DATABASE_LOOKUP:
-                # Placeholder database lookup
                 confidence = 0.60
+
                 evidence = CopyrightEvidence(
                     evidence_type="database_lookup",
                     confidence_score=confidence,
                     source="copyright_database",
                     details={"databases_checked": ["internal"], "matches_found": 0}
                 )
+
                 return {"evidence": evidence, "confidence": confidence}
             
             return None
             
         except Exception as e:
             logger.error(f"Copyright validation method {method.value} failed: {e}")
+
             return None
     
     async def _determine_copyright_status(
@@ -609,7 +676,8 @@ class ContentProtectionSystem:
         status: CopyrightStatus, 
         evidence: List[CopyrightEvidence]
     ) -> List[str]:
-        """Generate copyright recommendations"""
+        """
+        Generate copyright recommendations"""
         recommendations = []
         
         if status == CopyrightStatus.ORIGINAL:
@@ -618,14 +686,18 @@ class ContentProtectionSystem:
             recommendations.append("Copyright status unclear. Manual review recommended.")
         elif status == CopyrightStatus.UNKNOWN:
             recommendations.append("Insufficient evidence. Additional validation recommended.")
+
         
         return recommendations
     
     async def _generate_test_fingerprint(self, content_data: Any) -> Dict[str, Any]:
         """Generate test fingerprint for similarity detection"""
         # Use perceptual hash as default
+
         engine = self.fingerprint_engines[FingerprintType.PERCEPTUAL_HASH]
+
         hash_value = await engine(content_data)
+
         
         return {
             "type": FingerprintType.PERCEPTUAL_HASH,
@@ -640,13 +712,18 @@ class ContentProtectionSystem:
                 return 0.0
             
             # Convert to binary and calculate Hamming distance
+
             distance = sum(c1 != c2 for c1, c2 in zip(hash1, hash2))
+
+
             similarity = 1.0 - (distance / len(hash1))
+
             
             return similarity
             
         except Exception as e:
             logger.error(f"Similarity calculation failed: {e}")
+
             return 0.0
     
     # Fingerprint engine creators
@@ -659,108 +736,129 @@ class ContentProtectionSystem:
                     # Assume base64 image data
                     if content_data.startswith('data:image'):
                         content_data = content_data.split(',')[1]
+
                     image_data = base64.b64decode(content_data)
+
+
                     image = Image.open(io.BytesIO(image_data))
                     
                     # Resize to 8x8 for perceptual hash
+
                     image = image.resize((8, 8), Image.Resampling.LANCZOS)
+
+
                     image = image.convert('L')  # Convert to grayscale
                     
                     # Calculate hash
+
                     pixels = list(image.getdata())
+
+
                     avg = sum(pixels) / len(pixels)
+
+
                     hash_bits = ['1' if pixel > avg else '0' for pixel in pixels]
                     return ''.join(hash_bits)
                 
                 # Fallback: simple hash of content
                 return hashlib.md5(str(content_data).encode()).hexdigest()
+
                 
             except Exception as e:
                 logger.error(f"Perceptual hash generation failed: {e}")
+
                 return hashlib.md5(str(content_data).encode()).hexdigest()
+
         
         return perceptual_hash
     
     def _create_dct_hash_engine(self):
         """Create DCT hash engine"""
-        async def dct_hash(content_data: Any) -> str:
-            # Placeholder DCT hash implementation
-            return hashlib.sha256(str(content_data).encode()).hexdigest()[:32]
+        async def dct_hash(content_data: Any) -> str:            return hashlib.sha256(str(content_data).encode()).hexdigest()[:32]
         return dct_hash
     
     def _create_chromaprint_engine(self):
-        """Create audio chromaprint engine"""
-        async def chromaprint(content_data: Any) -> str:
-            # Placeholder chromaprint implementation
-            return hashlib.sha256(str(content_data).encode()).hexdigest()[:40]
+        """
+        Create audio chromaprint engine"""
+        async def chromaprint(content_data: Any) -> str:            return hashlib.sha256(str(content_data).encode()).hexdigest()[:40]
         return chromaprint
     
     def _create_video_dna_engine(self):
-        """Create video DNA engine"""
-        async def video_dna(content_data: Any) -> str:
-            # Placeholder video DNA implementation
-            return hashlib.sha256(str(content_data).encode()).hexdigest()[:48]
+        """
+        Create video DNA engine"""
+        async def video_dna(content_data: Any) -> str:            return hashlib.sha256(str(content_data).encode()).hexdigest()[:48]
         return video_dna
     
     def _create_feature_hash_engine(self):
-        """Create feature hash engine"""
-        async def feature_hash(content_data: Any) -> str:
-            # Placeholder feature hash implementation
-            return hashlib.sha256(str(content_data).encode()).hexdigest()[:24]
+        """
+        Create feature hash engine"""
+        async def feature_hash(content_data: Any) -> str:            return hashlib.sha256(str(content_data).encode()).hexdigest()[:24]
         return feature_hash
     
     # Watermark engine creators
     
     def _create_visible_watermark_engine(self):
-        """Create visible watermark engine"""
+        """
+        Create visible watermark engine"""
         async def visible_watermark(content_data: Any, watermark_text: str, config: Dict[str, Any]) -> Any:
             try:
                 if PIL_AVAILABLE and isinstance(content_data, str):
                     # Assume base64 image data
                     if content_data.startswith('data:image'):
                         content_data = content_data.split(',')[1]
+
                     image_data = base64.b64decode(content_data)
+
+
                     image = Image.open(io.BytesIO(image_data))
                     
                     # Create watermark
+
                     draw = ImageDraw.Draw(image)
+
+
                     position = config.get('position', (10, 10))
+
+
                     opacity = config.get('opacity', 128)
                     
                     # Add text watermark
                     draw.text(position, watermark_text, fill=(255, 255, 255, opacity))
                     
                     # Convert back to base64
+
                     buffer = io.BytesIO()
+
                     image.save(buffer, format='PNG')
+
                     return base64.b64encode(buffer.getvalue()).decode('utf-8')
+
                 
                 return content_data
                 
             except Exception as e:
                 logger.error(f"Visible watermark failed: {e}")
+
                 return content_data
         
         return visible_watermark
     
     def _create_invisible_watermark_engine(self):
         """Create invisible watermark engine"""
-        async def invisible_watermark(content_data: Any, watermark_text: str, config: Dict[str, Any]) -> Any:
-            # Placeholder invisible watermark implementation
-            return content_data
+        async def invisible_watermark(content_data: Any, watermark_text: str, config: Dict[str, Any]) -> Any:            return content_data
         return invisible_watermark
     
     def _create_robust_watermark_engine(self):
-        """Create robust watermark engine"""
-        async def robust_watermark(content_data: Any, watermark_text: str, config: Dict[str, Any]) -> Any:
-            # Placeholder robust watermark implementation
-            return content_data
+        """
+        Create robust watermark engine"""
+        async def robust_watermark(content_data: Any, watermark_text: str, config: Dict[str, Any]) -> Any:            return content_data
         return robust_watermark
 
 
 # Backward compatibility classes
 class ContentFingerprinting:
-    """Backward compatibility for ContentFingerprinting"""
+    """
+        Backward compatibility for ContentFingerprinting"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.protection_system = ContentProtectionSystem(config)
@@ -769,7 +867,8 @@ class ContentFingerprinting:
         return await self.protection_system.generate_fingerprint(content_data, content_id)
 
 class CopyrightValidator:
-    """Backward compatibility for CopyrightValidator"""
+    """
+        Backward compatibility for CopyrightValidator"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.protection_system = ContentProtectionSystem(config)
@@ -778,7 +877,8 @@ class CopyrightValidator:
         return await self.protection_system.validate_copyright(content_data, content_id)
 
 class ProtectionEngine:
-    """Backward compatibility for ProtectionEngine"""
+    """
+        Backward compatibility for ProtectionEngine"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.protection_system = ContentProtectionSystem(config)
@@ -789,7 +889,8 @@ class ProtectionEngine:
 # Configuration helper classes
 @dataclass
 class SecurityConfig:
-    """Security configuration"""
+    """
+        Security configuration"""
     encryption_enabled: bool = True
     watermark_enabled: bool = True
     fingerprint_enabled: bool = True
@@ -798,7 +899,8 @@ class SecurityConfig:
 
 @dataclass
 class ProtectionReport:
-    """Protection report structure"""
+    """
+        Protection report structure"""
     content_id: str
     protection_status: str
     protections_applied: List[str]

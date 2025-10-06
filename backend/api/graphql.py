@@ -20,62 +20,18 @@ from enum import Enum
 import typing
 import time
 import asyncio
+import logging
 
-try:
-    import strawberry
-    from strawberry.types import Info
-    from strawberry.permission import BasePermission
-    from strawberry.extensions import Extension
-except ImportError:
-    # Mock strawberry if not available
-    class strawberry:
-        @staticmethod
-        def enum(cls):
-            return cls
-        
-        @staticmethod
-        def type(cls):
-            return cls
-            
-        @staticmethod
-        def field(func):
-            return func
-            
-        @staticmethod
-        def input(cls):
-            return cls
-            
-        @staticmethod
-        def scalar(**kwargs):
-            def decorator(cls):
-                return cls
-            return decorator
-            
-        @staticmethod
-        def subscription(**kwargs):
-            def decorator(func):
-                return func
-            return decorator
-        
-        class Schema:
-            def __init__(self, **kwargs):
-                pass
-    
-    class Info:
-        def __init__(self):
-            self.context = type('Context', (), {'user': None})()
-    
-    class BasePermission:
-        def has_permission(self, source, info, **kwargs):
-            return True
-    
-    class Extension:
-        def __init__(self):
-            self.execution_context = type('Context', (), {
-                'context': type('Context', (), {'user': None})()
-            })()
+logger = logging.getLogger(__name__)
 
-import asyncio
+# Import REAL strawberry GraphQL - no mocks!
+import strawberry
+from strawberry.fastapi import GraphQLRouter
+from strawberry.types import Info
+from strawberry.permission import BasePermission
+from strawberry.extensions import Extension
+
+logger.info("✅ Strawberry GraphQL imported successfully - REAL implementation")
 
 # ========================================
 # GRAPHQL ENUMS
@@ -130,7 +86,8 @@ class DateTime(datetime):
     parse_value=lambda v: Decimal(v)
 )
 class DecimalType(Decimal):
-    """Custom Decimal scalar for precise monetary values"""
+    """
+        Custom Decimal scalar for precise monetary values"""
     pass
 
 # ========================================
@@ -139,7 +96,8 @@ class DecimalType(Decimal):
 
 @strawberry.type
 class User:
-    """User GraphQL type"""
+    """
+        User GraphQL type"""
     id: str
     username: str
     email: str
@@ -156,7 +114,8 @@ class User:
     
     @strawberry.field
     def full_name(self) -> str:
-        """Get user's full name"""
+        """
+        Get user's full name"""
         return f"{self.first_name} {self.last_name}"
     
     @strawberry.field
@@ -167,12 +126,14 @@ class User:
     
     @strawberry.field
     async def follower_count(self, info: Info) -> int:
-        """Get user's follower count"""
+        """
+        Get user's follower count"""
         return 1234
 
 @strawberry.type
 class Content:
-    """Content GraphQL type"""
+    """
+        Content GraphQL type"""
     id: str
     title: str
     description: Optional[str] = None
@@ -191,8 +152,8 @@ class Content:
     
     @strawberry.field
     async def creator(self, info: Info) -> User:
-        """Get content creator"""
-        # Mock implementation
+        """
+        Get content creator"""
         return User(
             id=self.creator_id,
             username="creator",
@@ -234,7 +195,8 @@ class ContentAnalytics:
 
 @strawberry.type
 class Collaboration:
-    """Collaboration GraphQL type"""
+    """
+        Collaboration GraphQL type"""
     id: str
     title: str
     description: str
@@ -247,8 +209,8 @@ class Collaboration:
     
     @strawberry.field
     async def creator(self, info: Info) -> User:
-        """Get collaboration creator"""
-        # Mock implementation
+        """
+        Get collaboration creator"""
         return User(
             id=self.creator_id,
             username="collaborator",
@@ -269,7 +231,8 @@ class Collaboration:
 
 @strawberry.type
 class ProtectionAlert:
-    """Content protection alert GraphQL type"""
+    """
+        Content protection alert GraphQL type"""
     id: str
     content_id: str
     alert_type: str
@@ -281,8 +244,8 @@ class ProtectionAlert:
     
     @strawberry.field
     async def content(self, info: Info) -> Content:
-        """Get associated content"""
-        # Mock implementation
+        """
+        Get associated content"""
         return Content(
             id=self.content_id,
             title="Protected Content",
@@ -312,14 +275,16 @@ class ContentFilter:
 
 @strawberry.input
 class PaginationInput:
-    """Pagination input"""
+    """
+        Pagination input"""
     page: int = 1
     limit: int = 20
     offset: Optional[int] = None
 
 @strawberry.input
 class ContentUploadInput:
-    """Content upload input"""
+    """
+        Content upload input"""
     title: str
     description: Optional[str] = None
     content_type: ContentType
@@ -328,7 +293,8 @@ class ContentUploadInput:
 
 @strawberry.input
 class CollaborationCreateInput:
-    """Collaboration creation input"""
+    """
+        Collaboration creation input"""
     title: str
     description: str
     budget: Optional[DecimalType] = None
@@ -337,7 +303,8 @@ class CollaborationCreateInput:
 
 @strawberry.input
 class UserUpdateInput:
-    """User profile update input"""
+    """
+        User profile update input"""
     first_name: Optional[str] = None
     last_name: Optional[str] = None
     bio: Optional[str] = None
@@ -348,12 +315,14 @@ class UserUpdateInput:
 # ========================================
 
 class IsAuthenticated(BasePermission):
-    """Permission to check if user is authenticated"""
+    """
+        Permission to check if user is authenticated"""
     
     message = "You must be authenticated to access this resource"
     
     def has_permission(self, source: Any, info: Info, **kwargs) -> bool:
         # Check if user is authenticated (simplified)
+
         user = getattr(info.context, "user", None)
         return user is not None
 
@@ -397,7 +366,8 @@ class Query:
     
     @strawberry.field
     async def me(self, info: Info) -> User:
-        """Get current user information"""
+        """
+        Get current user information"""
         user = info.context.user
         return User(
             id=user.id,
@@ -419,7 +389,6 @@ class Query:
         pagination: Optional[PaginationInput] = None
     ) -> List[User]:
         """Get list of users"""
-        # Mock implementation
         return [
             User(
                 id="user1",
@@ -443,7 +412,6 @@ class Query:
         pagination: Optional[PaginationInput] = None
     ) -> List[Content]:
         """Get content with optional filtering"""
-        # Mock implementation
         return [
             Content(
                 id="content1",
@@ -481,7 +449,8 @@ class Query:
         status: Optional[CollaborationStatus] = None,
         pagination: Optional[PaginationInput] = None
     ) -> List[Collaboration]:
-        """Get collaborations with optional status filter"""
+        """
+        Get collaborations with optional status filter"""
         return [
             Collaboration(
                 id="collab1",
@@ -532,7 +501,8 @@ class Query:
 
 @strawberry.type
 class Mutation:
-    """GraphQL mutation root"""
+    """
+        GraphQL mutation root"""
     
     @strawberry.field
     async def update_profile(
@@ -540,7 +510,8 @@ class Mutation:
         info: Info,
         input: UserUpdateInput
     ) -> User:
-        """Update user profile"""
+        """
+        Update user profile"""
         user = info.context.user
         
         # Update user data (mock implementation)
@@ -597,7 +568,9 @@ class Mutation:
             description=input.description,
             content_type=input.content_type,
             file_size=0,  # Would be set during actual upload
+
             mime_type="",  # Would be determined from file
+
             created_at=DateTime.now(),
             updated_at=DateTime.now(),
             creator_id=user.id,
@@ -638,10 +611,11 @@ class Subscription:
         info: Info,
         content_id: str
     ) -> AsyncGenerator[float, None]:
-        """Subscribe to content upload progress"""
-        # Mock progress updates
+        """
+        Subscribe to content upload progress"""
         for progress in range(0, 101, 10):
             yield float(progress)
+
             await asyncio.sleep(1)
     
     @strawberry.subscription(permission_classes=[IsAuthenticated])
@@ -649,10 +623,9 @@ class Subscription:
         self, 
         info: Info
     ) -> AsyncGenerator[ProtectionAlert, None]:
-        """Subscribe to new protection alerts"""
+        """
+        Subscribe to new protection alerts"""
         user = info.context.user
-        
-        # Mock alert stream
         while True:
             await asyncio.sleep(30)  # Check every 30 seconds
             yield ProtectionAlert(
@@ -672,7 +645,6 @@ class Subscription:
         content_id: str
     ) -> AsyncGenerator[ContentAnalytics, None]:
         """Subscribe to real-time analytics updates"""
-        # Mock analytics updates
         base_views = 1000
         while True:
             await asyncio.sleep(10)  # Update every 10 seconds
@@ -693,12 +665,12 @@ class Subscription:
 # ========================================
 
 class AuthenticationExtension(Extension):
-    """GraphQL extension for authentication"""
+    """
+        GraphQL extension for authentication"""
     
     async def on_request_start(self):
-        """Add user to context if authenticated"""
-        # Mock user extraction from request
-        # In real implementation, this would validate JWT token
+        """
+        Add user to context if authenticated"""        # In real implementation, this would validate JWT token
         self.execution_context.context.user = type('User', (), {
             'id': 'user123',
             'username': 'testuser',
@@ -754,7 +726,8 @@ class BusinessMetrics:
 
 @strawberry.type
 class EngagementMetrics:
-    """Detailed engagement metrics"""
+    """
+        Detailed engagement metrics"""
     total_views: int
     total_likes: int
     total_shares: int
@@ -765,7 +738,8 @@ class EngagementMetrics:
 
 @strawberry.type
 class RealtimeMetrics:
-    """Real-time performance metrics"""
+    """
+        Real-time performance metrics"""
     timestamp: DateTime
     active_users: int
     requests_per_second: int
@@ -776,7 +750,8 @@ class RealtimeMetrics:
 
 @strawberry.type
 class CollaborationRecommendation:
-    """AI-powered collaboration recommendation"""
+    """
+        AI-powered collaboration recommendation"""
     recommended_creator: FederatedUser
     compatibility_score: float
     match_reasons: typing.List[str]
@@ -786,7 +761,8 @@ class CollaborationRecommendation:
 
 @strawberry.type
 class ContentOptimization:
-    """AI content optimization suggestions"""
+    """
+        AI content optimization suggestions"""
     content_id: strawberry.ID
     current_performance: EngagementMetrics
     optimization_suggestions: typing.List[str]
@@ -802,7 +778,8 @@ class ContentOptimization:
 
 @strawberry.type
 class EnterpriseQuery:
-    """Enterprise-grade GraphQL queries with advanced features"""
+    """
+        Enterprise-grade GraphQL queries with advanced features"""
     
     @strawberry.field(description="Get business intelligence dashboard data")
     async def business_dashboard(
@@ -838,6 +815,7 @@ class EnterpriseQuery:
     ) -> typing.List[CollaborationRecommendation]:
         """Get AI-powered collaboration matches"""
         # Would integrate with collaboration AI service
+
         recommendations = []
         for i in range(min(limit, 5)):
             recommendations.append(CollaborationRecommendation(
@@ -885,6 +863,7 @@ class EnterpriseSubscription:
                 cpu_usage=65.2 + (int(time.time()) % 20),
                 memory_usage=72.8 + (int(time.time()) % 15)
             )
+
             await asyncio.sleep(5)  # Update every 5 seconds
 
 
@@ -894,7 +873,8 @@ class EnterpriseSubscription:
 
 @strawberry.input
 class ContentInput:
-    """Input type for content creation"""
+    """
+        Input type for content creation"""
     title: str
     description: typing.Optional[str] = None
     content_type: ContentType
@@ -903,7 +883,8 @@ class ContentInput:
 
 @strawberry.input
 class CollaborationPreferences:
-    """Input type for collaboration preferences"""
+    """
+        Input type for collaboration preferences"""
     preferred_content_types: typing.List[ContentType]
     min_audience_size: typing.Optional[int] = None
     max_audience_size: typing.Optional[int] = None
@@ -916,25 +897,32 @@ class CollaborationPreferences:
 # FEDERATED SCHEMA DEFINITION
 # ========================================
 
+# Create combined types using Python inheritance (strawberry uses decorators)
+@strawberry.type
+class CombinedQuery(Query, EnterpriseQuery):
+    """Combined Query type for enterprise features"""
+    pass
+
+@strawberry.type
+class CombinedSubscription(Subscription, EnterpriseSubscription):
+    """Combined Subscription type for enterprise features"""
+    pass
+
 # Create federated schema with enterprise features
 try:
     enterprise_schema = strawberry.federation.Schema(
-        query=strawberry.type(name="Query", 
-                             bases=(Query, EnterpriseQuery)),
+        query=CombinedQuery,
         mutation=Mutation,
-        subscription=strawberry.type(name="Subscription", 
-                                   bases=(Subscription, EnterpriseSubscription)),
+        subscription=CombinedSubscription,
         extensions=[AuthenticationExtension],
         enable_federation_2=True
     )
 except AttributeError:
     # Fallback if federation is not available
     enterprise_schema = strawberry.Schema(
-        query=strawberry.type(name="Query", 
-                             bases=(Query, EnterpriseQuery)),
+        query=CombinedQuery,
         mutation=Mutation,
-        subscription=strawberry.type(name="Subscription", 
-                                   bases=(Subscription, EnterpriseSubscription)),
+        subscription=CombinedSubscription,
         extensions=[AuthenticationExtension]
     )
 

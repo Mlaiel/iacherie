@@ -1,4 +1,5 @@
-"""IA Chérie Core Infrastructure - Message Queue Core
+"""
+IA Chérie Core Infrastructure - Message Queue Core
 ==================================================
 
 Enterprise-grade message queue management providing asynchronous communication,
@@ -26,7 +27,8 @@ from collections import defaultdict, deque
 logger = logging.getLogger(__name__)
 
 class MessagePriority(str, Enum):
-    """Message priority levels"""
+    """
+Message priority levels"""
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -34,7 +36,8 @@ class MessagePriority(str, Enum):
     URGENT = "urgent"
 
 class MessageStatus(str, Enum):
-    """Message processing status"""
+    """
+Message processing status"""
     PENDING = "pending"
     PROCESSING = "processing"
     PROCESSED = "processed"
@@ -43,7 +46,8 @@ class MessageStatus(str, Enum):
     DEAD_LETTER = "dead_letter"
 
 class QueueType(str, Enum):
-    """Queue types"""
+    """
+Queue types"""
     FIFO = "fifo"
     PRIORITY = "priority"
     DELAY = "delay"
@@ -52,7 +56,8 @@ class QueueType(str, Enum):
 
 @dataclass
 class Message:
-    """Message data structure"""
+    """
+Message data structure"""
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     topic: str = ""
     payload: Dict[str, Any] = field(default_factory=dict)
@@ -68,7 +73,8 @@ class Message:
     timeout_seconds: int = 300
 
     def to_dict(self) -> Dict[str, Any]:
-        """Convert message to dictionary"""
+        """
+Convert message to dictionary"""
         return {
             'id': self.id,
             'topic': self.topic,
@@ -87,7 +93,8 @@ class Message:
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'Message':
-        """Create message from dictionary"""
+        """
+Create message from dictionary"""
         message = cls()
         message.id = data.get('id', message.id)
         message.topic = data.get('topic', '')
@@ -106,7 +113,8 @@ class Message:
 
 @dataclass
 class QueueStats:
-    """Queue statistics"""
+    """
+Queue statistics"""
     total_messages: int = 0
     pending_messages: int = 0
     processing_messages: int = 0
@@ -118,20 +126,24 @@ class QueueStats:
     last_updated: datetime = field(default_factory=datetime.utcnow)
 
 class MessageHandler(ABC):
-    """Abstract message handler"""
+    """
+Abstract message handler"""
     
     @abstractmethod
     async def handle(self, message: Message) -> bool:
-        """Handle message processing"""
+        """
+Handle message processing"""
         pass
     
     @abstractmethod
     async def on_error(self, message: Message, error: Exception) -> bool:
-        """Handle processing errors"""
+        """
+Handle processing errors"""
         pass
 
 class InMemoryQueue:
-    """In-memory message queue implementation"""
+    """
+In-memory message queue implementation"""
     
     def __init__(self, name: str, queue_type: QueueType = QueueType.FIFO):
         self.name = name
@@ -145,7 +157,8 @@ class InMemoryQueue:
         self.lock = threading.Lock()
         
     def enqueue(self, message: Message) -> bool:
-        """Add message to queue"""
+        """
+Add message to queue"""
         try:
             with self.lock:
                 if message.scheduled_at and message.scheduled_at > datetime.utcnow():
@@ -165,7 +178,8 @@ class InMemoryQueue:
             return False
     
     def dequeue(self) -> Optional[Message]:
-        """Get next message from queue"""
+        """
+Get next message from queue"""
         try:
             with self.lock:
                 # Check delayed messages first
@@ -195,7 +209,8 @@ class InMemoryQueue:
             return None
     
     def _process_delayed_messages(self):
-        """Move ready delayed messages to main queue"""
+        """
+Move ready delayed messages to main queue"""
         now = datetime.utcnow()
         ready_messages = []
         
@@ -211,7 +226,8 @@ class InMemoryQueue:
                 self.messages.append(message)
     
     def complete_message(self, message_id: str, success: bool = True) -> bool:
-        """Mark message as completed"""
+        """
+Mark message as completed"""
         try:
             with self.lock:
                 if message_id in self.processing_messages:
@@ -242,12 +258,14 @@ class InMemoryQueue:
             return False
     
     def get_stats(self) -> QueueStats:
-        """Get queue statistics"""
+        """
+Get queue statistics"""
         with self.lock:
             return self.stats
 
 class MessageQueueCore:
-    """Core message queue management system"""
+    """
+Core message queue management system"""
     
     def __init__(self, level: str = "enterprise"):
         self.level = level
@@ -265,7 +283,8 @@ class MessageQueueCore:
         logger.info(f"Message Queue Core initialized - Level: {level}")
     
     async def initialize(self) -> bool:
-        """Initialize message queue system"""
+        """
+Initialize message queue system"""
         try:
             # Create default queues
             self.create_queue("default", QueueType.FIFO)
@@ -280,7 +299,8 @@ class MessageQueueCore:
             return False
     
     async def start(self) -> bool:
-        """Start message queue processing"""
+        """
+Start message queue processing"""
         try:
             self.is_running = True
             
@@ -298,7 +318,8 @@ class MessageQueueCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop message queue processing"""
+        """
+Stop message queue processing"""
         try:
             self.is_running = False
             
@@ -318,7 +339,8 @@ class MessageQueueCore:
             return False
     
     async def health_check(self) -> bool:
-        """Check system health"""
+        """
+Check system health"""
         try:
             # Check if queues are responsive
             for queue_name, queue in self.queues.items():
@@ -333,7 +355,8 @@ class MessageQueueCore:
             return False
     
     def create_queue(self, name: str, queue_type: QueueType = QueueType.FIFO) -> bool:
-        """Create a new queue"""
+        """
+Create a new queue"""
         try:
             if name not in self.queues:
                 self.queues[name] = InMemoryQueue(name, queue_type)
@@ -345,7 +368,8 @@ class MessageQueueCore:
             return False
     
     def delete_queue(self, name: str) -> bool:
-        """Delete a queue"""
+        """
+Delete a queue"""
         try:
             if name in self.queues:
                 # Stop worker if running
@@ -365,7 +389,8 @@ class MessageQueueCore:
                      priority: MessagePriority = MessagePriority.NORMAL,
                      delay_seconds: int = 0,
                      queue_name: str = "default") -> str:
-        """Publish message to queue"""
+        """
+Publish message to queue"""
         try:
             message = Message(
                 topic=topic,
@@ -386,7 +411,8 @@ class MessageQueueCore:
             raise
     
     def subscribe(self, topic: str, handler: Callable[[Message], bool]) -> bool:
-        """Subscribe to topic messages"""
+        """
+Subscribe to topic messages"""
         try:
             self.subscribers[topic].append(handler)
             logger.info(f"Subscribed handler to topic: {topic}")
@@ -396,7 +422,8 @@ class MessageQueueCore:
             return False
     
     def unsubscribe(self, topic: str, handler: Callable[[Message], bool]) -> bool:
-        """Unsubscribe from topic messages"""
+        """
+Unsubscribe from topic messages"""
         try:
             if topic in self.subscribers and handler in self.subscribers[topic]:
                 self.subscribers[topic].remove(handler)
@@ -408,7 +435,8 @@ class MessageQueueCore:
             return False
     
     async def _queue_worker(self, queue_name: str):
-        """Worker process for queue messages"""
+        """
+Worker process for queue messages"""
         queue = self.queues[queue_name]
         
         while self.is_running:
@@ -435,7 +463,8 @@ class MessageQueueCore:
                 await asyncio.sleep(1)
     
     async def _process_message(self, message: Message) -> bool:
-        """Process individual message"""
+        """
+Process individual message"""
         try:
             # Call topic subscribers
             if message.topic in self.subscribers:
@@ -466,13 +495,15 @@ class MessageQueueCore:
             return False
     
     def get_queue_stats(self, queue_name: str) -> Optional[QueueStats]:
-        """Get statistics for specific queue"""
+        """
+Get statistics for specific queue"""
         if queue_name in self.queues:
             return self.queues[queue_name].get_stats()
         return None
     
     def get_system_metrics(self) -> Dict[str, Any]:
-        """Get overall system metrics"""
+        """
+Get overall system metrics"""
         uptime = (datetime.utcnow() - self.metrics['start_time']).total_seconds()
         avg_processing_time = (
             self.metrics['total_processing_time'] / self.metrics['total_messages_processed']
@@ -497,15 +528,18 @@ message_queue_core = MessageQueueCore()
 async def publish_message(topic: str, payload: Dict[str, Any], 
                          priority: MessagePriority = MessagePriority.NORMAL,
                          delay_seconds: int = 0) -> str:
-    """Publish message to default queue"""
+    """
+Publish message to default queue"""
     return await message_queue_core.publish(topic, payload, priority, delay_seconds)
 
 def subscribe_to_topic(topic: str, handler: Callable[[Message], bool]) -> bool:
-    """Subscribe to topic messages"""
+    """
+Subscribe to topic messages"""
     return message_queue_core.subscribe(topic, handler)
 
 def get_queue_statistics(queue_name: str = "default") -> Optional[QueueStats]:
-    """Get queue statistics"""
+    """
+Get queue statistics"""
     return message_queue_core.get_queue_stats(queue_name)
 
 # Module exports
@@ -516,4 +550,4 @@ __all__ = [
     "get_queue_statistics"
 ]
 
-logger.info("Message Queue Core module loaded")
+logger.info("Message Queue Core module initialized")

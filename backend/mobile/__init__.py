@@ -63,7 +63,6 @@ from .mobile_analytics_engine import (
     TrendInsight,
     MobileAudienceRequest,
     AudienceInsight,
-    AnalyticsReport,
     EngagementMetric,
     PredictionModel,
     TrendAnalysisType,
@@ -77,9 +76,9 @@ from .mobile_protection_system import (
     MobileProtectionRequest,
     MobileProtectionResult,
     MobileProtectionConfiguration,
-    FingerprintEngine,
-    WatermarkProcessor,
-    ViolationAlertSystem,
+    MobileFingerprintEngine,
+    MobileWatermarkProcessor,
+    MobileViolationAlertSystem,
     MobileProtectionMode,
     MobileDeviceType,
     MobileNetworkType
@@ -90,9 +89,7 @@ from .mobile_optimization_engine import (
     MobileSEORequest,
     MobileSEOResult,
     MobileMetadataRequest,
-    MobileMetadataResult,
     MobileSocialRequest,
-    MobileSocialResult,
     MobileSEOStrategy,
     MobilePlatformType,
     SocialPlatform
@@ -196,7 +193,7 @@ from .mobile_device_manager import (
 from .mobile_security_gateway import (
     MobileSecurityGateway,
     BiometricAuth,
-    EncryptionManager,
+    MobileEncryptionManager,
     SecurityValidator,
     ThreatDetection,
     SecurityPolicy

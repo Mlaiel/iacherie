@@ -25,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 
 class ProductStatus(str, Enum):
-    """Product status options."""
+    """
+        Product status options."""
     ACTIVE = "active"
     ARCHIVED = "archived"
     DRAFT = "draft"
@@ -79,7 +80,8 @@ class ShopifyProduct:
 
 @dataclass
 class ShopifyOrder:
-    """Shopify order."""
+    """
+        Shopify order."""
     order_id: int
     order_number: str
     email: str
@@ -100,7 +102,8 @@ class ShopifyOrder:
 
 @dataclass
 class ShopifyCustomer:
-    """Shopify customer."""
+    """
+        Shopify customer."""
     customer_id: int
     first_name: str
     last_name: str
@@ -119,7 +122,8 @@ class ShopifyCustomer:
 
 @dataclass
 class ShopifyCollection:
-    """Shopify collection."""
+    """
+        Shopify collection."""
     collection_id: int
     title: str
     body_html: str
@@ -135,7 +139,8 @@ class ShopifyCollection:
 
 
 class ShopifyIntegration:
-    """Professional Shopify API integration."""
+    """
+        Professional Shopify API integration."""
     
     def __init__(
         self,
@@ -167,11 +172,13 @@ class ShopifyIntegration:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+        Async context manager exit."""
         await self.close()
     
     async def _ensure_session(self):
-        """Ensure HTTP session is available."""
+        """
+        Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
                 "X-Shopify-Access-Token": self.access_token,
@@ -190,26 +197,36 @@ class ShopifyIntegration:
             await self.session.close()
     
     async def get_shop_info(self) -> Dict[str, Any]:
-        """Get shop information."""
+        """
+        Get shop information."""
         await self._ensure_session()
+
         
         try:
             async with self.session.get(f"{self.base_url}/shop.json") as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Shopify API error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 shop_info = result["shop"]
                 
                 self.request_count += 1
                 self._add_to_history("get_shop_info", {}, shop_info)
+
                 
                 logger.info(f"Shop info retrieved: {shop_info.get('name')}")
+
                 return shop_info
         
         except Exception as e:
             logger.error(f"Failed to get shop info: {e}")
+
             raise
     
     async def list_products(
@@ -222,6 +239,8 @@ class ShopifyIntegration:
     ) -> List[ShopifyProduct]:
         """List products with filters."""
         await self._ensure_session()
+
+
         
         params = {"limit": min(limit, 250)}
         
@@ -241,9 +260,14 @@ class ShopifyIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Shopify API error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 products = []
                 
                 for product_data in result.get("products", []):
@@ -267,30 +291,42 @@ class ShopifyIntegration:
                             "template_suffix": product_data.get("template_suffix")
                         }
                     )
+
                     products.append(product)
+
                 
                 self.request_count += 1
                 self._add_to_history("list_products", params, {"count": len(products)})
+
                 
                 logger.info(f"Retrieved {len(products)} products")
+
                 return products
         
         except Exception as e:
             logger.error(f"Failed to list products: {e}")
+
             raise
     
     async def get_product(self, product_id: int) -> ShopifyProduct:
         """Get specific product."""
         await self._ensure_session()
+
         
         try:
             async with self.session.get(f"{self.base_url}/products/{product_id}.json") as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Shopify API error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 product_data = result["product"]
+
                 
                 product = ShopifyProduct(
                     product_id=product_data["id"],
@@ -312,15 +348,19 @@ class ShopifyIntegration:
                         "template_suffix": product_data.get("template_suffix")
                     }
                 )
+
                 
                 self.request_count += 1
                 self._add_to_history("get_product", {"product_id": product_id}, product)
+
                 
                 logger.info(f"Product retrieved: {product.title}")
+
                 return product
         
         except Exception as e:
             logger.error(f"Failed to get product: {e}")
+
             raise
     
     async def create_product(
@@ -338,6 +378,8 @@ class ShopifyIntegration:
     ) -> ShopifyProduct:
         """Create new product."""
         await self._ensure_session()
+
+
         
         product_data = {
             "title": title,
@@ -349,6 +391,7 @@ class ShopifyIntegration:
         
         if tags:
             product_data["tags"] = ", ".join(tags)
+
         
         if variants:
             product_data["variants"] = variants
@@ -361,6 +404,7 @@ class ShopifyIntegration:
         
         if seo_description:
             product_data["seo_description"] = seo_description
+
         
         data = {"product": product_data}
         
@@ -371,10 +415,16 @@ class ShopifyIntegration:
             ) as response:
                 if response.status not in [200, 201]:
                     error_data = await response.json()
+
                     raise Exception(f"Shopify product creation error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 product_data = result["product"]
+
                 
                 product = ShopifyProduct(
                     product_id=product_data["id"],
@@ -396,16 +446,20 @@ class ShopifyIntegration:
                         "template_suffix": product_data.get("template_suffix")
                     }
                 )
+
                 
                 self.request_count += 1
                 self.products_managed += 1
                 self._add_to_history("create_product", {"title": title}, product)
+
                 
                 logger.info(f"Product created: {product.title} (ID: {product.product_id})")
+
                 return product
         
         except Exception as e:
             logger.error(f"Product creation failed: {e}")
+
             raise
     
     async def update_product(
@@ -415,6 +469,8 @@ class ShopifyIntegration:
     ) -> ShopifyProduct:
         """Update existing product."""
         await self._ensure_session()
+
+
         
         data = {"product": updates}
         
@@ -425,10 +481,16 @@ class ShopifyIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Shopify product update error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 product_data = result["product"]
+
                 
                 product = ShopifyProduct(
                     product_id=product_data["id"],
@@ -450,15 +512,19 @@ class ShopifyIntegration:
                         "template_suffix": product_data.get("template_suffix")
                     }
                 )
+
                 
                 self.request_count += 1
                 self._add_to_history("update_product", {"product_id": product_id, "updates": updates}, product)
+
                 
                 logger.info(f"Product updated: {product.title}")
+
                 return product
         
         except Exception as e:
             logger.error(f"Product update failed: {e}")
+
             raise
     
     async def list_orders(
@@ -472,6 +538,8 @@ class ShopifyIntegration:
     ) -> List[ShopifyOrder]:
         """List orders with filters."""
         await self._ensure_session()
+
+
         
         params = {"limit": min(limit, 250)}
         
@@ -485,6 +553,7 @@ class ShopifyIntegration:
             params["created_at_min"] = created_at_min.isoformat()
         if created_at_max:
             params["created_at_max"] = created_at_max.isoformat()
+
         
         try:
             async with self.session.get(
@@ -493,9 +562,14 @@ class ShopifyIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Shopify API error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 orders = []
                 
                 for order_data in result.get("orders", []):
@@ -521,31 +595,44 @@ class ShopifyIntegration:
                             "reference": order_data.get("reference")
                         }
                     )
+
                     orders.append(order)
+
                 
                 self.request_count += 1
                 self.orders_processed += len(orders)
+
                 self._add_to_history("list_orders", params, {"count": len(orders)})
+
                 
                 logger.info(f"Retrieved {len(orders)} orders")
+
                 return orders
         
         except Exception as e:
             logger.error(f"Failed to list orders: {e}")
+
             raise
     
     async def get_order(self, order_id: int) -> ShopifyOrder:
         """Get specific order."""
         await self._ensure_session()
+
         
         try:
             async with self.session.get(f"{self.base_url}/orders/{order_id}.json") as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Shopify API error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 order_data = result["order"]
+
                 
                 order = ShopifyOrder(
                     order_id=order_data["id"],
@@ -569,15 +656,19 @@ class ShopifyIntegration:
                         "reference": order_data.get("reference")
                     }
                 )
+
                 
                 self.request_count += 1
                 self._add_to_history("get_order", {"order_id": order_id}, order)
+
                 
                 logger.info(f"Order retrieved: {order.order_number}")
+
                 return order
         
         except Exception as e:
             logger.error(f"Failed to get order: {e}")
+
             raise
     
     async def list_customers(
@@ -590,6 +681,8 @@ class ShopifyIntegration:
     ) -> List[ShopifyCustomer]:
         """List customers with filters."""
         await self._ensure_session()
+
+
         
         params = {"limit": min(limit, 250)}
         
@@ -601,6 +694,7 @@ class ShopifyIntegration:
             params["updated_at_min"] = updated_at_min.isoformat()
         if updated_at_max:
             params["updated_at_max"] = updated_at_max.isoformat()
+
         
         try:
             async with self.session.get(
@@ -609,9 +703,14 @@ class ShopifyIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Shopify API error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 customers = []
                 
                 for customer_data in result.get("customers", []):
@@ -635,16 +734,21 @@ class ShopifyIntegration:
                             "accepts_marketing": customer_data.get("accepts_marketing")
                         }
                     )
+
                     customers.append(customer)
+
                 
                 self.request_count += 1
                 self._add_to_history("list_customers", params, {"count": len(customers)})
+
                 
                 logger.info(f"Retrieved {len(customers)} customers")
+
                 return customers
         
         except Exception as e:
             logger.error(f"Failed to list customers: {e}")
+
             raise
     
     def verify_webhook_signature(
@@ -655,6 +759,7 @@ class ShopifyIntegration:
         """Verify Shopify webhook signature."""
         if not self.webhook_secret:
             logger.warning("Webhook secret not configured")
+
             return False
         
         try:
@@ -665,16 +770,21 @@ class ShopifyIntegration:
                     hashlib.sha256
                 ).digest()
             ).decode('utf-8')
+
             
             return hmac.compare_digest(expected_signature, signature_header)
+
         
         except Exception as e:
             logger.error(f"Webhook signature verification failed: {e}")
+
             return False
     
     async def handle_webhook_event(self, event_data: Dict[str, Any], topic: str) -> Dict[str, Any]:
         """Handle incoming webhook event."""
         logger.info(f"Processing webhook event: {topic}")
+
+
         
         handlers = {
             "orders/create": self._handle_order_created,
@@ -686,12 +796,14 @@ class ShopifyIntegration:
             "customers/create": self._handle_customer_created,
             "app/uninstalled": self._handle_app_uninstalled
         }
+
         
         handler = handlers.get(topic)
         if handler:
             return await handler(event_data)
         else:
             logger.info(f"No handler for webhook topic: {topic}")
+
             return {"status": "ignored"}
     
     async def _handle_order_created(self, order_data: Dict[str, Any]) -> Dict[str, Any]:
@@ -709,6 +821,7 @@ class ShopifyIntegration:
     async def _handle_order_paid(self, order_data: Dict[str, Any]) -> Dict[str, Any]:
         """Handle order paid event."""
         order_id = order_data.get("id")
+
         total_price = order_data.get("total_price")
         logger.info(f"Order paid: {order_id}, amount: {total_price}")
         return {"status": "processed", "order_id": order_id}
@@ -722,6 +835,7 @@ class ShopifyIntegration:
     async def _handle_product_created(self, product_data: Dict[str, Any]) -> Dict[str, Any]:
         """Handle product created event."""
         product_id = product_data.get("id")
+
         title = product_data.get("title")
         logger.info(f"Product created: {product_id}, title: {title}")
         return {"status": "processed", "product_id": product_id}
@@ -729,6 +843,7 @@ class ShopifyIntegration:
     async def _handle_product_updated(self, product_data: Dict[str, Any]) -> Dict[str, Any]:
         """Handle product updated event."""
         product_id = product_data.get("id")
+
         title = product_data.get("title")
         logger.info(f"Product updated: {product_id}, title: {title}")
         return {"status": "processed", "product_id": product_id}
@@ -736,6 +851,7 @@ class ShopifyIntegration:
     async def _handle_customer_created(self, customer_data: Dict[str, Any]) -> Dict[str, Any]:
         """Handle customer created event."""
         customer_id = customer_data.get("id")
+
         email = customer_data.get("email")
         logger.info(f"Customer created: {customer_id}, email: {email}")
         return {"status": "processed", "customer_id": customer_id}
@@ -822,7 +938,8 @@ async def quick_product_creation(
     shop_domain: str,
     access_token: str
 ) -> ShopifyProduct:
-    """Quick product creation utility."""
+    """
+        Quick product creation utility."""
     variants = [{
         "price": str(price),
         "inventory_quantity": inventory_quantity,
@@ -841,24 +958,34 @@ if __name__ == "__main__":
     # Example usage
     async def main():
         import os
+
         shop_domain = os.getenv("SHOPIFY_SHOP_DOMAIN")
+
         access_token = os.getenv("SHOPIFY_ACCESS_TOKEN")
+
         
         if not all([shop_domain, access_token]):
             print("Please set SHOPIFY_SHOP_DOMAIN and SHOPIFY_ACCESS_TOKEN")
+
             return
         
         async with ShopifyIntegration(shop_domain, access_token) as shopify:
             # Test get shop info
+
             shop_info = await shopify.get_shop_info()
+
             print(f"Shop: {shop_info.get('name')}")
             
             # Test list products
+
             products = await shopify.list_products(limit=5)
+
             print(f"Products: {len(products)}")
             
             # Test usage stats
+
             stats = shopify.get_usage_stats()
+
             print(f"Usage stats: {stats}")
     
     asyncio.run(main())

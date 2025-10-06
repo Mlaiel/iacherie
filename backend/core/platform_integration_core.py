@@ -33,7 +33,8 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Types of supported platforms"""
+    """
+        Types of supported platforms"""
     SOCIAL_MEDIA = "social_media"
     CONTENT_DELIVERY = "content_delivery"
     PAYMENT_GATEWAY = "payment_gateway"
@@ -88,7 +89,8 @@ class PlatformConfiguration:
 
 @dataclass
 class IntegrationMetrics:
-    """Metrics for platform integration"""
+    """
+        Metrics for platform integration"""
     platform_id: str
     total_requests: int = 0
     successful_requests: int = 0
@@ -108,7 +110,8 @@ class MultiPlatformIntegrationFramework:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the Multi-Platform Integration Framework"""
+        """
+        Initialize the Multi-Platform Integration Framework"""
         self.config = config or {}
         self.platforms: Dict[str, PlatformConfiguration] = {}
         self.metrics: Dict[str, IntegrationMetrics] = {}
@@ -136,12 +139,15 @@ class MultiPlatformIntegrationFramework:
                 
                 # Create HTTP session
                 await self._create_platform_session(platform_config)
+
             
             self.logger.info(f"Platform {platform_config.platform_name} registered successfully")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Failed to register platform {platform_config.platform_name}: {e}")
+
             return False
     
     def _initialize_rate_limiter(self, platform_config: PlatformConfiguration):
@@ -156,10 +162,13 @@ class MultiPlatformIntegrationFramework:
         }
     
     async def _create_platform_session(self, platform_config: PlatformConfiguration):
-        """Create HTTP session for platform"""
+        """
+        Create HTTP session for platform"""
         
         # Configure session with authentication
+
         headers = {}
+
         auth = platform_config.authentication
         
         if auth.get('type') == 'bearer':
@@ -168,21 +177,27 @@ class MultiPlatformIntegrationFramework:
             headers[auth.get('header_name', 'X-API-Key')] = auth.get('api_key')
         
         # Configure timeouts and connection limits
+
         timeout = aiohttp.ClientTimeout(
             total=self.config.get('request_timeout', 30),
             connect=self.config.get('connect_timeout', 10)
         )
+
+
         
         connector = aiohttp.TCPConnector(
             limit=self.config.get('connection_limit', 100),
             limit_per_host=self.config.get('connection_limit_per_host', 30)
         )
+
+
         
         session = aiohttp.ClientSession(
             headers=headers,
             timeout=timeout,
             connector=connector
         )
+
         
         self.session_pool[platform_config.platform_id] = session
     
@@ -208,23 +223,29 @@ class MultiPlatformIntegrationFramework:
                 'error': 'Rate limit exceeded',
                 'retry_after': self._get_rate_limit_reset_time(platform_id)
             }
+
         
         platform_config = self.platforms[platform_id]
+
         session = self.session_pool.get(platform_id)
+
         
         if not session:
             return {
                 'success': False,
                 'error': 'Session not available'
             }
+
         
         start_time = time.time()
+
         
         try:
             # Build full URL
             full_url = urljoin(platform_config.api_endpoint, endpoint)
             
             # Prepare request data based on format
+
             request_data = await self._prepare_request_data(
                 data, platform_config.data_format
             )
@@ -244,7 +265,9 @@ class MultiPlatformIntegrationFramework:
                 self._update_metrics(platform_id, response.status == 200, response_time)
                 
                 # Parse response
+
                 response_data = await self._parse_response(response, platform_config.data_format)
+
                 
                 return {
                     'success': response.status < 400,
@@ -257,8 +280,10 @@ class MultiPlatformIntegrationFramework:
         except Exception as e:
             response_time = time.time() - start_time
             self._update_metrics(platform_id, False, response_time)
+
             
             self.logger.error(f"Request to {platform_id} failed: {e}")
+
             return {
                 'success': False,
                 'error': str(e),
@@ -271,8 +296,10 @@ class MultiPlatformIntegrationFramework:
         
         if platform_id not in self.rate_limiters:
             return True
+
         
         limiter = self.rate_limiters[platform_id]
+
         now = datetime.now()
         
         # Clean old requests
@@ -282,11 +309,14 @@ class MultiPlatformIntegrationFramework:
         ]
         
         # Check limits
+
         requests_last_hour = len(limiter['request_history'])
+
         requests_last_minute = len([
             req_time for req_time in limiter['request_history']
             if now - req_time < timedelta(minutes=1)
         ])
+
         
         if requests_last_minute >= limiter['requests_per_minute']:
             return False
@@ -299,17 +329,24 @@ class MultiPlatformIntegrationFramework:
         return True
     
     def _get_rate_limit_reset_time(self, platform_id: str) -> int:
-        """Get time until rate limit resets (in seconds)"""
+        """
+        Get time until rate limit resets (in seconds)"""
         
         limiter = self.rate_limiters.get(platform_id, {})
+
         request_history = limiter.get('request_history', [])
+
         
         if not request_history:
             return 0
         
         # Time until oldest request in current minute expires
+
         now = datetime.now()
+
         minute_ago = now - timedelta(minutes=1)
+
+
         
         requests_last_minute = [
             req_time for req_time in request_history
@@ -318,13 +355,18 @@ class MultiPlatformIntegrationFramework:
         
         if requests_last_minute:
             oldest_request = min(requests_last_minute)
+
+
             reset_time = oldest_request + timedelta(minutes=1)
+
             return max(0, int((reset_time - now).total_seconds()))
+
         
         return 0
     
     async def _prepare_request_data(self, data: Any, data_format: DataFormat) -> Any:
-        """Prepare request data based on format"""
+        """
+        Prepare request data based on format"""
         
         if not data:
             return None
@@ -337,18 +379,23 @@ class MultiPlatformIntegrationFramework:
             return data
     
     async def _parse_response(self, response: aiohttp.ClientResponse, data_format: DataFormat) -> Any:
-        """Parse response based on format"""
+        """
+        Parse response based on format"""
         
         try:
             if data_format == DataFormat.JSON:
                 return await response.json()
+
             elif data_format == DataFormat.XML:
                 return await response.text()
+
             else:
                 return await response.text()
+
                 
         except Exception as e:
             self.logger.warning(f"Failed to parse response: {e}")
+
             return await response.text()
     
     def _update_metrics(self, platform_id: str, success: bool, response_time: float):
@@ -356,6 +403,7 @@ class MultiPlatformIntegrationFramework:
         
         if platform_id not in self.metrics:
             return
+
         
         metrics = self.metrics[platform_id]
         metrics.total_requests += 1
@@ -369,7 +417,9 @@ class MultiPlatformIntegrationFramework:
             metrics.errors_24h += 1
         
         # Update average response time
+
         total_requests = metrics.total_requests
+
         current_avg = metrics.average_response_time
         metrics.average_response_time = (
             (current_avg * (total_requests - 1) + response_time) / total_requests
@@ -382,13 +432,17 @@ class MultiPlatformIntegrationFramework:
             )
     
     async def get_platform_status(self, platform_id: str) -> Dict[str, Any]:
-        """Get status of specific platform"""
+        """
+        Get status of specific platform"""
         
         if platform_id not in self.platforms:
             return {'error': 'Platform not found'}
+
         
         platform_config = self.platforms[platform_id]
+
         metrics = self.metrics.get(platform_id, IntegrationMetrics(platform_id))
+
         
         return {
             'platform_id': platform_id,
@@ -404,11 +458,13 @@ class MultiPlatformIntegrationFramework:
         }
     
     async def cleanup(self):
-        """Cleanup resources"""
+        """
+        Cleanup resources"""
         
         for session in self.session_pool.values():
             if not session.closed:
                 await session.close()
+
         
         self.session_pool.clear()
 
@@ -422,7 +478,8 @@ class APIGatewayManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the API Gateway Manager"""
+        """
+        Initialize the API Gateway Manager"""
         self.config = config or {}
         self.routes: Dict[str, Dict[str, Any]] = {}
         self.middleware_stack: List[Callable] = []
@@ -448,10 +505,12 @@ class APIGatewayManager:
             }
             
             self.logger.info(f"Route {route_path} registered")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Failed to register route {route_path}: {e}")
+
             return False
     
     async def process_request(self, 
@@ -467,6 +526,7 @@ class APIGatewayManager:
                 'error': 'Route not found',
                 'status_code': 404
             }
+
         
         route_config = self.routes[route_path]
         
@@ -483,6 +543,7 @@ class APIGatewayManager:
         
         try:
             # Apply middleware
+
             request_context = {
                 'route_path': route_path,
                 'method': method,
@@ -495,13 +556,18 @@ class APIGatewayManager:
                 middleware_result = await self._apply_middleware(
                     middleware_name, request_context
                 )
+
                 
                 if not middleware_result['continue']:
                     return middleware_result['response']
             
             # Check cache
+
             cache_key = self._generate_cache_key(route_path, method, data)
+
+
             cached_response = self._get_cached_response(cache_key)
+
             
             if cached_response:
                 return {
@@ -513,6 +579,7 @@ class APIGatewayManager:
             
             # Forward request to target platform
             # This would typically use the MultiPlatformIntegrationFramework
+
             response = {
                 'success': True,
                 'data': f"Forwarded to {route_config['target_platform']}",
@@ -523,11 +590,13 @@ class APIGatewayManager:
             # Cache successful responses
             if response['success']:
                 self._cache_response(cache_key, response)
+
             
             return response
             
         except Exception as e:
             self.logger.error(f"Request processing failed for {route_path}: {e}")
+
             return {
                 'success': False,
                 'error': 'Internal gateway error',
@@ -548,10 +617,13 @@ class APIGatewayManager:
             return {'continue': True}
     
     async def _auth_middleware(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Authentication middleware"""
+        """
+        Authentication middleware"""
         
         headers = context.get('headers', {})
+
         auth_header = headers.get('Authorization')
+
         
         if not auth_header:
             return {
@@ -567,15 +639,18 @@ class APIGatewayManager:
         return {'continue': True}
     
     async def _rate_limit_middleware(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Rate limiting middleware"""
+        """
+        Rate limiting middleware"""
         
         # Simplified rate limiting
         return {'continue': True}
     
     def _generate_cache_key(self, route_path: str, method: str, data: Any) -> str:
-        """Generate cache key for request"""
+        """
+        Generate cache key for request"""
         
         import hashlib
+
         
         key_data = f"{route_path}:{method}:{json.dumps(data, sort_keys=True) if data else ''}"
         return hashlib.md5(key_data.encode()).hexdigest()
@@ -585,8 +660,10 @@ class APIGatewayManager:
         
         if cache_key not in self.cache:
             return None
+
         
         cached_item = self.cache[cache_key]
+
         cache_ttl = self.config.get('cache_ttl', 300)  # 5 minutes default
         
         if datetime.now() - cached_item['timestamp'] > timedelta(seconds=cache_ttl):
@@ -596,11 +673,14 @@ class APIGatewayManager:
         return cached_item
     
     def _cache_response(self, cache_key: str, response: Dict[str, Any]):
-        """Cache response"""
+        """
+        Cache response"""
         
         if len(self.cache) > self.config.get('max_cache_size', 1000):
             # Simple cache eviction - remove oldest
+
             oldest_key = min(self.cache.keys(), key=lambda k: self.cache[k]['timestamp'])
+
             del self.cache[oldest_key]
         
         self.cache[cache_key] = {
@@ -618,7 +698,8 @@ class CrossPlatformSynchronizer:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the Cross-Platform Synchronizer"""
+        """
+        Initialize the Cross-Platform Synchronizer"""
         self.config = config or {}
         self.sync_jobs: Dict[str, Dict[str, Any]] = {}
         self.sync_history: List[Dict[str, Any]] = []
@@ -646,10 +727,12 @@ class CrossPlatformSynchronizer:
             }
             
             self.logger.info(f"Sync job {job_id} created")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Failed to create sync job {job_id}: {e}")
+
             return False
     
     async def execute_sync(self, job_id: str, data: Any) -> Dict[str, Any]:
@@ -660,22 +743,28 @@ class CrossPlatformSynchronizer:
                 'success': False,
                 'error': 'Sync job not found'
             }
+
         
         job_config = self.sync_jobs[job_id]
+
         start_time = datetime.now()
+
         
         try:
             # Transform data according to mapping
+
             transformed_data = await self._transform_data(
                 data, job_config['data_mapping']
             )
             
             # Sync to target platforms
+
             sync_results = []
             for target_platform in job_config['target_platforms']:
                 result = await self._sync_to_platform(
                     target_platform, transformed_data
                 )
+
                 sync_results.append(result)
             
             # Update job statistics
@@ -684,6 +773,7 @@ class CrossPlatformSynchronizer:
             
             if any(not r['success'] for r in sync_results):
                 job_config['error_count'] += 1
+
             
             sync_result = {
                 'job_id': job_id,
@@ -694,11 +784,13 @@ class CrossPlatformSynchronizer:
             }
             
             self.sync_history.append(sync_result)
+
             return sync_result
             
         except Exception as e:
             job_config['error_count'] += 1
             self.logger.error(f"Sync execution failed for job {job_id}: {e}")
+
             
             return {
                 'job_id': job_id,
@@ -725,7 +817,8 @@ class CrossPlatformSynchronizer:
         return data
     
     async def _sync_to_platform(self, platform_id: str, data: Any) -> Dict[str, Any]:
-        """Synchronize data to specific platform"""
+        """
+        Synchronize data to specific platform"""
         
         # This would typically use the MultiPlatformIntegrationFramework
         # For now, it's a simplified implementation
@@ -757,7 +850,8 @@ class PlatformIntegrationCore:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the Platform Integration Core"""
+        """
+        Initialize the Platform Integration Core"""
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -779,19 +873,23 @@ class PlatformIntegrationCore:
             
             # Initialize default integrations
             await self._initialize_default_platforms()
+
             
             self.is_initialized = True
             self.logger.info("Platform Integration Core initialized successfully")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Platform Integration Core initialization failed: {e}")
+
             return False
     
     async def _initialize_default_platforms(self):
         """Initialize default platform configurations"""
         
         # Example default platforms
+
         default_platforms = [
             PlatformConfiguration(
                 platform_id="youtube",
@@ -820,6 +918,7 @@ class PlatformIntegrationCore:
         platform_statuses = {}
         for platform_id in self.integration_framework.platforms.keys():
             platform_statuses[platform_id] = await self.integration_framework.get_platform_status(platform_id)
+
         
         return {
             'initialized': self.is_initialized,
@@ -832,7 +931,8 @@ class PlatformIntegrationCore:
         }
     
     async def cleanup(self):
-        """Cleanup resources"""
+        """
+        Cleanup resources"""
         await self.integration_framework.cleanup()
 
 
@@ -841,12 +941,14 @@ class PlatformIntegrationCore:
 # =============================================================================
 
 def create_platform_integration_core(config: Optional[Dict[str, Any]] = None) -> PlatformIntegrationCore:
-    """Factory function to create Platform Integration Core"""
+    """
+        Factory function to create Platform Integration Core"""
     return PlatformIntegrationCore(config)
 
 
 async def quick_integration_setup() -> PlatformIntegrationCore:
-    """Quick setup for development environment"""
+    """
+        Quick setup for development environment"""
     core = create_platform_integration_core({
         'integration': {},
         'gateway': {'cache_ttl': 300},

@@ -40,7 +40,8 @@ import math
 logger = logging.getLogger(__name__)
 
 class RateLimitAlgorithm(str, Enum):
-    """Rate limiting algorithms"""
+    """
+Rate limiting algorithms"""
     TOKEN_BUCKET = "token_bucket"
     SLIDING_WINDOW_COUNTER = "sliding_window_counter"
     FIXED_WINDOW_COUNTER = "fixed_window_counter"
@@ -48,7 +49,8 @@ class RateLimitAlgorithm(str, Enum):
     ADAPTIVE = "adaptive"
 
 class RateLimitScope(str, Enum):
-    """Rate limiting scope"""
+    """
+Rate limiting scope"""
     GLOBAL = "global"
     USER = "user"
     IP = "ip"
@@ -57,7 +59,8 @@ class RateLimitScope(str, Enum):
     TENANT = "tenant"
 
 class RateLimitAction(str, Enum):
-    """Actions when rate limit is exceeded"""
+    """
+Actions when rate limit is exceeded"""
     BLOCK = "block"
     THROTTLE = "throttle"
     QUEUE = "queue"
@@ -65,7 +68,8 @@ class RateLimitAction(str, Enum):
 
 @dataclass
 class RateLimitRule:
-    """Rate limiting rule configuration"""
+    """
+Rate limiting rule configuration"""
     name: str
     scope: RateLimitScope
     algorithm: RateLimitAlgorithm = RateLimitAlgorithm.TOKEN_BUCKET
@@ -83,7 +87,8 @@ class RateLimitRule:
 
 @dataclass
 class RateLimitResult:
-    """Result of rate limit check"""
+    """
+Result of rate limit check"""
     allowed: bool
     remaining: int
     reset_time: float
@@ -94,7 +99,8 @@ class RateLimitResult:
 
 @dataclass
 class RateLimitMetrics:
-    """Rate limiting metrics"""
+    """
+Rate limiting metrics"""
     total_requests: int = 0
     blocked_requests: int = 0
     throttled_requests: int = 0
@@ -105,7 +111,8 @@ class RateLimitMetrics:
     average_response_time: float = 0.0
     
 class TokenBucket:
-    """Token bucket implementation for rate limiting"""
+    """
+Token bucket implementation for rate limiting"""
     
     def __init__(self, capacity: int, refill_rate: float, redis_client: Optional[redis.Redis] = None):
         self.capacity = capacity
@@ -116,14 +123,16 @@ class TokenBucket:
         self._lock = threading.Lock()
     
     async def consume(self, key: str, tokens: int = 1) -> Tuple[bool, int]:
-        """Consume tokens from bucket"""
+        """
+Consume tokens from bucket"""
         if self.redis_client:
             return await self._consume_distributed(key, tokens)
         else:
             return self._consume_local(tokens)
     
     def _consume_local(self, tokens: int) -> Tuple[bool, int]:
-        """Local token bucket consumption"""
+        """
+Local token bucket consumption"""
         with self._lock:
             current_time = time.time()
             time_passed = current_time - self.last_refill
@@ -140,7 +149,8 @@ class TokenBucket:
                 return False, int(self.local_tokens)
     
     async def _consume_distributed(self, key: str, tokens: int) -> Tuple[bool, int]:
-        """Distributed token bucket using Redis"""
+        """
+Distributed token bucket using Redis"""
         lua_script = """
         local key = KEYS[1]
         local capacity = tonumber(ARGV[1])
@@ -181,7 +191,8 @@ class TokenBucket:
             return self._consume_local(tokens)
 
 class SlidingWindowCounter:
-    """Sliding window counter implementation"""
+    """
+Sliding window counter implementation"""
     
     def __init__(self, window_seconds: int, max_requests: int, redis_client: Optional[redis.Redis] = None):
         self.window_seconds = window_seconds
@@ -191,14 +202,16 @@ class SlidingWindowCounter:
         self._lock = threading.Lock()
     
     async def check_limit(self, key: str) -> Tuple[bool, int]:
-        """Check if request is within limit"""
+        """
+Check if request is within limit"""
         if self.redis_client:
             return await self._check_limit_distributed(key)
         else:
             return self._check_limit_local(key)
     
     def _check_limit_local(self, key: str) -> Tuple[bool, int]:
-        """Local sliding window check"""
+        """
+Local sliding window check"""
         with self._lock:
             current_time = time.time()
             cutoff_time = current_time - self.window_seconds
@@ -221,7 +234,8 @@ class SlidingWindowCounter:
                 return False, 0
     
     async def _check_limit_distributed(self, key: str) -> Tuple[bool, int]:
-        """Distributed sliding window using Redis"""
+        """
+Distributed sliding window using Redis"""
         lua_script = """
         local key = KEYS[1]
         local window = tonumber(ARGV[1])
@@ -256,7 +270,8 @@ class SlidingWindowCounter:
             return self._check_limit_local(key)
 
 class AdaptiveRateLimiter:
-    """Adaptive rate limiter that adjusts based on system load"""
+    """
+Adaptive rate limiter that adjusts based on system load"""
     
     def __init__(self, base_limit: int, window_seconds: int):
         self.base_limit = base_limit
@@ -267,7 +282,8 @@ class AdaptiveRateLimiter:
         self.success_count = 0
         
     def adjust_limit(self, cpu_usage: float, memory_usage: float, error_rate: float):
-        """Adjust rate limit based on system metrics"""
+        """
+Adjust rate limit based on system metrics"""
         current_time = time.time()
         if current_time - self.last_adjustment < 30:  # Adjust max every 30 seconds
             return
@@ -289,11 +305,13 @@ class AdaptiveRateLimiter:
         logger.info(f"Rate limit adjusted: multiplier={self.current_multiplier:.2f}")
     
     def get_current_limit(self) -> int:
-        """Get current adjusted limit"""
+        """
+Get current adjusted limit"""
         return int(self.base_limit * self.current_multiplier)
 
 class RateLimiterCore:
-    """Advanced enterprise rate limiter core"""
+    """
+Advanced enterprise rate limiter core"""
     
     def __init__(self, level: str = "enterprise"):
         self.level = level
@@ -310,7 +328,8 @@ class RateLimiterCore:
         self.performance_config = self._get_performance_config()
         
     def _get_performance_config(self) -> Dict[str, Any]:
-        """Get performance configuration based on level"""
+        """
+Get performance configuration based on level"""
         configs = {
             "basic": {
                 "max_rules": 10,
@@ -340,7 +359,8 @@ class RateLimiterCore:
         return configs.get(self.level, configs["enterprise"])
     
     async def initialize(self) -> bool:
-        """Initialize rate limiter"""
+        """
+Initialize rate limiter"""
         try:
             logger.info(f"🚀 Initializing RateLimiterCore - Level: {self.level}")
             
@@ -362,7 +382,8 @@ class RateLimiterCore:
             return False
     
     async def _setup_redis(self):
-        """Setup Redis connection for distributed rate limiting"""
+        """
+Setup Redis connection for distributed rate limiting"""
         try:
             # This would be configured from environment variables
             # For now, we'll set it to None to use local rate limiting
@@ -373,7 +394,8 @@ class RateLimiterCore:
             self.redis_client = None
     
     async def _load_default_rules(self):
-        """Load default rate limiting rules"""
+        """
+Load default rate limiting rules"""
         default_rules = [
             RateLimitRule(
                 name="global_api",
@@ -409,7 +431,8 @@ class RateLimiterCore:
             await self.add_rule(rule)
     
     async def add_rule(self, rule: RateLimitRule) -> bool:
-        """Add rate limiting rule"""
+        """
+Add rate limiting rule"""
         try:
             async with self._lock:
                 self.rules[rule.name] = rule
@@ -443,7 +466,8 @@ class RateLimiterCore:
         tokens: int = 1,
         metadata: Optional[Dict[str, Any]] = None
     ) -> RateLimitResult:
-        """Check if request is within rate limit"""
+        """
+Check if request is within rate limit"""
         try:
             if not self.enabled:
                 return RateLimitResult(allowed=True, remaining=999, reset_time=0)
@@ -492,20 +516,23 @@ class RateLimiterCore:
             return RateLimitResult(allowed=True, remaining=999, reset_time=0)
     
     def _generate_key(self, identifier: str, rule_name: str, scope: RateLimitScope) -> str:
-        """Generate unique key for rate limiting"""
+        """
+Generate unique key for rate limiting"""
         key_parts = [rule_name, scope.value, identifier]
         key_string = ":".join(key_parts)
         return hashlib.sha256(key_string.encode()).hexdigest()[:16]
     
     async def _check_token_bucket(self, rule_name: str, key: str, tokens: int) -> Tuple[bool, int]:
-        """Check token bucket rate limit"""
+        """
+Check token bucket rate limit"""
         bucket = self.buckets.get(rule_name)
         if bucket:
             return await bucket.consume(key, tokens)
         return True, 999
     
     async def _check_sliding_window(self, rule_name: str, key: str) -> Tuple[bool, int]:
-        """Check sliding window rate limit"""
+        """
+Check sliding window rate limit"""
         window = self.windows.get(rule_name)
         if window:
             return await window.check_limit(key)
@@ -517,7 +544,8 @@ class RateLimiterCore:
         key: str, 
         metadata: Optional[Dict[str, Any]]
     ) -> Tuple[bool, int]:
-        """Check adaptive rate limit"""
+        """
+Check adaptive rate limit"""
         adaptive = self.adaptive_limiters.get(rule_name)
         if adaptive:
             # Adjust based on system metrics if provided
@@ -538,7 +566,8 @@ class RateLimiterCore:
         return True, 999
     
     def _calculate_retry_after(self, rule: RateLimitRule) -> float:
-        """Calculate retry after time"""
+        """
+Calculate retry after time"""
         if rule.algorithm == RateLimitAlgorithm.TOKEN_BUCKET:
             # For token bucket, retry after one token refill period
             refill_rate = rule.requests_per_window / rule.window_seconds
@@ -548,7 +577,8 @@ class RateLimiterCore:
             return rule.window_seconds / 4
     
     async def _update_metrics(self, allowed: bool, rule_name: str):
-        """Update rate limiting metrics"""
+        """
+Update rate limiting metrics"""
         self.metrics.total_requests += 1
         if not allowed:
             self.metrics.blocked_requests += 1
@@ -559,7 +589,8 @@ class RateLimiterCore:
             self.metrics.hit_rate = (self.metrics.total_requests - self.metrics.blocked_requests) / self.metrics.total_requests
     
     async def _cleanup_task(self):
-        """Background cleanup task"""
+        """
+Background cleanup task"""
         while True:
             try:
                 await asyncio.sleep(self.performance_config["cleanup_interval"])
@@ -568,13 +599,15 @@ class RateLimiterCore:
                 logger.error(f"Cleanup task error: {e}")
     
     async def _cleanup_expired_buckets(self):
-        """Clean up expired buckets and windows"""
+        """
+Clean up expired buckets and windows"""
         # This would clean up local storage
         # For distributed storage, Redis handles expiration
         pass
     
     async def _metrics_task(self):
-        """Background metrics collection task"""
+        """
+Background metrics collection task"""
         while True:
             try:
                 await asyncio.sleep(60)  # Update metrics every minute
@@ -584,11 +617,13 @@ class RateLimiterCore:
                 logger.error(f"Metrics task error: {e}")
     
     async def get_metrics(self) -> RateLimitMetrics:
-        """Get current metrics"""
+        """
+Get current metrics"""
         return self.metrics
     
     async def get_rule_status(self, rule_name: str) -> Optional[Dict[str, Any]]:
-        """Get status for specific rule"""
+        """
+Get status for specific rule"""
         rule = self.rules.get(rule_name)
         if not rule:
             return None
@@ -605,7 +640,8 @@ class RateLimiterCore:
         }
     
     async def update_rule(self, rule_name: str, updates: Dict[str, Any]) -> bool:
-        """Update existing rule"""
+        """
+Update existing rule"""
         try:
             rule = self.rules.get(rule_name)
             if not rule:
@@ -628,7 +664,8 @@ class RateLimiterCore:
             return False
     
     async def remove_rule(self, rule_name: str) -> bool:
-        """Remove rate limiting rule"""
+        """
+Remove rate limiting rule"""
         try:
             if rule_name in self.rules:
                 del self.rules[rule_name]
@@ -647,7 +684,8 @@ class RateLimiterCore:
             return False
     
     async def enable_rule(self, rule_name: str) -> bool:
-        """Enable rate limiting rule"""
+        """
+Enable rate limiting rule"""
         rule = self.rules.get(rule_name)
         if rule:
             rule.enabled = True
@@ -656,7 +694,8 @@ class RateLimiterCore:
         return False
     
     async def disable_rule(self, rule_name: str) -> bool:
-        """Disable rate limiting rule"""
+        """
+Disable rate limiting rule"""
         rule = self.rules.get(rule_name)
         if rule:
             rule.enabled = False
@@ -665,7 +704,8 @@ class RateLimiterCore:
         return False
     
     async def health_check(self) -> bool:
-        """Health check for rate limiter"""
+        """
+Health check for rate limiter"""
         try:
             # Check if core components are working
             test_result = await self.check_rate_limit("health_check", "global_api")
@@ -675,7 +715,8 @@ class RateLimiterCore:
             return False
     
     async def start(self) -> bool:
-        """Start rate limiter service"""
+        """
+Start rate limiter service"""
         try:
             logger.info("🚀 Starting RateLimiterCore service")
             self.enabled = True
@@ -685,7 +726,8 @@ class RateLimiterCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop rate limiter service"""
+        """
+Stop rate limiter service"""
         try:
             logger.info("🛑 Stopping RateLimiterCore service")
             self.enabled = False

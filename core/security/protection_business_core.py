@@ -1,4 +1,5 @@
-"""Protection Business Core - Enterprise Content Protection Engine
+"""
+Protection Business Core - Enterprise Content Protection Engine
 
 Central protection business logic core for content copyright, rights management, and violation detection.
 Handles DMCA compliance, fingerprinting, and legal protection with enterprise standards.
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 # Protection Status
 class ProtectionStatus(Enum):
-    """Content protection status"""
+    """
+Content protection status"""
     UNPROTECTED = "unprotected"
     PROTECTED = "protected"
     VIOLATED = "violated"
@@ -34,7 +36,8 @@ class ProtectionStatus(Enum):
 
 # Violation Severity
 class ViolationSeverity(Enum):
-    """Violation severity levels"""
+    """
+Violation severity levels"""
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -42,7 +45,8 @@ class ViolationSeverity(Enum):
 
 # Legal Action Types
 class LegalActionType(Enum):
-    """Types of legal actions"""
+    """
+Types of legal actions"""
     DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     COPYRIGHT_CLAIM = "copyright_claim"
@@ -51,7 +55,8 @@ class LegalActionType(Enum):
 
 @dataclass
 class ProtectionProfile:
-    """Content protection profile"""
+    """
+Content protection profile"""
     profile_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str = ""
     owner_id: str = ""
@@ -66,7 +71,8 @@ class ProtectionProfile:
 
 @dataclass
 class ViolationReport:
-    """Content violation report"""
+    """
+Content violation report"""
     report_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     protection_profile_id: str = ""
     violation_type: str = ""
@@ -82,7 +88,8 @@ class ViolationReport:
 
 @dataclass
 class LegalAction:
-    """Legal action record"""
+    """
+Legal action record"""
     action_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     violation_report_id: str = ""
     action_type: LegalActionType = LegalActionType.DMCA_TAKEDOWN
@@ -96,7 +103,8 @@ class LegalAction:
     completed_at: Optional[datetime] = None
 
 class ProtectionBusinessCore:
-    """Enterprise Protection Business Logic Core
+    """
+Enterprise Protection Business Logic Core
     
     Handles comprehensive content protection including copyright management,
     violation detection, and legal compliance with enterprise-grade reliability.
@@ -114,7 +122,8 @@ class ProtectionBusinessCore:
         logger.info("Protection Business Core initialized")
     
     async def initialize(self) -> bool:
-        """Initialize the protection business system"""
+        """
+Initialize the protection business system"""
         try:
             await self._setup_protection_policies()
             await self._setup_monitoring_systems()
@@ -130,7 +139,8 @@ class ProtectionBusinessCore:
             return False
     
     async def _setup_protection_policies(self):
-        """Setup content protection policies"""
+        """
+Setup content protection policies"""
         self.protection_policies = {
             "copyright_protection": {
                 "enabled": True,
@@ -169,7 +179,8 @@ class ProtectionBusinessCore:
         logger.info("✅ Protection policies configured")
     
     async def _setup_monitoring_systems(self):
-        """Setup content monitoring systems"""
+        """
+Setup content monitoring systems"""
         self.monitoring_systems = {
             "platform_monitors": {
                 "youtube": {
@@ -224,7 +235,8 @@ class ProtectionBusinessCore:
         logger.info("✅ Monitoring systems configured")
     
     async def _setup_legal_frameworks(self):
-        """Setup legal frameworks and templates"""
+        """
+Setup legal frameworks and templates"""
         self.legal_frameworks = {
             "dmca_templates": {
                 "takedown_notice": {
@@ -267,7 +279,8 @@ class ProtectionBusinessCore:
         logger.info("✅ Legal frameworks configured")
     
     async def _setup_performance_monitoring(self):
-        """Setup performance monitoring"""
+        """
+Setup performance monitoring"""
         self.performance_metrics = {
             "detection_accuracy": 0.0,
             "false_positive_rate": 0.0,
@@ -288,7 +301,8 @@ class ProtectionBusinessCore:
         copyright_info: Dict[str, Any],
         protection_level: str = "standard"
     ) -> ProtectionProfile:
-        """Create content protection profile"""
+        """
+Create content protection profile"""
         try:
             profile = ProtectionProfile(
                 content_id=content_id,
@@ -317,7 +331,8 @@ class ProtectionBusinessCore:
             raise
     
     def _get_monitoring_settings(self, protection_level: str) -> Dict[str, Any]:
-        """Get monitoring settings based on protection level"""
+        """
+Get monitoring settings based on protection level"""
         settings = {
             "basic": {
                 "scan_frequency_hours": 24,
@@ -350,7 +365,8 @@ class ProtectionBusinessCore:
         return settings.get(protection_level, settings["standard"])
     
     async def _validate_copyright_info(self, copyright_info: Dict[str, Any]) -> bool:
-        """Validate copyright information"""
+        """
+Validate copyright information"""
         try:
             required_fields = ["owner_name", "creation_date", "copyright_notice"]
             
@@ -375,7 +391,8 @@ class ProtectionBusinessCore:
             return False
     
     async def _configure_content_monitoring(self, profile: ProtectionProfile):
-        """Configure monitoring for specific content type"""
+        """
+Configure monitoring for specific content type"""
         try:
             content_type = profile.content_type
             monitoring_config = {}
@@ -415,7 +432,8 @@ class ProtectionBusinessCore:
             logger.error(f"❌ Content monitoring configuration failed: {str(e)}")
     
     async def scan_for_violations(self, profile_id: str) -> List[ViolationReport]:
-        """Scan for content violations"""
+        """
+Scan for content violations"""
         try:
             profile = self.protection_profiles.get(profile_id)
             if not profile:
@@ -457,7 +475,8 @@ class ProtectionBusinessCore:
         platform: str, 
         threshold: float
     ) -> List[ViolationReport]:
-        """Scan specific platform for violations"""
+        """
+Scan specific platform for violations"""
         try:
             violations = []
             
@@ -516,7 +535,8 @@ class ProtectionBusinessCore:
             return []
     
     def _calculate_violation_severity(self, similarity_score: float) -> ViolationSeverity:
-        """Calculate violation severity based on similarity score"""
+        """
+Calculate violation severity based on similarity score"""
         if similarity_score >= 0.95:
             return ViolationSeverity.CRITICAL
         elif similarity_score >= 0.90:
@@ -531,7 +551,8 @@ class ProtectionBusinessCore:
         violation_report_id: str,
         action_type: LegalActionType = LegalActionType.DMCA_TAKEDOWN
     ) -> LegalAction:
-        """Initiate legal action for a violation"""
+        """
+Initiate legal action for a violation"""
         try:
             violation = self.violation_reports.get(violation_report_id)
             if not violation:
@@ -579,7 +600,8 @@ class ProtectionBusinessCore:
         violation: ViolationReport, 
         profile: ProtectionProfile
     ) -> Dict[str, Any]:
-        """Generate legal document for action"""
+        """
+Generate legal document for action"""
         try:
             document = {
                 "document_type": action_type.value,
@@ -618,7 +640,8 @@ class ProtectionBusinessCore:
             return {}
     
     def _get_legal_basis(self, action_type: LegalActionType) -> str:
-        """Get legal basis for action type"""
+        """
+Get legal basis for action type"""
         legal_bases = {
             LegalActionType.DMCA_TAKEDOWN: "Digital Millennium Copyright Act (DMCA) Section 512(c)",
             LegalActionType.CEASE_DESIST: "Copyright infringement under 17 U.S.C. § 501",
@@ -629,7 +652,8 @@ class ProtectionBusinessCore:
         return legal_bases.get(action_type, "General copyright protection laws")
     
     def _get_demanded_action(self, action_type: LegalActionType) -> str:
-        """Get demanded action for action type"""
+        """
+Get demanded action for action type"""
         demanded_actions = {
             LegalActionType.DMCA_TAKEDOWN: "Immediate removal of infringing content",
             LegalActionType.CEASE_DESIST: "Cease all infringing activities and remove content",
@@ -644,7 +668,8 @@ class ProtectionBusinessCore:
         action_type: LegalActionType, 
         violation: ViolationReport
     ) -> float:
-        """Calculate estimated cost for legal action"""
+        """
+Calculate estimated cost for legal action"""
         base_costs = {
             LegalActionType.DMCA_TAKEDOWN: 0.0,  # Automated
             LegalActionType.CEASE_DESIST: 50.0,  # Template review
@@ -668,7 +693,8 @@ class ProtectionBusinessCore:
         action_type: LegalActionType, 
         violation: ViolationReport
     ) -> float:
-        """Predict success rate for legal action"""
+        """
+Predict success rate for legal action"""
         base_rates = {
             LegalActionType.DMCA_TAKEDOWN: 0.89,
             LegalActionType.CEASE_DESIST: 0.67,
@@ -686,7 +712,8 @@ class ProtectionBusinessCore:
         return max(adjusted_rate, 0.1)
     
     async def _execute_legal_action(self, legal_action: LegalAction) -> bool:
-        """Execute the legal action"""
+        """
+Execute the legal action"""
         try:
             # Simulate legal action execution
             # In real implementation, this would:
@@ -715,7 +742,8 @@ class ProtectionBusinessCore:
             return False
     
     async def _update_detection_metrics(self, violations: List[ViolationReport]):
-        """Update detection performance metrics"""
+        """
+Update detection performance metrics"""
         try:
             if not violations:
                 return
@@ -739,7 +767,8 @@ class ProtectionBusinessCore:
             logger.error(f"❌ Metrics update failed: {str(e)}")
     
     async def get_protection_status(self, profile_id: str) -> Optional[Dict[str, Any]]:
-        """Get comprehensive protection status"""
+        """
+Get comprehensive protection status"""
         try:
             profile = self.protection_profiles.get(profile_id)
             if not profile:
@@ -780,7 +809,8 @@ class ProtectionBusinessCore:
             return None
     
     async def get_system_metrics(self) -> Dict[str, Any]:
-        """Get system performance metrics"""
+        """
+Get system performance metrics"""
         try:
             total_profiles = len(self.protection_profiles)
             total_violations = len(self.violation_reports)

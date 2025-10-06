@@ -251,7 +251,8 @@ class AudienceAnalyzer:
         self._initialize_segmentation_models()
     
     def _initialize_segmentation_models(self):
-        """Initialise les modèles de segmentation"""
+        """
+        Initialise les modèles de segmentation"""
         try:
             # Modèle de clustering pour segmentation démographique
             self.segment_models['demographic'] = KMeans(n_clusters=8, random_state=42)
@@ -261,6 +262,7 @@ class AudienceAnalyzer:
             
             # Modèle de détection de qualité
             self.quality_detectors['engagement'] = GradientBoostingClassifier(random_state=42)
+
             
         except Exception as e:
             logger.error(f"Erreur initialisation modèles segmentation: {e}")
@@ -269,24 +271,30 @@ class AudienceAnalyzer:
         """Analyse l'audience d'un utilisateur"""
         try:
             # Extraire les données démographiques
+
             demographics = await self._extract_demographics(platform_data)
             
             # Analyser les patterns d'engagement
+
             engagement_patterns = await self._analyze_engagement_patterns(platform_data)
             
             # Calculer la distribution géographique
+
             geo_distribution = await self._analyze_geographic_distribution(platform_data)
             
             # Analyser les intérêts
+
             interest_distribution = await self._analyze_interests(platform_data)
             
             # Calculer le score de qualité
             quality_score = await self._calculate_audience_quality(platform_data)
             
             # Analyser les tendances de croissance
+
             growth_trends = await self._analyze_growth_trends(user_id, platform_data)
             
             # Créer le profil d'audience
+
             audience_profile = AudienceProfile(
                 user_id=user_id,
                 total_followers=platform_data.get('followers_count', 0),
@@ -307,12 +315,15 @@ class AudienceAnalyzer:
             # Persister
             if self.db_session:
                 await self._persist_audience_profile(audience_profile)
+
             
             logger.info(f"Audience analysée pour {user_id}: {audience_profile.total_followers} followers")
+
             return audience_profile
             
         except Exception as e:
             logger.error(f"Erreur analyse audience: {e}")
+
             raise
     
     async def _extract_demographics(self, platform_data: Dict) -> Dict:
@@ -328,11 +339,14 @@ class AudienceAnalyzer:
         if 'instagram' in platform_data:
             ig_data = platform_data['instagram']
             demographics['age'] = ig_data.get('audience_age', {})
+
             demographics['gender'] = ig_data.get('audience_gender', {})
+
         
         if 'tiktok' in platform_data:
             tt_data = platform_data['tiktok']
             demographics['age'].update(tt_data.get('audience_age', {}))
+
             demographics['gender'].update(tt_data.get('audience_gender', {}))
         
         # Normaliser les données
@@ -343,7 +357,8 @@ class AudienceAnalyzer:
         return demographics
     
     async def _analyze_engagement_patterns(self, platform_data: Dict) -> Dict:
-        """Analyse les patterns d'engagement"""
+        """
+        Analyse les patterns d'engagement"""
         patterns = {
             'likes_per_post': 0,
             'comments_per_post': 0,
@@ -354,64 +369,88 @@ class AudienceAnalyzer:
         }
         
         # Agréger les données de toutes les plateformes
+
         total_posts = 0
+
         total_likes = 0
+
         total_comments = 0
+
         total_shares = 0
         
         for platform, data in platform_data.items():
             if platform in ['instagram', 'tiktok', 'youtube', 'twitter']:
                 posts = data.get('posts', [])
+
                 total_posts += len(posts)
+
                 
                 for post in posts:
                     total_likes += post.get('likes', 0)
+
                     total_comments += post.get('comments', 0)
+
                     total_shares += post.get('shares', 0)
+
         
         if total_posts > 0:
             patterns['likes_per_post'] = total_likes / total_posts
             patterns['comments_per_post'] = total_comments / total_posts
             patterns['shares_per_post'] = total_shares / total_posts
+
             
             followers = platform_data.get('followers_count', 1)
+
             patterns['engagement_rate'] = (total_likes + total_comments + total_shares) / (total_posts * followers) * 100
         
         return patterns
     
     async def calculate_audience_overlap(self, user1_id: str, user2_id: str) -> Dict:
-        """Calcule le chevauchement d'audience entre deux utilisateurs"""
+        """
+        Calcule le chevauchement d'audience entre deux utilisateurs"""
         try:
             profile1 = self.audience_profiles.get(user1_id)
+
+
             profile2 = self.audience_profiles.get(user2_id)
+
             
             if not profile1 or not profile2:
                 return {'overlap_percentage': 0, 'details': {}}
             
             # Calculer le chevauchement démographique
+
             age_overlap = self._calculate_distribution_overlap(
                 profile1.age_distribution, profile2.age_distribution
             )
+
+
             
             gender_overlap = self._calculate_distribution_overlap(
                 profile1.gender_distribution, profile2.gender_distribution
             )
+
+
             
             geo_overlap = self._calculate_distribution_overlap(
                 profile1.geographic_distribution, profile2.geographic_distribution
             )
+
+
             
             interest_overlap = self._calculate_distribution_overlap(
                 profile1.interest_distribution, profile2.interest_distribution
             )
             
             # Moyenne pondérée
+
             overall_overlap = (
                 age_overlap * 0.25 +
                 gender_overlap * 0.15 +
                 geo_overlap * 0.3 +
                 interest_overlap * 0.3
             )
+
             
             return {
                 'overlap_percentage': overall_overlap,
@@ -427,41 +466,56 @@ class AudienceAnalyzer:
             
         except Exception as e:
             logger.error(f"Erreur calcul overlap audience: {e}")
+
             return {'overlap_percentage': 0, 'details': {}}
     
     def _calculate_distribution_overlap(self, dist1: Dict, dist2: Dict) -> float:
         """Calcule le chevauchement entre deux distributions"""
         if not dist1 or not dist2:
             return 0.0
+
         
         overlap = 0.0
+
         all_keys = set(dist1.keys()) | set(dist2.keys())
+
         
         for key in all_keys:
             val1 = dist1.get(key, 0)
+
+
             val2 = dist2.get(key, 0)
+
             overlap += min(val1, val2)
+
         
         return overlap * 100  # Pourcentage
     
     async def segment_audience(self, user_id: str, segmentation_type: str = 'behavioral') -> Dict:
-        """Segmente l'audience d'un utilisateur"""
+        """
+        Segmente l'audience d'un utilisateur"""
         try:
             profile = self.audience_profiles.get(user_id)
+
             if not profile:
                 return {}
             
             if segmentation_type == 'demographic':
                 return await self._segment_by_demographics(profile)
+
             elif segmentation_type == 'behavioral':
                 return await self._segment_by_behavior(profile)
+
             elif segmentation_type == 'geographic':
                 return await self._segment_by_geography(profile)
+
             else:
                 return await self._segment_hybrid(profile)
+
             
         except Exception as e:
             logger.error(f"Erreur segmentation audience: {e}")
+
             return {}
 
 # ==========================================
@@ -486,7 +540,8 @@ class DemographicMatcher:
         self.compatibility_matrix = {}
         
     def _initialize_demographic_weights(self) -> Dict:
-        """Initialise les poids démographiques"""
+        """
+        Initialise les poids démographiques"""
         return {
             'age_compatibility': 0.25,
             'gender_balance': 0.15,
@@ -495,18 +550,28 @@ class DemographicMatcher:
         }
     
     async def calculate_demographic_compatibility(self, user1_id: str, user2_id: str) -> float:
-        """Calcule la compatibilité démographique"""
+        """
+        Calcule la compatibilité démographique"""
         try:
             profile1 = self.audience_analyzer.audience_profiles.get(user1_id)
+
+
             profile2 = self.audience_analyzer.audience_profiles.get(user2_id)
+
             
             if not profile1 or not profile2:
                 return 0.0
             
             # Calculer les scores de compatibilité
             age_score = self._calculate_age_compatibility(profile1, profile2)
+
+
             gender_score = self._calculate_gender_compatibility(profile1, profile2)
+
+
             geo_score = self._calculate_geographic_compatibility(profile1, profile2)
+
+
             interest_score = self._calculate_interest_compatibility(profile1, profile2)
             
             # Score pondéré
@@ -516,11 +581,14 @@ class DemographicMatcher:
                 geo_score * self.demographic_weights['geographic_reach'] +
                 interest_score * self.demographic_weights['interest_alignment']
             )
+
             
             return min(100, max(0, compatibility))
+
             
         except Exception as e:
             logger.error(f"Erreur calcul compatibilité démographique: {e}")
+
             return 0.0
     
     def _calculate_age_compatibility(self, profile1: AudienceProfile, profile2: AudienceProfile) -> float:
@@ -532,21 +600,28 @@ class DemographicMatcher:
         complementarity = 100 - overlap
         
         # Bonus si couvre différents segments d'âge
+
         age_diversity_bonus = len(set(profile1.age_distribution.keys()) | set(profile2.age_distribution.keys())) * 5
         
         return min(100, complementarity + age_diversity_bonus)
     
     def _calculate_geographic_compatibility(self, profile1: AudienceProfile, profile2: AudienceProfile) -> float:
-        """Calcule la compatibilité géographique"""
+        """
+        Calcule la compatibilité géographique"""
         # Complémentarité géographique pour expansion
+
         overlap = self._calculate_overlap(profile1.geographic_distribution, profile2.geographic_distribution)
         
         # Favoriser les audiences dans différentes régions
+
         complementarity = 100 - overlap
         
         # Bonus pour la diversité géographique globale
+
         total_regions = len(set(profile1.geographic_distribution.keys()) | set(profile2.geographic_distribution.keys()))
+
         diversity_bonus = min(20, total_regions * 2)
+
         
         return min(100, complementarity + diversity_bonus)
 
@@ -579,7 +654,8 @@ class CollaborationPredictor:
         self._initialize_prediction_models()
     
     def _initialize_prediction_models(self):
-        """Initialise les modèles de prédiction"""
+        """
+        Initialise les modèles de prédiction"""
         try:
             # Modèle de prédiction de succès
             self.prediction_models['success'] = RandomForestRegressor(
@@ -600,6 +676,7 @@ class CollaborationPredictor:
             self.prediction_models['synergy'] = MLPClassifier(
                 hidden_layer_sizes=(150, 100, 50), random_state=42
             )
+
             
         except Exception as e:
             logger.error(f"Erreur initialisation modèles prédiction: {e}")
@@ -609,25 +686,39 @@ class CollaborationPredictor:
         """Prédit le succès d'une collaboration"""
         try:
             # Extraire les features
+
             features = await self._extract_collaboration_features(user1_id, user2_id, collaboration_type)
             
             # Prédictions multiples
+
             success_prob = await self._predict_success_probability(features)
+
+
             engagement_boost = await self._predict_engagement_boost(features)
+
+
             follower_growth = await self._predict_follower_growth(features)
+
+
             synergy_score = await self._predict_synergy_score(features)
             
             # Analyser les facteurs de risque
+
             risk_factors = await self._analyze_risk_factors(features)
             
             # Déterminer le type de collaboration optimal
+
             optimal_type = await self._recommend_collaboration_type(features)
             
             # Prédire la durée optimale
+
             optimal_duration = await self._predict_optimal_duration(features)
             
             # Prédire les outcomes spécifiques
+
             predicted_outcomes = await self._predict_specific_outcomes(features)
+
+
             
             prediction = CollaborationPrediction(
                 user1_id=user1_id,
@@ -645,11 +736,13 @@ class CollaborationPredictor:
             # Persister la prédiction
             if self.db_session:
                 await self._persist_prediction(prediction)
+
             
             return prediction
             
         except Exception as e:
             logger.error(f"Erreur prédiction collaboration: {e}")
+
             raise
     
     async def _extract_collaboration_features(self, user1_id: str, user2_id: str, 
@@ -659,29 +752,41 @@ class CollaborationPredictor:
         
         try:
             # Features utilisateur 1
+
             user1_features = await self._extract_user_features(user1_id)
+
             features.extend(user1_features)
             
             # Features utilisateur 2
+
             user2_features = await self._extract_user_features(user2_id)
+
             features.extend(user2_features)
             
             # Features de compatibilité
             compatibility_features = await self._extract_compatibility_features(user1_id, user2_id)
+
             features.extend(compatibility_features)
             
             # Features temporelles
+
             temporal_features = await self._extract_temporal_features()
+
             features.extend(temporal_features)
             
             # Features du type de collaboration
+
             collab_features = await self._extract_collaboration_type_features(collaboration_type)
+
             features.extend(collab_features)
+
             
             return np.array(features)
+
             
         except Exception as e:
             logger.error(f"Erreur extraction features: {e}")
+
             return np.array([])
     
     async def _extract_user_features(self, user_id: str) -> List[float]:
@@ -689,7 +794,9 @@ class CollaborationPredictor:
         features = []
         
         # Features de base (à adapter selon les données disponibles)
+
         user_data = await self._get_user_data(user_id)
+
         
         features.extend([
             user_data.get('followers_count', 0),
@@ -703,11 +810,13 @@ class CollaborationPredictor:
             user_data.get('content_quality_score', 0),
             user_data.get('audience_quality_score', 0)
         ])
+
         
         return features
     
     async def _predict_success_probability(self, features: np.ndarray) -> float:
-        """Prédit la probabilité de succès"""
+        """
+        Prédit la probabilité de succès"""
         try:
             if len(features) == 0:
                 return 0.5  # Probabilité neutre
@@ -715,16 +824,23 @@ class CollaborationPredictor:
             # Utiliser le modèle entraîné ou calculer heuristiquement
             if hasattr(self.prediction_models['success'], 'predict'):
                 # Modèle entraîné disponible
+
                 prediction = self.prediction_models['success'].predict([features])[0]
                 return max(0, min(1, prediction))
+
             else:
                 # Calcul heuristique basé sur les features
+
                 normalized_features = features / (np.max(features) + 1e-8)
+
+
                 score = np.mean(normalized_features[:10])  # Utiliser les 10 premières features
                 return max(0, min(1, score))
+
                 
         except Exception as e:
             logger.error(f"Erreur prédiction succès: {e}")
+
             return 0.5
     
     async def train_prediction_models(self, training_data: List[Dict]):
@@ -732,6 +848,7 @@ class CollaborationPredictor:
         try:
             if len(training_data) < 10:
                 logger.warning("Pas assez de données pour l'entraînement")
+
                 return
             
             # Préparer les données d'entraînement
@@ -744,16 +861,21 @@ class CollaborationPredictor:
             
             # Entraîner le modèle de succès
             self.prediction_models['success'].fit(X_train, y_success_train)
+
+
             success_score = self.prediction_models['success'].score(X_test, y_success_test)
             
             # Entraîner les autres modèles
             self.prediction_models['engagement'].fit(X_train, y_engagement[:len(X_train)])
+
             self.prediction_models['duration'].fit(X_train, y_duration[:len(X_train)])
             
             # Analyser l'importance des features
             self.feature_importance = dict(enumerate(self.prediction_models['success'].feature_importances_))
+
             
             logger.info(f"Modèles entraînés. Score de succès: {success_score:.3f}")
+
             
         except Exception as e:
             logger.error(f"Erreur entraînement modèles: {e}")
@@ -786,7 +908,8 @@ class ContentSimilarity:
         self._initialize_similarity_models()
     
     def _initialize_similarity_models(self):
-        """Initialise les modèles de similarité"""
+        """
+        Initialise les modèles de similarité"""
         try:
             # Vectorizer TF-IDF pour analyse textuelle
             self.tfidf_vectorizer = TfidfVectorizer(
@@ -800,13 +923,16 @@ class ContentSimilarity:
                 from sentence_transformers import SentenceTransformer
                 def get_sentence_transformer(model_name):
                     return SentenceTransformer(model_name)
+
                 self.sentence_model = get_sentence_transformer('all-MiniLM-L6-v2')
+
             except:
                 self.sentence_model = None
                 logger.warning("SentenceTransformer non disponible")
             
             # Modèle de clustering
             self.content_clusterer = KMeans(n_clusters=20, random_state=42)
+
             
         except Exception as e:
             logger.error(f"Erreur initialisation modèles similarité: {e}")
@@ -815,22 +941,30 @@ class ContentSimilarity:
         """Analyse la similarité de contenu entre deux utilisateurs"""
         try:
             # Récupérer les contenus
+
             content1 = await self._get_user_content(user1_id)
+
+
             content2 = await self._get_user_content(user2_id)
+
             
             if not content1 or not content2:
                 return {'similarity_score': 0, 'details': {}}
             
             # Analyser la similarité textuelle
+
             text_similarity = await self._calculate_text_similarity(content1, content2)
             
             # Analyser la similarité stylistique
+
             style_similarity = await self._calculate_style_similarity(content1, content2)
             
             # Analyser la similarité thématique
+
             topic_similarity = await self._calculate_topic_similarity(content1, content2)
             
             # Analyser la similarité temporelle
+
             temporal_similarity = await self._calculate_temporal_similarity(content1, content2)
             
             # Score global pondéré
@@ -840,6 +974,7 @@ class ContentSimilarity:
                 topic_similarity * 0.35 +
                 temporal_similarity * 0.1
             )
+
             
             return {
                 'similarity_score': overall_similarity,
@@ -855,13 +990,16 @@ class ContentSimilarity:
             
         except Exception as e:
             logger.error(f"Erreur analyse similarité contenu: {e}")
+
             return {'similarity_score': 0, 'details': {}}
     
     async def _calculate_text_similarity(self, content1: List[Dict], content2: List[Dict]) -> float:
         """Calcule la similarité textuelle"""
         try:
             # Extraire les textes
+
             texts1 = [item.get('text', '') for item in content1 if item.get('text')]
+
             texts2 = [item.get('text', '') for item in content2 if item.get('text')]
             
             if not texts1 or not texts2:
@@ -869,31 +1007,43 @@ class ContentSimilarity:
             
             # Méthode 1: TF-IDF
             all_texts = texts1 + texts2
+
             tfidf_matrix = self.tfidf_vectorizer.fit_transform(all_texts)
             
             # Calculer la similarité moyenne
             n1, n2 = len(texts1), len(texts2)
+
+
             similarities = []
             
             for i in range(n1):
                 for j in range(n1, n1 + n2):
                     sim = cosine_similarity(tfidf_matrix[i], tfidf_matrix[j])[0][0]
                     similarities.append(sim)
+
+
             
             tfidf_similarity = np.mean(similarities) if similarities else 0
             
             # Méthode 2: Sentence Transformers (si disponible)
+
+
             semantic_similarity = 0
             if self.sentence_model:
                 embeddings1 = self.sentence_model.encode(texts1)
+
+
                 embeddings2 = self.sentence_model.encode(texts2)
                 
                 # Similarité moyenne entre toutes les paires
+
                 semantic_sims = []
                 for emb1 in embeddings1:
                     for emb2 in embeddings2:
                         sim = cosine_similarity([emb1], [emb2])[0][0]
                         semantic_sims.append(sim)
+
+
                 
                 semantic_similarity = np.mean(semantic_sims) if semantic_sims else 0
             
@@ -902,34 +1052,48 @@ class ContentSimilarity:
             
         except Exception as e:
             logger.error(f"Erreur calcul similarité textuelle: {e}")
+
             return 0.0
     
     async def _calculate_style_similarity(self, content1: List[Dict], content2: List[Dict]) -> float:
         """Calcule la similarité stylistique"""
         try:
             # Extraire les features stylistiques
+
             style1 = await self._extract_style_features(content1)
+
+
             style2 = await self._extract_style_features(content2)
             
             # Calculer la distance euclidienne normalisée
+
             style_vector1 = np.array(list(style1.values()))
+
+
             style_vector2 = np.array(list(style2.values()))
             
             # Normaliser
             if np.max(style_vector1) > 0:
                 style_vector1 = style_vector1 / np.max(style_vector1)
+
             if np.max(style_vector2) > 0:
                 style_vector2 = style_vector2 / np.max(style_vector2)
             
             # Similarité basée sur la distance
+
             distance = euclidean(style_vector1, style_vector2)
+
+
             max_distance = np.sqrt(len(style_vector1))  # Distance maximale possible
+
             
             similarity = (1 - distance / max_distance) * 100
             return max(0, similarity)
+
             
         except Exception as e:
             logger.error(f"Erreur calcul similarité style: {e}")
+
             return 0.0
     
     async def _extract_style_features(self, content: List[Dict]) -> Dict[str, float]:
@@ -947,6 +1111,7 @@ class ContentSimilarity:
         
         if not content:
             return features
+
         
         texts = [item.get('text', '') for item in content if item.get('text')]
         
@@ -955,24 +1120,37 @@ class ContentSimilarity:
             features['avg_length'] = np.mean([len(text) for text in texts])
             
             # Usage d'emojis (approximation)
+
+
             emoji_count = sum(text.count('😊') + text.count('😍') + text.count('🔥') for text in texts)
+
             features['emoji_usage'] = emoji_count / len(texts)
             
             # Usage de hashtags
+
             hashtag_count = sum(text.count('#') for text in texts)
+
             features['hashtag_usage'] = hashtag_count / len(texts)
             
             # Fréquence de questions
+
             question_count = sum(text.count('?') for text in texts)
+
             features['question_frequency'] = question_count / len(texts)
             
             # Fréquence d'exclamations
+
             exclamation_count = sum(text.count('!') for text in texts)
+
             features['exclamation_frequency'] = exclamation_count / len(texts)
             
             # Usage de majuscules
+
             caps_count = sum(sum(1 for c in text if c.isupper()) for text in texts)
+
+
             total_chars = sum(len(text) for text in texts)
+
             features['caps_usage'] = caps_count / total_chars if total_chars > 0 else 0
         
         return features

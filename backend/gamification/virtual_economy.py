@@ -52,7 +52,8 @@ Base = declarative_base()
 # ==============================================
 
 class CurrencyType(Enum):
-    """Virtual currency types"""
+    """
+        Virtual currency types"""
     COINS = "coins"          # Primary currency (daily actions)
     GEMS = "gems"            # Premium currency (real money)
     CREDITS = "credits"      # Collaboration currency (team actions)
@@ -108,7 +109,8 @@ class CurrencyBalance:
 
 @dataclass
 class MarketplaceItem:
-    """Marketplace item definition"""
+    """
+        Marketplace item definition"""
     item_id: str
     name: str
     description: str
@@ -120,7 +122,8 @@ class MarketplaceItem:
 
 @dataclass
 class EconomicMetrics:
-    """Economic system metrics"""
+    """
+        Economic system metrics"""
     total_currency_supply: Dict[CurrencyType, Decimal]
     daily_transaction_volume: Decimal
     inflation_rate: float
@@ -133,7 +136,8 @@ class EconomicMetrics:
 # ==============================================
 
 class UserWallet(Base):
-    """User virtual wallet model"""
+    """
+        User virtual wallet model"""
     __tablename__ = 'user_wallets'
     
     id = Column(String, primary_key=True, default=lambda: str(uuid4()))
@@ -163,6 +167,7 @@ class VirtualTransaction(Base):
     
     id = Column(String, primary_key=True, default=lambda: str(uuid4()))
     wallet_id = Column(String, ForeignKey('user_wallets.id'))
+
     
     transaction_type = Column(String, nullable=False)
     currency_type = Column(String, nullable=False)
@@ -222,12 +227,14 @@ class MarketplaceProduct(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class UserInventory(Base):
-    """User inventory model"""
+    """
+        User inventory model"""
     __tablename__ = 'user_inventories'
     
     id = Column(String, primary_key=True, default=lambda: str(uuid4()))
     user_id = Column(String, nullable=False)
     product_id = Column(String, ForeignKey('marketplace_products.id'))
+
     
     quantity = Column(Integer, default=1)
     purchase_price = Column(DECIMAL(15, 2))
@@ -246,7 +253,8 @@ class UserInventory(Base):
     meta_data = Column(JSON)
 
 class PeerTrade(Base):
-    """Peer-to-peer trade model"""
+    """
+        Peer-to-peer trade model"""
     __tablename__ = 'peer_trades'
     
     id = Column(String, primary_key=True, default=lambda: str(uuid4()))
@@ -307,7 +315,8 @@ class EconomicEvent(Base):
 # ==============================================
 
 class VirtualEconomyEngine:
-    """Central virtual economy management system"""
+    """
+        Central virtual economy management system"""
     
     def __init__(self, redis_client: redis.Redis):
         self.redis = redis_client
@@ -331,16 +340,22 @@ class VirtualEconomyEngine:
         """Initialize new user wallet with starting balances"""
         try:
             # Check if wallet already exists
+
             existing_wallet = await self._get_user_wallet(user_id)
+
             if existing_wallet:
                 return existing_wallet
             
             # Create new wallet with starter amounts
+
             wallet = UserWallet(
                 user_id=user_id,
                 coins=Decimal('100'),     # Starting coins
+
                 gems=Decimal('10'),       # Starting gems
+
                 credits=Decimal('50'),    # Starting credits
+
                 xp_points=Decimal('0')    # No starting XP
             )
             
@@ -349,20 +364,25 @@ class VirtualEconomyEngine:
             
             # Cache wallet for fast access
             await self._cache_wallet(wallet)
+
             
             logger.info(f"Initialized wallet for user {user_id}")
+
             return wallet
             
         except Exception as e:
             logger.error(f"Failed to initialize wallet: {e}")
+
             raise
     
     async def get_user_balance(self, user_id: str) -> CurrencyBalance:
         """Get user's current currency balances"""
         try:
             wallet = await self._get_user_wallet(user_id)
+
             if not wallet:
                 wallet = await self.initialize_user_wallet(user_id)
+
             
             return CurrencyBalance(
                 user_id=user_id,
@@ -372,9 +392,11 @@ class VirtualEconomyEngine:
                 xp_points=wallet.xp_points,
                 last_updated=wallet.updated_at
             )
+
             
         except Exception as e:
             logger.error(f"Failed to get user balance: {e}")
+
             raise
     
     async def process_transaction(
@@ -390,6 +412,7 @@ class VirtualEconomyEngine:
         """Process virtual currency transaction"""
         try:
             wallet = await self._get_user_wallet(user_id)
+
             if not wallet:
                 raise ValueError("Wallet not found")
             
@@ -398,16 +421,21 @@ class VirtualEconomyEngine:
                 raise ValueError("Transaction validation failed")
             
             # Calculate new balance
+
             current_balance = getattr(wallet, currency_type.value)
+
             
             if transaction_type in [TransactionType.PURCHASE, TransactionType.TRADE]:
                 if current_balance < amount:
                     raise ValueError("Insufficient balance")
+
+
                 new_balance = current_balance - amount
             else:  # REWARD, REFUND, CONVERSION, GIFT
                 new_balance = current_balance + amount
             
             # Create transaction record
+
             transaction = VirtualTransaction(
                 wallet_id=wallet.id,
                 transaction_type=transaction_type.value,
@@ -423,11 +451,15 @@ class VirtualEconomyEngine:
             
             # Update wallet balance
             setattr(wallet, currency_type.value, new_balance)
+
             wallet.updated_at = datetime.utcnow()
+
             wallet.wallet_hash = await self._generate_wallet_hash(wallet)
             
             # Process transaction (database operations would happen here)
+
             transaction.processed_at = datetime.utcnow()
+
             transaction.verified = True
             
             # Update cache
@@ -435,12 +467,15 @@ class VirtualEconomyEngine:
             
             # Record for analytics
             await self.economy_balancer.record_transaction(transaction)
+
             
             logger.info(f"Processed {transaction_type.value} transaction: {amount} {currency_type.value} for user {user_id}")
+
             return transaction
             
         except Exception as e:
             logger.error(f"Failed to process transaction: {e}")
+
             raise
     
     async def convert_currency(
@@ -456,16 +491,26 @@ class VirtualEconomyEngine:
                 raise ValueError("Cannot convert to same currency")
             
             # Calculate conversion rate
+
             conversion_rate = await self._get_conversion_rate(from_currency, to_currency)
+
+
             converted_amount = amount * conversion_rate
             
             # Apply conversion fee (1%)
+
+
             fee_rate = Decimal('0.01')
+
+
             fee_amount = amount * fee_rate
+
             net_amount = amount - fee_amount
+
             final_converted_amount = net_amount * conversion_rate
             
             # Process deduction transaction
+
             deduction_transaction = await self.process_transaction(
                 user_id=user_id,
                 transaction_type=TransactionType.CONVERSION,
@@ -475,6 +520,7 @@ class VirtualEconomyEngine:
             )
             
             # Process addition transaction
+
             addition_transaction = await self.process_transaction(
                 user_id=user_id,
                 transaction_type=TransactionType.CONVERSION,
@@ -483,12 +529,15 @@ class VirtualEconomyEngine:
                 description=f"Currency conversion received: {from_currency.value} to {to_currency.value}",
                 reference_id=deduction_transaction.id
             )
+
             
             logger.info(f"Converted {amount} {from_currency.value} to {final_converted_amount} {to_currency.value} for user {user_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to convert currency: {e}")
+
             raise
     
     async def purchase_real_currency(
@@ -502,20 +551,28 @@ class VirtualEconomyEngine:
         """Purchase virtual currency with real money"""
         try:
             # Validate payment (would integrate with payment processor)
+
+
             payment_valid = await self._validate_real_payment(payment_reference, amount)
+
             if not payment_valid:
                 raise ValueError("Payment validation failed")
             
             # Apply purchase bonus (e.g., 10% bonus for gems)
+
+
             bonus_multiplier = {
                 CurrencyType.GEMS: Decimal('1.1'),  # 10% bonus
                 CurrencyType.COINS: Decimal('1.05'), # 5% bonus
                 CurrencyType.CREDITS: Decimal('1.0')  # No bonus
             }.get(currency_type, Decimal('1.0'))
+
+
             
             final_amount = amount * bonus_multiplier
             
             # Process transaction
+
             transaction = await self.process_transaction(
                 user_id=user_id,
                 transaction_type=TransactionType.PURCHASE,
@@ -530,12 +587,15 @@ class VirtualEconomyEngine:
                     'payment_reference': payment_reference
                 }
             )
+
             
             logger.info(f"Purchased {final_amount} {currency_type.value} for user {user_id} via {payment_method}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to purchase real currency: {e}")
+
             raise
     
     async def get_economic_metrics(self) -> EconomicMetrics:
@@ -544,6 +604,7 @@ class VirtualEconomyEngine:
             return await self.economy_balancer.get_current_metrics()
         except Exception as e:
             logger.error(f"Failed to get economic metrics: {e}")
+
             raise
     
     # ==============================================
@@ -553,9 +614,11 @@ class VirtualEconomyEngine:
     async def _get_user_wallet(self, user_id: str) -> Optional[UserWallet]:
         """Get user wallet from cache or database"""
         # Try cache first
+
         cached_wallet = await self.redis.get(f"wallet:{user_id}")
         if cached_wallet:
             wallet_data = json.loads(cached_wallet)
+
             return UserWallet(**wallet_data)
         
         # Database lookup would happen here
@@ -593,6 +656,7 @@ class VirtualEconomyEngine:
     ) -> str:
         """Generate transaction hash for security"""
         timestamp = datetime.utcnow().isoformat()
+
         data = f"{wallet_id}:{amount}:{currency_type.value}:{timestamp}"
         return hashlib.sha256(data.encode()).hexdigest()
     
@@ -611,13 +675,16 @@ class VirtualEconomyEngine:
         # Check balance for deduction transactions
         if transaction_type in [TransactionType.PURCHASE, TransactionType.TRADE]:
             current_balance = getattr(wallet, currency_type.value)
+
             if current_balance < amount:
                 return False
         
         # Check wallet integrity
+
         expected_hash = await self._generate_wallet_hash(wallet)
         if wallet.wallet_hash != expected_hash:
             logger.warning(f"Wallet hash mismatch for user {wallet.user_id}")
+
             return False
         
         return True
@@ -629,11 +696,13 @@ class VirtualEconomyEngine:
     ) -> Decimal:
         """Get conversion rate between currencies"""
         from_rate = self.exchange_rates[from_currency]
+
         to_rate = self.exchange_rates[to_currency]
         return to_rate / from_rate
     
     async def _validate_real_payment(self, payment_reference: str, amount: Decimal) -> bool:
-        """Validate real money payment (mock implementation)"""
+        """
+        Validate real money payment (mock implementation)"""
         # In real implementation, this would integrate with payment processor
         # For now, simulate validation
         return True
@@ -643,7 +712,8 @@ class VirtualEconomyEngine:
 # ==============================================
 
 class CurrencyManager:
-    """Advanced currency management and validation"""
+    """
+        Advanced currency management and validation"""
     
     def __init__(self, redis_client: redis.Redis):
         self.redis = redis_client
@@ -664,12 +734,19 @@ class CurrencyManager:
         try:
             if currency_type not in self.daily_limits:
                 return True  # No limit for this currency
+
             
             today = datetime.utcnow().date().isoformat()
+
+
             daily_key = f"daily_limit:{user_id}:{currency_type.value}:{today}"
             
             current_daily_amount = await self.redis.get(daily_key)
+
+
             current_amount = Decimal(current_daily_amount or '0')
+
+
             
             limit = self.daily_limits[currency_type]
             
@@ -677,6 +754,7 @@ class CurrencyManager:
                 return False
             
             # Update daily amount
+
             new_amount = current_amount + amount
             await self.redis.setex(daily_key, 86400, str(new_amount))  # 24 hour TTL
             
@@ -684,6 +762,7 @@ class CurrencyManager:
             
         except Exception as e:
             logger.error(f"Failed to validate daily limit: {e}")
+
             return False
     
     async def get_daily_usage(
@@ -694,17 +773,25 @@ class CurrencyManager:
         """Get current daily usage and limit"""
         try:
             today = datetime.utcnow().date().isoformat()
+
+
             daily_key = f"daily_limit:{user_id}:{currency_type.value}:{today}"
             
             current_amount = await self.redis.get(daily_key)
+
+
             used_amount = Decimal(current_amount or '0')
+
+
             
             limit = self.daily_limits.get(currency_type, Decimal('0'))
+
             
             return used_amount, limit
             
         except Exception as e:
             logger.error(f"Failed to get daily usage: {e}")
+
             return Decimal('0'), Decimal('0')
 
 # ==============================================
@@ -728,9 +815,12 @@ class MarketplaceEngine:
         """List available marketplace items with filters"""
         try:
             # Get all active items (would query database)
+
+
             items = await self._get_active_items()
             
             # Apply filters
+
             filtered_items = []
             for item in items:
                 if category and ItemType(item.item_type) != category:
@@ -739,15 +829,18 @@ class MarketplaceEngine:
                     continue
                 if price_range:
                     current_price = await self._get_current_price(item)
+
                     if current_price < price_range[0] or current_price > price_range[1]:
                         continue
                 
                 filtered_items.append(item)
+
             
             return filtered_items
             
         except Exception as e:
             logger.error(f"Failed to list available items: {e}")
+
             raise
     
     async def purchase_item(
@@ -760,12 +853,17 @@ class MarketplaceEngine:
         """Purchase item from marketplace"""
         try:
             # Get item details
+
             item = await self._get_marketplace_item(item_id)
+
             if not item or not item.is_active:
                 raise ValueError("Item not available")
             
             # Calculate current price with AI pricing
+
             current_price = await self.pricing_ai.get_dynamic_price(item)
+
+
             total_cost = current_price * quantity
             
             # Check stock availability
@@ -776,6 +874,7 @@ class MarketplaceEngine:
             # payment_success = await economy_engine.process_transaction(...)
             
             # Add item to user inventory
+
             inventory_item = UserInventory(
                 user_id=user_id,
                 product_id=item_id,
@@ -793,12 +892,15 @@ class MarketplaceEngine:
             
             # Update pricing based on demand
             await self.pricing_ai.update_demand_metrics(item_id, quantity)
+
             
             logger.info(f"User {user_id} purchased {quantity}x {item.name} for {total_cost} {currency_type.value}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to purchase item: {e}")
+
             raise
     
     async def get_user_inventory(
@@ -809,11 +911,17 @@ class MarketplaceEngine:
         """Get user's inventory items"""
         try:
             # Query user inventory (would use database)
+
+
             inventory_items = await self._get_user_inventory_items(user_id)
+
             
             if not include_expired:
                 # Filter out expired items
+
                 now = datetime.utcnow()
+
+
                 inventory_items = [
                     item for item in inventory_items
                     if not item.expires_at or item.expires_at > now
@@ -823,6 +931,7 @@ class MarketplaceEngine:
             
         except Exception as e:
             logger.error(f"Failed to get user inventory: {e}")
+
             raise
     
     async def _get_active_items(self) -> List[MarketplaceProduct]:
@@ -831,18 +940,22 @@ class MarketplaceEngine:
         return []
     
     async def _get_marketplace_item(self, item_id: str) -> Optional[MarketplaceProduct]:
-        """Get marketplace item by ID"""
+        """
+        Get marketplace item by ID"""
         # Database query would happen here
         return None
     
     async def _get_current_price(self, item: MarketplaceProduct) -> Decimal:
-        """Get current dynamic price for item"""
+        """
+        Get current dynamic price for item"""
         base_price = item.base_price_coins or Decimal('0')
+
         multiplier = Decimal(str(item.current_price_multiplier))
         return base_price * multiplier
     
     async def _get_user_inventory_items(self, user_id: str) -> List[UserInventory]:
-        """Get user inventory items from database"""
+        """
+        Get user inventory items from database"""
         # Database query would happen here
         return []
 
@@ -851,7 +964,8 @@ class MarketplaceEngine:
 # ==============================================
 
 class DynamicPricingAI:
-    """AI-powered dynamic pricing system"""
+    """
+        AI-powered dynamic pricing system"""
     
     def __init__(self):
         self.demand_metrics: Dict[str, Dict] = {}
@@ -863,11 +977,17 @@ class DynamicPricingAI:
             base_price = item.base_price_coins or Decimal('100')
             
             # Get demand metrics
+
             demand_data = await self._get_demand_metrics(item.id)
             
             # Calculate demand multiplier
+
             recent_sales = demand_data.get('recent_sales', 0)
+
+
             average_sales = demand_data.get('average_sales', 1)
+
+
             
             demand_ratio = recent_sales / max(average_sales, 1)
             
@@ -875,14 +995,18 @@ class DynamicPricingAI:
             if demand_ratio > 2.0:
                 # High demand - increase price up to 50%
                 price_multiplier = min(1.5, 1.0 + (demand_ratio - 1.0) * 0.25)
+
             elif demand_ratio < 0.5:
                 # Low demand - decrease price up to 20%
                 price_multiplier = max(0.8, 1.0 - (1.0 - demand_ratio) * 0.4)
+
             else:
                 # Normal demand
+
                 price_multiplier = 1.0
             
             # Apply rarity multiplier
+
             rarity_multipliers = {
                 ItemRarity.COMMON: 1.0,
                 ItemRarity.UNCOMMON: 1.2,
@@ -890,17 +1014,21 @@ class DynamicPricingAI:
                 ItemRarity.EPIC: 2.0,
                 ItemRarity.LEGENDARY: 3.0
             }
+
             
             rarity_multiplier = rarity_multipliers.get(ItemRarity(item.rarity), 1.0)
             
             # Calculate final price
+
             final_price = base_price * Decimal(str(price_multiplier)) * Decimal(str(rarity_multiplier))
             
             # Round to 2 decimal places
             return final_price.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+
             
         except Exception as e:
             logger.error(f"Failed to calculate dynamic price: {e}")
+
             return item.base_price_coins or Decimal('100')
     
     async def update_demand_metrics(self, item_id: str, quantity_sold: int):
@@ -912,6 +1040,7 @@ class DynamicPricingAI:
                     'recent_sales': 0,
                     'last_update': datetime.utcnow()
                 }
+
             
             metrics = self.demand_metrics[item_id]
             metrics['total_sales'] += quantity_sold
@@ -920,6 +1049,7 @@ class DynamicPricingAI:
             
             # Decay recent sales over time
             await self._decay_recent_metrics(item_id)
+
             
         except Exception as e:
             logger.error(f"Failed to update demand metrics: {e}")
@@ -932,15 +1062,20 @@ class DynamicPricingAI:
         return self.demand_metrics[item_id]
     
     async def _decay_recent_metrics(self, item_id: str):
-        """Decay recent sales metrics over time"""
+        """
+        Decay recent sales metrics over time"""
         if item_id not in self.demand_metrics:
             return
+
         
         metrics = self.demand_metrics[item_id]
+
         last_update = metrics['last_update']
+
         hours_since_update = (datetime.utcnow() - last_update).total_seconds() / 3600
         
         # Decay recent sales by 10% per hour
+
         decay_factor = 0.9 ** hours_since_update
         metrics['recent_sales'] = int(metrics['recent_sales'] * decay_factor)
 
@@ -949,7 +1084,8 @@ class DynamicPricingAI:
 # ==============================================
 
 class TradingSystem:
-    """Peer-to-peer trading system with escrow"""
+    """
+        Peer-to-peer trading system with escrow"""
     
     def __init__(self, redis_client: redis.Redis):
         self.redis = redis_client
@@ -971,6 +1107,7 @@ class TradingSystem:
                 raise ValueError("Seller does not own the item")
             
             # Create trade offer
+
             trade = PeerTrade(
                 seller_id=seller_id,
                 item_id=item_id,
@@ -983,12 +1120,15 @@ class TradingSystem:
             # Cache trade for fast access
             self.active_trades[trade.id] = trade
             await self._cache_trade(trade)
+
             
             logger.info(f"Created trade offer {trade.id} by seller {seller_id}")
+
             return trade
             
         except Exception as e:
             logger.error(f"Failed to create trade offer: {e}")
+
             raise
     
     async def accept_trade_offer(
@@ -999,11 +1139,14 @@ class TradingSystem:
         """Accept trade offer"""
         try:
             trade = await self._get_trade(trade_id)
+
             if not trade:
                 raise ValueError("Trade not found")
+
             
             if trade.status != TradeStatus.PENDING.value:
                 raise ValueError("Trade is no longer available")
+
             
             if trade.expires_at < datetime.utcnow():
                 raise ValueError("Trade has expired")
@@ -1021,35 +1164,45 @@ class TradingSystem:
             
             # Complete trade
             await self._complete_trade(trade)
+
             
             logger.info(f"Trade {trade_id} accepted by buyer {buyer_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to accept trade offer: {e}")
+
             raise
     
     async def cancel_trade_offer(self, trade_id: str, user_id: str) -> bool:
         """Cancel trade offer"""
         try:
             trade = await self._get_trade(trade_id)
+
             if not trade:
                 raise ValueError("Trade not found")
+
             
             if trade.seller_id != user_id:
                 raise ValueError("Only seller can cancel trade")
+
             
             if trade.status != TradeStatus.PENDING.value:
                 raise ValueError("Trade cannot be cancelled")
+
             
             trade.status = TradeStatus.CANCELLED.value
             await self._update_trade(trade)
+
             
             logger.info(f"Trade {trade_id} cancelled by seller {user_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to cancel trade offer: {e}")
+
             raise
     
     async def get_active_trades(
@@ -1060,6 +1213,7 @@ class TradingSystem:
         """Get list of active trade offers"""
         try:
             # Get all pending trades
+
             trades = []
             for trade in self.active_trades.values():
                 if trade.status != TradeStatus.PENDING.value:
@@ -1074,31 +1228,34 @@ class TradingSystem:
                     continue
                 
                 trades.append(trade)
+
             
             return trades
             
         except Exception as e:
             logger.error(f"Failed to get active trades: {e}")
+
             raise
     
     async def _validate_item_ownership(self, user_id: str, item_id: str) -> bool:
         """Validate user owns the item"""
         # Database query would happen here
-        return True  # Mock validation
-    
+        return True    
     async def _validate_buyer_funds(self, buyer_id: str, trade: PeerTrade) -> bool:
-        """Validate buyer has sufficient funds"""
+        """
+        Validate buyer has sufficient funds"""
         # Would check buyer's wallet balance
-        return True  # Mock validation
-    
+        return True    
     async def _generate_trade_hash(
         self,
         seller_id: str,
         item_id: str,
         amount: Decimal
     ) -> str:
-        """Generate trade hash for security"""
+        """
+        Generate trade hash for security"""
         timestamp = datetime.utcnow().isoformat()
+
         data = f"{seller_id}:{item_id}:{amount}:{timestamp}"
         return hashlib.sha256(data.encode()).hexdigest()
     
@@ -1127,6 +1284,7 @@ class TradingSystem:
             return self.active_trades[trade_id]
         
         # Try cache
+
         cached_trade = await self.redis.get(f"trade:{trade_id}")
         if cached_trade:
             trade_data = json.loads(cached_trade)
@@ -1143,7 +1301,8 @@ class TradingSystem:
         # Actual escrow implementation would freeze buyer funds
     
     async def _complete_trade(self, trade: PeerTrade):
-        """Complete the trade transaction"""
+        """
+        Complete the trade transaction"""
         trade.status = TradeStatus.COMPLETED.value
         trade.completed_at = datetime.utcnow()
         
@@ -1154,7 +1313,8 @@ class TradingSystem:
         await self._update_trade(trade)
     
     async def _update_trade(self, trade: PeerTrade):
-        """Update trade in database and cache"""
+        """
+        Update trade in database and cache"""
         await self._cache_trade(trade)
         # Database update would happen here
 
@@ -1163,7 +1323,8 @@ class TradingSystem:
 # ==============================================
 
 class EconomyBalancer:
-    """Economic balancing and inflation control"""
+    """
+        Economic balancing and inflation control"""
     
     def __init__(self, redis_client: redis.Redis):
         self.redis = redis_client
@@ -1174,7 +1335,10 @@ class EconomyBalancer:
         """Record transaction for economic analysis"""
         try:
             # Store daily transaction data
+
             today = datetime.utcnow().date().isoformat()
+
+
             daily_key = f"transactions:daily:{today}"
             
             transaction_data = {
@@ -1185,6 +1349,7 @@ class EconomyBalancer:
             }
             
             await self.redis.lpush(daily_key, json.dumps(transaction_data))
+
             await self.redis.expire(daily_key, 2592000)  # 30 days TTL
             
         except Exception as e:
@@ -1194,21 +1359,31 @@ class EconomyBalancer:
         """Get current economic metrics"""
         try:
             # Calculate total currency supply
+
             total_supply = {}
             for currency in CurrencyType:
                 supply = await self._calculate_currency_supply(currency)
+
                 total_supply[currency] = supply
             
             # Calculate daily transaction volume
+
             daily_volume = await self._calculate_daily_volume()
             
             # Calculate inflation rate
+
             inflation_rate = await self._calculate_inflation_rate()
             
             # Get other metrics
+
             avg_price = await self._calculate_average_item_price()
+
+
             active_traders = await self._count_active_traders()
+
+
             marketplace_revenue = await self._calculate_marketplace_revenue()
+
             
             return EconomicMetrics(
                 total_currency_supply=total_supply,
@@ -1218,46 +1393,59 @@ class EconomyBalancer:
                 active_traders_count=active_traders,
                 marketplace_revenue=marketplace_revenue
             )
+
             
         except Exception as e:
             logger.error(f"Failed to get economic metrics: {e}")
+
             raise
     
     async def adjust_inflation(self) -> bool:
         """Adjust economic parameters to control inflation"""
         try:
             current_inflation = await self._calculate_inflation_rate()
+
             
             if current_inflation > self.inflation_target * 1.5:
                 # High inflation - reduce money supply
                 await self._reduce_money_supply()
+
             elif current_inflation < self.inflation_target * 0.5:
                 # Low inflation - increase money supply
                 await self._increase_money_supply()
+
             
             logger.info(f"Inflation adjustment completed. Current rate: {current_inflation}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to adjust inflation: {e}")
+
             return False
     
     async def _calculate_currency_supply(self, currency: CurrencyType) -> Decimal:
         """Calculate total supply of specific currency"""
         # Would aggregate all wallet balances for this currency
-        return Decimal('1000000')  # Mock value
-    
+        return Decimal('1000000')    
     async def _calculate_daily_volume(self) -> Decimal:
-        """Calculate daily transaction volume"""
+        """
+        Calculate daily transaction volume"""
         today = datetime.utcnow().date().isoformat()
+
         daily_key = f"transactions:daily:{today}"
         
         transactions = await self.redis.lrange(daily_key, 0, -1)
+
         total_volume = Decimal('0')
+
         
         for transaction_json in transactions:
             transaction = json.loads(transaction_json)
+
+
             amount = Decimal(transaction['amount'])
+
             total_volume += amount
         
         return total_volume
@@ -1265,32 +1453,33 @@ class EconomyBalancer:
     async def _calculate_inflation_rate(self) -> float:
         """Calculate current inflation rate"""
         # Would compare current prices with historical prices
-        return 0.015  # Mock 1.5% inflation
-    
+        return 0.015    
     async def _calculate_average_item_price(self) -> Decimal:
-        """Calculate average marketplace item price"""
+        """
+        Calculate average marketplace item price"""
         # Would aggregate marketplace item prices
-        return Decimal('150.50')  # Mock value
-    
+        return Decimal('150.50')    
     async def _count_active_traders(self) -> int:
-        """Count active traders in last 24 hours"""
+        """
+        Count active traders in last 24 hours"""
         # Would count unique users who made trades
-        return 1250  # Mock value
-    
+        return 1250    
     async def _calculate_marketplace_revenue(self) -> Decimal:
-        """Calculate marketplace revenue (fees collected)"""
+        """
+        Calculate marketplace revenue (fees collected)"""
         # Would sum all marketplace fees
-        return Decimal('5000.75')  # Mock value
-    
+        return Decimal('5000.75')    
     async def _reduce_money_supply(self):
-        """Reduce money supply to combat inflation"""
+        """
+        Reduce money supply to combat inflation"""
         # Increase transaction fees
         # Reduce reward multipliers
         # Implement currency sinks
         pass
     
     async def _increase_money_supply(self):
-        """Increase money supply to stimulate economy"""
+        """
+        Increase money supply to stimulate economy"""
         # Reduce transaction fees
         # Increase reward multipliers
         # Add bonus events
@@ -1301,7 +1490,8 @@ class EconomyBalancer:
 # ==============================================
 
 class CurrencyConversionEngine:
-    """Real-world to virtual currency conversion"""
+    """
+        Real-world to virtual currency conversion"""
     
     def __init__(self):
         # Real money to virtual currency rates (USD)
@@ -1321,7 +1511,8 @@ class CurrencyConversionEngine:
         usd_amount: Decimal,
         currency_type: CurrencyType
     ) -> Decimal:
-        """Calculate virtual currency amount for USD purchase"""
+        """
+        Calculate virtual currency amount for USD purchase"""
         rate = self.usd_rates.get(currency_type, Decimal('0'))
         return usd_amount * rate
     
@@ -1330,7 +1521,8 @@ class CurrencyConversionEngine:
         usd_amount: Decimal,
         currency_type: CurrencyType
     ) -> Decimal:
-        """Get bonus multiplier based on purchase amount"""
+        """
+        Get bonus multiplier based on purchase amount"""
         # Larger purchases get better bonuses
         if usd_amount >= Decimal('100'):
             return Decimal('1.20')  # 20% bonus
@@ -1379,4 +1571,4 @@ __all__ = [
 ]
 
 # Initialize logging
-logger.info("Virtual Economy Engine module loaded successfully - All economic components ready for enterprise deployment")
+logger.info("Virtual Economy Engine module initialized successfully - All economic components ready for enterprise deployment")

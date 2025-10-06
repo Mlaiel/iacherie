@@ -31,7 +31,8 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class AchievementType(Enum):
-    """Achievement types for mobile gamification"""
+    """
+        Achievement types for mobile gamification"""
     CONTENT_CREATION = "content_creation"
     ENGAGEMENT_MILESTONE = "engagement_milestone"
     COLLABORATION_SUCCESS = "collaboration_success"
@@ -115,7 +116,8 @@ class Achievement:
     
 @dataclass
 class AchievementProgress:
-    """Achievement progress tracking"""
+    """
+        Achievement progress tracking"""
     progress_id: str
     achievement_id: str
     creator_id: str
@@ -129,7 +131,8 @@ class AchievementProgress:
 
 @dataclass
 class Reward:
-    """Reward structure"""
+    """
+        Reward structure"""
     reward_id: str
     title: str
     description: str
@@ -166,7 +169,8 @@ class GamificationReward:
 
 @dataclass
 class MobileGamificationRequest:
-    """Mobile gamification request"""
+    """
+        Mobile gamification request"""
     creator_id: str
     event_type: GamificationEvent
     event_data: Dict[str, Any] = field(default_factory=dict)
@@ -175,7 +179,8 @@ class MobileGamificationRequest:
 
 @dataclass
 class MobileGamificationResult:
-    """Mobile gamification result"""
+    """
+        Mobile gamification result"""
     result_id: str
     creator_id: str
     achievements_unlocked: List[Achievement]
@@ -186,10 +191,12 @@ class MobileGamificationResult:
     gamification_score: float
 
 class MobileGamificationSystem:
-    """Unified mobile gamification system consolidating engine, achievements, and rewards"""
+    """
+        Unified mobile gamification system consolidating engine, achievements, and rewards"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize mobile gamification system with comprehensive capabilities"""
+        """
+        Initialize mobile gamification system with comprehensive capabilities"""
         self.config = config or {}
         self.gamification_engine = MobileGamificationEngine(self.config)
         self.achievement_tracker = MobileAchievementTracker(self.config)
@@ -223,34 +230,41 @@ class MobileGamificationSystem:
             start_time = datetime.utcnow()
             
             # Process event through gamification engine
+
             engine_result = await self.gamification_engine.process_gamification_event(request)
             
             # Track achievement progress
+
             achievement_result = await self.achievement_tracker.update_achievement_progress(
                 request.creator_id, request.event_type, request.event_data
             )
             
             # Process rewards
+
             reward_result = await self.reward_system.process_reward_eligibility(
                 request.creator_id, achievement_result.get("achievements_unlocked", [])
             )
             
             # Calculate level changes
+
             level_changes = await self._calculate_level_changes(
                 request.creator_id, achievement_result, reward_result
             )
             
             # Generate mobile notifications
+
             mobile_notifications = await self._generate_mobile_notifications(
                 request.creator_id, achievement_result, reward_result, level_changes
             )
             
             # Calculate gamification score
+
             gamification_score = self._calculate_gamification_score(
                 achievement_result, reward_result, level_changes
             )
             
             # Create comprehensive result
+
             gamification_result = MobileGamificationResult(
                 result_id=result_id,
                 creator_id=request.creator_id,
@@ -268,26 +282,33 @@ class MobileGamificationSystem:
             # Send mobile notifications if enabled
             if self.push_notifications and mobile_notifications:
                 await self._send_mobile_notifications(request.creator_id, mobile_notifications)
+
             
             return gamification_result
             
         except Exception as e:
             logger.error(f"Mobile gamification event processing failed: {e}")
+
             raise
     
     async def get_creator_gamification_status(self, creator_id: str) -> Dict[str, Any]:
         """Get comprehensive gamification status for creator"""
         # Get creator level and experience
+
         creator_level = await self._get_creator_level(creator_id)
         
         # Get active achievements
+
         active_achievements = await self.achievement_tracker.get_creator_achievements(creator_id)
         
         # Get available rewards
+
         available_rewards = await self.reward_system.get_available_rewards(creator_id)
         
         # Get mobile-specific gamification data
+
         mobile_data = await self._get_mobile_gamification_data(creator_id)
+
         
         return {
             "creator_id": creator_id,
@@ -314,6 +335,7 @@ class MobileGamificationSystem:
             badge_icon=achievement_data.get("badge_icon", "default_badge"),
             mobile_optimized=achievement_data.get("mobile_optimized", True)
         )
+
         
         await self.achievement_tracker.register_achievement(achievement)
         return achievement
@@ -323,7 +345,8 @@ class MobileGamificationSystem:
         return await self.reward_system.distribute_rewards(creator_id, rewards)
     
     async def get_gamification_analytics(self) -> Dict[str, Any]:
-        """Get comprehensive gamification analytics"""
+        """
+        Get comprehensive gamification analytics"""
         return {
             "gamification_metrics": self.gamification_metrics,
             "engine_metrics": await self.gamification_engine.get_performance_metrics(),
@@ -338,12 +361,18 @@ class MobileGamificationSystem:
         current_level = await self._get_creator_level(creator_id)
         
         # Calculate experience points gained
+
         experience_gained = sum(
             achievement.reward_points for achievement in achievement_result.get("achievements_unlocked", [])
         )
+
+
         
         new_experience = current_level["experience_points"] + experience_gained
+
         new_level = self._calculate_level_from_experience(new_experience)
+
+
         
         level_up = new_level > current_level["level"]
         
@@ -388,6 +417,7 @@ class MobileGamificationSystem:
                 "message": f"Congratulations! You reached level {level_changes['new_level']}",
                 "mobile_optimized": True
             })
+
         
         return notifications
     
@@ -395,7 +425,9 @@ class MobileGamificationSystem:
                                     reward_result: Dict[str, Any], level_changes: Dict[str, Any]) -> float:
         """Calculate overall gamification impact score"""
         achievement_score = len(achievement_result.get("achievements_unlocked", [])) * 0.3
+
         reward_score = len(reward_result.get("rewards_earned", [])) * 0.4
+
         level_score = 1.0 if level_changes.get("level_up", False) else 0.0
         
         return min(1.0, achievement_score + reward_score + level_score * 0.3)
@@ -406,8 +438,11 @@ class MobileGamificationSystem:
         self.gamification_metrics["rewards_distributed"] += len(result.rewards_earned)
         
         # Update engagement boost calculation
+
         current_boost = self.gamification_metrics["average_engagement_boost"]
+
         new_boost = result.gamification_score
+
         total_events = self.gamification_metrics["achievements_unlocked"] + self.gamification_metrics["rewards_distributed"]
         
         if total_events > 0:
@@ -423,11 +458,13 @@ class MobileGamificationSystem:
                 "experience_points": 0,
                 "next_level_progress": 0.0
             }
+
         
         level_data = self.creator_levels[creator_id]
         level_data["next_level_progress"] = self._calculate_next_level_progress(
             level_data["experience_points"], level_data["level"]
         )
+
         
         return level_data
     
@@ -437,15 +474,19 @@ class MobileGamificationSystem:
         return int(math.sqrt(experience_points / 100)) + 1
     
     def _calculate_next_level_progress(self, experience_points: int, current_level: int) -> float:
-        """Calculate progress towards next level"""
+        """
+        Calculate progress towards next level"""
         current_level_requirement = (current_level - 1) ** 2 * 100
+
         next_level_requirement = current_level ** 2 * 100
+
         
         progress = (experience_points - current_level_requirement) / (next_level_requirement - current_level_requirement)
         return max(0.0, min(1.0, progress))
     
     def _get_next_level_requirements(self, current_level: int) -> Dict[str, Any]:
-        """Get requirements for next level"""
+        """
+        Get requirements for next level"""
         next_level_experience = current_level ** 2 * 100
         
         return {
@@ -481,10 +522,10 @@ class MobileGamificationSystem:
     
     async def _calculate_creator_gamification_score(self, creator_id: str) -> float:
         """Calculate overall gamification score for creator"""
-        return 0.82  # Placeholder implementation
-    
+        return 0.82    
     async def _get_mobile_engagement_analytics(self) -> Dict[str, Any]:
-        """Get mobile engagement analytics"""
+        """
+        Get mobile engagement analytics"""
         return {
             "mobile_gamification_adoption": 0.89,
             "mobile_notification_engagement": 0.76,
@@ -502,7 +543,8 @@ class MobileGamificationEngine:
         self.event_processors = {}
         
     async def process_gamification_event(self, request: MobileGamificationRequest) -> Dict[str, Any]:
-        """Process gamification event with game mechanics"""
+        """
+        Process gamification event with game mechanics"""
         event_result = {
             "event_processed": True,
             "event_type": request.event_type.value,
@@ -522,6 +564,7 @@ class MobileGamificationEngine:
             event_result.update(await self._process_collaboration_event(request))
         elif request.event_type == GamificationEvent.MOBILE_ACTION_PERFORMED:
             event_result.update(await self._process_mobile_action_event(request))
+
         
         return event_result
     
@@ -543,6 +586,7 @@ class MobileGamificationEngine:
             base_impact += 0.2
         
         # Event type specific impact
+
         event_impacts = {
             GamificationEvent.CONTENT_UPLOADED: 0.3,
             GamificationEvent.COLLABORATION_COMPLETED: 0.4,
@@ -552,6 +596,7 @@ class MobileGamificationEngine:
         }
         
         base_impact += event_impacts.get(request.event_type, 0.1)
+
         
         return min(1.0, base_impact)
     
@@ -590,18 +635,24 @@ class MobileAchievementTracker:
         self.achievements_registry = {}
         self.creator_progress = {}
         self._initialize_default_achievements()
+
         
     async def update_achievement_progress(self, creator_id: str, event_type: GamificationEvent, 
                                         event_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Update achievement progress based on gamification event"""
+        """
+        Update achievement progress based on gamification event"""
         achievements_unlocked = []
+
         progress_updates = []
         
         # Get relevant achievements for event
+
         relevant_achievements = self._get_relevant_achievements(event_type)
+
         
         for achievement in relevant_achievements:
             progress = await self._update_achievement_progress(creator_id, achievement, event_type, event_data)
+
             
             if progress:
                 progress_updates.append(progress)
@@ -609,6 +660,7 @@ class MobileAchievementTracker:
                 # Check if achievement is completed
                 if progress.status == ProgressStatus.COMPLETED:
                     achievements_unlocked.append(achievement)
+
         
         return {
             "achievements_unlocked": achievements_unlocked,
@@ -620,6 +672,7 @@ class MobileAchievementTracker:
         """Get creator's achievement status"""
         if creator_id not in self.creator_progress:
             self.creator_progress[creator_id] = {}
+
         
         creator_achievements = {
             "completed_achievements": [],
@@ -630,20 +683,25 @@ class MobileAchievementTracker:
         
         for achievement_id, achievement in self.achievements_registry.items():
             progress = self.creator_progress[creator_id].get(achievement_id)
+
             
             if progress:
                 if progress.status == ProgressStatus.COMPLETED:
                     creator_achievements["completed_achievements"].append(achievement)
+
                 elif progress.status == ProgressStatus.IN_PROGRESS:
                     creator_achievements["in_progress_achievements"].append({
                         "achievement": achievement,
                         "progress": progress
                     })
+
             else:
                 creator_achievements["available_achievements"].append(achievement)
         
         # Calculate mobile achievement score
+
         completed_count = len(creator_achievements["completed_achievements"])
+
         total_count = len(self.achievements_registry)
         creator_achievements["mobile_achievement_score"] = completed_count / total_count if total_count > 0 else 0.0
         
@@ -654,7 +712,8 @@ class MobileAchievementTracker:
         self.achievements_registry[achievement.achievement_id] = achievement
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get achievement tracker performance metrics"""
+        """
+        Get achievement tracker performance metrics"""
         return {
             "total_achievements": len(self.achievements_registry),
             "active_progress_tracking": sum(len(progress) for progress in self.creator_progress.values()),
@@ -717,31 +776,37 @@ class MobileAchievementTracker:
         for achievement in self.achievements_registry.values():
             if self._is_achievement_relevant(achievement, event_type):
                 relevant.append(achievement)
+
         
         return relevant
     
     def _is_achievement_relevant(self, achievement: Achievement, event_type: GamificationEvent) -> bool:
-        """Check if achievement is relevant to the event type"""
+        """
+        Check if achievement is relevant to the event type"""
         relevance_map = {
             GamificationEvent.CONTENT_UPLOADED: [AchievementType.CONTENT_CREATION, AchievementType.MOBILE_MASTERY],
             GamificationEvent.COLLABORATION_COMPLETED: [AchievementType.COLLABORATION_SUCCESS],
             GamificationEvent.MOBILE_ACTION_PERFORMED: [AchievementType.MOBILE_MASTERY],
             GamificationEvent.MILESTONE_REACHED: [AchievementType.ENGAGEMENT_MILESTONE]
         }
+
         
         relevant_types = relevance_map.get(event_type, [])
         return achievement.achievement_type in relevant_types
     
     async def _update_achievement_progress(self, creator_id: str, achievement: Achievement, 
                                          event_type: GamificationEvent, event_data: Dict[str, Any]) -> Optional[AchievementProgress]:
-        """Update progress for specific achievement"""
+        """
+        Update progress for specific achievement"""
         if creator_id not in self.creator_progress:
             self.creator_progress[creator_id] = {}
+
         
         progress_id = f"{creator_id}_{achievement.achievement_id}"
         
         if achievement.achievement_id not in self.creator_progress[creator_id]:
             # Initialize new progress
+
             progress = AchievementProgress(
                 progress_id=progress_id,
                 achievement_id=achievement.achievement_id,
@@ -751,12 +816,15 @@ class MobileAchievementTracker:
                 status=ProgressStatus.NOT_STARTED,
                 started_at=datetime.utcnow()
             )
+
             self.creator_progress[creator_id][achievement.achievement_id] = progress
         else:
             progress = self.creator_progress[creator_id][achievement.achievement_id]
         
         # Update progress based on requirements
+
         progress_made = self._calculate_progress_increment(achievement, event_type, event_data)
+
         
         if progress_made > 0:
             progress.current_progress += progress_made
@@ -766,6 +834,7 @@ class MobileAchievementTracker:
             if progress.current_progress >= progress.total_required:
                 progress.status = ProgressStatus.COMPLETED
                 progress.completed_at = datetime.utcnow()
+
             
             return progress
         
@@ -780,6 +849,7 @@ class MobileAchievementTracker:
             return 1.0 / achievement.requirements.get("collaborations_completed", 1)
         elif achievement.achievement_type == AchievementType.MOBILE_MASTERY and event_type == GamificationEvent.MOBILE_ACTION_PERFORMED:
             return 1.0 / achievement.requirements.get("mobile_actions", 1)
+
         
         return 0.0
 
@@ -792,19 +862,26 @@ class MobileRewardSystem:
         self.rewards_catalog = {}
         self.creator_rewards = {}
         self._initialize_default_rewards()
+
         
     async def process_reward_eligibility(self, creator_id: str, achievements_unlocked: List[Achievement]) -> Dict[str, Any]:
-        """Process reward eligibility based on unlocked achievements"""
+        """
+        Process reward eligibility based on unlocked achievements"""
         rewards_earned = []
         
         for achievement in achievements_unlocked:
             # Create reward for achievement
+
             reward = self._create_achievement_reward(achievement, creator_id)
+
             rewards_earned.append(reward)
             
             # Check for bonus rewards
+
             bonus_rewards = await self._check_bonus_rewards(creator_id, achievement)
+
             rewards_earned.extend(bonus_rewards)
+
         
         return {
             "rewards_earned": rewards_earned,
@@ -815,16 +892,19 @@ class MobileRewardSystem:
         """Get available rewards for creator"""
         if creator_id not in self.creator_rewards:
             self.creator_rewards[creator_id] = []
+
         
         available_rewards = []
         for reward_delivery in self.creator_rewards[creator_id]:
             if reward_delivery.status == RewardStatus.AVAILABLE:
                 reward = self.rewards_catalog.get(reward_delivery.reward_id)
+
                 if reward:
                     available_rewards.append({
                         "reward": reward,
                         "delivery": reward_delivery
                     })
+
         
         return available_rewards
     
@@ -851,7 +931,9 @@ class MobileRewardSystem:
                 self.creator_rewards[creator_id] = []
             
             self.creator_rewards[creator_id].append(delivery)
+
             deliveries.append(delivery)
+
         
         return deliveries
     
@@ -940,5 +1022,6 @@ class MobileRewardSystem:
                 amount=1,
                 description="Expert Achievement Bonus Access"
             ))
+
         
         return bonus_rewards

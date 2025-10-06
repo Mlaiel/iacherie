@@ -93,7 +93,6 @@ class StorageMetrics:
 
 class FileStorageCore:
     """Enterprise file storage system"""
-    
     def __init__(self, level: str = "enterprise"):
         """Initialize file storage core"""
         self.level = level
@@ -127,7 +126,6 @@ class FileStorageCore:
 
     def _initialize_local_storage(self):
         """Initialize local storage directories"""
-        
         self.local_storage_path.mkdir(exist_ok=True)
         self.temp_path.mkdir(exist_ok=True)
         
@@ -141,7 +139,6 @@ class FileStorageCore:
         config: Dict[str, Any]
     ):
         """Configure storage provider"""
-        
         # Validate configuration
         if provider == StorageProvider.AWS_S3:
             required_keys = ["bucket", "region", "access_key_id", "secret_access_key"]
@@ -175,7 +172,6 @@ class FileStorageCore:
         provider: Optional[StorageProvider] = None
     ) -> str:
         """Upload file to storage"""
-        
         start_time = time.time()
         
         try:
@@ -266,7 +262,6 @@ class FileStorageCore:
         content_type: Optional[str]
     ):
         """Validate file before upload"""
-        
         # Check file size
         if len(file_data) > self.config["max_file_size"]:
             raise ValueError(f"File too large: {len(file_data)} > {self.config['max_file_size']}")
@@ -292,7 +287,6 @@ class FileStorageCore:
 
     async def _check_quota(self, user_id: str, file_size: int):
         """Check user storage quota"""
-        
         quota = self.quotas.get(user_id)
         if not quota:
             # Create default quota
@@ -307,7 +301,6 @@ class FileStorageCore:
 
     async def _update_quota(self, user_id: str, size_delta: int, file_delta: int):
         """Update user storage quota"""
-        
         quota = self.quotas.get(user_id)
         if quota:
             quota.used_space += size_delta
@@ -321,7 +314,6 @@ class FileStorageCore:
         provider: StorageProvider
     ) -> str:
         """Store file using specified provider"""
-        
         if provider == StorageProvider.LOCAL:
             return await self._store_local(file_data, stored_filename)
         elif provider == StorageProvider.AWS_S3:
@@ -337,7 +329,6 @@ class FileStorageCore:
 
     async def _store_local(self, file_data: bytes, stored_filename: str) -> str:
         """Store file locally"""
-        
         file_path = self.local_storage_path / "files" / stored_filename
         
         async with aiofiles.open(file_path, 'wb') as f:
@@ -347,15 +338,12 @@ class FileStorageCore:
 
     async def _store_s3(self, file_data: bytes, stored_filename: str) -> str:
         """Store file in AWS S3"""
-        
-        # Placeholder for S3 implementation
         # In production, would use boto3 or aioboto3
         
         config = self.storage_providers.get("aws_s3")
         if not config:
             raise ValueError("AWS S3 not configured")
         
-        # Mock S3 storage path
         s3_path = f"s3://{config['bucket']}/{stored_filename}"
         
         # For now, store locally as fallback
@@ -363,8 +351,6 @@ class FileStorageCore:
 
     async def _store_azure(self, file_data: bytes, stored_filename: str) -> str:
         """Store file in Azure Blob Storage"""
-        
-        # Placeholder for Azure implementation
         config = self.storage_providers.get("azure_blob")
         if not config:
             raise ValueError("Azure Blob Storage not configured")
@@ -376,8 +362,6 @@ class FileStorageCore:
 
     async def _store_gcs(self, file_data: bytes, stored_filename: str) -> str:
         """Store file in Google Cloud Storage"""
-        
-        # Placeholder for GCS implementation
         config = self.storage_providers.get("google_cloud")
         if not config:
             raise ValueError("Google Cloud Storage not configured")
@@ -389,8 +373,6 @@ class FileStorageCore:
 
     async def _store_minio(self, file_data: bytes, stored_filename: str) -> str:
         """Store file in MinIO"""
-        
-        # Placeholder for MinIO implementation
         config = self.storage_providers.get("minio")
         if not config:
             raise ValueError("MinIO not configured")
@@ -402,7 +384,6 @@ class FileStorageCore:
 
     async def download_file(self, file_id: str) -> bytes:
         """Download file by ID"""
-        
         start_time = time.time()
         
         try:
@@ -434,7 +415,8 @@ class FileStorageCore:
             raise
 
     async def _download_from_provider(self, metadata: FileMetadata) -> bytes:
-        """Download file from storage provider"""
+        """
+Download file from storage provider"""
         
         if metadata.storage_provider == StorageProvider.LOCAL:
             return await self._download_local(metadata.storage_path)
@@ -445,7 +427,8 @@ class FileStorageCore:
             return await self._download_local(str(local_path))
 
     async def _download_local(self, file_path: str) -> bytes:
-        """Download file from local storage"""
+        """
+Download file from local storage"""
         
         async with aiofiles.open(file_path, 'rb') as f:
             return await f.read()
@@ -456,7 +439,6 @@ class FileStorageCore:
         expiry_seconds: int = 3600
     ) -> str:
         """Get temporary URL for file access"""
-        
         metadata = self.files.get(file_id)
         if not metadata:
             raise ValueError(f"File {file_id} not found")
@@ -477,7 +459,6 @@ class FileStorageCore:
 
     def _generate_url_signature(self, file_id: str, expiry_time: datetime) -> str:
         """Generate URL signature for secure access"""
-        
         # Simple signature generation
         # In production, would use proper signing mechanism
         data = f"{file_id}:{int(expiry_time.timestamp())}"
@@ -485,7 +466,6 @@ class FileStorageCore:
 
     async def delete_file(self, file_id: str, permanent: bool = False) -> bool:
         """Delete file"""
-        
         try:
             metadata = self.files.get(file_id)
             if not metadata:
@@ -522,7 +502,6 @@ class FileStorageCore:
 
     async def _delete_from_provider(self, metadata: FileMetadata):
         """Delete file from storage provider"""
-        
         if metadata.storage_provider == StorageProvider.LOCAL:
             try:
                 os.remove(metadata.storage_path)
@@ -542,7 +521,6 @@ class FileStorageCore:
         offset: int = 0
     ) -> List[FileMetadata]:
         """List files with filters"""
-        
         files = list(self.files.values())
         
         # Apply filters
@@ -566,7 +544,6 @@ class FileStorageCore:
 
     async def cleanup_expired_files(self):
         """Clean up expired files"""
-        
         current_time = datetime.utcnow()
         expired_files = []
         
@@ -644,4 +621,4 @@ __all__ = [
     "StorageProvider", "FileStatus", "AccessLevel"
 ]
 
-logger.info("💾 File Storage Core module loaded")
+logger.info("💾 File Storage Core module initialized")

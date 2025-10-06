@@ -66,7 +66,8 @@ logger = logging.getLogger(__name__)
 
 
 class ObservabilityLevel(Enum):
-    """Enterprise observability levels"""
+    """
+        Enterprise observability levels"""
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -140,7 +141,8 @@ class EnterpriseObservability:
     """
     
     def __init__(self, config: Optional[EnterpriseConfig] = None):
-        """Initialize enterprise observability system"""
+        """
+        Initialize enterprise observability system"""
         self.config = config or EnterpriseConfig()
         self.logger = logging.getLogger(__name__)
         
@@ -156,7 +158,8 @@ class EnterpriseObservability:
         self._aiops_incidents: Dict[str, Any] = {}
         
     async def initialize(self) -> bool:
-        """Initialize all enterprise observability components"""
+        """
+        Initialize all enterprise observability components"""
         try:
             self.logger.info("Initializing Enterprise Observability System")
             
@@ -186,13 +189,16 @@ class EnterpriseObservability:
             # Initialize AIOps integration
             if self.config.aiops_enabled:
                 await self._initialize_aiops()
+
             
             self._initialized = True
             self.logger.info("Enterprise Observability System initialized successfully")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Failed to initialize Enterprise Observability: {e}")
+
             return False
     
     async def _initialize_base_monitoring(self):
@@ -209,13 +215,16 @@ class EnterpriseObservability:
                 }
             }
             self._base_monitoring = MonitoringSystem(base_config)
+
             await self._base_monitoring.start()
+
             self.logger.info("Base monitoring system initialized")
     
     async def _initialize_distributed_tracing(self):
         """Initialize Jaeger distributed tracing"""
         if not HAS_JAEGER:
             self.logger.warning("Jaeger client not available - tracing disabled")
+
             return
         
         try:
@@ -238,8 +247,11 @@ class EnterpriseObservability:
                 service_name='iacherie-enterprise',
                 validate=True,
             )
+
             self._tracer = config.initialize_tracer()
+
             self.logger.info("Jaeger distributed tracing initialized")
+
             
         except Exception as e:
             self.logger.error(f"Failed to initialize Jaeger tracing: {e}")
@@ -256,8 +268,10 @@ class EnterpriseObservability:
                 }
                 # Configure Thanos sidecar
                 await self._configure_thanos_sidecar(thanos_config)
+
             
             self.logger.info("Enhanced metrics with Thanos initialized")
+
             
         except Exception as e:
             self.logger.error(f"Failed to initialize enhanced metrics: {e}")
@@ -275,8 +289,10 @@ class EnterpriseObservability:
                     }
                 }
                 await self._configure_loki_logging(loki_config)
+
             
             self.logger.info("Enhanced logging with Loki initialized")
+
             
         except Exception as e:
             self.logger.error(f"Failed to initialize enhanced logging: {e}")
@@ -285,6 +301,7 @@ class EnterpriseObservability:
         """Initialize DataDog APM"""
         if not HAS_DATADOG or not self.config.datadog_api_key:
             self.logger.warning("DataDog not available or API key missing")
+
             return
         
         try:
@@ -292,8 +309,10 @@ class EnterpriseObservability:
                 api_key=self.config.datadog_api_key,
                 app_key=self.config.datadog_app_key
             )
+
             self._datadog_client = datadog_api
             self.logger.info("DataDog APM initialized")
+
             
         except Exception as e:
             self.logger.error(f"Failed to initialize DataDog APM: {e}")
@@ -303,9 +322,11 @@ class EnterpriseObservability:
         try:
             if not self.config.gremlin_api_key:
                 self.logger.warning("Gremlin API key missing - chaos engineering disabled")
+
                 return
             
             # Initialize Gremlin client configuration
+
             gremlin_config = {
                 'api_key': self.config.gremlin_api_key,
                 'team_id': self.config.gremlin_team_id,
@@ -313,6 +334,7 @@ class EnterpriseObservability:
             }
             
             self.logger.info("Gremlin chaos engineering initialized")
+
             
         except Exception as e:
             self.logger.error(f"Failed to initialize chaos engineering: {e}")
@@ -322,9 +344,11 @@ class EnterpriseObservability:
         try:
             if not self.config.moogsoft_api_key:
                 self.logger.warning("Moogsoft API key missing - AIOps disabled")
+
                 return
             
             # Initialize Moogsoft client configuration
+
             moogsoft_config = {
                 'endpoint': self.config.moogsoft_endpoint,
                 'api_key': self.config.moogsoft_api_key,
@@ -332,6 +356,7 @@ class EnterpriseObservability:
             }
             
             self.logger.info("Moogsoft AIOps integration initialized")
+
             
         except Exception as e:
             self.logger.error(f"Failed to initialize AIOps: {e}")
@@ -353,17 +378,21 @@ class EnterpriseObservability:
         
         try:
             span = self._tracer.start_span(operation_name)
+
+
             trace_id = str(span.trace_id)
             
             # Add custom tags
             for key, value in kwargs.items():
                 span.set_tag(key, value)
+
             
             self._active_traces[trace_id] = span
             return trace_id
             
         except Exception as e:
             self.logger.error(f"Failed to start trace: {e}")
+
             return None
     
     async def finish_trace(self, trace_id: str, **kwargs):
@@ -375,8 +404,10 @@ class EnterpriseObservability:
                 # Add completion tags
                 for key, value in kwargs.items():
                     span.set_tag(key, value)
+
                 
                 span.finish()
+
                 del self._active_traces[trace_id]
                 
             except Exception as e:
@@ -397,6 +428,7 @@ class EnterpriseObservability:
                     points=[(time.time(), value)],
                     tags=metric_tags
                 )
+
             
         except Exception as e:
             self.logger.error(f"Failed to record metric {name}: {e}")
@@ -416,11 +448,13 @@ class EnterpriseObservability:
             
             self._chaos_experiments[experiment_id] = experiment
             self.logger.info(f"Chaos experiment created: {experiment_name}")
+
             
             return experiment_id
             
         except Exception as e:
             self.logger.error(f"Failed to create chaos experiment: {e}")
+
             raise
     
     async def trigger_aiops_incident(self, incident_data: Dict[str, Any]) -> str:
@@ -437,11 +471,13 @@ class EnterpriseObservability:
             
             self._aiops_incidents[incident_id] = incident
             self.logger.info(f"AIOps incident triggered: {incident_id}")
+
             
             return incident_id
             
         except Exception as e:
             self.logger.error(f"Failed to trigger AIOps incident: {e}")
+
             raise
     
     async def get_observability_status(self) -> Dict[str, Any]:
@@ -467,7 +503,8 @@ class EnterpriseObservability:
         }
     
     async def shutdown(self):
-        """Shutdown enterprise observability system"""
+        """
+        Shutdown enterprise observability system"""
         try:
             # Finish all active traces
             for trace_id in list(self._active_traces.keys()):
@@ -480,8 +517,10 @@ class EnterpriseObservability:
             # Close tracer
             if self._tracer:
                 self._tracer.close()
+
             
             self.logger.info("Enterprise Observability System shutdown completed")
+
             
         except Exception as e:
             self.logger.error(f"Error during shutdown: {e}")

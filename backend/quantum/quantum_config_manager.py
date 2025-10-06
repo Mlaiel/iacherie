@@ -29,7 +29,7 @@ import os
 import json
 import yaml
 from datetime import datetime
-from typing import Dict, List, Any, Optional, Union
+from typing import Dict, List, Any, Optional, Union, Callable
 from dataclasses import dataclass, field, asdict
 from enum import Enum
 from pathlib import Path
@@ -44,7 +44,8 @@ logger = logging.getLogger(__name__)
 # ========================================
 
 class QuantumEnvironment(Enum):
-    """Environnements quantiques"""
+    """
+        Environnements quantiques"""
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -80,7 +81,8 @@ class OptimizationLevel(Enum):
     MAXIMUM = 4
 
 class ConfigurationSource(Enum):
-    """Sources de configuration"""
+    """
+        Sources de configuration"""
     DEFAULT = "default_configuration"
     ENVIRONMENT_VARIABLES = "environment_variables"
     CONFIG_FILE = "configuration_file"
@@ -160,7 +162,8 @@ class QuantumBusinessConfig:
 
 @dataclass
 class QuantumMonitoringConfig:
-    """Configuration monitoring quantique"""
+    """
+        Configuration monitoring quantique"""
     metrics_collection_enabled: bool = True
     performance_tracking_enabled: bool = True
     error_tracking_enabled: bool = True
@@ -258,11 +261,14 @@ class QuantumConfigManager:
             
             # Création backup configuration
             await self._create_configuration_backup()
+
             
             logger.info(f"✅ Quantum configuration manager initialized for {self.environment.value}")
+
             
         except Exception as e:
             logger.error(f"❌ Failed to initialize quantum config manager: {e}")
+
             raise
     
     # ========================================
@@ -288,24 +294,32 @@ class QuantumConfigManager:
             logger.info("🔄 Loading quantum configuration from all sources")
             
             # 1. Chargement configuration par défaut
+
             default_config = await self._load_default_configuration()
             
             # 2. Chargement depuis fichiers de configuration
+
             file_config = await self._load_file_configuration()
             
             # 3. Chargement depuis variables d'environnement
+
             env_config = await self._load_environment_configuration()
             
             # 4. Chargement depuis base de données
+
             db_config = await self._load_database_configuration()
             
             # 5. Chargement depuis service distant
+
             remote_config = await self._load_remote_configuration()
             
             # 6. Application des overrides utilisateur
+
             user_overrides = await self._load_user_overrides()
             
             # Fusion de toutes les configurations (ordre de priorité)
+
+
             merged_config = await self._merge_configurations([
                 default_config,
                 file_config,
@@ -316,9 +330,11 @@ class QuantumConfigManager:
             ])
             
             # Validation de la configuration fusionnée
+
             validated_config = await self._validate_merged_configuration(merged_config)
             
             # Application optimisations spécifiques à l'environnement
+
             optimized_config = await self._apply_environment_optimizations(validated_config)
             
             # Stockage configuration maître
@@ -327,13 +343,16 @@ class QuantumConfigManager:
             
             # Notification des watchers
             await self._notify_configuration_watchers(optimized_config)
+
             
-            logger.info(f"✅ Quantum configuration loaded successfully for {self.environment.value}")
+            logger.info(f"✅ Quantum configuration initialized successfully for {self.environment.value}")
+
             
             return self.master_config
             
         except Exception as e:
             logger.error(f"❌ Failed to load quantum configuration: {e}")
+
             raise
     
     async def get_configuration(self, section: Optional[str] = None) -> Union[QuantumMasterConfig, Any]:
@@ -351,9 +370,11 @@ class QuantumConfigManager:
         try:
             if not self.master_config:
                 await self.load_configuration()
+
             
             if section is None:
                 return self.master_config
+
             
             section_mapping = {
                 "circuit": self.master_config.circuit_config,
@@ -368,9 +389,11 @@ class QuantumConfigManager:
                 return section_mapping[section]
             else:
                 raise ValueError(f"Unknown configuration section: {section}")
+
                 
         except Exception as e:
             logger.error(f"❌ Failed to get configuration section {section}: {e}")
+
             raise
     
     async def update_configuration(
@@ -387,14 +410,17 @@ class QuantumConfigManager:
         """
         try:
             logger.info(f"🔄 Updating quantum configuration section: {section}")
+
             
             if not self.master_config:
                 await self.load_configuration()
             
             # Validation des mises à jour
+
             validated_updates = await self._validate_configuration_updates(section, updates)
             
             # Application des mises à jour
+
             updated_config = await self._apply_configuration_updates(section, validated_updates)
             
             # Validation de la configuration mise à jour
@@ -409,13 +435,16 @@ class QuantumConfigManager:
             
             # Mise à jour du timestamp
             self.master_config.last_updated = datetime.utcnow()
+
             
             logger.info(f"✅ Configuration section {section} updated successfully")
+
             
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to update configuration section {section}: {e}")
+
             raise
     
     # ========================================
@@ -426,18 +455,23 @@ class QuantumConfigManager:
         """Récupération configuration spécifique à un environnement"""
         try:
             # Chargement configuration base
+
             base_config = await self._load_default_configuration()
             
             # Application des paramètres spécifiques à l'environnement
+
             env_specific_config = await self._apply_environment_specific_settings(base_config, environment)
             
             # Optimisation pour l'environnement
+
             optimized_config = await self._optimize_for_environment(env_specific_config, environment)
+
             
             return optimized_config
             
         except Exception as e:
             logger.error(f"❌ Failed to get environment configuration for {environment}: {e}")
+
             raise
     
     async def switch_environment(self, new_environment: QuantumEnvironment) -> bool:
@@ -449,10 +483,12 @@ class QuantumConfigManager:
             await self._backup_current_configuration()
             
             # Changement d'environnement
+
             old_environment = self.environment
             self.environment = new_environment
             
             # Rechargement configuration pour le nouvel environnement
+
             new_config = await self.get_environment_configuration(new_environment)
             
             # Validation compatibility
@@ -463,13 +499,16 @@ class QuantumConfigManager:
             
             # Notification du changement
             await self._notify_environment_switch(old_environment, new_environment)
+
             
             logger.info(f"✅ Successfully switched to environment: {new_environment.value}")
+
             
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to switch environment to {new_environment}: {e}")
+
             self.environment = old_environment  # Rollback
             raise
     
@@ -493,29 +532,35 @@ class QuantumConfigManager:
         """
         try:
             logger.info("🎯 Optimizing quantum configuration for specific workload")
+
             
             if not self.master_config:
                 await self.load_configuration()
             
             # Analyse caractéristiques workload
+
             workload_analysis = await self._analyze_workload_characteristics(workload_characteristics)
             
             # Optimisation configuration circuit
+
             circuit_optimization = await self._optimize_circuit_configuration(
                 self.master_config.circuit_config, workload_analysis
             )
             
             # Optimisation configuration algorithmes
+
             algorithm_optimization = await self._optimize_algorithm_configuration(
                 self.master_config.algorithm_config, workload_analysis
             )
             
             # Optimisation configuration performance
+
             performance_optimization = await self._optimize_performance_configuration(
                 self.master_config.performance_config, workload_analysis
             )
             
             # Création configuration optimisée
+
             optimized_config = QuantumMasterConfig(
                 environment=self.master_config.environment,
                 backend_type=await self._select_optimal_backend(workload_analysis),
@@ -529,13 +574,16 @@ class QuantumConfigManager:
             
             # Validation configuration optimisée
             await self._validate_optimized_configuration(optimized_config, workload_characteristics)
+
             
             logger.info("✅ Configuration optimized successfully for workload")
+
             
             return optimized_config
             
         except Exception as e:
             logger.error(f"❌ Failed to optimize configuration for workload: {e}")
+
             raise
     
     async def auto_tune_configuration(self) -> Dict[str, Any]:
@@ -549,22 +597,30 @@ class QuantumConfigManager:
             logger.info("🤖 Starting automatic configuration tuning")
             
             # Collecte métriques performance historiques
+
             performance_metrics = await self._collect_historical_performance_metrics()
             
             # Analyse patterns performance
+
             performance_patterns = await self._analyze_performance_patterns(performance_metrics)
             
             # Identification opportunités optimisation
+
             optimization_opportunities = await self._identify_optimization_opportunities(performance_patterns)
             
             # Génération recommandations ajustements
+
             tuning_recommendations = await self._generate_tuning_recommendations(optimization_opportunities)
             
             # Application ajustements sécurisés
+
             applied_tunings = await self._apply_safe_tuning_adjustments(tuning_recommendations)
             
             # Validation impact ajustements
+
             tuning_impact = await self._validate_tuning_impact(applied_tunings)
+
+
             
             tuning_result = {
                 "tuning_applied": applied_tunings,
@@ -576,11 +632,13 @@ class QuantumConfigManager:
             }
             
             logger.info(f"✅ Auto-tuning completed with {tuning_impact.get('improvement_percentage', 0.0):.2f}% improvement")
+
             
             return tuning_result
             
         except Exception as e:
             logger.error(f"❌ Failed to auto-tune configuration: {e}")
+
             raise
     
     # ========================================
@@ -600,34 +658,50 @@ class QuantumConfigManager:
         """
         try:
             logger.info("🔍 Validating quantum configuration compliance")
+
             
             if not self.master_config:
                 await self.load_configuration()
+
+
             
             compliance_results = {}
             
             # Validation sécurité quantum-safe
+
             security_compliance = await self._validate_security_compliance(self.master_config.security_config)
+
             compliance_results["security"] = security_compliance
             
             # Validation limites hardware
+
             hardware_compliance = await self._validate_hardware_compliance(self.master_config.circuit_config)
+
             compliance_results["hardware"] = hardware_compliance
             
             # Validation business requirements
+
             business_compliance = await self._validate_business_compliance(self.master_config.business_config)
+
             compliance_results["business"] = business_compliance
             
             # Validation performance requirements
+
             performance_compliance = await self._validate_performance_compliance(self.master_config.performance_config)
+
             compliance_results["performance"] = performance_compliance
             
             # Validation cohérence configuration
+
             coherence_compliance = await self._validate_configuration_coherence(self.master_config)
+
             compliance_results["coherence"] = coherence_compliance
             
             # Calcul score compliance global
+
             overall_compliance = await self._calculate_overall_compliance_score(compliance_results)
+
+
             
             validation_result = {
                 "compliance_results": compliance_results,
@@ -638,11 +712,13 @@ class QuantumConfigManager:
             }
             
             logger.info(f"✅ Configuration compliance validated with score: {overall_compliance:.2f}")
+
             
             return validation_result
             
         except Exception as e:
             logger.error(f"❌ Failed to validate configuration compliance: {e}")
+
             raise
     
     # ========================================
@@ -675,11 +751,15 @@ class QuantumConfigManager:
                     "quantum_advantage_threshold": 2.2
                 }
             }
+
             
             base_config = await self.get_configuration()
+
+
             creator_specific = creator_configs.get(creator_type.lower(), creator_configs["blogger"])
             
             # Fusion configuration base avec spécificités créateur
+
             merged_config = {
                 **asdict(base_config),
                 "creator_specific": creator_specific
@@ -689,6 +769,7 @@ class QuantumConfigManager:
             
         except Exception as e:
             logger.error(f"❌ Failed to get creator-specific configuration: {e}")
+
             raise
     
     async def get_business_stage_configuration(self, business_stage: str) -> Dict[str, Any]:
@@ -714,9 +795,13 @@ class QuantumConfigManager:
                     "enhancement_level": "quantum_supreme"
                 }
             }
+
             
             base_config = await self.get_configuration()
+
+
             stage_specific = stage_configs.get(business_stage.lower(), stage_configs["creator_upload"])
+
             
             return {
                 **asdict(base_config),
@@ -725,6 +810,7 @@ class QuantumConfigManager:
             
         except Exception as e:
             logger.error(f"❌ Failed to get business stage configuration: {e}")
+
             raise
     
     # ========================================
@@ -734,6 +820,7 @@ class QuantumConfigManager:
     def _detect_environment(self) -> QuantumEnvironment:
         """Détection automatique environnement"""
         env_var = os.getenv("QUANTUM_ENVIRONMENT", "development").lower()
+
         env_mapping = {
             "dev": QuantumEnvironment.DEVELOPMENT,
             "development": QuantumEnvironment.DEVELOPMENT,
@@ -758,7 +845,8 @@ class QuantumConfigManager:
         return QuantumMasterConfig()
     
     async def _load_file_configuration(self) -> Dict[str, Any]:
-        """Chargement configuration depuis fichiers"""
+        """
+        Chargement configuration depuis fichiers"""
         try:
             config_file = Path(self.config_path) / f"quantum_{self.environment.value}.yaml"
             if config_file.exists():
@@ -767,6 +855,7 @@ class QuantumConfigManager:
             return {}
         except Exception as e:
             logger.warning(f"Could not load file configuration: {e}")
+
             return {}
     
     async def _load_environment_configuration(self) -> Dict[str, Any]:
@@ -774,9 +863,7 @@ class QuantumConfigManager:
         env_config = {}
         for key, value in os.environ.items():
             if key.startswith("QUANTUM_"):
-# SECURITY: # SECURITY: config_key = key.replace("QUANTUM_", "").lower() # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
+                config_key = key.replace("QUANTUM_", "").lower()
                 env_config[config_key] = value
         return env_config
     
@@ -786,16 +873,19 @@ class QuantumConfigManager:
         return {}
     
     async def _load_remote_configuration(self) -> Dict[str, Any]:
-        """Chargement configuration depuis service distant"""
+        """
+        Chargement configuration depuis service distant"""
         # Simulation - à implémenter avec vraie API
         return {}
     
     async def _load_user_overrides(self) -> Dict[str, Any]:
-        """Chargement overrides utilisateur"""
+        """
+        Chargement overrides utilisateur"""
         return getattr(self, '_user_overrides', {})
     
     async def _merge_configurations(self, configs: List[Dict[str, Any]]) -> QuantumMasterConfig:
-        """Fusion de toutes les configurations"""
+        """
+        Fusion de toutes les configurations"""
         merged = {}
         for config in configs:
             if config:
@@ -806,19 +896,24 @@ class QuantumConfigManager:
             return QuantumMasterConfig(**merged)
         except Exception:
             # Fallback sur configuration par défaut avec overrides
+
             default_config = QuantumMasterConfig()
+
             for key, value in merged.items():
                 if hasattr(default_config, key):
                     setattr(default_config, key, value)
+
             return default_config
     
     async def _validate_merged_configuration(self, config: QuantumMasterConfig) -> QuantumMasterConfig:
-        """Validation configuration fusionnée"""
+        """
+        Validation configuration fusionnée"""
         # Validations spécifiques
         return config
     
     async def _apply_environment_optimizations(self, config: QuantumMasterConfig) -> QuantumMasterConfig:
-        """Application optimisations spécifiques à l'environnement"""
+        """
+        Application optimisations spécifiques à l'environnement"""
         if self.environment == QuantumEnvironment.PRODUCTION:
             config.performance_config.max_concurrent_circuits = 20
             config.monitoring_config.metrics_collection_enabled = True
@@ -829,7 +924,8 @@ class QuantumConfigManager:
         return config
     
     async def _config_needs_reload(self) -> bool:
-        """Vérification si configuration nécessite rechargement"""
+        """
+        Vérification si configuration nécessite rechargement"""
         if not self.last_reload_time:
             return True
         
@@ -837,6 +933,7 @@ class QuantumConfigManager:
         config_file = Path(self.config_path) / f"quantum_{self.environment.value}.yaml"
         if config_file.exists():
             file_mtime = datetime.fromtimestamp(config_file.stat().st_mtime)
+
             if file_mtime > self.last_reload_time:
                 return True
         
@@ -847,6 +944,7 @@ class QuantumConfigManager:
         for watcher in self.config_watchers:
             try:
                 await watcher(config)
+
             except Exception as e:
                 logger.warning(f"Configuration watcher failed: {e}")
     
@@ -859,18 +957,25 @@ class QuantumConfigManager:
         try:
             if not self.master_config:
                 await self.load_configuration()
+
+
             
             config_dict = asdict(self.master_config)
+
             
             if format.lower() == "yaml":
                 return yaml.dump(config_dict, default_flow_style=False, sort_keys=False)
+
             elif format.lower() == "json":
                 return json.dumps(config_dict, indent=2, default=str)
+
             else:
                 raise ValueError(f"Unsupported export format: {format}")
+
                 
         except Exception as e:
             logger.error(f"❌ Failed to export configuration: {e}")
+
             raise
     
     async def import_configuration(self, config_data: str, format: str = "yaml", validate: bool = True):
@@ -878,24 +983,32 @@ class QuantumConfigManager:
         try:
             if format.lower() == "yaml":
                 config_dict = yaml.safe_load(config_data)
+
             elif format.lower() == "json":
                 config_dict = json.loads(config_data)
+
             else:
                 raise ValueError(f"Unsupported import format: {format}")
             
             # Conversion vers QuantumMasterConfig
+
             imported_config = QuantumMasterConfig(**config_dict)
+
             
             if validate:
                 await self._validate_imported_configuration(imported_config)
+
             
             self.master_config = imported_config
             self.last_reload_time = datetime.utcnow()
+
             
             logger.info("✅ Configuration imported successfully")
+
             
         except Exception as e:
             logger.error(f"❌ Failed to import configuration: {e}")
+
             raise
     
     def add_configuration_watcher(self, watcher: Callable):
@@ -903,7 +1016,8 @@ class QuantumConfigManager:
         self.config_watchers.append(watcher)
     
     def remove_configuration_watcher(self, watcher: Callable):
-        """Suppression watcher"""
+        """
+        Suppression watcher"""
         if watcher in self.config_watchers:
             self.config_watchers.remove(watcher)
 
@@ -913,13 +1027,15 @@ class QuantumConfigManager:
 # ========================================
 
 async def get_quantum_config(environment: Optional[QuantumEnvironment] = None) -> QuantumMasterConfig:
-    """Fonction utilitaire pour récupération configuration quantique"""
+    """
+        Fonction utilitaire pour récupération configuration quantique"""
     config_manager = QuantumConfigManager(environment=environment)
     await config_manager.initialize()
     return await config_manager.get_configuration()
 
 async def validate_quantum_config(config: QuantumMasterConfig) -> bool:
-    """Validation rapide configuration quantique"""
+    """
+        Validation rapide configuration quantique"""
     try:
         # Validations essentielles
         if config.circuit_config.max_qubits <= 0:
@@ -936,9 +1052,13 @@ async def validate_quantum_config(config: QuantumMasterConfig) -> bool:
 # EXPORT INTERFACES
 # ========================================
 
+# Enterprise aliases
+ConfigRequest = QuantumMasterConfig
+
 __all__ = [
     "QuantumConfigManager",
     "QuantumMasterConfig",
+    "ConfigRequest",  # Alias
     "QuantumCircuitConfig",
     "QuantumAlgorithmConfig", 
     "QuantumSecurityConfig",

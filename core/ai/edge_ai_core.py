@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class EdgeAICore:
-    """Advanced EdgeAICore System"""
+    """
+Advanced EdgeAICore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class EdgeAICore:
 # Module exports
 __all__ = ["EdgeAICore"]
 
-logger.info("📱 EdgeAICore module loaded")
+logger.info("📱 EdgeAICore module initialized")

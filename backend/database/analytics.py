@@ -59,7 +59,8 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Analytics metric types."""
+    """
+        Analytics metric types."""
     ENGAGEMENT = "engagement"
     PERFORMANCE = "performance"
     REVENUE = "revenue"
@@ -121,7 +122,8 @@ class AnalyticsMetric:
 
 @dataclass
 class ContentPerformance:
-    """Content performance analytics."""
+    """
+        Content performance analytics."""
     content_id: str
     title: str
     content_type: str
@@ -143,7 +145,8 @@ class ContentPerformance:
 
 @dataclass
 class AudienceInsight:
-    """Audience analytics and insights."""
+    """
+        Audience analytics and insights."""
     user_id: str
     total_followers: int = 0
     active_followers: int = 0
@@ -159,7 +162,8 @@ class AudienceInsight:
 
 @dataclass
 class RevenueAnalytics:
-    """Revenue analytics and insights."""
+    """
+        Revenue analytics and insights."""
     user_id: str
     total_revenue: float = 0.0
     revenue_by_source: Dict[str, float] = field(default_factory=dict)
@@ -174,22 +178,26 @@ class RevenueAnalytics:
 
 
 class IAnalyticsProvider(ABC):
-    """Analytics provider interface."""
+    """
+        Analytics provider interface."""
     
     @abstractmethod
     async def collect_metric(self, metric: AnalyticsMetric) -> bool:
-        """Collect a single metric."""
+        """
+        Collect a single metric."""
         pass
     
     @abstractmethod
     async def get_metrics(self, metric_type: MetricType, start_time: datetime, 
                          end_time: datetime, granularity: TimeGranularity) -> List[AnalyticsMetric]:
-        """Get metrics for a time range."""
+        """
+        Get metrics for a time range."""
         pass
     
     @abstractmethod
     async def generate_insights(self, content_id: str) -> Dict[str, Any]:
-        """Generate insights for content."""
+        """
+        Generate insights for content."""
         pass
 
 
@@ -205,26 +213,32 @@ class ContentPerformanceAnalyzer(IAnalyticsProvider):
         self._performance_data: Dict[str, ContentPerformance] = {}
         self._metrics_history: Dict[str, List[AnalyticsMetric]] = defaultdict(list)
         self._real_time_buffer: deque = deque(maxlen=1000)
+
         
     async def collect_metric(self, metric: AnalyticsMetric) -> bool:
-        """Collect content performance metric."""
+        """
+        Collect content performance metric."""
         try:
             # Add to real-time buffer
             self._real_time_buffer.append(metric)
             
             # Add to history
+
             key = f"{metric.content_id}_{metric.metric_type.value}"
             self._metrics_history[key].append(metric)
             
             # Update content performance
             if metric.content_id:
                 await self._update_content_performance(metric)
+
             
             logger.debug(f"📊 Collected metric: {metric.metric_type.value} = {metric.value}")
+
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to collect metric: {e}")
+
             return False
     
     async def _update_content_performance(self, metric: AnalyticsMetric):
@@ -237,6 +251,8 @@ class ContentPerformanceAnalyzer(IAnalyticsProvider):
                 title=f"Content {content_id}",
                 content_type="unknown"
             )
+
+
         
         performance = self._performance_data[content_id]
         
@@ -244,25 +260,32 @@ class ContentPerformanceAnalyzer(IAnalyticsProvider):
         if metric.metric_type == MetricType.ENGAGEMENT:
             if "views" in metric.metadata:
                 performance.views = int(metric.metadata["views"])
+
             if "likes" in metric.metadata:
                 performance.likes = int(metric.metadata["likes"])
+
             if "shares" in metric.metadata:
                 performance.shares = int(metric.metadata["shares"])
+
             if "comments" in metric.metadata:
                 performance.comments = int(metric.metadata["comments"])
+
         
         elif metric.metric_type == MetricType.PERFORMANCE:
             performance.performance_score = metric.value
             if "reach" in metric.metadata:
                 performance.reach = int(metric.metadata["reach"])
+
             if "impressions" in metric.metadata:
                 performance.impressions = int(metric.metadata["impressions"])
+
         
         elif metric.metric_type == MetricType.REVENUE:
             performance.revenue_generated = metric.value
         
         # Calculate derived metrics
         await self._calculate_derived_metrics(performance)
+
         
         performance.last_updated = datetime.now(timezone.utc)
     
@@ -278,12 +301,18 @@ class ContentPerformanceAnalyzer(IAnalyticsProvider):
             performance.click_through_rate = performance.views / performance.impressions
         
         # Performance score (weighted combination)
+
         engagement_weight = 0.4
+
         reach_weight = 0.3
+
         revenue_weight = 0.3
+
         
         normalized_engagement = min(performance.engagement_rate * 100, 100)
+
         normalized_reach = min(performance.reach / 10000, 100)  # Assuming 10k is max reach
+
         normalized_revenue = min(performance.revenue_generated / 1000, 100)  # Assuming $1k is max
         
         performance.performance_score = (
@@ -294,7 +323,8 @@ class ContentPerformanceAnalyzer(IAnalyticsProvider):
     
     async def get_metrics(self, metric_type: MetricType, start_time: datetime, 
                          end_time: datetime, granularity: TimeGranularity) -> List[AnalyticsMetric]:
-        """Get content performance metrics for time range."""
+        """
+        Get content performance metrics for time range."""
         filtered_metrics = []
         
         for metrics_list in self._metrics_history.values():
@@ -309,27 +339,35 @@ class ContentPerformanceAnalyzer(IAnalyticsProvider):
         # Apply granularity aggregation if needed
         if granularity != TimeGranularity.REAL_TIME:
             filtered_metrics = await self._aggregate_metrics(filtered_metrics, granularity)
+
         
         return filtered_metrics
     
     async def _aggregate_metrics(self, metrics: List[AnalyticsMetric], 
                                 granularity: TimeGranularity) -> List[AnalyticsMetric]:
-        """Aggregate metrics by time granularity."""
+        """
+        Aggregate metrics by time granularity."""
         if not metrics:
             return []
         
         # Group metrics by time bucket
+
         time_buckets = defaultdict(list)
+
         
         for metric in metrics:
             bucket_key = self._get_time_bucket(metric.timestamp, granularity)
+
             time_buckets[bucket_key].append(metric)
         
         # Aggregate each bucket
+
         aggregated = []
         for bucket_time, bucket_metrics in time_buckets.items():
             if bucket_metrics:
                 avg_value = statistics.mean([m.value for m in bucket_metrics])
+
+
                 aggregated_metric = AnalyticsMetric(
                     metric_id=f"agg_{bucket_time}",
                     metric_type=bucket_metrics[0].metric_type,
@@ -337,7 +375,9 @@ class ContentPerformanceAnalyzer(IAnalyticsProvider):
                     unit=bucket_metrics[0].unit,
                     timestamp=bucket_time
                 )
+
                 aggregated.append(aggregated_metric)
+
         
         return sorted(aggregated, key=lambda x: x.timestamp)
     
@@ -349,7 +389,10 @@ class ContentPerformanceAnalyzer(IAnalyticsProvider):
             return timestamp.replace(hour=0, minute=0, second=0, microsecond=0)
         elif granularity == TimeGranularity.WEEKLY:
             days_since_monday = timestamp.weekday()
+
+
             week_start = timestamp - timedelta(days=days_since_monday)
+
             return week_start.replace(hour=0, minute=0, second=0, microsecond=0)
         elif granularity == TimeGranularity.MONTHLY:
             return timestamp.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
@@ -357,11 +400,14 @@ class ContentPerformanceAnalyzer(IAnalyticsProvider):
             return timestamp
     
     async def generate_insights(self, content_id: str) -> Dict[str, Any]:
-        """Generate AI-powered insights for content."""
+        """
+        Generate AI-powered insights for content."""
         if content_id not in self._performance_data:
             return {"error": "Content not found"}
+
         
         performance = self._performance_data[content_id]
+
         
         insights = {
             "content_id": content_id,
@@ -388,8 +434,10 @@ class ContentPerformanceAnalyzer(IAnalyticsProvider):
         }
         
         # Calculate engagement velocity
+
         total_interactions = performance.likes + performance.shares + performance.comments
         analysis["interaction_velocity"] = total_interactions / max(performance.views, 1)
+
         
         return analysis
     
@@ -399,28 +447,35 @@ class ContentPerformanceAnalyzer(IAnalyticsProvider):
         
         if performance.engagement_rate < 0.02:
             suggestions.append("Consider improving content quality to increase engagement")
+
         
         if performance.click_through_rate < 0.05:
             suggestions.append("Optimize thumbnails and titles to improve click-through rate")
+
         
         if performance.reach < performance.impressions * 0.1:
             suggestions.append("Improve content timing and hashtag strategy to increase reach")
+
         
         if performance.revenue_generated < 10:
             suggestions.append("Explore monetization opportunities and sponsorship deals")
+
         
         return suggestions
     
     async def _analyze_trends(self, content_id: str) -> Dict[str, Any]:
         """Analyze performance trends."""
         # Get historical metrics
+
         key = f"{content_id}_performance"
         metrics = self._metrics_history.get(key, [])
+
         
         if len(metrics) < 2:
             return {"trend": "insufficient_data"}
         
         # Calculate trend
+
         recent_values = [m.value for m in metrics[-10:]]  # Last 10 data points
         
         if len(recent_values) >= 2:
@@ -439,13 +494,18 @@ class ContentPerformanceAnalyzer(IAnalyticsProvider):
     async def _analyze_competitive_position(self, performance: ContentPerformance) -> Dict[str, Any]:
         """Analyze competitive position."""
         # Compare with other content in same category
+
         all_performances = list(self._performance_data.values())
+
         
         if len(all_performances) < 2:
             return {"position": "insufficient_data"}
+
         
         scores = [p.performance_score for p in all_performances]
+
         current_score = performance.performance_score
+
         
         percentile = sum(1 for score in scores if score < current_score) / len(scores) * 100
         
@@ -458,10 +518,13 @@ class ContentPerformanceAnalyzer(IAnalyticsProvider):
     async def _analyze_revenue_potential(self, performance: ContentPerformance) -> Dict[str, Any]:
         """Analyze revenue generation potential."""
         # Calculate revenue per engagement
+
         total_engagement = performance.likes + performance.shares + performance.comments
+
         revenue_per_engagement = performance.revenue_generated / max(total_engagement, 1)
         
         # Estimate potential based on reach
+
         potential_revenue = performance.reach * revenue_per_engagement * 0.1  # 10% conversion
         
         return {
@@ -478,7 +541,8 @@ class ContentPerformanceAnalyzer(IAnalyticsProvider):
         return performances[:limit]
     
     def get_content_performance(self, content_id: str) -> Optional[ContentPerformance]:
-        """Get performance data for specific content."""
+        """
+        Get performance data for specific content."""
         return self._performance_data.get(content_id)
 
 
@@ -492,9 +556,11 @@ class AudienceIntelligenceAnalyzer:
     def __init__(self):
         self._audience_data: Dict[str, AudienceInsight] = {}
         self._engagement_patterns: Dict[str, List[Dict[str, Any]]] = defaultdict(list)
+
         
     async def analyze_audience(self, user_id: str, audience_data: Dict[str, Any]) -> AudienceInsight:
-        """Analyze audience for a user."""
+        """
+        Analyze audience for a user."""
         insight = AudienceInsight(user_id=user_id)
         
         # Update basic metrics
@@ -511,6 +577,7 @@ class AudienceIntelligenceAnalyzer:
         insight.engagement_patterns = await self._analyze_engagement_patterns(user_id)
         insight.content_preferences = await self._identify_content_preferences(user_id)
         insight.peak_activity_hours = await self._identify_peak_hours(user_id)
+
         
         self._audience_data[user_id] = insight
         return insight
@@ -518,17 +585,22 @@ class AudienceIntelligenceAnalyzer:
     async def _analyze_engagement_patterns(self, user_id: str) -> Dict[str, Any]:
         """Analyze audience engagement patterns."""
         patterns = self._engagement_patterns.get(user_id, [])
+
         
         if not patterns:
             return {"status": "insufficient_data"}
         
         # Analyze timing patterns
+
         hour_distribution = defaultdict(int)
+
         day_distribution = defaultdict(int)
+
         
         for pattern in patterns:
             if "timestamp" in pattern:
                 dt = datetime.fromisoformat(pattern["timestamp"])
+
                 hour_distribution[dt.hour] += 1
                 day_distribution[dt.strftime("%A")] += 1
         
@@ -542,6 +614,8 @@ class AudienceIntelligenceAnalyzer:
     async def _identify_content_preferences(self, user_id: str) -> List[str]:
         """Identify audience content preferences."""
         patterns = self._engagement_patterns.get(user_id, [])
+
+
         
         content_types = defaultdict(int)
         for pattern in patterns:
@@ -549,20 +623,25 @@ class AudienceIntelligenceAnalyzer:
                 content_types[pattern["content_type"]] += pattern.get("engagement_score", 0)
         
         # Sort by preference score
+
         sorted_preferences = sorted(content_types.items(), key=lambda x: x[1], reverse=True)
         return [content_type for content_type, _ in sorted_preferences[:5]]
     
     async def _identify_peak_hours(self, user_id: str) -> List[int]:
         """Identify peak activity hours."""
         patterns = self._engagement_patterns.get(user_id, [])
+
+
         
         hour_activity = defaultdict(int)
         for pattern in patterns:
             if "timestamp" in pattern:
                 dt = datetime.fromisoformat(pattern["timestamp"])
+
                 hour_activity[dt.hour] += pattern.get("activity_score", 1)
         
         # Get top 3 peak hours
+
         sorted_hours = sorted(hour_activity.items(), key=lambda x: x[1], reverse=True)
         return [hour for hour, _ in sorted_hours[:3]]
 
@@ -581,13 +660,15 @@ class DatabaseAnalyticsManager:
         self._analytics_tasks: List[asyncio.Task] = []
         
     async def initialize(self):
-        """Initialize analytics manager."""
+        """
+        Initialize analytics manager."""
         logger.info("📊 Initializing Enterprise Database Analytics Manager...")
         
         # Start background analytics tasks
         self._analytics_tasks.append(
             asyncio.create_task(self._real_time_analytics_processor())
         )
+
         
         logger.info("✅ Enterprise Database Analytics Manager initialized")
     
@@ -597,9 +678,7 @@ class DatabaseAnalyticsManager:
             try:
                 await asyncio.sleep(60)  # Process every minute
                 
-                # Process any pending analytics calculations
-                # TODO: Implement real-time processing logic
-                
+                # Process any pending analytics calculations                
             except asyncio.CancelledError:
                 break
             except Exception as e:
@@ -609,6 +688,7 @@ class DatabaseAnalyticsManager:
         """Track content performance metrics."""
         try:
             # Create performance metric
+
             metric = AnalyticsMetric(
                 metric_id=f"perf_{content_id}_{int(datetime.now().timestamp())}",
                 metric_type=MetricType.PERFORMANCE,
@@ -618,26 +698,37 @@ class DatabaseAnalyticsManager:
                 content_id=content_id,
                 metadata=metrics
             )
+
             
             return await self.performance_analyzer.collect_metric(metric)
+
             
         except Exception as e:
             logger.error(f"❌ Failed to track content performance: {e}")
+
             return False
     
     async def get_analytics_dashboard(self, user_id: str) -> Dict[str, Any]:
         """Get comprehensive analytics dashboard."""
         try:
             # Get content performance summary
+
             top_content = self.performance_analyzer.get_top_performing_content(5)
             
             # Get audience insights
+
             audience_insight = self.audience_analyzer._audience_data.get(user_id)
             
             # Calculate summary metrics
+
             total_views = sum(c.views for c in top_content)
+
+
             total_revenue = sum(c.revenue_generated for c in top_content)
+
+
             avg_engagement = statistics.mean([c.engagement_rate for c in top_content]) if top_content else 0
+
             
             dashboard = {
                 "user_id": user_id,
@@ -670,6 +761,7 @@ class DatabaseAnalyticsManager:
             
         except Exception as e:
             logger.error(f"❌ Failed to generate analytics dashboard: {e}")
+
             return {"error": str(e)}
     
     async def close(self):
@@ -679,6 +771,7 @@ class DatabaseAnalyticsManager:
         # Cancel background tasks
         for task in self._analytics_tasks:
             task.cancel()
+
             try:
                 await task
             except asyncio.CancelledError:

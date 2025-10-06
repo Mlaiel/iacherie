@@ -32,7 +32,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class AuditEventType(Enum):
-    """Audit event type enumeration"""
+    """
+        Audit event type enumeration"""
     USER_LOGIN = "user_login"
     USER_LOGOUT = "user_logout"
     TRANSACTION_CREATED = "transaction_created"
@@ -100,8 +101,10 @@ class AuditEvent:
         self.hash_chain = self._calculate_hash()
     
     def _calculate_hash(self) -> str:
-        """Calculate SHA-256 hash of event data"""
+        """
+        Calculate SHA-256 hash of event data"""
         # Create deterministic representation
+
         data = {
             "event_id": self.event_id,
             "event_type": self.event_type.value,
@@ -112,6 +115,7 @@ class AuditEvent:
             "action": self.action,
             "description": self.description
         }
+
         
         json_str = json.dumps(data, sort_keys=True)
         return hashlib.sha256(json_str.encode()).hexdigest()
@@ -133,7 +137,8 @@ class AuditQuery:
 
 @dataclass
 class ComplianceReport:
-    """Compliance report data"""
+    """
+        Compliance report data"""
     report_id: str
     framework: ComplianceFramework
     period_start: datetime
@@ -151,7 +156,8 @@ class ComplianceReport:
 
 @dataclass
 class AuditAnalytics:
-    """Audit analytics and metrics"""
+    """
+        Audit analytics and metrics"""
     total_events: int = 0
     events_by_type: Dict[str, int] = field(default_factory=dict)
     events_by_severity: Dict[str, int] = field(default_factory=dict)
@@ -163,7 +169,8 @@ class AuditAnalytics:
     generated_at: datetime = field(default_factory=datetime.utcnow)
 
 class MarketplaceAuditManager:
-    """Advanced audit trail and compliance management system"""
+    """
+        Advanced audit trail and compliance management system"""
     
     def __init__(self):
         self.audit_events: List[AuditEvent] = []
@@ -177,7 +184,8 @@ class MarketplaceAuditManager:
         self._initialize_audit_rules()
     
     def _initialize_retention_policies(self):
-        """Initialize data retention policies by compliance framework"""
+        """
+        Initialize data retention policies by compliance framework"""
         self.retention_policies = {
             ComplianceFramework.GDPR: timedelta(days=2555),      # 7 years
             ComplianceFramework.SOX: timedelta(days=2555),       # 7 years
@@ -189,7 +197,8 @@ class MarketplaceAuditManager:
         }
     
     def _initialize_audit_rules(self):
-        """Initialize audit rules for compliance frameworks"""
+        """
+        Initialize audit rules for compliance frameworks"""
         self.audit_rules = {
             "gdpr_data_access": {
                 "event_types": [AuditEventType.DATA_EXPORT, AuditEventType.PROFILE_UPDATED],
@@ -232,6 +241,8 @@ class MarketplaceAuditManager:
             # Determine compliance tags if not provided
             if compliance_tags is None:
                 compliance_tags = self._determine_compliance_tags(event_type, entity_type)
+
+
             
             event = AuditEvent(
                 event_id=event_id,
@@ -263,12 +274,15 @@ class MarketplaceAuditManager:
             
             # Trigger alerts if necessary
             await self._trigger_alerts(event)
+
             
             logger.info(f"Audit event logged: {event_id} - {event_type.value}")
+
             return event
             
         except Exception as e:
             logger.error(f"Error logging audit event: {e}")
+
             raise
     
     def _determine_compliance_tags(
@@ -310,15 +324,18 @@ class MarketplaceAuditManager:
                 ComplianceFramework.ISO27001,
                 ComplianceFramework.NIST
             ])
+
         
         return tags
     
     def _add_to_blockchain_chain(self, event: AuditEvent):
         """Add event to blockchain chain for integrity"""
         # Get previous hash
+
         previous_hash = self.blockchain_chain[-1] if self.blockchain_chain else "genesis"
         
         # Create chain entry
+
         chain_data = {
             "event_id": event.event_id,
             "event_hash": event.hash_chain,
@@ -327,6 +344,7 @@ class MarketplaceAuditManager:
         }
         
         # Calculate chain hash
+
         chain_hash = hashlib.sha256(json.dumps(chain_data, sort_keys=True).encode()).hexdigest()
         self.blockchain_chain.append(chain_hash)
     
@@ -353,6 +371,7 @@ class MarketplaceAuditManager:
                 "compliance_frameworks": [tag.value for tag in event.compliance_tags]
             }
         )
+
         
         logger.warning(f"Compliance violation flagged: {reason}")
     
@@ -397,19 +416,24 @@ class MarketplaceAuditManager:
             
             if query.search_text:
                 search_lower = query.search_text.lower()
+
+
                 filtered_events = [
                     e for e in filtered_events
                     if search_lower in e.description.lower() or search_lower in e.action.lower()
                 ]
             
             # Apply pagination
+
             start_idx = query.offset
+
             end_idx = start_idx + query.limit
             
             return sorted(filtered_events, key=lambda x: x.timestamp, reverse=True)[start_idx:end_idx]
             
         except Exception as e:
             logger.error(f"Error querying audit events: {e}")
+
             return []
     
     async def generate_compliance_report(
@@ -423,34 +447,52 @@ class MarketplaceAuditManager:
             report_id = f"report_{uuid.uuid4().hex[:12]}"
             
             # Query events for the framework and period
+
             query = AuditQuery(
                 start_date=period_start,
                 end_date=period_end,
                 compliance_frameworks=[framework]
             )
+
+
             
             events = await self.query_events(query)
             
             # Calculate metrics
+
             total_events = len(events)
+
+
             critical_events = len([e for e in events if e.severity == AuditSeverity.CRITICAL])
+
+
             security_violations = len([e for e in events if e.event_type == AuditEventType.SECURITY_VIOLATION])
+
+
             
             data_access_events = len([
                 e for e in events
                 if e.event_type in [AuditEventType.DATA_EXPORT, AuditEventType.PROFILE_UPDATED]
             ])
+
+
             
             admin_actions = len([e for e in events if e.event_type == AuditEventType.ADMIN_ACTION])
             
             # Calculate compliance score (simplified)
+
+
             compliance_score = self._calculate_compliance_score(events, framework)
             
             # Identify violations
+
             violations = self._identify_violations(events, framework)
             
             # Generate recommendations
+
             recommendations = self._generate_recommendations(events, framework, violations)
+
+
             
             report = ComplianceReport(
                 report_id=report_id,
@@ -466,14 +508,17 @@ class MarketplaceAuditManager:
                 violations=violations,
                 recommendations=recommendations
             )
+
             
             self.compliance_reports[report_id] = report
             
             logger.info(f"Compliance report generated: {report_id} for {framework.value}")
+
             return report
             
         except Exception as e:
             logger.error(f"Error generating compliance report: {e}")
+
             raise
     
     def _calculate_compliance_score(
@@ -486,34 +531,43 @@ class MarketplaceAuditManager:
             return 100.0
         
         # Simplified scoring algorithm
+
         total_score = 100.0
         
         # Deduct points for violations
+
         critical_events = len([e for e in events if e.severity == AuditSeverity.CRITICAL])
+
         security_violations = len([e for e in events if e.event_type == AuditEventType.SECURITY_VIOLATION])
         
         # Framework-specific scoring
         if framework == ComplianceFramework.GDPR:
             # Deduct for data handling violations
+
             data_violations = len([
                 e for e in events
                 if e.event_type in [AuditEventType.DATA_EXPORT, AuditEventType.DATA_DELETION]
                 and e.severity in [AuditSeverity.WARNING, AuditSeverity.ERROR]
             ])
+
             total_score -= (data_violations * 5.0)
+
         
         elif framework == ComplianceFramework.SOX:
             # Deduct for financial reporting issues
+
             financial_issues = len([
                 e for e in events
                 if e.event_type in [AuditEventType.TRANSACTION_COMPLETED, AuditEventType.PAYMENT_PROCESSED]
                 and e.severity in [AuditSeverity.WARNING, AuditSeverity.ERROR]
             ])
+
             total_score -= (financial_issues * 3.0)
         
         # General deductions
         total_score -= (critical_events * 10.0)
         total_score -= (security_violations * 15.0)
+
         
         return max(0.0, min(100.0, total_score))
     
@@ -522,10 +576,12 @@ class MarketplaceAuditManager:
         events: List[AuditEvent],
         framework: ComplianceFramework
     ) -> List[Dict[str, Any]]:
-        """Identify compliance violations"""
+        """
+        Identify compliance violations"""
         violations = []
         
         # Check for critical events
+
         critical_events = [e for e in events if e.severity == AuditSeverity.CRITICAL]
         for event in critical_events:
             violations.append({
@@ -539,6 +595,7 @@ class MarketplaceAuditManager:
         # Framework-specific violations
         if framework == ComplianceFramework.GDPR:
             # Check for data processing without consent
+
             data_events_without_user = [
                 e for e in events
                 if e.event_type in [AuditEventType.DATA_EXPORT, AuditEventType.PROFILE_UPDATED]
@@ -553,6 +610,7 @@ class MarketplaceAuditManager:
                     "timestamp": event.timestamp.isoformat(),
                     "severity": "medium"
                 })
+
         
         return violations
     
@@ -574,26 +632,34 @@ class MarketplaceAuditManager:
                 e for e in events
                 if e.event_type in [AuditEventType.DATA_EXPORT, AuditEventType.DATA_DELETION]
             ])
+
             if data_events > 0:
                 recommendations.append("Review data processing activities for GDPR compliance")
+
                 recommendations.append("Ensure all data processing has proper legal basis")
+
         
         elif framework == ComplianceFramework.SOX:
             financial_events = len([
                 e for e in events
                 if e.event_type in [AuditEventType.TRANSACTION_COMPLETED, AuditEventType.PAYMENT_PROCESSED]
             ])
+
             if financial_events > 0:
                 recommendations.append("Review financial transaction controls")
+
                 recommendations.append("Ensure proper segregation of duties")
         
         # General recommendations
+
         critical_count = len([e for e in events if e.severity == AuditSeverity.CRITICAL])
         if critical_count > 10:
             recommendations.append("High number of critical events - review security controls")
+
         
         if not recommendations:
             recommendations.append("No specific issues identified - continue monitoring")
+
         
         return recommendations
     
@@ -611,7 +677,9 @@ class MarketplaceAuditManager:
             # Verify chain integrity
             for i, event in enumerate(self.audit_events):
                 # Verify event hash
+
                 expected_hash = event._calculate_hash()
+
                 if event.hash_chain != expected_hash:
                     integrity_result["integrity_valid"] = False
                     integrity_result["issues"].append({
@@ -629,12 +697,15 @@ class MarketplaceAuditManager:
                     "events_count": len(self.audit_events),
                     "chain_count": len(self.blockchain_chain)
                 })
+
             
             logger.info(f"Audit integrity verification: {'PASSED' if integrity_result['integrity_valid'] else 'FAILED'}")
+
             return integrity_result
             
         except Exception as e:
             logger.error(f"Error verifying audit integrity: {e}")
+
             return {
                 "integrity_valid": False,
                 "error": str(e),
@@ -647,30 +718,35 @@ class MarketplaceAuditManager:
             total_events = len(self.audit_events)
             
             # Events by type
+
             events_by_type = {}
             for event in self.audit_events:
                 event_type = event.event_type.value
                 events_by_type[event_type] = events_by_type.get(event_type, 0) + 1
             
             # Events by severity
+
             events_by_severity = {}
             for event in self.audit_events:
                 severity = event.severity.value
                 events_by_severity[severity] = events_by_severity.get(severity, 0) + 1
             
             # Events by user
+
             events_by_user = {}
             for event in self.audit_events:
                 if event.user_id:
                     events_by_user[event.user_id] = events_by_user.get(event.user_id, 0) + 1
             
             # Security incidents
+
             security_incidents = len([
                 e for e in self.audit_events
                 if e.event_type == AuditEventType.SECURITY_VIOLATION
             ])
             
             # Compliance violations
+
             compliance_violations = len([
                 e for e in self.audit_events
                 if e.event_type == AuditEventType.COMPLIANCE_CHECK
@@ -678,11 +754,13 @@ class MarketplaceAuditManager:
             ])
             
             # Top entities by activity
+
             entity_activity = {}
             for event in self.audit_events:
                 if event.entity_type and event.entity_id:
                     key = f"{event.entity_type}:{event.entity_id}"
                     entity_activity[key] = entity_activity.get(key, 0) + 1
+
             
             top_entities = [
                 {"entity": k, "activity_count": v}
@@ -690,22 +768,32 @@ class MarketplaceAuditManager:
             ]
             
             # Activity timeline (last 24 hours by hour)
+
+
             now = datetime.utcnow()
+
+
             timeline = []
             for i in range(24):
                 hour_start = now - timedelta(hours=i+1)
+
+
                 hour_end = now - timedelta(hours=i)
+
+
                 
                 hour_events = len([
                     e for e in self.audit_events
                     if hour_start <= e.timestamp < hour_end
                 ])
+
                 
                 timeline.append({
                     "hour": hour_start.hour,
                     "timestamp": hour_start.isoformat(),
                     "event_count": hour_events
                 })
+
             
             return AuditAnalytics(
                 total_events=total_events,
@@ -717,18 +805,23 @@ class MarketplaceAuditManager:
                 top_entities=top_entities,
                 activity_timeline=timeline
             )
+
             
         except Exception as e:
             logger.error(f"Error generating audit analytics: {e}")
+
             return AuditAnalytics()
     
     async def cleanup_old_events(self, framework: ComplianceFramework) -> int:
         """Clean up old audit events based on retention policy"""
         try:
             retention_period = self.retention_policies.get(framework, timedelta(days=2555))
+
+
             cutoff_date = datetime.utcnow() - retention_period
             
             # Count events to be removed
+
             events_to_remove = [
                 e for e in self.audit_events
                 if framework in e.compliance_tags and e.timestamp < cutoff_date
@@ -741,10 +834,13 @@ class MarketplaceAuditManager:
             ]
             
             logger.info(f"Cleaned up {len(events_to_remove)} old audit events for {framework.value}")
+
             return len(events_to_remove)
+
             
         except Exception as e:
             logger.error(f"Error cleaning up old events: {e}")
+
             return 0
     
     def get_compliance_report(self, report_id: str) -> Optional[ComplianceReport]:
@@ -752,12 +848,14 @@ class MarketplaceAuditManager:
         return self.compliance_reports.get(report_id)
     
     def get_event(self, event_id: str) -> Optional[AuditEvent]:
-        """Get audit event by ID"""
+        """
+        Get audit event by ID"""
         return next((e for e in self.audit_events if e.event_id == event_id), None)
 
 # Example usage
 async def main():
-    """Example usage of MarketplaceAuditManager"""
+    """
+        Example usage of MarketplaceAuditManager"""
     audit_manager = MarketplaceAuditManager()
     
     # Log various audit events

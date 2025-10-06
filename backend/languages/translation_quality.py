@@ -46,7 +46,8 @@ logger = logging.getLogger(__name__)
 
 
 class QualityMetric(Enum):
-    """Quality assessment metrics"""
+    """
+        Quality assessment metrics"""
     BLEU = "bleu"
     METEOR = "meteor"
     BERT_SCORE = "bert_score"
@@ -117,7 +118,8 @@ class ErrorAnalysis:
 
 @dataclass
 class QualityResult:
-    """Comprehensive quality assessment result"""
+    """
+        Comprehensive quality assessment result"""
     overall_score: float
     quality_level: QualityLevel
     metric_scores: Dict[QualityMetric, float] = field(default_factory=dict)
@@ -131,7 +133,8 @@ class QualityResult:
 
 @dataclass
 class HumanFeedback:
-    """Human feedback for translation quality"""
+    """
+        Human feedback for translation quality"""
     overall_rating: float  # 1-5 scale
     fluency_rating: float
     adequacy_rating: float
@@ -143,7 +146,8 @@ class HumanFeedback:
 
 @dataclass
 class QualityImprovement:
-    """Quality improvement recommendations"""
+    """
+        Quality improvement recommendations"""
     area: ImprovementArea
     priority: float  # 0.0-1.0
     description: str
@@ -158,7 +162,8 @@ class TranslationQualityEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize quality assessment engine"""
+        """
+        Initialize quality assessment engine"""
         self.config = config or {}
         self.quality_cache = {}
         self.feedback_database = {}
@@ -186,8 +191,11 @@ class TranslationQualityEngine:
         if NLTK_AVAILABLE:
             try:
                 nltk.download('punkt', quiet=True)
+
                 nltk.download('wordnet', quiet=True)
+
                 nltk.download('omw-1.4', quiet=True)
+
             except:
                 pass
         
@@ -205,6 +213,8 @@ class TranslationQualityEngine:
         """
         try:
             start_time = datetime.now(timezone.utc)
+
+
             
             result = QualityResult(
                 overall_score=0.0,
@@ -214,6 +224,7 @@ class TranslationQualityEngine:
             # Calculate individual metrics
             for metric in request.metrics_to_compute:
                 score = await self._calculate_metric(metric, request)
+
                 result.metric_scores[metric] = score
             
             # Calculate overall score
@@ -237,8 +248,10 @@ class TranslationQualityEngine:
             
             # Calculate confidence
             result.confidence = await self._calculate_confidence(result)
+
             
             result.processing_time = (datetime.now(timezone.utc) - start_time).total_seconds()
+
             result.metadata = {
                 "source_language": request.source_language,
                 "target_language": request.target_language,
@@ -250,11 +263,13 @@ class TranslationQualityEngine:
             
             logger.info(f"Quality assessment completed: {result.overall_score:.3f} "
                        f"({result.quality_level.value})")
+
             
             return result
             
         except Exception as e:
             logger.error(f"Error in quality assessment: {str(e)}")
+
             return QualityResult(
                 overall_score=0.0,
                 quality_level=QualityLevel.UNACCEPTABLE,
@@ -275,6 +290,7 @@ class TranslationQualityEngine:
         """
         try:
             text_hash = self._hash_text(translated_text)
+
             
             if text_hash not in self.feedback_database:
                 self.feedback_database[text_hash] = []
@@ -283,12 +299,15 @@ class TranslationQualityEngine:
             
             # Update error patterns based on feedback
             await self._update_error_patterns(feedback)
+
             
             logger.info(f"Human feedback added for translation (Hash: {text_hash[:8]})")
+
             return True
             
         except Exception as e:
             logger.error(f"Error adding human feedback: {str(e)}")
+
             return False
     
     async def get_quality_recommendations(self, request: QualityRequest) -> List[QualityImprovement]:
@@ -302,6 +321,7 @@ class TranslationQualityEngine:
             List of quality improvement recommendations
         """
         quality_result = await self.assess_quality(request)
+
         recommendations = []
         
         # Analyze each improvement area
@@ -309,34 +329,44 @@ class TranslationQualityEngine:
             improvement = await self._generate_detailed_recommendation(
                 area, request, quality_result
             )
+
             recommendations.append(improvement)
         
         # Sort by priority
         recommendations.sort(key=lambda x: x.priority, reverse=True)
+
         
         return recommendations
     
     async def _calculate_metric(self, metric: QualityMetric, 
                               request: QualityRequest) -> float:
-        """Calculate specific quality metric"""
+        """
+        Calculate specific quality metric"""
         try:
             if metric == QualityMetric.BLEU:
                 return await self._calculate_bleu_score(request)
+
             elif metric == QualityMetric.METEOR:
                 return await self._calculate_meteor_score(request)
+
             elif metric == QualityMetric.BERT_SCORE:
                 return await self._calculate_bert_score(request)
+
             elif metric == QualityMetric.FLUENCY:
                 return await self._calculate_fluency_score(request)
+
             elif metric == QualityMetric.ADEQUACY:
                 return await self._calculate_adequacy_score(request)
+
             elif metric == QualityMetric.HUMAN_EVALUATION:
                 return await self._get_human_evaluation_score(request.translated_text)
+
             else:
                 return 0.0
                 
         except Exception as e:
             logger.error(f"Error calculating {metric.value}: {str(e)}")
+
             return 0.0
     
     async def _calculate_bleu_score(self, request: QualityRequest) -> float:
@@ -346,17 +376,25 @@ class TranslationQualityEngine:
         
         try:
             # Tokenize texts
+
             reference = request.reference_translation.split()
+
+
             candidate = request.translated_text.split()
             
             # Calculate BLEU with smoothing
+
             smoothie = SmoothingFunction().method4
+
             score = sentence_bleu([reference], candidate, smoothing_function=smoothie)
+
             
             return float(score)
+
             
         except Exception as e:
             logger.error(f"Error calculating BLEU score: {str(e)}")
+
             return 0.0
     
     async def _calculate_meteor_score(self, request: QualityRequest) -> float:
@@ -366,10 +404,13 @@ class TranslationQualityEngine:
         
         try:
             score = meteor_score([request.reference_translation], request.translated_text)
+
             return float(score)
+
             
         except Exception as e:
             logger.error(f"Error calculating METEOR score: {str(e)}")
+
             return 0.0
     
     async def _calculate_bert_score(self, request: QualityRequest) -> float:
@@ -383,11 +424,14 @@ class TranslationQualityEngine:
                 [request.reference_translation],
                 lang=request.target_language[:2] if len(request.target_language) > 2 else request.target_language
             )
+
             
             return float(F1.mean())
+
             
         except Exception as e:
             logger.error(f"Error calculating BERT score: {str(e)}")
+
             return 0.0
     
     async def _calculate_fluency_score(self, request: QualityRequest) -> float:
@@ -395,6 +439,7 @@ class TranslationQualityEngine:
         text = request.translated_text
         
         # Basic fluency indicators
+
         indicators = {
             "sentence_structure": self._analyze_sentence_structure(text),
             "grammar_patterns": self._analyze_grammar_patterns(text),
@@ -403,12 +448,14 @@ class TranslationQualityEngine:
         }
         
         # Calculate weighted fluency score
+
         fluency_score = (
             indicators["sentence_structure"] * 0.3 +
             indicators["grammar_patterns"] * 0.3 +
             indicators["word_order"] * 0.2 +
             indicators["punctuation"] * 0.2
         )
+
         
         return max(0.0, min(1.0, fluency_score))
     
@@ -416,8 +463,10 @@ class TranslationQualityEngine:
         """Calculate adequacy score (meaning preservation)"""
         # This is a simplified adequacy calculation
         # In production, this would use more sophisticated semantic analysis
+
         
         original_words = set(request.original_text.lower().split())
+
         translated_words = set(request.translated_text.lower().split())
         
         # Simple word overlap (not accurate for different languages)
@@ -425,16 +474,21 @@ class TranslationQualityEngine:
             return 0.0
         
         # This is a placeholder - real adequacy would require cross-lingual analysis
+
         overlap_ratio = len(original_words.intersection(translated_words)) / len(original_words)
         
         # Adjust for typical translation patterns
+
         adequacy_score = min(1.0, overlap_ratio * 2.0)
+
         
         return adequacy_score
     
     async def _get_human_evaluation_score(self, translated_text: str) -> float:
-        """Get average human evaluation score if available"""
+        """
+        Get average human evaluation score if available"""
         text_hash = self._hash_text(translated_text)
+
         
         if text_hash in self.feedback_database:
             feedbacks = self.feedback_database[text_hash]
@@ -445,52 +499,65 @@ class TranslationQualityEngine:
         return 0.0
     
     async def _calculate_overall_score(self, metric_scores: Dict[QualityMetric, float]) -> float:
-        """Calculate weighted overall quality score"""
+        """
+        Calculate weighted overall quality score"""
         if not metric_scores:
             return 0.0
+
         
         total_weight = 0.0
+
         weighted_sum = 0.0
         
         for metric, score in metric_scores.items():
             weight = self.metric_weights.get(metric, 0.1)
+
             weighted_sum += score * weight
             total_weight += weight
         
         return weighted_sum / total_weight if total_weight > 0 else 0.0
     
     async def _determine_quality_level(self, overall_score: float) -> QualityLevel:
-        """Determine quality level from overall score"""
+        """
+        Determine quality level from overall score"""
         for level, threshold in self.quality_thresholds.items():
             if overall_score >= threshold:
                 return level
         return QualityLevel.UNACCEPTABLE
     
     async def _analyze_errors(self, request: QualityRequest) -> List[ErrorAnalysis]:
-        """Analyze potential errors in translation"""
+        """
+        Analyze potential errors in translation"""
         errors = []
+
         text = request.translated_text
         
         # Grammar errors
+
         grammar_errors = self._detect_grammar_errors(text)
         errors.extend(grammar_errors)
         
         # Fluency errors
+
         fluency_errors = self._detect_fluency_errors(text)
         errors.extend(fluency_errors)
         
         # Formatting errors
+
         formatting_errors = self._detect_formatting_errors(text, request.original_text)
         errors.extend(formatting_errors)
         
         # Completeness errors
+
         completeness_errors = self._detect_completeness_errors(text, request.original_text)
         errors.extend(completeness_errors)
+
         
         return errors
     
     def _detect_grammar_errors(self, text: str) -> List[ErrorAnalysis]:
-        """Detect potential grammar errors"""
+        """
+        Detect potential grammar errors"""
         errors = []
         
         # Simple grammar checks (placeholder)
@@ -502,6 +569,7 @@ class TranslationQualityEngine:
                 description="Potential article usage error",
                 suggestion="Check indefinite article usage before vowels"
             ))
+
         
         return errors
     
@@ -510,6 +578,7 @@ class TranslationQualityEngine:
         errors = []
         
         # Check for repeated words
+
         words = text.split()
         for i in range(len(words) - 1):
             if words[i].lower() == words[i + 1].lower():
@@ -520,6 +589,7 @@ class TranslationQualityEngine:
                     description="Repeated word detected",
                     suggestion="Remove word repetition"
                 ))
+
         
         return errors
     
@@ -528,8 +598,11 @@ class TranslationQualityEngine:
         errors = []
         
         # Check punctuation preservation
+
         original_punct = re.findall(r'[.!?;:]', original_text)
+
         translated_punct = re.findall(r'[.!?;:]', translated_text)
+
         
         if len(original_punct) != len(translated_punct):
             errors.append(ErrorAnalysis(
@@ -539,6 +612,7 @@ class TranslationQualityEngine:
                 description="Punctuation count mismatch",
                 suggestion="Preserve punctuation from original text"
             ))
+
         
         return errors
     
@@ -547,6 +621,7 @@ class TranslationQualityEngine:
         errors = []
         
         # Simple length-based completeness check
+
         len_ratio = len(translated_text) / len(original_text) if len(original_text) > 0 else 0
         
         if len_ratio < 0.5:
@@ -565,6 +640,7 @@ class TranslationQualityEngine:
                 description="Translation appears significantly longer than original",
                 suggestion="Check for unnecessary additions or repetitions"
             ))
+
         
         return errors
     
@@ -575,6 +651,7 @@ class TranslationQualityEngine:
             return 0.0
         
         # Basic structure analysis
+
         avg_length = statistics.mean([len(s.split()) for s in sentences if s.strip()])
         
         # Optimal sentence length is typically 15-20 words
@@ -586,15 +663,21 @@ class TranslationQualityEngine:
             return 0.5
     
     def _analyze_grammar_patterns(self, text: str) -> float:
-        """Analyze grammar patterns"""
+        """
+        Analyze grammar patterns"""
         # Simplified grammar analysis
+
         words = text.split()
         if not words:
             return 0.0
         
         # Check for basic patterns
+
         has_articles = any(word.lower() in ['a', 'an', 'the'] for word in words)
+
         has_conjunctions = any(word.lower() in ['and', 'but', 'or', 'because'] for word in words)
+
+
         
         score = 0.5
         if has_articles:
@@ -605,19 +688,24 @@ class TranslationQualityEngine:
         return min(1.0, score)
     
     def _analyze_word_order(self, text: str) -> float:
-        """Analyze word order naturalness"""
+        """
+        Analyze word order naturalness"""
         # This is a placeholder for more sophisticated word order analysis
         # In practice, this would use language-specific models
         return 0.8
     
     def _analyze_punctuation(self, text: str) -> float:
-        """Analyze punctuation usage"""
+        """
+        Analyze punctuation usage"""
         if not text:
             return 0.0
         
         # Check for balanced punctuation
+
         open_brackets = text.count('(') + text.count('[') + text.count('{')
+
         close_brackets = text.count(')') + text.count(']') + text.count('}')
+
         
         if open_brackets == close_brackets:
             return 0.9
@@ -626,10 +714,12 @@ class TranslationQualityEngine:
     
     async def _generate_improvement_suggestions(self, request: QualityRequest, 
                                               errors: List[ErrorAnalysis]) -> List[str]:
-        """Generate improvement suggestions based on error analysis"""
+        """
+        Generate improvement suggestions based on error analysis"""
         suggestions = []
         
         # Group errors by type
+
         error_types = {}
         for error in errors:
             if error.error_type not in error_types:
@@ -640,35 +730,45 @@ class TranslationQualityEngine:
         for error_type, error_list in error_types.items():
             if error_type == ErrorType.GRAMMAR:
                 suggestions.append("Review grammar rules for the target language")
+
             elif error_type == ErrorType.FLUENCY:
                 suggestions.append("Focus on natural word flow and sentence rhythm")
+
             elif error_type == ErrorType.FORMATTING:
                 suggestions.append("Preserve formatting and punctuation from original text")
+
             elif error_type == ErrorType.COMPLETENESS:
                 suggestions.append("Ensure all content is accurately translated")
+
         
         return suggestions
     
     async def _identify_improvement_areas(self, errors: List[ErrorAnalysis]) -> List[ImprovementArea]:
         """Identify key areas for improvement"""
         areas = set()
+
         
         for error in errors:
             if error.error_type == ErrorType.GRAMMAR:
                 areas.add(ImprovementArea.GRAMMAR_ACCURACY)
+
             elif error.error_type == ErrorType.FLUENCY:
                 areas.add(ImprovementArea.FLUENCY_ENHANCEMENT)
+
             elif error.error_type == ErrorType.CULTURAL:
                 areas.add(ImprovementArea.CULTURAL_ADAPTATION)
+
             elif error.error_type == ErrorType.TERMINOLOGY:
                 areas.add(ImprovementArea.TERMINOLOGY_CONSISTENCY)
+
         
         return list(areas)
     
     async def _generate_detailed_recommendation(self, area: ImprovementArea, 
                                               request: QualityRequest,
                                               quality_result: QualityResult) -> QualityImprovement:
-        """Generate detailed improvement recommendation for specific area"""
+        """
+        Generate detailed improvement recommendation for specific area"""
         recommendations = {
             ImprovementArea.GRAMMAR_ACCURACY: QualityImprovement(
                 area=area,
@@ -718,23 +818,29 @@ class TranslationQualityEngine:
         confidence_factors = []
         
         # Number of metrics used
+
         metrics_factor = min(1.0, len(result.metric_scores) / 3.0)
         confidence_factors.append(metrics_factor)
         
         # Consistency of scores
         if result.metric_scores:
             scores = list(result.metric_scores.values())
+
+
             consistency = 1.0 - statistics.stdev(scores) if len(scores) > 1 else 1.0
             confidence_factors.append(consistency)
         
         # Error analysis depth
+
         error_factor = min(1.0, len(result.error_analysis) / 5.0)
         confidence_factors.append(error_factor)
+
         
         return statistics.mean(confidence_factors) if confidence_factors else 0.5
     
     async def _update_error_patterns(self, feedback: HumanFeedback):
-        """Update error patterns based on human feedback"""
+        """
+        Update error patterns based on human feedback"""
         for error in feedback.specific_errors:
             pattern_key = f"{error.error_type.value}_{error.location}"
             if pattern_key not in self.error_patterns:
@@ -749,7 +855,8 @@ class TranslationQualityEngine:
         return hashlib.md5(text.encode()).hexdigest()
     
     async def get_quality_statistics(self) -> Dict[str, Any]:
-        """Get quality assessment statistics"""
+        """
+        Get quality assessment statistics"""
         return {
             "assessments_performed": len(self.quality_cache),
             "human_feedback_count": sum(len(feedbacks) for feedbacks in self.feedback_database.values()),

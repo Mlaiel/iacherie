@@ -133,7 +133,8 @@ class MonitoringConfig:
 
 @dataclass
 class PerformanceMetric:
-    """Performance metric data point"""
+    """
+        Performance metric data point"""
     metric_id: str
     metric_type: MetricType
     name: str
@@ -146,7 +147,8 @@ class PerformanceMetric:
 
 @dataclass
 class SystemHealth:
-    """System health status"""
+    """
+        System health status"""
     component: str
     status: HealthStatus
     score: float  # 0-100
@@ -158,7 +160,8 @@ class SystemHealth:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert"""
+    """
+        Performance alert"""
     alert_id: str
     severity: AlertSeverity
     title: str
@@ -175,7 +178,8 @@ class PerformanceAlert:
 
 @dataclass
 class PerformanceTrend:
-    """Performance trend analysis"""
+    """
+        Performance trend analysis"""
     metric_name: str
     component: str
     trend_direction: str  # increasing, decreasing, stable
@@ -187,7 +191,8 @@ class PerformanceTrend:
 
 
 class SystemMetricsCollector:
-    """Collects system-level performance metrics"""
+    """
+        Collects system-level performance metrics"""
     
     def __init__(self, config: MonitoringConfig):
         self.config = config
@@ -201,7 +206,9 @@ class SystemMetricsCollector:
         try:
             self.collection_active = True
             asyncio.create_task(self._collection_loop())
+
             logger.info("System metrics collection started")
+
             
         except Exception as e:
             logger.error(f"Failed to start metrics collection: {e}")
@@ -215,11 +222,15 @@ class SystemMetricsCollector:
         """Collect current system metrics"""
         try:
             metrics = []
+
             timestamp = datetime.now(timezone.utc)
+
             
             if HAS_PSUTIL:
                 # CPU metrics
+
                 cpu_percent = psutil.cpu_percent(interval=1)
+
                 metrics.append(PerformanceMetric(
                     metric_id=str(uuid.uuid4()),
                     metric_type=MetricType.SYSTEM,
@@ -230,7 +241,9 @@ class SystemMetricsCollector:
                 ))
                 
                 # Memory metrics
+
                 memory = psutil.virtual_memory()
+
                 metrics.append(PerformanceMetric(
                     metric_id=str(uuid.uuid4()),
                     metric_type=MetricType.SYSTEM,
@@ -239,6 +252,7 @@ class SystemMetricsCollector:
                     unit="percent",
                     timestamp=timestamp
                 ))
+
                 
                 metrics.append(PerformanceMetric(
                     metric_id=str(uuid.uuid4()),
@@ -250,7 +264,10 @@ class SystemMetricsCollector:
                 ))
                 
                 # Disk metrics
+
                 disk = psutil.disk_usage('/')
+
+
                 disk_percent = (disk.used / disk.total) * 100
                 metrics.append(PerformanceMetric(
                     metric_id=str(uuid.uuid4()),
@@ -262,7 +279,9 @@ class SystemMetricsCollector:
                 ))
                 
                 # Network metrics
+
                 network = psutil.net_io_counters()
+
                 metrics.append(PerformanceMetric(
                     metric_id=str(uuid.uuid4()),
                     metric_type=MetricType.NETWORK,
@@ -271,6 +290,7 @@ class SystemMetricsCollector:
                     unit="bytes",
                     timestamp=timestamp
                 ))
+
                 
                 metrics.append(PerformanceMetric(
                     metric_id=str(uuid.uuid4()),
@@ -282,8 +302,10 @@ class SystemMetricsCollector:
                 ))
                 
                 # Load average (Unix systems)
+
                 try:
                     load_avg = psutil.getloadavg()
+
                     metrics.append(PerformanceMetric(
                         metric_id=str(uuid.uuid4()),
                         metric_type=MetricType.SYSTEM,
@@ -292,18 +314,23 @@ class SystemMetricsCollector:
                         unit="ratio",
                         timestamp=timestamp
                     ))
+
                 except (AttributeError, OSError):
                     # getloadavg not available on Windows
                     pass
             
             # Add custom application metrics
+
             app_metrics = await self._collect_application_metrics(timestamp)
+
             metrics.extend(app_metrics)
+
             
             return metrics
             
         except Exception as e:
             logger.error(f"Failed to collect system metrics: {e}")
+
             return []
     
     async def _collection_loop(self):
@@ -318,9 +345,11 @@ class SystemMetricsCollector:
                 
                 # Wait for next collection interval
                 await asyncio.sleep(self.config.collection_interval_seconds)
+
                 
             except Exception as e:
                 logger.error(f"Metrics collection error: {e}")
+
                 await asyncio.sleep(self.config.collection_interval_seconds)
     
     async def _collect_application_metrics(self, timestamp: datetime) -> List[PerformanceMetric]:
@@ -344,6 +373,7 @@ class SystemMetricsCollector:
         # Thread count for current process
         try:
             thread_count = threading.active_count()
+
             metrics.append(PerformanceMetric(
                 metric_id=str(uuid.uuid4()),
                 metric_type=MetricType.APPLICATION,
@@ -360,6 +390,7 @@ class SystemMetricsCollector:
     def get_recent_metrics(self, metric_name: str, minutes: int = 60) -> List[PerformanceMetric]:
         """Get recent metrics for specific metric name"""
         cutoff_time = datetime.now(timezone.utc) - timedelta(minutes=minutes)
+
         
         return [
             metric for metric in self.metrics_buffer
@@ -368,7 +399,8 @@ class SystemMetricsCollector:
 
 
 class PerformanceAnalyzer:
-    """Analyzes performance metrics and detects issues"""
+    """
+        Analyzes performance metrics and detects issues"""
     
     def __init__(self, config: MonitoringConfig):
         self.config = config
@@ -397,10 +429,13 @@ class PerformanceAnalyzer:
             if not metrics:
                 analysis['health_score'] = 0.0
                 analysis['issues'].append("No metrics available for analysis")
+
                 return analysis
             
             # Group metrics by name
+
             metrics_by_name = defaultdict(list)
+
             for metric in metrics:
                 metrics_by_name[metric.name].append(metric)
             
@@ -414,7 +449,9 @@ class PerformanceAnalyzer:
                 
                 # Add issues and recommendations
                 analysis['issues'].extend(metric_analysis.get('issues', []))
+
                 analysis['recommendations'].extend(metric_analysis.get('recommendations', []))
+
                 analysis['trends'][metric_name] = metric_analysis.get('trend', {})
                 
                 # Add anomalies
@@ -423,11 +460,13 @@ class PerformanceAnalyzer:
             
             # Ensure health score is within bounds
             analysis['health_score'] = max(0.0, min(100.0, analysis['health_score']))
+
             
             return analysis
             
         except Exception as e:
             logger.error(f"Performance analysis failed: {e}")
+
             return {
                 'component': component,
                 'health_score': 0.0,
@@ -445,8 +484,11 @@ class PerformanceAnalyzer:
             return {'health_impact': 0, 'issues': [], 'recommendations': []}
         
         # Sort metrics by timestamp
+
         sorted_metrics = sorted(metrics, key=lambda m: m.timestamp)
+
         values = [m.value for m in sorted_metrics]
+
         
         analysis = {
             'health_impact': 0,
@@ -457,10 +499,12 @@ class PerformanceAnalyzer:
         }
         
         # Current value analysis
+
         current_value = values[-1] if values else 0
         analysis['current_value'] = current_value
         
         # Threshold analysis
+
         threshold_analysis = self._check_thresholds(metric_name, current_value)
         analysis['health_impact'] += threshold_analysis['health_impact']
         analysis['issues'].extend(threshold_analysis['issues'])
@@ -469,6 +513,7 @@ class PerformanceAnalyzer:
         # Trend analysis
         if len(values) >= 3:
             trend_analysis = self._analyze_trend(metric_name, values)
+
             analysis['trend'] = trend_analysis
             
             # Health impact from trends
@@ -479,11 +524,13 @@ class PerformanceAnalyzer:
         # Anomaly detection
         if len(values) >= 10 and self.config.enable_anomaly_detection:
             anomalies = self._detect_anomalies(metric_name, values)
+
             analysis['anomalies'] = anomalies
             
             if anomalies:
                 analysis['health_impact'] -= len(anomalies) * 5
                 analysis['issues'].append(f"{len(anomalies)} anomalies detected in {metric_name}")
+
         
         return analysis
     
@@ -492,6 +539,7 @@ class PerformanceAnalyzer:
         result = {'health_impact': 0, 'issues': [], 'recommendations': []}
         
         # Define thresholds for different metrics
+
         thresholds = {
             'cpu_usage_percent': {
                 'warning': self.config.cpu_warning_threshold,
@@ -513,12 +561,16 @@ class PerformanceAnalyzer:
             if value >= metric_thresholds.get('critical', 100):
                 result['health_impact'] = -50
                 result['issues'].append(f"{metric_name} is critically high: {value:.1f}%")
+
                 result['recommendations'].append(f"Immediate action required for {metric_name}")
+
                 
             elif value >= metric_thresholds.get('warning', 80):
                 result['health_impact'] = -20
                 result['issues'].append(f"{metric_name} is above warning threshold: {value:.1f}%")
+
                 result['recommendations'].append(f"Monitor {metric_name} closely and consider optimization")
+
         
         return result
     
@@ -528,15 +580,23 @@ class PerformanceAnalyzer:
             return {}
         
         # Calculate simple linear trend
+
         x = list(range(len(values)))
+
         y = values
         
         # Simple linear regression
+
         n = len(values)
+
         sum_x = sum(x)
+
         sum_y = sum(y)
+
         sum_xy = sum(x[i] * y[i] for i in range(n))
+
         sum_x2 = sum(x[i] * x[i] for i in range(n))
+
         
         if n * sum_x2 - sum_x * sum_x != 0:
             slope = (n * sum_xy - sum_x * sum_y) / (n * sum_x2 - sum_x * sum_x)
@@ -544,6 +604,7 @@ class PerformanceAnalyzer:
             slope = 0
         
         # Determine trend direction and strength
+
         trend_direction = "stable"
         if slope > 0.1:
             trend_direction = "increasing"
@@ -553,19 +614,26 @@ class PerformanceAnalyzer:
         # Calculate trend strength (correlation coefficient approximation)
         if n > 1:
             mean_y = sum_y / n
+
             variance_y = sum((yi - mean_y) ** 2 for yi in y) / n
+
             trend_strength = abs(slope) / max(variance_y, 0.001)
+
+
             trend_strength = min(trend_strength, 1.0)
         else:
             trend_strength = 0.0
         
         # Determine if trend is concerning
+
         concerning = False
+
         description = f"{trend_direction} trend"
         
         if metric_name in ['cpu_usage_percent', 'memory_usage_percent', 'disk_usage_percent']:
             if trend_direction == "increasing" and trend_strength > 0.5:
                 concerning = True
+
                 description = f"Rapidly increasing {metric_name}"
         
         return {
@@ -580,12 +648,16 @@ class PerformanceAnalyzer:
         """Detect anomalies in metric values"""
         if len(values) < 10:
             return []
+
         
         anomalies = []
         
         # Simple statistical anomaly detection using standard deviation
+
         mean_value = statistics.mean(values)
+
         std_dev = statistics.stdev(values)
+
         threshold = 2.5 * std_dev  # 2.5 sigma threshold
         
         for i, value in enumerate(values):
@@ -596,12 +668,14 @@ class PerformanceAnalyzer:
                     'expected_range': [mean_value - threshold, mean_value + threshold],
                     'severity': 'high' if abs(value - mean_value) > 3 * std_dev else 'medium'
                 })
+
         
         return anomalies
 
 
 class AlertManager:
-    """Manages performance alerts and notifications"""
+    """
+        Manages performance alerts and notifications"""
     
     def __init__(self, config: MonitoringConfig):
         self.config = config
@@ -610,6 +684,7 @@ class AlertManager:
         self.alert_cooldowns: Dict[str, datetime] = {}
         self.alerts_sent_this_hour = 0
         self.hour_reset_time = datetime.now(timezone.utc)
+
         
         logger.info("🚨 Alert Manager initialized")
     
@@ -628,7 +703,9 @@ class AlertManager:
                 return
             
             # Check health score for critical alerts
+
             health_score = analysis.get('health_score', 100)
+
             if health_score <= 20:
                 await self._create_alert(
                     severity=AlertSeverity.CRITICAL,
@@ -639,6 +716,7 @@ class AlertManager:
                     current_value=health_score,
                     threshold_value=20
                 )
+
             elif health_score <= 50:
                 await self._create_alert(
                     severity=AlertSeverity.WARNING,
@@ -651,7 +729,9 @@ class AlertManager:
                 )
             
             # Check for specific issues
+
             issues = analysis.get('issues', [])
+
             for issue in issues:
                 if 'critically high' in issue.lower():
                     await self._create_alert(
@@ -663,6 +743,7 @@ class AlertManager:
                         current_value=0,
                         threshold_value=0
                     )
+
                 elif 'warning threshold' in issue.lower():
                     await self._create_alert(
                         severity=AlertSeverity.WARNING,
@@ -675,7 +756,9 @@ class AlertManager:
                     )
             
             # Check anomalies
+
             anomalies = analysis.get('anomalies', [])
+
             if len(anomalies) > 5:  # Many anomalies indicate a problem
                 await self._create_alert(
                     severity=AlertSeverity.ERROR,
@@ -686,6 +769,7 @@ class AlertManager:
                     current_value=len(anomalies),
                     threshold_value=5
                 )
+
             
         except Exception as e:
             logger.error(f"Alert checking failed: {e}")
@@ -703,13 +787,18 @@ class AlertManager:
         """Create new alert"""
         try:
             # Check cooldown
+
             cooldown_key = f"{component}_{metric_name}_{severity.value}"
             if cooldown_key in self.alert_cooldowns:
                 cooldown_end = self.alert_cooldowns[cooldown_key] + timedelta(minutes=self.config.alert_cooldown_minutes)
+
                 if datetime.now(timezone.utc) < cooldown_end:
                     return  # Still in cooldown
+
             
             alert_id = str(uuid.uuid4())
+
+
             
             alert = PerformanceAlert(
                 alert_id=alert_id,
@@ -721,6 +810,7 @@ class AlertManager:
                 current_value=current_value,
                 threshold_value=threshold_value
             )
+
             
             self.active_alerts[alert_id] = alert
             self.alert_history.append(alert)
@@ -733,16 +823,16 @@ class AlertManager:
             
             # Send notification
             await self._send_alert_notification(alert)
+
             
             logger.warning(f"Alert created: {title}")
+
             
         except Exception as e:
             logger.error(f"Failed to create alert: {e}")
     
     async def _send_alert_notification(self, alert: PerformanceAlert):
-        """Send alert notification"""
-        # Placeholder for notification implementation
-        # In production, would integrate with email, Slack, PagerDuty, etc.
+        """Send alert notification"""        # In production, would integrate with email, Slack, PagerDuty, etc.
         logger.warning(f"ALERT [{alert.severity.value.upper()}] {alert.title}: {alert.description}")
     
     async def resolve_alert(self, alert_id: str, resolution_note: str = "") -> bool:
@@ -751,17 +841,20 @@ class AlertManager:
             if alert_id in self.active_alerts:
                 alert = self.active_alerts[alert_id]
                 alert.resolved_at = datetime.now(timezone.utc)
+
                 alert.metadata['resolution_note'] = resolution_note
                 
                 del self.active_alerts[alert_id]
                 
                 logger.info(f"Alert {alert_id} resolved: {resolution_note}")
+
                 return True
             
             return False
             
         except Exception as e:
             logger.error(f"Failed to resolve alert: {e}")
+
             return False
     
     def get_active_alerts(self) -> List[PerformanceAlert]:
@@ -769,8 +862,10 @@ class AlertManager:
         return list(self.active_alerts.values())
     
     def get_alert_summary(self) -> Dict[str, Any]:
-        """Get alert summary statistics"""
+        """
+        Get alert summary statistics"""
         active_alerts = list(self.active_alerts.values())
+
         
         return {
             'active_alerts': len(active_alerts),
@@ -787,7 +882,8 @@ class AlertManager:
 
 
 class PerformanceOptimizer:
-    """Provides performance optimization recommendations"""
+    """
+        Provides performance optimization recommendations"""
     
     def __init__(self, config: MonitoringConfig):
         self.config = config
@@ -803,9 +899,14 @@ class PerformanceOptimizer:
         """Generate performance optimization recommendations"""
         try:
             recommendations = []
+
             
             health_score = analysis.get('health_score', 100)
+
+
             issues = analysis.get('issues', [])
+
+
             trends = analysis.get('trends', {})
             
             # High-level recommendations based on health score
@@ -825,40 +926,55 @@ class PerformanceOptimizer:
                 })
             
             # CPU-specific recommendations
+
             cpu_recommendations = await self._get_cpu_recommendations(analysis)
+
             recommendations.extend(cpu_recommendations)
             
             # Memory-specific recommendations
+
             memory_recommendations = await self._get_memory_recommendations(analysis)
+
             recommendations.extend(memory_recommendations)
             
             # Disk-specific recommendations
+
             disk_recommendations = await self._get_disk_recommendations(analysis)
+
             recommendations.extend(disk_recommendations)
             
             # Trend-based recommendations
+
             trend_recommendations = await self._get_trend_recommendations(trends)
+
             recommendations.extend(trend_recommendations)
             
             # Auto-scaling recommendations
             if self.config.enable_auto_scaling_recommendations:
                 scaling_recommendations = await self._get_scaling_recommendations(analysis)
+
                 recommendations.extend(scaling_recommendations)
             
             # Sort by priority
+
             priority_order = {'critical': 0, 'high': 1, 'medium': 2, 'low': 3}
             recommendations.sort(key=lambda r: priority_order.get(r.get('priority', 'low'), 3))
+
             
             return recommendations
             
         except Exception as e:
             logger.error(f"Failed to generate recommendations: {e}")
+
             return []
     
     async def _get_cpu_recommendations(self, analysis: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Get CPU-specific recommendations"""
         recommendations = []
+
         issues = analysis.get('issues', [])
+
+
         
         cpu_issues = [issue for issue in issues if 'cpu_usage_percent' in issue.lower()]
         
@@ -878,6 +994,7 @@ class PerformanceOptimizer:
                     'impact': 'high',
                     'effort': 'medium'
                 })
+
             else:
                 recommendations.append({
                     'priority': 'high',
@@ -893,13 +1010,18 @@ class PerformanceOptimizer:
                     'impact': 'medium',
                     'effort': 'low'
                 })
+
         
         return recommendations
     
     async def _get_memory_recommendations(self, analysis: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Get memory-specific recommendations"""
+        """
+        Get memory-specific recommendations"""
         recommendations = []
+
         issues = analysis.get('issues', [])
+
+
         
         memory_issues = [issue for issue in issues if 'memory_usage_percent' in issue.lower()]
         
@@ -919,6 +1041,7 @@ class PerformanceOptimizer:
                     'impact': 'high',
                     'effort': 'medium'
                 })
+
             else:
                 recommendations.append({
                     'priority': 'high',
@@ -934,13 +1057,18 @@ class PerformanceOptimizer:
                     'impact': 'medium',
                     'effort': 'low'
                 })
+
         
         return recommendations
     
     async def _get_disk_recommendations(self, analysis: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Get disk-specific recommendations"""
+        """
+        Get disk-specific recommendations"""
         recommendations = []
+
         issues = analysis.get('issues', [])
+
+
         
         disk_issues = [issue for issue in issues if 'disk_usage_percent' in issue.lower()]
         
@@ -960,6 +1088,7 @@ class PerformanceOptimizer:
                     'impact': 'high',
                     'effort': 'low'
                 })
+
             else:
                 recommendations.append({
                     'priority': 'medium',
@@ -975,11 +1104,13 @@ class PerformanceOptimizer:
                     'impact': 'medium',
                     'effort': 'low'
                 })
+
         
         return recommendations
     
     async def _get_trend_recommendations(self, trends: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Get trend-based recommendations"""
+        """
+        Get trend-based recommendations"""
         recommendations = []
         
         for metric_name, trend_data in trends.items():
@@ -998,13 +1129,17 @@ class PerformanceOptimizer:
                     'impact': 'medium',
                     'effort': 'medium'
                 })
+
         
         return recommendations
     
     async def _get_scaling_recommendations(self, analysis: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Get auto-scaling recommendations"""
+        """
+        Get auto-scaling recommendations"""
         recommendations = []
+
         health_score = analysis.get('health_score', 100)
+
         
         if health_score < 70:
             recommendations.append({
@@ -1021,15 +1156,18 @@ class PerformanceOptimizer:
                 'impact': 'high',
                 'effort': 'medium'
             })
+
         
         return recommendations
 
 
 class MediaPerformanceMonitor:
-    """Main media performance monitoring system"""
+    """
+        Main media performance monitoring system"""
     
     def __init__(self, config: Optional[MonitoringConfig] = None):
-        """Initialize media performance monitor"""
+        """
+        Initialize media performance monitor"""
         self.config = config or MonitoringConfig()
         
         # Initialize components
@@ -1042,6 +1180,7 @@ class MediaPerformanceMonitor:
         self.monitoring_active = False
         self.component_health: Dict[str, SystemHealth] = {}
         self.monitoring_session_id = str(uuid.uuid4())
+
         
         logger.info("🎯 Media Performance Monitor initialized")
     
@@ -1050,6 +1189,7 @@ class MediaPerformanceMonitor:
         try:
             if self.monitoring_active:
                 logger.warning("Monitoring is already active")
+
                 return True
             
             self.monitoring_active = True
@@ -1060,12 +1200,15 @@ class MediaPerformanceMonitor:
             
             # Start monitoring loop
             asyncio.create_task(self._monitoring_loop())
+
             
             logger.info("Performance monitoring started")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to start monitoring: {e}")
+
             return False
     
     async def stop_monitoring(self) -> bool:
@@ -1075,18 +1218,22 @@ class MediaPerformanceMonitor:
             
             # Stop metrics collection
             await self.metrics_collector.stop_collection()
+
             
             logger.info("Performance monitoring stopped")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to stop monitoring: {e}")
+
             return False
     
     async def get_system_health(self, component: str = "system") -> SystemHealth:
         """Get current system health status"""
         try:
             # Get recent metrics
+
             recent_metrics = list(self.metrics_collector.metrics_buffer)[-50:]  # Last 50 metrics
             
             if not recent_metrics:
@@ -1099,10 +1246,13 @@ class MediaPerformanceMonitor:
                 )
             
             # Analyze performance
+
             analysis = await self.performance_analyzer.analyze_metrics(recent_metrics, component)
             
             # Determine health status
+
             health_score = analysis.get('health_score', 0)
+
             
             if health_score >= 90:
                 status = HealthStatus.HEALTHY
@@ -1114,7 +1264,10 @@ class MediaPerformanceMonitor:
                 status = HealthStatus.CRITICAL
             
             # Get performance recommendations
+
             recommendations = await self.performance_optimizer.generate_recommendations(analysis, component)
+
+
             
             health = SystemHealth(
                 component=component,
@@ -1127,12 +1280,14 @@ class MediaPerformanceMonitor:
                 issues=analysis.get('issues', []),
                 recommendations=[rec['title'] for rec in recommendations[:5]]  # Top 5 recommendations
             )
+
             
             self.component_health[component] = health
             return health
             
         except Exception as e:
             logger.error(f"Failed to get system health: {e}")
+
             return SystemHealth(
                 component=component,
                 status=HealthStatus.UNKNOWN,
@@ -1145,17 +1300,22 @@ class MediaPerformanceMonitor:
         """Get comprehensive performance dashboard"""
         try:
             # Get system health
+
             system_health = await self.get_system_health("system")
             
             # Get recent metrics summary
+
             recent_metrics = list(self.metrics_collector.metrics_buffer)[-20:]
             
             # Calculate metric summaries
+
             metric_summaries = {}
             if recent_metrics:
                 metrics_by_name = defaultdict(list)
+
                 for metric in recent_metrics:
                     metrics_by_name[metric.name].append(metric.value)
+
                 
                 for name, values in metrics_by_name.items():
                     metric_summaries[name] = {
@@ -1166,14 +1326,20 @@ class MediaPerformanceMonitor:
                     }
             
             # Get alert summary
+
             alert_summary = self.alert_manager.get_alert_summary()
             
             # Get active alerts
+
             active_alerts = self.alert_manager.get_active_alerts()
             
             # Get performance recommendations
+
             analysis = await self.performance_analyzer.analyze_metrics(recent_metrics, "system")
+
+
             recommendations = await self.performance_optimizer.generate_recommendations(analysis, "system")
+
             
             return {
                 'monitoring_session_id': self.monitoring_session_id,
@@ -1211,6 +1377,7 @@ class MediaPerformanceMonitor:
             
         except Exception as e:
             logger.error(f"Failed to generate performance dashboard: {e}")
+
             return {'error': str(e)}
     
     async def _monitoring_loop(self):
@@ -1218,10 +1385,12 @@ class MediaPerformanceMonitor:
         while self.monitoring_active:
             try:
                 # Get recent metrics for analysis
+
                 recent_metrics = list(self.metrics_collector.metrics_buffer)[-30:]  # Last 30 metrics
                 
                 if recent_metrics:
                     # Analyze performance
+
                     analysis = await self.performance_analyzer.analyze_metrics(recent_metrics, "system")
                     
                     # Check for alerts
@@ -1230,9 +1399,11 @@ class MediaPerformanceMonitor:
                 
                 # Wait for next check interval
                 await asyncio.sleep(self.config.alert_check_interval_seconds)
+
                 
             except Exception as e:
                 logger.error(f"Monitoring loop error: {e}")
+
                 await asyncio.sleep(self.config.alert_check_interval_seconds)
     
     async def get_metrics_history(
@@ -1243,6 +1414,8 @@ class MediaPerformanceMonitor:
         """Get historical metrics data"""
         try:
             cutoff_time = datetime.now(timezone.utc) - timedelta(hours=hours)
+
+
             
             historical_metrics = [
                 {
@@ -1255,9 +1428,11 @@ class MediaPerformanceMonitor:
             ]
             
             return sorted(historical_metrics, key=lambda m: m['timestamp'])
+
             
         except Exception as e:
             logger.error(f"Failed to get metrics history: {e}")
+
             return []
 
 

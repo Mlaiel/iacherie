@@ -26,7 +26,8 @@ from collections import defaultdict
 # === ÉNUMÉRATIONS ===
 
 class AnalyticsScope(Enum):
-    """Portée des analyses"""
+    """
+        Portée des analyses"""
     CONTENT = "content"
     CREATOR = "creator" 
     CAMPAIGN = "campaign"
@@ -89,7 +90,8 @@ class PerformanceMetrics:
 
 @dataclass 
 class SEOKPIAnalysis:
-    """Analyse des KPI SEO"""
+    """
+        Analyse des KPI SEO"""
     analysis_id: str
     reporting_period: Dict[str, str]
     kpi_summary: Dict[str, PerformanceMetrics]
@@ -102,7 +104,8 @@ class SEOKPIAnalysis:
 
 @dataclass
 class ConversionAnalytics:
-    """Analytics de conversion SEO"""
+    """
+        Analytics de conversion SEO"""
     analysis_id: str
     conversion_funnel: Dict[str, Dict[str, float]]
     conversion_rates: Dict[str, float]
@@ -115,7 +118,8 @@ class ConversionAnalytics:
 
 @dataclass
 class AnalyticsReport:
-    """Rapport d'analytics SEO"""
+    """
+        Rapport d'analytics SEO"""
     report_id: str
     report_type: ReportType
     reporting_scope: AnalyticsScope
@@ -132,7 +136,8 @@ class AnalyticsReport:
 
 @dataclass
 class BusinessIntelligenceReport:
-    """Rapport de business intelligence SEO"""
+    """
+        Rapport de business intelligence SEO"""
     report_id: str
     business_context: Dict[str, Any]
     strategic_insights: List[str]
@@ -240,23 +245,33 @@ class SEOAnalyticsEngine:
             metrics = {}
             
             # Métriques de trafic
+
             traffic_metrics = await self._calculate_traffic_metrics(analysis_data)
+
             metrics.update(traffic_metrics)
             
             # Métriques d'engagement
+
             engagement_metrics = await self._calculate_engagement_metrics(analysis_data)
+
             metrics.update(engagement_metrics)
             
             # Métriques de conversion
+
             conversion_metrics = await self._calculate_conversion_metrics(analysis_data)
+
             metrics.update(conversion_metrics)
             
             # Métriques de ranking
+
             ranking_metrics = await self._calculate_ranking_metrics(analysis_data)
+
             metrics.update(ranking_metrics)
             
             # Métriques techniques
+
             technical_metrics = await self._calculate_technical_metrics(analysis_data)
+
             metrics.update(technical_metrics)
             
             # Ajout des benchmarks si demandé
@@ -265,14 +280,18 @@ class SEOAnalyticsEngine:
                     metric.benchmark_comparison = self._get_benchmark_comparison(
                         metric_name, metric.current_value
                     )
+
             
             self.stats["total_metrics_tracked"] += len(metrics)
+
             self.logger.info(f"Calculé {len(metrics)} métriques de performance")
+
             
             return metrics
             
         except Exception as e:
             self.logger.error(f"Erreur calcul métriques: {str(e)}")
+
             return {}
     
     async def generate_kpi_analysis(
@@ -293,27 +312,36 @@ class SEOAnalyticsEngine:
             Analyse complète des KPI
         """
         analysis_id = self._generate_report_id("kpi_analysis", creator_id)
+
         
         try:
             # Récupération des métriques pour la période
+
             period_metrics = await self._get_period_metrics(creator_id, reporting_period)
             
             # Calcul de l'achievement des objectifs
+
             goal_achievement = self._calculate_goal_achievement(period_metrics, target_goals or {})
             
             # Génération d'insights de performance
+
             performance_insights = await self._generate_performance_insights(period_metrics)
             
             # Recommandations d'action
+
             action_recommendations = self._generate_action_recommendations(
                 period_metrics, goal_achievement
             )
             
             # Alertes de risque
+
             risk_alerts = self._identify_risk_alerts(period_metrics, goal_achievement)
             
             # Highlights d'opportunités
+
             opportunity_highlights = self._identify_opportunities(period_metrics)
+
+
             
             analysis = SEOKPIAnalysis(
                 analysis_id=analysis_id,
@@ -325,12 +353,15 @@ class SEOAnalyticsEngine:
                 risk_alerts=risk_alerts,
                 opportunity_highlights=opportunity_highlights
             )
+
             
             self.logger.info(f"Analyse KPI générée: {analysis_id}")
+
             return analysis
             
         except Exception as e:
             self.logger.error(f"Erreur génération analyse KPI: {str(e)}")
+
             raise
     
     async def generate_conversion_analytics(
@@ -351,30 +382,37 @@ class SEOAnalyticsEngine:
             Analytics de conversion détaillées
         """
         analysis_id = self._generate_report_id("conversion", creator_id)
+
         
         try:
             # Analyse du funnel de conversion
+
             conversion_funnel = await self._analyze_conversion_funnel(creator_id, analysis_period)
             
             # Calcul des taux de conversion
+
             conversion_rates = self._calculate_conversion_rates(conversion_funnel)
             
             # Attribution de revenus
+
             revenue_attribution = await self._calculate_revenue_attribution(
                 creator_id, analysis_period
             )
             
             # Coût par acquisition
+
             cost_per_acquisition = self._calculate_cost_per_acquisition(
                 revenue_attribution, conversion_rates
             )
             
             # Impact sur la valeur vie client
+
             lifetime_value_impact = await self._analyze_lifetime_value_impact(
                 creator_id, analysis_period
             )
             
             # Opportunités d'optimisation
+
             optimization_opportunities = self._identify_conversion_optimization_opportunities(
                 conversion_funnel, conversion_rates
             )
@@ -383,6 +421,8 @@ class SEOAnalyticsEngine:
             roi_analysis = self._calculate_roi_analysis(
                 revenue_attribution, cost_per_acquisition, lifetime_value_impact
             )
+
+
             
             analytics = ConversionAnalytics(
                 analysis_id=analysis_id,
@@ -394,12 +434,15 @@ class SEOAnalyticsEngine:
                 conversion_optimization_opportunities=optimization_opportunities,
                 roi_analysis=roi_analysis
             )
+
             
             self.logger.info(f"Analytics de conversion générées: {analysis_id}")
+
             return analytics
             
         except Exception as e:
             self.logger.error(f"Erreur analytics conversion: {str(e)}")
+
             raise
     
     async def generate_analytics_report(
@@ -424,19 +467,23 @@ class SEOAnalyticsEngine:
             Rapport d'analytics complet
         """
         report_id = self._generate_report_id(report_type.value, f"{scope.value}_{creator_id}")
+
         
         try:
             # Résumé exécutif
+
             executive_summary = await self._generate_executive_summary(
                 creator_id, scope, reporting_period
             )
             
             # Findings clés
+
             key_findings = await self._extract_key_findings(
                 creator_id, scope, reporting_period
             )
             
             # Métriques de performance
+
             performance_metrics = await self.calculate_performance_metrics({
                 "creator_id": creator_id,
                 "scope": scope.value,
@@ -444,27 +491,34 @@ class SEOAnalyticsEngine:
             })
             
             # Analyse des tendances
+
             trend_analysis = await self._perform_trend_analysis(
                 creator_id, reporting_period
             )
             
             # Insights concurrentiels
+
             competitive_insights = await self._generate_competitive_insights(
                 creator_id, reporting_period
             )
             
             # Recommandations
+
             recommendations = self._generate_strategic_recommendations(
                 performance_metrics, trend_analysis, competitive_insights
             )
             
             # Prochaines étapes
+
             next_steps = self._define_next_steps(recommendations, custom_parameters or {})
             
             # Annexes
+
             appendices = await self._generate_report_appendices(
                 creator_id, scope, reporting_period
             )
+
+
             
             report = AnalyticsReport(
                 report_id=report_id,
@@ -486,10 +540,12 @@ class SEOAnalyticsEngine:
             self.stats["total_reports_generated"] += 1
             
             self.logger.info(f"Rapport d'analytics généré: {report_id}")
+
             return report
             
         except Exception as e:
             self.logger.error(f"Erreur génération rapport: {str(e)}")
+
             raise
     
     async def generate_business_intelligence_report(
@@ -510,12 +566,15 @@ class SEOAnalyticsEngine:
             Rapport de business intelligence
         """
         report_id = self._generate_report_id("bi_report", creator_id)
+
         
         try:
             # Contexte business
+
             business_context = await self._analyze_business_context(creator_id, analysis_period)
             
             # Insights stratégiques
+
             strategic_insights = await self._generate_strategic_insights(
                 creator_id, business_context
             )
@@ -524,21 +583,25 @@ class SEOAnalyticsEngine:
             market_analysis = await self._perform_market_analysis(creator_id, analysis_period)
             
             # Positionnement concurrentiel
+
             competitive_positioning = await self._analyze_competitive_positioning(
                 creator_id, analysis_period
             )
             
             # Opportunités de croissance
+
             growth_opportunities = self._identify_growth_opportunities(
                 market_analysis, competitive_positioning
             )
             
             # Assessment des risques
+
             risk_assessment = self._perform_risk_assessment(
                 business_context, market_analysis
             )
             
             # Optimisation des ressources
+
             resource_optimization = self._analyze_resource_optimization(
                 business_context, growth_opportunities
             )
@@ -549,14 +612,18 @@ class SEOAnalyticsEngine:
             )
             
             # Recommandations stratégiques
+
             strategic_recommendations = self._generate_bi_strategic_recommendations(
                 strategic_insights, growth_opportunities, risk_assessment
             )
             
             # Roadmap d'implémentation
+
             implementation_roadmap = self._create_implementation_roadmap(
                 strategic_recommendations, resource_optimization
             )
+
+
             
             bi_report = BusinessIntelligenceReport(
                 report_id=report_id,
@@ -576,10 +643,12 @@ class SEOAnalyticsEngine:
             self.bi_reports_store[report_id] = bi_report
             
             self.logger.info(f"Rapport BI généré: {report_id}")
+
             return bi_report
             
         except Exception as e:
             self.logger.error(f"Erreur génération rapport BI: {str(e)}")
+
             raise
     
     # === MÉTHODES PRIVÉES - CALCUL DES MÉTRIQUES ===
@@ -589,6 +658,7 @@ class SEOAnalyticsEngine:
         metrics = {}
         
         # Trafic organique
+
         organic_traffic = PerformanceMetrics(
             metric_id="organic_traffic",
             category=MetricCategory.TRAFFIC,
@@ -604,6 +674,7 @@ class SEOAnalyticsEngine:
         metrics["organic_traffic"] = organic_traffic
         
         # Pages vues
+
         page_views = PerformanceMetrics(
             metric_id="page_views",
             category=MetricCategory.TRAFFIC,
@@ -625,6 +696,7 @@ class SEOAnalyticsEngine:
         metrics = {}
         
         # Taux de rebond
+
         bounce_rate = PerformanceMetrics(
             metric_id="bounce_rate",
             category=MetricCategory.ENGAGEMENT,
@@ -640,6 +712,7 @@ class SEOAnalyticsEngine:
         metrics["bounce_rate"] = bounce_rate
         
         # Temps sur page
+
         time_on_page = PerformanceMetrics(
             metric_id="time_on_page",
             category=MetricCategory.ENGAGEMENT,
@@ -661,6 +734,7 @@ class SEOAnalyticsEngine:
         metrics = {}
         
         # Taux de conversion
+
         conversion_rate = PerformanceMetrics(
             metric_id="conversion_rate",
             category=MetricCategory.CONVERSION,
@@ -682,6 +756,7 @@ class SEOAnalyticsEngine:
         metrics = {}
         
         # Position moyenne des mots-clés
+
         avg_keyword_position = PerformanceMetrics(
             metric_id="avg_keyword_position",
             category=MetricCategory.RANKING,
@@ -703,6 +778,7 @@ class SEOAnalyticsEngine:
         metrics = {}
         
         # Vitesse de chargement
+
         page_load_speed = PerformanceMetrics(
             metric_id="page_load_speed",
             category=MetricCategory.TECHNICAL,
@@ -767,39 +843,49 @@ class SEOAnalyticsEngine:
         for metric_name, metric in metrics.items():
             if metric_name in goals:
                 target = goals[metric_name]
+
                 current = metric.current_value
                 achievement[metric_name] = (current / target) * 100 if target > 0 else 0
             else:
                 # Utilise la cible de la métrique si pas d'objectif spécifique
+
                 target = metric.target_value
+
                 current = metric.current_value
                 achievement[metric_name] = (current / target) * 100 if target > 0 else 0
         
         return achievement
     
     async def _generate_performance_insights(self, metrics: Dict[str, PerformanceMetrics]) -> List[str]:
-        """Génère des insights de performance"""
+        """
+        Génère des insights de performance"""
         insights = []
         
         # Analyse des tendances
+
         trending_up = [name for name, metric in metrics.items() if metric.trend_direction == "up"]
+
         trending_down = [name for name, metric in metrics.items() if metric.trend_direction == "down"]
         
         if trending_up:
             insights.append(f"Amélioration notable des métriques: {', '.join(trending_up[:3])}")
+
         
         if trending_down:
             insights.append(f"Déclin observé pour: {', '.join(trending_down[:3])}")
         
         # Analyse des performances exceptionnelles
+
         exceeding_metrics = [name for name, metric in metrics.items() if metric.status == KPIStatus.EXCEEDING]
         if exceeding_metrics:
             insights.append(f"Performance exceptionnelle: {', '.join(exceeding_metrics[:2])}")
         
         # Analyse des alertes critiques
+
         critical_metrics = [name for name, metric in metrics.items() if metric.status == KPIStatus.CRITICAL]
         if critical_metrics:
             insights.append(f"Attention requise pour: {', '.join(critical_metrics)}")
+
         
         return insights
     
@@ -814,15 +900,19 @@ class SEOAnalyticsEngine:
             if metric.status == KPIStatus.CRITICAL:
                 if "traffic" in metric_name:
                     recommendations.append("Intensifier les efforts d'acquisition de trafic organique")
+
                 elif "conversion" in metric_name:
                     recommendations.append("Optimiser le funnel de conversion et les CTA")
+
                 elif "ranking" in metric_name:
                     recommendations.append("Revoir la stratégie de mots-clés et le contenu")
         
         # Recommandations basées sur l'achievement des objectifs
+
         underperforming = [name for name, ach in achievement.items() if ach < 80]
         if underperforming:
             recommendations.append(f"Prioriser l'amélioration de: {', '.join(underperforming[:2])}")
+
         
         return recommendations
     
@@ -833,19 +923,23 @@ class SEOAnalyticsEngine:
         alerts = []
         
         # Alertes basées sur le statut des métriques
+
         critical_count = sum(1 for metric in metrics.values() if metric.status == KPIStatus.CRITICAL)
         if critical_count > 2:
             alerts.append(f"Alerte: {critical_count} métriques en statut critique")
         
         # Alertes basées sur les tendances négatives
+
         declining_count = sum(1 for metric in metrics.values() if metric.trend_direction == "down")
         if declining_count > len(metrics) / 2:
             alerts.append("Alerte: Tendance générale à la baisse détectée")
         
         # Alertes basées sur l'achievement des objectifs
+
         severe_underperformance = sum(1 for ach in achievement.values() if ach < 50)
         if severe_underperformance > 1:
             alerts.append("Alerte: Sous-performance sévère sur plusieurs objectifs")
+
         
         return alerts
     
@@ -854,7 +948,9 @@ class SEOAnalyticsEngine:
         opportunities = []
         
         # Opportunités basées sur les métriques en progression
-        improving_metrics = [name for name, metric in metrics.items() 
+
+        improving_metrics = [name for name, metric in metrics.items()
+ 
                            if metric.trend_direction == "up" and metric.change_percentage > 10]
         
         if improving_metrics:
@@ -866,6 +962,7 @@ class SEOAnalyticsEngine:
                 gap = metric.benchmark_comparison["gap_to_excellent"]
                 if gap > 0 and gap < metric.current_value * 0.3:  # Gap réalisable
                     opportunities.append(f"Opportunité d'atteindre l'excellence pour {metric_name}")
+
         
         return opportunities
     
@@ -905,18 +1002,21 @@ class SEOAnalyticsEngine:
                 funnel["consideration"]["page_views"] / funnel["awareness"]["clicks"] * 100
                 if funnel["awareness"]["clicks"] > 0 else 0
             )
+
         
         if "consideration" in funnel and "conversion" in funnel:
             rates["consideration_to_conversion"] = (
                 funnel["conversion"]["conversions"] / funnel["consideration"]["page_views"] * 100
                 if funnel["consideration"]["page_views"] > 0 else 0
             )
+
         
         if "conversion" in funnel and "retention" in funnel:
             rates["conversion_to_retention"] = (
                 funnel["retention"]["repeat_visitors"] / funnel["conversion"]["conversions"] * 100
                 if funnel["conversion"]["conversions"] > 0 else 0
             )
+
         
         return rates
     
@@ -935,6 +1035,7 @@ class SEOAnalyticsEngine:
     ) -> Dict[str, float]:
         """Calcule le coût par acquisition"""
         # Simulation basée sur les coûts estimés par canal
+
         estimated_costs = {
             "organic_search": random.uniform(50, 500),
             "social_media": random.uniform(100, 1000),
@@ -942,12 +1043,15 @@ class SEOAnalyticsEngine:
             "referral_traffic": random.uniform(25, 250),
             "email_marketing": random.uniform(75, 750)
         }
+
         
         cpa = {}
         for channel, cost in estimated_costs.items():
             if channel in revenue and revenue[channel] > 0:
                 # Estimation du nombre de conversions basée sur le revenu moyen
+
                 avg_order_value = 100  # Valeur moyenne simulée
+
                 conversions = revenue[channel] / avg_order_value
                 cpa[channel] = cost / conversions if conversions > 0 else 0
         
@@ -972,8 +1076,10 @@ class SEOAnalyticsEngine:
         for stage, metrics in funnel.items():
             if stage == "awareness" and metrics.get("ctr", 0) < 5:
                 opportunities.append("Optimiser les titres et descriptions pour améliorer le CTR")
+
             elif stage == "consideration" and metrics.get("engagement_rate", 0) < 25:
                 opportunities.append("Améliorer l'engagement du contenu et l'UX")
+
             elif stage == "conversion" and metrics.get("conversion_rate", 0) < 3:
                 opportunities.append("Optimiser les CTA et le processus de conversion")
         
@@ -981,6 +1087,7 @@ class SEOAnalyticsEngine:
         for rate_name, rate_value in rates.items():
             if rate_value < 20:  # Seuil d'amélioration
                 opportunities.append(f"Améliorer le passage {rate_name.replace('_', ' ')}")
+
         
         return opportunities
     
@@ -989,6 +1096,7 @@ class SEOAnalyticsEngine:
     ) -> Dict[str, float]:
         """Calcule l'analyse ROI"""
         total_revenue = sum(revenue.values())
+
         total_cost = sum(cpa.values()) * 10  # Simulation coût total
         
         return {
@@ -1101,6 +1209,7 @@ class SEOAnalyticsEngine:
             "Développer une stratégie de link building",
             "Améliorer la vitesse et les Core Web Vitals"
         ])
+
         
         return recommendations[:8]  # Limite à 8 recommandations
     
@@ -1274,13 +1383,36 @@ class SEOAnalyticsEngine:
 
 
 # === EXPORTS ===
+
+# Aliases pour backward compatibility
+SEOBusinessIntelligenceEngine = SEOAnalyticsEngine
+PerformanceTracker = SEOAnalyticsEngine
+ROIAnalyzer = SEOAnalyticsEngine
+ConversionOptimizer = SEOAnalyticsEngine
+RevenueTracker = SEOAnalyticsEngine
+BusinessIntelligence = BusinessIntelligenceReport
+SEOMetrics = PerformanceMetrics
+ConversionMetrics = ConversionAnalytics
+RevenueInsights = BusinessIntelligenceReport
+ROIMetrics = PerformanceMetrics
+
 __all__ = [
     'SEOAnalyticsEngine',
+    'SEOBusinessIntelligenceEngine',
+    'PerformanceTracker',
+    'ROIAnalyzer',
+    'ConversionOptimizer',
+    'RevenueTracker',
     'PerformanceMetrics',
+    'SEOMetrics',
+    'ROIMetrics',
     'SEOKPIAnalysis',
     'ConversionAnalytics',
+    'ConversionMetrics',
     'AnalyticsReport',
     'BusinessIntelligenceReport',
+    'BusinessIntelligence',
+    'RevenueInsights',
     'AnalyticsScope',
     'MetricCategory',
     'ReportType',

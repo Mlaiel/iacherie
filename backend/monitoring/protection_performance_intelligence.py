@@ -26,7 +26,8 @@ logger = std_logging.getLogger(__name__)
 
 
 class ProtectionType(Enum):
-    """Types of protection systems"""
+    """
+        Types of protection systems"""
     COPYRIGHT_DETECTION = "copyright_detection"
     PIRACY_PREVENTION = "piracy_prevention"
     CONTENT_FINGERPRINTING = "content_fingerprinting"
@@ -225,9 +226,11 @@ class ProtectionPerformanceIntelligence:
         """
         try:
             # Collect protection system data
+
             raw_data = await self._collect_protection_data(protection_id, protection_type, timeframe)
             
             # Calculate performance metrics
+
             metrics = await self._calculate_protection_metrics(
                 protection_id, protection_type, raw_data
             )
@@ -246,10 +249,12 @@ class ProtectionPerformanceIntelligence:
                 self.protection_metrics[protection_id] = self.protection_metrics[protection_id][-50:]
             
             logger.info(f"Protection performance analysis completed for {protection_id}")
+
             return metrics
             
         except Exception as e:
             logger.error(f"Error analyzing protection performance for {protection_id}: {e}")
+
             return ProtectionPerformanceMetrics(
                 protection_id=protection_id,
                 protection_type=protection_type
@@ -267,6 +272,7 @@ class ProtectionPerformanceIntelligence:
         """
         try:
             # Create violation analytics
+
             analytics = ViolationAnalytics(
                 violation_id=violation_id,
                 violation_type=violation_type,
@@ -287,12 +293,15 @@ class ProtectionPerformanceIntelligence:
             
             # Trigger automated response based on severity
             await self._trigger_violation_response(analytics)
+
             
             logger.info(f"Violation response tracking initiated for {violation_id}")
+
             return analytics
             
         except Exception as e:
             logger.error(f"Error tracking violation response for {violation_id}: {e}")
+
             return ViolationAnalytics(
                 violation_id=violation_id,
                 violation_type=violation_type,
@@ -309,7 +318,9 @@ class ProtectionPerformanceIntelligence:
         """
         try:
             # Collect all metrics within timeframe
+
             cutoff_time = datetime.now() - timeframe
+
             recent_metrics = []
             
             for protection_id, metrics_list in self.protection_metrics.items():
@@ -318,8 +329,10 @@ class ProtectionPerformanceIntelligence:
                 ])
             
             # Collect recent violations
+
             recent_violations = [
                 v for v in self.violation_analytics.values()
+
                 if v.detected_at >= cutoff_time
             ]
             
@@ -327,6 +340,7 @@ class ProtectionPerformanceIntelligence:
                 return {"error": "No protection data available for the specified timeframe"}
             
             # Calculate dashboard metrics
+
             dashboard_data = {
                 "timeframe": str(timeframe),
                 "last_updated": datetime.now().isoformat(),
@@ -358,6 +372,7 @@ class ProtectionPerformanceIntelligence:
             
         except Exception as e:
             logger.error(f"Error generating protection dashboard: {e}")
+
             return {"error": str(e)}
     
     async def optimize_protection_strategy(
@@ -370,22 +385,27 @@ class ProtectionPerformanceIntelligence:
         """
         try:
             # Analyze current performance
+
             current_performance = await self._analyze_current_protection_performance(protection_type)
             
             # Identify optimization opportunities
+
             opportunities = await self._identify_optimization_opportunities(
                 protection_type, current_performance, optimization_goals
             )
             
             # Generate optimization plan
+
             optimization_plan = await self._generate_optimization_plan(
                 protection_type, opportunities, optimization_goals
             )
             
             # Calculate expected impact
+
             expected_impact = await self._calculate_optimization_impact(
                 protection_type, optimization_plan
             )
+
             
             return {
                 "protection_type": protection_type.value,
@@ -399,6 +419,7 @@ class ProtectionPerformanceIntelligence:
             
         except Exception as e:
             logger.error(f"Error optimizing protection strategy for {protection_type.value}: {e}")
+
             return {"error": str(e), "success": False}
     
     # Helper methods for data collection and analysis
@@ -441,27 +462,41 @@ class ProtectionPerformanceIntelligence:
         """Calculate comprehensive protection performance metrics"""
         
         violations_detected = raw_data.get("violations_detected", 0)
+
         violations_prevented = raw_data.get("violations_prevented", 0)
+
         false_positives = raw_data.get("false_positives", 0)
+
         false_negatives = raw_data.get("false_negatives", 0)
         
         # Calculate accuracy metrics
+
         total_detections = violations_detected + false_positives
+
         detection_accuracy = (violations_detected / max(total_detections, 1)) if total_detections > 0 else 0.0
+
         false_positive_rate = (false_positives / max(total_detections, 1)) if total_detections > 0 else 0.0
+
         false_negative_rate = (false_negatives / max(violations_detected + false_negatives, 1))
         
         # Calculate effectiveness
+
         protection_effectiveness = (violations_prevented / max(violations_detected, 1)) if violations_detected > 0 else 0.0
         
         # Calculate business metrics
+
         revenue_protected = Decimal(str(raw_data.get("revenue_protected", 0)))
+
         cost_per_protection = Decimal("25.50")  # Simulated cost per protection operation
+
         roi_protection = float(revenue_protected / max(cost_per_protection * violations_detected, 1)) if violations_detected > 0 else 0.0
         
         # Calculate performance metrics
+
         processing_time_ms = raw_data.get("processing_time_ms", 1000)
+
         detection_speed_ms = raw_data.get("detection_time_avg_ms", 1500)
+
         response_time_ms = int(raw_data.get("response_time_avg_hours", 8) * 3600 * 1000)  # Convert to ms
         
         return ProtectionPerformanceMetrics(
@@ -479,6 +514,7 @@ class ProtectionPerformanceIntelligence:
             response_time_ms=response_time_ms,
             protection_effectiveness=protection_effectiveness,
             content_coverage=0.92,  # Simulated coverage
+
             risk_mitigation_score=min(1.0, protection_effectiveness * 1.1),
             revenue_protected=revenue_protected,
             cost_per_protection=cost_per_protection,
@@ -486,6 +522,7 @@ class ProtectionPerformanceIntelligence:
             licenses_validated=raw_data.get("licenses_validated", 128),
             rights_disputes_resolved=raw_data.get("rights_disputes", 15),
             attribution_accuracy=0.94,  # Simulated attribution accuracy
+
             platform_coverage=raw_data.get("platform_coverage", {}),
             cpu_usage_percent=raw_data.get("cpu_usage", 30.0),
             memory_usage_mb=raw_data.get("memory_usage", 512.0),
@@ -510,8 +547,11 @@ class ProtectionPerformanceIntelligence:
         roi_analytics = ProtectionROIAnalytics(
             protection_system_id=metrics.protection_id,
             implementation_cost=Decimal("50000"),  # $50k implementation
+
             operational_cost_monthly=Decimal("5000"),  # $5k monthly operations
+
             maintenance_cost_monthly=Decimal("2000"),  # $2k monthly maintenance
+
             revenue_protected_monthly=metrics.revenue_protected,
             potential_losses_prevented=metrics.revenue_protected * Decimal("1.5"),
             cost_per_violation_detected=metrics.cost_per_protection,
@@ -519,6 +559,7 @@ class ProtectionPerformanceIntelligence:
             annual_roi=metrics.roi_protection * 12,
             reputation_protection_value=metrics.revenue_protected * Decimal("0.3")
         )
+
         
         self.roi_analytics[metrics.protection_id] = roi_analytics
     
@@ -558,9 +599,12 @@ class ProtectionPerformanceIntelligence:
         """Calculate violation analytics summary"""
         if not violations:
             return {}
+
         
         by_type = defaultdict(int)
+
         by_severity = defaultdict(int)
+
         
         for violation in violations:
             by_type[violation.violation_type.value] += 1
@@ -594,8 +638,10 @@ class ProtectionPerformanceIntelligence:
         """Calculate ROI analytics summary"""
         if not self.roi_analytics:
             return {}
+
         
         roi_values = list(self.roi_analytics.values())
+
         
         return {
             "total_revenue_protected": float(sum(r.revenue_protected_monthly for r in roi_values)),
@@ -608,26 +654,35 @@ class ProtectionPerformanceIntelligence:
     async def _calculate_platform_coverage(self, metrics: List[ProtectionPerformanceMetrics]) -> Dict[str, float]:
         """Calculate platform coverage summary"""
         platform_coverage = defaultdict(list)
+
         
         for metric in metrics:
             for platform, coverage in metric.platform_coverage.items():
                 platform_coverage[platform].append(coverage)
+
         
         return {
             platform: statistics.mean(coverages)
+
             for platform, coverages in platform_coverage.items()
         }
     
     async def _generate_protection_trends(self, metrics: List[ProtectionPerformanceMetrics]) -> Dict[str, List]:
-        """Generate trend data for protection metrics"""
+        """
+        Generate trend data for protection metrics"""
         # Sort metrics by timestamp
+
         sorted_metrics = sorted(metrics, key=lambda m: m.timestamp)
         
         # Group by day for trend analysis
+
         daily_data = defaultdict(list)
         for metric in sorted_metrics:
             day_key = metric.timestamp.date()
+
             daily_data[day_key].append(metric)
+
+
         
         trend_data = {
             "dates": [],
@@ -639,10 +694,15 @@ class ProtectionPerformanceIntelligence:
         
         for day, day_metrics in sorted(daily_data.items()):
             trend_data["dates"].append(day.isoformat())
+
             trend_data["violations_detected"].append(sum(m.violations_detected for m in day_metrics))
+
             trend_data["detection_accuracy"].append(statistics.mean([m.detection_accuracy for m in day_metrics]))
+
             trend_data["revenue_protected"].append(float(sum(m.revenue_protected for m in day_metrics)))
+
             trend_data["response_time"].append(statistics.mean([m.response_time_ms / 3600000 for m in day_metrics]))
+
         
         return trend_data
     
@@ -655,6 +715,7 @@ class ProtectionPerformanceIntelligence:
         alerts = []
         
         # Check detection accuracy
+
         low_accuracy_systems = [
             m for m in metrics
             if m.detection_accuracy < self.protection_thresholds["min_detection_accuracy"]
@@ -668,6 +729,7 @@ class ProtectionPerformanceIntelligence:
             })
         
         # Check response times
+
         slow_responses = [
             v for v in violations
             if v.response_time_hours > self.protection_thresholds["max_response_time_hours"]
@@ -683,6 +745,7 @@ class ProtectionPerformanceIntelligence:
         # Check ROI
         low_roi_systems = [
             r for r in self.roi_analytics.values()
+
             if r.monthly_roi < self.protection_thresholds["min_roi"]
         ]
         if low_roi_systems:
@@ -692,6 +755,7 @@ class ProtectionPerformanceIntelligence:
                 "message": f"{len(low_roi_systems)} protection systems have low ROI",
                 "recommendation": "Review cost-effectiveness and optimization opportunities"
             })
+
         
         return alerts
     
@@ -703,6 +767,7 @@ class ProtectionPerformanceIntelligence:
         
         if metrics:
             avg_accuracy = statistics.mean([m.detection_accuracy for m in metrics])
+
             if avg_accuracy < 0.90:
                 recommendations.append({
                     "type": "accuracy_improvement",
@@ -711,8 +776,11 @@ class ProtectionPerformanceIntelligence:
                     "description": "Detection accuracy is below optimal levels",
                     "action": "Enhance ML models and training data"
                 })
+
+
             
             avg_response_time = statistics.mean([m.response_time_ms / 3600000 for m in metrics])
+
             if avg_response_time > 12:  # 12 hours
                 recommendations.append({
                     "type": "response_optimization",
@@ -721,6 +789,7 @@ class ProtectionPerformanceIntelligence:
                     "description": "Violation response times can be improved",
                     "action": "Implement automated response workflows"
                 })
+
         
         return recommendations
     
@@ -729,12 +798,14 @@ class ProtectionPerformanceIntelligence:
     async def _analyze_current_protection_performance(self, protection_type: ProtectionType) -> Dict[str, Any]:
         """Analyze current protection performance for optimization"""
         # Get recent metrics for this protection type
+
         relevant_metrics = []
         for metrics_list in self.protection_metrics.values():
             relevant_metrics.extend([
                 m for m in metrics_list
                 if m.protection_type == protection_type
             ])
+
         
         if not relevant_metrics:
             return {"error": "No performance data available"}
@@ -758,12 +829,15 @@ class ProtectionPerformanceIntelligence:
         
         if current_performance.get("average_accuracy", 0) < optimization_goals.get("target_accuracy", 0.95):
             opportunities.append("Improve detection accuracy through model enhancement")
+
         
         if current_performance.get("average_response_time", 0) > optimization_goals.get("max_response_time", 3600000):
             opportunities.append("Optimize response time through automation")
+
         
         if current_performance.get("roi", 0) < optimization_goals.get("target_roi", 3.0):
             opportunities.append("Improve cost-effectiveness and ROI")
+
         
         return opportunities
     
@@ -819,14 +893,16 @@ async def track_violation(
     severity: ProtectionSeverity,
     violation_data: Dict[str, Any]
 ) -> ViolationAnalytics:
-    """Track violation detection and response"""
+    """
+        Track violation detection and response"""
     return await protection_performance_intelligence.track_violation_response(
         violation_id, violation_type, severity, violation_data
     )
 
 
 async def get_protection_dashboard(timeframe: timedelta = timedelta(days=30)) -> Dict[str, Any]:
-    """Get protection performance dashboard"""
+    """
+        Get protection performance dashboard"""
     return await protection_performance_intelligence.get_protection_dashboard(timeframe)
 
 
@@ -834,17 +910,20 @@ async def optimize_protection(
     protection_type: ProtectionType,
     optimization_goals: Dict[str, Any]
 ) -> Dict[str, Any]:
-    """Optimize protection strategy"""
+    """
+        Optimize protection strategy"""
     return await protection_performance_intelligence.optimize_protection_strategy(
         protection_type, optimization_goals
     )
 
 
 def get_protection_metrics(protection_id: str) -> Optional[List[ProtectionPerformanceMetrics]]:
-    """Get protection metrics history"""
+    """
+        Get protection metrics history"""
     return protection_performance_intelligence.protection_metrics.get(protection_id)
 
 
 def get_violation_analytics(violation_id: str) -> Optional[ViolationAnalytics]:
-    """Get violation analytics"""
+    """
+        Get violation analytics"""
     return protection_performance_intelligence.violation_analytics.get(violation_id)

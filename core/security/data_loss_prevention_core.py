@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class DataLossPreventionCore:
-    """Advanced DataLossPreventionCore System"""
+    """
+Advanced DataLossPreventionCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class DataLossPreventionCore:
 # Module exports
 __all__ = ["DataLossPreventionCore"]
 
-logger.info("🔒 DataLossPreventionCore module loaded")
+logger.info("🔒 DataLossPreventionCore module initialized")

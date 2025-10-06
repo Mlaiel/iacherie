@@ -424,7 +424,8 @@ class LanguageServiceManager:
     """
     
     def __init__(self, config=None):
-        """Initialize all language services"""
+        """
+        Initialize all language services"""
         self.config = {**DEFAULT_CONFIG, **(config or {})}
         
         # Initialize service components
@@ -448,6 +449,7 @@ class LanguageServiceManager:
         self.language_cache_engine = LanguageCacheEngine(self.config.get("language_cache"))
         self.translation_workflow_engine = TranslationWorkflowEngine(self.config.get("translation_workflows"))
         self.language_api_manager = LanguageAPIManager(self.config.get("language_apis"))
+
         
     async def process_multilingual_content(self, content: str, target_language: str, 
                                          source_language: str = None, 
@@ -459,6 +461,7 @@ class LanguageServiceManager:
             content: Source content to process
             target_language: Target language code
             source_language: Source language code (auto-detect if None)
+
             adaptation_level: Level of cultural adaptation
             
         Returns:
@@ -472,41 +475,56 @@ class LanguageServiceManager:
         
         try:
             # Step 1: Language Detection (if source not provided)
+
             if not source_language:
                 detection_result = await self.language_detector.detect_language(content)
+
+
                 source_language = detection_result.primary_language.language_code
                 result["detected_language"] = source_language
                 result["detection_confidence"] = detection_result.overall_confidence.value
                 result["processing_steps"].append("language_detection")
             
             # Step 2: Translation
+
             translation_request = TranslationRequest(
                 text=content,
                 source_language=source_language,
                 target_language=target_language
             )
+
+
             translation_result = await self.translation_engine.translate(translation_request)
+
             result["translated_content"] = translation_result.translated_text
             result["translation_quality"] = translation_result.quality_level.value
             result["processing_steps"].append("translation")
             
             # Step 3: Cultural Adaptation
+
             adaptation_request = AdaptationRequest(
                 content=translation_result.translated_text,
                 source_culture=source_language,
                 target_culture=target_language,
                 adaptation_level=adaptation_level
             )
+
+
             adaptation_result = await self.cultural_adapter.adapt_content(adaptation_request)
+
             result["culturally_adapted_content"] = adaptation_result.adapted_content
             result["cultural_adaptations"] = adaptation_result.adaptations_made
             result["cultural_notes"] = adaptation_result.cultural_notes
             result["processing_steps"].append("cultural_adaptation")
             
             # Step 4: RTL Processing (if target language is RTL)
+
+
             rtl_language = await self.rtl_processor.detect_rtl_language(adaptation_result.adapted_content)
+
             if rtl_language:
                 rtl_result = await self.rtl_processor.process_text(adaptation_result.adapted_content)
+
                 result["rtl_processed_content"] = rtl_result.processed_text
                 result["text_direction"] = rtl_result.detected_direction.value
                 result["css_styles"] = rtl_result.css_styles
@@ -514,21 +532,28 @@ class LanguageServiceManager:
                 result["processing_steps"].append("rtl_processing")
             
             # Step 5: Locale Formatting
+
             locale_request = LocaleRequest(
                 content=result.get("rtl_processed_content", result["culturally_adapted_content"]),
                 target_locale=target_language
             )
+
+
             locale_result = await self.locale_manager.format_content(locale_request)
+
             result["final_content"] = locale_result.formatted_content
             result["locale_used"] = locale_result.locale_used
             result["processing_steps"].append("locale_formatting")
+
             
             result["success"] = True
             result["total_steps"] = len(result["processing_steps"])
+
             
         except Exception as e:
             result["success"] = False
             result["error"] = str(e)
+
             result["final_content"] = content  # Fallback to original
         
         return result

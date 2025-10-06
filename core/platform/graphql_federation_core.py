@@ -31,7 +31,8 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class ServiceStatus(str, Enum):
-    """Service status in federation"""
+    """
+Service status in federation"""
     ACTIVE = "active"
     INACTIVE = "inactive"
     ERROR = "error"
@@ -39,7 +40,8 @@ class ServiceStatus(str, Enum):
     STOPPING = "stopping"
 
 class QueryComplexity(str, Enum):
-    """Query complexity levels"""
+    """
+Query complexity levels"""
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -47,7 +49,8 @@ class QueryComplexity(str, Enum):
 
 @dataclass
 class FederatedService:
-    """Federated GraphQL service"""
+    """
+Federated GraphQL service"""
     service_id: str
     service_name: str
     url: str
@@ -62,7 +65,8 @@ class FederatedService:
 
 @dataclass
 class QueryPlan:
-    """Query execution plan"""
+    """
+Query execution plan"""
     query_id: str
     query: str
     variables: Dict[str, Any]
@@ -74,7 +78,8 @@ class QueryPlan:
 
 @dataclass
 class ExecutionResult:
-    """Query execution result"""
+    """
+Query execution result"""
     query_id: str
     data: Optional[Dict[str, Any]] = None
     errors: List[Dict[str, Any]] = field(default_factory=list)
@@ -84,7 +89,8 @@ class ExecutionResult:
 
 @dataclass
 class FederationMetrics:
-    """GraphQL federation metrics"""
+    """
+GraphQL federation metrics"""
     queries_executed: int = 0
     successful_queries: int = 0
     failed_queries: int = 0
@@ -96,10 +102,12 @@ class FederationMetrics:
     complexity_violations: int = 0
 
 class GraphQLFederationCore:
-    """Enterprise GraphQL federation system"""
+    """
+Enterprise GraphQL federation system"""
     
     def __init__(self, level: str = "enterprise"):
-        """Initialize GraphQL federation core"""
+        """
+Initialize GraphQL federation core"""
         self.level = level
         self.services: Dict[str, FederatedService] = {}
         self.federated_schema: Optional[Any] = None
@@ -140,14 +148,16 @@ class GraphQLFederationCore:
         logger.info(f"🔗 GraphQL Federation Core initialized - Level: {level}")
 
     def _start_health_monitoring(self):
-        """Start health monitoring for federated services"""
+        """
+Start health monitoring for federated services"""
         if self._health_check_task and not self._health_check_task.done():
             return
         
         self._health_check_task = asyncio.create_task(self._health_monitor_loop())
 
     async def _health_monitor_loop(self):
-        """Health monitoring loop"""
+        """
+Health monitoring loop"""
         while not self._shutdown_event.is_set():
             try:
                 await self._check_services_health()
@@ -159,7 +169,8 @@ class GraphQLFederationCore:
                 await asyncio.sleep(60)
 
     async def register_service(self, service: FederatedService) -> str:
-        """Register a federated service"""
+        """
+Register a federated service"""
         
         try:
             # Validate service schema
@@ -184,7 +195,8 @@ class GraphQLFederationCore:
             raise
 
     async def _validate_service_schema(self, service: FederatedService):
-        """Validate service GraphQL schema"""
+        """
+Validate service GraphQL schema"""
         
         if not GRAPHQL_AVAILABLE:
             return
@@ -205,7 +217,8 @@ class GraphQLFederationCore:
             raise ValueError(f"Invalid GraphQL schema: {str(e)}")
 
     async def _rebuild_federated_schema(self):
-        """Rebuild the federated schema from all services"""
+        """
+Rebuild the federated schema from all services"""
         
         if not GRAPHQL_AVAILABLE:
             return
@@ -233,7 +246,8 @@ class GraphQLFederationCore:
             logger.error(f"Failed to rebuild federated schema: {str(e)}")
 
     def _merge_schemas(self, schemas: List[str]) -> str:
-        """Simple schema merging (placeholder for real federation)"""
+        """
+Simple schema merging (placeholder for real federation)"""
         
         # This is a simplified merge - real federation is much more complex
         type_defs = []
@@ -300,7 +314,8 @@ class GraphQLFederationCore:
         return '\n'.join(merged_parts)
 
     async def unregister_service(self, service_id: str):
-        """Unregister a federated service"""
+        """
+Unregister a federated service"""
         
         if service_id in self.services:
             service = self.services.pop(service_id)
@@ -321,7 +336,8 @@ class GraphQLFederationCore:
         context: Optional[Dict[str, Any]] = None,
         operation_name: Optional[str] = None
     ) -> ExecutionResult:
-        """Execute GraphQL query against federated schema"""
+        """
+Execute GraphQL query against federated schema"""
         
         start_time = time.time()
         query_id = f"query_{int(time.time() * 1000)}"
@@ -405,7 +421,8 @@ class GraphQLFederationCore:
         query: str,
         variables: Dict[str, Any]
     ) -> QueryComplexity:
-        """Analyze query complexity"""
+        """
+Analyze query complexity"""
         
         # Simple complexity analysis
         complexity_score = 0
@@ -438,7 +455,8 @@ class GraphQLFederationCore:
         variables: Dict[str, Any],
         complexity: QueryComplexity
     ) -> QueryPlan:
-        """Create execution plan for federated query"""
+        """
+Create execution plan for federated query"""
         
         query_id = f"plan_{int(time.time() * 1000)}"
         
@@ -474,7 +492,8 @@ class GraphQLFederationCore:
         )
 
     def _query_involves_service(self, query: str, service: FederatedService) -> bool:
-        """Check if query involves specific service"""
+        """
+Check if query involves specific service"""
         
         # Simple heuristic - check if service name or common types are in query
         service_indicators = [
@@ -490,7 +509,8 @@ class GraphQLFederationCore:
         plan: QueryPlan,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute federated query plan"""
+        """
+Execute federated query plan"""
         
         if not plan.services_involved:
             return {"data": None, "errors": [{"message": "No services available"}]}
@@ -522,7 +542,8 @@ class GraphQLFederationCore:
         variables: Dict[str, Any],
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute query against specific service"""
+        """
+Execute query against specific service"""
         
         try:
             # In a real implementation, this would make HTTP request to service
@@ -556,13 +577,15 @@ class GraphQLFederationCore:
             }
 
     async def _check_services_health(self):
-        """Check health of all federated services"""
+        """
+Check health of all federated services"""
         
         for service in self.services.values():
             await self._check_service_health(service)
 
     async def _check_service_health(self, service: FederatedService):
-        """Check health of specific service"""
+        """
+Check health of specific service"""
         
         try:
             # Simple health check - in production would make HTTP request
@@ -588,13 +611,15 @@ class GraphQLFederationCore:
             service.status = ServiceStatus.ERROR
 
     def _update_avg_execution_time(self, execution_time: float):
-        """Update average execution time"""
+        """
+Update average execution time"""
         self.metrics.avg_execution_time = (
             self.metrics.avg_execution_time * 0.9 + execution_time * 0.1
         )
 
     async def get_federated_schema_sdl(self) -> Optional[str]:
-        """Get federated schema as SDL string"""
+        """
+Get federated schema as SDL string"""
         
         if not GRAPHQL_AVAILABLE or not self.federated_schema:
             return None
@@ -607,7 +632,8 @@ class GraphQLFederationCore:
             return None
 
     def get_service_status(self, service_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of specific service"""
+        """
+Get status of specific service"""
         
         service = self.services.get(service_id)
         if not service:
@@ -624,7 +650,8 @@ class GraphQLFederationCore:
         }
 
     def get_all_services_status(self) -> List[Dict[str, Any]]:
-        """Get status of all services"""
+        """
+Get status of all services"""
         
         return [
             self.get_service_status(service_id)
@@ -632,7 +659,8 @@ class GraphQLFederationCore:
         ]
 
     def get_metrics(self) -> FederationMetrics:
-        """Get federation metrics"""
+        """
+Get federation metrics"""
         
         # Update real-time metrics
         self.metrics.services_active = len([
@@ -644,7 +672,8 @@ class GraphQLFederationCore:
         return self.metrics
 
     async def health_check(self) -> bool:
-        """Health check for GraphQL federation"""
+        """
+Health check for GraphQL federation"""
         try:
             # Check if we have any active services
             active_services = [
@@ -667,7 +696,8 @@ class GraphQLFederationCore:
             return False
 
     async def shutdown(self):
-        """Shutdown GraphQL federation"""
+        """
+Shutdown GraphQL federation"""
         logger.info("🛑 Shutting down GraphQL federation")
         
         # Signal shutdown
@@ -687,4 +717,4 @@ __all__ = [
     "ExecutionResult", "ServiceStatus", "QueryComplexity", "FederationMetrics"
 ]
 
-logger.info("🔗 GraphQL Federation Core module loaded")
+logger.info("🔗 GraphQL Federation Core module initialized")

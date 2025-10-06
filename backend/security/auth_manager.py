@@ -9,14 +9,16 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 security = HTTPBearer(auto_error=False)
 
 class User:
-    """User model placeholder"""
+    """
+        User model placeholder"""
     def __init__(self, id: str, username: str, permissions: list):
         self.id = id
         self.username = username
         self.permissions = permissions
 
 async def get_current_user(credentials: Optional[HTTPAuthorizationCredentials] = Depends(security)) -> User:
-    """Get current user from token (placeholder implementation)"""
+    """
+        Get current user from token (placeholder implementation)"""
     # For development, return a mock user with all permissions
     return User(
         id="dev-user-1",

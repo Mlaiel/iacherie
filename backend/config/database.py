@@ -42,7 +42,8 @@ logger = logging.getLogger(__name__)
 # ===== REDIS CONFIGURATION (from config/database/redis_config.py) =====
 
 class RedisEnvironment(Enum):
-    """Redis environment configurations"""
+    """
+        Redis environment configurations"""
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -92,7 +93,8 @@ class RedisPoolConfig:
 
 @dataclass
 class RedisCacheConfig:
-    """Redis caching configuration"""
+    """
+        Redis caching configuration"""
     default_ttl: int = 3600  # 1 hour
     key_prefix: str = "ia_influencer:"
     serializer: str = "json"  # json, pickle, msgpack
@@ -181,6 +183,7 @@ class RedisConfig:
         """Create Redis client based on deployment type"""
         if not REDIS_AVAILABLE:
             logger.warning("Redis is not available - returning mock client")
+
             return None
             
         try:
@@ -193,12 +196,15 @@ class RedisConfig:
                     password=self.credentials.password,
                     max_connections_per_node=self.cluster_config.max_connections_per_node
                 )
+
             elif self.deployment_type == RedisDeploymentType.SENTINEL:
                 sentinel = Sentinel(self.credentials.sentinel_hosts)
+
                 return sentinel.master_for(
                     self.credentials.sentinel_service_name,
                     password=self.credentials.password
                 )
+
             else:  # STANDALONE
                 pool = ConnectionPool(
                     host=self.credentials.host,
@@ -208,16 +214,20 @@ class RedisConfig:
                     socket_connect_timeout=self.pool_config.socket_connect_timeout,
                     socket_timeout=self.pool_config.socket_timeout
                 )
+
                 return Redis(connection_pool=pool)
+
         
         except Exception as e:
             logger.error(f"Failed to create Redis client: {e}")
+
             raise
     
     def optimize_cluster_performance(self):
         """Optimize Redis cluster for high performance"""
         if not REDIS_AVAILABLE:
             logger.warning("Redis is not available - skipping cluster optimization")
+
             return
             
         # Implementation for cluster optimization

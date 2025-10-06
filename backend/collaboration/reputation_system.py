@@ -30,20 +30,26 @@ from collections import defaultdict, deque
 import uuid
 import hashlib
 
-# External dependencies pour reputation management
+# External dependencies pour enterprise features
 try:
+    # Safe Redis import with Python 3.12 compatibility
+    try:
+        import aioredis
+        REDIS_AVAILABLE = True
+    except (ImportError, TypeError) as e:
+        # Handle Python 3.12 TimeoutError duplicate base class issue
+        from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+        import logging
+        logging.warning(f"Using Redis compatibility layer: {e}")
+    
+    from sqlalchemy.ext.asyncio import AsyncSession
+    from sqlalchemy import select, update, and_
     import numpy as np
-    import pandas as pd
-    from sklearn.ensemble import IsolationForest, RandomForestClassifier
-    from sklearn.preprocessing import StandardScaler
-    from sklearn.cluster import DBSCAN
-    from sklearn.metrics.pairwise import cosine_similarity
-    import networkx as nx
-    from textblob import TextBlob
-    import spacy
-    from scipy import stats
+    HAS_ENTERPRISE_DEPS = True
+    
 except ImportError as e:
-    logging.warning(f"Optional reputation dependency missing: {e}")
+    HAS_ENTERPRISE_DEPS = False
+    logging.warning(f"Enterprise dependencies not available: {e}")
 
 # Configuration logging
 logging.basicConfig(level=logging.INFO)
@@ -228,7 +234,8 @@ class ReputationManager:
         self._initialize_reputation_system()
     
     def _initialize_reputation_system(self):
-        """Initialise le système de réputation"""
+        """
+        Initialise le système de réputation"""
         # Créer les badges par défaut
         self._create_default_badges()
         
@@ -239,7 +246,8 @@ class ReputationManager:
         self._configure_reputation_factors()
     
     def _create_default_badges(self):
-        """Crée les badges par défaut du système"""
+        """
+        Crée les badges par défaut du système"""
         default_badges = [
             {
                 'name': 'Nouveau Créateur',
@@ -291,10 +299,12 @@ class ReputationManager:
         
         for badge_data in default_badges:
             badge = Badge(**badge_data)
+
             self.badges[badge.id] = badge
     
     def _initialize_fraud_detection(self):
-        """Initialise les systèmes de détection de fraude"""
+        """
+        Initialise les systèmes de détection de fraude"""
         self.fraud_detectors = {
             'fake_reviews': {
                 'model_type': 'isolation_forest',
@@ -314,7 +324,8 @@ class ReputationManager:
         }
     
     def _configure_reputation_factors(self):
-        """Configure les facteurs de réputation"""
+        """
+        Configure les facteurs de réputation"""
         self.reputation_models = {
             ReputationCategory.COLLABORATION: {
                 'factors': {
@@ -366,28 +377,37 @@ class ReputationManager:
     
     async def calculate_reputation_score(self, user_id: str, 
                                        category: ReputationCategory = ReputationCategory.OVERALL) -> ReputationScore:
-        """Calcule le score de réputation pour un utilisateur"""
+        """
+        Calcule le score de réputation pour un utilisateur"""
         try:
             if category == ReputationCategory.OVERALL:
                 return await self._calculate_overall_reputation(user_id)
+
             else:
                 return await self._calculate_category_reputation(user_id, category)
+
         
         except Exception as e:
             logger.error(f"Erreur calcul réputation: {e}")
+
             return ReputationScore(user_id=user_id, category=category)
     
     async def _calculate_overall_reputation(self, user_id: str) -> ReputationScore:
         """Calcule la réputation globale"""
         try:
             # Calculer les scores par catégorie
+
             category_scores = {}
+
             total_weighted_score = 0.0
+
             total_weight = 0.0
             
             for category, config in self.reputation_models.items():
                 category_score = await self._calculate_category_reputation(user_id, category)
+
                 category_scores[category.value] = category_score.current_score
+
                 
                 weight = config['base_weight']
                 total_weighted_score += category_score.current_score * weight
@@ -397,20 +417,25 @@ class ReputationManager:
             overall_score = total_weighted_score / total_weight if total_weight > 0 else 0.0
             
             # Récupérer le score précédent
+
             previous_score = 0.0
             if user_id in self.reputation_scores and ReputationCategory.OVERALL in self.reputation_scores[user_id]:
                 previous_score = self.reputation_scores[user_id][ReputationCategory.OVERALL].current_score
             
             # Déterminer la tendance
+
             trend = await self._calculate_reputation_trend(user_id, overall_score, previous_score)
             
             # Calculer le percentile
+
             percentile_rank = await self._calculate_percentile_rank(user_id, overall_score)
             
             # Calculer la confiance
+
             confidence_level = await self._calculate_confidence_level(user_id, category_scores)
             
             # Créer le score de réputation
+
             reputation_score = ReputationScore(
                 user_id=user_id,
                 category=ReputationCategory.OVERALL,
@@ -434,11 +459,13 @@ class ReputationManager:
             # Persister
             if self.db_session:
                 await self._persist_reputation_score(reputation_score)
+
             
             return reputation_score
             
         except Exception as e:
             logger.error(f"Erreur calcul réputation globale: {e}")
+
             return ReputationScore(user_id=user_id, category=ReputationCategory.OVERALL)
     
     async def _calculate_category_reputation(self, user_id: str, 
@@ -447,34 +474,45 @@ class ReputationManager:
         try:
             if category not in self.reputation_models:
                 return ReputationScore(user_id=user_id, category=category)
+
+
             
             config = self.reputation_models[category]
+
             factors = config['factors']
             
             # Récupérer les données utilisateur
+
             user_data = await self._get_user_reputation_data(user_id, category)
             
             # Calculer les scores des facteurs
+
             factor_scores = {}
+
             total_weighted_score = 0.0
+
             total_weight = 0.0
             
             for factor_name, weight in factors.items():
                 factor_score = await self._calculate_factor_score(user_data, factor_name, category)
+
                 factor_scores[factor_name] = factor_score
                 
                 total_weighted_score += factor_score * weight
                 total_weight += weight
             
             # Score de catégorie
+
             category_score = total_weighted_score / total_weight if total_weight > 0 else 0.0
             
             # Récupérer le score précédent
+
             previous_score = 0.0
             if user_id in self.reputation_scores and category in self.reputation_scores[user_id]:
                 previous_score = self.reputation_scores[user_id][category].current_score
             
             # Créer le score de réputation
+
             reputation_score = ReputationScore(
                 user_id=user_id,
                 category=category,
@@ -492,12 +530,14 @@ class ReputationManager:
             
         except Exception as e:
             logger.error(f"Erreur calcul réputation catégorie {category}: {e}")
+
             return ReputationScore(user_id=user_id, category=category)
     
     async def add_review(self, review_data: Dict) -> Review:
         """Ajoute un review à un utilisateur"""
         try:
             # Créer le review
+
             review = Review(
                 reviewee_id=review_data['reviewee_id'],
                 reviewer_id=review_data['reviewer_id'],
@@ -514,10 +554,13 @@ class ReputationManager:
             # Analyser le sentiment du commentaire
             if review.comment:
                 sentiment_score = await self._analyze_review_sentiment(review.comment)
+
                 review.metadata['sentiment_score'] = sentiment_score
             
             # Détecter les fraudes potentielles
+
             fraud_score = await self._detect_review_fraud(review)
+
             review.fraud_score = fraud_score
             
             # Stocker le review
@@ -530,12 +573,15 @@ class ReputationManager:
             # Recalculer la réputation si le review est valide
             if fraud_score < 0.5:  # Seuil de fraude acceptable
                 await self.calculate_reputation_score(review.reviewee_id)
+
             
             logger.info(f"Review ajouté: {review.rating}/5 pour {review.reviewee_id}")
+
             return review
             
         except Exception as e:
             logger.error(f"Erreur ajout review: {e}")
+
             raise
     
     async def award_badge(self, user_id: str, badge_id: str, awarded_by: Optional[str] = None,
@@ -543,10 +589,12 @@ class ReputationManager:
         """Attribue un badge à un utilisateur"""
         try:
             badge = self.badges.get(badge_id)
+
             if not badge:
                 raise ValueError("Badge introuvable")
             
             # Vérifier si l'utilisateur possède déjà ce badge
+
             existing_badges = [ub for ub in self.user_badges[user_id] if ub.badge_id == badge_id]
             if existing_badges:
                 raise ValueError("Badge déjà attribué")
@@ -554,10 +602,12 @@ class ReputationManager:
             # Vérifier les requirements si attribution automatique
             if badge.auto_awarded:
                 eligible = await self._check_badge_requirements(user_id, badge)
+
                 if not eligible:
                     raise ValueError("Requirements non satisfaits")
             
             # Créer l'attribution de badge
+
             user_badge = UserBadge(
                 user_id=user_id,
                 badge_id=badge_id,
@@ -574,13 +624,17 @@ class ReputationManager:
                 await self._persist_user_badge(user_badge)
             
             # Recalculer la réputation (les badges contribuent au score)
+
             await self.calculate_reputation_score(user_id)
+
             
             logger.info(f"Badge attribué: {badge.name} à {user_id}")
+
             return user_badge
             
         except Exception as e:
             logger.error(f"Erreur attribution badge: {e}")
+
             raise
     
     async def detect_fraud(self, user_id: str) -> List[FraudAlert]:
@@ -589,7 +643,9 @@ class ReputationManager:
             fraud_alerts = []
             
             # Détecter les faux reviews
+
             fake_review_score = await self._detect_fake_reviews(user_id)
+
             if fake_review_score > 0.7:
                 alert = FraudAlert(
                     user_id=user_id,
@@ -599,10 +655,13 @@ class ReputationManager:
                     description="Détection de reviews potentiellement faux",
                     evidence=await self._get_fake_review_evidence(user_id)
                 )
+
                 fraud_alerts.append(alert)
             
             # Détecter l'inflation de métriques
+
             inflated_metrics_score = await self._detect_inflated_metrics(user_id)
+
             if inflated_metrics_score > 0.8:
                 alert = FraudAlert(
                     user_id=user_id,
@@ -611,10 +670,13 @@ class ReputationManager:
                     confidence=inflated_metrics_score,
                     description="Métriques potentiellement gonflées artificiellement"
                 )
+
                 fraud_alerts.append(alert)
             
             # Détecter la manipulation de réseau
+
             manipulation_score = await self._detect_network_manipulation(user_id)
+
             if manipulation_score > 0.75:
                 alert = FraudAlert(
                     user_id=user_id,
@@ -623,12 +685,15 @@ class ReputationManager:
                     confidence=manipulation_score,
                     description="Manipulation de réseau détectée"
                 )
+
                 fraud_alerts.append(alert)
+
             
             return fraud_alerts
             
         except Exception as e:
             logger.error(f"Erreur détection fraude: {e}")
+
             return []
     
     async def generate_reputation_insights(self, user_id: str) -> List[ReputationInsight]:
@@ -637,30 +702,41 @@ class ReputationManager:
             insights = []
             
             # Récupérer les scores de réputation
+
             user_scores = self.reputation_scores.get(user_id, {})
             
             # Analyser les opportunités d'amélioration
             for category, score in user_scores.items():
                 if score.current_score < 80:  # Seuil d'amélioration
+
                     improvement_insights = await self._generate_improvement_insights(user_id, category, score)
+
                     insights.extend(improvement_insights)
             
             # Identifier les achievements potentiels
+
             achievement_insights = await self._generate_achievement_insights(user_id)
+
             insights.extend(achievement_insights)
             
             # Analyser les tendances
+
             trend_insights = await self._generate_trend_insights(user_id)
+
             insights.extend(trend_insights)
             
             # Suggestions de badges
+
             badge_insights = await self._generate_badge_suggestions(user_id)
+
             insights.extend(badge_insights)
+
             
             return insights
             
         except Exception as e:
             logger.error(f"Erreur génération insights réputation: {e}")
+
             return []
 
 # ==========================================
@@ -682,9 +758,11 @@ class BadgeSystem:
     def __init__(self, reputation_manager):
         self.reputation_manager = reputation_manager
         self.badge_progression_tracking = defaultdict(dict)
+
         
     async def create_dynamic_badge(self, badge_data: Dict, creator_id: str) -> Badge:
-        """Crée un badge dynamique"""
+        """
+        Crée un badge dynamique"""
         try:
             badge = Badge(
                 name=badge_data['name'],
@@ -704,12 +782,15 @@ class BadgeSystem:
             # Persister
             if self.reputation_manager.db_session:
                 await self._persist_badge(badge)
+
             
             logger.info(f"Badge dynamique créé: {badge.name}")
+
             return badge
             
         except Exception as e:
             logger.error(f"Erreur création badge dynamique: {e}")
+
             raise
     
     async def track_badge_progression(self, user_id: str) -> Dict[str, Any]:
@@ -719,12 +800,16 @@ class BadgeSystem:
             
             for badge_id, badge in self.reputation_manager.badges.items():
                 # Skip si l'utilisateur possède déjà ce badge
+
                 user_badges = self.reputation_manager.user_badges.get(user_id, [])
+
                 if any(ub.badge_id == badge_id for ub in user_badges):
                     continue
                 
                 # Calculer la progression
+
                 progress = await self._calculate_badge_progress(user_id, badge)
+
                 if progress['percentage'] > 0:
                     progression[badge_id] = {
                         'badge': badge,
@@ -736,6 +821,7 @@ class BadgeSystem:
             
         except Exception as e:
             logger.error(f"Erreur tracking progression badges: {e}")
+
             return {}
 
 # ==========================================
@@ -758,50 +844,66 @@ class FraudDetectionEngine:
         self.reputation_manager = reputation_manager
         self.fraud_models = {}
         self.suspicious_patterns = defaultdict(list)
+
         
     async def analyze_review_authenticity(self, review: Review) -> float:
-        """Analyse l'authenticité d'un review"""
+        """
+        Analyse l'authenticité d'un review"""
         try:
             authenticity_score = 1.0
             
             # Analyser le texte
+
             text_score = await self._analyze_review_text_patterns(review)
+
             authenticity_score *= text_score
             
             # Analyser le timing
+
             timing_score = await self._analyze_review_timing(review)
+
             authenticity_score *= timing_score
             
             # Analyser le reviewer
+
             reviewer_score = await self._analyze_reviewer_patterns(review)
+
             authenticity_score *= reviewer_score
             
             # Analyser la cohérence des ratings
+
             rating_score = await self._analyze_rating_patterns(review)
+
             authenticity_score *= rating_score
             
             return authenticity_score
             
         except Exception as e:
             logger.error(f"Erreur analyse authenticité review: {e}")
+
             return 0.5
     
     async def detect_coordinated_manipulation(self, user_id: str) -> Dict[str, Any]:
         """Détecte la manipulation coordonnée"""
         try:
             # Analyser les patterns de reviews
+
             review_patterns = await self._analyze_coordinated_review_patterns(user_id)
             
             # Analyser les connections suspectes
+
             network_analysis = await self._analyze_suspicious_connections(user_id)
             
             # Analyser les timing suspects
+
             timing_analysis = await self._analyze_suspicious_timing(user_id)
             
             # Calculer le score de manipulation
+
             manipulation_score = await self._calculate_manipulation_score(
                 review_patterns, network_analysis, timing_analysis
             )
+
             
             return {
                 'manipulation_score': manipulation_score,
@@ -813,6 +915,7 @@ class FraudDetectionEngine:
             
         except Exception as e:
             logger.error(f"Erreur détection manipulation coordonnée: {e}")
+
             return {'manipulation_score': 0.0}
 
 # ==========================================
@@ -838,15 +941,8 @@ async def create_reputation_system(redis_url: Optional[str] = None,
     redis_client = None
     if redis_url:
         try:
-            # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+            # Connexion Redis
+            import aioredis
             redis_client = await aioredis.from_url(redis_url)
         except Exception as e:
             logger.warning(f"Impossible de se connecter à Redis: {e}")

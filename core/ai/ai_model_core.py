@@ -1,4 +1,5 @@
-"""AI Model Core - Enterprise AI Model Management
+"""
+AI Model Core - Enterprise AI Model Management
 
 Central AI model management core for model lifecycle, versioning, and optimization.
 Handles model deployment, monitoring, and performance optimization with enterprise standards.
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 # Model Lifecycle States
 class ModelLifecycleState(Enum):
-    """Model lifecycle states"""
+    """
+Model lifecycle states"""
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -35,7 +37,8 @@ class ModelLifecycleState(Enum):
 
 # Model Types
 class ModelCategory(Enum):
-    """Model categories for organization"""
+    """
+Model categories for organization"""
     NLP = "nlp"
     COMPUTER_VISION = "computer_vision"
     AUDIO_PROCESSING = "audio_processing"
@@ -45,7 +48,8 @@ class ModelCategory(Enum):
 
 # Deployment Strategies
 class DeploymentStrategy(Enum):
-    """Model deployment strategies"""
+    """
+Model deployment strategies"""
     CANARY = "canary"
     BLUE_GREEN = "blue_green"
     ROLLING = "rolling"
@@ -53,7 +57,8 @@ class DeploymentStrategy(Enum):
 
 @dataclass
 class ModelMetrics:
-    """Model performance metrics"""
+    """
+Model performance metrics"""
     accuracy: float = 0.0
     precision: float = 0.0
     recall: float = 0.0
@@ -67,7 +72,8 @@ class ModelMetrics:
 
 @dataclass
 class ModelVersion:
-    """Model version information"""
+    """
+Model version information"""
     version_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     version_number: str = "1.0.0"
     model_path: str = ""
@@ -81,7 +87,8 @@ class ModelVersion:
 
 @dataclass
 class ModelConfiguration:
-    """Model configuration settings"""
+    """
+Model configuration settings"""
     model_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     model_name: str = ""
     model_category: ModelCategory = ModelCategory.NLP
@@ -98,7 +105,8 @@ class ModelConfiguration:
 
 @dataclass
 class ModelDeployment:
-    """Model deployment information"""
+    """
+Model deployment information"""
     deployment_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     model_id: str = ""
     version_id: str = ""
@@ -111,7 +119,8 @@ class ModelDeployment:
     performance_metrics: ModelMetrics = field(default_factory=ModelMetrics)
 
 class AIModelCore:
-    """Enterprise AI Model Management Core
+    """
+Enterprise AI Model Management Core
     
     Handles complete model lifecycle including versioning, deployment,
     monitoring, and optimization with enterprise-grade reliability.
@@ -129,7 +138,8 @@ class AIModelCore:
         logger.info(f"AI Model Core initialized - Level: {level}")
     
     async def initialize(self) -> bool:
-        """Initialize the AI model management system"""
+        """
+Initialize the AI model management system"""
         try:
             await self._setup_model_registry()
             await self._setup_deployment_strategies()
@@ -145,7 +155,8 @@ class AIModelCore:
             return False
     
     async def _setup_model_registry(self):
-        """Setup model registry with pre-configured models"""
+        """
+Setup model registry with pre-configured models"""
         # Example models for the system
         example_models = [
             ModelConfiguration(
@@ -229,7 +240,8 @@ class AIModelCore:
         logger.info(f"✅ Model registry setup complete: {len(self.models)} models")
     
     async def _setup_deployment_strategies(self):
-        """Setup deployment strategies and configurations"""
+        """
+Setup deployment strategies and configurations"""
         self.deployment_strategies = {
             DeploymentStrategy.CANARY: {
                 "initial_percentage": 5.0,
@@ -256,7 +268,8 @@ class AIModelCore:
         logger.info("✅ Deployment strategies configured")
     
     async def _setup_monitoring_systems(self):
-        """Setup model monitoring and alerting"""
+        """
+Setup model monitoring and alerting"""
         self.monitoring_config = {
             "health_check_interval_seconds": 30,
             "performance_alert_thresholds": {
@@ -276,7 +289,8 @@ class AIModelCore:
         logger.info("✅ Monitoring systems configured")
     
     async def _setup_auto_scaling(self):
-        """Setup auto-scaling rules for models"""
+        """
+Setup auto-scaling rules for models"""
         self.auto_scaling_rules = {
             "scale_up_conditions": {
                 "cpu_threshold": 70,
@@ -307,7 +321,8 @@ class AIModelCore:
         model_path: str,
         resource_requirements: Dict[str, Any]
     ) -> ModelConfiguration:
-        """Register a new model in the system"""
+        """
+Register a new model in the system"""
         try:
             model_config = ModelConfiguration(
                 model_name=model_name,
@@ -338,7 +353,8 @@ class AIModelCore:
             raise
     
     async def _calculate_model_checksum(self, model_path: str) -> str:
-        """Calculate model file checksum"""
+        """
+Calculate model file checksum"""
         try:
             # In real implementation, calculate actual file checksum
             return hashlib.sha256(model_path.encode()).hexdigest()[:16]
@@ -346,7 +362,8 @@ class AIModelCore:
             return "unknown"
     
     async def _calculate_model_size(self, model_path: str) -> float:
-        """Calculate model file size in MB"""
+        """
+Calculate model file size in MB"""
         try:
             # In real implementation, get actual file size
             return 256.0  # Default size
@@ -359,7 +376,8 @@ class AIModelCore:
         environment: str = "production",
         deployment_strategy: DeploymentStrategy = DeploymentStrategy.CANARY
     ) -> ModelDeployment:
-        """Deploy a model to specified environment"""
+        """
+Deploy a model to specified environment"""
         try:
             model_config = self.models.get(model_id)
             if not model_config:
@@ -397,7 +415,8 @@ class AIModelCore:
             raise
     
     async def _validate_deployment_prerequisites(self, model_config: ModelConfiguration) -> bool:
-        """Validate deployment prerequisites"""
+        """
+Validate deployment prerequisites"""
         try:
             # Check if model has required resources
             if not model_config.resource_requirements:
@@ -419,7 +438,8 @@ class AIModelCore:
         deployment: ModelDeployment, 
         model_config: ModelConfiguration
     ) -> bool:
-        """Execute model deployment based on strategy"""
+        """
+Execute model deployment based on strategy"""
         try:
             strategy = deployment.deployment_strategy
             
@@ -443,7 +463,8 @@ class AIModelCore:
         deployment: ModelDeployment, 
         model_config: ModelConfiguration
     ) -> bool:
-        """Execute canary deployment"""
+        """
+Execute canary deployment"""
         try:
             # Start with small percentage
             deployment.rollout_percentage = 5.0
@@ -473,7 +494,8 @@ class AIModelCore:
         deployment: ModelDeployment, 
         model_config: ModelConfiguration
     ) -> bool:
-        """Execute blue-green deployment"""
+        """
+Execute blue-green deployment"""
         try:
             # Deploy to green environment
             deployment.rollout_percentage = 100.0
@@ -499,7 +521,8 @@ class AIModelCore:
         deployment: ModelDeployment, 
         model_config: ModelConfiguration
     ) -> bool:
-        """Execute rolling deployment"""
+        """
+Execute rolling deployment"""
         try:
             # Deploy in batches
             batch_size = 25.0
@@ -528,7 +551,8 @@ class AIModelCore:
         deployment: ModelDeployment, 
         model_config: ModelConfiguration
     ) -> bool:
-        """Execute immediate deployment"""
+        """
+Execute immediate deployment"""
         try:
             deployment.rollout_percentage = 100.0
             
@@ -548,7 +572,8 @@ class AIModelCore:
             return False
     
     async def _collect_deployment_metrics(self, deployment: ModelDeployment) -> Dict[str, float]:
-        """Collect deployment performance metrics"""
+        """
+Collect deployment performance metrics"""
         try:
             # Simulate metric collection
             return {
@@ -565,7 +590,8 @@ class AIModelCore:
             return {}
     
     def _get_current_version(self, model_config: ModelConfiguration) -> Optional[ModelVersion]:
-        """Get current active version of a model"""
+        """
+Get current active version of a model"""
         if not model_config.current_version:
             return None
         
@@ -576,7 +602,8 @@ class AIModelCore:
         return None
     
     async def get_model_info(self, model_id: str) -> Optional[Dict[str, Any]]:
-        """Get comprehensive model information"""
+        """
+Get comprehensive model information"""
         try:
             model_config = self.models.get(model_id)
             if not model_config:
@@ -605,7 +632,8 @@ class AIModelCore:
             return None
     
     async def get_system_overview(self) -> Dict[str, Any]:
-        """Get system overview and health metrics"""
+        """
+Get system overview and health metrics"""
         try:
             total_models = len(self.models)
             production_models = len([m for m in self.models.values() 

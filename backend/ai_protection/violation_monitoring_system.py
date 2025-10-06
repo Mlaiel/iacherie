@@ -34,7 +34,8 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringScope(Enum):
-    """Monitoring scope levels"""
+    """
+        Monitoring scope levels"""
     BASIC = "basic"              # 5 major platforms
     STANDARD = "standard"        # 15 popular platforms  
     PREMIUM = "premium"          # 25 platforms + social media
@@ -95,7 +96,8 @@ class MonitoringTarget:
 
 @dataclass
 class PlatformConfiguration:
-    """Platform monitoring configuration"""
+    """
+        Platform monitoring configuration"""
     platform_id: str
     platform_name: str
     platform_type: PlatformType
@@ -112,7 +114,8 @@ class PlatformConfiguration:
 
 @dataclass
 class ViolationDetection:
-    """Detected violation record"""
+    """
+        Detected violation record"""
     violation_id: str
     target_id: str
     platform_id: str
@@ -133,7 +136,8 @@ class ViolationDetection:
 
 @dataclass
 class MonitoringReport:
-    """Comprehensive monitoring report"""
+    """
+        Comprehensive monitoring report"""
     report_id: str
     period_start: datetime
     period_end: datetime
@@ -152,7 +156,8 @@ class MonitoringReport:
 
 
 class PlatformMonitor:
-    """Individual platform monitoring agent"""
+    """
+        Individual platform monitoring agent"""
     
     def __init__(self, config: PlatformConfiguration):
         self.config = config
@@ -162,10 +167,14 @@ class PlatformMonitor:
         self.detection_history: List[ViolationDetection] = []
         
     async def initialize(self):
-        """Initialize platform monitor"""
+        """
+        Initialize platform monitor"""
         if HTTP_AVAILABLE:
             connector = aiohttp.TCPConnector(limit=10)
+
+
             timeout = aiohttp.ClientTimeout(total=30)
+
             self.session = aiohttp.ClientSession(
                 connector=connector,
                 timeout=timeout,
@@ -173,17 +182,20 @@ class PlatformMonitor:
             )
     
     async def cleanup(self):
-        """Cleanup platform monitor"""
+        """
+        Cleanup platform monitor"""
         if self.session:
             await self.session.close()
     
     async def scan_for_violations(self, targets: List[MonitoringTarget]) -> List[ViolationDetection]:
-        """Scan platform for violations of monitored content"""
+        """
+        Scan platform for violations of monitored content"""
         violations = []
         
         try:
             if not self.session:
                 await self.initialize()
+
             
             for target in targets:
                 # Check if target should be scanned on this platform
@@ -191,19 +203,24 @@ class PlatformMonitor:
                     continue
                 
                 # Perform platform-specific scanning
+
                 target_violations = await self._scan_target(target)
+
                 violations.extend(target_violations)
                 
                 # Rate limiting
                 await asyncio.sleep(1.0 / self.config.rate_limits.get('requests_per_second', 1))
+
             
             self.last_scan_time = datetime.utcnow()
+
             self.scan_count += 1
             
             return violations
             
         except Exception as e:
             logger.error(f"Platform scan failed for {self.config.platform_name}: {e}")
+
             return []
     
     async def _scan_target(self, target: MonitoringTarget) -> List[ViolationDetection]:
@@ -212,38 +229,46 @@ class PlatformMonitor:
         
         try:
             # Search using different methods
+
             search_results = []
             
             # Keyword-based search
             if 'keyword_search' in self.config.detection_methods:
                 keyword_results = await self._keyword_search(target)
+
                 search_results.extend(keyword_results)
             
             # Image reverse search
             if 'image_search' in self.config.detection_methods and target.content_type == 'image':
                 image_results = await self._image_search(target)
+
                 search_results.extend(image_results)
             
             # Audio fingerprint search
             if 'audio_fingerprint' in self.config.detection_methods and target.content_type == 'audio':
                 audio_results = await self._audio_fingerprint_search(target)
+
                 search_results.extend(audio_results)
             
             # Video hash search
             if 'video_hash' in self.config.detection_methods and target.content_type == 'video':
                 video_results = await self._video_hash_search(target)
+
                 search_results.extend(video_results)
             
             # Analyze search results for violations
             for result in search_results:
                 violation = await self._analyze_potential_violation(target, result)
+
                 if violation and violation.confidence_score >= self.config.confidence_threshold:
                     violations.append(violation)
+
             
             return violations
             
         except Exception as e:
             logger.error(f"Target scan failed for {target.target_id}: {e}")
+
             return []
     
     async def _keyword_search(self, target: MonitoringTarget) -> List[Dict[str, Any]]:
@@ -252,24 +277,31 @@ class PlatformMonitor:
         
         try:
             for keyword in target.keywords[:5]:  # Limit to 5 keywords
+
                 search_url = self.config.api_endpoints.get('search', '').format(
                     query=keyword.replace(' ', '+')
                 )
+
                 
                 if search_url and self.session:
                     async with self.session.get(search_url) as response:
                         if response.status == 200:
                             data = await response.text()
+
+
                             parsed_results = self._parse_search_results(data, keyword)
+
                             results.extend(parsed_results)
                 
                 # Rate limiting between keyword searches
                 await asyncio.sleep(0.5)
+
             
             return results
             
         except Exception as e:
             logger.error(f"Keyword search failed: {e}")
+
             return []
     
     async def _image_search(self, target: MonitoringTarget) -> List[Dict[str, Any]]:
@@ -283,7 +315,8 @@ class PlatformMonitor:
         }] if target.content_type == 'image' else []
     
     async def _audio_fingerprint_search(self, target: MonitoringTarget) -> List[Dict[str, Any]]:
-        """Perform audio fingerprint search"""
+        """
+        Perform audio fingerprint search"""
         # Simulate audio fingerprint search
         return [{
             'url': f'https://{self.config.platform_name}.com/audio/{uuid.uuid4()}',
@@ -293,7 +326,8 @@ class PlatformMonitor:
         }] if target.content_type == 'audio' else []
     
     async def _video_hash_search(self, target: MonitoringTarget) -> List[Dict[str, Any]]:
-        """Perform video hash search"""
+        """
+        Perform video hash search"""
         # Simulate video hash search
         return [{
             'url': f'https://{self.config.platform_name}.com/video/{uuid.uuid4()}',
@@ -303,12 +337,16 @@ class PlatformMonitor:
         }] if target.content_type == 'video' else []
     
     def _parse_search_results(self, html_content: str, keyword: str) -> List[Dict[str, Any]]:
-        """Parse search results from HTML content"""
+        """
+        Parse search results from HTML content"""
         results = []
         
         try:
             # Simple URL extraction (in production, use proper HTML parsing)
+
+
             urls = re.findall(r'https?://[^\s<>"]+', html_content)
+
             
             for url in urls[:10]:  # Limit to 10 results per keyword
                 if keyword.lower() in html_content.lower():
@@ -319,11 +357,13 @@ class PlatformMonitor:
                         'detection_method': 'keyword_search',
                         'keyword': keyword
                     })
+
             
             return results
             
         except Exception as e:
             logger.error(f"Search result parsing failed: {e}")
+
             return []
     
     async def _analyze_potential_violation(self, target: MonitoringTarget, 
@@ -331,17 +371,25 @@ class PlatformMonitor:
         """Analyze search result for potential violation"""
         try:
             # Calculate confidence score
+
             similarity = search_result.get('similarity', 0.0)
+
+
             confidence_score = similarity * target.sensitivity_level
             
             # Determine violation type
+
             violation_type = self._determine_violation_type(search_result)
             
             # Determine severity
+
             severity = self._determine_severity(confidence_score, violation_type)
             
             # Collect evidence
+
             evidence = await self._collect_evidence(search_result)
+
+
             
             violation = ViolationDetection(
                 violation_id=str(uuid.uuid4()),
@@ -372,16 +420,19 @@ class PlatformMonitor:
             
             # Add to detection history
             self.detection_history.append(violation)
+
             
             return violation
             
         except Exception as e:
             logger.error(f"Violation analysis failed: {e}")
+
             return None
     
     def _determine_violation_type(self, search_result: Dict[str, Any]) -> ViolationType:
         """Determine type of violation based on search result"""
         similarity = search_result.get('similarity', 0.0)
+
         
         if similarity >= 0.95:
             return ViolationType.EXACT_MATCH
@@ -393,7 +444,8 @@ class PlatformMonitor:
             return ViolationType.UNAUTHORIZED_USE
     
     def _determine_severity(self, confidence_score: float, violation_type: ViolationType) -> ViolationSeverity:
-        """Determine violation severity"""
+        """
+        Determine violation severity"""
         if confidence_score >= 0.95:
             return ViolationSeverity.CRITICAL
         elif confidence_score >= 0.85:
@@ -406,7 +458,8 @@ class PlatformMonitor:
             return ViolationSeverity.INFORMATIONAL
     
     async def _collect_evidence(self, search_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Collect evidence for potential violation"""
+        """
+        Collect evidence for potential violation"""
         evidence = {
             'detection_timestamp': datetime.utcnow().isoformat(),
             'platform': self.config.platform_name,
@@ -425,10 +478,13 @@ class PlatformMonitor:
                 async with self.session.get(search_result['url']) as response:
                     if response.status == 200:
                         evidence['response_headers'] = dict(response.headers)
+
                         evidence['content_length'] = response.headers.get('content-length', 0)
+
                         evidence['content_type'] = response.headers.get('content-type', '')
         except Exception as e:
             evidence['evidence_collection_error'] = str(e)
+
         
         return evidence
 
@@ -442,7 +498,8 @@ class ViolationMonitoringSystem:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize violation monitoring system"""
+        """
+        Initialize violation monitoring system"""
         self.config = config or {}
         
         # Core components
@@ -461,6 +518,7 @@ class ViolationMonitoringSystem:
         
         # Initialize platform configurations
         self._initialize_platform_configs()
+
         
         logger.info("Violation Monitoring System initialized")
     
@@ -468,6 +526,7 @@ class ViolationMonitoringSystem:
         """Initialize platform monitoring configurations"""
         
         # Video streaming platforms
+
         video_platforms = [
             ('youtube', 'YouTube', 'https://www.youtube.com'),
             ('vimeo', 'Vimeo', 'https://vimeo.com'),
@@ -477,6 +536,7 @@ class ViolationMonitoringSystem:
         ]
         
         # Music streaming platforms
+
         music_platforms = [
             ('spotify', 'Spotify', 'https://open.spotify.com'),
             ('soundcloud', 'SoundCloud', 'https://soundcloud.com'),
@@ -485,6 +545,7 @@ class ViolationMonitoringSystem:
         ]
         
         # Social media platforms
+
         social_platforms = [
             ('facebook', 'Facebook', 'https://www.facebook.com'),
             ('instagram', 'Instagram', 'https://www.instagram.com'),
@@ -496,6 +557,7 @@ class ViolationMonitoringSystem:
         ]
         
         # File sharing platforms
+
         file_platforms = [
             ('dropbox', 'Dropbox', 'https://www.dropbox.com'),
             ('googledrive', 'Google Drive', 'https://drive.google.com'),
@@ -504,6 +566,7 @@ class ViolationMonitoringSystem:
         ]
         
         # Marketplace platforms
+
         marketplace_platforms = [
             ('etsy', 'Etsy', 'https://www.etsy.com'),
             ('ebay', 'eBay', 'https://www.ebay.com'),
@@ -512,6 +575,7 @@ class ViolationMonitoringSystem:
         ]
         
         # Blog and news platforms
+
         content_platforms = [
             ('medium', 'Medium', 'https://medium.com'),
             ('wordpress', 'WordPress', 'https://wordpress.com'),
@@ -520,26 +584,34 @@ class ViolationMonitoringSystem:
         ]
         
         # Search engines
+
         search_platforms = [
             ('google', 'Google Search', 'https://www.google.com'),
             ('bing', 'Bing', 'https://www.bing.com'),
             ('duckduckgo', 'DuckDuckGo', 'https://duckduckgo.com')
         ]
+
         
         all_platforms = (
             video_platforms + music_platforms + social_platforms + 
             file_platforms + marketplace_platforms + content_platforms + search_platforms
         )
+
         
         for platform_id, name, base_url in all_platforms:
             config = self._create_platform_config(platform_id, name, base_url)
+
+
             monitor = PlatformMonitor(config)
+
             self.platform_monitors[platform_id] = monitor
     
     def _create_platform_config(self, platform_id: str, name: str, base_url: str) -> PlatformConfiguration:
-        """Create platform configuration"""
+        """
+        Create platform configuration"""
         
         # Determine platform type
+
         platform_type = PlatformType.SOCIAL_MEDIA  # Default
         if 'tube' in name.lower() or 'video' in name.lower() or 'vimeo' in name.lower():
             platform_type = PlatformType.VIDEO_STREAMING
@@ -577,11 +649,13 @@ class ViolationMonitoringSystem:
             detection_methods=['keyword_search', 'image_search', 'audio_fingerprint'],
             confidence_threshold=0.7,
             scan_frequency=3600,  # 1 hour
+
             is_active=True
         )
     
     async def add_monitoring_target(self, target: MonitoringTarget):
-        """Add content for monitoring"""
+        """
+        Add content for monitoring"""
         try:
             self.monitoring_targets[target.target_id] = target
             logger.info(f"Added monitoring target: {target.target_id}")
@@ -589,9 +663,11 @@ class ViolationMonitoringSystem:
             # Start monitoring if not already running
             if not self.is_monitoring:
                 await self.start_monitoring()
+
                 
         except Exception as e:
             logger.error(f"Failed to add monitoring target: {e}")
+
             raise
     
     async def remove_monitoring_target(self, target_id: str):
@@ -604,9 +680,11 @@ class ViolationMonitoringSystem:
             # Stop monitoring if no targets remain
             if not self.monitoring_targets and self.is_monitoring:
                 await self.stop_monitoring()
+
                 
         except Exception as e:
             logger.error(f"Failed to remove monitoring target: {e}")
+
             raise
     
     async def start_monitoring(self):
@@ -614,14 +692,18 @@ class ViolationMonitoringSystem:
         try:
             if self.is_monitoring:
                 logger.warning("Monitoring already running")
+
                 return
             
             self.is_monitoring = True
             self.monitoring_task = asyncio.create_task(self._monitoring_loop())
+
             logger.info("Violation monitoring started")
+
             
         except Exception as e:
             logger.error(f"Failed to start monitoring: {e}")
+
             self.is_monitoring = False
             raise
     
@@ -632,6 +714,7 @@ class ViolationMonitoringSystem:
             
             if self.monitoring_task:
                 self.monitoring_task.cancel()
+
                 try:
                     await self.monitoring_task
                 except asyncio.CancelledError:
@@ -641,8 +724,10 @@ class ViolationMonitoringSystem:
             # Cleanup platform monitors
             for monitor in self.platform_monitors.values():
                 await monitor.cleanup()
+
             
             logger.info("Violation monitoring stopped")
+
             
         except Exception as e:
             logger.error(f"Failed to stop monitoring: {e}")
@@ -663,25 +748,33 @@ class ViolationMonitoringSystem:
                 await self._update_monitoring_metrics(scan_start_time)
                 
                 # Adaptive sleep based on violation activity
+
                 sleep_duration = self._calculate_adaptive_sleep()
+
                 await asyncio.sleep(sleep_duration)
+
                 
         except asyncio.CancelledError:
             logger.info("Monitoring loop cancelled")
         except Exception as e:
             logger.error(f"Monitoring loop error: {e}")
+
             self.is_monitoring = False
     
     async def _perform_scan_cycle(self):
         """Perform one complete scan cycle across all platforms"""
         try:
             targets = list(self.monitoring_targets.values())
+
             if not targets:
                 return
             
             # Group platforms by scan frequency
+
             platforms_to_scan = []
+
             current_time = datetime.utcnow()
+
             
             for platform_id, monitor in self.platform_monitors.items():
                 if not monitor.config.is_active:
@@ -691,22 +784,28 @@ class ViolationMonitoringSystem:
                 if (monitor.last_scan_time is None or 
                     (current_time - monitor.last_scan_time).seconds >= monitor.config.scan_frequency):
                     platforms_to_scan.append(monitor)
+
             
             if not platforms_to_scan:
                 return
             
             # Perform concurrent scans with rate limiting
+
             semaphore = asyncio.Semaphore(10)  # Limit concurrent scans
+
             scan_tasks = []
             
             for monitor in platforms_to_scan:
                 task = self._scan_platform_with_semaphore(semaphore, monitor, targets)
+
                 scan_tasks.append(task)
             
             # Execute scans and collect results
+
             scan_results = await asyncio.gather(*scan_tasks, return_exceptions=True)
             
             # Process scan results
+
             total_violations = 0
             for result in scan_results:
                 if isinstance(result, list):
@@ -718,8 +817,10 @@ class ViolationMonitoringSystem:
                         self.active_violations[violation.violation_id] = violation
                 elif isinstance(result, Exception):
                     logger.error(f"Scan error: {result}")
+
             
             logger.info(f"Scan cycle completed: {total_violations} violations detected across {len(platforms_to_scan)} platforms")
+
             
         except Exception as e:
             logger.error(f"Scan cycle failed: {e}")
@@ -731,8 +832,10 @@ class ViolationMonitoringSystem:
         async with semaphore:
             try:
                 return await monitor.scan_for_violations(targets)
+
             except Exception as e:
                 logger.error(f"Platform scan failed for {monitor.config.platform_name}: {e}")
+
                 return []
     
     async def _process_violations(self):
@@ -744,21 +847,25 @@ class ViolationMonitoringSystem:
                     continue
                 
                 # Determine escalation action
+
                 escalation_action = await self._determine_escalation_action(violation)
                 
                 # Execute escalation
+
                 success = await self._execute_escalation(violation, escalation_action)
                 
                 # Update violation status
                 if success:
                     violation.escalation_status = 'escalated'
                     violation.actions_taken.append(escalation_action.value)
+
                 else:
                     violation.escalation_status = 'failed'
                 
                 # Notify owner if required
                 if not violation.owner_notified and violation.severity in [ViolationSeverity.HIGH, ViolationSeverity.CRITICAL]:
                     await self._notify_owner(violation)
+
                     violation.owner_notified = True
                 
         except Exception as e:
@@ -768,6 +875,7 @@ class ViolationMonitoringSystem:
         """Determine appropriate escalation action"""
         
         # Get target escalation rules
+
         target = self.monitoring_targets.get(violation.target_id)
         if not target:
             return EscalationAction.MONITOR_ONLY
@@ -793,40 +901,49 @@ class ViolationMonitoringSystem:
             return EscalationAction.MONITOR_ONLY
     
     async def _execute_escalation(self, violation: ViolationDetection, action: EscalationAction) -> bool:
-        """Execute escalation action"""
+        """
+        Execute escalation action"""
         try:
             if action == EscalationAction.MONITOR_ONLY:
                 return True
             
             elif action == EscalationAction.NOTIFY_OWNER:
                 return await self._send_owner_notification(violation)
+
             
             elif action == EscalationAction.AUTOMATED_TAKEDOWN:
                 return await self._submit_takedown_request(violation)
+
             
             elif action == EscalationAction.LEGAL_NOTICE:
                 return await self._send_legal_notice(violation)
+
             
             elif action == EscalationAction.COURT_ACTION:
                 return await self._initiate_court_action(violation)
+
             
             elif action == EscalationAction.EMERGENCY_RESPONSE:
                 return await self._execute_emergency_response(violation)
+
             
             return False
             
         except Exception as e:
             logger.error(f"Escalation execution failed: {e}")
+
             return False
     
     async def _submit_takedown_request(self, violation: ViolationDetection) -> bool:
         """Submit automated takedown request"""
         try:
             platform_monitor = self.platform_monitors.get(violation.platform_id)
+
             if not platform_monitor or not platform_monitor.session:
                 return False
             
             # Prepare takedown request data
+
             takedown_data = {
                 'violation_id': violation.violation_id,
                 'reported_url': violation.detected_url,
@@ -837,22 +954,28 @@ class ViolationMonitoringSystem:
             }
             
             # Submit takedown request (simulated)
+
+
             takedown_url = platform_monitor.config.api_endpoints.get('report', '')
+
             if takedown_url:
                 # In production, this would submit actual takedown requests
                 logger.info(f"Takedown request submitted for violation {violation.violation_id}")
+
                 return True
             
             return False
             
         except Exception as e:
             logger.error(f"Takedown request failed: {e}")
+
             return False
     
     async def _send_legal_notice(self, violation: ViolationDetection) -> bool:
         """Send legal notice for violation"""
         try:
             # Generate legal notice
+
             legal_notice = {
                 'violation_id': violation.violation_id,
                 'platform': violation.platform_id,
@@ -865,21 +988,26 @@ class ViolationMonitoringSystem:
             
             # In production, this would send actual legal notices
             logger.info(f"Legal notice generated for violation {violation.violation_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Legal notice generation failed: {e}")
+
             return False
     
     async def _send_owner_notification(self, violation: ViolationDetection) -> bool:
         """Send notification to content owner"""
         try:
             # Get target information
+
             target = self.monitoring_targets.get(violation.target_id)
+
             if not target:
                 return False
             
             # Create notification
+
             notification = {
                 'violation_id': violation.violation_id,
                 'content_id': target.content_id,
@@ -893,10 +1021,12 @@ class ViolationMonitoringSystem:
             
             # In production, this would send actual notifications
             logger.info(f"Owner notification sent for violation {violation.violation_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Owner notification failed: {e}")
+
             return False
     
     async def _notify_owner(self, violation: ViolationDetection):
@@ -904,9 +1034,11 @@ class ViolationMonitoringSystem:
         await self._send_owner_notification(violation)
     
     async def _initiate_court_action(self, violation: ViolationDetection) -> bool:
-        """Initiate court action for serious violations"""
+        """
+        Initiate court action for serious violations"""
         try:
             # Generate court filing documentation
+
             court_filing = {
                 'violation_id': violation.violation_id,
                 'legal_basis': 'Copyright infringement',
@@ -917,16 +1049,19 @@ class ViolationMonitoringSystem:
             
             # In production, this would interface with legal systems
             logger.info(f"Court action initiated for violation {violation.violation_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Court action initiation failed: {e}")
+
             return False
     
     async def _execute_emergency_response(self, violation: ViolationDetection) -> bool:
         """Execute emergency response for critical violations"""
         try:
             # Immediate actions for emergency response
+
             actions = [
                 self._submit_takedown_request(violation),
                 self._send_legal_notice(violation),
@@ -935,22 +1070,28 @@ class ViolationMonitoringSystem:
             ]
             
             # Execute all actions concurrently
+
             results = await asyncio.gather(*actions, return_exceptions=True)
             
             # Check if at least one action succeeded
+
             success_count = sum(1 for result in results if result is True)
+
             
             logger.info(f"Emergency response executed for violation {violation.violation_id}: {success_count}/{len(actions)} actions successful")
+
             return success_count > 0
             
         except Exception as e:
             logger.error(f"Emergency response failed: {e}")
+
             return False
     
     async def _escalate_to_authorities(self, violation: ViolationDetection) -> bool:
         """Escalate to relevant authorities"""
         try:
             # Generate authority report
+
             authority_report = {
                 'violation_id': violation.violation_id,
                 'violation_severity': violation.severity.value,
@@ -962,10 +1103,12 @@ class ViolationMonitoringSystem:
             
             # In production, this would contact relevant authorities
             logger.info(f"Authority escalation reported for violation {violation.violation_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Authority escalation failed: {e}")
+
             return False
     
     def _get_recommended_action(self, violation: ViolationDetection) -> str:
@@ -984,8 +1127,11 @@ class ViolationMonitoringSystem:
         base_sleep = 60.0  # 1 minute base
         
         # Adjust based on violation count
-        active_violations = len([v for v in self.active_violations.values() 
+
+        active_violations = len([v for v in self.active_violations.values()
+ 
                                if v.escalation_status == 'pending'])
+
         
         if active_violations > 10:
             return base_sleep * 0.5  # Faster monitoring
@@ -995,7 +1141,8 @@ class ViolationMonitoringSystem:
             return base_sleep
     
     async def _update_monitoring_metrics(self, scan_start_time: float):
-        """Update monitoring performance metrics"""
+        """
+        Update monitoring performance metrics"""
         try:
             scan_duration = time.time() - scan_start_time
             
@@ -1006,15 +1153,22 @@ class ViolationMonitoringSystem:
             )
             
             # Update violation metrics
+
             total_violations = len(self.active_violations)
-            pending_violations = len([v for v in self.active_violations.values() 
+
+
+            pending_violations = len([v for v in self.active_violations.values()
+ 
                                    if v.escalation_status == 'pending'])
+
             
             self.monitoring_metrics['total_violations'] = total_violations
             self.monitoring_metrics['pending_violations'] = pending_violations
             
             # Update platform metrics
+
             active_platforms = len([m for m in self.platform_monitors.values() if m.config.is_active])
+
             self.monitoring_metrics['active_platforms'] = active_platforms
             
             # Add scan to history
@@ -1036,25 +1190,33 @@ class ViolationMonitoringSystem:
         """Generate comprehensive monitoring report"""
         try:
             end_time = datetime.utcnow()
+
+
             start_time = end_time - timedelta(hours=period_hours)
             
             # Filter violations by time period
+
             period_violations = [
                 v for v in self.active_violations.values()
+
                 if start_time <= v.detection_timestamp <= end_time
             ]
             
             # Calculate metrics
+
             violations_by_severity = {}
             for severity in ViolationSeverity:
                 violations_by_severity[severity.value] = len([
                     v for v in period_violations if v.severity == severity
                 ])
+
+
             
             violations_by_platform = {}
             for violation in period_violations:
                 platform = violation.platform_id
                 violations_by_platform[platform] = violations_by_platform.get(platform, 0) + 1
+
             
             actions_taken = {}
             for violation in period_violations:
@@ -1062,11 +1224,14 @@ class ViolationMonitoringSystem:
                     actions_taken[action] = actions_taken.get(action, 0) + 1
             
             # Calculate response time metrics
+
             response_times = []
             for violation in period_violations:
                 if violation.actions_taken:
                     # Estimate response time (in production, track actual times)
+
                     response_times.append(300.0)  # 5 minutes average
+
             
             response_time_metrics = {
                 'avg_response_time': sum(response_times) / len(response_times) if response_times else 0,
@@ -1075,7 +1240,9 @@ class ViolationMonitoringSystem:
             }
             
             # Generate recommendations
+
             recommendations = self._generate_monitoring_recommendations(period_violations)
+
             
             return MonitoringReport(
                 report_id=str(uuid.uuid4()),
@@ -1096,9 +1263,11 @@ class ViolationMonitoringSystem:
                 recommendations=recommendations,
                 generated_timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             logger.error(f"Report generation failed: {e}")
+
             raise
     
     def _generate_monitoring_recommendations(self, violations: List[ViolationDetection]) -> List[str]:
@@ -1110,18 +1279,22 @@ class ViolationMonitoringSystem:
             recommendations.append("High violation volume detected - consider increasing monitoring frequency")
         
         # Platform analysis
+
         platform_counts = {}
         for violation in violations:
             platform_counts[violation.platform_id] = platform_counts.get(violation.platform_id, 0) + 1
         
         if platform_counts:
             top_platform = max(platform_counts, key=platform_counts.get)
+
             recommendations.append(f"Platform '{top_platform}' has highest violation count - focus enforcement efforts")
         
         # Severity analysis
+
         critical_violations = [v for v in violations if v.severity == ViolationSeverity.CRITICAL]
         if len(critical_violations) > 5:
             recommendations.append("Multiple critical violations detected - consider legal consultation")
+
         
         return recommendations
     

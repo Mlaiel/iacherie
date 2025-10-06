@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class EscrowServiceCore:
-    """Advanced EscrowServiceCore System"""
+    """
+Advanced EscrowServiceCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class EscrowServiceCore:
 # Module exports
 __all__ = ["EscrowServiceCore"]
 
-logger.info("🤝 EscrowServiceCore module loaded")
+logger.info("🤝 EscrowServiceCore module initialized")

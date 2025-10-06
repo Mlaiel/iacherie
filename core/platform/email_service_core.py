@@ -28,7 +28,8 @@ import re
 logger = logging.getLogger(__name__)
 
 class EmailStatus(str, Enum):
-    """Email delivery status"""
+    """
+Email delivery status"""
     PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -38,14 +39,16 @@ class EmailStatus(str, Enum):
     CLICKED = "clicked"
 
 class EmailPriority(str, Enum):
-    """Email priority levels"""
+    """
+Email priority levels"""
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
 
 class EmailProvider(str, Enum):
-    """Supported email providers"""
+    """
+Supported email providers"""
     SMTP = "smtp"
     SENDGRID = "sendgrid"
     MAILGUN = "mailgun"
@@ -54,7 +57,8 @@ class EmailProvider(str, Enum):
 
 @dataclass
 class EmailAttachment:
-    """Email attachment"""
+    """
+Email attachment"""
     filename: str
     content: bytes
     mime_type: str
@@ -62,7 +66,8 @@ class EmailAttachment:
 
 @dataclass
 class EmailTemplate:
-    """Email template"""
+    """
+Email template"""
     template_id: str
     name: str
     subject: str
@@ -74,7 +79,8 @@ class EmailTemplate:
 
 @dataclass
 class EmailMessage:
-    """Email message"""
+    """
+Email message"""
     message_id: str
     to_addresses: List[str]
     from_address: str
@@ -98,7 +104,8 @@ class EmailMessage:
 
 @dataclass
 class EmailMetrics:
-    """Email service metrics"""
+    """
+Email service metrics"""
     emails_sent: int = 0
     emails_delivered: int = 0
     emails_bounced: int = 0
@@ -111,10 +118,12 @@ class EmailMetrics:
     click_rate: float = 0.0
 
 class EmailServiceCore:
-    """Enterprise email service system"""
+    """
+Enterprise email service system"""
     
     def __init__(self, level: str = "enterprise"):
-        """Initialize email service core"""
+        """
+Initialize email service core"""
         self.level = level
         self.messages: Dict[str, EmailMessage] = {}
         self.templates: Dict[str, EmailTemplate] = {}
@@ -153,7 +162,8 @@ class EmailServiceCore:
         logger.info(f"📧 Email Service Core initialized - Level: {level}")
 
     def _initialize_default_templates(self):
-        """Initialize default email templates"""
+        """
+Initialize default email templates"""
         
         # Welcome email template
         welcome_template = EmailTemplate(
@@ -230,7 +240,8 @@ class EmailServiceCore:
         self.templates[reset_template.template_id] = reset_template
 
     def _start_email_processors(self):
-        """Start background email processing tasks"""
+        """
+Start background email processing tasks"""
         
         # Main email sender
         sender_task = asyncio.create_task(self._email_sender_loop())
@@ -249,7 +260,8 @@ class EmailServiceCore:
         provider: EmailProvider,
         config: Dict[str, Any]
     ):
-        """Configure email provider"""
+        """
+Configure email provider"""
         
         self.providers[provider.value] = config
         
@@ -280,7 +292,8 @@ class EmailServiceCore:
         text_content: str,
         variables: Optional[List[str]] = None
     ) -> str:
-        """Create email template"""
+        """
+Create email template"""
         
         template_id = f"template_{int(time.time())}_{len(self.templates)}"
         
@@ -311,7 +324,8 @@ class EmailServiceCore:
         priority: EmailPriority = EmailPriority.NORMAL,
         scheduled_at: Optional[datetime] = None
     ) -> str:
-        """Send email message"""
+        """
+Send email message"""
         
         # Normalize to_addresses
         if isinstance(to_addresses, str):
@@ -356,7 +370,8 @@ class EmailServiceCore:
         from_address: Optional[str] = None,
         priority: EmailPriority = EmailPriority.NORMAL
     ) -> str:
-        """Send email using template"""
+        """
+Send email using template"""
         
         template = self.templates.get(template_id)
         if not template:
@@ -394,7 +409,8 @@ class EmailServiceCore:
         return message_id
 
     def _process_template(self, template_text: str, variables: Dict[str, Any]) -> str:
-        """Process template with variables"""
+        """
+Process template with variables"""
         
         result = template_text
         
@@ -405,7 +421,8 @@ class EmailServiceCore:
         return result
 
     async def _email_sender_loop(self):
-        """Main email sending loop"""
+        """
+Main email sending loop"""
         
         while not self._shutdown_event.is_set():
             try:
@@ -423,7 +440,8 @@ class EmailServiceCore:
                 logger.error(f"Email sender error: {str(e)}")
 
     async def _send_message(self, message: EmailMessage):
-        """Send individual email message"""
+        """
+Send individual email message"""
         
         try:
             # Validate email addresses
@@ -463,7 +481,8 @@ class EmailServiceCore:
                 self.metrics.emails_failed += len(message.to_addresses)
 
     async def _send_via_smtp(self, message: EmailMessage):
-        """Send email via SMTP"""
+        """
+Send email via SMTP"""
         
         smtp_config = self.providers.get("smtp", {})
         if not smtp_config:
@@ -526,21 +545,21 @@ class EmailServiceCore:
             raise Exception(f"SMTP send failed: {str(e)}")
 
     async def _send_via_api(self, message: EmailMessage):
-        """Send email via API provider"""
-        
-        # Placeholder for API-based providers
-        # In production, would implement specific provider APIs
+        """
+Send email via API provider"""        # In production, would implement specific provider APIs
         
         logger.info(f"API send not implemented for {self.active_provider.value}")
         raise NotImplementedError(f"API sending not implemented for {self.active_provider.value}")
 
     def _is_valid_email(self, email: str) -> bool:
-        """Validate email address format"""
+        """
+Validate email address format"""
         pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         return re.match(pattern, email) is not None
 
     async def _retry_processor_loop(self):
-        """Process retry queue"""
+        """
+Process retry queue"""
         
         while not self._shutdown_event.is_set():
             try:
@@ -562,7 +581,8 @@ class EmailServiceCore:
                 logger.error(f"Retry processor error: {str(e)}")
 
     async def _metrics_updater_loop(self):
-        """Update email metrics"""
+        """
+Update email metrics"""
         
         while not self._shutdown_event.is_set():
             try:
@@ -581,7 +601,8 @@ class EmailServiceCore:
                 logger.error(f"Metrics updater error: {str(e)}")
 
     async def track_delivery(self, message_id: str):
-        """Track email delivery"""
+        """
+Track email delivery"""
         
         message = self.messages.get(message_id)
         if message:
@@ -590,7 +611,8 @@ class EmailServiceCore:
             self.metrics.emails_delivered += 1
 
     async def track_bounce(self, message_id: str, reason: str):
-        """Track email bounce"""
+        """
+Track email bounce"""
         
         message = self.messages.get(message_id)
         if message:
@@ -599,7 +621,8 @@ class EmailServiceCore:
             self.metrics.emails_bounced += 1
 
     async def track_open(self, message_id: str):
-        """Track email open"""
+        """
+Track email open"""
         
         message = self.messages.get(message_id)
         if message:
@@ -609,7 +632,8 @@ class EmailServiceCore:
             self.metrics.emails_opened += 1
 
     async def track_click(self, message_id: str, link_url: str):
-        """Track email link click"""
+        """
+Track email link click"""
         
         message = self.messages.get(message_id)
         if message:
@@ -623,11 +647,13 @@ class EmailServiceCore:
             self.metrics.emails_clicked += 1
 
     def get_message(self, message_id: str) -> Optional[EmailMessage]:
-        """Get email message by ID"""
+        """
+Get email message by ID"""
         return self.messages.get(message_id)
 
     def get_template(self, template_id: str) -> Optional[EmailTemplate]:
-        """Get email template by ID"""
+        """
+Get email template by ID"""
         return self.templates.get(template_id)
 
     def list_messages(
@@ -635,7 +661,8 @@ class EmailServiceCore:
         status: Optional[EmailStatus] = None,
         limit: int = 100
     ) -> List[EmailMessage]:
-        """List email messages"""
+        """
+List email messages"""
         
         messages = list(self.messages.values())
         
@@ -648,11 +675,13 @@ class EmailServiceCore:
         return messages[:limit]
 
     def get_metrics(self) -> EmailMetrics:
-        """Get email service metrics"""
+        """
+Get email service metrics"""
         return self.metrics
 
     async def health_check(self) -> bool:
-        """Health check for email service"""
+        """
+Health check for email service"""
         try:
             # Check if any provider is configured
             if not self.providers:
@@ -679,7 +708,8 @@ class EmailServiceCore:
             return False
 
     async def shutdown(self):
-        """Shutdown email service"""
+        """
+Shutdown email service"""
         logger.info("🛑 Shutting down email service")
         
         # Signal shutdown
@@ -699,4 +729,4 @@ __all__ = [
     "EmailStatus", "EmailPriority", "EmailProvider", "EmailMetrics"
 ]
 
-logger.info("📧 Email Service Core module loaded")
+logger.info("📧 Email Service Core module initialized")

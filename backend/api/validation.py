@@ -24,7 +24,6 @@ import hashlib
 try:
     import magic
 except ImportError:
-    # Mock magic module if not available
     class magic:
         @staticmethod
         def from_buffer(content, mime=True):
@@ -72,12 +71,16 @@ class BaseValidatedModel(BaseModel):
     
     class Config:
         validate_assignment = True
+
         use_enum_values = True
+
         populate_by_name = True
+
         arbitrary_types_allowed = True
 
 class PaginationParams(BaseValidatedModel):
-    """Standard pagination parameters"""
+    """
+        Standard pagination parameters"""
     page: int = Field(default=1, ge=1, le=10000, description="Page number")
     limit: int = Field(default=20, ge=1, le=100, description="Items per page")
     offset: Optional[int] = Field(default=None, ge=0, description="Offset for pagination")
@@ -116,6 +119,7 @@ class UserValidation(BaseValidatedModel):
     @classmethod
     def validate_names(cls, v):
         # Remove any HTML tags and sanitize
+
         cleaned = bleach.clean(v, tags=[], strip=True)
         if len(cleaned.strip()) == 0:
             raise ValueError('Name cannot be empty or contain only HTML')
@@ -129,12 +133,14 @@ class PasswordValidation(BaseValidatedModel):
     @model_validator(mode="after")
     def validate_passwords_match(self):
         password = self.password
+
         confirm_password = self.confirm_password
         
         if password != confirm_password:
             raise ValueError('Passwords do not match')
         
         # Password strength validation
+
         errors = []
         if not re.search(r'[A-Z]', password):
             errors.append('Password must contain at least one uppercase letter')
@@ -144,9 +150,11 @@ class PasswordValidation(BaseValidatedModel):
             errors.append('Password must contain at least one digit')
         if not re.search(r'[!@#$%^&*()_+\-=\[\]{}|;\':",./<>?]', password):
             errors.append('Password must contain at least one special character')
+
         
         if errors:
             raise ValueError('; '.join(errors))
+
         
         return self
 
@@ -178,16 +186,20 @@ class ContentMetadataValidation(BaseValidatedModel):
             return v
         
         # Clean and validate each tag
+
         cleaned_tags = []
         for tag in v:
             cleaned = bleach.clean(tag, tags=[], strip=True).lower()
+
             if len(cleaned) > 0 and len(cleaned) <= 30:
                 cleaned_tags.append(cleaned)
+
         
         return cleaned_tags[:20]  # Limit to 20 tags
 
 class FileUploadValidation(BaseValidatedModel):
-    """File upload validation"""
+    """
+        File upload validation"""
     filename: str = Field(..., min_length=1, max_length=255)
     content_type: str = Field(..., description="MIME type of the file")
     file_size: int = Field(..., ge=1, le=500_000_000, description="File size in bytes (max 500MB)")
@@ -197,11 +209,13 @@ class FileUploadValidation(BaseValidatedModel):
     @classmethod
     def validate_filename(cls, v):
         # Remove path traversal attempts
+
         cleaned = Path(v).name
         
         # Check for allowed characters
         if not re.match(r'^[a-zA-Z0-9._-]+$', cleaned):
             raise ValueError('Filename contains invalid characters')
+
         
         return cleaned
     
@@ -217,6 +231,7 @@ class FileUploadValidation(BaseValidatedModel):
         
         if v not in allowed_types:
             raise ValueError(f'Content type {v} not allowed')
+
         
         return v
 
@@ -256,14 +271,17 @@ class CollaborationValidation(BaseValidatedModel):
     def validate_revenue_split(cls, v):
         if v is None:
             return v
+
         
         total = sum(v.values())
         if total != Decimal('100'):
             raise ValueError('Revenue split must total 100%')
+
         
         for percentage in v.values():
             if percentage < 0 or percentage > 100:
                 raise ValueError('Revenue split percentages must be between 0 and 100')
+
         
         return v
 
@@ -284,7 +302,8 @@ class FileValidationService:
         }
     
     async def validate_upload_file(self, file: UploadFile) -> Dict[str, Any]:
-        """Comprehensive file validation"""
+        """
+        Comprehensive file validation"""
         validation_result = {
             'valid': True,
             'errors': [],
@@ -303,12 +322,14 @@ class FileValidationService:
             validation_result['errors'].append(f'Content type {file.content_type} not allowed')
         
         # Read file content for additional validation
+
         content = await file.read()
         await file.seek(0)  # Reset file pointer
         
         # Validate actual file type (magic number)
         try:
             actual_mime = magic.from_buffer(content, mime=True)
+
             if actual_mime != file.content_type:
                 validation_result['warnings'].append(f'Declared MIME type {file.content_type} differs from actual {actual_mime}')
         except Exception:
@@ -322,27 +343,34 @@ class FileValidationService:
         return validation_result
     
     def validate_image_dimensions(self, width: int, height: int) -> List[str]:
-        """Validate image dimensions"""
+        """
+        Validate image dimensions"""
         errors = []
         
         if width > 10000 or height > 10000:
             errors.append('Image dimensions too large (max 10000x10000)')
+
         
         if width < 1 or height < 1:
             errors.append('Invalid image dimensions')
+
         
         return errors
     
     def validate_video_duration(self, duration_seconds: float) -> List[str]:
-        """Validate video duration"""
+        """
+        Validate video duration"""
         errors = []
+
         
         max_duration = 3600  # 1 hour
         if duration_seconds > max_duration:
             errors.append(f'Video duration {duration_seconds}s exceeds maximum {max_duration}s')
+
         
         if duration_seconds <= 0:
             errors.append('Invalid video duration')
+
         
         return errors
 
@@ -351,11 +379,13 @@ class FileValidationService:
 # ========================================
 
 class InputSanitizer:
-    """Input sanitization for security"""
+    """
+        Input sanitization for security"""
     
     @staticmethod
     def sanitize_html(text: str, allowed_tags: List[str] = None) -> str:
-        """Sanitize HTML content"""
+        """
+        Sanitize HTML content"""
         if allowed_tags is None:
             allowed_tags = []
         
@@ -363,11 +393,14 @@ class InputSanitizer:
     
     @staticmethod
     def sanitize_filename(filename: str) -> str:
-        """Sanitize filename for security"""
+        """
+        Sanitize filename for security"""
         # Remove path components
+
         filename = Path(filename).name
         
         # Remove dangerous characters
+
         sanitized = re.sub(r'[^a-zA-Z0-9._-]', '_', filename)
         
         # Ensure not empty
@@ -378,7 +411,8 @@ class InputSanitizer:
     
     @staticmethod
     def validate_sql_injection(text: str) -> bool:
-        """Check for potential SQL injection patterns"""
+        """
+        Check for potential SQL injection patterns"""
         dangerous_patterns = [
             r"('|(\\')|(''|(\\\\')));?.*?",
             r"(select|insert|update|delete|drop|create|alter|exec|execute)\s",
@@ -406,7 +440,8 @@ def validate_request_size(max_size: int = 10_000_000):
     return decorator
 
 def validate_rate_limit(max_requests: int = 100, window_seconds: int = 60):
-    """Decorator to validate rate limits"""
+    """
+        Decorator to validate rate limits"""
     def decorator(func: Callable) -> Callable:
         async def wrapper(*args, **kwargs):
             # Implementation would check rate limits
@@ -419,14 +454,16 @@ def validate_rate_limit(max_requests: int = 100, window_seconds: int = 60):
 # ========================================
 
 class ValidationService:
-    """Main validation service consolidating all validation functionality"""
+    """
+        Main validation service consolidating all validation functionality"""
     
     def __init__(self):
         self.file_validator = FileValidationService()
         self.sanitizer = InputSanitizer()
     
     def validate_model(self, model_class: Type[BaseModel], data: Dict[str, Any]) -> BaseModel:
-        """Validate data against Pydantic model"""
+        """
+        Validate data against Pydantic model"""
         try:
             return model_class(**data)
         except Exception as e:
@@ -436,15 +473,18 @@ class ValidationService:
             )
     
     def validate_business_rules(self, data: Dict[str, Any], rules: List[Callable]) -> List[str]:
-        """Validate against business rules"""
+        """
+        Validate against business rules"""
         errors = []
         
         for rule in rules:
             try:
                 if not rule(data):
                     errors.append(f"Business rule violation: {rule.__name__}")
+
             except Exception as e:
                 errors.append(f"Business rule error: {str(e)}")
+
         
         return errors
     
@@ -457,6 +497,7 @@ class ValidationService:
         }
         
         # Check for inappropriate content (simplified)
+
         inappropriate_patterns = [
             r'\b(hate|violence|harassment)\b',
             r'\b(spam|scam|fraud)\b'
@@ -466,6 +507,7 @@ class ValidationService:
             if re.search(pattern, content.lower()):
                 result['compliant'] = False
                 result['violations'].append(f'Pattern match: {pattern}')
+
                 result['score'] -= 0.2
         
         return result
@@ -476,7 +518,8 @@ class ValidationService:
 # ========================================
 
 class BusinessRuleType(str, Enum):
-    """Types of business rules"""
+    """
+        Types of business rules"""
     REVENUE_LIMIT = "revenue_limit"
     CONTENT_QUOTA = "content_quota"
     COLLABORATION_LIMIT = "collaboration_limit"
@@ -500,9 +543,11 @@ class BusinessRuleEngine:
         self.rules = {}
         self.rule_cache = {}
         self.validation_history = defaultdict(list)
+
         
     def register_rule(self, rule_id: str, rule_config: Dict[str, Any]):
-        """Register a new business rule"""
+        """
+        Register a new business rule"""
         self.rules[rule_id] = rule_config
         
     async def validate_business_rules(
@@ -510,7 +555,8 @@ class BusinessRuleEngine:
         context: Dict[str, Any], 
         rule_types: List[BusinessRuleType] = None
     ) -> Dict[str, Any]:
-        """Validate all applicable business rules"""
+        """
+        Validate all applicable business rules"""
         try:
             results = {
                 "passed": True,
@@ -521,11 +567,13 @@ class BusinessRuleEngine:
             }
             
             # Get applicable rules
+
             applicable_rules = self._get_applicable_rules(context, rule_types)
             
             # Validate each rule
             for rule_id, rule_config in applicable_rules.items():
                 rule_result = await self._validate_single_rule(rule_id, rule_config, context)
+
                 results["rule_results"][rule_id] = rule_result
                 
                 if not rule_result["passed"]:
@@ -533,24 +581,30 @@ class BusinessRuleEngine:
                     
                     if rule_result["severity"] == RuleSeverity.ERROR:
                         results["errors"].append(rule_result)
+
                     elif rule_result["severity"] == RuleSeverity.WARNING:
                         results["warnings"].append(rule_result)
+
                     elif rule_result["severity"] == RuleSeverity.CRITICAL:
                         results["violations"].append(rule_result)
             
             # Store validation history
+
             user_id = context.get("user_id")
+
             if user_id:
                 self.validation_history[user_id].append({
                     "timestamp": datetime.utcnow(),
                     "results": results,
                     "context": context
                 })
+
             
             return results
             
         except Exception as e:
             logger.error(f"Business rule validation failed: {str(e)}")
+
             return {
                 "passed": False,
                 "violations": [],
@@ -563,18 +617,26 @@ class BusinessRuleEngine:
         """Validate revenue-related business rules"""
         try:
             user_id = context.get("user_id")
+
+
             subscription_tier = context.get("subscription_tier", "free")
+
+
             current_revenue = context.get("current_revenue", 0)
             
             # Define tier limits
+
             tier_limits = {
                 "free": {"max_monthly_revenue": 1000, "max_transactions": 50},
                 "basic": {"max_monthly_revenue": 10000, "max_transactions": 500},
                 "premium": {"max_monthly_revenue": 100000, "max_transactions": 5000},
                 "enterprise": {"max_monthly_revenue": float("inf"), "max_transactions": float("inf")}
             }
+
             
             limits = tier_limits.get(subscription_tier, tier_limits["free"])
+
+
             violations = []
             
             # Check revenue limit
@@ -586,6 +648,7 @@ class BusinessRuleEngine:
                     "limit": limits["max_monthly_revenue"],
                     "severity": RuleSeverity.ERROR
                 })
+
             
             return {
                 "passed": len(violations) == 0,
@@ -600,18 +663,26 @@ class BusinessRuleEngine:
         """Validate content quota business rules"""
         try:
             subscription_tier = context.get("subscription_tier", "free")
+
+
             current_content_count = context.get("current_content_count", 0)
+
+
             content_size_mb = context.get("content_size_mb", 0)
             
             # Define quota limits
+
             quota_limits = {
                 "free": {"max_content_items": 10, "max_storage_gb": 1, "max_file_size_mb": 100},
                 "basic": {"max_content_items": 100, "max_storage_gb": 10, "max_file_size_mb": 500},
                 "premium": {"max_content_items": 1000, "max_storage_gb": 100, "max_file_size_mb": 2000},
                 "enterprise": {"max_content_items": 10000, "max_storage_gb": 1000, "max_file_size_mb": 5000}
             }
+
             
             limits = quota_limits.get(subscription_tier, quota_limits["free"])
+
+
             violations = []
             
             # Check content count
@@ -633,6 +704,7 @@ class BusinessRuleEngine:
                     "limit": f"{limits['max_file_size_mb']}MB",
                     "severity": RuleSeverity.ERROR
                 })
+
             
             return {
                 "passed": len(violations) == 0,
@@ -647,10 +719,15 @@ class BusinessRuleEngine:
         """Validate copyright compliance rules"""
         try:
             content_data = context.get("content_data", {})
+
+
             copyright_info = content_data.get("copyright_info", {})
+
+
             violations = []
             
             # Check for required copyright information
+
             required_fields = ["owner", "license_type", "usage_rights"]
             for field in required_fields:
                 if not copyright_info.get(field):
@@ -664,6 +741,7 @@ class BusinessRuleEngine:
             # Check for copyrighted material detection
             if content_data.get("copyright_detected", False):
                 confidence = content_data.get("copyright_confidence", 0)
+
                 if confidence > 0.8:
                     violations.append({
                         "rule": "copyrighted_content_detected",
@@ -671,6 +749,7 @@ class BusinessRuleEngine:
                         "confidence": confidence,
                         "severity": RuleSeverity.CRITICAL
                     })
+
                 elif confidence > 0.5:
                     violations.append({
                         "rule": "possible_copyrighted_content",
@@ -678,6 +757,7 @@ class BusinessRuleEngine:
                         "confidence": confidence,
                         "severity": RuleSeverity.WARNING
                     })
+
             
             return {
                 "passed": len([v for v in violations if v["severity"] == RuleSeverity.CRITICAL]) == 0,
@@ -691,17 +771,23 @@ class BusinessRuleEngine:
         """Validate collaboration business rules"""
         try:
             subscription_tier = context.get("subscription_tier", "free")
+
+
             current_collaborations = context.get("current_collaborations", 0)
             
             # Define collaboration limits
+
             collab_limits = {
                 "free": {"max_collaborations": 1, "max_participants": 2},
                 "basic": {"max_collaborations": 5, "max_participants": 5},
                 "premium": {"max_collaborations": 20, "max_participants": 10},
                 "enterprise": {"max_collaborations": 100, "max_participants": 50}
             }
+
             
             limits = collab_limits.get(subscription_tier, collab_limits["free"])
+
+
             violations = []
             
             if current_collaborations >= limits["max_collaborations"]:
@@ -712,6 +798,7 @@ class BusinessRuleEngine:
                     "limit": limits["max_collaborations"],
                     "severity": RuleSeverity.ERROR
                 })
+
             
             return {
                 "passed": len(violations) == 0,
@@ -745,10 +832,12 @@ class BusinessRuleEngine:
         """Check if a rule applies to the given context"""
         try:
             conditions = rule_config.get("conditions", {})
+
             
             for field, expected_value in conditions.items():
                 if field not in context:
                     return False
+
                 
                 actual_value = context[field]
                 
@@ -775,18 +864,24 @@ class BusinessRuleEngine:
         """Validate a single business rule"""
         try:
             rule_type = rule_config.get("type")
+
             
             if rule_type == BusinessRuleType.REVENUE_LIMIT:
                 return await self.validate_revenue_limits(context)
+
             elif rule_type == BusinessRuleType.CONTENT_QUOTA:
                 return await self.validate_content_quotas(context)
+
             elif rule_type == BusinessRuleType.COPYRIGHT_COMPLIANCE:
                 return await self.validate_copyright_compliance(context)
+
             elif rule_type == BusinessRuleType.COLLABORATION_LIMIT:
                 return await self.validate_collaboration_limits(context)
+
             else:
                 # Custom rule validation
                 return await self._validate_custom_rule(rule_id, rule_config, context)
+
                 
         except Exception as e:
             return {
@@ -802,7 +897,6 @@ class BusinessRuleEngine:
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Validate custom business rule"""
-        # Placeholder for custom rule validation logic
         return {
             "passed": True,
             "message": "Custom rule validation not implemented",
@@ -818,12 +912,14 @@ class EnhancedValidationService(ValidationService):
         self._register_default_rules()
     
     def _register_default_rules(self):
-        """Register default business rules"""
+        """
+        Register default business rules"""
         self.business_rule_engine.register_rule("revenue_limits", {
             "type": BusinessRuleType.REVENUE_LIMIT,
             "conditions": {"subscription_tier": {"min": "free"}},
             "severity": RuleSeverity.ERROR
         })
+
         
         self.business_rule_engine.register_rule("content_quotas", {
             "type": BusinessRuleType.CONTENT_QUOTA,
@@ -839,12 +935,15 @@ class EnhancedValidationService(ValidationService):
         """Validate data with business rules"""
         try:
             # Standard validation first
+
             standard_result = await self.validate_request(data)
             
             # Business rules validation
+
             business_result = await self.business_rule_engine.validate_business_rules(context)
             
             # Combine results
+
             combined_result = {
                 "passed": standard_result["valid"] and business_result["passed"],
                 "standard_validation": standard_result,
@@ -857,6 +956,7 @@ class EnhancedValidationService(ValidationService):
             
         except Exception as e:
             logger.error(f"Enhanced validation failed: {str(e)}")
+
             return {
                 "passed": False,
                 "error": "Validation service error",
@@ -895,23 +995,32 @@ class ComplianceValidationEngine:
         """Validate data against applicable compliance frameworks"""
         try:
             applicable_frameworks = self.regional_requirements.get(user_location, ["GDPR"])
+
+
             
             compliance_results = {}
+
             overall_compliant = True
+
             violations = []
+
             recommendations = []
             
             for framework in applicable_frameworks:
                 validator = self.compliance_frameworks.get(framework)
+
                 if validator:
                     result = await validator.validate(data, operation_type)
+
                     compliance_results[framework] = result
                     
                     if not result["compliant"]:
                         overall_compliant = False
                         violations.extend(result.get("violations", []))
+
                     
                     recommendations.extend(result.get("recommendations", []))
+
             
             return {
                 "overall_compliant": overall_compliant,
@@ -935,23 +1044,30 @@ class GDPRComplianceValidator:
     """GDPR compliance validation"""
     
     async def validate(self, data: Dict[str, Any], operation_type: str) -> Dict[str, Any]:
-        """Validate GDPR compliance"""
+        """
+        Validate GDPR compliance"""
         violations = []
+
         recommendations = []
         
         # Check for personal data processing
+
         personal_data_fields = ["email", "name", "phone", "address", "ip_address", "user_id"]
+
         has_personal_data = any(field in data for field in personal_data_fields)
+
         
         if has_personal_data:
             # Check for consent
             if not data.get("consent_given", False):
                 violations.append("GDPR: Personal data processing requires explicit consent")
+
                 recommendations.append("Obtain explicit user consent before processing personal data")
             
             # Check for lawful basis
             if not data.get("lawful_basis"):
                 violations.append("GDPR: Must specify lawful basis for processing")
+
                 recommendations.append("Define lawful basis (consent, contract, legal obligation, etc.)")
             
             # Check for data minimization
@@ -966,6 +1082,7 @@ class GDPRComplianceValidator:
         if data.get("transfer_to_third_country", False):
             if not data.get("adequacy_decision") and not data.get("safeguards"):
                 violations.append("GDPR: International transfers require adequacy decision or safeguards")
+
         
         return {
             "compliant": len(violations) == 0,
@@ -979,11 +1096,14 @@ class CCPAComplianceValidator:
     """CCPA compliance validation"""
     
     async def validate(self, data: Dict[str, Any], operation_type: str) -> Dict[str, Any]:
-        """Validate CCPA compliance"""
+        """
+        Validate CCPA compliance"""
         violations = []
+
         recommendations = []
         
         # Check for California resident data
+
         is_california_resident = data.get("state") == "CA" or data.get("location") == "California"
         
         if is_california_resident:
@@ -998,6 +1118,7 @@ class CCPAComplianceValidator:
             # Check for data sale disclosure
             if data.get("data_sale", False) and not data.get("sale_disclosed", False):
                 violations.append("CCPA: Must disclose data sales to consumers")
+
         
         return {
             "compliant": len(violations) == 0,
@@ -1011,13 +1132,18 @@ class SOXComplianceValidator:
     """SOX compliance validation for financial data"""
     
     async def validate(self, data: Dict[str, Any], operation_type: str) -> Dict[str, Any]:
-        """Validate SOX compliance"""
+        """
+        Validate SOX compliance"""
         violations = []
+
         recommendations = []
         
         # Check for financial data
+
         financial_fields = ["revenue", "payment", "transaction", "invoice", "billing"]
+
         has_financial_data = any(field in str(data).lower() for field in financial_fields)
+
         
         if has_financial_data:
             # Check for audit trail
@@ -1031,6 +1157,7 @@ class SOXComplianceValidator:
             # Check for data integrity controls
             if not data.get("integrity_check", False):
                 recommendations.append("SOX: Implement data integrity controls")
+
         
         return {
             "compliant": len(violations) == 0,
@@ -1044,13 +1171,18 @@ class HIPAAComplianceValidator:
     """HIPAA compliance validation for health data"""
     
     async def validate(self, data: Dict[str, Any], operation_type: str) -> Dict[str, Any]:
-        """Validate HIPAA compliance"""
+        """
+        Validate HIPAA compliance"""
         violations = []
+
         recommendations = []
         
         # Check for PHI (Protected Health Information)
+
         phi_fields = ["medical", "health", "diagnosis", "treatment", "ssn", "medical_record"]
+
         has_phi = any(field in str(data).lower() for field in phi_fields)
+
         
         if has_phi:
             # Check for encryption
@@ -1064,6 +1196,7 @@ class HIPAAComplianceValidator:
             # Check for business associate agreement
             if data.get("third_party_access", False) and not data.get("baa_signed", False):
                 violations.append("HIPAA: Business Associate Agreement required for third-party PHI access")
+
         
         return {
             "compliant": len(violations) == 0,
@@ -1077,13 +1210,18 @@ class PCIDSSComplianceValidator:
     """PCI DSS compliance validation for payment data"""
     
     async def validate(self, data: Dict[str, Any], operation_type: str) -> Dict[str, Any]:
-        """Validate PCI DSS compliance"""
+        """
+        Validate PCI DSS compliance"""
         violations = []
+
         recommendations = []
         
         # Check for payment card data
+
         payment_fields = ["card_number", "cvv", "expiry", "cardholder", "payment"]
+
         has_payment_data = any(field in str(data).lower() for field in payment_fields)
+
         
         if has_payment_data:
             # Check for PAN protection
@@ -1097,6 +1235,7 @@ class PCIDSSComplianceValidator:
             # Check for secure transmission
             if not data.get("secure_transmission", False):
                 violations.append("PCI DSS: Payment data transmission must be secure")
+
         
         return {
             "compliant": len(violations) == 0,
@@ -1131,12 +1270,15 @@ class RealTimeValidationEngine:
         """Provide progressive validation with real-time feedback"""
         try:
             validator = self.progressive_validators.get(field_name)
+
             if not validator:
                 return {"valid": True, "feedback": "No validation rules for this field"}
+
             
             result = await validator(current_value, full_context or {})
             
             # Cache result for performance
+
             cache_key = f"{field_name}:{hash(current_value)}"
             self.validation_cache[cache_key] = result
             
@@ -1152,7 +1294,9 @@ class RealTimeValidationEngine:
     async def _validate_email_progressive(self, email: str, context: Dict) -> Dict[str, Any]:
         """Progressive email validation with real-time feedback"""
         feedback = []
+
         suggestions = []
+
         severity = "info"
         
         if len(email) == 0:
@@ -1161,34 +1305,51 @@ class RealTimeValidationEngine:
         # Check basic format as user types
         if "@" not in email:
             feedback.append("Email should contain @ symbol")
+
+
             severity = "warning"
         elif email.count("@") > 1:
             feedback.append("Email should contain only one @ symbol")
+
+
             severity = "error"
         elif "@" in email:
             local, domain = email.split("@", 1)
+
             
             if len(local) == 0:
                 feedback.append("Email needs text before @ symbol")
+
+
                 severity = "warning"
             elif len(domain) == 0:
                 feedback.append("Email needs domain after @ symbol")
+
+
                 severity = "warning"
             elif "." not in domain:
                 feedback.append("Domain should contain a dot (.)")
+
+
                 severity = "warning"
             else:
                 # Check for common typos
+
                 common_domains = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com"]
+
                 domain_lower = domain.lower()
+
                 
                 for common_domain in common_domains:
                     if self._similar_domain(domain_lower, common_domain):
                         suggestions.append(f"Did you mean {common_domain}?")
+
                         break
                 
                 if len(feedback) == 0:
                     feedback.append("Email format looks good!")
+
+
                     severity = "success"
         
         return {
@@ -1207,8 +1368,10 @@ class RealTimeValidationEngine:
                 "strength": 0,
                 "severity": "info"
             }
+
         
         strength_score = 0
+
         feedback_items = []
         
         # Length check
@@ -1224,18 +1387,21 @@ class RealTimeValidationEngine:
             feedback_items.append("✓ Contains uppercase letter")
         else:
             feedback_items.append("✗ Add uppercase letter")
+
         
         if any(c.islower() for c in password):
             strength_score += 1
             feedback_items.append("✓ Contains lowercase letter")
         else:
             feedback_items.append("✗ Add lowercase letter")
+
         
         if any(c.isdigit() for c in password):
             strength_score += 1
             feedback_items.append("✓ Contains number")
         else:
             feedback_items.append("✗ Add number")
+
         
         if any(c in "!@#$%^&*()_+-=[]{}|;:,.<>?" for c in password):
             strength_score += 1
@@ -1263,11 +1429,97 @@ class RealTimeValidationEngine:
             "severity": severity
         }
     
+    async def _validate_username_progressive(self, username: str, context: Dict) -> Dict[str, Any]:
+        """Progressive username validation"""
+        if len(username) == 0:
+            return {
+                "valid": True,
+                "feedback": "Enter a username",
+                "severity": "info"
+            }
+        
+        feedback_items = []
+        is_valid = True
+        
+        # Length check (3-30 characters)
+        if len(username) < 3:
+            feedback_items.append(f"✗ Too short (minimum 3 characters)")
+            is_valid = False
+        elif len(username) > 30:
+            feedback_items.append(f"✗ Too long (maximum 30 characters)")
+            is_valid = False
+        else:
+            feedback_items.append("✓ Good length")
+        
+        # Alphanumeric + underscore/hyphen only
+        if not all(c.isalnum() or c in ['_', '-'] for c in username):
+            feedback_items.append("✗ Only letters, numbers, _ and - allowed")
+            is_valid = False
+        else:
+            feedback_items.append("✓ Valid characters")
+        
+        # Must start with letter
+        if not username[0].isalpha():
+            feedback_items.append("✗ Must start with a letter")
+            is_valid = False
+        else:
+            feedback_items.append("✓ Starts with letter")
+        
+        return {
+            "valid": is_valid,
+            "feedback": "Valid username" if is_valid else "Username has issues",
+            "details": feedback_items,
+            "severity": "success" if is_valid else "error"
+        }
+    
+    async def _validate_content_title_progressive(self, title: str, context: Dict) -> Dict[str, Any]:
+        """Progressive content title validation"""
+        if len(title) == 0:
+            return {
+                "valid": True,
+                "feedback": "Enter a title for your content",
+                "severity": "info"
+            }
+        
+        feedback_items = []
+        is_valid = True
+        
+        # Length check (5-100 characters)
+        if len(title) < 5:
+            feedback_items.append(f"✗ Too short (minimum 5 characters)")
+            is_valid = False
+        elif len(title) > 100:
+            feedback_items.append(f"✗ Too long (maximum 100 characters)")
+            is_valid = False
+        else:
+            feedback_items.append("✓ Good length")
+        
+        # Check for meaningful content (not just special characters)
+        alpha_count = sum(c.isalnum() for c in title)
+        if alpha_count < 3:
+            feedback_items.append("✗ Title should contain meaningful words")
+            is_valid = False
+        else:
+            feedback_items.append("✓ Contains meaningful content")
+        
+        # SEO check - recommend keywords
+        if len(title) < 40:
+            feedback_items.append("💡 Tip: Longer titles (40-60 chars) perform better in search")
+        
+        return {
+            "valid": is_valid,
+            "feedback": "Great title!" if is_valid else "Title needs improvement",
+            "details": feedback_items,
+            "severity": "success" if is_valid else "error",
+            "seo_score": min(100, (len(title) / 60) * 100)
+        }
+    
     def _similar_domain(self, domain1: str, domain2: str) -> bool:
         """Check if domains are similar (for typo detection)"""
         # Simple Levenshtein distance check
         if abs(len(domain1) - len(domain2)) > 2:
             return False
+
         
         differences = sum(c1 != c2 for c1, c2 in zip(domain1, domain2))
         return differences <= 2 and differences > 0

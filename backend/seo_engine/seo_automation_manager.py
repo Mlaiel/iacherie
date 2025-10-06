@@ -36,7 +36,8 @@ import aiohttp
 logger = logging.getLogger(__name__)
 
 class AutomationStrategy(Enum):
-    """Types de stratégies d'automatisation SEO"""
+    """
+        Types de stratégies d'automatisation SEO"""
     CONTENT_OPTIMIZATION = "content_optimization"
     KEYWORD_MONITORING = "keyword_monitoring"
     PERFORMANCE_TRACKING = "performance_tracking"
@@ -129,7 +130,8 @@ class WorkflowTrigger:
 
 @dataclass
 class AutomationWorkflow:
-    """Workflow d'automatisation ultra-avancé"""
+    """
+        Workflow d'automatisation ultra-avancé"""
     workflow_id: str
     name: str
     description: str
@@ -173,7 +175,8 @@ class ExecutionResult:
 
 @dataclass
 class AutomationRule:
-    """Règle d'automatisation conditionnelle"""
+    """
+        Règle d'automatisation conditionnelle"""
     rule_id: str
     name: str
     condition: str  # Expression logique
@@ -198,7 +201,8 @@ class SEOAutomationManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialise le gestionnaire d'automatisation"""
+        """
+        Initialise le gestionnaire d'automatisation"""
         self.config = config or {}
         self.session: Optional[aiohttp.ClientSession] = None
         
@@ -239,6 +243,7 @@ class SEOAutomationManager:
         
         # Actions prédéfinies
         self._setup_predefined_actions()
+
         
         logger.info("🤖 SEO Automation Manager initialisé")
     
@@ -259,11 +264,14 @@ class SEOAutomationManager:
             
             # Configuration des webhooks
             await self._setup_webhooks()
+
             
             logger.info("✅ Gestionnaire d'automatisation initialisé")
+
             
         except Exception as e:
             logger.error(f"❌ Erreur initialisation automatisation: {e}")
+
             raise
     
     def _setup_predefined_actions(self) -> None:
@@ -317,10 +325,12 @@ class SEOAutomationManager:
         }
     
     async def _start_scheduler(self) -> None:
-        """Démarre le système de planification"""
+        """
+        Démarre le système de planification"""
         if not self.scheduler_running:
             self.scheduler_running = True
             asyncio.create_task(self._scheduler_loop())
+
             logger.info("⏰ Scheduler d'automatisation démarré")
     
     async def _scheduler_loop(self) -> None:
@@ -336,9 +346,11 @@ class SEOAutomationManager:
                 
                 # Attendre 60 secondes avant la prochaine vérification
                 await asyncio.sleep(60)
+
                 
             except Exception as e:
                 logger.error(f"❌ Erreur dans le scheduler: {e}")
+
                 await asyncio.sleep(60)
     
     async def _check_workflow_triggers(
@@ -350,20 +362,26 @@ class SEOAutomationManager:
         for trigger in workflow.triggers:
             if not trigger.is_active:
                 continue
+
             
             should_trigger = False
             
             if trigger.trigger_type == TriggerType.SCHEDULE:
                 should_trigger = await self._check_schedule_trigger(trigger, current_time)
+
             elif trigger.trigger_type == TriggerType.THRESHOLD:
                 should_trigger = await self._check_threshold_trigger(trigger)
+
             elif trigger.trigger_type == TriggerType.EVENT:
                 should_trigger = await self._check_event_trigger(trigger)
+
             elif trigger.trigger_type == TriggerType.CONDITIONAL:
                 should_trigger = await self._check_conditional_trigger(trigger, workflow)
+
             
             if should_trigger:
                 await self._trigger_workflow_execution(workflow, trigger)
+
                 trigger.last_triggered = current_time
                 trigger.trigger_count += 1
     
@@ -372,14 +390,19 @@ class SEOAutomationManager:
         trigger: WorkflowTrigger,
         current_time: datetime
     ) -> bool:
-        """Vérifie un déclencheur basé sur un planning"""
+        """
+        Vérifie un déclencheur basé sur un planning"""
         try:
             cron_expression = trigger.configuration.get('cron')
+
             if not cron_expression:
                 return False
             
             # Vérification avec croniter
+
             cron = croniter(cron_expression, trigger.last_triggered or current_time - timedelta(minutes=1))
+
+
             next_run = cron.get_next(datetime)
             
             # Si le prochain run est dans le passé (par rapport à maintenant), c'est le moment
@@ -387,20 +410,27 @@ class SEOAutomationManager:
             
         except Exception as e:
             logger.error(f"❌ Erreur vérification trigger schedule: {e}")
+
             return False
     
     async def _check_threshold_trigger(self, trigger: WorkflowTrigger) -> bool:
         """Vérifie un déclencheur basé sur un seuil"""
         try:
             metric_name = trigger.configuration.get('metric')
+
+
             threshold_value = trigger.configuration.get('threshold')
+
+
             comparison = trigger.configuration.get('comparison', 'gt')  # gt, lt, eq
             
             if not all([metric_name, threshold_value]):
                 return False
             
             # Récupération de la métrique actuelle
+
             current_value = await self._get_metric_value(metric_name)
+
             
             if comparison == 'gt':
                 return current_value > threshold_value
@@ -413,12 +443,14 @@ class SEOAutomationManager:
             
         except Exception as e:
             logger.error(f"❌ Erreur vérification trigger threshold: {e}")
+
             return False
     
     async def _check_event_trigger(self, trigger: WorkflowTrigger) -> bool:
         """Vérifie un déclencheur basé sur un événement"""
         # Simulation de vérification d'événement
         # Dans la réalité, cela vérifierait une queue d'événements
+
         event_type = trigger.configuration.get('event_type')
         
         # Simulation : événements aléatoires pour la démo
@@ -434,9 +466,11 @@ class SEOAutomationManager:
         trigger: WorkflowTrigger,
         workflow: AutomationWorkflow
     ) -> bool:
-        """Vérifie un déclencheur conditionnel"""
+        """
+        Vérifie un déclencheur conditionnel"""
         try:
             condition = trigger.configuration.get('condition')
+
             if not condition:
                 return False
             
@@ -448,12 +482,14 @@ class SEOAutomationManager:
             
         except Exception as e:
             logger.error(f"❌ Erreur vérification trigger conditionnel: {e}")
+
             return False
     
     async def _get_metric_value(self, metric_name: str) -> float:
         """Récupère la valeur d'une métrique"""
         # Simulation de récupération de métrique
         # Dans la réalité, cela interrogerait la base de données ou les APIs
+
         
         metrics_simulation = {
             'organic_traffic': np.random.uniform(1000, 10000),
@@ -499,6 +535,7 @@ class SEOAutomationManager:
             logger.info(f"🔧 Création workflow d'automatisation: {name}")
             
             # Génération de l'ID workflow
+
             workflow_id = hashlib.md5(f"{name}_{time.time()}_{created_by}".encode()).hexdigest()[:16]
             
             # Critères de succès par défaut
@@ -510,12 +547,15 @@ class SEOAutomationManager:
                 }
             
             # Validation des actions
+
             validated_actions = await self._validate_actions(actions)
             
             # Validation des triggers
+
             validated_triggers = await self._validate_triggers(triggers)
             
             # Création du workflow
+
             workflow = AutomationWorkflow(
                 workflow_id=workflow_id,
                 name=name,
@@ -550,10 +590,12 @@ class SEOAutomationManager:
             self.global_metrics['total_workflows'] += 1
             
             logger.info(f"✅ Workflow créé - ID: {workflow_id}")
+
             return workflow
             
         except Exception as e:
             logger.error(f"❌ Erreur création workflow: {e}")
+
             raise
     
     async def _validate_actions(
@@ -567,10 +609,13 @@ class SEOAutomationManager:
             # Vérification du type d'action
             if action.action_type not in self.predefined_actions:
                 logger.warning(f"⚠️ Type d'action non reconnu: {action.action_type}")
+
                 continue
             
             # Fusion avec les paramètres par défaut
+
             default_params = self.predefined_actions[action.action_type]['default_params']
+
             merged_params = {**default_params, **action.parameters}
             action.parameters = merged_params
             
@@ -579,6 +624,7 @@ class SEOAutomationManager:
                 action.timeout_seconds = self.predefined_actions[action.action_type]['timeout']
             
             validated_actions.append(action)
+
         
         return validated_actions
     
@@ -594,22 +640,27 @@ class SEOAutomationManager:
             if trigger.trigger_type == TriggerType.SCHEDULE:
                 if 'cron' not in trigger.configuration:
                     logger.error(f"❌ Trigger schedule sans expression cron: {trigger.trigger_id}")
+
                     continue
                 
                 # Validation de l'expression cron
                 try:
                     croniter(trigger.configuration['cron'])
+
                 except Exception as e:
                     logger.error(f"❌ Expression cron invalide: {e}")
+
                     continue
             
             elif trigger.trigger_type == TriggerType.THRESHOLD:
                 required_keys = ['metric', 'threshold', 'comparison']
                 if not all(key in trigger.configuration for key in required_keys):
                     logger.error(f"❌ Trigger threshold incomplet: {trigger.trigger_id}")
+
                     continue
             
             validated_triggers.append(trigger)
+
         
         return validated_triggers
     
@@ -618,18 +669,23 @@ class SEOAutomationManager:
         try:
             if workflow_id not in self.workflows:
                 raise ValueError(f"Workflow {workflow_id} non trouvé")
+
+
             
             workflow = self.workflows[workflow_id]
             workflow.status = WorkflowStatus.ACTIVE
             workflow.updated_at = datetime.now()
+
             
             self.global_metrics['active_workflows'] += 1
             
             logger.info(f"✅ Workflow activé: {workflow.name}")
+
             return True
             
         except Exception as e:
             logger.error(f"❌ Erreur activation workflow: {e}")
+
             return False
     
     async def _trigger_workflow_execution(
@@ -642,14 +698,17 @@ class SEOAutomationManager:
             # Vérification des limites d'exécution
             if workflow.max_executions and workflow.execution_count >= workflow.max_executions:
                 logger.info(f"⏹️ Workflow {workflow.name} a atteint sa limite d'exécutions")
+
                 return None
             
             # Génération de l'ID d'exécution
+
             execution_id = hashlib.md5(f"{workflow.workflow_id}_{time.time()}".encode()).hexdigest()[:12]
             
             logger.info(f"🚀 Démarrage exécution workflow: {workflow.name} (ID: {execution_id})")
             
             # Création du contexte d'exécution
+
             execution_context = {
                 'execution_id': execution_id,
                 'workflow_id': workflow.workflow_id,
@@ -663,14 +722,20 @@ class SEOAutomationManager:
             start_time = datetime.now()
             
             # Exécution des actions
+
             execution_result = await self._execute_workflow_actions(
                 workflow, execution_context
             )
+
+
             
             end_time = datetime.now()
+
+
             duration = (end_time - start_time).total_seconds()
             
             # Création du résultat d'exécution
+
             result = ExecutionResult(
                 execution_id=execution_id,
                 workflow_id=workflow.workflow_id,
@@ -688,7 +753,9 @@ class SEOAutomationManager:
             
             # Mise à jour des métriques et historique
             await self._update_workflow_metrics(workflow, result)
+
             workflow.execution_history.append(asdict(result))
+
             workflow.execution_count += 1
             
             # Remise du statut à ACTIVE
@@ -705,10 +772,12 @@ class SEOAutomationManager:
                 self.global_metrics['failed_executions'] += 1
             
             logger.info(f"✅ Exécution terminée - Durée: {duration:.1f}s - Statut: {result.status}")
+
             return result
             
         except Exception as e:
             logger.error(f"❌ Erreur exécution workflow: {e}")
+
             workflow.status = WorkflowStatus.FAILED
             raise
     
@@ -728,20 +797,26 @@ class SEOAutomationManager:
         
         try:
             # Tri des actions par dépendances
+
             sorted_actions = await self._sort_actions_by_dependencies(workflow.actions)
             
             # Exécution séquentielle ou parallèle selon les dépendances
             for action in sorted_actions:
                 action_start = time.time()
+
                 
                 try:
                     # Vérification des dépendances
                     if not await self._check_action_dependencies(action, execution_result['results']):
                         logger.warning(f"⚠️ Dépendances non satisfaites pour {action.name}")
+
                         continue
                     
                     # Exécution de l'action
+
                     action_result = await self._execute_single_action(action, execution_context)
+
+
                     
                     action_duration = time.time() - action_start
                     
@@ -762,9 +837,11 @@ class SEOAutomationManager:
                     
                     # Mise à jour du contexte
                     execution_context['variables'].update(execution_result['results'])
+
                     
                 except Exception as action_error:
                     logger.error(f"❌ Erreur exécution action {action.name}: {action_error}")
+
                     
                     execution_result['errors'].append({
                         'action_id': action.action_id,
@@ -780,6 +857,7 @@ class SEOAutomationManager:
             # Évaluation des critères de succès
             if execution_result['status'] == 'success':
                 success_rate = len([a for a in execution_result['actions_executed'] if a['status'] == 'success']) / len(workflow.actions)
+
                 
                 if success_rate < workflow.success_criteria.get('completion_rate', 0.95):
                     execution_result['status'] = 'partial_success'
@@ -788,11 +866,13 @@ class SEOAutomationManager:
             
         except Exception as e:
             logger.error(f"❌ Erreur exécution actions workflow: {e}")
+
             execution_result['status'] = 'failed'
             execution_result['errors'].append({
                 'error': str(e),
                 'timestamp': datetime.now()
             })
+
             return execution_result
     
     async def _sort_actions_by_dependencies(
@@ -801,31 +881,41 @@ class SEOAutomationManager:
     ) -> List[AutomationAction]:
         """Trie les actions selon leurs dépendances"""
         # Algorithme de tri topologique simple
+
         sorted_actions = []
+
         remaining_actions = actions.copy()
+
         
         while remaining_actions:
             # Trouver les actions sans dépendances non satisfaites
+
             ready_actions = []
             
             for action in remaining_actions:
                 dependencies_satisfied = all(
                     any(completed.action_id == dep for completed in sorted_actions)
+
                     for dep in action.dependencies
                 ) if action.dependencies else True
                 
                 if dependencies_satisfied:
                     ready_actions.append(action)
+
             
             if not ready_actions:
                 # Dépendances circulaires ou manquantes
                 logger.warning("⚠️ Dépendances circulaires détectées, ajout des actions restantes")
+
+
                 ready_actions = remaining_actions
             
             # Ajouter les actions prêtes
             for action in ready_actions:
                 sorted_actions.append(action)
+
                 remaining_actions.remove(action)
+
         
         return sorted_actions
     
@@ -850,18 +940,24 @@ class SEOAutomationManager:
         action: AutomationAction,
         execution_context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Exécute une action individuelle"""
+        """
+        Exécute une action individuelle"""
         try:
             logger.debug(f"🔧 Exécution action: {action.name}")
             
             # Récupération de la fonction d'action
+
             action_config = self.predefined_actions.get(action.action_type)
+
             if not action_config:
                 raise ValueError(f"Type d'action non supporté: {action.action_type}")
+
+
             
             action_function = action_config['function']
             
             # Préparation des paramètres
+
             params = {
                 **action.parameters,
                 'execution_context': execution_context
@@ -873,6 +969,7 @@ class SEOAutomationManager:
                     action_function(params),
                     timeout=action.timeout_seconds
                 )
+
                 
                 return {
                     'success': True,
@@ -882,6 +979,7 @@ class SEOAutomationManager:
                 
             except asyncio.TimeoutError:
                 raise Exception(f"Timeout après {action.timeout_seconds}s")
+
             
         except Exception as e:
             logger.error(f"❌ Erreur exécution action {action.name}: {e}")
@@ -889,10 +987,13 @@ class SEOAutomationManager:
             # Retry si configuré
             if action.retry_count > 0:
                 logger.info(f"🔄 Retry action {action.name} ({action.retry_count} restants)")
+
                 action.retry_count -= 1
                 
                 await asyncio.sleep(action.retry_delay)
+
                 return await self._execute_single_action(action, execution_context)
+
             
             return {
                 'success': False,
@@ -912,7 +1013,8 @@ class SEOAutomationManager:
         }
     
     async def _execute_keyword_research(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Exécute une recherche de mots-clés"""
+        """
+        Exécute une recherche de mots-clés"""
         await asyncio.sleep(5)  # Simulation
         return {
             'keywords_found': np.random.randint(50, 200),
@@ -922,7 +1024,8 @@ class SEOAutomationManager:
         }
     
     async def _execute_rank_tracking(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Exécute un suivi de positions"""
+        """
+        Exécute un suivi de positions"""
         await asyncio.sleep(3)  # Simulation
         return {
             'average_position': np.random.uniform(5, 25),
@@ -932,7 +1035,8 @@ class SEOAutomationManager:
         }
     
     async def _execute_technical_audit(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Exécute un audit technique"""
+        """
+        Exécute un audit technique"""
         await asyncio.sleep(4)  # Simulation
         return {
             'crawl_errors': np.random.randint(0, 20),
@@ -943,7 +1047,8 @@ class SEOAutomationManager:
         }
     
     async def _execute_backlink_analysis(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Exécute une analyse de backlinks"""
+        """
+        Exécute une analyse de backlinks"""
         await asyncio.sleep(6)  # Simulation
         return {
             'total_backlinks': np.random.randint(100, 5000),
@@ -973,10 +1078,13 @@ class SEOAutomationManager:
         try:
             if workflow_id not in self.workflows:
                 raise ValueError(f"Workflow {workflow_id} non trouvé")
+
+
             
             workflow = self.workflows[workflow_id]
             
             # Création d'un trigger manuel
+
             manual_trigger = WorkflowTrigger(
                 trigger_id=f"manual_{int(time.time())}",
                 trigger_type=TriggerType.MANUAL,
@@ -988,11 +1096,14 @@ class SEOAutomationManager:
                 workflow.variables.update(override_params)
             
             # Exécution
+
             result = await self._trigger_workflow_execution(workflow, manual_trigger)
+
             return result
             
         except Exception as e:
             logger.error(f"❌ Erreur exécution manuelle: {e}")
+
             raise
     
     async def get_workflow_status(self, workflow_id: str) -> Dict[str, Any]:
@@ -1000,21 +1111,32 @@ class SEOAutomationManager:
         try:
             if workflow_id not in self.workflows:
                 raise ValueError(f"Workflow {workflow_id} non trouvé")
+
+
             
             workflow = self.workflows[workflow_id]
             
             # Calcul des métriques de performance
+
             recent_executions = workflow.execution_history[-10:]  # 10 dernières exécutions
+
             
             success_rate = 0.0
+
             avg_duration = 0.0
             
             if recent_executions:
                 successful = len([e for e in recent_executions if e.get('status') == 'success'])
+
+
                 success_rate = successful / len(recent_executions)
+
+
                 
                 durations = [e.get('duration_seconds', 0) for e in recent_executions if e.get('duration_seconds')]
+
                 avg_duration = np.mean(durations) if durations else 0.0
+
             
             status_info = {
                 'workflow_id': workflow_id,
@@ -1049,6 +1171,7 @@ class SEOAutomationManager:
             
         except Exception as e:
             logger.error(f"❌ Erreur récupération statut: {e}")
+
             raise
     
     async def _get_next_scheduled_run(self, workflow: AutomationWorkflow) -> Optional[str]:
@@ -1057,32 +1180,44 @@ class SEOAutomationManager:
             if trigger.trigger_type == TriggerType.SCHEDULE and trigger.is_active:
                 try:
                     cron_expression = trigger.configuration.get('cron')
+
                     if cron_expression:
                         cron = croniter(cron_expression, datetime.now())
+
+
                         next_run = cron.get_next(datetime)
+
                         return next_run.isoformat()
+
                 except Exception:
                     continue
         
         return None
     
     async def get_automation_metrics(self) -> Dict[str, Any]:
-        """Récupère les métriques globales d'automatisation"""
+        """
+        Récupère les métriques globales d'automatisation"""
         try:
             # Calcul de l'efficacité d'automatisation
+
             total_executions = self.global_metrics['total_executions']
+
             successful_executions = self.global_metrics['successful_executions']
+
             
             efficiency = 0.0
             if total_executions > 0:
                 efficiency = successful_executions / total_executions
             
             # Calcul du temps d'exécution moyen
+
             all_durations = []
             for workflow in self.workflows.values():
                 for execution in workflow.execution_history:
                     if execution.get('duration_seconds'):
                         all_durations.append(execution['duration_seconds'])
+
+
             
             avg_execution_time = np.mean(all_durations) if all_durations else 0.0
             
@@ -1091,7 +1226,9 @@ class SEOAutomationManager:
             self.global_metrics['average_execution_time'] = avg_execution_time
             
             # Métriques par stratégie
+
             strategy_metrics = defaultdict(lambda: {'count': 0, 'success_rate': 0.0})
+
             
             for workflow in self.workflows.values():
                 strategy = workflow.strategy.value
@@ -1099,7 +1236,10 @@ class SEOAutomationManager:
                 
                 if workflow.execution_history:
                     successful = len([e for e in workflow.execution_history if e.get('status') == 'success'])
+
                     strategy_metrics[strategy]['success_rate'] = successful / len(workflow.execution_history)
+
+
             
             metrics = {
                 'global_metrics': self.global_metrics,
@@ -1107,6 +1247,7 @@ class SEOAutomationManager:
                 'active_workflows': [
                     {'id': wf.workflow_id, 'name': wf.name, 'strategy': wf.strategy.value}
                     for wf in self.workflows.values()
+
                     if wf.status == WorkflowStatus.ACTIVE
                 ],
                 'recent_activity': await self._get_recent_activity(),
@@ -1117,6 +1258,7 @@ class SEOAutomationManager:
             
         except Exception as e:
             logger.error(f"❌ Erreur récupération métriques: {e}")
+
             raise
     
     async def _get_recent_activity(self) -> List[Dict[str, Any]]:
@@ -1136,11 +1278,13 @@ class SEOAutomationManager:
         
         # Tri par date décroissante
         all_executions.sort(key=lambda x: x.get('start_time', ''), reverse=True)
+
         
         return all_executions[:20]  # 20 plus récentes
     
     async def _calculate_performance_trends(self) -> Dict[str, Any]:
-        """Calcule les tendances de performance"""
+        """
+        Calcule les tendances de performance"""
         # Simulation de calcul de tendances
         return {
             'efficiency_trend': 'stable',  # stable, improving, declining
@@ -1150,7 +1294,8 @@ class SEOAutomationManager:
         }
     
     async def cleanup(self) -> None:
-        """Nettoie les ressources du gestionnaire"""
+        """
+        Nettoie les ressources du gestionnaire"""
         try:
             # Arrêt du scheduler
             self.scheduler_running = False
@@ -1163,25 +1308,41 @@ class SEOAutomationManager:
             self.executor.shutdown(wait=True)
             
             # Sauvegarde des métriques finales
+
             total_workflows = len(self.workflows)
+
+
             active_workflows = len([w for w in self.workflows.values() if w.status == WorkflowStatus.ACTIVE])
+
             
             logger.info(f"🧹 Nettoyage automatisation - {total_workflows} workflows, {active_workflows} actifs")
+
             
         except Exception as e:
             logger.error(f"❌ Erreur nettoyage: {e}")
+
             raise
 
 # Instance globale du gestionnaire d'automatisation
 automation_manager = SEOAutomationManager()
 
 # Export des classes et fonctions
+# === ALIASES COMPATIBILITÉ ===
+WorkflowExecution = ExecutionResult
+AutomationMetrics = ExecutionResult
+TaskScheduler = SEOAutomationManager
+WorkflowOrchestrator = SEOAutomationManager
+
 __all__ = [
     'SEOAutomationManager',
     'AutomationWorkflow',
     'AutomationAction',
     'WorkflowTrigger',
     'ExecutionResult',
+    'WorkflowExecution',
+    'AutomationMetrics',
+    'TaskScheduler',
+    'WorkflowOrchestrator',
     'AutomationRule',
     'AutomationStrategy',
     'WorkflowStatus',
@@ -1198,6 +1359,7 @@ if __name__ == "__main__":
         await automation_manager.initialize()
         
         # Création d'actions test
+
         test_actions = [
             AutomationAction(
                 action_id="",
@@ -1216,6 +1378,7 @@ if __name__ == "__main__":
         ]
         
         # Création de triggers test
+
         test_triggers = [
             WorkflowTrigger(
                 trigger_id="daily_trigger",
@@ -1225,6 +1388,7 @@ if __name__ == "__main__":
         ]
         
         # Création du workflow
+
         workflow = await automation_manager.create_automation_workflow(
             name="Test SEO Automation",
             description="Workflow de test pour l'automatisation SEO",
@@ -1238,16 +1402,20 @@ if __name__ == "__main__":
         await automation_manager.activate_workflow(workflow.workflow_id)
         
         # Exécution manuelle
+
         result = await automation_manager.execute_automation(
             workflow.workflow_id,
             "test_execution"
         )
         
         # Récupération du statut
+
         status = await automation_manager.get_workflow_status(workflow.workflow_id)
         
         # Métriques globales
+
         metrics = await automation_manager.get_automation_metrics()
+
         
         print(f"✅ Test automatisation réussi:")
         print(f"🔧 Workflow créé: {workflow.name}")

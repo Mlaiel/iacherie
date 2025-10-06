@@ -17,7 +17,8 @@ from typing import Dict, Any, Optional
 logger = logging.getLogger(__name__)
 
 def configure_cuda_environment():
-    """Configure l'environnement CUDA optimal."""
+    """
+Configure l'environnement CUDA optimal."""
     
     # Configuration des variables d'environnement CUDA
     cuda_config = {
@@ -34,7 +35,8 @@ def configure_cuda_environment():
         logger.info(f"✅ {key} = {value}")
 
 def detect_gpu_capabilities() -> Dict[str, Any]:
-    """Détecte les capacités GPU disponibles."""
+    """
+Détecte les capacités GPU disponibles."""
     
     gpu_info = {
         "torch_cuda_available": torch.cuda.is_available(),
@@ -68,7 +70,8 @@ def detect_gpu_capabilities() -> Dict[str, Any]:
     return gpu_info
 
 def optimize_for_cpu():
-    """Optimise les performances pour CPU seulement."""
+    """
+Optimise les performances pour CPU seulement."""
     
     cpu_config = {
         "OMP_NUM_THREADS": str(os.cpu_count()),
@@ -92,7 +95,8 @@ def optimize_for_cpu():
     logger.info(f"⚡ CPU optimisé pour {os.cpu_count()} threads")
 
 def get_optimal_device() -> str:
-    """Retourne le dispositif optimal (cuda ou cpu)."""
+    """
+Retourne le dispositif optimal (cuda ou cpu)."""
     
     if torch.cuda.is_available():
         device = "cuda"
@@ -104,7 +108,8 @@ def get_optimal_device() -> str:
     return device
 
 def configure_model_precision(use_half_precision: bool = True) -> Dict[str, Any]:
-    """Configure la précision des modèles pour optimiser les performances."""
+    """
+Configure la précision des modèles pour optimiser les performances."""
     
     config = {
         "torch_dtype": torch.float16 if use_half_precision and torch.cuda.is_available() else torch.float32,
@@ -125,7 +130,8 @@ def configure_model_precision(use_half_precision: bool = True) -> Dict[str, Any]
     return config
 
 def initialize_cuda_system() -> Dict[str, Any]:
-    """Initialise complètement le système CUDA/GPU."""
+    """
+Initialise complètement le système CUDA/GPU."""
     
     logger.info("🚀 Initialisation du système CUDA/GPU...")
     
@@ -163,7 +169,8 @@ def initialize_cuda_system() -> Dict[str, Any]:
     return result
 
 def test_performance() -> float:
-    """Test rapide de performance du système."""
+    """
+Test rapide de performance du système."""
     
     import time
     start_time = time.time()
@@ -195,7 +202,8 @@ def test_performance() -> float:
     return score
 
 def generate_performance_recommendations(gpu_info: Dict[str, Any]) -> list:
-    """Génère des recommandations d'optimisation."""
+    """
+Génère des recommandations d'optimisation."""
     
     recommendations = []
     
@@ -219,7 +227,8 @@ def generate_performance_recommendations(gpu_info: Dict[str, Any]) -> list:
 CUDA_SYSTEM_INFO = None
 
 def get_cuda_system_info() -> Dict[str, Any]:
-    """Récupère les informations système CUDA (singleton)."""
+    """
+Récupère les informations système CUDA (singleton)."""
     global CUDA_SYSTEM_INFO
     if CUDA_SYSTEM_INFO is None:
         CUDA_SYSTEM_INFO = initialize_cuda_system()

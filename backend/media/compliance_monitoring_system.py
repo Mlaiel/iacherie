@@ -141,7 +141,8 @@ class ComplianceConfig:
 
 @dataclass
 class LicenseInfo:
-    """License information structure"""
+    """
+        License information structure"""
     license_id: str
     license_type: LicenseType
     content_id: str
@@ -168,7 +169,8 @@ class LicenseInfo:
 
 @dataclass
 class ComplianceViolation:
-    """Compliance violation record"""
+    """
+        Compliance violation record"""
     violation_id: str
     content_id: str
     license_id: str
@@ -207,7 +209,8 @@ class UsageRecord:
 
 @dataclass
 class ComplianceAudit:
-    """Compliance audit record"""
+    """
+        Compliance audit record"""
     audit_id: str
     audit_type: str  # scheduled, triggered, manual
     scope: List[str]  # content_ids or "all"
@@ -254,6 +257,7 @@ class LicenseComplianceMonitor:
             license_id = str(uuid.uuid4())
             
             # Parse license information
+
             license_data = LicenseInfo(
                 license_id=license_id,
                 license_type=LicenseType(license_info.get('type', 'unknown')),
@@ -276,26 +280,32 @@ class LicenseComplianceMonitor:
                 maximum_usage_count=license_info.get('maximum_usage_count'),
                 metadata=license_info.get('metadata', {})
             )
+
             
             self.licenses[license_id] = license_data
             
             # Auto-validate if enabled
             if auto_validate:
                 validation_result = await self.validate_license(license_id)
+
                 if validation_result['status'] != ComplianceStatus.COMPLIANT:
                     logger.warning(f"License {license_id} failed validation: {validation_result}")
+
             
             logger.info(f"Registered license {license_id} for content {content_id}")
+
             return license_data
             
         except Exception as e:
             logger.error(f"Failed to register license: {e}")
+
             raise
     
     async def validate_license(self, license_id: str) -> Dict[str, Any]:
         """Validate license compliance and status"""
         try:
             license_info = self.licenses.get(license_id)
+
             if not license_info:
                 return {
                     'status': ComplianceStatus.UNKNOWN,
@@ -303,27 +313,35 @@ class LicenseComplianceMonitor:
                 }
             
             # Check cache first
+
             cache_key = f"{license_id}_{license_info.current_usage_count}"
             if cache_key in self.validation_cache:
                 cached_result = self.validation_cache[cache_key]
                 # Use cache if less than 1 hour old
                 if (datetime.now(timezone.utc) - cached_result['timestamp']).seconds < 3600:
                     return cached_result['result']
+
             
             validation_issues = []
+
             compliance_status = ComplianceStatus.COMPLIANT
             
             # Check license expiry
             if license_info.end_date and datetime.now(timezone.utc) > license_info.end_date:
                 validation_issues.append("License has expired")
+
+
                 compliance_status = ComplianceStatus.EXPIRED
             
             # Check usage count limits
             if license_info.maximum_usage_count and license_info.current_usage_count >= license_info.maximum_usage_count:
                 validation_issues.append("Maximum usage count exceeded")
+
+
                 compliance_status = ComplianceStatus.NON_COMPLIANT
             
             # Check for pending violations
+
             active_violations = [
                 v for v in self.violations 
                 if v.license_id == license_id and v.resolved_at is None
@@ -331,12 +349,18 @@ class LicenseComplianceMonitor:
             
             if active_violations:
                 validation_issues.append(f"{len(active_violations)} unresolved violations")
+
+
                 compliance_status = ComplianceStatus.VIOLATION
             
             # Validate against external databases if available
+
             external_validation = await self._validate_external(license_info)
+
             if not external_validation['valid']:
                 validation_issues.extend(external_validation['issues'])
+
+
                 compliance_status = ComplianceStatus.NON_COMPLIANT
             
             result = {
@@ -359,6 +383,7 @@ class LicenseComplianceMonitor:
             
         except Exception as e:
             logger.error(f"License validation failed: {e}")
+
             return {
                 'status': ComplianceStatus.UNKNOWN,
                 'error': str(e)
@@ -373,10 +398,15 @@ class LicenseComplianceMonitor:
         """Record content usage for compliance tracking"""
         try:
             license_info = self.licenses.get(license_id)
+
             if not license_info:
                 raise ValueError(f"License {license_id} not found")
+
+
             
             usage_id = str(uuid.uuid4())
+
+
             
             usage_record = UsageRecord(
                 usage_id=usage_id,
@@ -393,6 +423,7 @@ class LicenseComplianceMonitor:
                 attribution_provided=usage_info.get('attribution_provided', False),
                 metadata=usage_info.get('metadata', {})
             )
+
             
             self.usage_records.append(usage_record)
             
@@ -400,16 +431,21 @@ class LicenseComplianceMonitor:
             license_info.current_usage_count += 1
             
             # Check for compliance violations
+
             violations = await self._check_usage_compliance(usage_record, license_info)
+
             if violations:
                 for violation_data in violations:
                     await self._create_violation(violation_data)
+
             
             logger.info(f"Recorded usage {usage_id} for content {content_id}")
+
             return usage_record
             
         except Exception as e:
             logger.error(f"Failed to record usage: {e}")
+
             raise
     
     async def check_compliance(
@@ -420,6 +456,7 @@ class LicenseComplianceMonitor:
         """Check if proposed usage complies with license terms"""
         try:
             # Find license for content
+
             content_licenses = [l for l in self.licenses.values() if l.content_id == content_id]
             
             if not content_licenses:
@@ -430,12 +467,17 @@ class LicenseComplianceMonitor:
                 }
             
             # Use most restrictive license if multiple licenses exist
+
             license_info = min(content_licenses, key=lambda l: len(l.granted_rights))
+
+
             
             compliance_issues = []
             
             # Check usage type
+
             proposed_type = UsageType(proposed_usage.get('usage_type', 'personal'))
+
             if proposed_type not in license_info.usage_types:
                 compliance_issues.append(f"Usage type '{proposed_type.value}' not permitted")
             
@@ -444,12 +486,16 @@ class LicenseComplianceMonitor:
                 compliance_issues.append("Commercial use not permitted")
             
             # Check geographic restrictions
+
             proposed_location = proposed_usage.get('geographic_location', '')
+
             if license_info.geographic_scope and proposed_location not in license_info.geographic_scope:
                 compliance_issues.append(f"Geographic location '{proposed_location}' not permitted")
             
             # Check platform restrictions
+
             proposed_platform = proposed_usage.get('platform', '')
+
             if license_info.platform_scope and proposed_platform not in license_info.platform_scope:
                 compliance_issues.append(f"Platform '{proposed_platform}' not permitted")
             
@@ -470,8 +516,11 @@ class LicenseComplianceMonitor:
                 compliance_issues.append("License has expired")
             
             # Determine compliance status
+
             is_compliant = len(compliance_issues) == 0
+
             risk_level = "low" if is_compliant else ("medium" if len(compliance_issues) <= 2 else "high")
+
             
             return {
                 'compliant': is_compliant,
@@ -484,6 +533,7 @@ class LicenseComplianceMonitor:
             
         except Exception as e:
             logger.error(f"Compliance check failed: {e}")
+
             return {
                 'compliant': False,
                 'reason': f'Compliance check error: {str(e)}',
@@ -498,9 +548,12 @@ class LicenseComplianceMonitor:
             # Filter content if specified
             if content_ids:
                 relevant_licenses = [l for l in self.licenses.values() if l.content_id in content_ids]
+
                 relevant_usage = [u for u in self.usage_records if u.content_id in content_ids]
             else:
                 relevant_licenses = list(self.licenses.values())
+
+
                 relevant_usage = self.usage_records
             
             # Check for expired licenses still in use
@@ -524,6 +577,7 @@ class LicenseComplianceMonitor:
                             legal_risk_level="high",
                             evidence={'expired_date': license_info.end_date.isoformat(), 'usage_count': len(recent_usage)}
                         )
+
                         violations_detected.append(violation)
             
             # Check for usage count violations
@@ -540,11 +594,13 @@ class LicenseComplianceMonitor:
                         legal_risk_level="medium",
                         evidence={'current_count': license_info.current_usage_count, 'max_count': license_info.maximum_usage_count}
                     )
+
                     violations_detected.append(violation)
             
             # Check for attribution violations
             for usage in relevant_usage:
                 license_info = self.licenses.get(usage.license_id)
+
                 if license_info and license_info.attribution_required and not usage.attribution_provided:
                     violation = ComplianceViolation(
                         violation_id=str(uuid.uuid4()),
@@ -557,16 +613,20 @@ class LicenseComplianceMonitor:
                         legal_risk_level="medium",
                         evidence={'usage_id': usage.usage_id, 'required_attribution': license_info.attribution_text}
                     )
+
                     violations_detected.append(violation)
             
             # Store detected violations
             self.violations.extend(violations_detected)
+
             
             logger.info(f"Detected {len(violations_detected)} compliance violations")
+
             return violations_detected
             
         except Exception as e:
             logger.error(f"Violation detection failed: {e}")
+
             return []
     
     async def generate_compliance_report(
@@ -579,47 +639,68 @@ class LicenseComplianceMonitor:
             # Determine scope
             if scope:
                 relevant_licenses = [l for l in self.licenses.values() if l.content_id in scope]
+
                 relevant_violations = [v for v in self.violations if v.content_id in scope]
+
                 relevant_usage = [u for u in self.usage_records if u.content_id in scope]
             else:
                 relevant_licenses = list(self.licenses.values())
+
+
                 relevant_violations = self.violations
+
                 relevant_usage = self.usage_records
             
             # Calculate compliance metrics
+
             total_content = len(set(l.content_id for l in relevant_licenses))
+
+
             total_licenses = len(relevant_licenses)
+
+
             total_violations = len(relevant_violations)
+
+
             active_violations = len([v for v in relevant_violations if v.resolved_at is None])
             
             # Compliance score calculation
             if total_licenses > 0:
                 compliance_score = max(0, 100 - (active_violations / total_licenses * 100))
+
             else:
                 compliance_score = 100
             
             # License status breakdown
+
             license_statuses = {}
             for license_info in relevant_licenses:
                 validation = await self.validate_license(license_info.license_id)
+
+
                 status = validation['status'].value
                 license_statuses[status] = license_statuses.get(status, 0) + 1
             
             # Violation breakdown by type
+
             violation_types = {}
             for violation in relevant_violations:
                 vtype = violation.violation_type.value
                 violation_types[vtype] = violation_types.get(vtype, 0) + 1
             
             # Usage statistics
+
             usage_by_type = {}
             for usage in relevant_usage:
                 utype = usage.usage_type.value
                 usage_by_type[utype] = usage_by_type.get(utype, 0) + 1
             
             # Risk assessment
+
             high_risk_violations = [v for v in relevant_violations if v.legal_risk_level == "high"]
+
             critical_violations = [v for v in relevant_violations if v.severity == "critical"]
+
             
             report = {
                 'report_id': str(uuid.uuid4()),
@@ -660,17 +741,21 @@ class LicenseComplianceMonitor:
             # Add recommendations if requested
             if include_recommendations:
                 report['recommendations'] = await self._generate_compliance_recommendations_report(relevant_violations)
+
             
             return report
             
         except Exception as e:
             logger.error(f"Compliance report generation failed: {e}")
+
             return {'error': str(e)}
     
     async def _validate_external(self, license_info: LicenseInfo) -> Dict[str, Any]:
         """Validate license against external databases"""
         try:
             # Simplified external validation (would use real APIs)
+
+
             validation_result = {
                 'valid': True,
                 'issues': []
@@ -690,6 +775,7 @@ class LicenseComplianceMonitor:
             
         except Exception as e:
             logger.error(f"External validation failed: {e}")
+
             return {'valid': False, 'issues': [f'External validation error: {str(e)}']}
     
     async def _check_usage_compliance(
@@ -747,11 +833,13 @@ class LicenseComplianceMonitor:
                 'severity': 'medium',
                 'description': 'Required attribution not provided'
             })
+
         
         return violations
     
     async def _create_violation(self, violation_data: Dict[str, Any]):
-        """Create compliance violation record"""
+        """
+        Create compliance violation record"""
         violation = ComplianceViolation(
             violation_id=str(uuid.uuid4()),
             content_id=violation_data.get('content_id', ''),
@@ -762,6 +850,7 @@ class LicenseComplianceMonitor:
             detected_at=datetime.now(timezone.utc),
             legal_risk_level=violation_data.get('risk_level', 'medium')
         )
+
         
         self.violations.append(violation)
         
@@ -770,7 +859,8 @@ class LicenseComplianceMonitor:
             await self._send_violation_alert(violation)
     
     async def _send_violation_alert(self, violation: ComplianceViolation):
-        """Send violation alert (placeholder implementation)"""
+        """
+        Send violation alert (placeholder implementation)"""
         logger.warning(f"Compliance violation detected: {violation.violation_type.value} - {violation.description}")
     
     def _generate_compliance_recommendations(
@@ -785,26 +875,34 @@ class LicenseComplianceMonitor:
             if "attribution" in issue.lower():
                 if license_info.attribution_text:
                     recommendations.append(f"Add attribution: {license_info.attribution_text}")
+
                 else:
                     recommendations.append("Add proper attribution to the content")
+
             
             elif "commercial" in issue.lower():
                 recommendations.append("Obtain commercial use license or remove from commercial context")
+
             
             elif "expired" in issue.lower():
                 recommendations.append("Renew license or cease usage of content")
+
             
             elif "geographic" in issue.lower():
                 recommendations.append("Restrict usage to permitted geographic locations")
+
             
             elif "platform" in issue.lower():
                 recommendations.append("Move content to permitted platforms only")
+
             
             elif "modification" in issue.lower():
                 recommendations.append("Use original content without modifications or obtain modification rights")
+
             
             else:
                 recommendations.append("Review license terms and adjust usage accordingly")
+
         
         return recommendations
     
@@ -816,16 +914,19 @@ class LicenseComplianceMonitor:
         recommendations = []
         
         # High priority recommendations
+
         high_risk_violations = [v for v in violations if v.legal_risk_level == "high"]
         if high_risk_violations:
             recommendations.append("URGENT: Address all high-risk violations immediately to avoid legal consequences")
         
         # License management recommendations
+
         expired_licenses = [v for v in violations if v.violation_type == ViolationType.EXPIRED_LICENSE]
         if expired_licenses:
             recommendations.append("Implement automated license renewal process to prevent expiry violations")
         
         # Attribution recommendations
+
         attribution_violations = [v for v in violations if v.violation_type == ViolationType.ATTRIBUTION_MISSING]
         if attribution_violations:
             recommendations.append("Establish mandatory attribution workflow for all licensed content")
@@ -837,6 +938,7 @@ class LicenseComplianceMonitor:
         # Training recommendations
         if any(v.violation_type == ViolationType.UNAUTHORIZED_USE for v in violations):
             recommendations.append("Provide compliance training to content creators and users")
+
         
         return recommendations
     
@@ -846,7 +948,9 @@ class LicenseComplianceMonitor:
             return "low"
         
         critical_count = len([v for v in violations if v.severity == "critical"])
+
         high_count = len([v for v in violations if v.severity == "high"])
+
         
         if critical_count > 0:
             return "critical"
@@ -868,6 +972,7 @@ class RegulatoryComplianceMonitor:
         
         # Initialize framework-specific checks
         self._initialize_compliance_checks()
+
         
         logger.info(f"📋 Regulatory Compliance Monitor initialized for {len(frameworks)} frameworks")
     
@@ -898,19 +1003,25 @@ class RegulatoryComplianceMonitor:
                 }
     
     async def check_regulatory_compliance(self, framework: RegulationFramework) -> Dict[str, Any]:
-        """Check compliance with specific regulatory framework"""
+        """
+        Check compliance with specific regulatory framework"""
         try:
             checks = self.compliance_checks.get(framework, {})
             
             # Perform framework-specific compliance checks
+
             results = {}
             
             if framework == RegulationFramework.GDPR:
                 results = await self._check_gdpr_compliance()
+
             elif framework == RegulationFramework.CCPA:
                 results = await self._check_ccpa_compliance()
+
             elif framework == RegulationFramework.DMCA:
                 results = await self._check_dmca_compliance()
+
+
             
             compliance_score = sum(results.values()) / len(results) * 100 if results else 0
             
@@ -924,6 +1035,7 @@ class RegulatoryComplianceMonitor:
             
         except Exception as e:
             logger.error(f"Regulatory compliance check failed for {framework.value}: {e}")
+
             return {'error': str(e)}
     
     async def _check_gdpr_compliance(self) -> Dict[str, bool]:
@@ -938,7 +1050,8 @@ class RegulatoryComplianceMonitor:
         }
     
     async def _check_ccpa_compliance(self) -> Dict[str, bool]:
-        """Check CCPA compliance"""
+        """
+        Check CCPA compliance"""
         return {
             'consumer_rights': True,
             'data_sale_opt_out': True,
@@ -947,7 +1060,8 @@ class RegulatoryComplianceMonitor:
         }
     
     async def _check_dmca_compliance(self) -> Dict[str, bool]:
-        """Check DMCA compliance"""
+        """
+        Check DMCA compliance"""
         return {
             'takedown_process': True,
             'counter_notification': True,
@@ -957,18 +1071,21 @@ class RegulatoryComplianceMonitor:
 
 
 class ComplianceMonitoringSystem:
-    """Main compliance monitoring system orchestrating all compliance components"""
+    """
+        Main compliance monitoring system orchestrating all compliance components"""
     
     def __init__(
         self, 
         config: Optional[ComplianceConfig] = None,
         regulatory_frameworks: Optional[List[RegulationFramework]] = None
     ):
-        """Initialize compliance monitoring system"""
+        """
+        Initialize compliance monitoring system"""
         self.config = config or ComplianceConfig()
         
         # Initialize component monitors
         self.license_monitor = LicenseComplianceMonitor(self.config)
+
         
         if regulatory_frameworks:
             self.regulatory_monitor = RegulatoryComplianceMonitor(regulatory_frameworks)
@@ -988,21 +1105,25 @@ class ComplianceMonitoringSystem:
         """Perform comprehensive compliance check"""
         try:
             # License compliance check
+
             license_compliance = await self.license_monitor.check_compliance(
                 content_id, proposed_usage
             )
             
             # Regulatory compliance checks
+
             regulatory_results = {}
             if self.regulatory_monitor:
                 for framework in self.config.regulatory_compliance:
                     regulatory_results[framework.value] = await self.regulatory_monitor.check_regulatory_compliance(framework)
             
             # Overall compliance assessment
+
             overall_compliant = license_compliance['compliant'] and all(
                 result.get('status') == 'compliant' 
                 for result in regulatory_results.values()
             )
+
             
             return {
                 'content_id': content_id,
@@ -1018,19 +1139,25 @@ class ComplianceMonitoringSystem:
             
         except Exception as e:
             logger.error(f"Comprehensive compliance check failed: {e}")
+
             return {'error': str(e)}
     
     async def generate_compliance_dashboard(self) -> Dict[str, Any]:
         """Generate compliance dashboard with key metrics"""
         try:
             # Generate license compliance report
+
             license_report = await self.license_monitor.generate_compliance_report()
             
             # Detect recent violations
+
             recent_violations = await self.license_monitor.detect_violations()
             
             # Calculate compliance trends
+
             compliance_trends = self._calculate_compliance_trends()
+
+
             
             dashboard = {
                 'dashboard_id': str(uuid.uuid4()),
@@ -1066,6 +1193,7 @@ class ComplianceMonitoringSystem:
                 regulatory_summary = {}
                 for framework in self.config.regulatory_compliance:
                     result = await self.regulatory_monitor.check_regulatory_compliance(framework)
+
                     regulatory_summary[framework.value] = {
                         'score': result.get('compliance_score', 0),
                         'status': result.get('status', 'unknown')
@@ -1077,6 +1205,7 @@ class ComplianceMonitoringSystem:
             
         except Exception as e:
             logger.error(f"Compliance dashboard generation failed: {e}")
+
             return {'error': str(e)}
     
     def _calculate_compliance_trends(self) -> Dict[str, Any]:
@@ -1092,7 +1221,8 @@ class ComplianceMonitoringSystem:
 
 # Backward compatibility classes for existing imports
 class LicenseComplianceMonitor_Legacy:
-    """Legacy wrapper for license compliance monitor"""
+    """
+        Legacy wrapper for license compliance monitor"""
     def __init__(self, *args, **kwargs):
         config = ComplianceConfig()
         self.monitor = LicenseComplianceMonitor(config)

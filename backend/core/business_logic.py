@@ -20,7 +20,8 @@ from .ia_agents_orchestrator import AIAgentsOrchestrator
 logger = logging.getLogger(__name__)
 
 class WorkflowStage(Enum):
-    """Business workflow stages"""
+    """
+        Business workflow stages"""
     CONTENT_UPLOAD = "content_upload"
     CONTENT_ANALYSIS = "content_analysis"
     AI_ENHANCEMENT = "ai_enhancement"
@@ -56,7 +57,8 @@ class ContentUpload:
 
 @dataclass
 class WorkflowResult:
-    """Enhanced workflow processing result"""
+    """
+        Enhanced workflow processing result"""
     content_id: str
     stage: WorkflowStage
     success: bool
@@ -106,13 +108,16 @@ class BusinessLogicCore:
             
             # Initialize protection system
             await self._setup_protection_system()
+
             
             self.initialized = True
             logger.info("✅ Enhanced Business Logic Core fully initialized with 53 AI agents")
+
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to initialize Enhanced Business Logic Core: {e}")
+
             return False
     
     async def _setup_workflows(self):
@@ -234,24 +239,32 @@ class BusinessLogicCore:
         """Process complete content workflow with AI agents integration"""
         try:
             logger.info(f"🎯 Processing content workflow: {workflow_name} for content: {content.content_id}")
+
             
             if not self.initialized:
                 raise ValueError("Business Logic Core not initialized")
+
             
             if workflow_name not in self.workflows:
                 raise ValueError(f"Unknown workflow: {workflow_name}")
+
+
             
             workflow_stages = self.workflows[workflow_name]
+
             results = []
             
             # Process each stage of the workflow
             for stage in workflow_stages:
                 try:
                     result = await self._process_workflow_stage(content, stage, results)
+
                     results.append(result)
+
                     
                     if not result.success:
                         logger.warning(f"⚠️ Stage {stage.value} failed, stopping workflow")
+
                         break
                         
                 except Exception as e:
@@ -262,49 +275,71 @@ class BusinessLogicCore:
                         data={},
                         errors=[str(e)]
                     )
+
                     results.append(error_result)
+
                     logger.error(f"❌ Stage {stage.value} failed: {e}")
+
                     break
             
             logger.info(f"✅ Content workflow completed with {len(results)} stages processed")
+
             return results
             
         except Exception as e:
             logger.error(f"❌ Content workflow failed: {e}")
+
             raise
     
     async def _process_workflow_stage(self, content: ContentUpload, stage: WorkflowStage, previous_results: List[WorkflowResult]) -> WorkflowResult:
         """Process a specific workflow stage"""
         start_time = datetime.now()
+
         
         try:
             logger.info(f"🔄 Processing stage: {stage.value}")
+
             
             if stage == WorkflowStage.CONTENT_UPLOAD:
                 result_data = await self._process_content_upload(content)
+
             elif stage == WorkflowStage.CONTENT_ANALYSIS:
                 result_data = await self._process_content_analysis(content)
+
             elif stage == WorkflowStage.AI_ENHANCEMENT:
                 result_data = await self._process_ai_enhancement(content)
+
             elif stage == WorkflowStage.RIGHTS_PROTECTION:
                 result_data = await self._process_rights_protection(content)
+
             elif stage == WorkflowStage.SEO_OPTIMIZATION:
                 result_data = await self._process_seo_optimization(content)
+
             elif stage == WorkflowStage.COLLABORATION_MATCHING:
                 result_data = await self._process_collaboration_matching(content)
+
             elif stage == WorkflowStage.DISTRIBUTION:
                 result_data = await self._process_distribution(content)
+
             elif stage == WorkflowStage.MONETIZATION:
                 result_data = await self._process_monetization(content)
+
             elif stage == WorkflowStage.ANALYTICS:
                 result_data = await self._process_analytics(content)
+
             elif stage == WorkflowStage.OPTIMIZATION:
                 result_data = await self._process_optimization(content, previous_results)
+
             else:
                 raise ValueError(f"Unknown workflow stage: {stage}")
+
+
             
             end_time = datetime.now()
+
+
             processing_time = (end_time - start_time).total_seconds()
+
             
             return WorkflowResult(
                 content_id=content.content_id,
@@ -317,9 +352,11 @@ class BusinessLogicCore:
                     "timestamp": end_time.isoformat()
                 }
             )
+
             
         except Exception as e:
             logger.error(f"❌ Stage {stage.value} failed: {e}")
+
             return WorkflowResult(
                 content_id=content.content_id,
                 stage=stage,
@@ -345,11 +382,13 @@ class BusinessLogicCore:
     async def _process_content_analysis(self, content: ContentUpload) -> Dict[str, Any]:
         """Process content analysis with AI agents"""
         # Use audience analyzer agent
+
         analysis_result = await self.orchestrator.execute_workflow("content_creation_workflow", {
             "content_type": content.content_type.value,
             "target_audience": content.metadata.get("target_audience"),
             "goals": content.monetization_goals or []
         })
+
         
         return {
             "content_analysis": analysis_result,
@@ -371,13 +410,17 @@ class BusinessLogicCore:
             ContentType.PODCAST: "podcast_producer",
             ContentType.LIVE_STREAM: "live_stream"
         }
+
         
         agent_id = agent_mapping.get(content.content_type, "content_strategist")
+
+
         
         enhancement_result = await self.orchestrator._execute_agent(agent_id, {
             "content": content.metadata,
             "enhancement_goals": ["quality", "engagement", "monetization"]
         })
+
         
         return {
             "enhancement_applied": True,
@@ -394,6 +437,7 @@ class BusinessLogicCore:
             "brand_guidelines": {},
             "jurisdictions": ["US", "EU", "UK"]
         })
+
         
         return {
             "protection_status": "active",
@@ -408,6 +452,7 @@ class BusinessLogicCore:
             "content": content.metadata,
             "platforms": content.target_platforms or ["youtube", "tiktok", "instagram"]
         })
+
         
         return {
             "seo_optimized": True,
@@ -419,12 +464,14 @@ class BusinessLogicCore:
         """Process collaboration matching with AI agents"""
         if not content.collaboration_preferences:
             return {"collaboration_matching": "skipped", "reason": "no_preferences_set"}
+
         
         collaboration_result = await self.orchestrator.execute_workflow("collaboration_workflow", {
             "user_id": content.creator_id,
             "collaboration_type": content.collaboration_preferences.get("type", "cross_promotion"),
             "requirements": content.collaboration_preferences.get("requirements", {})
         })
+
         
         return {
             "matches_found": True,
@@ -451,6 +498,7 @@ class BusinessLogicCore:
             "current_revenue": 0,
             "platforms": content.target_platforms or []
         })
+
         
         return {
             "monetization_enabled": True,
@@ -478,6 +526,7 @@ class BusinessLogicCore:
     async def _process_optimization(self, content: ContentUpload, previous_results: List[WorkflowResult]) -> Dict[str, Any]:
         """Process optimization based on previous results"""
         # Analyze previous stage results for optimization opportunities
+
         optimization_opportunities = []
         
         for result in previous_results:
@@ -486,6 +535,7 @@ class BusinessLogicCore:
                     "stage": result.stage.value,
                     "opportunities": ["performance_boost", "quality_enhancement"]
                 })
+
         
         return {
             "optimization_applied": True,
@@ -507,6 +557,7 @@ class BusinessLogicCore:
     async def get_business_metrics(self) -> Dict[str, Any]:
         """Get overall business metrics"""
         orchestrator_status = self.orchestrator.get_all_agents_status()
+
         
         return {
             "system_health": {
@@ -545,7 +596,8 @@ get_enhanced_business_core = get_business_core
 
 # Example usage and testing
 async def main():
-    """Example usage of the Enhanced Business Logic Core"""
+    """
+        Example usage of the Enhanced Business Logic Core"""
     logger.info("🚀 Testing Enhanced Business Logic Core")
     
     # Initialize core

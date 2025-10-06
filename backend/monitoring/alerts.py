@@ -26,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 
 class AlertCategory(Enum):
-    """Alert categories for intelligent routing"""
+    """
+        Alert categories for intelligent routing"""
     BUSINESS = "business"
     TECHNICAL = "technical" 
     AI_ML = "ai_ml"
@@ -100,7 +101,8 @@ class AlertRule:
 
 @dataclass
 class EscalationPolicy:
-    """Alert escalation policy"""
+    """
+        Alert escalation policy"""
     name: str
     levels: List[Dict[str, Any]]
     timeout_minutes: int = 30
@@ -108,7 +110,8 @@ class EscalationPolicy:
 
 
 class AlertCorrelator:
-    """Alert correlation and noise reduction engine"""
+    """
+        Alert correlation and noise reduction engine"""
     
     def __init__(self):
         self.correlation_window = timedelta(minutes=5)
@@ -116,18 +119,22 @@ class AlertCorrelator:
         self.correlation_cache = {}
     
     def correlate_alerts(self, new_alert: Alert, existing_alerts: List[Alert]) -> List[Alert]:
-        """Correlate new alert with existing alerts to reduce noise"""
+        """
+        Correlate new alert with existing alerts to reduce noise"""
         correlated = []
         
         for existing in existing_alerts:
             if self._are_correlated(new_alert, existing):
                 correlated.append(existing)
+
         
         return correlated
     
     def _are_correlated(self, alert1: Alert, alert2: Alert) -> bool:
-        """Check if two alerts are correlated"""
+        """
+        Check if two alerts are correlated"""
         # Time window check
+
         time_diff = abs((alert1.created_at - alert2.created_at).total_seconds())
         if time_diff > self.correlation_window.total_seconds():
             return False
@@ -141,12 +148,14 @@ class AlertCorrelator:
             return True
         
         # Tag similarity
+
         common_tags = set(alert1.tags.keys()) & set(alert2.tags.keys())
         if len(common_tags) >= 2:
             matching_values = sum(
                 1 for tag in common_tags 
                 if alert1.tags[tag] == alert2.tags[tag]
             )
+
             if matching_values / len(common_tags) >= self.similarity_threshold:
                 return True
         
@@ -154,7 +163,8 @@ class AlertCorrelator:
 
 
 class PagerDutyIntegration:
-    """PagerDuty integration for alert escalation"""
+    """
+        PagerDuty integration for alert escalation"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -166,10 +176,12 @@ class PagerDutyIntegration:
         """Send alert to PagerDuty"""
         if not self.enabled:
             logger.warning("PagerDuty integration not configured")
+
             return False
         
         try:
             # Simulate PagerDuty API call
+
             payload = {
                 "routing_key": self.integration_key,
                 "event_action": "trigger",
@@ -187,10 +199,12 @@ class PagerDutyIntegration:
             
             # In a real implementation, this would make an HTTP request to PagerDuty
             logger.info(f"Would send PagerDuty alert: {alert.id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to send PagerDuty alert: {e}")
+
             return False
     
     async def resolve_alert(self, alert_id: str) -> bool:
@@ -201,10 +215,12 @@ class PagerDutyIntegration:
         try:
             # Simulate PagerDuty resolve API call
             logger.info(f"Would resolve PagerDuty alert: {alert_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to resolve PagerDuty alert: {e}")
+
             return False
     
     def _map_severity(self, severity: AlertSeverity) -> str:
@@ -363,7 +379,9 @@ class UnifiedAlertManager:
         # Check if alert already exists (deduplication)
         if alert_id in self.alerts and self.alerts[alert_id].status == AlertStatus.OPEN:
             logger.debug(f"Alert {alert_id} already exists and is open")
+
             return alert_id
+
         
         alert = Alert(
             id=alert_id,
@@ -377,7 +395,9 @@ class UnifiedAlertManager:
         )
         
         # Check for correlation with existing alerts
+
         existing_alerts = [a for a in self.alerts.values() if a.status == AlertStatus.OPEN]
+
         correlated = self.correlator.correlate_alerts(alert, existing_alerts)
         
         # If highly correlated, suppress this alert
@@ -386,6 +406,7 @@ class UnifiedAlertManager:
             alert.metadata["suppressed_reason"] = "highly_correlated"
             alert.metadata["correlated_alerts"] = [a.id for a in correlated]
             self.suppressed_alerts.add(alert_id)
+
             logger.info(f"Alert {alert_id} suppressed due to correlation")
         
         # Store alert
@@ -396,6 +417,7 @@ class UnifiedAlertManager:
         # Process alert if not suppressed
         if alert.status != AlertStatus.SUPPRESSED:
             await self._process_alert(alert)
+
         
         logger.info(f"Created alert {alert_id}: {title}")
         return alert_id
@@ -411,13 +433,17 @@ class UnifiedAlertManager:
             await self._schedule_escalation(alert)
     
     async def _send_notifications(self, alert: Alert):
-        """Send alert notifications through configured channels"""
+        """
+        Send alert notifications through configured channels"""
         
         # Find applicable rules
+
         applicable_rules = [
             rule for rule in self.rules.values()
+
             if rule.category == alert.category and rule.enabled
         ]
+
         
         channels = set()
         for rule in applicable_rules:
@@ -427,6 +453,7 @@ class UnifiedAlertManager:
         for channel in channels:
             try:
                 await self._send_to_channel(alert, channel)
+
             except Exception as e:
                 logger.error(f"Failed to send alert {alert.id} to {channel}: {e}")
     
@@ -451,9 +478,11 @@ class UnifiedAlertManager:
         
         policy_name = "business_critical" if alert.category == AlertCategory.BUSINESS else "technical_standard"
         policy = self.escalation_policies.get(policy_name)
+
         
         if not policy:
             logger.warning(f"No escalation policy found for alert {alert.id}")
+
             return
         
         # In a real implementation, this would schedule background tasks
@@ -464,17 +493,21 @@ class UnifiedAlertManager:
         
         if alert_id not in self.alerts:
             logger.warning(f"Alert {alert_id} not found")
+
             return False
+
         
         alert = self.alerts[alert_id]
         if alert.status != AlertStatus.OPEN:
             logger.warning(f"Alert {alert_id} is not open (status: {alert.status})")
+
             return False
         
         alert.status = AlertStatus.ACKNOWLEDGED
         alert.acknowledged_at = datetime.now()
         alert.acknowledged_by = acknowledged_by
         alert.updated_at = datetime.now()
+
         
         logger.info(f"Alert {alert_id} acknowledged by {acknowledged_by}")
         return True
@@ -484,23 +517,28 @@ class UnifiedAlertManager:
         
         if alert_id not in self.alerts:
             logger.warning(f"Alert {alert_id} not found")
+
             return False
+
         
         alert = self.alerts[alert_id]
         if alert.status == AlertStatus.RESOLVED:
             logger.warning(f"Alert {alert_id} is already resolved")
+
             return False
         
         alert.status = AlertStatus.RESOLVED
         alert.resolved_at = datetime.now()
         alert.resolved_by = resolved_by
         alert.updated_at = datetime.now()
+
         
         if resolution_note:
             alert.metadata["resolution_note"] = resolution_note
         
         # Resolve in external systems
         await self.pagerduty.resolve_alert(alert_id)
+
         
         logger.info(f"Alert {alert_id} resolved by {resolved_by}")
         return True
@@ -510,37 +548,50 @@ class UnifiedAlertManager:
         return self.alerts.get(alert_id)
     
     def get_alerts_by_status(self, status: AlertStatus) -> List[Alert]:
-        """Get alerts by status"""
+        """
+        Get alerts by status"""
         return [alert for alert in self.alerts.values() if alert.status == status]
     
     def get_alerts_by_category(self, category: AlertCategory) -> List[Alert]:
-        """Get alerts by category"""
+        """
+        Get alerts by category"""
         return [alert for alert in self.alerts.values() if alert.category == category]
     
     def get_alerts_by_severity(self, severity: AlertSeverity) -> List[Alert]:
-        """Get alerts by severity"""
+        """
+        Get alerts by severity"""
         return [alert for alert in self.alerts.values() if alert.severity == severity]
     
     def get_open_alerts(self) -> List[Alert]:
-        """Get all open alerts"""
+        """
+        Get all open alerts"""
         return self.get_alerts_by_status(AlertStatus.OPEN)
     
     def get_recent_alerts(self, hours: int = 24) -> List[Alert]:
-        """Get recent alerts within specified time window"""
+        """
+        Get recent alerts within specified time window"""
         cutoff_time = datetime.now() - timedelta(hours=hours)
         return [
             alert for alert in self.alerts.values()
+
             if alert.created_at >= cutoff_time
         ]
     
     def get_alert_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive alert statistics"""
+        """
+        Get comprehensive alert statistics"""
         total_alerts = len(self.alerts)
+
         open_alerts = len(self.get_open_alerts())
+
         recent_alerts = len(self.get_recent_alerts(24))
+
+
         
         severity_counts = defaultdict(int)
+
         category_counts = defaultdict(int)
+
         
         for alert in self.alerts.values():
             severity_counts[alert.severity.value] += 1
@@ -580,7 +631,8 @@ async def create_business_alert(title: str, description: str, severity: AlertSev
 
 
 async def create_technical_alert(title: str, description: str, severity: AlertSeverity = AlertSeverity.WARNING, **kwargs) -> str:
-    """Create a technical alert"""
+    """
+        Create a technical alert"""
     return await alert_manager.create_alert(
         title=title,
         description=description,
@@ -591,7 +643,8 @@ async def create_technical_alert(title: str, description: str, severity: AlertSe
 
 
 async def create_ai_alert(title: str, description: str, severity: AlertSeverity = AlertSeverity.WARNING, **kwargs) -> str:
-    """Create an AI/ML alert"""
+    """
+        Create an AI/ML alert"""
     return await alert_manager.create_alert(
         title=title,
         description=description,
@@ -602,7 +655,8 @@ async def create_ai_alert(title: str, description: str, severity: AlertSeverity 
 
 
 async def create_security_alert(title: str, description: str, severity: AlertSeverity = AlertSeverity.CRITICAL, **kwargs) -> str:
-    """Create a security alert"""
+    """
+        Create a security alert"""
     return await alert_manager.create_alert(
         title=title,
         description=description,
@@ -613,10 +667,12 @@ async def create_security_alert(title: str, description: str, severity: AlertSev
 
 
 def get_open_alerts() -> List[Alert]:
-    """Get all open alerts"""
+    """
+        Get all open alerts"""
     return alert_manager.get_open_alerts()
 
 
 def get_alert_statistics() -> Dict[str, Any]:
-    """Get alert statistics"""
+    """
+        Get alert statistics"""
     return alert_manager.get_alert_statistics()

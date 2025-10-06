@@ -24,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 
 class DeviceType(str, Enum):
-    """IoT device types."""
+    """
+        IoT device types."""
     SENSOR = "sensor"
     ACTUATOR = "actuator"
     GATEWAY = "gateway"
@@ -106,7 +107,8 @@ class DeviceInfo:
 
 @dataclass
 class MeshLink:
-    """Link between devices in mesh network."""
+    """
+        Link between devices in mesh network."""
     link_id: str
     source_device_id: str
     target_device_id: str
@@ -123,7 +125,8 @@ class MeshLink:
 
 @dataclass
 class MeshRoute:
-    """Route through mesh network."""
+    """
+        Route through mesh network."""
     route_id: str
     source_device_id: str
     destination_device_id: str
@@ -138,7 +141,8 @@ class MeshRoute:
 
 @dataclass
 class IoTMeshConfig:
-    """Configuration for IoT mesh network."""
+    """
+        Configuration for IoT mesh network."""
     network_name: str = "iacherie-mesh"
     topology: NetworkTopology = NetworkTopology.HYBRID
     default_protocols: List[CommunicationProtocol] = None
@@ -199,6 +203,7 @@ class IoTMeshOrchestrator:
         """Start the IoT mesh orchestrator."""
         if self.running:
             logger.warning("IoT mesh orchestrator already running")
+
             return
         
         self.running = True
@@ -210,6 +215,7 @@ class IoTMeshOrchestrator:
             asyncio.create_task(self._network_monitoring()),
             asyncio.create_task(self._auto_healing())
         ])
+
         
         logger.info("IoT mesh orchestrator started")
     
@@ -223,12 +229,14 @@ class IoTMeshOrchestrator:
         # Cancel background tasks
         for task in self.background_tasks:
             task.cancel()
+
             try:
                 await task
             except asyncio.CancelledError:
                 pass
         
         self.background_tasks.clear()
+
         
         logger.info("IoT mesh orchestrator stopped")
     
@@ -244,6 +252,8 @@ class IoTMeshOrchestrator:
     ) -> str:
         """Register a new IoT device in the mesh network."""
         device_id = str(uuid.uuid4())
+
+
         
         device_info = DeviceInfo(
             device_id=device_id,
@@ -259,12 +269,14 @@ class IoTMeshOrchestrator:
             last_seen=datetime.now(),
             metadata=metadata or {}
         )
+
         
         self.devices[device_id] = device_info
         self.adjacency_list[device_id] = set()
         
         # Try to establish connections with other devices
         await self._discover_neighbors(device_id)
+
         
         logger.info(f"Registered device: {device_name} ({device_id})")
         return device_id
@@ -273,13 +285,17 @@ class IoTMeshOrchestrator:
         """Unregister a device from the mesh network."""
         if device_id not in self.devices:
             logger.warning(f"Device {device_id} not found")
+
             return False
+
         
         device_info = self.devices.pop(device_id)
         
         # Remove all links involving this device
+
         links_to_remove = [
             link_id for link_id, link in self.mesh_links.items()
+
             if link.source_device_id == device_id or link.target_device_id == device_id
         ]
         
@@ -289,18 +305,22 @@ class IoTMeshOrchestrator:
         # Remove from adjacency list
         if device_id in self.adjacency_list:
             neighbors = self.adjacency_list.pop(device_id)
+
             for neighbor_id in neighbors:
                 if neighbor_id in self.adjacency_list:
                     self.adjacency_list[neighbor_id].discard(device_id)
         
         # Remove from routes
+
         routes_to_remove = [
             route_id for route_id, route in self.routes.items()
+
             if device_id in route.path
         ]
         
         for route_id in routes_to_remove:
             self.routes.pop(route_id)
+
         
         logger.info(f"Unregistered device: {device_info.device_name}")
         return True
@@ -315,11 +335,14 @@ class IoTMeshOrchestrator:
         """Update device status and metadata."""
         if device_id not in self.devices:
             logger.warning(f"Device {device_id} not found")
+
             return False
+
         
         device = self.devices[device_id]
         device.status = status
         device.last_seen = datetime.now()
+
         
         if battery_level is not None:
             device.battery_level = battery_level
@@ -341,9 +364,11 @@ class IoTMeshOrchestrator:
         for device_id in device_ids:
             if device_id not in self.devices:
                 logger.error(f"Device {device_id} not found")
+
                 return False
         
         self.device_groups[group_name] = set(device_ids)
+
         
         logger.info(f"Created device group: {group_name} with {len(device_ids)} devices")
         return True
@@ -358,17 +383,22 @@ class IoTMeshOrchestrator:
         """Send a message through the mesh network."""
         if source_device_id not in self.devices:
             logger.error(f"Source device {source_device_id} not found")
+
             return False
         
         if destination_device_id not in self.devices:
             logger.error(f"Destination device {destination_device_id} not found")
+
             return False
         
         # Find or create route
+
         route = await self._find_optimal_route(source_device_id, destination_device_id)
+
         
         if not route:
             logger.error(f"No route found from {source_device_id} to {destination_device_id}")
+
             return False
         
         # Simulate message transmission
@@ -387,9 +417,12 @@ class IoTMeshOrchestrator:
         """Broadcast a message to multiple devices."""
         if source_device_id not in self.devices:
             logger.error(f"Source device {source_device_id} not found")
+
             return 0
+
         
         target_devices = set()
+
         
         if target_group and target_group in self.device_groups:
             target_devices = self.device_groups[target_group].copy()
@@ -398,6 +431,8 @@ class IoTMeshOrchestrator:
         
         # Remove source device
         target_devices.discard(source_device_id)
+
+
         
         successful_sends = 0
         
@@ -416,6 +451,7 @@ class IoTMeshOrchestrator:
     ) -> Dict[str, Any]:
         """Orchestrate distributed computation across mesh devices."""
         # Find suitable devices
+
         suitable_devices = []
         
         for device_id, device in self.devices.items():
@@ -424,16 +460,20 @@ class IoTMeshOrchestrator:
                 
                 if preferred_devices is None or device_id in preferred_devices:
                     suitable_devices.append(device_id)
+
         
         if not suitable_devices:
             logger.error("No suitable devices found for computation task")
+
             return {"success": False, "error": "No suitable devices"}
         
         # Select device based on capabilities and load
+
         selected_device = self._select_optimal_device(suitable_devices, required_capabilities)
         
         # Simulate task execution
         logger.info(f"Orchestrating computation task on device: {selected_device}")
+
         
         return {
             "success": True,
@@ -445,6 +485,7 @@ class IoTMeshOrchestrator:
     def get_network_status(self) -> Dict[str, Any]:
         """Get comprehensive network status."""
         active_devices = [d for d in self.devices.values() if d.status == DeviceStatus.ONLINE]
+
         active_links = [l for l in self.mesh_links.values() if l.is_active]
         
         self.network_metrics.update({
@@ -454,6 +495,7 @@ class IoTMeshOrchestrator:
             "active_links": len(active_links),
             "average_latency_ms": sum(l.latency_ms for l in active_links) / len(active_links) if active_links else 0
         })
+
         
         return {
             "network_info": {
@@ -475,10 +517,12 @@ class IoTMeshOrchestrator:
             },
             "device_groups": {
                 group_name: list(device_ids)
+
                 for group_name, device_ids in self.device_groups.items()
             },
             "topology": {
                 device_id: list(neighbors)
+
                 for device_id, neighbors in self.adjacency_list.items()
             }
         }
@@ -487,9 +531,13 @@ class IoTMeshOrchestrator:
         """Get detailed information about a specific device."""
         if device_id not in self.devices:
             return None
+
         
         device = self.devices[device_id]
+
         neighbors = list(self.adjacency_list.get(device_id, set()))
+
+
         
         device_links = [
             {
@@ -501,6 +549,7 @@ class IoTMeshOrchestrator:
                 "quality": link.link_quality
             }
             for link in self.mesh_links.values()
+
             if link.source_device_id == device_id or link.target_device_id == device_id
         ]
         
@@ -515,6 +564,7 @@ class IoTMeshOrchestrator:
         """Discover neighboring devices for a given device."""
         if device_id not in self.devices:
             return
+
         
         device = self.devices[device_id]
         
@@ -528,8 +578,10 @@ class IoTMeshOrchestrator:
                 await self._create_mesh_link(device_id, other_device_id)
     
     def _devices_can_connect(self, device1: DeviceInfo, device2: DeviceInfo) -> bool:
-        """Check if two devices can establish a connection."""
+        """
+        Check if two devices can establish a connection."""
         # Check for common protocols
+
         common_protocols = set(device1.protocols) & set(device2.protocols)
         if not common_protocols:
             return False
@@ -544,9 +596,12 @@ class IoTMeshOrchestrator:
         return True
     
     def _calculate_distance(self, loc1: Dict[str, float], loc2: Dict[str, float]) -> float:
-        """Calculate distance between two locations in meters."""
+        """
+        Calculate distance between two locations in meters."""
         # Simplified distance calculation (should use proper geographic calculation)
+
         lat_diff = abs(loc1.get("latitude", 0) - loc2.get("latitude", 0))
+
         lon_diff = abs(loc1.get("longitude", 0) - loc2.get("longitude", 0))
         return ((lat_diff ** 2 + lon_diff ** 2) ** 0.5) * 111000  # Approximate meters per degree
     
@@ -558,16 +613,25 @@ class IoTMeshOrchestrator:
             return  # Link already exists
         
         # Simulate link quality measurements
+
         signal_strength = random.uniform(0.5, 1.0)
+
         latency_ms = random.uniform(1.0, 10.0)
+
         bandwidth_mbps = random.uniform(10.0, 100.0)
+
         packet_loss_rate = random.uniform(0.0, 0.05)
+
         link_quality = signal_strength * (1 - packet_loss_rate) * min(1.0, 50.0 / latency_ms)
         
         # Determine the best common protocol
+
         device1 = self.devices[device1_id]
+
         device2 = self.devices[device2_id]
+
         common_protocols = set(device1.protocols) & set(device2.protocols)
+
         protocol = list(common_protocols)[0] if common_protocols else CommunicationProtocol.WIFI
         
         mesh_link = MeshLink(
@@ -584,12 +648,14 @@ class IoTMeshOrchestrator:
             created_at=datetime.now(),
             last_updated=datetime.now()
         )
+
         
         self.mesh_links[link_id] = mesh_link
         
         # Update adjacency list
         self.adjacency_list[device1_id].add(device2_id)
         self.adjacency_list[device2_id].add(device1_id)
+
         
         logger.debug(f"Created mesh link: {device1_id} <-> {device2_id} (quality: {link_quality:.2f})")
     
@@ -599,6 +665,7 @@ class IoTMeshOrchestrator:
             return None
         
         # Check if route already exists and is valid
+
         route_key = f"{source_id}_{destination_id}"
         if route_key in self.routes:
             route = self.routes[route_key]
@@ -606,40 +673,58 @@ class IoTMeshOrchestrator:
                 return route
         
         # Find route using Dijkstra's algorithm
+
         distances = {device_id: float('inf') for device_id in self.devices}
         distances[source_id] = 0
+
         previous = {}
+
         unvisited = set(self.devices.keys())
+
         
         while unvisited:
             # Find unvisited node with minimum distance
+
             current = min(unvisited, key=lambda x: distances[x])
+
             
             if distances[current] == float('inf'):
                 break  # No path exists
             
             if current == destination_id:
                 # Reconstruct path
+
                 path = []
+
                 node = destination_id
                 while node in previous:
                     path.append(node)
+
+
                     node = previous[node]
                 path.append(source_id)
+
                 path.reverse()
                 
                 # Calculate route metrics
+
                 total_latency = 0
+
                 total_bandwidth = float('inf')
+
                 
                 for i in range(len(path) - 1):
                     link_id = f"{path[i]}_{path[i+1]}"
                     reverse_link_id = f"{path[i+1]}_{path[i]}"
                     
                     link = self.mesh_links.get(link_id) or self.mesh_links.get(reverse_link_id)
+
                     if link:
                         total_latency += link.latency_ms
+
                         total_bandwidth = min(total_bandwidth, link.bandwidth_mbps)
+
+
                 
                 route = MeshRoute(
                     route_id=route_key,
@@ -650,9 +735,11 @@ class IoTMeshOrchestrator:
                     total_latency_ms=total_latency,
                     total_bandwidth_mbps=total_bandwidth if total_bandwidth != float('inf') else 0,
                     route_quality=1.0 / (1.0 + total_latency / 100.0),  # Simple quality metric
+
                     is_optimal=True,
                     created_at=datetime.now()
                 )
+
                 
                 self.routes[route_key] = route
                 return route
@@ -666,6 +753,7 @@ class IoTMeshOrchestrator:
                     reverse_link_id = f"{neighbor_id}_{current}"
                     
                     link = self.mesh_links.get(link_id) or self.mesh_links.get(reverse_link_id)
+
                     if link and link.is_active:
                         distance = distances[current] + link.latency_ms
                         if distance < distances[neighbor_id]:
@@ -688,6 +776,7 @@ class IoTMeshOrchestrator:
             reverse_link_id = f"{route.path[i+1]}_{route.path[i]}"
             
             link = self.mesh_links.get(link_id) or self.mesh_links.get(reverse_link_id)
+
             if not link or not link.is_active:
                 return False
         
@@ -699,10 +788,12 @@ class IoTMeshOrchestrator:
             return None
         
         # Simple selection based on battery level and device type priority
+
         device_scores = {}
         
         for device_id in device_ids:
             device = self.devices[device_id]
+
             score = 1.0
             
             # Prefer devices with more capabilities
@@ -721,18 +812,21 @@ class IoTMeshOrchestrator:
         return max(device_scores, key=device_scores.get)
     
     async def _device_discovery(self):
-        """Continuously discover new devices and update connections."""
+        """
+        Continuously discover new devices and update connections."""
         while self.running:
             try:
                 # Periodically rediscover neighbors for all devices
                 for device_id in list(self.devices.keys()):
                     if self.devices[device_id].status == DeviceStatus.ONLINE:
                         await self._discover_neighbors(device_id)
+
                 
                 await asyncio.sleep(60)  # Discovery every minute
                 
             except Exception as e:
                 logger.error(f"Device discovery error: {e}")
+
                 await asyncio.sleep(60)
     
     async def _route_maintenance(self):
@@ -740,19 +834,25 @@ class IoTMeshOrchestrator:
         while self.running:
             try:
                 # Remove invalid routes
+
                 invalid_routes = [
                     route_id for route_id, route in self.routes.items()
+
                     if not self._is_route_valid(route)
                 ]
                 
                 for route_id in invalid_routes:
                     self.routes.pop(route_id)
+
                     logger.debug(f"Removed invalid route: {route_id}")
+
                 
                 await asyncio.sleep(self.config.route_discovery_interval_seconds)
+
                 
             except Exception as e:
                 logger.error(f"Route maintenance error: {e}")
+
                 await asyncio.sleep(300)
     
     async def _network_monitoring(self):
@@ -764,6 +864,7 @@ class IoTMeshOrchestrator:
                 # Check device heartbeats
                 for device_id, device in self.devices.items():
                     time_since_seen = (current_time - device.last_seen).total_seconds()
+
                     
                     if time_since_seen > self.config.device_heartbeat_interval_seconds * 3:
                         if device.status == DeviceStatus.ONLINE:
@@ -773,8 +874,11 @@ class IoTMeshOrchestrator:
                 # Update link qualities
                 for link in self.mesh_links.values():
                     # Simulate quality degradation over time
+
                     age_hours = (current_time - link.created_at).total_seconds() / 3600
+
                     quality_degradation = min(0.1, age_hours * 0.01)
+
                     link.link_quality = max(0.0, link.link_quality - quality_degradation)
                     
                     # Deactivate poor quality links
@@ -782,9 +886,11 @@ class IoTMeshOrchestrator:
                         link.is_active = False
                 
                 await asyncio.sleep(self.config.device_heartbeat_interval_seconds)
+
                 
             except Exception as e:
                 logger.error(f"Network monitoring error: {e}")
+
                 await asyncio.sleep(60)
     
     async def _auto_healing(self):
@@ -793,6 +899,7 @@ class IoTMeshOrchestrator:
             try:
                 if not self.config.auto_healing_enabled:
                     await asyncio.sleep(300)
+
                     continue
                 
                 # Identify isolated devices
@@ -801,15 +908,18 @@ class IoTMeshOrchestrator:
                         len(self.adjacency_list.get(device_id, set())) == 0):
                         
                         logger.info(f"Attempting to reconnect isolated device: {device_id}")
+
                         await self._discover_neighbors(device_id)
                 
                 # Optimize network topology if needed
                 await self._optimize_topology()
+
                 
                 await asyncio.sleep(300)  # Auto-healing every 5 minutes
                 
             except Exception as e:
                 logger.error(f"Auto-healing error: {e}")
+
                 await asyncio.sleep(300)
     
     async def _optimize_topology(self):
@@ -823,7 +933,8 @@ class IoTMeshOrchestrator:
 
 # Convenience function
 async def create_iot_mesh_orchestrator(config: Optional[IoTMeshConfig] = None) -> IoTMeshOrchestrator:
-    """Create and start an IoT mesh orchestrator."""
+    """
+        Create and start an IoT mesh orchestrator."""
     orchestrator = IoTMeshOrchestrator(config)
     await orchestrator.start()
     return orchestrator
@@ -831,9 +942,11 @@ async def create_iot_mesh_orchestrator(config: Optional[IoTMeshConfig] = None) -
 
 # Example usage
 async def main():
-    """Example usage of the IoT mesh orchestrator."""
+    """
+        Example usage of the IoT mesh orchestrator."""
     try:
         # Create configuration
+
         config = IoTMeshConfig(
             network_name="iacherie-iot-mesh",
             topology=NetworkTopology.MESH,
@@ -841,10 +954,13 @@ async def main():
         )
         
         # Create and start orchestrator
+
         orchestrator = await create_iot_mesh_orchestrator(config)
+
         
         try:
             # Register some devices
+
             gateway_id = await orchestrator.register_device(
                 device_name="iot-gateway-1",
                 device_type=DeviceType.GATEWAY,
@@ -853,6 +969,8 @@ async def main():
                 hardware_specs={"cpu_cores": 4, "memory_gb": 8},
                 location={"latitude": 52.5200, "longitude": 13.4050}
             )
+
+
             
             sensor_id = await orchestrator.register_device(
                 device_name="temp-sensor-1",
@@ -865,22 +983,29 @@ async def main():
             
             # Update device status
             await orchestrator.update_device_status(gateway_id, DeviceStatus.ONLINE)
+
             await orchestrator.update_device_status(sensor_id, DeviceStatus.ONLINE, battery_level=0.85)
             
             # Create device group
             await orchestrator.create_device_group("sensors", [sensor_id])
             
             # Send a message
+
             message = {"type": "sensor_reading", "temperature": 23.5, "timestamp": datetime.now().isoformat()}
             await orchestrator.send_message(sensor_id, gateway_id, message)
             
             # Get network status
+
             status = orchestrator.get_network_status()
+
             print("IoT Mesh Network Status:")
+
             print(json.dumps(status, indent=2, default=str))
+
             
         finally:
             await orchestrator.stop()
+
             
     except Exception as e:
         logger.error(f"Example failed: {e}")

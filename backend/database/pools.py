@@ -77,7 +77,8 @@ logger = logging.getLogger(__name__)
 
 
 class PoolType(Enum):
-    """Connection pool type enumeration."""
+    """
+        Connection pool type enumeration."""
     POSTGRESQL = "postgresql"
     REDIS = "redis"
     MONGODB = "mongodb"
@@ -115,7 +116,8 @@ class PoolConfiguration:
 
 @dataclass
 class PoolMetrics:
-    """Pool performance metrics."""
+    """
+        Pool performance metrics."""
     total_connections: int = 0
     active_connections: int = 0
     idle_connections: int = 0
@@ -130,31 +132,37 @@ class PoolMetrics:
 
 
 class IConnectionPool(Protocol):
-    """Connection pool interface."""
+    """
+        Connection pool interface."""
     
     @abstractmethod
     async def initialize(self) -> None:
-        """Initialize the connection pool."""
+        """
+        Initialize the connection pool."""
         pass
     
     @abstractmethod
     async def get_connection(self):
-        """Get a connection from the pool."""
+        """
+        Get a connection from the pool."""
         pass
     
     @abstractmethod
     async def release_connection(self, connection) -> None:
-        """Release a connection back to the pool."""
+        """
+        Release a connection back to the pool."""
         pass
     
     @abstractmethod
     async def close(self) -> None:
-        """Close the connection pool."""
+        """
+        Close the connection pool."""
         pass
     
     @abstractmethod
     def get_metrics(self) -> PoolMetrics:
-        """Get pool metrics."""
+        """
+        Get pool metrics."""
         pass
 
 
@@ -174,10 +182,13 @@ class PostgreSQLConnectionPool(IConnectionPool):
         self._metrics = PoolMetrics()
         self._health_check_task: Optional[asyncio.Task] = None
         self._scaling_lock = asyncio.Lock()
+
         
     async def initialize(self) -> None:
-        """Initialize PostgreSQL connection pool."""
+        """
+        Initialize PostgreSQL connection pool."""
         logger.info("🚀 Initializing PostgreSQL connection pool...")
+
         
         try:
             self._pool = await asyncpg.create_pool(
@@ -188,18 +199,22 @@ class PostgreSQLConnectionPool(IConnectionPool):
                 max_inactive_connection_lifetime=self.config.max_inactive_connection_lifetime,
                 **self.config.extra_params
             )
+
             
             self._status = PoolStatus.HEALTHY
             self._metrics.total_connections = self.config.min_size
             
             # Start health monitoring
             self._health_check_task = asyncio.create_task(self._health_monitor())
+
             
             logger.info(f"✅ PostgreSQL pool initialized with {self.config.min_size}-{self.config.max_size} connections")
+
             
         except Exception as e:
             self._status = PoolStatus.UNHEALTHY
             logger.error(f"❌ Failed to initialize PostgreSQL pool: {e}")
+
             raise
     
     @asynccontextmanager
@@ -207,8 +222,11 @@ class PostgreSQLConnectionPool(IConnectionPool):
         """Get connection with automatic resource management."""
         if not self._pool or self._status == PoolStatus.SHUTDOWN:
             raise RuntimeError("Connection pool not available")
+
+
         
         start_time = datetime.now(timezone.utc)
+
         connection = None
         
         try:
@@ -216,23 +234,28 @@ class PostgreSQLConnectionPool(IConnectionPool):
                 self._pool.acquire(),
                 timeout=self.config.timeout
             )
+
             
             self._metrics.active_connections += 1
             self._update_wait_time(start_time)
+
             
             yield connection
             
         except asyncio.TimeoutError:
             self._metrics.connections_failed += 1
             logger.error("⏰ PostgreSQL connection timeout")
+
             raise
         except Exception as e:
             self._metrics.connections_failed += 1
             logger.error(f"❌ PostgreSQL connection error: {e}")
+
             raise
         finally:
             if connection:
                 await self._pool.release(connection)
+
                 self._metrics.active_connections -= 1
                 
         # Auto-scaling check
@@ -243,10 +266,12 @@ class PostgreSQLConnectionPool(IConnectionPool):
         """Release connection back to pool."""
         if self._pool and connection:
             await self._pool.release(connection)
+
             self._metrics.active_connections -= 1
     
     async def _health_monitor(self):
-        """Monitor pool health and performance."""
+        """
+        Monitor pool health and performance."""
         while self._status != PoolStatus.SHUTDOWN:
             try:
                 await asyncio.sleep(self.config.health_check_interval)
@@ -259,13 +284,16 @@ class PostgreSQLConnectionPool(IConnectionPool):
                 self._update_pool_metrics()
                 
                 # Check pool status
+
                 utilization = self._metrics.active_connections / self._metrics.total_connections
                 if utilization > 0.9:
                     self._status = PoolStatus.DEGRADED
                     logger.warning(f"🟡 PostgreSQL pool degraded: {utilization:.1%} utilization")
+
                 elif self._status == PoolStatus.DEGRADED and utilization < 0.7:
                     self._status = PoolStatus.HEALTHY
                     logger.info("✅ PostgreSQL pool recovered")
+
                     
             except asyncio.CancelledError:
                 break
@@ -283,6 +311,7 @@ class PostgreSQLConnectionPool(IConnectionPool):
                     int(self._metrics.total_connections * self.config.scaling_factor),
                     self.config.max_size
                 )
+
                 
                 if new_size > self._metrics.total_connections:
                     logger.info(f"🔄 Scaling PostgreSQL pool from {self._metrics.total_connections} to {new_size}")
@@ -298,26 +327,33 @@ class PostgreSQLConnectionPool(IConnectionPool):
             self._metrics.average_wait_time = 0.9 * self._metrics.average_wait_time + 0.1 * wait_time
     
     def _update_pool_metrics(self):
-        """Update pool metrics."""
+        """
+        Update pool metrics."""
         if self._pool:
             self._metrics.total_connections = self._pool.get_size()
+
             self._metrics.idle_connections = self._pool.get_idle_size()
+
             self._metrics.utilization_rate = self._metrics.active_connections / self._metrics.total_connections
             self._metrics.peak_connections = max(self._metrics.peak_connections, self._metrics.active_connections)
+
             self._metrics.last_updated = datetime.now(timezone.utc)
     
     def get_metrics(self) -> PoolMetrics:
-        """Get current pool metrics."""
+        """
+        Get current pool metrics."""
         self._update_pool_metrics()
         return self._metrics
     
     async def close(self) -> None:
-        """Close the connection pool."""
+        """
+        Close the connection pool."""
         logger.info("🔌 Closing PostgreSQL connection pool...")
         self._status = PoolStatus.SHUTDOWN
         
         if self._health_check_task:
             self._health_check_task.cancel()
+
             try:
                 await self._health_check_task
             except asyncio.CancelledError:
@@ -325,6 +361,7 @@ class PostgreSQLConnectionPool(IConnectionPool):
         
         if self._pool:
             await self._pool.close()
+
             logger.info("✅ PostgreSQL connection pool closed")
 
 
@@ -344,8 +381,10 @@ class RedisConnectionPool(IConnectionPool):
         self._connections: weakref.WeakSet = weakref.WeakSet()
     
     async def initialize(self) -> None:
-        """Initialize Redis connection pool."""
+        """
+        Initialize Redis connection pool."""
         logger.info("🚀 Initializing Redis connection pool...")
+
         
         try:
             self._pool = aioredis.ConnectionPool.from_url(
@@ -355,50 +394,63 @@ class RedisConnectionPool(IConnectionPool):
             )
             
             # Test connection
+
             redis_client = aioredis.Redis(connection_pool=self._pool)
+
             await redis_client.ping()
+
             await redis_client.close()
+
             
             self._status = PoolStatus.HEALTHY
             self._metrics.total_connections = self.config.max_size
             
             logger.info(f"✅ Redis pool initialized with max {self.config.max_size} connections")
+
             
         except Exception as e:
             self._status = PoolStatus.UNHEALTHY
             logger.error(f"❌ Failed to initialize Redis pool: {e}")
+
             raise
     
     async def get_connection(self):
         """Get Redis connection."""
         if not self._pool or self._status == PoolStatus.SHUTDOWN:
             raise RuntimeError("Redis pool not available")
+
         
         try:
             redis_client = aioredis.Redis(connection_pool=self._pool)
+
             self._connections.add(redis_client)
+
             self._metrics.active_connections += 1
             return redis_client
             
         except Exception as e:
             self._metrics.connections_failed += 1
             logger.error(f"❌ Redis connection error: {e}")
+
             raise
     
     async def release_connection(self, connection) -> None:
         """Release Redis connection."""
         if connection:
             await connection.close()
+
             self._metrics.active_connections -= 1
     
     def get_metrics(self) -> PoolMetrics:
-        """Get Redis pool metrics."""
+        """
+        Get Redis pool metrics."""
         self._metrics.utilization_rate = self._metrics.active_connections / self._metrics.total_connections
         self._metrics.last_updated = datetime.now(timezone.utc)
         return self._metrics
     
     async def close(self) -> None:
-        """Close Redis connection pool."""
+        """
+        Close Redis connection pool."""
         logger.info("🔌 Closing Redis connection pool...")
         self._status = PoolStatus.SHUTDOWN
         
@@ -406,11 +458,14 @@ class RedisConnectionPool(IConnectionPool):
         for connection in list(self._connections):
             try:
                 await connection.close()
+
             except Exception as e:
                 logger.error(f"Error closing Redis connection: {e}")
+
         
         if self._pool:
             await self._pool.disconnect()
+
             logger.info("✅ Redis connection pool closed")
 
 
@@ -436,27 +491,35 @@ class DatabasePoolManager:
         self._metrics_history: Dict[PoolType, List[PoolMetrics]] = {}
         
     async def initialize_pool(self, pool_type: PoolType, config: PoolConfiguration, connection_params: Dict[str, Any]):
-        """Initialize a specific pool type."""
+        """
+        Initialize a specific pool type."""
         logger.info(f"🔧 Initializing {pool_type.value} pool...")
+
         
         self._configurations[pool_type] = config
         
         try:
             if pool_type == PoolType.POSTGRESQL and ASYNCPG_AVAILABLE:
                 pool = PostgreSQLConnectionPool(config, connection_params['url'])
+
             elif pool_type == PoolType.REDIS and REDIS_AVAILABLE:
                 pool = RedisConnectionPool(config, connection_params['url'])
+
             else:
                 raise ValueError(f"Unsupported or unavailable pool type: {pool_type}")
+
             
             await pool.initialize()
+
             self._pools[pool_type] = pool
             self._metrics_history[pool_type] = []
             
             logger.info(f"✅ {pool_type.value} pool initialized successfully")
+
             
         except Exception as e:
             logger.error(f"❌ Failed to initialize {pool_type.value} pool: {e}")
+
             raise
     
     async def get_pool(self, pool_type: PoolType) -> IConnectionPool:
@@ -474,9 +537,11 @@ class DatabasePoolManager:
             yield connection
     
     async def start_monitoring(self):
-        """Start global pool monitoring."""
+        """
+        Start global pool monitoring."""
         if not self._monitoring_task:
             self._monitoring_task = asyncio.create_task(self._global_monitor())
+
             logger.info("📊 Global pool monitoring started")
     
     async def _global_monitor(self):
@@ -490,22 +555,27 @@ class DatabasePoolManager:
                         metrics = pool.get_metrics()
                         
                         # Store metrics history
+
                         history = self._metrics_history[pool_type]
                         history.append(metrics)
                         
                         # Keep only last 24 hours (1440 minutes)
+
                         if len(history) > 1440:
                             history.pop(0)
                         
                         # Log warnings for degraded pools
                         if metrics.utilization_rate > 0.9:
                             logger.warning(f"🟡 {pool_type.value} pool high utilization: {metrics.utilization_rate:.1%}")
+
                         
                         if metrics.error_rate > 0.1:
                             logger.warning(f"🔥 {pool_type.value} pool high error rate: {metrics.error_rate:.1%}")
+
                             
                     except Exception as e:
                         logger.error(f"Error monitoring {pool_type.value} pool: {e}")
+
                         
             except asyncio.CancelledError:
                 break
@@ -515,17 +585,24 @@ class DatabasePoolManager:
     def get_all_metrics(self) -> Dict[str, PoolMetrics]:
         """Get metrics for all pools."""
         return {
-            pool_type.value: pool.get_metrics() 
+            pool_type.value: pool.get_metrics()
+ 
             for pool_type, pool in self._pools.items()
         }
     
     def get_performance_summary(self) -> Dict[str, Any]:
-        """Get performance summary across all pools."""
+        """
+        Get performance summary across all pools."""
         metrics = self.get_all_metrics()
+
+
         
         total_connections = sum(m.total_connections for m in metrics.values())
+
         total_active = sum(m.active_connections for m in metrics.values())
+
         avg_utilization = statistics.mean([m.utilization_rate for m in metrics.values()]) if metrics else 0
+
         avg_wait_time = statistics.mean([m.average_wait_time for m in metrics.values() if m.average_wait_time > 0]) if metrics else 0
         
         return {
@@ -540,9 +617,11 @@ class DatabasePoolManager:
     async def close_all_pools(self):
         """Close all connection pools."""
         logger.info("🔌 Closing all database pools...")
+
         
         if self._monitoring_task:
             self._monitoring_task.cancel()
+
             try:
                 await self._monitoring_task
             except asyncio.CancelledError:
@@ -551,9 +630,12 @@ class DatabasePoolManager:
         for pool_type, pool in self._pools.items():
             try:
                 await pool.close()
+
                 logger.info(f"✅ {pool_type.value} pool closed")
+
             except Exception as e:
                 logger.error(f"❌ Error closing {pool_type.value} pool: {e}")
+
         
         self._pools.clear()
         logger.info("✅ All database pools closed")

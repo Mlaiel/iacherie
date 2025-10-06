@@ -46,7 +46,8 @@ logger = logging.getLogger(__name__)
 # ========================================
 
 class WorkflowStatus(Enum):
-    """Status workflow"""
+    """
+        Status workflow"""
     CREATED = "created"
     SCHEDULED = "scheduled"
     RUNNING = "running"
@@ -75,7 +76,8 @@ class TaskPriority(Enum):
     EMERGENCY = 5
 
 class ExecutionMode(Enum):
-    """Mode d'exécution"""
+    """
+        Mode d'exécution"""
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     HYBRID = "hybrid"
@@ -122,7 +124,8 @@ class TaskDefinition:
 
 @dataclass
 class TaskExecution:
-    """Exécution tâche"""
+    """
+        Exécution tâche"""
     task_id: str
     execution_id: str
     status: TaskStatus
@@ -138,7 +141,8 @@ class TaskExecution:
 
 @dataclass
 class WorkflowDefinition:
-    """Définition workflow"""
+    """
+        Définition workflow"""
     workflow_id: str
     workflow_name: str
     description: str
@@ -175,7 +179,8 @@ class WorkflowExecution:
 
 @dataclass
 class WorkflowSchedule:
-    """Planification workflow"""
+    """
+        Planification workflow"""
     schedule_id: str
     workflow_id: str
     schedule_type: str  # "once", "recurring", "event_triggered"
@@ -232,6 +237,7 @@ class QuantumWorkflowManager:
         self.max_concurrent_workflows = self.config.get("max_concurrent_workflows", 5)
         self.default_task_timeout = self.config.get("default_task_timeout", 300)
         self.monitoring_interval_seconds = self.config.get("monitoring_interval", 5)
+
         
         logger.info("🔄 Quantum Workflow Manager initialized")
     
@@ -252,11 +258,14 @@ class QuantumWorkflowManager:
             
             # Chargement workflows persistés
             await self._load_persisted_workflows()
+
             
             logger.info("✅ Quantum workflow manager initialized successfully")
+
             
         except Exception as e:
             logger.error(f"❌ Failed to initialize workflow manager: {e}")
+
             raise
     
     # ========================================
@@ -272,14 +281,17 @@ class QuantumWorkflowManager:
             await self._validate_workflow_definition(workflow_definition)
             
             # Construction graph de dépendances
+
             dependency_graph = await self._build_dependency_graph(workflow_definition)
             
             # Validation graph (cycles, etc.)
+
             await self._validate_dependency_graph(dependency_graph)
             
             # Optimisation quantum du workflow
             if workflow_definition.quantum_optimization_enabled:
                 optimized_definition = await self._apply_quantum_workflow_optimization(workflow_definition)
+
             else:
                 optimized_definition = workflow_definition
             
@@ -288,11 +300,13 @@ class QuantumWorkflowManager:
             self.dependency_graph_cache[workflow_definition.workflow_id] = dependency_graph
             
             logger.info(f"✅ Workflow {workflow_definition.workflow_name} created successfully")
+
             
             return workflow_definition.workflow_id
             
         except Exception as e:
             logger.error(f"❌ Failed to create workflow: {e}")
+
             raise
     
     async def update_workflow(self, workflow_id: str, updates: Dict[str, Any]) -> bool:
@@ -306,6 +320,7 @@ class QuantumWorkflowManager:
                 raise ValueError(f"Cannot update workflow {workflow_id} while executing")
             
             # Application mises à jour
+
             workflow = self.workflow_definitions[workflow_id]
             for key, value in updates.items():
                 if hasattr(workflow, key):
@@ -313,17 +328,23 @@ class QuantumWorkflowManager:
             
             # Revalidation et reconstruction graph
             await self._validate_workflow_definition(workflow)
+
+
             dependency_graph = await self._build_dependency_graph(workflow)
+
             await self._validate_dependency_graph(dependency_graph)
+
             
             self.dependency_graph_cache[workflow_id] = dependency_graph
             
             logger.info(f"✅ Workflow {workflow_id} updated successfully")
+
             
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to update workflow {workflow_id}: {e}")
+
             raise
     
     async def delete_workflow(self, workflow_id: str, force: bool = False) -> bool:
@@ -346,19 +367,23 @@ class QuantumWorkflowManager:
                 del self.dependency_graph_cache[workflow_id]
             
             # Suppression schedules associés
+
             schedules_to_remove = [
                 schedule_id for schedule_id, schedule in self.scheduled_workflows.items()
+
                 if schedule.workflow_id == workflow_id
             ]
             for schedule_id in schedules_to_remove:
                 del self.scheduled_workflows[schedule_id]
             
             logger.info(f"✅ Workflow {workflow_id} deleted successfully")
+
             
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to delete workflow {workflow_id}: {e}")
+
             raise
     
     # ========================================
@@ -379,13 +404,18 @@ class QuantumWorkflowManager:
             # Vérification limite exécutions concurrentes
             if len(self.active_executions) >= self.max_concurrent_workflows:
                 raise RuntimeError("Maximum concurrent workflows limit reached")
+
+
             
             workflow_def = self.workflow_definitions[workflow_id]
+
             execution_id = str(uuid.uuid4())
+
             
             logger.info(f"🚀 Starting workflow execution: {workflow_def.workflow_name} ({execution_id})")
             
             # Création exécution workflow
+
             workflow_execution = WorkflowExecution(
                 workflow_id=workflow_id,
                 execution_id=execution_id,
@@ -395,15 +425,19 @@ class QuantumWorkflowManager:
             )
             
             # Préparation données d'entrée
+
             prepared_input = await self._prepare_workflow_input_data(workflow_def, input_data or {})
             
             # Planification exécution avec optimisation quantique
+
             execution_plan = await self._create_quantum_optimized_execution_plan(
                 workflow_def, execution_options or {}
             )
             
             # Allocation ressources
+
             resource_allocation = await self._allocate_workflow_resources(workflow_def, execution_plan)
+
             workflow_execution.resource_allocation = resource_allocation
             
             # Ajout aux exécutions actives
@@ -411,13 +445,16 @@ class QuantumWorkflowManager:
             
             # Démarrage exécution asynchrone
             asyncio.create_task(self._execute_workflow_async(workflow_def, workflow_execution, execution_plan, prepared_input))
+
             
             logger.info(f"✅ Workflow execution {execution_id} started")
+
             
             return execution_id
             
         except Exception as e:
             logger.error(f"❌ Failed to execute workflow {workflow_id}: {e}")
+
             raise
     
     async def _execute_workflow_async(
@@ -432,23 +469,29 @@ class QuantumWorkflowManager:
             execution_id = workflow_execution.execution_id
             
             # Récupération graph de dépendances
+
             dependency_graph = self.dependency_graph_cache[workflow_def.workflow_id]
             
             # Exécution selon mode
             if workflow_def.execution_mode == ExecutionMode.SEQUENTIAL:
                 await self._execute_sequential_workflow(workflow_def, workflow_execution, dependency_graph, input_data)
+
             elif workflow_def.execution_mode == ExecutionMode.PARALLEL:
                 await self._execute_parallel_workflow(workflow_def, workflow_execution, dependency_graph, input_data)
+
             elif workflow_def.execution_mode == ExecutionMode.QUANTUM_OPTIMIZED:
                 await self._execute_quantum_optimized_workflow(workflow_def, workflow_execution, dependency_graph, input_data)
+
             else:  # HYBRID or ADAPTIVE
                 await self._execute_hybrid_workflow(workflow_def, workflow_execution, dependency_graph, input_data)
             
             # Finalisation exécution
             await self._finalize_workflow_execution(workflow_execution)
+
             
         except Exception as e:
             logger.error(f"❌ Workflow execution {execution_id} failed: {e}")
+
             workflow_execution.status = WorkflowStatus.FAILED
             await self._handle_workflow_execution_error(workflow_execution, e)
         finally:
@@ -465,6 +508,7 @@ class QuantumWorkflowManager:
         """Exécution workflow hybride (séquentiel + parallèle optimisé)"""
         try:
             # Analyse topologique pour déterminer niveaux d'exécution
+
             execution_levels = await self._analyze_execution_levels(dependency_graph)
             
             # Exécution par niveaux
@@ -472,24 +516,30 @@ class QuantumWorkflowManager:
                 logger.info(f"Executing level {level} with {len(tasks_at_level)} tasks")
                 
                 # Exécution parallèle des tâches au même niveau
+
                 level_futures = []
                 for task_id in tasks_at_level:
                     task_def = next(t for t in workflow_def.tasks if t.task_id == task_id)
                     
                     # Préparation données tâche
+
                     task_input = await self._prepare_task_input_data(task_def, input_data, workflow_execution)
                     
                     # Soumission tâche pour exécution
+
                     future = self.task_executor.submit(
                         self._execute_task_wrapper, task_def, task_input, workflow_execution
                     )
+
                     level_futures.append((task_id, future))
                 
                 # Attente completion niveau
                 for task_id, future in level_futures:
                     try:
                         task_result = await asyncio.wrap_future(future)
+
                         await self._process_task_completion(task_id, task_result, workflow_execution)
+
                     except Exception as e:
                         await self._handle_task_error(task_id, e, workflow_execution, workflow_def)
                 
@@ -499,6 +549,7 @@ class QuantumWorkflowManager:
             
         except Exception as e:
             logger.error(f"❌ Hybrid workflow execution failed: {e}")
+
             raise
     
     def _execute_task_wrapper(
@@ -510,37 +561,49 @@ class QuantumWorkflowManager:
         """Wrapper synchrone pour exécution tâche"""
         try:
             # Création exécution tâche
+
             task_execution = TaskExecution(
                 task_id=task_def.task_id,
                 execution_id=str(uuid.uuid4()),
                 status=TaskStatus.RUNNING,
                 start_time=datetime.utcnow()
             )
+
             
             workflow_execution.task_executions[task_def.task_id] = task_execution
             workflow_execution.current_executing_tasks.add(task_def.task_id)
             
             # Exécution fonction tâche
+
             start_time = time.time()
+
             
             if task_def.quantum_enhanced and self.quantum_optimizer:
                 # Exécution avec enhancement quantique
+
                 task_output = self._execute_quantum_enhanced_task(task_def, task_input)
+
                 task_execution.quantum_advantage_achieved = 2.1  # Simulation
             else:
                 # Exécution classique
+
                 task_output = task_def.executor_function(task_input)
+
                 task_execution.quantum_advantage_achieved = 1.0
+
             
             execution_time = (time.time() - start_time) * 1000
             
             # Mise à jour exécution tâche
             task_execution.status = TaskStatus.COMPLETED
             task_execution.end_time = datetime.utcnow()
+
             task_execution.execution_duration_ms = int(execution_time)
+
             task_execution.output_data = task_output
             
             workflow_execution.current_executing_tasks.discard(task_def.task_id)
+
             workflow_execution.completed_tasks += 1
             
             return {
@@ -555,8 +618,11 @@ class QuantumWorkflowManager:
             # Gestion erreur tâche
             task_execution.status = TaskStatus.FAILED
             task_execution.end_time = datetime.utcnow()
+
             task_execution.error_message = str(e)
+
             workflow_execution.current_executing_tasks.discard(task_def.task_id)
+
             workflow_execution.failed_tasks += 1
             
             return {
@@ -568,6 +634,7 @@ class QuantumWorkflowManager:
     def _execute_quantum_enhanced_task(self, task_def: TaskDefinition, task_input: Dict[str, Any]) -> Dict[str, Any]:
         """Exécution tâche avec enhancement quantique"""
         # Simulation enhancement quantique
+
         result = task_def.executor_function(task_input)
         
         # Application optimisations quantiques
@@ -591,10 +658,13 @@ class QuantumWorkflowManager:
         try:
             if workflow_id not in self.workflow_definitions:
                 raise ValueError(f"Workflow {workflow_id} not found")
+
+
             
             schedule_id = str(uuid.uuid4())
             
             # Création schedule
+
             schedule = WorkflowSchedule(
                 schedule_id=schedule_id,
                 workflow_id=workflow_id,
@@ -612,11 +682,13 @@ class QuantumWorkflowManager:
             self.scheduled_workflows[schedule_id] = schedule
             
             logger.info(f"✅ Workflow {workflow_id} scheduled with ID: {schedule_id}")
+
             
             return schedule_id
             
         except Exception as e:
             logger.error(f"❌ Failed to schedule workflow {workflow_id}: {e}")
+
             raise
     
     async def cancel_scheduled_workflow(self, schedule_id: str) -> bool:
@@ -624,15 +696,18 @@ class QuantumWorkflowManager:
         try:
             if schedule_id not in self.scheduled_workflows:
                 raise ValueError(f"Schedule {schedule_id} not found")
+
             
             del self.scheduled_workflows[schedule_id]
             
             logger.info(f"✅ Scheduled workflow {schedule_id} cancelled")
+
             
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to cancel scheduled workflow {schedule_id}: {e}")
+
             raise
     
     # ========================================
@@ -650,9 +725,12 @@ class QuantumWorkflowManager:
                 raise ValueError(f"Execution {execution_id} not found")
             
             # Calcul progrès
+
             total_tasks = len(execution.task_executions)
+
             if total_tasks > 0:
                 execution.progress_percentage = (execution.completed_tasks / total_tasks) * 100
+
             
             status = {
                 "execution_id": execution_id,
@@ -674,6 +752,7 @@ class QuantumWorkflowManager:
             
         except Exception as e:
             logger.error(f"❌ Failed to get workflow status for {execution_id}: {e}")
+
             raise
     
     async def pause_workflow(self, execution_id: str) -> bool:
@@ -681,16 +760,20 @@ class QuantumWorkflowManager:
         try:
             if execution_id not in self.active_executions:
                 raise ValueError(f"Active execution {execution_id} not found")
+
+
             
             execution = self.active_executions[execution_id]
             execution.status = WorkflowStatus.PAUSED
             
             logger.info(f"⏸️ Workflow execution {execution_id} paused")
+
             
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to pause workflow {execution_id}: {e}")
+
             raise
     
     async def resume_workflow(self, execution_id: str) -> bool:
@@ -698,19 +781,24 @@ class QuantumWorkflowManager:
         try:
             if execution_id not in self.active_executions:
                 raise ValueError(f"Active execution {execution_id} not found")
+
+
             
             execution = self.active_executions[execution_id]
             if execution.status != WorkflowStatus.PAUSED:
                 raise ValueError(f"Execution {execution_id} is not paused")
+
             
             execution.status = WorkflowStatus.RUNNING
             
             logger.info(f"▶️ Workflow execution {execution_id} resumed")
+
             
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to resume workflow {execution_id}: {e}")
+
             raise
     
     async def cancel_workflow(self, execution_id: str) -> bool:
@@ -718,6 +806,8 @@ class QuantumWorkflowManager:
         try:
             if execution_id not in self.active_executions:
                 raise ValueError(f"Active execution {execution_id} not found")
+
+
             
             execution = self.active_executions[execution_id]
             execution.status = WorkflowStatus.CANCELLED
@@ -734,11 +824,13 @@ class QuantumWorkflowManager:
             del self.active_executions[execution_id]
             
             logger.info(f"❌ Workflow execution {execution_id} cancelled")
+
             
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to cancel workflow {execution_id}: {e}")
+
             raise
     
     # ========================================
@@ -750,31 +842,45 @@ class QuantumWorkflowManager:
         try:
             if workflow_id:
                 # Analytics pour workflow spécifique
+
                 executions = [
                     exec for exec in list(self.active_executions.values()) + list(self.completed_executions.values())
+
                     if exec.workflow_id == workflow_id
                 ]
             else:
                 # Analytics globales
+
                 executions = list(self.active_executions.values()) + list(self.completed_executions.values())
+
             
             if not executions:
                 return {"message": "No execution data available"}
             
             # Calculs analytics
+
             total_executions = len(executions)
+
+
             completed_executions = [e for e in executions if e.status == WorkflowStatus.COMPLETED]
+
             failed_executions = [e for e in executions if e.status == WorkflowStatus.FAILED]
+
             
             success_rate = len(completed_executions) / total_executions if total_executions > 0 else 0
             
             # Durées moyennes
+
             durations = [e.total_duration_ms for e in completed_executions if e.total_duration_ms > 0]
+
             avg_duration = sum(durations) / len(durations) if durations else 0
             
             # Quantum advantage moyen
+
             quantum_advantages = [e.overall_quantum_advantage for e in executions if e.overall_quantum_advantage > 1]
+
             avg_quantum_advantage = sum(quantum_advantages) / len(quantum_advantages) if quantum_advantages else 1.0
+
             
             analytics = {
                 "workflow_id": workflow_id,
@@ -799,6 +905,7 @@ class QuantumWorkflowManager:
             
         except Exception as e:
             logger.error(f"❌ Failed to get workflow analytics: {e}")
+
             return {"error": str(e)}
     
     # ========================================
@@ -811,6 +918,7 @@ class QuantumWorkflowManager:
             raise ValueError("Workflow must have at least one task")
         
         # Validation IDs uniques
+
         task_ids = [task.task_id for task in workflow_def.tasks]
         if len(task_ids) != len(set(task_ids)):
             raise ValueError("Task IDs must be unique within workflow")
@@ -833,17 +941,21 @@ class QuantumWorkflowManager:
         for task in workflow_def.tasks:
             for dep_id in task.dependencies:
                 graph.add_edge(dep_id, task.task_id)
+
         
         return graph
     
     async def _validate_dependency_graph(self, graph: nx.DiGraph):
-        """Validation graph de dépendances"""
+        """
+        Validation graph de dépendances"""
         # Vérification cycles
         if not nx.is_directed_acyclic_graph(graph):
             cycles = list(nx.simple_cycles(graph))
+
             raise ValueError(f"Workflow contains dependency cycles: {cycles}")
         
         # Vérification nœuds isolés
+
         isolated_nodes = list(nx.isolates(graph))
         if isolated_nodes:
             logger.warning(f"Workflow contains isolated tasks: {isolated_nodes}")
@@ -853,12 +965,15 @@ class QuantumWorkflowManager:
         levels = {}
         
         # Tri topologique
+
         topo_order = list(nx.topological_sort(graph))
         
         # Attribution niveaux
+
         node_levels = {}
         for node in topo_order:
             predecessors = list(graph.predecessors(node))
+
             if not predecessors:
                 node_levels[node] = 0
             else:
@@ -869,6 +984,7 @@ class QuantumWorkflowManager:
             if level not in levels:
                 levels[level] = []
             levels[level].append(node)
+
         
         return levels
     
@@ -878,7 +994,8 @@ class QuantumWorkflowManager:
         workflow_input: Dict[str, Any], 
         execution: WorkflowExecution
     ) -> Dict[str, Any]:
-        """Préparation données d'entrée tâche"""
+        """
+        Préparation données d'entrée tâche"""
         task_input = workflow_input.copy()
         task_input.update(task_def.input_parameters)
         
@@ -934,9 +1051,13 @@ def create_simple_workflow(
 # EXPORT INTERFACES
 # ========================================
 
+# Enterprise aliases
+WorkflowRequest = WorkflowDefinition
+
 __all__ = [
     "QuantumWorkflowManager",
     "WorkflowDefinition",
+    "WorkflowRequest",  # Alias
     "TaskDefinition",
     "WorkflowExecution",
     "TaskExecution",

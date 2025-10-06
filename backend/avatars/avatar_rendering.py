@@ -25,7 +25,8 @@ from .metahuman import MetaHumanQuality
 
 
 class RenderingPipeline(Enum):
-    """Pipelines de rendu supportés"""
+    """
+        Pipelines de rendu supportés"""
     FORWARD = "forward"
     DEFERRED = "deferred"
     PBR = "pbr"  # Physically Based Rendering
@@ -108,7 +109,8 @@ class MaterialProperties:
 
 @dataclass
 class LightSource:
-    """Source lumineuse"""
+    """
+        Source lumineuse"""
     light_id: str
     light_type: LightType
     position: Tuple[float, float, float] = (0.0, 0.0, 0.0)
@@ -164,7 +166,8 @@ class PerformanceMetrics:
 
 
 class MaterialManager:
-    """Gestion matériaux avancés"""
+    """
+        Gestion matériaux avancés"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -172,7 +175,8 @@ class MaterialManager:
         self._initialize_preset_materials()
     
     def _initialize_preset_materials(self):
-        """Initialisation des matériaux prédéfinis"""
+        """
+        Initialisation des matériaux prédéfinis"""
         presets = {
             "realistic_skin": MaterialProperties(
                 material_id="realistic_skin",
@@ -245,12 +249,14 @@ class MaterialManager:
                 texture_maps=material_spec.get('texture_maps', {}),
                 custom_properties=material_spec.get('custom_properties', {})
             )
+
             
             self.materials[material.material_id] = material
             return material
             
         except Exception as e:
             self.logger.error(f"Erreur création matériau: {e}")
+
             raise
     
     async def optimize_material_for_quality(self, material_id: str, 
@@ -258,8 +264,11 @@ class MaterialManager:
         """Optimisation d'un matériau selon la qualité"""
         if material_id not in self.materials:
             raise ValueError(f"Matériau {material_id} non trouvé")
+
+
         
         material = self.materials[material_id]
+
         optimized = MaterialProperties(**material.__dict__)
         
         # Optimisations selon la qualité
@@ -267,8 +276,10 @@ class MaterialManager:
             optimized.normal_intensity *= 0.5
             optimized.subsurface_scattering *= 0.3
             # Simplifier les texture maps
+
             simplified_maps = {
                 key: value for key, value in optimized.texture_maps.items()
+
                 if key in ['diffuse', 'normal']
             }
             optimized.texture_maps = simplified_maps
@@ -289,7 +300,8 @@ class MaterialManager:
 
 
 class LightingSystem:
-    """Système éclairage professionnel"""
+    """
+        Système éclairage professionnel"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -298,7 +310,8 @@ class LightingSystem:
         self._initialize_lighting_presets()
     
     def _initialize_lighting_presets(self):
-        """Initialisation des préréglages d'éclairage"""
+        """
+        Initialisation des préréglages d'éclairage"""
         presets = {
             "studio_portrait": [
                 LightSource(
@@ -372,16 +385,19 @@ class LightingSystem:
         try:
             preset_lights = [
                 light for light_id, light in self.light_sources.items()
+
                 if light_id.startswith(preset_name)
             ]
             
             if not preset_lights:
                 raise ValueError(f"Préréglage {preset_name} non trouvé")
+
             
             return preset_lights
             
         except Exception as e:
             self.logger.error(f"Erreur configuration éclairage: {e}")
+
             raise
     
     async def create_custom_lighting(self, lighting_spec: Dict[str, Any]) -> List[LightSource]:
@@ -401,13 +417,16 @@ class LightingSystem:
                     cone_angle=light_data.get('cone_angle', 45.0),
                     shadows_enabled=light_data.get('shadows', True)
                 )
+
                 lights.append(light)
+
                 self.light_sources[light.light_id] = light
             
             return lights
             
         except Exception as e:
             self.logger.error(f"Erreur création éclairage personnalisé: {e}")
+
             raise
     
     async def optimize_lighting_for_performance(self, target_fps: int) -> Dict[str, Any]:
@@ -431,7 +450,8 @@ class LightingSystem:
 
 
 class PerformanceOptimizer:
-    """Optimiseur performance rendu"""
+    """
+        Optimiseur performance rendu"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -440,9 +460,11 @@ class PerformanceOptimizer:
         self.optimization_history: List[Dict[str, Any]] = []
     
     async def monitor_performance(self) -> PerformanceMetrics:
-        """Surveillance de la performance en temps réel"""
+        """
+        Surveillance de la performance en temps réel"""
         try:
             # Simulation de collecte de métriques
+
             metrics = PerformanceMetrics(
                 frame_rate=random.uniform(45, 75),
                 frame_time=1000 / random.uniform(45, 75),
@@ -457,19 +479,23 @@ class PerformanceOptimizer:
                 gpu_utilization=random.uniform(60, 90),
                 cpu_utilization=random.uniform(40, 70)
             )
+
             
             self.current_metrics = metrics
             return metrics
             
         except Exception as e:
             self.logger.error(f"Erreur surveillance performance: {e}")
+
             return PerformanceMetrics()
     
     async def optimize_for_target_fps(self, target_fps: int) -> Dict[str, Any]:
         """Optimisation automatique pour atteindre le FPS cible"""
         try:
             self.target_fps = target_fps
+
             current_fps = self.current_metrics.frame_rate
+
             
             optimizations = {
                 'timestamp': datetime.now().isoformat(),
@@ -480,6 +506,7 @@ class PerformanceOptimizer:
             
             if current_fps < target_fps:
                 # FPS trop bas, appliquer des optimisations
+
                 fps_deficit = target_fps - current_fps
                 
                 if fps_deficit > 20:
@@ -491,6 +518,7 @@ class PerformanceOptimizer:
                         'reduce_texture_quality',
                         'disable_anti_aliasing'
                     ])
+
                 elif fps_deficit > 10:
                     # Optimisations modérées
                     optimizations['applied_optimizations'].extend([
@@ -499,6 +527,7 @@ class PerformanceOptimizer:
                         'force_lod1_minimum',
                         'reduce_reflection_quality'
                     ])
+
                 else:
                     # Optimisations légères
                     optimizations['applied_optimizations'].extend([
@@ -506,6 +535,7 @@ class PerformanceOptimizer:
                         'optimize_draw_calls',
                         'enable_instancing'
                     ])
+
             
             elif current_fps > target_fps * 1.2:
                 # FPS trop élevé, on peut améliorer la qualité
@@ -515,12 +545,15 @@ class PerformanceOptimizer:
                     'increase_texture_quality',
                     'enable_anti_aliasing'
                 ])
+
             
             self.optimization_history.append(optimizations)
+
             return optimizations
             
         except Exception as e:
             self.logger.error(f"Erreur optimisation FPS: {e}")
+
             return {'error': str(e)}
     
     async def get_optimization_recommendations(self, render_settings: RenderSettings) -> List[str]:
@@ -535,15 +568,19 @@ class PerformanceOptimizer:
                 "Utiliser LOD plus agressif",
                 "Réduire la résolution de rendu"
             ])
+
         
         if self.current_metrics.texture_memory_mb > 500:
             recommendations.append("Compresser les textures")
+
         
         if self.current_metrics.draw_calls > 300:
             recommendations.append("Optimiser les draw calls via batching")
+
         
         if render_settings.anti_aliasing == "msaa_8x":
             recommendations.append("Réduire l'anti-aliasing à MSAA 4x ou FXAA")
+
         
         return recommendations
 
@@ -561,7 +598,8 @@ class RenderingEngine:
         self.active_lights: List[LightSource] = []
     
     async def initialize_renderer(self, settings: Optional[RenderSettings] = None) -> bool:
-        """Initialisation du moteur de rendu"""
+        """
+        Initialisation du moteur de rendu"""
         try:
             if settings:
                 self.render_settings = settings
@@ -570,13 +608,17 @@ class RenderingEngine:
             
             # Initialisation des composants
             await self._initialize_graphics_context()
+
             await self._setup_default_lighting()
+
             await self._load_default_materials()
+
             
             return True
             
         except Exception as e:
             self.logger.error(f"Erreur initialisation renderer: {e}")
+
             return False
     
     async def _initialize_graphics_context(self) -> None:
@@ -602,29 +644,38 @@ class RenderingEngine:
         """Rendu complet d'un avatar"""
         try:
             settings = custom_settings or self.render_settings
+
             render_id = str(uuid.uuid4())
+
             
             self.logger.info(f"Début rendu avatar {render_id}")
             
             # Étape 1: Préparation des données
+
             mesh_data = await self._prepare_avatar_mesh(avatar_data)
             
             # Étape 2: Application des matériaux
+
             material_data = await self._apply_materials(avatar_data, settings.quality)
             
             # Étape 3: Configuration de l'éclairage
+
             lighting_data = await self._setup_scene_lighting(avatar_data)
             
             # Étape 4: Rendu principal
+
             render_result = await self._execute_render_pipeline(
                 mesh_data, material_data, lighting_data, settings
             )
             
             # Étape 5: Post-traitement
+
             final_result = await self._apply_post_processing(render_result, settings)
             
             # Étape 6: Optimisation performance
+
             performance_metrics = await self.performance_optimizer.monitor_performance()
+
             
             return {
                 'render_id': render_id,
@@ -637,6 +688,7 @@ class RenderingEngine:
             
         except Exception as e:
             self.logger.error(f"Erreur rendu avatar: {e}")
+
             return {
                 'render_id': str(uuid.uuid4()),
                 'success': False,
@@ -657,10 +709,12 @@ class RenderingEngine:
     
     async def _apply_materials(self, avatar_data: Dict[str, Any], 
                              quality: RenderQuality) -> Dict[str, Any]:
-        """Application des matériaux"""
+        """
+        Application des matériaux"""
         applied_materials = {}
         
         # Matériaux par défaut pour un avatar
+
         material_mappings = {
             'skin': 'realistic_skin',
             'hair': 'natural_hair',
@@ -673,12 +727,14 @@ class RenderingEngine:
                 optimized_material = await self.material_manager.optimize_material_for_quality(
                     material_id, quality
                 )
+
                 applied_materials[part] = optimized_material.__dict__
         
         return applied_materials
     
     async def _setup_scene_lighting(self, avatar_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Configuration de l'éclairage de scène"""
+        """
+        Configuration de l'éclairage de scène"""
         return {
             'active_lights': [light.__dict__ for light in self.active_lights],
             'ambient_light': {'color': (0.2, 0.2, 0.25), 'intensity': 0.3},
@@ -690,8 +746,10 @@ class RenderingEngine:
                                      material_data: Dict[str, Any],
                                      lighting_data: Dict[str, Any],
                                      settings: RenderSettings) -> Dict[str, Any]:
-        """Exécution du pipeline de rendu"""
+        """
+        Exécution du pipeline de rendu"""
         # Simulation du rendu
+
         render_time = random.uniform(16.67, 33.33)  # 30-60 FPS
         
         return {
@@ -714,6 +772,7 @@ class RenderingEngine:
             post_effects.append(f'tone_mapping_{settings.tone_mapping}')
         if settings.anti_aliasing:
             post_effects.append(f'anti_aliasing_{settings.anti_aliasing}')
+
         
         render_result['post_effects_applied'] = post_effects
         render_result['final_output'] = f"final_{uuid.uuid4().hex[:8]}.jpg"
@@ -724,12 +783,18 @@ class RenderingEngine:
         """Optimisation automatique des paramètres de rendu"""
         try:
             target_fps = target_performance.get('fps', 60)
+
+
             target_quality = target_performance.get('quality', 'high')
+
+
             
             optimizations = await self.performance_optimizer.optimize_for_target_fps(target_fps)
             
             # Application des optimisations aux paramètres
+
             optimized_settings = RenderSettings(**self.render_settings.__dict__)
+
             
             for optimization in optimizations.get('applied_optimizations', []):
                 if 'shadow_quality' in optimization:
@@ -751,6 +816,7 @@ class RenderingEngine:
             
         except Exception as e:
             self.logger.error(f"Erreur optimisation paramètres: {e}")
+
             return self.render_settings
     
     def get_rendering_capabilities(self) -> Dict[str, Any]:

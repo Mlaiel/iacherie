@@ -1,4 +1,5 @@
-"""IA Chérie Core Creator Analytics - Advanced Analytics & Business Intelligence
+"""
+IA Chérie Core Creator Analytics - Advanced Analytics & Business Intelligence
 =======================================================================
 
 Enterprise creator analytics providing performance metrics, audience insights,
@@ -23,7 +24,8 @@ import statistics
 logger = logging.getLogger(__name__)
 
 class AnalyticsMetric(str, Enum):
-    """Analytics metrics"""
+    """
+Analytics metrics"""
     VIEWS = "views"
     ENGAGEMENT = "engagement"
     REVENUE = "revenue"
@@ -37,7 +39,8 @@ class AnalyticsMetric(str, Enum):
     LIFETIME_VALUE = "lifetime_value"
 
 class TimeRange(str, Enum):
-    """Time range for analytics"""
+    """
+Time range for analytics"""
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -47,7 +50,8 @@ class TimeRange(str, Enum):
     ALL_TIME = "all_time"
 
 class AggregationType(str, Enum):
-    """Data aggregation types"""
+    """
+Data aggregation types"""
     SUM = "sum"
     AVERAGE = "average"
     COUNT = "count"
@@ -58,14 +62,16 @@ class AggregationType(str, Enum):
 
 @dataclass
 class DataPoint:
-    """Single analytics data point"""
+    """
+Single analytics data point"""
     timestamp: datetime
     value: float
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 @dataclass
 class CreatorMetrics:
-    """Creator performance metrics"""
+    """
+Creator performance metrics"""
     creator_id: str
     total_views: int = 0
     total_engagement: int = 0
@@ -79,7 +85,8 @@ class CreatorMetrics:
 
 @dataclass
 class ContentMetrics:
-    """Content performance metrics"""
+    """
+Content performance metrics"""
     content_id: str
     creator_id: str
     content_type: str
@@ -97,7 +104,8 @@ class ContentMetrics:
 
 @dataclass
 class AudienceInsight:
-    """Audience insight data"""
+    """
+Audience insight data"""
     creator_id: str
     demographics: Dict[str, Any] = field(default_factory=dict)
     interests: List[str] = field(default_factory=list)
@@ -109,7 +117,8 @@ class AudienceInsight:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis result"""
+    """
+Trend analysis result"""
     metric: str
     trend_direction: str  # "up", "down", "stable"
     growth_rate: float
@@ -120,7 +129,8 @@ class TrendAnalysis:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""
+    """
+Comprehensive analytics report"""
     report_id: str
     creator_id: str
     report_type: str
@@ -132,10 +142,12 @@ class AnalyticsReport:
     generated_at: datetime = field(default_factory=datetime.utcnow)
 
 class CreatorAnalyticsCore:
-    """Enterprise creator analytics core management system"""
+    """
+Enterprise creator analytics core management system"""
     
     def __init__(self, level: str = "enterprise"):
-        """Initialize creator analytics core"""
+        """
+Initialize creator analytics core"""
         self.level = level
         self.start_time = time.time()
         
@@ -165,7 +177,8 @@ class CreatorAnalyticsCore:
         logger.info("📊 Creator Analytics Core initialized")
     
     async def initialize(self) -> bool:
-        """Initialize analytics core"""
+        """
+Initialize analytics core"""
         try:
             logger.info("🚀 Initializing creator analytics core")
             
@@ -183,7 +196,8 @@ class CreatorAnalyticsCore:
             return False
     
     def _setup_event_processors(self):
-        """Setup event processors for real-time analytics"""
+        """
+Setup event processors for real-time analytics"""
         self.event_processors = {
             "content_view": self._process_view_event,
             "content_like": self._process_engagement_event,
@@ -194,7 +208,8 @@ class CreatorAnalyticsCore:
         }
     
     async def _create_sample_data(self):
-        """Create sample analytics data"""
+        """
+Create sample analytics data"""
         sample_creators = ["creator_001", "creator_002", "creator_003"]
         
         for creator_id in sample_creators:
@@ -229,7 +244,8 @@ class CreatorAnalyticsCore:
             await self._generate_time_series(creator_id)
     
     async def _generate_time_series(self, creator_id: str):
-        """Generate sample time series data"""
+        """
+Generate sample time series data"""
         end_time = datetime.utcnow()
         start_time = end_time - timedelta(days=30)
         
@@ -254,7 +270,8 @@ class CreatorAnalyticsCore:
                 current_time += timedelta(hours=1)
     
     async def start(self) -> bool:
-        """Start analytics core"""
+        """
+Start analytics core"""
         try:
             if not hasattr(self, '_initialized'):
                 await self.initialize()
@@ -272,7 +289,8 @@ class CreatorAnalyticsCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop analytics core"""
+        """
+Stop analytics core"""
         try:
             logger.info("🛑 Stopping creator analytics core")
             
@@ -296,7 +314,8 @@ class CreatorAnalyticsCore:
             return False
     
     async def track_event(self, event_type: str, data: Dict[str, Any]) -> bool:
-        """Track real-time event"""
+        """
+Track real-time event"""
         try:
             event = {
                 "event_type": event_type,
@@ -322,7 +341,8 @@ class CreatorAnalyticsCore:
             return False
     
     async def _process_view_event(self, data: Dict[str, Any]):
-        """Process content view event"""
+        """
+Process content view event"""
         creator_id = data.get("creator_id")
         content_id = data.get("content_id")
         
@@ -342,7 +362,8 @@ class CreatorAnalyticsCore:
                 self.content_metrics[content_id].views += 1
     
     async def _process_engagement_event(self, data: Dict[str, Any]):
-        """Process engagement event (like, share, comment)"""
+        """
+Process engagement event (like, share, comment)"""
         creator_id = data.get("creator_id")
         content_id = data.get("content_id")
         engagement_type = data.get("engagement_type")
@@ -359,14 +380,16 @@ class CreatorAnalyticsCore:
                 self.content_metrics[content_id].comments += 1
     
     async def _process_follow_event(self, data: Dict[str, Any]):
-        """Process follow event"""
+        """
+Process follow event"""
         creator_id = data.get("creator_id")
         
         if creator_id and creator_id in self.creator_metrics:
             self.creator_metrics[creator_id].follower_count += 1
     
     async def _process_revenue_event(self, data: Dict[str, Any]):
-        """Process revenue event"""
+        """
+Process revenue event"""
         creator_id = data.get("creator_id")
         amount = data.get("amount", 0.0)
         
@@ -374,7 +397,8 @@ class CreatorAnalyticsCore:
             self.creator_metrics[creator_id].total_revenue += amount
     
     async def get_creator_analytics(self, creator_id: str, time_range: TimeRange = TimeRange.MONTH) -> Optional[Dict[str, Any]]:
-        """Get comprehensive creator analytics"""
+        """
+Get comprehensive creator analytics"""
         try:
             # Check cache first
             cache_key = f"{creator_id}_{time_range.value}"
@@ -437,7 +461,8 @@ class CreatorAnalyticsCore:
             return None
     
     async def _get_time_series_data(self, creator_id: str, time_range: TimeRange) -> Dict[str, List[Dict[str, Any]]]:
-        """Get time series data for creator"""
+        """
+Get time series data for creator"""
         result = {}
         
         for metric in [AnalyticsMetric.VIEWS, AnalyticsMetric.ENGAGEMENT, AnalyticsMetric.REVENUE]:
@@ -473,7 +498,8 @@ class CreatorAnalyticsCore:
         return result
     
     async def _analyze_trends(self, creator_id: str, time_range: TimeRange) -> List[TrendAnalysis]:
-        """Analyze trends for creator metrics"""
+        """
+Analyze trends for creator metrics"""
         trends = []
         
         for metric in [AnalyticsMetric.VIEWS, AnalyticsMetric.ENGAGEMENT, AnalyticsMetric.REVENUE]:
@@ -508,7 +534,8 @@ class CreatorAnalyticsCore:
         return trends
     
     async def _get_top_content(self, creator_id: str, limit: int = 10) -> List[Dict[str, Any]]:
-        """Get top performing content for creator"""
+        """
+Get top performing content for creator"""
         creator_content = [
             content for content in self.content_metrics.values()
             if content.creator_id == creator_id
@@ -535,7 +562,8 @@ class CreatorAnalyticsCore:
         ]
     
     async def _calculate_performance_scores(self, creator_id: str) -> Dict[str, float]:
-        """Calculate performance scores"""
+        """
+Calculate performance scores"""
         metrics = self.creator_metrics.get(creator_id)
         if not metrics:
             return {}
@@ -557,7 +585,8 @@ class CreatorAnalyticsCore:
         }
     
     async def generate_analytics_report(self, creator_id: str, report_type: str = "comprehensive") -> Optional[str]:
-        """Generate comprehensive analytics report"""
+        """
+Generate comprehensive analytics report"""
         try:
             report_id = str(uuid.uuid4())
             
@@ -591,7 +620,8 @@ class CreatorAnalyticsCore:
             return None
     
     async def _generate_insights(self, analytics_data: Dict[str, Any]) -> List[str]:
-        """Generate AI-powered insights"""
+        """
+Generate AI-powered insights"""
         insights = []
         overview = analytics_data["overview"]
         
@@ -619,7 +649,8 @@ class CreatorAnalyticsCore:
         return insights
     
     async def _generate_recommendations(self, analytics_data: Dict[str, Any]) -> List[str]:
-        """Generate AI-powered recommendations"""
+        """
+Generate AI-powered recommendations"""
         recommendations = []
         overview = analytics_data["overview"]
         audience = analytics_data["audience_insights"]
@@ -643,7 +674,8 @@ class CreatorAnalyticsCore:
         return recommendations
     
     async def _analytics_processor_loop(self):
-        """Background analytics processor"""
+        """
+Background analytics processor"""
         while not self._shutdown_event.is_set():
             try:
                 # Process queued events
@@ -669,7 +701,8 @@ class CreatorAnalyticsCore:
                 await asyncio.sleep(300)  # Wait 5 minutes on error
     
     async def _process_batch_event(self, event: Dict[str, Any]):
-        """Process event in batch mode"""
+        """
+Process event in batch mode"""
         # Add to time series data
         event_type = event["event_type"]
         data = event["data"]
@@ -690,14 +723,16 @@ class CreatorAnalyticsCore:
                     ))
     
     async def _update_calculated_metrics(self):
-        """Update calculated metrics like engagement rates"""
+        """
+Update calculated metrics like engagement rates"""
         for content_id, content in self.content_metrics.items():
             total_engagements = content.likes + content.shares + content.comments
             if content.views > 0:
                 content.engagement_rate = (total_engagements / content.views) * 100
     
     async def _cleanup_old_data(self):
-        """Clean up old data to prevent memory bloat"""
+        """
+Clean up old data to prevent memory bloat"""
         cutoff_time = datetime.utcnow() - timedelta(days=90)  # Keep 90 days
         
         # Clean up real-time events
@@ -714,7 +749,8 @@ class CreatorAnalyticsCore:
             ]
     
     async def health_check(self) -> bool:
-        """Perform analytics health check"""
+        """
+Perform analytics health check"""
         try:
             # Check if we have any data
             if not self.creator_metrics and not self.content_metrics:
@@ -732,7 +768,8 @@ class CreatorAnalyticsCore:
             return False
     
     async def _health_monitor_loop(self):
-        """Health monitoring loop"""
+        """
+Health monitoring loop"""
         while not self._shutdown_event.is_set():
             try:
                 await self.health_check()
@@ -744,7 +781,8 @@ class CreatorAnalyticsCore:
                 await asyncio.sleep(600)
     
     def get_system_metrics(self) -> Dict[str, Any]:
-        """Get system metrics"""
+        """
+Get system metrics"""
         return {
             "total_creators": len(self.creator_metrics),
             "total_content": len(self.content_metrics),

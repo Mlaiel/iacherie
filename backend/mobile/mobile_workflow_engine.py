@@ -29,7 +29,8 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class WorkflowStage(Enum):
-    """Mobile workflow stages"""
+    """
+        Mobile workflow stages"""
     CONTENT_UPLOAD = "content_upload"
     AI_PROCESSING = "ai_processing"
     CONTENT_OPTIMIZATION = "content_optimization"
@@ -119,8 +120,122 @@ class WorkflowRule:
     execution_count: int = 0
 
 @dataclass
+class AutomationRule:
+    """
+    Automation Rule - Règle d'automatisation de workflow mobile
+    ==========================================================
+    Règle complète définissant les conditions, actions et comportements
+    d'automatisation pour les workflows créateurs mobiles.
+    
+    Business Logic:
+    Trigger Event → Condition Check → Rule Evaluation → Action Execution →
+    Mobile Optimization → Result Tracking → Performance Analytics
+    """
+    # Required fields (no defaults)
+    rule_id: str
+    rule_name: str
+    creator_id: str
+    rule_type: AutomationRuleType
+    trigger_conditions: Dict[str, Any]
+    actions: List[WorkflowAction]
+    
+    # Optional fields (with defaults)
+    trigger_events: List[WorkflowTrigger] = field(default_factory=list)
+    action_parameters: Dict[str, Any] = field(default_factory=dict)
+    
+    # Execution Settings
+    mobile_optimized: bool = True
+    enabled: bool = True
+    priority: int = 5  # 1-10, higher = more priority
+    
+    # Scheduling
+    schedule: Optional[str] = None  # cron format ou "immediate", "hourly", "daily"
+    max_executions_per_day: int = 100
+    execution_timeout: float = 300.0  # seconds
+    
+    # Conditions avancées
+    conditional_logic: str = "AND"  # AND, OR, CUSTOM
+    custom_condition_script: Optional[str] = None
+    
+    # Retry & Error Handling
+    retry_on_failure: bool = True
+    max_retries: int = 3
+    retry_delay: float = 60.0  # seconds
+    
+    # Notifications
+    notify_on_success: bool = False
+    notify_on_failure: bool = True
+    notification_channels: List[str] = field(default_factory=list)
+    
+    # Analytics
+    execution_count: int = 0
+    success_count: int = 0
+    failure_count: int = 0
+    last_execution_time: Optional[datetime] = None
+    average_execution_time: float = 0.0
+    
+    # Mobile-Specific
+    mobile_battery_aware: bool = True  # Pause if low battery
+    wifi_only: bool = False  # Execute only on WiFi
+    background_execution: bool = True
+    
+    # Metadata
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
+    created_by: Optional[str] = None
+    tags: List[str] = field(default_factory=list)
+    description: Optional[str] = None
+    
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert rule to dictionary"""
+        return {
+            "rule_id": self.rule_id,
+            "rule_name": self.rule_name,
+            "creator_id": self.creator_id,
+            "rule_type": self.rule_type.value,
+            "enabled": self.enabled,
+            "priority": self.priority,
+            "execution_count": self.execution_count,
+            "success_rate": self.success_count / max(self.execution_count, 1),
+            "mobile_optimized": self.mobile_optimized,
+            "schedule": self.schedule
+        }
+    
+    def can_execute(self) -> bool:
+        """Check if rule can be executed"""
+        if not self.enabled:
+            return False
+        
+        if self.last_execution_time and self.schedule:
+            # Check scheduling constraints
+            if self.execution_count >= self.max_executions_per_day:
+                return False
+        
+        return True
+    
+    def record_execution(self, success: bool, execution_time: float):
+        """Record execution result"""
+        self.execution_count += 1
+        self.last_execution_time = datetime.now()
+        
+        if success:
+            self.success_count += 1
+        else:
+            self.failure_count += 1
+        
+        # Update average execution time
+        if self.execution_count > 1:
+            self.average_execution_time = (
+                (self.average_execution_time * (self.execution_count - 1) + execution_time)
+                / self.execution_count
+            )
+        else:
+            self.average_execution_time = execution_time
+
+@dataclass
 class WorkflowExecution:
-    """Workflow execution record"""
+    """
+        Workflow execution record"""
     execution_id: str
     workflow_id: str
     creator_id: str
@@ -135,7 +250,8 @@ class WorkflowExecution:
 
 @dataclass
 class MobileWorkflowConfiguration:
-    """Mobile workflow configuration"""
+    """
+        Mobile workflow configuration"""
     workflow_id: str
     workflow_name: str
     creator_id: str
@@ -147,7 +263,8 @@ class MobileWorkflowConfiguration:
 
 @dataclass
 class MobileWorkflowRequest:
-    """Mobile workflow execution request"""
+    """
+        Mobile workflow execution request"""
     creator_id: str
     workflow_type: str
     content_id: Optional[str] = None
@@ -159,7 +276,8 @@ class MobileWorkflowRequest:
 
 @dataclass
 class MobileWorkflowResult:
-    """Mobile workflow execution result"""
+    """
+        Mobile workflow execution result"""
     execution_id: str
     workflow_id: str
     status: WorkflowStatus
@@ -170,11 +288,72 @@ class MobileWorkflowResult:
     performance_metrics: Dict[str, Any]
     result_data: Dict[str, Any] = field(default_factory=dict)
 
+@dataclass
+class CreatorWorkflowRequest:
+    """Creator Workflow Request - Requête de workflow créateur mobile"""
+    creator_id: str
+    workflow_type: str
+    content_id: Optional[str] = None
+    trigger_type: WorkflowTrigger = WorkflowTrigger.MANUAL
+    workflow_config: Dict[str, Any] = field(default_factory=dict)
+    mobile_specific: bool = True
+    priority: int = 5
+    scheduled_time: Optional[datetime] = None
+    automation_enabled: bool = True
+    stages: List[WorkflowStage] = field(default_factory=list)
+
+@dataclass
+class CreatorWorkflowResult:
+    """Creator Workflow Result - Résultat d'exécution de workflow créateur"""
+    execution_id: str
+    creator_id: str
+    workflow_id: str
+    status: WorkflowStatus
+    stages_executed: List[WorkflowStage]
+    execution_time: float
+    mobile_optimized: bool
+    automation_rules_triggered: int
+    performance_metrics: Dict[str, Any]
+    result_data: Dict[str, Any] = field(default_factory=dict)
+    success_rate: float = 1.0
+    recommendations: List[str] = field(default_factory=list)
+
+@dataclass
+class WorkflowAutomationRequest:
+    """Workflow Automation Request - Requête d'automatisation de workflow"""
+    creator_id: str
+    automation_name: str
+    trigger_type: WorkflowTrigger
+    trigger_conditions: Dict[str, Any]
+    workflow_actions: List[WorkflowAction]
+    automation_rules: List[Dict[str, Any]] = field(default_factory=list)
+    mobile_optimized: bool = True
+    enabled: bool = True
+    schedule: Optional[str] = None
+    priority: int = 5
+
+@dataclass
+class WorkflowAutomationResult:
+    """Workflow Automation Result - Résultat de configuration d'automatisation"""
+    automation_id: str
+    creator_id: str
+    automation_name: str
+    status: str  # created, active, paused, failed
+    rules_configured: int
+    actions_configured: int
+    trigger_setup_success: bool
+    mobile_compatibility: bool
+    estimated_execution_frequency: str
+    next_execution_time: Optional[datetime] = None
+    configuration_details: Dict[str, Any] = field(default_factory=dict)
+
 class MobileWorkflowEngine:
-    """Unified mobile workflow engine consolidating creator workflows and automation"""
+    """
+        Unified mobile workflow engine consolidating creator workflows and automation"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize mobile workflow engine with comprehensive capabilities"""
+        """
+        Initialize mobile workflow engine with comprehensive capabilities"""
         self.config = config or {}
         self.creator_workflow_manager = CreatorWorkflowMobile(self.config)
         self.workflow_automation = MobileWorkflowAutomation(self.config)
@@ -208,9 +387,11 @@ class MobileWorkflowEngine:
             start_time = datetime.utcnow()
             
             # Create or get workflow configuration
+
             workflow_config = await self._get_or_create_workflow_config(workflow_request)
             
             # Initialize workflow execution
+
             execution = WorkflowExecution(
                 execution_id=execution_id,
                 workflow_id=workflow_config.workflow_id,
@@ -226,24 +407,29 @@ class MobileWorkflowEngine:
             )
             
             # Execute workflow with creator workflow manager
+
             creator_execution_result = await self.creator_workflow_manager.execute_creator_workflow(
                 workflow_request, execution
             )
             
             # Apply workflow automation
+
             automation_result = await self.workflow_automation.apply_workflow_automation(
                 execution, workflow_config
             )
             
             # Update execution status
             execution.completed_at = datetime.utcnow()
+
             execution.status = WorkflowStatus.COMPLETED
             execution.stages_completed = creator_execution_result.get("stages_completed", [])
             
             # Calculate performance metrics
+
             execution_time = (execution.completed_at - execution.started_at).total_seconds()
             
             # Create comprehensive result
+
             workflow_result = MobileWorkflowResult(
                 execution_id=execution_id,
                 workflow_id=workflow_config.workflow_id,
@@ -272,11 +458,13 @@ class MobileWorkflowEngine:
             # Update metrics
             self.workflow_metrics["workflows_executed"] += 1
             self._update_workflow_metrics(workflow_result)
+
             
             return workflow_result
             
         except Exception as e:
             logger.error(f"Mobile workflow execution failed: {e}")
+
             raise
     
     async def create_workflow_template(self, template_name: str, workflow_stages: List[WorkflowStage], 
@@ -304,9 +492,11 @@ class MobileWorkflowEngine:
         scheduled_id = f"scheduled_{uuid.uuid4().hex[:8]}"
         
         # Schedule with workflow automation system
+
         automation_result = await self.workflow_automation.schedule_workflow_execution(
             workflow_request, schedule_time, scheduled_id
         )
+
         
         return scheduled_id
     
@@ -314,14 +504,18 @@ class MobileWorkflowEngine:
         """Get comprehensive workflow execution status"""
         if execution_id not in self.active_workflows:
             return {"error": "Workflow execution not found", "execution_id": execution_id}
+
         
         execution = self.active_workflows[execution_id]
         
         # Get creator workflow status
+
         creator_status = await self.creator_workflow_manager.get_workflow_status(execution_id)
         
         # Get automation status
+
         automation_status = await self.workflow_automation.get_automation_status(execution_id)
+
         
         return {
             "execution_id": execution_id,
@@ -335,15 +529,19 @@ class MobileWorkflowEngine:
     async def optimize_workflow_performance(self, workflow_id: str) -> Dict[str, Any]:
         """Optimize workflow performance using AI and analytics"""
         # Analyze workflow performance history
+
         performance_analysis = await self._analyze_workflow_performance(workflow_id)
         
         # Generate optimization recommendations
+
         optimization_recommendations = await self._generate_workflow_optimizations(
             workflow_id, performance_analysis
         )
         
         # Apply mobile-specific optimizations
+
         mobile_optimizations = await self._apply_mobile_workflow_optimizations(workflow_id)
+
         
         return {
             "workflow_id": workflow_id,
@@ -368,6 +566,7 @@ class MobileWorkflowEngine:
         workflow_id = f"workflow_{request.creator_id}_{request.workflow_type}"
         
         # Default workflow stages based on type
+
         default_stages = [
             WorkflowStage.CONTENT_UPLOAD,
             WorkflowStage.AI_PROCESSING,
@@ -378,6 +577,7 @@ class MobileWorkflowEngine:
         ]
         
         # Default automation rules
+
         default_rules = [
             WorkflowRule(
                 rule_id=f"rule_{uuid.uuid4().hex[:8]}",
@@ -439,8 +639,11 @@ class MobileWorkflowEngine:
             self.workflow_metrics["failed_executions"] += 1
         
         # Update average execution time
+
         current_avg = self.workflow_metrics["average_execution_time"]
+
         total_executions = self.workflow_metrics["workflows_executed"]
+
         new_time = workflow_result.execution_time
         
         self.workflow_metrics["average_execution_time"] = (
@@ -448,10 +651,12 @@ class MobileWorkflowEngine:
         )
         
         # Update automation efficiency
+
         automation_score = workflow_result.performance_metrics.get("automation_effectiveness", 0.0)
         self.workflow_metrics["automation_efficiency"] = automation_score
         
         # Update mobile optimization score
+
         mobile_score = workflow_result.performance_metrics.get("mobile_optimization_score", 0.0)
         self.workflow_metrics["mobile_optimization_score"] = mobile_score
     
@@ -528,18 +733,23 @@ class CreatorWorkflowMobile:
         
     async def execute_creator_workflow(self, request: MobileWorkflowRequest, 
                                      execution: WorkflowExecution) -> Dict[str, Any]:
-        """Execute creator-specific workflow with mobile optimization"""
+        """
+        Execute creator-specific workflow with mobile optimization"""
         # Get or create creator workflow state
+
         creator_state = await self._get_creator_workflow_state(request.creator_id)
         
         # Determine workflow path based on creator state and content type
+
         workflow_path = await self._determine_workflow_path(request, creator_state)
         
         # Execute workflow stages
+
         stages_executed = []
         for stage in workflow_path:
             try:
                 stage_result = await self._execute_workflow_stage(stage, request, execution)
+
                 stages_executed.append(stage)
                 
                 # Update execution context
@@ -548,11 +758,14 @@ class CreatorWorkflowMobile:
                 
             except Exception as e:
                 logger.error(f"Workflow stage {stage.value} failed: {e}")
+
                 execution.stages_failed.append(stage)
+
                 break
         
         # Update creator workflow state
         await self._update_creator_workflow_state(request.creator_id, stages_executed)
+
         
         return {
             "stages_completed": stages_executed,
@@ -596,7 +809,8 @@ class CreatorWorkflowMobile:
     
     async def _determine_workflow_path(self, request: MobileWorkflowRequest, 
                                      creator_state: CreatorWorkflowState) -> List[WorkflowStage]:
-        """Determine optimal workflow path based on creator state and request"""
+        """
+        Determine optimal workflow path based on creator state and request"""
         base_workflow = [
             WorkflowStage.CONTENT_UPLOAD,
             WorkflowStage.AI_PROCESSING,
@@ -627,13 +841,16 @@ class CreatorWorkflowMobile:
                 WorkflowStage.PUBLISHING,
                 WorkflowStage.PERFORMANCE_MONITORING
             ])
+
         
         return base_workflow
     
     async def _execute_workflow_stage(self, stage: WorkflowStage, request: MobileWorkflowRequest, 
                                     execution: WorkflowExecution) -> Dict[str, Any]:
-        """Execute individual workflow stage"""
+        """
+        Execute individual workflow stage"""
         stage_start = datetime.utcnow()
+
         
         if stage == WorkflowStage.CONTENT_UPLOAD:
             result = await self._execute_content_upload_stage(request, execution)
@@ -657,6 +874,7 @@ class CreatorWorkflowMobile:
             result = await self._execute_performance_monitoring_stage(request, execution)
         else:
             result = {"status": "skipped", "reason": "Stage not implemented"}
+
         
         stage_duration = (datetime.utcnow() - stage_start).total_seconds()
         result["stage_duration"] = stage_duration
@@ -683,7 +901,8 @@ class CreatorWorkflowMobile:
     # Stage execution methods
     async def _execute_content_upload_stage(self, request: MobileWorkflowRequest, 
                                           execution: WorkflowExecution) -> Dict[str, Any]:
-        """Execute content upload stage"""
+        """
+        Execute content upload stage"""
         return {
             "status": "completed",
             "upload_progress": 100.0,
@@ -803,8 +1022,10 @@ class MobileWorkflowAutomation:
         
     async def apply_workflow_automation(self, execution: WorkflowExecution, 
                                       config: MobileWorkflowConfiguration) -> Dict[str, Any]:
-        """Apply workflow automation rules during execution"""
+        """
+        Apply workflow automation rules during execution"""
         rules_triggered = 0
+
         automation_results = []
         
         # Evaluate automation rules
@@ -812,12 +1033,15 @@ class MobileWorkflowAutomation:
             if await self._should_trigger_rule(rule, execution):
                 try:
                     rule_result = await self._execute_automation_rule(rule, execution)
+
                     automation_results.append(rule_result)
+
                     rules_triggered += 1
                     rule.execution_count += 1
                     
                 except Exception as e:
                     logger.error(f"Automation rule {rule.rule_id} failed: {e}")
+
         
         return {
             "rules_triggered": rules_triggered,
@@ -897,26 +1121,36 @@ class MobileWorkflowAutomation:
             try:
                 if action == WorkflowAction.SEND_NOTIFICATION:
                     result = await self._send_mobile_notification(execution)
+
                 elif action == WorkflowAction.OPTIMIZE_CONTENT:
                     result = await self._optimize_content_automatically(execution)
+
                 elif action == WorkflowAction.UPDATE_METADATA:
                     result = await self._update_content_metadata(execution)
+
                 elif action == WorkflowAction.GENERATE_REPORT:
                     result = await self._generate_workflow_report(execution)
+
                 elif action == WorkflowAction.TRIGGER_COLLABORATION:
                     result = await self._trigger_collaboration_workflow(execution)
+
                 elif action == WorkflowAction.DISTRIBUTE_CONTENT:
                     result = await self._distribute_content_automatically(execution)
+
                 elif action == WorkflowAction.COLLECT_ANALYTICS:
                     result = await self._collect_analytics_data(execution)
+
                 else:
                     result = {"action": action.value, "status": "not_implemented"}
                 
                 action_results.append(result)
+
                 
             except Exception as e:
                 logger.error(f"Automation action {action.value} failed: {e}")
+
                 action_results.append({"action": action.value, "status": "failed", "error": str(e)})
+
         
         return {
             "rule_id": rule.rule_id,
@@ -930,16 +1164,21 @@ class MobileWorkflowAutomation:
         """Calculate automation effectiveness score"""
         if not automation_results:
             return 0.0
+
         
         successful_actions = sum(
             1 for result in automation_results 
             for action_result in result.get("action_results", [])
+
             if action_result.get("status") != "failed"
         )
+
+
         
         total_actions = sum(
             len(result.get("action_results", [])) for result in automation_results
         )
+
         
         return successful_actions / total_actions if total_actions > 0 else 0.0
     

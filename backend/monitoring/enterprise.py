@@ -23,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 
 class IntegrationType(Enum):
-    """Types of enterprise integrations"""
+    """
+        Types of enterprise integrations"""
     MONITORING = "monitoring"
     ANALYTICS = "analytics"
     ALERTING = "alerting"
@@ -70,9 +71,11 @@ class PrometheusIntegration:
         try:
             # Simulate Prometheus push
             logger.info(f"Would push {len(metrics)} metrics to Prometheus at {self.endpoint}")
+
             return True
         except Exception as e:
             logger.error(f"Failed to push metrics to Prometheus: {e}")
+
             return False
     
     async def query_metrics(self, query: str, time_range: str = "1h") -> Dict[str, Any]:
@@ -100,6 +103,7 @@ class PrometheusIntegration:
             }
         except Exception as e:
             logger.error(f"Failed to query Prometheus: {e}")
+
             return {"error": str(e)}
     
     def get_status(self) -> Dict[str, Any]:
@@ -130,9 +134,11 @@ class GrafanaIntegration:
         try:
             # Simulate Grafana dashboard creation
             logger.info(f"Would create Grafana dashboard: {dashboard_config.get('title', 'Untitled')}")
+
             return True
         except Exception as e:
             logger.error(f"Failed to create Grafana dashboard: {e}")
+
             return False
     
     async def update_dashboard(self, dashboard_id: str, dashboard_config: Dict[str, Any]) -> bool:
@@ -143,9 +149,11 @@ class GrafanaIntegration:
         try:
             # Simulate Grafana dashboard update
             logger.info(f"Would update Grafana dashboard {dashboard_id}")
+
             return True
         except Exception as e:
             logger.error(f"Failed to update Grafana dashboard: {e}")
+
             return False
     
     async def get_dashboards(self) -> List[Dict[str, Any]]:
@@ -173,6 +181,7 @@ class GrafanaIntegration:
             ]
         except Exception as e:
             logger.error(f"Failed to get Grafana dashboards: {e}")
+
             return []
     
     def get_status(self) -> Dict[str, Any]:
@@ -204,9 +213,11 @@ class DatadogIntegration:
         try:
             # Simulate Datadog metrics submission
             logger.info(f"Would send {len(metrics)} metrics to Datadog")
+
             return True
         except Exception as e:
             logger.error(f"Failed to send metrics to Datadog: {e}")
+
             return False
     
     async def send_events(self, events: List[Dict[str, Any]]) -> bool:
@@ -217,9 +228,11 @@ class DatadogIntegration:
         try:
             # Simulate Datadog event submission
             logger.info(f"Would send {len(events)} events to Datadog")
+
             return True
         except Exception as e:
             logger.error(f"Failed to send events to Datadog: {e}")
+
             return False
     
     async def create_monitor(self, monitor_config: Dict[str, Any]) -> bool:
@@ -230,9 +243,11 @@ class DatadogIntegration:
         try:
             # Simulate Datadog monitor creation
             logger.info(f"Would create Datadog monitor: {monitor_config.get('name', 'Untitled')}")
+
             return True
         except Exception as e:
             logger.error(f"Failed to create Datadog monitor: {e}")
+
             return False
     
     def get_status(self) -> Dict[str, Any]:
@@ -264,9 +279,11 @@ class ElasticsearchIntegration:
         try:
             # Simulate Elasticsearch indexing
             logger.info(f"Would index {len(logs)} logs to Elasticsearch")
+
             return True
         except Exception as e:
             logger.error(f"Failed to index logs to Elasticsearch: {e}")
+
             return False
     
     async def search_logs(self, query: Dict[str, Any], size: int = 100) -> Dict[str, Any]:
@@ -295,6 +312,7 @@ class ElasticsearchIntegration:
             }
         except Exception as e:
             logger.error(f"Failed to search Elasticsearch: {e}")
+
             return {"error": str(e)}
     
     def get_status(self) -> Dict[str, Any]:
@@ -323,39 +341,48 @@ class EnterpriseOrchestrator:
         self.elasticsearch = None
     
     def initialize_integrations(self, config: Dict[str, Any]):
-        """Initialize enterprise integrations"""
+        """
+        Initialize enterprise integrations"""
         
         # Initialize Prometheus
         if "prometheus" in config:
             self.prometheus = PrometheusIntegration(config["prometheus"])
+
             logger.info("Initialized Prometheus integration")
         
         # Initialize Grafana
         if "grafana" in config:
             self.grafana = GrafanaIntegration(config["grafana"])
+
             logger.info("Initialized Grafana integration")
         
         # Initialize Datadog
         if "datadog" in config:
             self.datadog = DatadogIntegration(config["datadog"])
+
             logger.info("Initialized Datadog integration")
         
         # Initialize Elasticsearch
         if "elasticsearch" in config:
             self.elasticsearch = ElasticsearchIntegration(config["elasticsearch"])
+
             logger.info("Initialized Elasticsearch integration")
     
     async def start_monitoring(self):
         """Start enterprise monitoring orchestration"""
         self.monitoring_active = True
         logger.info("Starting enterprise monitoring orchestration")
+
         
         while self.monitoring_active:
             try:
                 await self.sync_integrations()
+
                 await asyncio.sleep(self.sync_interval)
+
             except Exception as e:
                 logger.error(f"Error in enterprise monitoring loop: {e}")
+
                 await asyncio.sleep(self.sync_interval)
     
     async def stop_monitoring(self):
@@ -377,6 +404,7 @@ class EnterpriseOrchestrator:
         # Sync with Elasticsearch
         if self.elasticsearch and self.elasticsearch.enabled:
             await self._sync_elasticsearch()
+
         
         logger.debug("Completed enterprise integration sync")
     
@@ -384,10 +412,12 @@ class EnterpriseOrchestrator:
         """Sync metrics with Prometheus"""
         try:
             # Get metrics from internal systems
+
             metrics = await self._collect_prometheus_metrics()
             
             # Push to Prometheus
             await self.prometheus.push_metrics(metrics)
+
             
         except Exception as e:
             logger.error(f"Failed to sync with Prometheus: {e}")
@@ -396,12 +426,17 @@ class EnterpriseOrchestrator:
         """Sync with Datadog"""
         try:
             # Get metrics and events
+
             metrics = await self._collect_datadog_metrics()
+
+
             events = await self._collect_datadog_events()
             
             # Send to Datadog
             await self.datadog.send_metrics(metrics)
+
             await self.datadog.send_events(events)
+
             
         except Exception as e:
             logger.error(f"Failed to sync with Datadog: {e}")
@@ -410,10 +445,12 @@ class EnterpriseOrchestrator:
         """Sync logs with Elasticsearch"""
         try:
             # Get logs from internal systems
+
             logs = await self._collect_elasticsearch_logs()
             
             # Index to Elasticsearch
             await self.elasticsearch.index_logs(logs)
+
             
         except Exception as e:
             logger.error(f"Failed to sync with Elasticsearch: {e}")
@@ -490,15 +527,19 @@ class EnterpriseOrchestrator:
         
         if self.prometheus:
             status["integrations"]["prometheus"] = self.prometheus.get_status()
+
         
         if self.grafana:
             status["integrations"]["grafana"] = self.grafana.get_status()
+
         
         if self.datadog:
             status["integrations"]["datadog"] = self.datadog.get_status()
+
         
         if self.elasticsearch:
             status["integrations"]["elasticsearch"] = self.elasticsearch.get_status()
+
         
         return status
     
@@ -508,6 +549,7 @@ class EnterpriseOrchestrator:
             return False
         
         # Main dashboard
+
         main_dashboard = {
             "dashboard": {
                 "title": "iacherie Production Overview",
@@ -543,6 +585,7 @@ class EnterpriseOrchestrator:
         await self.grafana.create_dashboard(main_dashboard)
         
         # Business dashboard
+
         business_dashboard = {
             "dashboard": {
                 "title": "iacherie Business Metrics",
@@ -569,6 +612,7 @@ class EnterpriseOrchestrator:
         }
         
         await self.grafana.create_dashboard(business_dashboard)
+
         
         return True
 
@@ -587,19 +631,23 @@ class UnifiedEnterpriseManager:
             self.orchestrator.initialize_integrations(config)
     
     async def start(self):
-        """Start enterprise monitoring"""
+        """
+        Start enterprise monitoring"""
         await self.orchestrator.start_monitoring()
     
     async def stop(self):
-        """Stop enterprise monitoring"""
+        """
+        Stop enterprise monitoring"""
         await self.orchestrator.stop_monitoring()
     
     async def setup_dashboards(self):
-        """Setup enterprise dashboards"""
+        """
+        Setup enterprise dashboards"""
         return await self.orchestrator.create_grafana_dashboards()
     
     def get_status(self) -> Dict[str, Any]:
-        """Get enterprise monitoring status"""
+        """
+        Get enterprise monitoring status"""
         return self.orchestrator.get_integration_status()
     
     async def query_prometheus(self, query: str, time_range: str = "1h") -> Dict[str, Any]:
@@ -627,7 +675,8 @@ enterprise_manager = UnifiedEnterpriseManager()
 
 # Convenience functions for external use
 async def start_enterprise_monitoring(config: Optional[Dict[str, Any]] = None):
-    """Start enterprise monitoring"""
+    """
+        Start enterprise monitoring"""
     global enterprise_manager
     if config:
         enterprise_manager = UnifiedEnterpriseManager(config)
@@ -635,17 +684,20 @@ async def start_enterprise_monitoring(config: Optional[Dict[str, Any]] = None):
 
 
 async def stop_enterprise_monitoring():
-    """Stop enterprise monitoring"""
+    """
+        Stop enterprise monitoring"""
     await enterprise_manager.stop()
 
 
 def get_enterprise_status() -> Dict[str, Any]:
-    """Get enterprise monitoring status"""
+    """
+        Get enterprise monitoring status"""
     return enterprise_manager.get_status()
 
 
 async def setup_enterprise_dashboards() -> bool:
-    """Setup enterprise dashboards"""
+    """
+        Setup enterprise dashboards"""
     return await enterprise_manager.setup_dashboards()
 
 
@@ -655,5 +707,6 @@ async def query_metrics(query: str, time_range: str = "1h") -> Dict[str, Any]:
 
 
 async def search_enterprise_logs(query: Dict[str, Any], size: int = 100) -> Dict[str, Any]:
-    """Search enterprise logs"""
+    """
+        Search enterprise logs"""
     return await enterprise_manager.search_logs(query, size)

@@ -20,13 +20,21 @@ import cv2
 import numpy as np
 from skimage import restoration, measure, filters
 import imageio
-from wand.image import Image as WandImage
-from wand.color import Color
+
+try:
+    from wand.image import Image as WandImage
+    from wand.color import Color
+    WAND_AVAILABLE = True
+except ImportError:
+    WAND_AVAILABLE = False
+    WandImage = None
+    Color = None
 
 # Configuration
 @dataclass
 class ImageProcessingConfig:
-    """Configuration for image processing operations"""
+    """
+        Configuration for image processing operations"""
     max_resolution: Tuple[int, int] = (4096, 4096)
     quality_levels: Dict[str, int] = None
     supported_formats: List[str] = None
@@ -55,11 +63,13 @@ class ImageProcessingError(Exception):
     pass
 
 class UnsupportedFormatError(ImageProcessingError):
-    """Raised when image format is not supported"""
+    """
+        Raised when image format is not supported"""
     pass
 
 class ProcessingTimeoutError(ImageProcessingError):
-    """Raised when processing takes too long"""
+    """
+        Raised when processing takes too long"""
     pass
 
 # Core Image Processor
@@ -82,12 +92,12 @@ class EnterpriseImageProcessor:
         
         # Initialize AI models for enhancement
         self._initialize_ai_models()
+
         
     def _initialize_ai_models(self):
-        """Initialize AI models for image enhancement"""
-        try:
-            # Placeholder for AI model initialization
-            # In production: Load pre-trained models for super-resolution, denoising, etc.
+        """
+        Initialize AI models for image enhancement"""
+        try:            # In production: Load pre-trained models for super-resolution, denoising, etc.
             self.ai_models = {
                 'super_resolution': None,  # ESRGAN, SRCNN, etc.
                 'denoising': None,         # DnCNN, FFDNet, etc.
@@ -97,6 +107,7 @@ class EnterpriseImageProcessor:
             self.logger.info("AI models initialized for image enhancement")
         except Exception as e:
             self.logger.warning(f"AI models initialization failed: {e}")
+
             self.ai_models = {}
 
     async def process_image(
@@ -114,9 +125,12 @@ class EnterpriseImageProcessor:
         Args:
             image_path: Input image file path
             output_path: Output file path (optional)
+
             target_format: Target format for conversion
             quality: Quality level (low, medium, high, lossless)
+
             resize_dimensions: Target dimensions (width, height)
+
             enhance: Enable AI enhancement
             
         Returns:
@@ -126,15 +140,21 @@ class EnterpriseImageProcessor:
             start_time = asyncio.get_event_loop().time()
             
             # Validate input
+
             image_path = Path(image_path)
+
             if not image_path.exists():
                 raise FileNotFoundError(f"Image file not found: {image_path}")
             
             # Load image
+
             image_data = await self._load_image(image_path)
+
+
             original_format = image_data['format']
             
             # Apply processing pipeline
+
             processed_image = await self._apply_processing_pipeline(
                 image_data['image'],
                 target_format=target_format or original_format,
@@ -146,10 +166,15 @@ class EnterpriseImageProcessor:
             # Save processed image
             if output_path:
                 output_path = Path(output_path)
+
                 await self._save_image(processed_image, output_path)
+
             else:
                 output_path = image_path.with_suffix(f'.processed{image_path.suffix}')
+
                 await self._save_image(processed_image, output_path)
+
+
             
             processing_time = asyncio.get_event_loop().time() - start_time
             
@@ -171,6 +196,7 @@ class EnterpriseImageProcessor:
             
         except Exception as e:
             self.logger.error(f"Image processing failed: {e}")
+
             return {
                 'success': False,
                 'error': str(e),
@@ -185,8 +211,10 @@ class EnterpriseImageProcessor:
                 if img.mode in ('RGBA', 'LA', 'P'):
                     if img.mode == 'P' and 'transparency' in img.info:
                         img = img.convert('RGBA')
+
                     else:
                         img = img.convert('RGB')
+
                 
                 return {
                     'image': img.copy(),
@@ -196,6 +224,7 @@ class EnterpriseImageProcessor:
                     'metadata': dict(img.info) if hasattr(img, 'info') else {},
                     'file_size': image_path.stat().st_size
                 }
+
         
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(self.executor, _load)
@@ -208,28 +237,35 @@ class EnterpriseImageProcessor:
         resize_dimensions: Optional[Tuple[int, int]],
         enhance: bool
     ) -> Dict[str, Any]:
-        """Apply comprehensive processing pipeline"""
+        """
+        Apply comprehensive processing pipeline"""
         
         processed_image = image.copy()
+
         enhancements = []
         
         # Step 1: Resize if needed
         if resize_dimensions:
             processed_image = await self._smart_resize(processed_image, resize_dimensions)
+
             enhancements.append('smart_resize')
         
         # Step 2: AI Enhancement
         if enhance and self.config.enable_ai_enhancement:
             processed_image = await self._ai_enhance(processed_image)
+
             enhancements.append('ai_enhancement')
         
         # Step 3: Quality optimization
+
         processed_image = await self._optimize_quality(processed_image, quality)
         enhancements.append('quality_optimization')
         
         # Step 4: Format-specific optimization
+
         processed_image = await self._format_optimization(processed_image, target_format)
         enhancements.append('format_optimization')
+
         
         return {
             'image': processed_image,
@@ -243,53 +279,69 @@ class EnterpriseImageProcessor:
         image: Image.Image, 
         target_size: Tuple[int, int]
     ) -> Image.Image:
-        """Smart resizing with aspect ratio preservation and quality enhancement"""
+        """
+        Smart resizing with aspect ratio preservation and quality enhancement"""
         def _resize():
             # Calculate optimal resize strategy
             current_w, current_h = image.size
             target_w, target_h = target_size
             
             # Preserve aspect ratio
+
             aspect_ratio = current_w / current_h
+
             target_aspect = target_w / target_h
             
             if aspect_ratio > target_aspect:
                 # Image is wider, fit to width
+
                 new_w = target_w
+
                 new_h = int(target_w / aspect_ratio)
+
             else:
                 # Image is taller, fit to height
+
                 new_h = target_h
+
                 new_w = int(target_h * aspect_ratio)
             
             # Use high-quality resampling
+
             resized = image.resize(
                 (new_w, new_h), 
                 Image.Resampling.LANCZOS
             )
             
             # Apply sharpening after resize
+
             sharpened = resized.filter(ImageFilter.UnsharpMask(
                 radius=0.5, percent=150, threshold=3
             ))
+
             
             return sharpened
+
         
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(self.executor, _resize)
 
     async def _ai_enhance(self, image: Image.Image) -> Image.Image:
-        """Apply AI-powered image enhancement"""
+        """
+        Apply AI-powered image enhancement"""
         def _enhance():
             # Convert PIL to numpy for processing
+
             img_array = np.array(image)
             
             # Apply noise reduction
+
             denoised = restoration.denoise_bilateral(
                 img_array, sigma_color=0.1, sigma_spatial=15, multichannel=True
             )
             
             # Enhance contrast adaptively
+
             enhanced = restoration.denoise_tv_chambolle(
                 denoised, weight=0.1, multichannel=True
             )
@@ -300,13 +352,22 @@ class EnterpriseImageProcessor:
             )
             
             # Apply additional PIL enhancements
+
             enhancer = ImageEnhance.Contrast(enhanced_img)
+
+
             enhanced_img = enhancer.enhance(1.1)
+
+
             
             enhancer = ImageEnhance.Sharpness(enhanced_img)
+
+
             enhanced_img = enhancer.enhance(1.05)
+
             
             return enhanced_img
+
         
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(self.executor, _enhance)
@@ -316,7 +377,8 @@ class EnterpriseImageProcessor:
         image: Image.Image, 
         quality_level: str
     ) -> Image.Image:
-        """Optimize image quality based on target level"""
+        """
+        Optimize image quality based on target level"""
         def _optimize():
             quality_value = self.config.quality_levels.get(quality_level, 85)
             
@@ -326,13 +388,19 @@ class EnterpriseImageProcessor:
                 return image
             elif quality_level == "medium":
                 # Medium quality: balanced compression
+
                 enhancer = ImageEnhance.Sharpness(image)
+
                 return enhancer.enhance(0.95)
+
             else:
                 # Low quality: aggressive compression with smart preprocessing
                 # Slight blur to reduce compression artifacts
+
                 blurred = image.filter(ImageFilter.GaussianBlur(radius=0.3))
+
                 return blurred
+
         
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(self.executor, _optimize)
@@ -348,16 +416,20 @@ class EnterpriseImageProcessor:
                 # JPEG optimization: convert to RGB, optimize for compression
                 if image.mode != 'RGB':
                     return image.convert('RGB')
+
             elif target_format.lower() == 'png':
                 # PNG optimization: preserve transparency, optimize palette
                 if image.mode not in ['RGBA', 'LA', 'P']:
                     return image.convert('RGBA')
+
             elif target_format.lower() == 'webp':
                 # WebP optimization: best of both worlds
                 if image.mode not in ['RGB', 'RGBA']:
                     return image.convert('RGBA')
+
             
             return image
+
         
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(self.executor, _optimize)
@@ -367,12 +439,15 @@ class EnterpriseImageProcessor:
         image_data: Dict[str, Any], 
         output_path: Path
     ) -> None:
-        """Save processed image with optimal settings"""
+        """
+        Save processed image with optimal settings"""
         def _save():
             image = image_data['image']
+
             target_format = image_data['format']
             
             # Prepare save parameters
+
             save_kwargs = {}
             
             if target_format.lower() in ['jpeg', 'jpg']:
@@ -384,12 +459,14 @@ class EnterpriseImageProcessor:
                     'optimize': True,
                     'progressive': True
                 })
+
             elif target_format.lower() == 'png':
                 save_kwargs.update({
                     'format': 'PNG',
                     'optimize': True,
                     'compress_level': 6
                 })
+
             elif target_format.lower() == 'webp':
                 save_kwargs.update({
                     'format': 'WebP',
@@ -402,6 +479,8 @@ class EnterpriseImageProcessor:
             
             # Save with optimizations
             image.save(output_path, **save_kwargs)
+
+
         
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(self.executor, _save)
@@ -433,14 +512,20 @@ class EnterpriseImageProcessor:
         output_dir.mkdir(parents=True, exist_ok=True)
         
         # Create processing tasks
+
         tasks = []
         for image_path in image_paths:
             input_path = Path(image_path)
+
+
             output_name = input_path.stem + (
                 f'.{target_format}' if target_format 
                 else input_path.suffix
             )
+
+
             output_path = output_dir / output_name
+
             
             task = self.process_image(
                 image_path=input_path,
@@ -450,13 +535,17 @@ class EnterpriseImageProcessor:
                 resize_dimensions=resize_dimensions,
                 enhance=enhance
             )
+
             tasks.append(task)
         
         # Execute batch processing
+
         results = await asyncio.gather(*tasks, return_exceptions=True)
         
         # Compile batch results
+
         successful = [r for r in results if isinstance(r, dict) and r.get('success')]
+
         failed = [r for r in results if not (isinstance(r, dict) and r.get('success'))]
         
         return {
@@ -472,17 +561,21 @@ class EnterpriseImageProcessor:
         original_size: int, 
         compressed_size: int
     ) -> float:
-        """Calculate compression ratio"""
+        """
+        Calculate compression ratio"""
         if original_size == 0:
             return 0.0
         return (1 - compressed_size / original_size) * 100
 
     async def get_image_info(self, image_path: Union[str, Path]) -> Dict[str, Any]:
-        """Get comprehensive image information and metadata"""
+        """
+        Get comprehensive image information and metadata"""
         image_path = Path(image_path)
+
         
         try:
             image_data = await self._load_image(image_path)
+
             
             return {
                 'filename': image_path.name,
@@ -526,6 +619,7 @@ class FormatConverter:
         input_path = Path(input_path)
         if not output_path:
             output_path = input_path.with_suffix(f'.{target_format}')
+
         
         return await self.processor.process_image(
             image_path=input_path,
@@ -537,16 +631,19 @@ class FormatConverter:
 
 # Factory Pattern Implementation
 class ImageProcessorFactory:
-    """Factory for creating image processors with different configurations"""
+    """
+        Factory for creating image processors with different configurations"""
     
     @staticmethod
     def create_standard_processor() -> EnterpriseImageProcessor:
-        """Create processor with standard configuration"""
+        """
+        Create processor with standard configuration"""
         return EnterpriseImageProcessor()
     
     @staticmethod
     def create_high_performance_processor() -> EnterpriseImageProcessor:
-        """Create processor optimized for performance"""
+        """
+        Create processor optimized for performance"""
         config = ImageProcessingConfig(
             optimization_level="medium",
             enable_ai_enhancement=False,
@@ -578,6 +675,7 @@ async def process_image_enterprise(
 # Export all public classes and functions
 __all__ = [
     'EnterpriseImageProcessor',
+    'ImageProcessor',  # Alias
     'ImageProcessingConfig',
     'FormatConverter',
     'ImageProcessorFactory',
@@ -586,3 +684,6 @@ __all__ = [
     'ProcessingTimeoutError',
     'process_image_enterprise'
 ]
+
+# Professional alias for external compatibility
+ImageProcessor = EnterpriseImageProcessor

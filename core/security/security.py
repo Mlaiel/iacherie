@@ -18,18 +18,21 @@ logger = get_logger("security")
 
 
 class SecurityManager:
-    """Main security manager for the platform"""
+    """
+Main security manager for the platform"""
     
     def __init__(self, secret_key: Optional[str] = None):
         self.secret_key = secret_key or self._generate_secret_key()
         self.logger = get_logger("security_manager")
     
     def _generate_secret_key(self) -> str:
-        """Generate a secure secret key"""
+        """
+Generate a secure secret key"""
         return secrets.token_urlsafe(32)
     
     def generate_secure_hash(self, data: str, salt: Optional[str] = None) -> str:
-        """Generate a secure hash of data"""
+        """
+Generate a secure hash of data"""
         if salt is None:
             salt = secrets.token_urlsafe(16)
         
@@ -39,7 +42,8 @@ class SecurityManager:
         return f"{hash_obj.hexdigest()}:{salt}"
     
     def verify_hash(self, data: str, hash_with_salt: str) -> bool:
-        """Verify a hash against data"""
+        """
+Verify a hash against data"""
         try:
             hash_part, salt = hash_with_salt.split(':')
             new_hash = self.generate_secure_hash(data, salt)
@@ -51,11 +55,13 @@ class SecurityManager:
             return False
     
     def generate_encryption_key(self) -> str:
-        """Generate an encryption key"""
+        """
+Generate an encryption key"""
         return base64.b64encode(secrets.token_bytes(32)).decode('utf-8')
     
     def encrypt_data(self, data: str, key: Optional[str] = None) -> str:
-        """Basic encryption (for demo purposes - use proper encryption in production)"""
+        """
+Basic encryption (for demo purposes - use proper encryption in production)"""
         if key is None:
             key = self.secret_key
         
@@ -71,7 +77,8 @@ class SecurityManager:
         return base64.b64encode(encrypted).decode('utf-8')
     
     def decrypt_data(self, encrypted_data: str, key: Optional[str] = None) -> str:
-        """Basic decryption (for demo purposes - use proper encryption in production)"""
+        """
+Basic decryption (for demo purposes - use proper encryption in production)"""
         if key is None:
             key = self.secret_key
         
@@ -90,7 +97,8 @@ class SecurityManager:
 
 
 class TokenManager:
-    """Manages security tokens and API keys"""
+    """
+Manages security tokens and API keys"""
     
     def __init__(self, expiry_hours: int = 24):
         self.expiry_hours = expiry_hours
@@ -98,7 +106,8 @@ class TokenManager:
         self.active_tokens: Dict[str, Dict[str, Any]] = {}
     
     def generate_token(self, user_id: str, additional_data: Optional[Dict] = None) -> str:
-        """Generate a secure token for a user"""
+        """
+Generate a secure token for a user"""
         token_data = {
             'user_id': user_id,
             'created_at': datetime.utcnow(),
@@ -113,7 +122,8 @@ class TokenManager:
         return token
     
     def validate_token(self, token: str) -> Optional[Dict[str, Any]]:
-        """Validate a token and return its data"""
+        """
+Validate a token and return its data"""
         if token not in self.active_tokens:
             self.logger.warning(f"Invalid token attempted: {token[:8]}...")
             return None
@@ -128,7 +138,8 @@ class TokenManager:
         return token_data
     
     def revoke_token(self, token: str) -> bool:
-        """Revoke a token"""
+        """
+Revoke a token"""
         if token in self.active_tokens:
             del self.active_tokens[token]
             self.logger.info(f"Token revoked: {token[:8]}...")
@@ -136,7 +147,8 @@ class TokenManager:
         return False
     
     def cleanup_expired_tokens(self) -> int:
-        """Remove expired tokens and return count removed"""
+        """
+Remove expired tokens and return count removed"""
         current_time = datetime.utcnow()
         expired_tokens = [
             token for token, data in self.active_tokens.items()
@@ -153,13 +165,15 @@ class TokenManager:
 
 
 class SecurityValidator:
-    """Validates security requirements and policies"""
+    """
+Validates security requirements and policies"""
     
     def __init__(self):
         self.logger = get_logger("security_validator")
     
     def validate_password_strength(self, password: str) -> Dict[str, Any]:
-        """Validate password strength"""
+        """
+Validate password strength"""
         result = {
             'is_valid': True,
             'score': 0,
@@ -198,13 +212,15 @@ class SecurityValidator:
         return result
     
     def validate_email(self, email: str) -> bool:
-        """Basic email validation"""
+        """
+Basic email validation"""
         import re
         pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         return bool(re.match(pattern, email))
     
     def validate_ip_address(self, ip: str) -> bool:
-        """Validate IP address format"""
+        """
+Validate IP address format"""
         import ipaddress
         try:
             ipaddress.ip_address(ip)
@@ -213,7 +229,8 @@ class SecurityValidator:
             return False
     
     def check_rate_limit_violation(self, client_id: str, max_requests: int = 100, window_minutes: int = 60) -> bool:
-        """Check if client has exceeded rate limits"""
+        """
+Check if client has exceeded rate limits"""
         # This would typically check against a database or cache
         # For this implementation, it's a placeholder
         self.logger.debug(f"Rate limit check for client: {client_id}")
@@ -222,17 +239,20 @@ class SecurityValidator:
 
 # Factory functions
 def create_security_manager(secret_key: Optional[str] = None) -> SecurityManager:
-    """Create a security manager instance"""
+    """
+Create a security manager instance"""
     return SecurityManager(secret_key=secret_key)
 
 
 def create_token_manager(expiry_hours: int = 24) -> TokenManager:
-    """Create a token manager instance"""
+    """
+Create a token manager instance"""
     return TokenManager(expiry_hours=expiry_hours)
 
 
 def create_security_validator() -> SecurityValidator:
-    """Create a security validator instance"""
+    """
+Create a security validator instance"""
     return SecurityValidator()
 
 

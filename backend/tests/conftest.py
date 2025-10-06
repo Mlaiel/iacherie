@@ -46,7 +46,8 @@ from . import (
 pytest_plugins = []
 
 def pytest_configure(config):
-    """Configure pytest settings"""
+    """
+        Configure pytest settings"""
     # Add custom markers
     config.addinivalue_line(
         "markers", "unit: mark test as unit test"
@@ -97,10 +98,7 @@ async def temp_dir() -> AsyncGenerator[Path, None]:
 @pytest.fixture(scope="session")
 async def mock_database_pool():
     """Mock database connection pool"""
-    pool_mock = AsyncMock()
-    
-    # Mock connection methods
-    async def mock_acquire():
+    pool_mock = AsyncMock()    async def mock_acquire():
         conn_mock = AsyncMock()
         conn_mock.fetch.return_value = MOCK_DATABASE_DATA["users"][:5]
         conn_mock.fetchrow.return_value = MOCK_DATABASE_DATA["users"][0]
@@ -116,10 +114,7 @@ async def mock_database_pool():
 @pytest.fixture(scope="session")
 async def mock_redis_client():
     """Mock Redis client"""
-    redis_mock = AsyncMock()
-    
-    # Mock Redis operations
-    redis_mock.get = AsyncMock(return_value=None)
+    redis_mock = AsyncMock()    redis_mock.get = AsyncMock(return_value=None)
     redis_mock.set = AsyncMock(return_value=True)
     redis_mock.delete = AsyncMock(return_value=1)
     redis_mock.exists = AsyncMock(return_value=True)
@@ -151,17 +146,16 @@ async def mock_http_client():
             
         async def text(self):
             return json.dumps(self.json_data)
+
             
         def __aenter__(self):
             return self
             
         async def __aexit__(self, exc_type, exc_val, exc_tb):
             pass
+
     
-    client_mock = AsyncMock()
-    
-    # Mock HTTP methods
-    async def mock_get(*args, **kwargs):
+    client_mock = AsyncMock()    async def mock_get(*args, **kwargs):
         return MockResponse({"success": True, "data": MOCK_DATABASE_DATA["users"]})
     
     async def mock_post(*args, **kwargs):
@@ -184,10 +178,7 @@ async def mock_http_client():
 @pytest.fixture(scope="function")
 async def mock_ai_service():
     """Mock AI service for testing"""
-    service_mock = AsyncMock()
-    
-    # Mock AI operations
-    service_mock.generate_content = AsyncMock(return_value={
+    service_mock = AsyncMock()    service_mock.generate_content = AsyncMock(return_value={
         "content": "Generated test content",
         "confidence": 0.95,
         "metadata": {"model": "test-model", "tokens": 150}
@@ -213,10 +204,7 @@ async def mock_ai_service():
 @pytest.fixture(scope="function")
 async def mock_payment_service():
     """Mock payment service for testing"""
-    service_mock = AsyncMock()
-    
-    # Mock payment operations
-    service_mock.create_payment = AsyncMock(return_value={
+    service_mock = AsyncMock()    service_mock.create_payment = AsyncMock(return_value={
         "payment_id": "pay_12345",
         "status": "succeeded",
         "amount": 1000,
@@ -239,10 +227,7 @@ async def mock_payment_service():
 @pytest.fixture(scope="function")
 async def mock_notification_service():
     """Mock notification service for testing"""
-    service_mock = AsyncMock()
-    
-    # Mock notification operations
-    service_mock.send_email = AsyncMock(return_value={
+    service_mock = AsyncMock()    service_mock.send_email = AsyncMock(return_value={
         "message_id": "msg_12345",
         "status": "sent",
         "delivered": True
@@ -264,10 +249,7 @@ async def mock_notification_service():
 @pytest.fixture(scope="function")
 async def mock_storage_service():
     """Mock storage service for testing"""
-    service_mock = AsyncMock()
-    
-    # Mock storage operations
-    service_mock.upload_file = AsyncMock(return_value={
+    service_mock = AsyncMock()    service_mock.upload_file = AsyncMock(return_value={
         "file_id": "file_12345",
         "url": "https://storage.example.com/file_12345.jpg",
         "size": 1024000,
@@ -327,6 +309,7 @@ async def setup_test_logging():
     # Create handler if not exists
     if not test_logger.handlers:
         handler = logging.StreamHandler()
+
         formatter = logging.Formatter(
             '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
         )
@@ -351,6 +334,7 @@ async def performance_timer():
             
         def start(self):
             self.start_time = time.time()
+
             
         def stop(self):
             self.end_time = time.time()
@@ -392,6 +376,7 @@ async def cleanup_test_environment():
         for item in TEST_DATA_DIR.iterdir():
             if item.is_file():
                 item.unlink()
+
             elif item.is_dir():
                 shutil.rmtree(item)
     
@@ -408,13 +393,15 @@ def assert_valid_uuid(value: str) -> bool:
         return False
 
 def assert_valid_email(email: str) -> bool:
-    """Assert that a string is a valid email"""
+    """
+        Assert that a string is a valid email"""
     import re
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     return bool(re.match(pattern, email))
 
 def assert_valid_url(url: str) -> bool:
-    """Assert that a string is a valid URL"""
+    """
+        Assert that a string is a valid URL"""
     import re
     pattern = r'^https?://(?:[-\w.])+(?:[:\d]+)?(?:/(?:[\w/_.])*)?(?:\?(?:[\w&=%.])*)?(?:#(?:\w*))?$'
     return bool(re.match(pattern, url))

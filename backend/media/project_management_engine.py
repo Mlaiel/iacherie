@@ -114,7 +114,8 @@ class TaskPriority(Enum):
 
 
 class VersionType(Enum):
-    """Version types"""
+    """
+        Version types"""
     MAJOR = "major"
     MINOR = "minor"
     PATCH = "patch"
@@ -147,7 +148,8 @@ class ProjectConfig:
 
 @dataclass
 class Resource:
-    """Project resource representation"""
+    """
+        Project resource representation"""
     resource_id: str
     name: str
     type: str  # file, person, tool, budget
@@ -159,7 +161,8 @@ class Resource:
 
 @dataclass
 class Task:
-    """Project task representation"""
+    """
+        Project task representation"""
     task_id: str
     project_id: str
     name: str
@@ -181,7 +184,8 @@ class Task:
 
 @dataclass
 class Milestone:
-    """Project milestone representation"""
+    """
+        Project milestone representation"""
     milestone_id: str
     project_id: str
     name: str
@@ -237,7 +241,8 @@ class Version:
 
 @dataclass
 class Asset:
-    """Asset representation with version control"""
+    """
+        Asset representation with version control"""
     asset_id: str
     name: str
     asset_type: str  # image, video, audio, document, etc.
@@ -251,7 +256,8 @@ class Asset:
 
 @dataclass
 class ChangeLog:
-    """Change log entry for version control"""
+    """
+        Change log entry for version control"""
     change_id: str
     asset_id: str
     version_id: str
@@ -263,7 +269,8 @@ class ChangeLog:
 
 
 class MediaProjectManager:
-    """Advanced media project coordination and management"""
+    """
+        Advanced media project coordination and management"""
     
     def __init__(self, config: ProjectConfig):
         self.config = config
@@ -291,6 +298,8 @@ class MediaProjectManager:
         """Create new media project"""
         try:
             project_id = str(uuid.uuid4())
+
+
             
             project = Project(
                 project_id=project_id,
@@ -303,17 +312,21 @@ class MediaProjectManager:
                 end_date=end_date,
                 budget=budget
             )
+
             
             self.projects[project_id] = project
             
             # Cache project for quick access
             await self._cache_project(project)
+
             
             logger.info(f"Created project {project_id}: {name}")
+
             return project
             
         except Exception as e:
             logger.error(f"Failed to create project: {e}")
+
             raise
     
     async def add_task(
@@ -330,10 +343,15 @@ class MediaProjectManager:
         """Add task to project"""
         try:
             project = self.projects.get(project_id)
+
             if not project:
                 raise ValueError(f"Project {project_id} not found")
+
+
             
             task_id = str(uuid.uuid4())
+
+
             
             task = Task(
                 task_id=task_id,
@@ -346,18 +364,23 @@ class MediaProjectManager:
                 estimated_hours=estimated_hours,
                 dependencies=dependencies or []
             )
+
             
             project.tasks.append(task)
+
             project.updated_at = datetime.now(timezone.utc)
             
             # Update cache
             await self._cache_project(project)
+
             
             logger.info(f"Added task {task_id} to project {project_id}")
+
             return task
             
         except Exception as e:
             logger.error(f"Failed to add task: {e}")
+
             raise
     
     async def update_task_status(
@@ -371,19 +394,25 @@ class MediaProjectManager:
         """Update task status"""
         try:
             project = self.projects.get(project_id)
+
             if not project:
                 return False
+
             
             task = next((t for t in project.tasks if t.task_id == task_id), None)
+
             if not task:
                 return False
+
             
             old_status = task.status
             task.status = new_status
             task.updated_at = datetime.now(timezone.utc)
+
             
             if new_status == TaskStatus.COMPLETED:
                 task.completed_at = datetime.now(timezone.utc)
+
             
             project.updated_at = datetime.now(timezone.utc)
             
@@ -392,12 +421,15 @@ class MediaProjectManager:
             
             # Cache updates
             await self._cache_project(project)
+
             
             logger.info(f"Task {task_id} status updated: {old_status.value} -> {new_status.value}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to update task status: {e}")
+
             return False
     
     async def add_milestone(
@@ -411,10 +443,15 @@ class MediaProjectManager:
         """Add milestone to project"""
         try:
             project = self.projects.get(project_id)
+
             if not project:
                 raise ValueError(f"Project {project_id} not found")
+
+
             
             milestone_id = str(uuid.uuid4())
+
+
             
             milestone = Milestone(
                 milestone_id=milestone_id,
@@ -424,17 +461,23 @@ class MediaProjectManager:
                 target_date=target_date,
                 completion_criteria=completion_criteria
             )
+
             
             project.milestones.append(milestone)
+
             project.updated_at = datetime.now(timezone.utc)
+
             
             await self._cache_project(project)
+
             
             logger.info(f"Added milestone {milestone_id} to project {project_id}")
+
             return milestone
             
         except Exception as e:
             logger.error(f"Failed to add milestone: {e}")
+
             raise
     
     async def add_resource(
@@ -449,10 +492,15 @@ class MediaProjectManager:
         """Add resource to project"""
         try:
             project = self.projects.get(project_id)
+
             if not project:
                 raise ValueError(f"Project {project_id} not found")
+
+
             
             resource_id = str(uuid.uuid4())
+
+
             
             resource = Resource(
                 resource_id=resource_id,
@@ -462,50 +510,70 @@ class MediaProjectManager:
                 cost=cost,
                 availability=availability
             )
+
             
             project.resources.append(resource)
+
             project.updated_at = datetime.now(timezone.utc)
+
             
             await self._cache_project(project)
+
             
             logger.info(f"Added resource {resource_id} to project {project_id}")
+
             return resource
             
         except Exception as e:
             logger.error(f"Failed to add resource: {e}")
+
             raise
     
     async def get_project_status(self, project_id: str) -> Dict[str, Any]:
         """Get comprehensive project status"""
         try:
             project = self.projects.get(project_id)
+
             if not project:
                 return {}
             
             # Calculate task statistics
+
             total_tasks = len(project.tasks)
+
+
             completed_tasks = len([t for t in project.tasks if t.status == TaskStatus.COMPLETED])
+
+
             in_progress_tasks = len([t for t in project.tasks if t.status == TaskStatus.IN_PROGRESS])
+
+
             blocked_tasks = len([t for t in project.tasks if t.status == TaskStatus.BLOCKED])
             
             # Calculate progress
+
             progress = (completed_tasks / total_tasks * 100) if total_tasks > 0 else 0
             
             # Calculate budget usage
+
             budget_used_percent = (project.spent_budget / project.budget * 100) if project.budget > 0 else 0
             
             # Check milestone status
+
             upcoming_milestones = [
                 m for m in project.milestones 
                 if m.status == "pending" and m.target_date > datetime.now(timezone.utc)
             ]
+
             overdue_milestones = [
                 m for m in project.milestones 
                 if m.status == "pending" and m.target_date <= datetime.now(timezone.utc)
             ]
             
             # Calculate estimated completion
+
             remaining_hours = sum(t.estimated_hours - t.actual_hours for t in project.tasks if t.status != TaskStatus.COMPLETED)
+
             
             return {
                 'project_id': project_id,
@@ -544,6 +612,7 @@ class MediaProjectManager:
             
         except Exception as e:
             logger.error(f"Failed to get project status: {e}")
+
             return {}
     
     async def get_user_projects(self, user_id: str) -> List[Dict[str, Any]]:
@@ -555,7 +624,9 @@ class MediaProjectManager:
                 # Check if user is owner or team member
                 if project.owner_id == user_id or user_id in project.team_members:
                     # Check if user has assigned tasks
+
                     user_tasks = [t for t in project.tasks if user_id in t.assigned_to]
+
                     
                     project_info = {
                         'project_id': project.project_id,
@@ -570,20 +641,25 @@ class MediaProjectManager:
             
             # Sort by most recently updated
             user_projects.sort(key=lambda p: p['updated_at'], reverse=True)
+
             
             return user_projects
             
         except Exception as e:
             logger.error(f"Failed to get user projects: {e}")
+
             return []
     
     async def _update_project_status(self, project: Project):
         """Update project status based on task completion"""
         if not project.tasks:
             return
+
         
         completed_tasks = len([t for t in project.tasks if t.status == TaskStatus.COMPLETED])
+
         total_tasks = len(project.tasks)
+
         
         if completed_tasks == total_tasks:
             project.status = ProjectStatus.COMPLETED
@@ -594,10 +670,12 @@ class MediaProjectManager:
                 project.status = ProjectStatus.ACTIVE
     
     async def _cache_project(self, project: Project):
-        """Cache project for quick access"""
+        """
+        Cache project for quick access"""
         if self.redis_client:
             try:
                 # Store basic project info in cache
+
                 cache_data = {
                     'name': project.name,
                     'status': project.status.value,
@@ -609,6 +687,7 @@ class MediaProjectManager:
                     3600,  # 1 hour cache
                     json.dumps(cache_data)
                 )
+
             except Exception as e:
                 logger.warning(f"Failed to cache project: {e}")
 
@@ -619,6 +698,7 @@ class VersionControlSystem:
     def __init__(self, storage_path: str):
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(parents=True, exist_ok=True)
+
         
         self.assets: Dict[str, Asset] = {}
         self.versions: Dict[str, Version] = {}
@@ -629,8 +709,10 @@ class VersionControlSystem:
         if HAS_GIT:
             try:
                 self.git_repo = git.Repo.init(str(self.storage_path))
+
             except Exception as e:
                 logger.warning(f"Failed to initialize Git repository: {e}")
+
         
         logger.info("📁 Version Control System initialized")
     
@@ -646,13 +728,19 @@ class VersionControlSystem:
         """Create new asset with initial version"""
         try:
             asset_id = str(uuid.uuid4())
+
+
             version_id = str(uuid.uuid4())
             
             # Copy file to version storage
+
             file_hash = await self._calculate_file_hash(file_path)
+
+
             stored_path = await self._store_file_version(file_path, asset_id, version_id)
             
             # Create initial version
+
             initial_version = Version(
                 version_id=version_id,
                 asset_id=asset_id,
@@ -668,6 +756,7 @@ class VersionControlSystem:
             )
             
             # Create asset
+
             asset = Asset(
                 asset_id=asset_id,
                 name=name,
@@ -676,6 +765,7 @@ class VersionControlSystem:
                 current_version=version_id,
                 versions=[initial_version]
             )
+
             
             self.assets[asset_id] = asset
             self.versions[version_id] = initial_version
@@ -689,15 +779,20 @@ class VersionControlSystem:
             if self.git_repo:
                 try:
                     self.git_repo.index.add([str(stored_path)])
+
                     self.git_repo.index.commit(f"Add {name} - {initial_message}")
+
                 except Exception as e:
                     logger.warning(f"Git commit failed: {e}")
+
             
             logger.info(f"Created asset {asset_id}: {name}")
+
             return asset
             
         except Exception as e:
             logger.error(f"Failed to create asset: {e}")
+
             raise
     
     async def create_version(
@@ -712,27 +807,37 @@ class VersionControlSystem:
         """Create new version of existing asset"""
         try:
             asset = self.assets.get(asset_id)
+
             if not asset:
                 raise ValueError(f"Asset {asset_id} not found")
+
+
             
             version_id = str(uuid.uuid4())
             
             # Calculate file hash
+
             file_hash = await self._calculate_file_hash(file_path)
             
             # Check if content actually changed
+
             current_version = self.versions.get(asset.current_version)
+
             if current_version and current_version.file_hash == file_hash:
                 logger.info(f"No changes detected for asset {asset_id}")
+
                 return current_version
             
             # Store new version
+
             stored_path = await self._store_file_version(file_path, asset_id, version_id)
             
             # Generate version number
+
             version_number = await self._generate_version_number(asset, version_type)
             
             # Create new version
+
             new_version = Version(
                 version_id=version_id,
                 asset_id=asset_id,
@@ -755,8 +860,10 @@ class VersionControlSystem:
             
             # Add to asset
             asset.versions.append(new_version)
+
             asset.current_version = version_id
             asset.updated_at = datetime.now(timezone.utc)
+
             
             self.versions[version_id] = new_version
             
@@ -769,26 +876,36 @@ class VersionControlSystem:
             if self.git_repo:
                 try:
                     self.git_repo.index.add([str(stored_path)])
+
                     self.git_repo.index.commit(f"Update {asset.name} v{version_number} - {message}")
+
                 except Exception as e:
                     logger.warning(f"Git commit failed: {e}")
+
             
             logger.info(f"Created version {version_number} for asset {asset_id}")
+
             return new_version
             
         except Exception as e:
             logger.error(f"Failed to create version: {e}")
+
             raise
     
     async def get_version_history(self, asset_id: str) -> List[Dict[str, Any]]:
         """Get version history for asset"""
         try:
             asset = self.assets.get(asset_id)
+
             if not asset:
                 return []
             
             # Sort versions by creation date (newest first)
+
+
             sorted_versions = sorted(asset.versions, key=lambda v: v.created_at, reverse=True)
+
+
             
             history = []
             for version in sorted_versions:
@@ -804,11 +921,13 @@ class VersionControlSystem:
                     'tags': version.tags
                 }
                 history.append(version_info)
+
             
             return history
             
         except Exception as e:
             logger.error(f"Failed to get version history: {e}")
+
             return []
     
     async def restore_version(
@@ -821,24 +940,34 @@ class VersionControlSystem:
         """Restore asset to previous version"""
         try:
             asset = self.assets.get(asset_id)
+
             if not asset:
                 raise ValueError(f"Asset {asset_id} not found")
+
+
             
             target_version = self.versions.get(version_id)
+
             if not target_version or target_version.asset_id != asset_id:
                 raise ValueError(f"Version {version_id} not found for asset {asset_id}")
             
             # Create new version based on target version
+
             new_version_id = str(uuid.uuid4())
             
             # Copy file from target version
+
             source_path = Path(target_version.file_path)
+
+
             stored_path = await self._store_file_version(str(source_path), asset_id, new_version_id)
             
             # Generate new version number
+
             new_version_number = await self._generate_version_number(asset, VersionType.MINOR)
             
             # Create restore version
+
             restore_version = Version(
                 version_id=new_version_id,
                 asset_id=asset_id,
@@ -855,13 +984,17 @@ class VersionControlSystem:
             )
             
             # Update current version
+
             current_version = self.versions.get(asset.current_version)
+
             if current_version:
                 current_version.is_current = False
             
             asset.versions.append(restore_version)
+
             asset.current_version = new_version_id
             asset.updated_at = datetime.now(timezone.utc)
+
             
             self.versions[new_version_id] = restore_version
             
@@ -870,12 +1003,15 @@ class VersionControlSystem:
                 asset_id, new_version_id, ChangeType.RESTORE, restored_by, 
                 f"Restored to version {target_version.version_number}"
             )
+
             
             logger.info(f"Restored asset {asset_id} to version {target_version.version_number}")
+
             return restore_version
             
         except Exception as e:
             logger.error(f"Failed to restore version: {e}")
+
             raise
     
     async def compare_versions(
@@ -887,14 +1023,22 @@ class VersionControlSystem:
         """Compare two versions of an asset"""
         try:
             asset = self.assets.get(asset_id)
+
             if not asset:
                 raise ValueError(f"Asset {asset_id} not found")
+
+
             
             version1 = self.versions.get(version1_id)
+
+
             version2 = self.versions.get(version2_id)
+
             
             if not version1 or not version2:
                 raise ValueError("One or both versions not found")
+
+
             
             comparison = {
                 'asset_id': asset_id,
@@ -926,15 +1070,18 @@ class VersionControlSystem:
                 comparison['differences'].update(
                     await self._compare_images(version1.file_path, version2.file_path)
                 )
+
             elif asset.asset_type == 'audio' and HAS_LIBROSA:
                 comparison['differences'].update(
                     await self._compare_audio(version1.file_path, version2.file_path)
                 )
+
             
             return comparison
             
         except Exception as e:
             logger.error(f"Failed to compare versions: {e}")
+
             return {}
     
     async def get_change_log(
@@ -950,7 +1097,10 @@ class VersionControlSystem:
                 relevant_logs = [log for log in self.change_logs if log.asset_id == asset_id]
             
             # Sort by timestamp (newest first)
+
+
             sorted_logs = sorted(relevant_logs, key=lambda l: l.timestamp, reverse=True)
+
             
             return [
                 {
@@ -968,41 +1118,52 @@ class VersionControlSystem:
             
         except Exception as e:
             logger.error(f"Failed to get change log: {e}")
+
             return []
     
     async def _calculate_file_hash(self, file_path: str) -> str:
         """Calculate SHA-256 hash of file"""
         try:
             sha256_hash = hashlib.sha256()
+
             with open(file_path, "rb") as f:
                 for chunk in iter(lambda: f.read(4096), b""):
                     sha256_hash.update(chunk)
+
             return sha256_hash.hexdigest()
         except Exception as e:
             logger.error(f"Failed to calculate file hash: {e}")
+
             return ""
     
     async def _store_file_version(self, source_path: str, asset_id: str, version_id: str) -> Path:
         """Store file version in version control storage"""
         try:
             # Create asset directory
+
             asset_dir = self.storage_path / asset_id
             asset_dir.mkdir(exist_ok=True)
             
             # Get file extension
+
             source_file = Path(source_path)
+
+
             extension = source_file.suffix
             
             # Create version file path
+
             version_file = asset_dir / f"{version_id}{extension}"
             
             # Copy file
             shutil.copy2(source_path, version_file)
+
             
             return version_file
             
         except Exception as e:
             logger.error(f"Failed to store file version: {e}")
+
             raise
     
     async def _generate_version_number(self, asset: Asset, version_type: VersionType) -> str:
@@ -1012,14 +1173,22 @@ class VersionControlSystem:
                 return "1.0.0"
             
             # Get current version number
+
             current_version = max(asset.versions, key=lambda v: v.created_at)
+
+
             current_number = current_version.version_number
             
             # Parse version number (assuming semantic versioning)
+
             try:
                 parts = current_number.split('.')
+
+
                 major = int(parts[0]) if len(parts) > 0 else 1
+
                 minor = int(parts[1]) if len(parts) > 1 else 0
+
                 patch = int(parts[2]) if len(parts) > 2 else 0
             except (ValueError, IndexError):
                 # Fallback for non-standard version numbers
@@ -1028,10 +1197,13 @@ class VersionControlSystem:
             # Increment based on version type
             if version_type == VersionType.MAJOR:
                 major += 1
+
                 minor = 0
+
                 patch = 0
             elif version_type == VersionType.MINOR:
                 minor += 1
+
                 patch = 0
             elif version_type == VersionType.PATCH:
                 patch += 1
@@ -1040,6 +1212,7 @@ class VersionControlSystem:
             
         except Exception as e:
             logger.error(f"Failed to generate version number: {e}")
+
             return f"{len(asset.versions) + 1}.0.0"
     
     async def _log_change(
@@ -1062,6 +1235,7 @@ class VersionControlSystem:
                 change_message=message,
                 details=details or {}
             )
+
             
             self.change_logs.append(change_log)
             
@@ -1086,6 +1260,7 @@ class VersionControlSystem:
                 }
                 
                 # Basic similarity check (if same dimensions)
+
                 if img1.size == img2.size and img1.mode == img2.mode:
                     # This is a simplified similarity check
                     # In production, would use more sophisticated image comparison
@@ -1094,16 +1269,24 @@ class VersionControlSystem:
                 return comparison
         except Exception as e:
             logger.error(f"Image comparison failed: {e}")
+
             return {'comparison_failed': True, 'error': str(e)}
     
     async def _compare_audio(self, audio1_path: str, audio2_path: str) -> Dict[str, Any]:
         """Compare two audio files"""
         try:
             y1, sr1 = librosa.load(audio1_path)
+
             y2, sr2 = librosa.load(audio2_path)
+
+
             
             duration1 = librosa.get_duration(y=y1, sr=sr1)
+
+
             duration2 = librosa.get_duration(y=y2, sr=sr2)
+
+
             
             comparison = {
                 'duration_changed': abs(duration1 - duration2) > 0.1,
@@ -1118,6 +1301,7 @@ class VersionControlSystem:
             return comparison
         except Exception as e:
             logger.error(f"Audio comparison failed: {e}")
+
             return {'comparison_failed': True, 'error': str(e)}
 
 
@@ -1153,6 +1337,7 @@ class ProjectManagementEngine:
         """Create project with initial assets"""
         try:
             # Create project
+
             project = await self.project_manager.create_project(
                 name=project_name,
                 description=project_description,
@@ -1162,6 +1347,7 @@ class ProjectManagementEngine:
             )
             
             # Add initial assets if provided
+
             assets_created = []
             if initial_assets:
                 for asset_info in initial_assets:
@@ -1174,12 +1360,16 @@ class ProjectManagementEngine:
                             created_by=owner_id,
                             initial_message=asset_info.get('message', 'Initial version')
                         )
+
                         
                         assets_created.append(asset)
+
                         self.project_assets[project.project_id].append(asset.asset_id)
+
                         
                     except Exception as e:
                         logger.error(f"Failed to create asset {asset_info.get('name')}: {e}")
+
             
             return {
                 'project': {
@@ -1201,6 +1391,7 @@ class ProjectManagementEngine:
             
         except Exception as e:
             logger.error(f"Failed to create project with assets: {e}")
+
             raise
     
     async def add_asset_to_project(
@@ -1215,11 +1406,14 @@ class ProjectManagementEngine:
         """Add new asset to existing project"""
         try:
             # Verify project exists
+
             project_status = await self.project_manager.get_project_status(project_id)
+
             if not project_status:
                 raise ValueError(f"Project {project_id} not found")
             
             # Create asset
+
             asset = await self.version_control.create_asset(
                 name=asset_name,
                 asset_type=asset_type,
@@ -1241,12 +1435,15 @@ class ProjectManagementEngine:
                     assigned_to=[created_by],
                     priority=TaskPriority.MEDIUM
                 )
+
             
             logger.info(f"Added asset {asset.asset_id} to project {project_id}")
+
             return asset
             
         except Exception as e:
             logger.error(f"Failed to add asset to project: {e}")
+
             raise
     
     async def update_project_asset(
@@ -1265,6 +1462,7 @@ class ProjectManagementEngine:
                 raise ValueError(f"Asset {asset_id} not found in project {project_id}")
             
             # Create new version
+
             version = await self.version_control.create_version(
                 asset_id=asset_id,
                 file_path=file_path,
@@ -1282,30 +1480,41 @@ class ProjectManagementEngine:
                     assigned_to=[updated_by],
                     priority=TaskPriority.HIGH
                 )
+
             
             logger.info(f"Updated asset {asset_id} in project {project_id} to version {version.version_number}")
+
             return version
             
         except Exception as e:
             logger.error(f"Failed to update project asset: {e}")
+
             raise
     
     async def get_project_dashboard(self, project_id: str) -> Dict[str, Any]:
         """Get comprehensive project dashboard"""
         try:
             # Get project status
+
             project_status = await self.project_manager.get_project_status(project_id)
+
             if not project_status:
                 return {'error': f'Project {project_id} not found'}
             
             # Get project assets
+
             asset_ids = self.project_assets.get(project_id, [])
+
+
             assets_info = []
             
             for asset_id in asset_ids:
                 asset = self.version_control.assets.get(asset_id)
+
                 if asset:
                     current_version = self.version_control.versions.get(asset.current_version)
+
+
                     asset_info = {
                         'asset_id': asset_id,
                         'name': asset.name,
@@ -1317,7 +1526,10 @@ class ProjectManagementEngine:
                     assets_info.append(asset_info)
             
             # Get recent changes
+
             recent_changes = await self.version_control.get_change_log(limit=10)
+
+
             project_changes = [
                 change for change in recent_changes
                 if change['asset_id'] in asset_ids
@@ -1338,25 +1550,36 @@ class ProjectManagementEngine:
             
         except Exception as e:
             logger.error(f"Failed to get project dashboard: {e}")
+
             return {'error': str(e)}
     
     async def get_user_dashboard(self, user_id: str) -> Dict[str, Any]:
         """Get user's project management dashboard"""
         try:
             # Get user's projects
+
             user_projects = await self.project_manager.get_user_projects(user_id)
             
             # Get user's recent asset changes
+
             all_changes = await self.version_control.get_change_log(limit=50)
+
+
             user_changes = [
                 change for change in all_changes
                 if change['changed_by'] == user_id
             ]
             
             # Calculate user statistics
+
             total_projects = len(user_projects)
+
+
             active_projects = len([p for p in user_projects if p['status'] in ['active', 'in_progress']])
+
+
             total_pending_tasks = sum(p['pending_tasks'] for p in user_projects)
+
             
             return {
                 'user_id': user_id,
@@ -1381,6 +1604,7 @@ class ProjectManagementEngine:
             
         except Exception as e:
             logger.error(f"Failed to get user dashboard: {e}")
+
             return {'error': str(e)}
 
 
@@ -1393,7 +1617,8 @@ class MediaProjectManager_Legacy:
 
 
 class VersionControlSystem_Legacy:
-    """Legacy wrapper for version control system"""
+    """
+        Legacy wrapper for version control system"""
     def __init__(self, *args, **kwargs):
         storage_path = kwargs.get('storage_path', './version_storage')
         self.system = VersionControlSystem(storage_path)

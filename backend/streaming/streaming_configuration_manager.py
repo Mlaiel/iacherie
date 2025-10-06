@@ -29,14 +29,7 @@ from enum import Enum
 import json
 import uuid
 # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+from protection.utils.redis_compat import aioredis, REDIS_AVAILABLE
 from sqlalchemy.ext.asyncio import AsyncSession
 from collections import defaultdict
 import hashlib
@@ -47,7 +40,8 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class ConfigurationType(Enum):
-    """Configuration type classification"""
+    """
+        Configuration type classification"""
     STREAMING_SETTINGS = "streaming_settings"
     DATABASE_CONFIG = "database_config"
     REDIS_CONFIG = "redis_config"
@@ -135,7 +129,8 @@ class ConfigurationSchema:
 
 @dataclass
 class ConfigurationItem:
-    """Individual configuration item"""
+    """
+        Individual configuration item"""
     config_id: str
     config_name: str
     configuration_type: ConfigurationType
@@ -161,7 +156,8 @@ class ConfigurationItem:
 
 @dataclass
 class EnvironmentConfiguration:
-    """Complete environment configuration"""
+    """
+        Complete environment configuration"""
     environment_id: str
     environment_name: str
     environment_type: EnvironmentType
@@ -185,7 +181,8 @@ class EnvironmentConfiguration:
 
 @dataclass
 class ConfigurationTemplate:
-    """Configuration template for reuse"""
+    """
+        Configuration template for reuse"""
     template_id: str
     template_name: str
     template_description: str
@@ -207,7 +204,8 @@ class ConfigurationTemplate:
 
 @dataclass
 class ConfigurationDeployment:
-    """Configuration deployment tracking"""
+    """
+        Configuration deployment tracking"""
     deployment_id: str
     config_ids: List[str]
     target_environment: EnvironmentType
@@ -227,36 +225,46 @@ class ConfigurationDeployment:
     deployed_by: str
 
 class ConfigurationValidator:
-    """Configuration validation and compliance system"""
+    """
+        Configuration validation and compliance system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.validation_engines = {}
         self.compliance_checkers = {}
         
     async def initialize_configuration_validator(self) -> Dict[str, Any]:
-        """Initialize configuration validation system"""
+        """
+        Initialize configuration validation system"""
         try:
             # Setup validation engines
+
             validation_engines = await self._setup_validation_engines()
             
             # Initialize compliance checkers
+
             compliance_checkers = await self._initialize_compliance_checkers()
             
             # Configure validation rules
+
             validation_rules = await self._configure_validation_rules()
             
             # Setup schema validation
+
             schema_validation = await self._setup_schema_validation()
             
             # Configure security validation
+
             security_validation = await self._configure_security_validation()
             
             # Setup performance validation
+
             performance_validation = await self._setup_performance_validation()
+
             
             logger.info(f"✅ Configuration Validator initialized with {len(validation_engines)} engines")
+
             
             return {
                 "validation_engines": len(validation_engines),
@@ -276,6 +284,7 @@ class ConfigurationValidator:
             
         except Exception as e:
             logger.error(f"Failed to initialize configuration validator: {e}")
+
             raise
 
     async def validate_configuration(
@@ -288,47 +297,56 @@ class ConfigurationValidator:
             validation_id = str(uuid.uuid4())
             
             # Perform syntax validation
+
             syntax_validation = await self._perform_syntax_validation(
                 configuration_item, validation_config
             )
             
             # Perform semantic validation
+
             semantic_validation = await self._perform_semantic_validation(
                 configuration_item, syntax_validation
             )
             
             # Check security compliance
+
             security_compliance = await self._check_security_compliance(
                 configuration_item, validation_config
             )
             
             # Validate performance impact
+
             performance_impact = await self._validate_performance_impact(
                 configuration_item, validation_config
             )
             
             # Check dependency compatibility
+
             dependency_validation = await self._check_dependency_compatibility(
                 configuration_item, validation_config
             )
             
             # Validate integration compatibility
+
             integration_validation = await self._validate_integration_compatibility(
                 configuration_item, validation_config
             )
             
             # Calculate overall validation score
+
             validation_score = await self._calculate_validation_score(
                 syntax_validation, semantic_validation, security_compliance,
                 performance_impact, dependency_validation, integration_validation
             )
             
             # Generate validation report
+
             validation_report = await self._generate_validation_report(
                 validation_id, configuration_item, validation_score,
                 [syntax_validation, semantic_validation, security_compliance,
                  performance_impact, dependency_validation, integration_validation]
             )
+
             
             return {
                 "success": True,
@@ -346,39 +364,49 @@ class ConfigurationValidator:
             
         except Exception as e:
             logger.error(f"Failed to validate configuration: {e}")
+
             raise
 
 class DynamicConfigurationManager:
     """Dynamic configuration updates and hot-reloading system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.update_managers = {}
         self.configuration_watchers = {}
         
     async def initialize_dynamic_manager(self) -> Dict[str, Any]:
-        """Initialize dynamic configuration management"""
+        """
+        Initialize dynamic configuration management"""
         try:
             # Setup update managers
+
             update_managers = await self._setup_update_managers()
             
             # Initialize configuration watchers
+
             config_watchers = await self._initialize_configuration_watchers()
             
             # Configure hot-reload systems
+
             hot_reload_systems = await self._configure_hot_reload_systems()
             
             # Setup change propagation
+
             change_propagation = await self._setup_change_propagation()
             
             # Configure rollback mechanisms
+
             rollback_mechanisms = await self._configure_rollback_mechanisms()
             
             # Setup monitoring and alerting
+
             monitoring_alerting = await self._setup_monitoring_and_alerting()
+
             
             logger.info(f"🔄 Dynamic Configuration Manager initialized with {len(update_managers)} managers")
+
             
             return {
                 "update_managers": len(update_managers),
@@ -398,6 +426,7 @@ class DynamicConfigurationManager:
             
         except Exception as e:
             logger.error(f"Failed to initialize dynamic manager: {e}")
+
             raise
 
     async def apply_dynamic_configuration_update(
@@ -411,9 +440,11 @@ class DynamicConfigurationManager:
             update_id = str(uuid.uuid4())
             
             # Validate update request
+
             update_validation = await self._validate_update_request(
                 configuration_update, update_strategy, update_config
             )
+
             
             if not update_validation["valid"]:
                 return {
@@ -423,29 +454,35 @@ class DynamicConfigurationManager:
                 }
             
             # Prepare update execution
+
             update_preparation = await self._prepare_update_execution(
                 configuration_update, update_strategy, update_config
             )
             
             # Execute update strategy
+
             strategy_execution = await self._execute_update_strategy(
                 configuration_update, update_strategy, update_preparation
             )
             
             # Monitor update impact
+
             impact_monitoring = await self._monitor_update_impact(
                 update_id, configuration_update, strategy_execution
             )
             
             # Validate post-update state
+
             post_update_validation = await self._validate_post_update_state(
                 configuration_update, strategy_execution
             )
             
             # Handle update completion
+
             completion_handling = await self._handle_update_completion(
                 update_id, strategy_execution, post_update_validation
             )
+
             
             return {
                 "success": True,
@@ -461,12 +498,13 @@ class DynamicConfigurationManager:
             
         except Exception as e:
             logger.error(f"Failed to apply dynamic configuration update: {e}")
+
             raise
 
 class EnvironmentConfigurationOrchestrator:
     """Environment-specific configuration orchestration system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.environment_managers = {}
@@ -476,39 +514,47 @@ class EnvironmentConfigurationOrchestrator:
         environment_type: EnvironmentType,
         configuration_request: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Orchestrate complete environment configuration"""
+        """
+        Orchestrate complete environment configuration"""
         try:
             orchestration_id = str(uuid.uuid4())
             
             # Load environment template
+
             environment_template = await self._load_environment_template(
                 environment_type, configuration_request
             )
             
             # Generate environment configuration
+
             environment_config = await self._generate_environment_configuration(
                 environment_template, configuration_request
             )
             
             # Validate environment setup
+
             environment_validation = await self._validate_environment_setup(
                 environment_config, configuration_request
             )
             
             # Deploy environment configuration
+
             deployment_result = await self._deploy_environment_configuration(
                 environment_config, environment_validation
             )
             
             # Configure monitoring
+
             monitoring_setup = await self._configure_environment_monitoring(
                 environment_config, deployment_result
             )
             
             # Setup health checks
+
             health_check_setup = await self._setup_environment_health_checks(
                 environment_config, deployment_result
             )
+
             
             return {
                 "success": True,
@@ -524,12 +570,13 @@ class EnvironmentConfigurationOrchestrator:
             
         except Exception as e:
             logger.error(f"Failed to orchestrate environment configuration: {e}")
+
             raise
 
 class ConfigurationOptimizer:
     """Intelligent configuration optimization system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.optimization_engines = {}
@@ -539,39 +586,47 @@ class ConfigurationOptimizer:
         configuration_data: Dict[str, Any],
         optimization_targets: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize configuration for performance and efficiency"""
+        """
+        Optimize configuration for performance and efficiency"""
         try:
             optimization_id = str(uuid.uuid4())
             
             # Analyze current performance
+
             performance_analysis = await self._analyze_current_performance(
                 configuration_data, optimization_targets
             )
             
             # Identify optimization opportunities
+
             optimization_opportunities = await self._identify_optimization_opportunities(
                 performance_analysis, optimization_targets
             )
             
             # Generate optimization recommendations
+
             optimization_recommendations = await self._generate_optimization_recommendations(
                 optimization_opportunities, configuration_data
             )
             
             # Simulate optimization impact
+
             impact_simulation = await self._simulate_optimization_impact(
                 configuration_data, optimization_recommendations
             )
             
             # Apply optimizations
+
             optimization_application = await self._apply_configuration_optimizations(
                 configuration_data, optimization_recommendations, impact_simulation
             )
             
             # Validate optimization results
+
             optimization_validation = await self._validate_optimization_results(
                 optimization_application, optimization_targets
             )
+
             
             return {
                 "success": True,
@@ -587,12 +642,13 @@ class ConfigurationOptimizer:
             
         except Exception as e:
             logger.error(f"Failed to optimize configuration performance: {e}")
+
             raise
 
 class StreamingConfigurationManager:
     """Unified streaming configuration manager - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         
@@ -612,24 +668,32 @@ class StreamingConfigurationManager:
         """Initialize configuration management system"""
         try:
             # Initialize validator
+
             validator_status = await self.validator.initialize_configuration_validator()
             
             # Initialize dynamic manager
+
             dynamic_status = await self.dynamic_manager.initialize_dynamic_manager()
             
             # Setup configuration registry
+
             registry_setup = await self._setup_configuration_registry()
             
             # Configure template system
+
             template_system = await self._configure_template_system()
             
             # Setup version control
+
             version_control = await self._setup_version_control()
             
             # Configure access control
+
             access_control = await self._configure_access_control()
+
             
             logger.info("⚙️ Streaming Configuration Manager fully initialized")
+
             
             return {
                 "manager_status": "initialized",
@@ -651,6 +715,7 @@ class StreamingConfigurationManager:
             
         except Exception as e:
             logger.error(f"Failed to initialize configuration manager: {e}")
+
             raise
     
     async def execute_comprehensive_configuration_workflow(
@@ -662,6 +727,8 @@ class StreamingConfigurationManager:
             workflow_id = str(uuid.uuid4())
             
             # Create configuration item (simplified for example)
+
+
             configuration_item = ConfigurationItem(
                 config_id=str(uuid.uuid4()),
                 config_name=configuration_request.get("config_name", "Default"),
@@ -688,12 +755,14 @@ class StreamingConfigurationManager:
             )
             
             # Validate configuration
+
             validation_result = await self.validator.validate_configuration(
                 configuration_item,
                 configuration_request.get("validation_config", {})
             )
             
             # Apply dynamic updates if requested
+
             dynamic_update = None
             if configuration_request.get("apply_dynamic_update", False):
                 dynamic_update = await self.dynamic_manager.apply_dynamic_configuration_update(
@@ -703,16 +772,19 @@ class StreamingConfigurationManager:
                 )
             
             # Orchestrate environment configuration
+
             environment_orchestration = await self.environment_orchestrator.orchestrate_environment_configuration(
                 EnvironmentType(configuration_request.get("environment", "production")),
                 configuration_request
             )
             
             # Optimize configuration
+
             optimization_result = await self.optimizer.optimize_configuration_performance(
                 configuration_request.get("config_data", {}),
                 configuration_request.get("optimization_targets", {})
             )
+
             
             return {
                 "success": True,
@@ -727,6 +799,7 @@ class StreamingConfigurationManager:
             
         except Exception as e:
             logger.error(f"Failed to execute comprehensive configuration workflow: {e}")
+
             raise
     
     # Additional helper methods implementation...
@@ -741,6 +814,7 @@ class StreamingConfigurationManager:
             }
         except Exception as e:
             logger.error(f"Failed to setup configuration registry: {e}")
+
             return {}
 
     async def _configure_template_system(self) -> Dict[str, Any]:
@@ -754,6 +828,7 @@ class StreamingConfigurationManager:
             }
         except Exception as e:
             logger.error(f"Failed to configure template system: {e}")
+
             return {}
 
 # Export main classes

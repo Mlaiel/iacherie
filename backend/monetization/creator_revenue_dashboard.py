@@ -27,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 
 class DashboardMetricType(str, Enum):
-    """Dashboard metric types."""
+    """
+        Dashboard metric types."""
     REVENUE = "revenue"
     AUDIENCE = "audience"
     ENGAGEMENT = "engagement"
@@ -89,7 +90,8 @@ class RevenueStreamData:
 
 @dataclass
 class DashboardAlert:
-    """Dashboard alert/notification."""
+    """
+        Dashboard alert/notification."""
     alert_id: str
     alert_type: AlertType
     title: str
@@ -103,7 +105,8 @@ class DashboardAlert:
 
 @dataclass
 class RevenueForecast:
-    """Revenue forecast data."""
+    """
+        Revenue forecast data."""
     forecast_id: str
     creator_id: str
     forecast_period: str
@@ -116,7 +119,8 @@ class RevenueForecast:
 
 @dataclass
 class GoalTracker:
-    """Goal tracking data."""
+    """
+        Goal tracking data."""
     goal_id: str
     goal_type: str
     goal_name: str
@@ -138,7 +142,8 @@ class CreatorRevenueDashboard:
     """
     
     def __init__(self):
-        """Initialize the creator revenue dashboard."""
+        """
+        Initialize the creator revenue dashboard."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.dashboard_data: Dict[str, Dict[str, Any]] = {}
         self.revenue_streams: Dict[str, List[RevenueStreamData]] = {}
@@ -150,6 +155,7 @@ class CreatorRevenueDashboard:
         
         # Dashboard configuration
         self.dashboard_config = self._initialize_dashboard_config()
+
         
         self.logger.info("CreatorRevenueDashboard initialized")
     
@@ -220,13 +226,16 @@ class CreatorRevenueDashboard:
             
             # Initialize real-time metrics
             await self._initialize_real_time_metrics()
+
             
             self.initialized = True
             self.logger.info("CreatorRevenueDashboard initialized successfully")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Failed to initialize CreatorRevenueDashboard: {e}")
+
             return False
     
     async def _load_dashboard_data(self):
@@ -246,22 +255,29 @@ class CreatorRevenueDashboard:
         """Get comprehensive dashboard overview for creator."""
         try:
             # Get core metrics
+
             core_metrics = await self._calculate_core_metrics(creator_id, timeframe)
             
             # Get revenue streams data
+
             revenue_streams = await self._get_revenue_streams_data(creator_id, timeframe)
             
             # Get recent alerts
+
             recent_alerts = await self._get_recent_alerts(creator_id, limit=5)
             
             # Get goals progress
+
             goals_progress = await self._get_goals_progress(creator_id)
             
             # Get revenue forecast
+
             revenue_forecast = await self._get_revenue_forecast(creator_id)
             
             # Get top insights
+
             insights = await self._generate_dashboard_insights(creator_id, timeframe)
+
             
             return {
                 "creator_id": creator_id,
@@ -278,6 +294,7 @@ class CreatorRevenueDashboard:
             
         except Exception as e:
             self.logger.error(f"Failed to get dashboard overview: {e}")
+
             raise
     
     async def _calculate_core_metrics(self, creator_id: str, timeframe: TimeFrame) -> List[DashboardMetric]:
@@ -285,9 +302,13 @@ class CreatorRevenueDashboard:
         metrics = []
         
         # Total Revenue
+
         current_revenue = await self._calculate_revenue(creator_id, timeframe)
+
         previous_revenue = await self._calculate_previous_revenue(creator_id, timeframe)
+
         revenue_change = self._calculate_change_percentage(current_revenue, previous_revenue)
+
         
         metrics.append(DashboardMetric(
             metric_id="total_revenue",
@@ -302,9 +323,13 @@ class CreatorRevenueDashboard:
         ))
         
         # Monthly Revenue
+
         monthly_revenue = await self._calculate_monthly_revenue(creator_id)
+
         previous_monthly = await self._calculate_previous_monthly_revenue(creator_id)
+
         monthly_change = self._calculate_change_percentage(monthly_revenue, previous_monthly)
+
         
         metrics.append(DashboardMetric(
             metric_id="monthly_revenue",
@@ -319,9 +344,13 @@ class CreatorRevenueDashboard:
         ))
         
         # Active Revenue Streams
+
         active_streams = await self._count_active_streams(creator_id)
+
         previous_streams = await self._count_previous_active_streams(creator_id)
+
         streams_change = self._calculate_change_percentage(active_streams, previous_streams)
+
         
         metrics.append(DashboardMetric(
             metric_id="active_streams",
@@ -335,9 +364,13 @@ class CreatorRevenueDashboard:
         ))
         
         # Average Revenue per Stream
+
         avg_revenue = current_revenue / active_streams if active_streams > 0 else Decimal("0")
+
         prev_avg_revenue = previous_revenue / previous_streams if previous_streams > 0 else Decimal("0")
+
         avg_change = self._calculate_change_percentage(avg_revenue, prev_avg_revenue)
+
         
         metrics.append(DashboardMetric(
             metric_id="avg_revenue_per_stream",
@@ -352,6 +385,7 @@ class CreatorRevenueDashboard:
         ))
         
         # Revenue Growth Rate
+
         growth_rate = revenue_change if revenue_change is not None else 0.0
         
         metrics.append(DashboardMetric(
@@ -365,7 +399,9 @@ class CreatorRevenueDashboard:
         ))
         
         # Top Performing Platform
+
         top_platform = await self._get_top_performing_platform(creator_id, timeframe)
+
         
         metrics.append(DashboardMetric(
             metric_id="top_platform",
@@ -374,6 +410,7 @@ class CreatorRevenueDashboard:
             value=top_platform,
             format_type="text"
         ))
+
         
         return metrics
     
@@ -381,6 +418,7 @@ class CreatorRevenueDashboard:
         """Calculate revenue for specified timeframe."""
         # In production, this would query actual revenue data
         # For now, return sample data
+
         sample_revenues = {
             TimeFrame.LAST_24_HOURS: Decimal("125.50"),
             TimeFrame.LAST_7_DAYS: Decimal("875.75"),
@@ -401,7 +439,8 @@ class CreatorRevenueDashboard:
         return await self._calculate_revenue(creator_id, TimeFrame.LAST_30_DAYS)
     
     async def _calculate_previous_monthly_revenue(self, creator_id: str) -> Decimal:
-        """Calculate previous month revenue."""
+        """
+        Calculate previous month revenue."""
         current = await self._calculate_monthly_revenue(creator_id)
         return current * Decimal("0.9")
     
@@ -411,19 +450,23 @@ class CreatorRevenueDashboard:
         return 8
     
     async def _count_previous_active_streams(self, creator_id: str) -> int:
-        """Count previous period active streams."""
+        """
+        Count previous period active streams."""
         return 6
     
     def _calculate_change_percentage(self, current: Union[Decimal, int], previous: Union[Decimal, int]) -> Optional[float]:
-        """Calculate percentage change between current and previous values."""
+        """
+        Calculate percentage change between current and previous values."""
         if previous == 0:
             return None
+
         
         change = ((current - previous) / previous) * 100
         return round(float(change), 2)
     
     def _determine_trend(self, change_percentage: Optional[float]) -> str:
-        """Determine trend direction based on change percentage."""
+        """
+        Determine trend direction based on change percentage."""
         if change_percentage is None:
             return "stable"
         elif change_percentage > 5:
@@ -436,6 +479,7 @@ class CreatorRevenueDashboard:
     async def _get_top_performing_platform(self, creator_id: str, timeframe: TimeFrame) -> str:
         """Get top performing platform by revenue."""
         # In production, this would analyze actual platform data
+
         platforms = ["YouTube", "Spotify", "Instagram", "Patreon", "OnlyFans"]
         return platforms[0]  # YouTube as example
     
@@ -446,6 +490,7 @@ class CreatorRevenueDashboard:
     ) -> List[Dict[str, Any]]:
         """Get revenue streams data for dashboard."""
         # Sample revenue streams data
+
         streams_data = [
             {
                 "stream_id": "youtube_ads",
@@ -514,6 +559,7 @@ class CreatorRevenueDashboard:
     async def _get_recent_alerts(self, creator_id: str, limit: int = 5) -> List[Dict[str, Any]]:
         """Get recent alerts for creator."""
         # Sample alerts
+
         alerts = [
             {
                 "alert_id": "revenue_milestone_1",
@@ -563,6 +609,7 @@ class CreatorRevenueDashboard:
     async def _get_goals_progress(self, creator_id: str) -> List[Dict[str, Any]]:
         """Get goals progress for creator."""
         # Sample goals
+
         goals = [
             {
                 "goal_id": "monthly_revenue_10k",
@@ -604,6 +651,7 @@ class CreatorRevenueDashboard:
     async def _get_revenue_forecast(self, creator_id: str) -> Dict[str, Any]:
         """Get revenue forecast for creator."""
         # Sample forecast
+
         forecast = {
             "forecast_period": "next_90_days",
             "projected_revenue": 12750.00,
@@ -683,6 +731,8 @@ class CreatorRevenueDashboard:
         """Get real-time metrics for creator."""
         try:
             # Real-time metrics (updated every few seconds)
+
+
             real_time_data = {
                 "current_revenue_today": 45.75,
                 "revenue_this_hour": 3.25,
@@ -746,6 +796,7 @@ class CreatorRevenueDashboard:
             
         except Exception as e:
             self.logger.error(f"Failed to get real-time metrics: {e}")
+
             raise
     
     async def get_revenue_analytics(
@@ -757,6 +808,7 @@ class CreatorRevenueDashboard:
         """Get detailed revenue analytics."""
         try:
             # Generate analytics data based on timeframe and granularity
+
             analytics = {
                 "revenue_trends": await self._generate_revenue_trends(creator_id, timeframe, granularity),
                 "platform_breakdown": await self._generate_platform_breakdown(creator_id, timeframe),
@@ -778,6 +830,7 @@ class CreatorRevenueDashboard:
             
         except Exception as e:
             self.logger.error(f"Failed to get revenue analytics: {e}")
+
             raise
     
     async def _generate_revenue_trends(
@@ -798,11 +851,15 @@ class CreatorRevenueDashboard:
             data_points = 30
         
         # Generate sample trend data
+
         trend_data = []
+
         base_revenue = 100.0
         
         for i in range(data_points):
             date_point = datetime.utcnow() - timedelta(days=data_points - i)
+
+
             revenue = base_revenue + (i * 5) + (i % 3 * 10)  # Simulated growth with variation
             
             trend_data.append({
@@ -810,6 +867,7 @@ class CreatorRevenueDashboard:
                 "revenue": revenue,
                 "cumulative_revenue": sum(point["revenue"] for point in trend_data) + revenue
             })
+
         
         return {
             "data_points": trend_data,
@@ -1000,17 +1058,21 @@ class CreatorRevenueDashboard:
                 progress_percentage=0.0,
                 target_date=target_date
             )
+
             
             if creator_id not in self.goals:
                 self.goals[creator_id] = []
             
             self.goals[creator_id].append(goal)
+
             
             self.logger.info(f"Created goal {goal_name} for creator {creator_id}")
+
             return goal
             
         except Exception as e:
             self.logger.error(f"Failed to create custom goal: {e}")
+
             raise
     
     async def update_goal_progress(
@@ -1022,6 +1084,7 @@ class CreatorRevenueDashboard:
         """Update goal progress."""
         try:
             creator_goals = self.goals.get(creator_id, [])
+
             
             for goal in creator_goals:
                 if goal.goal_id == goal_id:
@@ -1032,14 +1095,17 @@ class CreatorRevenueDashboard:
                         goal.is_achieved = True
                         # Create achievement alert
                         await self._create_goal_achievement_alert(creator_id, goal)
+
                     
                     self.logger.info(f"Updated goal progress for {goal_id}")
+
                     return True
             
             return False
             
         except Exception as e:
             self.logger.error(f"Failed to update goal progress: {e}")
+
             return False
     
     async def _create_goal_achievement_alert(self, creator_id: str, goal: GoalTracker):
@@ -1053,6 +1119,7 @@ class CreatorRevenueDashboard:
             action_required=False,
             action_items=[]
         )
+
         
         if creator_id not in self.alerts:
             self.alerts[creator_id] = []
@@ -1068,7 +1135,11 @@ class CreatorRevenueDashboard:
         """Export dashboard data for creator."""
         try:
             dashboard_data = await self.get_dashboard_overview(creator_id, timeframe)
+
+
             analytics_data = await self.get_revenue_analytics(creator_id, timeframe)
+
+
             
             export_data = {
                 "export_metadata": {
@@ -1088,6 +1159,7 @@ class CreatorRevenueDashboard:
             
         except Exception as e:
             self.logger.error(f"Failed to export dashboard data: {e}")
+
             raise
 
 

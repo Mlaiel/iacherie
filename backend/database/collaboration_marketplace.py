@@ -46,7 +46,8 @@ Base = declarative_base()
 # ================================
 
 class CreatorType(Enum):
-    """Creator type categories."""
+    """
+        Creator type categories."""
     MUSICIAN = "musician"
     PRODUCER = "producer"
     VOCALIST = "vocalist"
@@ -554,7 +555,8 @@ class EscrowPayment(Base):
 # ================================
 
 class CreatorReview(Base):
-    """Creator ratings and reviews system."""
+    """
+        Creator ratings and reviews system."""
     __tablename__ = 'creator_reviews'
     __table_args__ = (
         Index('idx_creator_review_reviewed', 'reviewed_creator_id'),
@@ -713,7 +715,8 @@ class CollaborationAnalytics(Base):
 # ================================
 
 def get_collaboration_marketplace_models():
-    """Get all collaboration and marketplace models."""
+    """
+        Get all collaboration and marketplace models."""
     return [
         CreatorProfile,
         CollaborationRequest,
@@ -728,7 +731,8 @@ def get_collaboration_marketplace_models():
 
 
 def create_collaboration_marketplace_tables(engine):
-    """Create all collaboration and marketplace tables."""
+    """
+        Create all collaboration and marketplace tables."""
     try:
         Base.metadata.create_all(engine, tables=[model.__table__ for model in get_collaboration_marketplace_models()])
         logger.info("Successfully created collaboration and marketplace tables")

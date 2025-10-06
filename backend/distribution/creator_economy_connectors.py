@@ -47,7 +47,8 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorPlatformType(str, Enum):
-    """Supported creator economy platform types."""
+    """
+        Supported creator economy platform types."""
     PATREON = "patreon"
     ONLYFANS = "onlyfans"
     KOFI = "kofi"
@@ -161,7 +162,8 @@ class CreatorEconomyResponse:
 
 @dataclass
 class CreatorAnalytics:
-    """Creator economy analytics data."""
+    """
+        Creator economy analytics data."""
     platform: CreatorPlatformType
     total_subscribers: int = 0
     active_subscribers: int = 0
@@ -183,7 +185,8 @@ class CreatorAnalytics:
 
 @dataclass
 class FanEngagementMetrics:
-    """Fan engagement and interaction metrics."""
+    """
+        Fan engagement and interaction metrics."""
     total_interactions: int = 0
     likes: int = 0
     comments: int = 0
@@ -200,7 +203,8 @@ class FanEngagementMetrics:
 
 
 class BaseCreatorConnector:
-    """Base class for creator economy platform connectors."""
+    """
+        Base class for creator economy platform connectors."""
     
     def __init__(self, platform: CreatorPlatformType, credentials: Dict[str, Any]):
         self.platform = platform
@@ -226,18 +230,24 @@ class BaseCreatorConnector:
                 timeout=aiohttp.ClientTimeout(total=30),
                 headers=self._get_default_headers()
             )
+
+
             
             authenticated = await self.authenticate()
+
             if authenticated:
                 self.authenticated = True
                 self.logger.info(f"✅ {self.platform.value} connector initialized")
+
                 return True
             else:
                 self.logger.error(f"❌ {self.platform.value} authentication failed")
+
                 return False
                 
         except Exception as e:
             self.logger.error(f"Error initializing {self.platform.value} connector: {e}")
+
             return False
     
     def _get_default_headers(self) -> Dict[str, str]:
@@ -255,7 +265,8 @@ class BaseCreatorConnector:
     
     async def create_content(self, metadata: CreatorContentMetadata, 
                            file_data: Optional[bytes] = None) -> CreatorEconomyResponse:
-        """Create content on the platform."""
+        """
+        Create content on the platform."""
         if not self.authenticated:
             return CreatorEconomyResponse(
                 success=False,
@@ -280,18 +291,21 @@ class BaseCreatorConnector:
         )
     
     async def get_creator_analytics(self, date_range: Tuple[datetime, datetime]) -> CreatorAnalytics:
-        """Get creator analytics data."""
+        """
+        Get creator analytics data."""
         # Platform-specific analytics implementation
         return CreatorAnalytics(platform=self.platform)
     
     async def get_fan_engagement_metrics(self, date_range: Tuple[datetime, datetime]) -> FanEngagementMetrics:
-        """Get fan engagement metrics."""
+        """
+        Get fan engagement metrics."""
         # Platform-specific engagement metrics implementation
         return FanEngagementMetrics()
     
     async def process_payment(self, amount: Decimal, currency: str, 
                             customer_id: str, description: str) -> CreatorEconomyResponse:
-        """Process payment transaction."""
+        """
+        Process payment transaction."""
         # Platform-specific payment processing
         return CreatorEconomyResponse(
             success=True,
@@ -301,18 +315,21 @@ class BaseCreatorConnector:
         )
     
     async def setup_webhook(self, webhook_url: str, events: List[str]) -> bool:
-        """Setup webhook for platform events."""
+        """
+        Setup webhook for platform events."""
         # Platform-specific webhook setup
         return True
     
     async def close(self):
-        """Close the connector and cleanup resources."""
+        """
+        Close the connector and cleanup resources."""
         if self.session:
             await self.session.close()
 
 
 class PatreonConnector(BaseCreatorConnector):
-    """Patreon API connector with subscription monetization."""
+    """
+        Patreon API connector with subscription monetization."""
     
     def __init__(self, credentials: Dict[str, Any]):
         super().__init__(CreatorPlatformType.PATREON, credentials)
@@ -331,6 +348,7 @@ class PatreonConnector(BaseCreatorConnector):
                 
         except Exception as e:
             self.logger.error(f"Patreon authentication error: {e}")
+
             return False
     
     async def create_content(self, metadata: CreatorContentMetadata, 
@@ -341,6 +359,7 @@ class PatreonConnector(BaseCreatorConnector):
                 "Authorization": f"Bearer {self.credentials.get('access_token')}",
                 **self._get_default_headers()
             }
+
             
             post_data = {
                 "data": {
@@ -358,22 +377,28 @@ class PatreonConnector(BaseCreatorConnector):
                                        json=post_data, headers=headers) as response:
                 if response.status in [200, 201]:
                     data = await response.json()
+
+
                     post = data.get("data", {})
+
                     return CreatorEconomyResponse(
                         success=True,
                         platform=self.platform,
                         content_id=post.get("id"),
                         response_data=data
                     )
+
                 else:
                     return CreatorEconomyResponse(
                         success=False,
                         platform=self.platform,
                         error_message=f"Post creation failed: {response.status}"
                     )
+
                     
         except Exception as e:
             self.logger.error(f"Patreon content creation error: {e}")
+
             return CreatorEconomyResponse(
                 success=False,
                 platform=self.platform,
@@ -389,14 +414,20 @@ class PatreonConnector(BaseCreatorConnector):
             }
             
             # Get campaigns (creator pages)
+
             async with self.session.get(f"{self.api_base}/campaigns", headers=headers) as response:
                 if response.status == 200:
                     data = await response.json()
+
+
                     campaigns = data.get("data", [])
+
                     
                     if campaigns:
                         campaign = campaigns[0]
+
                         attributes = campaign.get("attributes", {})
+
                         
                         return CreatorAnalytics(
                             platform=self.platform,
@@ -404,9 +435,11 @@ class PatreonConnector(BaseCreatorConnector):
                             monthly_revenue=Decimal(str(attributes.get("pledge_sum", 0) / 100)),
                             engagement_rate=0.0,  # Patreon doesn't provide this directly
                         )
+
                         
         except Exception as e:
             self.logger.error(f"Patreon analytics error: {e}")
+
         
         return CreatorAnalytics(platform=self.platform)
 
@@ -435,9 +468,11 @@ class KofiConnector(BaseCreatorConnector):
                 content_id=str(uuid4()),
                 payment_url=f"https://ko-fi.com/{self.credentials.get('username')}"
             )
+
                     
         except Exception as e:
             self.logger.error(f"Ko-fi content creation error: {e}")
+
             return CreatorEconomyResponse(
                 success=False,
                 platform=self.platform,
@@ -462,6 +497,7 @@ class GumroadConnector(BaseCreatorConnector):
                 
         except Exception as e:
             self.logger.error(f"Gumroad authentication error: {e}")
+
             return False
     
     async def create_content(self, metadata: CreatorContentMetadata, 
@@ -480,7 +516,10 @@ class GumroadConnector(BaseCreatorConnector):
                                        data=product_data) as response:
                 if response.status in [200, 201]:
                     data = await response.json()
+
+
                     product = data.get("product", {})
+
                     return CreatorEconomyResponse(
                         success=True,
                         platform=self.platform,
@@ -488,15 +527,18 @@ class GumroadConnector(BaseCreatorConnector):
                         payment_url=product.get("short_url"),
                         response_data=data
                     )
+
                 else:
                     return CreatorEconomyResponse(
                         success=False,
                         platform=self.platform,
                         error_message=f"Product creation failed: {response.status}"
                     )
+
                     
         except Exception as e:
             self.logger.error(f"Gumroad product creation error: {e}")
+
             return CreatorEconomyResponse(
                 success=False,
                 platform=self.platform,
@@ -524,6 +566,7 @@ class SubstackConnector(BaseCreatorConnector):
                 
         except Exception as e:
             self.logger.error(f"Substack authentication error: {e}")
+
             return False
     
     async def create_content(self, metadata: CreatorContentMetadata, 
@@ -534,6 +577,7 @@ class SubstackConnector(BaseCreatorConnector):
                 "Authorization": f"Bearer {self.credentials.get('api_key')}",
                 **self._get_default_headers()
             }
+
             
             post_data = {
                 "title": metadata.title,
@@ -548,21 +592,25 @@ class SubstackConnector(BaseCreatorConnector):
                                        json=post_data, headers=headers) as response:
                 if response.status in [200, 201]:
                     data = await response.json()
+
                     return CreatorEconomyResponse(
                         success=True,
                         platform=self.platform,
                         content_id=str(data.get("id")),
                         response_data=data
                     )
+
                 else:
                     return CreatorEconomyResponse(
                         success=False,
                         platform=self.platform,
                         error_message=f"Post creation failed: {response.status}"
                     )
+
                     
         except Exception as e:
             self.logger.error(f"Substack post creation error: {e}")
+
             return CreatorEconomyResponse(
                 success=False,
                 platform=self.platform,
@@ -588,20 +636,26 @@ class CreatorEconomyManager:
                 CreatorPlatformType.GUMROAD: GumroadConnector,
                 CreatorPlatformType.SUBSTACK: SubstackConnector
             }
+
             
             connector_class = connector_classes.get(platform)
+
             if connector_class:
                 connector = connector_class(credentials)
+
                 if await connector.initialize():
                     self.connectors[platform] = connector
                     self.logger.info(f"✅ Added {platform.value} connector")
+
                     return True
                     
             self.logger.error(f"❌ Failed to add {platform.value} connector")
+
             return False
             
         except Exception as e:
             self.logger.error(f"Error adding {platform.value} connector: {e}")
+
             return False
     
     async def create_content_on_platform(self, platform: CreatorPlatformType, 
@@ -615,7 +669,8 @@ class CreatorEconomyManager:
     
     async def create_subscription_plan_on_platform(self, platform: CreatorPlatformType, 
                                                  plan: SubscriptionPlan) -> Optional[CreatorEconomyResponse]:
-        """Create subscription plan on specific platform."""
+        """
+        Create subscription plan on specific platform."""
         connector = self.connectors.get(platform)
         if connector:
             return await connector.create_subscription_plan(plan)
@@ -623,7 +678,8 @@ class CreatorEconomyManager:
     
     async def get_platform_analytics(self, platform: CreatorPlatformType, 
                                    date_range: Tuple[datetime, datetime]) -> Optional[CreatorAnalytics]:
-        """Get analytics for specific platform."""
+        """
+        Get analytics for specific platform."""
         connector = self.connectors.get(platform)
         if connector:
             return await connector.get_creator_analytics(date_range)
@@ -632,15 +688,21 @@ class CreatorEconomyManager:
     async def distribute_premium_content(self, metadata: CreatorContentMetadata, 
                                        file_data: Optional[bytes], 
                                        platforms: List[CreatorPlatformType]) -> Dict[CreatorPlatformType, CreatorEconomyResponse]:
-        """Distribute premium content across multiple creator platforms."""
+        """
+        Distribute premium content across multiple creator platforms."""
         results = {}
         
         for platform in platforms:
             connector = self.connectors.get(platform)
+
             if connector:
                 # Adapt content for platform
+
                 adapted_metadata = self._adapt_content_for_platform(metadata, platform)
+
+
                 result = await connector.create_content(adapted_metadata, file_data)
+
                 results[platform] = result
             else:
                 results[platform] = CreatorEconomyResponse(
@@ -648,6 +710,7 @@ class CreatorEconomyManager:
                     platform=platform,
                     error_message="Platform not configured"
                 )
+
         
         return results
     
@@ -705,6 +768,7 @@ class CreatorEconomyManager:
         
         for platform, connector in self.connectors.items():
             analytics = await connector.get_creator_analytics(date_range)
+
             
             consolidated["total_revenue"] += analytics.total_revenue
             consolidated["total_subscribers"] += analytics.total_subscribers
@@ -714,9 +778,11 @@ class CreatorEconomyManager:
                 "engagement_rate": analytics.engagement_rate
             }
             consolidated["revenue_by_platform"][platform.value] = float(analytics.total_revenue)
+
             
             if analytics.top_performing_content:
                 consolidated["top_performing_content"].extend(analytics.top_performing_content)
+
         
         return consolidated
     
@@ -725,7 +791,8 @@ class CreatorEconomyManager:
         return list(self.connectors.keys())
     
     async def close_all(self):
-        """Close all connectors."""
+        """
+        Close all connectors."""
         for connector in self.connectors.values():
             await connector.close()
 
@@ -735,7 +802,8 @@ _creator_manager: Optional[CreatorEconomyManager] = None
 
 
 async def get_creator_economy_manager() -> CreatorEconomyManager:
-    """Get the global creator economy manager instance."""
+    """
+        Get the global creator economy manager instance."""
     global _creator_manager
     
     if _creator_manager is None:

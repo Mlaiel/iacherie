@@ -27,7 +27,8 @@ logger = logging.getLogger(__name__)
 # === ÉNUMÉRATIONS ===
 
 class TechnicalIssueType(Enum):
-    """Types de problèmes techniques"""
+    """
+        Types de problèmes techniques"""
     CORE_WEB_VITALS = "core_web_vitals"
     PAGE_SPEED = "page_speed"
     MOBILE_USABILITY = "mobile_usability"
@@ -88,7 +89,8 @@ class PageSpeedMetrics:
 
 @dataclass
 class TechnicalIssue:
-    """Problème technique SEO"""
+    """
+        Problème technique SEO"""
     issue_type: TechnicalIssueType
     severity: OptimizationPriority
     title: str
@@ -100,7 +102,8 @@ class TechnicalIssue:
 
 @dataclass
 class TechnicalAuditResult:
-    """Résultat d'audit technique"""
+    """
+        Résultat d'audit technique"""
     overall_score: float
     grade: PerformanceGrade
     core_web_vitals: Dict[str, CoreWebVitalsMetric]
@@ -114,7 +117,8 @@ class TechnicalAuditResult:
 
 @dataclass
 class OptimizationPlan:
-    """Plan d'optimisation technique"""
+    """
+        Plan d'optimisation technique"""
     quick_wins: List[TechnicalIssue]  # < 1 jour
     short_term: List[TechnicalIssue]  # 1-7 jours
     medium_term: List[TechnicalIssue]  # 1-4 semaines
@@ -133,7 +137,8 @@ class SEOTechnicalOptimizer:
     """
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize technical SEO optimizer"""
+        """
+        Initialize technical SEO optimizer"""
         self.config = config or {}
         self.audit_cache = {}
         self.benchmark_data = {}
@@ -185,15 +190,19 @@ class SEOTechnicalOptimizer:
         """Effectuer un audit technique complet"""
         try:
             # Audit Core Web Vitals
+
             cwv_metrics = await self._audit_core_web_vitals(url, device_type)
             
             # Audit vitesse de page
+
             page_speed = await self._audit_page_speed(url, device_type)
             
             # Audit des problèmes techniques
+
             technical_issues = await self._audit_technical_issues(url)
             
             # Audit mobile
+
             mobile_score = await self._audit_mobile_usability(url)
             
             # Audit sécurité
@@ -203,20 +212,25 @@ class SEOTechnicalOptimizer:
             crawlability_score = await self._audit_crawlability(url)
             
             # Calculer le score global
+
             overall_score = await self._calculate_overall_score(
                 cwv_metrics, page_speed, technical_issues, 
                 mobile_score, security_score, crawlability_score
             )
             
             # Déterminer la note
+
             grade = await self._calculate_performance_grade(overall_score)
             
             # Générer les recommandations
+
             recommendations = []
             if include_recommendations:
                 recommendations = await self._generate_technical_recommendations(
                     cwv_metrics, page_speed, technical_issues
                 )
+
+
             
             audit_result = TechnicalAuditResult(
                 overall_score=overall_score,
@@ -232,6 +246,7 @@ class SEOTechnicalOptimizer:
             )
             
             # Cache le résultat
+
             cache_key = f"{url}_{device_type.value}_{datetime.utcnow().date()}"
             self.audit_cache[cache_key] = audit_result
             
@@ -239,6 +254,7 @@ class SEOTechnicalOptimizer:
             
         except Exception as e:
             logger.error(f"Failed to perform technical audit: {e}")
+
             raise
     
     async def optimize_core_web_vitals(
@@ -250,26 +266,38 @@ class SEOTechnicalOptimizer:
         try:
             if not current_metrics:
                 current_metrics = await self._audit_core_web_vitals(url)
+
+
             
             optimizations = {}
             
             # Optimisation LCP (Largest Contentful Paint)
+
+
             lcp_metric = current_metrics.get("lcp")
+
             if lcp_metric and lcp_metric.status != "good":
                 optimizations["lcp"] = await self._optimize_lcp(url, lcp_metric)
             
             # Optimisation FID (First Input Delay)
+
+
             fid_metric = current_metrics.get("fid")
+
             if fid_metric and fid_metric.status != "good":
                 optimizations["fid"] = await self._optimize_fid(url, fid_metric)
             
             # Optimisation CLS (Cumulative Layout Shift)
+
+
             cls_metric = current_metrics.get("cls")
+
             if cls_metric and cls_metric.status != "good":
                 optimizations["cls"] = await self._optimize_cls(url, cls_metric)
             
             # Calculer l'impact estimé
             estimated_improvement = await self._estimate_cwv_improvement(optimizations)
+
             
             return {
                 "optimizations": optimizations,
@@ -280,6 +308,7 @@ class SEOTechnicalOptimizer:
             
         except Exception as e:
             logger.error(f"Failed to optimize Core Web Vitals: {e}")
+
             raise
     
     async def create_optimization_plan(
@@ -289,9 +318,13 @@ class SEOTechnicalOptimizer:
         """Créer un plan d'optimisation technique"""
         try:
             # Classer les problèmes par urgence et effort
+
             quick_wins = []
+
             short_term = []
+
             medium_term = []
+
             long_term = []
             
             for issue in audit_result.technical_issues:
@@ -299,17 +332,23 @@ class SEOTechnicalOptimizer:
                 
                 if "hour" in fix_time or "minutes" in fix_time:
                     quick_wins.append(issue)
+
                 elif "day" in fix_time and int(re.search(r'\d+', fix_time).group()) <= 7:
                     short_term.append(issue)
+
                 elif "week" in fix_time:
                     medium_term.append(issue)
+
                 else:
                     long_term.append(issue)
             
             # Trier par impact SEO
             quick_wins.sort(key=lambda x: x.seo_impact, reverse=True)
+
             short_term.sort(key=lambda x: x.seo_impact, reverse=True)
+
             medium_term.sort(key=lambda x: x.seo_impact, reverse=True)
+
             long_term.sort(key=lambda x: x.seo_impact, reverse=True)
             
             # Calculer l'impact estimé
@@ -318,9 +357,12 @@ class SEOTechnicalOptimizer:
             )
             
             # Calculer le temps total
+
             total_fix_time = await self._calculate_total_fix_time(
                 audit_result.technical_issues
             )
+
+
             
             plan = OptimizationPlan(
                 quick_wins=quick_wins,
@@ -330,11 +372,13 @@ class SEOTechnicalOptimizer:
                 estimated_impact=estimated_impact,
                 total_fix_time=total_fix_time
             )
+
             
             return plan
             
         except Exception as e:
             logger.error(f"Failed to create optimization plan: {e}")
+
             raise
     
     async def monitor_technical_performance(
@@ -348,17 +392,21 @@ class SEOTechnicalOptimizer:
             
             for url in urls:
                 # Audit de performance
+
                 audit_result = await self.perform_comprehensive_audit(url)
                 
                 # Comparer avec les données historiques
+
                 historical_comparison = await self._compare_with_historical_data(
                     url, audit_result
                 )
                 
                 # Détecter les régressions
+
                 regressions = await self._detect_performance_regressions(
                     url, audit_result
                 )
+
                 
                 monitoring_results[url] = {
                     "current_performance": audit_result,
@@ -368,7 +416,9 @@ class SEOTechnicalOptimizer:
                 }
             
             # Générer un rapport de monitoring
+
             monitoring_report = await self._generate_monitoring_report(monitoring_results)
+
             
             return {
                 "results": monitoring_results,
@@ -378,6 +428,7 @@ class SEOTechnicalOptimizer:
             
         except Exception as e:
             logger.error(f"Failed to monitor technical performance: {e}")
+
             raise
     
     # === MÉTHODES PRIVÉES ===
@@ -389,11 +440,13 @@ class SEOTechnicalOptimizer:
     ) -> Dict[str, CoreWebVitalsMetric]:
         """Auditer les Core Web Vitals"""
         # Simulation de données réelles (à remplacer par vraies APIs)
+
         simulated_metrics = {
             "lcp": 2.8,  # seconds
             "fid": 85,   # milliseconds  
             "cls": 0.15  # unitless
         }
+
         
         cwv_metrics = {}
         
@@ -408,6 +461,7 @@ class SEOTechnicalOptimizer:
                 status = "poor"
             
             suggestions = await self._get_cwv_improvement_suggestions(metric_name, value, status)
+
             
             cwv_metrics[metric_name] = CoreWebVitalsMetric(
                 name=metric_name.upper(),
@@ -418,6 +472,7 @@ class SEOTechnicalOptimizer:
                 threshold_poor=threshold["poor"],
                 improvement_suggestions=suggestions
             )
+
         
         return cwv_metrics
     
@@ -440,10 +495,12 @@ class SEOTechnicalOptimizer:
         )
     
     async def _audit_technical_issues(self, url: str) -> List[TechnicalIssue]:
-        """Auditer les problèmes techniques"""
+        """
+        Auditer les problèmes techniques"""
         issues = []
         
         # Simulation de problèmes techniques communs
+
         common_issues = [
             {
                 "type": TechnicalIssueType.CORE_WEB_VITALS,
@@ -497,7 +554,9 @@ class SEOTechnicalOptimizer:
                 estimated_fix_time=issue_data["fix_time"],
                 seo_impact=issue_data["impact"]
             )
+
             issues.append(issue)
+
         
         return issues
     
@@ -507,14 +566,17 @@ class SEOTechnicalOptimizer:
         return 85.0
     
     async def _audit_security(self, url: str) -> float:
-        """Auditer la sécurité"""
+        """
+        Auditer la sécurité"""
         # Vérifications de sécurité de base
+
         security_checks = {
             "https_enabled": await self._check_https(url),
             "secure_headers": await self._check_security_headers(url),
             "ssl_certificate": await self._check_ssl_certificate(url),
             "mixed_content": await self._check_mixed_content(url)
         }
+
         
         score = sum(security_checks.values()) / len(security_checks) * 100
         return score
@@ -528,6 +590,7 @@ class SEOTechnicalOptimizer:
             "internal_links": await self._check_internal_links(url),
             "canonical_tags": await self._check_canonical_tags(url)
         }
+
         
         score = sum(crawl_checks.values()) / len(crawl_checks) * 100
         return score
@@ -543,6 +606,7 @@ class SEOTechnicalOptimizer:
     ) -> float:
         """Calculer le score technique global"""
         # Pondération des différents facteurs
+
         weights = {
             "core_web_vitals": 0.3,
             "page_speed": 0.25,
@@ -552,6 +616,7 @@ class SEOTechnicalOptimizer:
         }
         
         # Score Core Web Vitals
+
         cwv_score = 0
         for metric in cwv_metrics.values():
             if metric.status == "good":
@@ -560,9 +625,11 @@ class SEOTechnicalOptimizer:
                 cwv_score += 60
             else:
                 cwv_score += 20
+
         cwv_score = cwv_score / len(cwv_metrics) if cwv_metrics else 0
         
         # Pénalités pour les problèmes techniques
+
         penalty = 0
         for issue in technical_issues:
             if issue.severity == OptimizationPriority.CRITICAL:
@@ -573,6 +640,7 @@ class SEOTechnicalOptimizer:
                 penalty += 5
         
         # Calcul du score final
+
         overall_score = (
             cwv_score * weights["core_web_vitals"] +
             page_speed.score * weights["page_speed"] +
@@ -582,7 +650,9 @@ class SEOTechnicalOptimizer:
         )
         
         # Appliquer les pénalités
+
         overall_score = max(0, overall_score - penalty)
+
         
         return min(100, overall_score)
     
@@ -607,7 +677,8 @@ class SEOTechnicalOptimizer:
         page_speed: PageSpeedMetrics,
         technical_issues: List[TechnicalIssue]
     ) -> List[str]:
-        """Générer les recommandations techniques"""
+        """
+        Générer les recommandations techniques"""
         recommendations = []
         
         # Recommandations Core Web Vitals
@@ -625,6 +696,7 @@ class SEOTechnicalOptimizer:
             ])
         
         # Recommandations des problèmes critiques
+
         critical_issues = [
             issue for issue in technical_issues 
             if issue.severity == OptimizationPriority.CRITICAL
@@ -634,6 +706,7 @@ class SEOTechnicalOptimizer:
             recommendations.extend(issue.recommendations)
         
         # Supprimer les doublons et limiter
+
         unique_recommendations = list(dict.fromkeys(recommendations))
         return unique_recommendations[:10]  # Top 10 recommandations
     
@@ -804,6 +877,7 @@ class SEOTechnicalOptimizer:
                 tech["estimated_improvement"] 
                 for tech in optimization.get("techniques", [])
             )
+
             improvements[metric] = total_improvement
         
         return improvements
@@ -829,6 +903,7 @@ class SEOTechnicalOptimizer:
         
         # Trier par score
         priorities.sort(key=lambda x: x["score"], reverse=True)
+
         
         return [f"{p['metric']}: {p['technique']}" for p in priorities]
     
@@ -848,10 +923,15 @@ class SEOTechnicalOptimizer:
         return min(10.0, total_impact)
     
     async def _calculate_total_fix_time(self, issues: List[TechnicalIssue]) -> str:
-        """Calculer le temps total de correction"""
+        """
+        Calculer le temps total de correction"""
         # Simplification: retourner une estimation basée sur le nombre de problèmes
+
         critical_count = len([i for i in issues if i.severity == OptimizationPriority.CRITICAL])
+
         high_count = len([i for i in issues if i.severity == OptimizationPriority.HIGH])
+
+
         
         total_days = critical_count * 3 + high_count * 2
         
@@ -918,6 +998,7 @@ class SEOTechnicalOptimizer:
                     "severity": "high",
                     "message": f"Performance score dropped to {results['current_performance'].overall_score}"
                 })
+
         
         return alerts
 
@@ -1017,21 +1098,26 @@ class TechnicalAnalysisEngine:
         analysis_results = {}
         
         # Analyser le site cible
+
         target_audit = await SEOTechnicalOptimizer().perform_comprehensive_audit(target_url)
         analysis_results["target"] = target_audit
         
         # Analyser les concurrents
+
         competitor_results = {}
         for competitor_url in competitor_urls:
             competitor_audit = await SEOTechnicalOptimizer().perform_comprehensive_audit(competitor_url)
+
             competitor_results[competitor_url] = competitor_audit
         
         analysis_results["competitors"] = competitor_results
         
         # Générer l'analyse comparative
+
         competitive_insights = await self._generate_competitive_insights(
             target_audit, competitor_results
         )
+
         
         return {
             "analysis_results": analysis_results,
@@ -1051,7 +1137,9 @@ class TechnicalAnalysisEngine:
     ) -> Dict[str, Any]:
         """Générer des insights compétitifs"""
         competitor_scores = [audit.overall_score for audit in competitor_results.values()]
+
         avg_competitor_score = statistics.mean(competitor_scores)
+
         
         return {
             "performance_ranking": await self._calculate_performance_ranking(
@@ -1073,17 +1161,22 @@ class TechnicalAnalysisEngine:
         target_audit: TechnicalAuditResult,
         competitor_results: Dict[str, TechnicalAuditResult]
     ) -> List[str]:
-        """Identifier les domaines où l'on est en avance"""
+        """
+        Identifier les domaines où l'on est en avance"""
         leading_areas = []
         
         # Comparer les scores spécifiques
+
         avg_mobile_score = statistics.mean([audit.mobile_score for audit in competitor_results.values()])
         if target_audit.mobile_score > avg_mobile_score:
             leading_areas.append("Mobile optimization")
+
+
         
         avg_security_score = statistics.mean([audit.security_score for audit in competitor_results.values()])
         if target_audit.security_score > avg_security_score:
             leading_areas.append("Security implementation")
+
         
         return leading_areas
     
@@ -1096,13 +1189,17 @@ class TechnicalAnalysisEngine:
         improvement_areas = []
         
         # Comparer avec les meilleurs concurrents
+
         best_competitor = max(competitor_results.values(), key=lambda x: x.overall_score)
+
         
         if target_audit.overall_score < best_competitor.overall_score:
             improvement_areas.append("Overall technical performance")
+
         
         if target_audit.page_speed_metrics.score < best_competitor.page_speed_metrics.score:
             improvement_areas.append("Page speed optimization")
+
         
         return improvement_areas
     
@@ -1123,6 +1220,7 @@ class TechnicalAnalysisEngine:
                     "advantage": f"Technical score advantage: {target_audit.overall_score - audit.overall_score:.1f} points",
                     "recommendation": "Maintain technical excellence to preserve competitive advantage"
                 })
+
         
         return opportunities
     
@@ -1150,6 +1248,7 @@ class TechnicalAnalysisEngine:
     async def _calculate_percentile(self, target_value: float, all_values: List[float]) -> float:
         """Calculer le percentile"""
         sorted_values = sorted(all_values)
+
         position = sorted_values.index(target_value)
         return (position / len(sorted_values)) * 100
     
@@ -1159,8 +1258,10 @@ class TechnicalAnalysisEngine:
         target_audit: TechnicalAuditResult, 
         all_audits: List[TechnicalAuditResult]
     ) -> float:
-        """Calculer le percentile pour une métrique CWV"""
+        """
+        Calculer le percentile pour une métrique CWV"""
         target_value = target_audit.core_web_vitals.get(metric_name, CoreWebVitalsMetric("", 0, "", "", 0, 0)).value
+
         all_values = [
             audit.core_web_vitals.get(metric_name, CoreWebVitalsMetric("", 0, "", "", 0, 0)).value 
             for audit in all_audits

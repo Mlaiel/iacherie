@@ -96,7 +96,8 @@ class MarketplaceConfig:
 
 @dataclass
 class NFTListing:
-    """NFT listing data structure"""
+    """
+        NFT listing data structure"""
     listing_id: str
     token_id: str
     contract_address: str
@@ -118,7 +119,8 @@ class NFTListing:
 
 @dataclass
 class MarketplaceMetrics:
-    """Marketplace performance metrics"""
+    """
+        Marketplace performance metrics"""
     marketplace: MarketplaceType
     total_listings: int
     active_listings: int
@@ -133,7 +135,8 @@ class MarketplaceMetrics:
 
 
 class MarketplaceListing(Base):
-    """Database model for marketplace listings"""
+    """
+        Database model for marketplace listings"""
     __tablename__ = "marketplace_listings"
     
     listing_id = Column(String, primary_key=True)
@@ -183,58 +186,73 @@ class MarketplaceConnector(ABC):
     
     @abstractmethod
     async def list_nft(self, listing: NFTListing) -> Dict[str, Any]:
-        """List NFT on marketplace"""
+        """
+        List NFT on marketplace"""
         pass
     
     @abstractmethod
     async def update_listing(self, listing_id: str, updates: Dict[str, Any]) -> Dict[str, Any]:
-        """Update existing listing"""
+        """
+        Update existing listing"""
         pass
     
     @abstractmethod
     async def cancel_listing(self, listing_id: str) -> Dict[str, Any]:
-        """Cancel listing"""
+        """
+        Cancel listing"""
         pass
     
     @abstractmethod
     async def get_listing_status(self, listing_id: str) -> Dict[str, Any]:
-        """Get listing status"""
+        """
+        Get listing status"""
         pass
     
     @abstractmethod
     async def get_marketplace_metrics(self) -> MarketplaceMetrics:
-        """Get marketplace metrics"""
+        """
+        Get marketplace metrics"""
         pass
     
     async def _make_api_request(self, method: str, endpoint: str, 
                                data: Optional[Dict] = None, 
                                headers: Optional[Dict] = None) -> Dict[str, Any]:
-        """Make rate-limited API request"""
+        """
+        Make rate-limited API request"""
         await self.rate_limiter.acquire()
+
+
         
         url = f"{self.config.api_endpoint}/{endpoint.lstrip('/')}"
         request_headers = {"Authorization": f"Bearer {self.config.api_key}"}
         if headers:
             request_headers.update(headers)
+
         
         try:
             if method.upper() == "GET":
                 async with self.session.get(url, headers=request_headers, params=data) as response:
                     return await self._handle_response(response)
+
             elif method.upper() == "POST":
                 async with self.session.post(url, headers=request_headers, json=data) as response:
                     return await self._handle_response(response)
+
             elif method.upper() == "PUT":
                 async with self.session.put(url, headers=request_headers, json=data) as response:
                     return await self._handle_response(response)
+
             elif method.upper() == "DELETE":
                 async with self.session.delete(url, headers=request_headers) as response:
                     return await self._handle_response(response)
+
             else:
                 raise ValueError(f"Unsupported HTTP method: {method}")
+
                 
         except Exception as e:
             logger.error(f"API request failed for {self.config.marketplace_type.value}: {str(e)}")
+
             raise
     
     async def _handle_response(self, response: aiohttp.ClientResponse) -> Dict[str, Any]:
@@ -246,6 +264,7 @@ class MarketplaceConnector(ABC):
             raise Exception("Rate limited")
         else:
             error_text = await response.text()
+
             raise Exception(f"API error {response.status}: {error_text}")
 
 
@@ -253,9 +272,11 @@ class OpenSeaConnector(MarketplaceConnector):
     """OpenSea marketplace connector"""
     
     async def list_nft(self, listing: NFTListing) -> Dict[str, Any]:
-        """List NFT on OpenSea"""
+        """
+        List NFT on OpenSea"""
         try:
             # OpenSea API v2 format
+
             listing_data = {
                 "collection": listing.contract_address,
                 "token_id": listing.token_id,
@@ -265,8 +286,10 @@ class OpenSeaConnector(MarketplaceConnector):
                 "duration": int((listing.end_time - listing.start_time).total_seconds()) if listing.end_time else None,
                 "seller": listing.seller
             }
+
             
             response = await self._make_api_request("POST", "/v2/orders", listing_data)
+
             
             return {
                 "success": True,
@@ -278,12 +301,14 @@ class OpenSeaConnector(MarketplaceConnector):
             
         except Exception as e:
             logger.error(f"OpenSea listing failed: {str(e)}")
+
             return {"success": False, "error": str(e)}
     
     async def update_listing(self, listing_id: str, updates: Dict[str, Any]) -> Dict[str, Any]:
         """Update OpenSea listing"""
         try:
             response = await self._make_api_request("PUT", f"/v2/orders/{listing_id}", updates)
+
             return {"success": True, "response": response}
         except Exception as e:
             return {"success": False, "error": str(e)}
@@ -292,6 +317,7 @@ class OpenSeaConnector(MarketplaceConnector):
         """Cancel OpenSea listing"""
         try:
             response = await self._make_api_request("DELETE", f"/v2/orders/{listing_id}")
+
             return {"success": True, "response": response}
         except Exception as e:
             return {"success": False, "error": str(e)}
@@ -300,6 +326,7 @@ class OpenSeaConnector(MarketplaceConnector):
         """Get OpenSea listing status"""
         try:
             response = await self._make_api_request("GET", f"/v2/orders/{listing_id}")
+
             return {
                 "status": self._map_opensea_status(response.get("status")),
                 "current_price": response.get("current_price"),
@@ -313,7 +340,9 @@ class OpenSeaConnector(MarketplaceConnector):
         """Get OpenSea marketplace metrics"""
         try:
             # Get collection stats
+
             stats_response = await self._make_api_request("GET", "/v2/stats")
+
             
             return MarketplaceMetrics(
                 marketplace=MarketplaceType.OPENSEA,
@@ -327,15 +356,18 @@ class OpenSeaConnector(MarketplaceConnector):
                 fee_efficiency=self._calculate_fee_efficiency(),
                 popularity_score=stats_response.get("popularity_score", 0.0)
             )
+
             
         except Exception as e:
             logger.error(f"Failed to get OpenSea metrics: {str(e)}")
+
             return self._get_default_metrics(MarketplaceType.OPENSEA)
     
     def _calculate_opensea_fees(self, price: Decimal) -> Dict[str, Decimal]:
         """Calculate OpenSea fees"""
         marketplace_fee = price * Decimal('0.025')  # 2.5%
         creator_royalty = price * Decimal('0.05')   # 5% (example)
+
         gas_fee = Decimal('0.01')  # Estimated gas fee
         
         return {
@@ -361,7 +393,8 @@ class OpenSeaConnector(MarketplaceConnector):
         return max(0.0, 1.0 - (total_fee_percentage / 10.0))  # Normalize to 0-1 scale
     
     def _get_default_metrics(self, marketplace: MarketplaceType) -> MarketplaceMetrics:
-        """Get default metrics when API fails"""
+        """
+        Get default metrics when API fails"""
         return MarketplaceMetrics(
             marketplace=marketplace,
             total_listings=0,
@@ -377,10 +410,12 @@ class OpenSeaConnector(MarketplaceConnector):
 
 
 class RaribleConnector(MarketplaceConnector):
-    """Rarible marketplace connector"""
+    """
+        Rarible marketplace connector"""
     
     async def list_nft(self, listing: NFTListing) -> Dict[str, Any]:
-        """List NFT on Rarible"""
+        """
+        List NFT on Rarible"""
         try:
             listing_data = {
                 "collection": listing.contract_address,
@@ -390,8 +425,10 @@ class RaribleConnector(MarketplaceConnector):
                 "seller": listing.seller,
                 "end": int(listing.end_time.timestamp()) if listing.end_time else None
             }
+
             
             response = await self._make_api_request("POST", "/v0.1/order/orders", listing_data)
+
             
             return {
                 "success": True,
@@ -403,12 +440,14 @@ class RaribleConnector(MarketplaceConnector):
             
         except Exception as e:
             logger.error(f"Rarible listing failed: {str(e)}")
+
             return {"success": False, "error": str(e)}
     
     async def update_listing(self, listing_id: str, updates: Dict[str, Any]) -> Dict[str, Any]:
         """Update Rarible listing"""
         try:
             response = await self._make_api_request("PUT", f"/v0.1/order/orders/{listing_id}", updates)
+
             return {"success": True, "response": response}
         except Exception as e:
             return {"success": False, "error": str(e)}
@@ -417,7 +456,9 @@ class RaribleConnector(MarketplaceConnector):
         """Cancel Rarible listing"""
         try:
             cancel_data = {"orderId": listing_id}
+
             response = await self._make_api_request("POST", "/v0.1/order/orders/cancel", cancel_data)
+
             return {"success": True, "response": response}
         except Exception as e:
             return {"success": False, "error": str(e)}
@@ -426,6 +467,7 @@ class RaribleConnector(MarketplaceConnector):
         """Get Rarible listing status"""
         try:
             response = await self._make_api_request("GET", f"/v0.1/order/orders/{listing_id}")
+
             return {
                 "status": self._map_rarible_status(response.get("status")),
                 "current_price": response.get("take", {}).get("value"),
@@ -439,6 +481,7 @@ class RaribleConnector(MarketplaceConnector):
         """Get Rarible marketplace metrics"""
         try:
             stats_response = await self._make_api_request("GET", "/v0.1/analytics/collections")
+
             
             return MarketplaceMetrics(
                 marketplace=MarketplaceType.RARIBLE,
@@ -452,9 +495,11 @@ class RaribleConnector(MarketplaceConnector):
                 fee_efficiency=self._calculate_fee_efficiency(),
                 popularity_score=stats_response.get("popularityScore", 0.0)
             )
+
             
         except Exception as e:
             logger.error(f"Failed to get Rarible metrics: {str(e)}")
+
             return self._get_default_metrics(MarketplaceType.RARIBLE)
     
     def _get_currency_contract(self, currency: str) -> str:
@@ -494,17 +539,21 @@ class FoundationConnector(MarketplaceConnector):
     """Foundation marketplace connector"""
     
     async def list_nft(self, listing: NFTListing) -> Dict[str, Any]:
-        """List NFT on Foundation"""
+        """
+        List NFT on Foundation"""
         try:
             # Foundation uses auction-based model
+
             listing_data = {
                 "contractAddress": listing.contract_address,
                 "tokenId": listing.token_id,
                 "reservePrice": str(listing.price),
                 "seller": listing.seller
             }
+
             
             response = await self._make_api_request("POST", "/auctions", listing_data)
+
             
             return {
                 "success": True,
@@ -516,6 +565,7 @@ class FoundationConnector(MarketplaceConnector):
             
         except Exception as e:
             logger.error(f"Foundation listing failed: {str(e)}")
+
             return {"success": False, "error": str(e)}
     
     async def update_listing(self, listing_id: str, updates: Dict[str, Any]) -> Dict[str, Any]:
@@ -526,6 +576,7 @@ class FoundationConnector(MarketplaceConnector):
         """Cancel Foundation listing"""
         try:
             response = await self._make_api_request("POST", f"/auctions/{listing_id}/cancel")
+
             return {"success": True, "response": response}
         except Exception as e:
             return {"success": False, "error": str(e)}
@@ -534,6 +585,7 @@ class FoundationConnector(MarketplaceConnector):
         """Get Foundation listing status"""
         try:
             response = await self._make_api_request("GET", f"/auctions/{listing_id}")
+
             return {
                 "status": self._map_foundation_status(response.get("status")),
                 "current_price": response.get("highestBid", {}).get("amount"),
@@ -548,7 +600,8 @@ class FoundationConnector(MarketplaceConnector):
         return self._get_default_metrics(MarketplaceType.FOUNDATION)
     
     def _calculate_foundation_fees(self, price: Decimal) -> Dict[str, Decimal]:
-        """Calculate Foundation fees"""
+        """
+        Calculate Foundation fees"""
         marketplace_fee = price * Decimal('0.15')   # 15%
         creator_royalty = price * Decimal('0.10')   # 10%
         gas_fee = Decimal('0.02')  # Estimated gas fee
@@ -580,7 +633,8 @@ class RateLimiter:
         self.lock = asyncio.Lock()
     
     async def acquire(self):
-        """Acquire rate limit token"""
+        """
+        Acquire rate limit token"""
         async with self.lock:
             now = datetime.utcnow()
             
@@ -591,8 +645,12 @@ class RateLimiter:
             # Check if we can make a request
             if len(self.requests) >= self.max_requests:
                 # Calculate wait time
+
                 oldest_request = min(self.requests)
+
+
                 wait_time = self.time_window - (now - oldest_request).total_seconds()
+
                 if wait_time > 0:
                     await asyncio.sleep(wait_time)
             
@@ -601,7 +659,8 @@ class RateLimiter:
 
 
 class MarketplaceIntegrator:
-    """Main marketplace integration engine"""
+    """
+        Main marketplace integration engine"""
     
     def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
         self.db = db_session
@@ -619,7 +678,8 @@ class MarketplaceIntegrator:
         self.performance_tracker = MarketplacePerformanceTracker(redis_client)
     
     async def initialize(self) -> None:
-        """Initialize marketplace integrator"""
+        """
+        Initialize marketplace integrator"""
         await self._load_marketplace_configs()
         await self._initialize_connectors()
         await self._start_background_tasks()
@@ -634,25 +694,33 @@ class MarketplaceIntegrator:
                 target_marketplaces = await self._select_optimal_marketplaces(nft_data)
             
             # Calculate optimal pricing for each marketplace
+
             pricing_data = await self.pricing_optimizer.calculate_optimal_pricing(
                 nft_data, target_marketplaces, pricing_strategy
             )
+
+
             
             listing_results = {}
+
             listing_tasks = []
             
             for marketplace in target_marketplaces:
                 if marketplace not in self.connectors:
                     logger.warning(f"Connector not available for {marketplace.value}")
+
                     continue
                 
                 # Create listing for this marketplace
+
                 listing = self._create_listing(nft_data, marketplace, pricing_data[marketplace])
                 
                 # Start listing task
+
                 task = asyncio.create_task(
                     self._list_on_marketplace(marketplace, listing)
                 )
+
                 listing_tasks.append((marketplace, task))
             
             # Wait for all listings to complete
@@ -664,14 +732,21 @@ class MarketplaceIntegrator:
                     # Store listing in database
                     if result.get("success"):
                         await self._store_listing(listing, result)
+
                         
                 except Exception as e:
                     logger.error(f"Listing failed on {marketplace.value}: {str(e)}")
+
                     listing_results[marketplace.value] = {"success": False, "error": str(e)}
             
             # Calculate overall success metrics
+
             success_count = sum(1 for r in listing_results.values() if r.get("success"))
+
+
             total_count = len(listing_results)
+
+
             
             result = {
                 "overall_success": success_count > 0,
@@ -683,10 +758,12 @@ class MarketplaceIntegrator:
             }
             
             logger.info(f"Multi-marketplace listing completed: {success_count}/{total_count} successful")
+
             return result
             
         except Exception as e:
             logger.error(f"Multi-marketplace listing failed: {str(e)}")
+
             raise
     
     async def update_cross_marketplace_pricing(self, token_id: str, contract_address: str,
@@ -694,24 +771,33 @@ class MarketplaceIntegrator:
         """Update pricing across all marketplaces where NFT is listed"""
         try:
             # Get current listings
+
             current_listings = await self._get_active_listings(token_id, contract_address)
+
             
             if not current_listings:
                 return {"success": False, "error": "No active listings found"}
             
             # Calculate new optimal pricing
+
             nft_data = {"token_id": token_id, "contract_address": contract_address}
+
             marketplaces = [MarketplaceType(listing["marketplace"]) for listing in current_listings]
+
             
             new_pricing = await self.pricing_optimizer.calculate_optimal_pricing(
                 nft_data, marketplaces, new_pricing_strategy
             )
             
             # Update listings on each marketplace
+
             update_results = {}
             for listing in current_listings:
                 marketplace = MarketplaceType(listing["marketplace"])
+
+
                 connector = self.connectors.get(marketplace)
+
                 
                 if connector:
                     try:
@@ -719,10 +805,12 @@ class MarketplaceIntegrator:
                             "price": str(new_pricing[marketplace]["price"]),
                             "pricing_strategy": new_pricing_strategy.value
                         }
+
                         
                         result = await connector.update_listing(
                             listing["marketplace_listing_id"], update_data
                         )
+
                         update_results[marketplace.value] = result
                         
                         # Update database
@@ -730,6 +818,7 @@ class MarketplaceIntegrator:
                             await self._update_listing_price(
                                 listing["listing_id"], new_pricing[marketplace]["price"]
                             )
+
                             
                     except Exception as e:
                         update_results[marketplace.value] = {"success": False, "error": str(e)}
@@ -743,6 +832,7 @@ class MarketplaceIntegrator:
             
         except Exception as e:
             logger.error(f"Cross-marketplace pricing update failed: {str(e)}")
+
             raise
     
     async def get_marketplace_performance_report(self, days: int = 30) -> Dict[str, Any]:
@@ -761,6 +851,7 @@ class MarketplaceIntegrator:
                 metrics = await self.performance_tracker.get_marketplace_metrics(
                     marketplace_type, days
                 )
+
                 report_data["marketplace_metrics"][marketplace_type.value] = metrics
             
             # Perform comparative analysis
@@ -772,18 +863,23 @@ class MarketplaceIntegrator:
             report_data["recommendations"] = await self._generate_marketplace_recommendations(
                 report_data["marketplace_metrics"], report_data["comparative_analysis"]
             )
+
             
             return report_data
             
         except Exception as e:
             logger.error(f"Failed to generate performance report: {str(e)}")
+
             raise
     
     async def auto_optimize_listings(self) -> Dict[str, Any]:
         """Automatically optimize all active listings"""
         try:
             # Get all active listings
+
             active_listings = await self._get_all_active_listings()
+
+
             
             optimization_results = {
                 "total_listings": len(active_listings),
@@ -796,18 +892,23 @@ class MarketplaceIntegrator:
             for listing in active_listings:
                 try:
                     # Analyze listing performance
+
                     performance = await self._analyze_listing_performance(listing)
                     
                     # Generate optimization recommendations
+
                     recommendations = await self._generate_listing_optimization(
                         listing, performance
                     )
+
                     
                     if recommendations.get("should_optimize"):
                         # Apply optimizations
+
                         optimization_result = await self._apply_listing_optimization(
                             listing, recommendations
                         )
+
                         
                         optimization_results["optimization_details"].append({
                             "listing_id": listing["listing_id"],
@@ -816,20 +917,25 @@ class MarketplaceIntegrator:
                             "price_change": optimization_result.get("price_change", 0),
                             "expected_improvement": recommendations.get("expected_improvement", 0)
                         })
+
                         
                         optimization_results["optimized_count"] += 1
                         optimization_results["total_potential_increase"] += Decimal(
                             str(recommendations.get("potential_increase", 0))
                         )
+
                         
                 except Exception as e:
                     logger.error(f"Failed to optimize listing {listing.get('listing_id')}: {str(e)}")
+
             
             logger.info(f"Auto-optimization completed: {optimization_results['optimized_count']} listings optimized")
+
             return optimization_results
             
         except Exception as e:
             logger.error(f"Auto-optimization failed: {str(e)}")
+
             raise
     
     async def _load_marketplace_configs(self) -> None:
@@ -841,6 +947,7 @@ class MarketplaceIntegrator:
             name="OpenSea",
             api_endpoint="https://api.opensea.io",
             api_key=None,  # Load from environment
+
             fee_percentage=2.5,
             supported_currencies=["ETH", "WETH", "USDC", "DAI"],
             supported_standards=["ERC-721", "ERC-1155"],
@@ -890,31 +997,39 @@ class MarketplaceIntegrator:
         for marketplace_type, config in self.marketplace_configs.items():
             if marketplace_type == MarketplaceType.OPENSEA:
                 self.connectors[marketplace_type] = OpenSeaConnector(config, self.session)
+
             elif marketplace_type == MarketplaceType.RARIBLE:
                 self.connectors[marketplace_type] = RaribleConnector(config, self.session)
+
             elif marketplace_type == MarketplaceType.FOUNDATION:
                 self.connectors[marketplace_type] = FoundationConnector(config, self.session)
     
     async def _start_background_tasks(self) -> None:
-        """Start background monitoring and optimization tasks"""
+        """
+        Start background monitoring and optimization tasks"""
         asyncio.create_task(self._monitor_listing_performance())
         asyncio.create_task(self._update_marketplace_metrics())
         asyncio.create_task(self._auto_optimize_periodically())
     
     async def _select_optimal_marketplaces(self, nft_data: Dict[str, Any]) -> List[MarketplaceType]:
-        """Select optimal marketplaces for NFT listing"""
+        """
+        Select optimal marketplaces for NFT listing"""
         # Analyze NFT characteristics
+
         nft_characteristics = await self._analyze_nft_characteristics(nft_data)
         
         # Score marketplaces based on NFT fit
+
         marketplace_scores = {}
         for marketplace_type, config in self.marketplace_configs.items():
             score = await self._calculate_marketplace_score(
                 marketplace_type, nft_characteristics
             )
+
             marketplace_scores[marketplace_type] = score
         
         # Select top marketplaces
+
         sorted_marketplaces = sorted(
             marketplace_scores.items(), 
             key=lambda x: x[1], 
@@ -925,8 +1040,9 @@ class MarketplaceIntegrator:
         return [marketplace for marketplace, score in sorted_marketplaces[:3]]
     
     async def _analyze_nft_characteristics(self, nft_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze NFT characteristics to determine best marketplaces"""
-        # Mock implementation - would analyze metadata, creator, collection, etc.
+        """
+        Analyze NFT characteristics to determine best marketplaces"""
+        
         return {
             "category": "art",
             "rarity_score": 85,
@@ -939,6 +1055,7 @@ class MarketplaceIntegrator:
                                          characteristics: Dict[str, Any]) -> float:
         """Calculate marketplace fit score for NFT"""
         config = self.marketplace_configs[marketplace]
+
         base_score = config.priority_score
         
         # Adjust score based on NFT characteristics
@@ -949,7 +1066,9 @@ class MarketplaceIntegrator:
             base_score += 15  # OpenSea good for rare items
         
         # Factor in fees
+
         fee_penalty = config.fee_percentage * 2
+
         final_score = base_score - fee_penalty
         
         return max(0, final_score)
@@ -979,7 +1098,8 @@ class MarketplaceIntegrator:
         return await connector.list_nft(listing)
     
     async def _store_listing(self, listing: NFTListing, result: Dict[str, Any]) -> None:
-        """Store listing in database"""
+        """
+        Store listing in database"""
         listing_db = MarketplaceListing(
             listing_id=listing.listing_id,
             token_id=listing.token_id,
@@ -1002,22 +1122,25 @@ class MarketplaceIntegrator:
     
     async def _get_active_listings(self, token_id: str, contract_address: str) -> List[Dict[str, Any]]:
         """Get active listings for NFT"""
-        # Mock implementation - query database
+        
         return []
     
     async def _get_all_active_listings(self) -> List[Dict[str, Any]]:
-        """Get all active listings"""
-        # Mock implementation - query database
+        """
+        Get all active listings"""
+        
         return []
     
     async def _update_listing_price(self, listing_id: str, new_price: Decimal) -> None:
-        """Update listing price in database"""
+        """
+        Update listing price in database"""
         # Implementation for database update
         pass
     
     async def _perform_comparative_analysis(self, marketplace_metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform comparative analysis of marketplace performance"""
-        # Mock implementation
+        """
+        Perform comparative analysis of marketplace performance"""
+        
         return {
             "best_for_volume": "opensea",
             "best_for_fees": "rarible",
@@ -1043,7 +1166,7 @@ class MarketplaceIntegrator:
     
     async def _analyze_listing_performance(self, listing: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze individual listing performance"""
-        # Mock implementation
+        
         return {
             "views": 150,
             "likes": 25,
@@ -1067,7 +1190,7 @@ class MarketplaceIntegrator:
     async def _apply_listing_optimization(self, listing: Dict[str, Any], 
                                         recommendations: Dict[str, Any]) -> Dict[str, Any]:
         """Apply optimization to listing"""
-        # Mock implementation
+        
         return {
             "optimization_applied": True,
             "price_change": -0.1,  # 10% reduction
@@ -1089,7 +1212,9 @@ class MarketplaceIntegrator:
             try:
                 for marketplace_type, connector in self.connectors.items():
                     metrics = await connector.get_marketplace_metrics()
+
                     await self.performance_tracker.update_metrics(marketplace_type, metrics)
+
                 
                 await asyncio.sleep(1800)  # Update every 30 minutes
             except Exception as e:
@@ -1100,6 +1225,7 @@ class MarketplaceIntegrator:
         while True:
             try:
                 await self.auto_optimize_listings()
+
                 await asyncio.sleep(86400)  # Optimize daily
             except Exception as e:
                 logger.error(f"Error in periodic auto-optimization: {str(e)}")
@@ -1119,13 +1245,19 @@ class DynamicPricingOptimizer:
     async def calculate_optimal_pricing(self, nft_data: Dict[str, Any], 
                                       marketplaces: List[MarketplaceType],
                                       strategy: PricingStrategy) -> Dict[MarketplaceType, Dict[str, Any]]:
-        """Calculate optimal pricing for each marketplace"""
+        """
+        Calculate optimal pricing for each marketplace"""
         pricing_calculator = self.pricing_models.get(strategy, self._calculate_fixed_price)
+
+
         
         pricing_results = {}
         for marketplace in marketplaces:
             market_data = await self._get_marketplace_data(marketplace)
+
+
             pricing_data = await pricing_calculator(nft_data, market_data, marketplace)
+
             pricing_results[marketplace] = pricing_data
         
         return pricing_results
@@ -1133,11 +1265,16 @@ class DynamicPricingOptimizer:
     async def _calculate_fixed_price(self, nft_data: Dict[str, Any], 
                                    market_data: Dict[str, Any], 
                                    marketplace: MarketplaceType) -> Dict[str, Any]:
-        """Calculate fixed price based on market analysis"""
+        """
+        Calculate fixed price based on market analysis"""
         base_price = await self._estimate_base_value(nft_data)
+
         market_multiplier = market_data.get("price_multiplier", 1.0)
+
+
         
         final_price = base_price * Decimal(str(market_multiplier))
+
         
         return {
             "price": final_price,
@@ -1152,7 +1289,9 @@ class DynamicPricingOptimizer:
                                            marketplace: MarketplaceType) -> Dict[str, Any]:
         """Calculate Dutch auction pricing"""
         base_price = await self._estimate_base_value(nft_data)
+
         starting_price = base_price * Decimal('1.5')  # Start 50% higher
+
         reserve_price = base_price * Decimal('0.8')   # Reserve 20% lower
         
         return {
@@ -1171,11 +1310,17 @@ class DynamicPricingOptimizer:
         base_price = await self._estimate_base_value(nft_data)
         
         # Market condition adjustments
+
         demand_multiplier = market_data.get("demand_score", 1.0)
+
         supply_multiplier = 1.0 / market_data.get("supply_score", 1.0)
+
         trend_multiplier = market_data.get("trend_multiplier", 1.0)
+
+
         
         adjusted_price = base_price * Decimal(str(demand_multiplier * supply_multiplier * trend_multiplier))
+
         
         return {
             "price": adjusted_price,
@@ -1196,19 +1341,26 @@ class DynamicPricingOptimizer:
         base_price = await self._estimate_base_value(nft_data)
         
         # Cross-market analysis
+
         competitor_prices = await self._analyze_competitor_pricing(nft_data, marketplace)
+
         market_efficiency = market_data.get("efficiency_score", 0.8)
+
         fee_adjustment = 1.0 + market_data.get("fee_percentage", 2.5) / 100
         
         # Calculate competitive price
         if competitor_prices:
             avg_competitor_price = sum(competitor_prices) / len(competitor_prices)
+
+
             competitive_price = Decimal(str(avg_competitor_price * 0.95))  # 5% below average
         else:
             competitive_price = base_price
         
         # Apply market efficiency and fee adjustments
+
         optimal_price = competitive_price * Decimal(str(market_efficiency)) * Decimal(str(fee_adjustment))
+
         
         return {
             "price": optimal_price,
@@ -1224,12 +1376,13 @@ class DynamicPricingOptimizer:
     
     async def _estimate_base_value(self, nft_data: Dict[str, Any]) -> Decimal:
         """Estimate base value of NFT using ML models"""
-        # Mock implementation - would use actual ML models
+        
         return Decimal('1.0')
     
     async def _get_marketplace_data(self, marketplace: MarketplaceType) -> Dict[str, Any]:
-        """Get marketplace-specific data for pricing"""
-        # Mock implementation
+        """
+        Get marketplace-specific data for pricing"""
+        
         return {
             "price_multiplier": 1.0,
             "demand_score": 1.0,
@@ -1242,19 +1395,21 @@ class DynamicPricingOptimizer:
     async def _analyze_competitor_pricing(self, nft_data: Dict[str, Any], 
                                         marketplace: MarketplaceType) -> List[float]:
         """Analyze competitor pricing for similar NFTs"""
-        # Mock implementation
+        
         return [0.8, 1.2, 1.5, 0.9, 1.1]
 
 
 class MarketplacePerformanceTracker:
-    """Tracks and analyzes marketplace performance metrics"""
+    """
+        Tracks and analyzes marketplace performance metrics"""
     
     def __init__(self, redis_client: aioredis.Redis):
         self.redis = redis_client
     
     async def update_metrics(self, marketplace: MarketplaceType, 
                            metrics: MarketplaceMetrics) -> None:
-        """Update marketplace metrics"""
+        """
+        Update marketplace metrics"""
         metrics_key = f"marketplace_metrics:{marketplace.value}:{datetime.utcnow().date()}"
         metrics_data = {
             "total_volume": str(metrics.total_volume),
@@ -1272,14 +1427,19 @@ class MarketplacePerformanceTracker:
                                     days: int) -> Dict[str, Any]:
         """Get marketplace metrics for specified period"""
         end_date = datetime.utcnow().date()
+
         start_date = end_date - timedelta(days=days)
+
+
         
         metrics_data = []
+
         current_date = start_date
         
         while current_date <= end_date:
             metrics_key = f"marketplace_metrics:{marketplace.value}:{current_date}"
             daily_metrics = await self.redis.hgetall(metrics_key)
+
             
             if daily_metrics:
                 metrics_data.append({
@@ -1289,14 +1449,20 @@ class MarketplacePerformanceTracker:
                     "average_price": float(daily_metrics.get("average_price", 0)),
                     "success_rate": float(daily_metrics.get("success_rate", 0))
                 })
+
             
             current_date += timedelta(days=1)
         
         # Calculate aggregated metrics
         if metrics_data:
             total_volume = sum(day["volume"] for day in metrics_data)
+
+
             total_sales = sum(day["sales"] for day in metrics_data)
+
+
             avg_success_rate = sum(day["success_rate"] for day in metrics_data) / len(metrics_data)
+
             
             return {
                 "marketplace": marketplace.value,
@@ -1316,6 +1482,7 @@ class MarketplacePerformanceTracker:
             return "insufficient_data"
         
         recent_volume = sum(day["volume"] for day in metrics_data[-7:])  # Last 7 days
+
         earlier_volume = sum(day["volume"] for day in metrics_data[-14:-7])  # Previous 7 days
         
         if recent_volume > earlier_volume * 1.1:

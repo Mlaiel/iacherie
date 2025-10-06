@@ -21,7 +21,8 @@ from backend.monitoring.openai_metrics import MetricsCollector
 logger = logging.getLogger(__name__)
 
 class OpenAIConfig(BaseModel):
-    """OpenAI API Configuration"""
+    """
+        OpenAI API Configuration"""
     api_key: str = Field(..., description="OpenAI API Key")
     model: str = Field(default="gpt-4o-mini", description="Default model to use")
     max_tokens: int = Field(default=2000, description="Maximum tokens per request")
@@ -44,7 +45,8 @@ class CompletionRequest(BaseModel):
     stream: bool = Field(default=False)
     
 class ImageGenerationRequest(BaseModel):
-    """Image generation request"""
+    """
+        Image generation request"""
     prompt: str = Field(..., description="Image description prompt")
     model: str = Field(default="dall-e-3", description="Image model to use")
     size: str = Field(default="1024x1024", description="Image size")
@@ -76,7 +78,8 @@ class OpenAIService:
         self._usage_cache = {}
         
     def _load_config(self) -> OpenAIConfig:
-        """Load OpenAI configuration from environment"""
+        """
+        Load OpenAI configuration from environment"""
         return OpenAIConfig(
             api_key=os.getenv("OPENAI_API_KEY"),
             model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
@@ -84,11 +87,13 @@ class OpenAIService:
             temperature=float(os.getenv("OPENAI_TEMPERATURE", "0.7")),
             base_url=os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1"),
         )
+
         
     async def health_check(self) -> Dict[str, Any]:
         """Check OpenAI API health and connectivity"""
         try:
             models = await self.client.models.list()
+
             return {
                 "status": "healthy",
                 "api_accessible": True,
@@ -97,6 +102,7 @@ class OpenAIService:
             }
         except Exception as e:
             logger.error(f"OpenAI health check failed: {e}")
+
             return {
                 "status": "unhealthy",
                 "api_accessible": False,
@@ -113,6 +119,7 @@ class OpenAIService:
             start_time = datetime.now()
             
             # Prepare request parameters
+
             params = {
                 "model": request.model or self.config.model,
                 "messages": [msg.dict() for msg in request.messages],
@@ -122,11 +129,17 @@ class OpenAIService:
             }
             
             # Make API call
+
             response = await self.client.chat.completions.create(**params)
             
             # Track metrics
+
             end_time = datetime.now()
+
+
             duration = (end_time - start_time).total_seconds()
+
+
             
             usage = {
                 "prompt_tokens": response.usage.prompt_tokens,
@@ -136,6 +149,7 @@ class OpenAIService:
             }
             
             await self._track_usage("chat_completion", usage)
+
             
             return {
                 "success": True,
@@ -147,13 +161,17 @@ class OpenAIService:
             
         except Exception as e:
             logger.error(f"Chat completion error: {e}")
+
             await self.metrics.increment_counter("openai_errors", {"type": "chat_completion"})
+
             raise HTTPException(status_code=500, detail=f"OpenAI API error: {str(e)}")
     
     async def generate_image(self, request: ImageGenerationRequest) -> Dict[str, Any]:
         """Generate images using DALL-E"""
         try:
             start_time = datetime.now()
+
+
             
             response = await self.client.images.generate(
                 model=request.model,
@@ -162,9 +180,15 @@ class OpenAIService:
                 quality=request.quality,
                 n=request.n
             )
+
+
             
             end_time = datetime.now()
+
+
             duration = (end_time - start_time).total_seconds()
+
+
             
             images = [
                 {
@@ -179,6 +203,7 @@ class OpenAIService:
                 "images_generated": len(images),
                 "duration_seconds": duration
             })
+
             
             return {
                 "success": True,
@@ -189,13 +214,16 @@ class OpenAIService:
             
         except Exception as e:
             logger.error(f"Image generation error: {e}")
+
             await self.metrics.increment_counter("openai_errors", {"type": "image_generation"})
+
             raise HTTPException(status_code=500, detail=f"Image generation error: {str(e)}")
     
     async def transcribe_audio(self, request: AudioTranscriptionRequest) -> Dict[str, Any]:
         """Transcribe audio using Whisper"""
         try:
             start_time = datetime.now()
+
             
             with open(request.file_path, "rb") as audio_file:
                 transcript = await self.client.audio.transcriptions.create(
@@ -204,15 +232,21 @@ class OpenAIService:
                     language=request.language,
                     response_format=request.response_format
                 )
+
+
             
             end_time = datetime.now()
+
+
             duration = (end_time - start_time).total_seconds()
+
             
             await self._track_usage("audio_transcription", {
                 "model": request.model,
                 "file_size": os.path.getsize(request.file_path),
                 "duration_seconds": duration
             })
+
             
             return {
                 "success": True,
@@ -223,21 +257,31 @@ class OpenAIService:
             
         except Exception as e:
             logger.error(f"Audio transcription error: {e}")
+
             await self.metrics.increment_counter("openai_errors", {"type": "transcription"})
+
             raise HTTPException(status_code=500, detail=f"Transcription error: {str(e)}")
     
     async def get_embeddings(self, texts: List[str], model: str = "text-embedding-3-small") -> Dict[str, Any]:
         """Generate embeddings for text analysis"""
         try:
             start_time = datetime.now()
+
+
             
             response = await self.client.embeddings.create(
                 model=model,
                 input=texts
             )
+
+
             
             end_time = datetime.now()
+
+
             duration = (end_time - start_time).total_seconds()
+
+
             
             embeddings = [data.embedding for data in response.data]
             
@@ -247,6 +291,7 @@ class OpenAIService:
                 "total_tokens": response.usage.total_tokens,
                 "duration_seconds": duration
             })
+
             
             return {
                 "success": True,
@@ -260,12 +305,16 @@ class OpenAIService:
             
         except Exception as e:
             logger.error(f"Embeddings error: {e}")
+
             await self.metrics.increment_counter("openai_errors", {"type": "embeddings"})
+
             raise HTTPException(status_code=500, detail=f"Embeddings error: {str(e)}")
     
     async def _track_usage(self, operation: str, usage_data: Dict[str, Any]):
         """Track API usage for monitoring and billing"""
         timestamp = datetime.now().isoformat()
+
+
         
         usage_record = {
             "operation": operation,
@@ -289,6 +338,7 @@ class OpenAIService:
             usage_data.get("duration_seconds", 0),
             {"operation": operation}
         )
+
         
         if "total_tokens" in usage_data:
             await self.metrics.record_histogram(
@@ -305,14 +355,19 @@ class OpenAIService:
             records = []
             for op_records in self._usage_cache.values():
                 records.extend(op_records)
+
         
         if not records:
             return {"total_requests": 0, "operations": {}}
         
         # Calculate statistics
+
         total_requests = len(records)
+
         total_tokens = sum(r.get("total_tokens", 0) for r in records)
+
         avg_duration = sum(r.get("duration_seconds", 0) for r in records) / total_requests
+
         
         operations = {}
         for record in records:
@@ -322,6 +377,7 @@ class OpenAIService:
             
             operations[op]["count"] += 1
             operations[op]["tokens"] += record.get("total_tokens", 0)
+
             operations[op]["duration"] += record.get("duration_seconds", 0)
         
         # Calculate averages per operation

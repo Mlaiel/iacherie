@@ -26,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 
 class CommunicationChannel(str, Enum):
-    """Supported communication channels."""
+    """
+        Supported communication channels."""
     EMAIL = "email"
     SMS = "sms"
     PUSH_NOTIFICATION = "push_notification"
@@ -96,7 +97,8 @@ class CommunicationAccount:
 
 @dataclass
 class MessageRecipient:
-    """Message recipient information."""
+    """
+        Message recipient information."""
     recipient_id: str
     channel: CommunicationChannel
     address: str  # email, phone number, device token, etc.
@@ -107,7 +109,8 @@ class MessageRecipient:
 
 @dataclass
 class MessageTemplate:
-    """Message template configuration."""
+    """
+        Message template configuration."""
     template_id: str
     name: str
     category: TemplateCategory
@@ -140,7 +143,8 @@ class CommunicationMessage:
 
 @dataclass
 class MarketingCampaign:
-    """Marketing campaign configuration."""
+    """
+        Marketing campaign configuration."""
     campaign_id: str
     name: str
     campaign_type: CampaignType
@@ -155,7 +159,8 @@ class MarketingCampaign:
 
 
 class CommunicationAPIsIntegration:
-    """Professional communication APIs integration."""
+    """
+        Professional communication APIs integration."""
     
     def __init__(
         self,
@@ -235,11 +240,13 @@ class CommunicationAPIsIntegration:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+        Async context manager exit."""
         await self.close()
     
     async def _ensure_session(self):
-        """Ensure HTTP session is available."""
+        """
+        Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
                 "User-Agent": "iacherie/1.0 Communication Hub",
@@ -258,11 +265,14 @@ class CommunicationAPIsIntegration:
             await self.session.close()
     
     async def initialize_sendgrid_account(self) -> CommunicationAccount:
-        """Initialize SendGrid email account."""
+        """
+        Initialize SendGrid email account."""
         await self._ensure_session()
+
         
         if not self.sendgrid_api_key:
             raise ValueError("SendGrid API key not configured")
+
         
         try:
             headers = {"Authorization": f"Bearer {self.sendgrid_api_key}"}
@@ -274,9 +284,14 @@ class CommunicationAPIsIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"SendGrid account error: {error_data}")
+
+
                 
                 profile = await response.json()
+
+
                 
                 account = CommunicationAccount(
                     channel=CommunicationChannel.EMAIL,
@@ -288,24 +303,29 @@ class CommunicationAPIsIntegration:
                     supported_features=["transactional", "marketing", "templates", "analytics"],
                     metadata={"profile": profile}
                 )
+
                 
                 self.communication_accounts[f"sendgrid_{account.account_id}"] = account
                 self.channel_usage[CommunicationChannel.EMAIL] = 0
                 self.request_count += 1
                 
                 logger.info(f"SendGrid account initialized: {account.account_id}")
+
                 return account
         
         except Exception as e:
             logger.error(f"SendGrid account initialization failed: {e}")
+
             raise
     
     async def initialize_mailchimp_account(self) -> CommunicationAccount:
         """Initialize Mailchimp marketing account."""
         await self._ensure_session()
+
         
         if not self.mailchimp_api_key or not self.mailchimp_server_prefix:
             raise ValueError("Mailchimp credentials not configured")
+
         
         try:
             headers = {"Authorization": f"apikey {self.mailchimp_api_key}"}
@@ -316,9 +336,14 @@ class CommunicationAPIsIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Mailchimp account error: {error_data}")
+
+
                 
                 account_info = await response.json()
+
+
                 
                 account = CommunicationAccount(
                     channel=CommunicationChannel.EMAIL,
@@ -330,26 +355,32 @@ class CommunicationAPIsIntegration:
                     supported_features=["marketing", "automation", "segmentation", "analytics"],
                     metadata={"account_info": account_info}
                 )
+
                 
                 self.communication_accounts[f"mailchimp_{account.account_id}"] = account
                 self.request_count += 1
                 
                 logger.info(f"Mailchimp account initialized: {account.account_id}")
+
                 return account
         
         except Exception as e:
             logger.error(f"Mailchimp account initialization failed: {e}")
+
             raise
     
     async def initialize_twilio_account(self) -> CommunicationAccount:
         """Initialize Twilio SMS account."""
         await self._ensure_session()
+
         
         if not self.twilio_account_sid or not self.twilio_auth_token:
             raise ValueError("Twilio credentials not configured")
+
         
         try:
             auth = aiohttp.BasicAuth(self.twilio_account_sid, self.twilio_auth_token)
+
             
             async with self.session.get(
                 f"{self.service_urls[CommunicationChannel.SMS]['twilio']}/Accounts/{self.twilio_account_sid}.json",
@@ -357,9 +388,14 @@ class CommunicationAPIsIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Twilio account error: {error_data}")
+
+
                 
                 account_info = await response.json()
+
+
                 
                 account = CommunicationAccount(
                     channel=CommunicationChannel.SMS,
@@ -371,22 +407,26 @@ class CommunicationAPIsIntegration:
                     supported_features=["sms", "mms", "voice", "verify"],
                     metadata={"account_info": account_info}
                 )
+
                 
                 self.communication_accounts[f"twilio_{account.account_id}"] = account
                 self.channel_usage[CommunicationChannel.SMS] = 0
                 self.request_count += 1
                 
                 logger.info(f"Twilio account initialized: {account.account_id}")
+
                 return account
         
         except Exception as e:
             logger.error(f"Twilio account initialization failed: {e}")
+
             raise
     
     async def initialize_fcm_account(self) -> CommunicationAccount:
         """Initialize Firebase Cloud Messaging account."""
         if not self.fcm_server_key or not self.fcm_project_id:
             raise ValueError("FCM credentials not configured")
+
         
         try:
             account = CommunicationAccount(
@@ -399,15 +439,18 @@ class CommunicationAPIsIntegration:
                 supported_features=["push_notifications", "topics", "targeting"],
                 metadata={"project_id": self.fcm_project_id}
             )
+
             
             self.communication_accounts[f"fcm_{account.account_id}"] = account
             self.channel_usage[CommunicationChannel.PUSH_NOTIFICATION] = 0
             
             logger.info(f"FCM account initialized: {account.account_id}")
+
             return account
         
         except Exception as e:
             logger.error(f"FCM account initialization failed: {e}")
+
             raise
     
     async def create_message_template(
@@ -423,6 +466,8 @@ class CommunicationAPIsIntegration:
     ) -> MessageTemplate:
         """Create a message template."""
         template_id = str(uuid.uuid4())
+
+
         
         template = MessageTemplate(
             template_id=template_id,
@@ -435,6 +480,7 @@ class CommunicationAPIsIntegration:
             variables=variables or [],
             metadata=metadata or {}
         )
+
         
         self.message_templates[template_id] = template
         
@@ -454,13 +500,17 @@ class CommunicationAPIsIntegration:
     ) -> CommunicationMessage:
         """Send message through specified channel."""
         await self._ensure_session()
+
+
         
         message_id = str(uuid.uuid4())
         
         # Use template if specified
         if template_id and template_id in self.message_templates:
             template = self.message_templates[template_id]
+
             subject = subject or template.subject
+
             content = content or template.content
             
             # Replace template variables
@@ -468,8 +518,10 @@ class CommunicationAPIsIntegration:
                 for var, value in template_variables.items():
                     if content:
                         content = content.replace(f"{{{var}}}", str(value))
+
                     if subject:
                         subject = subject.replace(f"{{{var}}}", str(value))
+
         
         if channel == CommunicationChannel.EMAIL:
             return await self._send_email(message_id, recipient, message_type, subject, content, metadata)
@@ -495,8 +547,11 @@ class CommunicationAPIsIntegration:
         try:
             if not self.sendgrid_api_key:
                 raise ValueError("SendGrid not configured")
+
+
             
             headers = {"Authorization": f"Bearer {self.sendgrid_api_key}"}
+
             
             email_data = {
                 "personalizations": [{
@@ -529,7 +584,10 @@ class CommunicationAPIsIntegration:
             ) as response:
                 if response.status not in [200, 202]:
                     error_data = await response.text()
+
                     raise Exception(f"SendGrid email error: {error_data}")
+
+
                 
                 message = CommunicationMessage(
                     message_id=message_id,
@@ -547,16 +605,19 @@ class CommunicationAPIsIntegration:
                     clicked_at=None,
                     metadata=metadata or {}
                 )
+
                 
                 self.total_messages_sent += 1
                 self.request_count += 1
                 self.channel_usage[CommunicationChannel.EMAIL] = self.channel_usage.get(CommunicationChannel.EMAIL, 0) + 1
                 
                 logger.info(f"Email sent: {message_id} to {recipient.address}")
+
                 return message
         
         except Exception as e:
             logger.error(f"Email sending failed: {e}")
+
             raise
     
     async def _send_sms(
@@ -571,8 +632,12 @@ class CommunicationAPIsIntegration:
         try:
             if not self.twilio_account_sid or not self.twilio_auth_token:
                 raise ValueError("Twilio not configured")
+
+
             
             auth = aiohttp.BasicAuth(self.twilio_account_sid, self.twilio_auth_token)
+
+
             
             sms_data = {
                 "From": self.twilio_phone_number,
@@ -587,9 +652,14 @@ class CommunicationAPIsIntegration:
             ) as response:
                 if response.status not in [200, 201]:
                     error_data = await response.json()
+
                     raise Exception(f"Twilio SMS error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 
                 message = CommunicationMessage(
                     message_id=result["sid"],
@@ -607,16 +677,19 @@ class CommunicationAPIsIntegration:
                     clicked_at=None,
                     metadata=metadata or {}
                 )
+
                 
                 self.total_messages_sent += 1
                 self.request_count += 1
                 self.channel_usage[CommunicationChannel.SMS] = self.channel_usage.get(CommunicationChannel.SMS, 0) + 1
                 
                 logger.info(f"SMS sent: {message_id} to {recipient.address}")
+
                 return message
         
         except Exception as e:
             logger.error(f"SMS sending failed: {e}")
+
             raise
     
     async def _send_push_notification(
@@ -632,8 +705,11 @@ class CommunicationAPIsIntegration:
         try:
             if not self.fcm_server_key:
                 raise ValueError("FCM not configured")
+
+
             
             headers = {"Authorization": f"key={self.fcm_server_key}"}
+
             
             notification_data = {
                 "to": recipient.address,  # Device token
@@ -657,9 +733,14 @@ class CommunicationAPIsIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"FCM push notification error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 
                 message = CommunicationMessage(
                     message_id=message_id,
@@ -677,16 +758,19 @@ class CommunicationAPIsIntegration:
                     clicked_at=None,
                     metadata=metadata or {}
                 )
+
                 
                 self.total_messages_sent += 1
                 self.request_count += 1
                 self.channel_usage[CommunicationChannel.PUSH_NOTIFICATION] = self.channel_usage.get(CommunicationChannel.PUSH_NOTIFICATION, 0) + 1
                 
                 logger.info(f"Push notification sent: {message_id} to {recipient.address}")
+
                 return message
         
         except Exception as e:
             logger.error(f"Push notification sending failed: {e}")
+
             raise
     
     async def _send_slack_message(
@@ -701,6 +785,7 @@ class CommunicationAPIsIntegration:
         try:
             if self.slack_webhook_url:
                 # Use webhook for simple messages
+
                 slack_data = {
                     "text": content,
                     "channel": recipient.address,
@@ -713,11 +798,15 @@ class CommunicationAPIsIntegration:
                 ) as response:
                     if response.status != 200:
                         error_data = await response.text()
+
                         raise Exception(f"Slack webhook error: {error_data}")
+
             
             elif self.slack_bot_token:
                 # Use API for advanced features
+
                 headers = {"Authorization": f"Bearer {self.slack_bot_token}"}
+
                 
                 slack_data = {
                     "channel": recipient.address,
@@ -731,10 +820,14 @@ class CommunicationAPIsIntegration:
                 ) as response:
                     if response.status != 200:
                         error_data = await response.json()
+
                         raise Exception(f"Slack API error: {error_data}")
+
             
             else:
                 raise ValueError("Slack not configured")
+
+
             
             message = CommunicationMessage(
                 message_id=message_id,
@@ -752,16 +845,19 @@ class CommunicationAPIsIntegration:
                 clicked_at=None,
                 metadata=metadata or {}
             )
+
             
             self.total_messages_sent += 1
             self.request_count += 1
             self.channel_usage[CommunicationChannel.SLACK] = self.channel_usage.get(CommunicationChannel.SLACK, 0) + 1
             
             logger.info(f"Slack message sent: {message_id} to {recipient.address}")
+
             return message
         
         except Exception as e:
             logger.error(f"Slack message sending failed: {e}")
+
             raise
     
     async def create_marketing_campaign(
@@ -776,6 +872,8 @@ class CommunicationAPIsIntegration:
     ) -> MarketingCampaign:
         """Create a marketing campaign."""
         campaign_id = str(uuid.uuid4())
+
+
         
         campaign = MarketingCampaign(
             campaign_id=campaign_id,
@@ -797,6 +895,7 @@ class CommunicationAPIsIntegration:
             created_at=datetime.now(),
             metadata=metadata or {}
         )
+
         
         self.active_campaigns[campaign_id] = campaign
         self.total_campaigns += 1
@@ -813,8 +912,11 @@ class CommunicationAPIsIntegration:
         """Execute a marketing campaign."""
         if campaign_id not in self.active_campaigns:
             raise ValueError(f"Campaign not found: {campaign_id}")
+
+
         
         campaign = self.active_campaigns[campaign_id]
+
         results = {"sent": 0, "failed": 0, "details": []}
         
         for recipient in recipients:
@@ -822,6 +924,7 @@ class CommunicationAPIsIntegration:
                 try:
                     if channel in campaign.templates:
                         template_id = campaign.templates[channel]
+
                         
                         message = await self.send_message(
                             channel=channel,
@@ -831,6 +934,7 @@ class CommunicationAPIsIntegration:
                             template_variables=template_variables,
                             metadata={"campaign_id": campaign_id}
                         )
+
                         
                         results["sent"] += 1
                         results["details"].append({
@@ -839,6 +943,7 @@ class CommunicationAPIsIntegration:
                             "status": "sent",
                             "message_id": message.message_id
                         })
+
                 
                 except Exception as e:
                     results["failed"] += 1
@@ -848,6 +953,7 @@ class CommunicationAPIsIntegration:
                         "status": "failed",
                         "error": str(e)
                     })
+
                     logger.error(f"Campaign message failed: {e}")
         
         # Update campaign metrics
@@ -868,6 +974,7 @@ class CommunicationAPIsIntegration:
         """Send transactional email using predefined templates."""
         
         # Define default templates for common transactional emails
+
         default_templates = {
             TemplateCategory.WELCOME: {
                 "subject": "Welcome to iacherie, {name}!",
@@ -890,18 +997,25 @@ class CommunicationAPIsIntegration:
                 "content": "Hi {name},\n\nYour payout of {amount} has been processed and should arrive within 1-3 business days.\n\nBest regards,\nThe iacherie Team"
             }
         }
+
         
         template = default_templates.get(template_category)
         if not template:
             raise ValueError(f"Template not found for category: {template_category}")
         
         # Replace variables in template
+
         subject = template["subject"]
+
         content = template["content"]
         
         for var, value in variables.items():
             subject = subject.replace(f"{{{var}}}", str(value))
+
+
             content = content.replace(f"{{{var}}}", str(value))
+
+
         
         recipient = MessageRecipient(
             recipient_id=recipient_email,
@@ -909,6 +1023,7 @@ class CommunicationAPIsIntegration:
             address=recipient_email,
             name=recipient_name
         )
+
         
         return await self.send_message(
             channel=CommunicationChannel.EMAIL,
@@ -940,14 +1055,21 @@ class CommunicationAPIsIntegration:
                         subject=subject,
                         content=content
                     )
+
                     tasks.append(task)
+
+
         
         results = await asyncio.gather(*tasks, return_exceptions=True)
+
+
         
         successful_sends = [r for r in results if isinstance(r, CommunicationMessage)]
+
         failed_sends = [r for r in results if isinstance(r, Exception)]
         
         logger.info(f"Bulk notification completed: {len(successful_sends)} sent, {len(failed_sends)} failed")
+
         
         return {
             "total_attempted": len(tasks),
@@ -965,6 +1087,7 @@ class CommunicationAPIsIntegration:
     ) -> bool:
         """Track message engagement events."""
         timestamp = timestamp or datetime.now()
+
         
         if event_type == "opened":
             self.engagement_metrics["total_opens"] += 1
@@ -980,14 +1103,21 @@ class CommunicationAPIsIntegration:
         """Get analytics for a specific campaign."""
         if campaign_id not in self.active_campaigns:
             raise ValueError(f"Campaign not found: {campaign_id}")
+
+
         
         campaign = self.active_campaigns[campaign_id]
         
         # Calculate engagement rates
+
         total_sent = campaign.metrics["messages_sent"]
+
         open_rate = (campaign.metrics["opened"] / max(total_sent, 1)) * 100
+
         click_rate = (campaign.metrics["clicked"] / max(total_sent, 1)) * 100
+
         unsubscribe_rate = (campaign.metrics["unsubscribed"] / max(total_sent, 1)) * 100
+
         
         analytics = {
             "campaign_id": campaign_id,
@@ -1013,11 +1143,13 @@ class CommunicationAPIsIntegration:
         return list(self.communication_accounts.values())
     
     async def get_message_templates(self) -> List[MessageTemplate]:
-        """Get all message templates."""
+        """
+        Get all message templates."""
         return list(self.message_templates.values())
     
     def get_usage_stats(self) -> Dict[str, Any]:
-        """Get communication usage statistics."""
+        """
+        Get communication usage statistics."""
         return {
             "total_requests": self.request_count,
             "total_messages_sent": self.total_messages_sent,
@@ -1054,7 +1186,8 @@ async def send_welcome_email_sequence(
     user_name: str,
     sequence_days: List[int] = [0, 3, 7, 14]
 ) -> List[CommunicationMessage]:
-    """Send automated welcome email sequence."""
+    """
+        Send automated welcome email sequence."""
     
     welcome_templates = [
         {
@@ -1078,6 +1211,7 @@ async def send_welcome_email_sequence(
             "content": "Hi {name},\n\nTwo weeks in! You're becoming a pro at this. Let's talk about maximizing your earnings:\n\n- Optimize your content for engagement\n- Use our AI tools for content creation\n- Set up automated payouts\n\nYour success is our success!\n\nBest regards,\nThe iacherie Team"
         }
     ]
+
     
     messages = []
     recipient = MessageRecipient(
@@ -1090,6 +1224,7 @@ async def send_welcome_email_sequence(
     for template in welcome_templates:
         if template["day"] in sequence_days:
             variables = {"name": user_name}
+
             
             message = await integration.send_message(
                 channel=CommunicationChannel.EMAIL,
@@ -1099,6 +1234,7 @@ async def send_welcome_email_sequence(
                 content=template["content"].format(**variables),
                 metadata={"sequence_day": template["day"], "sequence_type": "welcome"}
             )
+
             messages.append(message)
     
     logger.info(f"Welcome email sequence sent to {new_user_email}: {len(messages)} emails")
@@ -1120,11 +1256,14 @@ if __name__ == "__main__":
             try:
                 if comm.sendgrid_api_key:
                     sendgrid_account = await comm.initialize_sendgrid_account()
+
                     print(f"SendGrid account: {sendgrid_account.account_id}")
+
             except Exception as e:
                 print(f"SendGrid initialization failed: {e}")
             
             # Create a welcome email template
+
             template = await comm.create_message_template(
                 name="Welcome Email",
                 category=TemplateCategory.WELCOME,
@@ -1132,10 +1271,13 @@ if __name__ == "__main__":
                 subject="Welcome to iacherie, {name}!",
                 content="Hi {name}, welcome to our platform!"
             )
+
             print(f"Template created: {template.name}")
             
             # Check usage stats
+
             stats = comm.get_usage_stats()
+
             print(f"Usage stats: {stats}")
     
     asyncio.run(main())

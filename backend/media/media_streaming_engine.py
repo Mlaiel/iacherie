@@ -165,7 +165,8 @@ class StreamMetrics:
 
 @dataclass
 class Viewer:
-    """Stream viewer information"""
+    """
+        Stream viewer information"""
     viewer_id: str
     session_id: str
     ip_address: str
@@ -180,7 +181,8 @@ class Viewer:
 
 @dataclass
 class StreamSession:
-    """Stream session information"""
+    """
+        Stream session information"""
     session_id: str
     stream_id: str
     stream_type: StreamType
@@ -196,7 +198,8 @@ class StreamSession:
 
 
 class AdaptiveStreamingEngine:
-    """Adaptive bitrate streaming engine"""
+    """
+        Adaptive bitrate streaming engine"""
     
     def __init__(self, config: StreamConfig):
         self.config = config
@@ -243,19 +246,27 @@ class AdaptiveStreamingEngine:
         viewer: Viewer,
         network_conditions: Dict[str, float]
     ) -> StreamQuality:
-        """Determine optimal quality for viewer based on network conditions"""
+        """
+        Determine optimal quality for viewer based on network conditions"""
         try:
             available_bandwidth = network_conditions.get('bandwidth_kbps', 0)
+
+
             latency = network_conditions.get('latency_ms', 0)
+
+
             packet_loss = network_conditions.get('packet_loss_percent', 0)
             
             # Quality selection based on available bandwidth and network conditions
+
             suitable_qualities = []
             
             for quality, specs in self.quality_ladder.items():
                 required_bandwidth = specs['bandwidth_requirement']
                 
                 # Add buffer (20% overhead)
+
+
                 required_with_buffer = required_bandwidth * 1.2
                 
                 # Check if bandwidth is sufficient
@@ -263,9 +274,11 @@ class AdaptiveStreamingEngine:
                     # Consider network conditions
                     if packet_loss < 1.0 and latency < 100:  # Good conditions
                         suitable_qualities.append(quality)
+
                     elif packet_loss < 3.0 and latency < 200:  # Fair conditions
                         if quality in [StreamQuality.LOW, StreamQuality.MEDIUM]:
                             suitable_qualities.append(quality)
+
                     else:  # Poor conditions
                         if quality == StreamQuality.LOW:
                             suitable_qualities.append(quality)
@@ -278,7 +291,9 @@ class AdaptiveStreamingEngine:
                     StreamQuality.MEDIUM: 2,
                     StreamQuality.LOW: 1
                 }
+
                 optimal_quality = max(suitable_qualities, key=lambda q: quality_priorities.get(q, 0))
+
             else:
                 optimal_quality = StreamQuality.LOW  # Fallback
             
@@ -289,6 +304,7 @@ class AdaptiveStreamingEngine:
             
         except Exception as e:
             logger.error(f"Quality determination failed: {e}")
+
             return StreamQuality.LOW
     
     async def adjust_quality_real_time(
@@ -301,42 +317,58 @@ class AdaptiveStreamingEngine:
             current_quality = self.viewer_qualities.get(viewer_id, StreamQuality.MEDIUM)
             
             # Performance indicators
+
             buffer_health = performance_metrics.get('buffer_level_seconds', 0)
+
+
             frame_drops = performance_metrics.get('frame_drops_per_second', 0)
+
+
             bandwidth_utilization = performance_metrics.get('bandwidth_utilization_percent', 0)
+
+
             
             quality_priorities = [StreamQuality.LOW, StreamQuality.MEDIUM, StreamQuality.HIGH, StreamQuality.ULTRA]
+
             current_index = quality_priorities.index(current_quality)
             
             # Determine if quality adjustment is needed
+
             should_decrease = (
                 buffer_health < 2.0 or  # Low buffer
                 frame_drops > 1.0 or    # Dropping frames
                 bandwidth_utilization > 90  # High bandwidth usage
             )
+
+
             
             should_increase = (
                 buffer_health > 8.0 and  # Healthy buffer
+
                 frame_drops == 0 and     # No frame drops
                 bandwidth_utilization < 70  # Comfortable bandwidth usage
             )
+
             
             if should_decrease and current_index > 0:
                 new_quality = quality_priorities[current_index - 1]
                 self.viewer_qualities[viewer_id] = new_quality
                 logger.info(f"Decreased quality for viewer {viewer_id}: {current_quality.value} -> {new_quality.value}")
+
                 return new_quality
             
             elif should_increase and current_index < len(quality_priorities) - 1:
                 new_quality = quality_priorities[current_index + 1]
                 self.viewer_qualities[viewer_id] = new_quality
                 logger.info(f"Increased quality for viewer {viewer_id}: {current_quality.value} -> {new_quality.value}")
+
                 return new_quality
             
             return None  # No change needed
             
         except Exception as e:
             logger.error(f"Real-time quality adjustment failed: {e}")
+
             return None
 
 
@@ -358,15 +390,19 @@ class StreamProcessor:
             
             if self.config.video_enabled:
                 await self._start_video_processing(input_source)
+
             
             if self.config.audio_enabled:
                 await self._start_audio_processing(input_source)
+
             
             logger.info(f"Stream processing started for source: {input_source}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to start stream processing: {e}")
+
             self.is_processing = False
             return False
     
@@ -375,13 +411,17 @@ class StreamProcessor:
         try:
             self.is_processing = False
             self.frame_buffer.clear()
+
             self.audio_buffer.clear()
+
             
             logger.info("Stream processing stopped")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to stop stream processing: {e}")
+
             return False
     
     async def process_frame(self, frame_data: bytes) -> bytes:
@@ -391,21 +431,29 @@ class StreamProcessor:
                 return frame_data  # Return unchanged if OpenCV not available
             
             # Convert frame data to OpenCV format
+
             nparr = np.frombuffer(frame_data, np.uint8)
+
+
             frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
             
             if frame is None:
                 return frame_data
             
             # Apply processing filters
+
             processed_frame = await self._apply_video_filters(frame)
             
             # Encode frame
             _, encoded_frame = cv2.imencode('.jpg', processed_frame)
+
             return encoded_frame.tobytes()
+
             
         except Exception as e:
             logger.error(f"Frame processing failed: {e}")
+
             return frame_data
     
     async def process_audio(self, audio_data: bytes) -> bytes:
@@ -417,6 +465,7 @@ class StreamProcessor:
             
         except Exception as e:
             logger.error(f"Audio processing failed: {e}")
+
             return audio_data
     
     async def _start_video_processing(self, input_source: str):
@@ -426,20 +475,23 @@ class StreamProcessor:
             pass
     
     async def _start_audio_processing(self, input_source: str):
-        """Start audio processing from source"""
+        """
+        Start audio processing from source"""
         if HAS_SOUNDDEVICE:
             # Audio processing implementation
             pass
     
     async def _apply_video_filters(self, frame) -> Any:
-        """Apply video filters and enhancements"""
+        """
+        Apply video filters and enhancements"""
         # Basic frame processing
         # Could add filters like brightness, contrast, noise reduction, etc.
         return frame
 
 
 class StreamingServer:
-    """Core streaming server handling multiple streams"""
+    """
+        Core streaming server handling multiple streams"""
     
     def __init__(self, config: StreamConfig):
         self.config = config
@@ -460,12 +512,15 @@ class StreamingServer:
             
             # Initialize server components
             await self._initialize_server_components()
+
             
             logger.info(f"Streaming server started on {host}:{port}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to start streaming server: {e}")
+
             return False
     
     async def stop_server(self) -> bool:
@@ -474,14 +529,17 @@ class StreamingServer:
             # Stop all active streams
             for stream_id in list(self.active_streams.keys()):
                 await self.stop_stream(stream_id)
+
             
             self.is_running = False
             
             logger.info("Streaming server stopped")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to stop streaming server: {e}")
+
             return False
     
     async def create_stream(
@@ -493,17 +551,23 @@ class StreamingServer:
         """Create new stream session"""
         try:
             stream_id = str(uuid.uuid4())
+
+
             session_id = str(uuid.uuid4())
+
+
             
             stream_config = config or self.config
             
             # Initialize metrics
+
             metrics = StreamMetrics(
                 stream_id=stream_id,
                 start_time=datetime.now(timezone.utc)
             )
             
             # Create stream session
+
             session = StreamSession(
                 session_id=session_id,
                 stream_id=stream_id,
@@ -513,6 +577,7 @@ class StreamingServer:
                 metrics=metrics,
                 metadata=metadata or {}
             )
+
             
             self.active_streams[stream_id] = session
             
@@ -521,18 +586,22 @@ class StreamingServer:
             
             # Initialize adaptive streaming engine
             self.adaptive_engines[stream_id] = AdaptiveStreamingEngine(stream_config)
+
             
             logger.info(f"Created stream {stream_id} of type {stream_type.value}")
+
             return session
             
         except Exception as e:
             logger.error(f"Failed to create stream: {e}")
+
             raise
     
     async def start_stream(self, stream_id: str, input_source: str) -> bool:
         """Start streaming for specific stream"""
         try:
             session = self.active_streams.get(stream_id)
+
             if not session:
                 raise ValueError(f"Stream {stream_id} not found")
             
@@ -541,9 +610,12 @@ class StreamingServer:
             session.start_time = datetime.now(timezone.utc)
             
             # Start stream processor
+
             processor = self.stream_processors.get(stream_id)
+
             if processor:
                 success = await processor.start_processing(input_source)
+
                 if not success:
                     session.status = StreamStatus.ERROR
                     return False
@@ -553,18 +625,22 @@ class StreamingServer:
             
             # Start metrics collection
             asyncio.create_task(self._collect_stream_metrics(stream_id))
+
             
             logger.info(f"Stream {stream_id} started successfully")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to start stream {stream_id}: {e}")
+
             return False
     
     async def stop_stream(self, stream_id: str) -> bool:
         """Stop streaming for specific stream"""
         try:
             session = self.active_streams.get(stream_id)
+
             if not session:
                 return False
             
@@ -572,7 +648,9 @@ class StreamingServer:
             session.status = StreamStatus.ENDING
             
             # Stop stream processor
+
             processor = self.stream_processors.get(stream_id)
+
             if processor:
                 await processor.stop_processing()
             
@@ -591,10 +669,12 @@ class StreamingServer:
                 del self.adaptive_engines[stream_id]
             
             logger.info(f"Stream {stream_id} stopped")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to stop stream {stream_id}: {e}")
+
             return False
     
     async def add_viewer(
@@ -605,13 +685,19 @@ class StreamingServer:
         """Add viewer to stream"""
         try:
             session = self.active_streams.get(stream_id)
+
             if not session:
                 raise ValueError(f"Stream {stream_id} not found")
+
             
             if session.status != StreamStatus.LIVE:
                 raise ValueError(f"Stream {stream_id} is not live")
+
+
             
             viewer_id = str(uuid.uuid4())
+
+
             
             viewer = Viewer(
                 viewer_id=viewer_id,
@@ -621,8 +707,10 @@ class StreamingServer:
                 location=viewer_info.get('location'),
                 bandwidth_kbps=viewer_info.get('bandwidth_kbps', 0)
             )
+
             
             session.viewers.append(viewer)
+
             session.metrics.current_viewers += 1
             session.metrics.total_viewers += 1
             
@@ -630,45 +718,56 @@ class StreamingServer:
                 session.metrics.peak_viewers = session.metrics.current_viewers
             
             # Determine optimal quality for viewer
+
             adaptive_engine = self.adaptive_engines.get(stream_id)
+
             if adaptive_engine:
                 network_conditions = {
                     'bandwidth_kbps': viewer.bandwidth_kbps,
                     'latency_ms': viewer_info.get('latency_ms', 50),
                     'packet_loss_percent': viewer_info.get('packet_loss_percent', 0)
                 }
+
                 optimal_quality = await adaptive_engine.determine_optimal_quality(
                     viewer, network_conditions
                 )
+
                 viewer.quality = optimal_quality
             
             logger.info(f"Added viewer {viewer_id} to stream {stream_id}")
+
             return viewer
             
         except Exception as e:
             logger.error(f"Failed to add viewer to stream {stream_id}: {e}")
+
             raise
     
     async def remove_viewer(self, stream_id: str, viewer_id: str) -> bool:
         """Remove viewer from stream"""
         try:
             return await self._disconnect_viewer(stream_id, viewer_id)
+
             
         except Exception as e:
             logger.error(f"Failed to remove viewer {viewer_id} from stream {stream_id}: {e}")
+
             return False
     
     async def get_stream_status(self, stream_id: str) -> Dict[str, Any]:
         """Get stream status and metrics"""
         try:
             session = self.active_streams.get(stream_id)
+
             if not session:
                 return {'error': f'Stream {stream_id} not found'}
             
             # Calculate uptime
+
             uptime_seconds = 0
             if session.start_time:
                 uptime_seconds = (datetime.now(timezone.utc) - session.start_time).total_seconds()
+
             
             return {
                 'stream_id': stream_id,
@@ -698,6 +797,7 @@ class StreamingServer:
             
         except Exception as e:
             logger.error(f"Failed to get stream status: {e}")
+
             return {'error': str(e)}
     
     async def _initialize_server_components(self):
@@ -706,7 +806,8 @@ class StreamingServer:
         pass
     
     async def _collect_stream_metrics(self, stream_id: str):
-        """Collect real-time metrics for stream"""
+        """
+        Collect real-time metrics for stream"""
         session = self.active_streams.get(stream_id)
         if not session:
             return
@@ -717,6 +818,7 @@ class StreamingServer:
                 session.metrics.timestamp = datetime.now(timezone.utc)
                 
                 # Simulate metrics collection (would use real data in production)
+
                 session.metrics.bitrate_kbps = session.config.video_bitrate + session.config.audio_bitrate
                 session.metrics.latency_ms = 50.0  # Would measure actual latency
                 session.metrics.packet_loss_percent = 0.1  # Would measure actual packet loss
@@ -726,31 +828,38 @@ class StreamingServer:
                 
             except Exception as e:
                 logger.error(f"Metrics collection failed for stream {stream_id}: {e}")
+
                 break
     
     async def _disconnect_viewer(self, stream_id: str, viewer_id: str) -> bool:
         """Disconnect viewer from stream"""
         try:
             session = self.active_streams.get(stream_id)
+
             if not session:
                 return False
             
             # Find and remove viewer
+
             viewer_found = False
             for i, viewer in enumerate(session.viewers):
                 if viewer.viewer_id == viewer_id:
                     session.viewers.pop(i)
+
                     session.metrics.current_viewers -= 1
+
                     viewer_found = True
                     break
             
             if viewer_found:
                 logger.info(f"Disconnected viewer {viewer_id} from stream {stream_id}")
+
             
             return viewer_found
             
         except Exception as e:
             logger.error(f"Failed to disconnect viewer: {e}")
+
             return False
 
 
@@ -758,7 +867,8 @@ class MediaStreamingEngine:
     """Main media streaming engine orchestrating all streaming components"""
     
     def __init__(self, config: Optional[StreamConfig] = None):
-        """Initialize media streaming engine"""
+        """
+        Initialize media streaming engine"""
         self.config = config or StreamConfig()
         
         # Initialize core components
@@ -779,7 +889,9 @@ class MediaStreamingEngine:
         """Start the streaming engine"""
         try:
             # Start streaming server
+
             success = await self.streaming_server.start_server(host, port)
+
             if not success:
                 return False
             
@@ -787,12 +899,15 @@ class MediaStreamingEngine:
             
             # Start global metrics collection
             asyncio.create_task(self._collect_global_metrics())
+
             
             logger.info("Media Streaming Engine started successfully")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to start streaming engine: {e}")
+
             return False
     
     async def stop_engine(self) -> bool:
@@ -800,14 +915,17 @@ class MediaStreamingEngine:
         try:
             # Stop streaming server
             await self.streaming_server.stop_server()
+
             
             self.is_running = False
             
             logger.info("Media Streaming Engine stopped")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to stop streaming engine: {e}")
+
             return False
     
     async def create_live_stream(
@@ -819,6 +937,7 @@ class MediaStreamingEngine:
         """Create live stream session"""
         try:
             session = await self.streaming_server.create_stream(stream_type, config, metadata)
+
             self.global_metrics['total_streams_created'] += 1
             self.global_metrics['active_streams'] += 1
             
@@ -826,6 +945,7 @@ class MediaStreamingEngine:
             
         except Exception as e:
             logger.error(f"Failed to create live stream: {e}")
+
             raise
     
     async def start_live_stream(self, stream_id: str, input_source: str) -> bool:
@@ -833,7 +953,8 @@ class MediaStreamingEngine:
         return await self.streaming_server.start_stream(stream_id, input_source)
     
     async def stop_live_stream(self, stream_id: str) -> bool:
-        """Stop live streaming"""
+        """
+        Stop live streaming"""
         success = await self.streaming_server.stop_stream(stream_id)
         if success:
             self.global_metrics['active_streams'] = max(0, self.global_metrics['active_streams'] - 1)
@@ -844,15 +965,18 @@ class MediaStreamingEngine:
         stream_id: str,
         viewer_info: Dict[str, Any]
     ) -> Viewer:
-        """Join viewer to stream"""
+        """
+        Join viewer to stream"""
         try:
             viewer = await self.streaming_server.add_viewer(stream_id, viewer_info)
+
             self.global_metrics['total_viewers'] += 1
             
             return viewer
             
         except Exception as e:
             logger.error(f"Failed to join stream: {e}")
+
             raise
     
     async def leave_stream(self, stream_id: str, viewer_id: str) -> bool:
@@ -860,12 +984,15 @@ class MediaStreamingEngine:
         return await self.streaming_server.remove_viewer(stream_id, viewer_id)
     
     async def get_engine_status(self) -> Dict[str, Any]:
-        """Get comprehensive engine status"""
+        """
+        Get comprehensive engine status"""
         try:
             active_streams = []
             for stream_id, session in self.streaming_server.active_streams.items():
                 stream_status = await self.streaming_server.get_stream_status(stream_id)
+
                 active_streams.append(stream_status)
+
             
             return {
                 'engine_running': self.is_running,
@@ -882,6 +1009,7 @@ class MediaStreamingEngine:
             
         except Exception as e:
             logger.error(f"Failed to get engine status: {e}")
+
             return {'error': str(e)}
     
     async def _collect_global_metrics(self):
@@ -889,26 +1017,34 @@ class MediaStreamingEngine:
         while self.is_running:
             try:
                 # Update global metrics
+
                 active_streams = len(self.streaming_server.active_streams)
+
+
                 total_viewers = sum(
-                    len(session.viewers) 
+                    len(session.viewers)
+ 
                     for session in self.streaming_server.active_streams.values()
                 )
+
                 
                 self.global_metrics['active_streams'] = active_streams
                 self.global_metrics['total_viewers'] = total_viewers
                 
                 # Calculate total bandwidth usage
+
                 total_bandwidth = sum(
                     session.metrics.bitrate_kbps 
                     for session in self.streaming_server.active_streams.values()
                 )
+
                 self.global_metrics['total_bandwidth_usage'] = total_bandwidth
                 
                 await asyncio.sleep(10)  # Update every 10 seconds
                 
             except Exception as e:
                 logger.error(f"Global metrics collection failed: {e}")
+
                 break
 
 

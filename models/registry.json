@@ -1,0 +1,108 @@
+{
+  "models": {
+    "content_classifier": {
+      "1.0.0": {
+        "model_id": "content_classifier",
+        "model_name": "Content Classification Model",
+        "model_type": "classification",
+        "framework": "tensorflow",
+        "version": "1.0.0",
+        "description": "Classifies content type and quality",
+        "hyperparameters": {
+          "learning_rate": 0.001,
+          "batch_size": 32,
+          "dropout_rate": 0.3,
+          "hidden_units": [
+            512,
+            256,
+            128
+          ]
+        },
+        "preprocessing_config": {},
+        "postprocessing_config": {},
+        "performance_metrics": [
+          "accuracy",
+          "precision",
+          "recall",
+          "f1_score"
+        ],
+        "training_config": {},
+        "inference_config": {},
+        "resource_requirements": {},
+        "tags": [
+          "content",
+          "classification",
+          "ai_service"
+        ]
+      }
+    },
+    "user_recommendation": {
+      "1.0.0": {
+        "model_id": "user_recommendation",
+        "model_name": "User Recommendation Model",
+        "model_type": "recommendation",
+        "framework": "pytorch",
+        "version": "1.0.0",
+        "description": "Recommends content and collaborations to users",
+        "hyperparameters": {
+          "embedding_dim": 128,
+          "num_factors": 64,
+          "learning_rate": 0.0001,
+          "regularization": 0.01
+        },
+        "preprocessing_config": {},
+        "postprocessing_config": {},
+        "performance_metrics": [
+          "ndcg",
+          "precision_at_k",
+          "recall_at_k"
+        ],
+        "training_config": {},
+        "inference_config": {},
+        "resource_requirements": {},
+        "tags": [
+          "recommendation",
+          "personalization",
+          "user_service"
+        ]
+      }
+    },
+    "fraud_detection": {
+      "1.0.0": {
+        "model_id": "fraud_detection",
+        "model_name": "Fraud Detection Model",
+        "model_type": "anomaly_detection",
+        "framework": "xgboost",
+        "version": "1.0.0",
+        "description": "Detects fraudulent activity and content",
+        "hyperparameters": {
+          "n_estimators": 100,
+          "max_depth": 6,
+          "learning_rate": 0.1,
+          "subsample": 0.8
+        },
+        "preprocessing_config": {},
+        "postprocessing_config": {},
+        "performance_metrics": [
+          "auc_roc",
+          "precision",
+          "recall",
+          "f1_score"
+        ],
+        "training_config": {},
+        "inference_config": {},
+        "resource_requirements": {},
+        "tags": [
+          "fraud",
+          "security",
+          "anomaly_detection"
+        ]
+      }
+    }
+  },
+  "artifacts": {
+    "content_classifier": {},
+    "user_recommendation": {},
+    "fraud_detection": {}
+  }
+}

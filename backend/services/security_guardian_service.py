@@ -115,7 +115,8 @@ class SecurityPolicy:
 
 @dataclass
 class SecurityAudit:
-    """Audit de sécurité"""
+    """
+        Audit de sécurité"""
     audit_id: str
     audit_type: str
     scope: Dict[str, Any]
@@ -131,7 +132,8 @@ class SecurityAudit:
 
 @dataclass
 class ThreatDetection:
-    """Détection de menace"""
+    """
+        Détection de menace"""
     detection_id: str
     threat_type: str
     threat_level: ThreatLevel
@@ -149,7 +151,8 @@ class ThreatDetection:
 
 @dataclass
 class ComplianceResult:
-    """Résultat de conformité"""
+    """
+        Résultat de conformité"""
     compliance_id: str
     standard: ComplianceStandard
     overall_status: bool
@@ -162,7 +165,8 @@ class ComplianceResult:
     next_assessment: datetime
 
 class SecurityManager:
-    """Gestionnaire principal de sécurité"""
+    """
+        Gestionnaire principal de sécurité"""
     
     def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
         self.redis = redis_client
@@ -174,24 +178,30 @@ class SecurityManager:
         self.threat_patterns = {}
         
     async def initialize_security_framework(self) -> Dict[str, Any]:
-        """Initialiser le framework de sécurité"""
+        """
+        Initialiser le framework de sécurité"""
         try:
             # Charger les politiques de sécurité
             security_policies = await self._load_security_policies()
             
             # Initialiser les modèles de détection de menaces
+
             threat_models = await self._initialize_threat_detection_models()
             
             # Configurer les règles de conformité
             compliance_rules = await self._configure_compliance_rules()
             
             # Préparer les mécanismes d'audit
+
             audit_mechanisms = await self._prepare_audit_mechanisms()
             
             # Activer le monitoring en temps réel
+
             monitoring_status = await self._activate_real_time_monitoring()
+
             
             logger.info("🛡️ Security framework initialized successfully")
+
             
             return {
                 "security_policies_loaded": len(security_policies),
@@ -205,6 +215,7 @@ class SecurityManager:
             
         except Exception as e:
             logger.error(f"Failed to initialize security framework: {e}")
+
             raise
     
     async def validate_security_request(
@@ -217,11 +228,13 @@ class SecurityManager:
             request_id = str(uuid.uuid4())
             
             # Analyser les métadonnées de la requête
+
             request_analysis = await self._analyze_request_metadata(
                 request_data, user_context
             )
             
             # Détecter les menaces potentielles
+
             threat_analysis = await self._detect_request_threats(
                 request_data, user_context, request_analysis
             )
@@ -232,16 +245,19 @@ class SecurityManager:
             )
             
             # Contrôler l'accès
+
             access_control = await self._enforce_access_control(
                 request_data, user_context
             )
             
             # Calculer le score de risque
+
             risk_score = await self._calculate_risk_score(
                 threat_analysis, compliance_check, access_control
             )
             
             # Déterminer l'action à prendre
+
             security_action = await self._determine_security_action(
                 risk_score, threat_analysis
             )
@@ -251,6 +267,8 @@ class SecurityManager:
                 request_id, request_data, user_context, 
                 threat_analysis, security_action
             )
+
+
             
             validation_result = {
                 "request_id": request_id,
@@ -265,6 +283,7 @@ class SecurityManager:
             }
             
             logger.info(f"Security validation completed for request {request_id}: {security_action['status']}")
+
             
             return {
                 "success": True,
@@ -274,6 +293,7 @@ class SecurityManager:
             
         except Exception as e:
             logger.error(f"Failed to validate security request: {e}")
+
             raise
 
     async def _analyze_request_metadata(
@@ -289,24 +309,29 @@ class SecurityManager:
             )
             
             # Analyser l'user agent
+
             user_agent_analysis = await self._analyze_user_agent(
                 user_context.get("user_agent")
             )
             
             # Analyser les patterns temporels
+
             temporal_analysis = await self._analyze_temporal_patterns(
                 user_context.get("user_id"), user_context.get("timestamp")
             )
             
             # Analyser la session
+
             session_analysis = await self._analyze_session_behavior(
                 user_context.get("session_id"), user_context
             )
             
             # Analyser la géolocalisation
+
             geo_analysis = await self._analyze_geolocation(
                 user_context.get("ip_address")
             )
+
             
             return {
                 "ip_analysis": ip_analysis,
@@ -323,6 +348,7 @@ class SecurityManager:
             
         except Exception as e:
             logger.error(f"Failed to analyze request metadata: {e}")
+
             raise
 
     async def _detect_request_threats(
@@ -334,56 +360,81 @@ class SecurityManager:
         """Détecter les menaces dans la requête"""
         try:
             threats_detected = []
+
             overall_threat_level = ThreatLevel.NONE
             
             # Détection d'injection SQL
             sql_injection = await self._detect_sql_injection(request_data)
+
             if sql_injection["detected"]:
                 threats_detected.append(sql_injection)
+
+
                 overall_threat_level = max(overall_threat_level, ThreatLevel.HIGH)
             
             # Détection XSS
             xss_detection = await self._detect_xss_attacks(request_data)
+
             if xss_detection["detected"]:
                 threats_detected.append(xss_detection)
+
+
                 overall_threat_level = max(overall_threat_level, ThreatLevel.HIGH)
             
             # Détection de brute force
+
             brute_force = await self._detect_brute_force(
                 user_context, request_analysis
             )
+
             if brute_force["detected"]:
                 threats_detected.append(brute_force)
+
+
                 overall_threat_level = max(overall_threat_level, ThreatLevel.MEDIUM)
             
             # Détection d'anomalies comportementales
+
             behavioral_anomaly = await self._detect_behavioral_anomalies(
                 user_context, request_analysis
             )
+
             if behavioral_anomaly["detected"]:
                 threats_detected.append(behavioral_anomaly)
+
+
                 overall_threat_level = max(overall_threat_level, ThreatLevel.MEDIUM)
             
             # Détection de bots malveillants
+
             bot_detection = await self._detect_malicious_bots(
                 user_context, request_analysis
             )
+
             if bot_detection["detected"]:
                 threats_detected.append(bot_detection)
+
+
                 overall_threat_level = max(overall_threat_level, ThreatLevel.MEDIUM)
             
             # Détection d'escalation de privilèges
+
             privilege_escalation = await self._detect_privilege_escalation(
                 request_data, user_context
             )
+
             if privilege_escalation["detected"]:
                 threats_detected.append(privilege_escalation)
+
+
                 overall_threat_level = max(overall_threat_level, ThreatLevel.CRITICAL)
             
             # Calculer le score de confiance global
+
             confidence_score = await self._calculate_threat_confidence(
                 threats_detected
             )
+
             
             return {
                 "threats_detected": threats_detected,
@@ -397,6 +448,7 @@ class SecurityManager:
             
         except Exception as e:
             logger.error(f"Failed to detect request threats: {e}")
+
             raise
 
 class ComplianceMonitor:
@@ -419,20 +471,27 @@ class ComplianceMonitor:
             for standard in standards:
                 if standard == ComplianceStandard.GDPR:
                     result = await self._assess_gdpr_compliance(assessment_scope)
+
                 elif standard == ComplianceStandard.CCPA:
                     result = await self._assess_ccpa_compliance(assessment_scope)
+
                 elif standard == ComplianceStandard.SOX:
                     result = await self._assess_sox_compliance(assessment_scope)
+
                 elif standard == ComplianceStandard.PCI_DSS:
                     result = await self._assess_pci_dss_compliance(assessment_scope)
+
                 elif standard == ComplianceStandard.HIPAA:
                     result = await self._assess_hipaa_compliance(assessment_scope)
+
                 elif standard == ComplianceStandard.ISO27001:
                     result = await self._assess_iso27001_compliance(assessment_scope)
+
                 else:
                     result = await self._assess_generic_compliance(
                         assessment_scope, standard
                     )
+
                 
                 compliance_results[standard.value] = result
             
@@ -440,8 +499,10 @@ class ComplianceMonitor:
             consolidated_report = await self._generate_consolidated_compliance_report(
                 compliance_results
             )
+
             
             logger.info(f"Compliance assessment completed for {len(standards)} standards")
+
             
             return {
                 "individual_results": compliance_results,
@@ -453,6 +514,7 @@ class ComplianceMonitor:
             
         except Exception as e:
             logger.error(f"Failed to assess compliance: {e}")
+
             raise
 
     async def _assess_gdpr_compliance(
@@ -462,10 +524,13 @@ class ComplianceMonitor:
         """Évaluer la conformité GDPR"""
         try:
             violations = []
+
             compliance_score = 1.0
             
             # Vérifier le consentement
+
             consent_check = await self._verify_gdpr_consent(assessment_scope)
+
             if not consent_check["compliant"]:
                 violations.append({
                     "article": "Article 6 - Lawfulness of processing",
@@ -473,10 +538,13 @@ class ComplianceMonitor:
                     "severity": "high",
                     "remediation": consent_check["remediation"]
                 })
+
                 compliance_score -= 0.3
             
             # Vérifier les droits des personnes concernées
+
             rights_check = await self._verify_data_subject_rights(assessment_scope)
+
             if not rights_check["compliant"]:
                 violations.append({
                     "article": "Article 15-22 - Rights of the data subject",
@@ -484,10 +552,13 @@ class ComplianceMonitor:
                     "severity": "medium",
                     "remediation": rights_check["remediation"]
                 })
+
                 compliance_score -= 0.2
             
             # Vérifier la sécurité des données
+
             security_check = await self._verify_gdpr_security(assessment_scope)
+
             if not security_check["compliant"]:
                 violations.append({
                     "article": "Article 32 - Security of processing",
@@ -495,10 +566,13 @@ class ComplianceMonitor:
                     "severity": "high",
                     "remediation": security_check["remediation"]
                 })
+
                 compliance_score -= 0.3
             
             # Vérifier les transferts internationaux
+
             transfer_check = await self._verify_international_transfers(assessment_scope)
+
             if not transfer_check["compliant"]:
                 violations.append({
                     "article": "Chapter V - Transfers of personal data to third countries",
@@ -506,9 +580,12 @@ class ComplianceMonitor:
                     "severity": "medium",
                     "remediation": transfer_check["remediation"]
                 })
+
                 compliance_score -= 0.2
+
             
             compliance_score = max(0.0, compliance_score)
+
             
             return ComplianceResult(
                 compliance_id=str(uuid.uuid4()),
@@ -522,9 +599,11 @@ class ComplianceMonitor:
                 last_assessment=datetime.utcnow(),
                 next_assessment=datetime.utcnow() + timedelta(days=90)
             )
+
             
         except Exception as e:
             logger.error(f"Failed to assess GDPR compliance: {e}")
+
             raise
 
 class SecurityGuardianService:
@@ -539,7 +618,8 @@ class SecurityGuardianService:
         self.security_metrics = {}
         
     async def initialize_service(self) -> Dict[str, Any]:
-        """Initialiser le service guardian"""
+        """
+        Initialiser le service guardian"""
         try:
             # Initialiser le framework de sécurité
             security_framework = await self.security_manager.initialize_security_framework()
@@ -548,6 +628,7 @@ class SecurityGuardianService:
             compliance_monitoring = await self._activate_compliance_monitoring()
             
             # Démarrer les processus de sécurité automatiques
+
             automated_processes = await self._start_automated_security_processes()
             
             # Configurer les alertes de sécurité
@@ -555,8 +636,10 @@ class SecurityGuardianService:
             
             # Initialiser les métriques de sécurité
             security_metrics = await self._initialize_security_metrics()
+
             
             logger.info("🛡️ Security Guardian Service initialized successfully")
+
             
             return {
                 "service": "SecurityGuardianService",
@@ -573,6 +656,7 @@ class SecurityGuardianService:
             
         except Exception as e:
             logger.error(f"Failed to initialize security guardian service: {e}")
+
             raise
     
     async def execute_comprehensive_security_scan(
@@ -584,9 +668,11 @@ class SecurityGuardianService:
             scan_id = str(uuid.uuid4())
             
             # Phase 1: Analyse des vulnérabilités
+
             vulnerability_scan = await self._execute_vulnerability_scan(scan_scope)
             
             # Phase 2: Détection de menaces
+
             threat_detection = await self._execute_threat_detection_scan(scan_scope)
             
             # Phase 3: Audit de conformité
@@ -615,9 +701,12 @@ class SecurityGuardianService:
             )
             
             # Phase 7: Recommandations d'amélioration
+
             improvement_recommendations = await self._generate_security_improvements(
                 security_report
             )
+
+
             
             scan_result = {
                 "scan_id": scan_id,
@@ -634,8 +723,10 @@ class SecurityGuardianService:
             
             # Sauvegarder les résultats
             await self._save_security_scan_results(scan_id, scan_result)
+
             
             logger.info(f"Comprehensive security scan completed: {scan_id}")
+
             
             return {
                 "success": True,
@@ -645,6 +736,7 @@ class SecurityGuardianService:
             
         except Exception as e:
             logger.error(f"Failed to execute comprehensive security scan: {e}")
+
             raise
     
     # Méthodes privées pour l'implémentation détaillée...

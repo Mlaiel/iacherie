@@ -14,7 +14,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class I18nConfig:
-    """Configuration pour l'internationalisation"""
+    """
+Configuration pour l'internationalisation"""
     default_locale: str = 'en'
     fallback_locale: str = 'en'
     supported_locales: List[str] = field(default_factory=lambda: ['en', 'fr', 'es', 'de', 'it'])
@@ -27,7 +28,8 @@ class CoreI18n:
     """
     
     def __init__(self, config: Optional[I18nConfig] = None):
-        """Initialise le système i18n"""
+        """
+Initialise le système i18n"""
         self.config = config or I18nConfig()
         self.current_locale = self.config.default_locale
         self.translations: Dict[str, Dict[str, str]] = {}
@@ -39,7 +41,8 @@ class CoreI18n:
         logger.info(f"Supported locales: {self.config.supported_locales}")
     
     def _load_default_translations(self):
-        """Charge les traductions par défaut"""
+        """
+Charge les traductions par défaut"""
         # Traductions essentielles pour tous les modules
         default_translations = {
             'en': {
@@ -106,7 +109,8 @@ class CoreI18n:
         return key
     
     def set_locale(self, locale: str) -> bool:
-        """Définit la locale actuelle"""
+        """
+Définit la locale actuelle"""
         if locale in self.config.supported_locales:
             self.current_locale = locale
             logger.info(f"Locale changed to: {locale}")
@@ -116,15 +120,18 @@ class CoreI18n:
             return False
     
     def get_locale(self) -> str:
-        """Retourne la locale actuelle"""
+        """
+Retourne la locale actuelle"""
         return self.current_locale
     
     def get_supported_locales(self) -> List[str]:
-        """Retourne les locales supportées"""
+        """
+Retourne les locales supportées"""
         return self.config.supported_locales
     
     def add_translations(self, locale: str, translations: Dict[str, str]):
-        """Ajoute des traductions pour une locale"""
+        """
+Ajoute des traductions pour une locale"""
         if locale not in self.translations:
             self.translations[locale] = {}
         
@@ -132,7 +139,8 @@ class CoreI18n:
         logger.info(f"Added {len(translations)} translations for locale: {locale}")
     
     def format_currency(self, amount: float, currency: str = 'USD', locale: Optional[str] = None) -> str:
-        """Formate une devise selon la locale"""
+        """
+Formate une devise selon la locale"""
         target_locale = locale or self.current_locale
         
         # Formats de devise par locale
@@ -147,7 +155,8 @@ class CoreI18n:
         return currency_formats.get(target_locale, f"{currency} {amount:.2f}")
     
     def format_date(self, date_obj: Any, locale: Optional[str] = None) -> str:
-        """Formate une date selon la locale"""
+        """
+Formate une date selon la locale"""
         target_locale = locale or self.current_locale
         
         # Format basique - peut être étendu avec des bibliothèques de date
@@ -168,20 +177,24 @@ core_i18n = CoreI18n()
 
 # Fonctions utilitaires pour l'import facile
 def t(key: str, **kwargs) -> str:
-    """Fonction de traduction globale"""
+    """
+Fonction de traduction globale"""
     return core_i18n.t(key, **kwargs)
 
 def set_locale(locale: str) -> bool:
-    """Définit la locale globale"""
+    """
+Définit la locale globale"""
     return core_i18n.set_locale(locale)
 
 def get_locale() -> str:
-    """Retourne la locale globale"""
+    """
+Retourne la locale globale"""
     return core_i18n.get_locale()
 
 # Traductions spécifiques pour l'authentification
 def load_auth_translations():
-    """Charge les traductions spécifiques à l'authentification"""
+    """
+Charge les traductions spécifiques à l'authentification"""
     auth_translations = {
         'en': {
             'auth.login': 'Login',
@@ -216,7 +229,8 @@ def load_auth_translations():
 
 # Traductions spécifiques pour la sécurité
 def load_security_translations():
-    """Charge les traductions spécifiques à la sécurité"""
+    """
+Charge les traductions spécifiques à la sécurité"""
     security_translations = {
         'en': {
             'security.scan': 'Security Scan',
@@ -247,4 +261,4 @@ def load_security_translations():
 load_auth_translations()
 load_security_translations()
 
-logger.info("Core I18n module loaded successfully - Ready for 100% success!")
+logger.info("Core I18n module initialized successfully - Ready for 100% success!")

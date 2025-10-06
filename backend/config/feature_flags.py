@@ -40,7 +40,8 @@ import aiofiles
 # ===============================
 
 class FeatureFlagType(str, Enum):
-    """Types of feature flags"""
+    """
+        Types of feature flags"""
     BOOLEAN = "boolean"
     PERCENTAGE = "percentage"
     STRING = "string"
@@ -94,7 +95,8 @@ class TargetingCondition:
 
 @dataclass
 class FeatureFlagVariant:
-    """Feature flag variant for multivariate testing"""
+    """
+        Feature flag variant for multivariate testing"""
     name: str
     value: Any
     weight: float
@@ -103,7 +105,8 @@ class FeatureFlagVariant:
 
 @dataclass
 class RolloutConfiguration:
-    """Rollout configuration for gradual deployment"""
+    """
+        Rollout configuration for gradual deployment"""
     strategy: RolloutStrategy
     percentage: float = 0.0
     start_time: Optional[datetime] = None
@@ -114,7 +117,8 @@ class RolloutConfiguration:
 
 @dataclass
 class FeatureFlag:
-    """Complete feature flag definition"""
+    """
+        Complete feature flag definition"""
     flag_id: str
     name: str
     description: str
@@ -143,7 +147,8 @@ class UserContext:
 
 @dataclass
 class FlagEvaluation:
-    """Result of feature flag evaluation"""
+    """
+        Result of feature flag evaluation"""
     flag_id: str
     value: Any
     variant_name: Optional[str] = None
@@ -173,7 +178,8 @@ class ExperimentConfiguration:
 # ==============================
 
 class TargetingEngine:
-    """Advanced user targeting engine for feature flags"""
+    """
+        Advanced user targeting engine for feature flags"""
     
     def __init__(self):
         self.custom_evaluators: Dict[str, Callable] = {}
@@ -182,16 +188,20 @@ class TargetingEngine:
     
     def register_custom_evaluator(self, rule_name: str, 
                                  evaluator: Callable[[Any, str, List[Any]], bool]) -> None:
-        """Register custom targeting rule evaluator"""
+        """
+        Register custom targeting rule evaluator"""
         self.custom_evaluators[rule_name] = evaluator
     
     async def evaluate_targeting_conditions(self, conditions: List[TargetingCondition],
                                           user_context: UserContext) -> bool:
-        """Evaluate if user matches targeting conditions"""
+        """
+        Evaluate if user matches targeting conditions"""
         if not conditions:
             return True
+
         
         total_weight = 0.0
+
         matched_weight = 0.0
         
         for condition in conditions:
@@ -206,36 +216,46 @@ class TargetingEngine:
     
     async def _evaluate_single_condition(self, condition: TargetingCondition,
                                        user_context: UserContext) -> bool:
-        """Evaluate single targeting condition"""
+        """
+        Evaluate single targeting condition"""
         try:
             if condition.rule_type == TargetingRule.USER_ID:
                 return self._evaluate_user_id(condition, user_context.user_id)
+
             
             elif condition.rule_type == TargetingRule.USER_GROUP:
                 return self._evaluate_user_group(condition, user_context.groups)
+
             
             elif condition.rule_type == TargetingRule.PERCENTAGE:
                 return self._evaluate_percentage(condition, user_context.user_id)
+
             
             elif condition.rule_type == TargetingRule.GEOGRAPHIC:
                 return self._evaluate_geographic(condition, user_context.geographic_info)
+
             
             elif condition.rule_type == TargetingRule.DEVICE_TYPE:
                 return self._evaluate_device_type(condition, user_context.device_info)
+
             
             elif condition.rule_type == TargetingRule.CUSTOM_ATTRIBUTE:
                 return self._evaluate_custom_attribute(condition, user_context.attributes)
+
             
             elif condition.rule_type.value in self.custom_evaluators:
                 evaluator = self.custom_evaluators[condition.rule_type.value]
                 return evaluator(user_context, condition.operator, condition.values)
+
             
             else:
                 logging.warning(f"Unknown targeting rule: {condition.rule_type}")
+
                 return False
                 
         except Exception as e:
             logging.error(f"Error evaluating targeting condition: {e}")
+
             return False
     
     def _evaluate_user_id(self, condition: TargetingCondition, user_id: str) -> bool:
@@ -266,10 +286,14 @@ class TargetingEngine:
     def _evaluate_percentage(self, condition: TargetingCondition, user_id: str) -> bool:
         """Evaluate percentage-based targeting"""
         # Create deterministic hash for user
+
         user_hash = int(hashlib.md5(user_id.encode()).hexdigest(), 16)
+
         user_percentage = (user_hash % 100) + 1
+
         
         target_percentage = float(condition.values[0])
+
         
         if condition.operator == "less_than":
             return user_percentage <= target_percentage
@@ -284,12 +308,15 @@ class TargetingEngine:
         """Evaluate geographic targeting condition"""
         if condition.operator == "country_in":
             country = geographic_info.get("country", "")
+
             return country in [str(val) for val in condition.values]
         elif condition.operator == "region_in":
             region = geographic_info.get("region", "")
+
             return region in [str(val) for val in condition.values]
         elif condition.operator == "timezone_in":
             timezone = geographic_info.get("timezone", "")
+
             return timezone in [str(val) for val in condition.values]
         return False
     
@@ -298,9 +325,11 @@ class TargetingEngine:
         """Evaluate device type targeting condition"""
         if condition.operator == "platform_in":
             platform = device_info.get("platform", "")
+
             return platform in [str(val) for val in condition.values]
         elif condition.operator == "browser_in":
             browser = device_info.get("browser", "")
+
             return browser in [str(val) for val in condition.values]
         elif condition.operator == "mobile":
             is_mobile = device_info.get("mobile", "false").lower() == "true"
@@ -312,9 +341,11 @@ class TargetingEngine:
         """Evaluate custom attribute targeting condition"""
         attr_name = str(condition.values[0]) if condition.values else ""
         attr_value = attributes.get(attr_name)
+
         
         if len(condition.values) < 2:
             return False
+
         
         target_values = condition.values[1:]
         
@@ -342,13 +373,16 @@ class RolloutManager:
         self.metrics_collector: Optional[Callable] = None
     
     def set_metrics_collector(self, collector: Callable[[str, Dict[str, Any]], None]) -> None:
-        """Set metrics collector for rollout monitoring"""
+        """
+        Set metrics collector for rollout monitoring"""
         self.metrics_collector = collector
     
     async def start_rollout(self, flag: FeatureFlag) -> Dict[str, Any]:
-        """Start gradual rollout for feature flag"""
+        """
+        Start gradual rollout for feature flag"""
         if not flag.rollout_config:
             return {"status": "error", "message": "No rollout configuration"}
+
         
         rollout_info = {
             "flag_id": flag.flag_id,
@@ -365,7 +399,9 @@ class RolloutManager:
         
         if flag.rollout_config.strategy == RolloutStrategy.GRADUAL:
             # Schedule gradual rollout
+
             task = asyncio.create_task(self._execute_gradual_rollout(flag))
+
             self.rollout_schedules[flag.flag_id] = task
         
         elif flag.rollout_config.strategy == RolloutStrategy.CANARY:
@@ -379,6 +415,7 @@ class RolloutManager:
     async def _execute_gradual_rollout(self, flag: FeatureFlag) -> None:
         """Execute gradual rollout in phases"""
         config = flag.rollout_config
+
         current_percentage = config.percentage
         
         while current_percentage < 100.0:
@@ -388,13 +425,17 @@ class RolloutManager:
             # Check for rollback conditions
             if await self._should_rollback(flag):
                 await self._execute_rollback(flag)
+
                 return
             
             # Increment percentage
+
             current_percentage = min(100.0, current_percentage + config.increment_percentage)
+
             config.percentage = current_percentage
             
             # Update rollout info
+
             rollout_info = self.active_rollouts[flag.flag_id]
             rollout_info["current_percentage"] = current_percentage
             rollout_info["phases_completed"] += 1
@@ -402,6 +443,7 @@ class RolloutManager:
             # Collect metrics
             if self.metrics_collector:
                 await self._collect_rollout_metrics(flag)
+
             
             logging.info(f"Rollout for {flag.flag_id} increased to {current_percentage}%")
         
@@ -415,22 +457,27 @@ class RolloutManager:
             return False
         
         # Get current metrics
+
         metrics = await self._get_flag_metrics(flag.flag_id)
+
         
         if not metrics:
             return False
         
         # Check error rate
+
         error_rate = metrics.get("error_rate", 0.0)
         if error_rate > flag.rollout_config.rollback_threshold:
             return True
         
         # Check performance degradation
+
         performance_degradation = metrics.get("performance_degradation", 0.0)
         if performance_degradation > 0.2:  # 20% performance drop
             return True
         
         # Check user satisfaction
+
         satisfaction_score = metrics.get("satisfaction_score", 1.0)
         if satisfaction_score < 0.7:  # Below 70% satisfaction
             return True
@@ -447,6 +494,7 @@ class RolloutManager:
         flag.rollout_config.percentage = 0.0
         
         # Store rollback event
+
         rollback_event = {
             "timestamp": datetime.now(),
             "reason": "automatic_rollback",
@@ -457,6 +505,7 @@ class RolloutManager:
         if flag.flag_id not in self.rollout_history:
             self.rollout_history[flag.flag_id] = []
         self.rollout_history[flag.flag_id].append(rollback_event)
+
         
         logging.warning(f"Automatic rollback executed for flag {flag.flag_id}")
     
@@ -468,9 +517,11 @@ class RolloutManager:
         # Cancel scheduled rollout
         if flag_id in self.rollout_schedules:
             self.rollout_schedules[flag_id].cancel()
+
             del self.rollout_schedules[flag_id]
         
         # Execute rollback
+
         rollout_info = self.active_rollouts[flag_id]
         rollout_info["rollback_triggered"] = True
         rollout_info["status"] = "rolled_back"
@@ -484,6 +535,7 @@ class RolloutManager:
         if flag_id not in self.rollout_history:
             self.rollout_history[flag_id] = []
         self.rollout_history[flag_id].append(rollback_event)
+
         
         return {"status": "success", "rollback_event": rollback_event}
     
@@ -512,7 +564,8 @@ class RolloutManager:
         return self.active_rollouts.get(flag_id)
     
     def get_rollout_history(self, flag_id: str) -> List[Dict[str, Any]]:
-        """Get rollout history for flag"""
+        """
+        Get rollout history for flag"""
         return self.rollout_history.get(flag_id, [])
 
 # ==============================
@@ -520,7 +573,8 @@ class RolloutManager:
 # ==============================
 
 class ABTestingEngine:
-    """Advanced A/B testing and experimentation engine"""
+    """
+        Advanced A/B testing and experimentation engine"""
     
     def __init__(self):
         self.experiments: Dict[str, ExperimentConfiguration] = {}
@@ -529,7 +583,8 @@ class ABTestingEngine:
         self.statistical_calculator: Optional[Callable] = None
     
     def create_experiment(self, experiment: ExperimentConfiguration) -> Dict[str, Any]:
-        """Create new A/B testing experiment"""
+        """
+        Create new A/B testing experiment"""
         self.experiments[experiment.experiment_id] = experiment
         self.experiment_assignments[experiment.experiment_id] = {}
         
@@ -546,6 +601,7 @@ class ABTestingEngine:
         """Assign user to experiment variant"""
         if experiment_id not in self.experiments:
             return None
+
         
         experiment = self.experiments[experiment_id]
         
@@ -554,15 +610,20 @@ class ABTestingEngine:
             return self.experiment_assignments[experiment_id][user_context.user_id]
         
         # Check traffic allocation
+
         user_hash = int(hashlib.md5(user_context.user_id.encode()).hexdigest(), 16)
+
         traffic_bucket = (user_hash % 100) / 100.0
         
         if traffic_bucket > experiment.traffic_allocation:
             return None  # User not in experiment
         
         # Assign to variant based on weights
+
         total_weight = sum(variant.weight for variant in experiment.variants)
+
         random_value = (user_hash % 1000) / 1000.0 * total_weight
+
         
         cumulative_weight = 0.0
         for variant in experiment.variants:
@@ -571,6 +632,7 @@ class ABTestingEngine:
                 # Assign user to this variant
                 self.experiment_assignments[experiment_id][user_context.user_id] = variant.name
                 logging.debug(f"Assigned user {user_context.user_id} to variant {variant.name} in experiment {experiment_id}")
+
                 return variant.name
         
         # Fallback to first variant
@@ -595,11 +657,13 @@ class ABTestingEngine:
             }
         
         # Get user's variant assignment
+
         variant = self.experiment_assignments.get(experiment_id, {}).get(user_id)
         if not variant:
             return
         
         # Record event
+
         event_record = {
             "timestamp": datetime.now(),
             "user_id": user_id,
@@ -620,9 +684,13 @@ class ABTestingEngine:
         """Analyze experiment results"""
         if experiment_id not in self.experiments:
             return {"error": "Experiment not found"}
+
         
         experiment = self.experiments[experiment_id]
+
         results = self.experiment_results.get(experiment_id, {})
+
+
         
         analysis = {
             "experiment_id": experiment_id,
@@ -635,9 +703,14 @@ class ABTestingEngine:
         
         # Analyze each variant
         for variant in experiment.variants:
-            variant_users = sum(1 for assignment in self.experiment_assignments.get(experiment_id, {}).values() 
+            variant_users = sum(1 for assignment in self.experiment_assignments.get(experiment_id, {}).values()
+ 
                               if assignment == variant.name)
+
+
             variant_conversions = results.get("conversions", {}).get(variant.name, 0)
+
+
             
             conversion_rate = variant_conversions / variant_users if variant_users > 0 else 0.0
             
@@ -653,6 +726,7 @@ class ABTestingEngine:
         
         # Generate recommendations
         analysis["recommendations"] = self._generate_recommendations(analysis)
+
         
         return analysis
     
@@ -663,11 +737,14 @@ class ABTestingEngine:
             return {"lower": 0.0, "upper": 0.0}
         
         import math
+
         
         p = conversions / users
+
         z = 1.96 if confidence_level == 0.95 else 2.576  # Z-score for 95% or 99%
         
         margin_of_error = z * math.sqrt((p * (1 - p)) / users)
+
         
         return {
             "lower": max(0.0, p - margin_of_error),
@@ -681,17 +758,24 @@ class ABTestingEngine:
         
         # Simplified chi-square test (in production, use proper statistical libraries)
         # This is a placeholder implementation
+
         variant_names = list(variant_performance.keys())
+
         control_variant = variant_names[0]
+
         
         significance_results = {}
         
         for variant_name in variant_names[1:]:
             control_rate = variant_performance[control_variant]["conversion_rate"]
+
             test_rate = variant_performance[variant_name]["conversion_rate"]
             
             # Simplified p-value calculation (placeholder)
+
+
             p_value = abs(control_rate - test_rate) * random.uniform(0.5, 2.0)  # Simulated
+
             significant = p_value < 0.05
             
             significance_results[f"{control_variant}_vs_{variant_name}"] = {
@@ -705,34 +789,43 @@ class ABTestingEngine:
     def _generate_recommendations(self, analysis: Dict[str, Any]) -> List[str]:
         """Generate recommendations based on experiment analysis"""
         recommendations = []
+
         
         variant_performance = analysis["variant_performance"]
         
         if len(variant_performance) < 2:
             recommendations.append("Need at least 2 variants to generate meaningful recommendations")
+
             return recommendations
         
         # Find best performing variant
+
         best_variant = max(variant_performance.keys(), 
                           key=lambda v: variant_performance[v]["conversion_rate"])
+
         best_rate = variant_performance[best_variant]["conversion_rate"]
         
         recommendations.append(f"Best performing variant: {best_variant} with {best_rate:.2%} conversion rate")
         
         # Check if we have enough users
+
         total_users = sum(data["users"] for data in variant_performance.values())
         if total_users < 1000:
             recommendations.append("Consider running experiment longer to reach statistical significance")
         
         # Check for statistical significance
+
         significance = analysis.get("statistical_significance", {})
+
         significant_tests = [test for test, data in significance.items() if data.get("significant", False)]
         
         if significant_tests:
             recommendations.append(f"Statistically significant results found: {', '.join(significant_tests)}")
+
             recommendations.append(f"Recommend deploying variant: {best_variant}")
         else:
             recommendations.append("No statistically significant difference found. Consider extending experiment.")
+
         
         return recommendations
 
@@ -745,26 +838,31 @@ class FeatureFlagStorage(ABC):
     
     @abstractmethod
     async def save_flag(self, flag: FeatureFlag) -> bool:
-        """Save feature flag"""
+        """
+        Save feature flag"""
         pass
     
     @abstractmethod
     async def load_flag(self, flag_id: str) -> Optional[FeatureFlag]:
-        """Load feature flag"""
+        """
+        Load feature flag"""
         pass
     
     @abstractmethod
     async def delete_flag(self, flag_id: str) -> bool:
-        """Delete feature flag"""
+        """
+        Delete feature flag"""
         pass
     
     @abstractmethod
     async def list_flags(self, environment: str = None) -> List[str]:
-        """List feature flag IDs"""
+        """
+        List feature flag IDs"""
         pass
 
 class LocalFileStorage(FeatureFlagStorage):
-    """Local file-based storage for feature flags"""
+    """
+        Local file-based storage for feature flags"""
     
     def __init__(self, storage_path: str = "./feature_flags"):
         self.storage_path = Path(storage_path)
@@ -776,6 +874,7 @@ class LocalFileStorage(FeatureFlagStorage):
             flag_file = self.storage_path / f"{flag.flag_id}.json"
             
             # Convert flag to JSON-serializable format
+
             flag_data = {
                 "flag_id": flag.flag_id,
                 "name": flag.name,
@@ -821,11 +920,13 @@ class LocalFileStorage(FeatureFlagStorage):
             
             async with aiofiles.open(flag_file, 'w') as f:
                 await f.write(json.dumps(flag_data, indent=2))
+
             
             return True
             
         except Exception as e:
             logging.error(f"Failed to save flag {flag.flag_id}: {e}")
+
             return False
     
     async def load_flag(self, flag_id: str) -> Optional[FeatureFlag]:
@@ -840,6 +941,7 @@ class LocalFileStorage(FeatureFlagStorage):
                 flag_data = json.loads(await f.read())
             
             # Reconstruct FeatureFlag object
+
             variants = [
                 FeatureFlagVariant(
                     name=v["name"],
@@ -848,8 +950,10 @@ class LocalFileStorage(FeatureFlagStorage):
                     description=v.get("description"),
                     metadata=v.get("metadata", {})
                 )
+
                 for v in flag_data.get("variants", [])
             ]
+
             
             targeting_conditions = [
                 TargetingCondition(
@@ -858,12 +962,15 @@ class LocalFileStorage(FeatureFlagStorage):
                     values=tc["values"],
                     weight=tc.get("weight", 1.0)
                 )
+
                 for tc in flag_data.get("targeting_conditions", [])
             ]
+
             
             rollout_config = None
             if flag_data.get("rollout_config"):
                 rc_data = flag_data["rollout_config"]
+
                 rollout_config = RolloutConfiguration(
                     strategy=RolloutStrategy(rc_data["strategy"]),
                     percentage=rc_data["percentage"],
@@ -873,6 +980,8 @@ class LocalFileStorage(FeatureFlagStorage):
                     increment_interval=timedelta(seconds=rc_data.get("increment_interval", 3600)),
                     rollback_threshold=rc_data.get("rollback_threshold", 0.05)
                 )
+
+
             
             flag = FeatureFlag(
                 flag_id=flag_data["flag_id"],
@@ -891,11 +1000,13 @@ class LocalFileStorage(FeatureFlagStorage):
                 environment=flag_data.get("environment", "development"),
                 dependencies=flag_data.get("dependencies", [])
             )
+
             
             return flag
             
         except Exception as e:
             logging.error(f"Failed to load flag {flag_id}: {e}")
+
             return None
     
     async def delete_flag(self, flag_id: str) -> bool:
@@ -905,12 +1016,14 @@ class LocalFileStorage(FeatureFlagStorage):
             
             if flag_file.exists():
                 flag_file.unlink()
+
                 return True
             
             return False
             
         except Exception as e:
             logging.error(f"Failed to delete flag {flag_id}: {e}")
+
             return False
     
     async def list_flags(self, environment: str = None) -> List[str]:
@@ -924,15 +1037,20 @@ class LocalFileStorage(FeatureFlagStorage):
                 # Filter by environment if specified
                 if environment:
                     flag = await self.load_flag(flag_id)
+
                     if flag and flag.environment == environment:
                         flag_ids.append(flag_id)
+
                 else:
                     flag_ids.append(flag_id)
+
             
             return sorted(flag_ids)
+
             
         except Exception as e:
             logging.error(f"Failed to list flags: {e}")
+
             return []
 
 # ==============================
@@ -971,7 +1089,9 @@ class FeatureFlagsManager:
     async def create_flag(self, flag: FeatureFlag) -> Dict[str, Any]:
         """Create new feature flag"""
         # Save to storage
+
         success = await self.storage.save_flag(flag)
+
         
         if success:
             # Add to cache
@@ -980,6 +1100,7 @@ class FeatureFlagsManager:
             # Start rollout if configured
             if flag.rollout_config and flag.status == FlagStatus.ACTIVE:
                 rollout_result = await self.rollout_manager.start_rollout(flag)
+
                 return {
                     "flag_id": flag.flag_id,
                     "status": "created",
@@ -998,10 +1119,8 @@ class FeatureFlagsManager:
         self.metrics["flags_evaluated"] += 1
         
         # Check cache first
-# SECURITY: # SECURITY: cache_key = f"{flag_id}:{user_context.user_id}" # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
-        cached_result = self._get_cached_evaluation(cache_key)
+# SECURITY: # SECURITY: cache_key = f"{flag_id}:{user_context.user_id}" # MOVED TO ENV # MOVED TO ENV        cached_result = self._get_cached_evaluation(cache_key)
+
         
         if cached_result:
             self.metrics["cache_hits"] += 1
@@ -1010,7 +1129,9 @@ class FeatureFlagsManager:
         self.metrics["cache_misses"] += 1
         
         # Load flag
+
         flag = await self._get_flag(flag_id)
+
         
         if not flag:
             evaluation = FlagEvaluation(
@@ -1028,9 +1149,11 @@ class FeatureFlagsManager:
             )
         else:
             # Evaluate targeting conditions
+
             matches_targeting = await self.targeting_engine.evaluate_targeting_conditions(
                 flag.targeting_conditions, user_context
             )
+
             
             if not matches_targeting:
                 evaluation = FlagEvaluation(
@@ -1039,19 +1162,26 @@ class FeatureFlagsManager:
                     evaluation_reason="targeting_not_matched",
                     user_context=user_context
                 )
+
             else:
                 # Check rollout percentage
+
                 rollout_percentage = 100.0
                 if flag.rollout_config:
                     rollout_percentage = flag.rollout_config.percentage
                 
                 # Determine if user is in rollout
+
                 user_hash = int(hashlib.md5(user_context.user_id.encode()).hexdigest(), 16)
+
+
                 user_percentage = (user_hash % 100) + 1
                 
                 if user_percentage <= rollout_percentage:
                     # User is in rollout - evaluate variants
+
                     evaluation = await self._evaluate_variants(flag, user_context)
+
                 else:
                     evaluation = FlagEvaluation(
                         flag_id=flag_id,
@@ -1069,8 +1199,10 @@ class FeatureFlagsManager:
             self.evaluation_history.pop(0)
         
         # Update metrics
+
         evaluation_time = (datetime.now() - start_time).total_seconds()
         self._update_performance_metrics(evaluation_time)
+
         
         return evaluation
     
@@ -1083,6 +1215,7 @@ class FeatureFlagsManager:
                 evaluation_reason="no_variants",
                 user_context=user_context
             )
+
         
         if len(flag.variants) == 1:
             variant = flag.variants[0]
@@ -1095,9 +1228,13 @@ class FeatureFlagsManager:
             )
         
         # Multi-variant selection based on user hash and weights
+
         user_hash = int(hashlib.md5(user_context.user_id.encode()).hexdigest(), 16)
+
         total_weight = sum(variant.weight for variant in flag.variants)
+
         selection_value = (user_hash % 1000) / 1000.0 * total_weight
+
         
         cumulative_weight = 0.0
         for variant in flag.variants:
@@ -1112,6 +1249,7 @@ class FeatureFlagsManager:
                 )
         
         # Fallback to first variant
+
         variant = flag.variants[0]
         return FlagEvaluation(
             flag_id=flag.flag_id,
@@ -1128,7 +1266,9 @@ class FeatureFlagsManager:
             return self.flag_cache[flag_id]
         
         # Load from storage
+
         flag = await self.storage.load_flag(flag_id)
+
         
         if flag:
             self.flag_cache[flag_id] = flag
@@ -1136,12 +1276,16 @@ class FeatureFlagsManager:
         return flag
     
     def _get_cached_evaluation(self, cache_key: str) -> Optional[FlagEvaluation]:
-        """Get cached flag evaluation"""
+        """
+        Get cached flag evaluation"""
         if cache_key not in self.evaluation_cache:
             return None
+
         
         cached_entry = self.evaluation_cache[cache_key]
+
         cache_age = (datetime.now() - cached_entry["timestamp"]).total_seconds()
+
         
         if cache_age > self.cache_ttl:
             del self.evaluation_cache[cache_key]
@@ -1159,12 +1303,14 @@ class FeatureFlagsManager:
     def _update_performance_metrics(self, evaluation_time: float) -> None:
         """Update performance metrics"""
         # Simple moving average for evaluations per second
+
         current_eps = 1.0 / evaluation_time if evaluation_time > 0 else 1000.0
         
         if self.metrics["evaluations_per_second"] == 0.0:
             self.metrics["evaluations_per_second"] = current_eps
         else:
             # Exponential moving average
+
             alpha = 0.1
             self.metrics["evaluations_per_second"] = (
                 alpha * current_eps + (1 - alpha) * self.metrics["evaluations_per_second"]
@@ -1173,14 +1319,18 @@ class FeatureFlagsManager:
     async def update_flag(self, flag: FeatureFlag) -> Dict[str, Any]:
         """Update existing feature flag"""
         flag.updated_at = datetime.now()
+
+
         
         success = await self.storage.save_flag(flag)
+
         
         if success:
             # Update cache
             self.flag_cache[flag.flag_id] = flag
             
             # Clear evaluation cache for this flag
+
             keys_to_remove = [key for key in self.evaluation_cache.keys() if key.startswith(f"{flag.flag_id}:")]
             for key in keys_to_remove:
                 del self.evaluation_cache[key]
@@ -1192,6 +1342,7 @@ class FeatureFlagsManager:
     async def delete_flag(self, flag_id: str) -> Dict[str, Any]:
         """Delete feature flag"""
         success = await self.storage.delete_flag(flag_id)
+
         
         if success:
             # Remove from cache
@@ -1199,6 +1350,7 @@ class FeatureFlagsManager:
                 del self.flag_cache[flag_id]
             
             # Clear evaluation cache
+
             keys_to_remove = [key for key in self.evaluation_cache.keys() if key.startswith(f"{flag_id}:")]
             for key in keys_to_remove:
                 del self.evaluation_cache[key]
@@ -1206,6 +1358,7 @@ class FeatureFlagsManager:
             # Stop any active rollouts
             if flag_id in self.rollout_manager.active_rollouts:
                 await self.rollout_manager.manual_rollback(flag_id, "flag_deleted")
+
             
             return {"flag_id": flag_id, "status": "deleted"}
         else:
@@ -1218,8 +1371,10 @@ class FeatureFlagsManager:
     async def get_flag_analytics(self, flag_id: str, 
                                start_time: Optional[datetime] = None,
                                end_time: Optional[datetime] = None) -> Dict[str, Any]:
-        """Get analytics for feature flag"""
+        """
+        Get analytics for feature flag"""
         # Filter evaluations by time range
+
         evaluations = self.evaluation_history
         
         if start_time:
@@ -1235,6 +1390,7 @@ class FeatureFlagsManager:
             return {"flag_id": flag_id, "total_evaluations": 0}
         
         # Calculate analytics
+
         analytics = {
             "flag_id": flag_id,
             "total_evaluations": len(flag_evaluations),

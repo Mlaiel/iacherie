@@ -9,7 +9,8 @@ import os
 
 
 class BackendConfig:
-    """Backend configuration settings"""
+    """
+        Backend configuration settings"""
     
     def __init__(self):
         self.database_url = os.getenv('DATABASE_URL', 'sqlite:///iacherie.db')
@@ -18,7 +19,8 @@ class BackendConfig:
         self.debug = os.getenv('DEBUG', 'true').lower() == 'true'
         
     def get_settings(self) -> Dict[str, Any]:
-        """Get configuration settings"""
+        """
+        Get configuration settings"""
         return {
             'database_url': self.database_url,
             'redis_url': self.redis_url,
@@ -28,7 +30,8 @@ class BackendConfig:
 
 
 def get_backend_settings() -> Dict[str, Any]:
-    """Get backend settings"""
+    """
+        Get backend settings"""
     config = BackendConfig()
     return config.get_settings()
 

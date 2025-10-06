@@ -25,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 
 class SyncStrategy(str, Enum):
-    """Data synchronization strategies."""
+    """
+        Data synchronization strategies."""
     LAST_WRITE_WINS = "last_write_wins"
     FIRST_WRITE_WINS = "first_write_wins"
     MERGE_FIELDS = "merge_fields"
@@ -85,7 +86,8 @@ class OfflineOperation:
 
 @dataclass
 class SyncConflict:
-    """Data synchronization conflict."""
+    """
+        Data synchronization conflict."""
     conflict_id: str
     entity_type: str
     entity_id: str
@@ -102,7 +104,8 @@ class SyncConflict:
 
 @dataclass
 class SyncSession:
-    """Synchronization session."""
+    """
+        Synchronization session."""
     session_id: str
     user_id: str
     device_id: str
@@ -121,7 +124,8 @@ class SyncSession:
 
 @dataclass
 class SyncConfiguration:
-    """Sync configuration settings."""
+    """
+        Sync configuration settings."""
     sync_interval_seconds: int = 300  # 5 minutes
     batch_size: int = 100
     max_retries: int = 3
@@ -137,7 +141,8 @@ class SyncConfiguration:
 
 
 class OfflineSyncManager:
-    """Professional offline synchronization manager."""
+    """
+        Professional offline synchronization manager."""
     
     def __init__(
         self,
@@ -182,7 +187,8 @@ class OfflineSyncManager:
             await self.db_connection.close()
     
     async def _setup_database(self):
-        """Setup SQLite database for offline storage."""
+        """
+        Setup SQLite database for offline storage."""
         self.db_connection = await aiosqlite.connect(self.db_path)
         
         # Create tables
@@ -202,6 +208,7 @@ class OfflineSyncManager:
                 created_at TEXT DEFAULT CURRENT_TIMESTAMP
             )
         """)
+
         
         await self.db_connection.execute("""
             CREATE TABLE IF NOT EXISTS sync_conflicts (
@@ -219,6 +226,7 @@ class OfflineSyncManager:
                 resolved_at TEXT
             )
         """)
+
         
         await self.db_connection.execute("""
             CREATE TABLE IF NOT EXISTS sync_sessions (
@@ -238,15 +246,19 @@ class OfflineSyncManager:
                 metadata TEXT
             )
         """)
+
         
         await self.db_connection.commit()
     
     async def _load_pending_operations(self):
-        """Load pending operations from database."""
+        """
+        Load pending operations from database."""
         cursor = await self.db_connection.execute(
             "SELECT * FROM offline_operations WHERE status IN ('pending', 'failed')"
         )
+
         rows = await cursor.fetchall()
+
         
         for row in rows:
             operation = OfflineOperation(
@@ -262,6 +274,7 @@ class OfflineSyncManager:
                 conflict_data=json.loads(row[9]) if row[9] else None,
                 metadata=json.loads(row[10]) if row[10] else {}
             )
+
             self.pending_operations[operation.operation_id] = operation
         
         logger.info(f"Loaded {len(self.pending_operations)} pending operations")
@@ -271,7 +284,9 @@ class OfflineSyncManager:
         cursor = await self.db_connection.execute(
             "SELECT * FROM sync_conflicts WHERE resolution IS NULL"
         )
+
         rows = await cursor.fetchall()
+
         
         for row in rows:
             conflict = SyncConflict(
@@ -288,6 +303,7 @@ class OfflineSyncManager:
                 created_at=datetime.fromisoformat(row[10]),
                 resolved_at=datetime.fromisoformat(row[11]) if row[11] else None
             )
+
             self.sync_conflicts[conflict.conflict_id] = conflict
         
         logger.info(f"Loaded {len(self.sync_conflicts)} unresolved conflicts")
@@ -303,6 +319,8 @@ class OfflineSyncManager:
     ) -> str:
         """Queue an offline operation."""
         operation_id = str(uuid.uuid4())
+
+
         
         operation = OfflineOperation(
             operation_id=operation_id,
@@ -323,6 +341,7 @@ class OfflineSyncManager:
             INSERT INTO offline_operations 
             (operation_id, entity_type, entity_id, operation_type, data, 
              local_timestamp, max_retries, metadata)
+
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             operation.operation_id,
@@ -352,6 +371,8 @@ class OfflineSyncManager:
     ) -> str:
         """Start a synchronization session."""
         session_id = str(uuid.uuid4())
+
+
         
         session = SyncSession(
             session_id=session_id,
@@ -374,6 +395,7 @@ class OfflineSyncManager:
         await self.db_connection.execute("""
             INSERT INTO sync_sessions 
             (session_id, user_id, device_id, direction, entity_types, started_at, status)
+
             VALUES (?, ?, ?, ?, ?, ?, ?)
         """, (
             session.session_id,
@@ -385,6 +407,7 @@ class OfflineSyncManager:
             session.status.value
         ))
         await self.db_connection.commit()
+
         
         self.active_sessions[session_id] = session
         
@@ -399,32 +422,42 @@ class OfflineSyncManager:
         """Synchronize pending operations."""
         if session_id not in self.active_sessions:
             raise ValueError(f"Session {session_id} not found")
+
+
         
         session = self.active_sessions[session_id]
+
         batch_size = batch_size or self.config.batch_size
         
         # Get pending operations for this session
+
         operations_to_sync = []
         for operation in self.pending_operations.values():
             if (not session.entity_types or 
                 operation.entity_type in session.entity_types):
                 operations_to_sync.append(operation)
+
                 
                 if len(operations_to_sync) >= batch_size:
                     break
         
         session.operations_total = len(operations_to_sync)
+
+
         
         sync_results = []
         
         for operation in operations_to_sync:
             try:
                 result = await self._sync_operation(operation)
+
                 sync_results.append(result)
+
                 
                 if result["success"]:
                     session.operations_completed += 1
                     await self._remove_operation(operation.operation_id)
+
                 else:
                     session.operations_failed += 1
                     await self._update_operation_status(
@@ -434,9 +467,11 @@ class OfflineSyncManager:
                 
                 # Notify progress
                 await self._notify_sync_progress(session, operation, result)
+
                 
             except Exception as e:
                 logger.error(f"Operation sync failed: {operation.operation_id} - {e}")
+
                 session.operations_failed += 1
                 sync_results.append({
                     "operation_id": operation.operation_id,
@@ -446,6 +481,7 @@ class OfflineSyncManager:
         
         # Update session
         await self._update_session(session)
+
         
         return {
             "session_id": session_id,
@@ -469,12 +505,16 @@ class OfflineSyncManager:
             # Attempt to sync operation
             if operation.operation_type == OperationType.CREATE:
                 result = await self._sync_create_operation(operation)
+
             elif operation.operation_type == OperationType.UPDATE:
                 result = await self._sync_update_operation(operation)
+
             elif operation.operation_type == OperationType.DELETE:
                 result = await self._sync_delete_operation(operation)
+
             elif operation.operation_type == OperationType.PATCH:
                 result = await self._sync_patch_operation(operation)
+
             else:
                 return {
                     "operation_id": operation.operation_id,
@@ -494,6 +534,7 @@ class OfflineSyncManager:
                 operation.status = SyncStatus.PENDING
             
             await self._update_operation(operation)
+
             
             return {
                 "operation_id": operation.operation_id,
@@ -510,10 +551,12 @@ class OfflineSyncManager:
         # Check for conflicts (entity already exists remotely)
         if await self._check_remote_exists(operation.entity_type, operation.entity_id):
             # Create conflict
+
             conflict_id = await self._create_conflict(
                 operation, 
                 {"message": "Entity already exists remotely"}
             )
+
             return {
                 "operation_id": operation.operation_id,
                 "success": False,
@@ -535,14 +578,19 @@ class OfflineSyncManager:
         await asyncio.sleep(0.1)
         
         # Get remote version for conflict detection
+
         remote_data = await self._get_remote_data(operation.entity_type, operation.entity_id)
+
         
         if remote_data:
             # Check for conflicts
+
             conflicts = await self._detect_conflicts(operation.data, remote_data)
+
             
             if conflicts:
                 conflict_id = await self._create_conflict(operation, remote_data)
+
                 return {
                     "operation_id": operation.operation_id,
                     "success": False,
@@ -587,7 +635,8 @@ class OfflineSyncManager:
         return await self._sync_update_operation(operation)
     
     async def _check_remote_exists(self, entity_type: str, entity_id: str) -> bool:
-        """Check if entity exists remotely."""
+        """
+        Check if entity exists remotely."""
         # Simulate API call
         await asyncio.sleep(0.05)
         # For demo purposes, randomly return True/False
@@ -595,7 +644,8 @@ class OfflineSyncManager:
         return random.choice([True, False])
     
     async def _get_remote_data(self, entity_type: str, entity_id: str) -> Optional[Dict[str, Any]]:
-        """Get remote data for entity."""
+        """
+        Get remote data for entity."""
         # Simulate API call
         await asyncio.sleep(0.05)
         # Return mock remote data
@@ -615,15 +665,20 @@ class OfflineSyncManager:
                 if key in ["updated_at", "modified_at"]:
                     try:
                         local_time = datetime.fromisoformat(str(local_value))
+
+
                         remote_time = datetime.fromisoformat(str(remote_data[key]))
                         
                         # Consider conflict if times are significantly different
                         if abs((local_time - remote_time).total_seconds()) > 60:
                             conflicts.append(key)
+
                     except:
                         conflicts.append(key)
+
                 else:
                     conflicts.append(key)
+
         
         return conflicts
     
@@ -634,6 +689,8 @@ class OfflineSyncManager:
     ) -> str:
         """Create a sync conflict record."""
         conflict_id = str(uuid.uuid4())
+
+
         
         conflict = SyncConflict(
             conflict_id=conflict_id,
@@ -643,6 +700,7 @@ class OfflineSyncManager:
             remote_data=remote_data,
             local_timestamp=operation.local_timestamp,
             remote_timestamp=datetime.now(),  # Assume remote timestamp is now
+
             conflict_fields=await self._detect_conflicts(operation.data, remote_data),
             resolution=None,
             resolved_data=None,
@@ -655,6 +713,7 @@ class OfflineSyncManager:
             INSERT INTO sync_conflicts 
             (conflict_id, entity_type, entity_id, local_data, remote_data,
              local_timestamp, remote_timestamp, conflict_fields, created_at)
+
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             conflict.conflict_id,
@@ -668,12 +727,14 @@ class OfflineSyncManager:
             conflict.created_at.isoformat()
         ))
         await self.db_connection.commit()
+
         
         self.sync_conflicts[conflict_id] = conflict
         
         # Auto-resolve if configured
         if self.config.auto_resolve_conflicts:
             await self._auto_resolve_conflict(conflict_id)
+
         
         logger.info(f"Conflict created: {conflict_id}")
         return conflict_id
@@ -682,6 +743,7 @@ class OfflineSyncManager:
         """Automatically resolve conflict based on configuration."""
         if conflict_id not in self.sync_conflicts:
             return False
+
         
         conflict = self.sync_conflicts[conflict_id]
         
@@ -697,8 +759,10 @@ class OfflineSyncManager:
         return await self.resolve_conflict(conflict_id, ConflictResolution.MERGE, resolved_data)
     
     async def _merge_conflict_data(self, conflict: SyncConflict) -> Dict[str, Any]:
-        """Merge conflicted data using strategy."""
+        """
+        Merge conflicted data using strategy."""
         merged_data = conflict.remote_data.copy()
+
         
         if self.config.sync_strategy == SyncStrategy.LAST_WRITE_WINS:
             # Use data from the most recent timestamp
@@ -718,9 +782,11 @@ class OfflineSyncManager:
         resolution: ConflictResolution,
         resolved_data: Dict[str, Any]
     ) -> bool:
-        """Manually resolve a conflict."""
+        """
+        Manually resolve a conflict."""
         if conflict_id not in self.sync_conflicts:
             return False
+
         
         conflict = self.sync_conflicts[conflict_id]
         conflict.resolution = resolution
@@ -754,6 +820,7 @@ class OfflineSyncManager:
             (operation_id,)
         )
         await self.db_connection.commit()
+
         
         if operation_id in self.pending_operations:
             del self.pending_operations[operation_id]
@@ -765,6 +832,7 @@ class OfflineSyncManager:
             (status.value, operation_id)
         )
         await self.db_connection.commit()
+
         
         if operation_id in self.pending_operations:
             self.pending_operations[operation_id].status = status
@@ -783,7 +851,8 @@ class OfflineSyncManager:
         await self.db_connection.commit()
     
     async def _update_session(self, session: SyncSession):
-        """Update session in database."""
+        """
+        Update session in database."""
         await self.db_connection.execute("""
             UPDATE sync_sessions 
             SET operations_completed = ?, operations_failed = ?, 
@@ -804,10 +873,12 @@ class OfflineSyncManager:
         operation: OfflineOperation, 
         result: Dict[str, Any]
     ):
-        """Notify sync progress to handlers."""
+        """
+        Notify sync progress to handlers."""
         for handler in self.sync_progress_handlers:
             try:
                 await handler(session, operation, result)
+
             except Exception as e:
                 logger.error(f"Progress handler error: {e}")
     
@@ -816,13 +887,17 @@ class OfflineSyncManager:
         self.conflict_handlers[entity_type] = handler
     
     def add_progress_handler(self, handler: Callable):
-        """Add sync progress handler."""
+        """
+        Add sync progress handler."""
         self.sync_progress_handlers.append(handler)
     
     async def complete_sync_session(self, session_id: str) -> SyncSession:
-        """Complete a sync session."""
+        """
+        Complete a sync session."""
         if session_id not in self.active_sessions:
             raise ValueError(f"Session {session_id} not found")
+
+
         
         session = self.active_sessions[session_id]
         session.completed_at = datetime.now()
@@ -849,6 +924,7 @@ class OfflineSyncManager:
     def get_pending_operations(self, entity_type: Optional[str] = None) -> List[OfflineOperation]:
         """Get pending operations."""
         operations = list(self.pending_operations.values())
+
         
         if entity_type:
             operations = [op for op in operations if op.entity_type == entity_type]
@@ -856,8 +932,10 @@ class OfflineSyncManager:
         return operations
     
     def get_unresolved_conflicts(self, entity_type: Optional[str] = None) -> List[SyncConflict]:
-        """Get unresolved conflicts."""
+        """
+        Get unresolved conflicts."""
         conflicts = list(self.sync_conflicts.values())
+
         
         if entity_type:
             conflicts = [c for c in conflicts if c.entity_type == entity_type]
@@ -865,7 +943,8 @@ class OfflineSyncManager:
         return conflicts
     
     def get_sync_statistics(self) -> Dict[str, Any]:
-        """Get synchronization statistics."""
+        """
+        Get synchronization statistics."""
         return {
             "total_operations": self.total_operations,
             "pending_operations": len(self.pending_operations),
@@ -897,7 +976,8 @@ async def quick_sync_operation(
     user_id: str,
     device_id: str
 ) -> Dict[str, Any]:
-    """Quick sync operation utility."""
+    """
+        Quick sync operation utility."""
     # Queue operation
     operation_id = await manager.queue_operation(
         entity_type=entity_type,
@@ -934,17 +1014,23 @@ if __name__ == "__main__":
             auto_resolve_conflicts=True,
             conflict_resolution=ConflictResolution.MERGE
         )
+
+
         
         manager = await create_offline_sync_manager(config=config)
+
         
         try:
             # Queue some operations
+
             op1 = await manager.queue_operation(
                 entity_type="content",
                 entity_id="post_123",
                 operation_type=OperationType.CREATE,
                 data={"title": "My Post", "content": "Hello World"}
             )
+
+
             
             op2 = await manager.queue_operation(
                 entity_type="content",
@@ -952,10 +1038,12 @@ if __name__ == "__main__":
                 operation_type=OperationType.UPDATE,
                 data={"title": "Updated Post", "updated_at": datetime.now().isoformat()}
             )
+
             
             print(f"Queued operations: {op1}, {op2}")
             
             # Start sync session
+
             session_id = await manager.start_sync_session(
                 user_id="user123",
                 device_id="device456",
@@ -963,18 +1051,56 @@ if __name__ == "__main__":
             )
             
             # Sync operations
+
             result = await manager.sync_pending_operations(session_id)
+
             print(f"Sync result: {result}")
             
             # Complete session
+
             session = await manager.complete_sync_session(session_id)
+
             print(f"Session completed: {session.session_id}")
             
             # Get statistics
+
             stats = manager.get_sync_statistics()
+
             print(f"Sync stats: {stats}")
+
             
         finally:
             await manager.close()
     
     asyncio.run(main())
+
+# Classes supplémentaires pour compatibilité avec __init__.py
+MobileSyncEngine = OfflineSyncManager
+
+@dataclass
+class OfflineSyncRequest:
+    """Offline Sync Request"""
+    user_id: str
+    device_id: str
+    operations: List[OfflineOperation]
+    sync_strategy: SyncStrategy = SyncStrategy.LAST_WRITE_WINS
+    conflict_resolution: ConflictResolution = ConflictResolution.REMOTE_WINS
+    
+@dataclass
+class SyncResult:
+    """Sync Result"""
+    session_id: str
+    status: SyncStatus
+    operations_synced: int
+    conflicts_resolved: int
+    data_size_bytes: int
+    duration_seconds: float
+    
+@dataclass
+class DataSynchronizer:
+    """Data Synchronizer Configuration"""
+    sync_interval_seconds: int = 300
+    batch_size: int = 100
+    retry_count: int = 3
+    compression_enabled: bool = True
+

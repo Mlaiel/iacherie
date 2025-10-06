@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class WalletManagementCore:
-    """Advanced WalletManagementCore System"""
+    """
+Advanced WalletManagementCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class WalletManagementCore:
 # Module exports
 __all__ = ["WalletManagementCore"]
 
-logger.info("💳 WalletManagementCore module loaded")
+logger.info("💳 WalletManagementCore module initialized")

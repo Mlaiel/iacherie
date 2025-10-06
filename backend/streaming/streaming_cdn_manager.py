@@ -33,21 +33,14 @@ import aiohttp
 import dns.resolver
 from geopy.distance import geodesic
 import numpy as np
-# Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+from protection.utils.redis_compat import aioredis, REDIS_AVAILABLE
 from sqlalchemy.ext.asyncio import AsyncSession
 
 logger = logging.getLogger(__name__)
 
 class CDNProvider(Enum):
-    """CDN provider enumeration"""
+    """
+        CDN provider enumeration"""
     CLOUDFLARE = "cloudflare"
     AWS_CLOUDFRONT = "aws_cloudfront"
     AZURE_CDN = "azure_cdn"
@@ -103,7 +96,8 @@ class CDNNode:
 
 @dataclass
 class EdgeServer:
-    """Edge server configuration"""
+    """
+        Edge server configuration"""
     server_id: str
     node_id: str
     ip_address: str
@@ -120,7 +114,8 @@ class EdgeServer:
 
 @dataclass
 class PlatformConfig:
-    """Platform streaming configuration"""
+    """
+        Platform streaming configuration"""
     platform_id: str
     platform_name: str
     api_endpoint: str
@@ -134,7 +129,8 @@ class PlatformConfig:
 
 @dataclass
 class QualityOptimization:
-    """Quality optimization configuration"""
+    """
+        Quality optimization configuration"""
     optimization_id: str
     session_id: str
     target_quality: str
@@ -146,9 +142,10 @@ class QualityOptimization:
     created_at: datetime
 
 class ContentDeliveryNetwork:
-    """Content delivery network management"""
+    """
+        Content delivery network management"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Optional[Any]):
         self.redis = redis_client
         self.cdn_nodes = {}
         self.edge_servers = {}
@@ -156,24 +153,32 @@ class ContentDeliveryNetwork:
         self.performance_metrics = {}
         
     async def initialize_cdn_network(self) -> Dict[str, Any]:
-        """Initialize CDN network"""
+        """
+        Initialize CDN network"""
         try:
             # Discover and register CDN nodes
+
             cdn_nodes = await self._discover_cdn_nodes()
             
             # Initialize edge servers
+
             edge_servers = await self._initialize_edge_servers()
             
             # Setup geographic routing
+
             routing_tables = await self._setup_geographic_routing()
             
             # Configure health monitoring
+
             health_monitoring = await self._configure_health_monitoring()
             
             # Initialize performance tracking
+
             performance_tracking = await self._initialize_performance_tracking()
+
             
             logger.info(f"🌐 CDN Network initialized with {len(cdn_nodes)} nodes and {len(edge_servers)} edge servers")
+
             
             return {
                 "cdn_nodes": len(cdn_nodes),
@@ -187,6 +192,7 @@ class ContentDeliveryNetwork:
             
         except Exception as e:
             logger.error(f"Failed to initialize CDN network: {e}")
+
             raise
 
     async def select_optimal_cdn_nodes(
@@ -198,28 +204,35 @@ class ContentDeliveryNetwork:
         """Select optimal CDN nodes for content delivery"""
         try:
             # Analyze viewer geographic distribution
+
             geo_analysis = await self._analyze_viewer_distribution(viewer_locations)
             
             # Calculate optimal node selection
+
             optimal_nodes = []
             
             for region, viewer_count in geo_analysis["regional_distribution"].items():
                 # Find best nodes for this region
+
                 region_nodes = await self._find_best_nodes_for_region(
                     region, viewer_count, content_size, quality_requirements
                 )
+
                 optimal_nodes.extend(region_nodes)
             
             # Apply load balancing optimization
+
             balanced_nodes = await self._apply_load_balancing(optimal_nodes, viewer_locations)
             
             # Cache routing decisions
             await self._cache_routing_decisions(viewer_locations, balanced_nodes)
+
             
             return balanced_nodes
             
         except Exception as e:
             logger.error(f"Failed to select optimal CDN nodes: {e}")
+
             raise
 
     async def optimize_content_delivery(
@@ -231,19 +244,24 @@ class ContentDeliveryNetwork:
         """Optimize content delivery across CDN"""
         try:
             # Select optimal CDN nodes
+
             optimal_nodes = await self._select_nodes_for_regions(target_regions)
             
             # Optimize content for each node
+
             optimization_results = []
             
             for node in optimal_nodes:
                 # Apply region-specific optimizations
+
                 optimized_content = await self._optimize_content_for_node(content_data, node)
                 
                 # Deploy content to node
+
                 deployment_result = await self._deploy_content_to_node(
                     optimized_content, node, session_id
                 )
+
                 
                 optimization_results.append({
                     "node_id": node.node_id,
@@ -254,10 +272,13 @@ class ContentDeliveryNetwork:
                 })
             
             # Configure global load balancing
+
             load_balancing = await self._configure_global_load_balancing(session_id, optimal_nodes)
             
             # Setup performance monitoring
+
             monitoring = await self._setup_delivery_monitoring(session_id, optimal_nodes)
+
             
             return {
                 "success": True,
@@ -270,12 +291,13 @@ class ContentDeliveryNetwork:
             
         except Exception as e:
             logger.error(f"Failed to optimize content delivery: {e}")
+
             raise
 
 class StreamingQualityOptimizer:
     """Streaming quality optimization engine"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Optional[Any]):
         self.redis = redis_client
         self.optimization_algorithms = {
             "adaptive_bitrate": self._optimize_adaptive_bitrate,
@@ -294,20 +316,25 @@ class StreamingQualityOptimizer:
         """Optimize streaming quality based on real-time metrics"""
         try:
             # Analyze current performance
+
             performance_analysis = await self._analyze_current_performance(current_metrics)
             
             # Determine optimization strategy
+
             optimization_strategy = await self._determine_optimization_strategy(
                 performance_analysis, viewer_context
             )
             
             # Apply optimization algorithms
+
             optimization_results = []
             
             for algorithm_name in optimization_strategy["algorithms"]:
                 if algorithm_name in self.optimization_algorithms:
                     algorithm = self.optimization_algorithms[algorithm_name]
+
                     result = await algorithm(session_id, current_metrics, viewer_context)
+
                     optimization_results.append({
                         "algorithm": algorithm_name,
                         "result": result,
@@ -315,14 +342,17 @@ class StreamingQualityOptimizer:
                     })
             
             # Apply quality adjustments
+
             quality_adjustments = await self._apply_quality_adjustments(
                 session_id, optimization_results
             )
             
             # Monitor optimization effectiveness
+
             effectiveness_monitoring = await self._monitor_optimization_effectiveness(
                 session_id, optimization_results
             )
+
             
             return {
                 "success": True,
@@ -335,12 +365,13 @@ class StreamingQualityOptimizer:
             
         except Exception as e:
             logger.error(f"Failed to optimize streaming quality: {e}")
+
             raise
 
 class PlatformStreamingCoordinator:
     """Multi-platform streaming coordination"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.platform_configs = {}
@@ -352,28 +383,35 @@ class PlatformStreamingCoordinator:
         platforms: List[str],
         content_stream: bytes
     ) -> Dict[str, Any]:
-        """Coordinate streaming across multiple platforms"""
+        """
+        Coordinate streaming across multiple platforms"""
         try:
             # Get platform configurations
+
             platform_configs = await self._get_platform_configurations(platforms)
             
             # Optimize content for each platform
+
             platform_optimizations = []
             
             for platform in platforms:
                 config = platform_configs.get(platform)
+
                 if not config:
                     continue
                 
                 # Apply platform-specific optimizations
+
                 optimized_content = await self._optimize_content_for_platform(
                     content_stream, config
                 )
                 
                 # Setup platform streaming
+
                 streaming_setup = await self._setup_platform_streaming(
                     session_id, platform, optimized_content, config
                 )
+
                 
                 platform_optimizations.append({
                     "platform": platform,
@@ -383,13 +421,17 @@ class PlatformStreamingCoordinator:
                 })
             
             # Configure cross-platform synchronization
+
             sync_config = await self._configure_cross_platform_sync(session_id, platforms)
             
             # Setup unified monitoring
+
             monitoring = await self._setup_unified_monitoring(session_id, platforms)
             
             # Initialize platform analytics
+
             analytics = await self._initialize_platform_analytics(session_id, platforms)
+
             
             return {
                 "success": True,
@@ -402,12 +444,13 @@ class PlatformStreamingCoordinator:
             
         except Exception as e:
             logger.error(f"Failed to coordinate multi-platform streaming: {e}")
+
             raise
 
 class MultiPlatformDistributor:
     """Multi-platform content distribution"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Optional[Any]):
         self.redis = redis_client
         self.distribution_queue = asyncio.Queue()
         self.platform_apis = {}
@@ -419,9 +462,11 @@ class MultiPlatformDistributor:
         platforms: List[str],
         distribution_rules: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Distribute content to multiple platforms"""
+        """
+        Distribute content to multiple platforms"""
         try:
             # Prepare distribution tasks
+
             distribution_tasks = []
             
             for platform in platforms:
@@ -430,9 +475,11 @@ class MultiPlatformDistributor:
                         session_id, content_data, platform, distribution_rules
                     )
                 )
+
                 distribution_tasks.append((platform, task))
             
             # Execute distribution in parallel
+
             distribution_results = []
             
             for platform, task in distribution_tasks:
@@ -443,6 +490,7 @@ class MultiPlatformDistributor:
                         "success": True,
                         "result": result
                     })
+
                 except Exception as e:
                     distribution_results.append({
                         "platform": platform,
@@ -451,11 +499,15 @@ class MultiPlatformDistributor:
                     })
             
             # Calculate distribution metrics
+
             successful_distributions = len([r for r in distribution_results if r["success"]])
+
+
             failed_distributions = len(distribution_results) - successful_distributions
             
             # Update distribution analytics
             await self._update_distribution_analytics(session_id, distribution_results)
+
             
             return {
                 "success": failed_distributions == 0,
@@ -468,12 +520,13 @@ class MultiPlatformDistributor:
             
         except Exception as e:
             logger.error(f"Failed to distribute to platforms: {e}")
+
             raise
 
 class StreamingCDNManager:
     """Unified CDN management system - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         
@@ -493,24 +546,32 @@ class StreamingCDNManager:
         """Initialize CDN manager"""
         try:
             # Initialize CDN network
+
             cdn_status = await self.cdn_network.initialize_cdn_network()
             
             # Configure quality optimization
+
             quality_config = await self._configure_quality_optimization()
             
             # Setup platform integrations
+
             platform_integrations = await self._setup_platform_integrations()
             
             # Initialize performance monitoring
+
             monitoring_config = await self._initialize_performance_monitoring()
             
             # Configure analytics
+
             analytics_config = await self._configure_analytics()
             
             # Setup load balancing
+
             load_balancing = await self._setup_load_balancing()
+
             
             logger.info("🌐 Streaming CDN Manager fully initialized")
+
             
             return {
                 "manager_status": "initialized",
@@ -532,6 +593,7 @@ class StreamingCDNManager:
             
         except Exception as e:
             logger.error(f"Failed to initialize CDN manager: {e}")
+
             raise
     
     async def optimize_global_delivery(
@@ -544,29 +606,35 @@ class StreamingCDNManager:
         """Optimize global content delivery"""
         try:
             # Select optimal CDN nodes
+
             optimal_nodes = await self.cdn_network.select_optimal_cdn_nodes(
                 viewer_locations, len(content_data), {"quality": "high"}
             )
             
             # Optimize content delivery
+
             delivery_optimization = await self.cdn_network.optimize_content_delivery(
                 session_id, content_data, [node.region for node in optimal_nodes]
             )
             
             # Coordinate multi-platform streaming
+
             platform_coordination = await self.platform_coordinator.coordinate_multi_platform_streaming(
                 session_id, target_platforms, content_data
             )
             
             # Distribute to platforms
+
             distribution_result = await self.platform_distributor.distribute_to_platforms(
                 session_id, content_data, target_platforms, {}
             )
             
             # Apply quality optimization
+
             quality_optimization = await self.quality_optimizer.optimize_streaming_quality(
                 session_id, {}, {"platforms": target_platforms}
             )
+
             
             return {
                 "success": True,
@@ -583,6 +651,7 @@ class StreamingCDNManager:
             
         except Exception as e:
             logger.error(f"Failed to optimize global delivery: {e}")
+
             raise
     
     # Additional helper methods implementation...
@@ -597,6 +666,7 @@ class StreamingCDNManager:
             }
         except Exception as e:
             logger.error(f"Failed to configure quality optimization: {e}")
+
             return {}
 
     async def _setup_platform_integrations(self) -> Dict[str, Any]:
@@ -610,6 +680,7 @@ class StreamingCDNManager:
             }
         except Exception as e:
             logger.error(f"Failed to setup platform integrations: {e}")
+
             return {}
 
 # Export main classes

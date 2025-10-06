@@ -22,7 +22,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class MarketSegment(Enum):
-    """Market segments"""
+    """
+Market segments"""
     CONTENT_CREATORS = "content_creators"
     INFLUENCERS = "influencers"
     BRANDS = "brands"
@@ -31,7 +32,8 @@ class MarketSegment(Enum):
     CONSUMERS = "consumers"
 
 class AnalysisType(Enum):
-    """Types of market analysis"""
+    """
+Types of market analysis"""
     COMPETITIVE = "competitive"
     TREND = "trend"
     SENTIMENT = "sentiment"
@@ -41,7 +43,8 @@ class AnalysisType(Enum):
 
 @dataclass
 class MarketInsight:
-    """Market intelligence insight"""
+    """
+Market intelligence insight"""
     insight_id: str
     segment: MarketSegment
     analysis_type: AnalysisType
@@ -56,7 +59,8 @@ class MarketInsight:
 
 @dataclass
 class CompetitorProfile:
-    """Competitor profile"""
+    """
+Competitor profile"""
     competitor_id: str
     name: str
     market_share: float
@@ -69,7 +73,8 @@ class CompetitorProfile:
     performance_metrics: Dict[str, Any]
 
 class MarketIntelligenceCore:
-    """Advanced Market Intelligence Core System"""
+    """
+Advanced Market Intelligence Core System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -83,7 +88,8 @@ class MarketIntelligenceCore:
         logger.info(f"Market Intelligence Core initialized - Level: {level}")
 
     async def analyze_market_segment(self, segment: MarketSegment, analysis_config: Dict[str, Any]) -> List[MarketInsight]:
-        """Analyze specific market segment"""
+        """
+Analyze specific market segment"""
         try:
             insights = []
             
@@ -116,8 +122,6 @@ class MarketIntelligenceCore:
     async def _analyze_competition(self, segment: MarketSegment) -> List[MarketInsight]:
         """Analyze competition in segment"""
         insights = []
-        
-        # Mock competitive analysis
         competitive_data = {
             MarketSegment.CONTENT_CREATORS: {
                 "top_competitors": ["TikTok", "YouTube", "Instagram"],
@@ -158,8 +162,6 @@ class MarketIntelligenceCore:
     async def _analyze_trends(self, segment: MarketSegment) -> List[MarketInsight]:
         """Analyze market trends"""
         insights = []
-        
-        # Mock trend analysis
         trend_data = {
             MarketSegment.CONTENT_CREATORS: [
                 "AI-generated content increasing",
@@ -200,8 +202,6 @@ class MarketIntelligenceCore:
     async def _analyze_opportunities(self, segment: MarketSegment) -> List[MarketInsight]:
         """Analyze market opportunities"""
         insights = []
-        
-        # Mock opportunity analysis
         opportunities = {
             MarketSegment.CONTENT_CREATORS: [
                 "AI-powered content optimization",
@@ -240,7 +240,8 @@ class MarketIntelligenceCore:
         return insights
 
     async def track_competitor(self, competitor_data: Dict[str, Any]) -> str:
-        """Track competitor profile"""
+        """
+Track competitor profile"""
         try:
             competitor_id = f"comp_{uuid.uuid4().hex[:12]}"
             
@@ -269,7 +270,6 @@ class MarketIntelligenceCore:
     async def generate_market_forecast(self, segment: MarketSegment, forecast_horizon: int = 12) -> Dict[str, Any]:
         """Generate market forecast"""
         try:
-            # Mock forecast generation
             current_value = 100.0  # Base market value
             growth_rate = 0.15  # 15% annual growth
             volatility = 0.1  # 10% volatility
@@ -316,7 +316,8 @@ class MarketIntelligenceCore:
             return {}
 
     async def get_intelligence_dashboard(self) -> Dict[str, Any]:
-        """Get market intelligence dashboard data"""
+        """
+Get market intelligence dashboard data"""
         try:
             # Aggregate insights by type
             insights_by_type = {}
@@ -367,4 +368,4 @@ __all__ = [
     "CompetitorProfile"
 ]
 
-logger.info("📊 Market Intelligence Core module loaded")
+logger.info("📊 Market Intelligence Core module initialized")

@@ -47,7 +47,8 @@ logger = logging.getLogger(__name__)
 
 
 class MusicPlatformType(str, Enum):
-    """Supported music platform types."""
+    """
+        Supported music platform types."""
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     SOUNDCLOUD = "soundcloud"
@@ -139,7 +140,8 @@ class MusicPlatformResponse:
 
 @dataclass
 class MusicStreamingAnalytics:
-    """Music streaming analytics data."""
+    """
+        Music streaming analytics data."""
     platform: MusicPlatformType
     track_id: str
     plays: int = 0
@@ -157,7 +159,8 @@ class MusicStreamingAnalytics:
 
 
 class BaseMusicConnector:
-    """Base class for music platform connectors."""
+    """
+        Base class for music platform connectors."""
     
     def __init__(self, platform: MusicPlatformType, credentials: Dict[str, Any]):
         self.platform = platform
@@ -173,20 +176,27 @@ class BaseMusicConnector:
         try:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=60),  # Longer timeout for audio uploads
+
                 headers=self._get_default_headers()
             )
+
+
             
             authenticated = await self.authenticate()
+
             if authenticated:
                 self.authenticated = True
                 self.logger.info(f"✅ {self.platform.value} connector initialized")
+
                 return True
             else:
                 self.logger.error(f"❌ {self.platform.value} authentication failed")
+
                 return False
                 
         except Exception as e:
             self.logger.error(f"Error initializing {self.platform.value} connector: {e}")
+
             return False
     
     def _get_default_headers(self) -> Dict[str, str]:
@@ -230,17 +240,20 @@ class BaseMusicConnector:
         if datetime.utcnow() > self.rate_limit_reset:
             self.rate_limit_remaining = 1000  # Reset limit
             self.rate_limit_reset = datetime.utcnow() + timedelta(hours=1)
+
         
         return self.rate_limit_remaining > 0
     
     async def cleanup(self):
-        """Cleanup resources."""
+        """
+        Cleanup resources."""
         if self.session:
             await self.session.close()
 
 
 class SpotifyConnector(BaseMusicConnector):
-    """Spotify Web API connector with Artist Analytics."""
+    """
+        Spotify Web API connector with Artist Analytics."""
     
     def __init__(self, credentials: Dict[str, Any]):
         super().__init__(MusicPlatformType.SPOTIFY, credentials)
@@ -253,30 +266,38 @@ class SpotifyConnector(BaseMusicConnector):
         """Authenticate with Spotify Web API using Client Credentials flow."""
         try:
             # Get access token using client credentials
+
             auth_url = "https://accounts.spotify.com/api/token"
             
             # Encode client credentials
+
             credentials_b64 = base64.b64encode(
                 f"{self.client_id}:{self.client_secret}".encode()
             ).decode()
+
+
             
             headers = {
                 "Authorization": f"Basic {credentials_b64}",
                 "Content-Type": "application/x-www-form-urlencoded"
             }
+
             
             data = {"grant_type": "client_credentials"}
             
             async with self.session.post(auth_url, headers=headers, data=data) as response:
                 if response.status == 200:
                     token_data = await response.json()
+
                     self.access_token = token_data.get("access_token")
+
                     return True
                 
             return False
             
         except Exception as e:
             self.logger.error(f"Spotify authentication error: {e}")
+
             return False
     
     async def upload_track(self, metadata: MusicTrackMetadata, audio_data: bytes) -> MusicPlatformResponse:
@@ -287,11 +308,15 @@ class SpotifyConnector(BaseMusicConnector):
         try:
             # For demonstration, we'll simulate the distributor API call
             # In reality, this would integrate with approved distribution services
+
             
             distributor_response = await self._upload_via_distributor(metadata, audio_data)
+
             
             if distributor_response.get("success"):
                 track_id = distributor_response.get("spotify_id")
+
+
                 spotify_url = f"https://open.spotify.com/track/{track_id}"
                 
                 return MusicPlatformResponse(
@@ -301,15 +326,18 @@ class SpotifyConnector(BaseMusicConnector):
                     url=spotify_url,
                     response_data=distributor_response
                 )
+
             
             return MusicPlatformResponse(
                 success=False,
                 platform=self.platform,
                 error_message="Failed to distribute to Spotify"
             )
+
             
         except Exception as e:
             self.logger.error(f"Spotify upload error: {e}")
+
             return MusicPlatformResponse(
                 success=False,
                 platform=self.platform,
@@ -334,6 +362,7 @@ class SpotifyConnector(BaseMusicConnector):
         """Get Spotify streaming analytics."""
         try:
             # Get track details
+
             url = f"https://api.spotify.com/v1/tracks/{track_id}"
             headers = {"Authorization": f"Bearer {self.access_token}"}
             
@@ -342,20 +371,26 @@ class SpotifyConnector(BaseMusicConnector):
                     track_data = await response.json()
                     
                     # Simulate analytics data (in production, this would come from Spotify for Artists API)
+
                     return MusicStreamingAnalytics(
                         platform=self.platform,
                         track_id=track_id,
                         plays=track_data.get("popularity", 0) * 1000,  # Rough estimation
+
                         unique_listeners=track_data.get("popularity", 0) * 800,
                         saves=track_data.get("popularity", 0) * 50,
                         completion_rate=85.0,  # Estimated
+
                         skip_rate=15.0
                     )
+
             
             return MusicStreamingAnalytics(platform=self.platform, track_id=track_id)
+
             
         except Exception as e:
             self.logger.error(f"Spotify analytics error: {e}")
+
             return MusicStreamingAnalytics(platform=self.platform, track_id=track_id)
     
     async def search_tracks(self, query: str, limit: int = 50) -> List[Dict[str, Any]]:
@@ -363,6 +398,7 @@ class SpotifyConnector(BaseMusicConnector):
         try:
             url = "https://api.spotify.com/v1/search"
             headers = {"Authorization": f"Bearer {self.access_token}"}
+
             params = {
                 "q": query,
                 "type": "track",
@@ -372,12 +408,15 @@ class SpotifyConnector(BaseMusicConnector):
             async with self.session.get(url, headers=headers, params=params) as response:
                 if response.status == 200:
                     data = await response.json()
+
                     return data.get("tracks", {}).get("items", [])
+
                 
             return []
             
         except Exception as e:
             self.logger.error(f"Spotify search error: {e}")
+
             return []
     
     async def get_artist_profile(self, artist_id: str) -> Dict[str, Any]:
@@ -389,11 +428,13 @@ class SpotifyConnector(BaseMusicConnector):
             async with self.session.get(url, headers=headers) as response:
                 if response.status == 200:
                     return await response.json()
+
                 
             return {}
             
         except Exception as e:
             self.logger.error(f"Spotify artist profile error: {e}")
+
             return {}
     
     async def delete_track(self, track_id: str) -> bool:
@@ -402,11 +443,14 @@ class SpotifyConnector(BaseMusicConnector):
         try:
             # Simulate distributor deletion request
             await asyncio.sleep(1)
+
             self.logger.info(f"Initiated Spotify track deletion: {track_id}")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Spotify delete error: {e}")
+
             return False
     
     async def update_track(self, track_id: str, metadata: MusicTrackMetadata) -> MusicPlatformResponse:
@@ -414,6 +458,7 @@ class SpotifyConnector(BaseMusicConnector):
         try:
             # Simulate metadata update via distributor
             await asyncio.sleep(1)
+
             
             return MusicPlatformResponse(
                 success=True,
@@ -421,9 +466,11 @@ class SpotifyConnector(BaseMusicConnector):
                 track_id=track_id,
                 response_data={"status": "metadata_update_pending"}
             )
+
             
         except Exception as e:
             self.logger.error(f"Spotify update error: {e}")
+
             return MusicPlatformResponse(
                 success=False,
                 platform=self.platform,
@@ -456,11 +503,13 @@ class SoundCloudConnector(BaseMusicConnector):
                 elif response.status == 401:
                     # Try to refresh token
                     return await self._refresh_access_token()
+
                 
             return False
             
         except Exception as e:
             self.logger.error(f"SoundCloud authentication error: {e}")
+
             return False
     
     async def _refresh_access_token(self) -> bool:
@@ -480,31 +529,45 @@ class SoundCloudConnector(BaseMusicConnector):
             async with self.session.post(url, data=data) as response:
                 if response.status == 200:
                     token_data = await response.json()
+
                     self.access_token = token_data.get("access_token")
+
                     self.refresh_token = token_data.get("refresh_token")
+
                     return True
                 
             return False
             
         except Exception as e:
             self.logger.error(f"SoundCloud token refresh error: {e}")
+
             return False
     
     async def upload_track(self, metadata: MusicTrackMetadata, audio_data: bytes) -> MusicPlatformResponse:
         """Upload track directly to SoundCloud."""
         try:
             # SoundCloud supports direct uploads
+
             url = "https://api.soundcloud.com/tracks"
             
             # Prepare form data
+
             form_data = aiohttp.FormData()
+
             form_data.add_field("oauth_token", self.access_token)
+
             form_data.add_field("track[title]", metadata.title)
+
             form_data.add_field("track[description]", metadata.description or "")
+
             form_data.add_field("track[tag_list]", " ".join(metadata.tags))
+
             form_data.add_field("track[genre]", metadata.genre.value if metadata.genre else "")
+
             form_data.add_field("track[sharing]", "public" if metadata.privacy == "public" else "private")
+
             form_data.add_field("track[downloadable]", str(metadata.downloadable).lower())
+
             form_data.add_field("track[commentable]", "true")
             
             # Add audio file
@@ -518,12 +581,18 @@ class SoundCloudConnector(BaseMusicConnector):
             # If artwork is available
             if metadata.artwork_url:
                 form_data.add_field("track[artwork_url]", metadata.artwork_url)
+
             
             async with self.session.post(url, data=form_data) as response:
                 if response.status == 201:
                     result = await response.json()
+
+
                     track_id = str(result.get("id"))
+
+
                     track_url = result.get("permalink_url")
+
                     
                     return MusicPlatformResponse(
                         success=True,
@@ -533,16 +602,21 @@ class SoundCloudConnector(BaseMusicConnector):
                         streaming_url=result.get("stream_url"),
                         response_data=result
                     )
+
+
                 
                 error_text = await response.text()
+
                 return MusicPlatformResponse(
                     success=False,
                     platform=self.platform,
                     error_message=f"Upload failed: {error_text}"
                 )
+
                 
         except Exception as e:
             self.logger.error(f"SoundCloud upload error: {e}")
+
             return MusicPlatformResponse(
                 success=False,
                 platform=self.platform,
@@ -553,27 +627,33 @@ class SoundCloudConnector(BaseMusicConnector):
         """Get SoundCloud streaming analytics."""
         try:
             # Get track details
+
             url = f"https://api.soundcloud.com/tracks/{track_id}"
             params = {"oauth_token": self.access_token}
             
             async with self.session.get(url, params=params) as response:
                 if response.status == 200:
                     track_data = await response.json()
+
                     
                     return MusicStreamingAnalytics(
                         platform=self.platform,
                         track_id=track_id,
                         plays=track_data.get("playback_count", 0),
                         unique_listeners=track_data.get("playback_count", 0) // 2,  # Estimated
+
                         saves=track_data.get("likes_count", 0),
                         shares=track_data.get("reposts_count", 0),
                         completion_rate=75.0  # Estimated for SoundCloud
                     )
+
             
             return MusicStreamingAnalytics(platform=self.platform, track_id=track_id)
+
             
         except Exception as e:
             self.logger.error(f"SoundCloud analytics error: {e}")
+
             return MusicStreamingAnalytics(platform=self.platform, track_id=track_id)
     
     async def search_tracks(self, query: str, limit: int = 50) -> List[Dict[str, Any]]:
@@ -589,11 +669,13 @@ class SoundCloudConnector(BaseMusicConnector):
             async with self.session.get(url, params=params) as response:
                 if response.status == 200:
                     return await response.json()
+
                 
             return []
             
         except Exception as e:
             self.logger.error(f"SoundCloud search error: {e}")
+
             return []
     
     async def delete_track(self, track_id: str) -> bool:
@@ -607,6 +689,7 @@ class SoundCloudConnector(BaseMusicConnector):
                 
         except Exception as e:
             self.logger.error(f"SoundCloud delete error: {e}")
+
             return False
     
     async def update_track(self, track_id: str, metadata: MusicTrackMetadata) -> MusicPlatformResponse:
@@ -625,21 +708,25 @@ class SoundCloudConnector(BaseMusicConnector):
             async with self.session.put(url, data=update_data) as response:
                 if response.status == 200:
                     result = await response.json()
+
                     return MusicPlatformResponse(
                         success=True,
                         platform=self.platform,
                         track_id=track_id,
                         response_data=result
                     )
+
                 
                 return MusicPlatformResponse(
                     success=False,
                     platform=self.platform,
                     error_message=f"Update failed with status {response.status}"
                 )
+
                 
         except Exception as e:
             self.logger.error(f"SoundCloud update error: {e}")
+
             return MusicPlatformResponse(
                 success=False,
                 platform=self.platform,
@@ -655,11 +742,13 @@ class SoundCloudConnector(BaseMusicConnector):
             async with self.session.get(url, params=params) as response:
                 if response.status == 200:
                     return await response.json()
+
                 
             return {}
             
         except Exception as e:
             self.logger.error(f"SoundCloud artist profile error: {e}")
+
             return {}
 
 
@@ -680,9 +769,11 @@ class AppleMusicConnector(BaseMusicConnector):
             # The developer token should be pre-generated
             if not self.developer_token:
                 self.logger.error("Apple Music developer token not provided")
+
                 return False
             
             # Test the token with a simple API call
+
             url = "https://api.music.apple.com/v1/catalog/us/genres"
             headers = {"Authorization": f"Bearer {self.developer_token}"}
             
@@ -691,6 +782,7 @@ class AppleMusicConnector(BaseMusicConnector):
                 
         except Exception as e:
             self.logger.error(f"Apple Music authentication error: {e}")
+
             return False
     
     async def upload_track(self, metadata: MusicTrackMetadata, audio_data: bytes) -> MusicPlatformResponse:
@@ -698,10 +790,13 @@ class AppleMusicConnector(BaseMusicConnector):
         # Apple Music requires approved distributors for uploads
         try:
             # Simulate distributor API integration
+
             distributor_response = await self._upload_via_apple_distributor(metadata, audio_data)
+
             
             if distributor_response.get("success"):
                 track_id = distributor_response.get("apple_music_id")
+
                 
                 return MusicPlatformResponse(
                     success=True,
@@ -710,15 +805,18 @@ class AppleMusicConnector(BaseMusicConnector):
                     url=f"https://music.apple.com/album/{track_id}",
                     response_data=distributor_response
                 )
+
             
             return MusicPlatformResponse(
                 success=False,
                 platform=self.platform,
                 error_message="Failed to distribute to Apple Music"
             )
+
             
         except Exception as e:
             self.logger.error(f"Apple Music upload error: {e}")
+
             return MusicPlatformResponse(
                 success=False,
                 platform=self.platform,
@@ -746,14 +844,17 @@ class AppleMusicConnector(BaseMusicConnector):
                 platform=self.platform,
                 track_id=track_id,
                 plays=50000,  # Simulated
+
                 unique_listeners=35000,
                 saves=2500,
                 completion_rate=88.0,
                 skip_rate=12.0
             )
+
             
         except Exception as e:
             self.logger.error(f"Apple Music analytics error: {e}")
+
             return MusicStreamingAnalytics(platform=self.platform, track_id=track_id)
     
     async def search_tracks(self, query: str, limit: int = 50) -> List[Dict[str, Any]]:
@@ -761,6 +862,7 @@ class AppleMusicConnector(BaseMusicConnector):
         try:
             url = "https://api.music.apple.com/v1/catalog/us/search"
             headers = {"Authorization": f"Bearer {self.developer_token}"}
+
             params = {
                 "term": query,
                 "types": "songs",
@@ -770,12 +872,15 @@ class AppleMusicConnector(BaseMusicConnector):
             async with self.session.get(url, headers=headers, params=params) as response:
                 if response.status == 200:
                     data = await response.json()
+
                     return data.get("results", {}).get("songs", {}).get("data", [])
+
                 
             return []
             
         except Exception as e:
             self.logger.error(f"Apple Music search error: {e}")
+
             return []
     
     async def delete_track(self, track_id: str) -> bool:
@@ -783,17 +888,21 @@ class AppleMusicConnector(BaseMusicConnector):
         try:
             # Deletion would go through distributor
             await asyncio.sleep(1)
+
             self.logger.info(f"Initiated Apple Music track deletion: {track_id}")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Apple Music delete error: {e}")
+
             return False
     
     async def update_track(self, track_id: str, metadata: MusicTrackMetadata) -> MusicPlatformResponse:
         """Update Apple Music track metadata (via distributor)."""
         try:
             await asyncio.sleep(1)
+
             
             return MusicPlatformResponse(
                 success=True,
@@ -801,9 +910,11 @@ class AppleMusicConnector(BaseMusicConnector):
                 track_id=track_id,
                 response_data={"status": "metadata_update_pending"}
             )
+
             
         except Exception as e:
             self.logger.error(f"Apple Music update error: {e}")
+
             return MusicPlatformResponse(
                 success=False,
                 platform=self.platform,
@@ -819,12 +930,14 @@ class AppleMusicConnector(BaseMusicConnector):
             async with self.session.get(url, headers=headers) as response:
                 if response.status == 200:
                     data = await response.json()
+
                     return data.get("data", [{}])[0] if data.get("data") else {}
                 
             return {}
             
         except Exception as e:
             self.logger.error(f"Apple Music artist profile error: {e}")
+
             return {}
 
 
@@ -844,22 +957,29 @@ class MusicPlatformManager:
                 MusicPlatformType.APPLE_MUSIC: AppleMusicConnector,
                 # Additional platforms would be implemented similarly
             }.get(platform)
+
             
             if not connector_class:
                 self.logger.error(f"Unsupported platform: {platform}")
+
                 return False
+
             
             connector = connector_class(credentials)
+
             if await connector.initialize():
                 self.connectors[platform] = connector
                 self.logger.info(f"✅ {platform.value} connector added successfully")
+
                 return True
             else:
                 self.logger.error(f"❌ Failed to initialize {platform.value} connector")
+
                 return False
                 
         except Exception as e:
             self.logger.error(f"Error adding {platform.value} connector: {e}")
+
             return False
     
     async def get_connector(self, platform: MusicPlatformType) -> Optional[BaseMusicConnector]:
@@ -872,7 +992,8 @@ class MusicPlatformManager:
         metadata: MusicTrackMetadata,
         audio_data: bytes
     ) -> MusicPlatformResponse:
-        """Upload track to specific platform."""
+        """
+        Upload track to specific platform."""
         connector = self.connectors.get(platform)
         if not connector:
             return MusicPlatformResponse(
@@ -880,6 +1001,7 @@ class MusicPlatformManager:
                 platform=platform,
                 error_message=f"No connector available for {platform.value}"
             )
+
         
         return await connector.upload_track(metadata, audio_data)
     
@@ -894,11 +1016,15 @@ class MusicPlatformManager:
         for platform in platforms:
             if platform in self.connectors:
                 task = self.upload_to_platform(platform, metadata, audio_data)
+
                 tasks.append((platform, task))
+
+
         
         results = {}
         if tasks:
             completed_tasks = await asyncio.gather(*[task for _, task in tasks], return_exceptions=True)
+
             
             for (platform, _), result in zip(tasks, completed_tasks):
                 if isinstance(result, Exception):
@@ -907,6 +1033,7 @@ class MusicPlatformManager:
                         platform=platform,
                         error_message=str(result)
                     )
+
                 else:
                     results[platform] = result
         
@@ -918,7 +1045,8 @@ class MusicPlatformManager:
         track_id: str,
         date_range: Tuple[datetime, datetime]
     ) -> Optional[MusicStreamingAnalytics]:
-        """Get analytics for track on specific platform."""
+        """
+        Get analytics for track on specific platform."""
         connector = self.connectors.get(platform)
         if connector:
             return await connector.get_streaming_analytics(track_id, date_range)
@@ -929,17 +1057,22 @@ class MusicPlatformManager:
         track_ids: Dict[MusicPlatformType, str],
         date_range: Tuple[datetime, datetime]
     ) -> Dict[MusicPlatformType, MusicStreamingAnalytics]:
-        """Get analytics across multiple platforms."""
+        """
+        Get analytics across multiple platforms."""
         results = {}
+
         tasks = []
         
         for platform, track_id in track_ids.items():
             if platform in self.connectors:
                 task = self.get_platform_analytics(platform, track_id, date_range)
+
                 tasks.append((platform, task))
+
         
         if tasks:
             completed_tasks = await asyncio.gather(*[task for _, task in tasks], return_exceptions=True)
+
             
             for (platform, _), result in zip(tasks, completed_tasks):
                 if not isinstance(result, Exception) and result:
@@ -953,19 +1086,26 @@ class MusicPlatformManager:
         platforms: Optional[List[MusicPlatformType]] = None,
         limit_per_platform: int = 10
     ) -> Dict[MusicPlatformType, List[Dict[str, Any]]]:
-        """Search for tracks across multiple platforms."""
+        """
+        Search for tracks across multiple platforms."""
         search_platforms = platforms or list(self.connectors.keys())
+
         results = {}
+
         tasks = []
         
         for platform in search_platforms:
             if platform in self.connectors:
                 connector = self.connectors[platform]
+
                 task = connector.search_tracks(query, limit_per_platform)
+
                 tasks.append((platform, task))
+
         
         if tasks:
             completed_tasks = await asyncio.gather(*[task for _, task in tasks], return_exceptions=True)
+
             
             for (platform, _), result in zip(tasks, completed_tasks):
                 if not isinstance(result, Exception):
@@ -976,10 +1116,12 @@ class MusicPlatformManager:
         return results
     
     async def cleanup(self):
-        """Cleanup all connectors."""
+        """
+        Cleanup all connectors."""
         cleanup_tasks = [connector.cleanup() for connector in self.connectors.values()]
         if cleanup_tasks:
             await asyncio.gather(*cleanup_tasks, return_exceptions=True)
+
         
         self.connectors.clear()
         self.logger.info("✅ All music platform connectors cleaned up")

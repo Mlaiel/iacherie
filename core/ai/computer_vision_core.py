@@ -1,4 +1,5 @@
-"""IA Chérie Core AI - Computer Vision Core
+"""
+IA Chérie Core AI - Computer Vision Core
 ======================================
 
 Enterprise-grade computer vision system providing image analysis, object detection,
@@ -27,7 +28,8 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 class AnalysisType(str, Enum):
-    """Computer vision analysis types"""
+    """
+Computer vision analysis types"""
     OBJECT_DETECTION = "object_detection"
     FACE_DETECTION = "face_detection"
     FACE_RECOGNITION = "face_recognition"
@@ -43,7 +45,8 @@ class AnalysisType(str, Enum):
     NSFW_DETECTION = "nsfw_detection"
 
 class ProcessingStatus(str, Enum):
-    """Processing status"""
+    """
+Processing status"""
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -51,7 +54,8 @@ class ProcessingStatus(str, Enum):
     CANCELLED = "cancelled"
 
 class ConfidenceLevel(str, Enum):
-    """Confidence levels"""
+    """
+Confidence levels"""
     VERY_LOW = "very_low"    # 0.0 - 0.3
     LOW = "low"              # 0.3 - 0.5
     MEDIUM = "medium"        # 0.5 - 0.7
@@ -60,7 +64,8 @@ class ConfidenceLevel(str, Enum):
 
 @dataclass
 class BoundingBox:
-    """Bounding box coordinates"""
+    """
+Bounding box coordinates"""
     x: float
     y: float
     width: float
@@ -78,7 +83,8 @@ class BoundingBox:
 
 @dataclass
 class DetectedObject:
-    """Detected object in image"""
+    """
+Detected object in image"""
     class_name: str
     confidence: float
     bounding_box: BoundingBox
@@ -94,7 +100,8 @@ class DetectedObject:
 
 @dataclass
 class Face:
-    """Detected face information"""
+    """
+Detected face information"""
     face_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     bounding_box: BoundingBox = field(default_factory=lambda: BoundingBox(0, 0, 0, 0))
     landmarks: Dict[str, Tuple[float, float]] = field(default_factory=dict)
@@ -115,7 +122,8 @@ class Face:
 
 @dataclass
 class VisualAnalysisRequest:
-    """Visual analysis request"""
+    """
+Visual analysis request"""
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     image_url: Optional[str] = None
     image_data: Optional[bytes] = None
@@ -129,7 +137,8 @@ class VisualAnalysisRequest:
 
 @dataclass
 class VisualAnalysisResult:
-    """Visual analysis result"""
+    """
+Visual analysis result"""
     request_id: str
     status: ProcessingStatus = ProcessingStatus.PENDING
     image_info: Dict[str, Any] = field(default_factory=dict)
@@ -165,7 +174,8 @@ class VisualAnalysisResult:
         }
 
 class VisionModel(ABC):
-    """Abstract vision model interface"""
+    """
+Abstract vision model interface"""
     
     def __init__(self, name: str, model_type: str):
         self.name = name
@@ -176,21 +186,25 @@ class VisionModel(ABC):
         
     @abstractmethod
     async def load_model(self) -> bool:
-        """Load the model"""
+        """
+Load the model"""
         pass
     
     @abstractmethod
     async def analyze(self, image_data: np.ndarray, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze image"""
+        """
+Analyze image"""
         pass
     
     @abstractmethod
     def can_analyze(self, analysis_type: AnalysisType) -> bool:
-        """Check if model can perform analysis type"""
+        """
+Check if model can perform analysis type"""
         pass
 
 class ObjectDetectionModel(VisionModel):
-    """Object detection model"""
+    """
+Object detection model"""
     
     def __init__(self):
         super().__init__("ObjectDetector", "object_detection")
@@ -211,7 +225,8 @@ class ObjectDetectionModel(VisionModel):
         ]
         
     async def load_model(self) -> bool:
-        """Load object detection model"""
+        """
+Load object detection model"""
         try:
             # Simulate model loading
             await asyncio.sleep(0.1)
@@ -223,7 +238,8 @@ class ObjectDetectionModel(VisionModel):
             return False
     
     async def analyze(self, image_data: np.ndarray, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze image for objects"""
+        """
+Analyze image for objects"""
         if not self.loaded:
             raise Exception("Model not loaded")
         
@@ -276,7 +292,8 @@ class ObjectDetectionModel(VisionModel):
         return analysis_type in self.supported_analysis_types
 
 class FaceDetectionModel(VisionModel):
-    """Face detection and recognition model"""
+    """
+Face detection and recognition model"""
     
     def __init__(self):
         super().__init__("FaceDetector", "face_detection")
@@ -288,7 +305,8 @@ class FaceDetectionModel(VisionModel):
         }
         
     async def load_model(self) -> bool:
-        """Load face detection model"""
+        """
+Load face detection model"""
         try:
             # Simulate model loading
             await asyncio.sleep(0.1)
@@ -300,7 +318,8 @@ class FaceDetectionModel(VisionModel):
             return False
     
     async def analyze(self, image_data: np.ndarray, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze image for faces"""
+        """
+Analyze image for faces"""
         if not self.loaded:
             raise Exception("Model not loaded")
         
@@ -355,7 +374,8 @@ class FaceDetectionModel(VisionModel):
         return analysis_type in self.supported_analysis_types
 
 class ContentModerationModel(VisionModel):
-    """Content moderation model"""
+    """
+Content moderation model"""
     
     def __init__(self):
         super().__init__("ContentModerator", "content_moderation")
@@ -365,7 +385,8 @@ class ContentModerationModel(VisionModel):
         }
         
     async def load_model(self) -> bool:
-        """Load content moderation model"""
+        """
+Load content moderation model"""
         try:
             # Simulate model loading
             await asyncio.sleep(0.1)
@@ -377,7 +398,8 @@ class ContentModerationModel(VisionModel):
             return False
     
     async def analyze(self, image_data: np.ndarray, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze image for inappropriate content"""
+        """
+Analyze image for inappropriate content"""
         if not self.loaded:
             raise Exception("Model not loaded")
         
@@ -434,7 +456,8 @@ class ContentModerationModel(VisionModel):
         return analysis_type in self.supported_analysis_types
 
 class SceneClassificationModel(VisionModel):
-    """Scene classification model"""
+    """
+Scene classification model"""
     
     def __init__(self):
         super().__init__("SceneClassifier", "scene_classification")
@@ -446,7 +469,8 @@ class SceneClassificationModel(VisionModel):
         ]
         
     async def load_model(self) -> bool:
-        """Load scene classification model"""
+        """
+Load scene classification model"""
         try:
             # Simulate model loading
             await asyncio.sleep(0.1)
@@ -458,7 +482,8 @@ class SceneClassificationModel(VisionModel):
             return False
     
     async def analyze(self, image_data: np.ndarray, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze image scene"""
+        """
+Analyze image scene"""
         if not self.loaded:
             raise Exception("Model not loaded")
         
@@ -492,11 +517,13 @@ class SceneClassificationModel(VisionModel):
         return analysis_type in self.supported_analysis_types
 
 class ImageProcessor:
-    """Image processing utilities"""
+    """
+Image processing utilities"""
     
     @staticmethod
     def load_image_from_url(url: str) -> np.ndarray:
-        """Load image from URL"""
+        """
+Load image from URL"""
         # Simulate loading image
         # In real implementation, would download and decode image
         height, width = 480, 640
@@ -504,7 +531,8 @@ class ImageProcessor:
     
     @staticmethod
     def load_image_from_bytes(image_bytes: bytes) -> np.ndarray:
-        """Load image from bytes"""
+        """
+Load image from bytes"""
         # Simulate decoding image
         # In real implementation, would decode using PIL/OpenCV
         height, width = 480, 640
@@ -512,7 +540,8 @@ class ImageProcessor:
     
     @staticmethod
     def get_image_info(image_data: np.ndarray) -> Dict[str, Any]:
-        """Get image information"""
+        """
+Get image information"""
         height, width = image_data.shape[:2]
         channels = image_data.shape[2] if len(image_data.shape) > 2 else 1
         
@@ -527,7 +556,8 @@ class ImageProcessor:
     
     @staticmethod
     def calculate_quality_metrics(image_data: np.ndarray) -> Dict[str, float]:
-        """Calculate image quality metrics"""
+        """
+Calculate image quality metrics"""
         # Simulate quality analysis
         return {
             'sharpness': 0.7 + np.random.random() * 0.3,
@@ -538,7 +568,8 @@ class ImageProcessor:
         }
 
 class ComputerVisionCore:
-    """Core computer vision system"""
+    """
+Core computer vision system"""
     
     def __init__(self, level: str = "enterprise"):
         self.level = level
@@ -562,7 +593,8 @@ class ComputerVisionCore:
         logger.info(f"Computer Vision Core initialized - Level: {level}")
     
     async def initialize(self) -> bool:
-        """Initialize computer vision system"""
+        """
+Initialize computer vision system"""
         try:
             # Load all models
             load_tasks = []
@@ -587,7 +619,8 @@ class ComputerVisionCore:
             return False
     
     async def start(self) -> bool:
-        """Start computer vision system"""
+        """
+Start computer vision system"""
         try:
             self.is_running = True
             
@@ -603,7 +636,8 @@ class ComputerVisionCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop computer vision system"""
+        """
+Stop computer vision system"""
         try:
             self.is_running = False
             
@@ -622,7 +656,8 @@ class ComputerVisionCore:
             return False
     
     async def health_check(self) -> bool:
-        """Check system health"""
+        """
+Check system health"""
         try:
             # Check if workers are running
             active_workers = len([task for task in self.processing_tasks if not task.done()])
@@ -647,7 +682,8 @@ class ComputerVisionCore:
             return False
     
     def _initialize_models(self):
-        """Initialize vision models"""
+        """
+Initialize vision models"""
         self.models = {
             'object_detection': ObjectDetectionModel(),
             'face_detection': FaceDetectionModel(),
@@ -656,7 +692,8 @@ class ComputerVisionCore:
         }
     
     async def _vision_processor(self, worker_id: str):
-        """Background vision processor"""
+        """
+Background vision processor"""
         while self.is_running:
             try:
                 if self.analysis_queue:
@@ -674,7 +711,8 @@ class ComputerVisionCore:
                 await asyncio.sleep(1)
     
     async def _process_analysis_request(self, request: VisualAnalysisRequest):
-        """Process visual analysis request"""
+        """
+Process visual analysis request"""
         try:
             start_time = time.time()
             
@@ -735,7 +773,8 @@ class ComputerVisionCore:
     
     async def _perform_analysis(self, image_data: np.ndarray, analysis_type: AnalysisType,
                               options: Dict[str, Any], result: VisualAnalysisResult):
-        """Perform specific analysis type"""
+        """
+Perform specific analysis type"""
         try:
             # Find suitable model
             model = None
@@ -773,7 +812,8 @@ class ComputerVisionCore:
             result.confidence_scores[analysis_type.value] = 0.0
     
     async def analyze_image(self, request: VisualAnalysisRequest) -> str:
-        """Submit image for analysis"""
+        """
+Submit image for analysis"""
         try:
             # Add to queue
             self.analysis_queue.append(request)
@@ -786,11 +826,13 @@ class ComputerVisionCore:
             raise
     
     def get_analysis_result(self, request_id: str) -> Optional[VisualAnalysisResult]:
-        """Get analysis result"""
+        """
+Get analysis result"""
         return self.results.get(request_id)
     
     def get_processing_status(self, request_id: str) -> Optional[ProcessingStatus]:
-        """Get processing status"""
+        """
+Get processing status"""
         result = self.results.get(request_id)
         if result:
             return result.status
@@ -804,7 +846,8 @@ class ComputerVisionCore:
     
     async def find_similar_images(self, query_embedding: List[float], 
                                  threshold: float = 0.8, limit: int = 10) -> List[Dict[str, Any]]:
-        """Find similar images by embedding"""
+        """
+Find similar images by embedding"""
         # Simulate similarity search
         similar_images = []
         
@@ -824,7 +867,8 @@ class ComputerVisionCore:
         return similar_images[:limit]
     
     def get_analytics(self, days: int = 30) -> Dict[str, Any]:
-        """Get analytics for processed images"""
+        """
+Get analytics for processed images"""
         since = datetime.utcnow() - timedelta(days=days)
         
         recent_results = [
@@ -862,7 +906,8 @@ class ComputerVisionCore:
         }
     
     def _get_most_common_objects(self, results: List[VisualAnalysisResult]) -> Dict[str, int]:
-        """Get most commonly detected objects"""
+        """
+Get most commonly detected objects"""
         object_counts = {}
         for result in results:
             for obj in result.detected_objects:
@@ -873,7 +918,8 @@ class ComputerVisionCore:
         return dict(sorted_objects[:10])
     
     def _get_moderation_stats(self, results: List[VisualAnalysisResult]) -> Dict[str, Any]:
-        """Get content moderation statistics"""
+        """
+Get content moderation statistics"""
         total_moderated = 0
         flagged_content = 0
         safe_content = 0
@@ -894,7 +940,8 @@ class ComputerVisionCore:
         }
     
     def get_system_metrics(self) -> Dict[str, Any]:
-        """Get system metrics"""
+        """
+Get system metrics"""
         avg_processing_time = (
             self.metrics['total_processing_time'] / self.metrics['images_processed']
             if self.metrics['images_processed'] > 0 else 0
@@ -925,7 +972,8 @@ computer_vision_core = ComputerVisionCore()
 # Convenience functions
 async def analyze_image_url(image_url: str, analysis_types: List[AnalysisType],
                            user_id: Optional[str] = None) -> str:
-    """Analyze image from URL"""
+    """
+Analyze image from URL"""
     request = VisualAnalysisRequest(
         image_url=image_url,
         analysis_types=analysis_types,
@@ -935,7 +983,8 @@ async def analyze_image_url(image_url: str, analysis_types: List[AnalysisType],
 
 async def analyze_image_data(image_data: bytes, analysis_types: List[AnalysisType],
                             user_id: Optional[str] = None) -> str:
-    """Analyze image from data"""
+    """
+Analyze image from data"""
     request = VisualAnalysisRequest(
         image_data=image_data,
         analysis_types=analysis_types,
@@ -944,15 +993,18 @@ async def analyze_image_data(image_data: bytes, analysis_types: List[AnalysisTyp
     return await computer_vision_core.analyze_image(request)
 
 def get_vision_result(request_id: str) -> Optional[VisualAnalysisResult]:
-    """Get vision analysis result"""
+    """
+Get vision analysis result"""
     return computer_vision_core.get_analysis_result(request_id)
 
 async def detect_objects(image_url: str) -> str:
-    """Convenience function for object detection"""
+    """
+Convenience function for object detection"""
     return await analyze_image_url(image_url, [AnalysisType.OBJECT_DETECTION])
 
 async def moderate_content(image_url: str) -> str:
-    """Convenience function for content moderation"""
+    """
+Convenience function for content moderation"""
     return await analyze_image_url(image_url, [AnalysisType.CONTENT_MODERATION])
 
 # Module exports
@@ -964,4 +1016,4 @@ __all__ = [
     "moderate_content"
 ]
 
-logger.info("Computer Vision Core module loaded")
+logger.info("Computer Vision Core module initialized")

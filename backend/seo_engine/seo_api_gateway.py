@@ -27,7 +27,8 @@ import random
 # === ÉNUMÉRATIONS ===
 
 class AuthenticationLevel(Enum):
-    """Niveaux d'authentification"""
+    """
+        Niveaux d'authentification"""
     PUBLIC = "public"
     BASIC = "basic"
     PREMIUM = "premium"
@@ -102,7 +103,8 @@ class APIResponse:
 
 @dataclass
 class RateLimitConfig:
-    """Configuration de limitation de débit"""
+    """
+        Configuration de limitation de débit"""
     limit_type: RateLimitType
     requests_per_period: int
     period_duration: int
@@ -113,7 +115,8 @@ class RateLimitConfig:
 
 @dataclass
 class APIMetrics:
-    """Métriques de l'API"""
+    """
+        Métriques de l'API"""
     endpoint_id: str
     total_requests: int
     successful_requests: int
@@ -194,6 +197,7 @@ class SEOAPIGateway:
         
         # Initialisation des endpoints par défaut
         self._initialize_default_endpoints()
+
         
         self.logger.info("SEO API Gateway initialisé avec succès")
     
@@ -363,6 +367,7 @@ class SEOAPIGateway:
             rate_limit_hits=0,
             unique_clients=0
         )
+
         
         self.logger.info(f"Endpoint enregistré: {endpoint.endpoint_id}")
     
@@ -386,7 +391,9 @@ class SEOAPIGateway:
             Réponse API standardisée
         """
         start_time = time.time()
+
         request_id = self._generate_request_id(client_id, endpoint_id)
+
         
         try:
             # Vérification de l'existence de l'endpoint
@@ -394,27 +401,36 @@ class SEOAPIGateway:
                 return self._create_error_response(
                     404, "Endpoint not found", request_id, start_time
                 )
+
+
             
             endpoint = self.endpoints[endpoint_id]
             
             # Authentification
+
             auth_result = await self._authenticate_request(client_id, endpoint.auth_level, headers)
+
             if not auth_result["success"]:
                 return self._create_error_response(
                     401, auth_result["message"], request_id, start_time
                 )
             
             # Rate limiting
+
             rate_limit_result = await self._check_rate_limit(client_id, endpoint_id)
+
             if not rate_limit_result["allowed"]:
                 self._update_metrics(endpoint_id, "rate_limit_hit")
+
                 return self._create_error_response(
                     429, "Rate limit exceeded", request_id, start_time,
                     additional_data={"rate_limit_info": rate_limit_result}
                 )
             
             # Validation des paramètres
+
             validation_result = self._validate_request_parameters(endpoint, request_data)
+
             if not validation_result["valid"]:
                 return self._create_error_response(
                     400, f"Invalid parameters: {validation_result['message']}", 
@@ -422,18 +438,25 @@ class SEOAPIGateway:
                 )
             
             # Vérification du cache
+
             cache_key = self._generate_cache_key(endpoint_id, request_data)
+
+
             cached_response = await self._get_cached_response(cache_key)
+
             if cached_response:
                 self._update_metrics(endpoint_id, "cache_hit")
+
                 cached_response.request_id = request_id
                 cached_response.execution_time_ms = (time.time() - start_time) * 1000
                 return cached_response
             
             # Traitement de la requête
+
             response_data = await self._process_request(endpoint, request_data, auth_result["user_info"])
             
             # Création de la réponse
+
             response = APIResponse(
                 success=True,
                 status_code=200,
@@ -450,12 +473,15 @@ class SEOAPIGateway:
             
             # Mise à jour des métriques
             self._update_metrics(endpoint_id, "success", time.time() - start_time)
+
             
             return response
             
         except Exception as e:
             self.logger.error(f"Erreur traitement requête {request_id}: {str(e)}")
+
             self._update_metrics(endpoint_id, "error")
+
             return self._create_error_response(
                 500, f"Internal server error: {str(e)}", request_id, start_time
             )
@@ -481,18 +507,22 @@ class SEOAPIGateway:
             return {"success": True, "user_info": {"client_id": client_id, "level": "public"}}
         
         # Vérification du token d'authentification
+
         auth_header = headers.get("Authorization") if headers else None
         if not auth_header or not auth_header.startswith("Bearer "):
             return {"success": False, "message": "Missing or invalid authorization header"}
+
         
         token = auth_header.replace("Bearer ", "")
         
         # Validation du token (simulation)
         if token in self.auth_tokens:
             user_info = self.auth_tokens[token]
+
             user_level = AuthenticationLevel(user_info["level"])
             
             # Vérification du niveau d'accès
+
             level_hierarchy = {
                 AuthenticationLevel.PUBLIC: 0,
                 AuthenticationLevel.BASIC: 1,
@@ -521,11 +551,14 @@ class SEOAPIGateway:
         """
         if not self.active_config["enable_rate_limiting"]:
             return {"allowed": True, "remaining": 999999, "reset_time": None}
+
         
         endpoint = self.endpoints[endpoint_id]
+
         current_time = time.time()
         
         # Nettoie les anciennes requêtes (plus d'une heure)
+
         cutoff_time = current_time - 3600
         self.client_requests[client_id] = [
             req_time for req_time in self.client_requests[client_id] 
@@ -533,7 +566,9 @@ class SEOAPIGateway:
         ]
         
         # Vérifie la limite horaire
+
         hourly_limit = endpoint.rate_limit.get("per_hour", self.active_config["default_rate_limit"])
+
         recent_requests = [
             req_time for req_time in self.client_requests[client_id]
             if req_time > current_time - 3600
@@ -550,6 +585,7 @@ class SEOAPIGateway:
         
         # Enregistre cette requête
         self.client_requests[client_id].append(current_time)
+
         
         return {
             "allowed": True,
@@ -580,6 +616,8 @@ class SEOAPIGateway:
                 
                 if param_name in data:
                     param_type = param_config.get("type")
+
+
                     value = data[param_name]
                     
                     if param_type == "string" and not isinstance(value, str):
@@ -615,12 +653,15 @@ class SEOAPIGateway:
         
         if cache_key in self.response_cache:
             cached_data = self.response_cache[cache_key]
+
             cache_time = cached_data["timestamp"]
+
             ttl = self.active_config["cache_ttl_seconds"]
             
             if time.time() - cache_time < ttl:
                 response_data = cached_data["response"]
                 return APIResponse(**response_data)
+
         
         return None
     
@@ -703,8 +744,11 @@ class SEOAPIGateway:
     ) -> Dict[str, Any]:
         """Traite une requête d'optimisation"""
         await asyncio.sleep(random.uniform(0.2, 0.8))
+
+
         
         original_content = data.get("content", "")
+
         
         return {
             "optimization_id": f"opt_{int(time.time() * 1000)}",
@@ -729,6 +773,7 @@ class SEOAPIGateway:
     ) -> Dict[str, Any]:
         """Traite une requête de reporting"""
         await asyncio.sleep(random.uniform(0.5, 2.0))
+
         
         return {
             "report_id": f"rep_{int(time.time() * 1000)}",
@@ -753,6 +798,8 @@ class SEOAPIGateway:
     ) -> Dict[str, Any]:
         """Traite une requête d'intelligence"""
         await asyncio.sleep(random.uniform(0.1, 0.3))
+
+
         
         insights = []
         for i in range(random.randint(3, 8)):
@@ -765,6 +812,7 @@ class SEOAPIGateway:
                 "confidence": random.uniform(0.7, 0.95),
                 "impact_score": random.uniform(3, 9)
             })
+
         
         return {
             "insights": insights,
@@ -779,6 +827,7 @@ class SEOAPIGateway:
     ) -> Dict[str, Any]:
         """Traite une requête de monitoring"""
         await asyncio.sleep(random.uniform(0.05, 0.2))
+
         
         return {
             "metrics": {
@@ -822,6 +871,7 @@ class SEOAPIGateway:
         """Met à jour les métriques de l'endpoint"""
         if endpoint_id not in self.api_metrics:
             return
+
         
         metrics = self.api_metrics[endpoint_id]
         
@@ -830,7 +880,9 @@ class SEOAPIGateway:
             metrics.successful_requests += 1
             if response_time:
                 # Calcul de la moyenne mobile
+
                 total_time = metrics.average_response_time * (metrics.successful_requests - 1)
+
                 metrics.average_response_time = (total_time + response_time) / metrics.successful_requests
         elif event_type == "error":
             metrics.total_requests += 1
@@ -865,6 +917,7 @@ class SEOAPIGateway:
             Token d'authentification
         """
         token = hashlib.sha256(f"{client_id}_{auth_level.value}_{time.time()}".encode()).hexdigest()
+
         
         self.auth_tokens[token] = {
             "client_id": client_id,
@@ -889,6 +942,7 @@ class SEOAPIGateway:
         if token in self.auth_tokens:
             del self.auth_tokens[token]
             self.logger.info(f"Token révoqué: {token}")
+
             return True
         return False
     
@@ -916,6 +970,7 @@ class SEOAPIGateway:
         
         Args:
             endpoint_id: ID de l'endpoint spécifique (optionnel)
+
             
         Returns:
             Métriques des endpoints
@@ -932,7 +987,8 @@ class SEOAPIGateway:
         }
     
     def get_gateway_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques complètes de la passerelle"""
+        """
+        Retourne les statistiques complètes de la passerelle"""
         return {
             "version": "2.0.0",
             "configuration": self.active_config,
@@ -941,16 +997,20 @@ class SEOAPIGateway:
                 "total": len(self.endpoints),
                 "by_type": {
                     endpoint_type.value: sum(
-                        1 for ep in self.endpoints.values() 
+                        1 for ep in self.endpoints.values()
+ 
                         if ep.endpoint_type == endpoint_type
                     )
+
                     for endpoint_type in APIEndpointType
                 },
                 "by_auth_level": {
                     auth_level.value: sum(
                         1 for ep in self.endpoints.values()
+
                         if ep.auth_level == auth_level
                     )
+
                     for auth_level in AuthenticationLevel
                 }
             },
@@ -971,12 +1031,37 @@ class SEOAPIGateway:
 
 
 # === EXPORTS ===
+
+# Aliases pour backward compatibility
+AuthenticationManager = SEOAPIGateway
+RateLimiter = SEOAPIGateway
+EndpointManager = SEOAPIGateway
+SecurityManager = SEOAPIGateway
+CacheManager = SEOAPIGateway
+RequestHandler = SEOAPIGateway
+APIEndpoint = SEOEndpoint
+SecurityReport = APIMetrics
+CacheStatistics = APIMetrics
+RequestMetrics = APIMetrics
+EndpointMetrics = APIMetrics
+
 __all__ = [
     'SEOAPIGateway',
+    'AuthenticationManager',
+    'RateLimiter',
+    'EndpointManager',
+    'SecurityManager',
+    'CacheManager',
+    'RequestHandler',
     'SEOEndpoint',
+    'APIEndpoint',
     'APIResponse', 
     'RateLimitConfig',
     'APIMetrics',
+    'SecurityReport',
+    'CacheStatistics',
+    'RequestMetrics',
+    'EndpointMetrics',
     'AuthenticationLevel',
     'APIEndpointType',
     'RequestMethod',

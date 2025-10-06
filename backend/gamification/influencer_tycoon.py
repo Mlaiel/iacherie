@@ -39,7 +39,8 @@ logger = logging.getLogger(__name__)
 
 
 class TycoonAssetType(str, Enum):
-    """Types of assets in the tycoon game."""
+    """
+        Types of assets in the tycoon game."""
     CONTENT_STUDIO = "content_studio"
     EQUIPMENT = "equipment"
     VIRTUAL_ASSISTANT = "virtual_assistant"
@@ -94,6 +95,10 @@ class TycoonAsset:
     purchased_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     last_income_generated: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     active: bool = True
+
+
+# Alias for compatibility
+GameAsset = TycoonAsset
 
 
 @dataclass
@@ -155,6 +160,10 @@ class TycoonPlayer:
     offline_progress_enabled: bool = True
 
 
+# Alias for compatibility with imports
+GamePlayer = TycoonPlayer
+
+
 class InfluencerTycoon:
     """
     Main tycoon game engine managing player progression, asset management,
@@ -169,6 +178,7 @@ class InfluencerTycoon:
         self.game_balance = self.config.get('game_balance', {})
         self.passive_income_rate = self.config.get('passive_income_rate', 1.0)
         self.offline_income_cap_hours = self.config.get('offline_income_cap_hours', 24)
+
         
         self._initialize_templates()
         logger.info("🎮 Influencer Tycoon initialized")
@@ -250,6 +260,8 @@ class InfluencerTycoon:
         """Create a new tycoon player."""
         try:
             player_id = str(uuid.uuid4())
+
+
             
             player = TycoonPlayer(
                 player_id=player_id,
@@ -257,25 +269,33 @@ class InfluencerTycoon:
                 username=username,
                 display_name=display_name or username,
                 current_cash=Decimal('10000'),  # Starting cash
+
                 metrics=TycoonMetrics(player_id=player_id)
             )
             
             # Give starter assets
+
             starter_studio = await self._create_asset(TycoonAssetType.CONTENT_STUDIO, player)
+
             player.assets.append(starter_studio)
+
             
             self.players[player_id] = player
             
             logger.info(f"Created new tycoon player: {username} ({player_id})")
+
             return player
             
         except Exception as e:
             logger.error(f"Error creating tycoon player: {e}")
+
             raise
     
     async def _create_asset(self, asset_type: TycoonAssetType, player: TycoonPlayer, level: int = 1) -> TycoonAsset:
         """Create a new asset for a player."""
         template = self.asset_templates.get(asset_type, {})
+
+
         
         asset = TycoonAsset(
             asset_type=asset_type,
@@ -287,23 +307,31 @@ class InfluencerTycoon:
             base_income=template.get('base_income', Decimal('100')),
             current_income=template.get('base_income', Decimal('100'))
         )
+
         
         return asset
     
     async def purchase_asset(self, player_id: str, asset_type: TycoonAssetType) -> Dict[str, Any]:
-        """Purchase a new asset for the player."""
+        """
+        Purchase a new asset for the player."""
         try:
             if player_id not in self.players:
                 raise ValueError(f"Player {player_id} not found")
+
+
             
             player = self.players[player_id]
+
             template = self.asset_templates.get(asset_type)
+
             
             if not template:
                 raise ValueError(f"Asset type {asset_type} not available")
             
             # Check if player meets requirements
+
             required_level = template.get('unlock_level', 1)
+
             if player.player_level < required_level:
                 return {
                     "success": False,
@@ -311,9 +339,15 @@ class InfluencerTycoon:
                 }
             
             # Calculate cost (increases with each owned asset of same type)
+
+
             owned_count = sum(1 for asset in player.assets if asset.asset_type == asset_type)
+
+
             cost_multiplier = 1.5 ** owned_count
+
             final_cost = template['base_cost'] * Decimal(str(cost_multiplier))
+
             
             if player.current_cash < final_cost:
                 return {
@@ -322,18 +356,23 @@ class InfluencerTycoon:
                 }
             
             # Purchase asset
+
             asset = await self._create_asset(asset_type, player)
+
             asset.current_cost = final_cost
             
             player.assets.append(asset)
+
             player.current_cash -= final_cost
             player.metrics.total_spent += final_cost
             player.metrics.assets_owned += 1
             
             # Update player level based on total spent
             await self._update_player_level(player)
+
             
             logger.info(f"Player {player.username} purchased {asset.name} for {final_cost}")
+
             
             return {
                 "success": True,
@@ -344,6 +383,7 @@ class InfluencerTycoon:
             
         except Exception as e:
             logger.error(f"Error purchasing asset: {e}")
+
             return {"success": False, "message": str(e)}
     
     async def upgrade_asset(self, player_id: str, asset_id: str, upgrade_type: TycoonUpgradeType) -> Dict[str, Any]:
@@ -351,9 +391,13 @@ class InfluencerTycoon:
         try:
             if player_id not in self.players:
                 raise ValueError(f"Player {player_id} not found")
+
+
             
             player = self.players[player_id]
+
             asset = next((a for a in player.assets if a.asset_id == asset_id), None)
+
             
             if not asset:
                 return {"success": False, "message": "Asset not found"}
@@ -362,7 +406,9 @@ class InfluencerTycoon:
                 return {"success": False, "message": "Asset already at max level"}
             
             # Calculate upgrade cost
+
             upgrade_cost = Decimal('500') * (asset.level ** 1.2)
+
             
             if player.current_cash < upgrade_cost:
                 return {
@@ -389,8 +435,10 @@ class InfluencerTycoon:
             asset.current_income = asset.base_income * Decimal(str(
                 asset.efficiency_multiplier * asset.quality_multiplier * (1 + asset.automation_level)
             ))
+
             
             await self._update_player_level(player)
+
             
             return {
                 "success": True,
@@ -401,6 +449,7 @@ class InfluencerTycoon:
             
         except Exception as e:
             logger.error(f"Error upgrading asset: {e}")
+
             return {"success": False, "message": str(e)}
     
     async def calculate_passive_income(self, player_id: str) -> Decimal:
@@ -408,9 +457,13 @@ class InfluencerTycoon:
         try:
             if player_id not in self.players:
                 return Decimal('0')
+
+
             
             player = self.players[player_id]
+
             total_income = Decimal('0')
+
             
             for asset in player.assets:
                 if asset.active:
@@ -418,12 +471,14 @@ class InfluencerTycoon:
             
             # Apply global multipliers
             total_income *= Decimal(str(self.passive_income_rate))
+
             
             player.metrics.passive_income_rate = total_income
             return total_income
             
         except Exception as e:
             logger.error(f"Error calculating passive income: {e}")
+
             return Decimal('0')
     
     async def process_offline_progress(self, player_id: str) -> Dict[str, Any]:
@@ -431,31 +486,45 @@ class InfluencerTycoon:
         try:
             if player_id not in self.players:
                 return {"income_earned": Decimal('0'), "hours_offline": 0}
+
             
             player = self.players[player_id]
             
             if not player.offline_progress_enabled:
                 return {"income_earned": Decimal('0'), "hours_offline": 0}
+
             
             now = datetime.now(timezone.utc)
+
+
             offline_duration = now - player.last_active
+
             hours_offline = offline_duration.total_seconds() / 3600
             
             # Cap offline earnings
+
             capped_hours = min(hours_offline, self.offline_income_cap_hours)
+
+
             
             passive_income_rate = await self.calculate_passive_income(player_id)
+
+
             income_earned = passive_income_rate * Decimal(str(capped_hours))
             
             # Apply offline efficiency (reduced rate)
+
+
             offline_efficiency = 0.7  # 70% efficiency while offline
             income_earned *= Decimal(str(offline_efficiency))
+
             
             player.current_cash += income_earned
             player.metrics.total_income += income_earned
             player.last_active = now
             
             logger.info(f"Player {player.username} earned {income_earned} while offline for {hours_offline:.1f}h")
+
             
             return {
                 "income_earned": income_earned,
@@ -466,13 +535,17 @@ class InfluencerTycoon:
             
         except Exception as e:
             logger.error(f"Error processing offline progress: {e}")
+
             return {"income_earned": Decimal('0'), "hours_offline": 0}
     
     async def _update_player_level(self, player: TycoonPlayer):
         """Update player level based on progress."""
         # Simple level calculation based on total spent
+
         total_spent = float(player.metrics.total_spent)
+
         new_level = max(1, int(math.log(total_spent / 1000 + 1) * 5) + 1)
+
         
         if new_level > player.player_level:
             old_level = player.player_level
@@ -498,16 +571,22 @@ class InfluencerTycoon:
         try:
             if player_id not in self.players:
                 return {"success": False, "message": "Player not found"}
+
             
             player = self.players[player_id]
+
             passive_rate = await self.calculate_passive_income(player_id)
             
             # Simulate income generation
+
             income_generated = passive_rate * Decimal(str(simulation_hours))
             
             # Add some randomness for realism
+
             random_factor = random.uniform(0.8, 1.2)
+
             income_generated *= Decimal(str(random_factor))
+
             
             player.current_cash += income_generated
             player.metrics.total_income += income_generated
@@ -517,6 +596,7 @@ class InfluencerTycoon:
                 player.metrics.highest_income_rate = income_generated
             
             player.metrics.last_updated = datetime.now(timezone.utc)
+
             
             return {
                 "success": True,
@@ -528,6 +608,7 @@ class InfluencerTycoon:
             
         except Exception as e:
             logger.error(f"Error simulating growth: {e}")
+
             return {"success": False, "message": str(e)}
     
     async def get_player_stats(self, player_id: str) -> Optional[Dict[str, Any]]:
@@ -535,12 +616,16 @@ class InfluencerTycoon:
         try:
             if player_id not in self.players:
                 return None
+
             
             player = self.players[player_id]
+
             passive_income = await self.calculate_passive_income(player_id)
             
             # Calculate net worth
+
             asset_value = sum(float(asset.current_cost) * 0.7 for asset in player.assets)  # Assets worth 70% of purchase price
+
             net_worth = float(player.current_cash) + asset_value
             
             return {
@@ -561,6 +646,7 @@ class InfluencerTycoon:
             
         except Exception as e:
             logger.error(f"Error getting player stats: {e}")
+
             return None
 
 
@@ -577,12 +663,14 @@ def get_tycoon_game() -> InfluencerTycoon:
 
 
 async def simulate_growth(player_id: str, hours: float = 1.0) -> Dict[str, Any]:
-    """Simulate growth for a player."""
+    """
+        Simulate growth for a player."""
     tycoon = get_tycoon_game()
     return await tycoon.simulate_growth(player_id, hours)
 
 
 async def calculate_passive_income(player_id: str) -> Decimal:
-    """Calculate passive income for a player."""
+    """
+        Calculate passive income for a player."""
     tycoon = get_tycoon_game()
     return await tycoon.calculate_passive_income(player_id)

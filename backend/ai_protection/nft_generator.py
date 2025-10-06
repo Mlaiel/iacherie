@@ -33,7 +33,8 @@ logger = logging.getLogger(__name__)
 
 
 class NFTStandard(Enum):
-    """NFT standards"""
+    """
+        NFT standards"""
     ERC721 = "ERC721"
     ERC1155 = "ERC1155" 
     CUSTOM = "CUSTOM"
@@ -62,7 +63,8 @@ class NFTMetadata:
 
 @dataclass
 class CertificateMetadata:
-    """Digital certificate metadata"""
+    """
+        Digital certificate metadata"""
     certificate_id: str
     content_id: str
     owner_id: str
@@ -76,7 +78,8 @@ class CertificateMetadata:
 
 @dataclass
 class NFTResult:
-    """NFT generation result"""
+    """
+        NFT generation result"""
     success: bool
     nft_id: str
     token_id: Optional[str]
@@ -88,7 +91,8 @@ class NFTResult:
 
 
 class NFTGenerator:
-    """NFT generator for digital certificates and ownership proofs"""
+    """
+        NFT generator for digital certificates and ownership proofs"""
     
     def __init__(self,
                  blockchain_url: Optional[str] = None,
@@ -112,12 +116,15 @@ class NFTGenerator:
         if NFT_AVAILABLE and blockchain_url:
             try:
                 self.web3 = Web3(Web3.HTTPProvider(blockchain_url))
+
                 if private_key:
                     self.account = Account.from_key(private_key)
+
                 else:
                     self.account = None
             except Exception as e:
                 logger.warning(f"Blockchain connection failed: {e}")
+
                 self.web3 = None
                 self.account = None
         else:
@@ -152,9 +159,12 @@ class NFTGenerator:
         """
         try:
             certificate_id = str(uuid.uuid4())
+
+
             issue_date = datetime.now().isoformat()
             
             # Create certificate metadata
+
             certificate_metadata = CertificateMetadata(
                 certificate_id=certificate_id,
                 content_id=content_id,
@@ -162,12 +172,14 @@ class NFTGenerator:
                 certificate_type=certificate_type,
                 issue_date=issue_date,
                 expiry_date=None,  # Perpetual copyright
+
                 verification_hash=self._generate_verification_hash(content_id, owner_id),
                 legal_status="registered",
                 jurisdiction="international"
             )
             
             # Create NFT metadata
+
             nft_metadata = NFTMetadata(
                 name=f"Copyright Certificate - {content_metadata.get('title', content_id[:8])}",
                 description=f"Digital copyright certificate for {content_metadata.get('type', 'content')} content",
@@ -196,6 +208,7 @@ class NFTGenerator:
                 metadata_uri,
                 certificate_metadata
             )
+
             
             if nft_result['success']:
                 # Register with rights registry
@@ -210,6 +223,7 @@ class NFTGenerator:
                         'certificate_type': certificate_type
                     }
                 )
+
                 
                 return NFTResult(
                     success=True,
@@ -220,6 +234,7 @@ class NFTGenerator:
                     transaction_hash=nft_result.get('transaction_hash'),
                     certificate_data=certificate_metadata
                 )
+
             else:
                 return NFTResult(
                     success=False,
@@ -228,9 +243,11 @@ class NFTGenerator:
                     certificate_data=certificate_metadata,
                     error=nft_result.get('error', 'NFT minting failed')
                 )
+
                 
         except Exception as e:
             logger.error(f"Copyright certificate generation failed: {e}")
+
             return NFTResult(
                 success=False,
                 nft_id="",
@@ -257,6 +274,7 @@ class NFTGenerator:
             proof_id = str(uuid.uuid4())
             
             # Create ownership proof metadata
+
             certificate_metadata = CertificateMetadata(
                 certificate_id=proof_id,
                 content_id=content_id,
@@ -270,6 +288,7 @@ class NFTGenerator:
             )
             
             # Create NFT metadata
+
             nft_metadata = NFTMetadata(
                 name=f"Ownership Proof - {content_id[:8]}",
                 description="Blockchain-verified proof of content ownership",
@@ -290,10 +309,12 @@ class NFTGenerator:
             )
             
             # Upload metadata
+
             metadata_uri = await self._upload_metadata_to_ipfs(nft_metadata)
             
             # Mint NFT
             nft_result = await self._mint_nft(owner_id, metadata_uri, certificate_metadata)
+
             
             return NFTResult(
                 success=nft_result['success'],
@@ -305,9 +326,11 @@ class NFTGenerator:
                 certificate_data=certificate_metadata,
                 error=nft_result.get('error')
             )
+
             
         except Exception as e:
             logger.error(f"Ownership proof generation failed: {e}")
+
             return NFTResult(
                 success=False,
                 nft_id="",
@@ -332,13 +355,17 @@ class NFTGenerator:
             # Check local storage first
             if nft_id in self._local_nfts:
                 nft_data = self._local_nfts[nft_id]
+
                 certificate_data = nft_data['certificate_data']
                 
                 # Verify hash
+
                 expected_hash = self._generate_verification_hash(
                     certificate_data['content_id'],
                     certificate_data['owner_id']
                 )
+
+
                 
                 hash_valid = certificate_data['verification_hash'] == expected_hash
                 
@@ -353,6 +380,7 @@ class NFTGenerator:
             # Try blockchain verification if available
             if self.web3 and token_id:
                 return await self._verify_blockchain_nft(token_id)
+
             
             return {
                 'verified': False,
@@ -361,6 +389,7 @@ class NFTGenerator:
             
         except Exception as e:
             logger.error(f"NFT verification failed: {e}")
+
             return {
                 'verified': False,
                 'error': str(e)
@@ -386,7 +415,10 @@ class NFTGenerator:
                 content_item.get('metadata', {}),
                 content_item.get('certificate_type', 'copyright')
             )
+
             tasks.append(task)
+
+
         
         results = await asyncio.gather(*tasks, return_exceptions=True)
         
@@ -399,6 +431,7 @@ class NFTGenerator:
                     metadata_uri="",
                     error=str(result)
                 )
+
         
         return results
     
@@ -409,15 +442,20 @@ class NFTGenerator:
         """Mint NFT on blockchain or store locally"""
         try:
             nft_id = str(uuid.uuid4())
+
             
             if self.web3 and self.account:
                 # Blockchain minting (simplified)
+
+
                 token_id = str(int(nft_id.replace('-', '')[:8], 16))
                 
                 # In production, this would interact with actual NFT contract
+
                 tx_hash = f"0x{hashlib.sha256(f'{nft_id}{owner_id}{metadata_uri}'.encode()).hexdigest()}"
                 
                 # Store NFT data
+
                 nft_data = {
                     'nft_id': nft_id,
                     'token_id': token_id,
@@ -442,6 +480,7 @@ class NFTGenerator:
                 
             else:
                 # Local storage fallback
+
                 nft_data = {
                     'nft_id': nft_id,
                     'owner_id': owner_id,
@@ -461,6 +500,7 @@ class NFTGenerator:
                 
         except Exception as e:
             logger.error(f"NFT minting failed: {e}")
+
             return {
                 'success': False,
                 'error': str(e)
@@ -470,6 +510,8 @@ class NFTGenerator:
         """Upload metadata to IPFS (or local storage as fallback)"""
         try:
             metadata_json = json.dumps(asdict(metadata), indent=2)
+
+
             metadata_id = hashlib.sha256(metadata_json.encode()).hexdigest()
             
             # Store locally for development
@@ -480,6 +522,7 @@ class NFTGenerator:
             
         except Exception as e:
             logger.error(f"Metadata upload failed: {e}")
+
             return ""
     
     async def _generate_certificate_image(self,
@@ -487,12 +530,14 @@ class NFTGenerator:
                                         content_metadata: Dict[str, Any]) -> str:
         """Generate certificate image (placeholder)"""
         # In production, this would generate an actual certificate image
+
         image_data = {
             'certificate_id': certificate_data.certificate_id,
             'content_type': content_metadata.get('type', 'unknown'),
             'issue_date': certificate_data.issue_date,
             'owner_id': certificate_data.owner_id
         }
+
         
         image_hash = hashlib.sha256(json.dumps(image_data, sort_keys=True).encode()).hexdigest()
         return f"data:image/png;base64,{base64.b64encode(image_hash.encode()).decode()}"
@@ -506,6 +551,7 @@ class NFTGenerator:
             'content_id': certificate_data.content_id,
             'evidence_count': len(ownership_evidence.get('evidence', []))
         }
+
         
         image_hash = hashlib.sha256(json.dumps(image_data, sort_keys=True).encode()).hexdigest()
         return f"data:image/png;base64,{base64.b64encode(image_hash.encode()).decode()}"
@@ -524,11 +570,13 @@ class NFTGenerator:
         }
     
     def get_nft_by_id(self, nft_id: str) -> Optional[Dict[str, Any]]:
-        """Get NFT data by ID"""
+        """
+        Get NFT data by ID"""
         return self._local_nfts.get(nft_id)
     
     def get_metadata_by_uri(self, metadata_uri: str) -> Optional[str]:
-        """Get metadata by URI"""
+        """
+        Get metadata by URI"""
         # Extract metadata ID from IPFS URI
         if metadata_uri.startswith('ipfs://'):
             metadata_id = metadata_uri[7:]
@@ -536,8 +584,10 @@ class NFTGenerator:
         return None
     
     def list_nfts_by_owner(self, owner_id: str) -> List[Dict[str, Any]]:
-        """List all NFTs owned by a specific owner"""
+        """
+        List all NFTs owned by a specific owner"""
         return [
             nft_data for nft_data in self._local_nfts.values()
+
             if nft_data['owner_id'] == owner_id
         ]

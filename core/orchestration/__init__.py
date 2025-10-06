@@ -1,4 +1,5 @@
-"""IA Chérie Core Orchestration - Enterprise System Orchestration
+"""
+IA Chérie Core Orchestration - Enterprise System Orchestration
 ============================================================
 
 Core orchestration management providing enterprise orchestration, microservices

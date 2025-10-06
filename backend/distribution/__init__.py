@@ -61,7 +61,7 @@ try:
         get_platform_manager
     )
     platform_connector_available = True
-    logger.info("✅ Platform Connector loaded successfully")
+    logger.info("✅ Platform Connector initialized successfully")
 except ImportError as e:
     logger.warning(f"❌ Platform Connector not available: {e}")
     platform_connector_available = False
@@ -83,7 +83,7 @@ try:
         schedule_content
     )
     schedule_manager_available = True
-    logger.info("✅ Schedule Manager loaded successfully")
+    logger.info("✅ Schedule Manager initialized successfully")
 except ImportError as e:
     logger.warning(f"❌ Schedule Manager not available: {e}")
     schedule_manager_available = False
@@ -100,7 +100,7 @@ try:
         get_analytics_aggregator
     )
     analytics_aggregator_available = True
-    logger.info("✅ Analytics Aggregator loaded successfully")
+    logger.info("✅ Analytics Aggregator initialized successfully")
 except ImportError as e:
     logger.warning(f"❌ Analytics Aggregator not available: {e}")
     analytics_aggregator_available = False
@@ -119,7 +119,7 @@ try:
         get_revenue_tracker
     )
     revenue_tracker_available = True
-    logger.info("✅ Revenue Tracker loaded successfully")
+    logger.info("✅ Revenue Tracker initialized successfully")
 except ImportError as e:
     logger.warning(f"❌ Revenue Tracker not available: {e}")
     revenue_tracker_available = False
@@ -139,7 +139,7 @@ try:
         get_api_manager
     )
     api_manager_available = True
-    logger.info("✅ API Manager loaded successfully")
+    logger.info("✅ API Manager initialized successfully")
 except ImportError as e:
     logger.warning(f"❌ API Manager not available: {e}")
     api_manager_available = False
@@ -161,7 +161,7 @@ try:
         get_social_platform_manager
     )
     social_connectors_available = True
-    logger.info("✅ Social Platform Connectors loaded successfully")
+    logger.info("✅ Social Platform Connectors initialized successfully")
 except ImportError as e:
     logger.warning(f"❌ Social Platform Connectors not available: {e}")
     social_connectors_available = False
@@ -184,7 +184,7 @@ try:
         get_music_platform_manager
     )
     music_connectors_available = True
-    logger.info("✅ Music Platform Connectors loaded successfully")
+    logger.info("✅ Music Platform Connectors initialized successfully")
 except ImportError as e:
     logger.warning(f"❌ Music Platform Connectors not available: {e}")
     music_connectors_available = False
@@ -205,7 +205,7 @@ try:
         get_security_protection_manager
     )
     security_protection_available = True
-    logger.info("✅ Security Protection loaded successfully")
+    logger.info("✅ Security Protection initialized successfully")
 except ImportError as e:
     logger.warning(f"❌ Security Protection not available: {e}")
     security_protection_available = False
@@ -231,7 +231,7 @@ try:
         get_video_platform_manager
     )
     video_connectors_available = True
-    logger.info("✅ Video Platform Connectors loaded successfully")
+    logger.info("✅ Video Platform Connectors initialized successfully")
 except ImportError as e:
     logger.warning(f"❌ Video Platform Connectors not available: {e}")
     video_connectors_available = False
@@ -256,7 +256,7 @@ try:
         get_emerging_platform_manager
     )
     emerging_connectors_available = True
-    logger.info("✅ Emerging Platform Connectors loaded successfully")
+    logger.info("✅ Emerging Platform Connectors initialized successfully")
 except ImportError as e:
     logger.warning(f"❌ Emerging Platform Connectors not available: {e}")
     emerging_connectors_available = False
@@ -283,7 +283,7 @@ try:
         get_creator_economy_manager
     )
     creator_economy_available = True
-    logger.info("✅ Creator Economy Connectors loaded successfully")
+    logger.info("✅ Creator Economy Connectors initialized successfully")
 except ImportError as e:
     logger.warning(f"❌ Creator Economy Connectors not available: {e}")
     creator_economy_available = False
@@ -309,7 +309,7 @@ try:
         get_monetization_distribution_manager
     )
     monetization_distribution_available = True
-    logger.info("✅ Monetization Distribution loaded successfully")
+    logger.info("✅ Monetization Distribution initialized successfully")
 except ImportError as e:
     logger.warning(f"❌ Monetization Distribution not available: {e}")
     monetization_distribution_available = False
@@ -338,7 +338,7 @@ try:
         get_globalization_manager
     )
     globalization_available = True
-    logger.info("✅ Globalization Engine loaded successfully")
+    logger.info("✅ Globalization Engine initialized successfully")
 except ImportError as e:
     logger.warning(f"❌ Globalization Engine not available: {e}")
     globalization_available = False
@@ -353,7 +353,8 @@ class DistributionOrchestrator:
     """
     
     def __init__(self):
-        """Initialize the distribution orchestrator."""
+        """
+        Initialize the distribution orchestrator."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.initialized = False
         
@@ -382,15 +383,19 @@ class DistributionOrchestrator:
             # Initialize existing modules
             if platform_connector_available:
                 self.platform_manager = await get_platform_manager()
+
             
             if schedule_manager_available:
                 self.schedule_manager = await get_schedule_manager()
+
             
             if analytics_aggregator_available:
                 self.analytics_aggregator = await get_analytics_aggregator()
+
             
             if revenue_tracker_available:
                 self.revenue_tracker = await get_revenue_tracker()
+
             
             if api_manager_available:
                 self.api_manager = await get_api_manager()
@@ -398,29 +403,38 @@ class DistributionOrchestrator:
             # Initialize new modules
             if social_connectors_available:
                 self.social_platform_manager = await get_social_platform_manager()
+
             
             if music_connectors_available:
                 self.music_platform_manager = await get_music_platform_manager()
+
             
             if security_protection_available:
                 self.security_protection_manager = await get_security_protection_manager()
+
             
             if video_connectors_available:
                 self.video_platform_manager = await get_video_platform_manager()
+
             
             if emerging_connectors_available:
                 self.emerging_platform_manager = await get_emerging_platform_manager()
+
             
             if creator_economy_available:
                 self.creator_economy_manager = await get_creator_economy_manager()
+
             
             if monetization_distribution_available:
                 self.monetization_distribution_manager = await get_monetization_distribution_manager()
+
             
             if globalization_available:
                 self.globalization_manager = await get_globalization_manager()
+
             
             self.initialized = True
+
             
             available_modules = sum([
                 platform_connector_available,
@@ -437,12 +451,15 @@ class DistributionOrchestrator:
                 monetization_distribution_available,
                 globalization_available
             ])
+
             
             self.logger.info(f"✅ Distribution orchestrator initialized with {available_modules}/13 modules")
+
             return True
             
         except Exception as e:
             self.logger.error(f"❌ Failed to initialize distribution orchestrator: {e}")
+
             return False
     
     async def distribute_content(
@@ -456,6 +473,8 @@ class DistributionOrchestrator:
         """Distribute content across multiple platforms."""
         if not self.initialized:
             await self.initialize()
+
+
         
         results = {
             "content_id": content_id,
@@ -473,7 +492,11 @@ class DistributionOrchestrator:
             # Schedule content if scheduling is configured
             if schedule_config and schedule_manager_available and self.schedule_manager:
                 schedule_type = ScheduleType(schedule_config.get("type", "optimal_time"))
+
+
                 optimization_goal = OptimizationGoal(schedule_config.get("goal", "balanced"))
+
+
                 
                 scheduled_content = await self.schedule_manager.schedule_content(
                     content_id=content_id,
@@ -483,10 +506,12 @@ class DistributionOrchestrator:
                     specific_time=schedule_config.get("specific_time"),
                     optimization_goal=optimization_goal
                 )
+
                 
                 results["scheduled"] = True
                 results["schedule_id"] = scheduled_content.id
                 results["scheduled_time"] = scheduled_content.scheduled_time.isoformat()
+
                 
                 self.logger.info(f"📅 Content scheduled: {title}")
             
@@ -497,26 +522,36 @@ class DistributionOrchestrator:
                     for platform in target_platforms:
                         try:
                             connector = await self.platform_manager.get_connector(PlatformType(platform))
+
                             if connector:
                                 response = await connector.upload_content(content_metadata)
+
                                 if response.success:
                                     results["published_platforms"].append(platform)
+
                                     self.logger.info(f"✅ Published to {platform}")
+
                                 else:
                                     results["failed_platforms"].append(platform)
+
                                     self.logger.error(f"❌ Failed to publish to {platform}: {response.error}")
+
                             else:
                                 results["failed_platforms"].append(platform)
+
                                 self.logger.error(f"❌ No connector available for {platform}")
+
                         
                         except Exception as e:
                             results["failed_platforms"].append(platform)
+
                             self.logger.error(f"❌ Error publishing to {platform}: {e}")
             
             # Initialize analytics tracking
             if analytics_aggregator_available and self.analytics_aggregator:
                 for platform in results["published_platforms"]:
                     # Initialize with basic metrics (would be updated with real data later)
+
                     await self.analytics_aggregator.collect_platform_analytics(
                         platform=platform,
                         content_id=content_id,
@@ -527,6 +562,7 @@ class DistributionOrchestrator:
                             "comments": 0
                         }
                     )
+
                 results["analytics_tracked"] = True
             
             # Initialize revenue tracking
@@ -534,12 +570,15 @@ class DistributionOrchestrator:
                 # Set up revenue tracking for the content
                 results["revenue_tracked"] = True
                 self.logger.info(f"💰 Revenue tracking initialized for {content_id}")
+
             
             return results
             
         except Exception as e:
             self.logger.error(f"Error distributing content: {e}")
+
             results["error"] = str(e)
+
             return results
     
     async def collect_analytics(
@@ -550,6 +589,8 @@ class DistributionOrchestrator:
         """Collect analytics data from multiple platforms."""
         if not self.initialized:
             await self.initialize()
+
+
         
         results = {
             "content_id": content_id,
@@ -562,24 +603,30 @@ class DistributionOrchestrator:
         try:
             if analytics_aggregator_available and self.analytics_aggregator:
                 total_views = 0
+
                 total_engagement = 0
                 
                 for platform, metrics in platform_metrics.items():
                     # Collect analytics data
+
                     success = await self.analytics_aggregator.collect_platform_analytics(
                         platform=platform,
                         content_id=content_id,
                         metrics_data=metrics
                     )
+
                     
                     if success:
                         results["platforms_updated"].append(platform)
+
                         total_views += metrics.get("views", 0)
+
                         total_engagement += (
                             metrics.get("likes", 0) +
                             metrics.get("comments", 0) +
                             metrics.get("shares", 0)
                         )
+
                 
                 results["total_views"] = total_views
                 results["total_engagement"] = total_engagement
@@ -587,8 +634,13 @@ class DistributionOrchestrator:
                 # Generate insights if significant data
                 if total_views > 100:
                     from datetime import datetime, timedelta
+
                     end_time = datetime.utcnow()
+
+
                     start_time = end_time - timedelta(days=7)
+
+
                     
                     aggregated_metrics = await self.analytics_aggregator.aggregate_metrics(
                         AggregationPeriod.WEEK,
@@ -597,8 +649,11 @@ class DistributionOrchestrator:
                         list(platform_metrics.keys()),
                         [content_id]
                     )
+
+
                     
                     insights = await self.analytics_aggregator.generate_insights(aggregated_metrics)
+
                     results["insights_generated"] = len(insights) > 0
                     results["insights_count"] = len(insights)
             
@@ -611,7 +666,9 @@ class DistributionOrchestrator:
             
         except Exception as e:
             self.logger.error(f"Error collecting analytics: {e}")
+
             results["error"] = str(e)
+
             return results
     
     async def track_revenue(
@@ -626,6 +683,8 @@ class DistributionOrchestrator:
         """Track revenue for distributed content."""
         if not self.initialized:
             await self.initialize()
+
+
         
         results = {
             "content_id": content_id,
@@ -638,6 +697,7 @@ class DistributionOrchestrator:
         try:
             if revenue_tracker_available and self.revenue_tracker:
                 # Track the revenue
+
                 revenue_id = await self.revenue_tracker.track_revenue(
                     content_id=content_id,
                     platform=platform,
@@ -646,6 +706,7 @@ class DistributionOrchestrator:
                     currency=currency,
                     metadata=metadata
                 )
+
                 
                 results["revenue_tracked"] = True
                 results["revenue_id"] = revenue_id
@@ -657,13 +718,16 @@ class DistributionOrchestrator:
                         content_id=content_id,
                         metrics_data={"revenue": amount}
                     )
+
                     results["analytics_updated"] = True
             
             return results
             
         except Exception as e:
             self.logger.error(f"Error tracking revenue: {e}")
+
             results["error"] = str(e)
+
             return results
     
     async def get_distribution_dashboard(
@@ -674,10 +738,15 @@ class DistributionOrchestrator:
         """Get comprehensive distribution dashboard."""
         if not self.initialized:
             await self.initialize()
+
         
         from datetime import datetime, timedelta
+
         end_time = datetime.utcnow()
+
         start_time = end_time - timedelta(days=time_range_days)
+
+
         
         dashboard = {
             "time_range": {
@@ -696,7 +765,10 @@ class DistributionOrchestrator:
             # Platform connection status
             if platform_connector_available and self.platform_manager:
                 connected_platforms = await self.platform_manager.get_connected_platforms()
+
+
                 connection_statuses = await self.platform_manager.check_connections()
+
                 
                 dashboard["platforms"] = {
                     "connected_count": len(connected_platforms),
@@ -710,8 +782,11 @@ class DistributionOrchestrator:
                     status=ScheduleStatus.SCHEDULED,
                     time_range=(start_time, end_time)
                 )
+
+
                 
                 analytics = await self.schedule_manager.get_schedule_analytics((start_time, end_time))
+
                 
                 dashboard["scheduling"] = {
                     "upcoming_count": len(scheduled_content),
@@ -724,6 +799,7 @@ class DistributionOrchestrator:
                     content_ids=[content_id] if content_id else None,
                     time_window_hours=time_range_days * 24
                 )
+
                 
                 dashboard["analytics"] = real_time_metrics
             
@@ -734,19 +810,23 @@ class DistributionOrchestrator:
                     end_date=end_time,
                     content_ids=[content_id] if content_id else None
                 )
+
                 
                 dashboard["revenue"] = revenue_summary
             
             # API health
             if api_manager_available and self.api_manager:
                 api_stats = await self.api_manager.get_overall_statistics()
+
                 dashboard["api_health"] = api_stats
             
             return dashboard
             
         except Exception as e:
             self.logger.error(f"Error getting distribution dashboard: {e}")
+
             dashboard["error"] = str(e)
+
             return dashboard
     
     async def distribute_to_social_platforms(
@@ -759,6 +839,8 @@ class DistributionOrchestrator:
         """Distribute content to social media platforms."""
         if not self.initialized:
             await self.initialize()
+
+
         
         results = {
             "content_id": content_id,
@@ -775,6 +857,7 @@ class DistributionOrchestrator:
                     protection_status = await self.security_protection_manager.protect_content_globally(
                         content_id, file_data, metadata
                     )
+
                     results["protection_applied"] = True
                     results["protection_status"] = {
                         "level": protection_status.protection_level.value,
@@ -785,6 +868,7 @@ class DistributionOrchestrator:
             # Upload to social platforms
             if social_connectors_available and self.social_platform_manager:
                 from .platform_connectors_social import SocialContentMetadata, SocialPlatformType
+
                 
                 social_metadata = SocialContentMetadata(
                     title=metadata.get("title", ""),
@@ -794,12 +878,16 @@ class DistributionOrchestrator:
                     category=metadata.get("category"),
                     privacy=metadata.get("privacy", "public")
                 )
+
+
                 
                 social_platforms = [SocialPlatformType(p) for p in platforms if p in [e.value for e in SocialPlatformType]]
+
                 
                 upload_results = await self.social_platform_manager.upload_to_multiple_platforms(
                     social_platforms, social_metadata, file_data
                 )
+
                 
                 for platform, response in upload_results.items():
                     if response.success:
@@ -808,17 +896,21 @@ class DistributionOrchestrator:
                             "url": response.url,
                             "post_id": response.post_id
                         })
+
                     else:
                         results["failed_uploads"].append({
                             "platform": platform.value,
                             "error": response.error_message
                         })
+
             
             return results
             
         except Exception as e:
             self.logger.error(f"Error distributing to social platforms: {e}")
+
             results["error"] = str(e)
+
             return results
     
     async def distribute_to_music_platforms(
@@ -831,6 +923,8 @@ class DistributionOrchestrator:
         """Distribute music content to music streaming platforms."""
         if not self.initialized:
             await self.initialize()
+
+
         
         results = {
             "content_id": content_id,
@@ -846,6 +940,7 @@ class DistributionOrchestrator:
                 protection_status = await self.security_protection_manager.protect_content_globally(
                     content_id, audio_data, metadata
                 )
+
                 results["protection_applied"] = True
                 results["protection_status"] = {
                     "level": protection_status.protection_level.value,
@@ -855,6 +950,7 @@ class DistributionOrchestrator:
             # Upload to music platforms
             if music_connectors_available and self.music_platform_manager:
                 from .platform_connectors_music import MusicTrackMetadata, MusicPlatformType, MusicGenre
+
                 
                 music_metadata = MusicTrackMetadata(
                     title=metadata.get("title", ""),
@@ -867,12 +963,16 @@ class DistributionOrchestrator:
                     tags=metadata.get("tags", []),
                     privacy=metadata.get("privacy", "public")
                 )
+
+
                 
                 music_platforms = [MusicPlatformType(p) for p in platforms if p in [e.value for e in MusicPlatformType]]
+
                 
                 upload_results = await self.music_platform_manager.upload_to_multiple_platforms(
                     music_platforms, music_metadata, audio_data
                 )
+
                 
                 for platform, response in upload_results.items():
                     if response.success:
@@ -881,23 +981,29 @@ class DistributionOrchestrator:
                             "url": response.url,
                             "track_id": response.track_id
                         })
+
                     else:
                         results["failed_uploads"].append({
                             "platform": platform.value,
                             "error": response.error_message
                         })
+
             
             return results
             
         except Exception as e:
             self.logger.error(f"Error distributing to music platforms: {e}")
+
             results["error"] = str(e)
+
             return results
     
     async def scan_content_security(self, content_id: str) -> Dict[str, Any]:
         """Scan content for security threats."""
         if not self.initialized:
             await self.initialize()
+
+
         
         results = {
             "content_id": content_id,
@@ -909,9 +1015,12 @@ class DistributionOrchestrator:
         try:
             if security_protection_available and self.security_protection_manager:
                 # Get default protection engine
+
                 engine = await self.security_protection_manager.get_protection_engine("default")
+
                 if engine:
                     threats = await engine.scan_for_threats(content_id)
+
                     
                     results["threats_detected"] = [
                         {
@@ -927,7 +1036,9 @@ class DistributionOrchestrator:
                     # Calculate security score based on threats
                     if threats:
                         high_severity_count = sum(1 for t in threats if t.severity in [SecurityLevel.HIGH, SecurityLevel.MAXIMUM])
+
                         results["security_score"] = max(0.0, 1.0 - (len(threats) * 0.1) - (high_severity_count * 0.2))
+
                         
                         results["recommendations"] = [
                             "Review detected threats and take appropriate action",
@@ -939,7 +1050,9 @@ class DistributionOrchestrator:
             
         except Exception as e:
             self.logger.error(f"Error scanning content security: {e}")
+
             results["error"] = str(e)
+
             return results
 
 
@@ -948,20 +1061,26 @@ class DistributionOrchestrator:
         try:
             if self.platform_manager:
                 await self.platform_manager.cleanup()
+
             
             if self.api_manager:
                 await self.api_manager.cleanup()
+
             
             if self.social_platform_manager:
                 await self.social_platform_manager.cleanup()
+
             
             if self.music_platform_manager:
                 await self.music_platform_manager.cleanup()
+
             
             if self.security_protection_manager:
                 await self.security_protection_manager.cleanup()
+
             
             self.logger.info("✅ Distribution orchestrator cleaned up")
+
             
         except Exception as e:
             self.logger.error(f"Error during cleanup: {e}")

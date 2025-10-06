@@ -41,7 +41,8 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionType(Enum):
-    """Types of content protection mechanisms"""
+    """
+        Types of content protection mechanisms"""
     COPYRIGHT_DETECTION = "copyright_detection"
     WATERMARKING = "watermarking"
     FINGERPRINTING = "fingerprinting"
@@ -137,7 +138,8 @@ class ProtectionCase:
 
 @dataclass
 class ProtectionMetrics:
-    """Protection system performance metrics"""
+    """
+        Protection system performance metrics"""
     timestamp: datetime
     protection_type: ProtectionType
     
@@ -169,7 +171,8 @@ class ProtectionMetrics:
 
 @dataclass
 class ProtectionAnalysis:
-    """Comprehensive protection performance analysis"""
+    """
+        Comprehensive protection performance analysis"""
     analysis_period: Tuple[datetime, datetime]
     total_cases: int
     active_protections: int
@@ -223,7 +226,8 @@ class ProtectionPerformanceEngine:
     """
     
     def __init__(self, retention_days: int = 365):
-        """Initialize the Protection Performance Engine"""
+        """
+        Initialize the Protection Performance Engine"""
         self.retention_days = retention_days
         self.protection_cases: Dict[str, ProtectionCase] = {}
         self.protection_metrics: deque = deque(maxlen=10000)  # Last 10k measurements
@@ -241,6 +245,7 @@ class ProtectionPerformanceEngine:
         
         # Risk assessment models
         self.risk_models = self._initialize_risk_models()
+
         
         logger.info("🛡️ Protection Performance Engine initialized")
     
@@ -365,10 +370,12 @@ class ProtectionPerformanceEngine:
             
             # Log case registration
             logger.info(f"🛡️ Protection case {case.case_id} registered - {case.threat_level.value} threat")
+
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to register protection case: {e}")
+
             return False
     
     async def update_case_status(
@@ -381,13 +388,16 @@ class ProtectionPerformanceEngine:
         try:
             if case_id not in self.protection_cases:
                 logger.error(f"Protection case {case_id} not found")
+
                 return False
+
             
             case = self.protection_cases[case_id]
             case.status = status
             
             if status in [ProtectionStatus.SUCCESSFUL, ProtectionStatus.FAILED]:
                 case.resolution_timestamp = datetime.now()
+
                 
                 if case.detection_timestamp:
                     time_diff = case.resolution_timestamp - case.detection_timestamp
@@ -397,18 +407,22 @@ class ProtectionPerformanceEngine:
             if resolution_data:
                 if "recovered_revenue" in resolution_data:
                     case.recovered_revenue = Decimal(str(resolution_data["recovered_revenue"]))
+
                 
                 if "legal_outcome" in resolution_data:
                     case.legal_outcome = resolution_data["legal_outcome"]
                 
                 if "protection_costs" in resolution_data:
                     case.protection_costs = Decimal(str(resolution_data["protection_costs"]))
+
             
             logger.info(f"✅ Protection case {case_id} updated to {status.value}")
+
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to update case status: {e}")
+
             return False
     
     async def track_protection_metrics(self, metrics: ProtectionMetrics) -> bool:
@@ -429,16 +443,19 @@ class ProtectionPerformanceEngine:
                     metrics.recall = metrics.true_positives / (
                         metrics.true_positives + metrics.false_negatives
                     )
+
                 
                 if metrics.precision > 0 and metrics.recall > 0:
                     metrics.f1_score = 2 * (metrics.precision * metrics.recall) / (
                         metrics.precision + metrics.recall
                     )
+
             
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to track protection metrics: {e}")
+
             return False
     
     async def _update_threat_intelligence(self, case: ProtectionCase):
@@ -460,6 +477,7 @@ class ProtectionPerformanceEngine:
                 self.threat_intelligence[platform_key]["detection_methods"][case.detection_method.value] += 1
             
             # Update threat type patterns
+
             threat_type_key = f"threat_{case.protection_type.value}"
             if threat_type_key not in self.threat_intelligence:
                 self.threat_intelligence[threat_type_key] = {
@@ -490,111 +508,168 @@ class ProtectionPerformanceEngine:
         """
         try:
             # Define analysis period
+
             end_date = datetime.now()
+
+
             start_date = end_date - timedelta(days=analysis_period_days)
             
             # Filter cases for analysis period
+
             period_cases = [
                 case for case in self.protection_cases.values()
+
                 if start_date <= case.detection_timestamp <= end_date
             ]
             
             if not period_cases:
                 logger.warning("No protection cases found in specified period")
+
                 return None
             
             # Calculate basic metrics
+
             total_cases = len(period_cases)
+
+
             active_protections = sum(1 for case in period_cases 
                                    if case.status == ProtectionStatus.ACTIVE)
             
             # Calculate performance metrics
+
             successful_cases = [case for case in period_cases 
                               if case.status == ProtectionStatus.SUCCESSFUL]
+
             
             enforcement_success_rate = len(successful_cases) / total_cases if total_cases > 0 else 0.0
             
             # Calculate detection accuracy
+
             detection_metrics = [m for m in self.protection_metrics 
                                if start_date <= m.timestamp <= end_date]
             
             if detection_metrics:
                 overall_detection_accuracy = statistics.mean([m.detection_accuracy for m in detection_metrics])
+
+
                 false_positive_rate = statistics.mean([
                     m.false_positives / max(1, m.total_scans) for m in detection_metrics
                 ])
+
             else:
                 overall_detection_accuracy = 0.85  # Default estimate
+
                 false_positive_rate = 0.10
             
             # Calculate response times
+
             response_times = [case.response_time_hours for case in period_cases 
                             if case.response_time_hours is not None]
+
             average_response_time = statistics.mean(response_times) if response_times else 24.0
             
             # Financial analysis
+
             total_investment = sum(case.protection_costs for case in period_cases)
+
+
             total_recovered = sum(case.recovered_revenue for case in period_cases)
+
+
             
             protection_roi = ((total_recovered - total_investment) / total_investment * 100) if total_investment > 0 else 0.0
+
             cost_per_successful_case = total_investment / len(successful_cases) if successful_cases else Decimal('0')
             
             # Threat analysis
+
             threat_distribution = Counter(case.threat_level for case in period_cases)
+
+
             
             threat_types = Counter(case.protection_type.value for case in period_cases)
+
+
             most_common_threats = threat_types.most_common(5)
             
             # Platform analysis
+
             platform_cases = defaultdict(list)
+
             for case in period_cases:
                 if case.infringing_platform:
                     platform_cases[case.infringing_platform].append(case)
+
+
             
             platform_threat_breakdown = {
-                platform: len(cases) 
+                platform: len(cases)
+ 
                 for platform, cases in platform_cases.items()
             }
+
             
             platform_success_rates = {}
             for platform, cases in platform_cases.items():
                 successful = sum(1 for case in cases if case.status == ProtectionStatus.SUCCESSFUL)
+
                 platform_success_rates[platform] = successful / len(cases) if cases else 0.0
             
             # Identify high-risk platforms
+
             high_risk_platforms = [
                 platform for platform, success_rate in platform_success_rates.items()
+
                 if success_rate < 0.6  # Less than 60% success rate
             ]
             
             # Effectiveness analysis
+
             protection_type_effectiveness = await self._analyze_protection_type_effectiveness(period_cases)
+
+
             
             detection_method_performance = await self._analyze_detection_method_performance(period_cases)
+
+
             
             enforcement_action_success_rates = await self._analyze_enforcement_success_rates(period_cases)
             
             # Generate optimization recommendations
+
             optimization_recommendations = await self._generate_optimization_recommendations(
                 period_cases, detection_metrics
             )
+
+
             
             predicted_improvements = await self._predict_optimization_improvements(
                 optimization_recommendations
             )
+
+
             
             resource_allocation_suggestions = await self._generate_resource_allocation_suggestions(
                 period_cases, threat_distribution
             )
             
             # Risk assessment
+
             current_risk_level = await self._assess_current_risk_level(period_cases)
+
+
             risk_trend = await self._analyze_risk_trend(analysis_period_days)
+
+
             vulnerability_areas = await self._identify_vulnerability_areas(period_cases)
+
+
             mitigation_priorities = await self._prioritize_mitigation_efforts(period_cases)
             
             # Emerging threat patterns
+
             emerging_threat_patterns = await self._identify_emerging_threats(period_cases)
+
             
             return ProtectionAnalysis(
                 analysis_period=(start_date, end_date),
@@ -625,9 +700,11 @@ class ProtectionPerformanceEngine:
                 vulnerability_areas=vulnerability_areas,
                 mitigation_priorities=mitigation_priorities
             )
+
             
         except Exception as e:
             logger.error(f"❌ Failed to analyze protection performance: {e}")
+
             return None
     
     async def _analyze_protection_type_effectiveness(
@@ -642,7 +719,9 @@ class ProtectionPerformanceEngine:
             
             if type_cases:
                 successful = sum(1 for case in type_cases if case.status == ProtectionStatus.SUCCESSFUL)
+
                 effectiveness[protection_type] = successful / len(type_cases)
+
             else:
                 effectiveness[protection_type] = 0.0
         
@@ -652,7 +731,8 @@ class ProtectionPerformanceEngine:
         self, 
         cases: List[ProtectionCase]
     ) -> Dict[DetectionMethod, Dict[str, float]]:
-        """Analyze performance of different detection methods"""
+        """
+        Analyze performance of different detection methods"""
         performance = {}
         
         for method in DetectionMethod:
@@ -660,13 +740,22 @@ class ProtectionPerformanceEngine:
             
             if method_cases:
                 # Calculate accuracy metrics
+
                 avg_similarity = statistics.mean([case.similarity_score for case in method_cases])
+
+
                 avg_confidence = statistics.mean([case.confidence_score for case in method_cases])
+
+
                 avg_false_positive_prob = statistics.mean([case.false_positive_probability for case in method_cases])
                 
                 # Success rate
+
                 successful = sum(1 for case in method_cases if case.status == ProtectionStatus.SUCCESSFUL)
+
+
                 success_rate = successful / len(method_cases)
+
                 
                 performance[method] = {
                     "accuracy": avg_similarity,
@@ -701,7 +790,9 @@ class ProtectionPerformanceEngine:
             
             if action_cases:
                 successful = sum(1 for case in action_cases if case.status == ProtectionStatus.SUCCESSFUL)
+
                 success_rates[action] = successful / len(action_cases)
+
             else:
                 success_rates[action] = 0.0
         
@@ -712,7 +803,8 @@ class ProtectionPerformanceEngine:
         cases: List[ProtectionCase],
         metrics: List[ProtectionMetrics]
     ) -> List[str]:
-        """Generate optimization recommendations based on analysis"""
+        """
+        Generate optimization recommendations based on analysis"""
         recommendations = []
         
         # Analyze false positive rates
@@ -720,6 +812,7 @@ class ProtectionPerformanceEngine:
             avg_false_positive_rate = statistics.mean([
                 m.false_positives / max(1, m.total_scans) for m in metrics
             ])
+
             
             if avg_false_positive_rate > 0.15:
                 recommendations.append(
@@ -727,6 +820,7 @@ class ProtectionPerformanceEngine:
                 )
         
         # Analyze response times
+
         response_times = [case.response_time_hours for case in cases 
                         if case.response_time_hours is not None]
         
@@ -736,6 +830,7 @@ class ProtectionPerformanceEngine:
             )
         
         # Analyze threat levels
+
         critical_cases = [case for case in cases if case.threat_level in [ThreatLevel.CRITICAL, ThreatLevel.SEVERE]]
         
         if len(critical_cases) > len(cases) * 0.3:  # More than 30% critical
@@ -744,13 +839,17 @@ class ProtectionPerformanceEngine:
             )
         
         # Analyze platform-specific issues
+
         platform_cases = defaultdict(list)
         for case in cases:
             if case.infringing_platform:
                 platform_cases[case.infringing_platform].append(case)
+
         
         for platform, platform_case_list in platform_cases.items():
             successful = sum(1 for case in platform_case_list if case.status == ProtectionStatus.SUCCESSFUL)
+
+
             success_rate = successful / len(platform_case_list) if platform_case_list else 0
             
             if success_rate < 0.5:
@@ -759,13 +858,17 @@ class ProtectionPerformanceEngine:
                 )
         
         # Analyze cost effectiveness
+
         total_costs = sum(case.protection_costs for case in cases)
+
         total_recovered = sum(case.recovered_revenue for case in cases)
+
         
         if total_costs > 0 and (total_recovered / total_costs) < 1.5:
             recommendations.append(
                 "Low ROI on protection efforts - optimize cost allocation"
             )
+
         
         return recommendations
     
@@ -803,12 +906,15 @@ class ProtectionPerformanceEngine:
         suggestions = []
         
         # Analyze threat level distribution
+
         total_cases = len(cases)
+
         
         if threat_distribution[ThreatLevel.CRITICAL] > total_cases * 0.2:
             suggestions.append(
                 "Allocate additional resources to critical threat response team"
             )
+
         
         if threat_distribution[ThreatLevel.HIGH] > total_cases * 0.3:
             suggestions.append(
@@ -816,7 +922,9 @@ class ProtectionPerformanceEngine:
             )
         
         # Analyze detection method usage
+
         detection_methods = Counter(case.detection_method for case in cases)
+
         most_used_method = detection_methods.most_common(1)[0] if detection_methods else None
         
         if most_used_method and most_used_method[1] > total_cases * 0.6:
@@ -825,19 +933,24 @@ class ProtectionPerformanceEngine:
             )
         
         # Analyze enforcement action distribution
+
         all_actions = [action for case in cases for action in case.enforcement_actions]
+
         action_distribution = Counter(all_actions)
+
         
         if action_distribution[EnforcementAction.LEGAL_ACTION] > len(all_actions) * 0.4:
             suggestions.append(
                 "High legal action usage - consider preventive measures"
             )
+
         
         suggestions.extend([
             "Implement predictive analytics for threat prevention",
             "Establish dedicated rapid response team for critical threats",
             "Develop automated escalation procedures for high-value content"
         ])
+
         
         return suggestions
     
@@ -847,6 +960,7 @@ class ProtectionPerformanceEngine:
             return ThreatLevel.LOW
         
         # Calculate risk score based on recent threats
+
         recent_cases = [
             case for case in cases 
             if (datetime.now() - case.detection_timestamp).days <= 7
@@ -856,6 +970,7 @@ class ProtectionPerformanceEngine:
             return ThreatLevel.LOW
         
         # Weight threats by severity
+
         risk_weights = {
             ThreatLevel.LOW: 1,
             ThreatLevel.MEDIUM: 3,
@@ -863,9 +978,12 @@ class ProtectionPerformanceEngine:
             ThreatLevel.CRITICAL: 10,
             ThreatLevel.SEVERE: 15
         }
+
         
         total_risk_score = sum(risk_weights[case.threat_level] for case in recent_cases)
+
         average_risk_score = total_risk_score / len(recent_cases)
+
         
         if average_risk_score >= 12:
             return ThreatLevel.SEVERE
@@ -879,17 +997,24 @@ class ProtectionPerformanceEngine:
             return ThreatLevel.LOW
     
     async def _analyze_risk_trend(self, period_days: int) -> str:
-        """Analyze risk trend over time"""
+        """
+        Analyze risk trend over time"""
         # Compare recent period with previous period
+
         now = datetime.now()
+
+
         
         recent_cases = [
             case for case in self.protection_cases.values()
+
             if (now - case.detection_timestamp).days <= period_days
         ]
+
         
         previous_cases = [
             case for case in self.protection_cases.values()
+
             if period_days < (now - case.detection_timestamp).days <= period_days * 2
         ]
         
@@ -897,6 +1022,7 @@ class ProtectionPerformanceEngine:
             return "stable"  # No historical data
         
         # Calculate risk scores for both periods
+
         risk_weights = {
             ThreatLevel.LOW: 1,
             ThreatLevel.MEDIUM: 3,
@@ -904,9 +1030,12 @@ class ProtectionPerformanceEngine:
             ThreatLevel.CRITICAL: 10,
             ThreatLevel.SEVERE: 15
         }
+
         
         recent_risk = sum(risk_weights[case.threat_level] for case in recent_cases) / len(recent_cases) if recent_cases else 0
+
         previous_risk = sum(risk_weights[case.threat_level] for case in previous_cases) / len(previous_cases)
+
         
         if recent_risk > previous_risk * 1.2:
             return "increasing"
@@ -920,14 +1049,18 @@ class ProtectionPerformanceEngine:
         vulnerabilities = []
         
         # Analyze detection gaps
+
         detection_methods = Counter(case.detection_method for case in cases)
+
         total_detections = len(cases)
+
         
         for method in DetectionMethod:
             if detection_methods[method] < total_detections * 0.1:  # Less than 10% coverage
                 vulnerabilities.append(f"Low coverage in {method.value} detection")
         
         # Analyze platform coverage
+
         platforms = Counter(case.infringing_platform for case in cases if case.infringing_platform)
         
         # Check for platform blind spots
@@ -935,18 +1068,22 @@ class ProtectionPerformanceEngine:
             vulnerabilities.append("Limited platform monitoring coverage")
         
         # Analyze threat type coverage
+
         threat_types = Counter(case.protection_type for case in cases)
+
         
         for protection_type in ProtectionType:
             if threat_types[protection_type] == 0:
                 vulnerabilities.append(f"No protection coverage for {protection_type.value}")
         
         # Analyze response time vulnerabilities
+
         response_times = [case.response_time_hours for case in cases 
                         if case.response_time_hours is not None]
         
         if response_times and max(response_times) > 168:  # More than 1 week
             vulnerabilities.append("Slow response times for some cases")
+
         
         return vulnerabilities
     
@@ -955,6 +1092,7 @@ class ProtectionPerformanceEngine:
         priorities = []
         
         # Analyze high-impact threat types
+
         high_damage_cases = [
             case for case in cases 
             if case.estimated_damages > Decimal('1000')
@@ -962,24 +1100,29 @@ class ProtectionPerformanceEngine:
         
         if high_damage_cases:
             damage_by_type = defaultdict(list)
+
             for case in high_damage_cases:
                 damage_by_type[case.protection_type].append(case.estimated_damages)
             
             # Sort by total damage
+
             sorted_types = sorted(
                 damage_by_type.items(),
                 key=lambda x: sum(x[1]),
                 reverse=True
             )
+
             
             if sorted_types:
                 priorities.append(f"Priority 1: {sorted_types[0][0].value} protection enhancement")
         
         # Analyze frequently targeted platforms
+
         platform_cases = defaultdict(int)
         for case in cases:
             if case.infringing_platform:
                 platform_cases[case.infringing_platform] += 1
+
         
         most_targeted = max(platform_cases.items(), key=lambda x: x[1]) if platform_cases else None
         
@@ -987,17 +1130,22 @@ class ProtectionPerformanceEngine:
             priorities.append(f"Priority 2: Enhanced {most_targeted[0]} monitoring")
         
         # Analyze detection method improvements
+
         method_success = {}
         for method in DetectionMethod:
             method_cases = [case for case in cases if case.detection_method == method]
             if method_cases:
                 successful = sum(1 for case in method_cases if case.status == ProtectionStatus.SUCCESSFUL)
+
                 method_success[method] = successful / len(method_cases)
+
+
         
         worst_method = min(method_success.items(), key=lambda x: x[1]) if method_success else None
         
         if worst_method and worst_method[1] < 0.6:
             priorities.append(f"Priority 3: Improve {worst_method[0].value} accuracy")
+
         
         return priorities
     
@@ -1006,6 +1154,7 @@ class ProtectionPerformanceEngine:
         threats = []
         
         # Analyze recent vs historical patterns
+
         recent_cases = [
             case for case in cases 
             if (datetime.now() - case.detection_timestamp).days <= 7
@@ -1015,15 +1164,20 @@ class ProtectionPerformanceEngine:
             threats.append("Significant increase in threat volume")
         
         # Analyze new platforms
+
         recent_platforms = set(
             case.infringing_platform for case in recent_cases 
             if case.infringing_platform
         )
+
+
         
         all_platforms = set(
             case.infringing_platform for case in cases 
             if case.infringing_platform
         )
+
+
         
         new_platforms = recent_platforms - all_platforms
         
@@ -1031,6 +1185,7 @@ class ProtectionPerformanceEngine:
             threats.append(f"New threat platforms detected: {', '.join(new_platforms)}")
         
         # Analyze threat sophistication
+
         recent_ai_cases = [
             case for case in recent_cases 
             if case.detection_method == DetectionMethod.AI_SIMILARITY 
@@ -1039,6 +1194,7 @@ class ProtectionPerformanceEngine:
         
         if len(recent_ai_cases) > len(recent_cases) * 0.3:
             threats.append("Increase in sophisticated content manipulation")
+
         
         return threats
     
@@ -1048,26 +1204,38 @@ class ProtectionPerformanceEngine:
             current_time = datetime.now()
             
             # Active cases
+
             active_cases = [
                 case for case in self.protection_cases.values()
+
                 if case.status == ProtectionStatus.ACTIVE
             ]
             
             # Recent threats (last 24 hours)
+
+
             recent_threats = [
                 case for case in self.protection_cases.values()
+
                 if (current_time - case.detection_timestamp).total_seconds() < 86400
             ]
             
             # Calculate threat level distribution
+
             threat_levels = Counter(case.threat_level for case in recent_threats)
             
             # System health indicators
+
             total_cases = len(self.protection_cases)
+
+
             successful_cases = sum(
                 1 for case in self.protection_cases.values()
+
                 if case.status == ProtectionStatus.SUCCESSFUL
             )
+
+
             
             overall_success_rate = successful_cases / total_cases if total_cases > 0 else 0.0
             
@@ -1094,6 +1262,7 @@ class ProtectionPerformanceEngine:
                 ]),
                 "average_response_time_hours": statistics.mean([
                     case.response_time_hours for case in self.protection_cases.values()
+
                     if case.response_time_hours is not None
                 ]) if any(case.response_time_hours for case in self.protection_cases.values()) else 0,
                 "protection_roi": await self._calculate_current_roi(),
@@ -1102,16 +1271,21 @@ class ProtectionPerformanceEngine:
             
         except Exception as e:
             logger.error(f"❌ Failed to get real-time protection status: {e}")
+
             return {"error": str(e)}
     
     async def _calculate_current_roi(self) -> float:
         """Calculate current protection ROI"""
         try:
             total_investment = sum(case.protection_costs for case in self.protection_cases.values())
+
+
             total_recovered = sum(case.recovered_revenue for case in self.protection_cases.values())
+
             
             if total_investment > 0:
                 return float(((total_recovered - total_investment) / total_investment) * 100)
+
             return 0.0
             
         except Exception:
@@ -1122,10 +1296,12 @@ class ProtectionPerformanceEngine:
         active_cases: List[ProtectionCase], 
         recent_threats: List[ProtectionCase]
     ) -> List[str]:
-        """Get immediate action recommendations"""
+        """
+        Get immediate action recommendations"""
         recommendations = []
         
         # Check for critical cases requiring immediate attention
+
         critical_active = [
             case for case in active_cases 
             if case.threat_level in [ThreatLevel.CRITICAL, ThreatLevel.SEVERE]
@@ -1139,15 +1315,18 @@ class ProtectionPerformanceEngine:
             recommendations.append("HIGH: Rapid threat escalation detected - increase monitoring")
         
         # Check for platform concentration
+
         platform_threats = Counter(
             case.infringing_platform for case in recent_threats 
             if case.infringing_platform
         )
+
         
         if platform_threats:
             most_targeted = platform_threats.most_common(1)[0]
             if most_targeted[1] > len(recent_threats) * 0.5:
                 recommendations.append(f"MEDIUM: High threat concentration on {most_targeted[0]}")
+
         
         return recommendations
 
@@ -1166,6 +1345,6 @@ __all__ = [
 ]
 
 # Module initialization
-logger.info("🛡️ Protection Performance Engine module loaded")
+logger.info("🛡️ Protection Performance Engine module initialized")
 logger.info("✨ Features: Threat detection, enforcement analytics, ROI analysis, risk assessment")
 logger.info("🚀 Performance: Real-time monitoring, predictive analysis, compliance tracking")

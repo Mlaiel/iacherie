@@ -20,14 +20,16 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class ValidationSeverity(Enum):
-    """Validation issue severity levels"""
+    """
+Validation issue severity levels"""
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 class ValidationCategory(Enum):
-    """Content validation categories"""
+    """
+Content validation categories"""
     SECURITY = "security"
     CONTENT = "content"
     FORMAT = "format"
@@ -36,7 +38,8 @@ class ValidationCategory(Enum):
 
 @dataclass
 class ValidationIssue:
-    """Validation issue data structure"""
+    """
+Validation issue data structure"""
     category: ValidationCategory
     severity: ValidationSeverity
     message: str
@@ -46,7 +49,8 @@ class ValidationIssue:
 
 @dataclass
 class ValidationResult:
-    """Content validation result"""
+    """
+Content validation result"""
     is_valid: bool
     issues: List[ValidationIssue]
     score: float
@@ -59,7 +63,8 @@ class ContentValidator:
     """
     
     def __init__(self):
-        """Initialize content validator"""
+        """
+Initialize content validator"""
         self.security_patterns = {}
         self.content_policies = {}
         self.format_validators = {}
@@ -74,7 +79,8 @@ class ContentValidator:
         logger.info("🛡️ Content Validator initialized successfully")
     
     def _setup_security_patterns(self):
-        """Setup security validation patterns"""
+        """
+Setup security validation patterns"""
         self.security_patterns = {
             'xss': [
                 r'<script[^>]*>.*?</script>',
@@ -120,7 +126,8 @@ class ContentValidator:
         }
     
     def _setup_content_policies(self):
-        """Setup content policy rules"""
+        """
+Setup content policy rules"""
         self.content_policies = {
             'profanity': [
                 # Basic profanity patterns (family-friendly list)
@@ -150,7 +157,8 @@ class ContentValidator:
         }
     
     def _setup_format_validators(self):
-        """Setup format validation rules"""
+        """
+Setup format validation rules"""
         self.format_validators = {
             'html': {
                 'allowed_tags': ['p', 'br', 'strong', 'em', 'ul', 'ol', 'li', 'a', 'img'],
@@ -175,7 +183,8 @@ class ContentValidator:
         }
     
     def _setup_syntax_checkers(self):
-        """Setup syntax validation checkers"""
+        """
+Setup syntax validation checkers"""
         self.syntax_checkers = {
             'html': {
                 'unclosed_tags': r'<(\w+)[^>]*>(?!.*</\1>)',
@@ -264,7 +273,8 @@ class ContentValidator:
             )
     
     def _validate_security(self, content: str) -> List[ValidationIssue]:
-        """Validate content for security issues"""
+        """
+Validate content for security issues"""
         issues = []
         content_lower = content.lower()
         
@@ -284,7 +294,8 @@ class ContentValidator:
         return issues
     
     def _validate_content_policies(self, content: str) -> List[ValidationIssue]:
-        """Validate content against content policies"""
+        """
+Validate content against content policies"""
         issues = []
         content_lower = content.lower()
         
@@ -305,7 +316,8 @@ class ContentValidator:
         return issues
     
     def _validate_format(self, content: str, content_type: str) -> List[ValidationIssue]:
-        """Validate content format"""
+        """
+Validate content format"""
         issues = []
         
         if content_type not in self.format_validators:
@@ -325,7 +337,8 @@ class ContentValidator:
         return issues
     
     def _validate_html_format(self, content: str, config: Dict) -> List[ValidationIssue]:
-        """Validate HTML format"""
+        """
+Validate HTML format"""
         issues = []
         
         # Check for allowed tags
@@ -345,7 +358,8 @@ class ContentValidator:
         return issues
     
     def _validate_json_format(self, content: str, config: Dict) -> List[ValidationIssue]:
-        """Validate JSON format"""
+        """
+Validate JSON format"""
         issues = []
         
         try:
@@ -374,7 +388,8 @@ class ContentValidator:
         return issues
     
     def _validate_url_format(self, content: str, config: Dict) -> List[ValidationIssue]:
-        """Validate URL format"""
+        """
+Validate URL format"""
         issues = []
         
         # Check URL length
@@ -401,7 +416,8 @@ class ContentValidator:
         return issues
     
     def _validate_text_format(self, content: str, config: Dict) -> List[ValidationIssue]:
-        """Validate text format"""
+        """
+Validate text format"""
         issues = []
         
         # Check text length
@@ -426,7 +442,8 @@ class ContentValidator:
         return issues
     
     def _validate_syntax(self, content: str, content_type: str) -> List[ValidationIssue]:
-        """Validate content syntax"""
+        """
+Validate content syntax"""
         issues = []
         
         if content_type not in self.syntax_checkers:
@@ -449,7 +466,8 @@ class ContentValidator:
         return issues
     
     def _calculate_validation_score(self, issues: List[ValidationIssue], content_length: int) -> float:
-        """Calculate validation score based on issues"""
+        """
+Calculate validation score based on issues"""
         base_score = 100.0
         
         # Deduct points based on issue severity
@@ -470,7 +488,8 @@ class ContentValidator:
         return max(base_score, 0.0)
     
     def _get_json_depth(self, obj: Any, depth: int = 0) -> int:
-        """Calculate JSON object depth"""
+        """
+Calculate JSON object depth"""
         if isinstance(obj, dict):
             return max([self._get_json_depth(v, depth + 1) for v in obj.values()], default=depth)
         elif isinstance(obj, list):
@@ -479,7 +498,8 @@ class ContentValidator:
             return depth
     
     def sanitize_content(self, content: str, content_type: str = "text") -> str:
-        """Sanitize content by removing/escaping dangerous elements"""
+        """
+Sanitize content by removing/escaping dangerous elements"""
         sanitized = content
         
         if content_type == "html":
@@ -505,7 +525,8 @@ class ContentValidator:
         return sanitized
     
     def get_validation_summary(self, result: ValidationResult) -> Dict[str, Any]:
-        """Get summary of validation results"""
+        """
+Get summary of validation results"""
         issue_counts = {}
         for severity in ValidationSeverity:
             issue_counts[severity.value] = len([i for i in result.issues if i.severity == severity])
@@ -524,7 +545,8 @@ class ContentValidator:
         }
     
     def _get_recommendations(self, issues: List[ValidationIssue]) -> List[str]:
-        """Get recommendations based on validation issues"""
+        """
+Get recommendations based on validation issues"""
         recommendations = []
         
         if any(i.category == ValidationCategory.SECURITY for i in issues):
@@ -559,5 +581,5 @@ __all__ = [
 ]
 
 # Log module initialization
-logger.info("🛡️ Content Validator module loaded successfully")
+logger.info("🛡️ Content Validator module initialized successfully")
 logger.info("✅ Ready for comprehensive content validation and security checking")

@@ -30,7 +30,8 @@ import json
 logger = logging.getLogger(__name__)
 
 class HashtagCategory(Enum):
-    """Types de catégories d'hashtags"""
+    """
+Types de catégories d'hashtags"""
     TRENDING = "trending"
     NICHE = "niche"
     BRANDED = "branded"
@@ -41,7 +42,8 @@ class HashtagCategory(Enum):
     SEASONAL = "seasonal"
 
 class SocialPlatform(Enum):
-    """Plateformes de médias sociaux"""
+    """
+Plateformes de médias sociaux"""
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -52,7 +54,8 @@ class SocialPlatform(Enum):
 
 @dataclass
 class HashtagAnalytics:
-    """Analytics et métriques d'un hashtag"""
+    """
+Analytics et métriques d'un hashtag"""
     hashtag: str
     usage_count: int = 0
     engagement_rate: float = 0.0
@@ -65,7 +68,8 @@ class HashtagAnalytics:
 
 @dataclass
 class HashtagSuggestion:
-    """Suggestion d'hashtag avec score et métadonnées"""
+    """
+Suggestion d'hashtag avec score et métadonnées"""
     hashtag: str
     score: float
     category: HashtagCategory
@@ -77,7 +81,8 @@ class HashtagGenerator:
     """🏆 Générateur avancé d'hashtags avec IA et analytics - FINAL VICTORY PIECE ! 🏆"""
     
     def __init__(self):
-        """Initialise le générateur d'hashtags avec toutes les capacités"""
+        """
+Initialise le générateur d'hashtags avec toutes les capacités"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Base de données d'hashtags populaires par plateforme
@@ -279,7 +284,8 @@ class HashtagGenerator:
             ]
     
     def _extract_content_hashtags(self, content: str) -> List[str]:
-        """Extrait des hashtags potentiels du contenu"""
+        """
+Extrait des hashtags potentiels du contenu"""
         # Nettoyage et analyse simple du contenu
         words = re.findall(r'\b[a-zA-Z]{3,}\b', content.lower())
         
@@ -296,7 +302,8 @@ class HashtagGenerator:
         return list(set(filtered_words))[:10]
     
     def _get_current_season(self) -> str:
-        """Détermine la saison actuelle"""
+        """
+Détermine la saison actuelle"""
         month = datetime.now().month
         if month in [3, 4, 5]:
             return "spring"
@@ -581,7 +588,8 @@ class HashtagOptimizer:
     """🚀 Optimiseur avancé d'hashtags avec ML et analytics - BONUS ENTERPRISE CLASS ! 🚀"""
     
     def __init__(self):
-        """Initialise l'optimiseur d'hashtags"""
+        """
+Initialise l'optimiseur d'hashtags"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.generator = HashtagGenerator()
         
@@ -641,7 +649,8 @@ SocialMediaHashtagGenerator = HashtagGenerator
 
 # Initialisation du module
 def initialize_hashtag_system():
-    """Initialise le système complet de hashtags"""
+    """
+Initialise le système complet de hashtags"""
     try:
         generator = HashtagGenerator()
         optimizer = HashtagOptimizer()

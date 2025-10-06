@@ -73,6 +73,8 @@ class EnterpriseRevenueDashboard:
         """Get comprehensive dashboard data"""
         try:
             # Generate mock metrics (in production: query from database)
+
+
             metrics = RevenueMetrics(
                 period=f"2024-{datetime.now().month:02d}",
                 total_revenue=Decimal('145820.50'),
@@ -84,6 +86,8 @@ class EnterpriseRevenueDashboard:
                 transaction_count=2847,
                 active_subscribers=1256
             )
+
+
             
             dashboard_data = DashboardData(
                 metrics=metrics,
@@ -120,12 +124,15 @@ class EnterpriseRevenueDashboard:
                     {"type": "info", "message": "Revenue target 95% achieved"}
                 ]
             )
+
             
             self.logger.info(f"Dashboard data generated for {timeframe.value}")
+
             return dashboard_data
             
         except Exception as e:
             self.logger.error(f"Failed to get dashboard data: {e}")
+
             raise
     
     async def generate_revenue_report(
@@ -154,6 +161,7 @@ class EnterpriseRevenueDashboard:
             
         except Exception as e:
             self.logger.error(f"Failed to generate revenue report: {e}")
+
             raise
 
 __all__ = [

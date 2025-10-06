@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class ProcessAutomationCore:
-    """Advanced ProcessAutomationCore System"""
+    """
+Advanced ProcessAutomationCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class ProcessAutomationCore:
 # Module exports
 __all__ = ["ProcessAutomationCore"]
 
-logger.info("🤖 ProcessAutomationCore module loaded")
+logger.info("🤖 ProcessAutomationCore module initialized")

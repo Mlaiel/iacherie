@@ -48,7 +48,8 @@ logger = logging.getLogger(__name__)
 # ========================================
 
 class SchedulingStrategy(Enum):
-    """Stratégies de planification"""
+    """
+        Stratégies de planification"""
     FIRST_COME_FIRST_SERVED = "fcfs"
     SHORTEST_JOB_FIRST = "sjf"
     PRIORITY_BASED = "priority"
@@ -67,7 +68,8 @@ class TaskPriority(Enum):
     BACKGROUND = 1
 
 class ResourceType(Enum):
-    """Types de ressources"""
+    """
+        Types de ressources"""
     CPU = "cpu"
     MEMORY = "memory"
     GPU = "gpu"
@@ -115,7 +117,8 @@ class ResourceRequirement:
 
 @dataclass
 class ResourceAvailability:
-    """Disponibilité de ressource"""
+    """
+        Disponibilité de ressource"""
     resource_type: ResourceType
     total_capacity: float
     available_capacity: float
@@ -128,7 +131,8 @@ class ResourceAvailability:
 
 @dataclass
 class ScheduledTask:
-    """Tâche planifiée"""
+    """
+        Tâche planifiée"""
     task_id: str
     task_name: str
     task_type: str
@@ -161,7 +165,8 @@ class ScheduleEntry:
 
 @dataclass
 class OptimizationResult:
-    """Résultat d'optimisation"""
+    """
+        Résultat d'optimisation"""
     optimization_id: str
     strategy_used: SchedulingStrategy
     objectives_achieved: Dict[OptimizationObjective, float]
@@ -175,7 +180,8 @@ class OptimizationResult:
 
 @dataclass
 class SchedulingMetrics:
-    """Métriques de planification"""
+    """
+        Métriques de planification"""
     total_tasks_scheduled: int = 0
     average_waiting_time_seconds: float = 0.0
     average_execution_time_seconds: float = 0.0
@@ -267,11 +273,14 @@ class QuantumOptimizationScheduler:
             
             # Démarrage boucle de planification
             await self._start_scheduling_loop()
+
             
             logger.info("✅ Quantum optimization scheduler initialized successfully")
+
             
         except Exception as e:
             logger.error(f"❌ Failed to initialize scheduler: {e}")
+
             raise
     
     # ========================================
@@ -296,13 +305,16 @@ class QuantumOptimizationScheduler:
             # Trigger re-optimization si nécessaire
             if self._should_trigger_reoptimization():
                 await self._trigger_schedule_optimization()
+
             
             logger.info(f"✅ Task {task.task_id} added to scheduling queue")
+
             
             return task.task_id
             
         except Exception as e:
             logger.error(f"❌ Failed to schedule task {task.task_id}: {e}")
+
             raise
     
     async def cancel_task(self, task_id: str) -> bool:
@@ -313,6 +325,7 @@ class QuantumOptimizationScheduler:
                 if task.task_id == task_id:
                     del self.pending_tasks[i]
                     logger.info(f"✅ Pending task {task_id} cancelled")
+
                     return True
             
             # Recherche dans running tasks
@@ -329,13 +342,16 @@ class QuantumOptimizationScheduler:
                 del self.running_tasks[task_id]
                 
                 logger.info(f"✅ Running task {task_id} cancelled")
+
                 return True
             
             logger.warning(f"⚠️ Task {task_id} not found for cancellation")
+
             return False
             
         except Exception as e:
             logger.error(f"❌ Failed to cancel task {task_id}: {e}")
+
             raise
     
     async def update_task_priority(self, task_id: str, new_priority: TaskPriority) -> bool:
@@ -350,15 +366,19 @@ class QuantumOptimizationScheduler:
                     # Re-tri si nécessaire
                     if new_priority != old_priority:
                         await self._reorder_pending_tasks()
+
                     
                     logger.info(f"✅ Task {task_id} priority updated: {old_priority} → {new_priority}")
+
                     return True
             
             logger.warning(f"⚠️ Task {task_id} not found for priority update")
+
             return False
             
         except Exception as e:
             logger.error(f"❌ Failed to update task priority {task_id}: {e}")
+
             raise
     
     # ========================================
@@ -376,11 +396,13 @@ class QuantumOptimizationScheduler:
             # Trigger re-optimization si nouvelles ressources disponibles
             if resource_availability.available_capacity > 0:
                 await self._trigger_schedule_optimization()
+
             
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to register resource: {e}")
+
             raise
     
     async def update_resource_availability(
@@ -392,25 +414,32 @@ class QuantumOptimizationScheduler:
         try:
             if resource_type not in self.resource_availability:
                 raise ValueError(f"Resource type {resource_type} not registered")
+
+
             
             resource = self.resource_availability[resource_type]
+
             old_availability = resource.available_capacity
             resource.available_capacity = new_availability
             resource.utilization_percentage = (
                 (resource.total_capacity - resource.available_capacity) / resource.total_capacity * 100
             )
+
             resource.last_updated = datetime.utcnow()
+
             
             logger.info(f"📊 Resource {resource_type.value} availability updated: {old_availability} → {new_availability}")
             
             # Trigger re-optimization si changement significatif
             if abs(new_availability - old_availability) > resource.total_capacity * 0.1:
                 await self._trigger_schedule_optimization()
+
             
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to update resource availability: {e}")
+
             raise
     
     async def get_resource_utilization(self) -> Dict[str, Any]:
@@ -432,6 +461,7 @@ class QuantumOptimizationScheduler:
             
         except Exception as e:
             logger.error(f"❌ Failed to get resource utilization: {e}")
+
             return {}
     
     # ========================================
@@ -446,15 +476,20 @@ class QuantumOptimizationScheduler:
         """Optimisation planification avec stratégie donnée"""
         try:
             start_time = time.time()
+
+
             strategy = strategy or self.default_strategy
+
             objectives = objectives or [OptimizationObjective.MAXIMIZE_THROUGHPUT]
             
             logger.info(f"🔧 Optimizing schedule with strategy: {strategy.value}")
             
             # Génération ID optimisation
+
             optimization_id = str(uuid.uuid4())
             
             # Sélection algorithme d'optimisation
+
             optimization_result = await self._execute_optimization_strategy(
                 strategy, objectives, optimization_id
             )
@@ -465,16 +500,20 @@ class QuantumOptimizationScheduler:
             
             # Mise à jour cache
             self.optimization_cache[optimization_id] = optimization_result
+
             
             optimization_time = int((time.time() - start_time) * 1000)
+
             optimization_result.optimization_time_ms = optimization_time
             
             logger.info(f"✅ Schedule optimization completed in {optimization_time}ms, score: {optimization_result.total_optimization_score:.2f}")
+
             
             return optimization_result
             
         except Exception as e:
             logger.error(f"❌ Schedule optimization failed: {e}")
+
             raise
     
     async def _execute_optimization_strategy(
@@ -503,23 +542,34 @@ class QuantumOptimizationScheduler:
         objectives: List[OptimizationObjective],
         optimization_id: str
     ) -> OptimizationResult:
-        """Planification optimisée quantique"""
+        """
+        Planification optimisée quantique"""
         try:
             logger.info("🔬 Executing quantum-optimized scheduling")
             
             # Préparation données pour optimisation quantique
+
             task_matrix = await self._prepare_quantum_optimization_matrix()
+
+
             resource_constraints = await self._prepare_resource_constraints()
             
             # Simulation algorithme quantique (QAOA pour problème d'assignation)
+
+
             quantum_solution = await self._simulate_qaoa_scheduling(task_matrix, resource_constraints)
             
             # Conversion solution quantique en planning
+
             schedule_entries = await self._convert_quantum_solution_to_schedule(quantum_solution)
             
             # Calcul métriques de performance
+
             objectives_achieved = await self._calculate_objective_scores(schedule_entries, objectives)
+
+
             resource_utilization = await self._calculate_resource_utilization(schedule_entries)
+
             
             return OptimizationResult(
                 optimization_id=optimization_id,
@@ -527,17 +577,21 @@ class QuantumOptimizationScheduler:
                 objectives_achieved=objectives_achieved,
                 resource_utilization=resource_utilization,
                 quantum_advantage_factor=2.3,  # Simulation
+
                 total_optimization_score=sum(objectives_achieved.values()) / len(objectives_achieved),
                 schedule_entries=schedule_entries,
                 optimization_time_ms=0,  # Sera mis à jour
+
                 recommendations=[
                     "Quantum optimization achieved 2.3x performance improvement",
                     "Consider increasing quantum processor allocation for better results"
                 ]
             )
+
             
         except Exception as e:
             logger.error(f"❌ Quantum optimization failed: {e}")
+
             raise
     
     async def _adaptive_hybrid_scheduling(
@@ -550,19 +604,25 @@ class QuantumOptimizationScheduler:
             logger.info("🔄 Executing adaptive hybrid scheduling")
             
             # Analyse charge de travail actuelle
+
             workload_characteristics = await self._analyze_current_workload()
             
             # Sélection dynamique de la meilleure stratégie
+
             best_strategy = await self._select_optimal_strategy(workload_characteristics, objectives)
             
             # Exécution stratégie sélectionnée
+
             base_result = await self._execute_optimization_strategy(best_strategy, objectives, optimization_id)
             
             # Application optimisations adaptatives
+
             adaptive_improvements = await self._apply_adaptive_improvements(base_result)
             
             # Fusion résultats
+
             hybrid_schedule = await self._merge_optimization_results([base_result, adaptive_improvements])
+
             
             return OptimizationResult(
                 optimization_id=optimization_id,
@@ -570,7 +630,9 @@ class QuantumOptimizationScheduler:
                 objectives_achieved=await self._calculate_objective_scores(hybrid_schedule, objectives),
                 resource_utilization=await self._calculate_resource_utilization(hybrid_schedule),
                 quantum_advantage_factor=1.8,  # Simulation
+
                 total_optimization_score=0.85,  # Simulation
+
                 schedule_entries=hybrid_schedule,
                 optimization_time_ms=0,
                 recommendations=[
@@ -578,9 +640,11 @@ class QuantumOptimizationScheduler:
                     "Adaptive improvements applied for better resource utilization"
                 ]
             )
+
             
         except Exception as e:
             logger.error(f"❌ Adaptive hybrid scheduling failed: {e}")
+
             raise
     
     async def _multi_objective_optimization(
@@ -593,11 +657,16 @@ class QuantumOptimizationScheduler:
             logger.info("🎯 Executing multi-objective optimization")
             
             # Algorithme Pareto optimality pour multi-objectives
+
             pareto_solutions = await self._find_pareto_optimal_schedules(objectives)
             
             # Sélection meilleure solution selon pondération
+
             objective_weights = await self._calculate_objective_weights(objectives)
+
+
             best_solution = await self._select_best_pareto_solution(pareto_solutions, objective_weights)
+
             
             return OptimizationResult(
                 optimization_id=optimization_id,
@@ -605,7 +674,9 @@ class QuantumOptimizationScheduler:
                 objectives_achieved=await self._calculate_objective_scores(best_solution, objectives),
                 resource_utilization=await self._calculate_resource_utilization(best_solution),
                 quantum_advantage_factor=1.6,  # Simulation
+
                 total_optimization_score=0.82,  # Simulation
+
                 schedule_entries=best_solution,
                 optimization_time_ms=0,
                 alternative_schedules=[
@@ -616,9 +687,11 @@ class QuantumOptimizationScheduler:
                     "Multiple Pareto-optimal solutions available"
                 ]
             )
+
             
         except Exception as e:
             logger.error(f"❌ Multi-objective optimization failed: {e}")
+
             raise
     
     # ========================================
@@ -630,6 +703,8 @@ class QuantumOptimizationScheduler:
         try:
             # Mise à jour métriques temps réel
             await self._update_real_time_metrics()
+
+
             
             metrics = {
                 "total_tasks_scheduled": self.scheduling_metrics.total_tasks_scheduled,
@@ -654,30 +729,40 @@ class QuantumOptimizationScheduler:
             
         except Exception as e:
             logger.error(f"❌ Failed to get scheduling metrics: {e}")
+
             return {}
     
     async def get_optimization_insights(self) -> Dict[str, Any]:
         """Insights d'optimisation"""
         try:
             # Analyse historique optimisations
+
             recent_optimizations = list(self.optimization_cache.values())[-10:]
             
             if not recent_optimizations:
                 return {"message": "No optimization data available"}
             
             # Calculs insights
+
             avg_quantum_advantage = sum(opt.quantum_advantage_factor for opt in recent_optimizations) / len(recent_optimizations)
+
+
             avg_optimization_score = sum(opt.total_optimization_score for opt in recent_optimizations) / len(recent_optimizations)
             
             # Stratégies les plus efficaces
+
             strategy_performance = defaultdict(list)
+
             for opt in recent_optimizations:
                 strategy_performance[opt.strategy_used].append(opt.total_optimization_score)
+
+
             
             best_strategy = max(
                 strategy_performance.items(), 
                 key=lambda x: sum(x[1]) / len(x[1])
             )[0] if strategy_performance else None
+
             
             insights = {
                 "average_quantum_advantage": avg_quantum_advantage,
@@ -686,7 +771,8 @@ class QuantumOptimizationScheduler:
                 "optimization_frequency": len(recent_optimizations),
                 "resource_optimization_efficiency": {
                     resource_type.value: np.mean([
-                        opt.resource_utilization.get(resource_type, 0.0) 
+                        opt.resource_utilization.get(resource_type, 0.0)
+ 
                         for opt in recent_optimizations
                     ]) for resource_type in ResourceType
                 },
@@ -698,6 +784,7 @@ class QuantumOptimizationScheduler:
             
         except Exception as e:
             logger.error(f"❌ Failed to get optimization insights: {e}")
+
             return {}
     
     # ========================================
@@ -713,10 +800,12 @@ class QuantumOptimizationScheduler:
         asyncio.create_task(self._scheduling_loop())
     
     async def _scheduling_loop(self):
-        """Boucle principale planification"""
+        """
+        Boucle principale planification"""
         while self.scheduler_running:
             try:
                 # Vérification tâches prêtes à exécuter
+
                 ready_tasks = await self._get_ready_tasks()
                 
                 # Planification tâches prêtes
@@ -732,9 +821,11 @@ class QuantumOptimizationScheduler:
                 
                 # Attente intervalle suivant
                 await asyncio.sleep(self.scheduling_interval_seconds)
+
                 
             except Exception as e:
                 logger.error(f"❌ Error in scheduling loop: {e}")
+
                 await asyncio.sleep(1)  # Éviter boucle infinie en cas d'erreur
     
     async def _get_ready_tasks(self) -> List[ScheduledTask]:
@@ -747,6 +838,7 @@ class QuantumOptimizationScheduler:
                 # Vérification ressources disponibles
                 if await self._are_resources_available(task):
                     ready_tasks.append(task)
+
                     self.pending_tasks.remove(task)
         
         # Tri par priorité et autres critères
@@ -757,16 +849,20 @@ class QuantumOptimizationScheduler:
                 t.created_at  # FIFO pour égalité
             )
         )
+
         
         return ready_tasks
     
     async def _schedule_task_for_execution(self, task: ScheduledTask):
-        """Planification tâche pour exécution"""
+        """
+        Planification tâche pour exécution"""
         try:
             # Allocation ressources
+
             allocated_resources = await self._allocate_task_resources(task)
             
             # Création entrée planning
+
             schedule_entry = ScheduleEntry(
                 schedule_id=str(uuid.uuid4()),
                 task_id=task.task_id,
@@ -783,11 +879,13 @@ class QuantumOptimizationScheduler:
             # Simulation démarrage exécution
             schedule_entry.status = ScheduleStatus.RUNNING
             schedule_entry.actual_start_time = datetime.utcnow()
+
             
             logger.info(f"🚀 Task {task.task_id} scheduled for execution")
             
             # Simulation exécution asynchrone
             asyncio.create_task(self._simulate_task_execution(task, schedule_entry))
+
             
         except Exception as e:
             logger.error(f"❌ Failed to schedule task {task.task_id} for execution: {e}")
@@ -816,9 +914,11 @@ class QuantumOptimizationScheduler:
             del self.running_tasks[task.task_id]
             
             logger.info(f"✅ Task {task.task_id} completed")
+
             
         except Exception as e:
             logger.error(f"❌ Task execution simulation failed for {task.task_id}: {e}")
+
             schedule_entry.status = ScheduleStatus.FAILED
 
 
@@ -845,7 +945,8 @@ def create_scheduled_task(
     resource_requirements: List[ResourceRequirement],
     **kwargs
 ) -> ScheduledTask:
-    """Création tâche planifiée"""
+    """
+        Création tâche planifiée"""
     return ScheduledTask(
         task_id=task_id,
         task_name=task_name,

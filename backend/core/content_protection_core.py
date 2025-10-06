@@ -36,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Types of content that can be protected"""
+    """
+        Types of content that can be protected"""
     IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
@@ -90,7 +91,8 @@ class ContentFingerprint:
 
 @dataclass
 class DigitalRights:
-    """Digital rights configuration"""
+    """
+        Digital rights configuration"""
     content_id: str
     owner_id: str
     rights: List[RightsType]
@@ -103,7 +105,8 @@ class DigitalRights:
 
 @dataclass
 class ViolationReport:
-    """Content violation report"""
+    """
+        Content violation report"""
     violation_id: str
     content_id: str
     violation_type: ViolationType
@@ -123,7 +126,8 @@ class DigitalRightsManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the Digital Rights Manager"""
+        """
+        Initialize the Digital Rights Manager"""
         self.config = config or {}
         self.rights_registry: Dict[str, DigitalRights] = {}
         self.usage_tracking: Dict[str, List[Dict[str, Any]]] = {}
@@ -166,20 +170,27 @@ class DigitalRightsManager:
                                     license_template: str = None,
                                     custom_rights: List[RightsType] = None,
                                     restrictions: Dict[str, Any] = None) -> bool:
-        """Register digital rights for content"""
+        """
+        Register digital rights for content"""
         
         try:
             if license_template and license_template in self.license_templates:
                 template = self.license_templates[license_template]
+
                 rights = [RightsType(right) for right in template['rights']]
+
                 restrictions = restrictions or template['restrictions']
             elif custom_rights:
                 rights = custom_rights
+
                 restrictions = restrictions or {}
             else:
                 # Default to restricted rights
+
                 rights = [RightsType.VIEW]
+
                 restrictions = restrictions or {}
+
             
             digital_rights = DigitalRights(
                 content_id=content_id,
@@ -187,16 +198,19 @@ class DigitalRightsManager:
                 rights=rights,
                 restrictions=restrictions
             )
+
             
             with self._rights_lock:
                 self.rights_registry[content_id] = digital_rights
                 self.usage_tracking[content_id] = []
             
             self.logger.info(f"Rights registered for content {content_id}")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Failed to register rights for content {content_id}: {e}")
+
             return False
     
     async def check_access_permission(self, 
@@ -211,8 +225,10 @@ class DigitalRightsManager:
                 'allowed': False,
                 'reason': 'Content rights not registered'
             }
+
         
         rights = self.rights_registry[content_id]
+
         context = context or {}
         
         try:
@@ -242,15 +258,18 @@ class DigitalRightsManager:
                 }
             
             # Check restrictions
+
             restriction_check = await self._check_restrictions(
                 rights.restrictions, user_id, context
             )
+
             
             if not restriction_check['allowed']:
                 return restriction_check
             
             # Log usage
             await self._log_usage(content_id, user_id, requested_right, context)
+
             
             return {
                 'allowed': True,
@@ -262,6 +281,7 @@ class DigitalRightsManager:
             
         except Exception as e:
             self.logger.error(f"Permission check failed for content {content_id}: {e}")
+
             return {
                 'allowed': False,
                 'reason': 'Permission check error'
@@ -276,6 +296,7 @@ class DigitalRightsManager:
         try:
             if restrictions.get('authorized_users_only'):
                 authorized_users = restrictions.get('authorized_user_list', [])
+
                 if user_id not in authorized_users:
                     return {
                         'allowed': False,
@@ -284,6 +305,7 @@ class DigitalRightsManager:
             
             if restrictions.get('payment_required'):
                 payment_verified = context.get('payment_verified', False)
+
                 if not payment_verified:
                     return {
                         'allowed': False,
@@ -292,6 +314,7 @@ class DigitalRightsManager:
             
             if restrictions.get('attribution_required'):
                 attribution_provided = context.get('attribution_provided', False)
+
                 if not attribution_provided:
                     return {
                         'allowed': False,
@@ -300,6 +323,8 @@ class DigitalRightsManager:
             
             if restrictions.get('time_restricted'):
                 allowed_hours = restrictions.get('allowed_hours', [])
+
+
                 current_hour = datetime.now().hour
                 if current_hour not in allowed_hours:
                     return {
@@ -311,6 +336,7 @@ class DigitalRightsManager:
             
         except Exception as e:
             self.logger.error(f"Restriction check failed: {e}")
+
             return {
                 'allowed': False,
                 'reason': 'Restriction check error'
@@ -341,24 +367,31 @@ class DigitalRightsManager:
     async def get_usage_analytics(self, 
                                 content_id: str,
                                 time_range: Optional[Tuple[datetime, datetime]] = None) -> Dict[str, Any]:
-        """Get usage analytics for content"""
+        """
+        Get usage analytics for content"""
         
         if content_id not in self.usage_tracking:
             return {'error': 'No usage data found'}
+
         
         usage_records = self.usage_tracking[content_id]
         
         # Filter by time range if provided
         if time_range:
             start_time, end_time = time_range
+
             usage_records = [
                 record for record in usage_records
                 if start_time <= record['timestamp'] <= end_time
             ]
         
         # Calculate analytics
+
         total_uses = len(usage_records)
+
         unique_users = len(set(record['user_id'] for record in usage_records))
+
+
         
         rights_usage = {}
         for record in usage_records:
@@ -386,7 +419,8 @@ class ContentFingerprintEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the Content Fingerprint Engine"""
+        """
+        Initialize the Content Fingerprint Engine"""
         self.config = config or {}
         self.fingerprint_database: Dict[str, ContentFingerprint] = {}
         self.fingerprint_algorithms: Dict[str, Callable] = {}
@@ -410,20 +444,27 @@ class ContentFingerprintEngine:
                                  content_data: bytes,
                                  content_type: ContentType,
                                  algorithms: List[str] = None) -> ContentFingerprint:
-        """Generate comprehensive fingerprint for content"""
+        """
+        Generate comprehensive fingerprint for content"""
         
         algorithms = algorithms or ['sha256', 'perceptual_hash']
+
         fingerprints = {}
         
         try:
             for algorithm in algorithms:
                 if algorithm in self.fingerprint_algorithms:
                     fingerprint_func = self.fingerprint_algorithms[algorithm]
+
                     fingerprint = await fingerprint_func(content_data, content_type)
+
                     fingerprints[algorithm] = fingerprint
             
             # Combine fingerprints into a composite hash
+
             combined_fingerprint = self._combine_fingerprints(fingerprints)
+
+
             
             content_fingerprint = ContentFingerprint(
                 content_id=content_id,
@@ -442,10 +483,12 @@ class ContentFingerprintEngine:
             self.fingerprint_database[content_id] = content_fingerprint
             
             self.logger.info(f"Fingerprint generated for content {content_id}")
+
             return content_fingerprint
             
         except Exception as e:
             self.logger.error(f"Fingerprint generation failed for content {content_id}: {e}")
+
             raise
     
     async def _generate_sha256_fingerprint(self, 
@@ -458,25 +501,32 @@ class ContentFingerprintEngine:
     async def _generate_perceptual_hash(self, 
                                       content_data: bytes,
                                       content_type: ContentType) -> str:
-        """Generate perceptual hash for images/videos"""
+        """
+        Generate perceptual hash for images/videos"""
         
         try:
             if content_type == ContentType.IMAGE:
                 # Simplified perceptual hashing for images
                 # In production, you'd use libraries like imagehash
+
                 hash_value = hashlib.md5(content_data[:1024]).hexdigest()
+
                 return f"phash_{hash_value}"
             elif content_type == ContentType.AUDIO:
                 # Audio fingerprinting would use spectral analysis
                 # This is a simplified implementation
+
                 hash_value = hashlib.md5(content_data[::1000]).hexdigest()
+
                 return f"audio_phash_{hash_value}"
             else:
                 # Fallback to content-based hashing
                 return await self._generate_sha256_fingerprint(content_data, content_type)
+
                 
         except Exception as e:
             self.logger.warning(f"Perceptual hash generation failed: {e}")
+
             return await self._generate_sha256_fingerprint(content_data, content_type)
     
     async def _generate_content_signature(self, 
@@ -487,34 +537,49 @@ class ContentFingerprintEngine:
         try:
             if content_type == ContentType.TEXT:
                 # For text, create signature based on structure and key phrases
+
                 text_content = content_data.decode('utf-8', errors='ignore')
+
+
                 words = text_content.lower().split()
                 
                 # Use most frequent words and text length
+
                 word_freq = {}
                 for word in words:
                     word_freq[word] = word_freq.get(word, 0) + 1
+
                 
                 top_words = sorted(word_freq.items(), key=lambda x: x[1], reverse=True)[:10]
+
                 signature_data = f"{len(words)}:{','.join([word for word, _ in top_words])}"
                 
                 return hashlib.sha256(signature_data.encode()).hexdigest()
+
             else:
                 # For other content types, use byte pattern analysis
+
                 byte_patterns = []
+
                 chunk_size = max(1, len(content_data) // 10)
+
                 
                 for i in range(0, len(content_data), chunk_size):
                     chunk = content_data[i:i+chunk_size]
                     if chunk:
                         pattern = sum(chunk) % 256
                         byte_patterns.append(str(pattern))
+
+
                 
                 signature_data = ':'.join(byte_patterns)
+
                 return hashlib.sha256(signature_data.encode()).hexdigest()
+
                 
         except Exception as e:
             self.logger.warning(f"Content signature generation failed: {e}")
+
             return await self._generate_sha256_fingerprint(content_data, content_type)
     
     async def _generate_metadata_hash(self, 
@@ -529,12 +594,16 @@ class ContentFingerprintEngine:
                 'first_bytes': content_data[:32].hex() if len(content_data) >= 32 else content_data.hex(),
                 'last_bytes': content_data[-32:].hex() if len(content_data) >= 32 else content_data.hex()
             }
+
             
             metadata_string = json.dumps(metadata, sort_keys=True)
+
             return hashlib.sha256(metadata_string.encode()).hexdigest()
+
             
         except Exception as e:
             self.logger.warning(f"Metadata hash generation failed: {e}")
+
             return "metadata_hash_error"
     
     def _combine_fingerprints(self, fingerprints: Dict[str, str]) -> str:
@@ -560,9 +629,11 @@ class ContentFingerprintEngine:
                     continue
                 
                 # Calculate similarity
+
                 similarity = await self._calculate_fingerprint_similarity(
                     content_fingerprint, stored_fingerprint
                 )
+
                 
                 if similarity >= similarity_threshold:
                     similar_content.append({
@@ -573,11 +644,13 @@ class ContentFingerprintEngine:
             
             # Sort by similarity score
             similar_content.sort(key=lambda x: x['similarity_score'], reverse=True)
+
             
             return similar_content
             
         except Exception as e:
             self.logger.error(f"Similar content search failed: {e}")
+
             return []
     
     async def _calculate_fingerprint_similarity(self, 
@@ -593,11 +666,16 @@ class ContentFingerprintEngine:
                 return 1.0
             
             # Compare individual algorithm fingerprints if available
+
             fp1_individual = fp1.metadata.get('individual_fingerprints', {})
+
+
             fp2_individual = fp2.metadata.get('individual_fingerprints', {})
+
             
             if fp1_individual and fp2_individual:
                 common_algorithms = set(fp1_individual.keys()) & set(fp2_individual.keys())
+
                 
                 if common_algorithms:
                     matches = 0
@@ -609,19 +687,26 @@ class ContentFingerprintEngine:
             
             # Fallback to basic hash comparison
             # Calculate Hamming distance for hex strings
+
             hash1 = fp1.fingerprint_hash
+
             hash2 = fp2.fingerprint_hash
             
             if len(hash1) != len(hash2):
                 return 0.0
+
             
             differences = sum(c1 != c2 for c1, c2 in zip(hash1, hash2))
+
+
             similarity = 1.0 - (differences / len(hash1))
+
             
             return similarity
             
         except Exception as e:
             self.logger.error(f"Similarity calculation failed: {e}")
+
             return 0.0
 
 
@@ -634,7 +719,8 @@ class AntiPiracySystems:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the Anti-Piracy Systems"""
+        """
+        Initialize the Anti-Piracy Systems"""
         self.config = config or {}
         self.monitoring_targets: Dict[str, Dict[str, Any]] = {}
         self.violation_reports: List[ViolationReport] = []
@@ -656,10 +742,12 @@ class AntiPiracySystems:
             }
             
             self.logger.info(f"Content {content_id} added to anti-piracy monitoring")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Failed to add monitoring target {content_id}: {e}")
+
             return False
     
     async def scan_for_violations(self, content_id: str) -> List[ViolationReport]:
@@ -667,28 +755,35 @@ class AntiPiracySystems:
         
         if content_id not in self.monitoring_targets:
             return []
+
         
         violations = []
         
         try:
             monitoring_config = self.monitoring_targets[content_id]['config']
+
             scan_sources = monitoring_config.get('scan_sources', ['web', 'social_media'])
+
             
             for source in scan_sources:
                 source_violations = await self._scan_source(content_id, source)
+
                 violations.extend(source_violations)
             
             # Update monitoring status
             self.monitoring_targets[content_id]['last_scan'] = datetime.now(timezone.utc)
+
             self.monitoring_targets[content_id]['violations_detected'] += len(violations)
             
             # Store violation reports
             self.violation_reports.extend(violations)
+
             
             return violations
             
         except Exception as e:
             self.logger.error(f"Violation scan failed for content {content_id}: {e}")
+
             return []
     
     async def _scan_source(self, content_id: str, source: str) -> List[ViolationReport]:
@@ -702,15 +797,19 @@ class AntiPiracySystems:
             
             if source == 'web':
                 violations.extend(await self._scan_web_for_violations(content_id))
+
             elif source == 'social_media':
                 violations.extend(await self._scan_social_media_for_violations(content_id))
+
             elif source == 'file_sharing':
                 violations.extend(await self._scan_file_sharing_for_violations(content_id))
+
             
             return violations
             
         except Exception as e:
             self.logger.error(f"Source scan failed for {source}: {e}")
+
             return []
     
     async def _scan_web_for_violations(self, content_id: str) -> List[ViolationReport]:
@@ -718,11 +817,13 @@ class AntiPiracySystems:
         
         # Simplified implementation
         # In production, this would use web crawling and content matching
+
         
         violations = []
         
         # Simulate detection of violations
         if hash(content_id) % 10 < 2:  # 20% chance of finding a violation
+
             violation = ViolationReport(
                 violation_id=str(uuid.uuid4()),
                 content_id=content_id,
@@ -739,17 +840,21 @@ class AntiPiracySystems:
                     'similarity_score': 0.95
                 }
             )
+
             violations.append(violation)
+
         
         return violations
     
     async def _scan_social_media_for_violations(self, content_id: str) -> List[ViolationReport]:
-        """Scan social media platforms for violations"""
+        """
+        Scan social media platforms for violations"""
         
         violations = []
         
         # Simulate social media violation detection
         if hash(content_id) % 15 < 1:  # ~7% chance
+
             violation = ViolationReport(
                 violation_id=str(uuid.uuid4()),
                 content_id=content_id,
@@ -766,17 +871,21 @@ class AntiPiracySystems:
                     'similarity_score': 0.82
                 }
             )
+
             violations.append(violation)
+
         
         return violations
     
     async def _scan_file_sharing_for_violations(self, content_id: str) -> List[ViolationReport]:
-        """Scan file sharing platforms for violations"""
+        """
+        Scan file sharing platforms for violations"""
         
         violations = []
         
         # Simulate file sharing violation detection
         if hash(content_id) % 20 < 1:  # 5% chance
+
             violation = ViolationReport(
                 violation_id=str(uuid.uuid4()),
                 content_id=content_id,
@@ -793,14 +902,18 @@ class AntiPiracySystems:
                     'similarity_score': 1.0
                 }
             )
+
             violations.append(violation)
+
         
         return violations
     
     async def initiate_takedown_request(self, violation_id: str) -> Dict[str, Any]:
-        """Initiate DMCA takedown request for violation"""
+        """
+        Initiate DMCA takedown request for violation"""
         
         # Find the violation
+
         violation = None
         for report in self.violation_reports:
             if report.violation_id == violation_id:
@@ -815,6 +928,8 @@ class AntiPiracySystems:
         
         try:
             takedown_id = str(uuid.uuid4())
+
+
             
             takedown_request = {
                 'takedown_id': takedown_id,
@@ -836,6 +951,7 @@ class AntiPiracySystems:
             violation.status = 'takedown_requested'
             
             self.logger.info(f"Takedown request {takedown_id} initiated for violation {violation_id}")
+
             
             return {
                 'success': True,
@@ -845,6 +961,7 @@ class AntiPiracySystems:
             
         except Exception as e:
             self.logger.error(f"Takedown request failed for violation {violation_id}: {e}")
+
             return {
                 'success': False,
                 'error': str(e)
@@ -855,9 +972,12 @@ class AntiPiracySystems:
         
         # Simplified implementation
         # In production, this would integrate with platform APIs or email systems
+
         
         target_info = takedown_request['target_info']
+
         source_type = target_info.get('source_type')
+
         
         if source_type == 'web':
             await self._send_web_takedown_request(takedown_request)
@@ -867,7 +987,8 @@ class AntiPiracySystems:
             await self._send_file_sharing_takedown_request(takedown_request)
     
     async def _send_web_takedown_request(self, takedown_request: Dict[str, Any]):
-        """Send takedown request to website"""
+        """
+        Send takedown request to website"""
         
         # Simulate sending DMCA notice to website
         await asyncio.sleep(0.1)  # Simulate network delay
@@ -877,19 +998,23 @@ class AntiPiracySystems:
         takedown_request['sent_at'] = datetime.now(timezone.utc)
     
     async def _send_social_media_takedown_request(self, takedown_request: Dict[str, Any]):
-        """Send takedown request to social media platform"""
+        """
+        Send takedown request to social media platform"""
         
         # Simulate API call to social media platform
         await asyncio.sleep(0.1)
+
         
         takedown_request['status'] = 'sent'
         takedown_request['sent_at'] = datetime.now(timezone.utc)
     
     async def _send_file_sharing_takedown_request(self, takedown_request: Dict[str, Any]):
-        """Send takedown request to file sharing platform"""
+        """
+        Send takedown request to file sharing platform"""
         
         # Simulate notice to file sharing platform
         await asyncio.sleep(0.1)
+
         
         takedown_request['status'] = 'sent'
         takedown_request['sent_at'] = datetime.now(timezone.utc)
@@ -904,7 +1029,8 @@ class ContentProtectionCore:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the Content Protection Core"""
+        """
+        Initialize the Content Protection Core"""
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -930,13 +1056,16 @@ class ContentProtectionCore:
             
             # Initialize protection monitoring
             await self._initialize_protection_monitoring()
+
             
             self.is_initialized = True
             self.logger.info("Content Protection Core initialized successfully")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Content Protection Core initialization failed: {e}")
+
             return False
     
     async def _initialize_protection_monitoring(self):
@@ -956,16 +1085,19 @@ class ContentProtectionCore:
         
         try:
             # Generate fingerprint
+
             fingerprint = await self.fingerprint_engine.generate_fingerprint(
                 content_id, content_data, content_type
             )
             
             # Register digital rights
+
             rights_registered = await self.rights_manager.register_content_rights(
                 content_id, owner_id, 'restricted'
             )
             
             # Add to anti-piracy monitoring
+
             monitoring_added = await self.anti_piracy.add_monitoring_target(
                 content_id,
                 {
@@ -989,6 +1121,7 @@ class ContentProtectionCore:
             
         except Exception as e:
             self.logger.error(f"Content protection failed for {content_id}: {e}")
+
             return {
                 'success': False,
                 'error': str(e)
@@ -1013,6 +1146,7 @@ class ContentProtectionCore:
             
         except Exception as e:
             self.logger.error(f"Access check failed for content {content_id}: {e}")
+
             return {
                 'allowed': False,
                 'reason': 'Access check error'
@@ -1038,12 +1172,14 @@ class ContentProtectionCore:
 # =============================================================================
 
 def create_content_protection_core(config: Optional[Dict[str, Any]] = None) -> ContentProtectionCore:
-    """Factory function to create Content Protection Core"""
+    """
+        Factory function to create Content Protection Core"""
     return ContentProtectionCore(config)
 
 
 async def quick_protection_setup() -> ContentProtectionCore:
-    """Quick setup for development environment"""
+    """
+        Quick setup for development environment"""
     core = create_content_protection_core({
         'rights': {},
         'fingerprinting': {},

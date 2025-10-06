@@ -25,6 +25,7 @@ from enum import Enum
 import threading
 from datetime import datetime, timedelta
 from decimal import Decimal, ROUND_HALF_UP
+from collections import defaultdict
 import aiohttp
 import hmac
 

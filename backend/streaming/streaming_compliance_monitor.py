@@ -30,14 +30,7 @@ import json
 import uuid
 import re
 # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+from protection.utils.redis_compat import aioredis, REDIS_AVAILABLE
 from sqlalchemy.ext.asyncio import AsyncSession
 from collections import defaultdict
 import hashlib
@@ -45,7 +38,8 @@ import hashlib
 logger = logging.getLogger(__name__)
 
 class ComplianceRegion(Enum):
-    """Regulatory compliance region"""
+    """
+        Regulatory compliance region"""
     GLOBAL = "global"
     UNITED_STATES = "united_states"
     EUROPEAN_UNION = "european_union"
@@ -130,7 +124,8 @@ class CompliancePolicy:
 
 @dataclass
 class ComplianceViolation:
-    """Compliance violation record"""
+    """
+        Compliance violation record"""
     violation_id: str
     policy_id: str
     content_id: Optional[str]
@@ -150,7 +145,8 @@ class ComplianceViolation:
 
 @dataclass
 class RegulatoryRequirement:
-    """Regulatory requirement specification"""
+    """
+        Regulatory requirement specification"""
     requirement_id: str
     requirement_name: str
     compliance_framework: ComplianceFramework
@@ -167,7 +163,8 @@ class RegulatoryRequirement:
 
 @dataclass
 class ComplianceAudit:
-    """Compliance audit record"""
+    """
+        Compliance audit record"""
     audit_id: str
     audit_type: str
     audit_scope: List[str]
@@ -185,7 +182,8 @@ class ComplianceAudit:
 
 @dataclass
 class ComplianceReport:
-    """Compliance report structure"""
+    """
+        Compliance report structure"""
     report_id: str
     report_title: str
     reporting_period: Dict[str, datetime]
@@ -200,36 +198,46 @@ class ComplianceReport:
     report_format: str
 
 class ContentPolicyEngine:
-    """Content policy enforcement engine"""
+    """
+        Content policy enforcement engine"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.active_policies = {}
         self.policy_validators = {}
         
     async def initialize_policy_engine(self) -> Dict[str, Any]:
-        """Initialize content policy enforcement engine"""
+        """
+        Initialize content policy enforcement engine"""
         try:
             # Load active policies
+
             active_policies = await self._load_active_policies()
             
             # Setup policy validators
+
             policy_validators = await self._setup_policy_validators()
             
             # Configure content analysis
+
             content_analysis = await self._configure_content_analysis()
             
             # Setup automated enforcement
+
             automated_enforcement = await self._setup_automated_enforcement()
             
             # Configure appeal process
+
             appeal_process = await self._configure_appeal_process()
             
             # Setup policy learning
+
             policy_learning = await self._setup_policy_learning_system()
+
             
             logger.info(f"📋 Content Policy Engine initialized with {len(active_policies)} policies")
+
             
             return {
                 "active_policies": len(active_policies),
@@ -249,6 +257,7 @@ class ContentPolicyEngine:
             
         except Exception as e:
             logger.error(f"Failed to initialize policy engine: {e}")
+
             raise
 
     async def validate_content_compliance(
@@ -263,24 +272,30 @@ class ContentPolicyEngine:
             validation_id = str(uuid.uuid4())
             
             # Get applicable policies
+
             applicable_policies = await self._get_applicable_policies(
                 content_metadata, validation_context
             )
             
             # Perform content analysis
+
             content_analysis = await self._analyze_content_for_compliance(
                 content_data, content_metadata
             )
             
             # Validate against each policy
+
             policy_validations = []
+
             violations_detected = []
             
             for policy in applicable_policies:
                 # Validate content against policy rules
+
                 validation_result = await self._validate_against_policy(
                     content_analysis, policy, validation_context
                 )
+
                 
                 policy_validations.append({
                     "policy_id": policy.policy_id,
@@ -310,27 +325,33 @@ class ContentPolicyEngine:
                             resolution_timestamp=None,
                             resolution_notes=None
                         )
+
                         violations_detected.append(violation)
             
             # Calculate overall compliance score
+
             overall_score = await self._calculate_overall_compliance_score(
                 policy_validations
             )
             
             # Determine required actions
+
             required_actions = await self._determine_required_actions(
                 violations_detected, overall_score
             )
             
             # Store validation results
+
             storage_result = await self._store_validation_results(
                 validation_id, content_id, policy_validations, violations_detected
             )
             
             # Execute automated actions
+
             automated_actions = await self._execute_automated_compliance_actions(
                 content_id, violations_detected, required_actions
             )
+
             
             return {
                 "success": True,
@@ -347,39 +368,49 @@ class ContentPolicyEngine:
             
         except Exception as e:
             logger.error(f"Failed to validate content compliance: {e}")
+
             raise
 
 class RegulatoryComplianceTracker:
     """Regulatory compliance tracking system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.regulatory_requirements = {}
         self.compliance_trackers = {}
         
     async def initialize_compliance_tracker(self) -> Dict[str, Any]:
-        """Initialize regulatory compliance tracker"""
+        """
+        Initialize regulatory compliance tracker"""
         try:
             # Load regulatory requirements
+
             regulatory_requirements = await self._load_regulatory_requirements()
             
             # Setup compliance monitoring
+
             compliance_monitoring = await self._setup_compliance_monitoring()
             
             # Configure automated reporting
+
             automated_reporting = await self._configure_automated_reporting()
             
             # Setup requirement tracking
+
             requirement_tracking = await self._setup_requirement_tracking()
             
             # Configure regulatory updates
+
             regulatory_updates = await self._configure_regulatory_updates_monitoring()
             
             # Setup compliance dashboards
+
             compliance_dashboards = await self._setup_compliance_dashboards()
+
             
             logger.info(f"📊 Regulatory Compliance Tracker initialized with {len(regulatory_requirements)} requirements")
+
             
             return {
                 "regulatory_requirements": len(regulatory_requirements),
@@ -399,6 +430,7 @@ class RegulatoryComplianceTracker:
             
         except Exception as e:
             logger.error(f"Failed to initialize compliance tracker: {e}")
+
             raise
 
     async def monitor_regulatory_compliance(
@@ -412,39 +444,47 @@ class RegulatoryComplianceTracker:
             monitoring_id = str(uuid.uuid4())
             
             # Get framework requirements
+
             framework_requirements = await self._get_framework_requirements(
                 compliance_framework, monitoring_scope
             )
             
             # Assess compliance status
+
             compliance_assessment = await self._assess_compliance_status(
                 framework_requirements, assessment_period
             )
             
             # Identify compliance gaps
+
             compliance_gaps = await self._identify_compliance_gaps(
                 framework_requirements, compliance_assessment
             )
             
             # Calculate risk levels
+
             risk_assessment = await self._calculate_compliance_risk_levels(
                 compliance_gaps, framework_requirements
             )
             
             # Generate remediation plan
+
             remediation_plan = await self._generate_remediation_plan(
                 compliance_gaps, risk_assessment
             )
             
             # Update compliance tracking
+
             tracking_update = await self._update_compliance_tracking(
                 compliance_framework, compliance_assessment, compliance_gaps
             )
             
             # Generate compliance alerts
+
             compliance_alerts = await self._generate_compliance_alerts(
                 compliance_gaps, risk_assessment
             )
+
             
             return {
                 "success": True,
@@ -462,12 +502,13 @@ class RegulatoryComplianceTracker:
             
         except Exception as e:
             logger.error(f"Failed to monitor regulatory compliance: {e}")
+
             raise
 
 class LegalRequirementTracker:
     """Legal requirement tracking and documentation system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.legal_requirements = {}
@@ -479,39 +520,47 @@ class LegalRequirementTracker:
         requirement_categories: List[str],
         tracking_period: Dict[str, datetime]
     ) -> Dict[str, Any]:
-        """Track legal requirements and compliance status"""
+        """
+        Track legal requirements and compliance status"""
         try:
             tracking_id = str(uuid.uuid4())
             
             # Get applicable legal requirements
+
             legal_requirements = await self._get_applicable_legal_requirements(
                 jurisdiction, requirement_categories
             )
             
             # Assess requirement compliance
+
             requirement_compliance = await self._assess_requirement_compliance(
                 legal_requirements, tracking_period
             )
             
             # Track documentation status
+
             documentation_status = await self._track_documentation_status(
                 legal_requirements, requirement_compliance
             )
             
             # Monitor deadline compliance
+
             deadline_monitoring = await self._monitor_deadline_compliance(
                 legal_requirements, tracking_period
             )
             
             # Generate compliance documentation
+
             compliance_documentation = await self._generate_compliance_documentation(
                 legal_requirements, requirement_compliance
             )
             
             # Update requirement tracking
+
             tracking_update = await self._update_requirement_tracking(
                 jurisdiction, legal_requirements, requirement_compliance
             )
+
             
             return {
                 "success": True,
@@ -528,12 +577,13 @@ class LegalRequirementTracker:
             
         except Exception as e:
             logger.error(f"Failed to track legal requirements: {e}")
+
             raise
 
 class ComplianceReportingEngine:
     """Compliance reporting and documentation engine"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.report_generators = {}
@@ -546,41 +596,49 @@ class ComplianceReportingEngine:
         reporting_period: Dict[str, datetime],
         report_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate comprehensive compliance report"""
+        """
+        Generate comprehensive compliance report"""
         try:
             report_id = str(uuid.uuid4())
             
             # Collect compliance data
+
             compliance_data = await self._collect_compliance_data(
                 compliance_frameworks, reporting_period
             )
             
             # Calculate compliance metrics
+
             compliance_metrics = await self._calculate_compliance_metrics(
                 compliance_data, reporting_period
             )
             
             # Analyze violations and trends
+
             violation_analysis = await self._analyze_violations_and_trends(
                 compliance_data, reporting_period
             )
             
             # Assess regulatory updates
+
             regulatory_updates = await self._assess_regulatory_updates(
                 compliance_frameworks, reporting_period
             )
             
             # Generate risk assessment
+
             risk_assessment = await self._generate_compliance_risk_assessment(
                 compliance_data, violation_analysis
             )
             
             # Create recommendations
+
             compliance_recommendations = await self._generate_compliance_recommendations(
                 compliance_metrics, violation_analysis, risk_assessment
             )
             
             # Create compliance report
+
             compliance_report = ComplianceReport(
                 report_id=report_id,
                 report_title=report_config.get("title", "Compliance Report"),
@@ -597,17 +655,21 @@ class ComplianceReportingEngine:
             )
             
             # Format report output
+
             formatted_report = await self._format_compliance_report(
                 compliance_report, report_config
             )
             
             # Store compliance report
+
             report_storage = await self._store_compliance_report(compliance_report)
             
             # Schedule automated delivery
+
             delivery_scheduling = await self._schedule_report_delivery(
                 compliance_report, report_config
             )
+
             
             return {
                 "success": True,
@@ -621,12 +683,13 @@ class ComplianceReportingEngine:
             
         except Exception as e:
             logger.error(f"Failed to generate compliance report: {e}")
+
             raise
 
 class StreamingComplianceMonitor:
     """Unified streaming compliance monitor - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         
@@ -646,24 +709,32 @@ class StreamingComplianceMonitor:
         """Initialize compliance monitoring system"""
         try:
             # Initialize policy engine
+
             policy_status = await self.policy_engine.initialize_policy_engine()
             
             # Initialize compliance tracker
+
             tracker_status = await self.compliance_tracker.initialize_compliance_tracker()
             
             # Setup compliance frameworks
+
             framework_setup = await self._setup_compliance_frameworks()
             
             # Configure audit system
+
             audit_system = await self._configure_compliance_audit_system()
             
             # Setup violation management
+
             violation_management = await self._setup_violation_management_system()
             
             # Configure compliance alerts
+
             alert_system = await self._configure_compliance_alert_system()
+
             
             logger.info("⚖️ Streaming Compliance Monitor fully initialized")
+
             
             return {
                 "compliance_status": "initialized",
@@ -685,6 +756,7 @@ class StreamingComplianceMonitor:
             
         except Exception as e:
             logger.error(f"Failed to initialize compliance monitor: {e}")
+
             raise
     
     async def perform_comprehensive_compliance_check(
@@ -696,6 +768,7 @@ class StreamingComplianceMonitor:
             check_id = str(uuid.uuid4())
             
             # Validate content compliance
+
             content_validation = None
             if compliance_request.get("check_content", False):
                 content_validation = await self.policy_engine.validate_content_compliance(
@@ -706,6 +779,7 @@ class StreamingComplianceMonitor:
                 )
             
             # Monitor regulatory compliance
+
             regulatory_monitoring = await self.compliance_tracker.monitor_regulatory_compliance(
                 ComplianceFramework(compliance_request.get("framework", "gdpr")),
                 compliance_request.get("monitoring_scope", ["content", "user_data"]),
@@ -716,6 +790,7 @@ class StreamingComplianceMonitor:
             )
             
             # Track legal requirements
+
             legal_tracking = await self.legal_tracker.track_legal_requirements(
                 ComplianceRegion(compliance_request.get("jurisdiction", "global")),
                 compliance_request.get("requirement_categories", ["data_protection", "content_policy"]),
@@ -726,6 +801,7 @@ class StreamingComplianceMonitor:
             )
             
             # Generate compliance report
+
             compliance_report = await self.reporting_engine.generate_compliance_report(
                 compliance_request.get("report_type", "comprehensive"),
                 [ComplianceFramework(f) for f in compliance_request.get("frameworks", ["gdpr"])],
@@ -737,9 +813,11 @@ class StreamingComplianceMonitor:
             )
             
             # Calculate overall compliance status
+
             overall_status = await self._calculate_overall_compliance_status(
                 content_validation, regulatory_monitoring, legal_tracking
             )
+
             
             return {
                 "success": True,
@@ -754,6 +832,7 @@ class StreamingComplianceMonitor:
             
         except Exception as e:
             logger.error(f"Failed to perform comprehensive compliance check: {e}")
+
             raise
     
     # Additional helper methods implementation...
@@ -768,6 +847,7 @@ class StreamingComplianceMonitor:
             }
         except Exception as e:
             logger.error(f"Failed to setup compliance frameworks: {e}")
+
             return {}
 
     async def _configure_compliance_audit_system(self) -> Dict[str, Any]:
@@ -781,6 +861,7 @@ class StreamingComplianceMonitor:
             }
         except Exception as e:
             logger.error(f"Failed to configure audit system: {e}")
+
             return {}
 
 # Export main classes

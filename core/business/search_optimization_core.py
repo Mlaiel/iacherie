@@ -24,7 +24,8 @@ from collections import defaultdict, deque
 logger = logging.getLogger(__name__)
 
 class SearchEngine(Enum):
-    """Supported search engines"""
+    """
+Supported search engines"""
     GOOGLE = "google"
     BING = "bing"
     YAHOO = "yahoo"
@@ -35,7 +36,8 @@ class SearchEngine(Enum):
     LINKEDIN = "linkedin"
 
 class RankingFactor(Enum):
-    """Search ranking factors"""
+    """
+Search ranking factors"""
     CONTENT_QUALITY = "content_quality"
     KEYWORD_RELEVANCE = "keyword_relevance"
     USER_EXPERIENCE = "user_experience"
@@ -48,7 +50,8 @@ class RankingFactor(Enum):
     CLICK_THROUGH_RATE = "click_through_rate"
 
 class OptimizationStrategy(Enum):
-    """Optimization strategies"""
+    """
+Optimization strategies"""
     CONTENT_FIRST = "content_first"
     TECHNICAL_FOCUS = "technical_focus"
     USER_EXPERIENCE = "user_experience"
@@ -59,7 +62,8 @@ class OptimizationStrategy(Enum):
     VIDEO_OPTIMIZATION = "video_optimization"
 
 class PerformanceMetric(Enum):
-    """Search performance metrics"""
+    """
+Search performance metrics"""
     IMPRESSIONS = "impressions"
     CLICKS = "clicks"
     CTR = "ctr"
@@ -71,7 +75,8 @@ class PerformanceMetric(Enum):
 
 @dataclass
 class SearchPerformanceData:
-    """Search performance metrics and analytics"""
+    """
+Search performance metrics and analytics"""
     content_id: str
     search_engine: SearchEngine
     date: datetime
@@ -90,7 +95,8 @@ class SearchPerformanceData:
 
 @dataclass
 class OptimizationStrategy:
-    """Search optimization strategy"""
+    """
+Search optimization strategy"""
     strategy_id: str
     content_id: str
     strategy_type: OptimizationStrategy
@@ -107,7 +113,8 @@ class OptimizationStrategy:
 
 @dataclass
 class CompetitorSearchAnalysis:
-    """Competitor search performance analysis"""
+    """
+Competitor search performance analysis"""
     analysis_id: str
     competitor_domain: str
     analysis_date: datetime
@@ -125,7 +132,8 @@ class CompetitorSearchAnalysis:
 
 @dataclass
 class SearchTrendAnalysis:
-    """Search trend and opportunity analysis"""
+    """
+Search trend and opportunity analysis"""
     trend_id: str
     keyword_group: str
     trend_type: str
@@ -141,7 +149,8 @@ class SearchTrendAnalysis:
 
 @dataclass
 class VoiceSearchOptimization:
-    """Voice search optimization analysis"""
+    """
+Voice search optimization analysis"""
     content_id: str
     voice_search_potential: float
     conversational_keywords: List[str]
@@ -161,7 +170,8 @@ class SearchOptimizationCore:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize search optimization core"""
+        """
+Initialize search optimization core"""
         self.config = config or {}
         self.performance_data: Dict[str, List[SearchPerformanceData]] = {}
         self.optimization_strategies: Dict[str, OptimizationStrategy] = {}
@@ -200,7 +210,8 @@ class SearchOptimizationCore:
         logger.info("Search Optimization Core initialized")
     
     def _initialize_ranking_model(self) -> Dict[str, Any]:
-        """Initialize ranking prediction model"""
+        """
+Initialize ranking prediction model"""
         return {
             'model_version': '3.1.0',
             'prediction_accuracy': 0.88,
@@ -222,7 +233,8 @@ class SearchOptimizationCore:
         }
     
     def _initialize_content_ai(self) -> Dict[str, Any]:
-        """Initialize content optimization AI"""
+        """
+Initialize content optimization AI"""
         return {
             'model_type': 'transformer_based',
             'model_version': '2.3.0',
@@ -237,7 +249,8 @@ class SearchOptimizationCore:
         }
     
     def _initialize_competitor_ai(self) -> Dict[str, Any]:
-        """Initialize competitor intelligence AI"""
+        """
+Initialize competitor intelligence AI"""
         return {
             'analysis_engine': 'ml_powered',
             'version': '1.8.0',
@@ -255,7 +268,8 @@ class SearchOptimizationCore:
         content_id: str, 
         search_engines: List[SearchEngine]
     ) -> List[SearchPerformanceData]:
-        """Track search performance across multiple search engines"""
+        """
+Track search performance across multiple search engines"""
         try:
             performance_results = []
             
@@ -287,7 +301,8 @@ class SearchOptimizationCore:
         content_id: str, 
         search_engine: SearchEngine
     ) -> SearchPerformanceData:
-        """Collect performance data from search engine"""
+        """
+Collect performance data from search engine"""
         try:
             # Simulate real search console/analytics data
             base_impressions = 1000 + hash(content_id + search_engine.value) % 5000
@@ -333,7 +348,8 @@ class SearchOptimizationCore:
         historical_data: List[SearchPerformanceData], 
         current_clicks: int
     ) -> str:
-        """Calculate performance trend based on historical data"""
+        """
+Calculate performance trend based on historical data"""
         if len(historical_data) < 2:
             return 'new'
         
@@ -353,7 +369,8 @@ class SearchOptimizationCore:
             return 'stable'
     
     def _get_top_keywords(self, content_id: str) -> List[str]:
-        """Get top performing keywords for content"""
+        """
+Get top performing keywords for content"""
         # Simplified keyword generation
         base_keywords = [
             f"keyword_{hash(content_id + str(i)) % 1000}" 
@@ -366,7 +383,8 @@ class SearchOptimizationCore:
         content_id: str, 
         performance_data: SearchPerformanceData
     ):
-        """Update performance analytics and trends"""
+        """
+Update performance analytics and trends"""
         try:
             # Update ranking history
             self.search_analytics['ranking_history'][content_id].append({
@@ -400,7 +418,8 @@ class SearchOptimizationCore:
             logger.error(f"Error updating performance analytics: {e}")
     
     async def _check_performance_alerts(self, content_id: str):
-        """Check for performance alerts and notify if needed"""
+        """
+Check for performance alerts and notify if needed"""
         try:
             historical_data = self.performance_data.get(content_id, [])
             
@@ -458,7 +477,8 @@ class SearchOptimizationCore:
         content_id: str, 
         goals: Dict[str, Any]
     ) -> OptimizationStrategy:
-        """Create comprehensive optimization strategy"""
+        """
+Create comprehensive optimization strategy"""
         try:
             strategy_id = str(uuid.uuid4())
             
@@ -505,7 +525,8 @@ class SearchOptimizationCore:
             raise
     
     async def _analyze_current_performance(self, content_id: str) -> Dict[str, Any]:
-        """Analyze current search performance"""
+        """
+Analyze current search performance"""
         try:
             historical_data = self.performance_data.get(content_id, [])
             
@@ -559,7 +580,8 @@ class SearchOptimizationCore:
         content_id: str, 
         goals: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Identify optimization opportunities"""
+        """
+Identify optimization opportunities"""
         opportunities = []
         
         # Ranking improvement opportunity
@@ -609,7 +631,8 @@ class SearchOptimizationCore:
         opportunities: List[Dict[str, Any]], 
         goals: Dict[str, Any]
     ) -> OptimizationStrategy:
-        """Select optimal optimization strategy"""
+        """
+Select optimal optimization strategy"""
         try:
             # Priority mapping for different strategies
             strategy_priorities = {
@@ -642,7 +665,8 @@ class SearchOptimizationCore:
         strategy_type: OptimizationStrategy, 
         opportunities: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Generate detailed implementation plan"""
+        """
+Generate detailed implementation plan"""
         implementation_steps = []
         
         if strategy_type == OptimizationStrategy.CONTENT_FIRST:
@@ -724,7 +748,8 @@ class SearchOptimizationCore:
         return implementation_steps
     
     def _create_optimization_timeline(self, implementation_steps: List[Dict[str, Any]]) -> Dict[str, datetime]:
-        """Create timeline for optimization implementation"""
+        """
+Create timeline for optimization implementation"""
         timeline = {}
         current_date = datetime.utcnow()
         
@@ -744,7 +769,8 @@ class SearchOptimizationCore:
         return timeline
     
     def _calculate_resource_requirements(self, implementation_steps: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate resource requirements for optimization"""
+        """
+Calculate resource requirements for optimization"""
         resource_count = defaultdict(int)
         total_duration = 0
         
@@ -768,7 +794,8 @@ class SearchOptimizationCore:
         current_performance: Dict[str, Any], 
         implementation_steps: List[Dict[str, Any]]
     ) -> Dict[str, float]:
-        """Predict optimization outcomes"""
+        """
+Predict optimization outcomes"""
         try:
             # Base improvement factors
             base_ranking_improvement = 5.0
@@ -812,7 +839,8 @@ class SearchOptimizationCore:
         strategy_type: OptimizationStrategy, 
         current_performance: Dict[str, Any]
     ) -> List[str]:
-        """Identify potential risk factors"""
+        """
+Identify potential risk factors"""
         risks = []
         
         # Algorithm update risks
@@ -838,7 +866,8 @@ class SearchOptimizationCore:
         return risks
     
     async def analyze_voice_search_optimization(self, content_id: str) -> VoiceSearchOptimization:
-        """Analyze and optimize for voice search"""
+        """
+Analyze and optimize for voice search"""
         try:
             # Analyze voice search potential
             voice_potential = await self._calculate_voice_search_potential(content_id)
@@ -882,7 +911,8 @@ class SearchOptimizationCore:
             raise
     
     async def _calculate_voice_search_potential(self, content_id: str) -> float:
-        """Calculate voice search optimization potential"""
+        """
+Calculate voice search optimization potential"""
         # Simplified calculation based on content characteristics
         potential_score = 0.0
         
@@ -901,7 +931,8 @@ class SearchOptimizationCore:
         return min(potential_score, 1.0)
     
     async def _identify_conversational_keywords(self, content_id: str) -> List[str]:
-        """Identify conversational keywords for voice search"""
+        """
+Identify conversational keywords for voice search"""
         conversational_keywords = [
             "how do I",
             "what is the best way to",
@@ -917,7 +948,8 @@ class SearchOptimizationCore:
         return conversational_keywords[:5]
     
     async def _extract_question_queries(self, content_id: str) -> List[str]:
-        """Extract potential question-based queries"""
+        """
+Extract potential question-based queries"""
         questions = [
             f"How does {content_id} work?",
             f"What is the best {content_id}?",
@@ -929,12 +961,14 @@ class SearchOptimizationCore:
         return questions
     
     async def _calculate_local_intent(self, content_id: str) -> float:
-        """Calculate local search intent score"""
+        """
+Calculate local search intent score"""
         # Simplified local intent calculation
         return 0.3 + (hash(content_id) % 70) / 100
     
     async def _assess_featured_snippet_potential(self, content_id: str) -> float:
-        """Assess potential for featured snippets"""
+        """
+Assess potential for featured snippets"""
         # Simplified assessment
         return 0.4 + (hash(content_id + "snippet") % 60) / 100
     
@@ -944,7 +978,8 @@ class SearchOptimizationCore:
         conversational_keywords: List[str], 
         question_queries: List[str]
     ) -> List[Dict[str, Any]]:
-        """Generate voice search optimization recommendations"""
+        """
+Generate voice search optimization recommendations"""
         recommendations = []
         
         if voice_potential > 0.7:
@@ -973,7 +1008,8 @@ class SearchOptimizationCore:
         return recommendations
     
     def get_core_metrics(self) -> Dict[str, Any]:
-        """Get core search optimization metrics"""
+        """
+Get core search optimization metrics"""
         total_content_tracked = len(self.performance_data)
         total_alerts = len(self.search_analytics['performance_alerts'])
         

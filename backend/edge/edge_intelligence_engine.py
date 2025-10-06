@@ -30,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(str, Enum):
-    """Types de créateurs supportés."""
+    """
+        Types de créateurs supportés."""
     MUSICIAN = "musician"
     BLOGGER = "blogger" 
     PHOTOGRAPHER = "photographer"
@@ -96,7 +97,8 @@ class ContentAnalysis:
 
 @dataclass
 class ProcessingTask:
-    """Tâche de traitement IA."""
+    """
+        Tâche de traitement IA."""
     task_id: str
     content_id: str
     creator_type: CreatorType
@@ -109,7 +111,8 @@ class ProcessingTask:
 
 
 class EdgeAIModel(ABC):
-    """Classe abstraite pour modèles IA edge."""
+    """
+        Classe abstraite pour modèles IA edge."""
     
     def __init__(self, config: AIModelConfig):
         self.config = config
@@ -128,28 +131,35 @@ class EdgeAIModel(ABC):
     
     @abstractmethod
     async def predict(self, input_data: Any) -> Any:
-        """Effectue une prédiction."""
+        """
+        Effectue une prédiction."""
         pass
     
     @abstractmethod
     async def optimize_content(self, content: Any, target: OptimizationTarget) -> Any:
-        """Optimise le contenu selon la cible."""
+        """
+        Optimise le contenu selon la cible."""
         pass
 
 
 class ContentQualityModel(EdgeAIModel):
-    """Modèle d'évaluation de qualité du contenu."""
+    """
+        Modèle d'évaluation de qualité du contenu."""
     
     async def load_model(self) -> bool:
-        """Charge le modèle de qualité."""
+        """
+        Charge le modèle de qualité."""
         try:
             # Simulation du chargement du modèle
             await asyncio.sleep(0.1)
+
             self.is_loaded = True
-            logger.info(f"Content quality model {self.config.model_id} loaded successfully")
+            logger.info(f"Content quality model {self.config.model_id} initialized successfully")
+
             return True
         except Exception as e:
             logger.error(f"Failed to load content quality model: {e}")
+
             return False
     
     async def predict(self, input_data: Any) -> float:
@@ -160,6 +170,7 @@ class ContentQualityModel(EdgeAIModel):
         quality_score = np.random.uniform(0.7, 0.95)
         
         # Mise à jour des statistiques
+
         inference_time = time.time() - start_time
         self.performance_stats["inference_count"] += 1
         self.performance_stats["total_inference_time"] += inference_time
@@ -167,6 +178,7 @@ class ContentQualityModel(EdgeAIModel):
             self.performance_stats["total_inference_time"] / 
             self.performance_stats["inference_count"]
         )
+
         
         return quality_score
     
@@ -186,6 +198,7 @@ class ContentQualityModel(EdgeAIModel):
                 "Optimize encoding parameters",
                 "Implement adaptive bitrate"
             ])
+
         
         return {
             "optimized_content": content,
@@ -198,14 +211,18 @@ class EngagementPredictionModel(EdgeAIModel):
     """Modèle de prédiction d'engagement."""
     
     async def load_model(self) -> bool:
-        """Charge le modèle de prédiction d'engagement."""
+        """
+        Charge le modèle de prédiction d'engagement."""
         try:
             await asyncio.sleep(0.1)
+
             self.is_loaded = True
-            logger.info(f"Engagement prediction model {self.config.model_id} loaded successfully")
+            logger.info(f"Engagement prediction model {self.config.model_id} initialized successfully")
+
             return True
         except Exception as e:
             logger.error(f"Failed to load engagement prediction model: {e}")
+
             return False
     
     async def predict(self, input_data: Any) -> float:
@@ -213,9 +230,11 @@ class EngagementPredictionModel(EdgeAIModel):
         start_time = time.time()
         
         # Simulation de prédiction d'engagement
+
         engagement_score = np.random.uniform(0.6, 0.9)
         
         # Mise à jour des statistiques
+
         inference_time = time.time() - start_time
         self.performance_stats["inference_count"] += 1
         self.performance_stats["total_inference_time"] += inference_time
@@ -223,6 +242,7 @@ class EngagementPredictionModel(EdgeAIModel):
             self.performance_stats["total_inference_time"] / 
             self.performance_stats["inference_count"]
         )
+
         
         return engagement_score
     
@@ -237,6 +257,7 @@ class EngagementPredictionModel(EdgeAIModel):
                 "Enhance thumbnail design",
                 "Improve call-to-action placement"
             ])
+
         
         return {
             "optimized_content": content,
@@ -254,13 +275,15 @@ class EdgeContentProcessor:
         self.is_processing = False
     
     async def process_multiformat_content(self, content: Any, format_type: ContentFormat) -> Dict[str, Any]:
-        """Traite le contenu multi-format."""
+        """
+        Traite le contenu multi-format."""
         processing_result = {
             "processed_content": content,
             "format": format_type.value,
             "optimizations_applied": [],
             "processing_time": 0.0
         }
+
         
         start_time = time.time()
         
@@ -283,6 +306,7 @@ class EdgeContentProcessor:
                 "Format conversion",
                 "Metadata optimization"
             ])
+
         
         processing_result["processing_time"] = time.time() - start_time
         return processing_result
@@ -296,7 +320,8 @@ class EdgePerformanceOptimizer:
         self.performance_metrics = {}
     
     async def optimize_creator_performance(self, creator_type: CreatorType, content_data: Any) -> Dict[str, Any]:
-        """Optimise la performance selon le type de créateur."""
+        """
+        Optimise la performance selon le type de créateur."""
         optimization_strategies = {
             CreatorType.MUSICIAN: self._optimize_musician_content,
             CreatorType.BLOGGER: self._optimize_blogger_content,
@@ -304,12 +329,14 @@ class EdgePerformanceOptimizer:
             CreatorType.INFLUENCER: self._optimize_influencer_content,
             CreatorType.COMEDIAN: self._optimize_comedian_content
         }
+
         
         optimizer = optimization_strategies.get(creator_type, self._optimize_generic_content)
         return await optimizer(content_data)
     
     async def _optimize_musician_content(self, content_data: Any) -> Dict[str, Any]:
-        """Optimisation spécifique musiciens."""
+        """
+        Optimisation spécifique musiciens."""
         return {
             "optimizations": [
                 "Audio quality enhancement",
@@ -394,7 +421,8 @@ class EdgeRealTimeAnalytics:
         self.analytics_queue = asyncio.Queue()
     
     async def predict_engagement_patterns(self, content_id: str, creator_type: CreatorType) -> Dict[str, Any]:
-        """Prédit les patterns d'engagement."""
+        """
+        Prédit les patterns d'engagement."""
         return {
             "predicted_peak_times": ["12:00", "18:00", "21:00"],
             "engagement_score": np.random.uniform(0.6, 0.9),
@@ -412,15 +440,18 @@ class EdgeRealTimeAnalytics:
         
         if analysis.quality_score < 0.8:
             recommendations.append("Consider improving content quality")
+
         
         if analysis.engagement_prediction < 0.7:
             recommendations.append("Optimize for better engagement")
+
         
         recommendations.extend([
             "Use relevant hashtags for better discovery",
             "Post at optimal times for your audience",
             "Engage with your community regularly"
         ])
+
         
         return recommendations
 
@@ -440,7 +471,8 @@ class EdgeIntelligenceEngine:
         self._initialize_default_models()
     
     def _initialize_default_models(self):
-        """Initialise les modèles IA par défaut."""
+        """
+        Initialise les modèles IA par défaut."""
         # Modèle de qualité
         quality_config = AIModelConfig(
             model_id="content_quality_v1",
@@ -451,6 +483,7 @@ class EdgeIntelligenceEngine:
         self.ai_models["quality"] = ContentQualityModel(quality_config)
         
         # Modèle d'engagement
+
         engagement_config = AIModelConfig(
             model_id="engagement_prediction_v1",
             model_type="engagement_prediction",
@@ -467,16 +500,20 @@ class EdgeIntelligenceEngine:
             # Chargement des modèles IA
             for model_name, model in self.ai_models.items():
                 success = await model.load_model()
+
                 if not success:
                     logger.error(f"Failed to load model: {model_name}")
+
                     return False
             
             self.is_running = True
             logger.info("Edge Intelligence Engine initialized successfully")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to initialize Edge Intelligence Engine: {e}")
+
             return False
     
     async def process_multiformat_content(self, content: Any, format_type: ContentFormat, 
@@ -486,6 +523,7 @@ class EdgeIntelligenceEngine:
             content_id = str(uuid.uuid4())
             
             # Traitement du contenu
+
             processing_result = await self.content_processor.process_multiformat_content(
                 content, format_type
             )
@@ -494,14 +532,17 @@ class EdgeIntelligenceEngine:
             quality_score = await self.ai_models["quality"].predict(content)
             
             # Prédiction d'engagement
+
             engagement_prediction = await self.ai_models["engagement"].predict(content)
             
             # Optimisation performance
+
             performance_optimization = await self.performance_optimizer.optimize_creator_performance(
                 creator_type, content
             )
             
             # Génération des suggestions
+
             analysis = ContentAnalysis(
                 content_id=content_id,
                 format_type=format_type,
@@ -516,14 +557,19 @@ class EdgeIntelligenceEngine:
             )
             
             # Recommandations intelligentes
+
             smart_recommendations = await self.real_time_analytics.generate_smart_recommendations(analysis)
+
             analysis.optimization_suggestions.extend(smart_recommendations)
+
             
             logger.info(f"Content processed successfully: {content_id}")
+
             return analysis
             
         except Exception as e:
             logger.error(f"Failed to process content: {e}")
+
             raise
     
     async def optimize_creator_performance(self, creator_type: CreatorType, 
@@ -535,17 +581,20 @@ class EdgeIntelligenceEngine:
     
     async def predict_engagement_patterns(self, content_id: str, 
                                         creator_type: CreatorType) -> Dict[str, Any]:
-        """Prédit les patterns d'engagement IA."""
+        """
+        Prédit les patterns d'engagement IA."""
         return await self.real_time_analytics.predict_engagement_patterns(
             content_id, creator_type
         )
     
     async def enhance_content_quality(self, content: Any, format_type: ContentFormat,
                                     target: OptimizationTarget) -> Dict[str, Any]:
-        """Améliore la qualité du contenu automatiquement."""
+        """
+        Améliore la qualité du contenu automatiquement."""
         model = self.ai_models.get("quality")
         if not model:
             raise ValueError("Quality model not available")
+
         
         return await model.optimize_content(content, target)
     
@@ -554,7 +603,8 @@ class EdgeIntelligenceEngine:
         return await self.real_time_analytics.generate_smart_recommendations(analysis)
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Récupère les métriques de performance."""
+        """
+        Récupère les métriques de performance."""
         metrics = {
             "models_loaded": len([m for m in self.ai_models.values() if m.is_loaded]),
             "total_models": len(self.ai_models),

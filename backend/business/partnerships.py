@@ -1,879 +1,1333 @@
-"""Partnership Management - Strategic Collaboration & Business Alliances
-====================================================================
+"""
+Partnership Management Module - Enterprise Partnership & Alliance System
+======================================================================
 
-Advanced partnership management system for strategic collaboration orchestration,
-brand partnerships, influencer-brand matching, and alliance lifecycle management.
-
-Features:
-- Strategic partnership lifecycle management
-- Brand collaboration orchestration
-- Influencer-brand matching algorithms
+Complete partnership lifecycle management including:
+- Strategic alliance formation and management
+- Partner relationship tracking and optimization
+- Cross-promotion campaign coordination
+- Revenue sharing and attribution
 - Partnership performance analytics
-- Contract negotiation automation
-- Revenue sharing calculation
-- Collaboration workflow optimization
+- Contract and SLA management
 
-Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
+Author: Fahed Mlaiel (mlaiel@live.de)
+Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
 
 import asyncio
 import logging
-from typing import Dict, List, Optional, Any, Union, Tuple
+from typing import Dict, List, Optional, Any, Set, Tuple
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal, ROUND_HALF_UP
 from dataclasses import dataclass, field
 from enum import Enum
 import json
 import uuid
-from collections import defaultdict, Counter
+from collections import defaultdict
 
 logger = logging.getLogger(__name__)
 
 
+# =============================================================================
+# ENUMS & DATA MODELS
+# =============================================================================
+
 class PartnershipType(Enum):
-    """Types of partnerships."""
-    BRAND_COLLABORATION = "brand_collaboration"
-    INFLUENCER_PARTNERSHIP = "influencer_partnership"
+    """
+        Types of partnerships"""
     STRATEGIC_ALLIANCE = "strategic_alliance"
-    AFFILIATE_PARTNERSHIP = "affiliate_partnership"
-    CONTENT_LICENSING = "content_licensing"
-    CROSS_PROMOTION = "cross_promotion"
+    REVENUE_SHARE = "revenue_share"
+    CONTENT_COLLABORATION = "content_collaboration"
+    TECHNOLOGY_INTEGRATION = "technology_integration"
+    MARKETING_PARTNERSHIP = "marketing_partnership"
+    DISTRIBUTION_PARTNERSHIP = "distribution_partnership"
+    AFFILIATE = "affiliate"
     JOINT_VENTURE = "joint_venture"
-    SPONSORED_CONTENT = "sponsored_content"
+    LICENSING = "licensing"
+    RESELLER = "reseller"
 
 
 class PartnershipStatus(Enum):
-    """Partnership lifecycle status."""
+    """Partnership lifecycle status"""
     PROSPECTING = "prospecting"
     NEGOTIATING = "negotiating"
     ACTIVE = "active"
-    PAUSED = "paused"
-    COMPLETED = "completed"
+    ON_HOLD = "on_hold"
+    EXPIRED = "expired"
     TERMINATED = "terminated"
-    PENDING_RENEWAL = "pending_renewal"
+    RENEWED = "renewed"
 
 
-class CollaborationType(Enum):
-    """Types of collaborations."""
-    SINGLE_POST = "single_post"
-    CAMPAIGN_SERIES = "campaign_series"
-    LONG_TERM_AMBASSADOR = "long_term_ambassador"
-    EVENT_COLLABORATION = "event_collaboration"
-    PRODUCT_INTEGRATION = "product_integration"
-    CO_CREATION = "co_creation"
+class PartnerTier(Enum):
+    """Partner tier levels"""
+    BRONZE = "bronze"
+    SILVER = "silver"
+    GOLD = "gold"
+    PLATINUM = "platinum"
+    DIAMOND = "diamond"
+
+
+class RevenueShareModel(Enum):
+    """Revenue sharing models"""
+    PERCENTAGE_SPLIT = "percentage_split"
+    TIERED_COMMISSION = "tiered_commission"
+    FIXED_FEE = "fixed_fee"
+    PERFORMANCE_BASED = "performance_based"
+    HYBRID = "hybrid"
+
+
+class PartnershipMetricType(Enum):
+    """Partnership performance metrics"""
+    REVENUE_GENERATED = "revenue_generated"
+    LEADS_GENERATED = "leads_generated"
+    CONVERSIONS = "conversions"
+    ENGAGEMENT_RATE = "engagement_rate"
+    CUSTOMER_LIFETIME_VALUE = "customer_lifetime_value"
+    BRAND_AWARENESS = "brand_awareness"
+    MARKET_PENETRATION = "market_penetration"
 
 
 @dataclass
-class PartnershipProfile:
-    """Partnership entity profile."""
-    profile_id: str
-    entity_type: str  # "brand", "influencer", "agency"
+class PartnerProfile:
+    """Complete partner profile"""
+    partner_id: str
     name: str
-    industry: str
-    audience_demographics: Dict[str, Any]
-    reach_metrics: Dict[str, int]
-    engagement_metrics: Dict[str, float]
-    partnership_history: List[str]
-    preferences: Dict[str, Any]
-    budget_range: Tuple[Decimal, Decimal]
-    content_categories: List[str]
+    partnership_type: PartnershipType
+    tier: PartnerTier
+    status: PartnershipStatus
+    
+    # Contact Information
+    primary_contact: Dict[str, str]
+    secondary_contacts: List[Dict[str, str]] = field(default_factory=list)
+    
+    # Business Details
+    company_size: Optional[str] = None
+    industry: Optional[str] = None
+    geography: List[str] = field(default_factory=list)
+    specialization: List[str] = field(default_factory=list)
+    
+    # Partnership Terms
+    start_date: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    end_date: Optional[datetime] = None
+    renewal_date: Optional[datetime] = None
+    contract_value: Decimal = Decimal('0')
+    
+    # Performance Tracking
+    total_revenue_generated: Decimal = Decimal('0')
+    total_leads_generated: int = 0
+    conversion_rate: float = 0.0
+    satisfaction_score: float = 0.0
+    
+    # Metadata
+    tags: Set[str] = field(default_factory=set)
+    custom_fields: Dict[str, Any] = field(default_factory=dict)
+    created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
 
 @dataclass
-class Partnership:
-    """Partnership agreement representation."""
-    partnership_id: str
-    partnership_type: PartnershipType
-    status: PartnershipStatus
-    primary_partner: PartnershipProfile
-    secondary_partner: PartnershipProfile
-    collaboration_details: Dict[str, Any]
-    contract_terms: Dict[str, Any]
-    revenue_sharing: Dict[str, Any]
-    performance_metrics: Dict[str, Any]
-    created_at: datetime
+class RevenueShareAgreement:
+    """
+        Revenue sharing agreement details"""
+    agreement_id: str
+    partner_id: str
+    model: RevenueShareModel
+    
+    # Share Details
+    partner_share_percentage: Decimal
+    platform_share_percentage: Decimal
+    minimum_payout: Decimal = Decimal('0')
+    payment_frequency: str = "monthly"  # monthly, quarterly, annually
+    
+    # Performance Thresholds
+    revenue_tiers: List[Dict[str, Any]] = field(default_factory=list)
+    performance_bonuses: Dict[str, Decimal] = field(default_factory=dict)
+    
+    # Terms
+    effective_date: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    expiration_date: Optional[datetime] = None
+    auto_renewal: bool = False
+    
+    # Tracking
+    total_revenue_shared: Decimal = Decimal('0')
+    total_payouts: Decimal = Decimal('0')
+    pending_payout: Decimal = Decimal('0')
+    
+    created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+@dataclass
+class PartnershipActivity:
+    """Partnership activity tracking"""
+    activity_id: str
+    partner_id: str
+    activity_type: str
+    description: str
+    
+    # Revenue/Value Impact
+    revenue_impact: Decimal = Decimal('0')
+    leads_generated: int = 0
+    conversions: int = 0
+    
+    # Metadata
+    performed_by: str = ""
+    tags: Set[str] = field(default_factory=set)
+    metadata: Dict[str, Any] = field(default_factory=dict)
+    
+    timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+@dataclass
+class PartnershipCampaign:
+    """Joint marketing/promotion campaign"""
+    campaign_id: str
+    name: str
+    partner_ids: List[str]
+    
+    # Campaign Details
+    campaign_type: str
     start_date: datetime
-    end_date: Optional[datetime]
-    last_updated: datetime
-
-
-class PartnershipLifecycleManager:
-    """Advanced partnership lifecycle management system."""
+    end_date: datetime
+    budget: Decimal
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize partnership lifecycle manager."""
-        self.config = config or {}
-        self.partnerships: Dict[str, Partnership] = {}
-        self.partner_profiles: Dict[str, PartnershipProfile] = {}
-        self.lifecycle_analytics: Dict[str, Dict[str, Any]] = defaultdict(dict)
-        
-    async def create_partner_profile(
-        self,
-        entity_type: str,
-        name: str,
-        industry: str,
-        audience_demographics: Dict[str, Any],
-        reach_metrics: Dict[str, int],
-        engagement_metrics: Dict[str, float],
-        content_categories: List[str],
-        budget_range: Tuple[Decimal, Decimal],
-        preferences: Optional[Dict[str, Any]] = None
-    ) -> PartnershipProfile:
-        """Create a new partner profile."""
-        try:
-            profile = PartnershipProfile(
-                profile_id=str(uuid.uuid4()),
-                entity_type=entity_type,
-                name=name,
-                industry=industry,
-                audience_demographics=audience_demographics,
-                reach_metrics=reach_metrics,
-                engagement_metrics=engagement_metrics,
-                partnership_history=[],
-                preferences=preferences or {},
-                budget_range=budget_range,
-                content_categories=content_categories
-            )
-            
-            self.partner_profiles[profile.profile_id] = profile
-            logger.info(f"Created partner profile {profile.profile_id} for {name}")
-            
-            return profile
-            
-        except Exception as e:
-            logger.error(f"Partner profile creation failed: {e}")
-            raise
-
-    async def initiate_partnership(
-        self,
-        partnership_type: PartnershipType,
-        primary_partner_id: str,
-        secondary_partner_id: str,
-        collaboration_details: Dict[str, Any],
-        proposed_terms: Dict[str, Any]
-    ) -> Partnership:
-        """Initiate a new partnership."""
-        try:
-            if primary_partner_id not in self.partner_profiles:
-                raise ValueError(f"Primary partner {primary_partner_id} not found")
-            if secondary_partner_id not in self.partner_profiles:
-                raise ValueError(f"Secondary partner {secondary_partner_id} not found")
-            
-            primary_partner = self.partner_profiles[primary_partner_id]
-            secondary_partner = self.partner_profiles[secondary_partner_id]
-            
-            # Auto-generate revenue sharing based on partnership type
-            revenue_sharing = await self._calculate_revenue_sharing(
-                partnership_type, primary_partner, secondary_partner, proposed_terms
-            )
-            
-            partnership = Partnership(
-                partnership_id=str(uuid.uuid4()),
-                partnership_type=partnership_type,
-                status=PartnershipStatus.NEGOTIATING,
-                primary_partner=primary_partner,
-                secondary_partner=secondary_partner,
-                collaboration_details=collaboration_details,
-                contract_terms=proposed_terms,
-                revenue_sharing=revenue_sharing,
-                performance_metrics={},
-                created_at=datetime.now(timezone.utc),
-                start_date=datetime.now(timezone.utc),
-                end_date=None,
-                last_updated=datetime.now(timezone.utc)
-            )
-            
-            self.partnerships[partnership.partnership_id] = partnership
-            
-            # Update partner histories
-            primary_partner.partnership_history.append(partnership.partnership_id)
-            secondary_partner.partnership_history.append(partnership.partnership_id)
-            
-            logger.info(f"Initiated partnership {partnership.partnership_id}")
-            return partnership
-            
-        except Exception as e:
-            logger.error(f"Partnership initiation failed: {e}")
-            raise
-
-    async def manage_partnership_lifecycle(
-        self,
-        partnership_id: str,
-        action: str,
-        update_data: Optional[Dict[str, Any]] = None
-    ) -> Dict[str, Any]:
-        """Manage partnership through its lifecycle."""
-        try:
-            if partnership_id not in self.partnerships:
-                raise ValueError(f"Partnership {partnership_id} not found")
-            
-            partnership = self.partnerships[partnership_id]
-            old_status = partnership.status
-            
-            if action == "activate":
-                partnership.status = PartnershipStatus.ACTIVE
-                partnership.start_date = datetime.now(timezone.utc)
-                
-            elif action == "pause":
-                partnership.status = PartnershipStatus.PAUSED
-                
-            elif action == "resume":
-                if partnership.status == PartnershipStatus.PAUSED:
-                    partnership.status = PartnershipStatus.ACTIVE
-                    
-            elif action == "complete":
-                partnership.status = PartnershipStatus.COMPLETED
-                partnership.end_date = datetime.now(timezone.utc)
-                
-            elif action == "terminate":
-                partnership.status = PartnershipStatus.TERMINATED
-                partnership.end_date = datetime.now(timezone.utc)
-                
-            elif action == "update_terms":
-                if update_data:
-                    partnership.contract_terms.update(update_data.get('contract_terms', {}))
-                    partnership.collaboration_details.update(update_data.get('collaboration_details', {}))
-                    
-            partnership.last_updated = datetime.now(timezone.utc)
-            
-            # Log lifecycle event
-            lifecycle_event = {
-                "action": action,
-                "old_status": old_status.value,
-                "new_status": partnership.status.value,
-                "timestamp": partnership.last_updated.isoformat(),
-                "update_data": update_data
-            }
-            
-            if partnership_id not in self.lifecycle_analytics:
-                self.lifecycle_analytics[partnership_id] = {"events": []}
-            self.lifecycle_analytics[partnership_id]["events"].append(lifecycle_event)
-            
-            logger.info(f"Partnership {partnership_id} lifecycle: {action}")
-            
-            return {
-                "partnership_id": partnership_id,
-                "action_completed": action,
-                "old_status": old_status.value,
-                "new_status": partnership.status.value,
-                "updated_at": partnership.last_updated.isoformat()
-            }
-            
-        except Exception as e:
-            logger.error(f"Partnership lifecycle management failed: {e}")
-            raise
-
-    async def _calculate_revenue_sharing(
-        self,
-        partnership_type: PartnershipType,
-        primary_partner: PartnershipProfile,
-        secondary_partner: PartnershipProfile,
-        proposed_terms: Dict[str, Any]
-    ) -> Dict[str, Any]:
-        """Calculate revenue sharing based on partnership type and partner profiles."""
-        
-        # Base revenue sharing templates
-        revenue_sharing_templates = {
-            PartnershipType.BRAND_COLLABORATION: {
-                "brand_share": 60,
-                "influencer_share": 40,
-                "platform_fee": 5
-            },
-            PartnershipType.AFFILIATE_PARTNERSHIP: {
-                "merchant_share": 70,
-                "affiliate_share": 25,
-                "platform_fee": 5
-            },
-            PartnershipType.SPONSORED_CONTENT: {
-                "sponsor_share": 50,
-                "creator_share": 45,
-                "platform_fee": 5
-            },
-            PartnershipType.JOINT_VENTURE: {
-                "primary_share": 50,
-                "secondary_share": 45,
-                "platform_fee": 5
-            }
-        }
-        
-        template = revenue_sharing_templates.get(partnership_type, {
-            "primary_share": 50,
-            "secondary_share": 45,
-            "platform_fee": 5
-        })
-        
-        # Adjust based on partner metrics
-        primary_reach = primary_partner.reach_metrics.get('total_followers', 0)
-        secondary_reach = secondary_partner.reach_metrics.get('total_followers', 0)
-        
-        if primary_reach > secondary_reach * 2:
-            # Primary partner has significantly more reach
-            template["primary_share"] += 5
-            template["secondary_share"] -= 5
-        elif secondary_reach > primary_reach * 2:
-            # Secondary partner has significantly more reach
-            template["secondary_share"] += 5
-            template["primary_share"] -= 5
-        
-        return template
-
-
-class BrandCollaborationOrchestrator:
-    """Advanced brand collaboration orchestration system."""
+    # Goals & KPIs
+    revenue_goal: Decimal = Decimal('0')
+    leads_goal: int = 0
+    conversion_goal: int = 0
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize brand collaboration orchestrator."""
-        self.config = config or {}
-        self.active_campaigns: Dict[str, Dict[str, Any]] = {}
-        self.collaboration_templates: Dict[str, Dict[str, Any]] = {}
-        
-    async def create_collaboration_campaign(
-        self,
-        brand_id: str,
-        campaign_details: Dict[str, Any],
-        target_influencers: List[str],
-        budget: Decimal,
-        timeline: Dict[str, datetime]
-    ) -> Dict[str, Any]:
-        """Create a new brand collaboration campaign."""
-        try:
-            campaign_id = str(uuid.uuid4())
-            
-            campaign = {
-                "campaign_id": campaign_id,
-                "brand_id": brand_id,
-                "campaign_details": campaign_details,
-                "target_influencers": target_influencers,
-                "invited_influencers": [],
-                "confirmed_influencers": [],
-                "budget": float(budget),
-                "allocated_budget": Decimal('0'),
-                "timeline": {
-                    "start_date": timeline.get('start_date', datetime.now(timezone.utc)),
-                    "end_date": timeline.get('end_date'),
-                    "content_deadline": timeline.get('content_deadline'),
-                    "review_deadline": timeline.get('review_deadline')
-                },
-                "content_requirements": campaign_details.get('content_requirements', {}),
-                "success_metrics": campaign_details.get('success_metrics', {}),
-                "status": "planning",
-                "created_at": datetime.now(timezone.utc)
-            }
-            
-            self.active_campaigns[campaign_id] = campaign
-            
-            # Auto-send invitations to target influencers
-            invitation_results = await self._send_campaign_invitations(campaign)
-            campaign["invitation_results"] = invitation_results
-            
-            logger.info(f"Created collaboration campaign {campaign_id}")
-            
-            return {
-                "campaign_id": campaign_id,
-                "status": "created",
-                "invitations_sent": len(invitation_results),
-                "total_budget": float(budget),
-                "timeline": campaign["timeline"]
-            }
-            
-        except Exception as e:
-            logger.error(f"Campaign creation failed: {e}")
-            raise
-
-    async def orchestrate_collaboration_workflow(
-        self,
-        campaign_id: str
-    ) -> Dict[str, Any]:
-        """Orchestrate the complete collaboration workflow."""
-        try:
-            if campaign_id not in self.active_campaigns:
-                raise ValueError(f"Campaign {campaign_id} not found")
-            
-            campaign = self.active_campaigns[campaign_id]
-            
-            workflow_steps = [
-                "influencer_selection",
-                "contract_negotiation",
-                "content_briefing",
-                "content_creation",
-                "content_review",
-                "content_approval",
-                "content_publishing",
-                "performance_tracking"
-            ]
-            
-            workflow_results = {}
-            
-            for step in workflow_steps:
-                step_result = await self._execute_workflow_step(campaign, step)
-                workflow_results[step] = step_result
-                
-                # Update campaign status based on step completion
-                if step == "influencer_selection" and step_result.get("success"):
-                    campaign["status"] = "influencers_confirmed"
-                elif step == "content_publishing" and step_result.get("success"):
-                    campaign["status"] = "live"
-                elif step == "performance_tracking" and step_result.get("success"):
-                    campaign["status"] = "completed"
-            
-            return {
-                "campaign_id": campaign_id,
-                "workflow_completed": True,
-                "workflow_results": workflow_results,
-                "final_status": campaign["status"],
-                "orchestrated_at": datetime.now(timezone.utc).isoformat()
-            }
-            
-        except Exception as e:
-            logger.error(f"Collaboration orchestration failed: {e}")
-            raise
-
-    async def _send_campaign_invitations(
-        self,
-        campaign: Dict[str, Any]
-    ) -> List[Dict[str, Any]]:
-        """Send campaign invitations to target influencers."""
-        invitations = []
-        
-        for influencer_id in campaign["target_influencers"]:
-            invitation = {
-                "influencer_id": influencer_id,
-                "campaign_id": campaign["campaign_id"],
-                "invitation_id": str(uuid.uuid4()),
-                "sent_at": datetime.now(timezone.utc).isoformat(),
-                "status": "sent",
-                "response_deadline": (datetime.now(timezone.utc) + timedelta(days=7)).isoformat()
-            }
-            invitations.append(invitation)
-            campaign["invited_influencers"].append(influencer_id)
-        
-        return invitations
-
-    async def _execute_workflow_step(
-        self,
-        campaign: Dict[str, Any],
-        step: str
-    ) -> Dict[str, Any]:
-        """Execute a specific workflow step."""
-        # Mock workflow step execution
-        workflow_step_results = {
-            "influencer_selection": {
-                "success": True,
-                "selected_count": len(campaign.get("confirmed_influencers", [])),
-                "duration_days": 3
-            },
-            "contract_negotiation": {
-                "success": True,
-                "contracts_signed": len(campaign.get("confirmed_influencers", [])),
-                "average_negotiation_days": 2
-            },
-            "content_creation": {
-                "success": True,
-                "content_pieces_created": len(campaign.get("confirmed_influencers", [])) * 2,
-                "average_creation_days": 5
-            },
-            "content_publishing": {
-                "success": True,
-                "published_count": len(campaign.get("confirmed_influencers", [])) * 2,
-                "total_reach": 500000
-            }
-        }
-        
-        return workflow_step_results.get(step, {"success": True, "notes": f"Step {step} completed"})
-
-
-class InfluencerBrandMatcher:
-    """AI-powered influencer-brand matching system."""
+    # Performance
+    actual_revenue: Decimal = Decimal('0')
+    actual_leads: int = 0
+    actual_conversions: int = 0
+    roi: float = 0.0
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize influencer-brand matcher."""
-        self.config = config or {}
-        self.matching_algorithms = {
-            "audience_alignment": 0.3,
-            "content_style": 0.25,
-            "engagement_quality": 0.2,
-            "brand_safety": 0.15,
-            "budget_compatibility": 0.1
-        }
-        
-    async def find_optimal_influencer_matches(
-        self,
-        brand_profile: PartnershipProfile,
-        campaign_requirements: Dict[str, Any],
-        available_influencers: List[PartnershipProfile],
-        max_matches: int = 10
-    ) -> List[Dict[str, Any]]:
-        """Find optimal influencer matches for brand campaigns."""
-        try:
-            matches = []
-            
-            for influencer in available_influencers:
-                match_score = await self._calculate_match_score(
-                    brand_profile, influencer, campaign_requirements
-                )
-                
-                if match_score >= 0.7:  # Minimum threshold
-                    match_details = await self._generate_match_details(
-                        brand_profile, influencer, campaign_requirements, match_score
-                    )
-                    matches.append(match_details)
-            
-            # Sort by match score and return top matches
-            matches.sort(key=lambda x: x['match_score'], reverse=True)
-            top_matches = matches[:max_matches]
-            
-            logger.info(f"Found {len(top_matches)} optimal matches for brand {brand_profile.name}")
-            
-            return top_matches
-            
-        except Exception as e:
-            logger.error(f"Influencer matching failed: {e}")
-            raise
-
-    async def _calculate_match_score(
-        self,
-        brand: PartnershipProfile,
-        influencer: PartnershipProfile,
-        campaign_requirements: Dict[str, Any]
-    ) -> float:
-        """Calculate comprehensive match score between brand and influencer."""
-        
-        # Audience alignment score
-        audience_score = await self._calculate_audience_alignment(
-            brand.audience_demographics, influencer.audience_demographics
-        )
-        
-        # Content style compatibility
-        content_score = await self._calculate_content_compatibility(
-            brand.content_categories, influencer.content_categories
-        )
-        
-        # Engagement quality score
-        engagement_score = await self._calculate_engagement_score(influencer.engagement_metrics)
-        
-        # Brand safety score
-        safety_score = await self._calculate_brand_safety_score(influencer, brand)
-        
-        # Budget compatibility score
-        budget_score = await self._calculate_budget_compatibility(
-            brand.budget_range, campaign_requirements.get('influencer_budget_range', (0, 0))
-        )
-        
-        # Weighted overall score
-        overall_score = (
-            audience_score * self.matching_algorithms["audience_alignment"] +
-            content_score * self.matching_algorithms["content_style"] +
-            engagement_score * self.matching_algorithms["engagement_quality"] +
-            safety_score * self.matching_algorithms["brand_safety"] +
-            budget_score * self.matching_algorithms["budget_compatibility"]
-        )
-        
-        return min(1.0, overall_score)
-
-    async def _calculate_audience_alignment(
-        self,
-        brand_audience: Dict[str, Any],
-        influencer_audience: Dict[str, Any]
-    ) -> float:
-        """Calculate audience demographic alignment score."""
-        # Mock alignment calculation
-        age_overlap = 0.8  # 80% age demographic overlap
-        location_overlap = 0.7  # 70% location overlap
-        interest_overlap = 0.9  # 90% interest overlap
-        
-        return (age_overlap + location_overlap + interest_overlap) / 3
-
-    async def _calculate_content_compatibility(
-        self,
-        brand_categories: List[str],
-        influencer_categories: List[str]
-    ) -> float:
-        """Calculate content category compatibility score."""
-        if not brand_categories or not influencer_categories:
-            return 0.5
-        
-        overlap = len(set(brand_categories) & set(influencer_categories))
-        total_categories = len(set(brand_categories) | set(influencer_categories))
-        
-        return overlap / total_categories if total_categories > 0 else 0.5
-
-    async def _calculate_engagement_score(self, engagement_metrics: Dict[str, float]) -> float:
-        """Calculate engagement quality score."""
-        engagement_rate = engagement_metrics.get('engagement_rate', 0.0)
-        authenticity_score = engagement_metrics.get('authenticity_score', 0.5)
-        
-        # Normalize engagement rate (assuming 5% is excellent)
-        normalized_engagement = min(1.0, engagement_rate / 0.05)
-        
-        return (normalized_engagement + authenticity_score) / 2
-
-    async def _calculate_brand_safety_score(
-        self,
-        influencer: PartnershipProfile,
-        brand: PartnershipProfile
-    ) -> float:
-        """Calculate brand safety compatibility score."""
-        # Mock brand safety calculation
-        return 0.9  # High brand safety score
-
-    async def _calculate_budget_compatibility(
-        self,
-        brand_budget_range: Tuple[Decimal, Decimal],
-        influencer_budget_range: Tuple[float, float]
-    ) -> float:
-        """Calculate budget compatibility score."""
-        if not influencer_budget_range or influencer_budget_range == (0, 0):
-            return 0.8  # Default compatibility if no range specified
-        
-        brand_min, brand_max = brand_budget_range
-        influencer_min, influencer_max = Decimal(str(influencer_budget_range[0])), Decimal(str(influencer_budget_range[1]))
-        
-        # Check for overlap
-        overlap_min = max(brand_min, influencer_min)
-        overlap_max = min(brand_max, influencer_max)
-        
-        if overlap_min <= overlap_max:
-            overlap_size = overlap_max - overlap_min
-            total_range = max(brand_max, influencer_max) - min(brand_min, influencer_min)
-            return float(overlap_size / total_range) if total_range > 0 else 1.0
-        else:
-            return 0.0  # No budget overlap
-
-    async def _generate_match_details(
-        self,
-        brand: PartnershipProfile,
-        influencer: PartnershipProfile,
-        campaign_requirements: Dict[str, Any],
-        match_score: float
-    ) -> Dict[str, Any]:
-        """Generate detailed match information."""
-        return {
-            "influencer_id": influencer.profile_id,
-            "influencer_name": influencer.name,
-            "match_score": match_score,
-            "audience_size": influencer.reach_metrics.get('total_followers', 0),
-            "engagement_rate": influencer.engagement_metrics.get('engagement_rate', 0.0),
-            "content_categories": influencer.content_categories,
-            "estimated_budget": {
-                "min": float(influencer.budget_range[0]),
-                "max": float(influencer.budget_range[1])
-            },
-            "match_strengths": [
-                "High audience alignment",
-                "Strong engagement quality",
-                "Content style compatibility"
-            ],
-            "collaboration_potential": "high" if match_score >= 0.8 else "medium" if match_score >= 0.6 else "low"
-        }
-
-
-class PartnershipPerformanceAnalyzer:
-    """Partnership performance analytics and optimization system."""
+    # Resources
+    content_assets: List[str] = field(default_factory=list)
+    distribution_channels: List[str] = field(default_factory=list)
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize partnership performance analyzer."""
-        self.config = config or {}
-        self.performance_data: Dict[str, List[Dict[str, Any]]] = defaultdict(list)
-        
-    async def track_partnership_performance(
-        self,
-        partnership_id: str,
-        performance_metrics: Dict[str, Any],
-        timestamp: Optional[datetime] = None
-    ) -> Dict[str, Any]:
-        """Track partnership performance metrics."""
-        try:
-            tracking_timestamp = timestamp or datetime.now(timezone.utc)
-            
-            performance_record = {
-                "timestamp": tracking_timestamp.isoformat(),
-                "metrics": performance_metrics,
-                "tracking_id": str(uuid.uuid4())
-            }
-            
-            self.performance_data[partnership_id].append(performance_record)
-            
-            # Calculate performance trends
-            trends = await self._calculate_performance_trends(partnership_id)
-            
-            logger.info(f"Tracked performance for partnership {partnership_id}")
-            
-            return {
-                "partnership_id": partnership_id,
-                "tracking_id": performance_record["tracking_id"],
-                "current_metrics": performance_metrics,
-                "trends": trends,
-                "tracked_at": tracking_timestamp.isoformat()
-            }
-            
-        except Exception as e:
-            logger.error(f"Performance tracking failed: {e}")
-            raise
-
-    async def generate_performance_report(
-        self,
-        partnership_id: str,
-        report_period_days: int = 30
-    ) -> Dict[str, Any]:
-        """Generate comprehensive partnership performance report."""
-        try:
-            if partnership_id not in self.performance_data:
-                return {
-                    "partnership_id": partnership_id,
-                    "error": "No performance data available"
-                }
-            
-            cutoff_date = datetime.now(timezone.utc) - timedelta(days=report_period_days)
-            
-            # Filter data by period
-            period_data = [
-                record for record in self.performance_data[partnership_id]
-                if datetime.fromisoformat(record["timestamp"]) >= cutoff_date
-            ]
-            
-            if not period_data:
-                return {
-                    "partnership_id": partnership_id,
-                    "report_period_days": report_period_days,
-                    "error": "No data available for specified period"
-                }
-            
-            # Aggregate metrics
-            aggregated_metrics = await self._aggregate_performance_metrics(period_data)
-            performance_summary = await self._generate_performance_summary(aggregated_metrics)
-            recommendations = await self._generate_optimization_recommendations(aggregated_metrics)
-            
-            return {
-                "partnership_id": partnership_id,
-                "report_period_days": report_period_days,
-                "data_points": len(period_data),
-                "aggregated_metrics": aggregated_metrics,
-                "performance_summary": performance_summary,
-                "optimization_recommendations": recommendations,
-                "generated_at": datetime.now(timezone.utc).isoformat()
-            }
-            
-        except Exception as e:
-            logger.error(f"Performance report generation failed: {e}")
-            raise
-
-    async def _calculate_performance_trends(self, partnership_id: str) -> Dict[str, Any]:
-        """Calculate performance trends for partnership."""
-        if partnership_id not in self.performance_data or len(self.performance_data[partnership_id]) < 2:
-            return {"trend": "insufficient_data"}
-        
-        recent_data = self.performance_data[partnership_id][-5:]  # Last 5 data points
-        
-        # Mock trend calculation
-        return {
-            "engagement_trend": "increasing",
-            "reach_trend": "stable",
-            "conversion_trend": "improving",
-            "roi_trend": "positive"
-        }
-
-    async def _aggregate_performance_metrics(
-        self,
-        period_data: List[Dict[str, Any]]
-    ) -> Dict[str, Any]:
-        """Aggregate performance metrics over period."""
-        total_reach = sum(record["metrics"].get("reach", 0) for record in period_data)
-        total_engagement = sum(record["metrics"].get("engagement", 0) for record in period_data)
-        total_conversions = sum(record["metrics"].get("conversions", 0) for record in period_data)
-        total_revenue = sum(record["metrics"].get("revenue", 0) for record in period_data)
-        
-        avg_engagement_rate = total_engagement / total_reach if total_reach > 0 else 0
-        conversion_rate = total_conversions / total_reach if total_reach > 0 else 0
-        
-        return {
-            "total_reach": total_reach,
-            "total_engagement": total_engagement,
-            "total_conversions": total_conversions,
-            "total_revenue": total_revenue,
-            "average_engagement_rate": avg_engagement_rate,
-            "conversion_rate": conversion_rate,
-            "data_points": len(period_data)
-        }
-
-    async def _generate_performance_summary(
-        self,
-        aggregated_metrics: Dict[str, Any]
-    ) -> Dict[str, Any]:
-        """Generate performance summary with insights."""
-        engagement_rate = aggregated_metrics.get("average_engagement_rate", 0)
-        conversion_rate = aggregated_metrics.get("conversion_rate", 0)
-        
-        performance_grade = "A"
-        if engagement_rate >= 0.05 and conversion_rate >= 0.02:
-            performance_grade = "A"
-        elif engagement_rate >= 0.03 and conversion_rate >= 0.01:
-            performance_grade = "B"
-        elif engagement_rate >= 0.02 and conversion_rate >= 0.005:
-            performance_grade = "C"
-        else:
-            performance_grade = "D"
-        
-        return {
-            "performance_grade": performance_grade,
-            "key_strengths": [
-                "High engagement rate" if engagement_rate >= 0.04 else "Stable engagement",
-                "Good conversion rate" if conversion_rate >= 0.015 else "Developing conversions"
-            ],
-            "improvement_areas": [
-                "Expand reach" if aggregated_metrics.get("total_reach", 0) < 100000 else "Maintain reach",
-                "Optimize conversions" if conversion_rate < 0.01 else "Maintain conversion quality"
-            ]
-        }
-
-    async def _generate_optimization_recommendations(
-        self,
-        aggregated_metrics: Dict[str, Any]
-    ) -> List[Dict[str, Any]]:
-        """Generate optimization recommendations."""
-        recommendations = []
-        
-        engagement_rate = aggregated_metrics.get("average_engagement_rate", 0)
-        conversion_rate = aggregated_metrics.get("conversion_rate", 0)
-        
-        if engagement_rate < 0.03:
-            recommendations.append({
-                "category": "engagement",
-                "priority": "high",
-                "recommendation": "Improve content quality and audience targeting",
-                "expected_impact": "20-30% engagement improvement"
-            })
-        
-        if conversion_rate < 0.01:
-            recommendations.append({
-                "category": "conversion",
-                "priority": "medium",
-                "recommendation": "Optimize call-to-action and landing pages",
-                "expected_impact": "15-25% conversion improvement"
-            })
-        
-        recommendations.append({
-            "category": "analytics",
-            "priority": "low",
-            "recommendation": "Implement advanced attribution tracking",
-            "expected_impact": "Better performance insights"
-        })
-        
-        return recommendations
+    status: str = "planned"  # planned, active, completed, cancelled
+    created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
 
 # =============================================================================
-# EXPORTED CLASSES
+# PARTNERSHIP MANAGER
+# =============================================================================
+
+class PartnershipLifecycleManager:
+    """Enterprise partnership lifecycle management"""
+    
+    def __init__(self):
+        self.partners: Dict[str, PartnerProfile] = {}
+        self.revenue_agreements: Dict[str, RevenueShareAgreement] = {}
+        self.activities: List[PartnershipActivity] = []
+        self.campaigns: Dict[str, PartnershipCampaign] = {}
+        
+        logger.info("PartnershipManager initialized")
+    
+    async def create_partner(
+        self,
+        name: str,
+        partnership_type: PartnershipType,
+        primary_contact: Dict[str, str],
+        tier: PartnerTier = PartnerTier.BRONZE,
+        **kwargs
+    ) -> PartnerProfile:
+        """Create new partner profile"""
+        try:
+            partner_id = str(uuid.uuid4())
+
+
+            
+            partner = PartnerProfile(
+                partner_id=partner_id,
+                name=name,
+                partnership_type=partnership_type,
+                tier=tier,
+                status=PartnershipStatus.PROSPECTING,
+                primary_contact=primary_contact,
+                **{k: v for k, v in kwargs.items() if hasattr(PartnerProfile, k)}
+            )
+
+            
+            self.partners[partner_id] = partner
+            
+            # Log activity
+            await self._log_activity(
+                partner_id=partner_id,
+                activity_type="partner_created",
+                description=f"Partner {name} created"
+            )
+
+            
+            logger.info(f"Created partner: {name} ({partner_id})")
+
+            return partner
+            
+        except Exception as e:
+            logger.error(f"Failed to create partner: {e}")
+
+            raise
+    
+    async def update_partner_status(
+        self,
+        partner_id: str,
+        new_status: PartnershipStatus,
+        reason: Optional[str] = None
+    ) -> bool:
+        """Update partnership status"""
+        try:
+            if partner_id not in self.partners:
+                raise ValueError(f"Partner {partner_id} not found")
+
+
+            
+            partner = self.partners[partner_id]
+
+            old_status = partner.status
+            partner.status = new_status
+            partner.updated_at = datetime.now(timezone.utc)
+            
+            # Log status change
+            await self._log_activity(
+                partner_id=partner_id,
+                activity_type="status_change",
+                description=f"Status changed from {old_status.value} to {new_status.value}" + 
+                           (f": {reason}" if reason else "")
+            )
+
+            
+            logger.info(f"Updated partner {partner_id} status: {old_status} -> {new_status}")
+
+            return True
+            
+        except Exception as e:
+            logger.error(f"Failed to update partner status: {e}")
+
+            return False
+    
+    async def upgrade_partner_tier(
+        self,
+        partner_id: str,
+        new_tier: PartnerTier
+    ) -> bool:
+        """Upgrade partner to higher tier"""
+        try:
+            if partner_id not in self.partners:
+                raise ValueError(f"Partner {partner_id} not found")
+
+
+            
+            partner = self.partners[partner_id]
+
+            old_tier = partner.tier
+            partner.tier = new_tier
+            partner.updated_at = datetime.now(timezone.utc)
+            
+            # Log tier upgrade
+            await self._log_activity(
+                partner_id=partner_id,
+                activity_type="tier_upgrade",
+                description=f"Tier upgraded from {old_tier.value} to {new_tier.value}"
+            )
+
+            
+            logger.info(f"Upgraded partner {partner_id} tier: {old_tier} -> {new_tier}")
+
+            return True
+            
+        except Exception as e:
+            logger.error(f"Failed to upgrade partner tier: {e}")
+
+            return False
+    
+    async def create_revenue_share_agreement(
+        self,
+        partner_id: str,
+        model: RevenueShareModel,
+        partner_share: Decimal,
+        **kwargs
+    ) -> RevenueShareAgreement:
+        """Create revenue sharing agreement"""
+        try:
+            if partner_id not in self.partners:
+                raise ValueError(f"Partner {partner_id} not found")
+
+
+            
+            agreement_id = str(uuid.uuid4())
+
+
+            platform_share = Decimal('100') - partner_share
+
+            
+            agreement = RevenueShareAgreement(
+                agreement_id=agreement_id,
+                partner_id=partner_id,
+                model=model,
+                partner_share_percentage=partner_share,
+                platform_share_percentage=platform_share,
+                **{k: v for k, v in kwargs.items() if hasattr(RevenueShareAgreement, k)}
+            )
+
+            
+            self.revenue_agreements[agreement_id] = agreement
+            
+            # Log agreement creation
+            await self._log_activity(
+                partner_id=partner_id,
+                activity_type="revenue_agreement_created",
+                description=f"Revenue share agreement created: {partner_share}% to partner"
+            )
+
+            
+            logger.info(f"Created revenue share agreement {agreement_id} for partner {partner_id}")
+
+            return agreement
+            
+        except Exception as e:
+            logger.error(f"Failed to create revenue share agreement: {e}")
+
+            raise
+    
+    async def process_revenue_share(
+        self,
+        agreement_id: str,
+        revenue_amount: Decimal,
+        transaction_details: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Process revenue sharing for transaction"""
+        try:
+            if agreement_id not in self.revenue_agreements:
+                raise ValueError(f"Agreement {agreement_id} not found")
+
+
+            
+            agreement = self.revenue_agreements[agreement_id]
+
+            partner = self.partners[agreement.partner_id]
+            
+            # Calculate shares based on model
+            if agreement.model == RevenueShareModel.PERCENTAGE_SPLIT:
+                partner_amount = revenue_amount * (agreement.partner_share_percentage / Decimal('100'))
+
+
+                platform_amount = revenue_amount * (agreement.platform_share_percentage / Decimal('100'))
+
+            
+            elif agreement.model == RevenueShareModel.TIERED_COMMISSION:
+                # Apply tiered commission based on revenue tiers
+
+                partner_amount = await self._calculate_tiered_commission(
+                    agreement, revenue_amount
+                )
+
+
+                platform_amount = revenue_amount - partner_amount
+            
+            elif agreement.model == RevenueShareModel.PERFORMANCE_BASED:
+                # Calculate based on performance bonuses
+
+                partner_amount = await self._calculate_performance_bonus(
+                    agreement, revenue_amount, partner
+                )
+
+
+                platform_amount = revenue_amount - partner_amount
+            
+            else:  # FIXED_FEE or HYBRID
+                partner_amount = agreement.partner_share_percentage  # Used as fixed fee
+
+                platform_amount = revenue_amount - partner_amount
+            
+            # Update agreement tracking
+            agreement.total_revenue_shared += revenue_amount
+            agreement.pending_payout += partner_amount
+            agreement.updated_at = datetime.now(timezone.utc)
+            
+            # Update partner metrics
+            partner.total_revenue_generated += revenue_amount
+            partner.updated_at = datetime.now(timezone.utc)
+            
+            # Log revenue share activity
+            await self._log_activity(
+                partner_id=agreement.partner_id,
+                activity_type="revenue_shared",
+                description=f"Revenue shared: ${revenue_amount}",
+                revenue_impact=revenue_amount
+            )
+
+
+            
+            result = {
+                'agreement_id': agreement_id,
+                'partner_id': agreement.partner_id,
+                'total_revenue': float(revenue_amount),
+                'partner_share': float(partner_amount),
+                'platform_share': float(platform_amount),
+                'pending_payout': float(agreement.pending_payout),
+                'processed_at': datetime.now(timezone.utc).isoformat()
+            }
+            
+            logger.info(f"Processed revenue share for agreement {agreement_id}: ${revenue_amount}")
+
+            return result
+            
+        except Exception as e:
+            logger.error(f"Failed to process revenue share: {e}")
+
+            raise
+    
+    async def process_payout(
+        self,
+        agreement_id: str,
+        payout_amount: Optional[Decimal] = None
+    ) -> Dict[str, Any]:
+        """Process payout to partner"""
+        try:
+            if agreement_id not in self.revenue_agreements:
+                raise ValueError(f"Agreement {agreement_id} not found")
+
+
+            
+            agreement = self.revenue_agreements[agreement_id]
+            
+            # Use pending payout if amount not specified
+            if payout_amount is None:
+                payout_amount = agreement.pending_payout
+            
+            # Check minimum payout threshold
+            if payout_amount < agreement.minimum_payout:
+                logger.warning(
+                    f"Payout amount ${payout_amount} below minimum ${agreement.minimum_payout}"
+                )
+
+                return {
+                    'success': False,
+                    'reason': 'below_minimum_threshold',
+                    'minimum_required': float(agreement.minimum_payout)
+                }
+            
+            # Process payout (would integrate with payment processor)
+
+            agreement.total_payouts += payout_amount
+            agreement.pending_payout -= payout_amount
+            agreement.updated_at = datetime.now(timezone.utc)
+            
+            # Log payout activity
+            await self._log_activity(
+                partner_id=agreement.partner_id,
+                activity_type="payout_processed",
+                description=f"Payout processed: ${payout_amount}"
+            )
+
+            
+            logger.info(f"Processed payout of ${payout_amount} for agreement {agreement_id}")
+
+            
+            return {
+                'success': True,
+                'agreement_id': agreement_id,
+                'payout_amount': float(payout_amount),
+                'remaining_pending': float(agreement.pending_payout),
+                'total_payouts': float(agreement.total_payouts),
+                'processed_at': datetime.now(timezone.utc).isoformat()
+            }
+            
+        except Exception as e:
+            logger.error(f"Failed to process payout: {e}")
+
+            raise
+    
+    async def create_partnership_campaign(
+        self,
+        name: str,
+        partner_ids: List[str],
+        campaign_type: str,
+        start_date: datetime,
+        end_date: datetime,
+        budget: Decimal,
+        **kwargs
+    ) -> PartnershipCampaign:
+        """Create joint partnership campaign"""
+        try:
+            # Validate all partners exist
+            for partner_id in partner_ids:
+                if partner_id not in self.partners:
+                    raise ValueError(f"Partner {partner_id} not found")
+
+
+            
+            campaign_id = str(uuid.uuid4())
+
+
+            
+            campaign = PartnershipCampaign(
+                campaign_id=campaign_id,
+                name=name,
+                partner_ids=partner_ids,
+                campaign_type=campaign_type,
+                start_date=start_date,
+                end_date=end_date,
+                budget=budget,
+                **{k: v for k, v in kwargs.items() if hasattr(PartnershipCampaign, k)}
+            )
+
+            
+            self.campaigns[campaign_id] = campaign
+            
+            # Log campaign creation for all partners
+            for partner_id in partner_ids:
+                await self._log_activity(
+                    partner_id=partner_id,
+                    activity_type="campaign_created",
+                    description=f"Joint campaign created: {name}"
+                )
+
+            
+            logger.info(f"Created partnership campaign: {name} ({campaign_id})")
+
+            return campaign
+            
+        except Exception as e:
+            logger.error(f"Failed to create partnership campaign: {e}")
+
+            raise
+    
+    async def track_campaign_performance(
+        self,
+        campaign_id: str,
+        revenue: Optional[Decimal] = None,
+        leads: Optional[int] = None,
+        conversions: Optional[int] = None
+    ) -> Dict[str, Any]:
+        """Track campaign performance metrics"""
+        try:
+            if campaign_id not in self.campaigns:
+                raise ValueError(f"Campaign {campaign_id} not found")
+
+
+            
+            campaign = self.campaigns[campaign_id]
+            
+            # Update metrics
+            if revenue is not None:
+                campaign.actual_revenue += revenue
+            if leads is not None:
+                campaign.actual_leads += leads
+            if conversions is not None:
+                campaign.actual_conversions += conversions
+            
+            # Calculate ROI
+            if campaign.budget > 0:
+                campaign.roi = float(
+                    (campaign.actual_revenue - campaign.budget) / campaign.budget * 100
+                )
+
+            
+            campaign.updated_at = datetime.now(timezone.utc)
+            
+            # Calculate goal achievement
+
+            revenue_achievement = (
+                float(campaign.actual_revenue / campaign.revenue_goal * 100)
+
+                if campaign.revenue_goal > 0 else 0
+            )
+
+
+            leads_achievement = (
+                float(campaign.actual_leads / campaign.leads_goal * 100)
+
+                if campaign.leads_goal > 0 else 0
+            )
+
+
+            conversions_achievement = (
+                float(campaign.actual_conversions / campaign.conversion_goal * 100)
+
+                if campaign.conversion_goal > 0 else 0
+            )
+
+
+            
+            result = {
+                'campaign_id': campaign_id,
+                'campaign_name': campaign.name,
+                'performance': {
+                    'revenue': {
+                        'actual': float(campaign.actual_revenue),
+                        'goal': float(campaign.revenue_goal),
+                        'achievement': revenue_achievement
+                    },
+                    'leads': {
+                        'actual': campaign.actual_leads,
+                        'goal': campaign.leads_goal,
+                        'achievement': leads_achievement
+                    },
+                    'conversions': {
+                        'actual': campaign.actual_conversions,
+                        'goal': campaign.conversion_goal,
+                        'achievement': conversions_achievement
+                    }
+                },
+                'roi': campaign.roi,
+                'budget': float(campaign.budget),
+                'updated_at': campaign.updated_at.isoformat()
+            }
+            
+            logger.info(f"Updated campaign {campaign_id} performance")
+
+            return result
+            
+        except Exception as e:
+            logger.error(f"Failed to track campaign performance: {e}")
+
+            raise
+    
+    async def get_partner_performance(
+        self,
+        partner_id: str,
+        period_days: int = 30
+    ) -> Dict[str, Any]:
+        """Get comprehensive partner performance metrics"""
+        try:
+            if partner_id not in self.partners:
+                raise ValueError(f"Partner {partner_id} not found")
+
+
+            
+            partner = self.partners[partner_id]
+
+            cutoff_date = datetime.now(timezone.utc) - timedelta(days=period_days)
+            
+            # Get recent activities
+
+            recent_activities = [
+                a for a in self.activities
+                if a.partner_id == partner_id and a.timestamp >= cutoff_date
+            ]
+            
+            # Calculate period metrics
+
+            period_revenue = sum(a.revenue_impact for a in recent_activities)
+
+
+            period_leads = sum(a.leads_generated for a in recent_activities)
+
+
+            period_conversions = sum(a.conversions for a in recent_activities)
+            
+            # Get active campaigns
+
+            active_campaigns = [
+                c for c in self.campaigns.values()
+
+                if partner_id in c.partner_ids and c.status == "active"
+            ]
+            
+            # Get revenue agreements
+
+            partner_agreements = [
+                a for a in self.revenue_agreements.values()
+
+                if a.partner_id == partner_id
+            ]
+
+            
+            result = {
+                'partner_id': partner_id,
+                'partner_name': partner.name,
+                'tier': partner.tier.value,
+                'status': partner.status.value,
+                'overall_metrics': {
+                    'total_revenue_generated': float(partner.total_revenue_generated),
+                    'total_leads_generated': partner.total_leads_generated,
+                    'conversion_rate': partner.conversion_rate,
+                    'satisfaction_score': partner.satisfaction_score
+                },
+                'period_metrics': {
+                    'days': period_days,
+                    'revenue': float(period_revenue),
+                    'leads': period_leads,
+                    'conversions': period_conversions,
+                    'activities': len(recent_activities)
+                },
+                'active_campaigns': len(active_campaigns),
+                'revenue_agreements': len(partner_agreements),
+                'pending_payouts': float(
+                    sum(a.pending_payout for a in partner_agreements)
+                )
+            }
+            
+            logger.info(f"Retrieved performance metrics for partner {partner_id}")
+
+            return result
+            
+        except Exception as e:
+            logger.error(f"Failed to get partner performance: {e}")
+
+            raise
+    
+    async def get_top_partners(
+        self,
+        metric: PartnershipMetricType = PartnershipMetricType.REVENUE_GENERATED,
+        limit: int = 10,
+        min_tier: Optional[PartnerTier] = None
+    ) -> List[Dict[str, Any]]:
+        """Get top performing partners"""
+        try:
+            # Filter partners
+
+            partners = list(self.partners.values())
+
+            
+            if min_tier:
+                tier_order = [t for t in PartnerTier]
+
+                min_tier_index = tier_order.index(min_tier)
+
+
+                partners = [
+                    p for p in partners
+                    if tier_order.index(p.tier) >= min_tier_index
+                ]
+            
+            # Sort by metric
+            if metric == PartnershipMetricType.REVENUE_GENERATED:
+                partners.sort(key=lambda p: p.total_revenue_generated, reverse=True)
+
+            elif metric == PartnershipMetricType.LEADS_GENERATED:
+                partners.sort(key=lambda p: p.total_leads_generated, reverse=True)
+
+            elif metric == PartnershipMetricType.CONVERSIONS:
+                partners.sort(key=lambda p: p.conversion_rate, reverse=True)
+            
+            # Get top N
+            top_partners = partners[:limit]
+
+            
+            result = []
+            for partner in top_partners:
+                result.append({
+                    'partner_id': partner.partner_id,
+                    'name': partner.name,
+                    'tier': partner.tier.value,
+                    'status': partner.status.value,
+                    'total_revenue': float(partner.total_revenue_generated),
+                    'total_leads': partner.total_leads_generated,
+                    'conversion_rate': partner.conversion_rate,
+                    'satisfaction_score': partner.satisfaction_score
+                })
+
+            
+            logger.info(f"Retrieved top {limit} partners by {metric.value}")
+
+            return result
+            
+        except Exception as e:
+            logger.error(f"Failed to get top partners: {e}")
+
+            raise
+    
+    # Private helper methods
+    
+    async def _log_activity(
+        self,
+        partner_id: str,
+        activity_type: str,
+        description: str,
+        revenue_impact: Decimal = Decimal('0'),
+        leads_generated: int = 0,
+        conversions: int = 0,
+        **kwargs
+    ) -> None:
+        """Log partnership activity"""
+        activity = PartnershipActivity(
+            activity_id=str(uuid.uuid4()),
+            partner_id=partner_id,
+            activity_type=activity_type,
+            description=description,
+            revenue_impact=revenue_impact,
+            leads_generated=leads_generated,
+            conversions=conversions,
+            **kwargs
+        )
+        self.activities.append(activity)
+    
+    async def _calculate_tiered_commission(
+        self,
+        agreement: RevenueShareAgreement,
+        revenue: Decimal
+    ) -> Decimal:
+        """
+        Calculate tiered commission based on revenue tiers"""
+        commission = Decimal('0')
+
+        remaining_revenue = revenue
+        
+        for tier in sorted(agreement.revenue_tiers, key=lambda t: t['threshold']):
+            tier_threshold = Decimal(str(tier['threshold']))
+
+
+            tier_rate = Decimal(str(tier['rate']))
+
+            
+            if remaining_revenue > tier_threshold:
+                tier_revenue = min(remaining_revenue, tier_threshold)
+
+                commission += tier_revenue * (tier_rate / Decimal('100'))
+
+                remaining_revenue -= tier_revenue
+            else:
+                break
+        
+        # Apply remaining revenue at highest tier rate
+        if remaining_revenue > 0 and agreement.revenue_tiers:
+            highest_tier_rate = Decimal(str(agreement.revenue_tiers[-1]['rate']))
+
+            commission += remaining_revenue * (highest_tier_rate / Decimal('100'))
+
+        
+        return commission
+    
+    async def _calculate_performance_bonus(
+        self,
+        agreement: RevenueShareAgreement,
+        revenue: Decimal,
+        partner: PartnerProfile
+    ) -> Decimal:
+        """
+        Calculate performance-based bonus"""
+        base_share = revenue * (agreement.partner_share_percentage / Decimal('100'))
+        
+        # Apply performance bonuses
+
+        total_bonus = Decimal('0')
+        for bonus_type, bonus_amount in agreement.performance_bonuses.items():
+            if bonus_type == 'high_conversion' and partner.conversion_rate > 0.1:
+                total_bonus += bonus_amount
+            elif bonus_type == 'volume_bonus' and partner.total_revenue_generated > 10000:
+                total_bonus += bonus_amount
+        
+        return base_share + total_bonus
+
+
+# =============================================================================
+# ALLIANCE MANAGER
+# =============================================================================
+
+class BrandCollaborationOrchestrator:
+    """
+        Strategic alliance and partnership engine"""
+    
+    def __init__(self):
+        self.alliances: Dict[str, Dict[str, Any]] = {}
+        self.alliance_agreements: Dict[str, Dict[str, Any]] = {}
+        
+        logger.info("AllianceManager initialized")
+    
+    async def create_alliance(
+        self,
+        name: str,
+        partner_ids: List[str],
+        alliance_type: str,
+        objectives: List[str],
+        duration_months: int = 12
+    ) -> Dict[str, Any]:
+        """Create strategic alliance"""
+        try:
+            alliance_id = str(uuid.uuid4())
+
+
+            
+            alliance = {
+                'alliance_id': alliance_id,
+                'name': name,
+                'partner_ids': partner_ids,
+                'alliance_type': alliance_type,
+                'objectives': objectives,
+                'start_date': datetime.now(timezone.utc),
+                'end_date': datetime.now(timezone.utc) + timedelta(days=duration_months * 30),
+                'status': 'active',
+                'shared_resources': [],
+                'joint_initiatives': [],
+                'governance_model': {},
+                'success_metrics': {},
+                'created_at': datetime.now(timezone.utc)
+            }
+            
+            self.alliances[alliance_id] = alliance
+            
+            logger.info(f"Created alliance: {name} ({alliance_id})")
+
+            return alliance
+            
+        except Exception as e:
+            logger.error(f"Failed to create alliance: {e}")
+
+            raise
+    
+    async def add_shared_resource(
+        self,
+        alliance_id: str,
+        resource_type: str,
+        resource_details: Dict[str, Any]
+    ) -> bool:
+        """Add shared resource to alliance"""
+        try:
+            if alliance_id not in self.alliances:
+                raise ValueError(f"Alliance {alliance_id} not found")
+
+
+            
+            resource = {
+                'resource_id': str(uuid.uuid4()),
+                'type': resource_type,
+                'details': resource_details,
+                'added_at': datetime.now(timezone.utc)
+            }
+            
+            self.alliances[alliance_id]['shared_resources'].append(resource)
+
+            
+            logger.info(f"Added shared resource to alliance {alliance_id}")
+
+            return True
+            
+        except Exception as e:
+            logger.error(f"Failed to add shared resource: {e}")
+
+            return False
+    
+    async def track_alliance_success(
+        self,
+        alliance_id: str
+    ) -> Dict[str, Any]:
+        """Track alliance success metrics"""
+        try:
+            if alliance_id not in self.alliances:
+                raise ValueError(f"Alliance {alliance_id} not found")
+
+
+            
+            alliance = self.alliances[alliance_id]
+            
+            # Calculate success metrics
+
+            result = {
+                'alliance_id': alliance_id,
+                'name': alliance['name'],
+                'status': alliance['status'],
+                'partners': len(alliance['partner_ids']),
+                'shared_resources': len(alliance['shared_resources']),
+                'joint_initiatives': len(alliance['joint_initiatives']),
+                'objectives_met': 0,  # Would track actual progress
+                'total_objectives': len(alliance['objectives']),
+                'duration_days': (datetime.now(timezone.utc) - alliance['start_date']).days
+            }
+            
+            return result
+            
+        except Exception as e:
+            logger.error(f"Failed to track alliance success: {e}")
+
+            raise
+
+
+# =============================================================================
+# CROSS PROMOTION MANAGER
+# =============================================================================
+
+class InfluencerBrandMatcher:
+    """Cross-promotion and co-marketing management"""
+    
+    def __init__(self):
+        self.promotions: Dict[str, Dict[str, Any]] = {}
+        self.promotion_performance: Dict[str, Dict[str, Any]] = {}
+        
+        logger.info("CrossPromotionManager initialized")
+    
+    async def create_cross_promotion(
+        self,
+        name: str,
+        promoting_partner_id: str,
+        promoted_partner_id: str,
+        promotion_type: str,
+        content: Dict[str, Any],
+        duration_days: int = 30
+    ) -> Dict[str, Any]:
+        """Create cross-promotion campaign"""
+        try:
+            promotion_id = str(uuid.uuid4())
+
+
+            
+            promotion = {
+                'promotion_id': promotion_id,
+                'name': name,
+                'promoting_partner_id': promoting_partner_id,
+                'promoted_partner_id': promoted_partner_id,
+                'promotion_type': promotion_type,
+                'content': content,
+                'start_date': datetime.now(timezone.utc),
+                'end_date': datetime.now(timezone.utc) + timedelta(days=duration_days),
+                'status': 'active',
+                'impressions': 0,
+                'clicks': 0,
+                'conversions': 0,
+                'created_at': datetime.now(timezone.utc)
+            }
+            
+            self.promotions[promotion_id] = promotion
+            
+            logger.info(f"Created cross-promotion: {name} ({promotion_id})")
+
+            return promotion
+            
+        except Exception as e:
+            logger.error(f"Failed to create cross-promotion: {e}")
+
+            raise
+    
+    async def track_promotion_engagement(
+        self,
+        promotion_id: str,
+        impressions: int = 0,
+        clicks: int = 0,
+        conversions: int = 0
+    ) -> Dict[str, Any]:
+        """Track cross-promotion engagement"""
+        try:
+            if promotion_id not in self.promotions:
+                raise ValueError(f"Promotion {promotion_id} not found")
+
+
+            
+            promotion = self.promotions[promotion_id]
+            
+            promotion['impressions'] += impressions
+            promotion['clicks'] += clicks
+            promotion['conversions'] += conversions
+            
+            # Calculate rates
+
+            ctr = (promotion['clicks'] / promotion['impressions'] * 100) if promotion['impressions'] > 0 else 0
+
+            conversion_rate = (promotion['conversions'] / promotion['clicks'] * 100) if promotion['clicks'] > 0 else 0
+
+            
+            result = {
+                'promotion_id': promotion_id,
+                'name': promotion['name'],
+                'impressions': promotion['impressions'],
+                'clicks': promotion['clicks'],
+                'conversions': promotion['conversions'],
+                'ctr': round(ctr, 2),
+                'conversion_rate': round(conversion_rate, 2),
+                'status': promotion['status']
+            }
+            
+            logger.info(f"Updated promotion {promotion_id} engagement")
+
+            return result
+            
+        except Exception as e:
+            logger.error(f"Failed to track promotion engagement: {e}")
+
+            raise
+
+
+# =============================================================================
+# PARTNER RELATIONSHIP MANAGER
+# =============================================================================
+
+class PartnershipPerformanceAnalyzer:
+    """Comprehensive partner relationship management"""
+    
+    def __init__(self):
+        self.interactions: List[Dict[str, Any]] = []
+        self.relationship_scores: Dict[str, float] = {}
+        self.satisfaction_surveys: Dict[str, List[Dict[str, Any]]] = defaultdict(list)
+
+        
+        logger.info("PartnerRelationshipManager initialized")
+    
+    async def log_interaction(
+        self,
+        partner_id: str,
+        interaction_type: str,
+        summary: str,
+        sentiment: str = "neutral",
+        **kwargs
+    ) -> Dict[str, Any]:
+        """Log partner interaction"""
+        try:
+            interaction = {
+                'interaction_id': str(uuid.uuid4()),
+                'partner_id': partner_id,
+                'interaction_type': interaction_type,
+                'summary': summary,
+                'sentiment': sentiment,
+                'timestamp': datetime.now(timezone.utc),
+                **kwargs
+            }
+            
+            self.interactions.append(interaction)
+            
+            # Update relationship score based on sentiment
+            await self._update_relationship_score(partner_id, sentiment)
+
+            
+            logger.info(f"Logged interaction for partner {partner_id}")
+
+            return interaction
+            
+        except Exception as e:
+            logger.error(f"Failed to log interaction: {e}")
+
+            raise
+    
+    async def conduct_satisfaction_survey(
+        self,
+        partner_id: str,
+        questions: List[str],
+        responses: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Conduct partner satisfaction survey"""
+        try:
+            survey = {
+                'survey_id': str(uuid.uuid4()),
+                'partner_id': partner_id,
+                'questions': questions,
+                'responses': responses,
+                'overall_score': 0.0,
+                'conducted_at': datetime.now(timezone.utc)
+            }
+            
+            # Calculate overall satisfaction score
+
+            numeric_responses = [
+                v for v in responses.values() if isinstance(v, (int, float))
+            ]
+            if numeric_responses:
+                survey['overall_score'] = sum(numeric_responses) / len(numeric_responses)
+
+            
+            self.satisfaction_surveys[partner_id].append(survey)
+
+            
+            logger.info(f"Conducted satisfaction survey for partner {partner_id}")
+
+            return survey
+            
+        except Exception as e:
+            logger.error(f"Failed to conduct satisfaction survey: {e}")
+
+            raise
+    
+    async def get_relationship_health(
+        self,
+        partner_id: str
+    ) -> Dict[str, Any]:
+        """Get overall relationship health metrics"""
+        try:
+            # Get recent interactions
+
+            recent_interactions = [
+                i for i in self.interactions[-100:]
+                if i['partner_id'] == partner_id
+            ]
+            
+            # Calculate sentiment distribution
+
+            sentiment_counts = defaultdict(int)
+
+            for interaction in recent_interactions:
+                sentiment_counts[interaction['sentiment']] += 1
+            
+            # Get recent surveys
+
+            recent_surveys = self.satisfaction_surveys.get(partner_id, [])[-5:]
+
+            avg_satisfaction = (
+                sum(s['overall_score'] for s in recent_surveys) / len(recent_surveys)
+
+                if recent_surveys else 0.0
+            )
+            
+            # Get relationship score
+
+            relationship_score = self.relationship_scores.get(partner_id, 50.0)
+
+
+            
+            result = {
+                'partner_id': partner_id,
+                'relationship_score': relationship_score,
+                'average_satisfaction': round(avg_satisfaction, 2),
+                'recent_interactions': len(recent_interactions),
+                'sentiment_distribution': dict(sentiment_counts),
+                'health_status': (
+                    'excellent' if relationship_score >= 80 else
+                    'good' if relationship_score >= 60 else
+                    'fair' if relationship_score >= 40 else
+                    'poor'
+                )
+            }
+            
+            logger.info(f"Retrieved relationship health for partner {partner_id}")
+
+            return result
+            
+        except Exception as e:
+            logger.error(f"Failed to get relationship health: {e}")
+
+            raise
+    
+    async def _update_relationship_score(
+        self,
+        partner_id: str,
+        sentiment: str
+    ) -> None:
+        """Update relationship score based on interaction sentiment"""
+        current_score = self.relationship_scores.get(partner_id, 50.0)
+        
+        # Adjust score based on sentiment
+        if sentiment == 'positive':
+            current_score = min(100.0, current_score + 2.0)
+        elif sentiment == 'negative':
+            current_score = max(0.0, current_score - 5.0)
+        elif sentiment == 'neutral':
+            # Slight drift toward 50 (neutral baseline)
+
+            current_score += (50.0 - current_score) * 0.1
+        
+        self.relationship_scores[partner_id] = current_score
+
+
+# =============================================================================
+# EXPORTS
 # =============================================================================
 
 __all__ = [
-    'PartnershipLifecycleManager',
-    'BrandCollaborationOrchestrator',
-    'InfluencerBrandMatcher',
-    'PartnershipPerformanceAnalyzer',
-    'PartnershipProfile',
-    'Partnership',
+    # Enums
     'PartnershipType',
     'PartnershipStatus',
-    'CollaborationType'
+    'PartnerTier',
+    'RevenueShareModel',
+    'PartnershipMetricType',
+    
+    # Data Models
+    'PartnerProfile',
+    'RevenueShareAgreement',
+    'PartnershipActivity',
+    'PartnershipCampaign',
+    
+    # Managers
+    'PartnershipManager',
+    'AllianceManager',
+    'CrossPromotionManager',
+    'PartnerRelationshipManager'
 ]

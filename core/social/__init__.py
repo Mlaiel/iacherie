@@ -30,7 +30,8 @@ import json
 logger = logging.getLogger(__name__)
 
 class SocialPlatform(Enum):
-    """Plateformes de médias sociaux supportées"""
+    """
+Plateformes de médias sociaux supportées"""
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
@@ -43,7 +44,8 @@ class SocialPlatform(Enum):
     DISCORD = "discord"
 
 class ContentType(Enum):
-    """Types de contenu social"""
+    """
+Types de contenu social"""
     POST = "post"
     STORY = "story"
     REEL = "reel"
@@ -54,7 +56,8 @@ class ContentType(Enum):
     SHORT = "short"
 
 class EngagementType(Enum):
-    """Types d'engagement"""
+    """
+Types d'engagement"""
     LIKE = "like"
     COMMENT = "comment"
     SHARE = "share"
@@ -66,7 +69,8 @@ class EngagementType(Enum):
 
 @dataclass
 class SocialProfile:
-    """Profil sur une plateforme sociale"""
+    """
+Profil sur une plateforme sociale"""
     platform: SocialPlatform
     username: str
     display_name: str
@@ -85,7 +89,8 @@ class SocialProfile:
 
 @dataclass
 class SocialPost:
-    """Post sur une plateforme sociale"""
+    """
+Post sur une plateforme sociale"""
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     platform: SocialPlatform = SocialPlatform.INSTAGRAM
     content_type: ContentType = ContentType.POST
@@ -101,7 +106,8 @@ class SocialPost:
 
 @dataclass
 class EngagementMetrics:
-    """Métriques d'engagement"""
+    """
+Métriques d'engagement"""
     likes: int = 0
     comments: int = 0
     shares: int = 0
@@ -117,7 +123,8 @@ class SocialMediaManager:
     """🏆 Gestionnaire principal des médias sociaux - CORE ENTERPRISE SYSTEM ! 🏆"""
     
     def __init__(self):
-        """Initialise le gestionnaire de médias sociaux"""
+        """
+Initialise le gestionnaire de médias sociaux"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Base de données en mémoire (dans un vrai système, connecté à DB)
@@ -165,7 +172,8 @@ class SocialMediaManager:
         self.logger.info("🎯 Ready for enterprise social media management")
     
     def _init_demo_profiles(self):
-        """Initialise des profils de démonstration"""
+        """
+Initialise des profils de démonstration"""
         demo_profiles = [
             {
                 "platform": SocialPlatform.INSTAGRAM,
@@ -643,7 +651,8 @@ class SocialMediaIntegration:
     """🔗 Gestionnaire d'intégrations des APIs sociales - ENTERPRISE INTEGRATION ! 🔗"""
     
     def __init__(self):
-        """Initialise les intégrations"""
+        """
+Initialise les intégrations"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.api_configs = {}
         self.active_connections = {}
@@ -725,7 +734,8 @@ SocialIntegration = SocialMediaIntegration
 
 # Initialisation du module
 def initialize_social_system():
-    """Initialise le système social complet"""
+    """
+Initialise le système social complet"""
     try:
         manager = SocialMediaManager()
         integration = SocialMediaIntegration()

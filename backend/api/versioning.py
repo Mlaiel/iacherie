@@ -27,9 +27,11 @@ except ImportError:
         @staticmethod
         def parse(v):
             return tuple(map(int, v.split('.')))
+
         
         def __init__(self, v):
             self.version_tuple = tuple(map(int, v.split('.')))
+
         
         def __lt__(self, other):
             return self.version_tuple < other.version_tuple
@@ -46,7 +48,8 @@ from pydantic import BaseModel, Field
 # ========================================
 
 class VersionStatus(str, Enum):
-    """API version status"""
+    """
+        API version status"""
     DEVELOPMENT = "development"
     BETA = "beta"
     STABLE = "stable"
@@ -97,7 +100,8 @@ class APIVersion:
     
     @property
     def version_string(self) -> str:
-        """Get semantic version string"""
+        """
+        Get semantic version string"""
         return f"{self.major}.{self.minor}.{self.patch}"
     
     @property
@@ -111,14 +115,17 @@ class APIVersion:
     
     @property
     def days_until_eol(self) -> Optional[int]:
-        """Days until end of life"""
+        """
+        Days until end of life"""
         if not self.end_of_life:
             return None
+
         delta = self.end_of_life - datetime.now()
         return max(0, delta.days)
 
 class VersionCompatibility(BaseModel):
-    """Version compatibility information"""
+    """
+        Version compatibility information"""
     current_version: str = Field(..., description="Current API version")
     requested_version: str = Field(..., description="Requested API version")
     compatibility_level: CompatibilityLevel = Field(..., description="Compatibility level")
@@ -213,24 +220,31 @@ class APIVersionManager:
         return self.versions.get(version_string)
     
     def get_supported_versions(self) -> List[APIVersion]:
-        """Get all supported versions"""
+        """
+        Get all supported versions"""
         return [v for v in self.versions.values() if v.is_supported]
     
     def get_latest_version(self) -> APIVersion:
-        """Get latest stable version"""
+        """
+        Get latest stable version"""
         stable_versions = [
-            v for v in self.versions.values() 
+            v for v in self.versions.values()
+ 
             if v.status == VersionStatus.STABLE
         ]
         return max(stable_versions, key=lambda v: (v.major, v.minor, v.patch))
     
     def check_compatibility(self, requested_version: str) -> VersionCompatibility:
-        """Check compatibility between versions"""
+        """
+        Check compatibility between versions"""
         current = self.get_version(self.current_version)
+
         requested = self.get_version(requested_version)
+
         
         if not requested:
             raise ValueError(f"Unknown API version: {requested_version}")
+
         
         if not requested.is_supported:
             return VersionCompatibility(
@@ -243,28 +257,38 @@ class APIVersionManager:
             )
         
         # Compare version numbers
+
         current_ver = version.parse(self.current_version)
+
         requested_ver = version.parse(requested_version)
+
+
         
         warnings = []
+
         compatibility_level = CompatibilityLevel.COMPATIBLE
         
         if requested_ver < current_ver:
             if requested_ver.major < current_ver.major:
                 compatibility_level = CompatibilityLevel.BREAKING
                 warnings.append(f"Major version difference detected. Breaking changes may exist.")
+
             elif requested.status == VersionStatus.DEPRECATED:
                 compatibility_level = CompatibilityLevel.DEPRECATING
                 warnings.append(f"Version {requested_version} is deprecated")
+
                 if requested.days_until_eol:
                     warnings.append(f"End of life in {requested.days_until_eol} days")
+
             else:
                 compatibility_level = CompatibilityLevel.COMPATIBLE
                 warnings.append(f"Using older version {requested_version}")
+
         
         elif requested_ver > current_ver:
             compatibility_level = CompatibilityLevel.ENHANCED
             warnings.append(f"Requested version {requested_version} has additional features")
+
         
         return VersionCompatibility(
             current_version=self.current_version,
@@ -281,7 +305,8 @@ class APIVersionManager:
         self.changelog.sort(key=lambda x: x.date, reverse=True)
     
     def get_changelog(self, version: str = None, limit: int = 50) -> List[ChangelogEntry]:
-        """Get changelog entries"""
+        """
+        Get changelog entries"""
         if version:
             return [entry for entry in self.changelog if entry.version == version]
         return self.changelog[:limit]
@@ -291,13 +316,15 @@ class APIVersionManager:
 # ========================================
 
 class VersioningMiddleware:
-    """Middleware for API versioning"""
+    """
+        Middleware for API versioning"""
     
     def __init__(self, version_manager: APIVersionManager):
         self.version_manager = version_manager
     
     async def __call__(self, request: Request, call_next):
-        """Process versioning for requests"""
+        """
+        Process versioning for requests"""
         # Extract version from header or URL
         api_version = self._extract_version(request)
         
@@ -319,6 +346,7 @@ class VersioningMiddleware:
         request.state.compatibility = compatibility
         
         # Process request
+
         response = await call_next(request)
         
         # Add version headers to response
@@ -328,36 +356,45 @@ class VersioningMiddleware:
         # Add deprecation warnings
         if compatibility.warnings:
             response.headers["X-API-Warnings"] = "; ".join(compatibility.warnings)
+
         
         if compatibility.sunset_date:
             response.headers["X-API-Sunset"] = compatibility.sunset_date.isoformat()
+
         
         return response
     
     def _extract_version(self, request: Request) -> Optional[str]:
         """Extract API version from request"""
         # Check header first
+
         version_header = request.headers.get("X-API-Version")
         if version_header:
             return version_header
         
         # Check Accept header
+
         accept_header = request.headers.get("Accept", "")
+
         version_match = re.search(r'version=([0-9]+\.[0-9]+\.[0-9]+)', accept_header)
         if version_match:
             return version_match.group(1)
         
         # Check URL path
+
         path = request.url.path
+
         version_match = re.search(r'/v([0-9]+)/', path)
         if version_match:
             major_version = version_match.group(1)
             # Map major version to full version
+
             version_mapping = {
                 "1": "1.1.0",  # Latest v1
                 "2": "2.0.0"   # Latest v2
             }
             return version_mapping.get(major_version)
+
         
         return None
 
@@ -380,12 +417,14 @@ class VersionedRouter:
         methods: List[str] = None,
         **kwargs
     ):
-        """Add route for specific version"""
+        """
+        Add route for specific version"""
         if version not in self.routes:
             self.routes[version] = {}
         
         if methods is None:
             methods = ["GET"]
+
         
         route = APIRoute(
             path=path,
@@ -393,6 +432,7 @@ class VersionedRouter:
             methods=methods,
             **kwargs
         )
+
         
         self.routes[version][path] = route
     
@@ -402,6 +442,7 @@ class VersionedRouter:
             return self.routes[version][path]
         
         # Fallback to compatible version
+
         compatibility = self.version_manager.check_compatibility(version)
         if compatibility.compatibility_level in [CompatibilityLevel.COMPATIBLE, CompatibilityLevel.ENHANCED]:
             current_version = self.version_manager.current_version
@@ -415,20 +456,23 @@ class VersionedRouter:
 # ========================================
 
 class ResponseTransformer:
-    """Transform responses for different API versions"""
+    """
+        Transform responses for different API versions"""
     
     def __init__(self, version_manager: APIVersionManager):
         self.version_manager = version_manager
         self.transformers: Dict[str, Dict[str, Callable]] = {}
     
     def register_transformer(self, from_version: str, to_version: str, transformer: Callable):
-        """Register response transformer"""
+        """
+        Register response transformer"""
         if from_version not in self.transformers:
             self.transformers[from_version] = {}
         self.transformers[from_version][to_version] = transformer
     
     def transform_response(self, data: Any, from_version: str, to_version: str) -> Any:
-        """Transform response data between versions"""
+        """
+        Transform response data between versions"""
         if from_version == to_version:
             return data
         
@@ -439,8 +483,11 @@ class ResponseTransformer:
             return transformer(data)
         
         # Default transformations based on version comparison
+
         from_ver = version.parse(from_version)
+
         to_ver = version.parse(to_version)
+
         
         if from_ver < to_ver:
             return self._upgrade_response(data, from_version, to_version)
@@ -448,7 +495,8 @@ class ResponseTransformer:
             return self._downgrade_response(data, from_version, to_version)
     
     def _upgrade_response(self, data: Any, from_version: str, to_version: str) -> Any:
-        """Upgrade response format to newer version"""
+        """
+        Upgrade response format to newer version"""
         if isinstance(data, dict):
             # Add new fields with default values
             if from_version.startswith("1.") and to_version.startswith("2."):
@@ -457,6 +505,7 @@ class ResponseTransformer:
                     data["success"] = True
                 if "timestamp" not in data:
                     data["timestamp"] = datetime.now().isoformat()
+
         
         return data
     
@@ -466,10 +515,13 @@ class ResponseTransformer:
             # Remove fields not supported in older version
             if from_version.startswith("2.") and to_version.startswith("1."):
                 # v2 to v1 transformation
+
                 v1_data = data.copy()
                 # Remove v2-specific fields
                 v1_data.pop("timestamp", None)
+
                 v1_data.pop("request_id", None)
+
                 return v1_data
         
         return data
@@ -485,7 +537,8 @@ class VersioningEndpoints:
         self.version_manager = version_manager
     
     async def get_versions(self) -> Dict[str, Any]:
-        """Get all API versions"""
+        """
+        Get all API versions"""
         return {
             "current_version": self.version_manager.current_version,
             "supported_versions": [
@@ -508,6 +561,7 @@ class VersioningEndpoints:
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail=f"Version {version} not found"
             )
+
         
         return {
             "version": api_version.version_string,
@@ -544,7 +598,8 @@ class VersioningEndpoints:
 # ========================================
 
 class VersioningService:
-    """Main versioning service"""
+    """
+        Main versioning service"""
     
     def __init__(self):
         self.version_manager = APIVersionManager()
@@ -556,7 +611,8 @@ class VersioningService:
         self.semantic_versioning = SemanticVersionManager()
     
     def setup_versioning(self, app: FastAPI):
-        """Setup versioning for FastAPI app"""
+        """
+        Setup versioning for FastAPI app"""
         # Add middleware
         app.middleware("http")(self.middleware)
         
@@ -592,8 +648,10 @@ class SemanticVersionManager:
         match = self.version_pattern.match(version_string)
         if not match:
             raise ValueError(f"Invalid semantic version: {version_string}")
+
         
         major, minor, patch, prerelease, build = match.groups()
+
         
         return {
             "major": int(major),
@@ -620,19 +678,25 @@ class SemanticVersionManager:
         
         if change_type == ChangeType.BREAKING:
             major += 1
+
             minor = 0
+
             patch = 0
         elif change_type == ChangeType.FEATURE:
             minor += 1
+
             patch = 0
         elif change_type == ChangeType.BUGFIX:
             patch += 1
         
         # Build new version string
+
         base_version = f"{major}.{minor}.{patch}"
         
         if release_channel != "stable":
             channel_config = self.release_channels.get(release_channel, {})
+
+
             prefix = channel_config.get("prefix", release_channel)
             # Add prerelease identifier
             base_version += f"-{prefix}.1"
@@ -643,6 +707,8 @@ class SemanticVersionManager:
         """Compare two semantic versions (-1, 0, 1)"""
         try:
             v1 = self.parse_version(version1)
+
+
             v2 = self.parse_version(version2)
             
             # Compare major.minor.patch
@@ -678,6 +744,8 @@ class SemanticVersionManager:
         """Check if requested version is compatible with available version"""
         try:
             req = self.parse_version(requested)
+
+
             avail = self.parse_version(available)
             
             # Major version must match for compatibility
@@ -703,6 +771,7 @@ class SemanticVersionManager:
         
         for channel, config in self.release_channels.items():
             prefix = config.get("prefix", "")
+
             if prefix and prerelease.startswith(prefix):
                 return channel
         
@@ -765,6 +834,7 @@ class FeatureFlagManager:
         feature["usage_analytics"]["total_checks"] += 1
         
         # Apply rollout strategy
+
         strategy = self.rollout_strategies.get(feature["rollout_strategy"])
         if strategy:
             enabled = await strategy.is_enabled(feature, user_context or {})
@@ -779,6 +849,7 @@ class FeatureFlagManager:
         
         # Record analytics
         await self.feature_analytics.record_feature_check(feature_name, enabled, user_context)
+
         
         return enabled
     
@@ -790,10 +861,12 @@ class FeatureFlagManager:
         """Update feature rollout configuration"""
         if feature_name not in self.feature_flags:
             return False
+
         
         feature = self.feature_flags[feature_name]
         feature["rollout_config"].update(rollout_config)
         feature["last_modified"] = datetime.utcnow().isoformat()
+
         
         return True
     
@@ -815,8 +888,10 @@ class FeatureFlagManager:
         return [self.get_feature_status(name) for name in self.feature_flags.keys()]
     
     def _calculate_rollout_percentage(self, feature: Dict[str, Any]) -> float:
-        """Calculate current rollout percentage"""
+        """
+        Calculate current rollout percentage"""
         strategy = feature["rollout_strategy"]
+
         config = feature["rollout_config"]
         
         if strategy == "percentage":
@@ -826,7 +901,9 @@ class FeatureFlagManager:
             return config.get("estimated_percentage", 0.0)
         else:
             # For other strategies, estimate based on usage
+
             total = feature["usage_analytics"]["total_checks"]
+
             enabled = feature["usage_analytics"]["enabled_count"]
             return (enabled / total * 100) if total > 0 else 0.0
 
@@ -842,7 +919,9 @@ class PercentageRolloutStrategy:
         percentage = feature["rollout_config"].get("percentage", 0.0)
         
         # Use user ID for consistent rollout
+
         user_id = user_context.get("user_id", "anonymous")
+
         hash_value = hash(f"{feature['name']}:{user_id}") % 100
         
         return hash_value < percentage
@@ -853,7 +932,9 @@ class UserSegmentRolloutStrategy:
     
     async def is_enabled(self, feature: Dict[str, Any], user_context: Dict[str, Any]) -> bool:
         enabled_segments = feature["rollout_config"].get("enabled_segments", [])
+
         user_segment = user_context.get("segment", "default")
+
         
         return user_segment in enabled_segments
 
@@ -863,7 +944,9 @@ class GeographicRolloutStrategy:
     
     async def is_enabled(self, feature: Dict[str, Any], user_context: Dict[str, Any]) -> bool:
         enabled_regions = feature["rollout_config"].get("enabled_regions", [])
+
         user_region = user_context.get("region", "unknown")
+
         
         return user_region in enabled_regions
 
@@ -873,12 +956,17 @@ class TimeBasedRolloutStrategy:
     
     async def is_enabled(self, feature: Dict[str, Any], user_context: Dict[str, Any]) -> bool:
         start_time = feature["rollout_config"].get("start_time")
+
         end_time = feature["rollout_config"].get("end_time")
+
         
         if not start_time:
             return feature.get("default_enabled", False)
+
+
         
         current_time = datetime.utcnow().isoformat()
+
         
         if start_time <= current_time:
             if not end_time or current_time <= end_time:
@@ -892,7 +980,9 @@ class CanaryRolloutStrategy:
     
     async def is_enabled(self, feature: Dict[str, Any], user_context: Dict[str, Any]) -> bool:
         canary_users = feature["rollout_config"].get("canary_users", [])
+
         user_id = user_context.get("user_id")
+
         
         return user_id in canary_users
 
@@ -910,7 +1000,8 @@ class FeatureFlagAnalytics:
         enabled: bool,
         user_context: Dict[str, Any]
     ) -> None:
-        """Record feature flag check for analytics"""
+        """
+        Record feature flag check for analytics"""
         record = {
             "timestamp": datetime.utcnow().isoformat(),
             "enabled": enabled,
@@ -923,7 +1014,6 @@ class FeatureFlagAnalytics:
     
     def get_performance_impact(self, feature_name: str) -> Dict[str, Any]:
         """Get performance impact analysis for feature"""
-        # Mock implementation - would analyze actual performance metrics
         return {
             "avg_response_time_ms": 45.2,
             "error_rate_percent": 0.05,
@@ -934,12 +1024,16 @@ class FeatureFlagAnalytics:
     def get_usage_trends(self, feature_name: str) -> Dict[str, Any]:
         """Get usage trends for feature"""
         usage_records = self.usage_data.get(feature_name, [])
+
         
         if not usage_records:
             return {"total_checks": 0, "enabled_rate": 0.0}
+
         
         total_checks = len(usage_records)
+
         enabled_checks = sum(1 for record in usage_records if record["enabled"])
+
         
         return {
             "total_checks": total_checks,

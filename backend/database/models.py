@@ -47,7 +47,8 @@ Base = declarative_base()
 # ================================
 
 class ContentType(Enum):
-    """Content type enumeration."""
+    """
+        Content type enumeration."""
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"

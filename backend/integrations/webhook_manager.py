@@ -29,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class WebhookSource(str, Enum):
-    """Webhook event sources."""
+    """
+        Webhook event sources."""
     STRIPE = "stripe"
     PAYPAL = "paypal"
     YOUTUBE = "youtube"
@@ -107,7 +108,8 @@ class WebhookEvent:
 
 @dataclass
 class WebhookEndpoint:
-    """Webhook endpoint configuration."""
+    """
+        Webhook endpoint configuration."""
     endpoint_id: str
     url: str
     source: WebhookSource
@@ -122,7 +124,8 @@ class WebhookEndpoint:
 
 @dataclass
 class EventHandler:
-    """Event handler configuration."""
+    """
+        Event handler configuration."""
     handler_id: str
     event_types: List[EventType]
     handler_function: Callable[[WebhookEvent], Any]
@@ -135,7 +138,8 @@ class EventHandler:
 
 @dataclass
 class EventMetrics:
-    """Event processing metrics."""
+    """
+        Event processing metrics."""
     source: WebhookSource
     event_type: EventType
     period_start: datetime
@@ -151,7 +155,8 @@ class EventMetrics:
 
 
 class WebhookManagerIntegration:
-    """Professional webhook manager integration."""
+    """
+        Professional webhook manager integration."""
     
     def __init__(
         self,
@@ -223,12 +228,14 @@ class WebhookManagerIntegration:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+        Async context manager exit."""
         await self.stop_processing()
         await self.close()
     
     async def _ensure_session(self):
-        """Ensure HTTP session is available."""
+        """
+        Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
                 "User-Agent": "iacherie/1.0 Webhook Manager",
@@ -245,6 +252,7 @@ class WebhookManagerIntegration:
         """Close HTTP session and executor."""
         if self.session and not self.session.closed:
             await self.session.close()
+
         
         self.executor.shutdown(wait=True)
     
@@ -262,6 +270,8 @@ class WebhookManagerIntegration:
         """Register a webhook endpoint."""
         
         endpoint_id = str(uuid.uuid4())
+
+
         
         endpoint = WebhookEndpoint(
             endpoint_id=endpoint_id,
@@ -280,6 +290,7 @@ class WebhookManagerIntegration:
             rate_limit=rate_limit or {"per_minute": 60, "burst": 10},
             metadata=metadata or {}
         )
+
         
         self.webhook_endpoints[endpoint_id] = endpoint
         
@@ -299,6 +310,8 @@ class WebhookManagerIntegration:
         """Register an event handler."""
         
         handler_id = str(uuid.uuid4())
+
+
         
         handler = EventHandler(
             handler_id=handler_id,
@@ -310,6 +323,7 @@ class WebhookManagerIntegration:
             retry_on_failure=retry_on_failure,
             metadata=metadata or {}
         )
+
         
         self.event_handlers[handler_id] = handler
         
@@ -329,9 +343,11 @@ class WebhookManagerIntegration:
         event_id = str(uuid.uuid4())
         
         # Determine event priority
+
         priority = self._determine_event_priority(event_type, payload)
         
         # Create webhook event
+
         event = WebhookEvent(
             event_id=event_id,
             source=source,
@@ -355,6 +371,7 @@ class WebhookManagerIntegration:
             event.status = EventStatus.FAILED
             event.error_message = "Invalid webhook signature"
             logger.warning(f"Webhook signature verification failed: {event_id}")
+
             return event
         
         # Add to appropriate queue
@@ -369,6 +386,7 @@ class WebhookManagerIntegration:
         """Verify webhook signature."""
         try:
             # Find matching endpoint
+
             matching_endpoint = None
             for endpoint in self.webhook_endpoints.values():
                 if (endpoint.source == event.source and 
@@ -378,31 +396,44 @@ class WebhookManagerIntegration:
             
             if not matching_endpoint:
                 logger.warning(f"No matching endpoint found for {event.source} - {event.event_type}")
+
                 return True  # Allow if no endpoint configured
             
             # Calculate expected signature
+
             secret = matching_endpoint.secret.encode()
+
+
             payload_bytes = json.dumps(event.payload, sort_keys=True).encode()
+
             
             if matching_endpoint.signature_algorithm == "hmac-sha256":
                 expected_signature = hmac.new(secret, payload_bytes, hashlib.sha256).hexdigest()
+
+
                 signature_prefix = "sha256="
             elif matching_endpoint.signature_algorithm == "hmac-sha1":
                 expected_signature = hmac.new(secret, payload_bytes, hashlib.sha1).hexdigest()
+
+
                 signature_prefix = "sha1="
             else:
                 logger.error(f"Unsupported signature algorithm: {matching_endpoint.signature_algorithm}")
+
                 return False
             
             # Compare signatures
+
             provided_signature = event.signature
             if provided_signature and provided_signature.startswith(signature_prefix):
                 provided_signature = provided_signature[len(signature_prefix):]
             
             return hmac.compare_digest(expected_signature, provided_signature or "")
+
         
         except Exception as e:
             logger.error(f"Signature verification error: {e}")
+
             return False
     
     def _determine_event_priority(self, event_type: EventType, payload: Dict[str, Any]) -> EventPriority:
@@ -435,6 +466,7 @@ class WebhookManagerIntegration:
         """Start webhook event processing."""
         if self.is_processing:
             logger.warning("Event processing already started")
+
             return
         
         self.is_processing = True
@@ -445,14 +477,17 @@ class WebhookManagerIntegration:
                 self._process_events_queue(priority),
                 name=f"webhook_processor_{priority.value}"
             )
+
             self.processing_tasks.append(task)
         
         # Start retry processor
+
         retry_task = asyncio.create_task(
             self._process_retry_queue(),
             name="webhook_retry_processor"
         )
         self.processing_tasks.append(retry_task)
+
         
         logger.info(f"Webhook processing started with {len(self.processing_tasks)} tasks")
     
@@ -470,8 +505,10 @@ class WebhookManagerIntegration:
         # Wait for tasks to complete
         if self.processing_tasks:
             await asyncio.gather(*self.processing_tasks, return_exceptions=True)
+
         
         self.processing_tasks.clear()
+
         
         logger.info("Webhook processing stopped")
     
@@ -482,6 +519,7 @@ class WebhookManagerIntegration:
         while self.is_processing:
             try:
                 # Wait for event with timeout
+
                 event = await asyncio.wait_for(queue.get(), timeout=1.0)
                 
                 # Process the event
@@ -489,12 +527,14 @@ class WebhookManagerIntegration:
                 
                 # Mark task as done
                 queue.task_done()
+
             
             except asyncio.TimeoutError:
                 # No events in queue, continue
                 continue
             except Exception as e:
                 logger.error(f"Error in {priority} queue processor: {e}")
+
                 await asyncio.sleep(1)
     
     async def _process_single_event(self, event: WebhookEvent):
@@ -504,18 +544,22 @@ class WebhookManagerIntegration:
         
         try:
             # Find matching handlers
+
             matching_handlers = [
                 handler for handler in self.event_handlers.values()
+
                 if event.event_type in handler.event_types
             ]
             
             if not matching_handlers:
                 logger.warning(f"No handlers found for event type: {event.event_type}")
+
                 event.status = EventStatus.COMPLETED
                 event.error_message = "No handlers configured"
                 return
             
             # Execute handlers
+
             handler_results = []
             for handler in matching_handlers:
                 try:
@@ -524,22 +568,27 @@ class WebhookManagerIntegration:
                             handler.handler_function(event),
                             timeout=handler.timeout_seconds
                         )
+
                     else:
                         # Run sync handler in executor
+
                         result = await asyncio.get_event_loop().run_in_executor(
                             self.executor,
                             handler.handler_function,
                             event
                         )
+
                     
                     handler_results.append({
                         "handler_id": handler.handler_id,
                         "result": result,
                         "success": True
                     })
+
                 
                 except Exception as e:
                     logger.error(f"Handler {handler.handler_id} failed: {e}")
+
                     handler_results.append({
                         "handler_id": handler.handler_id,
                         "error": str(e),
@@ -547,7 +596,9 @@ class WebhookManagerIntegration:
                     })
             
             # Check if all handlers succeeded
+
             all_succeeded = all(result["success"] for result in handler_results)
+
             
             if all_succeeded:
                 event.status = EventStatus.COMPLETED
@@ -560,25 +611,33 @@ class WebhookManagerIntegration:
                 # Schedule retry if configured
                 if event.retry_count < self.max_retry_attempts:
                     await self._schedule_retry(event)
+
                 else:
                     await self._send_to_dead_letter(event)
+
         
         except Exception as e:
             logger.error(f"Event processing error: {e}")
+
             event.status = EventStatus.FAILED
             event.error_message = str(e)
+
             self.total_events_failed += 1
             
             # Schedule retry
             if event.retry_count < self.max_retry_attempts:
                 await self._schedule_retry(event)
+
             else:
                 await self._send_to_dead_letter(event)
+
         
         finally:
             # Update processing metrics
+
             processing_time = (time.time() - start_time) * 1000  # Convert to milliseconds
             event.processing_time_ms = int(processing_time)
+
             event.processed_at = datetime.now()
             
             # Update average processing time
@@ -597,10 +656,12 @@ class WebhookManagerIntegration:
         event.status = EventStatus.RETRY
         
         # Calculate retry delay with exponential backoff
+
         delay = min(
             self.retry_base_delay * (2 ** (event.retry_count - 1)),
             self.max_retry_delay
         )
+
         
         event.next_retry_at = datetime.now() + timedelta(seconds=delay)
         self.total_retries += 1
@@ -614,8 +675,10 @@ class WebhookManagerIntegration:
                 current_time = datetime.now()
                 
                 # Find events ready for retry
+
                 retry_events = [
                     event for event in self.processed_events.values()
+
                     if (event.status == EventStatus.RETRY and 
                         event.next_retry_at and 
                         event.next_retry_at <= current_time)
@@ -636,9 +699,11 @@ class WebhookManagerIntegration:
                 
                 # Sleep before next check
                 await asyncio.sleep(5)
+
             
             except Exception as e:
                 logger.error(f"Retry queue processor error: {e}")
+
                 await asyncio.sleep(5)
     
     async def _send_to_dead_letter(self, event: WebhookEvent):
@@ -686,9 +751,11 @@ class WebhookManagerIntegration:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> EventMetrics:
-        """Get event processing metrics."""
+        """
+        Get event processing metrics."""
         
         # Filter events based on criteria
+
         filtered_events = []
         for event in self.processed_events.values():
             if source and event.source != source:
@@ -701,6 +768,7 @@ class WebhookManagerIntegration:
                 continue
             
             filtered_events.append(event)
+
         
         if not filtered_events:
             return EventMetrics(
@@ -719,25 +787,37 @@ class WebhookManagerIntegration:
             )
         
         # Calculate metrics
+
         total_events = len(filtered_events)
+
         successful_events = len([e for e in filtered_events if e.status == EventStatus.COMPLETED])
+
         failed_events = len([e for e in filtered_events if e.status in [EventStatus.FAILED, EventStatus.DEAD_LETTER]])
         
         # Calculate average processing time
+
         processing_times = [e.processing_time_ms for e in filtered_events if e.processing_time_ms]
+
         average_processing_time_ms = sum(processing_times) / len(processing_times) if processing_times else 0.0
         
         # Calculate retry rate
+
         events_with_retries = len([e for e in filtered_events if e.retry_count > 0])
+
         retry_rate = (events_with_retries / total_events) * 100 if total_events > 0 else 0.0
         
         # Calculate error rate
+
         error_rate = (failed_events / total_events) * 100 if total_events > 0 else 0.0
         
         # Calculate throughput
+
         period_start = start_date or min(e.received_at for e in filtered_events)
+
         period_end = end_date or max(e.received_at for e in filtered_events)
+
         period_minutes = (period_end - period_start).total_seconds() / 60
+
         throughput_per_minute = total_events / period_minutes if period_minutes > 0 else 0.0
         
         return EventMetrics(
@@ -788,9 +868,11 @@ class WebhookManagerIntegration:
                 
                 results[event_id] = True
                 logger.info(f"Event replayed: {event_id}")
+
             else:
                 results[event_id] = False
                 logger.warning(f"Event not found for replay: {event_id}")
+
         
         return results
     
@@ -798,11 +880,13 @@ class WebhookManagerIntegration:
         """Get webhook manager status."""
         
         # Calculate queue sizes
+
         queue_sizes = {}
         for priority, queue in self.event_queues.items():
             queue_sizes[priority.value] = queue.qsize()
         
         # Calculate status by source
+
         source_stats = {}
         for event in list(self.processed_events.values()) + list(self.pending_events.values()):
             source = event.source.value
@@ -817,6 +901,7 @@ class WebhookManagerIntegration:
                 source_stats[source]["failed"] += 1
             elif event.status in [EventStatus.PENDING, EventStatus.PROCESSING, EventStatus.RETRY]:
                 source_stats[source]["pending"] += 1
+
         
         status = {
             "is_processing": self.is_processing,
@@ -889,7 +974,8 @@ async def create_webhook_manager(
 
 # Example event handlers
 async def payment_completed_handler(event: WebhookEvent):
-    """Handle payment completed events."""
+    """
+        Handle payment completed events."""
     payment_data = event.payload
     
     logger.info(f"Payment completed: {payment_data.get('payment_id')} - ${payment_data.get('amount')}")
@@ -934,37 +1020,48 @@ if __name__ == "__main__":
     async def main():
         async with WebhookManagerIntegration(max_workers=5) as webhook_manager:
             # Register webhook endpoints
+
             stripe_endpoint = await webhook_manager.register_webhook_endpoint(
                 url="https://api.iacherie.com/webhooks/stripe",
                 source=WebhookSource.STRIPE,
                 secret= os.getenv("SECRET", "CHANGE_ME"),
                 event_types=[EventType.PAYMENT_COMPLETED, EventType.PAYMENT_FAILED]
             )
+
             print(f"Stripe endpoint registered: {stripe_endpoint.endpoint_id}")
             
             # Register event handlers
+
             payment_handler = await webhook_manager.register_event_handler(
                 event_types=[EventType.PAYMENT_COMPLETED],
                 handler_function=payment_completed_handler,
                 priority=EventPriority.HIGH
             )
+
             print(f"Payment handler registered: {payment_handler.handler_id}")
+
+
             
             content_handler = await webhook_manager.register_event_handler(
                 event_types=[EventType.CONTENT_UPLOADED],
                 handler_function=content_uploaded_handler,
                 priority=EventPriority.NORMAL
             )
+
             print(f"Content handler registered: {content_handler.handler_id}")
+
+
             
             fraud_handler = await webhook_manager.register_event_handler(
                 event_types=[EventType.FRAUD_DETECTED],
                 handler_function=fraud_detected_handler,
                 priority=EventPriority.CRITICAL
             )
+
             print(f"Fraud handler registered: {fraud_handler.handler_id}")
             
             # Simulate webhook events
+
             payment_event = await webhook_manager.receive_webhook(
                 source=WebhookSource.STRIPE,
                 event_type=EventType.PAYMENT_COMPLETED,
@@ -977,17 +1074,22 @@ if __name__ == "__main__":
                 headers={"Content-Type": "application/json"},
                 signature="sha256=test_signature"
             )
+
             print(f"Payment event received: {payment_event.event_id}")
             
             # Wait for processing
             await asyncio.sleep(2)
             
             # Get status
+
             status = await webhook_manager.get_webhook_status()
+
             print(f"Webhook manager status: {status['metrics']}")
             
             # Get usage stats
+
             stats = webhook_manager.get_usage_stats()
+
             print(f"Usage stats: {stats}")
     
     asyncio.run(main())

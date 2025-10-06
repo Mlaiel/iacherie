@@ -47,7 +47,8 @@ logger = logging.getLogger(__name__)
 
 
 class BadgeType(str, Enum):
-    """Types of badges."""
+    """
+        Types of badges."""
     ACHIEVEMENT = "achievement"
     MILESTONE = "milestone"
     TIER = "tier"
@@ -101,7 +102,8 @@ class BadgeMetadata:
 
 @dataclass
 class BadgeDesign:
-    """Badge visual design configuration."""
+    """
+        Badge visual design configuration."""
     template_id: str
     background_color: str
     border_color: str
@@ -151,7 +153,8 @@ class Badge:
 
 @dataclass
 class BadgeTemplate:
-    """Template for generating badges."""
+    """
+        Template for generating badges."""
     id: str
     name: str
     badge_type: BadgeType
@@ -169,7 +172,8 @@ class BadgeGenerator:
     """
     
     def __init__(self, database_connection=None, cache_client=None, blockchain_client=None):
-        """Initialize the badge generator."""
+        """
+        Initialize the badge generator."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.db = database_connection
         self.cache = cache_client
@@ -178,6 +182,7 @@ class BadgeGenerator:
         self.generated_badges: Dict[str, Badge] = {}
         self.user_badges: Dict[str, List[str]] = {}
         self.rarity_multipliers = self._initialize_rarity_multipliers()
+
         
         self.logger.info("BadgeGenerator initialized")
     
@@ -214,6 +219,7 @@ class BadgeGenerator:
                 "threshold": 1
             }
         )
+
         
         templates["viral_master"] = BadgeTemplate(
             id="viral_master",
@@ -244,6 +250,7 @@ class BadgeGenerator:
                 "threshold": 1000000
             }
         )
+
         
         templates["collaboration_champion"] = BadgeTemplate(
             id="collaboration_champion",
@@ -274,6 +281,7 @@ class BadgeGenerator:
                 "threshold": 10
             }
         )
+
         
         templates["tier_legend"] = BadgeTemplate(
             id="tier_legend",
@@ -303,6 +311,7 @@ class BadgeGenerator:
                 "threshold": "legend"
             }
         )
+
         
         templates["quality_excellence"] = BadgeTemplate(
             id="quality_excellence",
@@ -333,6 +342,7 @@ class BadgeGenerator:
                 "threshold": 9.0
             }
         )
+
         
         return templates
     
@@ -354,31 +364,40 @@ class BadgeGenerator:
         trigger_data: Dict[str, Any],
         customizations: Optional[Dict[str, Any]] = None
     ) -> Optional[Badge]:
-        """Generate a badge from a template."""
+        """
+        Generate a badge from a template."""
         try:
             if template_id not in self.badge_templates:
                 self.logger.error(f"Template not found: {template_id}")
+
                 return None
+
             
             template = self.badge_templates[template_id]
+
             customizations = customizations or {}
             
             # Generate badge ID
             badge_id = str(uuid4())
             
             # Determine rarity
+
             rarity = self._determine_badge_rarity(template, trigger_data)
             
             # Create design
+
             design = self._create_badge_design(template, rarity, customizations)
             
             # Create metadata
+
             metadata = self._create_badge_metadata(template, rarity, trigger_data)
             
             # Calculate rarity score
+
             rarity_score = self._calculate_rarity_score(rarity, trigger_data)
             
             # Create badge
+
             badge = Badge(
                 id=badge_id,
                 name=metadata.name,
@@ -394,7 +413,9 @@ class BadgeGenerator:
             )
             
             # Generate badge image
+
             image_data = await self._generate_badge_image(badge)
+
             if image_data:
                 # In a real implementation, would upload to IPFS or cloud storage
                 badge.metadata.image_url = f"https://badges.iacherie.com/{badge_id}.png"
@@ -403,11 +424,13 @@ class BadgeGenerator:
             self.generated_badges[badge_id] = badge
             
             self.logger.info(f"✅ Badge generated: {badge.name} ({rarity.value}) for {user_id}")
+
             
             return badge
             
         except Exception as e:
             self.logger.error(f"Error generating badge from template: {e}")
+
             return None
     
     def _determine_badge_rarity(
@@ -418,44 +441,60 @@ class BadgeGenerator:
         """Determine badge rarity based on template and trigger data."""
         try:
             # Get base rarity distribution
+
             rarity_dist = template.rarity_distribution
             
             # Apply bonuses based on trigger data
+
             bonus_multipliers = {}
             
             # Quality bonus
+
             quality_score = trigger_data.get("quality_score", 0)
+
             if quality_score >= 9.5:
                 bonus_multipliers[BadgeRarity.LEGENDARY] = 2.0
             elif quality_score >= 9.0:
                 bonus_multipliers[BadgeRarity.EPIC] = 1.5
             
             # Performance bonus
+
             views = trigger_data.get("views", 0)
+
             if views >= 10000000:  # 10M+ views
                 bonus_multipliers[BadgeRarity.MYTHIC] = 1.5
             elif views >= 1000000:  # 1M+ views
                 bonus_multipliers[BadgeRarity.LEGENDARY] = 1.3
             
             # Speed bonus (for time-sensitive achievements)
+
+
             time_bonus = trigger_data.get("time_bonus", 1.0)
+
             if time_bonus > 1.5:
                 for rarity in [BadgeRarity.EPIC, BadgeRarity.LEGENDARY]:
                     bonus_multipliers[rarity] = bonus_multipliers.get(rarity, 1.0) * 1.2
             
             # Apply bonuses to distribution
+
             adjusted_dist = {}
             for rarity, probability in rarity_dist.items():
                 multiplier = bonus_multipliers.get(rarity, 1.0)
+
                 adjusted_dist[rarity] = probability * multiplier
             
             # Normalize probabilities
+
             total_prob = sum(adjusted_dist.values())
+
             if total_prob > 0:
                 adjusted_dist = {k: v / total_prob for k, v in adjusted_dist.items()}
             
             # Select rarity based on adjusted distribution
+
             rand_value = random.random()
+
+
             cumulative = 0.0
             
             for rarity, probability in adjusted_dist.items():
@@ -468,6 +507,7 @@ class BadgeGenerator:
             
         except Exception as e:
             self.logger.error(f"Error determining badge rarity: {e}")
+
             return BadgeRarity.COMMON
     
     def _create_badge_design(
@@ -481,6 +521,7 @@ class BadgeGenerator:
             design_template = template.design_template.copy()
             
             # Apply rarity-based modifications
+
             rarity_modifications = {
                 BadgeRarity.COMMON: {
                     "effects": ["glow"]
@@ -501,12 +542,15 @@ class BadgeGenerator:
                     "effects": ["glow", "gradient", "sparkle", "pulse", "rainbow", "cosmic"]
                 }
             }
+
             
             rarity_mods = rarity_modifications.get(rarity, {})
+
             design_template.update(rarity_mods)
             
             # Apply customizations
             design_template.update(customizations.get("design", {}))
+
             
             return BadgeDesign(
                 template_id=template.id,
@@ -520,9 +564,11 @@ class BadgeGenerator:
                 font_family=design_template.get("font_family", "Arial"),
                 custom_elements=design_template.get("custom_elements", {})
             )
+
             
         except Exception as e:
             self.logger.error(f"Error creating badge design: {e}")
+
             return BadgeDesign(
                 template_id=template.id,
                 background_color="#4CAF50",
@@ -542,6 +588,7 @@ class BadgeGenerator:
             metadata_template = template.metadata_template.copy()
             
             # Build attributes
+
             attributes = metadata_template.get("attributes", []).copy()
             
             # Add rarity attribute
@@ -562,6 +609,7 @@ class BadgeGenerator:
                     "trait_type": "Quality Score",
                     "value": trigger_data["quality_score"]
                 })
+
             
             if "views" in trigger_data:
                 attributes.append({
@@ -574,6 +622,7 @@ class BadgeGenerator:
                 name=metadata_template.get("name", "Badge"),
                 description=metadata_template.get("description", "Achievement badge"),
                 image_url="",  # Will be set after image generation
+
                 attributes=attributes,
                 properties={
                     "rarity": rarity.value,
@@ -581,9 +630,11 @@ class BadgeGenerator:
                     "generated_at": datetime.utcnow().isoformat()
                 }
             )
+
             
         except Exception as e:
             self.logger.error(f"Error creating badge metadata: {e}")
+
             return BadgeMetadata(
                 name="Badge",
                 description="Achievement badge",
@@ -601,48 +652,71 @@ class BadgeGenerator:
             base_score = self.rarity_multipliers[rarity]
             
             # Apply bonus modifiers
+
             bonus_score = 0.0
             
             # Quality bonus
+
             quality_score = trigger_data.get("quality_score", 0)
+
             if quality_score > 0:
                 bonus_score += (quality_score - 5) * 0.1  # Bonus for quality > 5
             
             # Performance bonus
+
             views = trigger_data.get("views", 0)
+
             if views > 0:
                 import math
+
                 view_bonus = math.log10(views) * 0.5  # Logarithmic view bonus
                 bonus_score += view_bonus
             
             # Time bonus
+
             time_bonus = trigger_data.get("time_bonus", 1.0)
+
             if time_bonus > 1.0:
                 bonus_score += (time_bonus - 1.0) * 0.3
+
             
             total_score = base_score + bonus_score
             return max(1.0, total_score)  # Minimum score of 1.0
             
         except Exception as e:
             self.logger.error(f"Error calculating rarity score: {e}")
+
             return 1.0
     
     async def _generate_badge_image(self, badge: Badge) -> Optional[bytes]:
         """Generate badge image based on design."""
         try:
             design = badge.design
+
             size = design.size
             
             # Create image
+
             image = Image.new('RGBA', size, (0, 0, 0, 0))
+
+
             draw = ImageDraw.Draw(image)
             
             # Parse colors
+
             bg_color = self._hex_to_rgb(design.background_color)
+
+
             border_color = self._hex_to_rgb(design.border_color)
+
+
             text_color = self._hex_to_rgb(design.text_color)
+
+
             
             center = (size[0] // 2, size[1] // 2)
+
+
             radius = min(size[0], size[1]) // 2 - 20
             
             # Draw shape
@@ -654,26 +728,37 @@ class BadgeGenerator:
                 ], fill=bg_color)
                 
                 # Draw border
+
                 border_width = 8
                 draw.ellipse([
                     center[0] - radius, center[1] - radius,
                     center[0] + radius, center[1] + radius
                 ], outline=border_color, width=border_width)
+
             
             elif design.shape == "hexagon":
                 # Calculate hexagon points
                 import math
+
                 points = []
                 for i in range(6):
                     angle = i * math.pi / 3
+
                     x = center[0] + radius * math.cos(angle)
+
+
                     y = center[1] + radius * math.sin(angle)
+
                     points.append((x, y))
+
                 
                 draw.polygon(points, fill=bg_color, outline=border_color, width=8)
+
             
             elif design.shape == "shield":
                 # Shield shape (simplified)
+
+
                 points = [
                     (center[0], center[1] - radius),
                     (center[0] + radius * 0.8, center[1] - radius * 0.6),
@@ -683,12 +768,17 @@ class BadgeGenerator:
                     (center[0] - radius * 0.8, center[1] - radius * 0.6)
                 ]
                 draw.polygon(points, fill=bg_color, outline=border_color, width=8)
+
             
             elif design.shape == "star":
                 # Star shape (simplified 5-point star)
+
                 import math
+
                 outer_radius = radius
+
                 inner_radius = radius * 0.4
+
                 points = []
                 
                 for i in range(10):
@@ -697,76 +787,113 @@ class BadgeGenerator:
                         r = outer_radius
                     else:
                         r = inner_radius
+
                     x = center[0] + r * math.cos(angle - math.pi / 2)
+
+
                     y = center[1] + r * math.sin(angle - math.pi / 2)
+
                     points.append((x, y))
+
                 
                 draw.polygon(points, fill=bg_color, outline=border_color, width=6)
             
             # Add icon (simplified - would use actual icon fonts/images)
+
+
             icon_text = self._get_icon_text(design.icon_type)
+
             try:
                 # Try to use a larger font size
+
                 font_size = radius // 3
+
                 font = ImageFont.truetype("arial.ttf", font_size)
+
             except:
                 # Fallback to default font
+
                 font = ImageFont.load_default()
             
             # Get text size for centering
+
             bbox = draw.textbbox((0, 0), icon_text, font=font)
+
+
             text_width = bbox[2] - bbox[0]
+
             text_height = bbox[3] - bbox[1]
+
             
             text_x = center[0] - text_width // 2
+
             text_y = center[1] - text_height // 2 - radius // 4
             
             draw.text((text_x, text_y), icon_text, fill=text_color, font=font)
             
             # Add badge name
+
             name_y = center[1] + radius // 3
+
             name_bbox = draw.textbbox((0, 0), badge.name, font=font)
+
+
             name_width = name_bbox[2] - name_bbox[0]
+
             name_x = center[0] - name_width // 2
             
             draw.text((name_x, name_y), badge.name, fill=text_color, font=font)
             
             # Apply effects (simplified)
+
             if "glow" in design.effects:
                 # Add glow effect (simplified)
+
                 pass
             
             if "sparkle" in design.effects:
                 # Add sparkle effect (simplified)
+
                 for _ in range(10):
                     sparkle_x = random.randint(center[0] - radius, center[0] + radius)
+
+
                     sparkle_y = random.randint(center[1] - radius, center[1] + radius)
+
                     draw.ellipse([
                         sparkle_x - 3, sparkle_y - 3,
                         sparkle_x + 3, sparkle_y + 3
                     ], fill=(255, 255, 255, 200))
             
             # Convert to bytes
+
             img_byte_arr = io.BytesIO()
+
             image.save(img_byte_arr, format='PNG')
+
             img_byte_arr.seek(0)
+
             
             return img_byte_arr.getvalue()
+
             
         except Exception as e:
             self.logger.error(f"Error generating badge image: {e}")
+
             return None
     
     def _hex_to_rgb(self, hex_color: str) -> Tuple[int, int, int]:
         """Convert hex color to RGB tuple."""
         try:
             hex_color = hex_color.lstrip('#')
+
             return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
         except:
             return (76, 175, 80)  # Default green
     
     def _get_icon_text(self, icon_type: str) -> str:
-        """Get text representation of icon."""
+        """
+        Get text representation of icon."""
         icons = {
             "upload": "↑",
             "fire": "🔥",
@@ -791,18 +918,24 @@ class BadgeGenerator:
         try:
             if not self.blockchain:
                 self.logger.warning("Blockchain client not available")
+
                 return False
             
             # Create contract configuration
+
             contract = BadgeContract(
                 network=network,
                 contract_address="0x...",  # Would be actual contract address
+
                 token_standard="ERC721",
                 royalty_percentage=2.5,  # 2.5% royalty
+
                 metadata_frozen=True
             )
             
             # Mint NFT (mock implementation)
+
+
             token_id = f"{badge.id}_{int(datetime.utcnow().timestamp())}"
             transaction_hash = f"0x{hashlib.sha256(token_id.encode()).hexdigest()}"
             
@@ -811,6 +944,7 @@ class BadgeGenerator:
             badge.owner_id = owner_id
             badge.status = BadgeStatus.MINTED
             badge.minted_at = datetime.utcnow()
+
             badge.token_id = token_id
             badge.transaction_hash = transaction_hash
             badge.current_supply = 1
@@ -819,13 +953,16 @@ class BadgeGenerator:
             if owner_id not in self.user_badges:
                 self.user_badges[owner_id] = []
             self.user_badges[owner_id].append(badge.id)
+
             
             self.logger.info(f"✅ Badge minted as NFT: {badge.name} for {owner_id}")
+
             
             return True
             
         except Exception as e:
             self.logger.error(f"Error minting badge as NFT: {e}")
+
             return False
     
     async def award_badge_to_user(
@@ -840,15 +977,19 @@ class BadgeGenerator:
             # Determine template if not specified
             if not template_id:
                 template_id = self._determine_badge_template(trigger_data)
+
             
             if not template_id:
                 self.logger.warning("No suitable badge template found")
+
                 return None
             
             # Generate badge
+
             badge = await self.generate_badge_from_template(
                 template_id, user_id, trigger_data
             )
+
             
             if not badge:
                 return None
@@ -856,21 +997,27 @@ class BadgeGenerator:
             # Mint as NFT if requested
             if auto_mint:
                 success = await self.mint_badge_as_nft(badge, user_id)
+
                 if not success:
                     self.logger.warning(f"Failed to mint badge {badge.id}")
+
             
             self.logger.info(f"🏅 Badge awarded: {badge.name} to {user_id}")
+
             
             return badge
             
         except Exception as e:
             self.logger.error(f"Error awarding badge to user: {e}")
+
             return None
     
     def _determine_badge_template(self, trigger_data: Dict[str, Any]) -> Optional[str]:
         """Determine appropriate badge template based on trigger data."""
         try:
             trigger_type = trigger_data.get("trigger_type")
+
+
             
             template_mapping = {
                 "first_upload": "first_upload",
@@ -881,9 +1028,11 @@ class BadgeGenerator:
             }
             
             return template_mapping.get(trigger_type)
+
             
         except Exception as e:
             self.logger.error(f"Error determining badge template: {e}")
+
             return None
     
     async def get_user_badges(
@@ -895,14 +1044,17 @@ class BadgeGenerator:
         try:
             if user_id not in self.user_badges:
                 return []
+
             
             user_badge_data = []
             
             for badge_id in self.user_badges[user_id]:
                 if badge_id not in self.generated_badges:
                     continue
+
                 
                 badge = self.generated_badges[badge_id]
+
                 
                 badge_data = {
                     "badge": badge,
@@ -917,12 +1069,15 @@ class BadgeGenerator:
                 user_badge_data.append(badge_data)
             
             # Sort by rarity score (highest first)
+
             user_badge_data.sort(key=lambda x: x["rarity_score"], reverse=True)
+
             
             return user_badge_data
             
         except Exception as e:
             self.logger.error(f"Error getting user badges: {e}")
+
             return []
     
     async def get_badge_analytics(self, badge_id: str) -> Dict[str, Any]:
@@ -930,14 +1085,19 @@ class BadgeGenerator:
         try:
             if badge_id not in self.generated_badges:
                 return {}
+
             
             badge = self.generated_badges[badge_id]
             
             # Count total holders
+
             total_holders = sum(
                 1 for user_badges in self.user_badges.values()
+
                 if badge_id in user_badges
             )
+
+
             
             analytics = {
                 "badge_id": badge_id,
@@ -956,6 +1116,7 @@ class BadgeGenerator:
             
         except Exception as e:
             self.logger.error(f"Error getting badge analytics: {e}")
+
             return {}
     
     async def create_badge_collection(
@@ -969,10 +1130,12 @@ class BadgeGenerator:
             collection_id = str(uuid4())
             
             # Validate badge IDs
+
             valid_badges = [
                 bid for bid in badge_ids 
                 if bid in self.generated_badges
             ]
+
             
             collection = {
                 "id": collection_id,
@@ -985,11 +1148,13 @@ class BadgeGenerator:
             }
             
             self.logger.info(f"✅ Badge collection created: {collection_name}")
+
             
             return collection
             
         except Exception as e:
             self.logger.error(f"Error creating badge collection: {e}")
+
             return {}
     
     def _calculate_collection_rarity_distribution(
@@ -1003,8 +1168,10 @@ class BadgeGenerator:
             for badge_id in badge_ids:
                 if badge_id not in self.generated_badges:
                     continue
+
                 
                 badge = self.generated_badges[badge_id]
+
                 rarity = badge.rarity.value
                 
                 distribution[rarity] = distribution.get(rarity, 0) + 1
@@ -1013,6 +1180,7 @@ class BadgeGenerator:
             
         except Exception as e:
             self.logger.error(f"Error calculating collection rarity distribution: {e}")
+
             return {}
 
 
@@ -1036,6 +1204,7 @@ async def award_badge_to_user(
     template_id: Optional[str] = None,
     auto_mint: bool = True
 ) -> Optional[Badge]:
-    """Convenience function to award a badge to a user."""
+    """
+        Convenience function to award a badge to a user."""
     generator = await get_badge_generator()
     return await generator.award_badge_to_user(user_id, trigger_data, template_id, auto_mint)

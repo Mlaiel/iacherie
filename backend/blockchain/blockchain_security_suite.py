@@ -55,7 +55,8 @@ logger = logging.getLogger(__name__)
 # =============================================================================
 
 class KeyType(Enum):
-    """Types of cryptographic keys"""
+    """
+        Types of cryptographic keys"""
     SYMMETRIC = "symmetric"
     ASYMMETRIC_PRIVATE = "asymmetric_private"
     ASYMMETRIC_PUBLIC = "asymmetric_public"
@@ -122,7 +123,8 @@ class CryptographicKey:
 
 @dataclass
 class KeyAccessLog:
-    """Key access log entry"""
+    """
+        Key access log entry"""
     access_id: str
     key_id: str
     accessor: str
@@ -132,7 +134,8 @@ class KeyAccessLog:
     ip_address: Optional[str] = None
 
 class KeyVault:
-    """Enterprise cryptographic key vault with security controls"""
+    """
+        Enterprise cryptographic key vault with security controls"""
     
     def __init__(self, master_key: Optional[bytes] = None):
         self.master_key = master_key or self._generate_master_key()
@@ -140,10 +143,13 @@ class KeyVault:
         self.access_logs: List[KeyAccessLog] = []
         self.access_policies: Dict[str, Dict[str, Any]] = {}
         self._fernet = Fernet(self.master_key)
+
         
     def _generate_master_key(self) -> bytes:
-        """Generate master encryption key"""
+        """
+        Generate master encryption key"""
         return Fernet.generate_key()
+
         
     async def store_key(
         self,
@@ -153,12 +159,16 @@ class KeyVault:
         expires_at: Optional[datetime] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Store cryptographic key securely"""
+        """
+        Store cryptographic key securely"""
         try:
             key_id = str(uuid.uuid4())
             
             # Encrypt key data
+
             encrypted_key_data = self._fernet.encrypt(key_data)
+
+
             
             key = CryptographicKey(
                 key_id=key_id,
@@ -170,14 +180,17 @@ class KeyVault:
                 status=KeyStatus.ACTIVE,
                 metadata=metadata or {}
             )
+
             
             self.keys[key_id] = key
             
             logger.info(f"Key stored: {key_id} ({key_type.value})")
+
             return key_id
             
         except Exception as e:
             logger.error(f"Error storing key: {str(e)}")
+
             raise
 
     async def retrieve_key(
@@ -190,41 +203,52 @@ class KeyVault:
         try:
             if key_id not in self.keys:
                 await self._log_access(key_id, accessor, operation, False)
+
                 return None
+
             
             key = self.keys[key_id]
             
             # Check key status
             if key.status != KeyStatus.ACTIVE:
                 await self._log_access(key_id, accessor, operation, False)
+
                 return None
             
             # Check expiration
             if key.expires_at and key.expires_at < datetime.utcnow():
                 key.status = KeyStatus.EXPIRED
                 await self._log_access(key_id, accessor, operation, False)
+
                 return None
             
             # Check access policy
             if not await self._check_access_policy(key_id, accessor, operation):
                 await self._log_access(key_id, accessor, operation, False)
+
                 return None
             
             # Decrypt key data
+
             decrypted_data = self._fernet.decrypt(key.key_data)
             
             # Update access tracking
             key.access_count += 1
             key.last_accessed = datetime.utcnow()
+
             
             await self._log_access(key_id, accessor, operation, True)
+
             
             logger.info(f"Key retrieved: {key_id} by {accessor}")
+
             return decrypted_data
             
         except Exception as e:
             logger.error(f"Error retrieving key: {str(e)}")
+
             await self._log_access(key_id, accessor, operation, False)
+
             return None
 
     async def rotate_key(self, key_id: str, new_key_data: bytes) -> str:
@@ -232,11 +256,14 @@ class KeyVault:
         try:
             if key_id not in self.keys:
                 raise ValueError(f"Key not found: {key_id}")
+
+
             
             old_key = self.keys[key_id]
             old_key.status = KeyStatus.ROTATED
             
             # Create new key with same properties
+
             new_key_id = await self.store_key(
                 old_key.key_type,
                 old_key.algorithm,
@@ -244,12 +271,15 @@ class KeyVault:
                 old_key.expires_at,
                 old_key.metadata
             )
+
             
             logger.info(f"Key rotated: {key_id} -> {new_key_id}")
+
             return new_key_id
             
         except Exception as e:
             logger.error(f"Error rotating key: {str(e)}")
+
             raise
 
     async def _check_access_policy(
@@ -262,21 +292,28 @@ class KeyVault:
         try:
             if key_id not in self.access_policies:
                 return True  # Default allow if no policy
+
             
             policy = self.access_policies[key_id]
             
             # Check allowed accessors
+
             allowed_accessors = policy.get('allowed_accessors', [])
+
             if allowed_accessors and accessor not in allowed_accessors:
                 return False
             
             # Check allowed operations
+
             allowed_operations = policy.get('allowed_operations', [])
+
             if allowed_operations and operation not in allowed_operations:
                 return False
             
             # Check time restrictions
+
             time_restrictions = policy.get('time_restrictions')
+
             if time_restrictions:
                 current_hour = datetime.utcnow().hour
                 if not (time_restrictions['start_hour'] <= current_hour <= time_restrictions['end_hour']):
@@ -286,6 +323,7 @@ class KeyVault:
             
         except Exception as e:
             logger.error(f"Error checking access policy: {str(e)}")
+
             return False
 
     async def _log_access(
@@ -307,8 +345,10 @@ class KeyVault:
                 success=success,
                 ip_address=ip_address
             )
+
             
             self.access_logs.append(access_log)
+
             
         except Exception as e:
             logger.error(f"Error logging access: {str(e)}")
@@ -333,7 +373,8 @@ class SecureWallet:
 
 @dataclass
 class WalletTransaction:
-    """Wallet transaction record"""
+    """
+        Wallet transaction record"""
     tx_id: str
     wallet_id: str
     to_address: str
@@ -345,7 +386,8 @@ class WalletTransaction:
     created_at: datetime
 
 class WalletManager:
-    """Enterprise wallet management with HD support"""
+    """
+        Enterprise wallet management with HD support"""
     
     def __init__(self, key_vault: KeyVault):
         self.key_vault = key_vault
@@ -359,20 +401,27 @@ class WalletManager:
         derivation_path: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Create new secure wallet"""
+        """
+        Create new secure wallet"""
         try:
             wallet_id = str(uuid.uuid4())
             
             # Generate key pair
+
             private_key = ec.generate_private_key(ec.SECP256K1(), default_backend())
+
+
             public_key = private_key.public_key()
             
             # Serialize keys
+
             private_key_bytes = private_key.private_bytes(
                 encoding=serialization.Encoding.PEM,
                 format=serialization.PrivateFormat.PKCS8,
                 encryption_algorithm=serialization.NoEncryption()
             )
+
+
             
             public_key_bytes = public_key.public_bytes(
                 encoding=serialization.Encoding.PEM,
@@ -380,6 +429,7 @@ class WalletManager:
             )
             
             # Store private key in vault
+
             key_id = await self.key_vault.store_key(
                 KeyType.ASYMMETRIC_PRIVATE,
                 "SECP256K1",
@@ -387,6 +437,8 @@ class WalletManager:
             )
             
             # Generate address (simplified - would use proper address derivation)
+
+
             address = f"0x{hashlib.sha256(public_key_bytes).hexdigest()[:40]}"
             
             wallet = SecureWallet(
@@ -399,15 +451,18 @@ class WalletManager:
                 created_at=datetime.utcnow(),
                 metadata=metadata or {}
             )
+
             
             self.wallets[wallet_id] = wallet
             self.address_index[address] = wallet_id
             
             logger.info(f"Wallet created: {wallet_id} ({address})")
+
             return wallet_id
             
         except Exception as e:
             logger.error(f"Error creating wallet: {str(e)}")
+
             raise
 
     async def sign_transaction(
@@ -422,19 +477,26 @@ class WalletManager:
         try:
             if wallet_id not in self.wallets:
                 raise ValueError(f"Wallet not found: {wallet_id}")
+
+
             
             wallet = self.wallets[wallet_id]
             
             # Retrieve private key from vault
+
             key_id = wallet.encrypted_private_key.decode()
+
+
             private_key_bytes = await self.key_vault.retrieve_key(
                 key_id, signer, "transaction_sign"
             )
+
             
             if not private_key_bytes:
                 raise ValueError("Failed to retrieve private key")
             
             # Create transaction data
+
             tx_data = {
                 'from': wallet.address,
                 'to': to_address,
@@ -445,13 +507,19 @@ class WalletManager:
             }
             
             # Sign transaction (simplified)
+
+
             tx_bytes = json.dumps(tx_data, sort_keys=True).encode()
+
+
             tx_hash = hashlib.sha256(tx_bytes).hexdigest()
             
             # Create signed transaction
+
             signed_tx = f"signed_{tx_hash}"
             
             # Store transaction
+
             transaction = WalletTransaction(
                 tx_id=str(uuid.uuid4()),
                 wallet_id=wallet_id,
@@ -463,18 +531,22 @@ class WalletManager:
                 status="signed",
                 created_at=datetime.utcnow()
             )
+
             
             self.transactions[transaction.tx_id] = transaction
             
             # Update wallet
             wallet.transaction_count += 1
             wallet.last_used = datetime.utcnow()
+
             
             logger.info(f"Transaction signed: {transaction.tx_id}")
+
             return transaction.tx_id
             
         except Exception as e:
             logger.error(f"Error signing transaction: {str(e)}")
+
             raise
 
     async def get_wallet_by_address(self, address: str) -> Optional[SecureWallet]:
@@ -483,10 +555,12 @@ class WalletManager:
             if address in self.address_index:
                 wallet_id = self.address_index[address]
                 return self.wallets.get(wallet_id)
+
             return None
             
         except Exception as e:
             logger.error(f"Error getting wallet by address: {str(e)}")
+
             return None
 
 # =============================================================================
@@ -508,12 +582,14 @@ class AuditEvent:
     user_agent: Optional[str] = None
 
 class AuditLogger:
-    """Immutable security audit logging system"""
+    """
+        Immutable security audit logging system"""
     
     def __init__(self, db_path: str = "security_audit.db"):
         self.db_path = db_path
         self.events: List[AuditEvent] = []
         self._init_database()
+
         
     def _init_database(self):
         """Initialize audit database"""
@@ -534,10 +610,13 @@ class AuditLogger:
                         hash_chain TEXT
                     )
                 ''')
+
                 conn.commit()
+
                 
         except Exception as e:
             logger.error(f"Error initializing audit database: {str(e)}")
+
             
     async def log_event(
         self,
@@ -566,6 +645,7 @@ class AuditLogger:
             )
             
             # Calculate hash chain for immutability
+
             hash_chain = await self._calculate_hash_chain(event)
             
             # Store in memory
@@ -573,24 +653,30 @@ class AuditLogger:
             
             # Store in database
             await self._store_event_in_db(event, hash_chain)
+
             
             logger.info(f"Audit event logged: {event.event_id}")
+
             return event.event_id
             
         except Exception as e:
             logger.error(f"Error logging audit event: {str(e)}")
+
             raise
 
     async def _calculate_hash_chain(self, event: AuditEvent) -> str:
         """Calculate hash chain for event immutability"""
         try:
             # Get previous hash
+
             previous_hash = ""
             if self.events:
                 # In production, would retrieve from database
+
                 previous_hash = "previous_hash_placeholder"
             
             # Create event data for hashing
+
             event_data = {
                 'event_id': event.event_id,
                 'event_type': event.event_type.value,
@@ -603,11 +689,15 @@ class AuditLogger:
             }
             
             # Calculate hash
+
             event_bytes = json.dumps(event_data, sort_keys=True).encode()
+
             return hashlib.sha256(event_bytes).hexdigest()
+
             
         except Exception as e:
             logger.error(f"Error calculating hash chain: {str(e)}")
+
             return ""
 
     async def _store_event_in_db(self, event: AuditEvent, hash_chain: str):
@@ -618,6 +708,7 @@ class AuditLogger:
                     INSERT INTO audit_events 
                     (event_id, event_type, timestamp, actor, resource, action, result, 
                      details, ip_address, user_agent, hash_chain)
+
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ''', (
                     event.event_id,
@@ -632,7 +723,9 @@ class AuditLogger:
                     event.user_agent,
                     hash_chain
                 ))
+
                 conn.commit()
+
                 
         except Exception as e:
             logger.error(f"Error storing event in database: {str(e)}")
@@ -644,8 +737,11 @@ class AuditLogger:
                 cursor = conn.execute('''
                     SELECT * FROM audit_events ORDER BY timestamp
                 ''')
+
+
                 
                 events = cursor.fetchall()
+
                 
                 for i, event_row in enumerate(events):
                     # Verify hash chain
@@ -656,6 +752,7 @@ class AuditLogger:
                 
         except Exception as e:
             logger.error(f"Error verifying chain integrity: {str(e)}")
+
             return False
 
 # =============================================================================
@@ -677,7 +774,8 @@ class SecurityThreat:
 
 @dataclass
 class SecurityMetrics:
-    """Security monitoring metrics"""
+    """
+        Security monitoring metrics"""
     failed_logins: int = 0
     suspicious_transactions: int = 0
     unusual_access_patterns: int = 0
@@ -685,7 +783,8 @@ class SecurityMetrics:
     last_scan: Optional[datetime] = None
 
 class ThreatDetector:
-    """Real-time security threat detection system"""
+    """
+        Real-time security threat detection system"""
     
     def __init__(self, audit_logger: AuditLogger):
         self.audit_logger = audit_logger
@@ -696,40 +795,50 @@ class ThreatDetector:
         self.rate_limits: Dict[str, Dict[str, Any]] = {}
         
     async def detect_threats(self, event_data: Dict[str, Any]) -> List[str]:
-        """Detect security threats from event data"""
+        """
+        Detect security threats from event data"""
         try:
             threats_detected = []
             
             # Check for suspicious IP patterns
             if 'ip_address' in event_data:
                 ip_threats = await self._detect_ip_threats(event_data)
+
                 threats_detected.extend(ip_threats)
             
             # Check for unusual access patterns
             if 'actor' in event_data:
                 access_threats = await self._detect_access_pattern_threats(event_data)
+
                 threats_detected.extend(access_threats)
             
             # Check for transaction anomalies
             if 'transaction' in event_data:
                 tx_threats = await self._detect_transaction_threats(event_data)
+
                 threats_detected.extend(tx_threats)
             
             # Check for rate limit violations
+
             rate_threats = await self._detect_rate_limit_violations(event_data)
+
             threats_detected.extend(rate_threats)
+
             
             return threats_detected
             
         except Exception as e:
             logger.error(f"Error detecting threats: {str(e)}")
+
             return []
 
     async def _detect_ip_threats(self, event_data: Dict[str, Any]) -> List[str]:
         """Detect IP-based threats"""
         try:
             threats = []
+
             ip_address = event_data.get('ip_address')
+
             
             if not ip_address:
                 return threats
@@ -743,11 +852,13 @@ class ThreatDetector:
                     event_data.get('resource', 'unknown'),
                     f"Access attempt from blacklisted IP: {ip_address}"
                 )
+
                 threats.append(threat_id)
             
             # Check for private IP in public context
             try:
                 ip_obj = ipaddress.ip_address(ip_address)
+
                 if ip_obj.is_private and event_data.get('context') == 'public':
                     threat_id = await self._create_threat(
                         "private_ip_public_context",
@@ -756,9 +867,12 @@ class ThreatDetector:
                         event_data.get('resource', 'unknown'),
                         f"Private IP in public context: {ip_address}"
                     )
+
                     threats.append(threat_id)
+
             except ValueError:
                 # Invalid IP format
+
                 threat_id = await self._create_threat(
                     "invalid_ip_format",
                     ThreatLevel.LOW,
@@ -766,33 +880,44 @@ class ThreatDetector:
                     event_data.get('resource', 'unknown'),
                     f"Invalid IP format: {ip_address}"
                 )
+
                 threats.append(threat_id)
+
             
             return threats
             
         except Exception as e:
             logger.error(f"Error detecting IP threats: {str(e)}")
+
             return []
 
     async def _detect_access_pattern_threats(self, event_data: Dict[str, Any]) -> List[str]:
         """Detect unusual access pattern threats"""
         try:
             threats = []
+
             actor = event_data.get('actor')
+
             
             if not actor:
                 return threats
             
             # Check for rapid successive access attempts
+
             current_time = datetime.utcnow()
             
             # Simple rate limiting check (would be more sophisticated in production)
+
             if actor in self.rate_limits:
                 last_access = self.rate_limits[actor].get('last_access')
+
+
                 access_count = self.rate_limits[actor].get('count', 0)
+
                 
                 if last_access and (current_time - last_access).seconds < 60:
                     if access_count > 10:  # More than 10 accesses per minute
+
                         threat_id = await self._create_threat(
                             "rapid_access_pattern",
                             ThreatLevel.MEDIUM,
@@ -800,6 +925,7 @@ class ThreatDetector:
                             actor,
                             f"Rapid access pattern detected for actor: {actor}"
                         )
+
                         threats.append(threat_id)
             
             # Update rate limit tracking
@@ -813,17 +939,22 @@ class ThreatDetector:
             
         except Exception as e:
             logger.error(f"Error detecting access pattern threats: {str(e)}")
+
             return []
 
     async def _detect_transaction_threats(self, event_data: Dict[str, Any]) -> List[str]:
         """Detect transaction-based threats"""
         try:
             threats = []
+
             transaction = event_data.get('transaction', {})
             
             # Check for large transaction amounts
+
             amount = transaction.get('amount')
+
             if amount and Decimal(str(amount)) > Decimal('1000000'):  # Large amount threshold
+
                 threat_id = await self._create_threat(
                     "large_transaction",
                     ThreatLevel.MEDIUM,
@@ -831,10 +962,13 @@ class ThreatDetector:
                     transaction.get('wallet_id', 'unknown'),
                     f"Large transaction detected: {amount}"
                 )
+
                 threats.append(threat_id)
             
             # Check for unusual destination addresses
+
             to_address = transaction.get('to_address')
+
             if to_address and to_address in self.blacklisted_ips:
                 threat_id = await self._create_threat(
                     "blacklisted_destination",
@@ -843,12 +977,15 @@ class ThreatDetector:
                     transaction.get('wallet_id', 'unknown'),
                     f"Transaction to blacklisted address: {to_address}"
                 )
+
                 threats.append(threat_id)
+
             
             return threats
             
         except Exception as e:
             logger.error(f"Error detecting transaction threats: {str(e)}")
+
             return []
 
     async def _detect_rate_limit_violations(self, event_data: Dict[str, Any]) -> List[str]:
@@ -863,6 +1000,7 @@ class ThreatDetector:
             
         except Exception as e:
             logger.error(f"Error detecting rate limit violations: {str(e)}")
+
             return []
 
     async def _create_threat(
@@ -876,6 +1014,8 @@ class ThreatDetector:
         """Create new threat record"""
         try:
             threat_id = str(uuid.uuid4())
+
+
             
             threat = SecurityThreat(
                 threat_id=threat_id,
@@ -886,6 +1026,7 @@ class ThreatDetector:
                 target_resource=target_resource,
                 description=description
             )
+
             
             self.threats[threat_id] = threat
             
@@ -908,10 +1049,12 @@ class ThreatDetector:
             self.metrics.threat_detections += 1
             
             logger.warning(f"Threat detected: {threat_id} ({threat_type})")
+
             return threat_id
             
         except Exception as e:
             logger.error(f"Error creating threat: {str(e)}")
+
             raise
 
 # =============================================================================
@@ -931,7 +1074,8 @@ class ComplianceCheck:
 
 @dataclass
 class ComplianceReport:
-    """Compliance report"""
+    """
+        Compliance report"""
     report_id: str
     framework: ComplianceFramework
     generated_at: datetime
@@ -943,16 +1087,19 @@ class ComplianceReport:
     checks: List[ComplianceCheck] = field(default_factory=list)
 
 class ComplianceChecker:
-    """Regulatory compliance checking system"""
+    """
+        Regulatory compliance checking system"""
     
     def __init__(self):
         self.compliance_rules: Dict[ComplianceFramework, Dict[str, Any]] = {}
         self.checks: Dict[str, ComplianceCheck] = {}
         self.reports: Dict[str, ComplianceReport] = {}
         self._initialize_rules()
+
         
     def _initialize_rules(self):
-        """Initialize compliance rules for different frameworks"""
+        """
+        Initialize compliance rules for different frameworks"""
         try:
             # GDPR rules
             self.compliance_rules[ComplianceFramework.GDPR] = {
@@ -1006,16 +1153,23 @@ class ComplianceChecker:
         """Run comprehensive compliance check"""
         try:
             report_id = str(uuid.uuid4())
+
+
             checks = []
             
             if framework not in self.compliance_rules:
                 raise ValueError(f"Unsupported compliance framework: {framework}")
+
+
             
             rules = self.compliance_rules[framework]
             
             for rule_id, rule_config in rules.items():
                 check_function = rule_config['check_function']
+
                 check_result = await check_function(resource, context)
+
+
                 
                 check = ComplianceCheck(
                     check_id=str(uuid.uuid4()),
@@ -1026,17 +1180,29 @@ class ComplianceChecker:
                     checked_at=datetime.utcnow(),
                     details=check_result.get('details', {})
                 )
+
                 
                 checks.append(check)
+
                 self.checks[check.check_id] = check
             
             # Calculate compliance score
+
             passed = len([c for c in checks if c.status == 'passed'])
+
+
             failed = len([c for c in checks if c.status == 'failed'])
+
+
             warnings = len([c for c in checks if c.status == 'warning'])
+
+
             total = len(checks)
+
+
             
             compliance_score = (passed / total * 100) if total > 0 else 0
+
             
             report = ComplianceReport(
                 report_id=report_id,
@@ -1049,22 +1215,29 @@ class ComplianceChecker:
                 compliance_score=compliance_score,
                 checks=checks
             )
+
             
             self.reports[report_id] = report
             
             logger.info(f"Compliance check completed: {framework.value} - Score: {compliance_score}%")
+
             return report
             
         except Exception as e:
             logger.error(f"Error running compliance check: {str(e)}")
+
             raise
 
     async def _check_data_encryption(self, resource: str, context: Dict[str, Any]) -> Dict[str, Any]:
         """Check data encryption compliance"""
         try:
             # Check if sensitive data is encrypted
+
             encrypted = context.get('data_encrypted', False)
+
+
             encryption_algorithm = context.get('encryption_algorithm')
+
             
             if encrypted and encryption_algorithm in ['AES-256', 'ChaCha20-Poly1305']:
                 return {'status': 'passed', 'details': {'algorithm': encryption_algorithm}}
@@ -1077,10 +1250,14 @@ class ComplianceChecker:
             return {'status': 'failed', 'details': {'error': str(e)}}
 
     async def _check_access_logging(self, resource: str, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Check access logging compliance"""
+        """
+        Check access logging compliance"""
         try:
             logging_enabled = context.get('access_logging_enabled', False)
+
+
             log_retention_days = context.get('log_retention_days', 0)
+
             
             if logging_enabled and log_retention_days >= 90:
                 return {'status': 'passed', 'details': {'retention_days': log_retention_days}}
@@ -1093,10 +1270,14 @@ class ComplianceChecker:
             return {'status': 'failed', 'details': {'error': str(e)}}
 
     async def _check_data_retention(self, resource: str, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Check data retention compliance"""
+        """
+        Check data retention compliance"""
         try:
             retention_policy = context.get('retention_policy')
+
+
             auto_deletion = context.get('auto_deletion_enabled', False)
+
             
             if retention_policy and auto_deletion:
                 return {'status': 'passed', 'details': {'policy': retention_policy}}
@@ -1109,10 +1290,14 @@ class ComplianceChecker:
             return {'status': 'failed', 'details': {'error': str(e)}}
 
     async def _check_key_encryption(self, resource: str, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Check key encryption compliance"""
+        """
+        Check key encryption compliance"""
         try:
             keys_encrypted = context.get('keys_encrypted', False)
+
+
             hsm_protected = context.get('hsm_protected', False)
+
             
             if keys_encrypted and hsm_protected:
                 return {'status': 'passed', 'details': {'hsm_protected': True}}
@@ -1125,10 +1310,14 @@ class ComplianceChecker:
             return {'status': 'failed', 'details': {'error': str(e)}}
 
     async def _check_access_control(self, resource: str, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Check access control compliance"""
+        """
+        Check access control compliance"""
         try:
             rbac_enabled = context.get('rbac_enabled', False)
+
+
             mfa_required = context.get('mfa_required', False)
+
             
             if rbac_enabled and mfa_required:
                 return {'status': 'passed', 'details': {'rbac': True, 'mfa': True}}
@@ -1141,10 +1330,14 @@ class ComplianceChecker:
             return {'status': 'failed', 'details': {'error': str(e)}}
 
     async def _check_transaction_monitoring(self, resource: str, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Check transaction monitoring compliance"""
+        """
+        Check transaction monitoring compliance"""
         try:
             monitoring_enabled = context.get('transaction_monitoring', False)
+
+
             threshold_amount = context.get('monitoring_threshold', 0)
+
             
             if monitoring_enabled and threshold_amount <= 10000:  # $10k threshold
                 return {'status': 'passed', 'details': {'threshold': threshold_amount}}
@@ -1157,10 +1350,14 @@ class ComplianceChecker:
             return {'status': 'failed', 'details': {'error': str(e)}}
 
     async def _check_identity_verification(self, resource: str, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Check identity verification compliance"""
+        """
+        Check identity verification compliance"""
         try:
             kyc_completed = context.get('kyc_completed', False)
+
+
             document_verified = context.get('document_verified', False)
+
             
             if kyc_completed and document_verified:
                 return {'status': 'passed', 'details': {'kyc': True, 'documents': True}}
@@ -1177,7 +1374,8 @@ class ComplianceChecker:
 # =============================================================================
 
 class EncryptionEngine:
-    """Advanced encryption engine with multiple algorithms"""
+    """
+        Advanced encryption engine with multiple algorithms"""
     
     def __init__(self):
         self.algorithms = {
@@ -1192,16 +1390,21 @@ class EncryptionEngine:
         algorithm: str = 'AES-256-GCM',
         key: Optional[bytes] = None
     ) -> Dict[str, Any]:
-        """Encrypt data using specified algorithm"""
+        """
+        Encrypt data using specified algorithm"""
         try:
             if algorithm not in self.algorithms:
                 raise ValueError(f"Unsupported algorithm: {algorithm}")
+
             
             if key is None:
                 key = secrets.token_bytes(32)  # 256-bit key
+
             
             encrypt_function = self.algorithms[algorithm]
+
             result = await encrypt_function(data, key)
+
             
             return {
                 'algorithm': algorithm,
@@ -1214,6 +1417,7 @@ class EncryptionEngine:
             
         except Exception as e:
             logger.error(f"Error encrypting data: {str(e)}")
+
             raise
 
     async def decrypt(
@@ -1229,15 +1433,20 @@ class EncryptionEngine:
         try:
             if algorithm == 'AES-256-GCM':
                 return await self._aes_gcm_decrypt(encrypted_data, key, iv, tag)
+
             elif algorithm == 'AES-256-CBC':
                 return await self._aes_cbc_decrypt(encrypted_data, key, iv)
+
             elif algorithm == 'ChaCha20-Poly1305':
                 return await self._chacha20_decrypt(encrypted_data, key, nonce, tag)
+
             else:
                 raise ValueError(f"Unsupported algorithm: {algorithm}")
+
                 
         except Exception as e:
             logger.error(f"Error decrypting data: {str(e)}")
+
             raise
 
     async def _aes_gcm_encrypt(self, data: bytes, key: bytes) -> Dict[str, Any]:
@@ -1249,9 +1458,13 @@ class EncryptionEngine:
             modes.GCM(iv),
             backend=default_backend()
         )
+
+
         
         encryptor = cipher.encryptor()
+
         encrypted_data = encryptor.update(data) + encryptor.finalize()
+
         
         return {
             'encrypted_data': encrypted_data,
@@ -1266,32 +1479,44 @@ class EncryptionEngine:
         iv: bytes,
         tag: bytes
     ) -> bytes:
-        """Decrypt using AES-256-GCM"""
+        """
+        Decrypt using AES-256-GCM"""
         cipher = Cipher(
             algorithms.AES(key),
             modes.GCM(iv, tag),
             backend=default_backend()
         )
+
+
         
         decryptor = cipher.decryptor()
         return decryptor.update(encrypted_data) + decryptor.finalize()
 
     async def _aes_cbc_encrypt(self, data: bytes, key: bytes) -> Dict[str, Any]:
-        """Encrypt using AES-256-CBC"""
+        """
+        Encrypt using AES-256-CBC"""
         iv = secrets.token_bytes(16)  # 128-bit IV for CBC
         
         # Add PKCS7 padding
+
         padder = padding.PKCS7(128).padder()
+
         padded_data = padder.update(data) + padder.finalize()
+
+
         
         cipher = Cipher(
             algorithms.AES(key),
             modes.CBC(iv),
             backend=default_backend()
         )
+
+
         
         encryptor = cipher.encryptor()
+
         encrypted_data = encryptor.update(padded_data) + encryptor.finalize()
+
         
         return {
             'encrypted_data': encrypted_data,
@@ -1304,35 +1529,46 @@ class EncryptionEngine:
         key: bytes,
         iv: bytes
     ) -> bytes:
-        """Decrypt using AES-256-CBC"""
+        """
+        Decrypt using AES-256-CBC"""
         cipher = Cipher(
             algorithms.AES(key),
             modes.CBC(iv),
             backend=default_backend()
         )
+
+
         
         decryptor = cipher.decryptor()
+
         padded_data = decryptor.update(encrypted_data) + decryptor.finalize()
         
         # Remove PKCS7 padding
+
         unpadder = padding.PKCS7(128).unpadder()
         return unpadder.update(padded_data) + unpadder.finalize()
 
     async def _chacha20_encrypt(self, data: bytes, key: bytes) -> Dict[str, Any]:
-        """Encrypt using ChaCha20-Poly1305"""
+        """
+        Encrypt using ChaCha20-Poly1305"""
         nonce = secrets.token_bytes(12)  # 96-bit nonce
+
         
         cipher = Cipher(
             algorithms.ChaCha20(key, nonce),
             mode=None,
             backend=default_backend()
         )
+
+
         
         encryptor = cipher.encryptor()
+
         encrypted_data = encryptor.update(data) + encryptor.finalize()
         
         # For simplicity, not implementing full Poly1305 auth
         # In production, would use proper AEAD implementation
+
         tag = hashlib.sha256(encrypted_data).digest()[:16]
         
         return {
@@ -1348,17 +1584,23 @@ class EncryptionEngine:
         nonce: bytes,
         tag: bytes
     ) -> bytes:
-        """Decrypt using ChaCha20-Poly1305"""
+        """
+        Decrypt using ChaCha20-Poly1305"""
         # Verify tag (simplified)
+
         expected_tag = hashlib.sha256(encrypted_data).digest()[:16]
         if not hmac.compare_digest(tag, expected_tag):
             raise ValueError("Authentication tag verification failed")
+
+
         
         cipher = Cipher(
             algorithms.ChaCha20(key, nonce),
             mode=None,
             backend=default_backend()
         )
+
+
         
         decryptor = cipher.decryptor()
         return decryptor.update(encrypted_data) + decryptor.finalize()
@@ -1380,9 +1622,11 @@ class BlockchainSecuritySuiteManager:
         self.threat_detector = ThreatDetector(self.audit_logger)
         self.compliance_checker = ComplianceChecker()
         self.encryption_engine = EncryptionEngine()
+
         
     async def initialize(self) -> bool:
-        """Initialize all security systems"""
+        """
+        Initialize all security systems"""
         try:
             logger.info("Initializing Blockchain Security Suite...")
             
@@ -1393,21 +1637,28 @@ class BlockchainSecuritySuiteManager:
             await self._setup_compliance_monitoring()
             
             # Verify audit log integrity
+
             integrity_ok = await self.audit_logger.verify_chain_integrity()
+
             if not integrity_ok:
                 logger.warning("Audit log chain integrity check failed")
+
             
             logger.info("Blockchain Security Suite initialized successfully")
+
             return True
             
         except Exception as e:
             logger.error(f"Error initializing security suite: {str(e)}")
+
             return False
 
     async def _setup_threat_detection(self):
         """Setup threat detection rules and blacklists"""
         try:
             # Add known malicious IPs (example)
+
+
             malicious_ips = [
                 "192.168.100.100",  # Example malicious IP
                 "10.0.0.50"         # Example suspicious IP
@@ -1429,6 +1680,7 @@ class BlockchainSecuritySuiteManager:
         """Setup compliance monitoring for all frameworks"""
         try:
             # Enable all supported compliance frameworks
+
             frameworks = [
                 ComplianceFramework.GDPR,
                 ComplianceFramework.PCI_DSS,
@@ -1451,12 +1703,15 @@ class BlockchainSecuritySuiteManager:
             }
             
             # Detect threats
+
             threats = await self.threat_detector.detect_threats(event_data)
+
             result['threats_detected'] = threats
             
             # Log audit event
             if 'audit_event' in event_data:
                 audit_data = event_data['audit_event']
+
                 event_id = await self.audit_logger.log_event(
                     AuditEventType(audit_data['type']),
                     audit_data['actor'],
@@ -1467,17 +1722,21 @@ class BlockchainSecuritySuiteManager:
                     event_data.get('ip_address'),
                     event_data.get('user_agent')
                 )
+
                 result['audit_logged'] = True
                 result['audit_event_id'] = event_id
             
             # Check compliance if required
             if 'compliance_check' in event_data:
                 compliance_data = event_data['compliance_check']
+
                 report = await self.compliance_checker.run_compliance_check(
                     ComplianceFramework(compliance_data['framework']),
                     compliance_data['resource'],
                     compliance_data['context']
                 )
+
+
                 
                 failed_checks = [c for c in report.checks if c.status == 'failed']
                 result['compliance_issues'] = [c.rule_id for c in failed_checks]
@@ -1487,6 +1746,7 @@ class BlockchainSecuritySuiteManager:
             
         except Exception as e:
             logger.error(f"Error processing security event: {str(e)}")
+
             return {'event_processed': False, 'error': str(e)}
 
     async def get_comprehensive_security_status(self) -> Dict[str, Any]:
@@ -1522,6 +1782,7 @@ class BlockchainSecuritySuiteManager:
             
         except Exception as e:
             logger.error(f"Error getting security status: {str(e)}")
+
             return {}
 
 # =============================================================================

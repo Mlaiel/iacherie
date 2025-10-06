@@ -28,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 
 class CacheStrategy(str, Enum):
-    """Cache replacement strategies."""
+    """
+        Cache replacement strategies."""
     LRU = "lru"  # Least Recently Used
     LFU = "lfu"  # Least Frequently Used
     FIFO = "fifo"  # First In, First Out
@@ -78,20 +79,23 @@ class CacheItem:
     compressed: bool = False
     
     def is_expired(self) -> bool:
-        """Check if cache item is expired."""
+        """
+        Check if cache item is expired."""
         if self.ttl is None:
             return False
         return (datetime.now() - self.created_at).seconds > self.ttl
     
     def update_access(self):
-        """Update access statistics."""
+        """
+        Update access statistics."""
         self.last_accessed = datetime.now()
         self.access_count += 1
 
 
 @dataclass
 class CacheStats:
-    """Cache performance statistics."""
+    """
+        Cache performance statistics."""
     hits: int = 0
     misses: int = 0
     evictions: int = 0
@@ -104,7 +108,8 @@ class CacheStats:
 
 @dataclass
 class CachePrefetchRequest:
-    """Cache prefetch request."""
+    """
+        Cache prefetch request."""
     keys: List[str]
     priority: int = 1
     ttl: Optional[int] = None
@@ -155,6 +160,7 @@ class EdgeCache:
         
         # Event handlers
         self.event_handlers: Dict[str, List[Callable]] = defaultdict(list)
+
         
         logger.info(f"EdgeCache initialized with strategy: {strategy}")
     
@@ -163,12 +169,14 @@ class EdgeCache:
         self.cleanup_task = asyncio.create_task(self._cleanup_loop())
         self.prefetch_task = asyncio.create_task(self._prefetch_loop())
         self.analytics_task = asyncio.create_task(self._analytics_loop())
+
         
         logger.info("Edge cache system started")
     
     async def stop(self):
         """Stop the cache system and background tasks."""
         # Cancel background tasks
+
         tasks = [self.cleanup_task, self.prefetch_task, self.analytics_task]
         for task in tasks:
             if task:
@@ -177,6 +185,7 @@ class EdgeCache:
         # Wait for tasks to complete
         if tasks:
             await asyncio.gather(*tasks, return_exceptions=True)
+
         
         logger.info("Edge cache system stopped")
     
@@ -190,24 +199,30 @@ class EdgeCache:
                 # Check if expired
                 if item.is_expired():
                     await self._evict_item(key)
+
                     self.stats.misses += 1
                     return default
                 
                 # Update access stats and move to end (LRU)
+
                 item.update_access()
+
                 self.memory_cache.move_to_end(key)
+
                 self.stats.hits += 1
                 
                 # Update access patterns
                 await self._update_access_pattern(key)
                 
                 # Decompress if needed
+
                 value = item.value
                 if item.compressed and isinstance(value, bytes):
                     value = pickle.loads(gzip.decompress(value))
                 
                 # Trigger cache hit event
                 await self._trigger_event("cache_hit", {"key": key, "value": value})
+
                 
                 return value
             
@@ -215,11 +230,14 @@ class EdgeCache:
             if key in self.disk_cache:
                 try:
                     value = await self._load_from_disk(key)
+
                     if value is not None:
                         # Promote to memory cache
                         await self._promote_to_memory(key, value)
+
                         self.stats.hits += 1
                         await self._update_access_pattern(key)
+
                         return value
                 except Exception as e:
                     logger.error(f"Failed to load from disk cache: {e}")
@@ -227,6 +245,7 @@ class EdgeCache:
             # Cache miss
             self.stats.misses += 1
             await self._trigger_event("cache_miss", {"key": key})
+
             return default
     
     async def set(self, 
@@ -244,6 +263,7 @@ class EdgeCache:
                 serialized_value, size, compressed = await self._serialize_value(value)
                 
                 # Create cache item
+
                 item = CacheItem(
                     key=key,
                     value=serialized_value,
@@ -266,18 +286,23 @@ class EdgeCache:
                 
                 # Determine cache level based on size and strategy
                 if force_disk or size > self.max_memory_size // 10:  # Large items go to disk
+
                     success = await self._store_to_disk(key, item)
+
                 else:
                     success = await self._store_to_memory(key, item)
+
                 
                 if success:
                     await self._trigger_event("cache_set", {"key": key, "size": size})
+
                     return True
                 
                 return False
                 
         except Exception as e:
             logger.error(f"Failed to set cache item {key}: {e}")
+
             return False
     
     async def delete(self, key: str) -> bool:
@@ -288,15 +313,20 @@ class EdgeCache:
             # Remove from memory cache
             if key in self.memory_cache:
                 await self._evict_item(key)
+
+
                 deleted = True
             
             # Remove from disk cache
             if key in self.disk_cache:
                 await self._remove_from_disk(key)
+
+
                 deleted = True
             
             if deleted:
                 await self._trigger_event("cache_delete", {"key": key})
+
             
             return deleted
     
@@ -306,6 +336,7 @@ class EdgeCache:
         
         if tag in self.tag_to_keys:
             keys_to_invalidate = list(self.tag_to_keys[tag])
+
             
             for key in keys_to_invalidate:
                 if await self.delete(key):
@@ -323,6 +354,7 @@ class EdgeCache:
         
         if dependency in self.dependency_graph:
             keys_to_invalidate = list(self.dependency_graph[dependency])
+
             
             for key in keys_to_invalidate:
                 if await self.delete(key):
@@ -350,17 +382,24 @@ class EdgeCache:
                 
                 # Clear tracking structures
                 self.access_patterns.clear()
+
                 self.popularity_scores.clear()
+
                 self.tag_to_keys.clear()
+
                 self.dependency_graph.clear()
+
                 
                 await self._trigger_event("cache_clear", {})
+
                 
                 logger.info("Cache cleared")
+
                 return True
                 
         except Exception as e:
             logger.error(f"Failed to clear cache: {e}")
+
             return False
     
     async def prefetch(self, keys: List[str], priority: int = 1) -> bool:
@@ -371,32 +410,40 @@ class EdgeCache:
                 priority=priority,
                 requester="manual"
             )
+
             
             await self.prefetch_queue.put(prefetch_request)
+
             logger.info(f"Queued prefetch request for {len(keys)} keys")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to queue prefetch request: {e}")
+
             return False
     
     async def get_stats(self) -> CacheStats:
         """Get cache statistics."""
         with self._cache_lock:
             # Update hit ratio
+
             total_requests = self.stats.hits + self.stats.misses
             if total_requests > 0:
                 self.stats.hit_ratio = self.stats.hits / total_requests
             
             # Update size information
             self.stats.size = len(self.memory_cache)
+
             self.stats.memory_usage = sum(item.size for item in self.memory_cache.values())
+
             self.stats.disk_usage = len(self.disk_cache)  # Simplified
             
             return self.stats
     
     async def get_popular_keys(self, limit: int = 10) -> List[Tuple[str, float]]:
-        """Get most popular cache keys."""
+        """
+        Get most popular cache keys."""
         sorted_keys = sorted(
             self.popularity_scores.items(),
             key=lambda x: x[1],
@@ -405,7 +452,8 @@ class EdgeCache:
         return sorted_keys[:limit]
     
     async def optimize(self) -> Dict[str, Any]:
-        """Optimize cache configuration based on usage patterns."""
+        """
+        Optimize cache configuration based on usage patterns."""
         optimization_results = {
             "actions_taken": [],
             "metrics_improved": {},
@@ -414,13 +462,16 @@ class EdgeCache:
         
         try:
             # Analyze access patterns
+
             hot_keys = await self.get_popular_keys(100)
             
             # Promote frequently accessed items to memory
+
             promoted = 0
             for key, score in hot_keys:
                 if key in self.disk_cache and key not in self.memory_cache:
                     value = await self._load_from_disk(key)
+
                     if value and await self._promote_to_memory(key, value):
                         promoted += 1
             
@@ -428,18 +479,24 @@ class EdgeCache:
                 optimization_results["actions_taken"].append(f"Promoted {promoted} items to memory")
             
             # Adjust cache sizes based on hit ratios
+
             current_stats = await self.get_stats()
+
             if current_stats.hit_ratio < 0.7:  # Low hit ratio
                 optimization_results["recommendations"].append("Consider increasing cache size")
+
             
             if current_stats.memory_usage > self.max_memory_size * 0.9:  # High memory usage
                 optimization_results["recommendations"].append("Consider implementing more aggressive eviction")
+
             
             logger.info(f"Cache optimization completed: {optimization_results}")
+
             return optimization_results
             
         except Exception as e:
             logger.error(f"Cache optimization failed: {e}")
+
             return optimization_results
     
     def add_event_handler(self, event_type: str, handler: Callable):
@@ -447,33 +504,43 @@ class EdgeCache:
         self.event_handlers[event_type].append(handler)
     
     def remove_event_handler(self, event_type: str, handler: Callable):
-        """Remove event handler for cache events."""
+        """
+        Remove event handler for cache events."""
         if event_type in self.event_handlers:
             try:
                 self.event_handlers[event_type].remove(handler)
+
             except ValueError:
                 pass
     
     # Private methods
     
     async def _serialize_value(self, value: Any) -> Tuple[bytes, int, bool]:
-        """Serialize and optionally compress value."""
+        """
+        Serialize and optionally compress value."""
         # Serialize the value
+
         serialized = pickle.dumps(value)
+
         original_size = len(serialized)
         
         # Compress if above threshold
+
         compressed = False
         if original_size > self.compression_threshold:
             compressed_data = gzip.compress(serialized)
+
             if len(compressed_data) < original_size * 0.8:  # Only use if significant compression
+
                 serialized = compressed_data
+
                 compressed = True
         
         return serialized, len(serialized), compressed
     
     async def _store_to_memory(self, key: str, item: CacheItem) -> bool:
-        """Store item in memory cache."""
+        """
+        Store item in memory cache."""
         try:
             # Check if we need to evict items
             while (self.stats.memory_usage + item.size > self.max_memory_size and 
@@ -488,6 +555,7 @@ class EdgeCache:
             
         except Exception as e:
             logger.error(f"Failed to store item to memory cache: {e}")
+
             return False
     
     async def _store_to_disk(self, key: str, item: CacheItem) -> bool:
@@ -501,6 +569,7 @@ class EdgeCache:
             
         except Exception as e:
             logger.error(f"Failed to store item to disk cache: {e}")
+
             return False
     
     async def _load_from_disk(self, key: str) -> Optional[Any]:
@@ -515,6 +584,7 @@ class EdgeCache:
             
         except Exception as e:
             logger.error(f"Failed to load item from disk cache: {e}")
+
             return None
     
     async def _remove_from_disk(self, key: str) -> bool:
@@ -529,12 +599,15 @@ class EdgeCache:
             
         except Exception as e:
             logger.error(f"Failed to remove item from disk cache: {e}")
+
             return False
     
     async def _promote_to_memory(self, key: str, value: Any) -> bool:
         """Promote disk-cached item to memory cache."""
         try:
             serialized_value, size, compressed = await self._serialize_value(value)
+
+
             
             item = CacheItem(
                 key=key,
@@ -544,11 +617,14 @@ class EdgeCache:
                 last_accessed=datetime.now(),
                 compressed=compressed
             )
+
             
             return await self._store_to_memory(key, item)
+
             
         except Exception as e:
             logger.error(f"Failed to promote item to memory: {e}")
+
             return False
     
     async def _evict_item(self, key: str):
@@ -560,53 +636,74 @@ class EdgeCache:
             self.stats.evictions += 1
     
     async def _evict_least_valuable(self):
-        """Evict least valuable item based on current strategy."""
+        """
+        Evict least valuable item based on current strategy."""
         if not self.memory_cache:
             return
         
         if self.strategy == CacheStrategy.LRU:
             # Remove least recently used (first item in OrderedDict)
+
+
             key = next(iter(self.memory_cache))
+
             await self._evict_item(key)
+
             
         elif self.strategy == CacheStrategy.LFU:
             # Remove least frequently used
+
             min_key = min(self.memory_cache.keys(), 
                          key=lambda k: self.memory_cache[k].access_count)
+
             await self._evict_item(min_key)
+
             
         elif self.strategy == CacheStrategy.FIFO:
             # Remove oldest item
+
             min_key = min(self.memory_cache.keys(), 
                          key=lambda k: self.memory_cache[k].created_at)
+
             await self._evict_item(min_key)
+
             
         elif self.strategy == CacheStrategy.TTL:
             # Remove expired items first, then oldest
+
             expired_keys = [k for k, v in self.memory_cache.items() if v.is_expired()]
             if expired_keys:
                 await self._evict_item(expired_keys[0])
+
             else:
                 min_key = min(self.memory_cache.keys(), 
                              key=lambda k: self.memory_cache[k].created_at)
+
                 await self._evict_item(min_key)
+
                 
         elif self.strategy == CacheStrategy.ADAPTIVE:
             # Use popularity score for eviction
+
             min_key = min(self.memory_cache.keys(), 
                          key=lambda k: self.popularity_scores.get(k, 0))
+
             await self._evict_item(min_key)
+
             
         else:  # Default to LRU
             key = next(iter(self.memory_cache))
+
             await self._evict_item(key)
     
     async def _update_access_pattern(self, key: str):
-        """Update access pattern for adaptive caching."""
+        """
+        Update access pattern for adaptive caching."""
         now = datetime.now()
         self.access_patterns[key].append(now)
         
         # Keep only recent accesses (last hour)
+
         cutoff_time = now - timedelta(hours=1)
         self.access_patterns[key] = [
             access_time for access_time in self.access_patterns[key]
@@ -614,21 +711,26 @@ class EdgeCache:
         ]
         
         # Update popularity score
+
         recent_accesses = len(self.access_patterns[key])
+
         time_decay = 0.9 ** ((now - self.access_patterns[key][-1]).seconds / 3600)  # Decay over time
         self.popularity_scores[key] = recent_accesses * time_decay
     
     async def _cleanup_loop(self):
-        """Background cleanup task."""
+        """
+        Background cleanup task."""
         while True:
             try:
                 await self._cleanup_expired_items()
+
                 await asyncio.sleep(60)  # Run every minute
                 
             except asyncio.CancelledError:
                 break
             except Exception as e:
                 logger.error(f"Error in cleanup loop: {e}")
+
                 await asyncio.sleep(60)
     
     async def _prefetch_loop(self):
@@ -636,8 +738,11 @@ class EdgeCache:
         while True:
             try:
                 # Wait for prefetch requests
+
                 request = await self.prefetch_queue.get()
+
                 await self._process_prefetch_request(request)
+
                 
             except asyncio.CancelledError:
                 break
@@ -649,12 +754,14 @@ class EdgeCache:
         while True:
             try:
                 await self._analyze_access_patterns()
+
                 await asyncio.sleep(300)  # Run every 5 minutes
                 
             except asyncio.CancelledError:
                 break
             except Exception as e:
                 logger.error(f"Error in analytics loop: {e}")
+
                 await asyncio.sleep(300)
     
     async def _cleanup_expired_items(self):
@@ -665,9 +772,11 @@ class EdgeCache:
             for key, item in self.memory_cache.items():
                 if item.is_expired():
                     expired_keys.append(key)
+
         
         for key in expired_keys:
             await self._evict_item(key)
+
         
         if expired_keys:
             logger.info(f"Cleaned up {len(expired_keys)} expired cache items")
@@ -681,17 +790,22 @@ class EdgeCache:
         for key in request.keys:
             if key not in self.memory_cache and key not in self.disk_cache:
                 # Simulate fetching data
+
                 dummy_value = f"prefetched_value_{key}"
                 await self.set(key, dummy_value, ttl=request.ttl)
     
     async def _analyze_access_patterns(self):
         """Analyze access patterns for optimization."""
         # Clean up old access patterns
+
         cutoff_time = datetime.now() - timedelta(hours=24)
+
+
         
         keys_to_remove = []
         for key, accesses in self.access_patterns.items():
             # Remove old accesses
+
             recent_accesses = [a for a in accesses if a > cutoff_time]
             
             if recent_accesses:
@@ -706,14 +820,17 @@ class EdgeCache:
                 del self.popularity_scores[key]
     
     async def _trigger_event(self, event_type: str, data: Dict[str, Any]):
-        """Trigger cache event handlers."""
+        """
+        Trigger cache event handlers."""
         if event_type in self.event_handlers:
             for handler in self.event_handlers[event_type]:
                 try:
                     if asyncio.iscoroutinefunction(handler):
                         await handler(data)
+
                     else:
                         handler(data)
+
                 except Exception as e:
                     logger.error(f"Error in event handler: {e}")
 
@@ -747,20 +864,26 @@ if __name__ == "__main__":
         await cache.set("key2", {"data": "complex_value"}, tags=["tag1", "tag2"])
         
         # Test retrieval
+
         value1 = await cache.get("key1")
+
         value2 = await cache.get("key2")
+
         
         print(f"Retrieved: {value1}, {value2}")
         
         # Test statistics
+
         stats = await cache.get_stats()
         print(f"Cache stats: {stats.hits} hits, {stats.misses} misses, hit ratio: {stats.hit_ratio:.2f}")
         
         # Test tag-based invalidation
+
         invalidated = await cache.invalidate_by_tag("tag1")
         print(f"Invalidated {invalidated} items with tag1")
         
         # Test optimization
+
         optimization_results = await cache.optimize()
         print(f"Optimization results: {optimization_results}")
         

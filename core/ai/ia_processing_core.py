@@ -1,4 +1,5 @@
-"""IA Processing Core - Enterprise AI Processing Engine
+"""
+IA Processing Core - Enterprise AI Processing Engine
 
 Central IA processing business logic core for AI/ML operations.
 Handles AI model management, ML pipelines, and intelligent analysis with enterprise standards.
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 # AI Model Types
 class AIModelType(Enum):
-    """Supported AI model types"""
+    """
+Supported AI model types"""
     TEXT_ANALYSIS = "text_analysis"
     IMAGE_RECOGNITION = "image_recognition"
     AUDIO_PROCESSING = "audio_processing"
@@ -36,7 +38,8 @@ class AIModelType(Enum):
 
 # Processing Priority Levels
 class ProcessingPriority(Enum):
-    """Processing priority levels"""
+    """
+Processing priority levels"""
     CRITICAL = "critical"
     HIGH = "high"
     NORMAL = "normal"
@@ -45,7 +48,8 @@ class ProcessingPriority(Enum):
 
 # Model Status
 class ModelStatus(Enum):
-    """AI model status"""
+    """
+AI model status"""
     LOADING = "loading"
     READY = "ready"
     PROCESSING = "processing"
@@ -54,7 +58,8 @@ class ModelStatus(Enum):
 
 @dataclass
 class AIModelConfig:
-    """AI model configuration"""
+    """
+AI model configuration"""
     model_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     model_type: AIModelType = AIModelType.TEXT_ANALYSIS
     model_name: str = ""
@@ -70,7 +75,8 @@ class AIModelConfig:
 
 @dataclass
 class InferenceRequest:
-    """AI inference request"""
+    """
+AI inference request"""
     request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     model_type: AIModelType = AIModelType.TEXT_ANALYSIS
     input_data: Dict[str, Any] = field(default_factory=dict)
@@ -82,7 +88,8 @@ class InferenceRequest:
 
 @dataclass
 class InferenceResult:
-    """AI inference result"""
+    """
+AI inference result"""
     result_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     request_id: str = ""
     model_id: str = ""
@@ -96,7 +103,8 @@ class InferenceResult:
 
 @dataclass
 class MLPipelineStage:
-    """ML pipeline stage configuration"""
+    """
+ML pipeline stage configuration"""
     stage_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     stage_name: str = ""
     stage_type: str = ""
@@ -107,7 +115,8 @@ class MLPipelineStage:
     enabled: bool = True
 
 class IAProcessingCore:
-    """Enterprise IA Processing Business Logic Core
+    """
+Enterprise IA Processing Business Logic Core
     
     Handles AI model management, ML pipelines, and intelligent analysis
     with enterprise-grade performance, reliability, and accuracy standards.
@@ -125,7 +134,8 @@ class IAProcessingCore:
         logger.info("IA Processing Core initialized")
     
     async def initialize(self) -> bool:
-        """Initialize the IA processing system"""
+        """
+Initialize the IA processing system"""
         try:
             await self._setup_ai_models()
             await self._setup_ml_pipelines()
@@ -141,7 +151,8 @@ class IAProcessingCore:
             return False
     
     async def _setup_ai_models(self):
-        """Setup AI model configurations"""
+        """
+Setup AI model configurations"""
         model_configs = [
             # Text Analysis Models
             AIModelConfig(
@@ -258,7 +269,8 @@ class IAProcessingCore:
         logger.info(f"✅ AI models configured: {len(self.ai_models)} models")
     
     async def _setup_ml_pipelines(self):
-        """Setup ML pipeline configurations"""
+        """
+Setup ML pipeline configurations"""
         # Content Analysis Pipeline
         content_pipeline = [
             MLPipelineStage(
@@ -343,11 +355,13 @@ class IAProcessingCore:
         logger.info(f"✅ ML pipelines configured: {len(self.ml_pipelines)} pipelines")
     
     async def _setup_intelligent_analysis(self):
-        """Setup intelligent analysis capabilities"""
+        """
+Setup intelligent analysis capabilities"""
         logger.info("✅ Intelligent analysis capabilities configured")
     
     async def _setup_performance_monitoring(self):
-        """Setup performance monitoring"""
+        """
+Setup performance monitoring"""
         self.performance_metrics = {
             "inference_speed_ms": 0.0,
             "model_accuracy": 0.0,
@@ -361,7 +375,8 @@ class IAProcessingCore:
         logger.info("✅ Performance monitoring configured")
     
     async def process_inference_request(self, request: InferenceRequest) -> InferenceResult:
-        """Process AI inference request"""
+        """
+Process AI inference request"""
         start_time = time.time()
         
         try:
@@ -426,7 +441,8 @@ class IAProcessingCore:
             return result
     
     async def _validate_inference_request(self, request: InferenceRequest) -> bool:
-        """Validate inference request"""
+        """
+Validate inference request"""
         try:
             if not request.input_data:
                 return False
@@ -444,7 +460,8 @@ class IAProcessingCore:
             return False
     
     async def _find_model_for_request(self, request: InferenceRequest) -> Optional[AIModelConfig]:
-        """Find appropriate model for inference request"""
+        """
+Find appropriate model for inference request"""
         try:
             for model in self.ai_models.values():
                 if model.model_type == request.model_type and model.status == ModelStatus.READY:
@@ -461,7 +478,8 @@ class IAProcessingCore:
         model_config: AIModelConfig, 
         request: InferenceRequest
     ) -> Dict[str, Any]:
-        """Execute model inference"""
+        """
+Execute model inference"""
         try:
             # Simulate model inference based on type
             predictions = {}
@@ -486,7 +504,8 @@ class IAProcessingCore:
             raise
     
     async def _execute_text_analysis(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute text analysis inference"""
+        """
+Execute text analysis inference"""
         text = input_data.get("text", "")
         
         return {
@@ -512,7 +531,8 @@ class IAProcessingCore:
         }
     
     async def _execute_image_recognition(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute image recognition inference"""
+        """
+Execute image recognition inference"""
         return {
             "objects": [
                 {"label": "person", "confidence": 0.95, "bbox": [100, 100, 200, 300]},
@@ -535,7 +555,8 @@ class IAProcessingCore:
         }
     
     async def _execute_audio_processing(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute audio processing inference"""
+        """
+Execute audio processing inference"""
         return {
             "transcription": {
                 "text": "This is a sample transcription",
@@ -558,7 +579,8 @@ class IAProcessingCore:
         }
     
     async def _execute_content_generation(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute content generation inference"""
+        """
+Execute content generation inference"""
         prompt = input_data.get("prompt", "")
         
         return {
@@ -583,7 +605,8 @@ class IAProcessingCore:
         }
     
     async def _execute_engagement_prediction(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute engagement prediction inference"""
+        """
+Execute engagement prediction inference"""
         return {
             "engagement_forecast": {
                 "likes_prediction": 1250,
@@ -612,7 +635,8 @@ class IAProcessingCore:
         predictions: Dict[str, Any], 
         model_config: AIModelConfig
     ) -> Dict[str, float]:
-        """Calculate confidence scores for predictions"""
+        """
+Calculate confidence scores for predictions"""
         try:
             confidence_scores = {}
             
@@ -640,7 +664,8 @@ class IAProcessingCore:
         model_config: AIModelConfig, 
         predictions: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Generate model performance metrics"""
+        """
+Generate model performance metrics"""
         try:
             metrics = {
                 "model_version": float(model_config.model_version.replace(".", "")),
@@ -661,7 +686,8 @@ class IAProcessingCore:
         result: InferenceResult, 
         model_config: AIModelConfig
     ):
-        """Update system performance metrics"""
+        """
+Update system performance metrics"""
         try:
             # Update inference speed
             self.performance_metrics["inference_speed_ms"] = (
@@ -702,7 +728,8 @@ class IAProcessingCore:
         pipeline_name: str, 
         input_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute ML pipeline"""
+        """
+Execute ML pipeline"""
         try:
             if pipeline_name not in self.ml_pipelines:
                 raise ValueError(f"Pipeline not found: {pipeline_name}")
@@ -747,7 +774,8 @@ class IAProcessingCore:
         input_data: Dict[str, Any],
         previous_results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute a single pipeline stage"""
+        """
+Execute a single pipeline stage"""
         try:
             # Simulate stage execution based on type
             if stage.stage_type == "preprocessing":
@@ -782,15 +810,18 @@ class IAProcessingCore:
             raise
     
     async def get_model_status(self, model_id: str) -> Optional[AIModelConfig]:
-        """Get AI model status"""
+        """
+Get AI model status"""
         return self.ai_models.get(model_id)
     
     async def get_inference_result(self, result_id: str) -> Optional[InferenceResult]:
-        """Get inference result"""
+        """
+Get inference result"""
         return self.inference_results.get(result_id)
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get current performance metrics"""
+        """
+Get current performance metrics"""
         try:
             return {
                 "metrics": self.performance_metrics,

@@ -38,7 +38,8 @@ from abc import ABC, abstractmethod
 # ===============================
 
 class ModelType(str, Enum):
-    """Machine learning model types"""
+    """
+        Machine learning model types"""
     CLASSIFICATION = "classification"
     REGRESSION = "regression"
     CLUSTERING = "clustering"
@@ -174,7 +175,8 @@ class FeatureStoreConfiguration:
 
 @dataclass
 class MLOpsConfiguration:
-    """MLOps pipeline configuration"""
+    """
+        MLOps pipeline configuration"""
     pipeline_id: str
     pipeline_name: str
     stages: List[str] = field(default_factory=list)
@@ -187,7 +189,8 @@ class MLOpsConfiguration:
 
 @dataclass
 class ModelMetrics:
-    """Model performance metrics"""
+    """
+        Model performance metrics"""
     model_id: str
     metrics: Dict[str, float]
     timestamp: datetime
@@ -199,7 +202,8 @@ class ModelMetrics:
 
 @dataclass
 class ExperimentConfiguration:
-    """ML experiment configuration"""
+    """
+        ML experiment configuration"""
     experiment_id: str
     experiment_name: str
     objective: str
@@ -214,7 +218,8 @@ class ExperimentConfiguration:
 # ==============================
 
 class ModelRegistry:
-    """Model registry for version control and metadata management"""
+    """
+        Model registry for version control and metadata management"""
     
     def __init__(self, registry_path: str = "./models"):
         self.registry_path = Path(registry_path)
@@ -239,8 +244,10 @@ class ModelRegistry:
                     self.models[model_id] = {}
                     for version, config_data in versions.items():
                         self.models[model_id][version] = ModelConfiguration(**config_data)
+
                 
                 self.model_artifacts = registry_data.get("artifacts", {})
+
                 
             except Exception as e:
                 logging.error(f"Failed to load model registry: {e}")
@@ -255,8 +262,8 @@ class ModelRegistry:
                     version: {
                         "model_id": config.model_id,
                         "model_name": config.model_name,
-                        "model_type": config.model_type.value,
-                        "framework": config.framework.value,
+                        "model_type": config.model_type.value if hasattr(config.model_type, 'value') else config.model_type,
+                        "framework": config.framework.value if hasattr(config.framework, 'value') else config.framework,
                         "version": config.version,
                         "description": config.description,
                         "hyperparameters": config.hyperparameters,
@@ -284,6 +291,7 @@ class ModelRegistry:
     def register_model(self, config: ModelConfiguration, artifact_path: Optional[str] = None) -> Dict[str, Any]:
         """Register a new model or version"""
         model_id = config.model_id
+
         version = config.version
         
         # Initialize model entry if new
@@ -300,6 +308,7 @@ class ModelRegistry:
         
         # Save registry
         self._save_registry()
+
         
         logging.info(f"Registered model {model_id} version {version}")
         return {
@@ -318,12 +327,15 @@ class ModelRegistry:
             return self.models[model_id].get(version)
         else:
             # Return latest version
+
             versions = sorted(self.models[model_id].keys(), reverse=True)
+
             return self.models[model_id][versions[0]] if versions else None
     
     def list_models(self, model_type: Optional[ModelType] = None, 
                    tags: Optional[List[str]] = None) -> List[Dict[str, Any]]:
-        """List models with optional filtering"""
+        """
+        List models with optional filtering"""
         model_list = []
         
         for model_id, versions in self.models.items():
@@ -343,6 +355,7 @@ class ModelRegistry:
                     "framework": config.framework.value,
                     "tags": config.tags
                 })
+
         
         return sorted(model_list, key=lambda x: (x["model_id"], x["version"]))
     
@@ -364,6 +377,7 @@ class ModelRegistry:
                     del self.model_artifacts[model_id]
                 
                 self._save_registry()
+
                 return {"status": "deleted", "model_id": model_id, "version": version}
             else:
                 return {"status": "error", "message": "Version not found"}
@@ -372,6 +386,7 @@ class ModelRegistry:
             del self.models[model_id]
             del self.model_artifacts[model_id]
             self._save_registry()
+
             return {"status": "deleted", "model_id": model_id}
     
     def record_metrics(self, metrics: ModelMetrics) -> None:
@@ -388,7 +403,8 @@ class ModelRegistry:
             self.model_metrics[model_id] = self.model_metrics[model_id][-100:]
     
     def get_model_metrics(self, model_id: str, limit: int = 10) -> List[ModelMetrics]:
-        """Get model performance metrics"""
+        """
+        Get model performance metrics"""
         metrics = self.model_metrics.get(model_id, [])
         return sorted(metrics, key=lambda x: x.timestamp, reverse=True)[:limit]
 
@@ -397,7 +413,8 @@ class ModelRegistry:
 # ==============================
 
 class TrainingPipelineManager:
-    """Training pipeline orchestration and management"""
+    """
+        Training pipeline orchestration and management"""
     
     def __init__(self, model_registry: ModelRegistry):
         self.model_registry = model_registry
@@ -407,21 +424,25 @@ class TrainingPipelineManager:
         self.training_callbacks: List[Callable] = []
     
     def register_data_processor(self, processor_name: str, processor: Callable) -> None:
-        """Register data preprocessing function"""
+        """
+        Register data preprocessing function"""
         self.data_processors[processor_name] = processor
     
     def add_training_callback(self, callback: Callable) -> None:
-        """Add training event callback"""
+        """
+        Add training event callback"""
         self.training_callbacks.append(callback)
     
     async def start_training(self, training_config: TrainingConfiguration) -> Dict[str, Any]:
-        """Start model training pipeline"""
+        """
+        Start model training pipeline"""
         training_id = training_config.training_id
         
         if training_id in self.active_trainings:
             return {"status": "error", "message": "Training already active"}
         
         # Initialize training state
+
         training_state = {
             "training_id": training_id,
             "model_id": training_config.model_config.model_id,
@@ -440,9 +461,11 @@ class TrainingPipelineManager:
             await self._notify_training_event("training_started", training_state)
             
             # Start training process
+
             training_task = asyncio.create_task(
                 self._execute_training_pipeline(training_config, training_state)
             )
+
             
             training_state["task"] = training_task
             training_state["status"] = "running"
@@ -456,7 +479,9 @@ class TrainingPipelineManager:
         except Exception as e:
             training_state["status"] = "failed"
             training_state["error"] = str(e)
+
             logging.error(f"Failed to start training {training_id}: {e}")
+
             return {"status": "error", "message": str(e)}
     
     async def _execute_training_pipeline(self, config: TrainingConfiguration, 
@@ -474,18 +499,22 @@ class TrainingPipelineManager:
             # Training loop
             state["status"] = "training"
             best_score = float('-inf') if config.model_config.model_type != ModelType.CLASSIFICATION else 0.0
+
             patience_counter = 0
             
             for epoch in range(config.epochs):
                 state["current_epoch"] = epoch + 1
                 
                 # Training step
+
                 train_metrics = await self._training_step(model, train_data, config)
                 
                 # Validation step
+
                 val_metrics = await self._validation_step(model, val_data, config)
                 
                 # Log metrics
+
                 epoch_log = {
                     "epoch": epoch + 1,
                     "train_metrics": train_metrics,
@@ -495,25 +524,32 @@ class TrainingPipelineManager:
                 state["training_logs"].append(epoch_log)
                 
                 # Check for improvement
+
                 current_score = val_metrics.get("accuracy", val_metrics.get("loss", 0.0))
+
                 if current_score > best_score:
                     best_score = current_score
                     state["best_metrics"] = val_metrics
+
                     patience_counter = 0
                     
                     # Save checkpoint
+
                     checkpoint_path = await self._save_checkpoint(model, config, epoch)
+
                     state["checkpoints"].append({
                         "epoch": epoch + 1,
                         "path": checkpoint_path,
                         "metrics": val_metrics
                     })
+
                 else:
                     patience_counter += 1
                 
                 # Early stopping
                 if config.early_stopping and patience_counter >= config.early_stopping_patience:
                     logging.info(f"Early stopping triggered at epoch {epoch + 1}")
+
                     break
                 
                 # Notify progress
@@ -525,36 +561,48 @@ class TrainingPipelineManager:
             # Final evaluation
             state["status"] = "evaluating"
             test_metrics = await self._evaluation_step(model, test_data, config)
+
             state["final_metrics"] = test_metrics
             
             # Register trained model
+
             trained_model_config = config.model_config
             trained_model_config.version = f"{trained_model_config.version}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             best_checkpoint = max(state["checkpoints"], key=lambda x: x["metrics"].get("accuracy", 0))
+
             self.model_registry.register_model(trained_model_config, best_checkpoint["path"])
             
             # Record metrics
+
             metrics = ModelMetrics(
                 model_id=trained_model_config.model_id,
                 metrics=test_metrics,
                 timestamp=datetime.now(),
                 dataset_info={"train_size": len(train_data), "val_size": len(val_data), "test_size": len(test_data)}
             )
+
             self.model_registry.record_metrics(metrics)
+
             
             state["status"] = "completed"
             state["end_time"] = datetime.now()
+
             
             await self._notify_training_event("training_completed", state)
+
             
         except Exception as e:
             state["status"] = "failed"
             state["error"] = str(e)
+
             state["end_time"] = datetime.now()
+
             
             logging.error(f"Training failed for {config.training_id}: {e}")
+
             await self._notify_training_event("training_failed", state)
+
         
         finally:
             # Move to history
@@ -573,8 +621,11 @@ class TrainingPipelineManager:
         await asyncio.sleep(2)  # Simulate data loading time
         
         # This would integrate with actual data loading logic
+
         train_data = {"features": [], "labels": [], "size": 1000}
+
         val_data = {"features": [], "labels": [], "size": 200}
+
         test_data = {"features": [], "labels": [], "size": 200}
         
         return train_data, val_data, test_data
@@ -583,6 +634,7 @@ class TrainingPipelineManager:
         """Initialize ML model"""
         # Simulate model initialization
         await asyncio.sleep(1)
+
         
         return {
             "model_id": model_config.model_id,
@@ -596,6 +648,7 @@ class TrainingPipelineManager:
         """Execute training step"""
         # Simulate training step
         await asyncio.sleep(0.1)
+
         
         return {
             "loss": 0.5 + (0.5 * (1 / (config.epochs + 1))),  # Decreasing loss
@@ -607,6 +660,7 @@ class TrainingPipelineManager:
         """Execute validation step"""
         # Simulate validation step
         await asyncio.sleep(0.05)
+
         
         return {
             "val_loss": 0.6 + (0.4 * (1 / (config.epochs + 1))),
@@ -618,6 +672,7 @@ class TrainingPipelineManager:
         """Execute final evaluation"""
         # Simulate evaluation
         await asyncio.sleep(0.5)
+
         
         return {
             "test_loss": 0.55,
@@ -632,6 +687,8 @@ class TrainingPipelineManager:
         """Save model checkpoint"""
         checkpoint_dir = Path("./checkpoints") / config.training_id
         checkpoint_dir.mkdir(parents=True, exist_ok=True)
+
+
         
         checkpoint_path = checkpoint_dir / f"epoch_{epoch + 1}.ckpt"
         
@@ -639,6 +696,7 @@ class TrainingPipelineManager:
         await asyncio.sleep(0.1)
         
         # In real implementation, this would save actual model weights
+
         checkpoint_data = {
             "epoch": epoch + 1,
             "model_state": model,
@@ -647,6 +705,7 @@ class TrainingPipelineManager:
         
         with open(checkpoint_path, 'w') as f:
             json.dump(checkpoint_data, f, default=str, indent=2)
+
         
         return str(checkpoint_path)
     
@@ -655,6 +714,7 @@ class TrainingPipelineManager:
         for callback in self.training_callbacks:
             try:
                 await callback(event_type, data)
+
             except Exception as e:
                 logging.error(f"Training callback error: {e}")
     
@@ -668,6 +728,7 @@ class TrainingPipelineManager:
             return state
         
         # Check training history
+
         history = self.training_history.get(training_id, [])
         return history[-1] if history else None
     
@@ -675,17 +736,21 @@ class TrainingPipelineManager:
         """Stop active training"""
         if training_id not in self.active_trainings:
             return {"status": "error", "message": "Training not active"}
+
         
         training_state = self.active_trainings[training_id]
         
         # Cancel training task
         if "task" in training_state:
             training_state["task"].cancel()
+
         
         training_state["status"] = "stopped"
         training_state["end_time"] = datetime.now()
+
         
         await self._notify_training_event("training_stopped", training_state)
+
         
         return {"status": "stopped", "training_id": training_id}
 
@@ -704,20 +769,25 @@ class ModelDeploymentManager:
         self.deployment_callbacks: List[Callable] = []
     
     def add_deployment_callback(self, callback: Callable) -> None:
-        """Add deployment event callback"""
+        """
+        Add deployment event callback"""
         self.deployment_callbacks.append(callback)
     
     async def deploy_model(self, deployment_config: DeploymentConfiguration) -> Dict[str, Any]:
-        """Deploy model to target environment"""
+        """
+        Deploy model to target environment"""
         deployment_id = deployment_config.deployment_id
+
         model_id = deployment_config.model_id
         
         # Get model configuration
+
         model_config = self.model_registry.get_model(model_id)
         if not model_config:
             return {"status": "error", "message": "Model not found in registry"}
         
         # Initialize deployment state
+
         deployment_state = {
             "deployment_id": deployment_id,
             "model_id": model_id,
@@ -736,42 +806,56 @@ class ModelDeploymentManager:
             # Execute deployment strategy
             if deployment_config.deployment_strategy == DeploymentStrategy.BLUE_GREEN:
                 result = await self._blue_green_deployment(deployment_config, deployment_state)
+
             elif deployment_config.deployment_strategy == DeploymentStrategy.CANARY:
                 result = await self._canary_deployment(deployment_config, deployment_state)
+
             elif deployment_config.deployment_strategy == DeploymentStrategy.ROLLING:
                 result = await self._rolling_deployment(deployment_config, deployment_state)
+
             else:
                 result = await self._instant_deployment(deployment_config, deployment_state)
+
             
             deployment_state.update(result)
+
             deployment_state["status"] = "deployed"
             deployment_state["end_time"] = datetime.now()
+
             
             await self._notify_deployment_event("deployment_completed", deployment_state)
+
             
             return {"status": "deployed", "deployment_id": deployment_id, "endpoint": result.get("endpoint")}
             
         except Exception as e:
             deployment_state["status"] = "failed"
             deployment_state["error"] = str(e)
+
             deployment_state["end_time"] = datetime.now()
+
             
             await self._notify_deployment_event("deployment_failed", deployment_state)
+
             
             logging.error(f"Deployment failed for {deployment_id}: {e}")
+
             return {"status": "error", "message": str(e)}
     
     async def _blue_green_deployment(self, config: DeploymentConfiguration, 
                                    state: Dict[str, Any]) -> Dict[str, Any]:
         """Execute blue-green deployment"""
         # Create green environment
+
         green_endpoint = f"http://green-{config.model_id}.{config.target_environment}.local:8080"
         
         # Deploy to green environment
         await asyncio.sleep(2)  # Simulate deployment time
         
         # Health check green environment
+
         health_check_result = await self._health_check_endpoint(green_endpoint)
+
         
         if health_check_result["healthy"]:
             # Switch traffic to green
@@ -794,6 +878,7 @@ class ModelDeploymentManager:
                                 state: Dict[str, Any]) -> Dict[str, Any]:
         """Execute canary deployment"""
         # Deploy canary version
+
         canary_endpoint = f"http://canary-{config.model_id}.{config.target_environment}.local:8080"
         
         await asyncio.sleep(1.5)  # Simulate deployment time
@@ -805,7 +890,9 @@ class ModelDeploymentManager:
         await asyncio.sleep(0.5)  # Simulate monitoring time
         
         # Check canary metrics
+
         canary_metrics = await self._get_deployment_metrics(canary_endpoint)
+
         
         if canary_metrics["error_rate"] < 0.01:  # Less than 1% error rate
             # Gradually increase traffic
@@ -814,10 +901,14 @@ class ModelDeploymentManager:
                 await asyncio.sleep(0.1)  # Simulate gradual rollout
                 
                 # Check metrics at each step
+
                 metrics = await self._get_deployment_metrics(canary_endpoint)
+
                 if metrics["error_rate"] > 0.05:  # Rollback if error rate > 5%
                     await self._rollback_deployment(config.deployment_id)
+
                     raise Exception("Canary deployment rolled back due to high error rate")
+
             
             state["health_status"] = "healthy"
             
@@ -836,6 +927,7 @@ class ModelDeploymentManager:
                                 state: Dict[str, Any]) -> Dict[str, Any]:
         """Execute rolling deployment"""
         # Rolling deployment across multiple instances
+
         instances = ["instance-1", "instance-2", "instance-3"]
         
         for i, instance in enumerate(instances):
@@ -843,14 +935,17 @@ class ModelDeploymentManager:
             await asyncio.sleep(0.5)  # Simulate per-instance deployment
             
             # Health check instance
+
             instance_endpoint = f"http://{instance}-{config.model_id}.{config.target_environment}.local:8080"
             health_result = await self._health_check_endpoint(instance_endpoint)
+
             
             if not health_result["healthy"]:
                 raise Exception(f"Rolling deployment failed on {instance}")
             
             # Update traffic percentage
             state["traffic_percentage"] = ((i + 1) / len(instances)) * 100
+
         
         main_endpoint = f"http://{config.model_id}.{config.target_environment}.local:8080"
         state["health_status"] = "healthy"
@@ -873,7 +968,9 @@ class ModelDeploymentManager:
         await asyncio.sleep(1)  # Simulate deployment time
         
         # Health check
+
         health_result = await self._health_check_endpoint(endpoint)
+
         
         if health_result["healthy"]:
             state["traffic_percentage"] = 100.0
@@ -907,6 +1004,7 @@ class ModelDeploymentManager:
         """Get deployment performance metrics"""
         # Simulate metrics collection
         await asyncio.sleep(0.05)
+
         
         return {
             "error_rate": 0.005,  # 0.5% error rate
@@ -920,12 +1018,14 @@ class ModelDeploymentManager:
         """Rollback deployment"""
         if deployment_id not in self.active_deployments:
             return {"status": "error", "message": "Deployment not found"}
+
         
         deployment_state = self.active_deployments[deployment_id]
         deployment_state["status"] = "rolling_back"
         
         # Simulate rollback process
         await asyncio.sleep(1)
+
         
         deployment_state["status"] = "rolled_back"
         deployment_state["traffic_percentage"] = 0.0
@@ -936,6 +1036,7 @@ class ModelDeploymentManager:
             del self.serving_endpoints[deployment_id]
         
         await self._notify_deployment_event("deployment_rolled_back", deployment_state)
+
         
         return {"status": "rolled_back", "deployment_id": deployment_id}
     
@@ -944,6 +1045,7 @@ class ModelDeploymentManager:
         for callback in self.deployment_callbacks:
             try:
                 await callback(event_type, data)
+
             except Exception as e:
                 logging.error(f"Deployment callback error: {e}")
     
@@ -952,7 +1054,8 @@ class ModelDeploymentManager:
         return self.active_deployments.get(deployment_id)
     
     def list_active_deployments(self) -> List[Dict[str, Any]]:
-        """List all active deployments"""
+        """
+        List all active deployments"""
         return list(self.active_deployments.values())
 
 # ==============================
@@ -960,7 +1063,8 @@ class ModelDeploymentManager:
 # ==============================
 
 class MLPipelineConfigManager:
-    """Main ML pipeline configuration and management system"""
+    """
+        Main ML pipeline configuration and management system"""
     
     def __init__(self):
         # Core components
@@ -996,6 +1100,7 @@ class MLPipelineConfigManager:
     def _initialize_default_configurations(self) -> None:
         """Initialize default ML pipeline configurations"""
         # Set up default model configurations for the platform
+
         default_models = [
             ModelConfiguration(
                 model_id="content_classifier",
@@ -1061,6 +1166,7 @@ class MLPipelineConfigManager:
         # Update pipeline metrics
         if event_type == "training_completed":
             model_id = data.get("model_id")
+
             if model_id not in self.pipeline_metrics:
                 self.pipeline_metrics[model_id] = {"trainings_completed": 0}
             self.pipeline_metrics[model_id]["trainings_completed"] += 1
@@ -1072,6 +1178,7 @@ class MLPipelineConfigManager:
         # Update pipeline metrics
         if event_type == "deployment_completed":
             model_id = data.get("model_id")
+
             if model_id not in self.pipeline_metrics:
                 self.pipeline_metrics[model_id] = {"deployments_completed": 0}
             self.pipeline_metrics[model_id]["deployments_completed"] += 1
@@ -1080,11 +1187,13 @@ class MLPipelineConfigManager:
                                      training_config_override: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """Create and start training pipeline"""
         # Get model configuration
+
         model_config = self.model_registry.get_model(model_id)
         if not model_config:
             return {"status": "error", "message": "Model not found"}
         
         # Create training configuration
+
         training_config = TrainingConfiguration(
             training_id=f"training_{model_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
             model_config=model_config,
@@ -1108,6 +1217,7 @@ class MLPipelineConfigManager:
                           deployment_strategy: DeploymentStrategy = DeploymentStrategy.CANARY) -> Dict[str, Any]:
         """Deploy model to specified environment"""
         # Create deployment configuration
+
         deployment_config = DeploymentConfiguration(
             deployment_id=f"deploy_{model_id}_{environment}_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
             model_id=model_id,
@@ -1129,6 +1239,7 @@ class MLPipelineConfigManager:
                 "tracing_enabled": True
             }
         )
+
         
         return await self.deployment_manager.deploy_model(deployment_config)
     
@@ -1151,8 +1262,10 @@ class MLPipelineConfigManager:
         """Run ML experiment"""
         if experiment_id not in self.active_experiments:
             return {"status": "error", "message": "Experiment not found"}
+
         
         experiment_config = self.active_experiments[experiment_id]
+
         experiment_results = {
             "experiment_id": experiment_id,
             "start_time": datetime.now(),
@@ -1164,17 +1277,23 @@ class MLPipelineConfigManager:
             # Train and evaluate each model in the experiment
             for model_id in experiment_config.models_to_compare:
                 # Start training
+
                 training_result = await self.create_training_pipeline(model_id)
+
                 
                 if training_result["status"] == "started":
                     # Wait for training completion (simplified)
+
+
                     training_id = training_result["training_id"]
                     
                     # In real implementation, this would wait for actual completion
                     await asyncio.sleep(1)  # Simulate training time
                     
                     # Get training results
+
                     training_status = self.training_manager.get_training_status(training_id)
+
                     
                     experiment_results["model_results"][model_id] = {
                         "training_status": training_status["status"] if training_status else "unknown",
@@ -1185,8 +1304,10 @@ class MLPipelineConfigManager:
             experiment_results["end_time"] = datetime.now()
             
             # Determine best model
+
             best_model = self._find_best_model(experiment_results["model_results"], 
                                              experiment_config.evaluation_metrics)
+
             experiment_results["best_model"] = best_model
             
             self.experiment_results[experiment_id] = experiment_results
@@ -1196,7 +1317,9 @@ class MLPipelineConfigManager:
         except Exception as e:
             experiment_results["status"] = "failed"
             experiment_results["error"] = str(e)
+
             experiment_results["end_time"] = datetime.now()
+
             
             return experiment_results
     
@@ -1205,18 +1328,26 @@ class MLPipelineConfigManager:
         """Find best performing model from experiment results"""
         if not model_results or not evaluation_metrics:
             return None
+
         
         best_model = None
+
         best_score = float('-inf')
+
+
         
         primary_metric = evaluation_metrics[0]  # Use first metric as primary
         
         for model_id, results in model_results.items():
             metrics = results.get("final_metrics", {})
+
+
             score = metrics.get(primary_metric, 0.0)
+
             
             if score > best_score:
                 best_score = score
+
                 best_model = model_id
         
         return best_model
@@ -1239,6 +1370,7 @@ class MLPipelineConfigManager:
         
         for model_id in self.model_registry.models.keys():
             metrics_history = self.model_registry.get_model_metrics(model_id)
+
             
             if metrics_history:
                 latest_metrics = metrics_history[0]

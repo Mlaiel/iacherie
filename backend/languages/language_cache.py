@@ -38,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 
 class CacheLevel(Enum):
-    """Cache levels in multi-tier architecture"""
+    """
+        Cache levels in multi-tier architecture"""
     L1_MEMORY = "l1_memory"         # In-memory cache (fastest)
     L2_REDIS = "l2_redis"          # Redis cache (fast)
     L3_DISK = "l3_disk"            # Disk cache (slower but persistent)
@@ -87,8 +88,10 @@ class CacheKey:
     parameters: Dict[str, Any] = field(default_factory=dict)
     
     def to_string(self) -> str:
-        """Convert cache key to string"""
+        """
+        Convert cache key to string"""
         params_str = json.dumps(self.parameters, sort_keys=True)
+
         params_hash = hashlib.md5(params_str.encode()).hexdigest()[:8]
         return f"{self.content_type.value}:{self.language_code}:{self.content_hash}:{params_hash}"
 
@@ -105,22 +108,26 @@ class CacheEntry:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def is_expired(self) -> bool:
-        """Check if cache entry is expired"""
+        """
+        Check if cache entry is expired"""
         if self.ttl_seconds is None:
             return False
+
         
         expiry_time = self.created_at + timedelta(seconds=self.ttl_seconds)
         return datetime.now(timezone.utc) > expiry_time
     
     def update_access(self):
-        """Update access statistics"""
+        """
+        Update access statistics"""
         self.last_accessed = datetime.now(timezone.utc)
         self.access_count += 1
 
 
 @dataclass
 class CacheRequest:
-    """Request for cache operations"""
+    """
+        Request for cache operations"""
     operation: CacheOperation
     cache_key: CacheKey
     value: Optional[Any] = None
@@ -131,7 +138,8 @@ class CacheRequest:
 
 @dataclass
 class CacheResult:
-    """Result from cache operation"""
+    """
+        Result from cache operation"""
     success: bool
     value: Optional[Any] = None
     cache_hit: bool = False
@@ -142,7 +150,8 @@ class CacheResult:
 
 @dataclass
 class CacheStats:
-    """Cache performance statistics"""
+    """
+        Cache performance statistics"""
     total_requests: int = 0
     cache_hits: int = 0
     cache_misses: int = 0
@@ -155,7 +164,8 @@ class CacheStats:
 
 @dataclass
 class CacheConfig:
-    """Cache configuration"""
+    """
+        Cache configuration"""
     max_memory_mb: int = 1024
     default_ttl_seconds: int = 3600
     max_entries_per_level: Dict[CacheLevel, int] = field(default_factory=lambda: {
@@ -175,7 +185,8 @@ class LanguageCacheEngine:
     """
     
     def __init__(self, config: Optional[CacheConfig] = None):
-        """Initialize language cache engine"""
+        """
+        Initialize language cache engine"""
         self.config = config or CacheConfig()
         
         # Cache storage layers
@@ -200,13 +211,17 @@ class LanguageCacheEngine:
                 )
                 # Test connection
                 self.l2_redis_cache.ping()
+
                 logger.info("Redis cache initialized successfully")
+
             except Exception as e:
                 logger.warning(f"Redis not available: {e}")
+
                 self.l2_redis_cache = None
         
         # Create disk cache directory
         self.l3_disk_cache_dir.mkdir(parents=True, exist_ok=True)
+
         
         logger.info("LanguageCacheEngine initialized with multi-tier caching")
     
@@ -217,20 +232,25 @@ class LanguageCacheEngine:
         Args:
             cache_key: Cache key to lookup
             levels: Cache levels to search (default: all configured levels)
+
             
         Returns:
             CacheResult with value and metadata
         """
         start_time = datetime.now(timezone.utc)
+
         
         if levels is None:
             levels = [CacheLevel.L1_MEMORY, CacheLevel.L2_REDIS, CacheLevel.L3_DISK]
+
         
         key_str = cache_key.to_string()
+
         
         for level in levels:
             try:
                 result = await self._get_from_level(key_str, level)
+
                 if result.success and result.value is not None:
                     # Update statistics
                     self.stats.cache_hits += 1
@@ -241,6 +261,8 @@ class LanguageCacheEngine:
                     
                     # Update access statistics
                     await self._update_access_stats(key_str, level)
+
+
                     
                     latency = (datetime.now(timezone.utc) - start_time).total_seconds() * 1000
                     self.level_stats[level]["latency_sum"] += latency
@@ -253,15 +275,18 @@ class LanguageCacheEngine:
                         latency_ms=latency,
                         metadata={"source_level": level.value}
                     )
+
                 else:
                     self.level_stats[level]["misses"] += 1
                     
             except Exception as e:
                 logger.error(f"Error accessing cache level {level.value}: {e}")
+
                 continue
         
         # Cache miss across all levels
         self.stats.cache_misses += 1
+
         latency = (datetime.now(timezone.utc) - start_time).total_seconds() * 1000
         
         return CacheResult(
@@ -290,29 +315,36 @@ class LanguageCacheEngine:
             CacheResult indicating success
         """
         start_time = datetime.now(timezone.utc)
+
         
         if levels is None:
             levels = [CacheLevel.L1_MEMORY, CacheLevel.L2_REDIS]
         
         if ttl_seconds is None:
             ttl_seconds = self.config.default_ttl_seconds
+
         
         key_str = cache_key.to_string()
+
         success_count = 0
         
         for level in levels:
             try:
                 result = await self._set_to_level(key_str, value, ttl_seconds, level, strategy)
+
                 if result.success:
                     success_count += 1
             except Exception as e:
                 logger.error(f"Error setting cache level {level.value}: {e}")
+
                 continue
+
         
         latency = (datetime.now(timezone.utc) - start_time).total_seconds() * 1000
         
         # Update cache patterns for optimization
         await self._update_cache_patterns(cache_key, strategy)
+
         
         return CacheResult(
             success=success_count > 0,
@@ -335,17 +367,21 @@ class LanguageCacheEngine:
         """
         if levels is None:
             levels = [CacheLevel.L1_MEMORY, CacheLevel.L2_REDIS, CacheLevel.L3_DISK]
+
         
         key_str = cache_key.to_string()
+
         success_count = 0
         
         for level in levels:
             try:
                 result = await self._delete_from_level(key_str, level)
+
                 if result.success:
                     success_count += 1
             except Exception as e:
                 logger.error(f"Error invalidating cache level {level.value}: {e}")
+
                 continue
         
         return CacheResult(
@@ -367,15 +403,18 @@ class LanguageCacheEngine:
         """
         if levels is None:
             levels = [CacheLevel.L1_MEMORY, CacheLevel.L2_REDIS, CacheLevel.L3_DISK]
+
         
         total_invalidated = 0
         
         for level in levels:
             try:
                 count = await self._invalidate_pattern_level(pattern, level)
+
                 total_invalidated += count
             except Exception as e:
                 logger.error(f"Error invalidating pattern on level {level.value}: {e}")
+
                 continue
         
         return total_invalidated
@@ -394,16 +433,19 @@ class LanguageCacheEngine:
         """
         if levels is None:
             levels = [CacheLevel.L1_MEMORY]
+
         
         success_count = 0
         
         for cache_key, value in preload_data:
             try:
                 result = await self.set(cache_key, value, levels=levels)
+
                 if result.success:
                     success_count += 1
             except Exception as e:
                 logger.error(f"Error preloading cache entry: {e}")
+
                 continue
         
         logger.info(f"Preloaded {success_count}/{len(preload_data)} cache entries")
@@ -423,6 +465,7 @@ class LanguageCacheEngine:
         }
         
         # Analyze cache patterns
+
         patterns = await self._analyze_cache_patterns()
         
         # Optimize memory allocation
@@ -439,6 +482,7 @@ class LanguageCacheEngine:
         
         # Generate recommendations
         optimization_report["recommendations"] = await self._generate_optimization_recommendations(patterns)
+
         
         return optimization_report
     
@@ -455,9 +499,11 @@ class LanguageCacheEngine:
                               if self.stats.total_requests > 0 else 0.0)
         
         # Calculate average latency
+
         total_latency = sum(
             level_stat["latency_sum"] for level_stat in self.level_stats.values()
         )
+
         total_hits = sum(
             level_stat["hits"] for level_stat in self.level_stats.values()
         )
@@ -471,7 +517,8 @@ class LanguageCacheEngine:
             level: {
                 "hits": stats["hits"],
                 "misses": stats["misses"],
-                "hit_rate": stats["hits"] / (stats["hits"] + stats["misses"]) 
+                "hit_rate": stats["hits"] / (stats["hits"] + stats["misses"])
+ 
                            if (stats["hits"] + stats["misses"]) > 0 else 0.0,
                 "avg_latency": stats["latency_sum"] / stats["hits"] if stats["hits"] > 0 else 0.0
             }
@@ -495,7 +542,8 @@ class LanguageCacheEngine:
     
     async def _set_to_level(self, key: str, value: Any, ttl_seconds: int, 
                           level: CacheLevel, strategy: CacheStrategy) -> CacheResult:
-        """Set value to specific cache level"""
+        """
+        Set value to specific cache level"""
         if level == CacheLevel.L1_MEMORY:
             return await self._set_to_memory(key, value, ttl_seconds, strategy)
         elif level == CacheLevel.L2_REDIS:
@@ -506,7 +554,8 @@ class LanguageCacheEngine:
             return CacheResult(success=False)
     
     async def _delete_from_level(self, key: str, level: CacheLevel) -> CacheResult:
-        """Delete value from specific cache level"""
+        """
+        Delete value from specific cache level"""
         if level == CacheLevel.L1_MEMORY:
             return await self._delete_from_memory(key)
         elif level == CacheLevel.L2_REDIS:
@@ -519,12 +568,15 @@ class LanguageCacheEngine:
     # Memory cache operations
     
     async def _get_from_memory(self, key: str) -> CacheResult:
-        """Get from L1 memory cache"""
+        """
+        Get from L1 memory cache"""
         if key in self.l1_memory_cache:
             entry = self.l1_memory_cache[key]
             if not entry.is_expired():
                 entry.update_access()
+
                 return CacheResult(success=True, value=entry.value)
+
             else:
                 # Remove expired entry
                 del self.l1_memory_cache[key]
@@ -533,10 +585,13 @@ class LanguageCacheEngine:
     
     async def _set_to_memory(self, key: str, value: Any, ttl_seconds: int, 
                            strategy: CacheStrategy) -> CacheResult:
-        """Set to L1 memory cache"""
+        """
+        Set to L1 memory cache"""
         # Check if we need to evict entries
         if len(self.l1_memory_cache) >= self.config.max_entries_per_level[CacheLevel.L1_MEMORY]:
             await self._evict_memory_entries(strategy, 1)
+
+
         
         entry = CacheEntry(
             key=key,
@@ -545,12 +600,14 @@ class LanguageCacheEngine:
             last_accessed=datetime.now(timezone.utc),
             ttl_seconds=ttl_seconds
         )
+
         
         self.l1_memory_cache[key] = entry
         return CacheResult(success=True)
     
     async def _delete_from_memory(self, key: str) -> CacheResult:
-        """Delete from L1 memory cache"""
+        """
+        Delete from L1 memory cache"""
         if key in self.l1_memory_cache:
             del self.l1_memory_cache[key]
             return CacheResult(success=True)
@@ -559,17 +616,22 @@ class LanguageCacheEngine:
     # Redis cache operations
     
     async def _get_from_redis(self, key: str) -> CacheResult:
-        """Get from L2 Redis cache"""
+        """
+        Get from L2 Redis cache"""
         if self.l2_redis_cache is None:
             return CacheResult(success=True, value=None)
+
         
         try:
             data = self.l2_redis_cache.get(key)
+
             if data:
                 value = pickle.loads(data)
+
                 return CacheResult(success=True, value=value)
         except Exception as e:
             logger.error(f"Redis get error: {e}")
+
         
         return CacheResult(success=True, value=None)
     
@@ -577,25 +639,32 @@ class LanguageCacheEngine:
         """Set to L2 Redis cache"""
         if self.l2_redis_cache is None:
             return CacheResult(success=False)
+
         
         try:
             serialized_value = pickle.dumps(value)
+
             self.l2_redis_cache.setex(key, ttl_seconds, serialized_value)
+
             return CacheResult(success=True)
         except Exception as e:
             logger.error(f"Redis set error: {e}")
+
             return CacheResult(success=False)
     
     async def _delete_from_redis(self, key: str) -> CacheResult:
         """Delete from L2 Redis cache"""
         if self.l2_redis_cache is None:
             return CacheResult(success=False)
+
         
         try:
             result = self.l2_redis_cache.delete(key)
+
             return CacheResult(success=result > 0)
         except Exception as e:
             logger.error(f"Redis delete error: {e}")
+
             return CacheResult(success=False)
     
     # Disk cache operations
@@ -608,15 +677,20 @@ class LanguageCacheEngine:
             if cache_file.exists():
                 with open(cache_file, 'rb') as f:
                     entry_data = pickle.load(f)
+
+
                     entry = CacheEntry(**entry_data)
+
                     
                     if not entry.is_expired():
                         return CacheResult(success=True, value=entry.value)
+
                     else:
                         # Remove expired file
                         cache_file.unlink()
         except Exception as e:
             logger.error(f"Disk cache get error: {e}")
+
         
         return CacheResult(success=True, value=None)
     
@@ -632,6 +706,8 @@ class LanguageCacheEngine:
                 last_accessed=datetime.now(timezone.utc),
                 ttl_seconds=ttl_seconds
             )
+
+
             
             entry_data = {
                 'key': entry.key,
@@ -645,10 +721,12 @@ class LanguageCacheEngine:
             
             with open(cache_file, 'wb') as f:
                 pickle.dump(entry_data, f)
+
             
             return CacheResult(success=True)
         except Exception as e:
             logger.error(f"Disk cache set error: {e}")
+
             return CacheResult(success=False)
     
     async def _delete_from_disk(self, key: str) -> CacheResult:
@@ -658,9 +736,11 @@ class LanguageCacheEngine:
         try:
             if cache_file.exists():
                 cache_file.unlink()
+
                 return CacheResult(success=True)
         except Exception as e:
             logger.error(f"Disk cache delete error: {e}")
+
         
         return CacheResult(success=False)
     
@@ -672,18 +752,21 @@ class LanguageCacheEngine:
     
     async def _promote_to_higher_levels(self, key: str, value: Any, current_level: CacheLevel, 
                                       available_levels: List[CacheLevel]):
-        """Promote frequently accessed data to higher cache levels"""
+        """
+        Promote frequently accessed data to higher cache levels"""
         higher_levels = []
         
         if current_level == CacheLevel.L3_DISK and CacheLevel.L2_REDIS in available_levels:
             higher_levels.append(CacheLevel.L2_REDIS)
         if current_level in [CacheLevel.L3_DISK, CacheLevel.L2_REDIS] and CacheLevel.L1_MEMORY in available_levels:
             higher_levels.append(CacheLevel.L1_MEMORY)
+
         
         for level in higher_levels:
             try:
                 await self._set_to_level(key, value, self.config.default_ttl_seconds, 
                                        level, CacheStrategy.LRU)
+
             except Exception as e:
                 logger.error(f"Error promoting to level {level.value}: {e}")
     
@@ -693,13 +776,16 @@ class LanguageCacheEngine:
         pass
     
     async def _evict_memory_entries(self, strategy: CacheStrategy, count: int):
-        """Evict entries from memory cache based on strategy"""
+        """
+        Evict entries from memory cache based on strategy"""
         if strategy == CacheStrategy.LRU:
             # Sort by last accessed time
+
             sorted_entries = sorted(self.l1_memory_cache.items(), 
                                   key=lambda x: x[1].last_accessed)
         elif strategy == CacheStrategy.LFU:
             # Sort by access count
+
             sorted_entries = sorted(self.l1_memory_cache.items(), 
                                   key=lambda x: x[1].access_count)
         else:
@@ -714,7 +800,8 @@ class LanguageCacheEngine:
             self.stats.evictions += 1
     
     async def _invalidate_pattern_level(self, pattern: str, level: CacheLevel) -> int:
-        """Invalidate entries matching pattern on specific level"""
+        """
+        Invalidate entries matching pattern on specific level"""
         count = 0
         
         if level == CacheLevel.L1_MEMORY:
@@ -726,21 +813,29 @@ class LanguageCacheEngine:
         elif level == CacheLevel.L2_REDIS and self.l2_redis_cache:
             try:
                 keys = self.l2_redis_cache.keys(f"*{pattern}*")
+
                 if keys:
                     self.l2_redis_cache.delete(*keys)
+
+
                     count = len(keys)
+
             except Exception as e:
                 logger.error(f"Redis pattern invalidation error: {e}")
+
         
         elif level == CacheLevel.L3_DISK:
             try:
                 cache_files = list(self.l3_disk_cache_dir.glob("*.cache"))
+
                 for cache_file in cache_files:
                     if pattern in cache_file.name:
                         cache_file.unlink()
+
                         count += 1
             except Exception as e:
                 logger.error(f"Disk pattern invalidation error: {e}")
+
         
         return count
     
@@ -774,42 +869,50 @@ class LanguageCacheEngine:
     async def _optimize_memory_allocation(self) -> bool:
         """Optimize memory allocation based on usage"""
         # This would implement dynamic memory allocation optimization
-        return False  # Placeholder
+        return False
     
-    async def _optimize_ttl_settings(self, patterns: Dict[str, Any]) -> bool:
-        """Optimize TTL settings based on patterns"""
+    async def _optimize_ttl_settings(self) -> bool:
+        """
+        Optimize TTL settings based on patterns"""
         # This would adjust TTL based on access patterns
-        return False  # Placeholder
+        return False
     
-    async def _optimize_cache_levels(self, patterns: Dict[str, Any]) -> bool:
-        """Optimize cache level usage"""
+    async def _optimize_level_usage(self) -> bool:
+        """
+        Optimize cache level usage"""
         # This would optimize which levels to use for different content types
-        return False  # Placeholder
+        return False
     
-    async def _generate_optimization_recommendations(self, patterns: Dict[str, Any]) -> List[str]:
-        """Generate optimization recommendations"""
+    async def _generate_recommendations(self) -> List[str]:
+        """
+        Generate optimization recommendations"""
         recommendations = []
         
         if self.stats.hit_rate < 0.7:
             recommendations.append("Consider increasing cache size or TTL")
+
         
         if self.stats.avg_latency_ms > 100:
             recommendations.append("Consider optimizing cache access patterns")
+
         
         return recommendations
     
     async def _calculate_memory_usage(self) -> float:
         """Calculate approximate memory usage in MB"""
         import sys
+
         
         total_size = 0
         for entry in self.l1_memory_cache.values():
             total_size += sys.getsizeof(entry.value)
+
         
         return total_size / (1024 * 1024)  # Convert to MB
     
     async def get_cache_capabilities(self) -> Dict[str, Any]:
-        """Get cache engine capabilities"""
+        """
+        Get cache engine capabilities"""
         return {
             "cache_levels": [level.value for level in CacheLevel],
             "cache_strategies": [strategy.value for strategy in CacheStrategy],

@@ -23,7 +23,8 @@ from collections import defaultdict
 
 
 class MetricType(Enum):
-    """Types de métriques"""
+    """
+        Types de métriques"""
     ENGAGEMENT = "engagement"
     VIEWS = "views"
     INTERACTIONS = "interactions"
@@ -94,7 +95,8 @@ class PerformanceMetric:
 
 @dataclass
 class EngagementData:
-    """Données d'engagement"""
+    """
+        Données d'engagement"""
     avatar_id: str
     total_views: int = 0
     unique_viewers: int = 0
@@ -113,7 +115,8 @@ class EngagementData:
 
 @dataclass
 class AudienceInsight:
-    """Insights audience"""
+    """
+        Insights audience"""
     avatar_id: str
     total_audience: int
     audience_segments: Dict[AudienceSegment, int] = field(default_factory=dict)
@@ -129,7 +132,8 @@ class AudienceInsight:
 
 @dataclass
 class ViralityMetrics:
-    """Métriques de viralité"""
+    """
+        Métriques de viralité"""
     avatar_id: str
     viral_coefficient: float = 0.0
     share_rate: float = 0.0
@@ -145,7 +149,8 @@ class ViralityMetrics:
 
 @dataclass
 class OptimizationSuggestion:
-    """Suggestion d'optimisation"""
+    """
+        Suggestion d'optimisation"""
     suggestion_id: str
     avatar_id: str
     category: OptimizationCategory
@@ -162,7 +167,8 @@ class OptimizationSuggestion:
 
 @dataclass
 class PerformanceReport:
-    """Rapport de performance complet"""
+    """
+        Rapport de performance complet"""
     report_id: str
     avatar_id: str
     period_start: datetime
@@ -179,7 +185,8 @@ class PerformanceReport:
 
 
 class PerformanceAnalytics:
-    """Analytics performance détaillées"""
+    """
+        Analytics performance détaillées"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -189,7 +196,8 @@ class PerformanceAnalytics:
         self.reports_cache: Dict[str, PerformanceReport] = {}
     
     async def record_metric(self, metric_data: Dict[str, Any]) -> PerformanceMetric:
-        """Enregistrement d'une métrique"""
+        """
+        Enregistrement d'une métrique"""
         try:
             metric = PerformanceMetric(
                 metric_id=str(uuid.uuid4()),
@@ -200,6 +208,7 @@ class PerformanceAnalytics:
                 metadata=metric_data.get('metadata', {}),
                 context=metric_data.get('context', {})
             )
+
             
             self.metrics[metric.avatar_id].append(metric)
             
@@ -211,6 +220,7 @@ class PerformanceAnalytics:
             
         except Exception as e:
             self.logger.error(f"Erreur enregistrement métrique: {e}")
+
             raise
     
     async def calculate_engagement_metrics(self, avatar_id: str, 
@@ -218,45 +228,62 @@ class PerformanceAnalytics:
         """Calcul des métriques d'engagement"""
         try:
             # Récupération des métriques récentes
+
             cutoff_time = await self._get_period_cutoff(period)
+
+
             recent_metrics = [
                 m for m in self.metrics.get(avatar_id, [])
+
                 if m.timestamp >= cutoff_time
             ]
+
             
             engagement = EngagementData(avatar_id=avatar_id)
+
             
             for metric in recent_metrics:
                 if metric.metric_type == MetricType.VIEWS:
                     engagement.total_views += int(metric.value)
+
                 elif metric.metric_type == MetricType.ENGAGEMENT:
                     engagement.likes += metric.metadata.get('likes', 0)
+
                     engagement.comments += metric.metadata.get('comments', 0)
+
                     engagement.shares += metric.metadata.get('shares', 0)
+
                     engagement.saves += metric.metadata.get('saves', 0)
             
             # Calculs dérivés
             if engagement.total_views > 0:
                 total_interactions = (engagement.likes + engagement.comments + 
                                     engagement.shares + engagement.saves)
+
                 engagement.interaction_rate = total_interactions / engagement.total_views
                 
                 # Simulation d'autres métriques
                 engagement.unique_viewers = int(engagement.total_views * 0.7)
+
                 engagement.retention_rate = min(1.0, engagement.interaction_rate * 2)
+
                 engagement.bounce_rate = max(0.0, 1.0 - engagement.retention_rate)
+
                 engagement.conversion_rate = engagement.interaction_rate * 0.1
             
             self.engagement_history[avatar_id].append(engagement)
+
             return engagement
             
         except Exception as e:
             self.logger.error(f"Erreur calcul engagement: {e}")
+
             return EngagementData(avatar_id=avatar_id)
     
     async def _get_period_cutoff(self, period: PerformancePeriod) -> datetime:
         """Calcul de la date de coupure pour une période"""
         now = datetime.now()
+
         
         if period == PerformancePeriod.HOUR:
             return now - timedelta(hours=1)
@@ -276,11 +303,15 @@ class PerformanceAnalytics:
     async def analyze_performance_trends(self, avatar_id: str, 
                                        metric_type: MetricType,
                                        days: int = 30) -> Dict[str, Any]:
-        """Analyse des tendances de performance"""
+        """
+        Analyse des tendances de performance"""
         try:
             cutoff_time = datetime.now() - timedelta(days=days)
+
+
             relevant_metrics = [
                 m for m in self.metrics.get(avatar_id, [])
+
                 if m.metric_type == metric_type and m.timestamp >= cutoff_time
             ]
             
@@ -288,14 +319,19 @@ class PerformanceAnalytics:
                 return {'trend': 'no_data', 'growth_rate': 0.0}
             
             # Groupement par jour
+
             daily_values = defaultdict(list)
+
             for metric in relevant_metrics:
                 day_key = metric.timestamp.date()
+
                 daily_values[day_key].append(metric.value)
             
             # Calcul des moyennes quotidiennes
+
             daily_averages = {
                 day: sum(values) / len(values)
+
                 for day, values in daily_values.items()
             }
             
@@ -303,15 +339,24 @@ class PerformanceAnalytics:
                 return {'trend': 'insufficient_data', 'growth_rate': 0.0}
             
             # Calcul de la tendance
+
             values = list(daily_averages.values())
+
+
             days_count = len(values)
             
             # Régression linéaire simple
+
             x_mean = (days_count - 1) / 2
+
             y_mean = sum(values) / days_count
+
             
             numerator = sum((i - x_mean) * (values[i] - y_mean) for i in range(days_count))
+
+
             denominator = sum((i - x_mean) ** 2 for i in range(days_count))
+
             
             if denominator == 0:
                 slope = 0
@@ -342,6 +387,7 @@ class PerformanceAnalytics:
             
         except Exception as e:
             self.logger.error(f"Erreur analyse tendances: {e}")
+
             return {'trend': 'error', 'growth_rate': 0.0}
     
     async def get_comparative_analysis(self, avatar_id: str, 
@@ -356,6 +402,7 @@ class PerformanceAnalytics:
             }
             
             # Métriques à comparer
+
             metrics_to_compare = [
                 MetricType.ENGAGEMENT,
                 MetricType.VIEWS,
@@ -365,17 +412,23 @@ class PerformanceAnalytics:
             
             for metric_type in metrics_to_compare:
                 # Performance de l'avatar principal
+
                 main_performance = await self._get_recent_performance(avatar_id, metric_type)
                 
                 # Performance des avatars de comparaison
+
                 comparison_performances = []
                 for comp_avatar in comparison_avatars:
                     comp_performance = await self._get_recent_performance(comp_avatar, metric_type)
+
                     comparison_performances.append(comp_performance)
                 
                 # Calcul du percentile
+
                 all_performances = comparison_performances + [main_performance]
                 all_performances.sort()
+
+
                 
                 percentile = (all_performances.index(main_performance) / len(all_performances)) * 100
                 
@@ -391,13 +444,16 @@ class PerformanceAnalytics:
             
         except Exception as e:
             self.logger.error(f"Erreur analyse comparative: {e}")
+
             return {}
     
     async def _get_recent_performance(self, avatar_id: str, metric_type: MetricType) -> float:
         """Performance récente pour un type de métrique"""
         cutoff_time = datetime.now() - timedelta(days=7)
+
         recent_metrics = [
             m for m in self.metrics.get(avatar_id, [])
+
             if m.metric_type == metric_type and m.timestamp >= cutoff_time
         ]
         
@@ -408,7 +464,8 @@ class PerformanceAnalytics:
 
 
 class EngagementTracker:
-    """Suivi engagement audience"""
+    """
+        Suivi engagement audience"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -416,7 +473,8 @@ class EngagementTracker:
         self.audience_segments: Dict[str, AudienceInsight] = {}
     
     async def track_engagement_event(self, event_data: Dict[str, Any]) -> None:
-        """Suivi d'un événement d'engagement"""
+        """
+        Suivi d'un événement d'engagement"""
         try:
             event = {
                 'event_id': str(uuid.uuid4()),
@@ -430,7 +488,9 @@ class EngagementTracker:
             }
             
             self.engagement_events[event['avatar_id']].append(event)
+
             await self._update_real_time_metrics(event)
+
             
         except Exception as e:
             self.logger.error(f"Erreur suivi engagement: {e}")
@@ -444,13 +504,16 @@ class EngagementTracker:
         pass
     
     async def analyze_audience_behavior(self, avatar_id: str) -> Dict[str, Any]:
-        """Analyse du comportement de l'audience"""
+        """
+        Analyse du comportement de l'audience"""
         try:
             events = self.engagement_events.get(avatar_id, [])
+
             if not events:
                 return {'error': 'No engagement data'}
             
             # Analyse des patterns d'engagement
+
             behavior_analysis = {
                 'total_events': len(events),
                 'unique_users': len(set(e.get('user_id') for e in events if e.get('user_id'))),
@@ -459,8 +522,10 @@ class EngagementTracker:
                 'engagement_duration': [],
                 'repeat_engagement_rate': 0.0
             }
+
             
             user_events = defaultdict(list)
+
             
             for event in events:
                 behavior_analysis['event_types'][event['event_type']] += 1
@@ -468,12 +533,14 @@ class EngagementTracker:
                 
                 if event.get('duration'):
                     behavior_analysis['engagement_duration'].append(event['duration'])
+
                 
                 if event.get('user_id'):
                     user_events[event['user_id']].append(event)
             
             # Calcul du taux d'engagement répété
             repeat_users = sum(1 for events_list in user_events.values() if len(events_list) > 1)
+
             if behavior_analysis['unique_users'] > 0:
                 behavior_analysis['repeat_engagement_rate'] = repeat_users / behavior_analysis['unique_users']
             
@@ -483,17 +550,21 @@ class EngagementTracker:
                     sum(behavior_analysis['engagement_duration']) / 
                     len(behavior_analysis['engagement_duration'])
                 )
+
             
             return behavior_analysis
             
         except Exception as e:
             self.logger.error(f"Erreur analyse comportement: {e}")
+
             return {}
     
     async def segment_audience(self, avatar_id: str) -> AudienceInsight:
         """Segmentation de l'audience"""
         try:
             events = self.engagement_events.get(avatar_id, [])
+
+
             
             insight = AudienceInsight(
                 avatar_id=avatar_id,
@@ -502,6 +573,7 @@ class EngagementTracker:
             
             # Simulation de segmentation basée sur les événements
             # En production, ceci utiliserait des données utilisateur réelles
+
             total_users = insight.total_audience
             
             if total_users > 0:
@@ -523,6 +595,7 @@ class EngagementTracker:
                 }
                 
                 # Engagement par segment (simulation)
+
                 insight.engagement_by_segment = {
                     'young_adults': 0.85,
                     'creators': 0.92,
@@ -535,6 +608,7 @@ class EngagementTracker:
             
         except Exception as e:
             self.logger.error(f"Erreur segmentation audience: {e}")
+
             return AudienceInsight(avatar_id=avatar_id)
 
 
@@ -547,7 +621,8 @@ class ViralPredictor:
         self.viral_history: Dict[str, List[ViralityMetrics]] = defaultdict(list)
     
     async def analyze_viral_potential(self, avatar_id: str) -> ViralityMetrics:
-        """Analyse du potentiel viral"""
+        """
+        Analyse du potentiel viral"""
         try:
             metrics = ViralityMetrics(avatar_id=avatar_id)
             
@@ -570,14 +645,18 @@ class ViralPredictor:
             metrics.viral_triggers = await self._identify_viral_triggers(avatar_id)
             
             # Prédiction de performance
+
             viral_prediction = await self._predict_viral_trajectory(metrics)
+
             
             self.viral_history[avatar_id].append(metrics)
+
             
             return metrics
             
         except Exception as e:
             self.logger.error(f"Erreur analyse potentiel viral: {e}")
+
             return ViralityMetrics(avatar_id=avatar_id)
     
     async def _calculate_viral_coefficient(self, avatar_id: str) -> float:
@@ -586,32 +665,39 @@ class ViralPredictor:
         # Formule: K = (nombre d'invitations par utilisateur) * (taux de conversion)
         
         # Simulation de données
+
         invitations_per_user = 2.5
+
         conversion_rate = 0.15
+
         
         k_factor = invitations_per_user * conversion_rate
         return min(k_factor, 5.0)  # Plafonné à 5.0
     
     async def _calculate_share_rate(self, avatar_id: str) -> float:
-        """Calcul du taux de partage"""
+        """
+        Calcul du taux de partage"""
         # Simulation basée sur l'historique des partages
         import random
         return random.uniform(0.05, 0.25)
     
     async def _calculate_reach_amplification(self, avatar_id: str) -> float:
-        """Calcul de l'amplification de la portée"""
+        """
+        Calcul de l'amplification de la portée"""
         # Facteur multiplicateur de la portée due au partage
         import random
         return random.uniform(1.0, 4.0)
     
     async def _calculate_trend_momentum(self, avatar_id: str) -> float:
-        """Calcul du momentum de tendance"""
+        """
+        Calcul du momentum de tendance"""
         # Analyse de la vitesse de croissance et de l'accélération
         import random
         return random.uniform(0.0, 1.0)
     
     async def _determine_virality_stage(self, metrics: ViralityMetrics) -> ViralityStage:
-        """Détermination du stade de viralité"""
+        """
+        Détermination du stade de viralité"""
         if metrics.viral_coefficient < 0.5:
             return ViralityStage.DORMANT
         elif metrics.viral_coefficient < 1.0:
@@ -624,7 +710,8 @@ class ViralPredictor:
             return ViralityStage.PEAK
     
     async def _identify_viral_triggers(self, avatar_id: str) -> List[str]:
-        """Identification des déclencheurs viraux"""
+        """
+        Identification des déclencheurs viraux"""
         potential_triggers = [
             "Contenu émotionnellement engageant",
             "Timing optimal de publication", 
@@ -638,6 +725,7 @@ class ViralPredictor:
         
         # Simulation de détection de déclencheurs
         import random
+
         num_triggers = random.randint(2, 5)
         return random.sample(potential_triggers, num_triggers)
     
@@ -656,26 +744,31 @@ class ViralPredictor:
             metrics.share_rate * 0.3 +
             metrics.trend_momentum * 0.3
         )
+
         
         prediction['probability_viral'] = min(viral_score / 3.0, 1.0)
         
         # Estimation de la date de pic
         if prediction['probability_viral'] > 0.7:
             days_to_peak = int(7 - (viral_score * 2))
+
             prediction['estimated_peak_date'] = datetime.now() + timedelta(days=max(1, days_to_peak))
         
         # Projection de la portée
+
         base_reach = 1000  # Portée de base simulée
         prediction['projected_reach'] = int(base_reach * metrics.reach_amplification * (1 + viral_score))
         
         # Score de confiance
         prediction['confidence_score'] = min(viral_score / 2.0, 1.0)
+
         
         return prediction
 
 
 class OptimizationSuggester:
-    """Suggestions optimisation"""
+    """
+        Suggestions optimisation"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -683,7 +776,8 @@ class OptimizationSuggester:
         self._initialize_suggestion_templates()
     
     def _initialize_suggestion_templates(self):
-        """Initialisation des templates de suggestions"""
+        """
+        Initialisation des templates de suggestions"""
         self.suggestion_templates = {
             OptimizationCategory.CONTENT_STRATEGY: [
                 {
@@ -752,21 +846,27 @@ class OptimizationSuggester:
     
     async def generate_suggestions(self, avatar_id: str, 
                                  performance_data: Dict[str, Any]) -> List[OptimizationSuggestion]:
-        """Génération de suggestions d'optimisation"""
+        """
+        Génération de suggestions d'optimisation"""
         try:
             suggestions = []
             
             # Analyse des points faibles
+
             weak_points = await self._identify_weak_points(performance_data)
+
             
             for category, templates in self.suggestion_templates.items():
                 if await self._category_relevant(category, weak_points):
                     # Sélectionner les suggestions les plus pertinentes
+
                     relevant_templates = await self._filter_relevant_templates(
                         templates, performance_data
                     )
+
                     
                     for template in relevant_templates[:2]:  # Top 2 par catégorie
+
                         suggestion = OptimizationSuggestion(
                             suggestion_id=str(uuid.uuid4()),
                             avatar_id=avatar_id,
@@ -781,14 +881,17 @@ class OptimizationSuggester:
                                 template, performance_data
                             )
                         )
+
                         suggestions.append(suggestion)
             
             # Tri par priorité et impact
             suggestions.sort(key=lambda s: (s.priority, -s.impact_score))
+
             return suggestions[:5]  # Top 5 suggestions
             
         except Exception as e:
             self.logger.error(f"Erreur génération suggestions: {e}")
+
             return []
     
     async def _identify_weak_points(self, performance_data: Dict[str, Any]) -> List[str]:
@@ -796,23 +899,30 @@ class OptimizationSuggester:
         weak_points = []
         
         # Analyse des métriques
+
         engagement_rate = performance_data.get('engagement_rate', 0)
         if engagement_rate < 0.05:  # Moins de 5%
             weak_points.append('low_engagement')
+
+
         
         virality_score = performance_data.get('virality_score', 0)
         if virality_score < 0.3:
             weak_points.append('low_virality')
+
+
         
         audience_growth = performance_data.get('audience_growth', 0)
         if audience_growth < 0.02:  # Moins de 2%
             weak_points.append('slow_growth')
+
         
         return weak_points
     
     async def _category_relevant(self, category: OptimizationCategory, 
                                weak_points: List[str]) -> bool:
-        """Vérification de la pertinence d'une catégorie"""
+        """
+        Vérification de la pertinence d'une catégorie"""
         relevance_map = {
             OptimizationCategory.CONTENT_STRATEGY: ['low_engagement', 'low_virality'],
             OptimizationCategory.TIMING: ['low_engagement'],
@@ -824,14 +934,16 @@ class OptimizationSuggester:
     
     async def _filter_relevant_templates(self, templates: List[Dict[str, Any]], 
                                        performance_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Filtrage des templates pertinents"""
+        """
+        Filtrage des templates pertinents"""
         # Pour l'instant, retourner tous les templates
         # En production, filtrer selon les données de performance spécifiques
         return templates
     
     async def _calculate_priority(self, template: Dict[str, Any], 
                                 weak_points: List[str]) -> int:
-        """Calcul de la priorité d'une suggestion"""
+        """
+        Calcul de la priorité d'une suggestion"""
         base_priority = 3  # Moyenne
         
         if template['impact_score'] > 0.7:
@@ -843,7 +955,8 @@ class OptimizationSuggester:
     
     async def _estimate_improvement(self, template: Dict[str, Any], 
                                   performance_data: Dict[str, Any]) -> Dict[str, float]:
-        """Estimation de l'amélioration attendue"""
+        """
+        Estimation de l'amélioration attendue"""
         base_improvement = template['impact_score'] * 0.2  # 20% max d'amélioration
         
         return {

@@ -61,7 +61,8 @@ logger = logging.getLogger(__name__)
 # ==============================================
 
 class MigrationStatus(Enum):
-    """Migration execution status tracking"""
+    """
+        Migration execution status tracking"""
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -96,7 +97,8 @@ class MigrationMetadata:
 
 @dataclass
 class MigrationResult:
-    """Migration execution result"""
+    """
+        Migration execution result"""
     migration_id: str
     status: MigrationStatus
     started_at: datetime
@@ -125,36 +127,43 @@ class BaseMigration(ABC):
         
     @abstractmethod
     async def execute(self) -> MigrationResult:
-        """Execute the migration"""
+        """
+        Execute the migration"""
         pass
         
     @abstractmethod
     async def rollback(self) -> MigrationResult:
-        """Rollback the migration"""
+        """
+        Rollback the migration"""
         pass
         
     async def validate_prerequisites(self) -> bool:
-        """Validate migration prerequisites"""
+        """
+        Validate migration prerequisites"""
         try:
             # Check dependencies
             for dep in self.metadata.dependencies:
                 if not await self._check_dependency(dep):
                     logger.error(f"Dependency {dep} not satisfied for migration {self.metadata.id}")
+
                     return False
             
             # Check database connectivity
             if not await self._check_database_connection():
                 logger.error(f"Database connection failed for migration {self.metadata.id}")
+
                 return False
                 
             # Check resource availability
             if not await self._check_resources():
                 logger.error(f"Insufficient resources for migration {self.metadata.id}")
+
                 return False
                 
             return True
         except Exception as e:
             logger.error(f"Prerequisites validation failed: {str(e)}")
+
             return False
     
     async def _check_dependency(self, dependency_id: str) -> bool:
@@ -162,10 +171,12 @@ class BaseMigration(ABC):
         return True
     
     async def _check_database_connection(self) -> bool:
-        """Verify database connection"""
+        """
+        Verify database connection"""
         try:
             if self.session:
                 self.session.execute(text("SELECT 1"))
+
                 return True
             return False
         except Exception:
@@ -192,11 +203,14 @@ class MigrationFramework:
         self.migration_registry: Dict[str, BaseMigration] = {}
         self.execution_queue: List[str] = []
         self.completed_migrations: Set[str] = set()
+
         
     async def register_migration(self, migration: BaseMigration) -> None:
-        """Register a migration for execution"""
+        """
+        Register a migration for execution"""
         self.migration_registry[migration.metadata.id] = migration
         logger.info(f"Registered migration: {migration.metadata.name}")
+
         
     async def execute_all_migrations(self) -> List[MigrationResult]:
         """Execute all registered migrations"""
@@ -204,50 +218,67 @@ class MigrationFramework:
         
         try:
             execution_plan = await self._build_execution_plan()
+
             
             for migration_id in execution_plan:
                 migration = self.migration_registry[migration_id]
+
                 result = await self._execute_single_migration(migration)
+
                 results.append(result)
+
                 
                 if result.status == MigrationStatus.FAILED:
                     logger.error(f"Migration {migration_id} failed, stopping execution")
+
                     break
                     
         except Exception as e:
             logger.error(f"Migration execution failed: {str(e)}")
+
             
         return results
     
     async def _build_execution_plan(self) -> List[str]:
         """Build optimal execution plan based on dependencies"""
         plan = []
+
         remaining = set(self.migration_registry.keys())
+
         
         while remaining:
             ready = []
             for migration_id in remaining:
                 migration = self.migration_registry[migration_id]
+
                 deps_satisfied = all(dep in self.completed_migrations or dep in plan 
                                    for dep in migration.metadata.dependencies)
+
                 if deps_satisfied:
                     ready.append(migration_id)
+
             
             if not ready:
                 raise ValueError("Cannot resolve migration dependencies")
+
             
             ready.sort(key=lambda x: self.migration_registry[x].metadata.priority.value)
+
             plan.extend(ready)
+
             remaining -= set(ready)
+
             
         return plan
     
     async def _execute_single_migration(self, migration: BaseMigration) -> MigrationResult:
         """Execute a single migration with full transaction support"""
         start_time = time.time()
+
         
         try:
             session = self.session_factory()
+
             migration.session = session
             
             if not await migration.validate_prerequisites():
@@ -257,23 +288,33 @@ class MigrationFramework:
                     started_at=datetime.now(timezone.utc),
                     error_message="Prerequisites validation failed"
                 )
+
             
             logger.info(f"Executing migration: {migration.metadata.name}")
+
+
             result = await migration.execute()
+
             
             if result.status == MigrationStatus.COMPLETED:
                 session.commit()
+
                 self.completed_migrations.add(migration.metadata.id)
+
                 logger.info(f"Migration completed: {migration.metadata.name}")
+
             else:
                 session.rollback()
+
                 logger.error(f"Migration failed: {migration.metadata.name}")
+
                 
             result.duration = time.time() - start_time
             return result
             
         except Exception as e:
             logger.error(f"Migration execution error: {str(e)}")
+
             return MigrationResult(
                 migration_id=migration.metadata.id,
                 status=MigrationStatus.FAILED,
@@ -308,15 +349,22 @@ class ContentMigration(BaseMigration):
         }
         
     async def execute(self) -> MigrationResult:
-        """Execute content migration"""
+        """
+        Execute content migration"""
         try:
             start_time = datetime.now(timezone.utc)
+
+
             rows_affected = 0
             
             rows_affected += await self._migrate_content_metadata()
+
             rows_affected += await self._migrate_content_relationships()
+
             await self._update_content_indexes()
+
             await self._validate_content_integrity()
+
             
             return MigrationResult(
                 migration_id=self.metadata.id,
@@ -325,9 +373,11 @@ class ContentMigration(BaseMigration):
                 completed_at=datetime.now(timezone.utc),
                 rows_affected=rows_affected
             )
+
             
         except Exception as e:
             logger.error(f"Content migration failed: {str(e)}")
+
             return MigrationResult(
                 migration_id=self.metadata.id,
                 status=MigrationStatus.FAILED,
@@ -356,15 +406,18 @@ class ContentMigration(BaseMigration):
         return 0
     
     async def _migrate_content_relationships(self) -> int:
-        """Migrate content relationship structures"""
+        """
+        Migrate content relationship structures"""
         return 0
     
     async def _update_content_indexes(self):
-        """Update content database indexes"""
+        """
+        Update content database indexes"""
         pass
     
     async def _validate_content_integrity(self):
-        """Validate content data integrity"""
+        """
+        Validate content data integrity"""
         pass
 
 
@@ -382,7 +435,8 @@ class MediaMigrationEngine:
         self.validation_rules = {}
         
     async def migrate_media_content(self, content_batch: List[Dict]) -> Dict[str, Any]:
-        """Migrate a batch of media content"""
+        """
+        Migrate a batch of media content"""
         results = {
             'processed': 0,
             'failed': 0,
@@ -393,11 +447,14 @@ class MediaMigrationEngine:
         for content in content_batch:
             try:
                 await self._process_media_item(content)
+
                 results['processed'] += 1
             except Exception as e:
                 results['failed'] += 1
                 results['errors'].append(str(e))
+
                 logger.error(f"Media migration failed for item {content.get('id', 'unknown')}: {str(e)}")
+
         
         return results
     
@@ -419,23 +476,31 @@ class DataTransformer:
         self.error_handlers: Dict[str, Callable] = {}
         
     async def transform_data(self, source_data: Any, transformation_type: str) -> Any:
-        """Transform data using specified transformation rules"""
+        """
+        Transform data using specified transformation rules"""
         try:
             if transformation_type not in self.transformation_rules:
                 raise ValueError(f"Unknown transformation type: {transformation_type}")
+
+
             
             transformation_rule = self.transformation_rules[transformation_type]
+
             transformed_data = await transformation_rule(source_data)
+
             
             if transformation_type in self.validation_schemas:
                 await self._validate_transformed_data(transformed_data, transformation_type)
+
             
             return transformed_data
             
         except Exception as e:
             logger.error(f"Data transformation failed: {str(e)}")
+
             if transformation_type in self.error_handlers:
                 return await self.error_handlers[transformation_type](source_data, e)
+
             raise
     
     async def _validate_transformed_data(self, data: Any, transformation_type: str):
@@ -443,7 +508,8 @@ class DataTransformer:
         pass
     
     def register_transformation(self, transformation_type: str, rule: Callable):
-        """Register a transformation rule"""
+        """
+        Register a transformation rule"""
         self.transformation_rules[transformation_type] = rule
         logger.info(f"Registered transformation rule: {transformation_type}")
 
@@ -456,17 +522,21 @@ class SchemaTransformer:
         self.transformation_paths: Dict[str, List[str]] = {}
         
     async def transform_schema(self, from_version: str, to_version: str) -> bool:
-        """Transform schema from one version to another"""
+        """
+        Transform schema from one version to another"""
         try:
             transformation_path = await self._find_transformation_path(from_version, to_version)
+
             
             for step in transformation_path:
                 await self._execute_schema_step(step)
+
             
             return True
             
         except Exception as e:
             logger.error(f"Schema transformation failed: {str(e)}")
+
             return False
     
     async def _find_transformation_path(self, from_version: str, to_version: str) -> List[str]:
@@ -474,7 +544,8 @@ class SchemaTransformer:
         return []
     
     async def _execute_schema_step(self, step: str):
-        """Execute individual schema transformation step"""
+        """
+        Execute individual schema transformation step"""
         pass
 
 
@@ -482,7 +553,8 @@ class FingerprintMigration(BaseMigration):
     """🔍 Fingerprint Migration - Content Identification System Evolution"""
     
     async def execute(self) -> MigrationResult:
-        """Execute fingerprint migration"""
+        """
+        Execute fingerprint migration"""
         return MigrationResult(
             migration_id=self.metadata.id,
             status=MigrationStatus.COMPLETED,
@@ -490,7 +562,8 @@ class FingerprintMigration(BaseMigration):
         )
     
     async def rollback(self) -> MigrationResult:
-        """Rollback fingerprint migration"""
+        """
+        Rollback fingerprint migration"""
         return MigrationResult(
             migration_id=self.metadata.id,
             status=MigrationStatus.ROLLED_BACK,
@@ -506,7 +579,8 @@ class IntegrityValidator:
         self.integrity_reports: List[Dict] = []
     
     async def validate_migration_integrity(self, migration_id: str) -> Dict[str, Any]:
-        """Validate data integrity after migration"""
+        """
+        Validate data integrity after migration"""
         report = {
             'migration_id': migration_id,
             'validation_time': datetime.now(timezone.utc),
@@ -519,6 +593,7 @@ class IntegrityValidator:
         for rule in self.validation_rules:
             try:
                 result = await rule(migration_id)
+
                 if result:
                     report['rules_passed'] += 1
                 else:
@@ -526,6 +601,7 @@ class IntegrityValidator:
             except Exception as e:
                 report['rules_failed'] += 1
                 report['errors'].append(str(e))
+
         
         self.integrity_reports.append(report)
         return report
@@ -539,7 +615,8 @@ class MigrationMonitor:
         self.performance_metrics: Dict[str, List[float]] = {}
     
     async def start_monitoring(self, migration_id: str):
-        """Start monitoring a migration"""
+        """
+        Start monitoring a migration"""
         self.active_migrations[migration_id] = {
             'start_time': time.time(),
             'status': MigrationStatus.RUNNING,
@@ -548,19 +625,23 @@ class MigrationMonitor:
         }
     
     async def update_progress(self, migration_id: str, progress: float):
-        """Update migration progress"""
+        """
+        Update migration progress"""
         if migration_id in self.active_migrations:
             self.active_migrations[migration_id]['progress'] = progress
     
     async def finish_monitoring(self, migration_id: str, status: MigrationStatus):
-        """Finish monitoring a migration"""
+        """
+        Finish monitoring a migration"""
         if migration_id in self.active_migrations:
             migration_data = self.active_migrations[migration_id]
+
             duration = time.time() - migration_data['start_time']
             
             if migration_id not in self.performance_metrics:
                 self.performance_metrics[migration_id] = []
             self.performance_metrics[migration_id].append(duration)
+
             
             migration_data['status'] = status
             migration_data['duration'] = duration
@@ -574,20 +655,26 @@ class MigrationOrchestrator:
         self.execution_context: Dict[str, Any] = {}
     
     async def orchestrate_migrations(self, workflow_id: str) -> List[MigrationResult]:
-        """Orchestrate a complex migration workflow"""
+        """
+        Orchestrate a complex migration workflow"""
         results = []
         
         if workflow_id not in self.workflow_definitions:
             raise ValueError(f"Unknown workflow: {workflow_id}")
+
+
         
         workflow = self.workflow_definitions[workflow_id]
         
         for step in workflow.get('steps', []):
             result = await self._execute_workflow_step(step)
+
             results.append(result)
+
             
             if result.status == MigrationStatus.FAILED:
                 await self._handle_workflow_failure(workflow_id, step, results)
+
                 break
         
         return results
@@ -601,7 +688,8 @@ class MigrationOrchestrator:
         )
     
     async def _handle_workflow_failure(self, workflow_id: str, failed_step: Dict, results: List[MigrationResult]):
-        """Handle workflow failure with appropriate recovery actions"""
+        """
+        Handle workflow failure with appropriate recovery actions"""
         logger.error(f"Workflow {workflow_id} failed at step {failed_step.get('id', 'unknown')}")
 
 
@@ -632,7 +720,8 @@ class PerformanceOptimizer:
         self.performance_thresholds: Dict[str, float] = {}
     
     async def optimize_migration_performance(self, migration_id: str) -> Dict[str, Any]:
-        """Optimize migration performance"""
+        """
+        Optimize migration performance"""
         return {
             'migration_id': migration_id,
             'optimizations_applied': [],
@@ -649,7 +738,8 @@ class RollbackManager:
         self.rollback_strategies: Dict[str, Callable] = {}
     
     async def create_rollback_point(self, migration_id: str) -> str:
-        """Create a rollback point before migration"""
+        """
+        Create a rollback point before migration"""
         rollback_point_id = str(uuid.uuid4())
         self.rollback_points[rollback_point_id] = {
             'migration_id': migration_id,
@@ -659,16 +749,19 @@ class RollbackManager:
         return rollback_point_id
     
     async def execute_rollback(self, rollback_point_id: str) -> bool:
-        """Execute rollback to specified point"""
+        """
+        Execute rollback to specified point"""
         if rollback_point_id not in self.rollback_points:
             return False
         
         try:
             rollback_point = self.rollback_points[rollback_point_id]
             await self._restore_state_snapshot(rollback_point['state_snapshot'])
+
             return True
         except Exception as e:
             logger.error(f"Rollback execution failed: {str(e)}")
+
             return False
     
     async def _capture_state_snapshot(self) -> Dict[str, Any]:
@@ -676,7 +769,8 @@ class RollbackManager:
         return {}
     
     async def _restore_state_snapshot(self, snapshot: Dict[str, Any]):
-        """Restore database state from snapshot"""
+        """
+        Restore database state from snapshot"""
         pass
 
 
@@ -772,14 +866,17 @@ class DatabaseMigrationsSuite:
         self.content_migration_engine = MediaMigrationEngine()
         self.data_transformer = DataTransformer()
         self.schema_transformer = SchemaTransformer()
+
         
     async def initialize_suite(self):
         """Initialize the complete migration suite"""
         logger.info("Initializing Database Migrations Suite...")
+
         
         await self._setup_default_configurations()
         await self._initialize_monitoring()
         await self._setup_rollback_strategies()
+
         
         logger.info("Database Migrations Suite initialized successfully")
     
@@ -795,9 +892,13 @@ class DatabaseMigrationsSuite:
         
         if migration_type not in migration_classes:
             raise ValueError(f"Unknown migration type: {migration_type}")
+
+
         
         migration_class = migration_classes[migration_type]
+
         migration = migration_class(metadata)
+
         
         if self.framework:
             await self.framework.register_migration(migration)
@@ -815,15 +916,18 @@ class DatabaseMigrationsSuite:
         }
     
     async def _setup_default_configurations(self):
-        """Setup default migration configurations"""
+        """
+        Setup default migration configurations"""
         pass
         
     async def _initialize_monitoring(self):
-        """Initialize migration monitoring"""
+        """
+        Initialize migration monitoring"""
         pass
     
     async def _setup_rollback_strategies(self):
-        """Setup default rollback strategies"""
+        """
+        Setup default rollback strategies"""
         pass
 
 
@@ -837,7 +941,8 @@ def create_migration_suite(database_url: str = "") -> DatabaseMigrationsSuite:
 
 
 async def migrate_from_legacy_structure():
-    """Utility function to migrate from legacy database structure"""
+    """
+        Utility function to migrate from legacy database structure"""
     logger.info("Starting migration from legacy database structure...")
     logger.info("Legacy structure migration completed")
 
@@ -890,6 +995,6 @@ __all__ = [
 # MODULE INITIALIZATION
 # ==============================================
 
-logger.info("Database Migrations Suite module loaded successfully")
+logger.info("Database Migrations Suite module initialized successfully")
 logger.info(f"Consolidated {len(__all__)} classes and functions from database/data_migrations/")
 logger.info("Enterprise-grade migration framework ready for deployment")

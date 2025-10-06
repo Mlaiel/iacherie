@@ -1,4 +1,5 @@
-"""IA Chérie Core Neural Network - Advanced Neural Network Engine
+"""
+IA Chérie Core Neural Network - Advanced Neural Network Engine
 =========================================================
 
 Advanced neural network management providing deep learning architectures,
@@ -35,7 +36,8 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class NetworkArchitecture(str, Enum):
-    """Neural network architectures"""
+    """
+Neural network architectures"""
     FEEDFORWARD = "feedforward"
     CONVOLUTIONAL = "convolutional"
     RECURRENT = "recurrent"
@@ -51,7 +53,8 @@ class NetworkArchitecture(str, Enum):
     EFFICIENTNET = "efficientnet"
 
 class ActivationFunction(str, Enum):
-    """Activation functions"""
+    """
+Activation functions"""
     RELU = "relu"
     LEAKY_RELU = "leaky_relu"
     GELU = "gelu"
@@ -63,7 +66,8 @@ class ActivationFunction(str, Enum):
     SELU = "selu"
 
 class OptimizationAlgorithm(str, Enum):
-    """Optimization algorithms"""
+    """
+Optimization algorithms"""
     SGD = "sgd"
     ADAM = "adam"
     ADAMW = "adamw"
@@ -73,7 +77,8 @@ class OptimizationAlgorithm(str, Enum):
 
 @dataclass
 class NetworkConfig:
-    """Neural network configuration"""
+    """
+Neural network configuration"""
     architecture: NetworkArchitecture = NetworkArchitecture.TRANSFORMER
     input_size: int = 768
     hidden_sizes: List[int] = field(default_factory=lambda: [512, 256, 128])
@@ -92,7 +97,8 @@ class NetworkConfig:
 
 @dataclass
 class TrainingMetrics:
-    """Training performance metrics"""
+    """
+Training performance metrics"""
     epoch: int = 0
     train_loss: float = 0.0
     val_loss: float = 0.0
@@ -105,7 +111,8 @@ class TrainingMetrics:
     gpu_utilization: float = 0.0
 
 class iacherieCoreNeuralNetwork(nn.Module if nn else object):
-    """Core neural network architecture for IA Chérie"""
+    """
+Core neural network architecture for IA Chérie"""
     
     def __init__(self, config: NetworkConfig):
         if nn:
@@ -118,7 +125,8 @@ class iacherieCoreNeuralNetwork(nn.Module if nn else object):
             logger.warning("⚠️ PyTorch not available, using mock neural network")
     
     def _build_network(self):
-        """Build the neural network architecture"""
+        """
+Build the neural network architecture"""
         if self.config.architecture == NetworkArchitecture.TRANSFORMER:
             self._build_transformer()
         elif self.config.architecture == NetworkArchitecture.CONVOLUTIONAL:
@@ -129,7 +137,8 @@ class iacherieCoreNeuralNetwork(nn.Module if nn else object):
             self._build_feedforward()
     
     def _build_transformer(self):
-        """Build transformer architecture"""
+        """
+Build transformer architecture"""
         self.embedding = nn.Linear(self.config.input_size, self.config.hidden_sizes[0])
         self.positional_encoding = nn.Parameter(
             torch.randn(1000, self.config.hidden_sizes[0])
@@ -154,7 +163,8 @@ class iacherieCoreNeuralNetwork(nn.Module if nn else object):
             self.layer_norm = nn.LayerNorm(self.config.hidden_sizes[0])
     
     def _build_feedforward(self):
-        """Build feedforward network"""
+        """
+Build feedforward network"""
         layers = []
         
         input_size = self.config.input_size
@@ -178,7 +188,8 @@ class iacherieCoreNeuralNetwork(nn.Module if nn else object):
         self.network = nn.Sequential(*layers)
     
     def _build_cnn(self):
-        """Build convolutional network"""
+        """
+Build convolutional network"""
         self.conv_layers = nn.Sequential(
             nn.Conv2d(3, 64, kernel_size=3, padding=1),
             nn.BatchNorm2d(64),
@@ -205,7 +216,8 @@ class iacherieCoreNeuralNetwork(nn.Module if nn else object):
         )
     
     def _build_rnn(self):
-        """Build recurrent network"""
+        """
+Build recurrent network"""
         self.embedding = nn.Linear(self.config.input_size, self.config.hidden_sizes[0])
         
         if self.config.architecture == NetworkArchitecture.LSTM:
@@ -228,7 +240,8 @@ class iacherieCoreNeuralNetwork(nn.Module if nn else object):
         self.output_layer = nn.Linear(self.config.hidden_sizes[1], self.config.output_size)
     
     def forward(self, x):
-        """Forward pass through the network"""
+        """
+Forward pass through the network"""
         if not torch:
             return {"logits": [0.0] * self.config.output_size}
         
@@ -242,7 +255,8 @@ class iacherieCoreNeuralNetwork(nn.Module if nn else object):
             return self._forward_feedforward(x)
     
     def _forward_transformer(self, x):
-        """Forward pass for transformer"""
+        """
+Forward pass for transformer"""
         x = self.embedding(x)
         
         # Add positional encoding
@@ -265,18 +279,21 @@ class iacherieCoreNeuralNetwork(nn.Module if nn else object):
         return {"logits": logits}
     
     def _forward_feedforward(self, x):
-        """Forward pass for feedforward network"""
+        """
+Forward pass for feedforward network"""
         logits = self.network(x)
         return {"logits": logits}
     
     def _forward_cnn(self, x):
-        """Forward pass for CNN"""
+        """
+Forward pass for CNN"""
         features = self.conv_layers(x)
         logits = self.classifier(features)
         return {"logits": logits}
     
     def _forward_rnn(self, x):
-        """Forward pass for RNN"""
+        """
+Forward pass for RNN"""
         x = self.embedding(x)
         rnn_out, _ = self.rnn(x)
         
@@ -287,10 +304,12 @@ class iacherieCoreNeuralNetwork(nn.Module if nn else object):
         return {"logits": logits}
 
 class NeuralNetworkCore:
-    """Enterprise neural network core management system"""
+    """
+Enterprise neural network core management system"""
     
     def __init__(self, config: Optional[NetworkConfig] = None, level: str = "enterprise"):
-        """Initialize neural network core"""
+        """
+Initialize neural network core"""
         self.config = config or NetworkConfig()
         self.level = level
         
@@ -311,7 +330,8 @@ class NeuralNetworkCore:
         logger.info(f"🧠 Neural Network Core initialized - Device: {self.device}")
     
     def _get_device(self) -> str:
-        """Get optimal device for training"""
+        """
+Get optimal device for training"""
         if not torch:
             return "cpu"
         
@@ -326,7 +346,8 @@ class NeuralNetworkCore:
             return self.config.device
     
     async def initialize(self) -> bool:
-        """Initialize neural network"""
+        """
+Initialize neural network"""
         try:
             logger.info("🚀 Initializing neural network core")
             
@@ -370,7 +391,8 @@ class NeuralNetworkCore:
             return False
     
     async def start(self) -> bool:
-        """Start neural network core"""
+        """
+Start neural network core"""
         try:
             if not self.model:
                 await self.initialize()
@@ -383,7 +405,8 @@ class NeuralNetworkCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop neural network core"""
+        """
+Stop neural network core"""
         try:
             logger.info("🛑 Stopping neural network core")
             
@@ -402,7 +425,8 @@ class NeuralNetworkCore:
             return False
     
     async def train_epoch(self, train_loader: Any, val_loader: Optional[Any] = None) -> TrainingMetrics:
-        """Train for one epoch"""
+        """
+Train for one epoch"""
         if not self.model or not torch:
             return TrainingMetrics()
         
@@ -467,7 +491,8 @@ class NeuralNetworkCore:
         return metrics
     
     async def _validate(self, val_loader: Any) -> Tuple[float, float]:
-        """Validate the model"""
+        """
+Validate the model"""
         self.model.eval()
         val_loss = 0.0
         val_correct = 0
@@ -487,7 +512,8 @@ class NeuralNetworkCore:
         return val_loss / len(val_loader), 100.0 * val_correct / val_total
     
     async def predict(self, input_data: Any) -> Dict[str, Any]:
-        """Make predictions with the model"""
+        """
+Make predictions with the model"""
         if not self.model or not torch:
             return {"predictions": [], "confidence": []}
         
@@ -511,7 +537,8 @@ class NeuralNetworkCore:
             }
     
     async def save_model(self, model_name: str, metadata: Optional[Dict[str, Any]] = None) -> bool:
-        """Save model to registry"""
+        """
+Save model to registry"""
         try:
             if not self.model or not torch:
                 return False
@@ -534,7 +561,8 @@ class NeuralNetworkCore:
             return False
     
     async def load_model(self, model_name: str) -> bool:
-        """Load model from registry"""
+        """
+Load model from registry"""
         try:
             if model_name not in self.model_registry:
                 logger.error(f"Model '{model_name}' not found in registry")
@@ -550,7 +578,7 @@ class NeuralNetworkCore:
                 self.model.load_state_dict(model_data["state_dict"])
                 self.model.to(self.device)
             
-            logger.info(f"📂 Model '{model_name}' loaded successfully")
+            logger.info(f"📂 Model '{model_name}' initialized successfully")
             return True
             
         except Exception as e:
@@ -558,7 +586,8 @@ class NeuralNetworkCore:
             return False
     
     async def health_check(self) -> bool:
-        """Perform neural network health check"""
+        """
+Perform neural network health check"""
         try:
             if not self.model:
                 return False
@@ -576,7 +605,8 @@ class NeuralNetworkCore:
             return False
     
     def get_model_summary(self) -> Dict[str, Any]:
-        """Get model architecture summary"""
+        """
+Get model architecture summary"""
         if not self.model or not torch:
             return {"error": "Model not available"}
         

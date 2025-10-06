@@ -1,4 +1,5 @@
-"""IA Chérie Core API Gateway - Enterprise API Gateway Management
+"""
+IA Chérie Core API Gateway - Enterprise API Gateway Management
 =========================================================
 
 Advanced API gateway providing request routing, authentication, rate limiting,
@@ -36,7 +37,8 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class RoutingStrategy(str, Enum):
-    """API routing strategies"""
+    """
+API routing strategies"""
     PATH_BASED = "path_based"
     SUBDOMAIN_BASED = "subdomain_based"
     HEADER_BASED = "header_based"
@@ -44,7 +46,8 @@ class RoutingStrategy(str, Enum):
     WEIGHTED = "weighted"
 
 class LoadBalancingMethod(str, Enum):
-    """Load balancing methods"""
+    """
+Load balancing methods"""
     ROUND_ROBIN = "round_robin"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     LEAST_CONNECTIONS = "least_connections"
@@ -53,7 +56,8 @@ class LoadBalancingMethod(str, Enum):
     HEALTH_CHECK = "health_check"
 
 class AuthenticationMethod(str, Enum):
-    """Authentication methods"""
+    """
+Authentication methods"""
     API_KEY = "api_key"
     JWT = "jwt"
     OAUTH2 = "oauth2"
@@ -62,7 +66,8 @@ class AuthenticationMethod(str, Enum):
 
 @dataclass
 class ServiceEndpoint:
-    """Service endpoint configuration"""
+    """
+Service endpoint configuration"""
     service_id: str
     name: str
     url: str
@@ -79,7 +84,8 @@ class ServiceEndpoint:
 
 @dataclass
 class RouteConfig:
-    """Route configuration"""
+    """
+Route configuration"""
     path: str
     methods: List[str]
     service_id: str
@@ -96,7 +102,8 @@ class RouteConfig:
 
 @dataclass
 class GatewayConfig:
-    """API Gateway configuration"""
+    """
+API Gateway configuration"""
     host: str = "0.0.0.0"
     port: int = 8000
     routing_strategy: RoutingStrategy = RoutingStrategy.PATH_BASED
@@ -117,7 +124,8 @@ class GatewayConfig:
 
 @dataclass
 class GatewayMetrics:
-    """API Gateway metrics"""
+    """
+API Gateway metrics"""
     total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
@@ -132,10 +140,12 @@ class GatewayMetrics:
     last_health_check: float = field(default_factory=time.time)
 
 class APIGatewayCore:
-    """Enterprise API Gateway core management system"""
+    """
+Enterprise API Gateway core management system"""
     
     def __init__(self, config: Optional[GatewayConfig] = None, level: str = "enterprise"):
-        """Initialize API Gateway core"""
+        """
+Initialize API Gateway core"""
         self.config = config or GatewayConfig()
         self.level = level
         self.metrics = GatewayMetrics()
@@ -168,7 +178,8 @@ class APIGatewayCore:
         logger.info("🌐 API Gateway Core initialized")
     
     async def initialize(self) -> bool:
-        """Initialize API Gateway"""
+        """
+Initialize API Gateway"""
         try:
             logger.info("🚀 Initializing API Gateway core")
             
@@ -210,7 +221,8 @@ class APIGatewayCore:
             return False
     
     def _setup_middleware(self):
-        """Setup gateway middleware"""
+        """
+Setup gateway middleware"""
         if not self.app:
             return
         
@@ -249,7 +261,8 @@ class APIGatewayCore:
                 )
     
     def _setup_routes(self):
-        """Setup dynamic routes"""
+        """
+Setup dynamic routes"""
         if not self.app:
             return
         
@@ -266,7 +279,8 @@ class APIGatewayCore:
             return self.get_metrics_summary()
     
     async def _handle_request(self, request: Request, path: str) -> Any:
-        """Handle incoming request"""
+        """
+Handle incoming request"""
         try:
             # Find matching route
             route_config = self._find_route(path, request.method)
@@ -333,7 +347,8 @@ class APIGatewayCore:
             )
     
     def _find_route(self, path: str, method: str) -> Optional[RouteConfig]:
-        """Find matching route configuration"""
+        """
+Find matching route configuration"""
         for route_path, route_config in self.routes.items():
             if method.upper() in route_config.methods:
                 # Simple path matching (can be enhanced with regex)
@@ -342,7 +357,8 @@ class APIGatewayCore:
         return None
     
     async def _authenticate_request(self, request: Request, auth_method: AuthenticationMethod) -> bool:
-        """Authenticate request"""
+        """
+Authenticate request"""
         try:
             handler = self.auth_handlers.get(auth_method)
             if handler:
@@ -357,7 +373,8 @@ class APIGatewayCore:
             return False
     
     async def _check_rate_limit(self, request: Request, limit: int) -> bool:
-        """Check rate limit"""
+        """
+Check rate limit"""
         # Simple implementation - can be enhanced with Redis
         client_ip = request.client.host if request.client else "unknown"
         current_time = int(time.time())
@@ -369,7 +386,8 @@ class APIGatewayCore:
         return True  # Always allow for now
     
     def _get_cached_response(self, request: Request) -> Optional[Any]:
-        """Get cached response"""
+        """
+Get cached response"""
         cache_key = self._generate_cache_key(request)
         cached = self.response_cache.get(cache_key)
         
@@ -379,7 +397,8 @@ class APIGatewayCore:
         return None
     
     def _cache_response(self, request: Request, response: Any):
-        """Cache response"""
+        """
+Cache response"""
         cache_key = self._generate_cache_key(request)
         self.response_cache[cache_key] = {
             "content": response.body,
@@ -396,11 +415,13 @@ class APIGatewayCore:
                 del self.response_cache[key]
     
     def _generate_cache_key(self, request: Request) -> str:
-        """Generate cache key"""
+        """
+Generate cache key"""
         return f"{request.method}:{request.url.path}:{request.url.query}"
     
     def _select_endpoint(self, route_config: RouteConfig) -> Optional[ServiceEndpoint]:
-        """Select endpoint using load balancing"""
+        """
+Select endpoint using load balancing"""
         healthy_endpoints = [ep for ep in route_config.endpoints if ep.is_healthy]
         if not healthy_endpoints:
             return None
@@ -422,7 +443,8 @@ class APIGatewayCore:
             return healthy_endpoints[0]
     
     async def _forward_request(self, request: Request, endpoint: ServiceEndpoint, route_config: RouteConfig) -> Any:
-        """Forward request to backend service"""
+        """
+Forward request to backend service"""
         try:
             if not httpx:
                 return JSONResponse(content={"mock": "response"})
@@ -468,7 +490,8 @@ class APIGatewayCore:
             )
     
     def _is_circuit_breaker_open(self, service_id: str) -> bool:
-        """Check if circuit breaker is open"""
+        """
+Check if circuit breaker is open"""
         circuit_breaker = self.circuit_breakers.get(service_id)
         if not circuit_breaker:
             return False
@@ -482,7 +505,8 @@ class APIGatewayCore:
         return False
     
     def _handle_circuit_breaker(self, service_id: str):
-        """Handle circuit breaker logic"""
+        """
+Handle circuit breaker logic"""
         if service_id not in self.circuit_breakers:
             return
         
@@ -496,7 +520,8 @@ class APIGatewayCore:
             logger.warning(f"Circuit breaker opened for service {service_id}")
     
     def _initialize_circuit_breakers(self):
-        """Initialize circuit breakers for all services"""
+        """
+Initialize circuit breakers for all services"""
         for service_id in self.services:
             self.circuit_breakers[service_id] = {
                 "state": "closed",
@@ -505,7 +530,8 @@ class APIGatewayCore:
             }
     
     def _update_avg_response_time(self, processing_time: float):
-        """Update average response time"""
+        """
+Update average response time"""
         total_requests = self.metrics.total_requests
         self.metrics.avg_response_time = (
             (self.metrics.avg_response_time * (total_requests - 1) + processing_time) /
@@ -513,7 +539,8 @@ class APIGatewayCore:
         )
     
     async def register_service(self, service_id: str, endpoints: List[ServiceEndpoint]) -> bool:
-        """Register service with endpoints"""
+        """
+Register service with endpoints"""
         try:
             self.services[service_id] = endpoints
             logger.info(f"🔗 Registered service '{service_id}' with {len(endpoints)} endpoints")
@@ -523,7 +550,8 @@ class APIGatewayCore:
             return False
     
     async def register_route(self, route_config: RouteConfig) -> bool:
-        """Register route configuration"""
+        """
+Register route configuration"""
         try:
             self.routes[route_config.path] = route_config
             logger.info(f"🛣️ Registered route '{route_config.path}'")
@@ -533,7 +561,8 @@ class APIGatewayCore:
             return False
     
     async def start(self) -> bool:
-        """Start API Gateway"""
+        """
+Start API Gateway"""
         try:
             if not hasattr(self, '_initialized'):
                 await self.initialize()
@@ -550,7 +579,8 @@ class APIGatewayCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop API Gateway"""
+        """
+Stop API Gateway"""
         try:
             logger.info("🛑 Stopping API Gateway core")
             
@@ -573,7 +603,8 @@ class APIGatewayCore:
             return False
     
     async def health_check(self) -> bool:
-        """Perform API Gateway health check"""
+        """
+Perform API Gateway health check"""
         try:
             # Check all registered services
             for service_id, endpoints in self.services.items():
@@ -598,7 +629,8 @@ class APIGatewayCore:
             return False
     
     async def _health_monitor_loop(self):
-        """Health monitoring loop"""
+        """
+Health monitoring loop"""
         while not self._shutdown_event.is_set():
             try:
                 await self.health_check()
@@ -610,7 +642,8 @@ class APIGatewayCore:
                 await asyncio.sleep(60)
     
     def get_metrics_summary(self) -> Dict[str, Any]:
-        """Get API Gateway metrics summary"""
+        """
+Get API Gateway metrics summary"""
         return {
             "total_requests": self.metrics.total_requests,
             "successful_requests": self.metrics.successful_requests,

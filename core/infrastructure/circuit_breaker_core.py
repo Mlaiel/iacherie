@@ -1,4 +1,5 @@
-"""IA Chérie Core Infrastructure - Circuit Breaker Core
+"""
+IA Chérie Core Infrastructure - Circuit Breaker Core
 ==================================================
 
 Enterprise-grade circuit breaker implementation providing fault tolerance,
@@ -26,13 +27,15 @@ logger = logging.getLogger(__name__)
 T = TypeVar('T')
 
 class CircuitState(str, Enum):
-    """Circuit breaker states"""
+    """
+Circuit breaker states"""
     CLOSED = "closed"        # Normal operation
     OPEN = "open"           # Circuit is open, failing fast
     HALF_OPEN = "half_open" # Testing if service is recovered
 
 class FailureType(str, Enum):
-    """Types of failures"""
+    """
+Types of failures"""
     TIMEOUT = "timeout"
     EXCEPTION = "exception"
     HTTP_ERROR = "http_error"
@@ -40,7 +43,8 @@ class FailureType(str, Enum):
 
 @dataclass
 class CircuitBreakerConfig:
-    """Circuit breaker configuration"""
+    """
+Circuit breaker configuration"""
     failure_threshold: int = 5          # Number of failures before opening
     recovery_timeout: float = 60.0      # Seconds before trying half-open
     success_threshold: int = 3          # Successes needed to close from half-open
@@ -54,7 +58,8 @@ class CircuitBreakerConfig:
 
 @dataclass
 class CircuitMetrics:
-    """Circuit breaker metrics"""
+    """
+Circuit breaker metrics"""
     total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
@@ -72,7 +77,8 @@ class CircuitMetrics:
 
 @dataclass
 class CallResult(Generic[T]):
-    """Result of a circuit breaker call"""
+    """
+Result of a circuit breaker call"""
     success: bool
     result: Optional[T] = None
     exception: Optional[Exception] = None
@@ -82,32 +88,38 @@ class CallResult(Generic[T]):
     failure_type: Optional[FailureType] = None
 
 class CircuitBreakerException(Exception):
-    """Circuit breaker specific exception"""
+    """
+Circuit breaker specific exception"""
     def __init__(self, message: str, state: CircuitState):
         super().__init__(message)
         self.state = state
 
 class CircuitOpenException(CircuitBreakerException):
-    """Exception when circuit is open"""
+    """
+Exception when circuit is open"""
     def __init__(self):
         super().__init__("Circuit breaker is OPEN", CircuitState.OPEN)
 
 class FallbackHandler(ABC, Generic[T]):
-    """Abstract fallback handler"""
+    """
+Abstract fallback handler"""
     
     @abstractmethod
     async def handle_fallback(self, exception: Exception, *args, **kwargs) -> T:
-        """Handle fallback when circuit is open or call fails"""
+        """
+Handle fallback when circuit is open or call fails"""
         pass
 
 class DefaultFallbackHandler(FallbackHandler[T]):
-    """Default fallback handler that raises the original exception"""
+    """
+Default fallback handler that raises the original exception"""
     
     async def handle_fallback(self, exception: Exception, *args, **kwargs) -> T:
         raise exception
 
 class CircuitBreaker:
-    """Circuit breaker implementation"""
+    """
+Circuit breaker implementation"""
     
     def __init__(self, name: str, config: Optional[CircuitBreakerConfig] = None):
         self.name = name
@@ -123,11 +135,13 @@ class CircuitBreaker:
         logger.info(f"Circuit breaker '{name}' initialized")
     
     def set_fallback_handler(self, handler: FallbackHandler):
-        """Set fallback handler"""
+        """
+Set fallback handler"""
         self.fallback_handler = handler
     
     async def call(self, func: Callable[..., T], *args, **kwargs) -> CallResult[T]:
-        """Execute function with circuit breaker protection"""
+        """
+Execute function with circuit breaker protection"""
         start_time = time.time()
         
         with self.lock:
@@ -223,7 +237,8 @@ class CircuitBreaker:
     
     async def _handle_failed_call(self, result: CallResult[T], exception: Exception, 
                                  *args, **kwargs) -> CallResult[T]:
-        """Handle failed call with fallback"""
+        """
+Handle failed call with fallback"""
         if self.fallback_handler:
             try:
                 fallback_result = await self.fallback_handler.handle_fallback(exception, *args, **kwargs)
@@ -235,7 +250,8 @@ class CircuitBreaker:
         return result
     
     async def _handle_rejected_call(self, result: CallResult[T], *args, **kwargs) -> CallResult[T]:
-        """Handle rejected call with fallback"""
+        """
+Handle rejected call with fallback"""
         if self.fallback_handler:
             try:
                 fallback_result = await self.fallback_handler.handle_fallback(
@@ -250,7 +266,8 @@ class CircuitBreaker:
         return result
     
     def _should_open_circuit(self) -> bool:
-        """Check if circuit should be opened"""
+        """
+Check if circuit should be opened"""
         # Check consecutive failures
         if self.metrics.consecutive_failures >= self.config.failure_threshold:
             return True
@@ -263,11 +280,13 @@ class CircuitBreaker:
         return False
     
     def _should_attempt_reset(self) -> bool:
-        """Check if we should attempt to reset circuit"""
+        """
+Check if we should attempt to reset circuit"""
         return time.time() - self.last_failure_time >= self.config.recovery_timeout
     
     def _transition_to_open(self):
-        """Transition circuit to open state"""
+        """
+Transition circuit to open state"""
         old_state = self.state
         self.state = CircuitState.OPEN
         self.state_changed_at = time.time()
@@ -277,7 +296,8 @@ class CircuitBreaker:
         logger.warning(f"Circuit breaker '{self.name}' opened - {old_state} -> {self.state}")
     
     def _transition_to_half_open(self):
-        """Transition circuit to half-open state"""
+        """
+Transition circuit to half-open state"""
         old_state = self.state
         self.state = CircuitState.HALF_OPEN
         self.state_changed_at = time.time()
@@ -288,7 +308,8 @@ class CircuitBreaker:
         logger.info(f"Circuit breaker '{self.name}' half-opened - {old_state} -> {self.state}")
     
     def _transition_to_closed(self):
-        """Transition circuit to closed state"""
+        """
+Transition circuit to closed state"""
         old_state = self.state
         self.state = CircuitState.CLOSED
         self.state_changed_at = time.time()
@@ -299,7 +320,8 @@ class CircuitBreaker:
         logger.info(f"Circuit breaker '{self.name}' closed - {old_state} -> {self.state}")
     
     def _record_success(self, execution_time: float):
-        """Record successful execution"""
+        """
+Record successful execution"""
         self.metrics.successful_requests += 1
         self.metrics.consecutive_successes += 1
         self.metrics.consecutive_failures = 0
@@ -316,7 +338,8 @@ class CircuitBreaker:
         self._update_failure_rate()
     
     def _record_failure(self, failure_type: FailureType):
-        """Record failed execution"""
+        """
+Record failed execution"""
         self.metrics.failed_requests += 1
         self.metrics.consecutive_failures += 1
         self.metrics.consecutive_successes = 0
@@ -330,14 +353,16 @@ class CircuitBreaker:
         self._update_failure_rate()
     
     def _update_failure_rate(self):
-        """Update current failure rate"""
+        """
+Update current failure rate"""
         if self.metrics.total_requests > 0:
             self.metrics.current_failure_rate = (
                 self.metrics.failed_requests / self.metrics.total_requests
             )
     
     def _classify_exception(self, exception: Exception) -> FailureType:
-        """Classify exception type"""
+        """
+Classify exception type"""
         if isinstance(exception, asyncio.TimeoutError):
             return FailureType.TIMEOUT
         elif hasattr(exception, 'status_code'):
@@ -346,7 +371,8 @@ class CircuitBreaker:
             return FailureType.EXCEPTION
     
     def reset(self):
-        """Reset circuit breaker state"""
+        """
+Reset circuit breaker state"""
         with self.lock:
             self.state = CircuitState.CLOSED
             self.metrics = CircuitMetrics()
@@ -357,32 +383,38 @@ class CircuitBreaker:
         logger.info(f"Circuit breaker '{self.name}' reset")
     
     def force_open(self):
-        """Force circuit to open state"""
+        """
+Force circuit to open state"""
         with self.lock:
             self._transition_to_open()
     
     def force_close(self):
-        """Force circuit to closed state"""
+        """
+Force circuit to closed state"""
         with self.lock:
             self._transition_to_closed()
     
     def get_state(self) -> CircuitState:
-        """Get current circuit state"""
+        """
+Get current circuit state"""
         return self.state
     
     def get_metrics(self) -> CircuitMetrics:
-        """Get circuit metrics"""
+        """
+Get circuit metrics"""
         return self.metrics
     
     def is_call_permitted(self) -> bool:
-        """Check if call is permitted"""
+        """
+Check if call is permitted"""
         with self.lock:
             if self.state == CircuitState.OPEN:
                 return self._should_attempt_reset()
             return True
 
 class CircuitBreakerCore:
-    """Core circuit breaker management system"""
+    """
+Core circuit breaker management system"""
     
     def __init__(self, level: str = "enterprise"):
         self.level = level
@@ -403,7 +435,8 @@ class CircuitBreakerCore:
         logger.info(f"Circuit Breaker Core initialized - Level: {level}")
     
     async def initialize(self) -> bool:
-        """Initialize circuit breaker system"""
+        """
+Initialize circuit breaker system"""
         try:
             logger.info("Circuit Breaker Core initialized successfully")
             return True
@@ -412,7 +445,8 @@ class CircuitBreakerCore:
             return False
     
     async def start(self) -> bool:
-        """Start circuit breaker system"""
+        """
+Start circuit breaker system"""
         try:
             self.is_running = True
             
@@ -426,7 +460,8 @@ class CircuitBreakerCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop circuit breaker system"""
+        """
+Stop circuit breaker system"""
         try:
             self.is_running = False
             
@@ -445,7 +480,8 @@ class CircuitBreakerCore:
             return False
     
     async def health_check(self) -> bool:
-        """Check system health"""
+        """
+Check system health"""
         try:
             # Check if monitoring is running
             if self.is_running and (not self.monitoring_task or self.monitoring_task.done()):
@@ -465,7 +501,8 @@ class CircuitBreakerCore:
             return False
     
     async def _monitor_circuits(self):
-        """Monitor circuit breaker states"""
+        """
+Monitor circuit breaker states"""
         while self.is_running:
             try:
                 await self._update_global_metrics()
@@ -477,7 +514,8 @@ class CircuitBreakerCore:
                 await asyncio.sleep(30)
     
     async def _update_global_metrics(self):
-        """Update global metrics"""
+        """
+Update global metrics"""
         total_calls = 0
         successful_calls = 0
         failed_calls = 0
@@ -509,7 +547,8 @@ class CircuitBreakerCore:
         })
     
     def create_circuit_breaker(self, name: str, config: Optional[CircuitBreakerConfig] = None) -> CircuitBreaker:
-        """Create new circuit breaker"""
+        """
+Create new circuit breaker"""
         if name in self.circuit_breakers:
             logger.warning(f"Circuit breaker '{name}' already exists")
             return self.circuit_breakers[name]
@@ -522,11 +561,13 @@ class CircuitBreakerCore:
         return circuit
     
     def get_circuit_breaker(self, name: str) -> Optional[CircuitBreaker]:
-        """Get circuit breaker by name"""
+        """
+Get circuit breaker by name"""
         return self.circuit_breakers.get(name)
     
     def remove_circuit_breaker(self, name: str) -> bool:
-        """Remove circuit breaker"""
+        """
+Remove circuit breaker"""
         if name in self.circuit_breakers:
             del self.circuit_breakers[name]
             logger.info(f"Removed circuit breaker: {name}")
@@ -535,7 +576,8 @@ class CircuitBreakerCore:
     
     async def call_with_circuit_breaker(self, circuit_name: str, func: Callable[..., T], 
                                        *args, **kwargs) -> CallResult[T]:
-        """Execute function with circuit breaker protection"""
+        """
+Execute function with circuit breaker protection"""
         circuit = self.get_circuit_breaker(circuit_name)
         if not circuit:
             # Create circuit breaker on demand
@@ -544,7 +586,8 @@ class CircuitBreakerCore:
         return await circuit.call(func, *args, **kwargs)
     
     def reset_circuit_breaker(self, name: str) -> bool:
-        """Reset specific circuit breaker"""
+        """
+Reset specific circuit breaker"""
         circuit = self.get_circuit_breaker(name)
         if circuit:
             circuit.reset()
@@ -552,13 +595,15 @@ class CircuitBreakerCore:
         return False
     
     def reset_all_circuit_breakers(self):
-        """Reset all circuit breakers"""
+        """
+Reset all circuit breakers"""
         for circuit in self.circuit_breakers.values():
             circuit.reset()
         logger.info("Reset all circuit breakers")
     
     def get_circuit_status(self, name: str) -> Optional[Dict[str, Any]]:
-        """Get circuit breaker status"""
+        """
+Get circuit breaker status"""
         circuit = self.get_circuit_breaker(name)
         if not circuit:
             return None
@@ -590,14 +635,16 @@ class CircuitBreakerCore:
         }
     
     def get_all_circuit_status(self) -> List[Dict[str, Any]]:
-        """Get status of all circuit breakers"""
+        """
+Get status of all circuit breakers"""
         return [
             self.get_circuit_status(name) 
             for name in self.circuit_breakers.keys()
         ]
     
     def get_system_metrics(self) -> Dict[str, Any]:
-        """Get system metrics"""
+        """
+Get system metrics"""
         success_rate = (
             self.metrics['successful_calls'] / self.metrics['total_calls']
             if self.metrics['total_calls'] > 0 else 1.0
@@ -638,19 +685,23 @@ circuit_breaker_core = CircuitBreakerCore()
 
 # Convenience functions
 def create_circuit_breaker(name: str, config: Optional[CircuitBreakerConfig] = None) -> CircuitBreaker:
-    """Create circuit breaker"""
+    """
+Create circuit breaker"""
     return circuit_breaker_core.create_circuit_breaker(name, config)
 
 async def call_with_circuit_breaker(circuit_name: str, func: Callable[..., T], *args, **kwargs) -> CallResult[T]:
-    """Call function with circuit breaker protection"""
+    """
+Call function with circuit breaker protection"""
     return await circuit_breaker_core.call_with_circuit_breaker(circuit_name, func, *args, **kwargs)
 
 def get_circuit_status(name: str) -> Optional[Dict[str, Any]]:
-    """Get circuit breaker status"""
+    """
+Get circuit breaker status"""
     return circuit_breaker_core.get_circuit_status(name)
 
 def reset_circuit_breaker(name: str) -> bool:
-    """Reset circuit breaker"""
+    """
+Reset circuit breaker"""
     return circuit_breaker_core.reset_circuit_breaker(name)
 
 # Module exports
@@ -662,4 +713,4 @@ __all__ = [
     "get_circuit_status", "reset_circuit_breaker"
 ]
 
-logger.info("Circuit Breaker Core module loaded")
+logger.info("Circuit Breaker Core module initialized")

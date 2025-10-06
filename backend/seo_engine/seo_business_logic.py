@@ -25,7 +25,8 @@ from collections import defaultdict
 # === ÉNUMÉRATIONS ===
 
 class BusinessObjective(Enum):
-    """Objectifs business"""
+    """
+        Objectifs business"""
     TRAFFIC_GROWTH = "traffic_growth"
     REVENUE_OPTIMIZATION = "revenue_optimization"
     BRAND_AWARENESS = "brand_awareness"
@@ -90,7 +91,8 @@ class BusinessRule:
 
 @dataclass
 class MonetizationStrategy:
-    """Stratégie de monétisation SEO"""
+    """
+        Stratégie de monétisation SEO"""
     strategy_id: str
     monetization_model: MonetizationModel
     target_revenue: float
@@ -105,7 +107,8 @@ class MonetizationStrategy:
 
 @dataclass
 class ProtectionStrategy:
-    """Stratégie de protection SEO"""
+    """
+        Stratégie de protection SEO"""
     strategy_id: str
     protection_level: ProtectionLevel
     protected_assets: List[str]
@@ -120,7 +123,8 @@ class ProtectionStrategy:
 
 @dataclass
 class GamificationSEOStrategy:
-    """Stratégie de gamification SEO"""
+    """
+        Stratégie de gamification SEO"""
     strategy_id: str
     gamification_elements: List[GamificationStrategy]
     target_engagement_boost: float
@@ -135,7 +139,8 @@ class GamificationSEOStrategy:
 
 @dataclass
 class CollaborationStrategy:
-    """Stratégie de collaboration SEO"""
+    """
+        Stratégie de collaboration SEO"""
     strategy_id: str
     collaboration_type: CollaborationType
     partner_profiles: List[Dict[str, Any]]
@@ -206,6 +211,7 @@ class SEOBusinessLogic:
         
         # Initialisation des règles par défaut
         self._initialize_default_business_rules()
+
         
         self.logger.info("SEO Business Logic initialisé avec succès")
     
@@ -301,35 +307,44 @@ class SEOBusinessLogic:
         
         try:
             # Analyse de l'impact sur les revenus
+
             revenue_impact = await self._analyze_revenue_impact(content_analysis, creator_context)
             
             # Analyse des risques et protection
+
             protection_analysis = await self._analyze_protection_requirements(
                 content_analysis, creator_context
             )
             
             # Opportunités de gamification
+
             gamification_opportunities = await self._analyze_gamification_opportunities(
                 content_analysis, creator_context
             )
             
             # Potentiel de collaboration
+
             collaboration_potential = await self._analyze_collaboration_potential(
                 content_analysis, creator_context
             )
             
             # Recommandations stratégiques intégrées
+
             strategic_recommendations = await self._generate_integrated_recommendations(
                 revenue_impact, protection_analysis, gamification_opportunities, collaboration_potential
             )
             
             # Calcul du ROI global
+
             overall_roi = self._calculate_overall_business_roi(
                 revenue_impact, protection_analysis, gamification_opportunities, collaboration_potential
             )
             
             # Plan d'implémentation prioritaire
+
             implementation_plan = self._create_implementation_plan(strategic_recommendations)
+
+
             
             business_impact = {
                 "analysis_id": analysis_id,
@@ -349,10 +364,12 @@ class SEOBusinessLogic:
             self.business_analysis_cache[analysis_id] = business_impact
             
             self.logger.info(f"Analyse business impact terminée: {analysis_id}")
+
             return business_impact
             
         except Exception as e:
             self.logger.error(f"Erreur analyse business impact: {str(e)}")
+
             raise
     
     async def create_monetization_strategy(
@@ -378,6 +395,7 @@ class SEOBusinessLogic:
         
         try:
             # Analyse du modèle de monétisation optimal
+
             optimal_model = self._determine_optimal_monetization_model(
                 creator_profile, business_objectives, target_revenue
             )
@@ -388,24 +406,29 @@ class SEOBusinessLogic:
             )
             
             # Tactiques d'optimisation
+
             optimization_tactics = self._design_monetization_seo_tactics(
                 optimal_model, seo_integration_points
             )
             
             # Funnel de conversion
+
             conversion_funnel = await self._design_monetization_conversion_funnel(
                 optimal_model, creator_profile
             )
             
             # Métriques de performance
+
             performance_metrics = self._define_monetization_performance_metrics(
                 optimal_model, target_revenue
             )
             
             # Assessment des risques
+
             risk_assessment = self._assess_monetization_risks(optimal_model, creator_profile)
             
             # Timeline d'implémentation
+
             implementation_timeline = self._create_monetization_timeline(
                 optimization_tactics, timeframe_months
             )
@@ -414,6 +437,8 @@ class SEOBusinessLogic:
             roi_projection = self._calculate_monetization_roi_projection(
                 target_revenue, implementation_timeline, risk_assessment
             )
+
+
             
             strategy = MonetizationStrategy(
                 strategy_id=strategy_id,
@@ -432,10 +457,12 @@ class SEOBusinessLogic:
             self.monetization_strategies[strategy_id] = strategy
             
             self.logger.info(f"Stratégie de monétisation créée: {strategy_id}")
+
             return strategy
             
         except Exception as e:
             self.logger.error(f"Erreur création stratégie monétisation: {str(e)}")
+
             raise
     
     async def create_protection_strategy(
@@ -461,14 +488,17 @@ class SEOBusinessLogic:
         
         try:
             # Assets protégés prioritaires
+
             protected_assets = self._prioritize_protected_assets(content_assets, creator_profile)
             
             # Assessment des menaces
+
             threat_assessment = await self._assess_protection_threats(
                 threat_landscape, protected_assets
             )
             
             # Mécanismes de protection
+
             protection_mechanisms = self._design_protection_mechanisms(
                 protection_level, threat_assessment
             )
@@ -479,24 +509,30 @@ class SEOBusinessLogic:
             )
             
             # Requirements de compliance
+
             compliance_requirements = self._identify_compliance_requirements(
                 creator_profile, protection_level
             )
             
             # Setup de monitoring
+
             monitoring_setup = self._design_protection_monitoring(
                 protected_assets, threat_assessment
             )
             
             # Plan de réponse aux incidents
+
             incident_response = self._create_incident_response_plan(
                 protection_mechanisms, threat_assessment
             )
             
             # Analyse coût-bénéfice
+
             cost_benefit_analysis = self._calculate_protection_cost_benefit(
                 protection_level, protected_assets, threat_assessment
             )
+
+
             
             strategy = ProtectionStrategy(
                 strategy_id=strategy_id,
@@ -515,10 +551,12 @@ class SEOBusinessLogic:
             self.protection_strategies[strategy_id] = strategy
             
             self.logger.info(f"Stratégie de protection créée: {strategy_id}")
+
             return strategy
             
         except Exception as e:
             self.logger.error(f"Erreur création stratégie protection: {str(e)}")
+
             raise
     
     async def create_gamification_strategy(
@@ -542,11 +580,13 @@ class SEOBusinessLogic:
         
         try:
             # Éléments de gamification adaptés
+
             gamification_elements = self._select_gamification_elements(
                 creator_profile, target_audience
             )
             
             # Boost d'engagement cible
+
             target_engagement_boost = self._calculate_target_engagement_boost(
                 engagement_goals, gamification_elements
             )
@@ -557,34 +597,42 @@ class SEOBusinessLogic:
             )
             
             # Optimisation du parcours utilisateur
+
             user_journey_optimization = await self._optimize_gamified_user_journey(
                 gamification_elements, target_audience
             )
             
             # Système de récompenses
+
             reward_system = self._design_seo_reward_system(
                 gamification_elements, engagement_goals
             )
             
             # Mécaniques sociales
+
             social_mechanics = self._design_social_gamification_mechanics(
                 gamification_elements, target_audience
             )
             
             # Tracking de performance
+
             performance_tracking = self._setup_gamification_performance_tracking(
                 engagement_goals, gamification_elements
             )
             
             # Potentiel viral
+
             viral_potential = self._assess_gamification_viral_potential(
                 social_mechanics, target_audience
             )
             
             # Phases d'implémentation
+
             implementation_phases = self._plan_gamification_implementation_phases(
                 gamification_elements, creator_profile
             )
+
+
             
             strategy = GamificationSEOStrategy(
                 strategy_id=strategy_id,
@@ -603,10 +651,12 @@ class SEOBusinessLogic:
             self.gamification_strategies[strategy_id] = strategy
             
             self.logger.info(f"Stratégie de gamification créée: {strategy_id}")
+
             return strategy
             
         except Exception as e:
             self.logger.error(f"Erreur création stratégie gamification: {str(e)}")
+
             raise
     
     async def create_collaboration_strategy(
@@ -630,11 +680,13 @@ class SEOBusinessLogic:
         
         try:
             # Type de collaboration optimal
+
             collaboration_type = self._determine_optimal_collaboration_type(
                 creator_profile, potential_partners, collaboration_objectives
             )
             
             # Profils de partenaires sélectionnés
+
             partner_profiles = self._select_optimal_partners(
                 potential_partners, collaboration_type, creator_profile
             )
@@ -645,34 +697,42 @@ class SEOBusinessLogic:
             )
             
             # Bénéfices mutuels
+
             mutual_benefits = self._calculate_collaboration_mutual_benefits(
                 creator_profile, partner_profiles, seo_synergies
             )
             
             # Stratégie de contenu
+
             content_strategy = await self._design_collaborative_content_strategy(
                 collaboration_type, partner_profiles, seo_synergies
             )
             
             # Plan de cross-promotion
+
             cross_promotion_plan = self._create_cross_promotion_plan(
                 partner_profiles, content_strategy
             )
             
             # Métriques de performance
+
             performance_metrics = self._define_collaboration_performance_metrics(
                 collaboration_objectives, mutual_benefits
             )
             
             # Mitigation des risques
+
             risk_mitigation = self._identify_collaboration_risk_mitigation(
                 partner_profiles, collaboration_type
             )
             
             # Indicateurs de succès
+
             success_indicators = self._define_collaboration_success_indicators(
                 collaboration_objectives, performance_metrics
             )
+
+
             
             strategy = CollaborationStrategy(
                 strategy_id=strategy_id,
@@ -691,10 +751,12 @@ class SEOBusinessLogic:
             self.collaboration_strategies[strategy_id] = strategy
             
             self.logger.info(f"Stratégie de collaboration créée: {strategy_id}")
+
             return strategy
             
         except Exception as e:
             self.logger.error(f"Erreur création stratégie collaboration: {str(e)}")
+
             raise
     
     # === MÉTHODES PRIVÉES - ANALYSE BUSINESS ===
@@ -809,6 +871,7 @@ class SEOBusinessLogic:
             "Mettre en place un système de monitoring unifié",
             "Optimiser le ROI global via l'approche multi-facettes"
         ])
+
         
         return recommendations
     
@@ -872,6 +935,7 @@ class SEOBusinessLogic:
     def _calculate_success_probability(self, recommendations: List[str]) -> float:
         """Calcule la probabilité de succès"""
         base_probability = 0.7
+
         recommendation_bonus = len(recommendations) * 0.02
         return min(0.95, base_probability + recommendation_bonus)
     
@@ -880,10 +944,14 @@ class SEOBusinessLogic:
     def _determine_optimal_monetization_model(
         self, creator_profile: Dict[str, Any], objectives: List[BusinessObjective], target_revenue: float
     ) -> MonetizationModel:
-        """Détermine le modèle de monétisation optimal"""
+        """
+        Détermine le modèle de monétisation optimal"""
         # Logique basée sur le profil du créateur et les objectifs
+
         audience_size = creator_profile.get("audience_size", 1000)
+
         content_type = creator_profile.get("primary_content_type", "blog")
+
         
         if audience_size > 50000 and BusinessObjective.REVENUE_OPTIMIZATION in objectives:
             return MonetizationModel.SUBSCRIPTION
@@ -906,6 +974,7 @@ class SEOBusinessLogic:
             base_points.extend(["sponsor_content_optimization", "branded_content_seo"])
         elif model == MonetizationModel.PRODUCT_SALES:
             base_points.extend(["product_page_seo", "shopping_intent_keywords"])
+
         
         return base_points
     
@@ -918,10 +987,13 @@ class SEOBusinessLogic:
         for point in integration_points:
             if "landing" in point:
                 tactics.append("landing_page_optimization")
+
             elif "conversion" in point:
                 tactics.append("conversion_rate_optimization")
+
             elif "product" in point:
                 tactics.append("ecommerce_seo")
+
         
         return list(set(tactics))
     
@@ -999,14 +1071,32 @@ class SEOBusinessLogic:
         }
 
 
+# === ALIASES COMPATIBILITÉ IMPORTS ===
+MonetizationSEOEngine = SEOBusinessLogic
+ProtectionSEOEngine = SEOBusinessLogic
+GamificationSEOEngine = SEOBusinessLogic
+CollaborationSEOEngine = SEOBusinessLogic
+DistributionSEOEngine = SEOBusinessLogic
+
+# Aliases strategies (dataclasses déjà définies)
+BusinessStrategy = MonetizationStrategy
+DistributionStrategy = CollaborationStrategy
+
 # === EXPORTS ===
 __all__ = [
     'SEOBusinessLogic',
+    'MonetizationSEOEngine',
+    'ProtectionSEOEngine',
+    'GamificationSEOEngine',
+    'CollaborationSEOEngine',
+    'DistributionSEOEngine',
     'BusinessRule',
     'MonetizationStrategy',
     'ProtectionStrategy', 
     'GamificationSEOStrategy',
     'CollaborationStrategy',
+    'BusinessStrategy',
+    'DistributionStrategy',
     'BusinessObjective',
     'MonetizationModel',
     'ProtectionLevel',

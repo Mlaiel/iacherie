@@ -40,7 +40,8 @@ import hashlib
 logger = logging.getLogger(__name__)
 
 class LanguageCode(str, Enum):
-    """Supported language codes"""
+    """
+Supported language codes"""
     ENGLISH = "en"
     GERMAN = "de"
     FRENCH = "fr"
@@ -55,7 +56,8 @@ class LanguageCode(str, Enum):
     HINDI = "hi"
 
 class SentimentLabel(str, Enum):
-    """Sentiment analysis labels"""
+    """
+Sentiment analysis labels"""
     VERY_POSITIVE = "very_positive"
     POSITIVE = "positive"
     NEUTRAL = "neutral"
@@ -63,7 +65,8 @@ class SentimentLabel(str, Enum):
     VERY_NEGATIVE = "very_negative"
 
 class EmotionLabel(str, Enum):
-    """Emotion detection labels"""
+    """
+Emotion detection labels"""
     JOY = "joy"
     SADNESS = "sadness"
     ANGER = "anger"
@@ -74,7 +77,8 @@ class EmotionLabel(str, Enum):
     ANTICIPATION = "anticipation"
 
 class ContentCategory(str, Enum):
-    """Content classification categories"""
+    """
+Content classification categories"""
     ENTERTAINMENT = "entertainment"
     EDUCATION = "education"
     NEWS = "news"
@@ -92,14 +96,16 @@ class ContentCategory(str, Enum):
 
 @dataclass
 class LanguageDetectionResult:
-    """Language detection result"""
+    """
+Language detection result"""
     language: LanguageCode
     confidence: float
     alternatives: List[Tuple[LanguageCode, float]] = field(default_factory=list)
 
 @dataclass
 class SentimentAnalysisResult:
-    """Sentiment analysis result"""
+    """
+Sentiment analysis result"""
     sentiment: SentimentLabel
     confidence: float
     score: float  # -1.0 to 1.0
@@ -107,7 +113,8 @@ class SentimentAnalysisResult:
 
 @dataclass
 class ContentClassificationResult:
-    """Content classification result"""
+    """
+Content classification result"""
     category: ContentCategory
     confidence: float
     subcategories: List[Tuple[str, float]] = field(default_factory=list)
@@ -115,7 +122,8 @@ class ContentClassificationResult:
 
 @dataclass
 class NamedEntity:
-    """Named entity recognition result"""
+    """
+Named entity recognition result"""
     text: str
     label: str
     start_pos: int
@@ -124,7 +132,8 @@ class NamedEntity:
 
 @dataclass
 class ContentQualityMetrics:
-    """Content quality assessment metrics"""
+    """
+Content quality assessment metrics"""
     readability_score: float
     complexity_score: float
     coherence_score: float
@@ -134,7 +143,8 @@ class ContentQualityMetrics:
 
 @dataclass
 class ToxicityDetectionResult:
-    """Toxicity detection result"""
+    """
+Toxicity detection result"""
     is_toxic: bool
     toxicity_score: float
     categories: Dict[str, float] = field(default_factory=dict)
@@ -142,7 +152,8 @@ class ToxicityDetectionResult:
 
 @dataclass
 class NLPProcessingResult:
-    """Comprehensive NLP processing result"""
+    """
+Comprehensive NLP processing result"""
     text: str
     language: LanguageDetectionResult
     sentiment: SentimentAnalysisResult
@@ -154,7 +165,8 @@ class NLPProcessingResult:
     timestamp: datetime = field(default_factory=datetime.utcnow)
 
 class TextPreprocessor:
-    """Advanced text preprocessing utilities"""
+    """
+Advanced text preprocessing utilities"""
     
     def __init__(self):
         self.html_pattern = re.compile(r'<[^>]+>')
@@ -166,7 +178,8 @@ class TextPreprocessor:
     def clean_text(self, text: str, remove_html: bool = True, remove_urls: bool = True,
                    remove_mentions: bool = False, remove_hashtags: bool = False,
                    remove_emails: bool = True) -> str:
-        """Clean and normalize text"""
+        """
+Clean and normalize text"""
         if not text:
             return ""
         
@@ -199,7 +212,8 @@ class TextPreprocessor:
         return text.strip()
     
     def extract_features(self, text: str) -> Dict[str, Any]:
-        """Extract text features"""
+        """
+Extract text features"""
         words = text.split()
         sentences = text.split('.')
         
@@ -216,7 +230,8 @@ class TextPreprocessor:
         }
 
 class LanguageDetector:
-    """Language detection using various methods"""
+    """
+Language detection using various methods"""
     
     def __init__(self):
         # Language patterns for basic detection
@@ -240,7 +255,8 @@ class LanguageDetector:
         }
     
     def detect_language(self, text: str) -> LanguageDetectionResult:
-        """Detect language of text"""
+        """
+Detect language of text"""
         if not text or len(text.strip()) < 10:
             return LanguageDetectionResult(
                 language=LanguageCode.ENGLISH,
@@ -287,7 +303,8 @@ class LanguageDetector:
         )
 
 class SentimentAnalyzer:
-    """Sentiment analysis with emotion detection"""
+    """
+Sentiment analysis with emotion detection"""
     
     def __init__(self):
         # Simplified sentiment lexicon
@@ -315,7 +332,8 @@ class SentimentAnalyzer:
         }
     
     def analyze_sentiment(self, text: str) -> SentimentAnalysisResult:
-        """Analyze sentiment and emotions in text"""
+        """
+Analyze sentiment and emotions in text"""
         if not text:
             return SentimentAnalysisResult(
                 sentiment=SentimentLabel.NEUTRAL,
@@ -361,7 +379,8 @@ class SentimentAnalyzer:
         )
 
 class ContentClassifier:
-    """Content classification system"""
+    """
+Content classification system"""
     
     def __init__(self):
         # Category keywords (simplified)
@@ -393,7 +412,8 @@ class ContentClassifier:
         }
     
     def classify_content(self, text: str) -> ContentClassificationResult:
-        """Classify content into categories"""
+        """
+Classify content into categories"""
         if not text:
             return ContentClassificationResult(
                 category=ContentCategory.ENTERTAINMENT,
@@ -433,7 +453,8 @@ class ContentClassifier:
         )
 
 class NamedEntityRecognizer:
-    """Named Entity Recognition system"""
+    """
+Named Entity Recognition system"""
     
     def __init__(self):
         # Simple patterns for entity recognition
@@ -446,7 +467,8 @@ class NamedEntityRecognizer:
         }
     
     def extract_entities(self, text: str) -> List[NamedEntity]:
-        """Extract named entities from text"""
+        """
+Extract named entities from text"""
         entities = []
         
         for label, pattern in self.patterns.items():
@@ -463,10 +485,12 @@ class NamedEntityRecognizer:
         return entities
 
 class QualityAssessor:
-    """Content quality assessment"""
+    """
+Content quality assessment"""
     
     def assess_quality(self, text: str) -> ContentQualityMetrics:
-        """Assess content quality"""
+        """
+Assess content quality"""
         if not text:
             return ContentQualityMetrics(
                 readability_score=0.0,
@@ -519,7 +543,8 @@ class QualityAssessor:
         )
 
 class ToxicityDetector:
-    """Toxicity and inappropriate content detection"""
+    """
+Toxicity and inappropriate content detection"""
     
     def __init__(self):
         # Simplified toxic word list (in production, use ML models)
@@ -536,7 +561,8 @@ class ToxicityDetector:
         }
     
     def detect_toxicity(self, text: str) -> ToxicityDetectionResult:
-        """Detect toxic content"""
+        """
+Detect toxic content"""
         if not text:
             return ToxicityDetectionResult(
                 is_toxic=False,
@@ -572,7 +598,8 @@ class ToxicityDetector:
         )
 
 class NaturalLanguageCore:
-    """Advanced enterprise natural language processing core"""
+    """
+Advanced enterprise natural language processing core"""
     
     def __init__(self, level: str = "enterprise"):
         self.level = level
@@ -593,7 +620,8 @@ class NaturalLanguageCore:
         self._cache_lock = threading.Lock()
     
     def _get_performance_config(self) -> Dict[str, Any]:
-        """Get performance configuration based on level"""
+        """
+Get performance configuration based on level"""
         configs = {
             "basic": {
                 "cache_size": 100,
@@ -623,11 +651,13 @@ class NaturalLanguageCore:
         return configs.get(self.level, configs["enterprise"])
     
     def _get_cache_key(self, text: str) -> str:
-        """Generate cache key for text"""
+        """
+Generate cache key for text"""
         return hashlib.sha256(text.encode()).hexdigest()[:16]
     
     async def initialize(self) -> bool:
-        """Initialize NLP core"""
+        """
+Initialize NLP core"""
         try:
             logger.info(f"🚀 Initializing NaturalLanguageCore - Level: {self.level}")
             
@@ -639,7 +669,8 @@ class NaturalLanguageCore:
             return False
     
     async def process_text(self, text: str, use_cache: bool = True) -> NLPProcessingResult:
-        """Comprehensive text processing"""
+        """
+Comprehensive text processing"""
         start_time = time.time()
         
         try:
@@ -714,54 +745,66 @@ class NaturalLanguageCore:
             raise
     
     async def _detect_language_async(self, text: str) -> LanguageDetectionResult:
-        """Async language detection"""
+        """
+Async language detection"""
         return self.language_detector.detect_language(text)
     
     async def _analyze_sentiment_async(self, text: str) -> SentimentAnalysisResult:
-        """Async sentiment analysis"""
+        """
+Async sentiment analysis"""
         return self.sentiment_analyzer.analyze_sentiment(text)
     
     async def _classify_content_async(self, text: str) -> ContentClassificationResult:
-        """Async content classification"""
+        """
+Async content classification"""
         return self.content_classifier.classify_content(text)
     
     async def _extract_entities_async(self, text: str) -> List[NamedEntity]:
-        """Async entity extraction"""
+        """
+Async entity extraction"""
         return self.entity_recognizer.extract_entities(text)
     
     async def _assess_quality_async(self, text: str) -> ContentQualityMetrics:
-        """Async quality assessment"""
+        """
+Async quality assessment"""
         return self.quality_assessor.assess_quality(text)
     
     async def _detect_toxicity_async(self, text: str) -> ToxicityDetectionResult:
-        """Async toxicity detection"""
+        """
+Async toxicity detection"""
         return self.toxicity_detector.detect_toxicity(text)
     
     async def analyze_sentiment_only(self, text: str) -> SentimentAnalysisResult:
-        """Analyze sentiment only"""
+        """
+Analyze sentiment only"""
         cleaned_text = self.preprocessor.clean_text(text)
         return self.sentiment_analyzer.analyze_sentiment(cleaned_text)
     
     async def classify_content_only(self, text: str) -> ContentClassificationResult:
-        """Classify content only"""
+        """
+Classify content only"""
         cleaned_text = self.preprocessor.clean_text(text)
         return self.content_classifier.classify_content(cleaned_text)
     
     async def detect_language_only(self, text: str) -> LanguageDetectionResult:
-        """Detect language only"""
+        """
+Detect language only"""
         return self.language_detector.detect_language(text)
     
     async def check_toxicity_only(self, text: str) -> ToxicityDetectionResult:
-        """Check toxicity only"""
+        """
+Check toxicity only"""
         cleaned_text = self.preprocessor.clean_text(text)
         return self.toxicity_detector.detect_toxicity(cleaned_text)
     
     async def extract_features(self, text: str) -> Dict[str, Any]:
-        """Extract text features"""
+        """
+Extract text features"""
         return self.preprocessor.extract_features(text)
     
     async def get_processing_stats(self) -> Dict[str, Any]:
-        """Get processing statistics"""
+        """
+Get processing statistics"""
         with self._cache_lock:
             cache_size = len(self._cache)
         
@@ -777,7 +820,8 @@ class NaturalLanguageCore:
         }
     
     async def clear_cache(self) -> bool:
-        """Clear processing cache"""
+        """
+Clear processing cache"""
         try:
             with self._cache_lock:
                 self._cache.clear()
@@ -788,7 +832,8 @@ class NaturalLanguageCore:
             return False
     
     async def health_check(self) -> bool:
-        """Health check for NLP core"""
+        """
+Health check for NLP core"""
         try:
             # Test basic functionality
             test_result = await self.analyze_sentiment_only("This is a test message.")
@@ -798,7 +843,8 @@ class NaturalLanguageCore:
             return False
     
     async def start(self) -> bool:
-        """Start NLP service"""
+        """
+Start NLP service"""
         try:
             logger.info("🚀 Starting NaturalLanguageCore service")
             self.enabled = True
@@ -808,7 +854,8 @@ class NaturalLanguageCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop NLP service"""
+        """
+Stop NLP service"""
         try:
             logger.info("🛑 Stopping NaturalLanguageCore service")
             self.enabled = False

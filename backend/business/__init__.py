@@ -43,8 +43,8 @@ from .analytics import (
 from .optimization import (
     PerformanceOptimizer,
     CustomerLifecycleManager,
-    ProcessOptimizer,
-    ResourceOptimizer
+    BusinessProcessOptimizer,
+    ResourceAllocationOptimizer
 )
 
 # === MONETIZATION (CONSOLIDATED) ===
@@ -69,8 +69,6 @@ from .monetization_engine import (
     CryptoPayments,
     PaymentStatus,
     PaymentMethod,
-    ContentMonetizationManager,
-    RevenueStreamManager,
     PaymentProcessor
 )
 
@@ -253,7 +251,7 @@ from .revenue_management import (
 )
 
 # New Enterprise Modules (Phase 2)
-from .partnership_management import (
+from .partnerships import (
     PartnershipLifecycleManager, BrandCollaborationOrchestrator,
     InfluencerBrandMatcher, PartnershipPerformanceAnalyzer
 )
@@ -265,7 +263,7 @@ from .customer_lifecycle import (
     CustomerAcquisitionOptimizer, OnboardingAutomationWorkflows,
     RetentionStrategyImplementer, ChurnPredictionPreventer
 )
-from .performance_optimization import (
+from .optimization import (
     BusinessProcessOptimizer, ResourceAllocationOptimizer
 )
 from .risk_management import (
@@ -278,39 +276,41 @@ from .strategic_planning import (
 )
 
 # Basic monetization (from business migration)
-from .basic_monetization import (
-    BusinessRule, MonetizationRule, ContentMonetizationManager,
-    RevenueStreamManager, PaymentProcessor
-)
-from .quality_assurance import (
-    QualityControlAutomator, ProcessQualityMonitor,
-    StandardsComplianceVerifier
-)
-from .innovation_management import (
-    InnovationPipelineManager, IdeaGenerationEvaluator,
-    InnovationProjectTracker
-)
+# TEMPORARY: Commented to break import cycle - will create modules
+# from .basic_monetization import (
+#     BusinessRule, MonetizationRule, ContentMonetizationManager,
+#     RevenueStreamManager, PaymentProcessor
+# )
+# from .quality_assurance import (
+#     QualityControlAutomator, ProcessQualityMonitor,
+#     StandardsComplianceVerifier
+# )
+# from .innovation_management import (
+#     InnovationPipelineManager, IdeaGenerationEvaluator,
+#     InnovationProjectTracker
+# )
 
 # Legacy Monetization (moved from legacy_monetization/)
-from .legacy_crypto_processor import (
-    EnterpriseCryptoProcessor,
-    CryptoAnalytics,
-    CryptoNetwork,
-    enterprise_crypto_processor,
-    crypto_analytics
-)
-from .legacy_revenue_tracking import (
-    AIRevenueTracker,
-    RevenueForecastingEngine,
-    ai_revenue_tracker,
-    revenue_forecasting_engine
-)
-from .legacy_payment_router import (
-    IntelligentPaymentRouter,
-    PaymentOptimizer,
-    intelligent_payment_router,
-    payment_optimizer
-)
+# TEMPORARY: Commented to break import cycle
+# from .legacy_crypto_processor import (
+#     EnterpriseCryptoProcessor,
+#     CryptoAnalytics,
+#     CryptoNetwork,
+#     enterprise_crypto_processor,
+#     crypto_analytics
+# )
+# from .legacy_revenue_tracking import (
+#     AIRevenueTracker,
+#     RevenueForecastingEngine,
+#     ai_revenue_tracker,
+#     revenue_forecasting_engine
+# )
+# from .legacy_payment_router import (
+#     IntelligentPaymentRouter,
+#     PaymentOptimizer,
+#     intelligent_payment_router,
+#     payment_optimizer
+# )
 
 __all__ = [
     # Core business rules and workflows

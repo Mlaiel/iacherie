@@ -33,7 +33,8 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionAlgorithm(Enum):
-    """Specialized protection algorithms"""
+    """
+        Specialized protection algorithms"""
     SPECTRAL_WATERMARKING = "spectral_watermarking"
     DCT_WATERMARKING = "dct_watermarking"
     LSB_STEGANOGRAPHY = "lsb_steganography"
@@ -79,7 +80,8 @@ class ProtectionProfile:
 
 @dataclass
 class MultimediaAnalysis:
-    """Comprehensive multimedia content analysis"""
+    """
+        Comprehensive multimedia content analysis"""
     content_id: str
     content_type: ContentType
     format_info: Dict[str, Any]
@@ -94,7 +96,8 @@ class MultimediaAnalysis:
 
 @dataclass
 class ProtectionResult:
-    """Multimedia protection operation result"""
+    """
+        Multimedia protection operation result"""
     content_id: str
     algorithm_used: ProtectionAlgorithm
     success: bool
@@ -110,7 +113,8 @@ class ProtectionResult:
 
 
 class AudioProtectionEngine:
-    """Specialized audio content protection"""
+    """
+        Specialized audio content protection"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -119,7 +123,8 @@ class AudioProtectionEngine:
         self.channels = self.config.get('channels', 2)
     
     async def analyze_audio(self, audio_data: Union[bytes, np.ndarray]) -> Dict[str, Any]:
-        """Comprehensive audio analysis"""
+        """
+        Comprehensive audio analysis"""
         try:
             analysis = {
                 'format': 'audio',
@@ -135,15 +140,16 @@ class AudioProtectionEngine:
             
             if NUMPY_AVAILABLE and isinstance(audio_data, np.ndarray):
                 # Advanced audio analysis with numpy
+
                 audio_length = len(audio_data)
+
                 analysis['estimated_duration'] = audio_length / self.sample_rate
                 analysis['dynamic_range'] = float(np.max(audio_data) - np.min(audio_data))
                 
                 # Frequency analysis (simplified)
+
                 analysis['frequency_spectrum'] = {
-                    'dominant_frequency': 440.0,  # Placeholder
-                    'frequency_spread': 0.8,
-                    'spectral_centroid': 2000.0
+                    'dominant_frequency': 440.0,                    'spectral_centroid': 2000.0
                 }
                 
                 # Quality metrics
@@ -155,6 +161,7 @@ class AudioProtectionEngine:
                 }
             else:
                 # Basic analysis for byte data
+
                 data_size = len(audio_data) if isinstance(audio_data, bytes) else 0
                 analysis['estimated_duration'] = data_size / (self.sample_rate * self.channels * (self.bit_depth // 8))
             
@@ -169,38 +176,48 @@ class AudioProtectionEngine:
             
         except Exception as e:
             logger.error(f"Audio analysis failed: {e}")
+
             return {'format': 'audio', 'error': str(e)}
     
     async def protect_audio(self, audio_data: Union[bytes, np.ndarray], 
                           profile: ProtectionProfile) -> ProtectionResult:
         """Apply audio-specific protection"""
         start_time = time.time()
+
         errors = []
         
         try:
             content_id = str(uuid.uuid4())
             
             # Audio analysis
+
             analysis = await self.analyze_audio(audio_data)
             
             # Select optimal algorithm for audio
+
             algorithm = self._select_audio_algorithm(profile, analysis)
             
             # Apply protection
             if algorithm == ProtectionAlgorithm.SPECTRAL_WATERMARKING:
                 result_data = await self._apply_spectral_watermarking(audio_data, profile)
+
             elif algorithm == ProtectionAlgorithm.DCT_WATERMARKING:
                 result_data = await self._apply_dct_watermarking(audio_data, profile)
+
             elif algorithm == ProtectionAlgorithm.TEMPORAL_DOMAIN:
                 result_data = await self._apply_temporal_watermarking(audio_data, profile)
+
             else:
                 result_data = audio_data  # Fallback
             
             # Quality assessment
+
             quality_metrics = await self._assess_audio_quality(audio_data, result_data)
             
             # Robustness testing
+
             robustness_metrics = await self._test_audio_robustness(result_data, profile)
+
             
             return ProtectionResult(
                 content_id=content_id,
@@ -223,10 +240,13 @@ class AudioProtectionEngine:
                 errors=errors,
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             errors.append(str(e))
+
             logger.error(f"Audio protection failed: {e}")
+
             
             return ProtectionResult(
                 content_id=str(uuid.uuid4()),
@@ -260,19 +280,24 @@ class AudioProtectionEngine:
     
     async def _apply_spectral_watermarking(self, audio_data: Union[bytes, np.ndarray], 
                                          profile: ProtectionProfile) -> Union[bytes, np.ndarray]:
-        """Apply spectral domain watermarking"""
+        """
+        Apply spectral domain watermarking"""
         try:
             if NUMPY_AVAILABLE and isinstance(audio_data, np.ndarray):
                 # Simulate spectral watermarking
+
                 watermarked = audio_data.copy()
                 # Add minimal spectral modifications
+
                 watermarked = watermarked * (1.0 + profile.strength * 0.001)
+
                 return watermarked
             else:
                 # For byte data, return with minimal modification
                 return audio_data
         except Exception as e:
             logger.error(f"Spectral watermarking failed: {e}")
+
             return audio_data
     
     async def _apply_dct_watermarking(self, audio_data: Union[bytes, np.ndarray], 
@@ -283,6 +308,7 @@ class AudioProtectionEngine:
             return audio_data
         except Exception as e:
             logger.error(f"DCT watermarking failed: {e}")
+
             return audio_data
     
     async def _apply_temporal_watermarking(self, audio_data: Union[bytes, np.ndarray], 
@@ -293,6 +319,7 @@ class AudioProtectionEngine:
             return audio_data
         except Exception as e:
             logger.error(f"Temporal watermarking failed: {e}")
+
             return audio_data
     
     async def _assess_audio_quality(self, original: Union[bytes, np.ndarray], 
@@ -301,9 +328,12 @@ class AudioProtectionEngine:
         try:
             if NUMPY_AVAILABLE and isinstance(original, np.ndarray) and isinstance(protected, np.ndarray):
                 # Calculate quality metrics
+
                 mse = float(np.mean((original - protected) ** 2))
+
                 if mse > 0:
                     psnr = 20 * np.log10(np.max(np.abs(original)) / np.sqrt(mse))
+
                 else:
                     psnr = 100.0  # Perfect quality
                 
@@ -321,6 +351,7 @@ class AudioProtectionEngine:
                 }
         except Exception as e:
             logger.error(f"Audio quality assessment failed: {e}")
+
             return {'quality_score': 0.5}
     
     async def _test_audio_robustness(self, protected_data: Union[bytes, np.ndarray], 
@@ -335,7 +366,8 @@ class AudioProtectionEngine:
         }
     
     def _get_algorithm_params(self, algorithm: ProtectionAlgorithm) -> Dict[str, Any]:
-        """Get algorithm-specific parameters"""
+        """
+        Get algorithm-specific parameters"""
         return {
             'algorithm': algorithm.value,
             'parameters': {
@@ -346,22 +378,27 @@ class AudioProtectionEngine:
         }
     
     def _generate_watermark_signature(self, protected_data: Union[bytes, np.ndarray]) -> str:
-        """Generate watermark verification signature"""
+        """
+        Generate watermark verification signature"""
         data_str = str(protected_data) if not isinstance(protected_data, bytes) else protected_data.hex()
         return hashlib.sha256(data_str.encode()).hexdigest()[:32]
     
     def _get_memory_usage(self) -> float:
-        """Get current memory usage"""
+        """
+        Get current memory usage"""
         try:
             import psutil
+
             process = psutil.Process()
+
             return process.memory_info().rss / 1024 / 1024
         except ImportError:
             return 0.0
 
 
 class VideoProtectionEngine:
-    """Specialized video content protection"""
+    """
+        Specialized video content protection"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -370,7 +407,8 @@ class VideoProtectionEngine:
         self.codec = self.config.get('codec', 'h264')
     
     async def analyze_video(self, video_data: Union[bytes, Any]) -> Dict[str, Any]:
-        """Comprehensive video analysis"""
+        """
+        Comprehensive video analysis"""
         try:
             analysis = {
                 'format': 'video',
@@ -385,7 +423,9 @@ class VideoProtectionEngine:
             }
             
             # Estimate duration from data size
+
             data_size = len(video_data) if isinstance(video_data, bytes) else 1000000
+
             estimated_bitrate = analysis['bitrate']
             analysis['estimated_duration'] = (data_size * 8) / estimated_bitrate
             
@@ -410,6 +450,7 @@ class VideoProtectionEngine:
             }
             
             # Watermarking capacity
+
             total_frames = analysis['estimated_duration'] * self.frame_rate
             analysis['watermarking_capacity'] = {
                 'spatial_capacity': total_frames * 100,   # bits per frame
@@ -421,38 +462,48 @@ class VideoProtectionEngine:
             
         except Exception as e:
             logger.error(f"Video analysis failed: {e}")
+
             return {'format': 'video', 'error': str(e)}
     
     async def protect_video(self, video_data: Union[bytes, Any], 
                           profile: ProtectionProfile) -> ProtectionResult:
         """Apply video-specific protection"""
         start_time = time.time()
+
         errors = []
         
         try:
             content_id = str(uuid.uuid4())
             
             # Video analysis
+
             analysis = await self.analyze_video(video_data)
             
             # Select optimal algorithm
+
             algorithm = self._select_video_algorithm(profile, analysis)
             
             # Apply protection
             if algorithm == ProtectionAlgorithm.DCT_WATERMARKING:
                 result_data = await self._apply_video_dct_watermarking(video_data, profile)
+
             elif algorithm == ProtectionAlgorithm.SPATIAL_DOMAIN:
                 result_data = await self._apply_spatial_watermarking(video_data, profile)
+
             elif algorithm == ProtectionAlgorithm.TEMPORAL_DOMAIN:
                 result_data = await self._apply_temporal_video_watermarking(video_data, profile)
+
             else:
                 result_data = video_data
             
             # Quality assessment
+
             quality_metrics = await self._assess_video_quality(video_data, result_data)
             
             # Robustness testing
+
             robustness_metrics = await self._test_video_robustness(result_data, profile)
+
             
             return ProtectionResult(
                 content_id=content_id,
@@ -475,10 +526,13 @@ class VideoProtectionEngine:
                 errors=errors,
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             errors.append(str(e))
+
             logger.error(f"Video protection failed: {e}")
+
             
             return ProtectionResult(
                 content_id=str(uuid.uuid4()),
@@ -514,25 +568,29 @@ class VideoProtectionEngine:
     
     async def _apply_video_dct_watermarking(self, video_data: Union[bytes, Any], 
                                           profile: ProtectionProfile) -> Union[bytes, Any]:
-        """Apply DCT-based video watermarking"""
+        """
+        Apply DCT-based video watermarking"""
         # Simulate video DCT watermarking
         return video_data
     
     async def _apply_spatial_watermarking(self, video_data: Union[bytes, Any], 
                                         profile: ProtectionProfile) -> Union[bytes, Any]:
-        """Apply spatial domain video watermarking"""
+        """
+        Apply spatial domain video watermarking"""
         # Simulate spatial watermarking
         return video_data
     
     async def _apply_temporal_video_watermarking(self, video_data: Union[bytes, Any], 
                                                profile: ProtectionProfile) -> Union[bytes, Any]:
-        """Apply temporal domain video watermarking"""
+        """
+        Apply temporal domain video watermarking"""
         # Simulate temporal watermarking
         return video_data
     
     async def _assess_video_quality(self, original: Union[bytes, Any], 
                                   protected: Union[bytes, Any]) -> Dict[str, float]:
-        """Assess video quality after protection"""
+        """
+        Assess video quality after protection"""
         return {
             'psnr_db': 42.0,
             'ssim': 0.95,
@@ -542,7 +600,8 @@ class VideoProtectionEngine:
     
     async def _test_video_robustness(self, protected_data: Union[bytes, Any], 
                                    profile: ProtectionProfile) -> Dict[str, float]:
-        """Test robustness of video protection"""
+        """
+        Test robustness of video protection"""
         return {
             'compression_resistance': 0.82,
             'frame_dropping_resistance': 0.75,
@@ -553,7 +612,8 @@ class VideoProtectionEngine:
         }
     
     def _get_frame_modification_stats(self) -> Dict[str, Any]:
-        """Get frame modification statistics"""
+        """
+        Get frame modification statistics"""
         return {
             'frames_modified': 150,
             'modification_intensity': 0.02,
@@ -561,7 +621,8 @@ class VideoProtectionEngine:
         }
     
     def _generate_frame_signatures(self, video_data: Union[bytes, Any]) -> List[str]:
-        """Generate frame signatures for verification"""
+        """
+        Generate frame signatures for verification"""
         # Simulate frame signatures
         return [f"frame_{i}_sig_{hashlib.md5(str(i).encode()).hexdigest()[:8]}" for i in range(5)]
     
@@ -569,14 +630,17 @@ class VideoProtectionEngine:
         """Get current memory usage"""
         try:
             import psutil
+
             process = psutil.Process()
+
             return process.memory_info().rss / 1024 / 1024
         except ImportError:
             return 0.0
 
 
 class ImageProtectionEngine:
-    """Specialized image content protection"""
+    """
+        Specialized image content protection"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -584,7 +648,8 @@ class ImageProtectionEngine:
         self.max_resolution = self.config.get('max_resolution', (4096, 4096))
     
     async def analyze_image(self, image_data: Union[bytes, Any]) -> Dict[str, Any]:
-        """Comprehensive image analysis"""
+        """
+        Comprehensive image analysis"""
         try:
             analysis = {
                 'format': 'image',
@@ -597,7 +662,9 @@ class ImageProtectionEngine:
             }
             
             # Estimate properties from data size
+
             data_size = len(image_data) if isinstance(image_data, bytes) else 1000000
+
             estimated_pixels = data_size // 3  # Assuming RGB
             estimated_width = int(np.sqrt(estimated_pixels)) if NUMPY_AVAILABLE else 1000
             analysis['estimated_resolution'] = (estimated_width, estimated_width)
@@ -627,6 +694,7 @@ class ImageProtectionEngine:
             }
             
             # Watermarking capacity
+
             total_pixels = analysis['estimated_resolution'][0] * analysis['estimated_resolution'][1]
             analysis['watermarking_capacity'] = {
                 'spatial_capacity': total_pixels // 64,      # bits in spatial domain
@@ -638,38 +706,48 @@ class ImageProtectionEngine:
             
         except Exception as e:
             logger.error(f"Image analysis failed: {e}")
+
             return {'format': 'image', 'error': str(e)}
     
     async def protect_image(self, image_data: Union[bytes, Any], 
                           profile: ProtectionProfile) -> ProtectionResult:
         """Apply image-specific protection"""
         start_time = time.time()
+
         errors = []
         
         try:
             content_id = str(uuid.uuid4())
             
             # Image analysis
+
             analysis = await self.analyze_image(image_data)
             
             # Select optimal algorithm
+
             algorithm = self._select_image_algorithm(profile, analysis)
             
             # Apply protection
             if algorithm == ProtectionAlgorithm.DCT_WATERMARKING:
                 result_data = await self._apply_image_dct_watermarking(image_data, profile)
+
             elif algorithm == ProtectionAlgorithm.LSB_STEGANOGRAPHY:
                 result_data = await self._apply_lsb_steganography(image_data, profile)
+
             elif algorithm == ProtectionAlgorithm.FREQUENCY_DOMAIN:
                 result_data = await self._apply_frequency_watermarking(image_data, profile)
+
             else:
                 result_data = image_data
             
             # Quality assessment
+
             quality_metrics = await self._assess_image_quality(image_data, result_data)
             
             # Robustness testing
+
             robustness_metrics = await self._test_image_robustness(result_data, profile)
+
             
             return ProtectionResult(
                 content_id=content_id,
@@ -692,10 +770,13 @@ class ImageProtectionEngine:
                 errors=errors,
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             errors.append(str(e))
+
             logger.error(f"Image protection failed: {e}")
+
             
             return ProtectionResult(
                 content_id=str(uuid.uuid4()),
@@ -731,25 +812,29 @@ class ImageProtectionEngine:
     
     async def _apply_image_dct_watermarking(self, image_data: Union[bytes, Any], 
                                           profile: ProtectionProfile) -> Union[bytes, Any]:
-        """Apply DCT-based image watermarking"""
+        """
+        Apply DCT-based image watermarking"""
         # Simulate image DCT watermarking
         return image_data
     
     async def _apply_lsb_steganography(self, image_data: Union[bytes, Any], 
                                      profile: ProtectionProfile) -> Union[bytes, Any]:
-        """Apply LSB steganography"""
+        """
+        Apply LSB steganography"""
         # Simulate LSB steganography
         return image_data
     
     async def _apply_frequency_watermarking(self, image_data: Union[bytes, Any], 
                                           profile: ProtectionProfile) -> Union[bytes, Any]:
-        """Apply frequency domain watermarking"""
+        """
+        Apply frequency domain watermarking"""
         # Simulate frequency domain watermarking
         return image_data
     
     async def _assess_image_quality(self, original: Union[bytes, Any], 
                                   protected: Union[bytes, Any]) -> Dict[str, float]:
-        """Assess image quality after protection"""
+        """
+        Assess image quality after protection"""
         return {
             'psnr_db': 45.0,
             'ssim': 0.98,
@@ -759,7 +844,8 @@ class ImageProtectionEngine:
     
     async def _test_image_robustness(self, protected_data: Union[bytes, Any], 
                                    profile: ProtectionProfile) -> Dict[str, float]:
-        """Test robustness of image protection"""
+        """
+        Test robustness of image protection"""
         return {
             'jpeg_compression_resistance': 0.85,
             'scaling_resistance': 0.90,
@@ -770,7 +856,8 @@ class ImageProtectionEngine:
         }
     
     def _get_pixel_modification_stats(self) -> Dict[str, Any]:
-        """Get pixel modification statistics"""
+        """
+        Get pixel modification statistics"""
         return {
             'pixels_modified': 15000,
             'modification_intensity': 0.5,
@@ -778,29 +865,35 @@ class ImageProtectionEngine:
         }
     
     def _generate_image_signature(self, image_data: Union[bytes, Any]) -> str:
-        """Generate image signature for verification"""
+        """
+        Generate image signature for verification"""
         data_str = str(image_data) if not isinstance(image_data, bytes) else image_data.hex()
         return hashlib.sha256(data_str.encode()).hexdigest()[:32]
     
     def _get_memory_usage(self) -> float:
-        """Get current memory usage"""
+        """
+        Get current memory usage"""
         try:
             import psutil
+
             process = psutil.Process()
+
             return process.memory_info().rss / 1024 / 1024
         except ImportError:
             return 0.0
 
 
 class TextProtectionEngine:
-    """Specialized text content protection"""
+    """
+        Specialized text content protection"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.languages = self.config.get('supported_languages', ['en', 'de', 'fr', 'ar'])
     
     async def analyze_text(self, text_data: str) -> Dict[str, Any]:
-        """Comprehensive text analysis"""
+        """
+        Comprehensive text analysis"""
         try:
             analysis = {
                 'format': 'text',
@@ -851,36 +944,45 @@ class TextProtectionEngine:
             
         except Exception as e:
             logger.error(f"Text analysis failed: {e}")
+
             return {'format': 'text', 'error': str(e)}
     
     async def protect_text(self, text_data: str, 
                          profile: ProtectionProfile) -> ProtectionResult:
         """Apply text-specific protection"""
         start_time = time.time()
+
         errors = []
         
         try:
             content_id = str(uuid.uuid4())
             
             # Text analysis
+
             analysis = await self.analyze_text(text_data)
             
             # Select optimal algorithm
+
             algorithm = self._select_text_algorithm(profile, analysis)
             
             # Apply protection
             if algorithm == ProtectionAlgorithm.SEMANTIC_WATERMARKING:
                 result_data = await self._apply_semantic_watermarking(text_data, profile)
+
             elif algorithm == ProtectionAlgorithm.LSB_STEGANOGRAPHY:
                 result_data = await self._apply_text_steganography(text_data, profile)
+
             else:
                 result_data = await self._apply_syntactic_watermarking(text_data, profile)
             
             # Quality assessment
+
             quality_metrics = await self._assess_text_quality(text_data, result_data)
             
             # Robustness testing
+
             robustness_metrics = await self._test_text_robustness(result_data, profile)
+
             
             return ProtectionResult(
                 content_id=content_id,
@@ -903,10 +1005,13 @@ class TextProtectionEngine:
                 errors=errors,
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             errors.append(str(e))
+
             logger.error(f"Text protection failed: {e}")
+
             
             return ProtectionResult(
                 content_id=str(uuid.uuid4()),
@@ -936,7 +1041,8 @@ class TextProtectionEngine:
             return 'en'  # English (default)
     
     def _select_text_algorithm(self, profile: ProtectionProfile, analysis: Dict[str, Any]) -> ProtectionAlgorithm:
-        """Select optimal text protection algorithm"""
+        """
+        Select optimal text protection algorithm"""
         word_count = analysis.get('word_count', 0)
         
         # Long text content
@@ -951,28 +1057,39 @@ class TextProtectionEngine:
     
     async def _apply_semantic_watermarking(self, text_data: str, 
                                          profile: ProtectionProfile) -> str:
-        """Apply semantic watermarking to text"""
+        """
+        Apply semantic watermarking to text"""
         try:
             # Simulate semantic watermarking by making subtle word substitutions
+
             words = text_data.split()
+
+
             watermarked_words = []
             
             for i, word in enumerate(words):
                 if i % 20 == 0 and len(word) > 4:  # Watermark every 20th word
                     # Simulate synonym substitution (in real implementation, use NLP models)
+
                     if word.lower() == 'good':
                         watermarked_words.append('excellent')
+
                     elif word.lower() == 'bad':
                         watermarked_words.append('poor')
+
                     else:
                         watermarked_words.append(word)
+
                 else:
                     watermarked_words.append(word)
+
             
             return ' '.join(watermarked_words)
+
             
         except Exception as e:
             logger.error(f"Semantic watermarking failed: {e}")
+
             return text_data
     
     async def _apply_text_steganography(self, text_data: str, 
@@ -980,19 +1097,25 @@ class TextProtectionEngine:
         """Apply steganography to text"""
         try:
             # Simulate text steganography using invisible characters
+
             steganographic_text = text_data
             
             # Insert zero-width spaces at strategic positions
+
             words = text_data.split()
+
             if len(words) > 10:
                 # Insert after every 10th word (simplified approach)
+
                 for i in range(9, len(words), 10):
                     words[i] += '\u200B'  # Zero-width space
             
             return ' '.join(words)
+
             
         except Exception as e:
             logger.error(f"Text steganography failed: {e}")
+
             return text_data
     
     async def _apply_syntactic_watermarking(self, text_data: str, 
@@ -1000,37 +1123,52 @@ class TextProtectionEngine:
         """Apply syntactic watermarking to text"""
         try:
             # Simulate syntactic watermarking by altering sentence structure
+
             sentences = text_data.split('. ')
+
+
             watermarked_sentences = []
             
             for i, sentence in enumerate(sentences):
                 if i % 5 == 0 and len(sentence.split()) > 5:  # Every 5th sentence
                     # Simple transformation: add parenthetical phrases
+
                     words = sentence.split()
+
                     if len(words) > 3:
                         words.insert(3, '(notably)')
+
                     watermarked_sentences.append(' '.join(words))
+
                 else:
                     watermarked_sentences.append(sentence)
+
             
             return '. '.join(watermarked_sentences)
+
             
         except Exception as e:
             logger.error(f"Syntactic watermarking failed: {e}")
+
             return text_data
     
     async def _assess_text_quality(self, original: str, protected: str) -> Dict[str, float]:
         """Assess text quality after protection"""
         # Calculate similarity metrics
+
         original_words = set(original.lower().split())
+
         protected_words = set(protected.lower().split())
+
         
         if original_words:
             word_preservation = len(original_words & protected_words) / len(original_words)
         else:
             word_preservation = 1.0
+
         
         length_preservation = min(len(protected), len(original)) / max(len(protected), len(original), 1)
+
         
         return {
             'word_preservation': word_preservation,
@@ -1042,7 +1180,8 @@ class TextProtectionEngine:
     
     async def _test_text_robustness(self, protected_data: str, 
                                   profile: ProtectionProfile) -> Dict[str, float]:
-        """Test robustness of text protection"""
+        """
+        Test robustness of text protection"""
         return {
             'paraphrasing_resistance': 0.75,
             'translation_resistance': 0.60,
@@ -1053,9 +1192,12 @@ class TextProtectionEngine:
         }
     
     def _get_text_modification_stats(self, original: str, protected: str) -> Dict[str, Any]:
-        """Get text modification statistics"""
+        """
+        Get text modification statistics"""
         original_words = original.split()
+
         protected_words = protected.split()
+
         
         return {
             'words_modified': abs(len(protected_words) - len(original_words)),
@@ -1064,14 +1206,18 @@ class TextProtectionEngine:
         }
     
     def _generate_text_signature(self, text_data: str) -> str:
-        """Generate text signature for verification"""
+        """
+        Generate text signature for verification"""
         return hashlib.sha256(text_data.encode()).hexdigest()[:32]
     
     def _get_memory_usage(self) -> float:
-        """Get current memory usage"""
+        """
+        Get current memory usage"""
         try:
             import psutil
+
             process = psutil.Process()
+
             return process.memory_info().rss / 1024 / 1024
         except ImportError:
             return 0.0
@@ -1086,7 +1232,8 @@ class MultimediaProtectionEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize multimedia protection engine"""
+        """
+        Initialize multimedia protection engine"""
         self.config = config or {}
         
         # Initialize format-specific engines
@@ -1106,21 +1253,28 @@ class MultimediaProtectionEngine:
         """Comprehensive multimedia content analysis"""
         try:
             content_id = str(uuid.uuid4())
+
+
             start_time = time.time()
             
             # Route to appropriate engine
             if content_type == ContentType.AUDIO:
                 analysis_result = await self.audio_engine.analyze_audio(content_data)
+
             elif content_type == ContentType.VIDEO:
                 analysis_result = await self.video_engine.analyze_video(content_data)
+
             elif content_type == ContentType.IMAGE:
                 analysis_result = await self.image_engine.analyze_image(content_data)
+
             elif content_type == ContentType.TEXT:
                 analysis_result = await self.text_engine.analyze_text(content_data)
+
             else:
                 raise ValueError(f"Unsupported content type: {content_type}")
             
             # Extract unified analysis data
+
             analysis = MultimediaAnalysis(
                 content_id=content_id,
                 content_type=content_type,
@@ -1133,11 +1287,13 @@ class MultimediaProtectionEngine:
                 hardware_requirements=self._calculate_hardware_requirements(analysis_result),
                 timestamp=datetime.utcnow()
             )
+
             
             return analysis
             
         except Exception as e:
             logger.error(f"Content analysis failed: {e}")
+
             raise
     
     async def protect_content(self, content_data: Union[bytes, str], 
@@ -1150,12 +1306,16 @@ class MultimediaProtectionEngine:
             # Route to appropriate engine
             if content_type == ContentType.AUDIO:
                 result = await self.audio_engine.protect_audio(content_data, protection_profile)
+
             elif content_type == ContentType.VIDEO:
                 result = await self.video_engine.protect_video(content_data, protection_profile)
+
             elif content_type == ContentType.IMAGE:
                 result = await self.image_engine.protect_image(content_data, protection_profile)
+
             elif content_type == ContentType.TEXT:
                 result = await self.text_engine.protect_text(content_data, protection_profile)
+
             else:
                 raise ValueError(f"Unsupported content type: {content_type}")
             
@@ -1180,6 +1340,7 @@ class MultimediaProtectionEngine:
             
         except Exception as e:
             logger.error(f"Content protection failed: {e}")
+
             raise
     
     def create_protection_profile(self, content_type: ContentType,
@@ -1188,6 +1349,7 @@ class MultimediaProtectionEngine:
         """Create optimized protection profile for content type"""
         
         # Default algorithms by content type
+
         algorithm_mapping = {
             ContentType.AUDIO: ProtectionAlgorithm.SPECTRAL_WATERMARKING,
             ContentType.VIDEO: ProtectionAlgorithm.DCT_WATERMARKING,
@@ -1196,6 +1358,7 @@ class MultimediaProtectionEngine:
         }
         
         # Format-specific configurations
+
         format_configs = {
             ContentType.AUDIO: {
                 'frequency_range': [20, 20000],
@@ -1219,6 +1382,7 @@ class MultimediaProtectionEngine:
         }
         
         # Performance constraints by optimization target
+
         performance_configs = {
             OptimizationTarget.QUALITY_PRESERVATION: {
                 'max_processing_time': 60.0,
@@ -1249,31 +1413,38 @@ class MultimediaProtectionEngine:
         )
     
     def _generate_optimization_recommendations(self, analysis_result: Dict[str, Any]) -> List[str]:
-        """Generate optimization recommendations based on analysis"""
+        """
+        Generate optimization recommendations based on analysis"""
         recommendations = []
         
         # Quality-based recommendations
+
         quality_score = analysis_result.get('quality_assessment', {}).get('quality_score', 0.5)
         if quality_score < 0.7:
             recommendations.append('consider_preprocessing_enhancement')
         
         # Complexity-based recommendations
+
         complexity = analysis_result.get('complexity_analysis', {})
         if complexity.get('texture_complexity', 0.5) > 0.8:
             recommendations.append('use_robust_watermarking')
         
         # Capacity-based recommendations
+
         capacity = analysis_result.get('watermarking_capacity', {})
+
         total_capacity = sum(capacity.values()) if capacity else 0
         if total_capacity > 10000:
             recommendations.append('high_capacity_watermarking_available')
         elif total_capacity < 100:
             recommendations.append('use_minimal_watermarking')
+
         
         return recommendations
     
     def _estimate_processing_time(self, analysis_result: Dict[str, Any]) -> float:
-        """Estimate processing time based on content analysis"""
+        """
+        Estimate processing time based on content analysis"""
         base_time = 1.0  # seconds
         
         # Adjust based on content size/complexity
@@ -1283,6 +1454,7 @@ class MultimediaProtectionEngine:
         
         if 'estimated_resolution' in analysis_result:
             width, height = analysis_result['estimated_resolution']
+
             pixels = width * height
             base_time += pixels / 1000000  # 1 second per megapixel
         
@@ -1293,7 +1465,8 @@ class MultimediaProtectionEngine:
         return min(base_time, 300.0)  # Cap at 5 minutes
     
     def _calculate_hardware_requirements(self, analysis_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate hardware requirements for processing"""
+        """
+        Calculate hardware requirements for processing"""
         requirements = {
             'min_memory_mb': 512,
             'recommended_memory_mb': 2048,
@@ -1305,21 +1478,25 @@ class MultimediaProtectionEngine:
         # Adjust based on content type and size
         if 'estimated_resolution' in analysis_result:
             width, height = analysis_result['estimated_resolution']
+
             pixels = width * height
             requirements['recommended_memory_mb'] = max(2048, pixels // 500000)
+
             if pixels > 8000000:  # 8MP+
                 requirements['gpu_acceleration'] = True
         
         if 'estimated_duration' in analysis_result:
             duration = analysis_result['estimated_duration']
             requirements['recommended_memory_mb'] = max(2048, int(duration * 100))
+
             if duration > 300:  # 5+ minutes
                 requirements['min_cpu_cores'] = 4
         
         return requirements
     
     async def _update_performance_metrics(self, content_type: ContentType, result: ProtectionResult):
-        """Update performance metrics"""
+        """
+        Update performance metrics"""
         type_key = content_type.value
         
         if type_key not in self.performance_metrics:
@@ -1329,6 +1506,7 @@ class MultimediaProtectionEngine:
                 'avg_processing_time': 0.0,
                 'avg_quality_score': 0.0
             }
+
         
         metrics = self.performance_metrics[type_key]
         
@@ -1336,6 +1514,7 @@ class MultimediaProtectionEngine:
         metrics['total_processed'] += 1
         
         # Update success rate
+
         current_success = 1.0 if result.success else 0.0
         metrics['success_rate'] = (metrics['success_rate'] * 0.95) + (current_success * 0.05)
         
@@ -1343,11 +1522,13 @@ class MultimediaProtectionEngine:
         metrics['avg_processing_time'] = (metrics['avg_processing_time'] * 0.9) + (result.processing_time * 0.1)
         
         # Update quality score
+
         quality_score = result.quality_metrics.get('quality_score', 0.5)
         metrics['avg_quality_score'] = (metrics['avg_quality_score'] * 0.9) + (quality_score * 0.1)
     
     async def get_engine_status(self) -> Dict[str, Any]:
-        """Get comprehensive engine status"""
+        """
+        Get comprehensive engine status"""
         return {
             'engine_id': id(self),
             'performance_metrics': self.performance_metrics.copy(),

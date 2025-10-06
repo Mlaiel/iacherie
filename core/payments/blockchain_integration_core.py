@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class BlockchainIntegrationCore:
-    """Advanced BlockchainIntegrationCore System"""
+    """
+Advanced BlockchainIntegrationCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class BlockchainIntegrationCore:
 # Module exports
 __all__ = ["BlockchainIntegrationCore"]
 
-logger.info("⛓️ BlockchainIntegrationCore module loaded")
+logger.info("⛓️ BlockchainIntegrationCore module initialized")

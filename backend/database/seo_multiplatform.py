@@ -45,7 +45,8 @@ Base = declarative_base()
 # ================================
 
 class PlatformType(Enum):
-    """Platform categories for SEO optimization."""
+    """
+        Platform categories for SEO optimization."""
     STREAMING_MUSIC = "streaming_music"
     STREAMING_VIDEO = "streaming_video"
     SOCIAL_MEDIA = "social_media"
@@ -265,7 +266,8 @@ class MetadataOptimization(Base):
 
 
 class CompetitorAnalysis(Base):
-    """Real-time competitor analysis and benchmarking."""
+    """
+        Real-time competitor analysis and benchmarking."""
     __tablename__ = 'competitor_analyses'
     __table_args__ = (
         Index('idx_competitor_analysis_user', 'user_id'),
@@ -330,7 +332,8 @@ class CompetitorAnalysis(Base):
 
 
 class RankingTracking(Base):
-    """SEO rankings tracking across multiple platforms."""
+    """
+        SEO rankings tracking across multiple platforms."""
     __tablename__ = 'ranking_tracking'
     __table_args__ = (
         Index('idx_ranking_tracking_content', 'content_id'),
@@ -379,7 +382,8 @@ class RankingTracking(Base):
 
 
 class ContentPerformanceTracking(Base):
-    """Content performance tracking and optimization insights."""
+    """
+        Content performance tracking and optimization insights."""
     __tablename__ = 'content_performance_tracking'
     __table_args__ = (
         Index('idx_content_performance_seo', 'seo_optimization_id'),
@@ -508,7 +512,8 @@ class PlatformAlgorithm(Base):
 # ================================
 
 def get_seo_multiplatform_models():
-    """Get all SEO and multi-platform models."""
+    """
+        Get all SEO and multi-platform models."""
     return [
         SEOOptimization,
         KeywordResearch,
@@ -521,7 +526,8 @@ def get_seo_multiplatform_models():
 
 
 def create_seo_multiplatform_tables(engine):
-    """Create all SEO and multi-platform tables."""
+    """
+        Create all SEO and multi-platform tables."""
     try:
         Base.metadata.create_all(engine, tables=[model.__table__ for model in get_seo_multiplatform_models()])
         logger.info("Successfully created SEO and multi-platform tables")

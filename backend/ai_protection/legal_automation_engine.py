@@ -27,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 
 class LegalActionType(Enum):
-    """Types of legal actions"""
+    """
+        Types of legal actions"""
     DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     COPYRIGHT_CLAIM = "copyright_claim"
@@ -107,7 +108,8 @@ class LegalCase:
 
 @dataclass
 class LegalDocument:
-    """Legal document specification"""
+    """
+        Legal document specification"""
     document_id: str
     document_type: LegalDocumentType
     case_id: str
@@ -125,7 +127,8 @@ class LegalDocument:
 
 @dataclass
 class DMCANotice:
-    """DMCA takedown notice"""
+    """
+        DMCA takedown notice"""
     notice_id: str
     case_id: str
     copyright_owner: Dict[str, Any]
@@ -144,7 +147,8 @@ class DMCANotice:
 
 @dataclass
 class SettlementOffer:
-    """Settlement offer specification"""
+    """
+        Settlement offer specification"""
     offer_id: str
     case_id: str
     offering_party: str
@@ -161,7 +165,8 @@ class SettlementOffer:
 
 @dataclass
 class LegalActionResult:
-    """Legal action execution result"""
+    """
+        Legal action execution result"""
     action_id: str
     case_id: str
     action_type: LegalActionType
@@ -177,14 +182,17 @@ class LegalActionResult:
 
 
 class DMCAProcessor:
-    """DMCA takedown processing engine"""
+    """
+        DMCA takedown processing engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.templates = self._load_dmca_templates()
+
         
     def _load_dmca_templates(self) -> Dict[str, str]:
-        """Load DMCA notice templates"""
+        """
+        Load DMCA notice templates"""
         return {
             'standard_notice': """
 DMCA TAKEDOWN NOTICE
@@ -273,21 +281,31 @@ NOTICE: This communication may contain attorney-client privileged information. I
     async def generate_dmca_notice(self, violation: ViolationDetection, 
                                  copyright_owner: Dict[str, Any],
                                  case_details: Dict[str, Any]) -> DMCANotice:
-        """Generate DMCA takedown notice"""
+        """
+        Generate DMCA takedown notice"""
         try:
             notice_id = str(uuid.uuid4())
+
+
             case_id = case_details.get('case_id', str(uuid.uuid4()))
             
             # Determine service provider from URL
             service_provider = self._identify_service_provider(violation.detected_url)
             
             # Generate notice content
+
             template_type = case_details.get('template_type', 'standard_notice')
+
+
             template = self.templates.get(template_type, self.templates['standard_notice'])
+
+
             
             notice_content = self._populate_dmca_template(
                 template, violation, copyright_owner, service_provider, case_details
             )
+
+
             
             dmca_notice = DMCANotice(
                 notice_id=notice_id,
@@ -305,11 +323,13 @@ NOTICE: This communication may contain attorney-client privileged information. I
                 served_date=None,
                 response_deadline=datetime.utcnow() + timedelta(days=14)
             )
+
             
             return dmca_notice
             
         except Exception as e:
             logger.error(f"DMCA notice generation failed: {e}")
+
             raise
     
     def _identify_service_provider(self, url: str) -> Dict[str, Any]:
@@ -319,6 +339,7 @@ NOTICE: This communication may contain attorney-client privileged information. I
             domain = domain[0].lower()
             
             # Known service providers
+
             providers = {
                 'youtube.com': {
                     'name': 'YouTube LLC',
@@ -361,9 +382,12 @@ NOTICE: This communication may contain attorney-client privileged information. I
     def _populate_dmca_template(self, template: str, violation: ViolationDetection,
                               copyright_owner: Dict[str, Any], service_provider: Dict[str, Any],
                               case_details: Dict[str, Any]) -> str:
-        """Populate DMCA template with case data"""
+        """
+        Populate DMCA template with case data"""
         
         current_date = datetime.utcnow()
+
+
         
         template_vars = {
             'service_provider': service_provider.get('name', 'Service Provider'),
@@ -397,9 +421,11 @@ NOTICE: This communication may contain attorney-client privileged information. I
         }
         
         # Replace template variables
+
         populated_template = template
         for key, value in template_vars.items():
             populated_template = populated_template.replace(f'{{{key}}}', str(value))
+
         
         return populated_template
     
@@ -425,7 +451,8 @@ The infringing use is not authorized by the copyright owner, its agent, or the l
         return description.strip()
     
     def _format_contact_information(self, copyright_owner: Dict[str, Any]) -> str:
-        """Format complete contact information"""
+        """
+        Format complete contact information"""
         info_parts = []
         
         if copyright_owner.get('name'):
@@ -440,6 +467,7 @@ The infringing use is not authorized by the copyright owner, its agent, or the l
             info_parts.append(f"Phone: {copyright_owner['phone']}")
         if copyright_owner.get('email'):
             info_parts.append(f"Email: {copyright_owner['email']}")
+
         
         return '\n'.join(info_parts)
     
@@ -453,11 +481,13 @@ The infringing use is not authorized by the copyright owner, its agent, or the l
             
             # Update served date
             dmca_notice.served_date = datetime.utcnow()
+
             
             return True
             
         except Exception as e:
             logger.error(f"DMCA notice submission failed: {e}")
+
             return False
 
 
@@ -469,7 +499,8 @@ class LegalDocumentGenerator:
         self.templates = self._load_document_templates()
     
     def _load_document_templates(self) -> Dict[str, str]:
-        """Load legal document templates"""
+        """
+        Load legal document templates"""
         return {
             'cease_desist': """
 CEASE AND DESIST LETTER
@@ -556,24 +587,32 @@ Date: ___________              Date: ___________
     
     async def generate_document(self, document_type: LegalDocumentType,
                               case: LegalCase, additional_data: Dict[str, Any]) -> LegalDocument:
-        """Generate legal document"""
+        """
+        Generate legal document"""
         try:
             document_id = str(uuid.uuid4())
             
             # Select appropriate template
+
             template_key = document_type.value
             if template_key not in self.templates:
                 raise ValueError(f"No template found for document type: {document_type}")
+
+
             
             template = self.templates[template_key]
             
             # Generate document content
+
             content = await self._populate_document_template(
                 template, case, additional_data, document_type
             )
             
             # Generate title
+
             title = self._generate_document_title(document_type, case)
+
+
             
             document = LegalDocument(
                 document_id=document_id,
@@ -595,11 +634,13 @@ Date: ___________              Date: ___________
                 legal_validity=True,
                 created_date=datetime.utcnow()
             )
+
             
             return document
             
         except Exception as e:
             logger.error(f"Document generation failed: {e}")
+
             raise
     
     async def _populate_document_template(self, template: str, case: LegalCase,
@@ -610,9 +651,13 @@ Date: ___________              Date: ___________
         current_date = datetime.utcnow()
         
         # Extract case information
+
         plaintiff_info = case.plaintiff_info
+
         defendant_info = case.defendant_info
+
         case_details = case.case_details
+
         
         template_vars = {
             'date': current_date.strftime('%B %d, %Y'),
@@ -637,9 +682,11 @@ Date: ___________              Date: ___________
         }
         
         # Replace template variables
+
         populated_template = template
         for key, value in template_vars.items():
             populated_template = populated_template.replace(f'{{{key}}}', str(value))
+
         
         return populated_template
     
@@ -667,7 +714,8 @@ class SettlementNegotiator:
         self.negotiation_strategies = self._load_negotiation_strategies()
     
     def _load_negotiation_strategies(self) -> Dict[str, Dict[str, Any]]:
-        """Load negotiation strategies"""
+        """
+        Load negotiation strategies"""
         return {
             'aggressive': {
                 'initial_demand_multiplier': 3.0,
@@ -694,25 +742,35 @@ class SettlementNegotiator:
     
     async def initiate_settlement_negotiation(self, case: LegalCase, 
                                             strategy: EnforcementStrategy) -> SettlementOffer:
-        """Initiate automated settlement negotiation"""
+        """
+        Initiate automated settlement negotiation"""
         try:
             offer_id = str(uuid.uuid4())
             
             # Select negotiation strategy
+
             strategy_name = strategy.value if strategy.value in self.negotiation_strategies else 'diplomatic'
             strategy_config = self.negotiation_strategies[strategy_name]
             
             # Calculate settlement amount
+
             base_damages = case.estimated_damages
+
             initial_multiplier = strategy_config['initial_demand_multiplier']
+
             settlement_amount = base_damages * initial_multiplier
             
             # Generate terms and conditions
+
             terms = self._generate_settlement_terms(case, strategy_config)
             
             # Calculate deadline
+
             deadline_days = 14 if strategy_config['deadline_pressure'] else 30
+
             deadline = datetime.utcnow() + timedelta(days=deadline_days)
+
+
             
             settlement_offer = SettlementOffer(
                 offer_id=offer_id,
@@ -728,11 +786,13 @@ class SettlementNegotiator:
                 future_compliance_terms=self._generate_compliance_terms(case),
                 created_date=datetime.utcnow()
             )
+
             
             return settlement_offer
             
         except Exception as e:
             logger.error(f"Settlement negotiation initiation failed: {e}")
+
             raise
     
     def _generate_settlement_terms(self, case: LegalCase, strategy_config: Dict[str, Any]) -> List[str]:
@@ -748,9 +808,11 @@ class SettlementNegotiator:
         # Add strategy-specific terms
         if strategy_config.get('deadline_pressure'):
             terms.append("Time is of the essence - failure to respond by deadline constitutes rejection")
+
         
         if case.estimated_damages > 10000:
             terms.append("Payment plan options available for amounts over $10,000")
+
         
         return terms
     
@@ -770,14 +832,20 @@ class SettlementNegotiator:
         """Evaluate counter offer using AI decision making"""
         try:
             original_amount = original_offer.settlement_amount
+
             reduction_percentage = (original_amount - counter_offer_amount) / original_amount
             
             # Get strategy for the case
+
             strategy_name = 'diplomatic'  # Default strategy
+
             strategy_config = self.negotiation_strategies[strategy_name]
+
             
             minimum_ratio = strategy_config['minimum_settlement_ratio']
+
             minimum_acceptable = original_amount * minimum_ratio
+
             
             evaluation = {
                 'counter_offer_id': str(uuid.uuid4()),
@@ -810,6 +878,7 @@ class SettlementNegotiator:
             
         except Exception as e:
             logger.error(f"Counter offer evaluation failed: {e}")
+
             raise
 
 
@@ -822,7 +891,8 @@ class LegalAutomationEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize legal automation engine"""
+        """
+        Initialize legal automation engine"""
         self.config = config or {}
         
         # Core components
@@ -848,10 +918,15 @@ class LegalAutomationEngine:
         """Initiate automated legal action"""
         try:
             start_time = time.time()
+
+
             case_id = str(uuid.uuid4())
+
+
             action_id = str(uuid.uuid4())
             
             # Create legal case
+
             legal_case = await self._create_legal_case(
                 case_id, violation, action_type, copyright_owner, enforcement_strategy
             )
@@ -861,35 +936,55 @@ class LegalAutomationEngine:
             self.case_documents[case_id] = []
             
             # Execute action-specific workflows
+
             documents_generated = []
+
             actions_taken = []
+
             costs_incurred = 0.0
+
             errors = []
             
             try:
                 if action_type == LegalActionType.DMCA_TAKEDOWN:
                     result = await self._execute_dmca_takedown(legal_case, violation)
+
                     documents_generated.extend(result.get('documents', []))
+
                     actions_taken.extend(result.get('actions', []))
+
                     costs_incurred += result.get('costs', 0.0)
+
                     
                 elif action_type == LegalActionType.CEASE_DESIST:
                     result = await self._execute_cease_desist(legal_case)
+
                     documents_generated.extend(result.get('documents', []))
+
                     actions_taken.extend(result.get('actions', []))
+
                     costs_incurred += result.get('costs', 0.0)
+
                     
                 elif action_type == LegalActionType.SETTLEMENT_NEGOTIATION:
                     result = await self._execute_settlement_negotiation(legal_case, enforcement_strategy)
+
                     documents_generated.extend(result.get('documents', []))
+
                     actions_taken.extend(result.get('actions', []))
+
                     costs_incurred += result.get('costs', 0.0)
+
                     
                 elif action_type == LegalActionType.LAWSUIT_FILING:
                     result = await self._execute_lawsuit_filing(legal_case)
+
                     documents_generated.extend(result.get('documents', []))
+
                     actions_taken.extend(result.get('actions', []))
+
                     costs_incurred += result.get('costs', 0.0)
+
                     
                 else:
                     errors.append(f"Unsupported action type: {action_type}")
@@ -900,7 +995,10 @@ class LegalAutomationEngine:
                 legal_case.last_updated = datetime.utcnow()
                 
                 # Generate next steps
+
                 next_steps = self._generate_next_steps(legal_case, action_type, enforcement_strategy)
+
+
                 
                 action_result = LegalActionResult(
                     action_id=action_id,
@@ -922,11 +1020,13 @@ class LegalAutomationEngine:
                 
                 # Update metrics
                 await self._update_automation_metrics(action_result)
+
                 
                 return action_result
                 
             except Exception as action_error:
                 errors.append(str(action_error))
+
                 legal_case.status = LegalActionStatus.FAILED
                 
                 return LegalActionResult(
@@ -943,9 +1043,11 @@ class LegalAutomationEngine:
                     execution_time=time.time() - start_time,
                     created_date=datetime.utcnow()
                 )
+
                 
         except Exception as e:
             logger.error(f"Legal action initiation failed: {e}")
+
             raise
     
     async def _create_legal_case(self, case_id: str, violation: ViolationDetection,
@@ -954,16 +1056,22 @@ class LegalAutomationEngine:
         """Create legal case record"""
         
         # Determine jurisdiction
+
         jurisdiction = self._determine_jurisdiction(violation, copyright_owner)
         
         # Extract defendant information from violation
+
         defendant_info = self._extract_defendant_info(violation)
         
         # Calculate estimated damages
+
         estimated_damages = self._calculate_estimated_damages(violation, action_type)
         
         # Calculate success probability
+
         success_probability = self._calculate_success_probability(violation, action_type, jurisdiction)
+
+
         
         legal_case = LegalCase(
             case_id=case_id,
@@ -993,15 +1101,20 @@ class LegalAutomationEngine:
             created_date=datetime.utcnow(),
             last_updated=datetime.utcnow()
         )
+
         
         return legal_case
     
     def _determine_jurisdiction(self, violation: ViolationDetection, 
                               copyright_owner: Dict[str, Any]) -> LegalJurisdiction:
-        """Determine appropriate legal jurisdiction"""
+        """
+        Determine appropriate legal jurisdiction"""
         
         # Default to owner's jurisdiction
+
         owner_country = copyright_owner.get('country', 'US').upper()
+
+
         
         jurisdiction_mapping = {
             'US': LegalJurisdiction.US_FEDERAL,
@@ -1014,10 +1127,12 @@ class LegalAutomationEngine:
         return jurisdiction_mapping.get(owner_country, LegalJurisdiction.INTERNATIONAL)
     
     def _extract_defendant_info(self, violation: ViolationDetection) -> Dict[str, Any]:
-        """Extract defendant information from violation"""
+        """
+        Extract defendant information from violation"""
         
         # Extract domain from URL
         domain_match = re.search(r'://([^/]+)', violation.detected_url)
+
         domain = domain_match.group(1) if domain_match else 'unknown'
         
         return {
@@ -1032,9 +1147,11 @@ class LegalAutomationEngine:
     
     def _calculate_estimated_damages(self, violation: ViolationDetection, 
                                    action_type: LegalActionType) -> float:
-        """Calculate estimated damages for the case"""
+        """
+        Calculate estimated damages for the case"""
         
         # Base damages by violation severity
+
         base_damages_by_severity = {
             ViolationSeverity.INFORMATIONAL: 500.0,
             ViolationSeverity.LOW: 1500.0,
@@ -1043,14 +1160,18 @@ class LegalAutomationEngine:
             ViolationSeverity.CRITICAL: 50000.0,
             ViolationSeverity.EMERGENCY: 150000.0
         }
+
         
         base_damages = base_damages_by_severity.get(violation.severity, 5000.0)
         
         # Adjust by confidence score
+
         confidence_multiplier = 0.5 + (violation.confidence_score * 0.5)
+
         adjusted_damages = base_damages * confidence_multiplier
         
         # Adjust by action type
+
         action_multipliers = {
             LegalActionType.DMCA_TAKEDOWN: 0.3,
             LegalActionType.CEASE_DESIST: 0.5,
@@ -1059,8 +1180,10 @@ class LegalAutomationEngine:
             LegalActionType.LAWSUIT_FILING: 1.0,
             LegalActionType.COURT_INJUNCTION: 1.2
         }
+
         
         action_multiplier = action_multipliers.get(action_type, 1.0)
+
         final_damages = adjusted_damages * action_multiplier
         
         return round(final_damages, 2)
@@ -1068,12 +1191,15 @@ class LegalAutomationEngine:
     def _calculate_success_probability(self, violation: ViolationDetection,
                                      action_type: LegalActionType,
                                      jurisdiction: LegalJurisdiction) -> float:
-        """Calculate probability of successful legal action"""
+        """
+        Calculate probability of successful legal action"""
         
         # Base probability by confidence score
+
         base_probability = violation.confidence_score * 0.8
         
         # Adjust by action type complexity
+
         action_success_rates = {
             LegalActionType.DMCA_TAKEDOWN: 0.95,
             LegalActionType.CEASE_DESIST: 0.85,
@@ -1082,10 +1208,12 @@ class LegalAutomationEngine:
             LegalActionType.LAWSUIT_FILING: 0.60,
             LegalActionType.COURT_INJUNCTION: 0.50
         }
+
         
         action_rate = action_success_rates.get(action_type, 0.60)
         
         # Adjust by jurisdiction
+
         jurisdiction_factors = {
             LegalJurisdiction.US_FEDERAL: 1.0,
             LegalJurisdiction.EU_GENERAL: 0.9,
@@ -1093,15 +1221,20 @@ class LegalAutomationEngine:
             LegalJurisdiction.GERMAN_COURTS: 0.85,
             LegalJurisdiction.INTERNATIONAL: 0.7
         }
+
         
         jurisdiction_factor = jurisdiction_factors.get(jurisdiction, 0.7)
+
+
         
         final_probability = min(0.95, base_probability * action_rate * jurisdiction_factor)
+
         
         return round(final_probability, 3)
     
     async def _execute_dmca_takedown(self, case: LegalCase, violation: ViolationDetection) -> Dict[str, Any]:
-        """Execute DMCA takedown process"""
+        """
+        Execute DMCA takedown process"""
         try:
             result = {
                 'documents': [],
@@ -1110,11 +1243,13 @@ class LegalAutomationEngine:
             }
             
             # Generate DMCA notice
+
             dmca_notice = await self.dmca_processor.generate_dmca_notice(
                 violation, case.plaintiff_info, case.case_details
             )
             
             # Create legal document record
+
             dmca_document = LegalDocument(
                 document_id=str(uuid.uuid4()),
                 document_type=LegalDocumentType.DMCA_NOTICE,
@@ -1133,18 +1268,23 @@ class LegalAutomationEngine:
             
             # Store document
             self.case_documents[case.case_id].append(dmca_document)
+
             result['documents'].append(dmca_document.document_id)
             
             # Submit DMCA notice
+
             submission_success = await self.dmca_processor.submit_dmca_notice(dmca_notice)
+
             
             if submission_success:
                 result['actions'].append('dmca_notice_submitted')
+
                 case.timeline.append({
                     'event': 'DMCA Notice Submitted',
                     'date': datetime.utcnow().isoformat(),
                     'description': f'DMCA notice {dmca_notice.notice_id} submitted to platform'
                 })
+
             else:
                 result['actions'].append('dmca_notice_failed')
             
@@ -1155,6 +1295,7 @@ class LegalAutomationEngine:
             
         except Exception as e:
             logger.error(f"DMCA takedown execution failed: {e}")
+
             raise
     
     async def _execute_cease_desist(self, case: LegalCase) -> Dict[str, Any]:
@@ -1167,6 +1308,7 @@ class LegalAutomationEngine:
             }
             
             # Generate cease and desist letter
+
             cease_desist_document = await self.document_generator.generate_document(
                 LegalDocumentType.CEASE_DESIST_LETTER,
                 case,
@@ -1179,10 +1321,13 @@ class LegalAutomationEngine:
             
             # Store document
             self.case_documents[case.case_id].append(cease_desist_document)
+
             result['documents'].append(cease_desist_document.document_id)
             
             # Send letter (simulated)
+
             result['actions'].append('cease_desist_sent')
+
             case.timeline.append({
                 'event': 'Cease and Desist Letter Sent',
                 'date': datetime.utcnow().isoformat(),
@@ -1196,6 +1341,7 @@ class LegalAutomationEngine:
             
         except Exception as e:
             logger.error(f"Cease and desist execution failed: {e}")
+
             raise
     
     async def _execute_settlement_negotiation(self, case: LegalCase, 
@@ -1209,6 +1355,7 @@ class LegalAutomationEngine:
             }
             
             # Initiate settlement offer
+
             settlement_offer = await self.settlement_negotiator.initiate_settlement_negotiation(
                 case, enforcement_strategy
             )
@@ -1217,6 +1364,7 @@ class LegalAutomationEngine:
             self.settlement_offers[settlement_offer.offer_id] = settlement_offer
             
             # Generate settlement agreement template
+
             settlement_document = await self.document_generator.generate_document(
                 LegalDocumentType.SETTLEMENT_AGREEMENT,
                 case,
@@ -1229,9 +1377,12 @@ class LegalAutomationEngine:
             
             # Store document
             self.case_documents[case.case_id].append(settlement_document)
+
             result['documents'].append(settlement_document.document_id)
+
             
             result['actions'].append('settlement_offer_sent')
+
             case.timeline.append({
                 'event': 'Settlement Offer Sent',
                 'date': datetime.utcnow().isoformat(),
@@ -1245,6 +1396,7 @@ class LegalAutomationEngine:
             
         except Exception as e:
             logger.error(f"Settlement negotiation execution failed: {e}")
+
             raise
     
     async def _execute_lawsuit_filing(self, case: LegalCase) -> Dict[str, Any]:
@@ -1257,6 +1409,7 @@ class LegalAutomationEngine:
             }
             
             # Generate infringement complaint
+
             complaint_document = await self.document_generator.generate_document(
                 LegalDocumentType.INFRINGEMENT_COMPLAINT,
                 case,
@@ -1267,6 +1420,7 @@ class LegalAutomationEngine:
             )
             
             # Generate evidence package
+
             evidence_document = await self.document_generator.generate_document(
                 LegalDocumentType.EVIDENCE_PACKAGE,
                 case,
@@ -1277,9 +1431,12 @@ class LegalAutomationEngine:
             
             # Store documents
             self.case_documents[case.case_id].extend([complaint_document, evidence_document])
+
             result['documents'].extend([complaint_document.document_id, evidence_document.document_id])
+
             
             result['actions'].append('lawsuit_filed')
+
             case.timeline.append({
                 'event': 'Lawsuit Filed',
                 'date': datetime.utcnow().isoformat(),
@@ -1293,6 +1450,7 @@ class LegalAutomationEngine:
             
         except Exception as e:
             logger.error(f"Lawsuit filing execution failed: {e}")
+
             raise
     
     def _generate_next_steps(self, case: LegalCase, action_type: LegalActionType,
@@ -1307,6 +1465,7 @@ class LegalAutomationEngine:
                 'Escalate to cease and desist if no response',
                 'Document platform response for evidence'
             ])
+
             
         elif action_type == LegalActionType.CEASE_DESIST:
             next_steps.extend([
@@ -1314,6 +1473,7 @@ class LegalAutomationEngine:
                 'Prepare settlement negotiation if partial compliance',
                 'Consider lawsuit filing if no response'
             ])
+
             
         elif action_type == LegalActionType.SETTLEMENT_NEGOTIATION:
             next_steps.extend([
@@ -1321,6 +1481,7 @@ class LegalAutomationEngine:
                 'Prepare counter-offer strategy',
                 'Set deadline for negotiation completion'
             ])
+
             
         elif action_type == LegalActionType.LAWSUIT_FILING:
             next_steps.extend([
@@ -1334,12 +1495,14 @@ class LegalAutomationEngine:
             next_steps.append('Prepare immediate escalation options')
         elif enforcement_strategy == EnforcementStrategy.SETTLEMENT_FOCUSED:
             next_steps.append('Explore additional settlement opportunities')
+
         
         return next_steps
     
     def _estimate_resolution_time(self, action_type: LegalActionType,
                                 enforcement_strategy: EnforcementStrategy) -> int:
-        """Estimate resolution time in days"""
+        """
+        Estimate resolution time in days"""
         
         base_times = {
             LegalActionType.DMCA_TAKEDOWN: 14,
@@ -1349,6 +1512,7 @@ class LegalAutomationEngine:
             LegalActionType.LAWSUIT_FILING: 180,
             LegalActionType.COURT_INJUNCTION: 90
         }
+
         
         base_time = base_times.get(action_type, 60)
         
@@ -1359,11 +1523,13 @@ class LegalAutomationEngine:
             return int(base_time * 0.5)
         elif enforcement_strategy == EnforcementStrategy.DIPLOMATIC:
             return int(base_time * 1.3)
+
         
         return base_time
     
     async def _update_automation_metrics(self, action_result: LegalActionResult):
-        """Update automation performance metrics"""
+        """
+        Update automation performance metrics"""
         try:
             action_type = action_result.action_type.value
             
@@ -1376,6 +1542,7 @@ class LegalAutomationEngine:
                     'avg_cost': 0.0,
                     'success_rate': 0.0
                 }
+
             
             metrics = self.automation_metrics[action_type]
             
@@ -1388,9 +1555,11 @@ class LegalAutomationEngine:
             metrics['avg_execution_time'] = (
                 metrics['avg_execution_time'] * 0.9 + action_result.execution_time * 0.1
             )
+
             metrics['avg_cost'] = (
                 metrics['avg_cost'] * 0.9 + action_result.costs_incurred * 0.1
             )
+
             metrics['success_rate'] = metrics['successful_actions'] / metrics['total_actions']
             
             # Add to action history
@@ -1406,12 +1575,14 @@ class LegalAutomationEngine:
             # Keep history manageable
             if len(self.action_history) > 1000:
                 # Keep only the most recent 500 entries
+
                 recent_items = sorted(
                     self.action_history.items(),
                     key=lambda x: x[1]['timestamp'],
                     reverse=True
                 )[:500]
                 self.action_history = dict(recent_items)
+
                 
         except Exception as e:
             logger.error(f"Metrics update failed: {e}")
@@ -1421,9 +1592,12 @@ class LegalAutomationEngine:
         try:
             if case_id not in self.active_cases:
                 return None
+
             
             case = self.active_cases[case_id]
+
             documents = self.case_documents.get(case_id, [])
+
             
             return {
                 'case_id': case_id,
@@ -1442,6 +1616,7 @@ class LegalAutomationEngine:
             
         except Exception as e:
             logger.error(f"Case status retrieval failed: {e}")
+
             return None
     
     def _get_pending_actions(self, case: LegalCase) -> List[str]:
@@ -1456,7 +1631,8 @@ class LegalAutomationEngine:
             return ['No pending actions']
     
     async def get_engine_status(self) -> Dict[str, Any]:
-        """Get comprehensive engine status"""
+        """
+        Get comprehensive engine status"""
         return {
             'engine_id': id(self),
             'active_cases': len(self.active_cases),

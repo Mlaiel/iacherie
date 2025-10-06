@@ -23,7 +23,8 @@ from ._base_generator import BaseContentGenerator, ContentGenerationContext
 
 
 class ClothingCategory(Enum):
-    """Categories of clothing items"""
+    """
+        Categories of clothing items"""
     TOPS = "tops"
     BOTTOMS = "bottoms"
     DRESSES = "dresses"
@@ -155,7 +156,8 @@ class Outfit:
         self._recalculate_formality()
     
     def _recalculate_formality(self) -> None:
-        """Recalculate total formality based on items"""
+        """
+        Recalculate total formality based on items"""
         if self.items:
             self.total_formality = sum(item.formality for item in self.items) // len(self.items)
     
@@ -222,9 +224,11 @@ class ClothingConfig:
         self.layering_enabled = kwargs.get('layering_enabled', True)
         self.accessory_matching = kwargs.get('accessory_matching', True)
         self.color_psychology = kwargs.get('color_psychology', False)
+
         
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""
+        """
+        Convert configuration to dictionary"""
         return {
             "style": self.style.value if isinstance(self.style, ClothingStyle) else self.style,
             "occasion": self.occasion,
@@ -279,9 +283,11 @@ class AvatarClothingSystem(BaseContentGenerator):
         self._setup_clothing_engine()
         self._setup_clothing_catalog()
         self._setup_style_rules()
+
         
     def _setup_clothing_engine(self) -> None:
-        """Setup clothing generation and simulation engine"""
+        """
+        Setup clothing generation and simulation engine"""
         try:
             # Initialize clothing generation models
             self.models = {
@@ -312,9 +318,11 @@ class AvatarClothingSystem(BaseContentGenerator):
             }
             
             self.logger.info("Clothing engine initialized successfully")
+
             
         except Exception as e:
             self.logger.error(f"Failed to initialize clothing engine: {str(e)}")
+
             raise
     
     def _setup_clothing_catalog(self) -> None:
@@ -476,12 +484,15 @@ class AvatarClothingSystem(BaseContentGenerator):
             Dict containing clothing data and metadata
         """
         start_time = datetime.now()
+
         
         try:
             # Create clothing config
+
             config = self._create_config_from_options(prompt, options or {})
             
             # Generate outfit
+
             outfit_data = await self._generate_outfit(prompt, config, context)
             
             # Apply physics simulation if enabled
@@ -489,9 +500,11 @@ class AvatarClothingSystem(BaseContentGenerator):
                 outfit_data = await self._apply_physics_simulation(outfit_data, config)
             
             # Post-process clothing
+
             processed_data = await self._post_process_clothing(outfit_data, config)
             
             # Package results
+
             result = {
                 'content': processed_data,
                 'metadata': {
@@ -510,28 +523,35 @@ class AvatarClothingSystem(BaseContentGenerator):
             }
             
             self.logger.info(f"Clothing generated successfully in {result['metadata']['generation_time']:.2f}s")
+
             return result
             
         except Exception as e:
             self.logger.error(f"Clothing generation failed: {str(e)}")
+
             raise
     
     def _create_config_from_options(self, prompt: str, options: Dict[str, Any]) -> ClothingConfig:
         """Create clothing config from prompt and options"""
         # Extract style preferences from prompt
+
         extracted_config = self._extract_style_from_prompt(prompt)
         
         # Merge with options
+
         config_data = {**extracted_config, **options}
         
         return ClothingConfig(**config_data)
     
     def _extract_style_from_prompt(self, prompt: str) -> Dict[str, Any]:
-        """Extract clothing style preferences from text prompt"""
+        """
+        Extract clothing style preferences from text prompt"""
         prompt_lower = prompt.lower()
+
         config = {}
         
         # Style detection
+
         style_keywords = {
             'casual': ['casual', 'relaxed', 'comfortable', 'everyday'],
             'formal': ['formal', 'elegant', 'sophisticated', 'dressy'],
@@ -546,9 +566,11 @@ class AvatarClothingSystem(BaseContentGenerator):
         for style, keywords in style_keywords.items():
             if any(word in prompt_lower for word in keywords):
                 config['style'] = ClothingStyle(style)
+
                 break
         
         # Occasion detection
+
         occasion_keywords = {
             'work': ['work', 'office', 'meeting', 'professional'],
             'party': ['party', 'celebration', 'event', 'social'],
@@ -563,6 +585,7 @@ class AvatarClothingSystem(BaseContentGenerator):
                 break
         
         # Season detection
+
         season_keywords = {
             'spring': ['spring', 'easter', 'mild'],
             'summer': ['summer', 'hot', 'beach', 'vacation'],
@@ -576,6 +599,7 @@ class AvatarClothingSystem(BaseContentGenerator):
                 break
         
         # Color preferences
+
         color_keywords = {
             'black': ['black', 'dark'],
             'white': ['white', 'light'],
@@ -585,11 +609,13 @@ class AvatarClothingSystem(BaseContentGenerator):
             'brown': ['brown', 'tan', 'beige'],
             'gray': ['gray', 'grey', 'charcoal']
         }
+
         
         detected_colors = []
         for color, keywords in color_keywords.items():
             if any(word in prompt_lower for word in keywords):
                 detected_colors.append(f"#{color.upper()}" if color in ['black', 'white'] else color)
+
         
         if detected_colors:
             config['primary_colors'] = detected_colors[:3]  # Limit to 3 colors
@@ -613,6 +639,7 @@ class AvatarClothingSystem(BaseContentGenerator):
         """Generate complete outfit based on configuration"""
         
         # Create outfit
+
         outfit = Outfit(
             name=f"{config.style.value}_{config.occasion}_outfit",
             occasion=config.occasion,
@@ -621,6 +648,7 @@ class AvatarClothingSystem(BaseContentGenerator):
         )
         
         # Select clothing items based on style and occasion
+
         selected_items = await self._select_clothing_items(config)
         
         # Add items to outfit
@@ -628,12 +656,15 @@ class AvatarClothingSystem(BaseContentGenerator):
             outfit.add_item(item)
         
         # Ensure style coherence
+
         outfit = await self._ensure_style_coherence(outfit, config)
         
         # Generate accessories if enabled
+
         accessories = []
         if config.accessory_matching:
             accessories = await self._generate_accessories(outfit, config)
+
         
         return {
             'outfit': outfit.to_dict(),
@@ -646,11 +677,14 @@ class AvatarClothingSystem(BaseContentGenerator):
     async def _select_clothing_items(self, config: ClothingConfig) -> List[ClothingItem]:
         """Select appropriate clothing items from catalog"""
         await asyncio.sleep(0.1)  # Simulate selection process
+
         
         selected_items = []
+
         formality_range = self.style_rules['occasion_matching'][config.occasion]['formality_range']
         
         # Filter items by style, occasion, and formality
+
         suitable_items = []
         for item in self.clothing_catalog.values():
             # Check formality
@@ -664,13 +698,16 @@ class AvatarClothingSystem(BaseContentGenerator):
         # Select essential items based on gender and occasion
         if config.gender_fit in ['female', 'unisex'] and config.occasion in ['formal', 'party']:
             # Consider dresses
+
             dress_options = [item for item in suitable_items if item.category == ClothingCategory.DRESSES]
             if dress_options:
                 selected_items.append(dress_options[0])  # Select first suitable dress
                 return selected_items
         
         # Standard outfit selection (top + bottom)
+
         top_options = [item for item in suitable_items if item.category == ClothingCategory.TOPS]
+
         bottom_options = [item for item in suitable_items if item.category == ClothingCategory.BOTTOMS]
         
         if top_options:
@@ -685,15 +722,19 @@ class AvatarClothingSystem(BaseContentGenerator):
                 selected_items.append(outerwear_options[0])
         
         # Add footwear
+
         footwear_options = [item for item in suitable_items if item.category == ClothingCategory.FOOTWEAR]
         if footwear_options:
             selected_items.append(footwear_options[0])
+
         
         return selected_items
     
     def _is_style_compatible(self, item_style: ClothingStyle, target_style: ClothingStyle) -> bool:
-        """Check if clothing item style is compatible with target style"""
+        """
+        Check if clothing item style is compatible with target style"""
         # Style compatibility matrix
+
         compatibility = {
             ClothingStyle.CASUAL: [ClothingStyle.CASUAL, ClothingStyle.SPORTY, ClothingStyle.STREETWEAR],
             ClothingStyle.FORMAL: [ClothingStyle.FORMAL, ClothingStyle.ELEGANT, ClothingStyle.BUSINESS],
@@ -709,23 +750,29 @@ class AvatarClothingSystem(BaseContentGenerator):
         return item_style in compatibility.get(target_style, [target_style])
     
     async def _ensure_style_coherence(self, outfit: Outfit, config: ClothingConfig) -> Outfit:
-        """Ensure outfit has good style coherence"""
+        """
+        Ensure outfit has good style coherence"""
         await asyncio.sleep(0.05)  # Simulate analysis
         
         # Calculate style coherence score
+
         coherence_score = 1.0
         
         # Check formality consistency
+
         formalities = [item.formality for item in outfit.items]
         if formalities:
             formality_range = max(formalities) - min(formalities)
+
             if formality_range > self.style_rules['formality_matching']['tolerance']:
                 coherence_score *= 0.8
         
         # Check color coordination
+
         colors = []
         for item in outfit.items:
             colors.extend(item.colors)
+
         
         if len(set(colors)) > 4:  # Too many different colors
             coherence_score *= 0.9
@@ -734,8 +781,10 @@ class AvatarClothingSystem(BaseContentGenerator):
         return outfit
     
     async def _generate_accessories(self, outfit: Outfit, config: ClothingConfig) -> List[ClothingItem]:
-        """Generate matching accessories for outfit"""
+        """
+        Generate matching accessories for outfit"""
         await asyncio.sleep(0.05)  # Simulate generation
+
         
         accessories = []
         
@@ -776,6 +825,7 @@ class AvatarClothingSystem(BaseContentGenerator):
                     formality=2
                 )
             ])
+
         
         return accessories
     
@@ -793,9 +843,11 @@ class AvatarClothingSystem(BaseContentGenerator):
         # Add recommendations based on analysis
         if outfit.style_coherence < 0.8:
             analysis['recommendations'].append("Consider adjusting item combinations for better style coherence")
+
         
         if len(outfit.items) < 3:
             analysis['recommendations'].append("Consider adding more layers or accessories")
+
         
         return analysis
     
@@ -804,8 +856,11 @@ class AvatarClothingSystem(BaseContentGenerator):
         all_colors = []
         for item in outfit.items:
             all_colors.extend(item.colors)
+
+
         
         unique_colors = list(set(all_colors))
+
         
         return {
             'total_colors': len(unique_colors),
@@ -815,8 +870,10 @@ class AvatarClothingSystem(BaseContentGenerator):
         }
     
     async def _apply_physics_simulation(self, outfit_data: Dict[str, Any], config: ClothingConfig) -> Dict[str, Any]:
-        """Apply physics simulation to clothing"""
+        """
+        Apply physics simulation to clothing"""
         await asyncio.sleep(0.2)  # Simulate physics calculation
+
         
         physics_data = {
             'simulation_quality': config.physics_quality,
@@ -827,6 +884,7 @@ class AvatarClothingSystem(BaseContentGenerator):
         # Calculate physics properties for each item
         for item_data in outfit_data['outfit']['items']:
             item_name = item_data['name']
+
             material = item_data['material']
             
             physics_data['cloth_properties'][item_name] = {
@@ -841,7 +899,8 @@ class AvatarClothingSystem(BaseContentGenerator):
         return outfit_data
     
     async def _post_process_clothing(self, outfit_data: Dict[str, Any], config: ClothingConfig) -> bytes:
-        """Post-process and export clothing data"""
+        """
+        Post-process and export clothing data"""
         await asyncio.sleep(0.1)  # Simulate processing
         
         # In production, this would:
@@ -850,9 +909,8 @@ class AvatarClothingSystem(BaseContentGenerator):
         # - Apply physics constraints
         # - Optimize for target platform
         # - Export in requested format
-        
-        # Mock processed clothing data
         processed_data = json.dumps(outfit_data, indent=2).encode('utf-8')
+
         
         self.logger.info(f"Post-processed clothing ({len(processed_data)} bytes)")
         return processed_data
@@ -863,12 +921,15 @@ class AvatarClothingSystem(BaseContentGenerator):
             return False
         
         # Check required fields
+
         required_fields = ['content', 'metadata']
         if not all(field in content for field in required_fields):
             return False
         
         # Check metadata
+
         metadata = content.get('metadata', {})
+
         required_metadata = ['type', 'style', 'occasion', 'formality_level']
         if not all(field in metadata for field in required_metadata):
             return False
@@ -880,7 +941,8 @@ class AvatarClothingSystem(BaseContentGenerator):
         return True
     
     def _supports_content_type(self, content_type: str) -> bool:
-        """Check if this generator supports the content type"""
+        """
+        Check if this generator supports the content type"""
         supported_types = [
             'avatar_clothing',
             'outfit_generation',

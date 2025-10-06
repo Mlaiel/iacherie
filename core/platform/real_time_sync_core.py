@@ -39,7 +39,8 @@ from contextlib import asynccontextmanager
 logger = logging.getLogger(__name__)
 
 class OperationType(str, Enum):
-    """Types of operations for synchronization"""
+    """
+Types of operations for synchronization"""
     INSERT = "insert"
     DELETE = "delete"
     UPDATE = "update"
@@ -48,7 +49,8 @@ class OperationType(str, Enum):
     BATCH = "batch"
 
 class SyncState(str, Enum):
-    """Synchronization states"""
+    """
+Synchronization states"""
     SYNCHRONIZED = "synchronized"
     SYNCHRONIZING = "synchronizing"
     OFFLINE = "offline"
@@ -56,7 +58,8 @@ class SyncState(str, Enum):
     ERROR = "error"
 
 class ConflictResolution(str, Enum):
-    """Conflict resolution strategies"""
+    """
+Conflict resolution strategies"""
     LAST_WRITE_WINS = "last_write_wins"
     OPERATIONAL_TRANSFORM = "operational_transform"
     MANUAL_RESOLUTION = "manual_resolution"
@@ -64,20 +67,24 @@ class ConflictResolution(str, Enum):
 
 @dataclass
 class VectorClock:
-    """Vector clock for distributed consistency"""
+    """
+Vector clock for distributed consistency"""
     clock: Dict[str, int] = field(default_factory=dict)
     
     def increment(self, node_id: str):
-        """Increment clock for node"""
+        """
+Increment clock for node"""
         self.clock[node_id] = self.clock.get(node_id, 0) + 1
     
     def update(self, other_clock: 'VectorClock'):
-        """Update with another vector clock"""
+        """
+Update with another vector clock"""
         for node_id, timestamp in other_clock.clock.items():
             self.clock[node_id] = max(self.clock.get(node_id, 0), timestamp)
     
     def compare(self, other_clock: 'VectorClock') -> str:
-        """Compare with another vector clock"""
+        """
+Compare with another vector clock"""
         # Returns: "before", "after", "concurrent", "equal"
         all_nodes = set(self.clock.keys()) | set(other_clock.clock.keys())
         
@@ -104,7 +111,8 @@ class VectorClock:
 
 @dataclass
 class Operation:
-    """Synchronization operation"""
+    """
+Synchronization operation"""
     operation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     operation_type: OperationType = OperationType.UPDATE
     document_id: str = ""
@@ -119,7 +127,8 @@ class Operation:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             "operation_id": self.operation_id,
             "operation_type": self.operation_type.value,
@@ -137,7 +146,8 @@ class Operation:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'Operation':
-        """Create from dictionary"""
+        """
+Create from dictionary"""
         operation = cls(
             operation_id=data.get("operation_id", str(uuid.uuid4())),
             operation_type=OperationType(data.get("operation_type", "update")),
@@ -159,7 +169,8 @@ class Operation:
 
 @dataclass
 class SyncDocument:
-    """Document being synchronized"""
+    """
+Document being synchronized"""
     document_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content: Dict[str, Any] = field(default_factory=dict)
     version: int = 0
@@ -170,7 +181,8 @@ class SyncDocument:
     sync_state: SyncState = SyncState.SYNCHRONIZED
     
     def apply_operation(self, operation: Operation) -> bool:
-        """Apply operation to document"""
+        """
+Apply operation to document"""
         try:
             if operation.operation_type == OperationType.INSERT:
                 self._apply_insert(operation)
@@ -195,7 +207,8 @@ class SyncDocument:
             return False
     
     def _apply_insert(self, operation: Operation):
-        """Apply insert operation"""
+        """
+Apply insert operation"""
         path_parts = operation.path.split('.')
         target = self.content
         
@@ -212,7 +225,8 @@ class SyncDocument:
             target[path_parts[-1]] = operation.new_value
     
     def _apply_delete(self, operation: Operation):
-        """Apply delete operation"""
+        """
+Apply delete operation"""
         path_parts = operation.path.split('.')
         target = self.content
         
@@ -230,7 +244,8 @@ class SyncDocument:
             target.pop(path_parts[-1], None)
     
     def _apply_update(self, operation: Operation):
-        """Apply update operation"""
+        """
+Apply update operation"""
         path_parts = operation.path.split('.')
         target = self.content
         
@@ -247,7 +262,8 @@ class SyncDocument:
             self.content = operation.new_value
     
     def _apply_move(self, operation: Operation):
-        """Apply move operation"""
+        """
+Apply move operation"""
         # Simplified move operation
         old_path_parts = operation.path.split('.')
         new_position = operation.position
@@ -256,7 +272,8 @@ class SyncDocument:
         pass
     
     def _apply_attribute(self, operation: Operation):
-        """Apply attribute change operation"""
+        """
+Apply attribute change operation"""
         path_parts = operation.path.split('.')
         target = self.content
         
@@ -271,11 +288,13 @@ class SyncDocument:
             target.update(operation.new_value)
 
 class OperationalTransform:
-    """Operational Transform engine for conflict resolution"""
+    """
+Operational Transform engine for conflict resolution"""
     
     @staticmethod
     def transform(op1: Operation, op2: Operation) -> Tuple[Operation, Operation]:
-        """Transform two concurrent operations"""
+        """
+Transform two concurrent operations"""
         # Simplified OT implementation
         # In production, this would be much more sophisticated
         
@@ -301,7 +320,8 @@ class OperationalTransform:
     
     @staticmethod
     def _transform_insert_insert(op1: Operation, op2: Operation) -> Tuple[Operation, Operation]:
-        """Transform two concurrent insert operations"""
+        """
+Transform two concurrent insert operations"""
         transformed_op1 = Operation(**op1.__dict__)
         transformed_op2 = Operation(**op2.__dict__)
         
@@ -314,7 +334,8 @@ class OperationalTransform:
     
     @staticmethod
     def _transform_delete_delete(op1: Operation, op2: Operation) -> Tuple[Operation, Operation]:
-        """Transform two concurrent delete operations"""
+        """
+Transform two concurrent delete operations"""
         transformed_op1 = Operation(**op1.__dict__)
         transformed_op2 = Operation(**op2.__dict__)
         
@@ -330,7 +351,8 @@ class OperationalTransform:
     
     @staticmethod
     def _transform_insert_delete(op1: Operation, op2: Operation) -> Tuple[Operation, Operation]:
-        """Transform insert and delete operations"""
+        """
+Transform insert and delete operations"""
         transformed_op1 = Operation(**op1.__dict__)
         transformed_op2 = Operation(**op2.__dict__)
         
@@ -342,7 +364,8 @@ class OperationalTransform:
         return transformed_op1, transformed_op2
 
 class SyncSession:
-    """Real-time synchronization session"""
+    """
+Real-time synchronization session"""
     
     def __init__(self, session_id: str, user_id: str):
         self.session_id = session_id
@@ -355,16 +378,19 @@ class SyncSession:
         self.connection_state = "connected"
         
     def update_activity(self):
-        """Update last activity timestamp"""
+        """
+Update last activity timestamp"""
         self.last_activity = datetime.utcnow()
     
     def is_active(self, timeout_minutes: int = 30) -> bool:
-        """Check if session is still active"""
+        """
+Check if session is still active"""
         timeout = datetime.utcnow() - timedelta(minutes=timeout_minutes)
         return self.last_activity > timeout
 
 class RealTimeSyncCore:
-    """Advanced enterprise real-time synchronization core"""
+    """
+Advanced enterprise real-time synchronization core"""
     
     def __init__(self, level: str = "enterprise"):
         self.level = level
@@ -388,7 +414,8 @@ class RealTimeSyncCore:
         self._sync_running = False
     
     def _get_performance_config(self) -> Dict[str, Any]:
-        """Get performance configuration based on level"""
+        """
+Get performance configuration based on level"""
         configs = {
             "basic": {
                 "max_documents": 100,
@@ -422,7 +449,8 @@ class RealTimeSyncCore:
         return configs.get(self.level, configs["enterprise"])
     
     async def initialize(self) -> bool:
-        """Initialize real-time sync core"""
+        """
+Initialize real-time sync core"""
         try:
             logger.info(f"🚀 Initializing RealTimeSyncCore - Level: {self.level}")
             
@@ -437,7 +465,8 @@ class RealTimeSyncCore:
             return False
     
     async def start_synchronization(self) -> bool:
-        """Start background synchronization tasks"""
+        """
+Start background synchronization tasks"""
         try:
             if self._sync_running:
                 return True
@@ -467,7 +496,8 @@ class RealTimeSyncCore:
             return False
     
     async def _session_management_loop(self):
-        """Session management background loop"""
+        """
+Session management background loop"""
         while self._sync_running:
             try:
                 await self._cleanup_inactive_sessions()
@@ -480,7 +510,8 @@ class RealTimeSyncCore:
                 await asyncio.sleep(60)
     
     async def _operation_processing_loop(self):
-        """Operation processing background loop"""
+        """
+Operation processing background loop"""
         while self._sync_running:
             try:
                 await self._process_pending_operations()
@@ -493,7 +524,8 @@ class RealTimeSyncCore:
                 await asyncio.sleep(5)
     
     async def _conflict_resolution_loop(self):
-        """Conflict resolution background loop"""
+        """
+Conflict resolution background loop"""
         while self._sync_running:
             try:
                 await self._resolve_conflicts()
@@ -506,7 +538,8 @@ class RealTimeSyncCore:
                 await asyncio.sleep(10)
     
     async def create_session(self, user_id: str) -> str:
-        """Create new synchronization session"""
+        """
+Create new synchronization session"""
         session_id = str(uuid.uuid4())
         
         async with self._lock:
@@ -525,7 +558,8 @@ class RealTimeSyncCore:
             return session_id
     
     async def close_session(self, session_id: str) -> bool:
-        """Close synchronization session"""
+        """
+Close synchronization session"""
         try:
             async with self._lock:
                 session = self.sessions.pop(session_id, None)
@@ -543,7 +577,8 @@ class RealTimeSyncCore:
             return False
     
     async def create_document(self, content: Dict[str, Any], author_id: str) -> str:
-        """Create new synchronized document"""
+        """
+Create new synchronized document"""
         document_id = str(uuid.uuid4())
         
         async with self._lock:
@@ -563,7 +598,8 @@ class RealTimeSyncCore:
             return document_id
     
     async def subscribe_to_document(self, session_id: str, document_id: str) -> bool:
-        """Subscribe session to document updates"""
+        """
+Subscribe session to document updates"""
         try:
             async with self._lock:
                 session = self.sessions.get(session_id)
@@ -584,7 +620,8 @@ class RealTimeSyncCore:
             return False
     
     async def unsubscribe_from_document(self, session_id: str, document_id: str) -> bool:
-        """Unsubscribe session from document updates"""
+        """
+Unsubscribe session from document updates"""
         try:
             async with self._lock:
                 session = self.sessions.get(session_id)
@@ -605,7 +642,8 @@ class RealTimeSyncCore:
             return False
     
     async def submit_operation(self, session_id: str, operation: Operation) -> bool:
-        """Submit operation for synchronization"""
+        """
+Submit operation for synchronization"""
         try:
             async with self._lock:
                 session = self.sessions.get(session_id)
@@ -630,7 +668,8 @@ class RealTimeSyncCore:
             return False
     
     async def _apply_operation(self, operation: Operation) -> bool:
-        """Apply operation to document"""
+        """
+Apply operation to document"""
         try:
             document = self.documents.get(operation.document_id)
             if not document:
@@ -662,7 +701,8 @@ class RealTimeSyncCore:
             return False
     
     async def _detect_conflicts(self, operation: Operation, document: SyncDocument) -> List[Operation]:
-        """Detect conflicting operations"""
+        """
+Detect conflicting operations"""
         conflicts = []
         
         # Check recent operations for conflicts
@@ -676,7 +716,8 @@ class RealTimeSyncCore:
         return conflicts
     
     def _operations_conflict(self, op1: Operation, op2: Operation) -> bool:
-        """Check if two operations conflict"""
+        """
+Check if two operations conflict"""
         # Same path and overlapping positions/ranges
         if op1.path == op2.path:
             if op1.operation_type == OperationType.DELETE or op2.operation_type == OperationType.DELETE:
@@ -688,7 +729,8 @@ class RealTimeSyncCore:
         return False
     
     async def _resolve_operation_conflicts(self, operation: Operation, conflicts: List[Operation]) -> Optional[Operation]:
-        """Resolve operation conflicts using selected strategy"""
+        """
+Resolve operation conflicts using selected strategy"""
         if self.conflict_resolution == ConflictResolution.OPERATIONAL_TRANSFORM:
             resolved_op = operation
             
@@ -707,7 +749,8 @@ class RealTimeSyncCore:
             return None
     
     async def _broadcast_operation(self, operation: Operation):
-        """Broadcast operation to all subscribed sessions"""
+        """
+Broadcast operation to all subscribed sessions"""
         try:
             document = self.documents.get(operation.document_id)
             if not document:
@@ -736,7 +779,8 @@ class RealTimeSyncCore:
             logger.error(f"Failed to broadcast operation: {e}")
     
     async def _process_pending_operations(self):
-        """Process pending operations from all sessions"""
+        """
+Process pending operations from all sessions"""
         async with self._lock:
             processed_count = 0
             
@@ -756,7 +800,8 @@ class RealTimeSyncCore:
                 logger.debug(f"Processed {processed_count} operations")
     
     async def _resolve_conflicts(self):
-        """Resolve document conflicts"""
+        """
+Resolve document conflicts"""
         async with self._lock:
             conflict_documents = [
                 doc for doc in self.documents.values()
@@ -771,14 +816,16 @@ class RealTimeSyncCore:
                     logger.error(f"Conflict resolution failed for document {document.document_id}: {e}")
     
     async def _resolve_document_conflicts(self, document: SyncDocument):
-        """Resolve conflicts for a specific document"""
+        """
+Resolve conflicts for a specific document"""
         # Simplified conflict resolution
         # In production, this would be more sophisticated
         document.sync_state = SyncState.SYNCHRONIZED
         logger.info(f"Conflicts resolved for document {document.document_id}")
     
     async def _cleanup_inactive_sessions(self):
-        """Clean up inactive sessions"""
+        """
+Clean up inactive sessions"""
         async with self._lock:
             inactive_sessions = [
                 session_id for session_id, session in self.sessions.items()
@@ -790,21 +837,25 @@ class RealTimeSyncCore:
     
     # Public API methods
     async def get_document(self, document_id: str) -> Optional[SyncDocument]:
-        """Get document by ID"""
+        """
+Get document by ID"""
         return self.documents.get(document_id)
     
     async def get_document_content(self, document_id: str) -> Optional[Dict[str, Any]]:
-        """Get document content"""
+        """
+Get document content"""
         document = self.documents.get(document_id)
         return document.content if document else None
     
     async def get_sync_status(self, document_id: str) -> Optional[SyncState]:
-        """Get synchronization status of document"""
+        """
+Get synchronization status of document"""
         document = self.documents.get(document_id)
         return document.sync_state if document else None
     
     async def get_active_sessions(self) -> List[Dict[str, Any]]:
-        """Get information about active sessions"""
+        """
+Get information about active sessions"""
         async with self._lock:
             return [
                 {
@@ -819,7 +870,8 @@ class RealTimeSyncCore:
             ]
     
     async def get_sync_metrics(self) -> Dict[str, Any]:
-        """Get synchronization metrics"""
+        """
+Get synchronization metrics"""
         async with self._lock:
             total_operations = sum(len(doc.operations) for doc in self.documents.values())
             total_participants = sum(len(doc.participants) for doc in self.documents.values())
@@ -835,19 +887,23 @@ class RealTimeSyncCore:
     
     # Event callback registration
     def on_operation(self, callback: Callable):
-        """Register operation callback"""
+        """
+Register operation callback"""
         self.operation_callbacks.append(callback)
     
     def on_conflict(self, callback: Callable):
-        """Register conflict callback"""
+        """
+Register conflict callback"""
         self.conflict_callbacks.append(callback)
     
     def on_sync(self, callback: Callable):
-        """Register sync callback"""
+        """
+Register sync callback"""
         self.sync_callbacks.append(callback)
     
     async def stop_synchronization(self) -> bool:
-        """Stop background synchronization tasks"""
+        """
+Stop background synchronization tasks"""
         try:
             self._sync_running = False
             
@@ -867,7 +923,8 @@ class RealTimeSyncCore:
             return False
     
     async def health_check(self) -> bool:
-        """Health check for real-time sync core"""
+        """
+Health check for real-time sync core"""
         try:
             return self._sync_running and len(self.sessions) >= 0
         except Exception as e:
@@ -875,7 +932,8 @@ class RealTimeSyncCore:
             return False
     
     async def start(self) -> bool:
-        """Start real-time sync service"""
+        """
+Start real-time sync service"""
         try:
             logger.info("🚀 Starting RealTimeSyncCore service")
             return await self.start_synchronization()
@@ -884,7 +942,8 @@ class RealTimeSyncCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop real-time sync service"""
+        """
+Stop real-time sync service"""
         try:
             logger.info("🛑 Stopping RealTimeSyncCore service")
             return await self.stop_synchronization()

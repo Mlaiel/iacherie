@@ -70,7 +70,8 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class RightsType(Enum):
-    """Types of intellectual property rights"""
+    """
+        Types of intellectual property rights"""
     COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PATENT = "patent"
@@ -173,7 +174,8 @@ class RightsConfig:
 
 @dataclass
 class License:
-    """Digital license structure"""
+    """
+        Digital license structure"""
     license_id: str
     content_id: str
     licensee_id: str
@@ -191,7 +193,8 @@ class License:
 
 @dataclass
 class PiracyIncident:
-    """Piracy incident record"""
+    """
+        Piracy incident record"""
     incident_id: str
     content_id: str
     platform: MonitoringPlatform
@@ -222,7 +225,8 @@ class WatermarkConfig:
 
 @dataclass
 class UsageRecord:
-    """Content usage tracking record"""
+    """
+        Content usage tracking record"""
     usage_id: str
     content_id: str
     license_id: str
@@ -235,7 +239,8 @@ class UsageRecord:
 
 @dataclass
 class RoyaltyDistribution:
-    """Royalty distribution record"""
+    """
+        Royalty distribution record"""
     distribution_id: str
     content_id: str
     total_revenue: Decimal
@@ -244,10 +249,12 @@ class RoyaltyDistribution:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class RightsManagementEngine:
-    """Comprehensive digital rights management system"""
+    """
+        Comprehensive digital rights management system"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize rights management engine"""
+        """
+        Initialize rights management engine"""
         self.config = config or {}
         self.licenses = {}
         self.piracy_incidents = {}
@@ -260,6 +267,7 @@ class RightsManagementEngine:
         self._initialize_watermark_engines()
         self._initialize_detection_engines()
         self._initialize_monitoring_services()
+
         
         logger.info("⚖️ Rights Management Engine initialized")
     
@@ -303,12 +311,16 @@ class RightsManagementEngine:
             license_id = str(uuid.uuid4())
             
             # Calculate license duration
+
             valid_from = datetime.now(timezone.utc)
+
+
             valid_until = None
             if rights_config.duration_days:
                 valid_until = valid_from + timedelta(days=rights_config.duration_days)
             
             # Create license
+
             license = License(
                 license_id=license_id,
                 content_id=content_id,
@@ -326,10 +338,12 @@ class RightsManagementEngine:
             self.licenses[license_id] = license
             
             logger.info(f"License created: {license_id} for content: {content_id}")
+
             return license
             
         except Exception as e:
             logger.error(f"License creation failed: {e}")
+
             raise
     
     async def validate_usage(
@@ -342,6 +356,7 @@ class RightsManagementEngine:
         """Validate content usage against licenses"""
         try:
             # Find applicable licenses
+
             applicable_licenses = []
             for license in self.licenses.values():
                 if (license.content_id == content_id and 
@@ -349,7 +364,9 @@ class RightsManagementEngine:
                     usage_type in license.usage_permissions):
                     
                     # Check if license is valid
+
                     now = datetime.now(timezone.utc)
+
                     if (license.valid_from <= now and 
                         (license.valid_until is None or license.valid_until >= now)):
                         
@@ -357,6 +374,7 @@ class RightsManagementEngine:
                         if (license.max_usage_count is None or 
                             license.current_usage_count < license.max_usage_count):
                             applicable_licenses.append(license)
+
             
             if not applicable_licenses:
                 return {
@@ -366,9 +384,11 @@ class RightsManagementEngine:
                 }
             
             # Use the first applicable license
+
             license = applicable_licenses[0]
             
             # Record usage
+
             usage_record = await self._record_usage(
                 content_id, license.license_id, user_id, usage_type, platform
             )
@@ -387,6 +407,7 @@ class RightsManagementEngine:
             
         except Exception as e:
             logger.error(f"Usage validation failed: {e}")
+
             return {
                 "valid": False,
                 "reason": f"Validation error: {str(e)}",
@@ -401,10 +422,14 @@ class RightsManagementEngine:
         """Apply watermark to content"""
         try:
             engine = self.watermark_engines.get(watermark_config.watermark_type)
+
             if not engine:
                 raise ValueError(f"Watermark engine {watermark_config.watermark_type.value} not available")
+
+
             
             watermarked_content = await engine(content_data, watermark_config)
+
             
             return {
                 "success": True,
@@ -419,6 +444,7 @@ class RightsManagementEngine:
             
         except Exception as e:
             logger.error(f"Watermark application failed: {e}")
+
             return {
                 "success": False,
                 "error": str(e),
@@ -434,6 +460,7 @@ class RightsManagementEngine:
         """Detect piracy across specified platforms"""
         if platforms is None:
             platforms = list(MonitoringPlatform)
+
         
         if detection_methods is None:
             detection_methods = [
@@ -447,8 +474,10 @@ class RightsManagementEngine:
             # Monitor each platform
             for platform in platforms:
                 monitor = self.monitoring_services.get(platform)
+
                 if monitor:
                     platform_incidents = await monitor(content_id, detection_methods)
+
                     incidents.extend(platform_incidents)
             
             # Store incidents
@@ -456,10 +485,12 @@ class RightsManagementEngine:
                 self.piracy_incidents[incident.incident_id] = incident
             
             logger.info(f"Piracy detection completed for {content_id}: {len(incidents)} incidents found")
+
             return incidents
             
         except Exception as e:
             logger.error(f"Piracy detection failed: {e}")
+
             return []
     
     async def calculate_royalties(
@@ -471,6 +502,7 @@ class RightsManagementEngine:
         """Calculate and distribute royalties for a content piece"""
         try:
             # Get usage records for the period
+
             relevant_usage = []
             for usage in self.usage_records.values():
                 if (usage.content_id == content_id and 
@@ -478,12 +510,15 @@ class RightsManagementEngine:
                     relevant_usage.append(usage)
             
             # Calculate total revenue
+
             total_revenue = sum(usage.revenue_generated for usage in relevant_usage)
             
             # Get license information for revenue sharing
+
             revenue_shares = {}
             for usage in relevant_usage:
                 license = self.licenses.get(usage.license_id)
+
                 if license:
                     licensor_share = total_revenue * license.royalty_rate
                     revenue_shares[license.licensor_id] = revenue_shares.get(
@@ -491,6 +526,7 @@ class RightsManagementEngine:
                     ) + licensor_share
             
             # Create distribution record
+
             distribution = RoyaltyDistribution(
                 distribution_id=str(uuid.uuid4()),
                 content_id=content_id,
@@ -503,12 +539,15 @@ class RightsManagementEngine:
                     "usage_count": len(relevant_usage)
                 }
             )
+
             
             logger.info(f"Royalty distribution calculated for {content_id}: ${total_revenue}")
+
             return distribution
             
         except Exception as e:
             logger.error(f"Royalty calculation failed: {e}")
+
             raise
     
     async def generate_takedown_notice(
@@ -535,12 +574,15 @@ class RightsManagementEngine:
             
             # Mark incident as having takedown notice generated
             incident.actions_taken.append("takedown_notice_generated")
+
             
             logger.info(f"Takedown notice generated for incident: {incident.incident_id}")
+
             return notice
             
         except Exception as e:
             logger.error(f"Takedown notice generation failed: {e}")
+
             raise
     
     # Private helper methods
@@ -555,6 +597,8 @@ class RightsManagementEngine:
     ) -> UsageRecord:
         """Record content usage"""
         usage_id = str(uuid.uuid4())
+
+
         
         usage_record = UsageRecord(
             usage_id=usage_id,
@@ -564,6 +608,7 @@ class RightsManagementEngine:
             usage_type=usage_type,
             platform=platform
         )
+
         
         self.usage_records[usage_id] = usage_record
         return usage_record
@@ -571,17 +616,22 @@ class RightsManagementEngine:
     # Watermark engine creators
     
     def _create_visible_watermark_engine(self):
-        """Create visible watermark engine"""
+        """
+        Create visible watermark engine"""
         async def visible_watermark(content_data: Any, config: WatermarkConfig) -> Any:
             try:
                 if PIL_AVAILABLE and isinstance(content_data, str):
                     # Handle base64 image data
                     if content_data.startswith('data:image'):
                         content_data = content_data.split(',')[1]
+
                     image_data = base64.b64decode(content_data)
+
+
                     image = Image.open(io.BytesIO(image_data))
                     
                     # Create watermark
+
                     draw = ImageDraw.Draw(image)
                     
                     # Apply watermark text
@@ -593,32 +643,34 @@ class RightsManagementEngine:
                     )
                     
                     # Convert back to base64
+
                     buffer = io.BytesIO()
+
                     image.save(buffer, format='PNG')
+
                     return base64.b64encode(buffer.getvalue()).decode('utf-8')
+
                 
                 return content_data
                 
             except Exception as e:
                 logger.error(f"Visible watermark failed: {e}")
+
                 return content_data
         
         return visible_watermark
     
     def _create_invisible_watermark_engine(self):
         """Create invisible watermark engine"""
-        async def invisible_watermark(content_data: Any, config: WatermarkConfig) -> Any:
-            # Placeholder implementation for invisible watermarking
-            # In a real implementation, this would use LSB steganography or DCT embedding
+        async def invisible_watermark(content_data: Any, config: WatermarkConfig) -> Any:            # In a real implementation, this would use LSB steganography or DCT embedding
             return content_data
         
         return invisible_watermark
     
     def _create_steganographic_engine(self):
-        """Create steganographic watermark engine"""
-        async def steganographic_watermark(content_data: Any, config: WatermarkConfig) -> Any:
-            # Placeholder implementation for steganographic embedding
-            # In a real implementation, this would use advanced steganographic techniques
+        """
+        Create steganographic watermark engine"""
+        async def steganographic_watermark(content_data: Any, config: WatermarkConfig) -> Any:            # In a real implementation, this would use advanced steganographic techniques
             return content_data
         
         return steganographic_watermark
@@ -626,67 +678,61 @@ class RightsManagementEngine:
     # Detection engine creators
     
     def _create_visual_detection_engine(self):
-        """Create visual fingerprint detection engine"""
-        async def visual_detection(content_id: str, platform_data: Any) -> List[PiracyIncident]:
-            # Placeholder visual detection implementation
-            return []
+        """
+        Create visual fingerprint detection engine"""
+        async def visual_detection(content_id: str, platform_data: Any) -> List[PiracyIncident]:            return []
         
         return visual_detection
     
     def _create_audio_detection_engine(self):
-        """Create audio fingerprint detection engine"""
-        async def audio_detection(content_id: str, platform_data: Any) -> List[PiracyIncident]:
-            # Placeholder audio detection implementation
-            return []
+        """
+        Create audio fingerprint detection engine"""
+        async def audio_detection(content_id: str, platform_data: Any) -> List[PiracyIncident]:            return []
         
         return audio_detection
     
     def _create_text_detection_engine(self):
-        """Create text similarity detection engine"""
-        async def text_detection(content_id: str, platform_data: Any) -> List[PiracyIncident]:
-            # Placeholder text detection implementation
-            return []
+        """
+        Create text similarity detection engine"""
+        async def text_detection(content_id: str, platform_data: Any) -> List[PiracyIncident]:            return []
         
         return text_detection
     
     def _create_watermark_detection_engine(self):
-        """Create watermark detection engine"""
-        async def watermark_detection(content_id: str, platform_data: Any) -> List[PiracyIncident]:
-            # Placeholder watermark detection implementation
-            return []
+        """
+        Create watermark detection engine"""
+        async def watermark_detection(content_id: str, platform_data: Any) -> List[PiracyIncident]:            return []
         
         return watermark_detection
     
     # Monitoring service creators
     
     def _create_youtube_monitor(self):
-        """Create YouTube monitoring service"""
-        async def youtube_monitor(content_id: str, detection_methods: List[DetectionMethod]) -> List[PiracyIncident]:
-            # Placeholder YouTube monitoring implementation
-            return []
+        """
+        Create YouTube monitoring service"""
+        async def youtube_monitor(content_id: str, detection_methods: List[DetectionMethod]) -> List[PiracyIncident]:            return []
         
         return youtube_monitor
     
     def _create_instagram_monitor(self):
-        """Create Instagram monitoring service"""
-        async def instagram_monitor(content_id: str, detection_methods: List[DetectionMethod]) -> List[PiracyIncident]:
-            # Placeholder Instagram monitoring implementation
-            return []
+        """
+        Create Instagram monitoring service"""
+        async def instagram_monitor(content_id: str, detection_methods: List[DetectionMethod]) -> List[PiracyIncident]:            return []
         
         return instagram_monitor
     
     def _create_facebook_monitor(self):
-        """Create Facebook monitoring service"""
-        async def facebook_monitor(content_id: str, detection_methods: List[DetectionMethod]) -> List[PiracyIncident]:
-            # Placeholder Facebook monitoring implementation
-            return []
+        """
+        Create Facebook monitoring service"""
+        async def facebook_monitor(content_id: str, detection_methods: List[DetectionMethod]) -> List[PiracyIncident]:            return []
         
         return facebook_monitor
 
 
 # Backward compatibility classes
 class PiracyDetection:
-    """Backward compatibility for PiracyDetection"""
+    """
+        Backward compatibility for PiracyDetection"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.rights_engine = RightsManagementEngine(config)
@@ -695,7 +741,8 @@ class PiracyDetection:
         return await self.rights_engine.detect_piracy(content_id, platforms)
 
 class WatermarkIntegration:
-    """Backward compatibility for WatermarkIntegration"""
+    """
+        Backward compatibility for WatermarkIntegration"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.rights_engine = RightsManagementEngine(config)
@@ -704,7 +751,8 @@ class WatermarkIntegration:
         return await self.rights_engine.apply_watermark(content_data, config)
 
 class LicenseManager:
-    """Backward compatibility for LicenseManager"""
+    """
+        Backward compatibility for LicenseManager"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.rights_engine = RightsManagementEngine(config)
@@ -715,7 +763,8 @@ class LicenseManager:
 # Configuration helper classes
 @dataclass
 class RightsComplianceConfig:
-    """Rights compliance configuration"""
+    """
+        Rights compliance configuration"""
     automatic_licensing: bool = True
     piracy_monitoring_enabled: bool = True
     takedown_automation: bool = False

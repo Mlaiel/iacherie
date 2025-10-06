@@ -49,6 +49,15 @@ class SurveillanceAlert:
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     metadata: Dict[str, Any] = field(default_factory=dict)
 
+
+# ============================================================================
+# BACKWARD COMPATIBILITY ALIASES
+# ============================================================================
+
+# Main class alias (often used as IntelligentSurveillance in other modules)
+IntelligentSurveillance = lambda: IntelligentSurveillanceEngine()
+
+
 class IntelligentSurveillanceEngine:
     """Moteur de surveillance intelligente"""
     

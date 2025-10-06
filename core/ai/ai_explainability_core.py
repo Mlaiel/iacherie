@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class AIExplainabilityCore:
-    """Advanced AIExplainabilityCore System"""
+    """
+Advanced AIExplainabilityCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class AIExplainabilityCore:
 # Module exports
 __all__ = ["AIExplainabilityCore"]
 
-logger.info("🔬 AIExplainabilityCore module loaded")
+logger.info("🔬 AIExplainabilityCore module initialized")

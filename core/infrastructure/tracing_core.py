@@ -35,7 +35,8 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class TracingLevel(str, Enum):
-    """Tracing detail levels"""
+    """
+Tracing detail levels"""
     BASIC = "basic"
     STANDARD = "standard"
     DETAILED = "detailed"
@@ -43,7 +44,8 @@ class TracingLevel(str, Enum):
     PERFORMANCE = "performance"
 
 class SpanType(str, Enum):
-    """Types of spans for categorization"""
+    """
+Types of spans for categorization"""
     HTTP_REQUEST = "http_request"
     DATABASE_QUERY = "database_query"
     CACHE_OPERATION = "cache_operation"
@@ -55,7 +57,8 @@ class SpanType(str, Enum):
 
 @dataclass
 class SpanContext:
-    """Custom span context for internal tracing"""
+    """
+Custom span context for internal tracing"""
     trace_id: str
     span_id: str
     parent_span_id: Optional[str] = None
@@ -69,7 +72,8 @@ class SpanContext:
     error: Optional[str] = None
 
     def finish(self, error: Optional[str] = None):
-        """Finish the span"""
+        """
+Finish the span"""
         self.end_time = time.time()
         self.duration_ms = (self.end_time - self.start_time) * 1000
         self.status = "error" if error else "completed"
@@ -77,7 +81,8 @@ class SpanContext:
 
 @dataclass
 class TraceMetrics:
-    """Trace performance metrics"""
+    """
+Trace performance metrics"""
     total_traces: int = 0
     active_traces: int = 0
     completed_traces: int = 0
@@ -89,10 +94,12 @@ class TraceMetrics:
     error_rate: float = 0.0
 
 class TracingCore:
-    """Enterprise distributed tracing system"""
+    """
+Enterprise distributed tracing system"""
     
     def __init__(self, level: str = "enterprise"):
-        """Initialize tracing core"""
+        """
+Initialize tracing core"""
         self.level = TracingLevel.DETAILED if level == "enterprise" else TracingLevel.STANDARD
         self.active_spans: Dict[str, SpanContext] = {}
         self.completed_spans: List[SpanContext] = []
@@ -123,7 +130,8 @@ class TracingCore:
         logger.info(f"🔍 Tracing Core initialized - Level: {self.level}")
 
     def _initialize_tracing(self):
-        """Initialize tracing backend"""
+        """
+Initialize tracing backend"""
         try:
             if OPENTELEMETRY_AVAILABLE:
                 self._setup_opentelemetry()
@@ -140,7 +148,8 @@ class TracingCore:
             logger.error(f"Failed to initialize tracing: {str(e)}")
 
     def _setup_opentelemetry(self):
-        """Setup OpenTelemetry integration"""
+        """
+Setup OpenTelemetry integration"""
         if not OPENTELEMETRY_AVAILABLE:
             return
             
@@ -178,7 +187,8 @@ class TracingCore:
             logger.error(f"Failed to setup OpenTelemetry: {str(e)}")
 
     def _setup_processors(self):
-        """Setup trace processors"""
+        """
+Setup trace processors"""
         self.processors = [
             self._enrich_span_processor,
             self._performance_processor,
@@ -187,7 +197,8 @@ class TracingCore:
         ]
 
     def _setup_samplers(self):
-        """Setup trace samplers"""
+        """
+Setup trace samplers"""
         self.samplers = {
             "always": lambda: True,
             "never": lambda: False,
@@ -197,7 +208,8 @@ class TracingCore:
         }
 
     def _rate_limited_sampler(self) -> bool:
-        """Rate-limited sampling"""
+        """
+Rate-limited sampling"""
         current_minute = int(time.time() // 60)
         key = f"sample_{current_minute}"
         
@@ -213,7 +225,8 @@ class TracingCore:
         return False
 
     def _error_biased_sampler(self) -> bool:
-        """Error-biased sampling - always sample errors"""
+        """
+Error-biased sampling - always sample errors"""
         # This would be determined at span finish time
         return True
 
@@ -225,7 +238,8 @@ class TracingCore:
         tags: Optional[Dict[str, Any]] = None,
         parent_span_id: Optional[str] = None
     ):
-        """Create and manage a trace span"""
+        """
+Create and manage a trace span"""
         span_id = str(uuid.uuid4())
         trace_id = parent_span_id or str(uuid.uuid4())
         
@@ -283,7 +297,8 @@ class TracingCore:
         span_type: SpanType = SpanType.BUSINESS_LOGIC,
         tags: Optional[Dict[str, Any]] = None
     ):
-        """Synchronous version of trace context manager"""
+        """
+Synchronous version of trace context manager"""
         span_id = str(uuid.uuid4())
         trace_id = str(uuid.uuid4())
         
@@ -312,7 +327,8 @@ class TracingCore:
             self.completed_spans.append(span)
 
     async def _process_span(self, span: SpanContext):
-        """Process completed span through processors"""
+        """
+Process completed span through processors"""
         for processor in self.processors:
             try:
                 await processor(span)
@@ -320,7 +336,8 @@ class TracingCore:
                 logger.error(f"Processor error: {str(e)}")
 
     async def _enrich_span_processor(self, span: SpanContext):
-        """Enrich span with additional metadata"""
+        """
+Enrich span with additional metadata"""
         span.tags["timestamp"] = datetime.utcnow().isoformat()
         span.tags["environment"] = self.config["environment"]
         
@@ -333,7 +350,8 @@ class TracingCore:
             pass
 
     async def _performance_processor(self, span: SpanContext):
-        """Process performance metrics"""
+        """
+Process performance metrics"""
         if span.duration_ms:
             if span.duration_ms > 1000:  # Slow operation
                 span.tags["performance.slow"] = True
@@ -344,7 +362,8 @@ class TracingCore:
                 })
 
     async def _security_processor(self, span: SpanContext):
-        """Process security-related information"""
+        """
+Process security-related information"""
         if span.span_id in self.active_spans:
             # Check for security-related operations
             if any(sec_tag in span.operation_name.lower() 
@@ -352,12 +371,14 @@ class TracingCore:
                 span.tags["security.sensitive"] = True
 
     async def _business_processor(self, span: SpanContext):
-        """Process business logic metrics"""
+        """
+Process business logic metrics"""
         if "business_logic" in span.tags.get("span.type", ""):
             span.tags["business.processed"] = True
 
     def add_log_to_span(self, span_id: str, level: str, message: str, **kwargs):
-        """Add log entry to active span"""
+        """
+Add log entry to active span"""
         if span_id in self.active_spans:
             span = self.active_spans[span_id]
             span.logs.append({
@@ -368,12 +389,14 @@ class TracingCore:
             })
 
     def add_tag_to_span(self, span_id: str, key: str, value: Any):
-        """Add tag to active span"""
+        """
+Add tag to active span"""
         if span_id in self.active_spans:
             self.active_spans[span_id].tags[key] = value
 
     def _update_metrics(self):
-        """Update trace metrics"""
+        """
+Update trace metrics"""
         completed_count = len(self.completed_spans)
         if completed_count > 0:
             # Calculate averages
@@ -394,27 +417,32 @@ class TracingCore:
         self.trace_metrics.active_traces = len(self.active_spans)
 
     def get_trace_by_id(self, trace_id: str) -> List[SpanContext]:
-        """Get all spans for a trace ID"""
+        """
+Get all spans for a trace ID"""
         return [span for span in self.completed_spans if span.trace_id == trace_id]
 
     def get_metrics(self) -> TraceMetrics:
-        """Get current tracing metrics"""
+        """
+Get current tracing metrics"""
         self._update_metrics()
         return self.trace_metrics
 
     def get_slow_operations(self, threshold_ms: float = 1000) -> List[SpanContext]:
-        """Get operations slower than threshold"""
+        """
+Get operations slower than threshold"""
         return [
             span for span in self.completed_spans 
             if span.duration_ms and span.duration_ms > threshold_ms
         ]
 
     def get_error_traces(self) -> List[SpanContext]:
-        """Get traces with errors"""
+        """
+Get traces with errors"""
         return [span for span in self.completed_spans if span.error]
 
     def export_traces(self, format: str = "json") -> str:
-        """Export traces in specified format"""
+        """
+Export traces in specified format"""
         if format == "json":
             traces_data = []
             for span in self.completed_spans:
@@ -436,7 +464,8 @@ class TracingCore:
         return ""
 
     async def cleanup_old_traces(self, max_age_hours: int = 24):
-        """Clean up old completed traces"""
+        """
+Clean up old completed traces"""
         cutoff_time = time.time() - (max_age_hours * 3600)
         initial_count = len(self.completed_spans)
         
@@ -450,7 +479,8 @@ class TracingCore:
             logger.info(f"🧹 Cleaned up {cleaned_count} old traces")
 
     async def health_check(self) -> bool:
-        """Health check for tracing system"""
+        """
+Health check for tracing system"""
         try:
             # Check if tracing is working
             async with self.trace("health_check", SpanType.BUSINESS_LOGIC):
@@ -471,7 +501,8 @@ class TracingCore:
             return False
 
     def __del__(self):
-        """Cleanup on destruction"""
+        """
+Cleanup on destruction"""
         try:
             # Export remaining traces
             if self.completed_spans:
@@ -485,4 +516,4 @@ __all__ = [
     "TraceMetrics"
 ]
 
-logger.info("🔍 Tracing Core module loaded")
+logger.info("🔍 Tracing Core module initialized")

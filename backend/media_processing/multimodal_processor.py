@@ -115,7 +115,8 @@ logger = structlog.get_logger(__name__)
 # =============================================================================
 
 class ModalityType(Enum):
-    """Content modality types"""
+    """
+        Content modality types"""
     TEXT = "text"
     IMAGE = "image"
     AUDIO = "audio"
@@ -166,7 +167,8 @@ class CrossModalResult:
 # =============================================================================
 
 class TextFeatureExtractor:
-    """Extract features from text content"""
+    """
+        Extract features from text content"""
     
     def __init__(self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2"):
         self.model_name = model_name
@@ -181,10 +183,13 @@ class TextFeatureExtractor:
                 input_shape=(),
                 cause=ImportError("Required AI libraries not available")
             )
+
         
         try:
             self.model = get_sentence_transformer(self.model_name)
+
             self.model.to(self.device)
+
             logger.info(f"Text feature extractor initialized: {self.model_name}")
         except Exception as e:
             raise ModelInferenceError(
@@ -197,18 +202,27 @@ class TextFeatureExtractor:
         """Extract features from text"""
         if self.model is None:
             await self.initialize()
+
+
         
         start_time = time.time()
+
         
         try:
             # Generate embeddings
+
             embeddings = self.model.encode([text], convert_to_tensor=True)
+
+
             features = embeddings.cpu().numpy().squeeze()
             
             # Calculate confidence based on text quality
+
             confidence = min(len(text.split()) / 50, 1.0)  # Longer text = higher confidence
+
             
             processing_time = int((time.time() - start_time) * 1000)
+
             
             return ModalityFeatures(
                 modality=ModalityType.TEXT,
@@ -222,6 +236,7 @@ class TextFeatureExtractor:
                 extraction_method=self.model_name,
                 processing_time_ms=processing_time
             )
+
             
         except Exception as e:
             raise ModelInferenceError(
@@ -231,7 +246,8 @@ class TextFeatureExtractor:
             )
 
 class ImageFeatureExtractor:
-    """Extract features from image content"""
+    """
+        Extract features from image content"""
     
     def __init__(self, model_name: str = "openai/clip-vit-base-patch32"):
         self.model_name = model_name
@@ -247,11 +263,15 @@ class ImageFeatureExtractor:
                 input_shape=(),
                 cause=ImportError("Required AI libraries not available")
             )
+
         
         try:
             self.model = CLIPModel.from_pretrained(self.model_name)
+
             self.processor = CLIPProcessor.from_pretrained(self.model_name)
+
             self.model.to(self.device)
+
             logger.info(f"Image feature extractor initialized: {self.model_name}")
         except Exception as e:
             raise ModelInferenceError(
@@ -264,25 +284,38 @@ class ImageFeatureExtractor:
         """Extract features from image"""
         if self.model is None:
             await self.initialize()
+
+
         
         start_time = time.time()
+
         
         try:
             # Load and preprocess image
+
             image = Image.open(image_path).convert('RGB')
+
+
             inputs = self.processor(images=image, return_tensors="pt")
+
+
             inputs = {k: v.to(self.device) for k, v in inputs.items()}
             
             # Extract features
             with torch.no_grad():
                 image_features = self.model.get_image_features(**inputs)
+
+
                 features = F.normalize(image_features, p=2, dim=1).cpu().numpy().squeeze()
             
             # Calculate confidence based on image quality
             width, height = image.size
+
             confidence = min((width * height) / 1000000, 1.0)  # Higher resolution = higher confidence
+
             
             processing_time = int((time.time() - start_time) * 1000)
+
             
             return ModalityFeatures(
                 modality=ModalityType.IMAGE,
@@ -296,6 +329,7 @@ class ImageFeatureExtractor:
                 extraction_method=self.model_name,
                 processing_time_ms=processing_time
             )
+
             
         except Exception as e:
             raise ModelInferenceError(
@@ -322,12 +356,14 @@ class AudioFeatureExtractor:
     async def extract_features(self, audio_path: str) -> ModalityFeatures:
         """Extract features from audio"""
         start_time = time.time()
+
         
         try:
             # Load audio file
             audio, sr = librosa.load(audio_path, sr=16000)
             
             # Extract various audio features
+
             features_dict = {
                 'mfcc': librosa.feature.mfcc(y=audio, sr=sr, n_mfcc=13).mean(axis=1),
                 'spectral_centroid': librosa.feature.spectral_centroid(y=audio, sr=sr).mean(),
@@ -338,6 +374,7 @@ class AudioFeatureExtractor:
             }
             
             # Combine features into a single vector
+
             features = np.concatenate([
                 features_dict['mfcc'],
                 [features_dict['spectral_centroid']],
@@ -348,10 +385,14 @@ class AudioFeatureExtractor:
             ])
             
             # Calculate confidence based on audio duration and quality
+
             duration = len(audio) / sr
+
             confidence = min(duration / 30, 1.0)  # Longer audio = higher confidence
+
             
             processing_time = int((time.time() - start_time) * 1000)
+
             
             return ModalityFeatures(
                 modality=ModalityType.AUDIO,
@@ -365,6 +406,7 @@ class AudioFeatureExtractor:
                 extraction_method="librosa_combined",
                 processing_time_ms=processing_time
             )
+
             
         except Exception as e:
             raise ModelInferenceError(
@@ -381,7 +423,8 @@ class VideoFeatureExtractor:
         self.audio_extractor = AudioFeatureExtractor()
     
     async def initialize(self):
-        """Initialize the video feature extractor"""
+        """
+        Initialize the video feature extractor"""
         await self.image_extractor.initialize()
         await self.audio_extractor.initialize()
         logger.info("Video feature extractor initialized")
@@ -389,47 +432,73 @@ class VideoFeatureExtractor:
     async def extract_features(self, video_path: str) -> ModalityFeatures:
         """Extract features from video"""
         start_time = time.time()
+
         
         try:
             # Extract video information
+
             cap = cv2.VideoCapture(video_path)
+
+
             fps = cap.get(cv2.CAP_PROP_FPS)
+
+
             frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+
             duration = frame_count / fps if fps > 0 else 0
             
             # Sample frames for analysis
+
             frame_features = []
+
             sample_count = min(10, frame_count)  # Sample up to 10 frames
+
             sample_interval = max(1, frame_count // sample_count)
+
             
             for i in range(0, frame_count, sample_interval):
                 cap.set(cv2.CAP_PROP_POS_FRAMES, i)
+
                 ret, frame = cap.read()
+
                 if ret:
                     # Convert frame to PIL Image and extract features
+
                     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+
                     frame_image = Image.fromarray(frame_rgb)
                     
                     # Save temporary frame for processing
+
                     temp_path = f"/tmp/frame_{i}.jpg"
                     frame_image.save(temp_path)
                     
                     # Extract features from frame
+
                     frame_feature = await self.image_extractor.extract_features(temp_path)
+
                     frame_features.append(frame_feature.features)
+
             
             cap.release()
             
             # Combine frame features (average)
+
             if frame_features:
                 combined_features = np.mean(frame_features, axis=0)
+
             else:
                 combined_features = np.zeros(512)  # Default CLIP feature size
             
             # Calculate confidence
+
             confidence = min(duration / 60, 1.0)  # Longer video = higher confidence
+
             
             processing_time = int((time.time() - start_time) * 1000)
+
             
             return ModalityFeatures(
                 modality=ModalityType.VIDEO,
@@ -445,6 +514,7 @@ class VideoFeatureExtractor:
                 extraction_method="clip_frame_sampling",
                 processing_time_ms=processing_time
             )
+
             
         except Exception as e:
             raise ModelInferenceError(
@@ -461,7 +531,8 @@ class MultimodalProcessor:
     """Advanced cross-modal content processing engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize multimodal processor"""
+        """
+        Initialize multimodal processor"""
         self.config = config or self._get_default_config()
         
         # Initialize feature extractors
@@ -505,7 +576,8 @@ class MultimodalProcessor:
         }
     
     async def initialize(self):
-        """Initialize all feature extractors"""
+        """
+        Initialize all feature extractors"""
         if self._initialized:
             return
         
@@ -516,10 +588,12 @@ class MultimodalProcessor:
                 self.audio_extractor.initialize(),
                 self.video_extractor.initialize()
             )
+
             self._initialized = True
             logger.info("All multimodal extractors initialized")
         except Exception as e:
             logger.error(f"Failed to initialize multimodal processor: {e}")
+
             raise
     
     @handle_processing_errors("multimodal_process")
@@ -533,8 +607,11 @@ class MultimodalProcessor:
         
         if not self._initialized:
             await self.initialize()
+
+
         
         start_time = time.time()
+
         options = options or {}
         
         # Validate inputs
@@ -551,6 +628,7 @@ class MultimodalProcessor:
         
         try:
             # Extract features from each modality
+
             modality_features = {}
             
             for modality, content in content_data.items():
@@ -558,35 +636,51 @@ class MultimodalProcessor:
                 
                 if modality == ModalityType.TEXT:
                     features = await self.text_extractor.extract_features(content)
+
                 elif modality == ModalityType.IMAGE:
                     features = await self.image_extractor.extract_features(content)
+
                 elif modality == ModalityType.AUDIO:
                     features = await self.audio_extractor.extract_features(content)
+
                 elif modality == ModalityType.VIDEO:
                     features = await self.video_extractor.extract_features(content)
+
                 else:
                     raise ValueError(f"Unsupported modality: {modality}")
+
                 
                 modality_features[modality] = features
             
             # Process based on mode
+
             result_data = {}
             if processing_mode == ProcessingMode.FUSION:
                 result_data = await self._perform_fusion(modality_features, options)
+
             elif processing_mode == ProcessingMode.ALIGNMENT:
                 result_data = await self._perform_alignment(modality_features, options)
+
             elif processing_mode == ProcessingMode.CORRELATION:
                 result_data = await self._perform_correlation(modality_features, options)
+
             elif processing_mode == ProcessingMode.TRANSLATION:
                 result_data = await self._perform_translation(modality_features, options)
+
             elif processing_mode == ProcessingMode.ENHANCEMENT:
                 result_data = await self._perform_enhancement(modality_features, options)
+
             elif processing_mode == ProcessingMode.SEARCH:
                 result_data = await self._perform_search(modality_features, options)
+
             else:
                 raise ValueError(f"Unknown processing mode: {processing_mode}")
+
+
             
             processing_time = int((time.time() - start_time) * 1000)
+
+
             
             result = CrossModalResult(
                 input_modalities=list(content_data.keys()),
@@ -598,6 +692,7 @@ class MultimodalProcessor:
             # Cache result if enabled
             if self.config.get('cache_enabled'):
                 cache_key = self._generate_cache_key(content_data, processing_mode, options)
+
                 self.cross_modal_cache[cache_key] = result
             
             self.processing_stats['successful_requests'] += 1
@@ -606,6 +701,7 @@ class MultimodalProcessor:
         except Exception as e:
             self.processing_stats['failed_requests'] += 1
             logger.error(f"Multimodal processing failed: {e}")
+
             raise
     
     async def _perform_fusion(
@@ -618,14 +714,18 @@ class MultimodalProcessor:
         fusion_strategy = FusionStrategy(options.get('fusion_strategy', self.config['fusion_strategy'].value))
         
         # Extract feature vectors
+
         feature_vectors = []
+
         modality_weights = []
         
         for modality, features in modality_features.items():
             feature_vectors.append(features.features)
+
             modality_weights.append(features.confidence)
         
         # Normalize weights
+
         total_weight = sum(modality_weights)
         if total_weight > 0:
             modality_weights = [w / total_weight for w in modality_weights]
@@ -635,47 +735,68 @@ class MultimodalProcessor:
         # Perform fusion based on strategy
         if fusion_strategy == FusionStrategy.EARLY_FUSION:
             # Concatenate features
+
             fused_features = np.concatenate(feature_vectors)
+
             
         elif fusion_strategy == FusionStrategy.LATE_FUSION:
             # Weighted average of features
             # First, pad features to same dimension
+
             max_dim = max(len(f) for f in feature_vectors)
+
+
             padded_features = []
             for f in feature_vectors:
                 if len(f) < max_dim:
                     padded = np.pad(f, (0, max_dim - len(f)), mode='constant')
+
                 else:
                     padded = f[:max_dim]
                 padded_features.append(padded)
+
+
             
             fused_features = np.average(padded_features, axis=0, weights=modality_weights)
+
             
         elif fusion_strategy == FusionStrategy.ATTENTION_FUSION:
             # Attention-based fusion
+
             fused_features = self._attention_fusion(feature_vectors, modality_weights)
+
             
         else:  # HYBRID_FUSION
             # Combination of early and late fusion
+
             concatenated = np.concatenate(feature_vectors)
             
             # Pad and average
+
             max_dim = max(len(f) for f in feature_vectors)
+
+
             padded_features = []
             for f in feature_vectors:
                 if len(f) < max_dim:
                     padded = np.pad(f, (0, max_dim - len(f)), mode='constant')
+
                 else:
                     padded = f[:max_dim]
                 padded_features.append(padded)
+
+
             
             averaged = np.average(padded_features, axis=0, weights=modality_weights)
             
             # Combine concatenated and averaged
+
             fused_features = np.concatenate([concatenated, averaged])
         
         # Calculate fusion confidence
+
         fusion_confidence = np.mean(modality_weights)
+
         
         return {
             'fused_features': fused_features,
@@ -688,28 +809,35 @@ class MultimodalProcessor:
         }
     
     def _attention_fusion(self, feature_vectors: List[np.ndarray], weights: List[float]) -> np.ndarray:
-        """Perform attention-based fusion"""
+        """
+        Perform attention-based fusion"""
         # Simplified attention mechanism
         # In a full implementation, this would use learned attention weights
         
         # Pad all vectors to same dimension
+
         max_dim = max(len(f) for f in feature_vectors)
+
         padded_features = []
         
         for i, f in enumerate(feature_vectors):
             if len(f) < max_dim:
                 padded = np.pad(f, (0, max_dim - len(f)), mode='constant')
+
             else:
                 padded = f[:max_dim]
             
             # Apply attention weight
+
             attention_weight = weights[i]
             padded_features.append(padded * attention_weight)
         
         # Sum weighted features
+
         fused = np.sum(padded_features, axis=0)
         
         # Normalize
+
         norm = np.linalg.norm(fused)
         if norm > 0:
             fused = fused / norm
@@ -721,27 +849,40 @@ class MultimodalProcessor:
         modality_features: Dict[ModalityType, ModalityFeatures],
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform cross-modal alignment"""
+        """
+        Perform cross-modal alignment"""
         
         alignment_scores = {}
         
         # Calculate pairwise alignments
+
         modalities = list(modality_features.keys())
         for i, mod1 in enumerate(modalities):
             for j, mod2 in enumerate(modalities[i+1:], i+1):
                 # Calculate cosine similarity between feature vectors
+
                 features1 = modality_features[mod1].features
+
                 features2 = modality_features[mod2].features
                 
                 # Pad to same dimension for comparison
+
                 min_dim = min(len(features1), len(features2))
+
+
                 f1_norm = features1[:min_dim] / (np.linalg.norm(features1[:min_dim]) + 1e-8)
+
+
                 f2_norm = features2[:min_dim] / (np.linalg.norm(features2[:min_dim]) + 1e-8)
+
+
                 
                 similarity = np.dot(f1_norm, f2_norm)
+
                 alignment_scores[f"{mod1.value}_{mod2.value}"] = float(similarity)
         
         # Calculate overall alignment score
+
         overall_alignment = np.mean(list(alignment_scores.values())) if alignment_scores else 0.0
         
         return {
@@ -761,19 +902,28 @@ class MultimodalProcessor:
         """Perform cross-modal correlation analysis"""
         
         # Create correlation matrix
+
         modalities = list(modality_features.keys())
+
         num_modalities = len(modalities)
+
         correlation_matrix = np.eye(num_modalities)
+
         
         for i, mod1 in enumerate(modalities):
             for j, mod2 in enumerate(modalities):
                 if i != j:
                     # Calculate correlation between modalities
+
                     features1 = modality_features[mod1].features
+
                     features2 = modality_features[mod2].features
                     
                     # Use a subset of features for correlation calculation
+
                     min_dim = min(len(features1), len(features2), 100)
+
+
                     corr = np.corrcoef(features1[:min_dim], features2[:min_dim])[0, 1]
                     
                     # Handle NaN correlations
@@ -783,7 +933,9 @@ class MultimodalProcessor:
                     correlation_matrix[i, j] = corr
         
         # Calculate correlation strength
+
         off_diagonal = correlation_matrix[np.triu_indices_from(correlation_matrix, k=1)]
+
         avg_correlation = np.mean(np.abs(off_diagonal)) if len(off_diagonal) > 0 else 0.0
         
         return {
@@ -800,7 +952,8 @@ class MultimodalProcessor:
         modality_features: Dict[ModalityType, ModalityFeatures],
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform cross-modal translation"""
+        """
+        Perform cross-modal translation"""
         
         translation_results = {}
         
@@ -811,15 +964,19 @@ class MultimodalProcessor:
             for target_modality in ModalityType:
                 if target_modality != source_modality and target_modality in modality_features:
                     # Simplified translation: use feature transformation
+
                     target_features = modality_features[target_modality].features
                     
                     # Create a simple linear mapping (in practice, this would be learned)
+
+
                     translation_vector = self._translate_features(
                         source_features.features,
                         target_features.features,
                         source_modality,
                         target_modality
                     )
+
                     
                     translations[target_modality.value] = {
                         'translated_features': translation_vector.tolist(),
@@ -844,13 +1001,17 @@ class MultimodalProcessor:
         source_modality: ModalityType,
         target_modality: ModalityType
     ) -> np.ndarray:
-        """Translate features between modalities"""
+        """
+        Translate features between modalities"""
         
         # Simplified feature translation using linear transformation
         # In practice, this would use learned mappings
+
         
         source_dim = len(source_features)
+
         target_dim = len(target_features)
+
         
         if source_dim == target_dim:
             # Same dimension: use weighted combination
@@ -860,7 +1021,9 @@ class MultimodalProcessor:
             return source_features[:target_dim]
         else:
             # Increase dimensionality
+
             padded = np.pad(source_features, (0, target_dim - source_dim), mode='constant')
+
             return padded
     
     async def _perform_enhancement(
@@ -868,19 +1031,23 @@ class MultimodalProcessor:
         modality_features: Dict[ModalityType, ModalityFeatures],
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform cross-modal enhancement"""
+        """
+        Perform cross-modal enhancement"""
         
         enhancement_results = {}
         
         # Enhance each modality using information from others
         for target_modality, target_features in modality_features.items():
             enhanced_features = target_features.features.copy()
+
+
             enhancement_strength = 0.0
             
             # Use other modalities to enhance target
             for source_modality, source_features in modality_features.items():
                 if source_modality != target_modality:
                     # Calculate enhancement contribution
+
                     contribution = self._calculate_enhancement_contribution(
                         source_features.features,
                         target_features.features,
@@ -889,6 +1056,7 @@ class MultimodalProcessor:
                     )
                     
                     # Apply enhancement
+
                     alpha = 0.1  # Enhancement strength
                     if len(contribution) == len(enhanced_features):
                         enhanced_features += alpha * contribution
@@ -917,19 +1085,25 @@ class MultimodalProcessor:
         source_modality: ModalityType,
         target_modality: ModalityType
     ) -> np.ndarray:
-        """Calculate enhancement contribution from source to target modality"""
+        """
+        Calculate enhancement contribution from source to target modality"""
         
         # Simplified enhancement calculation
+
         target_dim = len(target_features)
+
         
         if len(source_features) >= target_dim:
             # Use first target_dim dimensions
+
             contribution = source_features[:target_dim]
         else:
             # Pad with zeros
+
             contribution = np.pad(source_features, (0, target_dim - len(source_features)), mode='constant')
         
         # Apply modality-specific scaling
+
         modality_compatibility = {
             (ModalityType.TEXT, ModalityType.IMAGE): 0.3,
             (ModalityType.IMAGE, ModalityType.TEXT): 0.3,
@@ -938,6 +1112,7 @@ class MultimodalProcessor:
             (ModalityType.IMAGE, ModalityType.VIDEO): 0.5,
             (ModalityType.VIDEO, ModalityType.IMAGE): 0.5
         }
+
         
         scale = modality_compatibility.get((source_modality, target_modality), 0.2)
         return contribution * scale
@@ -947,13 +1122,15 @@ class MultimodalProcessor:
         modality_features: Dict[ModalityType, ModalityFeatures],
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform cross-modal search"""
+        """
+        Perform cross-modal search"""
         
         # This would interface with a search index in practice
+
         search_results = {
             'query_modalities': [m.value for m in modality_features.keys()],
             'search_performed': True,
-            'results_found': 0  # Placeholder
+            'results_found': 0
         }
         
         return {
@@ -971,14 +1148,17 @@ class MultimodalProcessor:
         processing_mode: ProcessingMode,
         options: Dict[str, Any]
     ) -> str:
-        """Generate cache key for multimodal processing"""
+        """
+        Generate cache key for multimodal processing"""
         import hashlib
+
         
         key_components = [
             processing_mode.value,
             str(sorted(content_data.keys())),
             str(sorted(options.items()))
         ]
+
         
         key_string = "|".join(key_components)
         return hashlib.md5(key_string.encode()).hexdigest()
@@ -992,7 +1172,8 @@ class MultimodalProcessor:
         }
     
     async def cleanup(self):
-        """Cleanup resources"""
+        """
+        Cleanup resources"""
         # Clear cache
         self.cross_modal_cache.clear()
         
@@ -1018,6 +1199,11 @@ def get_multimodal_processor(config: Optional[Dict[str, Any]] = None) -> Multimo
 # MODULE EXPORTS
 # =============================================================================
 
+# Enterprise aliases
+MultimodalRequest = ModalityFeatures
+MultimodalResponse = CrossModalResult
+MultimodalResult = CrossModalResult  # Another alias
+
 __all__ = [
     'MultimodalProcessor',
     'TextFeatureExtractor',
@@ -1025,7 +1211,10 @@ __all__ = [
     'AudioFeatureExtractor',
     'VideoFeatureExtractor',
     'ModalityFeatures',
+    'MultimodalRequest',  # Alias
     'CrossModalResult',
+    'MultimodalResponse',  # Alias
+    'MultimodalResult',  # Alias
     'ModalityType',
     'ProcessingMode',
     'FusionStrategy',

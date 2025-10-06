@@ -29,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class PrivacyLevel(Enum):
-    """Privacy protection levels"""
+    """
+        Privacy protection levels"""
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -70,7 +71,8 @@ class PrivacyConfig:
     min_clients_for_update: int = 10
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+        Convert to dictionary"""
         return {
             "privacy_level": self.privacy_level.value,
             "differential_privacy": self.differential_privacy,
@@ -97,7 +99,8 @@ class FederatedMetrics:
     last_updated: datetime = field(default_factory=datetime.utcnow)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+        Convert to dictionary"""
         return {
             "round_number": self.round_number,
             "participating_clients": self.participating_clients,
@@ -127,6 +130,7 @@ class FederatedClient:
         self.privacy_budget_used = 0.0
         self.total_rounds_participated = 0
         self.last_communication = datetime.utcnow()
+
         
         logger.info(f"FederatedClient {client_id} initialized with {data_size} data samples")
     
@@ -135,23 +139,34 @@ class FederatedClient:
         """Perform local training"""
         self.status = ClientStatus.TRAINING
         start_time = time.time()
+
         
         try:
             # Simulate local training
             await asyncio.sleep(np.random.uniform(0.1, 0.5))  # Simulate training time
             
             # Create updated weights (simulate training)
+
+
             updated_weights = {}
             for layer_name, weights in global_weights.items():
                 # Add noise to simulate training updates
+
                 noise = np.random.normal(0, 0.01, weights.shape)
+
                 updated_weights[layer_name] = weights + noise
             
             # Simulate metrics improvement
+
             accuracy_improvement = np.random.uniform(0.001, 0.01)
+
             self.local_metrics['accuracy'] = min(1.0, self.local_metrics['accuracy'] + accuracy_improvement)
+
             self.local_metrics['loss'] = max(0.01, self.local_metrics['loss'] * 0.99)
+
             self.local_metrics['last_update'] = datetime.utcnow()
+
+
             
             training_time = time.time() - start_time
             self.total_rounds_participated += 1
@@ -169,6 +184,7 @@ class FederatedClient:
         except Exception as e:
             self.status = ClientStatus.ERROR
             logger.error(f"Local training failed for client {self.client_id}: {e}")
+
             raise
     
     async def apply_differential_privacy(self, weights: Dict[str, np.ndarray], 
@@ -178,25 +194,33 @@ class FederatedClient:
             return weights
         
         # Calculate sensitivity and noise scale
+
         sensitivity = privacy_config.max_grad_norm
+
         noise_scale = sensitivity * privacy_config.noise_multiplier
         
         # Add noise to weights
+
         private_weights = {}
+
         total_privacy_cost = 0
         
         for layer_name, layer_weights in weights.items():
             # Add Gaussian noise
+
             noise = np.random.normal(0, noise_scale, layer_weights.shape)
+
             private_weights[layer_name] = layer_weights + noise
             
             # Update privacy cost
             total_privacy_cost += privacy_config.epsilon / len(weights)
+
         
         self.privacy_budget_used += total_privacy_cost
         
         logger.debug(f"Applied differential privacy to client {self.client_id}, "
                     f"privacy cost: {total_privacy_cost:.6f}")
+
         
         return private_weights
     
@@ -214,7 +238,8 @@ class FederatedClient:
 
 
 class FederatedServer:
-    """Federated learning server"""
+    """
+        Federated learning server"""
     
     def __init__(self, server_id: str, privacy_config: PrivacyConfig):
         self.server_id = server_id
@@ -228,6 +253,7 @@ class FederatedServer:
         
         # Initialize global model
         self._initialize_global_model()
+
         
         logger.info(f"FederatedServer {server_id} initialized")
     
@@ -250,14 +276,17 @@ class FederatedServer:
         with self._lock:
             if client.client_id in self.clients:
                 logger.warning(f"Client {client.client_id} already registered")
+
                 return False
             
             self.clients[client.client_id] = client
             client.status = ClientStatus.ONLINE
             client.last_communication = datetime.utcnow()
+
             
             logger.info(f"Registered client {client.client_id} "
                        f"(total clients: {len(self.clients)})")
+
             return True
     
     def unregister_client(self, client_id: str) -> bool:
@@ -269,19 +298,25 @@ class FederatedServer:
             del self.clients[client_id]
             logger.info(f"Unregistered client {client_id} "
                        f"(remaining clients: {len(self.clients)})")
+
             return True
     
     async def federated_round(self, strategy: AggregationStrategy = AggregationStrategy.FEDAVG) -> FederatedMetrics:
         """Execute one round of federated learning"""
         if self.is_training:
             raise RuntimeError("Federated round already in progress")
+
         
         self.is_training = True
+
         start_time = time.time()
+
         
         try:
             # Select clients for this round
+
             selected_clients = await self._select_clients()
+
             
             if len(selected_clients) < self.privacy_config.min_clients_for_update:
                 raise RuntimeError(f"Not enough clients for update. "
@@ -293,9 +328,11 @@ class FederatedServer:
                        f"with {len(selected_clients)} clients")
             
             # Collect client updates
+
             client_updates = await self._collect_client_updates(selected_clients)
             
             # Aggregate updates
+
             aggregated_weights = await self._aggregate_updates(client_updates, strategy)
             
             # Update global model
@@ -303,6 +340,7 @@ class FederatedServer:
             self.round_number += 1
             
             # Calculate metrics
+
             metrics = await self._calculate_round_metrics(client_updates, start_time)
             
             # Store aggregation history
@@ -313,9 +351,11 @@ class FederatedServer:
                 'metrics': metrics.to_dict(),
                 'timestamp': datetime.utcnow().isoformat()
             })
+
             
             logger.info(f"Federated round {self.round_number} completed. "
                        f"Global accuracy: {metrics.global_accuracy:.4f}")
+
             
             return metrics
         
@@ -327,14 +367,17 @@ class FederatedServer:
         with self._lock:
             online_clients = [
                 client_id for client_id, client in self.clients.items()
+
                 if client.status == ClientStatus.ONLINE
             ]
         
         # Random sampling based on sampling rate
+
         num_selected = max(
             self.privacy_config.min_clients_for_update,
             int(len(online_clients) * self.privacy_config.client_sampling_rate)
         )
+
         
         if len(online_clients) < num_selected:
             selected = online_clients
@@ -344,6 +387,7 @@ class FederatedServer:
                 size=num_selected, 
                 replace=False
             ).tolist()
+
         
         logger.debug(f"Selected {len(selected)} clients from {len(online_clients)} online clients")
         return selected
@@ -354,10 +398,14 @@ class FederatedServer:
         
         for client_id in selected_clients:
             client = self.clients[client_id]
+
             task = asyncio.create_task(
                 client.local_training(self.global_model_weights)
             )
+
             update_tasks.append((client_id, task))
+
+
         
         client_updates = []
         for client_id, task in update_tasks:
@@ -371,8 +419,10 @@ class FederatedServer:
                         update['updated_weights'], 
                         self.privacy_config
                     )
+
                 
                 client_updates.append(update)
+
                 
             except Exception as e:
                 logger.error(f"Failed to collect update from client {client_id}: {e}")
@@ -401,21 +451,26 @@ class FederatedServer:
             return await self._federated_averaging(client_updates)
     
     async def _federated_averaging(self, client_updates: List[Dict[str, Any]]) -> Dict[str, np.ndarray]:
-        """Standard federated averaging (FedAvg)"""
+        """
+        Standard federated averaging (FedAvg)"""
         if not client_updates:
             return self.global_model_weights
         
         # Calculate total samples
+
         total_samples = sum(update['data_samples'] for update in client_updates)
         
         # Initialize aggregated weights
+
         aggregated_weights = {}
         
         for layer_name in self.global_model_weights.keys():
             weighted_sum = np.zeros_like(self.global_model_weights[layer_name])
+
             
             for update in client_updates:
                 weight = update['data_samples'] / total_samples
+
                 layer_weights = update['updated_weights'][layer_name]
                 weighted_sum += weight * layer_weights
             
@@ -424,20 +479,27 @@ class FederatedServer:
         return aggregated_weights
     
     async def _weighted_averaging(self, client_updates: List[Dict[str, Any]]) -> Dict[str, np.ndarray]:
-        """Weighted averaging based on client performance"""
+        """
+        Weighted averaging based on client performance"""
         if not client_updates:
             return self.global_model_weights
         
         # Calculate weights based on local accuracy
+
         total_weight = 0
+
         weights = []
         
         for update in client_updates:
             accuracy = update['local_metrics']['accuracy']
+
             data_samples = update['data_samples']
             # Weight by accuracy and data size
+
             weight = accuracy * np.sqrt(data_samples)
+
             weights.append(weight)
+
             total_weight += weight
         
         # Normalize weights
@@ -447,10 +509,12 @@ class FederatedServer:
             weights = [1.0 / len(client_updates)] * len(client_updates)
         
         # Aggregate with normalized weights
+
         aggregated_weights = {}
         
         for layer_name in self.global_model_weights.keys():
             weighted_sum = np.zeros_like(self.global_model_weights[layer_name])
+
             
             for update, weight in zip(client_updates, weights):
                 layer_weights = update['updated_weights'][layer_name]
@@ -461,33 +525,44 @@ class FederatedServer:
         return aggregated_weights
     
     async def _median_aggregation(self, client_updates: List[Dict[str, Any]]) -> Dict[str, np.ndarray]:
-        """Median-based aggregation for robustness"""
+        """
+        Median-based aggregation for robustness"""
         if not client_updates:
             return self.global_model_weights
+
         
         aggregated_weights = {}
         
         for layer_name in self.global_model_weights.keys():
             # Collect all weights for this layer
+
             layer_weights_list = []
             for update in client_updates:
                 layer_weights_list.append(update['updated_weights'][layer_name])
             
             # Stack weights and compute median
+
             stacked_weights = np.stack(layer_weights_list, axis=0)
+
+
             median_weights = np.median(stacked_weights, axis=0)
+
             
             aggregated_weights[layer_name] = median_weights
         
         return aggregated_weights
     
     async def _byzantine_robust_aggregation(self, client_updates: List[Dict[str, Any]]) -> Dict[str, np.ndarray]:
-        """Byzantine-robust aggregation"""
+        """
+        Byzantine-robust aggregation"""
         # For simplicity, use trimmed mean (remove outliers)
         if len(client_updates) < 3:
             return await self._federated_averaging(client_updates)
+
+
         
         aggregated_weights = {}
+
         trim_fraction = 0.2  # Remove 20% of outliers
         
         for layer_name in self.global_model_weights.keys():
@@ -496,47 +571,63 @@ class FederatedServer:
                 layer_weights_list.append(update['updated_weights'][layer_name])
             
             # Stack weights
+
             stacked_weights = np.stack(layer_weights_list, axis=0)
             
             # Calculate trimmed mean
+
             trim_count = int(len(client_updates) * trim_fraction)
+
             if trim_count > 0:
                 # Sort along client axis and trim outliers
+
                 sorted_weights = np.sort(stacked_weights, axis=0)
+
+
                 trimmed_weights = sorted_weights[trim_count:-trim_count] if trim_count < len(client_updates)//2 else sorted_weights
                 aggregated_weights[layer_name] = np.mean(trimmed_weights, axis=0)
+
             else:
                 aggregated_weights[layer_name] = np.mean(stacked_weights, axis=0)
+
         
         return aggregated_weights
     
     async def _calculate_round_metrics(self, client_updates: List[Dict[str, Any]], 
                                      start_time: float) -> FederatedMetrics:
-        """Calculate metrics for the federated round"""
+        """
+        Calculate metrics for the federated round"""
         training_time = time.time() - start_time
         
         # Calculate weighted average accuracy
+
         total_samples = sum(update['data_samples'] for update in client_updates)
+
         weighted_accuracy = 0
         
         if total_samples > 0:
             for update in client_updates:
                 weight = update['data_samples'] / total_samples
+
                 accuracy = update['local_metrics']['accuracy']
                 weighted_accuracy += weight * accuracy
         
         # Calculate convergence rate (simplified)
+
         convergence_rate = 0.0
         if len(self.aggregation_history) > 1:
             prev_accuracy = self.aggregation_history[-1]['metrics']['global_accuracy']
+
             convergence_rate = abs(weighted_accuracy - prev_accuracy)
         
         # Calculate privacy cost
+
         privacy_cost = 0.0
         if self.privacy_config.differential_privacy:
             privacy_cost = self.privacy_config.epsilon * len(client_updates)
         
         # Calculate communication overhead (simplified)
+
         communication_overhead = len(client_updates) * 10.0  # MB per client
         
         return FederatedMetrics(
@@ -550,9 +641,12 @@ class FederatedServer:
         )
     
     def get_server_stats(self) -> Dict[str, Any]:
-        """Get comprehensive server statistics"""
+        """
+        Get comprehensive server statistics"""
         with self._lock:
             client_status_counts = defaultdict(int)
+
+
             total_data_samples = 0
             
             for client in self.clients.values():
@@ -572,7 +666,8 @@ class FederatedServer:
 
 
 class PrivacyPreservingLearning:
-    """Advanced privacy-preserving learning mechanisms"""
+    """
+        Advanced privacy-preserving learning mechanisms"""
     
     def __init__(self, privacy_config: PrivacyConfig):
         self.privacy_config = privacy_config
@@ -584,15 +679,19 @@ class PrivacyPreservingLearning:
     
     async def apply_differential_privacy(self, data: np.ndarray, 
                                        sensitivity: float = 1.0) -> np.ndarray:
-        """Apply differential privacy to data"""
+        """
+        Apply differential privacy to data"""
         if not self.privacy_config.differential_privacy:
             return data
         
         # Calculate noise scale
+
         noise_scale = sensitivity / self.privacy_config.epsilon
         
         # Add Laplace noise
+
         noise = np.random.laplace(0, noise_scale, data.shape)
+
         private_data = data + noise
         
         # Update privacy accountant
@@ -603,24 +702,30 @@ class PrivacyPreservingLearning:
         return private_data
     
     async def secure_aggregation(self, client_updates: List[Dict[str, np.ndarray]]) -> Dict[str, np.ndarray]:
-        """Perform secure aggregation"""
+        """
+        Perform secure aggregation"""
         if len(client_updates) < 2:
             raise ValueError("Need at least 2 clients for secure aggregation")
         
         # Simulate secure aggregation protocol
         # In practice, this would use cryptographic techniques
+
         
         aggregated = {}
         for layer_name in client_updates[0].keys():
             layer_sum = np.zeros_like(client_updates[0][layer_name])
+
             
             for update in client_updates:
                 # Add noise for security
+
                 noise = np.random.normal(0, 0.001, update[layer_name].shape)
+
                 layer_sum += update[layer_name] + noise
             
             # Average
             aggregated[layer_name] = layer_sum / len(client_updates)
+
         
         return aggregated
     
@@ -637,7 +742,8 @@ class PrivacyPreservingLearning:
 
 
 class FederatedOrchestrator:
-    """Main orchestrator for federated learning"""
+    """
+        Main orchestrator for federated learning"""
     
     def __init__(self, privacy_config: PrivacyConfig):
         self.privacy_config = privacy_config
@@ -657,12 +763,16 @@ class FederatedOrchestrator:
         """Create federated server"""
         if server_id in self.servers:
             raise ValueError(f"Server {server_id} already exists")
+
+
         
         config = privacy_config or self.privacy_config
+
         server = FederatedServer(server_id, config)
         self.servers[server_id] = server
         
         self.global_stats['total_servers'] = len(self.servers)
+
         
         logger.info(f"Created federated server {server_id}")
         return server
@@ -674,6 +784,7 @@ class FederatedOrchestrator:
         
         del self.servers[server_id]
         self.global_stats['total_servers'] = len(self.servers)
+
         
         logger.info(f"Removed federated server {server_id}")
         return True
@@ -684,16 +795,22 @@ class FederatedOrchestrator:
         """Orchestrate complete federated learning process"""
         if server_id not in self.servers:
             raise ValueError(f"Server {server_id} not found")
+
+
         
         server = self.servers[server_id]
+
         metrics_history = []
         
         logger.info(f"Starting federated learning orchestration for {rounds} rounds")
+
         
         for round_num in range(rounds):
             try:
                 metrics = await server.federated_round(strategy)
+
                 metrics_history.append(metrics)
+
                 
                 self.global_stats['total_rounds_completed'] += 1
                 self.global_stats['global_privacy_budget_used'] += metrics.privacy_cost
@@ -704,14 +821,17 @@ class FederatedOrchestrator:
                 # Check convergence
                 if len(metrics_history) > 5 and self._check_convergence(metrics_history[-5:]):
                     logger.info("Convergence detected, stopping early")
+
                     break
                 
             except Exception as e:
                 logger.error(f"Round {round_num + 1} failed: {e}")
+
                 break
         
         logger.info(f"Federated learning orchestration completed. "
                    f"Final accuracy: {metrics_history[-1].global_accuracy:.4f}")
+
         
         return metrics_history
     
@@ -721,13 +841,17 @@ class FederatedOrchestrator:
             return False
         
         # Check if accuracy improvement is minimal
+
         accuracies = [m.global_accuracy for m in recent_metrics]
+
         improvement = max(accuracies) - min(accuracies)
+
         
         return improvement < 0.001  # 0.1% threshold
     
     def get_global_stats(self) -> Dict[str, Any]:
-        """Get global orchestration statistics"""
+        """
+        Get global orchestration statistics"""
         total_clients = sum(len(server.clients) for server in self.servers.values())
         self.global_stats['total_clients'] = total_clients
         
@@ -736,7 +860,8 @@ class FederatedOrchestrator:
             'privacy_budget_status': self.privacy_engine.get_privacy_budget_status(),
             'active_servers': [server_id for server_id in self.servers.keys()],
             'server_details': {
-                server_id: server.get_server_stats() 
+                server_id: server.get_server_stats()
+ 
                 for server_id, server in self.servers.items()
             }
         }

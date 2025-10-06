@@ -627,11 +627,16 @@ class EventStreamingService:
         self.event_processor = EventProcessor()
         self.active_streams = set()
         self.processing_pool = ThreadPoolExecutor(max_workers=10)
-        self.metrics_collector = self._start_metrics_collection()
+        self.metrics_collector = None  # Lazy init
         self._lock = threading.Lock()
         
         # Initialize default streams
         self._initialize_default_streams()
+    
+    async def ensure_initialized(self):
+        """Ensure async components are initialized"""
+        if self.metrics_collector is None:
+            self.metrics_collector = self._start_metrics_collection()
         
         logger.info("EventStreamingService initialized successfully")
     

@@ -52,7 +52,8 @@ class PlatformIntegration(Base):
     created_at = Column(DateTime(timezone=True), default=datetime.utcnow)
 
 class ContentDistribution(Base):
-    """Automated content distribution tracking."""
+    """
+        Automated content distribution tracking."""
     __tablename__ = 'content_distributions'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -70,7 +71,8 @@ class ContentDistribution(Base):
     created_at = Column(DateTime(timezone=True), default=datetime.utcnow)
 
 class CrossPlatformSync(Base):
-    """Cross-platform synchronization management."""
+    """
+        Cross-platform synchronization management."""
     __tablename__ = 'cross_platform_sync'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -84,7 +86,8 @@ class CrossPlatformSync(Base):
     created_at = Column(DateTime(timezone=True), default=datetime.utcnow)
 
 class DistributionAnalytics(Base):
-    """Distribution performance analytics."""
+    """
+        Distribution performance analytics."""
     __tablename__ = 'distribution_analytics'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

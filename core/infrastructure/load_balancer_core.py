@@ -25,7 +25,8 @@ import threading
 logger = logging.getLogger(__name__)
 
 class LoadBalancingAlgorithm(str, Enum):
-    """Load balancing algorithms"""
+    """
+Load balancing algorithms"""
     ROUND_ROBIN = "round_robin"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     LEAST_CONNECTIONS = "least_connections"
@@ -38,7 +39,8 @@ class LoadBalancingAlgorithm(str, Enum):
     RESOURCE_BASED = "resource_based"
 
 class BackendStatus(str, Enum):
-    """Backend server status"""
+    """
+Backend server status"""
     HEALTHY = "healthy"
     UNHEALTHY = "unhealthy"
     DRAINING = "draining"
@@ -47,7 +49,8 @@ class BackendStatus(str, Enum):
 
 @dataclass
 class Backend:
-    """Backend server configuration"""
+    """
+Backend server configuration"""
     id: str
     host: str
     port: int
@@ -63,33 +66,38 @@ class Backend:
     
     @property
     def url(self) -> str:
-        """Get backend URL"""
+        """
+Get backend URL"""
         return f"http://{self.host}:{self.port}"
     
     @property
     def avg_response_time(self) -> float:
-        """Get average response time"""
+        """
+Get average response time"""
         if not self.response_times:
             return 0.0
         return sum(self.response_times) / len(self.response_times)
     
     @property
     def error_rate(self) -> float:
-        """Get error rate"""
+        """
+Get error rate"""
         if self.total_requests == 0:
             return 0.0
         return self.failed_requests / self.total_requests
     
     @property
     def connection_utilization(self) -> float:
-        """Get connection utilization percentage"""
+        """
+Get connection utilization percentage"""
         if self.max_connections == 0:
             return 0.0
         return (self.current_connections / self.max_connections) * 100
 
 @dataclass
 class LoadBalancerRule:
-    """Load balancer routing rule"""
+    """
+Load balancer routing rule"""
     name: str
     condition: Callable[[Dict[str, Any]], bool]
     backend_pool: str
@@ -98,7 +106,8 @@ class LoadBalancerRule:
 
 @dataclass
 class StickySession:
-    """Sticky session information"""
+    """
+Sticky session information"""
     session_id: str
     backend_id: str
     created_at: datetime
@@ -107,7 +116,8 @@ class StickySession:
 
 @dataclass
 class BalancerMetrics:
-    """Load balancer metrics"""
+    """
+Load balancer metrics"""
     total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
@@ -120,7 +130,8 @@ class BalancerMetrics:
     last_reset: datetime = field(default_factory=datetime.utcnow)
 
 class LoadBalancerRequest:
-    """Load balancer request context"""
+    """
+Load balancer request context"""
     
     def __init__(self, client_ip: str, headers: Dict[str, str], path: str, method: str):
         self.client_ip = client_ip
@@ -131,10 +142,12 @@ class LoadBalancerRequest:
         self.timestamp = time.time()
 
 class LoadBalancerCore:
-    """Enterprise load balancing system"""
+    """
+Enterprise load balancing system"""
     
     def __init__(self, level: str = "enterprise"):
-        """Initialize load balancer core"""
+        """
+Initialize load balancer core"""
         self.level = level
         self.backend_pools: Dict[str, List[Backend]] = {}
         self.algorithms: Dict[str, LoadBalancingAlgorithm] = {}
@@ -167,7 +180,8 @@ class LoadBalancerCore:
         logger.info(f"⚖️ Load Balancer Core initialized - Level: {level}")
 
     async def add_backend_pool(self, pool_name: str, algorithm: LoadBalancingAlgorithm = LoadBalancingAlgorithm.ROUND_ROBIN):
-        """Add a backend pool"""
+        """
+Add a backend pool"""
         async with self._lock:
             self.backend_pools[pool_name] = []
             self.algorithms[pool_name] = algorithm
@@ -179,7 +193,8 @@ class LoadBalancerCore:
             logger.info(f"📝 Added backend pool '{pool_name}' with algorithm {algorithm.value}")
 
     async def add_backend(self, pool_name: str, backend: Backend):
-        """Add backend to pool"""
+        """
+Add backend to pool"""
         async with self._lock:
             if pool_name not in self.backend_pools:
                 await self.add_backend_pool(pool_name)
@@ -194,7 +209,8 @@ class LoadBalancerCore:
             logger.info(f"🔗 Added backend {backend.id} to pool '{pool_name}'")
 
     async def remove_backend(self, pool_name: str, backend_id: str):
-        """Remove backend from pool"""
+        """
+Remove backend from pool"""
         async with self._lock:
             if pool_name in self.backend_pools:
                 backends = self.backend_pools[pool_name]
@@ -211,7 +227,8 @@ class LoadBalancerCore:
                         break
 
     def _update_consistent_hash_ring(self, pool_name: str):
-        """Update consistent hash ring for pool"""
+        """
+Update consistent hash ring for pool"""
         ring = {}
         backends = self.backend_pools[pool_name]
         
@@ -228,7 +245,8 @@ class LoadBalancerCore:
         self._consistent_hash_rings[pool_name] = ring
 
     async def select_backend(self, pool_name: str, request: LoadBalancerRequest) -> Optional[Backend]:
-        """Select backend based on configured algorithm"""
+        """
+Select backend based on configured algorithm"""
         async with self._lock:
             if pool_name not in self.backend_pools:
                 return None
@@ -264,7 +282,8 @@ class LoadBalancerCore:
         backends: List[Backend], 
         request: LoadBalancerRequest
     ) -> Optional[Backend]:
-        """Apply load balancing algorithm"""
+        """
+Apply load balancing algorithm"""
         
         if algorithm == LoadBalancingAlgorithm.ROUND_ROBIN:
             return self._round_robin(pool_name, backends)
@@ -300,14 +319,16 @@ class LoadBalancerCore:
             return self._round_robin(pool_name, backends)
 
     def _round_robin(self, pool_name: str, backends: List[Backend]) -> Backend:
-        """Round robin algorithm"""
+        """
+Round robin algorithm"""
         index = self._round_robin_indices[pool_name]
         backend = backends[index % len(backends)]
         self._round_robin_indices[pool_name] = (index + 1) % len(backends)
         return backend
 
     def _weighted_round_robin(self, pool_name: str, backends: List[Backend]) -> Backend:
-        """Weighted round robin algorithm"""
+        """
+Weighted round robin algorithm"""
         total_weight = sum(b.weight for b in backends)
         if total_weight == 0:
             return self._round_robin(pool_name, backends)
@@ -324,11 +345,13 @@ class LoadBalancerCore:
         return backend
 
     def _least_connections(self, backends: List[Backend]) -> Backend:
-        """Least connections algorithm"""
+        """
+Least connections algorithm"""
         return min(backends, key=lambda b: b.current_connections)
 
     def _weighted_least_connections(self, backends: List[Backend]) -> Backend:
-        """Weighted least connections algorithm"""
+        """
+Weighted least connections algorithm"""
         def score(backend: Backend) -> float:
             if backend.weight == 0:
                 return float('inf')
@@ -337,7 +360,8 @@ class LoadBalancerCore:
         return min(backends, key=score)
 
     def _weighted_random(self, backends: List[Backend]) -> Backend:
-        """Weighted random algorithm"""
+        """
+Weighted random algorithm"""
         total_weight = sum(b.weight for b in backends)
         if total_weight == 0:
             return random.choice(backends)
@@ -353,7 +377,8 @@ class LoadBalancerCore:
         return backends[-1]
 
     def _consistent_hash(self, pool_name: str, backends: List[Backend], request: LoadBalancerRequest) -> Backend:
-        """Consistent hash algorithm"""
+        """
+Consistent hash algorithm"""
         ring = self._consistent_hash_rings.get(pool_name, {})
         if not ring:
             return random.choice(backends)
@@ -376,17 +401,20 @@ class LoadBalancerCore:
         return random.choice(backends)
 
     def _ip_hash(self, backends: List[Backend], request: LoadBalancerRequest) -> Backend:
-        """IP hash algorithm"""
+        """
+IP hash algorithm"""
         ip_hash = hash(request.client_ip)
         index = ip_hash % len(backends)
         return backends[index]
 
     def _least_response_time(self, backends: List[Backend]) -> Backend:
-        """Least response time algorithm"""
+        """
+Least response time algorithm"""
         return min(backends, key=lambda b: b.avg_response_time or 0)
 
     def _resource_based(self, backends: List[Backend]) -> Backend:
-        """Resource-based algorithm (CPU + Memory + Connections)"""
+        """
+Resource-based algorithm (CPU + Memory + Connections)"""
         def resource_score(backend: Backend) -> float:
             # Lower score is better
             connection_score = backend.connection_utilization / 100
@@ -398,21 +426,24 @@ class LoadBalancerCore:
         return min(backends, key=resource_score)
 
     def _find_backend_by_id(self, pool_name: str, backend_id: str) -> Optional[Backend]:
-        """Find backend by ID in pool"""
+        """
+Find backend by ID in pool"""
         if pool_name not in self.backend_pools:
             return None
         
         return self._find_backend_by_id_in_list(self.backend_pools[pool_name], backend_id)
 
     def _find_backend_by_id_in_list(self, backends: List[Backend], backend_id: str) -> Optional[Backend]:
-        """Find backend by ID in list"""
+        """
+Find backend by ID in list"""
         for backend in backends:
             if backend.id == backend_id:
                 return backend
         return None
 
     def _create_sticky_session(self, session_id: str, backend_id: str):
-        """Create sticky session"""
+        """
+Create sticky session"""
         session = StickySession(
             session_id=session_id,
             backend_id=backend_id,
@@ -422,7 +453,8 @@ class LoadBalancerCore:
         self.sticky_sessions[session_id] = session
 
     async def record_request(self, backend: Backend, response_time: float, success: bool):
-        """Record request metrics"""
+        """
+Record request metrics"""
         async with self._lock:
             backend.total_requests += 1
             backend.response_times.append(response_time)
@@ -443,7 +475,8 @@ class LoadBalancerCore:
             await self._update_circuit_breaker(backend, success)
 
     async def _update_circuit_breaker(self, backend: Backend, success: bool):
-        """Update circuit breaker state"""
+        """
+Update circuit breaker state"""
         cb_key = f"{backend.id}"
         
         if cb_key not in self._circuit_breakers:
@@ -468,18 +501,21 @@ class LoadBalancerCore:
                 logger.warning(f"🔌 Circuit breaker opened for backend {backend.id}")
 
     async def add_rule(self, rule: LoadBalancerRule):
-        """Add routing rule"""
+        """
+Add routing rule"""
         self.rules.append(rule)
         self.rules.sort(key=lambda r: r.priority, reverse=True)
         logger.info(f"📋 Added load balancer rule '{rule.name}'")
 
     async def remove_rule(self, rule_name: str):
-        """Remove routing rule"""
+        """
+Remove routing rule"""
         self.rules = [r for r in self.rules if r.name != rule_name]
         logger.info(f"🗑️ Removed load balancer rule '{rule_name}'")
 
     async def evaluate_rules(self, request: LoadBalancerRequest) -> Optional[str]:
-        """Evaluate routing rules to determine backend pool"""
+        """
+Evaluate routing rules to determine backend pool"""
         context = {
             'path': request.path,
             'method': request.method,
@@ -494,7 +530,8 @@ class LoadBalancerCore:
         return None
 
     async def cleanup_sticky_sessions(self):
-        """Clean up expired sticky sessions"""
+        """
+Clean up expired sticky sessions"""
         current_time = datetime.utcnow()
         expired_sessions = []
         
@@ -509,7 +546,8 @@ class LoadBalancerCore:
             logger.info(f"🧹 Cleaned up {len(expired_sessions)} expired sticky sessions")
 
     async def update_backend_status(self, pool_name: str, backend_id: str, status: BackendStatus):
-        """Update backend status"""
+        """
+Update backend status"""
         async with self._lock:
             backend = self._find_backend_by_id(pool_name, backend_id)
             if backend:
@@ -530,7 +568,8 @@ class LoadBalancerCore:
                 logger.info(f"🔄 Updated backend {backend_id} status: {old_status.value} -> {status.value}")
 
     def get_pool_status(self, pool_name: str) -> Dict[str, Any]:
-        """Get pool status"""
+        """
+Get pool status"""
         if pool_name not in self.backend_pools:
             return {}
         
@@ -558,7 +597,8 @@ class LoadBalancerCore:
         }
 
     def get_metrics(self) -> BalancerMetrics:
-        """Get load balancer metrics"""
+        """
+Get load balancer metrics"""
         # Update real-time metrics
         current_time = time.time()
         time_diff = current_time - self._last_metrics_update
@@ -577,7 +617,8 @@ class LoadBalancerCore:
         return self.metrics
 
     async def health_check(self) -> bool:
-        """Health check for load balancer"""
+        """
+Health check for load balancer"""
         try:
             # Check if we have any backend pools
             if not self.backend_pools:
@@ -602,4 +643,4 @@ __all__ = [
     "StickySession", "BalancerMetrics", "LoadBalancingAlgorithm", "BackendStatus"
 ]
 
-logger.info("⚖️ Load Balancer Core module loaded")
+logger.info("⚖️ Load Balancer Core module initialized")

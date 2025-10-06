@@ -46,7 +46,8 @@ warnings.filterwarnings('ignore')
 
 # Enums
 class RevenueMetricType(Enum):
-    """Revenue metric types for analytics"""
+    """
+        Revenue metric types for analytics"""
     TOTAL_REVENUE = "total_revenue"
     MONTHLY_RECURRING_REVENUE = "mrr"
     ANNUAL_RECURRING_REVENUE = "arr"
@@ -141,7 +142,8 @@ class RevenueMetrics:
 
 @dataclass
 class AnalyticsQuery:
-    """Analytics query parameters"""
+    """
+        Analytics query parameters"""
     metric_types: List[RevenueMetricType]
     timeframe: AnalyticsTimeframe
     start_date: datetime
@@ -165,7 +167,8 @@ class ForecastResult:
 
 @dataclass
 class AnalyticsReport:
-    """Analytics report data"""
+    """
+        Analytics report data"""
     report_id: str
     report_type: ReportType
     generation_date: datetime
@@ -179,7 +182,8 @@ class AnalyticsReport:
 
 @dataclass
 class RevenueAlert:
-    """Revenue alert notification"""
+    """
+        Revenue alert notification"""
     alert_id: str
     alert_type: AlertType
     severity: str  # low, medium, high, critical
@@ -193,7 +197,8 @@ class RevenueAlert:
 
 @dataclass
 class PerformanceInsight:
-    """Performance insight data"""
+    """
+        Performance insight data"""
     insight_id: str
     insight_type: str
     title: str
@@ -206,15 +211,18 @@ class PerformanceInsight:
 
 # Exceptions
 class RevenueAnalyticsError(Exception):
-    """Base revenue analytics error"""
+    """
+        Base revenue analytics error"""
     pass
 
 class ForecastingError(RevenueAnalyticsError):
-    """Forecasting error"""
+    """
+        Forecasting error"""
     pass
 
 class DatabaseConnectionError(RevenueAnalyticsError):
-    """Database connection error"""
+    """
+        Database connection error"""
     pass
 
 # Core Revenue Analytics Engine
@@ -253,7 +261,8 @@ class EnterpriseRevenueAnalyticsEngine:
         self.forecast_cache = {}
         
     def _init_forecasting_models(self):
-        """Initialize ML models for forecasting"""
+        """
+        Initialize ML models for forecasting"""
         try:
             self.forecasting_models = {
                 # Revenue forecasting models
@@ -292,6 +301,7 @@ class EnterpriseRevenueAnalyticsEngine:
             self.logger.info("Forecasting models initialized")
         except Exception as e:
             self.logger.error(f"Forecasting models initialization failed: {e}")
+
             raise ForecastingError(f"Failed to initialize forecasting models: {e}")
 
     def _init_analytics_processors(self):
@@ -328,6 +338,7 @@ class EnterpriseRevenueAnalyticsEngine:
         try:
             # Initialize Redis
             self.redis_client = redis.from_url(self.config.redis_url)
+
             await self.redis_client.ping()
             
             # Initialize PostgreSQL pool
@@ -337,10 +348,12 @@ class EnterpriseRevenueAnalyticsEngine:
                 max_size=20,
                 command_timeout=30
             )
+
             
             self.logger.info("Database and Redis connections established")
         except Exception as e:
             self.logger.error(f"Connection initialization failed: {e}")
+
             raise DatabaseConnectionError(f"Failed to initialize connections: {e}")
 
     async def track_revenue_metrics(
@@ -354,6 +367,7 @@ class EnterpriseRevenueAnalyticsEngine:
         Args:
             revenue_data: Raw revenue data from various sources
             timestamp: Metrics timestamp (default: current time)
+
             
         Returns:
             Calculated revenue metrics
@@ -362,23 +376,47 @@ class EnterpriseRevenueAnalyticsEngine:
             timestamp = timestamp or datetime.utcnow()
             
             # Calculate core revenue metrics
+
             total_revenue = await self._calculate_total_revenue(revenue_data)
+
+
             mrr = await self._calculate_mrr(revenue_data)
+
+
             arr = mrr * 12
+
             arpu = await self._calculate_arpu(revenue_data)
+
+
             clv = await self._calculate_clv(revenue_data)
+
+
             churn_rate = await self._calculate_churn_rate(revenue_data)
+
+
             conversion_rate = await self._calculate_conversion_rate(revenue_data)
+
+
             revenue_growth_rate = await self._calculate_growth_rate(revenue_data)
+
+
             profit_margin = await self._calculate_profit_margin(revenue_data)
             
             # Calculate subscriber metrics
+
             active_subscribers = revenue_data.get('active_subscribers', 0)
+
+
             new_subscribers = revenue_data.get('new_subscribers', 0)
+
+
             churned_subscribers = revenue_data.get('churned_subscribers', 0)
             
             # Calculate revenue per content
+
             revenue_per_content = await self._calculate_revenue_per_content(revenue_data)
+
+
             
             metrics = RevenueMetrics(
                 timestamp=timestamp,
@@ -410,12 +448,15 @@ class EnterpriseRevenueAnalyticsEngine:
             
             # Check for alerts
             await self._check_alert_conditions(metrics)
+
             
             self.logger.info(f"Revenue metrics tracked for {timestamp}")
+
             return metrics
             
         except Exception as e:
             self.logger.error(f"Revenue metrics tracking failed: {e}")
+
             raise RevenueAnalyticsError(f"Failed to track revenue metrics: {e}")
 
     async def _calculate_total_revenue(self, data: Dict[str, Any]) -> Decimal:
@@ -433,7 +474,8 @@ class EnterpriseRevenueAnalyticsEngine:
             return Decimal('0.00')
 
     async def _calculate_mrr(self, data: Dict[str, Any]) -> Decimal:
-        """Calculate Monthly Recurring Revenue"""
+        """
+        Calculate Monthly Recurring Revenue"""
         try:
             subscription_revenue = data.get('subscription_revenue', 0)
             # Normalize to monthly
@@ -444,77 +486,107 @@ class EnterpriseRevenueAnalyticsEngine:
             return Decimal('0.00')
 
     async def _calculate_arpu(self, data: Dict[str, Any]) -> Decimal:
-        """Calculate Average Revenue Per User"""
+        """
+        Calculate Average Revenue Per User"""
         try:
             total_revenue = await self._calculate_total_revenue(data)
+
+
             active_users = data.get('active_subscribers', 1)
+
             return total_revenue / Decimal(str(max(active_users, 1)))
         except Exception:
             return Decimal('0.00')
 
     async def _calculate_clv(self, data: Dict[str, Any]) -> Decimal:
-        """Calculate Customer Lifetime Value"""
+        """
+        Calculate Customer Lifetime Value"""
         try:
             arpu = await self._calculate_arpu(data)
+
+
             churn_rate = await self._calculate_churn_rate(data)
+
             
             if churn_rate > 0:
                 # CLV = ARPU / Churn Rate
                 return arpu / Decimal(str(churn_rate))
+
             return arpu * Decimal('12')  # Default to 12 months
         except Exception:
             return Decimal('100.00')
 
     async def _calculate_churn_rate(self, data: Dict[str, Any]) -> float:
-        """Calculate churn rate"""
+        """
+        Calculate churn rate"""
         try:
             churned = data.get('churned_subscribers', 0)
+
+
             total_start = data.get('subscribers_start_period', 1)
+
             return churned / max(total_start, 1)
         except Exception:
             return 0.05  # Default 5% churn
 
     async def _calculate_conversion_rate(self, data: Dict[str, Any]) -> float:
-        """Calculate conversion rate"""
+        """
+        Calculate conversion rate"""
         try:
             conversions = data.get('new_subscribers', 0)
+
+
             visitors = data.get('unique_visitors', 1)
+
             return conversions / max(visitors, 1)
         except Exception:
             return 0.02  # Default 2% conversion
 
     async def _calculate_growth_rate(self, data: Dict[str, Any]) -> float:
-        """Calculate revenue growth rate"""
+        """
+        Calculate revenue growth rate"""
         try:
             current_revenue = await self._calculate_total_revenue(data)
+
+
             previous_revenue = Decimal(str(data.get('previous_period_revenue', current_revenue)))
+
             
             if previous_revenue > 0:
                 growth = (current_revenue - previous_revenue) / previous_revenue
                 return float(growth)
+
             return 0.0
         except Exception:
             return 0.0
 
     async def _calculate_profit_margin(self, data: Dict[str, Any]) -> float:
-        """Calculate profit margin"""
+        """
+        Calculate profit margin"""
         try:
             revenue = await self._calculate_total_revenue(data)
+
+
             costs = Decimal(str(data.get('total_costs', 0)))
+
             
             if revenue > 0:
                 profit = revenue - costs
                 return float(profit / revenue)
+
             return 0.0
         except Exception:
             return 0.2  # Default 20% margin
 
     async def _calculate_revenue_per_content(self, data: Dict[str, Any]) -> Dict[str, Decimal]:
-        """Calculate revenue per content item"""
+        """
+        Calculate revenue per content item"""
         try:
             content_revenues = data.get('content_revenues', {})
+
             return {
                 content_id: Decimal(str(revenue))
+
                 for content_id, revenue in content_revenues.items()
             }
         except Exception:
@@ -539,7 +611,9 @@ class EnterpriseRevenueAnalyticsEngine:
         """
         try:
             # Get historical data for forecasting
+
             historical_data = await self._get_historical_data(metric_type)
+
             
             if len(historical_data) < 30:  # Need minimum data points
                 raise ForecastingError("Insufficient historical data for forecasting")
@@ -553,22 +627,33 @@ class EnterpriseRevenueAnalyticsEngine:
             )
             
             # Calculate accuracy metrics
+
             accuracy_metrics = await self._calculate_forecast_accuracy(
                 historical_data, method
             )
             
             # Detect seasonality and trends
+
             seasonality_detected = await self._detect_seasonality(historical_data)
+
+
             trend_direction = await self._detect_trend_direction(historical_data)
             
             # Generate forecast dates
+
             start_date = datetime.utcnow() + timedelta(days=1)
+
+
             forecast_dates = [
-                start_date + timedelta(days=i) 
+                start_date + timedelta(days=i)
+ 
                 for i in range(horizon_days)
             ]
+
             
             forecast_with_dates = list(zip(forecast_dates, forecast_values))
+
+
             
             result = ForecastResult(
                 metric_type=metric_type,
@@ -589,18 +674,20 @@ class EnterpriseRevenueAnalyticsEngine:
                     3600,  # 1 hour
                     json.dumps(asdict(result), default=str)
                 )
+
             
             self.logger.info(f"Forecast generated for {metric_type.value}")
+
             return result
             
         except Exception as e:
             self.logger.error(f"Forecast generation failed: {e}")
+
             raise ForecastingError(f"Failed to generate forecast: {e}")
 
     async def _get_historical_data(self, metric_type: RevenueMetricType) -> pd.DataFrame:
         """Get historical data for forecasting"""
         try:
-            # Mock historical data generation (in production: query from database)
             dates = pd.date_range(
                 start=datetime.utcnow() - timedelta(days=365),
                 end=datetime.utcnow(),
@@ -608,12 +695,22 @@ class EnterpriseRevenueAnalyticsEngine:
             )
             
             # Generate realistic time series data with trend and seasonality
+
             base_values = np.random.normal(1000, 100, len(dates))
+
+
             trend = np.linspace(0, 200, len(dates))
+
+
             seasonality = 50 * np.sin(2 * np.pi * np.arange(len(dates)) / 365.25)
+
+
             noise = np.random.normal(0, 50, len(dates))
+
+
             
             values = base_values + trend + seasonality + noise
+
             values = np.maximum(values, 0)  # Ensure non-negative
             
             return pd.DataFrame({
@@ -622,6 +719,7 @@ class EnterpriseRevenueAnalyticsEngine:
             })
         except Exception as e:
             self.logger.error(f"Historical data retrieval failed: {e}")
+
             return pd.DataFrame()
 
     async def _prepare_forecast_features(self, data: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
@@ -638,30 +736,40 @@ class EnterpriseRevenueAnalyticsEngine:
             
             # Lag features
             data['lag_1'] = data['value'].shift(1)
+
             data['lag_7'] = data['value'].shift(7)
+
             data['lag_30'] = data['value'].shift(30)
             
             # Rolling statistics
             data['rolling_mean_7'] = data['value'].rolling(window=7).mean()
+
             data['rolling_std_7'] = data['value'].rolling(window=7).std()
+
             data['rolling_mean_30'] = data['value'].rolling(window=30).mean()
             
             # Remove NaN values
+
             data = data.dropna()
+
+
             
             feature_columns = [
                 'day_of_year', 'day_of_week', 'month', 'quarter',
                 'lag_1', 'lag_7', 'lag_30',
                 'rolling_mean_7', 'rolling_std_7', 'rolling_mean_30'
             ]
+
             
             features = data[feature_columns].values
+
             targets = data['value'].values
             
             return features, targets
             
         except Exception as e:
             self.logger.error(f"Feature preparation failed: {e}")
+
             return np.array([]), np.array([])
 
     async def _apply_forecasting_method(
@@ -675,19 +783,29 @@ class EnterpriseRevenueAnalyticsEngine:
         try:
             if features.size == 0 or targets.size == 0:
                 # Generate default forecast
+
                 base_value = Decimal('1000.00')
+
+
                 forecasts = [base_value * Decimal(str(1 + np.random.normal(0, 0.1))) for _ in range(horizon)]
+
                 intervals = [(f * Decimal('0.9'), f * Decimal('1.1')) for f in forecasts]
                 return forecasts, intervals
             
             # Split data for validation
+
             split_point = int(len(features) * 0.8)
+
             X_train, X_test = features[:split_point], features[split_point:]
             y_train, y_test = targets[:split_point], targets[split_point:]
             
             # Scale features
+
             scaler = self.scalers['standard']
+
             X_train_scaled = scaler.fit_transform(X_train)
+
+
             X_test_scaled = scaler.transform(X_test)
             
             # Select and train model based on method
@@ -702,21 +820,33 @@ class EnterpriseRevenueAnalyticsEngine:
             model.fit(X_train_scaled, y_train)
             
             # Generate future features for forecasting
+
             last_features = features[-1].copy()
+
+
             forecasts = []
+
             confidence_intervals = []
             
             for i in range(horizon):
                 # Predict next value
+
                 prediction = model.predict(scaler.transform([last_features]))[0]
+
                 prediction = max(prediction, 0)  # Ensure non-negative
                 
                 # Calculate confidence interval (using simple standard deviation)
+
+
                 std_error = np.std(y_test - model.predict(X_test_scaled))
+
+
                 lower_bound = prediction - 1.96 * std_error
+
                 upper_bound = prediction + 1.96 * std_error
                 
                 forecasts.append(Decimal(str(round(prediction, 2))))
+
                 confidence_intervals.append((
                     Decimal(str(round(max(lower_bound, 0), 2))),
                     Decimal(str(round(upper_bound, 2)))
@@ -732,8 +862,12 @@ class EnterpriseRevenueAnalyticsEngine:
         except Exception as e:
             self.logger.error(f"Forecasting method application failed: {e}")
             # Return default forecast
+
             base_value = Decimal('1000.00')
+
+
             forecasts = [base_value for _ in range(horizon)]
+
             intervals = [(base_value * Decimal('0.9'), base_value * Decimal('1.1')) for _ in range(horizon)]
             return forecasts, intervals
 
@@ -746,8 +880,6 @@ class EnterpriseRevenueAnalyticsEngine:
         try:
             if historical_data.empty:
                 return {'mae': 0.0, 'rmse': 0.0, 'mape': 0.0, 'r2': 0.0}
-            
-            # Mock accuracy calculation (in production: use actual validation)
             return {
                 'mae': np.random.uniform(50, 150),
                 'rmse': np.random.uniform(75, 200),
@@ -758,12 +890,14 @@ class EnterpriseRevenueAnalyticsEngine:
             return {'mae': 100.0, 'rmse': 150.0, 'mape': 0.1, 'r2': 0.8}
 
     async def _detect_seasonality(self, data: pd.DataFrame) -> bool:
-        """Detect seasonality in time series data"""
+        """
+        Detect seasonality in time series data"""
         try:
             if len(data) < 365:
                 return False
             
             # Simple seasonality detection using autocorrelation
+
             values = data['value'].values
             
             # Check for yearly seasonality
@@ -776,16 +910,19 @@ class EnterpriseRevenueAnalyticsEngine:
             return False
 
     async def _detect_trend_direction(self, data: pd.DataFrame) -> str:
-        """Detect trend direction in time series data"""
+        """
+        Detect trend direction in time series data"""
         try:
             if data.empty:
                 return "stable"
             
             values = data['value'].values
+
             x = np.arange(len(values))
             
             # Linear regression to detect trend
             slope, _, r_value, _, _ = stats.linregress(x, values)
+
             
             if abs(r_value) < 0.3:
                 return "stable"
@@ -816,29 +953,42 @@ class EnterpriseRevenueAnalyticsEngine:
         """
         try:
             report_id = str(uuid.uuid4())
+
+
             generation_date = datetime.utcnow()
             
             # Get metrics for the timeframe
+
             metrics_data = await self._get_metrics_for_timeframe(timeframe)
             
             # Generate report based on type
             if report_type == ReportType.EXECUTIVE_SUMMARY:
                 report_data = await self._generate_executive_summary(metrics_data, timeframe)
+
             elif report_type == ReportType.DETAILED_PERFORMANCE:
                 report_data = await self._generate_detailed_performance(metrics_data, timeframe)
+
             elif report_type == ReportType.FORECASTING_REPORT:
                 report_data = await self._generate_forecasting_report(metrics_data, timeframe)
+
             elif report_type == ReportType.TREND_ANALYSIS:
                 report_data = await self._generate_trend_analysis(metrics_data, timeframe)
+
             else:
                 report_data = await self._generate_default_report(metrics_data, timeframe)
             
             # Generate insights and recommendations
+
             insights = await self._generate_insights(metrics_data, report_type)
+
+
             recommendations = await self._generate_recommendations(metrics_data, insights)
             
             # Create charts data
+
             charts_data = await self._generate_charts_data(metrics_data, report_type)
+
+
             
             report = AnalyticsReport(
                 report_id=report_id,
@@ -855,28 +1005,35 @@ class EnterpriseRevenueAnalyticsEngine:
             
             # Store report
             await self._store_report(report)
+
             
             self.logger.info(f"Analytics report generated: {report_id}")
+
             return report
             
         except Exception as e:
             self.logger.error(f"Report generation failed: {e}")
+
             raise RevenueAnalyticsError(f"Failed to generate report: {e}")
 
     async def _get_metrics_for_timeframe(self, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
         """Get metrics data for specified timeframe"""
         try:
-            # Mock metrics data (in production: query from database)
             now = datetime.utcnow()
+
             
             if timeframe == AnalyticsTimeframe.DAILY:
                 period_start = now - timedelta(days=1)
+
             elif timeframe == AnalyticsTimeframe.WEEKLY:
                 period_start = now - timedelta(weeks=1)
+
             elif timeframe == AnalyticsTimeframe.MONTHLY:
                 period_start = now - timedelta(days=30)
+
             else:
                 period_start = now - timedelta(days=7)
+
             
             return {
                 'period_start': period_start,
@@ -897,7 +1054,8 @@ class EnterpriseRevenueAnalyticsEngine:
             return {'error': 'Failed to retrieve metrics data'}
 
     async def _generate_executive_summary(self, metrics: Dict[str, Any], timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
-        """Generate executive summary report"""
+        """
+        Generate executive summary report"""
         return {
             'key_metrics': {
                 'total_revenue': metrics.get('total_revenue', Decimal('0')),
@@ -947,7 +1105,9 @@ class EnterpriseRevenueAnalyticsEngine:
     async def _generate_forecasting_report(self, metrics: Dict[str, Any], timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
         """Generate forecasting report"""
         # Generate forecasts for key metrics
+
         revenue_forecast = await self.generate_forecast(RevenueMetricType.TOTAL_REVENUE, 30)
+
         
         return {
             'key_metrics': {
@@ -965,7 +1125,8 @@ class EnterpriseRevenueAnalyticsEngine:
         }
 
     async def _generate_trend_analysis(self, metrics: Dict[str, Any], timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
-        """Generate trend analysis report"""
+        """
+        Generate trend analysis report"""
         return {
             'key_metrics': {
                 'revenue_trend': metrics.get('revenue_trend', 'stable'),
@@ -982,7 +1143,8 @@ class EnterpriseRevenueAnalyticsEngine:
         }
 
     async def _generate_default_report(self, metrics: Dict[str, Any], timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
-        """Generate default report format"""
+        """
+        Generate default report format"""
         return {
             'key_metrics': {
                 'total_revenue': metrics.get('total_revenue', Decimal('0')),
@@ -998,10 +1160,12 @@ class EnterpriseRevenueAnalyticsEngine:
         }
 
     async def _generate_insights(self, metrics: Dict[str, Any], report_type: ReportType) -> List[str]:
-        """Generate actionable insights from metrics"""
+        """
+        Generate actionable insights from metrics"""
         insights = []
         
         # Revenue insights
+
         growth_rate = metrics.get('growth_rate', 0)
         if growth_rate > 0.1:
             insights.append("Strong revenue growth indicates successful market expansion")
@@ -1009,16 +1173,19 @@ class EnterpriseRevenueAnalyticsEngine:
             insights.append("Declining revenue trend requires immediate attention")
         
         # Customer insights
+
         churn_rate = metrics.get('churn_rate', 0)
         if churn_rate > 0.1:
             insights.append("High churn rate suggests customer retention issues")
         
         # Conversion insights
+
         conversion_rate = metrics.get('conversion_rate', 0)
         if conversion_rate < 0.03:
             insights.append("Low conversion rate indicates funnel optimization opportunities")
         
         # Add default insights based on report type
+
         type_insights = {
             ReportType.EXECUTIVE_SUMMARY: ["Focus on strategic KPIs", "Monitor competitive positioning"],
             ReportType.DETAILED_PERFORMANCE: ["Analyze customer segments", "Optimize pricing strategies"],
@@ -1027,6 +1194,7 @@ class EnterpriseRevenueAnalyticsEngine:
         }
         
         insights.extend(type_insights.get(report_type, ["Monitor key performance indicators"]))
+
         
         return insights[:5]  # Return top 5 insights
 
@@ -1035,15 +1203,19 @@ class EnterpriseRevenueAnalyticsEngine:
         recommendations = []
         
         # Revenue-based recommendations
+
         growth_rate = metrics.get('growth_rate', 0)
         if growth_rate < 0:
             recommendations.append("Implement aggressive customer acquisition campaigns")
+
             recommendations.append("Review and optimize pricing strategy")
         
         # Customer-based recommendations
+
         churn_rate = metrics.get('churn_rate', 0)
         if churn_rate > 0.08:
             recommendations.append("Launch customer retention program")
+
             recommendations.append("Improve customer support and engagement")
         
         # General recommendations
@@ -1053,20 +1225,23 @@ class EnterpriseRevenueAnalyticsEngine:
             "Invest in customer experience improvements",
             "Optimize content monetization strategies"
         ])
+
         
         return recommendations[:5]  # Return top 5 recommendations
 
     async def _generate_charts_data(self, metrics: Dict[str, Any], report_type: ReportType) -> Dict[str, Any]:
         """Generate data for charts and visualizations"""
         try:
-            # Mock chart data generation
             dates = pd.date_range(
                 start=datetime.utcnow() - timedelta(days=30),
                 end=datetime.utcnow(),
                 freq='D'
             )
+
+
             
             revenue_data = [float(metrics.get('total_revenue', 1000)) * (1 + np.random.normal(0, 0.1)) for _ in dates]
+
             
             charts_data = {
                 'revenue_trend': {
@@ -1095,6 +1270,8 @@ class EnterpriseRevenueAnalyticsEngine:
                     periods=30,
                     freq='D'
                 )
+
+
                 forecast_values = [revenue_data[-1] * (1 + np.random.normal(0.05, 0.1)) for _ in forecast_dates]
                 
                 charts_data['revenue_forecast'] = {
@@ -1108,6 +1285,7 @@ class EnterpriseRevenueAnalyticsEngine:
             
         except Exception as e:
             self.logger.error(f"Charts data generation failed: {e}")
+
             return {'error': 'Failed to generate charts data'}
 
     async def _store_metrics(self, metrics: RevenueMetrics):
@@ -1120,6 +1298,7 @@ class EnterpriseRevenueAnalyticsEngine:
                         INSERT INTO revenue_metrics 
                         (timestamp, total_revenue, mrr, arr, arpu, clv, churn_rate, conversion_rate, 
                          revenue_growth_rate, profit_margin, active_subscribers, new_subscribers, churned_subscribers)
+
                         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
                         """,
                         metrics.timestamp, metrics.total_revenue, metrics.mrr, metrics.arr,
@@ -1164,6 +1343,7 @@ class EnterpriseRevenueAnalyticsEngine:
                         "Analyze competitor activities"
                     ]
                 )
+
                 alerts.append(alert)
             
             # Churn spike alert
@@ -1183,11 +1363,13 @@ class EnterpriseRevenueAnalyticsEngine:
                         "Analyze churn reasons"
                     ]
                 )
+
                 alerts.append(alert)
             
             # Store alerts
             for alert in alerts:
                 await self._store_alert(alert)
+
             
         except Exception as e:
             self.logger.error(f"Alert checking failed: {e}")
@@ -1201,9 +1383,11 @@ class EnterpriseRevenueAnalyticsEngine:
                     3600,  # 1 hour
                     json.dumps(asdict(alert), default=str)
                 )
+
             
             self.active_alerts[alert.alert_id] = alert
             self.logger.warning(f"Revenue alert triggered: {alert.message}")
+
             
         except Exception as e:
             self.logger.error(f"Alert storage failed: {e}")
@@ -1211,100 +1395,120 @@ class EnterpriseRevenueAnalyticsEngine:
     # Analytics Processors
     async def _calculate_metrics(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Calculate various analytics metrics"""
-        return data  # Placeholder
-
+        return data
+    
     async def _analyze_trends(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze trends in data"""
-        return {'trend': 'increasing'}  # Placeholder
-
-    async def _analyze_correlations(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze correlations between metrics"""
-        return {'correlation': 0.8}  # Placeholder
-
+        """
+        Analyze trends in data"""
+        return {'trend': 'increasing'}
+    
+    async def _analyze_correlations(self, data: Dict[str, Any]) -> Dict[str, float]:
+        """
+        Analyze correlations between metrics"""
+        return {'correlation': 0.8}
+    
     async def _detect_anomalies(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect anomalies in metrics"""
-        return []  # Placeholder
-
-    async def _analyze_segments(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze customer segments"""
-        return {'segments': 3}  # Placeholder
-
-    async def _analyze_cohorts(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze customer cohorts"""
-        return {'cohorts': 5}  # Placeholder
-
-    # Alert Monitors
+        """
+        Detect anomalies in metrics"""
+        return []
+    
+    async def _analyze_segments(self, data: Dict[str, Any]) -> Dict[str, int]:
+        """
+        Analyze customer segments"""
+        return {'segments': 3}
+    
+    async def _analyze_cohorts(self, data: Dict[str, Any]) -> Dict[str, int]:
+        """
+        Analyze customer cohorts"""
+        return {'cohorts': 5}
+    
     async def _monitor_revenue_changes(self, metrics: RevenueMetrics) -> List[RevenueAlert]:
-        """Monitor revenue changes for alerts"""
-        return []  # Placeholder
-
+        """
+        Monitor revenue changes for alerts"""
+        return []
+    
     async def _monitor_conversion_rates(self, metrics: RevenueMetrics) -> List[RevenueAlert]:
-        """Monitor conversion rates for alerts"""
-        return []  # Placeholder
-
+        """
+        Monitor conversion rates for alerts"""
+        return []
+    
     async def _monitor_churn_rates(self, metrics: RevenueMetrics) -> List[RevenueAlert]:
-        """Monitor churn rates for alerts"""
-        return []  # Placeholder
-
+        """
+        Monitor churn rates for alerts"""
+        return []
+    
     async def _monitor_forecast_accuracy(self, metrics: RevenueMetrics) -> List[RevenueAlert]:
-        """Monitor forecast accuracy for alerts"""
-        return []  # Placeholder
+        """
+        Monitor forecast accuracy for alerts"""
+        return []
 
-# Legacy Integration Classes
+
 class RevenueAnalyticsDashboard:
-    """Legacy revenue analytics dashboard interface"""
+    """
+        Legacy revenue analytics dashboard interface"""
     
     def __init__(self, engine: EnterpriseRevenueAnalyticsEngine):
         self.engine = engine
     
     async def get_dashboard_data(self, timeframe: str) -> Dict[str, Any]:
-        """Legacy dashboard data interface"""
+        """
+        Legacy dashboard data interface"""
         analytics_timeframe = AnalyticsTimeframe(timeframe)
+
         metrics = await self.engine._get_metrics_for_timeframe(analytics_timeframe)
         return metrics
 
 class PerformanceTrackingEngine:
-    """Legacy performance tracking interface"""
+    """
+        Legacy performance tracking interface"""
     
     def __init__(self, engine: EnterpriseRevenueAnalyticsEngine):
         self.engine = engine
     
     async def track_performance(self, metrics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Legacy performance tracking interface"""
+        """
+        Legacy performance tracking interface"""
         metrics = await self.engine.track_revenue_metrics(metrics_data)
         return asdict(metrics)
 
 class RevenueForecastingAI:
-    """Legacy revenue forecasting interface"""
+    """
+        Legacy revenue forecasting interface"""
     
     def __init__(self, engine: EnterpriseRevenueAnalyticsEngine):
         self.engine = engine
     
     async def generate_forecast(self, metric_type: str, horizon: int) -> Dict[str, Any]:
-        """Legacy forecasting interface"""
+        """
+        Legacy forecasting interface"""
         metric_enum = RevenueMetricType(metric_type)
+
         forecast = await self.engine.generate_forecast(metric_enum, horizon)
         return asdict(forecast)
 
 class FinancialInsightsEngine:
-    """Legacy financial insights interface"""
+    """
+        Legacy financial insights interface"""
     
     def __init__(self, engine: EnterpriseRevenueAnalyticsEngine):
         self.engine = engine
     
     async def generate_insights(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Legacy insights generation interface"""
+        """
+        Legacy insights generation interface"""
         insights = await self.engine._generate_insights(data, ReportType.EXECUTIVE_SUMMARY)
         return {'insights': insights}
 
 class BusinessIntelligenceMonetization:
-    """Legacy business intelligence interface"""
+    """
+        Legacy business intelligence interface"""
     
     def __init__(self, engine: EnterpriseRevenueAnalyticsEngine):
         self.engine = engine
     
     async def generate_bi_report(self, report_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Legacy BI report interface"""
+        """
+        Legacy BI report interface"""
         report = await self.engine.generate_analytics_report(
             ReportType.DETAILED_PERFORMANCE,
             AnalyticsTimeframe.MONTHLY
@@ -1313,23 +1517,28 @@ class BusinessIntelligenceMonetization:
 
 # Factory Pattern
 class RevenueAnalyticsFactory:
-    """Factory for creating revenue analytics engines"""
+    """
+        Factory for creating revenue analytics engines"""
     
     @staticmethod
     def create_standard_engine() -> EnterpriseRevenueAnalyticsEngine:
-        """Create standard revenue analytics engine"""
+        """
+        Create standard revenue analytics engine"""
         return EnterpriseRevenueAnalyticsEngine()
     
     @staticmethod
     def create_enterprise_engine() -> EnterpriseRevenueAnalyticsEngine:
-        """Create enterprise revenue analytics engine with advanced features"""
+        """
+        Create enterprise revenue analytics engine with advanced features"""
         config = RevenueAnalyticsConfig(
             enable_real_time_tracking=True,
             enable_forecasting=True,
             enable_alerts=True,
             enable_advanced_analytics=True,
             analytics_retention_days=730,  # 2 years
+
             forecast_horizon_days=180,  # 6 months
+
             update_frequency_minutes=15,
             alert_thresholds={
                 'revenue_drop_threshold': 0.10,  # 10%

@@ -20,7 +20,8 @@ from datetime import datetime, timedelta
 logger = logging.getLogger(__name__)
 
 class CollectorStatus(Enum):
-    """Collector status enumeration."""
+    """
+        Collector status enumeration."""
     IDLE = "idle"
     RUNNING = "running"
     PAUSED = "paused"
@@ -52,7 +53,8 @@ class CollectorResult:
 
 @dataclass 
 class CollectionConfig:
-    """Configuration for content collection operations."""
+    """
+        Configuration for content collection operations."""
     max_results: int = 50
     include_metadata: bool = True
     include_engagement: bool = True
@@ -62,7 +64,8 @@ class CollectionConfig:
     retry_attempts: int = 3
 
 class RateLimiter:
-    """Basic rate limiter for collectors."""
+    """
+        Basic rate limiter for collectors."""
     
     def __init__(self, max_requests: int = 60, time_window: int = 60):
         self.max_requests = max_requests
@@ -70,7 +73,8 @@ class RateLimiter:
         self.requests = []
     
     async def wait_if_needed(self):
-        """Wait if rate limit would be exceeded."""
+        """
+        Wait if rate limit would be exceeded."""
         now = time.time()
         # Remove old requests outside time window
         self.requests = [req_time for req_time in self.requests 
@@ -79,9 +83,13 @@ class RateLimiter:
         # Check if we need to wait
         if len(self.requests) >= self.max_requests:
             oldest_request = min(self.requests)
+
+
             wait_time = self.time_window - (now - oldest_request)
+
             if wait_time > 0:
                 logger.info(f"Rate limit reached, waiting {wait_time:.2f} seconds")
+
                 await asyncio.sleep(wait_time)
         
         # Record this request
@@ -119,26 +127,31 @@ class BaseCollector(ABC):
     
     @abstractmethod
     async def get_content_details(self, content_id: str) -> Optional[CollectorResult]:
-        """Get detailed information about specific content."""
+        """
+        Get detailed information about specific content."""
         pass
     
     @abstractmethod
     async def get_user_content(self, user_id: str, config: CollectionConfig) -> List[CollectorResult]:
-        """Get content from a specific user."""
+        """
+        Get content from a specific user."""
         pass
     
     @abstractmethod
     async def monitor_hashtags(self, hashtags: List[str], config: CollectionConfig) -> AsyncGenerator[CollectorResult, None]:
-        """Monitor content for specific hashtags in real-time."""
+        """
+        Monitor content for specific hashtags in real-time."""
         pass
     
     @abstractmethod
     async def get_trending_content(self, config: CollectionConfig) -> List[CollectorResult]:
-        """Get currently trending content."""
+        """
+        Get currently trending content."""
         pass
     
     async def collect_analytics(self, content_id: str) -> Dict[str, Any]:
-        """Collect analytics data for content (default implementation)."""
+        """
+        Collect analytics data for content (default implementation)."""
         logger.warning(f"Analytics collection not implemented for {self.platform_name}")
         return {}
     
@@ -158,7 +171,8 @@ class BaseCollector(ABC):
         }
     
     def update_stats(self, success: bool, response_time: float):
-        """Update collection statistics."""
+        """
+        Update collection statistics."""
         self.stats['total_requests'] += 1
         
         if success:
@@ -168,7 +182,9 @@ class BaseCollector(ABC):
             self.stats['failed_collections'] += 1
         
         # Update average response time
+
         current_avg = self.stats['avg_response_time']
+
         total_requests = self.stats['total_requests']
         self.stats['avg_response_time'] = ((current_avg * (total_requests - 1)) + response_time) / total_requests
         

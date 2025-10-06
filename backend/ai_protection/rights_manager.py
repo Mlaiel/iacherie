@@ -25,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionLevel(Enum):
-    """Levels of content protection"""
+    """
+        Levels of content protection"""
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -58,7 +59,8 @@ class ContentRegistration:
 
 @dataclass
 class ProtectionReport:
-    """Comprehensive protection report"""
+    """
+        Comprehensive protection report"""
     content_id: str
     protection_summary: Dict[str, Any]
     watermark_status: Dict[str, Any]
@@ -71,7 +73,8 @@ class ProtectionReport:
 
 
 class DigitalRightsManager:
-    """Comprehensive digital rights management system"""
+    """
+        Comprehensive digital rights management system"""
     
     def __init__(self,
                  blockchain_url: Optional[str] = None,
@@ -123,12 +126,17 @@ class DigitalRightsManager:
         """
         try:
             content_id = str(uuid.uuid4())
+
+
             timestamp = datetime.now().isoformat()
+
             
             logger.info(f"Starting content registration: {content_id}")
             
             # Get protection policy
+
             policy = self._protection_policies[protection_level]
+
             
             protection_results = {}
             
@@ -137,9 +145,11 @@ class DigitalRightsManager:
                 copyright_result = await self.copyright_detector.register_original_content(
                     content_id, content_data, content_type, owner_id, metadata
                 )
+
                 protection_results['copyright_registration'] = copyright_result
             
             # Step 2: Apply watermarking
+
             watermark_id = None
             if policy['enable_watermarking']:
                 watermark_config = WatermarkConfig(
@@ -147,6 +157,8 @@ class DigitalRightsManager:
                     strength=policy['watermark_strength'],
                     redundancy=policy['watermark_redundancy']
                 )
+
+
                 
                 watermark_result = await self.watermark_engine.embed_watermark(
                     content_data,
@@ -155,14 +167,18 @@ class DigitalRightsManager:
                     owner_id,
                     watermark_config
                 )
+
                 
                 if watermark_result.success:
                     watermark_id = watermark_result.watermark_id
+
                     content_data = watermark_result.watermark_data.get('watermarked_content', content_data)
+
                 
                 protection_results['watermarking'] = asdict(watermark_result)
             
             # Step 3: Blockchain registration
+
             blockchain_tx = None
             if policy['enable_blockchain']:
                 blockchain_result = await self.blockchain_registry.register_rights(
@@ -176,6 +192,7 @@ class DigitalRightsManager:
                         'metadata': metadata or {}
                     }
                 )
+
                 
                 if blockchain_result['success']:
                     blockchain_tx = blockchain_result['blockchain_tx']
@@ -183,6 +200,7 @@ class DigitalRightsManager:
                 protection_results['blockchain_registration'] = blockchain_result
             
             # Step 4: NFT certificate generation
+
             nft_certificate = None
             if policy['enable_nft_certificates']:
                 nft_result = await self.nft_generator.generate_copyright_certificate(
@@ -190,6 +208,7 @@ class DigitalRightsManager:
                     owner_id,
                     metadata or {'type': content_type}
                 )
+
                 
                 if nft_result.success:
                     nft_certificate = nft_result.nft_id
@@ -197,6 +216,7 @@ class DigitalRightsManager:
                 protection_results['nft_certificate'] = asdict(nft_result)
             
             # Create content registration record
+
             registration = ContentRegistration(
                 content_id=content_id,
                 owner_id=owner_id,
@@ -212,8 +232,10 @@ class DigitalRightsManager:
             
             # Store registration
             self._content_registry[content_id] = asdict(registration)
+
             
             logger.info(f"Content registration completed: {content_id}")
+
             
             return {
                 'success': True,
@@ -225,6 +247,7 @@ class DigitalRightsManager:
             
         except Exception as e:
             logger.error(f"Content registration failed: {e}")
+
             return {
                 'success': False,
                 'error': str(e)
@@ -249,10 +272,12 @@ class DigitalRightsManager:
                     'success': False,
                     'error': 'Content not registered'
                 }
+
             
             registration = self._content_registry[content_id]
             
             # Detect violations
+
             violation_results = []
             for suspected_item in suspected_content_list:
                 detection_result = await self.copyright_detector.detect_violations(
@@ -262,6 +287,7 @@ class DigitalRightsManager:
                 )
                 
                 # Filter matches for this specific content
+
                 relevant_matches = [
                     match for match in detection_result.matches
                     if match.original_content_id == content_id
@@ -276,13 +302,17 @@ class DigitalRightsManager:
                     })
             
             # Generate takedown notices if needed
+
             takedown_notices = []
             for violation in violation_results:
                 if violation['violation_severity'] >= 0.8:  # High confidence violations
                     for match_data in violation['matches']:
                         # Reconstruct match object for notice generation
                         from .copyright_detector import CopyrightMatch
+
                         match = CopyrightMatch(**match_data)
+
+
                         
                         notice_result = await self.copyright_detector.generate_takedown_notice(
                             match,
@@ -292,9 +322,11 @@ class DigitalRightsManager:
                                 'content_id': content_id
                             }
                         )
+
                         
                         if notice_result['success']:
                             takedown_notices.append(notice_result)
+
             
             return {
                 'success': True,
@@ -308,6 +340,7 @@ class DigitalRightsManager:
             
         except Exception as e:
             logger.error(f"Violation monitoring failed: {e}")
+
             return {
                 'success': False,
                 'error': str(e)
@@ -326,13 +359,18 @@ class DigitalRightsManager:
         try:
             if content_id not in self._content_registry:
                 raise ValueError("Content not registered")
+
+
             
             registration = self._content_registry[content_id]
             
             # Check watermark status
+
             watermark_status = {'enabled': False}
             if registration['watermark_id']:
                 # Verify watermark integrity (would need original content)
+
+
                 watermark_status = {
                     'enabled': True,
                     'watermark_id': registration['watermark_id'],
@@ -340,11 +378,14 @@ class DigitalRightsManager:
                 }
             
             # Check blockchain status
+
             blockchain_status = {'registered': False}
             if registration['blockchain_tx']:
                 rights_verification = await self.blockchain_registry.verify_rights(
                     registration['blockchain_tx'], content_id
                 )
+
+
                 blockchain_status = {
                     'registered': True,
                     'transaction_hash': registration['blockchain_tx'],
@@ -352,11 +393,14 @@ class DigitalRightsManager:
                 }
             
             # Check NFT certificate status
+
             nft_status = {'issued': False}
             if registration['nft_certificate']:
                 nft_verification = await self.nft_generator.verify_nft_certificate(
                     registration['nft_certificate']
                 )
+
+
                 nft_status = {
                     'issued': True,
                     'certificate_id': registration['nft_certificate'],
@@ -364,12 +408,16 @@ class DigitalRightsManager:
                 }
             
             # Check for recent violations (placeholder)
+
+
             violations_detected = []
             
             # Generate recommendations
+
             recommendations = self._generate_protection_recommendations(registration)
             
             # Protection summary
+
             protection_summary = {
                 'protection_level': registration['protection_level'],
                 'rights_status': registration['rights_status'],
@@ -389,9 +437,11 @@ class DigitalRightsManager:
                 recommendations=recommendations,
                 report_timestamp=datetime.now().isoformat()
             )
+
             
         except Exception as e:
             logger.error(f"Protection report generation failed: {e}")
+
             raise
     
     async def update_protection_level(self,
@@ -413,9 +463,12 @@ class DigitalRightsManager:
                     'success': False,
                     'error': 'Content not registered'
                 }
+
             
             registration = self._content_registry[content_id]
+
             current_level = ProtectionLevel(registration['protection_level'])
+
             
             if current_level == new_protection_level:
                 return {
@@ -424,7 +477,9 @@ class DigitalRightsManager:
                 }
             
             # Update protection based on new level
+
             new_policy = self._protection_policies[new_protection_level]
+
             update_results = {}
             
             # Enable additional protections if upgrading
@@ -436,6 +491,7 @@ class DigitalRightsManager:
                         registration['owner_id'],
                         registration['metadata']
                     )
+
                     
                     if nft_result.success:
                         registration['nft_certificate'] = nft_result.nft_id
@@ -452,6 +508,7 @@ class DigitalRightsManager:
                             'timestamp': datetime.now().isoformat()
                         }
                     )
+
                     
                     if blockchain_result['success']:
                         registration['blockchain_tx'] = blockchain_result['blockchain_tx']
@@ -472,6 +529,7 @@ class DigitalRightsManager:
             
         except Exception as e:
             logger.error(f"Protection level update failed: {e}")
+
             return {
                 'success': False,
                 'error': str(e)
@@ -498,7 +556,10 @@ class DigitalRightsManager:
                 ProtectionLevel(content_item.get('protection_level', 'standard')),
                 content_item.get('metadata')
             )
+
             tasks.append(task)
+
+
         
         results = await asyncio.gather(*tasks, return_exceptions=True)
         
@@ -514,7 +575,8 @@ class DigitalRightsManager:
         return results
     
     def _initialize_protection_policies(self):
-        """Initialize protection policies for different levels"""
+        """
+        Initialize protection policies for different levels"""
         self._protection_policies = {
             ProtectionLevel.BASIC: {
                 'enable_watermarking': True,
@@ -551,27 +613,32 @@ class DigitalRightsManager:
         }
     
     def _calculate_violation_severity(self, matches: List) -> float:
-        """Calculate severity score for violations"""
+        """
+        Calculate severity score for violations"""
         if not matches:
             return 0.0
         
         # Average confidence weighted by violation type
+
         type_weights = {
             ViolationType.EXACT_MATCH: 1.0,
             ViolationType.PARTIAL_MATCH: 0.8,
             ViolationType.DERIVATIVE_WORK: 0.6,
             ViolationType.UNAUTHORIZED_USE: 0.4
         }
+
         
         total_score = 0.0
         for match in matches:
             weight = type_weights.get(match.violation_type, 0.5)
+
             total_score += match.confidence * weight
         
         return min(total_score / len(matches), 1.0)
     
     def _calculate_protection_score(self, registration: Dict[str, Any]) -> float:
-        """Calculate overall protection score"""
+        """
+        Calculate overall protection score"""
         score = 0.0
         
         if registration.get('watermark_id'):
@@ -582,6 +649,7 @@ class DigitalRightsManager:
             score += 25
         
         # Add score based on protection level
+
         level_scores = {
             'basic': 5,
             'standard': 10,
@@ -589,24 +657,30 @@ class DigitalRightsManager:
             'enterprise': 15
         }
         score += level_scores.get(registration['protection_level'], 0)
+
         
         return min(score, 100)
     
     def _generate_protection_recommendations(self, registration: Dict[str, Any]) -> List[str]:
-        """Generate protection recommendations"""
+        """
+        Generate protection recommendations"""
         recommendations = []
         
         if not registration.get('watermark_id'):
             recommendations.append("Consider adding watermarking for content authentication")
+
         
         if not registration.get('blockchain_tx'):
             recommendations.append("Enable blockchain registration for immutable ownership records")
+
         
         if not registration.get('nft_certificate'):
             recommendations.append("Generate NFT certificate for enhanced legal protection")
+
         
         if registration['protection_level'] == 'basic':
             recommendations.append("Upgrade to Standard protection for enhanced security")
+
         
         return recommendations
     
@@ -618,19 +692,24 @@ class DigitalRightsManager:
         return levels.index(new) > levels.index(current)
     
     def get_content_registration(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Get content registration by ID"""
+        """
+        Get content registration by ID"""
         return self._content_registry.get(content_id)
     
     def list_content_by_owner(self, owner_id: str) -> List[Dict[str, Any]]:
-        """List all content registered by a specific owner"""
+        """
+        List all content registered by a specific owner"""
         return [
             registration for registration in self._content_registry.values()
+
             if registration['owner_id'] == owner_id
         ]
     
     def get_protection_statistics(self) -> Dict[str, Any]:
-        """Get overall protection statistics"""
+        """
+        Get overall protection statistics"""
         total_content = len(self._content_registry)
+
         
         if total_content == 0:
             return {
@@ -640,9 +719,13 @@ class DigitalRightsManager:
             }
         
         # Count by protection level
+
         level_counts = {}
+
         watermarked = 0
+
         blockchain_registered = 0
+
         nft_certified = 0
         
         for registration in self._content_registry.values():

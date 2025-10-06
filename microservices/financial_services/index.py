@@ -38,7 +38,7 @@ Team: Financial Services Team (6 experts)
 
 import asyncio
 import logging
-from typing import Dict, List, Any, Optional, Union, Decimal
+from typing import Dict, List, Any, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum

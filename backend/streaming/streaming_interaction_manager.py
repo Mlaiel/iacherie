@@ -30,24 +30,18 @@ import json
 import uuid
 import re
 # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+from protection.utils.redis_compat import aioredis, REDIS_AVAILABLE
 from sqlalchemy.ext.asyncio import AsyncSession
 import websockets
 from collections import defaultdict, deque
 import emoji
-import profanity_check
+from better_profanity import profanity
 
 logger = logging.getLogger(__name__)
 
 class MessageType(Enum):
-    """Chat message type"""
+    """
+        Chat message type"""
     TEXT = "text"
     EMOJI = "emoji"
     STICKER = "sticker"
@@ -121,7 +115,8 @@ class ChatMessage:
 
 @dataclass
 class UserInteraction:
-    """User interaction record"""
+    """
+        User interaction record"""
     interaction_id: str
     user_id: str
     stream_id: str
@@ -134,7 +129,8 @@ class UserInteraction:
 
 @dataclass
 class ModerationRule:
-    """Content moderation rule"""
+    """
+        Content moderation rule"""
     rule_id: str
     rule_name: str
     rule_type: str
@@ -149,7 +145,8 @@ class ModerationRule:
 
 @dataclass
 class EngagementMetrics:
-    """User engagement metrics"""
+    """
+        User engagement metrics"""
     user_id: str
     stream_id: str
     messages_sent: int
@@ -164,7 +161,8 @@ class EngagementMetrics:
 
 @dataclass
 class InteractiveFeature:
-    """Interactive feature configuration"""
+    """
+        Interactive feature configuration"""
     feature_id: str
     feature_type: str
     stream_id: str
@@ -179,7 +177,8 @@ class InteractiveFeature:
 
 @dataclass
 class CommunityReward:
-    """Community reward system"""
+    """
+        Community reward system"""
     reward_id: str
     reward_type: str
     title: str
@@ -192,36 +191,47 @@ class CommunityReward:
     expires_at: Optional[datetime]
 
 class RealTimeChatSystem:
-    """Real-time chat system"""
+    """
+        Real-time chat system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Optional[Any]):
         self.redis = redis_client
         self.active_connections = {}
         self.chat_rooms = {}
         self.message_queues = defaultdict(deque)
+
         
     async def initialize_chat_system(self) -> Dict[str, Any]:
-        """Initialize real-time chat system"""
+        """
+        Initialize real-time chat system"""
         try:
             # Setup WebSocket server
+
             websocket_server = await self._setup_websocket_server()
             
             # Configure chat rooms
+
             chat_rooms = await self._configure_chat_rooms()
             
             # Setup message processing
+
             message_processing = await self._setup_message_processing()
             
             # Configure chat features
+
             chat_features = await self._configure_chat_features()
             
             # Setup rate limiting
+
             rate_limiting = await self._setup_chat_rate_limiting()
             
             # Configure message persistence
+
             message_persistence = await self._configure_message_persistence()
+
             
             logger.info(f"💬 Real-time Chat System initialized with {len(chat_rooms)} rooms")
+
             
             return {
                 "websocket_server": websocket_server,
@@ -242,6 +252,7 @@ class RealTimeChatSystem:
             
         except Exception as e:
             logger.error(f"Failed to initialize chat system: {e}")
+
             raise
 
     async def handle_chat_message(
@@ -256,28 +267,38 @@ class RealTimeChatSystem:
             message_id = str(uuid.uuid4())
             
             # Validate message content
+
             content_validation = await self._validate_message_content(message_data)
+
             if not content_validation["valid"]:
                 raise ValueError(f"Invalid message content: {content_validation['errors']}")
             
             # Get user role and permissions
+
             user_permissions = await self._get_user_chat_permissions(user_id, stream_id)
             
             # Check rate limiting
+
             rate_check = await self._check_user_rate_limit(user_id, stream_id)
+
             if not rate_check["allowed"]:
                 raise ValueError("Rate limit exceeded")
             
             # Process message content
+
             processed_content = await self._process_message_content(
                 message_data["content"], message_data.get("type", "text")
             )
             
             # Extract mentions and hashtags
+
             mentions = await self._extract_mentions(processed_content)
+
+
             hashtags = await self._extract_hashtags(processed_content)
             
             # Create chat message
+
             chat_message = ChatMessage(
                 message_id=message_id,
                 user_id=user_id,
@@ -302,21 +323,25 @@ class RealTimeChatSystem:
             )
             
             # Apply content moderation
+
             moderation_result = await self._apply_content_moderation(chat_message)
             
             # Store message
             await self._store_chat_message(chat_message)
             
             # Broadcast message to chat room
+
             broadcast_result = await self._broadcast_message_to_room(stream_id, chat_message)
             
             # Update user engagement metrics
             await self._update_user_engagement_metrics(user_id, stream_id, "message")
             
             # Process mentions notifications
+
             mention_notifications = await self._process_mention_notifications(
                 chat_message, mentions
             )
+
             
             return {
                 "success": True,
@@ -330,39 +355,49 @@ class RealTimeChatSystem:
             
         except Exception as e:
             logger.error(f"Failed to handle chat message: {e}")
+
             raise
 
 class ContentModerationEngine:
     """Advanced content moderation system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.moderation_rules = {}
         self.auto_moderators = {}
         
     async def initialize_moderation_engine(self) -> Dict[str, Any]:
-        """Initialize content moderation engine"""
+        """
+        Initialize content moderation engine"""
         try:
             # Setup moderation rules
+
             moderation_rules = await self._setup_moderation_rules()
             
             # Configure auto-moderation
+
             auto_moderation = await self._configure_auto_moderation()
             
             # Setup spam detection
+
             spam_detection = await self._setup_spam_detection()
             
             # Configure profanity filtering
+
             profanity_filtering = await self._configure_profanity_filtering()
             
             # Setup image/video moderation
+
             media_moderation = await self._setup_media_content_moderation()
             
             # Configure moderator tools
+
             moderator_tools = await self._configure_moderator_tools()
+
             
             logger.info(f"🛡️ Content Moderation Engine initialized with {len(moderation_rules)} rules")
+
             
             return {
                 "moderation_rules": len(moderation_rules),
@@ -382,6 +417,7 @@ class ContentModerationEngine:
             
         except Exception as e:
             logger.error(f"Failed to initialize moderation engine: {e}")
+
             raise
 
     async def moderate_content(
@@ -394,25 +430,31 @@ class ContentModerationEngine:
         """Moderate content using AI and rule-based systems"""
         try:
             # Run profanity detection
+
             profanity_result = await self._detect_profanity(content)
             
             # Run spam detection
+
             spam_result = await self._detect_spam(content, context)
             
             # Check against custom rules
+
             custom_rules_result = await self._check_custom_moderation_rules(
                 content, content_type, user_role
             )
             
             # Run AI content analysis
+
             ai_analysis_result = await self._run_ai_content_analysis(content, content_type)
             
             # Calculate overall moderation score
+
             moderation_score = await self._calculate_moderation_score([
                 profanity_result, spam_result, custom_rules_result, ai_analysis_result
             ])
             
             # Determine moderation action
+
             moderation_action = await self._determine_moderation_action(
                 moderation_score, user_role, context
             )
@@ -421,6 +463,7 @@ class ContentModerationEngine:
             await self._log_moderation_decision(
                 content, moderation_score, moderation_action, context
             )
+
             
             return {
                 "moderation_passed": moderation_action == ModerationAction.ALLOW,
@@ -435,12 +478,13 @@ class ContentModerationEngine:
             
         except Exception as e:
             logger.error(f"Failed to moderate content: {e}")
+
             raise
 
 class EngagementTracker:
     """User engagement tracking system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.engagement_processors = {}
@@ -453,21 +497,25 @@ class EngagementTracker:
         interaction_type: InteractionType,
         interaction_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Track user interaction and update engagement metrics"""
+        """
+        Track user interaction and update engagement metrics"""
         try:
             interaction_id = str(uuid.uuid4())
             
             # Calculate interaction value
+
             interaction_value = await self._calculate_interaction_value(
                 interaction_type, interaction_data
             )
             
             # Calculate points earned
+
             points_earned = await self._calculate_points_earned(
                 user_id, interaction_type, interaction_value
             )
             
             # Create interaction record
+
             user_interaction = UserInteraction(
                 interaction_id=interaction_id,
                 user_id=user_id,
@@ -484,20 +532,25 @@ class EngagementTracker:
             await self._store_user_interaction(user_interaction)
             
             # Update engagement metrics
+
             engagement_update = await self._update_engagement_metrics(
                 user_id, stream_id, user_interaction
             )
             
             # Check for achievement unlocks
+
             achievements = await self._check_achievement_unlocks(user_id, engagement_update)
             
             # Process rewards
+
             rewards_processed = await self._process_engagement_rewards(
                 user_id, points_earned, engagement_update
             )
             
             # Update user level/rank
+
             level_update = await self._update_user_level(user_id, engagement_update)
+
             
             return {
                 "success": True,
@@ -512,12 +565,13 @@ class EngagementTracker:
             
         except Exception as e:
             logger.error(f"Failed to track user interaction: {e}")
+
             raise
 
 class InteractiveFeatureManager:
     """Interactive features management system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.active_features = {}
@@ -529,18 +583,22 @@ class InteractiveFeatureManager:
         feature_type: str,
         feature_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create interactive feature for stream"""
+        """
+        Create interactive feature for stream"""
         try:
             feature_id = str(uuid.uuid4())
             
             # Validate feature configuration
+
             config_validation = await self._validate_feature_configuration(
                 feature_type, feature_config
             )
+
             if not config_validation["valid"]:
                 raise ValueError("Invalid feature configuration")
             
             # Create interactive feature
+
             interactive_feature = InteractiveFeature(
                 feature_id=feature_id,
                 feature_type=feature_type,
@@ -556,6 +614,7 @@ class InteractiveFeatureManager:
             )
             
             # Initialize feature handler
+
             feature_handler = await self._initialize_feature_handler(
                 feature_type, interactive_feature
             )
@@ -564,15 +623,19 @@ class InteractiveFeatureManager:
             await self._store_interactive_feature(interactive_feature)
             
             # Announce feature to stream
+
             announcement = await self._announce_feature_to_stream(
                 stream_id, interactive_feature
             )
             
             # Setup feature monitoring
+
             monitoring_setup = await self._setup_feature_monitoring(interactive_feature)
             
             # Start feature automation
+
             automation_setup = await self._start_feature_automation(interactive_feature)
+
             
             return {
                 "success": True,
@@ -587,6 +650,7 @@ class InteractiveFeatureManager:
             
         except Exception as e:
             logger.error(f"Failed to create interactive feature: {e}")
+
             raise
 
     async def handle_feature_participation(
@@ -598,39 +662,49 @@ class InteractiveFeatureManager:
         """Handle user participation in interactive feature"""
         try:
             # Get interactive feature
+
             interactive_feature = await self._get_interactive_feature(feature_id)
+
             if not interactive_feature or not interactive_feature.active:
                 raise ValueError("Feature not found or inactive")
             
             # Validate participation
+
             participation_validation = await self._validate_user_participation(
                 interactive_feature, user_id, participation_data
             )
+
             if not participation_validation["valid"]:
                 raise ValueError("Invalid participation")
             
             # Process participation
+
             participation_result = await self._process_feature_participation(
                 interactive_feature, user_id, participation_data
             )
             
             # Update feature state
+
             feature_update = await self._update_feature_state(
                 interactive_feature, participation_result
             )
             
             # Track user engagement
+
             engagement_tracking = await self._track_feature_engagement(
                 user_id, interactive_feature, participation_data
             )
             
             # Check for feature completion
+
             completion_check = await self._check_feature_completion(interactive_feature)
             
             # Broadcast participation to stream
+
             broadcast_result = await self._broadcast_participation_to_stream(
                 interactive_feature, user_id, participation_result
             )
+
             
             return {
                 "success": True,
@@ -646,12 +720,13 @@ class InteractiveFeatureManager:
             
         except Exception as e:
             logger.error(f"Failed to handle feature participation: {e}")
+
             raise
 
 class StreamingInteractionManager:
     """Unified streaming interaction manager - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         
@@ -671,24 +746,32 @@ class StreamingInteractionManager:
         """Initialize interaction management system"""
         try:
             # Initialize chat system
+
             chat_status = await self.chat_system.initialize_chat_system()
             
             # Initialize moderation engine
+
             moderation_status = await self.moderation_engine.initialize_moderation_engine()
             
             # Setup community features
+
             community_features = await self._setup_community_features()
             
             # Configure interaction analytics
+
             interaction_analytics = await self._configure_interaction_analytics()
             
             # Setup reward systems
+
             reward_systems = await self._setup_community_reward_systems()
             
             # Configure gamification
+
             gamification_setup = await self._configure_gamification_system()
+
             
             logger.info("🎮 Streaming Interaction Manager fully initialized")
+
             
             return {
                 "interaction_status": "initialized",
@@ -710,6 +793,7 @@ class StreamingInteractionManager:
             
         except Exception as e:
             logger.error(f"Failed to initialize interaction manager: {e}")
+
             raise
     
     async def handle_stream_interaction(
@@ -722,37 +806,45 @@ class StreamingInteractionManager:
         """Handle comprehensive stream interaction"""
         try:
             # Route interaction based on type
+
             interaction_result = None
             
             if interaction_type == "chat_message":
                 interaction_result = await self.chat_system.handle_chat_message(
                     user_id, stream_id, interaction_data, {}
                 )
+
             elif interaction_type == "feature_participation":
                 interaction_result = await self.feature_manager.handle_feature_participation(
                     interaction_data["feature_id"], user_id, interaction_data
                 )
+
             elif interaction_type in ["like", "share", "follow", "subscribe"]:
                 interaction_result = await self.engagement_tracker.track_user_interaction(
                     user_id, stream_id, InteractionType(interaction_type), interaction_data
                 )
+
             else:
                 raise ValueError(f"Unsupported interaction type: {interaction_type}")
             
             # Update stream analytics
+
             stream_analytics_update = await self._update_stream_interaction_analytics(
                 stream_id, interaction_type, interaction_result
             )
             
             # Process community engagement
+
             community_engagement = await self._process_community_engagement(
                 stream_id, user_id, interaction_type, interaction_data
             )
             
             # Check for streak bonuses
+
             streak_bonuses = await self._check_user_interaction_streaks(
                 user_id, stream_id, interaction_type
             )
+
             
             return {
                 "success": True,
@@ -768,6 +860,7 @@ class StreamingInteractionManager:
             
         except Exception as e:
             logger.error(f"Failed to handle stream interaction: {e}")
+
             raise
     
     # Additional helper methods implementation...
@@ -784,6 +877,7 @@ class StreamingInteractionManager:
             }
         except Exception as e:
             logger.error(f"Failed to setup community features: {e}")
+
             return {}
 
     async def _configure_interaction_analytics(self) -> Dict[str, Any]:
@@ -797,7 +891,56 @@ class StreamingInteractionManager:
             }
         except Exception as e:
             logger.error(f"Failed to configure interaction analytics: {e}")
+
             return {}
+
+    async def _configure_profanity_filtering(self) -> Dict[str, Any]:
+        """Configure profanity filtering with better-profanity"""
+        try:
+            # Load default profanity wordlist
+            profanity.load_censor_words()
+
+            
+            return {
+                "enabled": True,
+                "engine": "better-profanity",
+                "censor_char": "*",
+                "custom_words_supported": True,
+                "real_time_filtering": True
+            }
+        except Exception as e:
+            logger.error(f"Failed to configure profanity filtering: {e}")
+
+            return {"enabled": False, "error": str(e)}
+
+    async def _detect_profanity(self, content: str) -> Dict[str, Any]:
+        """Detect profanity in content using better-profanity"""
+        try:
+            # Check if content contains profanity
+
+            contains_profanity = profanity.contains_profanity(content)
+            
+            # Get censored version
+
+            censored_text = profanity.censor(content) if contains_profanity else content
+            
+            return {
+                "contains_profanity": contains_profanity,
+                "censored_text": censored_text,
+                "severity": "high" if contains_profanity else "none",
+                "confidence": 1.0 if contains_profanity else 0.0,
+                "engine": "better-profanity"
+            }
+        except Exception as e:
+            logger.error(f"Failed to detect profanity: {e}")
+
+            return {
+                "contains_profanity": False,
+                "censored_text": content,
+                "severity": "none",
+                "confidence": 0.0,
+                "error": str(e)
+            }
 
 # Export main classes
 __all__ = [

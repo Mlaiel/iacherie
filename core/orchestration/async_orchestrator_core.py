@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class AsyncOrchestratorCore:
-    """Advanced AsyncOrchestratorCore System"""
+    """
+Advanced AsyncOrchestratorCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class AsyncOrchestratorCore:
 # Module exports
 __all__ = ["AsyncOrchestratorCore"]
 
-logger.info("⚡ AsyncOrchestratorCore module loaded")
+logger.info("⚡ AsyncOrchestratorCore module initialized")

@@ -30,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentFormat(str, Enum):
-    """Formats de contenu supportés."""
+    """
+        Formats de contenu supportés."""
     VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
@@ -85,7 +86,8 @@ class OptimizationConfig:
 
 @dataclass
 class OptimizationResult:
-    """Résultat d'optimisation."""
+    """
+        Résultat d'optimisation."""
     original_size: int
     optimized_size: int
     compression_ratio: float
@@ -99,7 +101,8 @@ class OptimizationResult:
 
 @dataclass
 class StreamingConfig:
-    """Configuration streaming optimisé."""
+    """
+        Configuration streaming optimisé."""
     bitrate_ladder: List[int]
     resolution_ladder: List[Tuple[int, int]]
     adaptive_bitrate: bool = True
@@ -109,21 +112,25 @@ class StreamingConfig:
 
 
 class ContentOptimizer(ABC):
-    """Classe abstraite pour optimiseurs de contenu."""
+    """
+        Classe abstraite pour optimiseurs de contenu."""
     
     @abstractmethod
     async def optimize(self, content: Any, config: OptimizationConfig) -> OptimizationResult:
-        """Optimise le contenu selon la configuration."""
+        """
+        Optimise le contenu selon la configuration."""
         pass
     
     @abstractmethod
     async def analyze_content(self, content: Any) -> Dict[str, Any]:
-        """Analyse le contenu pour déterminer les optimisations."""
+        """
+        Analyse le contenu pour déterminer les optimisations."""
         pass
 
 
 class VideoStreamingOptimizer(ContentOptimizer):
-    """Optimiseur streaming vidéo."""
+    """
+        Optimiseur streaming vidéo."""
     
     def __init__(self):
         self.encoding_presets = {
@@ -142,6 +149,8 @@ class VideoStreamingOptimizer(ContentOptimizer):
         # Adaptive bitrate ladder
         if streaming_config.adaptive_bitrate:
             optimizations.append("Adaptive bitrate streaming configured")
+
+
             bitrate_variants = []
             for bitrate in streaming_config.bitrate_ladder:
                 bitrate_variants.append({
@@ -158,6 +167,7 @@ class VideoStreamingOptimizer(ContentOptimizer):
         # Latency optimization
         if streaming_config.latency_optimization:
             optimizations.append("Low-latency streaming optimization")
+
         
         return {
             "optimized_variants": bitrate_variants if streaming_config.adaptive_bitrate else [],
@@ -178,9 +188,12 @@ class VideoStreamingOptimizer(ContentOptimizer):
             return (640, 360)    # 360p
     
     async def optimize(self, content: Any, config: OptimizationConfig) -> OptimizationResult:
-        """Optimise le contenu vidéo."""
+        """
+        Optimise le contenu vidéo."""
         start_time = time.time()
+
         original_size = len(str(content)) if isinstance(content, str) else 1000000
+
         
         optimizations = ["Video compression optimization"]
         
@@ -201,6 +214,8 @@ class VideoStreamingOptimizer(ContentOptimizer):
         # Optimisation par device
         if DeviceType.MOBILE in config.target_devices:
             optimizations.append("Mobile-optimized encoding")
+
+
         
         optimized_size = int(original_size * 0.6)  # Simulation 40% compression
         
@@ -246,6 +261,7 @@ class AudioQualityEnhancer(ContentOptimizer):
                                   quality_preset: QualityPreset) -> Dict[str, Any]:
         """Améliore la qualité audio."""
         preset = self.audio_presets[quality_preset]
+
         enhancements = []
         
         # Noise reduction
@@ -259,6 +275,7 @@ class AudioQualityEnhancer(ContentOptimizer):
         
         # Stereo imaging enhancement
         enhancements.append("Stereo imaging optimization")
+
         
         return {
             "enhanced_audio": audio_content,
@@ -271,7 +288,9 @@ class AudioQualityEnhancer(ContentOptimizer):
     async def optimize(self, content: Any, config: OptimizationConfig) -> OptimizationResult:
         """Optimise le contenu audio."""
         start_time = time.time()
+
         original_size = len(str(content)) if isinstance(content, str) else 500000
+
         
         optimizations = ["Audio compression optimization"]
         
@@ -286,6 +305,8 @@ class AudioQualityEnhancer(ContentOptimizer):
             "Dynamic range optimization",
             "Psychoacoustic optimization"
         ])
+
+
         
         optimized_size = int(original_size * 0.7)  # Simulation 30% compression
         
@@ -327,6 +348,7 @@ class ImageSmartCompressor(ContentOptimizer):
         compressions = []
         
         # Format optimization
+
         best_format = self._select_optimal_format(image_content)
         compressions.append(f"Optimal format selection: {best_format}")
         
@@ -338,6 +360,7 @@ class ImageSmartCompressor(ContentOptimizer):
         
         # Metadata optimization
         compressions.append("Metadata optimization")
+
         
         return {
             "compressed_image": image_content,
@@ -354,11 +377,14 @@ class ImageSmartCompressor(ContentOptimizer):
     async def optimize(self, content: Any, config: OptimizationConfig) -> OptimizationResult:
         """Optimise le contenu image."""
         start_time = time.time()
+
         original_size = len(str(content)) if isinstance(content, str) else 200000
+
         
         optimizations = ["Image compression optimization"]
         
         # Format optimization
+
         optimal_format = self._select_optimal_format(content)
         optimizations.append(f"Format conversion to {optimal_format}")
         
@@ -370,8 +396,11 @@ class ImageSmartCompressor(ContentOptimizer):
         for device in config.target_devices:
             if device == DeviceType.MOBILE:
                 optimizations.append("Mobile-optimized resolution")
+
             elif device == DeviceType.DESKTOP:
                 optimizations.append("High-resolution preservation")
+
+
         
         optimized_size = int(original_size * 0.5)  # Simulation 50% compression
         
@@ -430,6 +459,7 @@ class ContentAdaptationEngine:
                                  format_type: ContentFormat) -> Dict[str, Any]:
         """Adapte le contenu au device cible."""
         profile = self.device_profiles.get(target_device, self.device_profiles[DeviceType.DESKTOP])
+
         adaptations = []
         
         # Resolution adaptation
@@ -448,6 +478,7 @@ class ContentAdaptationEngine:
             adaptations.append("Size-optimized for mobile bandwidth")
         elif profile["optimization_focus"] == "quality":
             adaptations.append("Quality-optimized for high-resolution displays")
+
         
         return {
             "adapted_content": content,
@@ -462,7 +493,8 @@ class SEORealtimeOptimizer:
     
     async def optimize_seo_realtime(self, content: Any, content_type: ContentFormat,
                                   keywords: List[str] = None) -> Dict[str, Any]:
-        """Optimise le SEO en temps réel."""
+        """
+        Optimise le SEO en temps réel."""
         seo_optimizations = []
         
         # Metadata optimization
@@ -497,6 +529,7 @@ class SEORealtimeOptimizer:
                 "Transcript generation",
                 "Thumbnail optimization"
             ])
+
         
         return {
             "seo_optimized_content": content,
@@ -511,7 +544,8 @@ class PersonalizedDeliveryEngine:
     
     async def personalize_content_delivery(self, content: Any, user_profile: Dict[str, Any],
                                          delivery_context: Dict[str, Any]) -> Dict[str, Any]:
-        """Personnalise la livraison de contenu."""
+        """
+        Personnalise la livraison de contenu."""
         personalizations = []
         
         # Device-based personalization
@@ -523,6 +557,7 @@ class PersonalizedDeliveryEngine:
             speed = delivery_context["network_speed"]
             if speed == "slow":
                 personalizations.append("Low-bandwidth optimization")
+
             elif speed == "fast":
                 personalizations.append("High-quality delivery optimization")
         
@@ -537,6 +572,7 @@ class PersonalizedDeliveryEngine:
         # User preference adaptation
         if user_profile.get("quality_preference"):
             personalizations.append(f"Quality preference: {user_profile['quality_preference']}")
+
         
         return {
             "personalized_content": content,
@@ -561,36 +597,43 @@ class EdgeContentOptimizer:
     
     async def optimize_video_streaming(self, video_content: Any, 
                                      config: StreamingConfig) -> Dict[str, Any]:
-        """Optimise le streaming vidéo."""
+        """
+        Optimise le streaming vidéo."""
         return await self.video_optimizer.optimize_video_streaming(video_content, config)
     
     async def enhance_audio_quality(self, audio_content: Any,
                                   quality_preset: QualityPreset = QualityPreset.HIGH) -> Dict[str, Any]:
-        """Améliore la qualité audio."""
+        """
+        Améliore la qualité audio."""
         return await self.audio_enhancer.enhance_audio_quality(audio_content, quality_preset)
     
     async def compress_images_smart(self, image_content: Any,
                                   quality_target: float = 0.85) -> Dict[str, Any]:
-        """Compression intelligente d'images."""
+        """
+        Compression intelligente d'images."""
         return await self.image_compressor.compress_images_smart(image_content, quality_target)
     
     async def adapt_content_device(self, content: Any, target_device: DeviceType,
                                  format_type: ContentFormat) -> Dict[str, Any]:
-        """Adapte le contenu par device."""
+        """
+        Adapte le contenu par device."""
         return await self.adaptation_engine.adapt_content_device(content, target_device, format_type)
     
     async def optimize_seo_realtime(self, content: Any, content_type: ContentFormat,
                                   keywords: List[str] = None) -> Dict[str, Any]:
-        """SEO temps réel."""
+        """
+        SEO temps réel."""
         return await self.seo_optimizer.optimize_seo_realtime(content, content_type, keywords)
     
     async def personalize_content_delivery(self, content: Any, user_profile: Dict[str, Any],
                                          delivery_context: Dict[str, Any]) -> Dict[str, Any]:
-        """Personnalise la livraison contenu."""
+        """
+        Personnalise la livraison contenu."""
         return await self.delivery_engine.personalize_content_delivery(content, user_profile, delivery_context)
     
     async def optimize_content(self, content: Any, config: OptimizationConfig) -> OptimizationResult:
-        """Optimise le contenu selon la configuration."""
+        """
+        Optimise le contenu selon la configuration."""
         cache_key = self._generate_cache_key(content, config)
         
         # Check cache
@@ -598,9 +641,11 @@ class EdgeContentOptimizer:
             return self.optimization_cache[cache_key]
         
         # Select optimizer based on format
+
         optimizer = self._get_optimizer_for_format(config.format_type)
         
         # Perform optimization
+
         result = await optimizer.optimize(content, config)
         
         # Cache result
@@ -608,12 +653,15 @@ class EdgeContentOptimizer:
         
         # Update metrics
         self._update_performance_metrics(config.format_type, result)
+
         
         return result
     
     def _generate_cache_key(self, content: Any, config: OptimizationConfig) -> str:
-        """Génère une clé de cache."""
+        """
+        Génère une clé de cache."""
         content_hash = hashlib.md5(str(content).encode()).hexdigest()[:8]
+
         config_hash = hashlib.md5(str(config).encode()).hexdigest()[:8]
         return f"{content_hash}_{config_hash}"
     
@@ -629,7 +677,8 @@ class EdgeContentOptimizer:
             return self.image_compressor  # Default fallback
     
     def _update_performance_metrics(self, format_type: ContentFormat, result: OptimizationResult):
-        """Met à jour les métriques de performance."""
+        """
+        Met à jour les métriques de performance."""
         if format_type.value not in self.performance_metrics:
             self.performance_metrics[format_type.value] = {
                 "total_optimizations": 0,
@@ -637,6 +686,7 @@ class EdgeContentOptimizer:
                 "average_compression": 0.0,
                 "average_quality": 0.0
             }
+
         
         metrics = self.performance_metrics[format_type.value]
         metrics["total_optimizations"] += 1
@@ -664,13 +714,19 @@ class EdgeContentOptimizer:
 
 
 def create_edge_content_optimizer() -> EdgeContentOptimizer:
-    """Factory function pour créer une instance de l'optimiseur."""
+    """
+        Factory function pour créer une instance de l'optimiseur."""
     return EdgeContentOptimizer()
 
 
 # Exports principaux
 __all__ = [
     "EdgeContentOptimizer",
+    "ContentOptimizationEngine",  # Alias for compatibility
+    "MultiFormatProcessor",  # Alias
+    "QualityEnhancer",  # Alias
+    "OptimizationStrategy",  # Alias
+    "CompressionProfile",  # Alias
     "ContentFormat",
     "DeviceType",
     "OptimizationLevel",
@@ -687,3 +743,10 @@ __all__ = [
     "PersonalizedDeliveryEngine",
     "create_edge_content_optimizer"
 ]
+
+# Alias for compatibility with different import conventions
+ContentOptimizationEngine = EdgeContentOptimizer
+MultiFormatProcessor = ContentAdaptationEngine
+QualityEnhancer = AudioQualityEnhancer
+OptimizationStrategy = OptimizationLevel
+CompressionProfile = QualityPreset

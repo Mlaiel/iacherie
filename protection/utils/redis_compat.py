@@ -31,23 +31,6 @@ root_logger.addFilter(RedisWarningFilter())
 
 logger = logging.getLogger(__name__)
 
-# Import Redis avec la nouvelle approche Python 3.12
-try:
-    import redis.asyncio as aioredis
-    REDIS_AVAILABLE = True
-    logger.info("✅ Redis asyncio imported successfully")
-except ImportError:
-    try:
-        # Fallback vers aioredis si redis.asyncio non disponible
-        import aioredis
-        REDIS_AVAILABLE = True
-        logger.info("✅ aioredis imported successfully")
-    except ImportError:
-        # Utiliser MockRedis seulement en dernier recours
-        aioredis = None
-        REDIS_AVAILABLE = False
-        logger.info("Using MockRedis fallback")
-
 
 class MockRedis:
     """Mock Redis client for compatibility when redis is not available."""
@@ -167,7 +150,7 @@ except ImportError:
         Redis = MockRedis
         from_url = MockRedis.from_url
     
-    aioredis = MockAioRedis()
+    aioredis = MockAioRedis
     REDIS_AVAILABLE = False
 
 __all__ = ['aioredis', 'REDIS_AVAILABLE', 'MockRedis']

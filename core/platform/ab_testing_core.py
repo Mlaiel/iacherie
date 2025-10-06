@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class ABTestingCore:
-    """Advanced ABTestingCore System"""
+    """
+Advanced ABTestingCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class ABTestingCore:
 # Module exports
 __all__ = ["ABTestingCore"]
 
-logger.info("🧪 ABTestingCore module loaded")
+logger.info("🧪 ABTestingCore module initialized")

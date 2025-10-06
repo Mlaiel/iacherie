@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class SMSServiceCore:
-    """Advanced SMSServiceCore System"""
+    """
+Advanced SMSServiceCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class SMSServiceCore:
 # Module exports
 __all__ = ["SMSServiceCore"]
 
-logger.info("📱 SMSServiceCore module loaded")
+logger.info("📱 SMSServiceCore module initialized")

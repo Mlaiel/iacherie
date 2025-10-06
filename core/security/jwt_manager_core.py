@@ -36,7 +36,8 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class TokenType(str, Enum):
-    """JWT token types"""
+    """
+JWT token types"""
     ACCESS = "access"
     REFRESH = "refresh"
     ID = "id"
@@ -45,7 +46,8 @@ class TokenType(str, Enum):
     API = "api"
 
 class TokenAlgorithm(str, Enum):
-    """JWT signing algorithms"""
+    """
+JWT signing algorithms"""
     HS256 = "HS256"
     HS384 = "HS384"
     HS512 = "HS512"
@@ -57,7 +59,8 @@ class TokenAlgorithm(str, Enum):
     ES512 = "ES512"
 
 class TokenStatus(str, Enum):
-    """Token status"""
+    """
+Token status"""
     ACTIVE = "active"
     EXPIRED = "expired"
     REVOKED = "revoked"
@@ -66,7 +69,8 @@ class TokenStatus(str, Enum):
 
 @dataclass
 class TokenClaims:
-    """JWT token claims"""
+    """
+JWT token claims"""
     user_id: str
     token_type: TokenType
     issued_at: datetime
@@ -81,7 +85,8 @@ class TokenClaims:
 
 @dataclass
 class TokenPair:
-    """Access and refresh token pair"""
+    """
+Access and refresh token pair"""
     access_token: str
     refresh_token: str
     token_type: str = "Bearer"
@@ -91,7 +96,8 @@ class TokenPair:
 
 @dataclass
 class TokenInfo:
-    """Token information and metadata"""
+    """
+Token information and metadata"""
     token_id: str
     user_id: str
     token_type: TokenType
@@ -106,7 +112,8 @@ class TokenInfo:
 
 @dataclass
 class JWTMetrics:
-    """JWT management metrics"""
+    """
+JWT management metrics"""
     tokens_issued: int = 0
     tokens_verified: int = 0
     tokens_revoked: int = 0
@@ -116,10 +123,12 @@ class JWTMetrics:
     blacklisted_tokens: int = 0
 
 class JWTManagerCore:
-    """Enterprise JWT management system"""
+    """
+Enterprise JWT management system"""
     
     def __init__(self, level: str = "enterprise"):
-        """Initialize JWT manager core"""
+        """
+Initialize JWT manager core"""
         self.level = level
         self.metrics = JWTMetrics()
         
@@ -155,11 +164,13 @@ class JWTManagerCore:
         logger.info(f"🔑 JWT Manager Core initialized - Level: {level}")
 
     def _generate_secret(self) -> str:
-        """Generate cryptographically secure secret"""
+        """
+Generate cryptographically secure secret"""
         return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode('utf-8')
 
     def _initialize_rsa_keys(self):
-        """Initialize RSA key pair for asymmetric signing"""
+        """
+Initialize RSA key pair for asymmetric signing"""
         try:
             # Generate RSA key pair
             private_key = rsa.generate_private_key(
@@ -185,7 +196,8 @@ class JWTManagerCore:
         custom_claims: Optional[Dict[str, Any]] = None,
         client_info: Optional[Dict[str, str]] = None
     ) -> TokenPair:
-        """Generate access and refresh token pair"""
+        """
+Generate access and refresh token pair"""
         
         # Rate limiting check
         if not await self._check_rate_limit("token_generation", user_id):
@@ -253,7 +265,8 @@ class JWTManagerCore:
         algorithm: Optional[TokenAlgorithm] = None,
         use_refresh_secret: bool = False
     ) -> str:
-        """Create JWT token from claims"""
+        """
+Create JWT token from claims"""
         
         if not CRYPTO_AVAILABLE:
             raise ImportError("JWT library not available")
@@ -315,7 +328,8 @@ class JWTManagerCore:
         token_type: Optional[TokenType] = None,
         verify_expiration: bool = True
     ) -> Dict[str, Any]:
-        """Verify and decode JWT token"""
+        """
+Verify and decode JWT token"""
         
         # Rate limiting check
         if not await self._check_rate_limit("token_verification", "global"):
@@ -381,7 +395,8 @@ class JWTManagerCore:
         refresh_token: str,
         client_info: Optional[Dict[str, str]] = None
     ) -> TokenPair:
-        """Refresh access token using refresh token"""
+        """
+Refresh access token using refresh token"""
         
         # Rate limiting check
         if not await self._check_rate_limit("token_refresh", "global"):
@@ -440,7 +455,8 @@ class JWTManagerCore:
             raise
 
     async def _get_token_id(self, token: str) -> Optional[str]:
-        """Extract token ID from JWT without verification"""
+        """
+Extract token ID from JWT without verification"""
         try:
             if not CRYPTO_AVAILABLE:
                 return None
@@ -451,7 +467,8 @@ class JWTManagerCore:
             return None
 
     async def revoke_token(self, token_id: str):
-        """Revoke specific token by ID"""
+        """
+Revoke specific token by ID"""
         
         if token_id in self.active_tokens:
             self.active_tokens[token_id].status = TokenStatus.REVOKED
@@ -461,7 +478,8 @@ class JWTManagerCore:
             logger.debug(f"Revoked token {token_id}")
 
     async def revoke_refresh_token(self, refresh_token: str):
-        """Revoke refresh token"""
+        """
+Revoke refresh token"""
         
         if refresh_token in self.refresh_tokens:
             access_token_id = self.refresh_tokens.pop(refresh_token)
@@ -469,7 +487,8 @@ class JWTManagerCore:
             await self.revoke_token(access_token_id)
 
     async def revoke_all_user_tokens(self, user_id: str):
-        """Revoke all tokens for a specific user"""
+        """
+Revoke all tokens for a specific user"""
         
         revoked_count = 0
         
@@ -493,7 +512,8 @@ class JWTManagerCore:
         logger.info(f"Revoked {revoked_count} tokens for user {user_id}")
 
     async def validate_token_scopes(self, token: str, required_scopes: List[str]) -> bool:
-        """Validate if token has required scopes"""
+        """
+Validate if token has required scopes"""
         
         try:
             payload = await self.verify_token(token)
@@ -506,11 +526,13 @@ class JWTManagerCore:
             return False
 
     async def get_token_info(self, token_id: str) -> Optional[TokenInfo]:
-        """Get token information by ID"""
+        """
+Get token information by ID"""
         return self.active_tokens.get(token_id)
 
     async def list_user_tokens(self, user_id: str) -> List[TokenInfo]:
-        """List all active tokens for a user"""
+        """
+List all active tokens for a user"""
         
         user_tokens = []
         for token_info in self.active_tokens.values():
@@ -521,7 +543,8 @@ class JWTManagerCore:
         return user_tokens
 
     async def cleanup_expired_tokens(self):
-        """Clean up expired tokens from storage"""
+        """
+Clean up expired tokens from storage"""
         
         now = datetime.utcnow()
         expired_tokens = []
@@ -549,7 +572,8 @@ class JWTManagerCore:
             logger.info(f"Cleaned up {len(expired_tokens)} expired tokens")
 
     async def _check_rate_limit(self, operation: str, identifier: str) -> bool:
-        """Check rate limit for operation"""
+        """
+Check rate limit for operation"""
         
         if operation not in self.rate_limits:
             return True
@@ -585,7 +609,8 @@ class JWTManagerCore:
         scopes: List[str],
         expires_in: Optional[int] = None
     ) -> str:
-        """Generate long-lived API token"""
+        """
+Generate long-lived API token"""
         
         now = datetime.utcnow()
         expiry = now + timedelta(seconds=expires_in) if expires_in else now + timedelta(days=365)
@@ -618,11 +643,13 @@ class JWTManagerCore:
         return api_token
 
     def get_metrics(self) -> JWTMetrics:
-        """Get JWT management metrics"""
+        """
+Get JWT management metrics"""
         return self.metrics
 
     async def health_check(self) -> bool:
-        """Health check for JWT management system"""
+        """
+Health check for JWT management system"""
         try:
             # Test token generation and verification
             test_user_id = "health_check_user"
@@ -652,4 +679,4 @@ __all__ = [
     "TokenClaims", "TokenPair", "TokenInfo", "JWTMetrics"
 ]
 
-logger.info("🔑 JWT Manager Core module loaded")
+logger.info("🔑 JWT Manager Core module initialized")

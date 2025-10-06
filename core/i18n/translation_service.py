@@ -18,14 +18,16 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class TranslationQuality(Enum):
-    """Translation quality levels"""
+    """
+Translation quality levels"""
     BASIC = "basic"
     PROFESSIONAL = "professional"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
 
 class TranslationProvider(Enum):
-    """Translation service providers"""
+    """
+Translation service providers"""
     INTERNAL = "internal"
     GOOGLE = "google"
     MICROSOFT = "microsoft"
@@ -34,7 +36,8 @@ class TranslationProvider(Enum):
 
 @dataclass
 class TranslationRequest:
-    """Translation request data structure"""
+    """
+Translation request data structure"""
     source_text: str
     source_language: str
     target_language: str
@@ -45,7 +48,8 @@ class TranslationRequest:
 
 @dataclass
 class TranslationResult:
-    """Translation result data structure"""
+    """
+Translation result data structure"""
     translated_text: str
     source_language: str
     target_language: str
@@ -62,7 +66,8 @@ class TranslationService:
     """
     
     def __init__(self):
-        """Initialize translation service"""
+        """
+Initialize translation service"""
         self.providers = {}
         self.language_mappings = {}
         self.cached_translations = {}
@@ -76,7 +81,8 @@ class TranslationService:
         logger.info("🌐 Translation Service initialized successfully")
     
     def _load_default_translations(self):
-        """Load default translation dictionaries"""
+        """
+Load default translation dictionaries"""
         self.default_translations = {
             'en': {
                 'hello': 'Hello',
@@ -191,7 +197,8 @@ class TranslationService:
         }
     
     def _setup_language_mappings(self):
-        """Setup language code mappings"""
+        """
+Setup language code mappings"""
         self.language_mappings = {
             'en': ['en', 'en-US', 'en-GB', 'english'],
             'fr': ['fr', 'fr-FR', 'fr-CA', 'french'],
@@ -201,7 +208,8 @@ class TranslationService:
         }
     
     def _configure_quality_filters(self):
-        """Configure quality filters for translations"""
+        """
+Configure quality filters for translations"""
         self.quality_filters = {
             TranslationQuality.BASIC: {
                 'min_confidence': 0.6,
@@ -277,7 +285,8 @@ class TranslationService:
             )
     
     def _internal_translate(self, text: str, source_lang: str, target_lang: str) -> TranslationResult:
-        """Internal translation using built-in dictionaries"""
+        """
+Internal translation using built-in dictionaries"""
         
         # Simple key-based translation for known terms
         text_lower = text.lower().strip()
@@ -311,12 +320,11 @@ class TranslationService:
         )
     
     def _external_translate(self, request: TranslationRequest) -> TranslationResult:
-        """Simulate external translation provider"""
+        """
+Simulate external translation provider"""
         # This would integrate with real translation APIs
         return TranslationResult(
-            translated_text=request.source_text,  # Placeholder
-            source_language=request.source_language,
-            target_language=request.target_language,
+            translated_text=request.source_text,            target_language=request.target_language,
             confidence=0.8,
             provider=request.provider.value,
             quality_score=0.8,
@@ -325,7 +333,8 @@ class TranslationService:
         )
     
     def _apply_quality_filters(self, result: TranslationResult, quality: TranslationQuality) -> TranslationResult:
-        """Apply quality filters to translation result"""
+        """
+Apply quality filters to translation result"""
         filters = self.quality_filters.get(quality, {})
         min_confidence = filters.get('min_confidence', 0.0)
         
@@ -339,7 +348,8 @@ class TranslationService:
         return result
     
     def _normalize_language_code(self, lang_code: str) -> str:
-        """Normalize language code to standard format"""
+        """
+Normalize language code to standard format"""
         lang_code = lang_code.lower().strip()
         
         for standard_code, variants in self.language_mappings.items():
@@ -350,11 +360,13 @@ class TranslationService:
         return lang_code[:2] if len(lang_code) >= 2 else lang_code
     
     def get_supported_languages(self) -> List[str]:
-        """Get list of supported languages"""
+        """
+Get list of supported languages"""
         return list(self.default_translations.keys())
     
     def batch_translate(self, requests: List[TranslationRequest]) -> List[TranslationResult]:
-        """Translate multiple texts in batch"""
+        """
+Translate multiple texts in batch"""
         results = []
         for request in requests:
             result = self.translate(request)
@@ -363,7 +375,8 @@ class TranslationService:
     
     def get_translation_confidence(self, source_text: str, translated_text: str, 
                                  source_lang: str, target_lang: str) -> float:
-        """Calculate confidence score for a translation"""
+        """
+Calculate confidence score for a translation"""
         # Simple heuristic-based confidence calculation
         if source_text == translated_text:
             return 0.1  # Likely no translation occurred
@@ -396,5 +409,5 @@ __all__ = [
 ]
 
 # Log module initialization
-logger.info("🌐 Translation Service module loaded successfully")
+logger.info("🌐 Translation Service module initialized successfully")
 logger.info("✅ Ready for multi-language translation capabilities")

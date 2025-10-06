@@ -63,7 +63,8 @@ class DatabaseSharding(Base):
     updated_at = Column(DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class QueryPerformanceTuning(Base):
-    """Automated query performance optimization."""
+    """
+        Automated query performance optimization."""
     __tablename__ = 'query_performance_tuning'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -89,7 +90,8 @@ class QueryPerformanceTuning(Base):
     last_analyzed_at = Column(DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class ConnectionLoadBalancing(Base):
-    """Connection pool and load balancing management."""
+    """
+        Connection pool and load balancing management."""
     __tablename__ = 'connection_load_balancing'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -115,7 +117,8 @@ class ConnectionLoadBalancing(Base):
     updated_at = Column(DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class DatabaseHealthMonitoring(Base):
-    """Real-time database health and performance monitoring."""
+    """
+        Real-time database health and performance monitoring."""
     __tablename__ = 'database_health_monitoring'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -145,7 +148,8 @@ class DatabaseHealthMonitoring(Base):
     recorded_at = Column(DateTime(timezone=True), default=datetime.utcnow)
 
 class AutomaticScaling(Base):
-    """Automatic scaling configuration and history."""
+    """
+        Automatic scaling configuration and history."""
     __tablename__ = 'automatic_scaling'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -173,7 +177,8 @@ class AutomaticScaling(Base):
     created_at = Column(DateTime(timezone=True), default=datetime.utcnow)
 
 class DisasterRecoveryAutomation(Base):
-    """Automated disaster recovery management."""
+    """
+        Automated disaster recovery management."""
     __tablename__ = 'disaster_recovery_automation'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

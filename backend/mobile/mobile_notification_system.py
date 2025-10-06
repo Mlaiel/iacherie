@@ -27,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationPriority(str, Enum):
-    """Notification priority levels."""
+    """
+        Notification priority levels."""
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -71,7 +72,8 @@ class DeviceToken:
 
 @dataclass
 class NotificationContent:
-    """Notification content."""
+    """
+        Notification content."""
     title: str
     body: str
     image_url: Optional[str] = None
@@ -86,7 +88,8 @@ class NotificationContent:
 
 @dataclass
 class NotificationSchedule:
-    """Notification scheduling."""
+    """
+        Notification scheduling."""
     send_at: Optional[datetime] = None
     timezone: Optional[str] = None
     repeat_interval: Optional[str] = None  # daily, weekly, monthly
@@ -96,7 +99,8 @@ class NotificationSchedule:
 
 @dataclass
 class NotificationTargeting:
-    """Notification targeting options."""
+    """
+        Notification targeting options."""
     user_ids: Optional[List[str]] = None
     device_tokens: Optional[List[str]] = None
     platforms: Optional[List[Platform]] = None
@@ -109,7 +113,8 @@ class NotificationTargeting:
 
 @dataclass
 class NotificationResult:
-    """Notification sending result."""
+    """
+        Notification sending result."""
     notification_id: str
     target_count: int
     sent_count: int
@@ -122,7 +127,8 @@ class NotificationResult:
 
 @dataclass
 class NotificationAnalytics:
-    """Notification analytics data."""
+    """
+        Notification analytics data."""
     notification_id: str
     sent_count: int
     delivered_count: int
@@ -138,7 +144,8 @@ class NotificationAnalytics:
 
 
 class PushNotificationService:
-    """Professional push notification service."""
+    """
+        Professional push notification service."""
     
     def __init__(
         self,
@@ -189,18 +196,21 @@ class PushNotificationService:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+        Async context manager exit."""
         await self.close()
     
     async def _ensure_session(self):
-        """Ensure HTTP session is available."""
+        """
+        Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=30)
             )
     
     async def close(self):
-        """Close HTTP session."""
+        """
+        Close HTTP session."""
         if self.session and not self.session.closed:
             await self.session.close()
     
@@ -242,6 +252,7 @@ class PushNotificationService:
         
         if token not in self.user_devices[user_id]:
             self.user_devices[user_id].append(token)
+
         
         logger.info(f"Device registered: {platform.value} device for user {user_id}")
         return device_token
@@ -250,6 +261,7 @@ class PushNotificationService:
         """Unregister a device."""
         if token in self.registered_devices:
             device = self.registered_devices[token]
+
             user_id = device.user_id
             
             # Remove from device registry
@@ -264,6 +276,7 @@ class PushNotificationService:
                     del self.user_devices[user_id]
             
             logger.info(f"Device unregistered: {token}")
+
             return True
         
         return False
@@ -272,6 +285,7 @@ class PushNotificationService:
         """Update device last seen timestamp."""
         if token in self.registered_devices:
             self.registered_devices[token].last_seen = datetime.now()
+
             return True
         return False
     
@@ -284,8 +298,11 @@ class PushNotificationService:
         schedule: Optional[NotificationSchedule] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> NotificationResult:
-        """Send push notification."""
+        """
+        Send push notification."""
         await self._ensure_session()
+
+
         
         notification_id = str(uuid.uuid4())
         
@@ -296,10 +313,13 @@ class PushNotificationService:
             )
         
         # Get target devices
+
         target_devices = await self._resolve_targeting(targeting)
+
         
         if not target_devices:
             logger.warning("No target devices found for notification")
+
             return NotificationResult(
                 notification_id=notification_id,
                 target_count=0,
@@ -312,32 +332,43 @@ class PushNotificationService:
             )
         
         # Group devices by platform
+
         platform_groups = self._group_devices_by_platform(target_devices)
         
         # Send to each platform
+
         delivery_results = []
+
         sent_count = 0
+
         failed_count = 0
         
         for platform, devices in platform_groups.items():
             if platform == Platform.ANDROID:
                 results = await self._send_fcm_notifications(devices, content, priority, notification_type)
+
             elif platform == Platform.IOS:
                 results = await self._send_apns_notifications(devices, content, priority, notification_type)
+
             elif platform == Platform.WEB:
                 results = await self._send_web_push_notifications(devices, content, priority, notification_type)
+
             else:
                 continue
             
             delivery_results.extend(results)
+
             sent_count += sum(1 for r in results if r.get("success"))
+
             failed_count += sum(1 for r in results if not r.get("success"))
         
         # Create analytics entry
+
         analytics = NotificationAnalytics(
             notification_id=notification_id,
             sent_count=sent_count,
             delivered_count=0,  # Will be updated by delivery receipts
+
             opened_count=0,
             clicked_count=0,
             bounced_count=failed_count,
@@ -348,12 +379,14 @@ class PushNotificationService:
             created_at=datetime.now(),
             updated_at=datetime.now()
         )
+
         
         self.notification_analytics[notification_id] = analytics
         
         # Update counters
         self.sent_count += sent_count
         self.failed_count += failed_count
+
         
         result = NotificationResult(
             notification_id=notification_id,
@@ -365,6 +398,7 @@ class PushNotificationService:
             estimated_delivery=datetime.now() + timedelta(seconds=30),
             metadata=metadata or {}
         )
+
         
         logger.info(f"Notification sent: {notification_id}, targets: {len(target_devices)}, sent: {sent_count}, failed: {failed_count}")
         return result
@@ -392,6 +426,7 @@ class PushNotificationService:
                                 target_devices.append(device)
         
         # Apply filters
+
         filtered_devices = []
         for device in target_devices:
             # Platform filter
@@ -411,11 +446,13 @@ class PushNotificationService:
                 continue
             
             filtered_devices.append(device)
+
         
         return filtered_devices
     
     def _group_devices_by_platform(self, devices: List[DeviceToken]) -> Dict[Platform, List[DeviceToken]]:
-        """Group devices by platform."""
+        """
+        Group devices by platform."""
         groups = {}
         for device in devices:
             if device.platform not in groups:
@@ -430,25 +467,32 @@ class PushNotificationService:
         priority: NotificationPriority,
         notification_type: NotificationType
     ) -> List[Dict[str, Any]]:
-        """Send FCM notifications to Android devices."""
+        """
+        Send FCM notifications to Android devices."""
         if not self.fcm_server_key:
             logger.error("FCM server key not configured")
+
             return [{"success": False, "error": "FCM not configured"} for _ in devices]
+
         
         headers = {
             "Authorization": f"key={self.fcm_server_key}",
             "Content-Type": "application/json"
         }
+
         
         results = []
         
         # Send in batches
+
         batch_size = 1000
         for i in range(0, len(devices), batch_size):
             batch = devices[i:i + batch_size]
+
             tokens = [device.token for device in batch]
             
             # Build FCM payload
+
             payload = {
                 "registration_ids": tokens,
                 "notification": {
@@ -476,6 +520,8 @@ class PushNotificationService:
                 ) as response:
                     if response.status == 200:
                         result_data = await response.json()
+
+
                         batch_results = []
                         
                         for j, result in enumerate(result_data.get("results", [])):
@@ -487,16 +533,23 @@ class PushNotificationService:
                                 "error": result.get("error")
                             }
                             batch_results.append(device_result)
+
                         
                         results.extend(batch_results)
+
                     else:
                         error_data = await response.json()
+
                         logger.error(f"FCM batch failed: {error_data}")
+
                         results.extend([{"success": False, "error": "FCM batch failed"} for _ in batch])
+
             
             except Exception as e:
                 logger.error(f"FCM send failed: {e}")
+
                 results.extend([{"success": False, "error": str(e)} for _ in batch])
+
         
         return results
     
@@ -510,10 +563,13 @@ class PushNotificationService:
         """Send APNS notifications to iOS devices."""
         if not all([self.apns_key_id, self.apns_team_id, self.apns_private_key, self.apns_bundle_id]):
             logger.error("APNS not properly configured")
+
             return [{"success": False, "error": "APNS not configured"} for _ in devices]
         
         # Generate JWT token for APNS
         jwt_token = self._generate_apns_jwt()
+
+
         
         headers = {
             "Authorization": f"bearer {jwt_token}",
@@ -524,6 +580,7 @@ class PushNotificationService:
         }
         
         # Build APNS payload
+
         payload = {
             "aps": {
                 "alert": {
@@ -538,6 +595,7 @@ class PushNotificationService:
             "deep_link": content.deep_link,
             **(content.custom_data or {})
         }
+
         
         results = []
         
@@ -557,18 +615,23 @@ class PushNotificationService:
                     
                     if response.status != 200:
                         error_data = await response.json()
+
                         device_result["error"] = error_data.get("reason", "Unknown APNS error")
+
                     
                     results.append(device_result)
+
             
             except Exception as e:
                 logger.error(f"APNS send failed for device {device.token}: {e}")
+
                 results.append({
                     "device_token": device.token,
                     "platform": "ios",
                     "success": False,
                     "error": str(e)
                 })
+
         
         return results
     
@@ -583,6 +646,7 @@ class PushNotificationService:
         # Web push implementation would require additional libraries like pywebpush
         # For now, return placeholder results
         logger.info(f"Web push notifications would be sent to {len(devices)} devices")
+
         
         return [{
             "device_token": device.token,
@@ -596,6 +660,7 @@ class PushNotificationService:
         # This is a simplified implementation
         # In practice, you'd use the cryptography library to properly sign the JWT
         header = {"alg": "ES256", "kid": self.apns_key_id}
+
         payload = {
             "iss": self.apns_team_id,
             "iat": int(time.time())
@@ -618,6 +683,7 @@ class PushNotificationService:
         """Handle scheduled notifications."""
         # In a real implementation, this would use a job queue or scheduler
         logger.info(f"Notification {notification_id} scheduled for {schedule.send_at}")
+
         
         return NotificationResult(
             notification_id=notification_id,
@@ -637,8 +703,10 @@ class PushNotificationService:
             analytics.opened_count += 1
             analytics.open_rate = analytics.opened_count / analytics.sent_count if analytics.sent_count > 0 else 0
             analytics.updated_at = datetime.now()
+
             
             logger.info(f"Notification opened: {notification_id}")
+
             return True
         return False
     
@@ -649,8 +717,10 @@ class PushNotificationService:
             analytics.clicked_count += 1
             analytics.click_rate = analytics.clicked_count / analytics.sent_count if analytics.sent_count > 0 else 0
             analytics.updated_at = datetime.now()
+
             
             logger.info(f"Notification clicked: {notification_id}")
+
             return True
         return False
     
@@ -659,7 +729,8 @@ class PushNotificationService:
         return self.notification_analytics.get(notification_id)
     
     def get_user_devices(self, user_id: str) -> List[DeviceToken]:
-        """Get all devices for a user."""
+        """
+        Get all devices for a user."""
         devices = []
         if user_id in self.user_devices:
             for token in self.user_devices[user_id]:
@@ -668,9 +739,13 @@ class PushNotificationService:
         return devices
     
     def get_usage_stats(self) -> Dict[str, Any]:
-        """Get service usage statistics."""
+        """
+        Get service usage statistics."""
         active_devices = sum(1 for device in self.registered_devices.values() if device.is_active)
+
         total_devices = len(self.registered_devices)
+
+
         
         platform_breakdown = {}
         for device in self.registered_devices.values():
@@ -707,6 +782,7 @@ async def send_instant_notification(
         body=body,
         deep_link=deep_link
     )
+
     
     targeting = NotificationTargeting(user_ids=user_ids)
     
@@ -723,8 +799,10 @@ async def broadcast_system_notification(
     service: PushNotificationService,
     exclude_users: Optional[List[str]] = None
 ) -> NotificationResult:
-    """Broadcast system notification to all users."""
+    """
+        Broadcast system notification to all users."""
     content = NotificationContent(title=title, body=body)
+
     
     targeting = NotificationTargeting(exclude_user_ids=exclude_users)
     
@@ -740,6 +818,7 @@ if __name__ == "__main__":
     # Example usage
     async def main():
         # Initialize service (in practice, get these from environment)
+
         service = PushNotificationService(
             fcm_server_key="your_fcm_server_key",
             apns_key_id="your_apns_key_id",
@@ -747,28 +826,68 @@ if __name__ == "__main__":
             apns_private_key="your_private_key",
             apns_bundle_id="com.example.app"
         )
+
         
         async with service:
             # Register a device
+
             device = await service.register_device(
                 token= os.getenv("TOKEN", "CHANGE_ME"),
                 platform=Platform.ANDROID,
                 user_id="user123",
                 device_id="device456"
             )
+
             print(f"Device registered: {device.device_id}")
             
             # Send notification
+
             result = await send_instant_notification(
                 title="Welcome!",
                 body="Thanks for using our app",
                 user_ids=["user123"],
                 service=service
             )
+
             print(f"Notification sent: {result.notification_id}")
             
             # Get stats
+
             stats = service.get_usage_stats()
+
             print(f"Usage stats: {stats}")
     
     asyncio.run(main())
+
+# Classes supplémentaires pour compatibilité avec __init__.py
+MobileNotificationSystem = PushNotificationService
+
+@dataclass
+class PushNotificationRequest:
+    """Push Notification Request"""
+    title: str
+    body: str
+    user_ids: List[str]
+    priority: NotificationPriority = NotificationPriority.NORMAL
+    notification_type: NotificationType = NotificationType.SYSTEM
+    
+@dataclass
+class NotificationTemplate:
+    """Notification Template"""
+    template_id: str
+    template_name: str
+    content: NotificationContent
+    
+@dataclass
+class DeliveryReport:
+    """Delivery Report"""
+    notification_id: str
+    delivered_count: int
+    failed_count: int
+    
+@dataclass
+class NotificationScheduler:
+    """Notification Scheduler"""
+    schedule_id: str
+    schedule: NotificationSchedule
+

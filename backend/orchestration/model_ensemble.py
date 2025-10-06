@@ -27,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 
 class ModelStatus(Enum):
-    """Model execution status"""
+    """
+        Model execution status"""
     IDLE = "idle"
     ACTIVE = "active"
     LOADING = "loading"
@@ -61,7 +62,8 @@ class ModelMetrics:
     last_updated: datetime = field(default_factory=datetime.utcnow)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metrics to dictionary"""
+        """
+        Convert metrics to dictionary"""
         return {
             "model_id": self.model_id,
             "accuracy": self.accuracy,
@@ -92,7 +94,8 @@ class EnsembleConfig:
     
     
 class ModelPool:
-    """Thread-safe model pool for managing hundreds of models"""
+    """
+        Thread-safe model pool for managing hundreds of models"""
     
     def __init__(self, max_size: int = 500):
         self.max_size = max_size
@@ -103,6 +106,7 @@ class ModelPool:
         self.active_models: Set[str] = set()
         self._lock = threading.RLock()
         self._performance_history: Dict[str, deque] = defaultdict(lambda: deque(maxlen=1000))
+
         
         logger.info(f"ModelPool initialized with max_size={max_size}")
     
@@ -111,18 +115,22 @@ class ModelPool:
         with self._lock:
             if len(self.models) >= self.max_size:
                 logger.warning(f"ModelPool at capacity ({self.max_size}), cannot add model {model_id}")
+
                 return False
             
             if model_id in self.models:
                 logger.warning(f"Model {model_id} already exists in pool")
+
                 return False
             
             self.models[model_id] = model
             self.model_metrics[model_id] = ModelMetrics(model_id=model_id)
+
             self.model_status[model_id] = ModelStatus.IDLE
             self.model_weights[model_id] = initial_weight
             
             logger.info(f"Added model {model_id} to pool (total: {len(self.models)})")
+
             return True
     
     def remove_model(self, model_id: str) -> bool:
@@ -137,11 +145,13 @@ class ModelPool:
             del self.model_status[model_id]
             del self.model_weights[model_id]
             self.active_models.discard(model_id)
+
             
             if model_id in self._performance_history:
                 del self._performance_history[model_id]
             
             logger.info(f"Removed model {model_id} from pool (remaining: {len(self.models)})")
+
             return True
     
     def get_available_models(self, min_performance: float = 0.0) -> List[str]:
@@ -151,12 +161,15 @@ class ModelPool:
             for model_id, status in self.model_status.items():
                 if status == ModelStatus.IDLE:
                     metrics = self.model_metrics.get(model_id)
+
                     if metrics and metrics.accuracy >= min_performance:
                         available.append(model_id)
+
             return available
     
     def update_metrics(self, model_id: str, metrics: ModelMetrics):
-        """Update model performance metrics"""
+        """
+        Update model performance metrics"""
         with self._lock:
             if model_id in self.model_metrics:
                 self.model_metrics[model_id] = metrics
@@ -168,22 +181,30 @@ class ModelPool:
                 })
     
     def get_pool_stats(self) -> Dict[str, Any]:
-        """Get comprehensive pool statistics"""
+        """
+        Get comprehensive pool statistics"""
         with self._lock:
             status_counts = defaultdict(int)
+
+
             total_accuracy = 0
+
             total_latency = 0
+
             active_count = 0
             
             for model_id, status in self.model_status.items():
                 status_counts[status.value] += 1
+
                 metrics = self.model_metrics[model_id]
                 total_accuracy += metrics.accuracy
                 total_latency += metrics.latency_ms
                 if status == ModelStatus.ACTIVE:
                     active_count += 1
+
             
             total_models = len(self.models)
+
             
             return {
                 "total_models": total_models,
@@ -206,7 +227,8 @@ class ModelRegistry:
         self._lock = threading.RLock()
     
     def register_model(self, model_id: str, metadata: Dict[str, Any]) -> bool:
-        """Register model with metadata"""
+        """
+        Register model with metadata"""
         with self._lock:
             self.models_db[model_id] = {
                 **metadata,
@@ -215,15 +237,21 @@ class ModelRegistry:
             }
             
             # Index by capabilities
+
             capabilities = metadata.get('capabilities', [])
+
             for capability in capabilities:
                 self.capability_index[capability].add(model_id)
             
             # Index by performance tier
+
             performance_tier = metadata.get('performance_tier', 'medium')
+
             self.performance_index[performance_tier].append(model_id)
+
             
             logger.info(f"Registered model {model_id} with capabilities: {capabilities}")
+
             return True
     
     def find_models_by_capability(self, capability: str) -> List[str]:
@@ -232,18 +260,21 @@ class ModelRegistry:
             return list(self.capability_index.get(capability, set()))
     
     def find_models_by_performance(self, tier: str) -> List[str]:
-        """Find models by performance tier"""
+        """
+        Find models by performance tier"""
         with self._lock:
             return self.performance_index.get(tier, [])
     
     def get_model_metadata(self, model_id: str) -> Optional[Dict[str, Any]]:
-        """Get model metadata"""
+        """
+        Get model metadata"""
         with self._lock:
             return self.models_db.get(model_id)
 
 
 class LargeScaleEnsembleManager:
-    """Main manager for large-scale ensemble orchestration"""
+    """
+        Main manager for large-scale ensemble orchestration"""
     
     def __init__(self, config: EnsembleConfig):
         self.config = config
@@ -266,6 +297,7 @@ class LargeScaleEnsembleManager:
         
         if self.config.resource_monitoring:
             self._monitoring_task = asyncio.create_task(self._monitor_performance())
+
         
         logger.info("LargeScaleEnsembleManager started")
     
@@ -275,6 +307,7 @@ class LargeScaleEnsembleManager:
         
         if self._monitoring_task:
             self._monitoring_task.cancel()
+
             try:
                 await self._monitoring_task
             except asyncio.CancelledError:
@@ -289,12 +322,16 @@ class LargeScaleEnsembleManager:
         self.model_registry.register_model(model_id, metadata)
         
         # Add to model pool
+
         initial_weight = metadata.get('initial_weight', 1.0)
+
         success = self.model_pool.add_model(model_id, model, initial_weight)
+
         
         if success:
             self.ensemble_weights[model_id] = initial_weight
             logger.info(f"Successfully added model {model_id} to ensemble")
+
         
         return success
     
@@ -303,31 +340,40 @@ class LargeScaleEnsembleManager:
         success = self.model_pool.remove_model(model_id)
         if success:
             self.ensemble_weights.pop(model_id, None)
+
             self.prediction_cache.pop(model_id, None)
+
         
         return success
     
     async def predict_ensemble(self, input_data: Any, strategy: Optional[EnsembleStrategy] = None) -> Dict[str, Any]:
-        """Make ensemble prediction using specified strategy"""
+        """
+        Make ensemble prediction using specified strategy"""
         strategy = strategy or self.config.strategy
         
         # Get available models
+
         available_models = self.model_pool.get_available_models()
+
         
         if not available_models:
             raise RuntimeError("No available models for prediction")
         
         # Select models based on strategy
+
         selected_models = await self._select_models(available_models, strategy)
         
         # Make predictions in parallel
+
         predictions = await self._parallel_predict(selected_models, input_data)
         
         # Combine predictions
+
         ensemble_result = await self._combine_predictions(predictions, strategy)
         
         # Update metrics
         await self._update_prediction_metrics(selected_models)
+
         
         return ensemble_result
     
@@ -335,27 +381,39 @@ class LargeScaleEnsembleManager:
         """Select models based on strategy"""
         if strategy == EnsembleStrategy.PERFORMANCE_BASED:
             # Select top-performing models
+
             model_scores = []
             for model_id in available_models:
                 metrics = self.model_pool.model_metrics[model_id]
+
                 score = metrics.accuracy * (1 - metrics.error_rate) / max(metrics.latency_ms, 1)
+
                 model_scores.append((model_id, score))
             
             # Sort by score and take top 50%
             model_scores.sort(key=lambda x: x[1], reverse=True)
+
+
             selected_count = max(1, len(model_scores) // 2)
+
             return [model_id for model_id, _ in model_scores[:selected_count]]
         
         elif strategy == EnsembleStrategy.LOAD_BALANCED:
             # Select models with lowest current load
+
             model_loads = []
             for model_id in available_models:
                 metrics = self.model_pool.model_metrics[model_id]
+
                 load = (metrics.cpu_usage_percent + metrics.memory_usage_mb / 1000) / 2
                 model_loads.append((model_id, load))
+
             
             model_loads.sort(key=lambda x: x[1])
+
+
             selected_count = min(len(available_models), self.config.parallel_workers)
+
             return [model_id for model_id, _ in model_loads[:selected_count]]
         
         else:
@@ -363,7 +421,8 @@ class LargeScaleEnsembleManager:
             return available_models
     
     async def _parallel_predict(self, model_ids: List[str], input_data: Any) -> Dict[str, Any]:
-        """Make predictions in parallel"""
+        """
+        Make predictions in parallel"""
         prediction_tasks = []
         
         for model_id in model_ids:
@@ -373,7 +432,10 @@ class LargeScaleEnsembleManager:
                 model_id,
                 input_data
             )
+
             prediction_tasks.append((model_id, task))
+
+
         
         predictions = {}
         for model_id, task in prediction_tasks:
@@ -382,6 +444,7 @@ class LargeScaleEnsembleManager:
                 predictions[model_id] = result
             except Exception as e:
                 logger.error(f"Prediction failed for model {model_id}: {e}")
+
                 predictions[model_id] = None
         
         return predictions
@@ -394,21 +457,28 @@ class LargeScaleEnsembleManager:
         try:
             # Simulate model prediction
             # In production, this would call the actual model
+
             start_time = time.time()
             
             # Simulate processing time
+
             processing_time = np.random.uniform(0.01, 0.1)
+
             time.sleep(processing_time)
             
             # Generate prediction
+
             prediction = np.random.random()
             
             # Update metrics
+
             latency = (time.time() - start_time) * 1000
+
             metrics = self.model_pool.model_metrics[model_id]
             metrics.latency_ms = latency
             metrics.predictions_count += 1
             metrics.last_updated = datetime.utcnow()
+
             
             return {
                 'prediction': prediction,
@@ -425,38 +495,51 @@ class LargeScaleEnsembleManager:
             self.model_pool.model_status[model_id] = ModelStatus.IDLE
     
     async def _combine_predictions(self, predictions: Dict[str, Any], strategy: EnsembleStrategy) -> Dict[str, Any]:
-        """Combine predictions from multiple models"""
+        """
+        Combine predictions from multiple models"""
         valid_predictions = {k: v for k, v in predictions.items() if v is not None}
         
         if not valid_predictions:
             raise RuntimeError("No valid predictions to combine")
+
         
         if strategy == EnsembleStrategy.DYNAMIC_WEIGHTING:
             # Weight by recent performance
+
             weighted_sum = 0
+
             total_weight = 0
             
             for model_id, pred_data in valid_predictions.items():
                 weight = self.ensemble_weights.get(model_id, 1.0)
+
+
                 confidence = pred_data.get('confidence', 1.0)
                 
                 # Adjust weight by confidence
+
                 adjusted_weight = weight * confidence
                 weighted_sum += pred_data['prediction'] * adjusted_weight
                 total_weight += adjusted_weight
+
             
             final_prediction = weighted_sum / total_weight if total_weight > 0 else 0
         
         else:
             # Simple average
+
             predictions_list = [pred['prediction'] for pred in valid_predictions.values()]
+
             final_prediction = np.mean(predictions_list)
         
         # Calculate ensemble confidence
+
         confidences = [pred['confidence'] for pred in valid_predictions.values()]
+
         ensemble_confidence = np.mean(confidences)
         
         # Calculate ensemble metrics
+
         latencies = [pred['latency_ms'] for pred in valid_predictions.values()]
         
         return {
@@ -480,7 +563,8 @@ class LargeScaleEnsembleManager:
                 )
     
     async def _monitor_performance(self):
-        """Monitor ensemble performance continuously"""
+        """
+        Monitor ensemble performance continuously"""
         while self.is_running:
             try:
                 # Update adaptive weights
@@ -498,6 +582,7 @@ class LargeScaleEnsembleManager:
                 
             except Exception as e:
                 logger.error(f"Performance monitoring error: {e}")
+
                 await asyncio.sleep(10)
     
     async def _update_adaptive_weights(self):
@@ -506,6 +591,7 @@ class LargeScaleEnsembleManager:
             metrics = self.model_pool.model_metrics[model_id]
             
             # Calculate performance score
+
             performance_score = (
                 metrics.accuracy * 0.4 +
                 (1 - metrics.error_rate) * 0.3 +
@@ -516,11 +602,13 @@ class LargeScaleEnsembleManager:
             self.ensemble_weights[model_id] = max(0.1, min(2.0, performance_score))
     
     async def _check_model_health(self):
-        """Check model health and handle failures"""
+        """
+        Check model health and handle failures"""
         for model_id, status in self.model_pool.model_status.items():
             if status == ModelStatus.ERROR:
                 logger.warning(f"Model {model_id} in error state")
                 # Could implement automatic recovery here
+
             
             metrics = self.model_pool.model_metrics[model_id]
             if metrics.error_rate > 0.1:  # 10% error rate threshold
@@ -529,6 +617,7 @@ class LargeScaleEnsembleManager:
     async def _optimize_resources(self):
         """Optimize resource usage across models"""
         pool_stats = self.model_pool.get_pool_stats()
+
         
         if pool_stats['utilization_rate'] > self.config.load_balance_threshold:
             logger.info("High utilization detected, considering load balancing")
@@ -537,6 +626,7 @@ class LargeScaleEnsembleManager:
     def get_ensemble_stats(self) -> Dict[str, Any]:
         """Get comprehensive ensemble statistics"""
         pool_stats = self.model_pool.get_pool_stats()
+
         
         return {
             'config': {
@@ -552,7 +642,8 @@ class LargeScaleEnsembleManager:
 
 
 class EnsembleOrchestrator:
-    """High-level orchestrator for managing multiple ensemble managers"""
+    """
+        High-level orchestrator for managing multiple ensemble managers"""
     
     def __init__(self):
         self.ensembles: Dict[str, LargeScaleEnsembleManager] = {}
@@ -563,15 +654,19 @@ class EnsembleOrchestrator:
         }
     
     async def create_ensemble(self, ensemble_id: str, config: EnsembleConfig) -> bool:
-        """Create new ensemble"""
+        """
+        Create new ensemble"""
         if ensemble_id in self.ensembles:
             return False
+
         
         ensemble = LargeScaleEnsembleManager(config)
         await ensemble.start()
+
         
         self.ensembles[ensemble_id] = ensemble
         self.global_stats['active_ensembles'] = len(self.ensembles)
+
         
         logger.info(f"Created ensemble {ensemble_id}")
         return True
@@ -580,12 +675,14 @@ class EnsembleOrchestrator:
         """Remove ensemble"""
         if ensemble_id not in self.ensembles:
             return False
+
         
         ensemble = self.ensembles[ensemble_id]
         await ensemble.stop()
         del self.ensembles[ensemble_id]
         
         self.global_stats['active_ensembles'] = len(self.ensembles)
+
         
         logger.info(f"Removed ensemble {ensemble_id}")
         return True
@@ -593,9 +690,11 @@ class EnsembleOrchestrator:
     def get_global_stats(self) -> Dict[str, Any]:
         """Get global orchestration statistics"""
         total_models = sum(
-            len(ensemble.model_pool.models) 
+            len(ensemble.model_pool.models)
+ 
             for ensemble in self.ensembles.values()
         )
+
         
         self.global_stats['total_models'] = total_models
         

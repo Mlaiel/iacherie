@@ -38,7 +38,8 @@ logger = logging.getLogger(__name__)
 # =============================================================================
 
 class BlockchainNetwork(Enum):
-    """Supported blockchain networks"""
+    """
+        Supported blockchain networks"""
     ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BSC = "binance_smart_chain"
@@ -91,7 +92,8 @@ class NetworkConfig:
 
 @dataclass
 class CrossChainValidator:
-    """Cross-chain transaction validator"""
+    """
+        Cross-chain transaction validator"""
     validator_id: str
     validator_address: str
     stake_amount: Decimal
@@ -102,7 +104,8 @@ class CrossChainValidator:
 
 @dataclass
 class LiquidityPoolManager:
-    """Liquidity pool management for bridge"""
+    """
+        Liquidity pool management for bridge"""
     pool_id: str
     source_network: BlockchainNetwork
     target_network: BlockchainNetwork
@@ -115,7 +118,8 @@ class LiquidityPoolManager:
 
 @dataclass
 class CrossChainTransfer:
-    """Cross-chain transfer record"""
+    """
+        Cross-chain transfer record"""
     transfer_id: str
     source_network: BlockchainNetwork
     target_network: BlockchainNetwork
@@ -137,7 +141,8 @@ class CrossChainTransfer:
 # =============================================================================
 
 class BridgeManager:
-    """Enterprise cross-chain bridge management system"""
+    """
+        Enterprise cross-chain bridge management system"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -149,7 +154,8 @@ class BridgeManager:
         self.supported_assets: Dict[str, Dict[str, Any]] = {}
         
     async def initialize(self) -> bool:
-        """Initialize bridge manager"""
+        """
+        Initialize bridge manager"""
         try:
             logger.info("Initializing Cross-Chain Bridge Manager...")
             
@@ -164,12 +170,15 @@ class BridgeManager:
             
             # Load supported assets
             await self._load_supported_assets()
+
             
             logger.info("Cross-Chain Bridge Manager initialized successfully")
+
             return True
             
         except Exception as e:
             logger.error(f"Error initializing bridge manager: {str(e)}")
+
             return False
 
     async def _setup_network_configs(self):
@@ -210,6 +219,7 @@ class BridgeManager:
                 native_currency="BNB",
                 explorer_url="https://bscscan.com"
             )
+
             
         except Exception as e:
             logger.error(f"Error setting up network configs: {str(e)}")
@@ -218,6 +228,8 @@ class BridgeManager:
         """Initialize cross-chain validators"""
         try:
             # Add default validators (in production, these would be real validator nodes)
+
+
             validator1 = CrossChainValidator(
                 validator_id="validator_1",
                 validator_address="0x4567890123456789012345678901234567890123",
@@ -229,6 +241,8 @@ class BridgeManager:
                     BlockchainNetwork.BSC
                 ]
             )
+
+
             
             validator2 = CrossChainValidator(
                 validator_id="validator_2",
@@ -241,6 +255,7 @@ class BridgeManager:
                     BlockchainNetwork.AVALANCHE
                 ]
             )
+
             
             self.validators[validator1.validator_id] = validator1
             self.validators[validator2.validator_id] = validator2
@@ -252,6 +267,7 @@ class BridgeManager:
         """Setup liquidity pools for different bridge routes"""
         try:
             # ETH <-> POLYGON pool
+
             eth_polygon_pool = LiquidityPoolManager(
                 pool_id="eth_polygon_pool",
                 source_network=BlockchainNetwork.ETHEREUM,
@@ -264,6 +280,7 @@ class BridgeManager:
             )
             
             # ETH <-> BSC pool
+
             eth_bsc_pool = LiquidityPoolManager(
                 pool_id="eth_bsc_pool",
                 source_network=BlockchainNetwork.ETHEREUM,
@@ -274,6 +291,7 @@ class BridgeManager:
                 utilization_rate=0.2,
                 fee_percentage=Decimal('0.15')
             )
+
             
             self.liquidity_pools[eth_polygon_pool.pool_id] = eth_polygon_pool
             self.liquidity_pools[eth_bsc_pool.pool_id] = eth_bsc_pool
@@ -332,15 +350,19 @@ class BridgeManager:
             # Validate asset
             if asset_symbol not in self.supported_assets:
                 raise ValueError(f"Unsupported asset: {asset_symbol}")
+
+
             
             asset_info = self.supported_assets[asset_symbol]
             if source_network not in asset_info["contracts"]:
                 raise ValueError(f"Asset {asset_symbol} not available on {source_network}")
             
             # Calculate bridge fee
+
             fee = await self._calculate_bridge_fee(source_network, target_network, amount)
             
             # Check liquidity availability
+
             pool_id = f"{source_network.value}_{target_network.value}_pool"
             if pool_id in self.liquidity_pools:
                 pool = self.liquidity_pools[pool_id]
@@ -348,7 +370,10 @@ class BridgeManager:
                     raise ValueError("Insufficient liquidity for transfer")
             
             # Create transfer record
+
             transfer_id = str(uuid.uuid4())
+
+
             transfer = CrossChainTransfer(
                 transfer_id=transfer_id,
                 source_network=source_network,
@@ -361,17 +386,21 @@ class BridgeManager:
                 fee=fee,
                 status=TransferStatus.INITIATED
             )
+
             
             self.transfers[transfer_id] = transfer
             
             # Start transfer process
             await self._process_transfer(transfer_id)
+
             
             logger.info(f"Cross-chain transfer initiated: {transfer_id}")
+
             return transfer_id
             
         except Exception as e:
             logger.error(f"Error initiating cross-chain transfer: {str(e)}")
+
             raise
 
     async def _calculate_bridge_fee(
@@ -383,30 +412,41 @@ class BridgeManager:
         """Calculate bridge fee for transfer"""
         try:
             # Base fee percentage
+
             base_fee_percentage = Decimal('0.1')  # 0.1%
             
             # Network-specific adjustments
+
             network_multipliers = {
                 BlockchainNetwork.ETHEREUM: Decimal('1.5'),  # Higher fee for Ethereum
                 BlockchainNetwork.POLYGON: Decimal('1.0'),
                 BlockchainNetwork.BSC: Decimal('1.0'),
                 BlockchainNetwork.AVALANCHE: Decimal('1.2')
             }
+
             
             source_multiplier = network_multipliers.get(source_network, Decimal('1.0'))
+
+
             target_multiplier = network_multipliers.get(target_network, Decimal('1.0'))
             
             # Calculate fee
+
             fee_percentage = base_fee_percentage * source_multiplier * target_multiplier
+
             fee = amount * (fee_percentage / Decimal('100'))
             
             # Minimum fee
+
             min_fee = Decimal('1.0')
+
             
             return max(fee, min_fee)
+
             
         except Exception as e:
             logger.error(f"Error calculating bridge fee: {str(e)}")
+
             return Decimal('10.0')  # Default high fee on error
 
     async def _process_transfer(self, transfer_id: str) -> bool:
@@ -414,6 +454,7 @@ class BridgeManager:
         try:
             if transfer_id not in self.transfers:
                 return False
+
             
             transfer = self.transfers[transfer_id]
             
@@ -429,8 +470,10 @@ class BridgeManager:
             # Step 4: Complete transfer
             transfer.status = TransferStatus.COMPLETED
             transfer.completed_at = datetime.utcnow()
+
             
             logger.info(f"Cross-chain transfer completed: {transfer_id}")
+
             return True
             
         except Exception as e:
@@ -453,10 +496,12 @@ class BridgeManager:
             transfer.status = TransferStatus.LOCKED
             
             logger.info(f"Tokens locked on {transfer.source_network}: {transfer.source_tx_hash}")
+
             return True
             
         except Exception as e:
             logger.error(f"Error locking tokens: {str(e)}")
+
             return False
 
     async def _validate_with_validators(self, transfer: CrossChainTransfer) -> bool:
@@ -465,8 +510,10 @@ class BridgeManager:
             required_signatures = 2  # Require 2 validator signatures
             
             # Get eligible validators for this transfer
+
             eligible_validators = [
                 v for v in self.validators.values()
+
                 if (transfer.source_network in v.networks_supported and
                     transfer.target_network in v.networks_supported and
                     v.active)
@@ -483,12 +530,14 @@ class BridgeManager:
             if len(transfer.validator_signatures) >= required_signatures:
                 transfer.status = TransferStatus.VALIDATED
                 logger.info(f"Transfer validated by {len(transfer.validator_signatures)} validators")
+
                 return True
             else:
                 return False
                 
         except Exception as e:
             logger.error(f"Error validating with validators: {str(e)}")
+
             return False
 
     async def _mint_tokens_target(self, transfer: CrossChainTransfer) -> bool:
@@ -502,18 +551,23 @@ class BridgeManager:
             transfer.status = TransferStatus.MINTED
             
             # Update liquidity pools
+
             pool_id = f"{transfer.source_network.value}_{transfer.target_network.value}_pool"
             if pool_id in self.liquidity_pools:
                 pool = self.liquidity_pools[pool_id]
                 pool.available_liquidity -= transfer.amount
                 pool.utilization_rate = 1 - (pool.available_liquidity / pool.total_liquidity)
+
                 pool.last_updated = datetime.utcnow()
+
             
             logger.info(f"Tokens minted on {transfer.target_network}: {transfer.target_tx_hash}")
+
             return True
             
         except Exception as e:
             logger.error(f"Error minting tokens: {str(e)}")
+
             return False
 
     async def get_transfer_status(self, transfer_id: str) -> Optional[Dict[str, Any]]:
@@ -521,6 +575,7 @@ class BridgeManager:
         try:
             if transfer_id not in self.transfers:
                 return None
+
             
             transfer = self.transfers[transfer_id]
             
@@ -540,24 +595,35 @@ class BridgeManager:
             
         except Exception as e:
             logger.error(f"Error getting transfer status: {str(e)}")
+
             return None
 
     async def get_bridge_statistics(self) -> Dict[str, Any]:
         """Get comprehensive bridge statistics"""
         try:
             total_transfers = len(self.transfers)
+
+
             completed_transfers = len([t for t in self.transfers.values() if t.status == TransferStatus.COMPLETED])
+
+
             failed_transfers = len([t for t in self.transfers.values() if t.status == TransferStatus.FAILED])
             
             # Calculate total volume
+
             total_volume = sum(t.amount for t in self.transfers.values() if t.status == TransferStatus.COMPLETED)
+
+
             total_fees = sum(t.fee for t in self.transfers.values() if t.status == TransferStatus.COMPLETED)
             
             # Network distribution
+
             network_stats = {}
             for transfer in self.transfers.values():
                 source = transfer.source_network.value
+
                 target = transfer.target_network.value
+
                 route = f"{source}->{target}"
                 
                 if route not in network_stats:
@@ -568,6 +634,7 @@ class BridgeManager:
                     network_stats[route]['volume'] += transfer.amount
             
             # Liquidity pool stats
+
             pool_stats = {}
             for pool_id, pool in self.liquidity_pools.items():
                 pool_stats[pool_id] = {
@@ -593,6 +660,7 @@ class BridgeManager:
             
         except Exception as e:
             logger.error(f"Error getting bridge statistics: {str(e)}")
+
             return {}
 
     async def emergency_pause(self, reason: str) -> bool:
@@ -608,6 +676,7 @@ class BridgeManager:
             
         except Exception as e:
             logger.error(f"Error during emergency pause: {str(e)}")
+
             return False
 
     async def resume_bridge(self) -> bool:
@@ -615,38 +684,48 @@ class BridgeManager:
         try:
             if self.bridge_status == BridgeStatus.EMERGENCY_STOPPED:
                 # Perform safety checks before resuming
+
                 safety_checks_passed = await self._perform_safety_checks()
+
                 
                 if safety_checks_passed:
                     self.bridge_status = BridgeStatus.ACTIVE
                     logger.info("Bridge operations resumed")
+
                     return True
                 else:
                     logger.warning("Safety checks failed, bridge remains paused")
+
                     return False
             
             return False
             
         except Exception as e:
             logger.error(f"Error resuming bridge: {str(e)}")
+
             return False
 
     async def _perform_safety_checks(self) -> bool:
         """Perform safety checks before resuming bridge"""
         try:
             # Check validator availability
+
             active_validators = len([v for v in self.validators.values() if v.active])
+
             if active_validators < 2:
                 logger.warning("Insufficient active validators")
+
                 return False
             
             # Check liquidity pool health
             for pool in self.liquidity_pools.values():
                 if pool.available_liquidity < pool.total_liquidity * Decimal('0.1'):
                     logger.warning(f"Low liquidity in pool {pool.pool_id}")
+
                     return False
             
             # Check network connectivity (simplified)
+
             for network in self.networks.values():
                 # In production, would check actual network connectivity
                 pass
@@ -655,6 +734,7 @@ class BridgeManager:
             
         except Exception as e:
             logger.error(f"Error performing safety checks: {str(e)}")
+
             return False
 
 # =============================================================================

@@ -22,7 +22,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class TransferLearningCore:
-    """Advanced Transfer Learning Core System"""
+    """
+Advanced Transfer Learning Core System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -32,4 +33,4 @@ class TransferLearningCore:
 # Module exports
 __all__ = ["TransferLearningCore"]
 
-logger.info("🔄 Transfer Learning Core module loaded")
+logger.info("🔄 Transfer Learning Core module initialized")

@@ -97,7 +97,8 @@ class PlatformIntegration:
 
 @dataclass
 class SyncResult:
-    """Résultat de synchronisation"""
+    """
+        Résultat de synchronisation"""
     sync_id: str
     source_platform: str
     target_platforms: List[str]
@@ -115,7 +116,8 @@ class SyncResult:
 
 @dataclass
 class SyncStrategy:
-    """Stratégie de synchronisation"""
+    """
+        Stratégie de synchronisation"""
     strategy_id: str
     strategy_name: str
     platforms: List[str]
@@ -131,7 +133,8 @@ class SyncStrategy:
 
 @dataclass
 class CrossPlatformSync:
-    """Synchronisation cross-platform"""
+    """
+        Synchronisation cross-platform"""
     cross_sync_id: str
     participating_platforms: List[str]
     sync_coordinator: str
@@ -145,7 +148,8 @@ class CrossPlatformSync:
     last_executed: Optional[datetime]
 
 class PlatformSynchronizer:
-    """Synchroniseur principal de plateformes"""
+    """
+        Synchroniseur principal de plateformes"""
     
     def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
         self.redis = redis_client
@@ -156,24 +160,31 @@ class PlatformSynchronizer:
         self.rate_limiters = {}
         
     async def initialize_platform_synchronizer(self) -> Dict[str, Any]:
-        """Initialiser le synchroniseur de plateformes"""
+        """
+        Initialiser le synchroniseur de plateformes"""
         try:
             # Configurer les intégrations de plateformes
+
             platform_integrations = await self._configure_platform_integrations()
             
             # Initialiser les clients API
             api_clients = await self._initialize_api_clients()
             
             # Configurer les limiteurs de débit
+
             rate_limiters = await self._configure_rate_limiters()
             
             # Préparer la queue de synchronisation
+
             sync_queue_status = await self._prepare_sync_queue()
             
             # Démarrer les workers de synchronisation
+
             sync_workers = await self._start_sync_workers()
+
             
             logger.info("🔄 Platform synchronizer initialized successfully")
+
             
             return {
                 "platform_integrations": len(platform_integrations),
@@ -187,6 +198,7 @@ class PlatformSynchronizer:
             
         except Exception as e:
             logger.error(f"Failed to initialize platform synchronizer: {e}")
+
             raise
     
     async def execute_platform_sync(
@@ -196,56 +208,73 @@ class PlatformSynchronizer:
         """Exécuter une synchronisation de plateforme"""
         try:
             sync_id = str(uuid.uuid4())
+
+
             start_time = datetime.utcnow()
             
             # Valider la requête de synchronisation
+
             validation_result = await self._validate_sync_request(sync_request)
+
             if not validation_result["valid"]:
                 raise ValueError(f"Invalid sync request: {validation_result['reason']}")
             
             # Analyser les plateformes sources et cibles
+
             platform_analysis = await self._analyze_sync_platforms(
                 sync_request["source_platform"],
                 sync_request["target_platforms"]
             )
             
             # Sélectionner la stratégie de synchronisation
+
             sync_strategy = await self._select_sync_strategy(
                 sync_request, platform_analysis
             )
             
             # Récupérer les données de la plateforme source
+
             source_data = await self._fetch_source_platform_data(
                 sync_request["source_platform"],
                 sync_request.get("data_filters", {})
             )
             
             # Transformer les données pour chaque plateforme cible
+
             transformation_results = {}
             for target_platform in sync_request["target_platforms"]:
                 transformed_data = await self._transform_data_for_platform(
                     source_data, target_platform, sync_strategy
                 )
+
                 transformation_results[target_platform] = transformed_data
             
             # Exécuter la synchronisation vers chaque plateforme
+
             sync_tasks = []
             for target_platform, transformed_data in transformation_results.items():
                 task = self._sync_to_platform(
                     target_platform, transformed_data, sync_strategy
                 )
+
                 sync_tasks.append(task)
             
             # Exécuter les synchronisations en parallèle
+
             platform_sync_results = await asyncio.gather(
                 *sync_tasks, return_exceptions=True
             )
             
             # Analyser les résultats
+
             items_synced = 0
+
             items_failed = 0
+
             conflicts_detected = 0
+
             conflicts_resolved = 0
+
             error_log = []
             
             for i, result in enumerate(platform_sync_results):
@@ -257,17 +286,24 @@ class PlatformSynchronizer:
                         "error": str(result),
                         "timestamp": datetime.utcnow().isoformat()
                     })
+
                     items_failed += len(transformation_results[target_platform])
+
                 else:
                     items_synced += result.get("items_synced", 0)
+
                     items_failed += result.get("items_failed", 0)
+
                     conflicts_detected += result.get("conflicts_detected", 0)
+
                     conflicts_resolved += result.get("conflicts_resolved", 0)
+
                     
                     if result.get("errors"):
                         error_log.extend(result["errors"])
             
             # Déterminer le statut de synchronisation
+
             total_items = items_synced + items_failed
             if items_failed == 0:
                 sync_status = SyncStatus.COMPLETED
@@ -280,8 +316,13 @@ class PlatformSynchronizer:
                 sync_status = SyncStatus.CONFLICT
             
             # Calculer les métriques de performance
+
             end_time = datetime.utcnow()
+
+
             sync_duration = (end_time - start_time).total_seconds()
+
+
             
             performance_metrics = {
                 "sync_duration_seconds": sync_duration,
@@ -292,6 +333,7 @@ class PlatformSynchronizer:
             }
             
             # Créer le résultat de synchronisation
+
             sync_result = SyncResult(
                 sync_id=sync_id,
                 source_platform=sync_request["source_platform"],
@@ -314,13 +356,16 @@ class PlatformSynchronizer:
             
             # Déclencher les callbacks post-synchronisation
             await self._trigger_post_sync_callbacks(sync_result, sync_request)
+
             
             logger.info(f"Platform sync completed: {sync_id} ({sync_status.value})")
+
             
             return sync_result
             
         except Exception as e:
             logger.error(f"Failed to execute platform sync: {e}")
+
             raise
 
     async def _transform_data_for_platform(
@@ -332,19 +377,23 @@ class PlatformSynchronizer:
         """Transformer les données pour une plateforme cible"""
         try:
             # Récupérer les règles de mapping pour la plateforme
+
             mapping_rules = sync_strategy.data_mapping.get(target_platform, {})
             
             # Récupérer les transformations spécifiques
+
             transformations = [
                 t for t in sync_strategy.transformations 
                 if target_platform in t.get("target_platforms", [target_platform])
             ]
+
             
             transformed_items = []
             
             for item in source_data.get("items", []):
                 try:
                     # Appliquer le mapping de base
+
                     transformed_item = await self._apply_data_mapping(
                         item, mapping_rules
                     )
@@ -356,25 +405,32 @@ class PlatformSynchronizer:
                         )
                     
                     # Valider la compatibilité avec la plateforme cible
+
                     validation_result = await self._validate_platform_compatibility(
                         transformed_item, target_platform
                     )
+
                     
                     if validation_result["valid"]:
                         transformed_items.append(transformed_item)
+
                     else:
                         logger.warning(f"Item incompatible with {target_platform}: {validation_result['reason']}")
+
                 
                 except Exception as e:
                     logger.error(f"Failed to transform item for {target_platform}: {e}")
+
                     continue
             
             logger.info(f"Transformed {len(transformed_items)} items for {target_platform}")
+
             
             return transformed_items
             
         except Exception as e:
             logger.error(f"Failed to transform data for platform {target_platform}: {e}")
+
             raise
 
 class SyncManager:
@@ -390,31 +446,38 @@ class SyncManager:
         self,
         workflow_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Gérer un workflow de synchronisation"""
+        """
+        Gérer un workflow de synchronisation"""
         try:
             workflow_id = str(uuid.uuid4())
             
             # Analyser la configuration du workflow
+
             workflow_analysis = await self._analyze_workflow_config(workflow_config)
             
             # Créer le plan d'exécution
+
             execution_plan = await self._create_execution_plan(
                 workflow_config, workflow_analysis
             )
             
             # Valider les dépendances
+
             dependency_validation = await self._validate_workflow_dependencies(
                 execution_plan
             )
+
             
             if not dependency_validation["valid"]:
                 raise ValueError(f"Workflow dependencies invalid: {dependency_validation['reason']}")
             
             # Exécuter les étapes du workflow
+
             workflow_results = []
             
             for step in execution_plan["steps"]:
                 step_result = await self._execute_workflow_step(step, workflow_results)
+
                 workflow_results.append(step_result)
                 
                 # Vérifier si on doit arrêter en cas d'erreur
@@ -422,9 +485,11 @@ class SyncManager:
                     break
             
             # Analyser les résultats du workflow
+
             workflow_summary = await self._analyze_workflow_results(workflow_results)
             
             # Générer le rapport de workflow
+
             workflow_report = {
                 "workflow_id": workflow_id,
                 "workflow_config": workflow_config,
@@ -441,8 +506,10 @@ class SyncManager:
             
             # Sauvegarder le rapport
             await self._save_workflow_report(workflow_report)
+
             
             logger.info(f"Sync workflow managed: {workflow_id} ({workflow_summary['overall_status']})")
+
             
             return {
                 "success": True,
@@ -454,6 +521,7 @@ class SyncManager:
             
         except Exception as e:
             logger.error(f"Failed to manage sync workflow: {e}")
+
             raise
 
 class PlatformSyncService:
@@ -468,24 +536,32 @@ class PlatformSyncService:
         self.monitoring_system = None
         
     async def initialize_service(self) -> Dict[str, Any]:
-        """Initialiser le service de synchronisation"""
+        """
+        Initialiser le service de synchronisation"""
         try:
             # Initialiser le synchroniseur de plateformes
+
             synchronizer_status = await self.platform_synchronizer.initialize_platform_synchronizer()
             
             # Configurer le gestionnaire de synchronisation
+
             manager_config = await self._configure_sync_manager()
             
             # Initialiser le planificateur de synchronisation
+
             scheduler_status = await self._initialize_sync_scheduler()
             
             # Configurer le système de monitoring
+
             monitoring_config = await self._configure_sync_monitoring()
             
             # Démarrer les processus automatiques
+
             automated_processes = await self._start_automated_sync_processes()
+
             
             logger.info("🔄 Platform Sync Service initialized successfully")
+
             
             return {
                 "service": "PlatformSyncService",
@@ -502,6 +578,7 @@ class PlatformSyncService:
             
         except Exception as e:
             logger.error(f"Failed to initialize platform sync service: {e}")
+
             raise
     
     async def execute_comprehensive_sync(
@@ -511,32 +588,40 @@ class PlatformSyncService:
         """Exécuter une synchronisation complète"""
         try:
             # Phase 1: Planification de la synchronisation
+
             sync_planning = await self._execute_sync_planning(sync_configuration)
             
             # Phase 2: Validation et préparation
+
             sync_validation = await self._validate_sync_preparation(
                 sync_planning, sync_configuration
             )
             
             # Phase 3: Exécution de la synchronisation
+
             sync_execution = await self.platform_synchronizer.execute_platform_sync(
                 sync_validation["validated_config"]
             )
             
             # Phase 4: Gestion des workflows
+
             workflow_management = await self.sync_manager.manage_sync_workflow(
                 sync_configuration.get("workflow_config", {})
             )
             
             # Phase 5: Monitoring et suivi
+
             monitoring_setup = await self._setup_sync_monitoring(
                 sync_execution.sync_id
             )
             
             # Phase 6: Rapport et insights
+
             comprehensive_report = await self._generate_comprehensive_sync_report(
                 sync_execution, workflow_management, monitoring_setup
             )
+
+
             
             comprehensive_sync_result = {
                 "sync_id": sync_execution.sync_id,
@@ -554,8 +639,10 @@ class PlatformSyncService:
             
             # Sauvegarder pour analytics
             await self._save_comprehensive_sync_analytics(comprehensive_sync_result)
+
             
             logger.info(f"Comprehensive sync executed: {sync_execution.sync_id}")
+
             
             return {
                 "success": True,
@@ -565,6 +652,7 @@ class PlatformSyncService:
             
         except Exception as e:
             logger.error(f"Failed to execute comprehensive sync: {e}")
+
             raise
     
     # Méthodes privées pour l'implémentation détaillée...

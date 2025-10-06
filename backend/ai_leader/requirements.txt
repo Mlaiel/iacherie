@@ -1,0 +1,27 @@
+# AI Leader Agent Dependencies
+# Core ML/AI framework dependencies
+
+# FastAPI server
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+pydantic==2.5.3
+
+# Machine Learning (for future model training)
+torch>=2.1.0
+transformers>=4.36.0
+datasets>=2.16.0
+
+# Data handling
+numpy>=1.24.0
+pandas>=2.1.0
+
+# Monitoring and logging
+python-json-logger>=2.0.7
+prometheus-client>=0.19.0
+
+# HTTP requests
+httpx>=0.26.0
+requests>=2.31.0
+
+# Environment
+python-dotenv>=1.0.0

@@ -24,7 +24,8 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class PaymentGateway(Enum):
-    """Supported payment gateways"""
+    """
+Supported payment gateways"""
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -34,7 +35,8 @@ class PaymentGateway(Enum):
     MOLLIE = "mollie"
 
 class PaymentMethod(Enum):
-    """Supported payment methods"""
+    """
+Supported payment methods"""
     CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     BANK_TRANSFER = "bank_transfer"
@@ -45,7 +47,8 @@ class PaymentMethod(Enum):
     UPI = "upi"
 
 class TransactionType(Enum):
-    """Transaction types"""
+    """
+Transaction types"""
     PAYMENT = "payment"
     REFUND = "refund"
     PARTIAL_REFUND = "partial_refund"
@@ -56,7 +59,8 @@ class TransactionType(Enum):
     CAPTURE = "capture"
 
 class TransactionStatus(Enum):
-    """Transaction status"""
+    """
+Transaction status"""
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -66,7 +70,8 @@ class TransactionStatus(Enum):
     DISPUTED = "disputed"
 
 class Currency(Enum):
-    """Supported currencies"""
+    """
+Supported currencies"""
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -80,7 +85,8 @@ class Currency(Enum):
 
 @dataclass
 class PaymentTransaction:
-    """Payment transaction record"""
+    """
+Payment transaction record"""
     transaction_id: str
     gateway: PaymentGateway
     payment_method: PaymentMethod
@@ -101,7 +107,8 @@ class PaymentTransaction:
 
 @dataclass
 class PaymentMethod_Config:
-    """Payment method configuration"""
+    """
+Payment method configuration"""
     method_id: str
     gateway: PaymentGateway
     method_type: PaymentMethod
@@ -117,7 +124,8 @@ class PaymentMethod_Config:
 
 @dataclass
 class GatewayConfig:
-    """Payment gateway configuration"""
+    """
+Payment gateway configuration"""
     gateway: PaymentGateway
     api_key: str
     secret_key: str
@@ -132,7 +140,8 @@ class GatewayConfig:
     config_data: Dict[str, Any] = field(default_factory=dict)
 
 class StripeGateway:
-    """Stripe payment gateway integration"""
+    """
+Stripe payment gateway integration"""
     
     def __init__(self, config: GatewayConfig):
         self.config = config
@@ -151,7 +160,6 @@ class StripeGateway:
     async def process_payment(self, transaction: PaymentTransaction) -> Dict[str, Any]:
         """Process payment through Stripe"""
         try:
-            # Mock Stripe API integration
             payment_intent_data = {
                 "amount": int(transaction.amount * 100),  # Stripe uses cents
                 "currency": transaction.currency.value.lower(),
@@ -191,7 +199,8 @@ class StripeGateway:
             }
 
     async def create_customer(self, customer_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create customer in Stripe"""
+        """
+Create customer in Stripe"""
         try:
             customer_payload = {
                 "email": customer_data["email"],
@@ -213,7 +222,8 @@ class StripeGateway:
             return {"success": False, "error": str(e)}
 
     async def setup_payment_method(self, customer_id: str, payment_method_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup payment method for customer"""
+        """
+Setup payment method for customer"""
         try:
             setup_intent_data = {
                 "customer": customer_id,
@@ -235,7 +245,8 @@ class StripeGateway:
             return {"success": False, "error": str(e)}
 
     async def process_refund(self, original_transaction_id: str, amount: Decimal) -> Dict[str, Any]:
-        """Process refund through Stripe"""
+        """
+Process refund through Stripe"""
         try:
             refund_data = {
                 "payment_intent": original_transaction_id,
@@ -257,7 +268,6 @@ class StripeGateway:
 
     async def _call_stripe_api(self, endpoint: str, data: Dict[str, Any]) -> Dict[str, Any]:
         """Mock Stripe API call"""
-        # Mock successful Stripe response
         if endpoint == "payment_intents":
             return {
                 "id": f"pi_{uuid.uuid4().hex[:24]}",
@@ -293,12 +303,14 @@ class StripeGateway:
         return {"status": "succeeded"}
 
     def _calculate_fees(self, amount: Decimal) -> Decimal:
-        """Calculate Stripe fees"""
+        """
+Calculate Stripe fees"""
         # Stripe standard fee: 2.9% + $0.30
         return amount * Decimal('0.029') + Decimal('0.30')
 
 class PayPalGateway:
-    """PayPal payment gateway integration"""
+    """
+PayPal payment gateway integration"""
     
     def __init__(self, config: GatewayConfig):
         self.config = config
@@ -312,7 +324,8 @@ class PayPalGateway:
         logger.info("PayPal Gateway initialized")
 
     async def process_payment(self, transaction: PaymentTransaction) -> Dict[str, Any]:
-        """Process payment through PayPal"""
+        """
+Process payment through PayPal"""
         try:
             payment_data = {
                 "intent": "CAPTURE",
@@ -360,7 +373,8 @@ class PayPalGateway:
             }
 
     async def _call_paypal_api(self, endpoint: str, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Mock PayPal API call"""
+        """
+Mock PayPal API call"""
         if endpoint == "orders":
             return {
                 "id": uuid.uuid4().hex[:17].upper(),
@@ -372,12 +386,14 @@ class PayPalGateway:
         return {"status": "COMPLETED"}
 
     def _calculate_fees(self, amount: Decimal) -> Decimal:
-        """Calculate PayPal fees"""
+        """
+Calculate PayPal fees"""
         # PayPal standard fee: 2.9% + fixed fee
         return amount * Decimal('0.029') + Decimal('0.30')
 
 class WiseGateway:
-    """Wise (formerly TransferWise) gateway for international transfers"""
+    """
+Wise (formerly TransferWise) gateway for international transfers"""
     
     def __init__(self, config: GatewayConfig):
         self.config = config
@@ -390,7 +406,8 @@ class WiseGateway:
         logger.info("Wise Gateway initialized")
 
     async def process_payment(self, transaction: PaymentTransaction) -> Dict[str, Any]:
-        """Process international transfer through Wise"""
+        """
+Process international transfer through Wise"""
         try:
             transfer_data = {
                 "targetAccount": transaction.metadata.get("target_account"),
@@ -420,7 +437,8 @@ class WiseGateway:
             }
 
     async def get_exchange_rate(self, source_currency: Currency, target_currency: Currency) -> Dict[str, Any]:
-        """Get real-time exchange rate from Wise"""
+        """
+Get real-time exchange rate from Wise"""
         try:
             rate_response = await self._call_wise_api("rates", {
                 "source": source_currency.value,
@@ -438,7 +456,8 @@ class WiseGateway:
             return {"success": False, "error": str(e)}
 
     async def _call_wise_api(self, endpoint: str, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Mock Wise API call"""
+        """
+Mock Wise API call"""
         if endpoint == "transfers":
             return {
                 "id": int(uuid.uuid4().hex[:8], 16),
@@ -447,14 +466,14 @@ class WiseGateway:
             }
         elif endpoint == "rates":
             return {
-                "rate": 1.1234,  # Mock exchange rate
-                "time": datetime.utcnow().isoformat()
+                "rate": 1.1234,                "time": datetime.utcnow().isoformat()
             }
         
         return {"status": "success"}
 
     def _calculate_fees(self, amount: Decimal, currency: Currency) -> Decimal:
-        """Calculate Wise fees based on currency and amount"""
+        """
+Calculate Wise fees based on currency and amount"""
         # Wise has variable fees based on amount and currency
         if amount < Decimal('500'):
             return Decimal('5.00')
@@ -464,7 +483,8 @@ class WiseGateway:
             return amount * Decimal('0.005')
 
 class FraudDetection:
-    """Advanced fraud detection system"""
+    """
+Advanced fraud detection system"""
     
     def __init__(self):
         self.risk_rules = {}
@@ -477,7 +497,8 @@ class FraudDetection:
         logger.info("Fraud Detection initialized")
 
     def _initialize_risk_rules(self):
-        """Initialize fraud detection rules"""
+        """
+Initialize fraud detection rules"""
         self.risk_rules = {
             "velocity_check": {
                 "max_transactions_per_hour": 10,
@@ -503,7 +524,8 @@ class FraudDetection:
         }
 
     async def assess_transaction_risk(self, transaction: PaymentTransaction, customer_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess fraud risk for transaction"""
+        """
+Assess fraud risk for transaction"""
         try:
             risk_score = 0.0
             risk_factors = []
@@ -567,7 +589,8 @@ class FraudDetection:
             }
 
     async def _check_velocity(self, transaction: PaymentTransaction, customer_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check transaction velocity"""
+        """
+Check transaction velocity"""
         customer_id = transaction.customer_id
         current_time = datetime.utcnow()
         
@@ -608,7 +631,8 @@ class FraudDetection:
         }
 
     async def _check_geographic(self, transaction: PaymentTransaction, customer_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check geographic risk factors"""
+        """
+Check geographic risk factors"""
         country_code = customer_data.get("country", "US")
         
         risk_score = 0
@@ -636,7 +660,8 @@ class FraudDetection:
         }
 
     async def _check_amount(self, transaction: PaymentTransaction, customer_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check amount-based risk factors"""
+        """
+Check amount-based risk factors"""
         amount = transaction.amount
         
         risk_score = 0
@@ -670,7 +695,8 @@ class FraudDetection:
         }
 
     async def _check_behavior(self, transaction: PaymentTransaction, customer_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check behavioral risk factors"""
+        """
+Check behavioral risk factors"""
         current_time = datetime.utcnow()
         
         risk_score = 0
@@ -708,7 +734,8 @@ class FraudDetection:
         }
 
 class PaymentGatewayCore:
-    """Main Payment Gateway Core System"""
+    """
+Main Payment Gateway Core System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -726,7 +753,6 @@ class PaymentGatewayCore:
 
     def _initialize_gateways(self):
         """Initialize payment gateway configurations"""
-        # Mock gateway configurations
         gateway_configs = {
             PaymentGateway.STRIPE: GatewayConfig(
                 gateway=PaymentGateway.STRIPE,
@@ -775,7 +801,8 @@ class PaymentGatewayCore:
                 self.gateways[gateway_type] = WiseGateway(config)
 
     async def process_payment(self, payment_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process payment through optimal gateway"""
+        """
+Process payment through optimal gateway"""
         try:
             # Create transaction record
             transaction = PaymentTransaction(
@@ -852,7 +879,8 @@ class PaymentGatewayCore:
             }
 
     async def setup_payment_method(self, customer_id: str, payment_method_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup payment method for customer"""
+        """
+Setup payment method for customer"""
         try:
             gateway_type = PaymentGateway(payment_method_data["gateway"])
             gateway = self.gateways.get(gateway_type)
@@ -895,7 +923,8 @@ class PaymentGatewayCore:
             return {"success": False, "error": str(e)}
 
     async def process_refund(self, refund_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process refund for transaction"""
+        """
+Process refund for transaction"""
         try:
             original_transaction_id = refund_data["original_transaction_id"]
             
@@ -949,7 +978,8 @@ class PaymentGatewayCore:
             return {"success": False, "error": str(e)}
 
     async def get_transaction_status(self, transaction_id: str) -> Dict[str, Any]:
-        """Get current status of transaction"""
+        """
+Get current status of transaction"""
         try:
             if transaction_id not in self.transactions:
                 return {"found": False, "error": "Transaction not found"}
@@ -975,7 +1005,8 @@ class PaymentGatewayCore:
             return {"found": False, "error": str(e)}
 
     async def get_gateway_analytics(self, gateway: PaymentGateway, days: int = 30) -> Dict[str, Any]:
-        """Get analytics for specific gateway"""
+        """
+Get analytics for specific gateway"""
         try:
             # Filter transactions for gateway and time period
             end_date = datetime.utcnow()
@@ -1031,7 +1062,8 @@ class PaymentGatewayCore:
             raise
 
     async def get_system_health(self) -> Dict[str, Any]:
-        """Get system health and statistics"""
+        """
+Get system health and statistics"""
         total_transactions = len(self.transactions)
         total_gateways = len(self.gateways)
         total_payment_methods = len(self.payment_methods)
@@ -1074,4 +1106,4 @@ __all__ = [
 ]
 
 if __name__ == "__main__":
-    logger.info("Payment Gateway Core module loaded successfully")
+    logger.info("Payment Gateway Core module initialized successfully")

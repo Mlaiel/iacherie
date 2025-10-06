@@ -14,23 +14,27 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MLModelConfig:
-    """Configuration d'un modèle ML"""
+    """
+Configuration d'un modèle ML"""
     name: str
     model_type: str
     parameters: Dict[str, Any]
     version: str = "1.0"
 
 class MLModels:
-    """Gestionnaire des modèles ML"""
+    """
+Gestionnaire des modèles ML"""
     
     def __init__(self):
-        """Initialise le gestionnaire de modèles ML"""
+        """
+Initialise le gestionnaire de modèles ML"""
         self.models: Dict[str, MLModelConfig] = {}
         self._initialize_default_models()
         logger.info("ML Models initialized")
     
     def _initialize_default_models(self):
-        """Initialise les modèles par défaut"""
+        """
+Initialise les modèles par défaut"""
         
         # Modèles par défaut
         default_models = [
@@ -55,16 +59,19 @@ class MLModels:
             self.models[model.name] = model
     
     def get_model(self, name: str) -> Optional[MLModelConfig]:
-        """Récupère un modèle par son nom"""
+        """
+Récupère un modèle par son nom"""
         return self.models.get(name)
     
     def add_model(self, model: MLModelConfig):
-        """Ajoute un nouveau modèle"""
+        """
+Ajoute un nouveau modèle"""
         self.models[model.name] = model
         logger.info(f"ML model added: {model.name}")
     
     def list_models(self) -> List[str]:
-        """Liste tous les modèles disponibles"""
+        """
+Liste tous les modèles disponibles"""
         return list(self.models.keys())
 
 # Instance globale
@@ -75,11 +82,13 @@ MLModelManager = MLModels  # Alias pour compatibilité
 
 # Fonctions utilitaires
 def get_model_config(name: str) -> Optional[MLModelConfig]:
-    """Récupère la configuration d'un modèle"""
+    """
+Récupère la configuration d'un modèle"""
     return ml_models.get_model(name)
 
 def register_model(name: str, model_type: str, parameters: Dict[str, Any]):
-    """Enregistre un nouveau modèle"""
+    """
+Enregistre un nouveau modèle"""
     config = MLModelConfig(
         name=name,
         model_type=model_type,
@@ -97,4 +106,4 @@ __all__ = [
     'register_model'
 ]
 
-logger.info("ML Models sub-module loaded successfully")
+logger.info("ML Models sub-module initialized successfully")

@@ -34,7 +34,8 @@ logger = logging.getLogger(__name__)
 
 
 class APIProvider(Enum):
-    """Supported API providers"""
+    """
+        Supported API providers"""
     GOOGLE_TRANSLATE = "google_translate"
     GOOGLE_TTS = "google_tts"
     DEEPL = "deepl"
@@ -103,7 +104,8 @@ class APICredentials:
 
 @dataclass
 class APIQuota:
-    """API quota configuration"""
+    """
+        API quota configuration"""
     provider: APIProvider
     service_type: APIServiceType
     quota_type: str  # "requests", "characters", "minutes"
@@ -129,7 +131,8 @@ class RateLimit:
 
 @dataclass
 class APIRequest:
-    """API request definition"""
+    """
+        API request definition"""
     request_id: str
     provider: APIProvider
     service_type: APIServiceType
@@ -162,7 +165,8 @@ class APIResponse:
 
 @dataclass
 class ProviderConfig:
-    """Provider configuration"""
+    """
+        Provider configuration"""
     provider: APIProvider
     credentials: APICredentials
     quotas: List[APIQuota]
@@ -179,7 +183,8 @@ class ProviderConfig:
 
 @dataclass
 class APIStats:
-    """API usage statistics"""
+    """
+        API usage statistics"""
     provider: APIProvider
     total_requests: int = 0
     successful_requests: int = 0
@@ -194,7 +199,8 @@ class APIStats:
 
 @dataclass
 class CostOptimization:
-    """Cost optimization configuration"""
+    """
+        Cost optimization configuration"""
     strategy: CostOptimizationStrategy
     quality_threshold: float = 0.7
     cost_threshold: float = 100.0
@@ -211,7 +217,8 @@ class LanguageAPIManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize language API manager"""
+        """
+        Initialize language API manager"""
         self.config = config or {}
         
         # Provider configurations
@@ -242,6 +249,7 @@ class LanguageAPIManager:
         
         # Initialize default providers
         self._initialize_default_providers()
+
         
         logger.info("LanguageAPIManager initialized with multi-provider support")
     
@@ -282,10 +290,12 @@ class LanguageAPIManager:
                     self.quota_trackers[key] = quota
                 
                 logger.info(f"Provider {config.provider.value} added successfully")
+
                 return True
             
         except Exception as e:
             logger.error(f"Error adding provider {config.provider.value}: {e}")
+
         
         return False
     
@@ -300,6 +310,7 @@ class LanguageAPIManager:
             service_type: Type of service requested
             request_data: Request payload
             preferred_provider: Preferred provider (optional)
+
             fallback_enabled: Enable fallback to other providers
             
         Returns:
@@ -311,14 +322,17 @@ class LanguageAPIManager:
         ).hexdigest()
         
         # Select optimal provider
+
         provider = await self._select_optimal_provider(
             service_type, request_data, preferred_provider
         )
+
         
         if not provider:
             return APIResponse(
                 request_id=request_id,
                 provider=APIProvider.GOOGLE_TRANSLATE,  # Fallback
+
                 service_type=service_type,
                 success=False,
                 error_message="No available providers for this service"
@@ -328,13 +342,16 @@ class LanguageAPIManager:
         if not await self._check_rate_limit(provider, service_type):
             if fallback_enabled:
                 # Try fallback provider
+
                 fallback_provider = await self._get_fallback_provider(provider, service_type)
+
                 if fallback_provider:
                     provider = fallback_provider
                 else:
                     return await self._create_rate_limit_error_response(
                         request_id, provider, service_type
                     )
+
             else:
                 return await self._create_rate_limit_error_response(
                     request_id, provider, service_type
@@ -344,12 +361,14 @@ class LanguageAPIManager:
         if not await self._check_quota(provider, service_type, request_data):
             if fallback_enabled:
                 fallback_provider = await self._get_fallback_provider(provider, service_type)
+
                 if fallback_provider:
                     provider = fallback_provider
                 else:
                     return await self._create_quota_error_response(
                         request_id, provider, service_type
                     )
+
             else:
                 return await self._create_quota_error_response(
                     request_id, provider, service_type
@@ -363,6 +382,7 @@ class LanguageAPIManager:
             
             # Update statistics
             await self._update_provider_stats(provider, response)
+
             
             return response
             
@@ -375,10 +395,12 @@ class LanguageAPIManager:
             # Try fallback if enabled
             if fallback_enabled:
                 fallback_provider = await self._get_fallback_provider(provider, service_type)
+
                 if fallback_provider:
                     return await self.make_api_request(
                         service_type, request_data, fallback_provider, False
                     )
+
             
             return APIResponse(
                 request_id=request_id,
@@ -401,12 +423,14 @@ class LanguageAPIManager:
             List of APIResponse objects
         """
         # Group requests by provider for batch optimization
+
         provider_groups = {}
         
         for service_type, request_data in requests:
             provider = await self._select_optimal_provider(
                 service_type, request_data, preferred_provider
             )
+
             
             if provider not in provider_groups:
                 provider_groups[provider] = []
@@ -414,18 +438,24 @@ class LanguageAPIManager:
             provider_groups[provider].append((service_type, request_data))
         
         # Execute batched requests
+
         all_responses = []
         
         for provider, provider_requests in provider_groups.items():
             if len(provider_requests) > 1 and await self._supports_batch_requests(provider):
                 # Use batch API if supported
+
                 batch_response = await self._execute_batch_api_call(provider, provider_requests)
+
                 all_responses.extend(batch_response)
+
             else:
                 # Execute individual requests
                 for service_type, request_data in provider_requests:
                     response = await self.make_api_request(service_type, request_data, provider)
+
                     all_responses.append(response)
+
         
         return all_responses
     
@@ -440,13 +470,16 @@ class LanguageAPIManager:
             Cost optimization report
         """
         cutoff_date = datetime.now(timezone.utc) - timedelta(days=historical_days)
+
         recent_requests = [
             r for r in self.request_history 
             if r.timestamp >= cutoff_date
         ]
         
         # Analyze cost by provider
+
         provider_costs = {}
+
         provider_requests = {}
         
         for response in recent_requests:
@@ -459,26 +492,35 @@ class LanguageAPIManager:
             provider_requests[provider] += 1
         
         # Calculate cost per request by provider
+
         cost_per_request = {
             provider: cost / provider_requests[provider] 
             for provider, cost in provider_costs.items()
+
             if provider_requests[provider] > 0
         }
         
         # Identify optimization opportunities
+
         recommendations = []
+
         potential_savings = 0.0
         
         for provider, avg_cost in cost_per_request.items():
             # Find cheaper alternatives
+
             cheaper_providers = [
-                p for p, cost in cost_per_request.items() 
+                p for p, cost in cost_per_request.items()
+ 
                 if cost < avg_cost * 0.8 and self._provides_similar_quality(p, provider)
             ]
             
             if cheaper_providers:
                 current_cost = provider_costs[provider]
+
                 cheapest_cost = min(cost_per_request[p] for p in cheaper_providers)
+
+
                 savings = (avg_cost - cheapest_cost) * provider_requests[provider]
                 potential_savings += savings
                 
@@ -489,6 +531,7 @@ class LanguageAPIManager:
                     "potential_savings": savings,
                     "requests_affected": provider_requests[provider]
                 })
+
         
         return {
             "analysis_period_days": historical_days,
@@ -518,12 +561,17 @@ class LanguageAPIManager:
         
         for provider, config in self.providers.items():
             stats = self.api_stats.get(provider, APIStats(provider=provider))
+
+
             circuit_breaker = self.circuit_breakers.get(provider, {})
+
+
             
             provider_info = {
                 "status": config.status.value,
                 "circuit_breaker_open": circuit_breaker.get("circuit_open", False),
-                "success_rate": (stats.successful_requests / stats.total_requests * 100) 
+                "success_rate": (stats.successful_requests / stats.total_requests * 100)
+ 
                                if stats.total_requests > 0 else 0,
                 "average_latency_ms": stats.average_latency,
                 "total_cost": stats.total_cost,
@@ -558,13 +606,18 @@ class LanguageAPIManager:
         
         for key, quota in self.quota_trackers.items():
             provider_service = key.split(":")
+
+
             provider = provider_service[0]
+
             service = provider_service[1]
             
             if provider not in quota_report["quotas_by_provider"]:
                 quota_report["quotas_by_provider"][provider] = {}
+
             
             utilization = (quota.current_usage / quota.limit_per_period) * 100
+
             
             quota_info = {
                 "limit": quota.limit_per_period,
@@ -583,6 +636,7 @@ class LanguageAPIManager:
                     "service": service,
                     "utilization": utilization
                 })
+
             
             if utilization >= 100:
                 quota_report["quota_exceeded"].append({
@@ -590,6 +644,7 @@ class LanguageAPIManager:
                     "service": service,
                     "exceeded_by": quota.current_usage - quota.limit_per_period
                 })
+
         
         return quota_report
     
@@ -607,6 +662,7 @@ class LanguageAPIManager:
                 return preferred_provider
         
         # Filter available providers
+
         available_providers = []
         
         for provider, config in self.providers.items():
@@ -614,6 +670,7 @@ class LanguageAPIManager:
                 config.status == APIStatus.ACTIVE and
                 not self.circuit_breakers.get(provider, {}).get("circuit_open")):
                 available_providers.append(provider)
+
         
         if not available_providers:
             return None
@@ -622,21 +679,27 @@ class LanguageAPIManager:
         if self.cost_optimization.strategy == CostOptimizationStrategy.CHEAPEST_FIRST:
             return min(available_providers, 
                       key=lambda p: self.providers[p].base_cost_per_unit)
+
         
         elif self.cost_optimization.strategy == CostOptimizationStrategy.QUALITY_WEIGHTED:
             return max(available_providers, 
                       key=lambda p: self.providers[p].quality_score)
+
         
         elif self.cost_optimization.strategy == CostOptimizationStrategy.BALANCED:
             # Balance cost and quality
+
             scores = {}
             for provider in available_providers:
                 config = self.providers[provider]
+
                 cost_score = 1.0 / (config.base_cost_per_unit + 0.001)  # Lower cost = higher score
+
                 quality_score = config.quality_score
                 scores[provider] = (cost_score + quality_score) / 2
             
             return max(scores.keys(), key=lambda p: scores[p])
+
         
         else:
             # Default to first available
@@ -649,18 +712,25 @@ class LanguageAPIManager:
         
         if key not in self.rate_limiters:
             return True
+
         
         rate_limit = self.rate_limiters[key]
+
         now = datetime.now(timezone.utc)
+
         
         if rate_limit.strategy == RateLimitStrategy.TOKEN_BUCKET:
             # Refill tokens based on time elapsed
+
             time_elapsed = (now - rate_limit.last_refill).total_seconds()
+
+
             tokens_to_add = time_elapsed * rate_limit.requests_per_second
             rate_limit.current_tokens = min(
                 rate_limit.burst_capacity or rate_limit.requests_per_second,
                 rate_limit.current_tokens + tokens_to_add
             )
+
             rate_limit.last_refill = now
             
             if rate_limit.current_tokens >= 1.0:
@@ -679,8 +749,10 @@ class LanguageAPIManager:
         
         if key not in self.quota_trackers:
             return True
+
         
         quota = self.quota_trackers[key]
+
         now = datetime.now(timezone.utc)
         
         # Reset quota if period has elapsed
@@ -689,9 +761,11 @@ class LanguageAPIManager:
             quota.last_reset = now
         
         # Estimate usage for this request
+
         estimated_usage = await self._estimate_quota_usage(
             service_type, request_data, quota.quota_type
         )
+
         
         if quota.current_usage + estimated_usage <= quota.limit_per_period:
             return True
@@ -705,13 +779,17 @@ class LanguageAPIManager:
                               request_data: Dict[str, Any]) -> APIResponse:
         """Execute the actual API call"""
         start_time = time.time()
+
+
         
         provider_config = self.providers[provider]
         
         # Build API request
+
         api_request = await self._build_api_request(
             provider, service_type, request_data, provider_config
         )
+
         
         try:
             async with aiohttp.ClientSession() as session:
@@ -724,15 +802,19 @@ class LanguageAPIManager:
                 ) as response:
                     
                     latency_ms = (time.time() - start_time) * 1000
+
                     response_data = await response.json() if response.content_type == 'application/json' else {}
                     
                     # Calculate cost
+
                     cost = await self._calculate_request_cost(
                         provider, service_type, request_data, response
                     )
                     
                     # Update quota usage
                     await self._update_quota_usage(provider, service_type, request_data)
+
+
                     
                     api_response = APIResponse(
                         request_id=request_id,
@@ -744,12 +826,14 @@ class LanguageAPIManager:
                         latency_ms=latency_ms,
                         cost=cost
                     )
+
                     
                     if not api_response.success:
                         api_response.error_message = response_data.get('error', 'Unknown error')
                     
                     # Store in history
                     self.request_history.append(api_response)
+
                     
                     return api_response
         
@@ -766,16 +850,20 @@ class LanguageAPIManager:
             )
     
     def _initialize_default_providers(self):
-        """Initialize default provider configurations"""
+        """
+        Initialize default provider configurations"""
         # This would load from configuration files or environment variables
         # For now, create placeholder configurations
         
         # Google Translate
+
         google_creds = APICredentials(
             provider=APIProvider.GOOGLE_TRANSLATE,
             api_key= os.getenv("API_KEY", "CHANGE_ME"),
             endpoint="https://translation.googleapis.com/language/translate/v2"
         )
+
+
         
         google_quota = APIQuota(
             provider=APIProvider.GOOGLE_TRANSLATE,
@@ -784,6 +872,8 @@ class LanguageAPIManager:
             limit_per_period=1000000,
             period_seconds=86400  # 24 hours
         )
+
+
         
         google_rate_limit = RateLimit(
             provider=APIProvider.GOOGLE_TRANSLATE,
@@ -792,6 +882,8 @@ class LanguageAPIManager:
             requests_per_second=10.0,
             burst_capacity=50
         )
+
+
         
         google_config = ProviderConfig(
             provider=APIProvider.GOOGLE_TRANSLATE,
@@ -799,12 +891,14 @@ class LanguageAPIManager:
             quotas=[google_quota],
             rate_limits=[google_rate_limit],
             base_cost_per_unit=0.00002,  # $20 per million characters
+
             quality_score=0.85,
             average_latency=300.0,
             supported_languages=["en", "es", "fr", "de", "it", "pt", "ru", "zh", "ja", "ko"],
             supported_services=[APIServiceType.TRANSLATION, APIServiceType.LANGUAGE_DETECTION],
             priority=1
         )
+
         
         self.providers[APIProvider.GOOGLE_TRANSLATE] = google_config
         self.api_stats[APIProvider.GOOGLE_TRANSLATE] = APIStats(provider=APIProvider.GOOGLE_TRANSLATE)
@@ -812,11 +906,11 @@ class LanguageAPIManager:
     async def _validate_provider_credentials(self, config: ProviderConfig) -> bool:
         """Validate provider credentials"""
         # This would make a test API call to validate credentials
-        return True  # Placeholder
+        return True
     
-    async def _get_fallback_provider(self, primary_provider: APIProvider,
-                                   service_type: APIServiceType) -> Optional[APIProvider]:
-        """Get fallback provider"""
+    async def _get_fallback_provider(self, primary_provider: APIProvider, service_type: APIServiceType) -> Optional[APIProvider]:
+        """
+        Get fallback provider"""
         primary_config = self.providers.get(primary_provider)
         if primary_config and primary_config.fallback_providers:
             for fallback in primary_config.fallback_providers:
@@ -882,7 +976,8 @@ class LanguageAPIManager:
         stats.error_rate = (stats.failed_requests / stats.total_requests) * 100
     
     async def _handle_provider_failure(self, provider: APIProvider):
-        """Handle provider failure for circuit breaker"""
+        """
+        Handle provider failure for circuit breaker"""
         circuit_breaker = self.circuit_breakers[provider]
         circuit_breaker["failures"] += 1
         circuit_breaker["last_failure"] = datetime.now(timezone.utc)
@@ -891,6 +986,7 @@ class LanguageAPIManager:
         if circuit_breaker["failures"] >= 5:
             circuit_breaker["circuit_open"] = True
             circuit_breaker["next_retry"] = datetime.now(timezone.utc) + timedelta(minutes=5)
+
             logger.warning(f"Circuit breaker opened for provider {provider.value}")
     
     async def _estimate_quota_usage(self, service_type: APIServiceType,
@@ -898,6 +994,7 @@ class LanguageAPIManager:
         """Estimate quota usage for a request"""
         if quota_type == "characters":
             text = request_data.get("text", "")
+
             return len(text)
         elif quota_type == "requests":
             return 1
@@ -914,7 +1011,9 @@ class LanguageAPIManager:
         
         if key in self.quota_trackers:
             quota = self.quota_trackers[key]
+
             usage = await self._estimate_quota_usage(service_type, request_data, quota.quota_type)
+
             quota.current_usage += usage
     
     async def _build_api_request(self, provider: APIProvider, service_type: APIServiceType,
@@ -924,6 +1023,7 @@ class LanguageAPIManager:
         request_id = hashlib.md5(f"{provider.value}:{time.time()}".encode()).hexdigest()
         
         # This would be provider-specific implementation
+
         endpoint = provider_config.credentials.endpoint or "https://api.example.com"
         headers = {
             "Authorization": f"Bearer {provider_config.credentials.api_key}",
@@ -944,10 +1044,12 @@ class LanguageAPIManager:
                                     request_data: Dict[str, Any], response) -> float:
         """Calculate cost for API request"""
         provider_config = self.providers[provider]
+
         base_cost = provider_config.base_cost_per_unit
         
         if service_type == APIServiceType.TRANSLATION:
             text_length = len(request_data.get("text", ""))
+
             return text_length * base_cost
         else:
             return base_cost
@@ -955,38 +1057,46 @@ class LanguageAPIManager:
     async def _supports_batch_requests(self, provider: APIProvider) -> bool:
         """Check if provider supports batch requests"""
         # This would check provider capabilities
-        return False  # Placeholder
+        return False
     
-    async def _execute_batch_api_call(self, provider: APIProvider,
-                                    requests: List[Tuple[APIServiceType, Dict[str, Any]]]) -> List[APIResponse]:
-        """Execute batch API call"""
+    async def _execute_batch_request(self, provider: APIProvider, requests: List[Tuple[APIServiceType, Dict[str, Any]]]) -> List[APIResponse]:
+        """
+        Execute batch API call"""
         # This would implement batch API calling
+
         responses = []
         for service_type, request_data in requests:
             response = await self.make_api_request(service_type, request_data, provider, False)
+
             responses.append(response)
         return responses
     
     def _provides_similar_quality(self, provider1: APIProvider, provider2: APIProvider) -> bool:
-        """Check if two providers provide similar quality"""
+        """
+        Check if two providers provide similar quality"""
         config1 = self.providers.get(provider1)
+
         config2 = self.providers.get(provider2)
+
         
         if not config1 or not config2:
             return False
+
         
         quality_diff = abs(config1.quality_score - config2.quality_score)
         return quality_diff <= 0.1  # Within 10% quality difference
     
     async def get_api_capabilities(self) -> Dict[str, Any]:
-        """Get comprehensive API management capabilities"""
+        """
+        Get comprehensive API management capabilities"""
         return {
             "supported_providers": [p.value for p in APIProvider],
             "service_types": [st.value for st in APIServiceType],
             "rate_limit_strategies": [rls.value for rls in RateLimitStrategy],
             "cost_optimization_strategies": [cos.value for cos in CostOptimizationStrategy],
             "configured_providers": len(self.providers),
-            "active_providers": len([p for p, c in self.providers.items() 
+            "active_providers": len([p for p, c in self.providers.items()
+ 
                                    if c.status == APIStatus.ACTIVE]),
             "total_requests_processed": self.performance_metrics["total_requests"],
             "total_cost_incurred": self.performance_metrics["total_cost"],

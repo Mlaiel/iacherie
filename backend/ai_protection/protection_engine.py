@@ -26,7 +26,8 @@ class ProtectionEngine:
     """
     
     def __init__(self):
-        """Initialize Protection Engine"""
+        """
+        Initialize Protection Engine"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Initialize protection components
@@ -48,32 +49,41 @@ class ProtectionEngine:
             # Initialize copyright detector
             try:
                 self.copyright_detector = CopyrightDetector()
+
                 self.logger.info("✅ Copyright Detector initialized")
+
             except Exception as e:
                 self.logger.warning(f"Copyright Detector initialization failed: {e}")
             
             # Initialize watermark engine
             try:
                 self.watermark_engine = WatermarkEngine()
+
                 self.logger.info("✅ Watermark Engine initialized")
+
             except Exception as e:
                 self.logger.warning(f"Watermark Engine initialization failed: {e}")
             
             # Initialize violation monitor
             try:
                 self.violation_monitor = ViolationMonitoringSystem()
+
                 self.logger.info("✅ Violation Monitor initialized")
+
             except Exception as e:
                 self.logger.warning(f"Violation Monitor initialization failed: {e}")
+
             
             self.is_initialized = True
             self.status = "ready"
             
             self.logger.info("🎉 Protection Engine fully initialized")
+
             return True
             
         except Exception as e:
             self.logger.error(f"❌ Failed to initialize Protection Engine: {e}")
+
             self.status = "error"
             return False
     
@@ -81,6 +91,7 @@ class ProtectionEngine:
         """Protect content using appropriate protection methods"""
         if not self.is_initialized:
             await self.initialize()
+
         
         try:
             result = {
@@ -94,6 +105,7 @@ class ProtectionEngine:
             if self.multimedia_engine:
                 if content_type in ["image", "video", "audio", "text"]:
                     protection_result = await self._protect_multimedia(content_type, content_data, protection_level)
+
                     result["protection_data"] = protection_result
                 else:
                     result["error"] = f"Unsupported content type: {content_type}"
@@ -105,6 +117,7 @@ class ProtectionEngine:
             
         except Exception as e:
             self.logger.error(f"Error protecting content: {e}")
+
             return {
                 "content_type": content_type,
                 "status": "error",
@@ -114,7 +127,6 @@ class ProtectionEngine:
     
     async def _protect_multimedia(self, content_type: str, content_data: Any, protection_level: str) -> Dict[str, Any]:
         """Protect multimedia content"""
-        # Mock multimedia protection
         return {
             "protected": True,
             "content_type": content_type,
@@ -127,9 +139,7 @@ class ProtectionEngine:
     
     async def detect_violations(self, content_data: Any) -> Dict[str, Any]:
         """Detect content violations"""
-        try:
-            # Mock violation detection
-            return {
+        try:            return {
                 "violations_found": False,
                 "violation_count": 0,
                 "confidence_score": 95.5,
@@ -138,6 +148,7 @@ class ProtectionEngine:
             
         except Exception as e:
             self.logger.error(f"Error detecting violations: {e}")
+
             return {
                 "violations_found": False,
                 "error": str(e),
@@ -204,12 +215,14 @@ class AdvancedFingerprintingSystem:
             
         except Exception as e:
             self.logger.error(f"Error creating fingerprint: {e}")
+
             return {"error": str(e)}
     
     async def match_fingerprint(self, content: dict) -> dict:
         """Match content against existing fingerprints"""
         try:
             # Simulate fingerprint matching
+
             matches = []
             for fp_id, fingerprint in self.fingerprints_db.items():
                 similarity = 0.85  # Simulated similarity score
@@ -219,6 +232,7 @@ class AdvancedFingerprintingSystem:
                         "similarity": similarity,
                         "original_content": fingerprint["content_id"]
                     })
+
             
             return {
                 "matches_found": len(matches),
@@ -228,6 +242,7 @@ class AdvancedFingerprintingSystem:
             
         except Exception as e:
             self.logger.error(f"Error matching fingerprint: {e}")
+
             return {"error": str(e)}
 
 
@@ -262,7 +277,9 @@ class ThreatDetectionEngine:
             }
             
             # Simulate threat detection based on content
+
             content_text = str(content).lower()
+
             if any(word in content_text for word in ["malware", "phishing", "spam"]):
                 threat_analysis.update({
                     "threat_detected": True,
@@ -270,11 +287,13 @@ class ThreatDetectionEngine:
                     "threat_types": ["suspicious_content"],
                     "confidence": 0.88
                 })
+
             
             return threat_analysis
             
         except Exception as e:
             self.logger.error(f"Error analyzing threat: {e}")
+
             return {"error": str(e)}
     
     async def get_threat_intelligence(self) -> dict:
@@ -296,6 +315,7 @@ class ThreatDetectionEngine:
             
         except Exception as e:
             self.logger.error(f"Error getting threat intelligence: {e}")
+
             return {"error": str(e)}
 
 
@@ -325,7 +345,9 @@ class AutomatedEnforcementEngine:
             }
             
             # Determine action based on severity
+
             severity = violation.get("severity", "medium")
+
             if severity == "critical":
                 enforcement_action["action_taken"] = "block"
             elif severity == "high":
@@ -337,6 +359,7 @@ class AutomatedEnforcementEngine:
             
             # Record action
             self.action_history.append(enforcement_action)
+
             
             return {
                 "enforcement_successful": True,
@@ -346,6 +369,7 @@ class AutomatedEnforcementEngine:
             
         except Exception as e:
             self.logger.error(f"Error enforcing policy: {e}")
+
             return {"error": str(e)}
     
     def _get_next_steps(self, action: str) -> list:
@@ -380,6 +404,7 @@ class AutomatedEnforcementEngine:
             
         except Exception as e:
             self.logger.error(f"Error getting enforcement statistics: {e}")
+
             return {"error": str(e)}
 
 

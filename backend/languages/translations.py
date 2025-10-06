@@ -31,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 
 class TranslationProvider(Enum):
-    """Supported translation service providers"""
+    """
+        Supported translation service providers"""
     GOOGLE = "google"
     DEEPL = "deepl"
     MICROSOFT = "microsoft"
@@ -65,7 +66,8 @@ class TranslationRequest:
 
 @dataclass
 class TranslationResult:
-    """Translation result with metadata"""
+    """
+        Translation result with metadata"""
     translated_text: str
     source_language: str
     target_language: str
@@ -84,7 +86,8 @@ class TranslationEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize translation engine"""
+        """
+        Initialize translation engine"""
         self.config = config or {}
         self.providers = {}
         self.cache = {}
@@ -117,8 +120,10 @@ class TranslationEngine:
             # Check cache first
             if request.use_cache:
                 cached_result = await self._get_cached_translation(request)
+
                 if cached_result:
                     logger.debug(f"Cache hit for {request.source_language} -> {request.target_language}")
+
                     return cached_result
             
             # Validate language support
@@ -126,9 +131,11 @@ class TranslationEngine:
                 raise ValueError(f"Language pair not supported: {request.source_language} -> {request.target_language}")
             
             # Select optimal provider
+
             provider = await self._select_provider(request)
             
             # Perform translation
+
             result = await self._translate_with_provider(request, provider)
             
             # Assess quality
@@ -140,11 +147,14 @@ class TranslationEngine:
             
             # Update provider statistics
             await self._update_provider_stats(provider, result)
+
             
             result.processing_time = (datetime.now(timezone.utc) - start_time).total_seconds()
+
             
             logger.info(f"Translation completed: {request.source_language} -> {request.target_language} "
                        f"(Quality: {result.quality_level.value}, Provider: {provider.value})")
+
             
             return result
             
@@ -165,14 +175,20 @@ class TranslationEngine:
         """
         try:
             # Group requests by language pair and provider for batch processing
+
             grouped_requests = self._group_requests_for_batch(requests)
+
+
             
             results = []
             for group in grouped_requests:
                 batch_results = await self._process_batch_group(group)
+
                 results.extend(batch_results)
+
             
             logger.info(f"Batch translation completed: {len(requests)} texts processed")
+
             return results
             
         except Exception as e:
@@ -202,6 +218,7 @@ class TranslationEngine:
     async def _get_cached_translation(self, request: TranslationRequest) -> Optional[TranslationResult]:
         """Get translation from cache if available"""
         cache_key = self._generate_cache_key(request)
+
         
         if cache_key in self.cache:
             cached_data = self.cache[cache_key]
@@ -211,7 +228,8 @@ class TranslationEngine:
         return None
     
     async def _cache_translation(self, request: TranslationRequest, result: TranslationResult):
-        """Cache translation result"""
+        """
+        Cache translation result"""
         cache_key = self._generate_cache_key(request)
         self.cache[cache_key] = result
         
@@ -220,7 +238,8 @@ class TranslationEngine:
             await self._cleanup_cache()
     
     def _generate_cache_key(self, request: TranslationRequest) -> str:
-        """Generate unique cache key for translation request"""
+        """
+        Generate unique cache key for translation request"""
         content = f"{request.text}|{request.source_language}|{request.target_language}|{request.context or ''}"
         return hashlib.md5(content.encode()).hexdigest()
     
@@ -230,11 +249,13 @@ class TranslationEngine:
                 target_lang in self.supported_languages)
     
     async def _select_provider(self, request: TranslationRequest) -> TranslationProvider:
-        """Select optimal translation provider based on language pair and quality metrics"""
+        """
+        Select optimal translation provider based on language pair and quality metrics"""
         if request.preferred_provider:
             return request.preferred_provider
         
         # Default provider selection logic
+
         language_pair = f"{request.source_language}-{request.target_language}"
         
         # Provider preferences based on language pairs and quality statistics
@@ -272,7 +293,8 @@ class TranslationEngine:
         return TranslationQuality.FAILED
     
     async def _update_provider_stats(self, provider: TranslationProvider, result: TranslationResult):
-        """Update provider performance statistics"""
+        """
+        Update provider performance statistics"""
         if provider not in self.provider_stats:
             self.provider_stats[provider] = {
                 "total_requests": 0,
@@ -280,6 +302,7 @@ class TranslationEngine:
                 "average_confidence": 0.0,
                 "average_processing_time": 0.0
             }
+
         
         stats = self.provider_stats[provider]
         stats["total_requests"] += 1
@@ -288,6 +311,7 @@ class TranslationEngine:
             stats["successful_requests"] += 1
         
         # Update running averages
+
         total = stats["total_requests"]
         stats["average_confidence"] = ((stats["average_confidence"] * (total - 1)) + result.confidence_score) / total
         stats["average_processing_time"] = ((stats["average_processing_time"] * (total - 1)) + result.processing_time) / total
@@ -308,6 +332,7 @@ class TranslationEngine:
     def _group_requests_for_batch(self, requests: List[TranslationRequest]) -> List[List[TranslationRequest]]:
         """Group translation requests for optimal batch processing"""
         # Group by language pair and provider
+
         groups = {}
         
         for request in requests:
@@ -315,25 +340,32 @@ class TranslationEngine:
             if key not in groups:
                 groups[key] = []
             groups[key].append(request)
+
         
         return list(groups.values())
     
     async def _process_batch_group(self, requests: List[TranslationRequest]) -> List[TranslationResult]:
         """Process a group of similar translation requests"""
         # For now, process individually - could be optimized for true batch processing
+
         results = []
         for request in requests:
             result = await self.translate(request)
+
             results.append(result)
         return results
     
     async def _cleanup_cache(self):
-        """Clean up cache to maintain performance"""
+        """
+        Clean up cache to maintain performance"""
         # Remove oldest entries (simple LRU-like cleanup)
+
         cache_items = list(self.cache.items())
         # Keep most recent 80% of cache
+
         keep_count = int(len(cache_items) * 0.8)
         self.cache = dict(cache_items[-keep_count:])
+
         
         logger.info(f"Cache cleaned up, keeping {keep_count} entries")
     

@@ -126,11 +126,9 @@ class TestResult:
     status: TestStatus
     duration: float
     error_message: Optional[str] = None
-    metadata: Dict[str, Any] = field(default_factory=dict)
-
-# Mock data generators
-def generate_test_user_data() -> Dict[str, Any]:
-    """Generate test user data"""
+    metadata: Dict[str, Any] = field(default_factory=dict)def generate_test_user_data() -> Dict[str, Any]:
+    """
+        Generate test user data"""
     return {
         "id": str(uuid.uuid4()),
         "username": f"test_user_{secrets.token_hex(4)}",
@@ -176,10 +174,7 @@ def generate_test_jwt_token(payload: Optional[Dict[str, Any]] = None) -> str:
             "user_id": str(uuid.uuid4()),
             "username": f"test_user_{secrets.token_hex(4)}",
             "exp": (datetime.utcnow() + timedelta(hours=1)).timestamp()
-        }
-    
-    # Mock JWT token (not real encryption for tests)
-    header = base64.b64encode(json.dumps({"alg": "HS256", "typ": "JWT"}).encode()).decode()
+        }    header = base64.b64encode(json.dumps({"alg": "HS256", "typ": "JWT"}).encode()).decode()
     payload_encoded = base64.b64encode(json.dumps(payload).encode()).decode()
     signature = base64.b64encode(secrets.token_bytes(32)).decode()
     
@@ -197,17 +192,21 @@ def validate_test_environment() -> bool:
     """Validate test environment setup"""
     try:
         # Check if required directories exist
+
         required_dirs = [TEST_DATA_DIR]
         for dir_path in required_dirs:
             if not dir_path.exists():
                 logger.error(f"Required directory missing: {dir_path}")
+
                 return False
         
         # Check if test configuration is valid
+
         required_config_keys = ["database", "redis", "api"]
         for key in required_config_keys:
             if key not in TEST_CONFIG:
                 logger.error(f"Required config key missing: {key}")
+
                 return False
         
         logger.info("Test environment validation passed")

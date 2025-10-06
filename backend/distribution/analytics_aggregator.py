@@ -39,7 +39,8 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(str, Enum):
-    """Types of analytics metrics."""
+    """
+        Types of analytics metrics."""
     VIEWS = "views"
     IMPRESSIONS = "impressions"
     CLICKS = "clicks"
@@ -77,7 +78,8 @@ class AnalyticsDataPoint:
 
 @dataclass
 class AggregatedMetrics:
-    """Aggregated metrics for a time period."""
+    """
+        Aggregated metrics for a time period."""
     period: AggregationPeriod
     start_time: datetime
     end_time: datetime
@@ -89,7 +91,8 @@ class AggregatedMetrics:
 
 @dataclass
 class PerformanceInsight:
-    """Performance insight generated from analytics."""
+    """
+        Performance insight generated from analytics."""
     id: str
     title: str
     description: str
@@ -107,7 +110,8 @@ class AnalyticsAggregator:
     """
     
     def __init__(self, database_connection=None, cache_client=None):
-        """Initialize the analytics aggregator."""
+        """
+        Initialize the analytics aggregator."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.db = database_connection
         self.cache = cache_client
@@ -126,10 +130,13 @@ class AnalyticsAggregator:
         """Collect analytics data from a platform."""
         try:
             timestamp = datetime.utcnow()
+
             
             for metric_name, value in metrics_data.items():
                 try:
                     metric_type = MetricType(metric_name.lower())
+
+
                     
                     data_point = AnalyticsDataPoint(
                         platform=platform,
@@ -138,19 +145,24 @@ class AnalyticsAggregator:
                         value=value,
                         timestamp=timestamp
                     )
+
                     
                     self.raw_data.append(data_point)
+
                     
                 except ValueError:
                     # Skip unknown metric types
                     self.logger.warning(f"Unknown metric type: {metric_name}")
+
                     continue
             
             self.logger.debug(f"📊 Collected analytics for {platform}:{content_id}")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Error collecting platform analytics: {e}")
+
             return False
     
     async def aggregate_metrics(
@@ -164,6 +176,7 @@ class AnalyticsAggregator:
         """Aggregate metrics for specified period and filters."""
         try:
             # Filter data points
+
             filtered_data = []
             for data_point in self.raw_data:
                 # Time filter
@@ -181,12 +194,16 @@ class AnalyticsAggregator:
                 filtered_data.append(data_point)
             
             # Group data by metric type
+
             metrics_by_type = {}
+
             platforms_used = set()
+
             
             for data_point in filtered_data:
                 metric_type = data_point.metric_type
                 platforms_used.add(data_point.platform)
+
                 
                 if metric_type not in metrics_by_type:
                     metrics_by_type[metric_type] = []
@@ -194,6 +211,7 @@ class AnalyticsAggregator:
                 metrics_by_type[metric_type].append(data_point.value)
             
             # Calculate aggregated values
+
             aggregated_values = {}
             for metric_type, values in metrics_by_type.items():
                 if metric_type in [MetricType.ENGAGEMENT_RATE, MetricType.CONVERSION_RATE, MetricType.CTR]:
@@ -204,9 +222,12 @@ class AnalyticsAggregator:
                     aggregated_values[metric_type] = sum(values)
             
             # Calculate growth rates
+
             growth_rates = await self._calculate_growth_rates(
                 aggregated_values, period, start_time, platforms, content_ids
             )
+
+
             
             aggregated_metrics = AggregatedMetrics(
                 period=period,
@@ -218,15 +239,18 @@ class AnalyticsAggregator:
             )
             
             # Store aggregated metrics
+
             key = f"{period.value}_{start_time.isoformat()}_{end_time.isoformat()}"
             self.aggregated_metrics[key] = aggregated_metrics
             
             self.logger.info(f"📈 Metrics aggregated for {period.value} period")
+
             
             return aggregated_metrics
             
         except Exception as e:
             self.logger.error(f"Error aggregating metrics: {e}")
+
             return AggregatedMetrics(
                 period=period,
                 start_time=start_time,
@@ -248,6 +272,7 @@ class AnalyticsAggregator:
             growth_rates = {}
             
             # Calculate previous period
+
             period_delta = {
                 AggregationPeriod.HOUR: timedelta(hours=1),
                 AggregationPeriod.DAY: timedelta(days=1),
@@ -256,12 +281,17 @@ class AnalyticsAggregator:
                 AggregationPeriod.QUARTER: timedelta(days=90),
                 AggregationPeriod.YEAR: timedelta(days=365)
             }
+
             
             delta = period_delta.get(period, timedelta(days=1))
+
+
             prev_start = current_start - delta
+
             prev_end = current_start
             
             # Get previous period metrics
+
             prev_metrics = await self.aggregate_metrics(
                 period, prev_start, prev_end, platforms, content_ids
             )
@@ -269,6 +299,7 @@ class AnalyticsAggregator:
             # Calculate growth rates
             for metric_type, current_value in current_metrics.items():
                 prev_value = prev_metrics.metrics.get(metric_type, 0)
+
                 
                 if prev_value > 0:
                     growth_rate = ((current_value - prev_value) / prev_value) * 100
@@ -282,6 +313,7 @@ class AnalyticsAggregator:
             
         except Exception as e:
             self.logger.error(f"Error calculating growth rates: {e}")
+
             return {}
     
     async def generate_insights(
@@ -310,13 +342,16 @@ class AnalyticsAggregator:
             
             # Store insights
             self.insights.extend(insights)
+
             
             self.logger.info(f"🧠 Generated {len(insights)} performance insights")
+
             
             return insights
             
         except Exception as e:
             self.logger.error(f"Error generating insights: {e}")
+
             return []
     
     async def _analyze_performance_trends(
@@ -328,7 +363,9 @@ class AnalyticsAggregator:
         
         try:
             # High engagement rate insight
+
             engagement_rate = metrics.metrics.get(MetricType.ENGAGEMENT_RATE, 0)
+
             if engagement_rate > 0.05:  # 5% threshold
                 insights.append(PerformanceInsight(
                     id=str(uuid4()),
@@ -345,7 +382,9 @@ class AnalyticsAggregator:
                 ))
             
             # Growth trend insight
+
             views_growth = metrics.growth_rates.get(MetricType.VIEWS, 0)
+
             if views_growth > 20:  # 20% growth
                 insights.append(PerformanceInsight(
                     id=str(uuid4()),
@@ -360,9 +399,11 @@ class AnalyticsAggregator:
                     ],
                     supporting_data={"views_growth": views_growth}
                 ))
+
             
         except Exception as e:
             self.logger.error(f"Error analyzing performance trends: {e}")
+
         
         return insights
     
@@ -390,9 +431,11 @@ class AnalyticsAggregator:
                     ],
                     supporting_data={"platform_count": len(metrics.platforms)}
                 ))
+
             
         except Exception as e:
             self.logger.error(f"Error analyzing platform performance: {e}")
+
         
         return insights
     
@@ -405,7 +448,11 @@ class AnalyticsAggregator:
         
         try:
             views = metrics.metrics.get(MetricType.VIEWS, 0)
+
+
             likes = metrics.metrics.get(MetricType.LIKES, 0)
+
+
             comments = metrics.metrics.get(MetricType.COMMENTS, 0)
             
             # Comment to like ratio
@@ -425,9 +472,11 @@ class AnalyticsAggregator:
                         ],
                         supporting_data={"comment_like_ratio": comment_like_ratio}
                     ))
+
             
         except Exception as e:
             self.logger.error(f"Error analyzing engagement patterns: {e}")
+
         
         return insights
     
@@ -440,10 +489,12 @@ class AnalyticsAggregator:
         
         try:
             # Identify declining metrics
+
             declining_metrics = []
             for metric_type, growth_rate in metrics.growth_rates.items():
                 if growth_rate < -10:  # Declining by more than 10%
                     declining_metrics.append((metric_type, growth_rate))
+
             
             if declining_metrics:
                 insights.append(PerformanceInsight(
@@ -460,9 +511,11 @@ class AnalyticsAggregator:
                     ],
                     supporting_data={"declining_metrics": declining_metrics}
                 ))
+
             
         except Exception as e:
             self.logger.error(f"Error analyzing growth patterns: {e}")
+
         
         return insights
     
@@ -475,6 +528,8 @@ class AnalyticsAggregator:
         
         try:
             views = metrics.metrics.get(MetricType.VIEWS, 0)
+
+
             engagement_rate = metrics.metrics.get(MetricType.ENGAGEMENT_RATE, 0)
             
             # Low engagement with high views
@@ -496,9 +551,11 @@ class AnalyticsAggregator:
                         "engagement_rate": engagement_rate
                     }
                 ))
+
             
         except Exception as e:
             self.logger.error(f"Error generating optimization recommendations: {e}")
+
         
         return insights
     
@@ -511,9 +568,12 @@ class AnalyticsAggregator:
         """Get real-time metrics for the specified time window."""
         try:
             end_time = datetime.utcnow()
+
+
             start_time = end_time - timedelta(hours=time_window_hours)
             
             # Get recent data
+
             recent_metrics = await self.aggregate_metrics(
                 AggregationPeriod.HOUR,
                 start_time,
@@ -523,6 +583,7 @@ class AnalyticsAggregator:
             )
             
             # Calculate real-time stats
+
             real_time_data = {
                 "timestamp": end_time.isoformat(),
                 "time_window_hours": time_window_hours,
@@ -542,6 +603,7 @@ class AnalyticsAggregator:
             
         except Exception as e:
             self.logger.error(f"Error getting real-time metrics: {e}")
+
             return {}
     
     def _get_top_performing_metrics(self, metrics: AggregatedMetrics) -> List[Dict[str, Any]]:
@@ -551,6 +613,7 @@ class AnalyticsAggregator:
             
             for metric_type, value in metrics.metrics.items():
                 growth_rate = metrics.growth_rates.get(metric_type, 0)
+
                 
                 metric_performance.append({
                     "metric": metric_type.value,
@@ -561,11 +624,13 @@ class AnalyticsAggregator:
             
             # Sort by performance score
             metric_performance.sort(key=lambda x: x["performance_score"], reverse=True)
+
             
             return metric_performance[:5]  # Top 5
             
         except Exception as e:
             self.logger.error(f"Error getting top performing metrics: {e}")
+
             return []
     
     async def export_analytics_report(
@@ -578,6 +643,7 @@ class AnalyticsAggregator:
         """Export comprehensive analytics report."""
         try:
             # Aggregate metrics for the period
+
             weekly_metrics = await self.aggregate_metrics(
                 AggregationPeriod.WEEK,
                 start_time,
@@ -586,9 +652,11 @@ class AnalyticsAggregator:
             )
             
             # Generate insights
+
             insights = await self.generate_insights(weekly_metrics)
             
             # Compile report
+
             report = {
                 "report_id": str(uuid4()),
                 "generated_at": datetime.utcnow().isoformat(),
@@ -623,11 +691,13 @@ class AnalyticsAggregator:
             }
             
             self.logger.info(f"📊 Analytics report exported for {start_time} to {end_time}")
+
             
             return report
             
         except Exception as e:
             self.logger.error(f"Error exporting analytics report: {e}")
+
             return {}
     
     def _compile_recommendations(self, insights: List[PerformanceInsight]) -> List[str]:
@@ -638,17 +708,23 @@ class AnalyticsAggregator:
                 all_recommendations.extend(insight.actionable_recommendations)
             
             # Remove duplicates while preserving order
+
             unique_recommendations = []
+
             seen = set()
+
             for rec in all_recommendations:
                 if rec not in seen:
                     unique_recommendations.append(rec)
+
                     seen.add(rec)
+
             
             return unique_recommendations[:10]  # Top 10 recommendations
             
         except Exception as e:
             self.logger.error(f"Error compiling recommendations: {e}")
+
             return []
 
 

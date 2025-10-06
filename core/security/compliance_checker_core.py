@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class ComplianceCheckerCore:
-    """Advanced ComplianceCheckerCore System"""
+    """
+Advanced ComplianceCheckerCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class ComplianceCheckerCore:
 # Module exports
 __all__ = ["ComplianceCheckerCore"]
 
-logger.info("✅ ComplianceCheckerCore module loaded")
+logger.info("✅ ComplianceCheckerCore module initialized")

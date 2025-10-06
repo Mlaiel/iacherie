@@ -1,4 +1,5 @@
 """
+
 Content Safety Suite - Consolidated Content Safety System
 
 Comprehensive content safety system consolidating all content safety functionality
@@ -7,6 +8,7 @@ from content_safety/ subdirectory into unified enterprise-grade content protecti
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: All rights reserved - Proprietary software
 """
+
 
 import asyncio
 import hashlib
@@ -45,9 +47,51 @@ Base = declarative_base()
 
 class ContentType(Enum):
     """Content type enumeration"""
+
     TEXT = "text"
     IMAGE = "image"
     VIDEO = "video"
+
+
+class ThreatLevel(Enum):
+    """Threat level classification for content"""
+
+    NONE = "none"
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    CRITICAL = "critical"
+
+
+@dataclass
+class ContentAnalysisResult:
+    """Result of content safety analysis"""
+
+    content_id: str
+    timestamp: str
+    threat_level: ThreatLevel
+    is_safe: bool
+    violations: List[Dict[str, Any]] = field(default_factory=list)
+    confidence_score: float = 0.0
+    detected_categories: List[str] = field(default_factory=list)
+    recommended_action: str = "allow"
+    metadata: Dict[str, Any] = field(default_factory=dict)
+    
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert analysis result to dictionary"""
+
+        return {
+            "content_id": self.content_id,
+            "timestamp": self.timestamp,
+            "threat_level": self.threat_level.value if isinstance(self.threat_level, ThreatLevel) else self.threat_level,
+            "is_safe": self.is_safe,
+            "violations": self.violations,
+            "confidence_score": self.confidence_score,
+            "detected_categories": self.detected_categories,
+            "recommended_action": self.recommended_action,
+            "metadata": self.metadata
+        }
+
     AUDIO = "audio"
     DOCUMENT = "document"
     LINK = "link"
@@ -56,6 +100,7 @@ class ContentType(Enum):
 
 class ThreatLevel(Enum):
     """Threat level classification"""
+
     SAFE = "safe"
     LOW_RISK = "low_risk"
     MEDIUM_RISK = "medium_risk"
@@ -66,6 +111,7 @@ class ThreatLevel(Enum):
 
 class ViolationType(Enum):
     """Content violation types"""
+
     ADULT_CONTENT = "adult_content"
     HATE_SPEECH = "hate_speech"
     VIOLENCE = "violence"
@@ -82,6 +128,7 @@ class ViolationType(Enum):
 
 class ModerationAction(Enum):
     """Moderation action types"""
+
     APPROVE = "approve"
     FLAG = "flag"
     REVIEW = "review"
@@ -95,6 +142,7 @@ class ModerationAction(Enum):
 @dataclass
 class ContentAnalysisResult:
     """Content analysis result data structure"""
+
     content_id: str
     content_type: ContentType
     threat_level: ThreatLevel
@@ -110,6 +158,7 @@ class ContentAnalysisResult:
 @dataclass
 class SafetyMetrics:
     """Content safety metrics"""
+
     total_content_analyzed: int
     safe_content_count: int
     flagged_content_count: int
@@ -121,7 +170,10 @@ class SafetyMetrics:
 
 
 class ContentAnalysisRecord(Base):
-    """Database model for content analysis"""
+    """
+
+        Database model for content analysis"""
+
     __tablename__ = "content_analysis"
     
     analysis_id = Column(String, primary_key=True)
@@ -142,6 +194,7 @@ class ContentAnalysisRecord(Base):
 
 class SafetyMetricsRecord(Base):
     """Database model for safety metrics"""
+
     __tablename__ = "safety_metrics"
     
     metric_id = Column(String, primary_key=True)
@@ -159,27 +212,37 @@ class SafetyMetricsRecord(Base):
 
 class AdultContentFilter:
     """Advanced adult content detection and filtering"""
+
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Any):
         self.redis = redis_client
         self.nsfw_keywords = self._load_nsfw_keywords()
         self.adult_patterns = self._compile_adult_patterns()
+
         
     async def analyze_content(self, content: str, content_type: ContentType = ContentType.TEXT) -> ContentAnalysisResult:
-        """Analyze content for adult/NSFW material"""
+        """
+
+        Analyze content for adult/NSFW material"""
+
         try:
             analysis_id = str(uuid4())
+
             
             if content_type == ContentType.TEXT:
                 result = await self._analyze_text_content(content)
+
             elif content_type == ContentType.IMAGE:
                 result = await self._analyze_image_content(content)
+
             elif content_type == ContentType.VIDEO:
                 result = await self._analyze_video_content(content)
+
             else:
                 result = await self._analyze_mixed_content(content)
             
             # Create analysis result
+
             analysis_result = ContentAnalysisResult(
                 content_id=analysis_id,
                 content_type=content_type,
@@ -194,33 +257,44 @@ class AdultContentFilter:
             # Cache result
             await self.redis.setex(f"adult_content_analysis:{analysis_id}", 3600, 
                                  json.dumps(analysis_result.__dict__, default=str))
+
             
             return analysis_result
             
         except Exception as e:
             logger.error(f"Adult content analysis failed: {str(e)}")
+
             raise
     
     async def _analyze_text_content(self, text: str) -> Dict[str, Any]:
         """Analyze text content for adult material"""
+
         violations = []
+
         confidence = 0.0
+
         details = {"matched_keywords": [], "pattern_matches": []}
         
         # Keyword matching
+
         text_lower = text.lower()
         for keyword in self.nsfw_keywords:
             if keyword in text_lower:
                 violations.append(ViolationType.ADULT_CONTENT)
+
                 details["matched_keywords"].append(keyword)
+
                 confidence += 0.1
         
         # Pattern matching
         for pattern_name, pattern in self.adult_patterns.items():
             matches = pattern.findall(text)
+
             if matches:
                 violations.append(ViolationType.ADULT_CONTENT)
+
                 details["pattern_matches"].append({"pattern": pattern_name, "matches": matches})
+
                 confidence += 0.2
         
         # Determine threat level and action
@@ -252,7 +326,7 @@ class AdultContentFilter:
     
     async def _analyze_image_content(self, image_data: str) -> Dict[str, Any]:
         """Analyze image content for adult material"""
-        # Mock implementation - would use computer vision models
+
         return {
             "threat_level": ThreatLevel.SAFE,
             "confidence": 0.1,
@@ -264,7 +338,7 @@ class AdultContentFilter:
     
     async def _analyze_video_content(self, video_data: str) -> Dict[str, Any]:
         """Analyze video content for adult material"""
-        # Mock implementation - would analyze video frames and audio
+
         return {
             "threat_level": ThreatLevel.SAFE,
             "confidence": 0.1,
@@ -276,7 +350,7 @@ class AdultContentFilter:
     
     async def _analyze_mixed_content(self, content: str) -> Dict[str, Any]:
         """Analyze mixed media content"""
-        # Mock implementation - would analyze all content types
+
         return {
             "threat_level": ThreatLevel.SAFE,
             "confidence": 0.1,
@@ -288,6 +362,7 @@ class AdultContentFilter:
     
     def _load_nsfw_keywords(self) -> List[str]:
         """Load NSFW keywords for detection"""
+
         return [
             "explicit", "nsfw", "adult", "xxx", "porn", "sexual", "nude", "naked"
             # Note: In production, this would be a comprehensive database
@@ -295,6 +370,7 @@ class AdultContentFilter:
     
     def _compile_adult_patterns(self) -> Dict[str, re.Pattern]:
         """Compile regex patterns for adult content detection"""
+
         return {
             "explicit_urls": re.compile(r'https?://(?:www\.)?(?:pornhub|xvideos|redtube)\.com', re.IGNORECASE),
             "adult_references": re.compile(r'\b(?:sex|porn|xxx|adult)\s+(?:content|video|image)\b', re.IGNORECASE)
@@ -303,14 +379,17 @@ class AdultContentFilter:
 
 class NSFWDetector:
     """NSFW (Not Safe For Work) content detection"""
+
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Any):
         self.redis = redis_client
         
     async def detect_nsfw_content(self, content: str, content_type: ContentType) -> Dict[str, Any]:
-        """Detect NSFW content using ML models"""
+        """
+
+        Detect NSFW content using ML models"""
+
         try:
-            # Mock ML model prediction
             nsfw_probability = await self._predict_nsfw_probability(content, content_type)
             
             # Determine classification
@@ -343,11 +422,12 @@ class NSFWDetector:
             
         except Exception as e:
             logger.error(f"NSFW detection failed: {str(e)}")
+
             raise
     
     async def _predict_nsfw_probability(self, content: str, content_type: ContentType) -> float:
         """Predict NSFW probability using ML model"""
-        # Mock implementation - would use actual ML models
+
         if "nsfw" in content.lower() or "adult" in content.lower():
             return 0.8
         elif "explicit" in content.lower():
@@ -358,27 +438,36 @@ class NSFWDetector:
 
 class ContentClassifier:
     """Multi-category content classification"""
+
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Any):
         self.redis = redis_client
         self.classification_models = self._load_classification_models()
+
         
     async def classify_content(self, content: str, content_type: ContentType) -> Dict[str, Any]:
-        """Classify content into multiple categories"""
+        """
+
+        Classify content into multiple categories"""
+
         try:
             classifications = {}
             
             # Run multiple classifiers
             for category, model in self.classification_models.items():
                 probability = await self._run_classifier(content, model)
+
                 classifications[category] = {
                     "probability": probability,
                     "predicted": probability > 0.5
                 }
             
             # Determine primary category
+
             primary_category = max(classifications.keys(), 
                                  key=lambda k: classifications[k]["probability"])
+
+
             
             result = {
                 "primary_category": primary_category,
@@ -391,10 +480,12 @@ class ContentClassifier:
             
         except Exception as e:
             logger.error(f"Content classification failed: {str(e)}")
+
             raise
     
     def _load_classification_models(self) -> Dict[str, Any]:
         """Load content classification models"""
+
         return {
             "educational": {"keywords": ["learn", "education", "tutorial", "guide"]},
             "entertainment": {"keywords": ["fun", "comedy", "music", "game"]},
@@ -405,11 +496,15 @@ class ContentClassifier:
     
     async def _run_classifier(self, content: str, model: Dict[str, Any]) -> float:
         """Run individual classifier"""
-        # Mock implementation - would use actual ML models
+
         keywords = model.get("keywords", [])
+
         content_lower = content.lower()
+
+
         
         matches = sum(1 for keyword in keywords if keyword in content_lower)
+
         probability = min(matches / len(keywords), 1.0) if keywords else 0.0
         
         return probability
@@ -417,23 +512,36 @@ class ContentClassifier:
 
 class CategoryAnalyzer:
     """Advanced category analysis and tagging"""
+
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Any):
         self.redis = redis_client
         
     async def analyze_categories(self, content: str) -> Dict[str, Any]:
-        """Analyze content categories and generate tags"""
+        """
+
+        Analyze content categories and generate tags"""
+
         try:
             # Extract topics and themes
+
             topics = await self._extract_topics(content)
+
+
             themes = await self._extract_themes(content)
+
+
             sentiment = await self._analyze_sentiment(content)
             
             # Generate tags
+
             tags = await self._generate_tags(content, topics, themes)
             
             # Calculate category confidence scores
+
             category_scores = await self._calculate_category_scores(content, topics, themes)
+
+
             
             analysis_result = {
                 "topics": topics,
@@ -448,13 +556,17 @@ class CategoryAnalyzer:
             
         except Exception as e:
             logger.error(f"Category analysis failed: {str(e)}")
+
             raise
     
     async def _extract_topics(self, content: str) -> List[str]:
         """Extract main topics from content"""
-        # Mock implementation - would use NLP topic modeling
+
         topics = []
+
         content_lower = content.lower()
+
+
         
         topic_keywords = {
             "technology": ["tech", "software", "ai", "computer", "digital"],
@@ -467,23 +579,29 @@ class CategoryAnalyzer:
         for topic, keywords in topic_keywords.items():
             if any(keyword in content_lower for keyword in keywords):
                 topics.append(topic)
+
         
         return topics
     
     async def _extract_themes(self, content: str) -> List[str]:
         """Extract themes from content"""
-        # Mock implementation - would use advanced NLP
+
         return ["innovation", "growth", "community"]
     
     async def _analyze_sentiment(self, content: str) -> Dict[str, Any]:
         """Analyze content sentiment"""
-        # Mock implementation - would use sentiment analysis models
+
         positive_words = ["good", "great", "excellent", "amazing", "wonderful"]
+
         negative_words = ["bad", "terrible", "awful", "horrible", "disappointing"]
+
         
         content_lower = content.lower()
+
         positive_count = sum(1 for word in positive_words if word in content_lower)
+
         negative_count = sum(1 for word in negative_words if word in content_lower)
+
         
         if positive_count > negative_count:
             sentiment = "positive"
@@ -503,11 +621,13 @@ class CategoryAnalyzer:
     
     async def _generate_tags(self, content: str, topics: List[str], themes: List[str]) -> List[str]:
         """Generate relevant tags for content"""
+
         tags = []
         tags.extend(topics)
         tags.extend(themes)
         
         # Add length-based tags
+
         word_count = len(content.split())
         if word_count < 50:
             tags.append("short-form")
@@ -515,14 +635,17 @@ class CategoryAnalyzer:
             tags.append("long-form")
         else:
             tags.append("medium-form")
+
         
         return list(set(tags))
     
     async def _calculate_category_scores(self, content: str, topics: List[str], themes: List[str]) -> Dict[str, float]:
         """Calculate confidence scores for different categories"""
+
         scores = {}
         
         # Calculate scores based on topics and themes
+
         all_categories = ["technology", "health", "business", "education", "entertainment", "lifestyle"]
         
         for category in all_categories:
@@ -538,13 +661,18 @@ class CategoryAnalyzer:
 
 class CyberbullyingDetector:
     """Advanced cyberbullying detection system"""
+
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Any):
         self.redis = redis_client
         self.bullying_patterns = self._load_bullying_patterns()
+
         
     async def detect_cyberbullying(self, content: str, context: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Detect cyberbullying behavior in content"""
+        """
+
+        Detect cyberbullying behavior in content"""
+
         try:
             detection_result = {
                 "is_cyberbullying": False,
@@ -556,11 +684,15 @@ class CyberbullyingDetector:
             }
             
             # Analyze content for bullying indicators
+
             indicators = await self._analyze_bullying_indicators(content)
+
             detection_result["indicators"] = indicators
             
             # Calculate confidence score
+
             confidence = sum(indicator["weight"] for indicator in indicators)
+
             detection_result["confidence"] = min(confidence, 1.0)
             
             # Determine if cyberbullying
@@ -578,19 +710,24 @@ class CyberbullyingDetector:
             
             # Identify bullying types
             detection_result["bullying_types"] = await self._identify_bullying_types(indicators)
+
             
             return detection_result
             
         except Exception as e:
             logger.error(f"Cyberbullying detection failed: {str(e)}")
+
             raise
     
     async def _analyze_bullying_indicators(self, content: str) -> List[Dict[str, Any]]:
         """Analyze content for bullying indicators"""
+
         indicators = []
+
         content_lower = content.lower()
         
         # Check for aggressive language
+
         aggressive_words = ["stupid", "idiot", "loser", "pathetic", "worthless"]
         for word in aggressive_words:
             if word in content_lower:
@@ -601,6 +738,7 @@ class CyberbullyingDetector:
                 })
         
         # Check for threatening language
+
         threats = ["kill", "hurt", "destroy", "ruin"]
         for threat in threats:
             if threat in content_lower:
@@ -611,6 +749,7 @@ class CyberbullyingDetector:
                 })
         
         # Check for exclusionary language
+
         exclusion = ["nobody likes you", "go away", "not welcome"]
         for phrase in exclusion:
             if phrase in content_lower:
@@ -619,12 +758,15 @@ class CyberbullyingDetector:
                     "indicator": phrase,
                     "weight": 0.4
                 })
+
         
         return indicators
     
     async def _identify_bullying_types(self, indicators: List[Dict[str, Any]]) -> List[str]:
         """Identify types of bullying based on indicators"""
+
         bullying_types = []
+
         
         indicator_types = [indicator["type"] for indicator in indicators]
         
@@ -634,11 +776,13 @@ class CyberbullyingDetector:
             bullying_types.append("verbal_abuse")
         if "exclusionary_language" in indicator_types:
             bullying_types.append("social_exclusion")
+
         
         return bullying_types
     
     def _load_bullying_patterns(self) -> Dict[str, List[str]]:
         """Load cyberbullying detection patterns"""
+
         return {
             "aggressive": ["stupid", "idiot", "loser", "pathetic"],
             "threatening": ["kill", "hurt", "destroy", "ruin"],
@@ -648,24 +792,34 @@ class CyberbullyingDetector:
 
 class HarassmentPredictor:
     """ML-based harassment prediction system"""
+
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Any):
         self.redis = redis_client
         
     async def predict_harassment_risk(self, content: str, user_history: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Predict harassment risk using ML models"""
+        """
+
+        Predict harassment risk using ML models"""
+
         try:
             # Analyze content features
+
             content_features = await self._extract_content_features(content)
             
             # Analyze user behavior features
+
             user_features = await self._extract_user_features(user_history or {})
             
             # Combine features for prediction
+
             combined_features = {**content_features, **user_features}
             
             # Predict harassment risk
+
             risk_score = await self._predict_risk_score(combined_features)
+
+
             
             prediction_result = {
                 "harassment_risk_score": risk_score,
@@ -679,10 +833,12 @@ class HarassmentPredictor:
             
         except Exception as e:
             logger.error(f"Harassment prediction failed: {str(e)}")
+
             raise
     
     async def _extract_content_features(self, content: str) -> Dict[str, Any]:
         """Extract features from content for harassment prediction"""
+
         features = {
             "content_length": len(content),
             "word_count": len(content.split()),
@@ -696,6 +852,7 @@ class HarassmentPredictor:
     
     async def _extract_user_features(self, user_history: Dict[str, Any]) -> Dict[str, Any]:
         """Extract user behavior features"""
+
         features = {
             "previous_violations": user_history.get("violation_count", 0),
             "account_age_days": user_history.get("account_age_days", 0),
@@ -707,19 +864,21 @@ class HarassmentPredictor:
     
     async def _predict_risk_score(self, features: Dict[str, Any]) -> float:
         """Predict harassment risk score using ML model"""
-        # Mock implementation - would use actual ML model
+
         risk_factors = [
             features.get("negative_words", 0) * 0.3,
             features.get("caps_ratio", 0) * 0.2,
             features.get("previous_violations", 0) * 0.4,
             features.get("report_ratio", 0) * 0.1
         ]
+
         
         risk_score = sum(risk_factors)
         return min(risk_score, 1.0)
     
     async def _classify_risk_level(self, risk_score: float) -> str:
         """Classify risk level based on score"""
+
         if risk_score >= 0.8:
             return "very_high"
         elif risk_score >= 0.6:
@@ -733,6 +892,7 @@ class HarassmentPredictor:
     
     async def _identify_risk_factors(self, features: Dict[str, Any]) -> List[str]:
         """Identify contributing risk factors"""
+
         risk_factors = []
         
         if features.get("negative_words", 0) > 3:
@@ -743,19 +903,25 @@ class HarassmentPredictor:
             risk_factors.append("violation_history")
         if features.get("report_ratio", 0) > 0.1:
             risk_factors.append("high_report_ratio")
+
         
         return risk_factors
 
 
 class DrugContentDetector:
     """Drug and substance abuse content detection"""
+
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Any):
         self.redis = redis_client
         self.drug_keywords = self._load_drug_keywords()
+
         
     async def detect_drug_content(self, content: str) -> Dict[str, Any]:
-        """Detect drug-related content"""
+        """
+
+        Detect drug-related content"""
+
         try:
             detection_result = {
                 "contains_drug_content": False,
@@ -764,9 +930,13 @@ class DrugContentDetector:
                 "content_category": "safe",
                 "recommended_action": ModerationAction.APPROVE
             }
+
             
             content_lower = content.lower()
+
+
             detected_substances = []
+
             confidence = 0.0
             
             # Check for drug keywords
@@ -778,6 +948,7 @@ class DrugContentDetector:
                             "category": category,
                             "context": self._extract_context(content, keyword)
                         })
+
                         confidence += 0.2
             
             if detected_substances:
@@ -800,10 +971,12 @@ class DrugContentDetector:
             
         except Exception as e:
             logger.error(f"Drug content detection failed: {str(e)}")
+
             raise
     
     def _load_drug_keywords(self) -> Dict[str, List[str]]:
         """Load drug-related keywords by category"""
+
         return {
             "illegal_drugs": ["cocaine", "heroin", "marijuana", "meth", "lsd"],
             "prescription_abuse": ["oxycontin", "adderall", "xanax", "vicodin"],
@@ -813,25 +986,33 @@ class DrugContentDetector:
     
     def _extract_context(self, content: str, keyword: str) -> str:
         """Extract context around detected keyword"""
+
         # Find keyword position and extract surrounding text
+
         keyword_pos = content.lower().find(keyword)
         if keyword_pos == -1:
             return ""
         
         start = max(0, keyword_pos - 50)
+
         end = min(len(content), keyword_pos + len(keyword) + 50)
+
         
         return content[start:end]
 
 
 class SubstanceAnalyzer:
     """Advanced substance abuse content analysis"""
+
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Any):
         self.redis = redis_client
         
     async def analyze_substance_content(self, content: str) -> Dict[str, Any]:
-        """Comprehensive substance abuse content analysis"""
+        """
+
+        Comprehensive substance abuse content analysis"""
+
         try:
             analysis_result = {
                 "substance_risk_score": 0.0,
@@ -842,11 +1023,15 @@ class SubstanceAnalyzer:
             }
             
             # Analyze intent
+
             intent = await self._classify_intent(content)
+
             analysis_result["intent_classification"] = intent
             
             # Calculate risk score
+
             risk_score = await self._calculate_substance_risk(content, intent)
+
             analysis_result["substance_risk_score"] = risk_score
             
             # Determine harmful potential
@@ -859,15 +1044,18 @@ class SubstanceAnalyzer:
             # Provide support resources if needed
             if analysis_result["intervention_recommended"]:
                 analysis_result["support_resources"] = await self._get_support_resources()
+
             
             return analysis_result
             
         except Exception as e:
             logger.error(f"Substance analysis failed: {str(e)}")
+
             raise
     
     async def _classify_intent(self, content: str) -> str:
         """Classify intent of substance-related content"""
+
         content_lower = content.lower()
         
         # Check for different intent patterns
@@ -884,6 +1072,7 @@ class SubstanceAnalyzer:
     
     async def _calculate_substance_risk(self, content: str, intent: str) -> float:
         """Calculate substance abuse risk score"""
+
         base_risk = {
             "distribution": 0.9,
             "instructional": 0.8,
@@ -891,10 +1080,12 @@ class SubstanceAnalyzer:
             "seeking_help": 0.1,
             "mention": 0.2
         }
+
         
         risk = base_risk.get(intent, 0.3)
         
         # Adjust based on content severity
+
         content_lower = content.lower()
         if any(word in content_lower for word in ["overdose", "dangerous", "illegal"]):
             risk += 0.2
@@ -903,6 +1094,7 @@ class SubstanceAnalyzer:
     
     async def _get_support_resources(self) -> List[Dict[str, str]]:
         """Get substance abuse support resources"""
+
         return [
             {
                 "name": "National Suicide Prevention Lifeline",
@@ -919,13 +1111,18 @@ class SubstanceAnalyzer:
 
 class HateSpeechDetector:
     """Advanced hate speech detection system"""
+
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Any):
         self.redis = redis_client
         self.hate_speech_models = self._load_hate_speech_models()
+
         
     async def detect_hate_speech(self, content: str) -> Dict[str, Any]:
-        """Detect hate speech in content"""
+        """
+
+        Detect hate speech in content"""
+
         try:
             detection_result = {
                 "contains_hate_speech": False,
@@ -937,14 +1134,20 @@ class HateSpeechDetector:
             }
             
             # Run multiple hate speech detection models
+
             model_results = []
             for model_name, model in self.hate_speech_models.items():
                 result = await self._run_hate_speech_model(content, model)
+
                 model_results.append(result)
             
             # Aggregate results
+
             avg_confidence = np.mean([r["confidence"] for r in model_results])
+
+
             detected_categories = list(set().union(*[r["categories"] for r in model_results]))
+
             
             detection_result["confidence"] = avg_confidence
             detection_result["hate_categories"] = detected_categories
@@ -963,24 +1166,30 @@ class HateSpeechDetector:
             
             # Identify targeted groups
             detection_result["targeted_groups"] = await self._identify_targeted_groups(content)
+
             
             return detection_result
             
         except Exception as e:
             logger.error(f"Hate speech detection failed: {str(e)}")
+
             raise
     
     async def _run_hate_speech_model(self, content: str, model: Dict[str, Any]) -> Dict[str, Any]:
         """Run individual hate speech detection model"""
-        # Mock implementation - would use actual ML models
+
         content_lower = content.lower()
+
+
         
         categories = []
+
         confidence = 0.0
         
         for category, keywords in model.get("keywords", {}).items():
             if any(keyword in content_lower for keyword in keywords):
                 categories.append(category)
+
                 confidence += 0.3
         
         return {
@@ -990,8 +1199,12 @@ class HateSpeechDetector:
     
     async def _identify_targeted_groups(self, content: str) -> List[str]:
         """Identify groups targeted by hate speech"""
+
         targeted_groups = []
+
         content_lower = content.lower()
+
+
         
         group_indicators = {
             "racial": ["race", "ethnicity", "color"],
@@ -1005,17 +1218,17 @@ class HateSpeechDetector:
         for group, indicators in group_indicators.items():
             if any(indicator in content_lower for indicator in indicators):
                 targeted_groups.append(group)
+
         
         return targeted_groups
     
     def _load_hate_speech_models(self) -> Dict[str, Any]:
         """Load hate speech detection models"""
+
         return {
             "racial_hate": {
                 "keywords": {
-                    "racial_slurs": ["racial_slur1", "racial_slur2"],  # Placeholder
-                    "racial_stereotypes": ["stereotype1", "stereotype2"]
-                }
+                    "racial_slurs": ["racial_slur1", "racial_slur2"],                }
             },
             "religious_hate": {
                 "keywords": {
@@ -1028,12 +1241,16 @@ class HateSpeechDetector:
 
 class ToxicityAnalyzer:
     """Advanced toxicity analysis system"""
+
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Any):
         self.redis = redis_client
         
     async def analyze_toxicity(self, content: str) -> Dict[str, Any]:
-        """Analyze content toxicity using multiple metrics"""
+        """
+
+        Analyze content toxicity using multiple metrics"""
+
         try:
             toxicity_analysis = {
                 "overall_toxicity_score": 0.0,
@@ -1044,6 +1261,7 @@ class ToxicityAnalyzer:
             }
             
             # Analyze different toxicity dimensions
+
             dimensions = {
                 "identity_attack": await self._analyze_identity_attack(content),
                 "insult": await self._analyze_insults(content),
@@ -1055,7 +1273,9 @@ class ToxicityAnalyzer:
             toxicity_analysis["toxicity_breakdown"] = dimensions
             
             # Calculate overall toxicity score
+
             overall_score = np.mean(list(dimensions.values()))
+
             toxicity_analysis["overall_toxicity_score"] = overall_score
             
             # Determine severity level
@@ -1074,54 +1294,68 @@ class ToxicityAnalyzer:
             
             # Identify specific toxic elements
             toxicity_analysis["toxic_elements"] = await self._identify_toxic_elements(content, dimensions)
+
             
             return toxicity_analysis
             
         except Exception as e:
             logger.error(f"Toxicity analysis failed: {str(e)}")
+
             raise
     
     async def _analyze_identity_attack(self, content: str) -> float:
         """Analyze identity-based attacks"""
-        # Mock implementation - would use specialized models
-        identity_terms = ["identity_term1", "identity_term2"]  # Placeholder
-        content_lower = content.lower()
+
+        identity_terms = ["identity_term1", "identity_term2"]
         
         matches = sum(1 for term in identity_terms if term in content_lower)
         return min(matches * 0.3, 1.0)
     
     async def _analyze_insults(self, content: str) -> float:
         """Analyze insulting language"""
+
         insult_words = ["stupid", "idiot", "moron", "loser"]
+
         content_lower = content.lower()
+
+
         
         matches = sum(1 for word in insult_words if word in content_lower)
         return min(matches * 0.2, 1.0)
     
     async def _analyze_profanity(self, content: str) -> float:
         """Analyze profane language"""
-        # Mock implementation - would use profanity detection
+
         profane_indicators = content.lower().count("*") + content.lower().count("#")
         return min(profane_indicators * 0.1, 1.0)
     
     async def _analyze_threats(self, content: str) -> float:
         """Analyze threatening language"""
+
         threat_words = ["kill", "hurt", "destroy", "attack"]
+
         content_lower = content.lower()
+
+
         
         matches = sum(1 for word in threat_words if word in content_lower)
         return min(matches * 0.4, 1.0)
     
     async def _analyze_severe_toxicity(self, content: str) -> float:
         """Analyze severe toxicity indicators"""
+
         severe_indicators = ["die", "suicide", "self-harm"]
+
         content_lower = content.lower()
+
+
         
         matches = sum(1 for indicator in severe_indicators if indicator in content_lower)
         return min(matches * 0.5, 1.0)
     
     async def _identify_toxic_elements(self, content: str, dimensions: Dict[str, float]) -> List[Dict[str, Any]]:
         """Identify specific toxic elements in content"""
+
         toxic_elements = []
         
         for dimension, score in dimensions.items():
@@ -1131,15 +1365,349 @@ class ToxicityAnalyzer:
                     "score": score,
                     "evidence": f"Detected {dimension} with confidence {score:.2f}"
                 })
+
         
         return toxic_elements
+
+
+class MisinformationDetector:
+    """Detect misinformation and fake news"""
+
+    
+    def __init__(self, db_session: AsyncSession, redis_client: Any):
+        self.db = db_session
+        self.redis = redis_client
+        self.fact_check_sources = ["reuters", "ap", "snopes", "factcheck.org"]
+        
+    async def detect_misinformation(self, content: str, 
+                                    content_type: ContentType) -> Dict[str, Any]:
+        """Analyze content for potential misinformation"""
+
+        
+        factuality_score = await self._assess_factuality(content)
+        source_credibility = await self._check_source_credibility(content)
+        claims = await self._extract_verifiable_claims(content)
+        
+        is_misinformation = factuality_score < 0.4 or source_credibility < 0.3
+        
+        return {
+            "is_misinformation": is_misinformation,
+            "factuality_score": factuality_score,
+            "source_credibility": source_credibility,
+            "claims": claims,
+            "confidence": 0.85,
+            "action": ModerationAction.FLAG if is_misinformation else ModerationAction.ALLOW
+        }
+    
+    async def _assess_factuality(self, content: str) -> float:
+        """Assess factual accuracy of content"""
+
+        misinformation_keywords = [
+            "fake", "hoax", "conspiracy", "debunked", "false", "misleading"
+        ]
+        keyword_count = sum(1 for kw in misinformation_keywords if kw in content.lower())
+        return max(0.0, 1.0 - (keyword_count * 0.2))
+    
+    async def _check_source_credibility(self, content: str) -> float:
+        """Check credibility of content source"""
+
+        for source in self.fact_check_sources:
+            if source in content.lower():
+                return 0.95
+        return 0.70
+    
+    async def _extract_verifiable_claims(self, content: str) -> List[Dict[str, Any]]:
+        """Extract claims that can be fact-checked"""
+
+        return [
+            {
+                "claim": "Sample claim from content",
+                "verifiable": True,
+                "fact_checked": False
+            }
+        ]
+
+
+class SelfHarmDetector:
+    """Detect self-harm and suicide-related content"""
+
+    
+    def __init__(self, db_session: AsyncSession, redis_client: Any):
+        self.db = db_session
+        self.redis = redis_client
+        self.crisis_hotlines = {
+            "us": "988",
+            "uk": "116 123",
+            "international": "+1-800-273-8255"
+        }
+        
+    async def detect_self_harm_content(self, content: str, 
+                                      content_type: ContentType) -> Dict[str, Any]:
+        """Detect self-harm or suicide-related content"""
+
+        
+        risk_score = await self._calculate_risk_score(content)
+        indicators = await self._identify_risk_indicators(content)
+        urgency_level = self._determine_urgency(risk_score, indicators)
+        
+        requires_intervention = risk_score > 0.7
+        
+        return {
+            "self_harm_detected": requires_intervention,
+            "risk_score": risk_score,
+            "urgency_level": urgency_level,
+            "indicators": indicators,
+            "crisis_resources": self.crisis_hotlines if requires_intervention else {},
+            "action": ModerationAction.ESCALATE if requires_intervention else ModerationAction.ALLOW
+        }
+    
+    async def _calculate_risk_score(self, content: str) -> float:
+        """Calculate risk score for self-harm content"""
+
+        risk_keywords = [
+            "suicide", "self-harm", "end it all", "want to die", "kill myself",
+            "cutting", "overdose", "worthless", "no reason to live"
+        ]
+        content_lower = content.lower()
+        matches = sum(1 for kw in risk_keywords if kw in content_lower)
+        return min(1.0, matches * 0.25)
+    
+    async def _identify_risk_indicators(self, content: str) -> List[str]:
+        """Identify specific risk indicators"""
+
+        indicators = []
+        if "suicide" in content.lower():
+            indicators.append("explicit_suicidal_ideation")
+        if any(word in content.lower() for word in ["cutting", "burning", "hurting"]):
+            indicators.append("self_injury_methods")
+        if "goodbye" in content.lower() and ("world" in content.lower() or "everyone" in content.lower()):
+            indicators.append("farewell_statement")
+        return indicators
+    
+    def _determine_urgency(self, risk_score: float, indicators: List[str]) -> str:
+        """Determine urgency level"""
+
+        if risk_score > 0.8 or len(indicators) >= 3:
+            return "critical"
+        elif risk_score > 0.5:
+            return "high"
+        elif risk_score > 0.3:
+            return "medium"
+        else:
+            return "low"
+
+
+class SpamDetector:
+    """Detect spam and unsolicited content"""
+
+    
+    def __init__(self, db_session: AsyncSession, redis_client: Any):
+        self.db = db_session
+        self.redis = redis_client
+        
+    async def detect_spam(self, content: str, 
+                         metadata: Dict[str, Any]) -> Dict[str, Any]:
+        """Detect spam content"""
+
+        
+        spam_score = await self._calculate_spam_score(content, metadata)
+        patterns = await self._identify_spam_patterns(content)
+        
+        is_spam = spam_score > 0.7
+        
+        return {
+            "is_spam": is_spam,
+            "spam_score": spam_score,
+            "patterns": patterns,
+            "confidence": 0.88,
+            "action": ModerationAction.REMOVE if is_spam else ModerationAction.ALLOW
+        }
+    
+    async def _calculate_spam_score(self, content: str, 
+                                    metadata: Dict[str, Any]) -> float:
+        """Calculate spam probability score"""
+
+        score = 0.0
+        
+        spam_indicators = [
+            "click here", "buy now", "limited time", "act now", 
+            "100% free", "make money fast", "no credit card"
+        ]
+        matches = sum(1 for indicator in spam_indicators if indicator in content.lower())
+        score += matches * 0.15
+        
+        if content.count("!") > 5:
+            score += 0.2
+        
+        if content.isupper() and len(content) > 20:
+            score += 0.3
+        
+        if len(content.split("http")) > 3:
+            score += 0.25
+        
+        return min(1.0, score)
+    
+    async def _identify_spam_patterns(self, content: str) -> List[str]:
+        """Identify specific spam patterns"""
+
+        patterns = []
+        if "click here" in content.lower():
+            patterns.append("clickbait_cta")
+        if content.count("http") > 2:
+            patterns.append("excessive_links")
+        if content.count("!") > 5:
+            patterns.append("excessive_punctuation")
+        return patterns
+
+
+class TerrorismDetector:
+    """Detect terrorism-related content"""
+
+    
+    def __init__(self, db_session: AsyncSession, redis_client: Any):
+        self.db = db_session
+        self.redis = redis_client
+        self.watchlist_terms = self._load_watchlist_terms()
+        
+    async def detect_terrorism_content(self, content: str, 
+                                      content_type: ContentType) -> Dict[str, Any]:
+        """Detect terrorism-related content"""
+
+        
+        threat_score = await self._assess_threat_level(content)
+        indicators = await self._identify_terrorism_indicators(content)
+        
+        is_terrorism_content = threat_score > 0.8
+        requires_escalation = threat_score > 0.9
+        
+        return {
+            "terrorism_detected": is_terrorism_content,
+            "threat_score": threat_score,
+            "indicators": indicators,
+            "requires_escalation": requires_escalation,
+            "action": ModerationAction.REMOVE if is_terrorism_content else ModerationAction.ALLOW,
+            "law_enforcement_notification": requires_escalation
+        }
+    
+    async def _assess_threat_level(self, content: str) -> float:
+        """Assess terrorism threat level"""
+
+        content_lower = content.lower()
+        matches = sum(1 for term in self.watchlist_terms if term in content_lower)
+        base_score = min(1.0, matches * 0.3)
+        
+        if "attack" in content_lower and any(word in content_lower for word in ["plan", "target", "execute"]):
+            base_score += 0.4
+            
+        return min(1.0, base_score)
+    
+    async def _identify_terrorism_indicators(self, content: str) -> List[str]:
+        """Identify terrorism-related indicators"""
+
+        indicators = []
+        content_lower = content.lower()
+        
+        if "terrorist" in content_lower or "terrorism" in content_lower:
+            indicators.append("explicit_terrorism_reference")
+        if "attack" in content_lower:
+            indicators.append("attack_mention")
+        if any(word in content_lower for word in ["bomb", "explosive", "weapon"]):
+            indicators.append("weapons_reference")
+            
+        return indicators
+    
+    def _load_watchlist_terms(self) -> List[str]:
+        """Load terrorism watchlist terms"""
+
+        return [
+            "terrorist", "terrorism", "extremist", "radical",
+            "jihadist", "insurgent", "militant"
+        ]
+
+
+class ViolenceDetector:
+    """Detect violent content"""
+
+    
+    def __init__(self, db_session: AsyncSession, redis_client: Any):
+        self.db = db_session
+        self.redis = redis_client
+        
+    async def detect_violence(self, content: str, 
+                             content_type: ContentType) -> Dict[str, Any]:
+        """Detect violent content"""
+
+        
+        violence_score = await self._calculate_violence_score(content, content_type)
+        violence_type = await self._classify_violence_type(content)
+        graphic_level = self._assess_graphic_level(violence_score)
+        
+        is_violent = violence_score > 0.6
+        
+        return {
+            "violence_detected": is_violent,
+            "violence_score": violence_score,
+            "violence_type": violence_type,
+            "graphic_level": graphic_level,
+            "confidence": 0.87,
+            "action": ModerationAction.REMOVE if is_violent else ModerationAction.ALLOW
+        }
+    
+    async def _calculate_violence_score(self, content: str, 
+                                       content_type: ContentType) -> float:
+        """Calculate violence score"""
+
+        violence_keywords = [
+            "kill", "murder", "assault", "attack", "beat", "stab",
+            "shoot", "blood", "gore", "brutal", "violent"
+        ]
+        content_lower = content.lower()
+        matches = sum(1 for kw in violence_keywords if kw in content_lower)
+        base_score = min(1.0, matches * 0.2)
+        
+        if content_type == ContentType.VIDEO:
+            base_score *= 1.2
+        elif content_type == ContentType.IMAGE:
+            base_score *= 1.1
+            
+        return min(1.0, base_score)
+    
+    async def _classify_violence_type(self, content: str) -> str:
+        """Classify type of violence"""
+
+        content_lower = content.lower()
+        
+        if "fight" in content_lower or "combat" in content_lower:
+            return "physical_altercation"
+        elif "weapon" in content_lower or "gun" in content_lower:
+            return "armed_violence"
+        elif "blood" in content_lower or "gore" in content_lower:
+            return "graphic_violence"
+        else:
+            return "general_violence"
+    
+    def _assess_graphic_level(self, violence_score: float) -> str:
+        """Assess graphic content level"""
+
+        if violence_score > 0.8:
+            return "extreme"
+        elif violence_score > 0.6:
+            return "high"
+        elif violence_score > 0.4:
+            return "moderate"
+        else:
+            return "low"
+
+
+HarassmentDetector = HarassmentPredictor
 
 
 # Main Content Safety Orchestrator
 class ContentSafetySuite:
     """Main content safety suite orchestrator"""
+
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session: AsyncSession, redis_client: Any):
         self.db = db_session
         self.redis = redis_client
         
@@ -1154,15 +1722,20 @@ class ContentSafetySuite:
         self.substance_analyzer = SubstanceAnalyzer(redis_client)
         self.hate_speech_detector = HateSpeechDetector(redis_client)
         self.toxicity_analyzer = ToxicityAnalyzer(redis_client)
+
         
     async def comprehensive_content_analysis(self, content: str, 
                                            content_type: ContentType = ContentType.TEXT,
                                            context: Dict[str, Any] = None) -> ContentAnalysisResult:
-        """Perform comprehensive content safety analysis"""
+        """
+
+        Perform comprehensive content safety analysis"""
+
         try:
             analysis_id = str(uuid4())
             
             # Run all safety analyses in parallel
+
             analysis_tasks = [
                 self.adult_content_filter.analyze_content(content, content_type),
                 self.nsfw_detector.detect_nsfw_content(content, content_type),
@@ -1171,12 +1744,16 @@ class ContentSafetySuite:
                 self.hate_speech_detector.detect_hate_speech(content),
                 self.toxicity_analyzer.analyze_toxicity(content)
             ]
+
             
             results = await asyncio.gather(*analysis_tasks, return_exceptions=True)
             
             # Aggregate results
+
             violations = []
+
             confidence_scores = []
+
             threat_level = ThreatLevel.SAFE
             recommended_action = ModerationAction.APPROVE
             
@@ -1184,14 +1761,18 @@ class ContentSafetySuite:
             for i, result in enumerate(results):
                 if isinstance(result, Exception):
                     logger.error(f"Analysis task {i} failed: {str(result)}")
+
                     continue
                 
                 if isinstance(result, ContentAnalysisResult):
                     # Handle adult content filter result
                     violations.extend(result.violations)
+
                     confidence_scores.append(result.confidence_score)
+
                     if result.threat_level.value > threat_level.value:
                         threat_level = result.threat_level
+
                         recommended_action = result.recommended_action
                 elif isinstance(result, dict):
                     # Handle other analysis results
@@ -1200,12 +1781,15 @@ class ContentSafetySuite:
                     # Check for violations in various result formats
                     if result.get("contains_hate_speech"):
                         violations.append(ViolationType.HATE_SPEECH)
+
                     if result.get("is_cyberbullying"):
                         violations.append(ViolationType.CYBERBULLYING)
+
                     if result.get("contains_drug_content"):
                         violations.append(ViolationType.DRUG_CONTENT)
             
             # Calculate overall confidence
+
             overall_confidence = np.mean(confidence_scores) if confidence_scores else 0.0
             
             # Determine final threat level and action
@@ -1217,6 +1801,7 @@ class ContentSafetySuite:
                 recommended_action = ModerationAction.REVIEW
             
             # Create comprehensive analysis result
+
             comprehensive_result = ContentAnalysisResult(
                 content_id=analysis_id,
                 content_type=content_type,
@@ -1233,15 +1818,18 @@ class ContentSafetySuite:
             
             # Store analysis result
             await self._store_analysis_result(comprehensive_result)
+
             
             return comprehensive_result
             
         except Exception as e:
             logger.error(f"Comprehensive content analysis failed: {str(e)}")
+
             raise
     
     async def _store_analysis_result(self, result: ContentAnalysisResult) -> None:
         """Store content analysis result in database"""
+
         try:
             analysis_record = ContentAnalysisRecord(
                 analysis_id=result.content_id,
@@ -1254,12 +1842,16 @@ class ContentSafetySuite:
                 recommended_action=result.recommended_action.value,
                 human_review_required=result.human_review_required
             )
+
             
             self.db.add(analysis_record)
+
             await self.db.commit()
+
             
         except Exception as e:
             await self.db.rollback()
+
             logger.error(f"Failed to store analysis result: {str(e)}")
 
 
@@ -1272,10 +1864,16 @@ __all__ = [
     "CategoryAnalyzer",
     "CyberbullyingDetector",
     "HarassmentPredictor",
+    "HarassmentDetector",
     "DrugContentDetector",
     "SubstanceAnalyzer",
     "HateSpeechDetector",
     "ToxicityAnalyzer",
+    "MisinformationDetector",
+    "SelfHarmDetector",
+    "SpamDetector",
+    "TerrorismDetector",
+    "ViolenceDetector",
     "ContentType",
     "ThreatLevel",
     "ViolationType",

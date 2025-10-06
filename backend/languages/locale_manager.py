@@ -32,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 
 class LocaleCategory(Enum):
-    """Locale category types"""
+    """
+        Locale category types"""
     NUMERIC = "numeric"
     MONETARY = "monetary"
     TIME = "time"
@@ -143,7 +144,8 @@ class LocaleManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize locale manager"""
+        """
+        Initialize locale manager"""
         self.config = config or {}
         self.locales = self._load_locale_definitions()
         self.format_patterns = self._load_format_patterns()
@@ -175,33 +177,46 @@ class LocaleManager:
             start_time = datetime.now(timezone.utc)
             
             # Validate locale
+
             locale_info = await self.get_locale_info(request.target_locale)
+
             if not locale_info:
                 logger.warning(f"Locale {request.target_locale} not found, using fallback")
+
+
                 locale_info = await self.get_locale_info(request.fallback_locale)
+
                 if not locale_info:
                     raise ValueError(f"Fallback locale {request.fallback_locale} not available")
             
             # Check cache
+
             cache_key = self._generate_cache_key(request)
+
             if cache_key in self.cache:
                 cached_result = self.cache[cache_key]
                 self.processing_stats["cache_hits"] += 1
                 logger.debug(f"Cache hit for locale formatting")
+
                 return cached_result
             
             # Determine format type
+
             format_type = request.format_type
             if format_type == "auto":
                 format_type = await self._detect_content_type(request.content)
             
             # Apply formatting
+
             formatted_content = await self._apply_locale_formatting(
                 request.content, locale_info, format_type
             )
             
             # Create result
+
             processing_time = (datetime.now(timezone.utc) - start_time).total_seconds()
+
+
             
             result = LocaleResult(
                 formatted_content=formatted_content,
@@ -222,12 +237,15 @@ class LocaleManager:
             
             # Update statistics
             await self._update_processing_stats(result)
+
             
             logger.info(f"Locale formatting completed: {request.target_locale} ({format_type})")
+
             return result
             
         except Exception as e:
             logger.error(f"Locale formatting failed: {e}")
+
             return await self._create_fallback_result(request)
     
     async def get_locale_info(self, locale_code: str) -> Optional[LocaleInfo]:
@@ -236,11 +254,13 @@ class LocaleManager:
         
         Args:
             locale_code: Locale identifier (e.g., 'en-US', 'ar-SA')
+
             
         Returns:
             LocaleInfo object or None if not found
         """
         # Normalize locale code
+
         normalized_code = self._normalize_locale_code(locale_code)
         
         # Direct lookup
@@ -248,6 +268,7 @@ class LocaleManager:
             return self.locales[normalized_code]
         
         # Fallback to language only (e.g., 'en' from 'en-US')
+
         language_code = normalized_code.split('-')[0]
         for locale_key, locale_info in self.locales.items():
             if locale_info.language_code == language_code:
@@ -277,6 +298,7 @@ class LocaleManager:
                 "is_rtl": locale_info.is_rtl,
                 "quality_score": locale_info.quality_score
             })
+
         
         return sorted(locales_list, key=lambda x: x["display_name"])
     
@@ -296,13 +318,17 @@ class LocaleManager:
         locale_info = await self.get_locale_info(locale_code)
         if not locale_info:
             locale_info = await self.get_locale_info("en-US")
+
+
         
         format_patterns = self.format_patterns.get(locale_code, {}).get("date", {})
+
         
         if format_style.value in format_patterns:
             pattern = format_patterns[format_style.value]
         else:
             # Use default pattern from locale info
+
             pattern = locale_info.date_format
         
         try:
@@ -327,8 +353,11 @@ class LocaleManager:
         locale_info = await self.get_locale_info(locale_code)
         if not locale_info:
             locale_info = await self.get_locale_info("en-US")
+
+
         
         format_patterns = self.format_patterns.get(locale_code, {}).get("time", {})
+
         
         if format_style.value in format_patterns:
             pattern = format_patterns[format_style.value]
@@ -356,21 +385,28 @@ class LocaleManager:
         locale_info = await self.get_locale_info(locale_code)
         if not locale_info:
             locale_info = await self.get_locale_info("en-US")
+
         
         try:
             if format_style == NumberFormat.DECIMAL:
                 return self._format_decimal(number, locale_info)
+
             elif format_style == NumberFormat.CURRENCY:
                 return self._format_currency(number, locale_info)
+
             elif format_style == NumberFormat.PERCENT:
                 return self._format_percent(number, locale_info)
+
             elif format_style == NumberFormat.SCIENTIFIC:
                 return self._format_scientific(number, locale_info)
+
             else:
                 return str(number)
+
                 
         except Exception as e:
             logger.error(f"Number formatting failed: {e}")
+
             return str(number)
     
     async def format_currency(self, amount: Union[int, float, Decimal], 
@@ -381,6 +417,7 @@ class LocaleManager:
         Args:
             amount: Currency amount
             currency_code: Currency code (e.g., 'USD', 'EUR')
+
             locale_code: Target locale
             
         Returns:
@@ -389,11 +426,15 @@ class LocaleManager:
         locale_info = await self.get_locale_info(locale_code)
         if not locale_info:
             locale_info = await self.get_locale_info("en-US")
+
+
         
         currency_info = self.currency_data.get(currency_code, {})
+
         currency_symbol = currency_info.get("symbol", currency_code)
         
         # Format the number part
+
         formatted_number = self._format_decimal(amount, locale_info)
         
         # Apply currency symbol positioning
@@ -413,11 +454,13 @@ class LocaleManager:
             Most likely locale code or None
         """
         # Analyze content for locale indicators
+
         locale_scores = {}
         
         # Check for currency symbols
         for currency_code, currency_info in self.currency_data.items():
             symbol = currency_info.get("symbol", "")
+
             if symbol and symbol in content:
                 # Find locales that use this currency
                 for locale_code, locale_info in self.locales.items():
@@ -427,18 +470,23 @@ class LocaleManager:
         # Check for date/time patterns
         for locale_code, patterns in self.format_patterns.items():
             date_patterns = patterns.get("date", {})
+
             for pattern_name, pattern in date_patterns.items():
                 # Convert strftime pattern to regex for matching
+
                 regex_pattern = self._strftime_to_regex(pattern)
+
                 if regex_pattern and re.search(regex_pattern, content):
                     locale_scores[locale_code] = locale_scores.get(locale_code, 0) + 1
         
         # Check for number formatting
         for locale_code, locale_info in self.locales.items():
             decimal_sep = locale_info.number_decimal_separator
+
             thousand_sep = locale_info.number_thousand_separator
             
             # Look for numbers with locale-specific formatting
+
             number_pattern = f"\\d{{1,3}}(?:{re.escape(thousand_sep)}\\d{{3}})*{re.escape(decimal_sep)}\\d+"
             if re.search(number_pattern, content):
                 locale_scores[locale_code] = locale_scores.get(locale_code, 0) + 1
@@ -463,12 +511,17 @@ class LocaleManager:
         recommendations = []
         
         # Extract preference indicators
+
         preferred_language = user_preferences.get("language")
+
         preferred_country = user_preferences.get("country")
+
         preferred_currency = user_preferences.get("currency")
+
         preferred_timezone = user_preferences.get("timezone")
         
         # Score locales based on preferences
+
         locale_scores = {}
         
         for locale_code, locale_info in self.locales.items():
@@ -493,7 +546,9 @@ class LocaleManager:
                 locale_scores[locale_code] = score
         
         # Sort by score and return top recommendations
+
         sorted_locales = sorted(locale_scores.items(), key=lambda x: x[1], reverse=True)
+
         recommendations = [locale_code for locale_code, score in sorted_locales[:10]]
         
         return recommendations
@@ -503,21 +558,30 @@ class LocaleManager:
         """Apply locale-specific formatting to content"""
         if format_type == "date" and isinstance(content, datetime):
             return await self.format_date(content, locale_info.locale_code)
+
         
         elif format_type == "time" and isinstance(content, datetime):
             return await self.format_time(content, locale_info.locale_code)
+
         
         elif format_type == "number" and isinstance(content, (int, float, Decimal)):
             return await self.format_number(content, locale_info.locale_code)
+
         
         elif format_type == "currency" and isinstance(content, dict):
             amount = content.get("amount", 0)
+
+
             currency = content.get("currency", locale_info.currency_code)
+
             return await self.format_currency(amount, currency, locale_info.locale_code)
+
         
         elif format_type == "text" and isinstance(content, str):
             # Apply text-specific locale formatting (e.g., case conversion)
+
             return self._format_text(content, locale_info)
+
         
         else:
             # Return content as-is if no specific formatting applies
@@ -551,10 +615,12 @@ class LocaleManager:
             integer_part, decimal_part = num_str, ""
         
         # Add thousand separators
+
         formatted_integer = ""
         for i, digit in enumerate(reversed(integer_part)):
             if i > 0 and i % 3 == 0:
                 formatted_integer = locale_info.number_thousand_separator + formatted_integer
+
             formatted_integer = digit + formatted_integer
         
         # Combine with decimal part
@@ -566,6 +632,7 @@ class LocaleManager:
     def _format_currency(self, amount: Union[int, float, Decimal], locale_info: LocaleInfo) -> str:
         """Format currency amount"""
         formatted_number = self._format_decimal(amount, locale_info)
+
         
         if locale_info.currency_position == "before":
             return f"{locale_info.currency_symbol}{formatted_number}"
@@ -575,6 +642,7 @@ class LocaleManager:
     def _format_percent(self, number: Union[int, float, Decimal], locale_info: LocaleInfo) -> str:
         """Format percentage"""
         percent_value = float(number) * 100
+
         formatted_number = self._format_decimal(percent_value, locale_info)
         return f"{formatted_number}%"
     
@@ -596,6 +664,7 @@ class LocaleManager:
     def _normalize_locale_code(self, locale_code: str) -> str:
         """Normalize locale code to standard format"""
         # Convert to lowercase and standardize format
+
         normalized = locale_code.lower().replace('_', '-')
         
         # Handle common variations
@@ -605,6 +674,7 @@ class LocaleManager:
         elif len(normalized) == 5 and '-' in normalized:
             # Language-Country format
             lang, country = normalized.split('-')
+
             return f"{lang}-{country.upper()}"
         
         return normalized
@@ -612,7 +682,9 @@ class LocaleManager:
     def _strftime_to_regex(self, strftime_pattern: str) -> Optional[str]:
         """Convert strftime pattern to regex for content matching"""
         # Simplified conversion - in production would be more comprehensive
+
         regex_pattern = strftime_pattern
+
         
         replacements = {
             '%Y': r'\d{4}',
@@ -626,12 +698,15 @@ class LocaleManager:
         
         for pattern, replacement in replacements.items():
             regex_pattern = regex_pattern.replace(pattern, replacement)
+
         
         return regex_pattern
     
     def _generate_cache_key(self, request: LocaleRequest) -> str:
-        """Generate cache key for locale request"""
+        """
+        Generate cache key for locale request"""
         content_str = str(request.content)[:100]  # Limit content size for key
+
         key_parts = [
             content_str,
             request.target_locale,
@@ -643,17 +718,21 @@ class LocaleManager:
         return hashlib.md5('|'.join(key_parts).encode()).hexdigest()
     
     async def _update_processing_stats(self, result: LocaleResult):
-        """Update processing statistics"""
+        """
+        Update processing statistics"""
         self.processing_stats["total_requests"] += 1
         
         # Update locale usage
+
         locale_used = result.locale_used
         self.processing_stats["locale_usage"][locale_used] = (
             self.processing_stats["locale_usage"].get(locale_used, 0) + 1
         )
         
         # Update average processing time
+
         total = self.processing_stats["total_requests"]
+
         current_avg = self.processing_stats["average_processing_time"]
         self.processing_stats["average_processing_time"] = (
             (current_avg * (total - 1) + result.processing_time) / total
@@ -674,6 +753,7 @@ class LocaleManager:
         """Load comprehensive locale definitions"""
         # This would load from a comprehensive locale database
         # For now, returning key locales
+
         locales = {}
         
         # Major Western locales
@@ -686,6 +766,7 @@ class LocaleManager:
             currency_symbol="$", currency_position="before",
             first_day_of_week=0, measurement_system="imperial", paper_size="Letter"
         )
+
         
         locales["en-GB"] = LocaleInfo(
             locale_code="en-GB", language_code="en", country_code="GB",
@@ -707,6 +788,7 @@ class LocaleManager:
             currency_symbol="€", currency_position="after",
             first_day_of_week=1, measurement_system="metric", paper_size="A4"
         )
+
         
         locales["de-DE"] = LocaleInfo(
             locale_code="de-DE", language_code="de", country_code="DE",
@@ -729,6 +811,7 @@ class LocaleManager:
             text_direction="rtl", layout_direction="rtl", is_rtl=True,
             first_day_of_week=0, measurement_system="metric", paper_size="A4"
         )
+
         
         locales["he-IL"] = LocaleInfo(
             locale_code="he-IL", language_code="he", country_code="IL",
@@ -751,6 +834,7 @@ class LocaleManager:
             currency_symbol="¥", currency_position="before",
             first_day_of_week=0, measurement_system="metric", paper_size="A4"
         )
+
         
         locales["zh-CN"] = LocaleInfo(
             locale_code="zh-CN", language_code="zh", country_code="CN",
@@ -761,6 +845,7 @@ class LocaleManager:
             currency_symbol="¥", currency_position="before",
             first_day_of_week=1, measurement_system="metric", paper_size="A4"
         )
+
         
         return locales
     

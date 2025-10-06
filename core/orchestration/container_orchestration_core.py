@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class ContainerOrchestrationCore:
-    """Advanced ContainerOrchestrationCore System"""
+    """
+Advanced ContainerOrchestrationCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class ContainerOrchestrationCore:
 # Module exports
 __all__ = ["ContainerOrchestrationCore"]
 
-logger.info("📦 ContainerOrchestrationCore module loaded")
+logger.info("📦 ContainerOrchestrationCore module initialized")

@@ -24,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 # Individual platform collector classes (simplified implementations)
 class EcommerceCollector(BaseCollector):
-    """Ecommerce content collector."""
+    """
+        Ecommerce content collector."""
     def __init__(self, **kwargs):
         super().__init__("ecommerce", rate_limit=60)
     
@@ -66,14 +67,17 @@ class MarketplaceCollector(BaseCollector):
     """
     
     def __init__(self, platform_configs: Optional[Dict[str, Dict]] = None):
-        """Initialize with platform-specific configurations."""
+        """
+        Initialize with platform-specific configurations."""
         super().__init__("marketplace", rate_limit=120)
         
         # Initialize individual platform collectors
+
         configs = platform_configs or {}
         
         self.ecommerce = EcommerceCollector(**configs.get('ecommerce', {}))
         self.pinterest = PinterestCollector(**configs.get('pinterest', {}))
+
         
         self.collectors = {
             'ecommerce': self.ecommerce,
@@ -91,20 +95,25 @@ class MarketplaceCollector(BaseCollector):
             query: Search query
             config: Collection configuration
             platforms: List of platforms to search (default: all)
+
             
         Returns:
             List of collected marketplace content from all platforms
         """
         if platforms is None:
             platforms = list(self.collectors.keys())
+
+
         
         results = []
+
         tasks = []
         
         # Create search tasks for each platform
         for platform in platforms:
             if platform in self.collectors:
                 task = self.collectors[platform].search_content(query, config)
+
                 tasks.append((platform, task))
         
         # Execute searches concurrently
@@ -112,9 +121,12 @@ class MarketplaceCollector(BaseCollector):
             try:
                 platform_results = await task
                 results.extend(platform_results)
+
                 logger.info(f"Collected {len(platform_results)} marketplace results from {platform}")
+
             except Exception as e:
                 logger.error(f"Marketplace search failed for {platform}: {e}")
+
         
         return results
     
@@ -125,6 +137,7 @@ class MarketplaceCollector(BaseCollector):
         Args:
             content_id: ID of marketplace content to retrieve
             platform: Specific platform (auto-detect if None)
+
             
         Returns:
             Detailed marketplace content information
@@ -136,10 +149,12 @@ class MarketplaceCollector(BaseCollector):
         for platform_name, collector in self.collectors.items():
             try:
                 result = await collector.get_content_details(content_id)
+
                 if result:
                     return result
             except Exception as e:
                 logger.debug(f"Marketplace content not found on {platform_name}: {e}")
+
         
         return None
     
@@ -158,21 +173,28 @@ class MarketplaceCollector(BaseCollector):
         """
         if platforms is None:
             platforms = list(self.collectors.keys())
+
+
         
         results = []
+
         tasks = []
         
         for platform in platforms:
             if platform in self.collectors:
                 task = self.collectors[platform].get_user_content(user_id, config)
+
                 tasks.append((platform, task))
+
         
         for platform, task in tasks:
             try:
                 platform_results = await task
                 results.extend(platform_results)
+
             except Exception as e:
                 logger.error(f"User marketplace content collection failed for {platform}: {e}")
+
         
         return results
     
@@ -193,12 +215,15 @@ class MarketplaceCollector(BaseCollector):
             platforms = list(self.collectors.keys())
         
         # Create async generators for each platform
+
         generators = []
         for platform in platforms:
             if platform in self.collectors:
                 try:
                     gen = self.collectors[platform].monitor_hashtags(hashtags, config)
+
                     generators.append(gen)
+
                 except Exception as e:
                     logger.error(f"Marketplace hashtag monitoring failed for {platform}: {e}")
         
@@ -207,11 +232,14 @@ class MarketplaceCollector(BaseCollector):
             for i, gen in enumerate(generators[:]):
                 try:
                     result = await gen.__anext__()
+
                     yield result
                 except StopAsyncIteration:
                     generators.remove(gen)
+
                 except Exception as e:
                     logger.error(f"Marketplace hashtag monitoring error: {e}")
+
                     generators.remove(gen)
     
     async def get_trending_content(self, config: CollectionConfig,
@@ -228,21 +256,28 @@ class MarketplaceCollector(BaseCollector):
         """
         if platforms is None:
             platforms = list(self.collectors.keys())
+
+
         
         results = []
+
         tasks = []
         
         for platform in platforms:
             if platform in self.collectors:
                 task = self.collectors[platform].get_trending_content(config)
+
                 tasks.append((platform, task))
+
         
         for platform, task in tasks:
             try:
                 platform_results = await task
                 results.extend(platform_results)
+
             except Exception as e:
                 logger.error(f"Trending marketplace content collection failed for {platform}: {e}")
+
         
         return results
     
@@ -264,10 +299,13 @@ class MarketplaceCollector(BaseCollector):
             try:
                 for keyword in product_keywords:
                     # Search for products
+
                     products = await collector.search_content(keyword, config)
+
                     
                     for product in products:
                         # Extract pricing information
+
                         price_info = {
                             'platform': platform_name,
                             'product_id': product.content_id,
@@ -289,18 +327,23 @@ class MarketplaceCollector(BaseCollector):
                                 'shipping_cost': product.metadata.get('shipping_cost', 0),
                                 'discount': product.metadata.get('discount', 0)
                             })
+
                         elif platform_name == 'pinterest':
                             price_info.update({
                                 'pin_count': product.engagement_metrics.get('pins', 0) if product.engagement_metrics else 0,
                                 'board_category': product.metadata.get('board_category', 'unknown')
                             })
+
                         
                         price_data.append(price_info)
+
                 
                 logger.info(f"Tracked {len([p for p in price_data if p['platform'] == platform_name])} products on {platform_name}")
+
                 
             except Exception as e:
                 logger.error(f"Product price tracking failed for {platform_name}: {e}")
+
         
         return price_data
     
@@ -319,12 +362,14 @@ class MarketplaceCollector(BaseCollector):
         opportunities = []
         
         # Search for niche-related products and trends
+
         niche_keywords = [creator_niche, f"{creator_niche} creator", f"{creator_niche} influencer"]
         
         for platform_name, collector in self.collectors.items():
             try:
                 for keyword in niche_keywords:
                     content = await collector.search_content(keyword, config)
+
                     
                     for item in content:
                         opportunity = {
@@ -345,6 +390,7 @@ class MarketplaceCollector(BaseCollector):
                                 'product_category': item.metadata.get('category', 'unknown'),
                                 'seller_rating': item.metadata.get('seller_rating', 0)
                             })
+
                         elif platform_name == 'pinterest':
                             opportunity.update({
                                 'visual_appeal': item.metadata.get('visual_score', 0),
@@ -355,6 +401,7 @@ class MarketplaceCollector(BaseCollector):
                         # Only include relevant opportunities
                         if opportunity['niche_relevance'] > 0.3:
                             opportunities.append(opportunity)
+
                 
             except Exception as e:
                 logger.error(f"Creator opportunity search failed for {platform_name}: {e}")
@@ -364,6 +411,7 @@ class MarketplaceCollector(BaseCollector):
             key=lambda x: (x['niche_relevance'] + x['engagement_potential']) / 2, 
             reverse=True
         )
+
         
         return opportunities
     
@@ -391,7 +439,9 @@ class MarketplaceCollector(BaseCollector):
         for platform_name, collector in self.collectors.items():
             try:
                 # Search for category content
+
                 category_content = await collector.search_content(category, config)
+
                 
                 if category_content:
                     platform_trends = {
@@ -402,6 +452,7 @@ class MarketplaceCollector(BaseCollector):
                     }
                     
                     # Analyze keywords and visual elements
+
                     all_keywords = []
                     for content in category_content:
                         if content.hashtags:
@@ -416,6 +467,7 @@ class MarketplaceCollector(BaseCollector):
                         # Identify high-engagement content
                         if content.engagement_metrics:
                             engagement_score = content.engagement_metrics.get('total_engagement', 0)
+
                             if engagement_score > 1000:  # Threshold for high engagement
                                 platform_trends['engagement_leaders'].append({
                                     'title': content.title,
@@ -424,6 +476,7 @@ class MarketplaceCollector(BaseCollector):
                                 })
                     
                     # Find most popular keywords
+
                     keyword_counts = {}
                     for keyword in all_keywords:
                         keyword_counts[keyword] = keyword_counts.get(keyword, 0) + 1
@@ -438,6 +491,7 @@ class MarketplaceCollector(BaseCollector):
                 
             except Exception as e:
                 logger.error(f"Visual trends analysis failed for {platform_name}: {e}")
+
                 trends_data['platforms'][platform_name] = {'error': str(e)}
         
         return trends_data
@@ -445,6 +499,7 @@ class MarketplaceCollector(BaseCollector):
     def _calculate_niche_relevance(self, content: CollectorResult, niche: str) -> float:
         """Calculate how relevant content is to a specific niche."""
         relevance_score = 0.0
+
         niche_lower = niche.lower()
         
         # Check title relevance
@@ -459,25 +514,31 @@ class MarketplaceCollector(BaseCollector):
         if content.hashtags:
             matching_hashtags = [tag for tag in content.hashtags if niche_lower in tag.lower()]
             relevance_score += min(0.3, len(matching_hashtags) * 0.1)
+
         
         return min(1.0, relevance_score)
     
     def _calculate_engagement_potential(self, content: CollectorResult) -> float:
-        """Calculate engagement potential for marketplace content."""
+        """
+        Calculate engagement potential for marketplace content."""
         if not content.engagement_metrics:
             return 0.0
+
         
         total_engagement = content.engagement_metrics.get('total_engagement', 0)
+
         views = content.engagement_metrics.get('views', 1)
         
         # Simple engagement rate calculation
+
         engagement_rate = total_engagement / views if views > 0 else 0
         
         # Normalize to 0-1 scale
         return min(1.0, engagement_rate * 10)
     
     def get_platform_status(self) -> Dict[str, Any]:
-        """Get status of all marketplace platform collectors."""
+        """
+        Get status of all marketplace platform collectors."""
         status = {
             'unified_collector': {
                 'status': self.status.value,
@@ -489,5 +550,6 @@ class MarketplaceCollector(BaseCollector):
         
         for platform_name, collector in self.collectors.items():
             status['platforms'][platform_name] = collector.get_platform_info()
+
         
         return status

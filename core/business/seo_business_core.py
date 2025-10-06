@@ -23,7 +23,8 @@ from collections import defaultdict
 logger = logging.getLogger(__name__)
 
 class SEOStrategy(Enum):
-    """SEO optimization strategies"""
+    """
+SEO optimization strategies"""
     CONTENT_OPTIMIZATION = "content_optimization"
     KEYWORD_TARGETING = "keyword_targeting"
     TECHNICAL_SEO = "technical_seo"
@@ -34,7 +35,8 @@ class SEOStrategy(Enum):
     VOICE_SEARCH = "voice_search"
 
 class SearchIntent(Enum):
-    """User search intent types"""
+    """
+User search intent types"""
     INFORMATIONAL = "informational"
     NAVIGATIONAL = "navigational"
     TRANSACTIONAL = "transactional"
@@ -43,7 +45,8 @@ class SearchIntent(Enum):
     ENTERTAINMENT = "entertainment"
 
 class ContentType(Enum):
-    """Content types for SEO optimization"""
+    """
+Content types for SEO optimization"""
     ARTICLE = "article"
     VIDEO = "video"
     IMAGE = "image"
@@ -54,7 +57,8 @@ class ContentType(Enum):
     PRODUCT = "product"
 
 class SEOMetric(Enum):
-    """SEO performance metrics"""
+    """
+SEO performance metrics"""
     ORGANIC_TRAFFIC = "organic_traffic"
     KEYWORD_RANKINGS = "keyword_rankings"
     CLICK_THROUGH_RATE = "click_through_rate"
@@ -66,7 +70,8 @@ class SEOMetric(Enum):
 
 @dataclass
 class KeywordResearch:
-    """Keyword research and analysis"""
+    """
+Keyword research and analysis"""
     keyword_id: str
     keyword: str
     search_volume: int
@@ -84,7 +89,8 @@ class KeywordResearch:
 
 @dataclass
 class ContentOptimization:
-    """Content SEO optimization analysis"""
+    """
+Content SEO optimization analysis"""
     content_id: str
     content_type: ContentType
     target_keywords: List[str]
@@ -103,7 +109,8 @@ class ContentOptimization:
 
 @dataclass
 class SEOAudit:
-    """Comprehensive SEO audit results"""
+    """
+Comprehensive SEO audit results"""
     audit_id: str
     content_id: str
     audit_date: datetime
@@ -123,7 +130,8 @@ class SEOAudit:
 
 @dataclass
 class RankingTracking:
-    """Search engine ranking tracking"""
+    """
+Search engine ranking tracking"""
     tracking_id: str
     content_id: str
     keyword: str
@@ -144,7 +152,8 @@ class RankingTracking:
 
 @dataclass
 class CompetitorAnalysis:
-    """SEO competitor analysis"""
+    """
+SEO competitor analysis"""
     analysis_id: str
     competitor_domain: str
     analysis_date: datetime
@@ -169,7 +178,8 @@ class SEOBusinessCore:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize SEO business core"""
+        """
+Initialize SEO business core"""
         self.config = config or {}
         self.keyword_research: Dict[str, KeywordResearch] = {}
         self.content_optimizations: Dict[str, ContentOptimization] = {}
@@ -200,7 +210,8 @@ class SEOBusinessCore:
         logger.info("SEO Business Core initialized")
     
     def _initialize_keyword_database(self) -> Dict[str, Any]:
-        """Initialize keyword database and research tools"""
+        """
+Initialize keyword database and research tools"""
         return {
             'search_engines': ['google', 'bing', 'youtube', 'amazon'],
             'keyword_tools': ['google_keyword_planner', 'semrush', 'ahrefs', 'custom_ai'],
@@ -212,7 +223,8 @@ class SEOBusinessCore:
         }
     
     def _initialize_optimization_algorithms(self) -> Dict[str, Any]:
-        """Initialize SEO optimization algorithms"""
+        """
+Initialize SEO optimization algorithms"""
         return {
             'content_optimization': {
                 'keyword_density_target': 0.01,  # 1-2%
@@ -239,7 +251,8 @@ class SEOBusinessCore:
         }
     
     def _initialize_ranking_factors(self) -> Dict[str, float]:
-        """Initialize search engine ranking factors with weights"""
+        """
+Initialize search engine ranking factors with weights"""
         return {
             'content_quality': 0.25,
             'keyword_optimization': 0.20,
@@ -256,7 +269,8 @@ class SEOBusinessCore:
         seed_keywords: List[str], 
         target_audience: Dict[str, Any]
     ) -> List[KeywordResearch]:
-        """Conduct comprehensive keyword research"""
+        """
+Conduct comprehensive keyword research"""
         try:
             keyword_research_results = []
             
@@ -292,7 +306,8 @@ class SEOBusinessCore:
         keyword: str, 
         target_audience: Dict[str, Any]
     ) -> KeywordResearch:
-        """Analyze individual keyword metrics"""
+        """
+Analyze individual keyword metrics"""
         try:
             # Simulate keyword analysis (would use real SEO APIs in production)
             search_volume = self._estimate_search_volume(keyword)
@@ -324,7 +339,8 @@ class SEOBusinessCore:
             raise
     
     def _estimate_search_volume(self, keyword: str) -> int:
-        """Estimate monthly search volume for keyword"""
+        """
+Estimate monthly search volume for keyword"""
         # Simplified estimation based on keyword characteristics
         base_volume = len(keyword.split()) * 1000
         
@@ -338,7 +354,8 @@ class SEOBusinessCore:
         return max(base_volume, 100)
     
     def _calculate_competition_level(self, keyword: str) -> float:
-        """Calculate keyword competition level (0-1 scale)"""
+        """
+Calculate keyword competition level (0-1 scale)"""
         # Simplified competition calculation
         word_count = len(keyword.split())
         
@@ -352,7 +369,8 @@ class SEOBusinessCore:
             return 0.3  # Long-tail keywords are less competitive
     
     def _calculate_keyword_difficulty(self, keyword: str) -> float:
-        """Calculate keyword difficulty score (0-100 scale)"""
+        """
+Calculate keyword difficulty score (0-100 scale)"""
         competition = self._calculate_competition_level(keyword)
         search_volume = self._estimate_search_volume(keyword)
         
@@ -361,7 +379,8 @@ class SEOBusinessCore:
         return min(difficulty, 100)
     
     def _determine_search_intent(self, keyword: str) -> SearchIntent:
-        """Determine user search intent for keyword"""
+        """
+Determine user search intent for keyword"""
         keyword_lower = keyword.lower()
         
         # Question keywords
@@ -387,7 +406,8 @@ class SEOBusinessCore:
         return SearchIntent.INFORMATIONAL  # Default
     
     def _calculate_commercial_value(self, keyword: str, intent: SearchIntent) -> float:
-        """Calculate commercial value of keyword (0-10 scale)"""
+        """
+Calculate commercial value of keyword (0-10 scale)"""
         value_map = {
             SearchIntent.TRANSACTIONAL: 9.0,
             SearchIntent.COMMERCIAL: 7.0,
@@ -399,7 +419,8 @@ class SEOBusinessCore:
         return value_map.get(intent, 3.0)
     
     def _analyze_seasonal_trends(self, keyword: str) -> Dict[str, float]:
-        """Analyze seasonal search trends"""
+        """
+Analyze seasonal search trends"""
         # Simplified seasonal analysis
         seasonal_keywords = {
             'christmas': {'december': 3.0, 'november': 2.0, 'january': 0.5},
@@ -419,7 +440,8 @@ class SEOBusinessCore:
         ]}
     
     def _identify_content_opportunities(self, keyword: str) -> List[str]:
-        """Identify content creation opportunities"""
+        """
+Identify content creation opportunities"""
         opportunities = []
         intent = self._determine_search_intent(keyword)
         
@@ -447,7 +469,8 @@ class SEOBusinessCore:
         return opportunities
     
     async def _find_related_keywords(self, keyword: str) -> List[str]:
-        """Find semantically related keywords"""
+        """
+Find semantically related keywords"""
         # Simplified related keyword generation
         base_words = keyword.split()
         related = []
@@ -469,7 +492,8 @@ class SEOBusinessCore:
         return related[:10]  # Limit to top 10
     
     async def _generate_long_tail_variations(self, keyword: str) -> List[str]:
-        """Generate long-tail keyword variations"""
+        """
+Generate long-tail keyword variations"""
         variations = []
         
         # Add question variations
@@ -490,7 +514,8 @@ class SEOBusinessCore:
         return variations[:15]  # Limit to top 15
     
     async def _extract_user_questions(self, keyword: str) -> List[str]:
-        """Extract common user questions related to keyword"""
+        """
+Extract common user questions related to keyword"""
         questions = [
             f"What is {keyword}?",
             f"How does {keyword} work?",
@@ -510,7 +535,8 @@ class SEOBusinessCore:
         content_data: Dict[str, Any], 
         target_keywords: List[str]
     ) -> ContentOptimization:
-        """Optimize content for SEO"""
+        """
+Optimize content for SEO"""
         try:
             content_type = ContentType(content_data.get('type', 'article'))
             
@@ -561,7 +587,8 @@ class SEOBusinessCore:
         target_keywords: List[str], 
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """Analyze current content optimization level"""
+        """
+Analyze current content optimization level"""
         try:
             content_text = content_data.get('text', '')
             title = content_data.get('title', '')
@@ -626,7 +653,8 @@ class SEOBusinessCore:
         title: str, 
         target_keywords: List[str]
     ) -> float:
-        """Analyze keyword optimization in content"""
+        """
+Analyze keyword optimization in content"""
         if not content_text or not target_keywords:
             return 0.0
         
@@ -666,7 +694,8 @@ class SEOBusinessCore:
         return min(score / len(target_keywords), 100)
     
     def _analyze_readability(self, content_text: str) -> float:
-        """Analyze content readability"""
+        """
+Analyze content readability"""
         if not content_text:
             return 0.0
         
@@ -685,7 +714,8 @@ class SEOBusinessCore:
         return max(min(readability, 100), 0)
     
     def _analyze_semantic_seo(self, content_text: str, target_keywords: List[str]) -> float:
-        """Analyze semantic SEO optimization"""
+        """
+Analyze semantic SEO optimization"""
         if not content_text or not target_keywords:
             return 0.0
         
@@ -711,7 +741,8 @@ class SEOBusinessCore:
         return min(score, 100)
     
     def _analyze_technical_seo(self, content_data: Dict[str, Any]) -> float:
-        """Analyze technical SEO factors"""
+        """
+Analyze technical SEO factors"""
         score = 0.0
         
         # Check for proper heading structure
@@ -742,7 +773,8 @@ class SEOBusinessCore:
         return score
     
     def _analyze_user_experience(self, content_data: Dict[str, Any]) -> float:
-        """Analyze user experience factors"""
+        """
+Analyze user experience factors"""
         score = 0.0
         
         # Page load speed
@@ -776,7 +808,8 @@ class SEOBusinessCore:
         meta_description: str, 
         target_keywords: List[str]
     ) -> Dict[str, Any]:
-        """Analyze meta tag optimization"""
+        """
+Analyze meta tag optimization"""
         analysis = {
             'title_optimized': False,
             'description_optimized': False,
@@ -807,7 +840,8 @@ class SEOBusinessCore:
         return analysis
     
     def _analyze_content_structure(self, content_text: str) -> Dict[str, Any]:
-        """Analyze content structure and organization"""
+        """
+Analyze content structure and organization"""
         if not content_text:
             return {'structure_score': 0}
         
@@ -842,7 +876,8 @@ class SEOBusinessCore:
         }
     
     def _analyze_internal_linking(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze internal linking structure"""
+        """
+Analyze internal linking structure"""
         internal_links = content_data.get('internal_links', [])
         
         return {
@@ -852,7 +887,8 @@ class SEOBusinessCore:
         }
     
     def _analyze_schema_markup(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze schema markup implementation"""
+        """
+Analyze schema markup implementation"""
         schema_types = content_data.get('schema_types', [])
         
         return {
@@ -867,7 +903,8 @@ class SEOBusinessCore:
         target_keywords: List[str], 
         analysis: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate specific optimization recommendations"""
+        """
+Generate specific optimization recommendations"""
         recommendations = []
         
         # Keyword optimization recommendations
@@ -934,7 +971,8 @@ class SEOBusinessCore:
         analysis: Dict[str, Any], 
         recommendations: List[Dict[str, Any]]
     ) -> Dict[str, float]:
-        """Predict performance improvement from optimization"""
+        """
+Predict performance improvement from optimization"""
         current_score = analysis['overall_score']
         
         # Calculate potential improvement based on recommendations
@@ -956,7 +994,8 @@ class SEOBusinessCore:
         }
     
     def get_core_metrics(self) -> Dict[str, Any]:
-        """Get core SEO metrics"""
+        """
+Get core SEO metrics"""
         return {
             'seo_business_core_metrics': self.metrics.copy(),
             'core_status': 'operational',

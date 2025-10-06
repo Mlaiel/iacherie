@@ -29,7 +29,8 @@ import json
 logger = logging.getLogger(__name__)
 
 class TrendType(Enum):
-    """Types de tendances"""
+    """
+Types de tendances"""
     HASHTAG = "hashtag"
     TOPIC = "topic"
     INFLUENCER = "influencer"
@@ -40,7 +41,8 @@ class TrendType(Enum):
     BRAND = "brand"
 
 class TrendStatus(Enum):
-    """Statut des tendances"""
+    """
+Statut des tendances"""
     EMERGING = "emerging"
     RISING = "rising"
     PEAK = "peak"
@@ -50,7 +52,8 @@ class TrendStatus(Enum):
 
 @dataclass
 class TrendData:
-    """Données d'une tendance"""
+    """
+Données d'une tendance"""
     id: str
     name: str
     trend_type: TrendType
@@ -70,7 +73,8 @@ class TrendData:
 
 @dataclass
 class TrendAnalysis:
-    """Analyse complète d'une tendance"""
+    """
+Analyse complète d'une tendance"""
     trend: TrendData
     performance_metrics: Dict[str, float]
     audience_insights: Dict[str, Any]
@@ -83,7 +87,8 @@ class SocialTrendAnalyzer:
     """🏆 Analyseur avancé des tendances sociales - FINAL VICTORY COMPONENT ! 🏆"""
     
     def __init__(self):
-        """Initialise l'analyseur de tendances"""
+        """
+Initialise l'analyseur de tendances"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Base de données des tendances (simulation)
@@ -109,7 +114,8 @@ class SocialTrendAnalyzer:
         self.logger.info("🚀 Ready for advanced social trend analysis")
     
     def _init_demo_trends(self):
-        """Initialise des tendances de démonstration"""
+        """
+Initialise des tendances de démonstration"""
         demo_trends = [
             {
                 "id": "ai_content_2024",
@@ -268,7 +274,8 @@ class SocialTrendAnalyzer:
             return None
     
     def _calculate_longevity_score(self, trend: TrendData) -> float:
-        """Calcule le score de longévité d'une tendance"""
+        """
+Calcule le score de longévité d'une tendance"""
         base_score = 5.0
         
         # Bonus pour le type de tendance
@@ -293,7 +300,8 @@ class SocialTrendAnalyzer:
         return min(score, 10.0)
     
     def _calculate_authenticity_score(self, trend: TrendData) -> float:
-        """Calcule le score d'authenticité d'une tendance"""
+        """
+Calcule le score d'authenticité d'une tendance"""
         base_score = 5.0
         
         # Bonus pour croissance organique vs artificielle
@@ -316,7 +324,8 @@ class SocialTrendAnalyzer:
         trend: TrendData,
         performance_metrics: Dict[str, float]
     ) -> List[str]:
-        """Génère des recommandations stratégiques"""
+        """
+Génère des recommandations stratégiques"""
         recommendations = []
         
         # Recommandations basées sur le statut
@@ -648,7 +657,8 @@ SocialTrendDetector = SocialTrendAnalyzer
 
 # Initialisation du module
 def initialize_trend_analyzer():
-    """Initialise l'analyseur de tendances"""
+    """
+Initialise l'analyseur de tendances"""
     try:
         analyzer = SocialTrendAnalyzer()
         

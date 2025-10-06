@@ -22,7 +22,8 @@ from collections import defaultdict, deque
 logger = logging.getLogger(__name__)
 
 class PipelineType(Enum):
-    """Types of business logic pipelines"""
+    """
+Types of business logic pipelines"""
     CONTENT_PROCESSING = "content_processing"
     USER_ONBOARDING = "user_onboarding"
     PAYMENT_PROCESSING = "payment_processing"
@@ -33,7 +34,8 @@ class PipelineType(Enum):
     COMPLIANCE_CHECK = "compliance_check"
 
 class PipelineStatus(Enum):
-    """Pipeline execution status"""
+    """
+Pipeline execution status"""
     CREATED = "created"
     QUEUED = "queued"
     RUNNING = "running"
@@ -44,7 +46,8 @@ class PipelineStatus(Enum):
     RETRYING = "retrying"
 
 class StepType(Enum):
-    """Types of pipeline steps"""
+    """
+Types of pipeline steps"""
     DATA_VALIDATION = "data_validation"
     BUSINESS_LOGIC = "business_logic"
     API_CALL = "api_call"
@@ -58,7 +61,8 @@ class StepType(Enum):
 
 @dataclass
 class PipelineStep:
-    """Individual pipeline step definition"""
+    """
+Individual pipeline step definition"""
     step_id: str
     step_name: str
     step_type: StepType
@@ -76,7 +80,8 @@ class PipelineStep:
 
 @dataclass
 class BusinessPipeline:
-    """Business logic pipeline definition"""
+    """
+Business logic pipeline definition"""
     pipeline_id: str
     pipeline_name: str
     pipeline_type: PipelineType
@@ -95,7 +100,8 @@ class BusinessPipeline:
 
 @dataclass
 class PipelineExecution:
-    """Pipeline execution instance"""
+    """
+Pipeline execution instance"""
     execution_id: str
     pipeline_id: str
     status: PipelineStatus
@@ -115,7 +121,8 @@ class PipelineExecution:
 
 @dataclass
 class StepExecution:
-    """Individual step execution"""
+    """
+Individual step execution"""
     step_execution_id: str
     execution_id: str
     step_id: str
@@ -139,7 +146,8 @@ class BusinessLogicPipelineCore:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None, level: str = "enterprise"):
-        """Initialize business logic pipeline core"""
+        """
+Initialize business logic pipeline core"""
         self.config = config or {}
         self.level = level
         self.pipelines: Dict[str, BusinessPipeline] = {}
@@ -173,7 +181,8 @@ class BusinessLogicPipelineCore:
         logger.info("Business Logic Pipeline Core initialized")
     
     def _initialize_execution_engine(self) -> Dict[str, Any]:
-        """Initialize pipeline execution engine"""
+        """
+Initialize pipeline execution engine"""
         return {
             'engine_type': 'async_distributed',
             'version': '2.1.0',
@@ -185,7 +194,8 @@ class BusinessLogicPipelineCore:
         }
     
     def _initialize_workflow_orchestrator(self) -> Dict[str, Any]:
-        """Initialize workflow orchestration system"""
+        """
+Initialize workflow orchestration system"""
         return {
             'orchestrator_type': 'event_driven',
             'version': '1.8.0',
@@ -202,7 +212,8 @@ class BusinessLogicPipelineCore:
         }
     
     def _initialize_monitoring_system(self) -> Dict[str, Any]:
-        """Initialize pipeline monitoring system"""
+        """
+Initialize pipeline monitoring system"""
         return {
             'monitoring_type': 'real_time_analytics',
             'version': '1.5.0',
@@ -213,7 +224,8 @@ class BusinessLogicPipelineCore:
         }
     
     def _initialize_error_handler(self) -> Dict[str, Any]:
-        """Initialize error handling system"""
+        """
+Initialize error handling system"""
         return {
             'error_handling_strategies': ['retry', 'fallback', 'circuit_breaker', 'graceful_degradation'],
             'recovery_mechanisms': ['automatic', 'manual', 'hybrid'],
@@ -223,7 +235,8 @@ class BusinessLogicPipelineCore:
         }
     
     def _initialize_default_pipelines(self):
-        """Initialize default business logic pipelines"""
+        """
+Initialize default business logic pipelines"""
         default_pipelines = [
             {
                 'pipeline_id': 'content_processing_pipeline',
@@ -294,7 +307,8 @@ class BusinessLogicPipelineCore:
         input_data: Dict[str, Any], 
         metadata: Optional[Dict[str, Any]] = None
     ) -> PipelineExecution:
-        """Execute business logic pipeline"""
+        """
+Execute business logic pipeline"""
         try:
             if pipeline_id not in self.pipelines:
                 raise ValueError(f"Pipeline not found: {pipeline_id}")
@@ -339,7 +353,8 @@ class BusinessLogicPipelineCore:
         execution: PipelineExecution, 
         pipeline: BusinessPipeline
     ):
-        """Execute pipeline steps"""
+        """
+Execute pipeline steps"""
         try:
             execution.status = PipelineStatus.RUNNING
             current_data = execution.input_data.copy()
@@ -400,7 +415,8 @@ class BusinessLogicPipelineCore:
         input_data: Dict[str, Any], 
         execution: PipelineExecution
     ) -> Dict[str, Any]:
-        """Execute individual pipeline step"""
+        """
+Execute individual pipeline step"""
         try:
             step_execution_id = str(uuid.uuid4())
             
@@ -444,7 +460,8 @@ class BusinessLogicPipelineCore:
         step: PipelineStep, 
         input_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute step-specific business logic"""
+        """
+Execute step-specific business logic"""
         # Simulate step execution based on function name
         await asyncio.sleep(0.1)  # Simulate processing time
         
@@ -485,7 +502,8 @@ class BusinessLogicPipelineCore:
         error: Exception, 
         execution: PipelineExecution
     ) -> bool:
-        """Handle step failure and determine if pipeline should continue"""
+        """
+Handle step failure and determine if pipeline should continue"""
         retry_config = step.retry_config
         max_retries = retry_config.get('max_retries', 3)
         
@@ -511,7 +529,8 @@ class BusinessLogicPipelineCore:
         return False  # Stop pipeline execution
     
     def _update_execution_metrics(self, execution: PipelineExecution):
-        """Update execution metrics"""
+        """
+Update execution metrics"""
         if execution.duration:
             duration_seconds = execution.duration.total_seconds()
             current_avg = self.metrics['average_execution_time']
@@ -528,7 +547,8 @@ class BusinessLogicPipelineCore:
         self.metrics['pipeline_success_rate'] = successful / max(total, 1)
     
     async def get_pipeline_status(self, execution_id: str) -> Dict[str, Any]:
-        """Get detailed pipeline execution status"""
+        """
+Get detailed pipeline execution status"""
         try:
             if execution_id not in self.executions:
                 raise ValueError(f"Execution not found: {execution_id}")
@@ -564,7 +584,8 @@ class BusinessLogicPipelineCore:
             raise
     
     def get_core_metrics(self) -> Dict[str, Any]:
-        """Get core business logic pipeline metrics"""
+        """
+Get core business logic pipeline metrics"""
         return {
             'business_logic_pipeline_core_metrics': self.metrics.copy(),
             'core_status': 'operational',

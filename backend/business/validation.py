@@ -24,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationType(Enum):
-    """Types of business validation."""
+    """
+        Types of business validation."""
     CONTENT_VALIDATION = "content_validation"
     USER_VALIDATION = "user_validation"
     MONETIZATION_VALIDATION = "monetization_validation"
@@ -56,7 +57,8 @@ class ValidationRule:
 
 @dataclass
 class ValidationError:
-    """Validation error details."""
+    """
+        Validation error details."""
     rule_id: str
     field: str
     message: str
@@ -68,7 +70,8 @@ class ValidationError:
 
 @dataclass
 class ValidationResult:
-    """Result of validation process."""
+    """
+        Result of validation process."""
     is_valid: bool
     errors: List[ValidationError] = field(default_factory=list)
     warnings: List[ValidationError] = field(default_factory=list)
@@ -85,7 +88,8 @@ class BusinessValidator:
     """
     
     def __init__(self):
-        """Initialize the business validator."""
+        """
+        Initialize the business validator."""
         self.validation_rules: Dict[str, ValidationRule] = {}
         self.validators: Dict[str, callable] = {}
         self.logger = logging.getLogger(__name__)
@@ -93,7 +97,8 @@ class BusinessValidator:
         self._load_default_rules()
     
     def _register_default_validators(self):
-        """Register default validation functions."""
+        """
+        Register default validation functions."""
         self.validators.update({
             "validate_email": self._validate_email,
             "validate_content_type": self._validate_content_type,
@@ -197,9 +202,11 @@ class BusinessValidator:
         try:
             self.validation_rules[rule.rule_id] = rule
             self.logger.info(f"Added validation rule: {rule.name} ({rule.rule_id})")
+
             return rule.rule_id
         except Exception as e:
             self.logger.error(f"Failed to add validation rule {rule.rule_id}: {str(e)}")
+
             raise
     
     def register_validator(self, name: str, validator_func: callable) -> None:
@@ -209,23 +216,28 @@ class BusinessValidator:
             self.logger.info(f"Registered validator: {name}")
         except Exception as e:
             self.logger.error(f"Failed to register validator {name}: {str(e)}")
+
             raise
     
     async def validate_content(self, content_data: Dict[str, Any]) -> ValidationResult:
         """Validate content data."""
         try:
             errors = []
+
             warnings = []
             
             # Apply content validation rules
             for rule in self.validation_rules.values():
                 if rule.validation_type == ValidationType.CONTENT_VALIDATION and rule.is_active:
                     validation_error = await self._apply_validation_rule(rule, content_data)
+
                     if validation_error:
                         if validation_error.severity in [ValidationSeverity.CRITICAL, ValidationSeverity.ERROR]:
                             errors.append(validation_error)
+
                         else:
                             warnings.append(validation_error)
+
             
             return ValidationResult(
                 is_valid=len(errors) == 0,
@@ -233,9 +245,11 @@ class BusinessValidator:
                 warnings=warnings,
                 metadata={"validation_type": "content", "rules_applied": len(self.validation_rules)}
             )
+
             
         except Exception as e:
             self.logger.error(f"Error validating content: {str(e)}")
+
             return ValidationResult(
                 is_valid=False,
                 errors=[ValidationError(
@@ -250,17 +264,21 @@ class BusinessValidator:
         """Validate user data."""
         try:
             errors = []
+
             warnings = []
             
             # Apply user validation rules
             for rule in self.validation_rules.values():
                 if rule.validation_type == ValidationType.USER_VALIDATION and rule.is_active:
                     validation_error = await self._apply_validation_rule(rule, user_data)
+
                     if validation_error:
                         if validation_error.severity in [ValidationSeverity.CRITICAL, ValidationSeverity.ERROR]:
                             errors.append(validation_error)
+
                         else:
                             warnings.append(validation_error)
+
             
             return ValidationResult(
                 is_valid=len(errors) == 0,
@@ -268,9 +286,11 @@ class BusinessValidator:
                 warnings=warnings,
                 metadata={"validation_type": "user", "rules_applied": len(self.validation_rules)}
             )
+
             
         except Exception as e:
             self.logger.error(f"Error validating user: {str(e)}")
+
             return ValidationResult(
                 is_valid=False,
                 errors=[ValidationError(
@@ -285,17 +305,21 @@ class BusinessValidator:
         """Validate monetization data."""
         try:
             errors = []
+
             warnings = []
             
             # Apply monetization validation rules
             for rule in self.validation_rules.values():
                 if rule.validation_type == ValidationType.MONETIZATION_VALIDATION and rule.is_active:
                     validation_error = await self._apply_validation_rule(rule, monetization_data)
+
                     if validation_error:
                         if validation_error.severity in [ValidationSeverity.CRITICAL, ValidationSeverity.ERROR]:
                             errors.append(validation_error)
+
                         else:
                             warnings.append(validation_error)
+
             
             return ValidationResult(
                 is_valid=len(errors) == 0,
@@ -303,9 +327,11 @@ class BusinessValidator:
                 warnings=warnings,
                 metadata={"validation_type": "monetization", "rules_applied": len(self.validation_rules)}
             )
+
             
         except Exception as e:
             self.logger.error(f"Error validating monetization: {str(e)}")
+
             return ValidationResult(
                 is_valid=False,
                 errors=[ValidationError(
@@ -320,17 +346,21 @@ class BusinessValidator:
         """Validate collaboration data."""
         try:
             errors = []
+
             warnings = []
             
             # Apply collaboration validation rules
             for rule in self.validation_rules.values():
                 if rule.validation_type == ValidationType.COLLABORATION_VALIDATION and rule.is_active:
                     validation_error = await self._apply_validation_rule(rule, collaboration_data)
+
                     if validation_error:
                         if validation_error.severity in [ValidationSeverity.CRITICAL, ValidationSeverity.ERROR]:
                             errors.append(validation_error)
+
                         else:
                             warnings.append(validation_error)
+
             
             return ValidationResult(
                 is_valid=len(errors) == 0,
@@ -338,9 +368,11 @@ class BusinessValidator:
                 warnings=warnings,
                 metadata={"validation_type": "collaboration", "rules_applied": len(self.validation_rules)}
             )
+
             
         except Exception as e:
             self.logger.error(f"Error validating collaboration: {str(e)}")
+
             return ValidationResult(
                 is_valid=False,
                 errors=[ValidationError(
@@ -361,9 +393,12 @@ class BusinessValidator:
                     message=f"Validator {rule.validator_func} not found",
                     severity=ValidationSeverity.ERROR
                 )
+
+
             
             validator = self.validators[rule.validator_func]
             is_valid, error_details = await validator(data)
+
             
             if not is_valid:
                 return ValidationError(
@@ -375,11 +410,13 @@ class BusinessValidator:
                     expected=error_details.get("expected"),
                     metadata=error_details.get("metadata", {})
                 )
+
             
             return None
             
         except Exception as e:
             self.logger.error(f"Error applying validation rule {rule.rule_id}: {str(e)}")
+
             return ValidationError(
                 rule_id=rule.rule_id,
                 field="system",
@@ -391,6 +428,7 @@ class BusinessValidator:
     async def _validate_email(self, data: Dict[str, Any]) -> Tuple[bool, Dict[str, Any]]:
         """Validate email format."""
         email = data.get("email", "")
+
         email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         
         if not email or not re.match(email_pattern, email):
@@ -401,6 +439,7 @@ class BusinessValidator:
     async def _validate_content_type(self, data: Dict[str, Any]) -> Tuple[bool, Dict[str, Any]]:
         """Validate content type."""
         content_type = data.get("content_type", "")
+
         valid_types = ["audio", "video", "image", "text"]
         
         if content_type not in valid_types:
@@ -411,17 +450,21 @@ class BusinessValidator:
     async def _validate_file_size(self, data: Dict[str, Any]) -> Tuple[bool, Dict[str, Any]]:
         """Validate file size."""
         file_size = data.get("file_size", 0)
+
         content_type = data.get("content_type", "")
         
         # Size limits in bytes
+
         size_limits = {
             "audio": 100 * 1024 * 1024,  # 100MB
             "video": 500 * 1024 * 1024,  # 500MB
             "image": 10 * 1024 * 1024,   # 10MB
             "text": 1 * 1024 * 1024      # 1MB
         }
+
         
         max_size = size_limits.get(content_type, 10 * 1024 * 1024)
+
         
         if file_size > max_size:
             return False, {
@@ -437,8 +480,10 @@ class BusinessValidator:
         """Validate audio format."""
         if data.get("content_type") != "audio":
             return True, {}
+
         
         audio_format = data.get("audio_format", "")
+
         valid_formats = ["mp3", "wav", "flac", "aac", "ogg"]
         
         if audio_format not in valid_formats:
@@ -450,8 +495,10 @@ class BusinessValidator:
         """Validate video format."""
         if data.get("content_type") != "video":
             return True, {}
+
         
         video_format = data.get("video_format", "")
+
         valid_formats = ["mp4", "avi", "mov", "mkv", "webm"]
         
         if video_format not in valid_formats:
@@ -463,8 +510,10 @@ class BusinessValidator:
         """Validate image format."""
         if data.get("content_type") != "image":
             return True, {}
+
         
         image_format = data.get("image_format", "")
+
         valid_formats = ["jpg", "jpeg", "png", "gif", "webp"]
         
         if image_format not in valid_formats:
@@ -475,6 +524,7 @@ class BusinessValidator:
     async def _validate_creator_type(self, data: Dict[str, Any]) -> Tuple[bool, Dict[str, Any]]:
         """Validate creator type."""
         creator_type = data.get("creator_type", "")
+
         valid_types = ["musician", "podcaster", "video_creator", "artist", "influencer"]
         
         if creator_type not in valid_types:
@@ -485,6 +535,7 @@ class BusinessValidator:
     async def _validate_audience_size(self, data: Dict[str, Any]) -> Tuple[bool, Dict[str, Any]]:
         """Validate audience size."""
         audience_size = data.get("audience_size", 0)
+
         
         if not isinstance(audience_size, int) or audience_size < 0:
             return False, {"field": "audience_size", "value": audience_size, "expected": "non-negative integer"}
@@ -504,11 +555,14 @@ class BusinessValidator:
         """Validate revenue amount."""
         try:
             amount = data.get("amount", 0)
+
             
             if isinstance(amount, str):
                 amount = Decimal(amount)
+
             elif isinstance(amount, (int, float)):
                 amount = Decimal(str(amount))
+
             
             if amount < 0:
                 return False, {"field": "amount", "value": str(amount), "expected": ">= 0"}
@@ -530,9 +584,11 @@ class BusinessValidator:
     async def _validate_collaboration_terms(self, data: Dict[str, Any]) -> Tuple[bool, Dict[str, Any]]:
         """Validate collaboration terms."""
         terms = data.get("collaboration_terms", {})
+
         
         if not isinstance(terms, dict):
             return False, {"field": "collaboration_terms", "value": type(terms).__name__, "expected": "dictionary"}
+
         
         required_fields = ["revenue_share", "duration", "responsibilities"]
         
@@ -545,9 +601,11 @@ class BusinessValidator:
                 }
         
         # Validate revenue share
+
         revenue_share = terms.get("revenue_share", {})
         if isinstance(revenue_share, dict):
             total_share = sum(revenue_share.values())
+
             if abs(total_share - 100) > 0.01:  # Allow small floating point errors
                 return False, {
                     "field": "collaboration_terms.revenue_share",
@@ -560,6 +618,7 @@ class BusinessValidator:
     async def _validate_compliance_requirements(self, data: Dict[str, Any]) -> Tuple[bool, Dict[str, Any]]:
         """Validate compliance requirements."""
         # Check for required compliance fields
+
         required_compliance = ["terms_accepted", "privacy_policy_accepted", "age_verification"]
         
         for field in required_compliance:
@@ -575,6 +634,7 @@ class BusinessValidator:
     async def _validate_pricing_data(self, data: Dict[str, Any]) -> Tuple[bool, Dict[str, Any]]:
         """Validate pricing data."""
         pricing = data.get("pricing", {})
+
         
         if not isinstance(pricing, dict):
             return False, {"field": "pricing", "value": type(pricing).__name__, "expected": "dictionary"}
@@ -583,6 +643,7 @@ class BusinessValidator:
         for price_type, price_value in pricing.items():
             try:
                 price = Decimal(str(price_value))
+
                 if price < 0:
                     return False, {
                         "field": f"pricing.{price_type}",
@@ -601,11 +662,14 @@ class BusinessValidator:
     async def _validate_payment_method(self, data: Dict[str, Any]) -> Tuple[bool, Dict[str, Any]]:
         """Validate payment method."""
         payment_method = data.get("payment_method", {})
+
         
         if not isinstance(payment_method, dict):
             return False, {"field": "payment_method", "value": type(payment_method).__name__, "expected": "dictionary"}
+
         
         method_type = payment_method.get("type", "")
+
         valid_types = ["credit_card", "bank_transfer", "paypal", "crypto", "stripe"]
         
         if method_type not in valid_types:
@@ -620,11 +684,13 @@ class BusinessValidator:
     async def _validate_content_metadata(self, data: Dict[str, Any]) -> Tuple[bool, Dict[str, Any]]:
         """Validate content metadata."""
         metadata = data.get("metadata", {})
+
         
         if not isinstance(metadata, dict):
             return False, {"field": "metadata", "value": type(metadata).__name__, "expected": "dictionary"}
         
         # Check for required metadata fields
+
         content_type = data.get("content_type", "")
         if content_type == "audio":
             required_fields = ["duration", "bitrate", "sample_rate"]
@@ -646,14 +712,17 @@ class BusinessValidator:
                 "active_rules": len([r for r in self.validation_rules.values() if r.is_active]),
                 "rules_by_type": {
                     vtype.value: len([r for r in self.validation_rules.values() if r.validation_type == vtype])
+
                     for vtype in ValidationType
                 },
                 "rules_by_severity": {
                     severity.value: len([r for r in self.validation_rules.values() if r.severity == severity])
+
                     for severity in ValidationSeverity
                 },
                 "registered_validators": len(self.validators)
             }
         except Exception as e:
             self.logger.error(f"Error getting validation summary: {str(e)}")
+
             return {}

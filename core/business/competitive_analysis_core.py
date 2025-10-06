@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class CompetitiveAnalysisCore:
-    """Advanced Competitive Analysis Core System"""
+    """
+Advanced Competitive Analysis Core System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class CompetitiveAnalysisCore:
 # Module exports
 __all__ = ["CompetitiveAnalysisCore"]
 
-logger.info("🏁 Competitive Analysis Core module loaded")
+logger.info("🏁 Competitive Analysis Core module initialized")

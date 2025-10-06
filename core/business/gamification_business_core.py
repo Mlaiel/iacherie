@@ -22,7 +22,8 @@ import math
 logger = logging.getLogger(__name__)
 
 class AchievementType(Enum):
-    """Types of achievements"""
+    """
+Types of achievements"""
     MILESTONE = "milestone"
     SKILL_MASTERY = "skill_mastery"
     COLLABORATION = "collaboration"
@@ -35,7 +36,8 @@ class AchievementType(Enum):
     SPECIAL_EVENT = "special_event"
 
 class AchievementDifficulty(Enum):
-    """Achievement difficulty levels"""
+    """
+Achievement difficulty levels"""
     BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
@@ -43,7 +45,8 @@ class AchievementDifficulty(Enum):
     LEGENDARY = "legendary"
 
 class RewardType(Enum):
-    """Types of rewards"""
+    """
+Types of rewards"""
     POINTS = "points"
     BADGE = "badge"
     TITLE = "title"
@@ -55,7 +58,8 @@ class RewardType(Enum):
     CUSTOM_REWARD = "custom_reward"
 
 class ChallengeType(Enum):
-    """Types of challenges"""
+    """
+Types of challenges"""
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -66,7 +70,8 @@ class ChallengeType(Enum):
     COLLABORATION = "collaboration"
 
 class EngagementLevel(Enum):
-    """User engagement levels"""
+    """
+User engagement levels"""
     NEWCOMER = "newcomer"
     ACTIVE = "active"
     ENGAGED = "engaged"
@@ -76,7 +81,8 @@ class EngagementLevel(Enum):
 
 @dataclass
 class Achievement:
-    """Achievement definition"""
+    """
+Achievement definition"""
     achievement_id: str
     name: str
     description: str
@@ -95,7 +101,8 @@ class Achievement:
 
 @dataclass
 class UserAchievement:
-    """User's achieved achievement"""
+    """
+User's achieved achievement"""
     user_achievement_id: str
     user_id: str
     achievement_id: str
@@ -108,7 +115,8 @@ class UserAchievement:
 
 @dataclass
 class Challenge:
-    """Gamification challenge"""
+    """
+Gamification challenge"""
     challenge_id: str
     name: str
     description: str
@@ -128,7 +136,8 @@ class Challenge:
 
 @dataclass
 class UserChallenge:
-    """User's challenge participation"""
+    """
+User's challenge participation"""
     user_challenge_id: str
     user_id: str
     challenge_id: str
@@ -143,7 +152,8 @@ class UserChallenge:
 
 @dataclass
 class UserLevel:
-    """User level and progression"""
+    """
+User level and progression"""
     user_id: str
     current_level: int
     total_points: int
@@ -163,7 +173,8 @@ class UserLevel:
 
 @dataclass
 class Leaderboard:
-    """Leaderboard for competitions"""
+    """
+Leaderboard for competitions"""
     leaderboard_id: str
     name: str
     description: str
@@ -178,7 +189,8 @@ class Leaderboard:
 
 @dataclass
 class Badge:
-    """Achievement badge"""
+    """
+Achievement badge"""
     badge_id: str
     name: str
     description: str
@@ -193,7 +205,8 @@ class Badge:
 
 @dataclass
 class UserBadge:
-    """User's earned badge"""
+    """
+User's earned badge"""
     user_badge_id: str
     user_id: str
     badge_id: str
@@ -212,7 +225,8 @@ class GamificationBusinessCore:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize gamification business core"""
+        """
+Initialize gamification business core"""
         self.config = config or {}
         self.achievements: Dict[str, Achievement] = {}
         self.user_achievements: Dict[str, List[UserAchievement]] = {}
@@ -246,7 +260,8 @@ class GamificationBusinessCore:
         logger.info("Gamification Business Core initialized")
     
     def _initialize_default_gamification(self):
-        """Initialize default achievements and badges"""
+        """
+Initialize default achievements and badges"""
         # Default achievements
         default_achievements = [
             {
@@ -308,7 +323,8 @@ class GamificationBusinessCore:
             self.achievements[achievement.achievement_id] = achievement
     
     def _calculate_rarity_score(self, difficulty: AchievementDifficulty) -> float:
-        """Calculate rarity score based on difficulty"""
+        """
+Calculate rarity score based on difficulty"""
         rarity_map = {
             AchievementDifficulty.BEGINNER: 1.0,
             AchievementDifficulty.INTERMEDIATE: 2.5,
@@ -319,7 +335,8 @@ class GamificationBusinessCore:
         return rarity_map.get(difficulty, 1.0)
     
     async def initialize_user_progression(self, user_id: str) -> UserLevel:
-        """Initialize user progression system"""
+        """
+Initialize user progression system"""
         try:
             user_level = UserLevel(
                 user_id=user_id,
@@ -357,7 +374,8 @@ class GamificationBusinessCore:
         reason: str, 
         activity_type: str = "general"
     ) -> Dict[str, Any]:
-        """Award points to user and handle level progression"""
+        """
+Award points to user and handle level progression"""
         try:
             if user_id not in self.user_levels:
                 await self.initialize_user_progression(user_id)
@@ -412,7 +430,8 @@ class GamificationBusinessCore:
             raise
     
     async def _award_level_benefits(self, user_id: str, level: int):
-        """Award benefits for reaching new level"""
+        """
+Award benefits for reaching new level"""
         try:
             user_level = self.user_levels[user_id]
             
@@ -438,7 +457,8 @@ class GamificationBusinessCore:
             logger.error(f"Error awarding level benefits: {e}")
     
     async def _update_engagement_level(self, user_id: str):
-        """Update user engagement level based on activity"""
+        """
+Update user engagement level based on activity"""
         try:
             user_level = self.user_levels[user_id]
             
@@ -467,7 +487,8 @@ class GamificationBusinessCore:
             logger.error(f"Error updating engagement level: {e}")
     
     async def check_achievements(self, user_id: str, activity_data: Dict[str, Any]) -> List[UserAchievement]:
-        """Check and award achievements based on user activity"""
+        """
+Check and award achievements based on user activity"""
         try:
             if user_id not in self.user_levels:
                 await self.initialize_user_progression(user_id)
@@ -503,7 +524,8 @@ class GamificationBusinessCore:
         activity_data: Dict[str, Any], 
         user_id: str
     ) -> bool:
-        """Check if achievement requirements are met"""
+        """
+Check if achievement requirements are met"""
         try:
             for requirement, value in achievement.requirements.items():
                 activity_value = activity_data.get(requirement, 0)
@@ -531,7 +553,8 @@ class GamificationBusinessCore:
             return False
     
     async def _award_achievement(self, user_id: str, achievement: Achievement) -> UserAchievement:
-        """Award achievement to user"""
+        """
+Award achievement to user"""
         try:
             user_achievement = UserAchievement(
                 user_achievement_id=str(uuid.uuid4()),
@@ -559,7 +582,8 @@ class GamificationBusinessCore:
             raise
     
     async def _award_reward(self, user_id: str, reward: Dict[str, Any]):
-        """Award reward to user"""
+        """
+Award reward to user"""
         try:
             reward_type = reward.get('type')
             reward_value = reward.get('value')
@@ -579,7 +603,8 @@ class GamificationBusinessCore:
             logger.error(f"Error awarding reward: {e}")
     
     async def _award_badge(self, user_id: str, badge_id: str):
-        """Award badge to user"""
+        """
+Award badge to user"""
         try:
             if badge_id not in self.badges:
                 return
@@ -621,7 +646,8 @@ class GamificationBusinessCore:
             logger.error(f"Error awarding badge: {e}")
     
     async def create_challenge(self, challenge_data: Dict[str, Any]) -> Challenge:
-        """Create new gamification challenge"""
+        """
+Create new gamification challenge"""
         try:
             challenge_id = str(uuid.uuid4())
             
@@ -654,7 +680,8 @@ class GamificationBusinessCore:
             raise
     
     async def join_challenge(self, user_id: str, challenge_id: str) -> UserChallenge:
-        """Join user to challenge"""
+        """
+Join user to challenge"""
         try:
             if challenge_id not in self.challenges:
                 raise ValueError(f"Challenge not found: {challenge_id}")
@@ -707,7 +734,8 @@ class GamificationBusinessCore:
         challenge_id: str, 
         progress_data: Dict[str, Any]
     ) -> bool:
-        """Update user's challenge progress"""
+        """
+Update user's challenge progress"""
         try:
             user_challenge = None
             for uc in self.user_challenges.get(user_id, []):
@@ -755,7 +783,8 @@ class GamificationBusinessCore:
             raise
     
     async def get_user_dashboard(self, user_id: str) -> Dict[str, Any]:
-        """Get comprehensive user gamification dashboard"""
+        """
+Get comprehensive user gamification dashboard"""
         try:
             if user_id not in self.user_levels:
                 await self.initialize_user_progression(user_id)
@@ -815,7 +844,8 @@ class GamificationBusinessCore:
             raise
     
     def _get_next_level_benefits(self, current_level: int) -> List[str]:
-        """Get benefits for next level"""
+        """
+Get benefits for next level"""
         level_benefits = {
             5: ['Premium badge slots', 'Extended collaboration search'],
             10: ['Advanced analytics', 'Priority support'],
@@ -831,7 +861,8 @@ class GamificationBusinessCore:
         return ['Maximum level reached']
     
     def get_core_metrics(self) -> Dict[str, Any]:
-        """Get core gamification metrics"""
+        """
+Get core gamification metrics"""
         total_users = len(self.user_levels)
         avg_level = sum(ul.current_level for ul in self.user_levels.values()) / max(total_users, 1)
         
@@ -848,7 +879,8 @@ class GamificationBusinessCore:
         }
     
     def _get_engagement_distribution(self) -> Dict[str, int]:
-        """Get distribution of users by engagement level"""
+        """
+Get distribution of users by engagement level"""
         distribution = {level.value: 0 for level in EngagementLevel}
         
         for user_level in self.user_levels.values():

@@ -49,7 +49,8 @@ except ImportError:
 # ============================================================================
 
 class BaseModel:
-    """Base model with common fields and functionality"""
+    """
+        Base model with common fields and functionality"""
     
     def __init__(self):
         super().__init__()
@@ -58,12 +59,14 @@ class BaseModel:
         self.updated_at = datetime.now(timezone.utc)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert model to dictionary"""
+        """
+        Convert model to dictionary"""
         result = {}
         for key, value in self.__dict__.items():
             if not key.startswith('_'):
                 if isinstance(value, datetime):
                     result[key] = value.isoformat()
+
                 elif isinstance(value, Enum):
                     result[key] = value.value
                 else:
@@ -71,7 +74,8 @@ class BaseModel:
         return result
     
     def update_timestamp(self):
-        """Update the updated_at timestamp"""
+        """
+        Update the updated_at timestamp"""
         self.updated_at = datetime.now(timezone.utc)
 
 
@@ -81,7 +85,8 @@ class BaseModel:
 
 # User-related enums
 class UserType(Enum):
-    """User type enumeration"""
+    """
+        User type enumeration"""
     CREATOR = "creator"
     ARTIST = "artist"
     INFLUENCER = "influencer" 
@@ -1682,12 +1687,14 @@ def get_model(model_name: str):
 
 
 def list_available_models() -> List[str]:
-    """List all available model names"""
+    """
+        List all available model names"""
     return list(MODEL_REGISTRY.keys())
 
 
 def create_model(model_name: str, **kwargs):
-    """Create a model instance by name"""
+    """
+        Create a model instance by name"""
     model_class = get_model(model_name)
     if model_class:
         return model_class(**kwargs)

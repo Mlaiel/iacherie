@@ -52,4 +52,4 @@ class RevenueOptimizationCore:
         return True
 
 __all__ = ["RevenueOptimizationCore", "RevenueStrategy", "RevenueMetrics"]
-logger.info("💰 Revenue Optimization Core module loaded")
+logger.info("💰 Revenue Optimization Core module initialized")

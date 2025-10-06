@@ -22,7 +22,8 @@ from dataclasses import dataclass, field
 
 
 class PlatformType(Enum):
-    """Types de plateformes supportées"""
+    """
+        Types de plateformes supportées"""
     WEB = "web"
     MOBILE_IOS = "mobile_ios"
     MOBILE_ANDROID = "mobile_android"
@@ -106,7 +107,8 @@ class PlatformConstraints:
 
 @dataclass
 class OptimizationSettings:
-    """Paramètres d'optimisation"""
+    """
+        Paramètres d'optimisation"""
     target_platform: PlatformType
     quality_profile: QualityProfile
     polygon_reduction: float = 0.0  # 0.0 à 1.0
@@ -136,7 +138,8 @@ class ExportConfiguration:
 
 @dataclass
 class DeploymentResult:
-    """Résultat de déploiement"""
+    """
+        Résultat de déploiement"""
     deployment_id: str
     export_id: str
     platform: PlatformType
@@ -153,7 +156,8 @@ class DeploymentResult:
 
 
 class PlatformAdapter:
-    """Adaptateur multi-plateforme"""
+    """
+        Adaptateur multi-plateforme"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -161,7 +165,8 @@ class PlatformAdapter:
         self._initialize_platform_constraints()
     
     def _initialize_platform_constraints(self):
-        """Initialisation des contraintes par plateforme"""
+        """
+        Initialisation des contraintes par plateforme"""
         constraints = {
             PlatformType.WEB: PlatformConstraints(
                 platform_type=PlatformType.WEB,
@@ -235,12 +240,15 @@ class PlatformAdapter:
     
     async def validate_avatar_for_platform(self, avatar_data: Dict[str, Any], 
                                          platform: PlatformType) -> Dict[str, Any]:
-        """Validation d'un avatar pour une plateforme"""
+        """
+        Validation d'un avatar pour une plateforme"""
         try:
             if platform not in self.platform_constraints:
                 return {'valid': False, 'error': f'Plateforme {platform.value} non supportée'}
+
             
             constraints = self.platform_constraints[platform]
+
             validation_result = {
                 'valid': True,
                 'platform': platform.value,
@@ -250,35 +258,47 @@ class PlatformAdapter:
             }
             
             # Validation polygones
+
             avatar_polygons = avatar_data.get('polygon_count', 0)
+
             if avatar_polygons > constraints.max_polygons:
                 validation_result['issues'].append(
                     f"Trop de polygones: {avatar_polygons} > {constraints.max_polygons}"
                 )
+
                 validation_result['required_optimizations'].append('polygon_reduction')
             
             # Validation taille de texture
+
             max_texture = avatar_data.get('max_texture_size', 0)
+
             if max_texture > constraints.max_texture_size:
                 validation_result['issues'].append(
                     f"Texture trop grande: {max_texture} > {constraints.max_texture_size}"
                 )
+
                 validation_result['required_optimizations'].append('texture_compression')
             
             # Validation taille de fichier
+
             file_size = avatar_data.get('file_size_mb', 0)
+
             if file_size > constraints.max_file_size_mb:
                 validation_result['issues'].append(
                     f"Fichier trop volumineux: {file_size}MB > {constraints.max_file_size_mb}MB"
                 )
+
                 validation_result['required_optimizations'].append('file_compression')
             
             # Validation format
+
             current_format = avatar_data.get('format', '')
+
             if current_format and ExportFormat(current_format) not in constraints.supported_formats:
                 validation_result['warnings'].append(
                     f"Format {current_format} non optimal, conversion recommandée"
                 )
+
                 validation_result['required_optimizations'].append('format_conversion')
             
             # Validation des exigences spéciales
@@ -287,12 +307,14 @@ class PlatformAdapter:
                     validation_result['warnings'].append(
                         f"Exigence spéciale manquante: {requirement}"
                     )
+
             
             validation_result['valid'] = len(validation_result['issues']) == 0
             return validation_result
             
         except Exception as e:
             self.logger.error(f"Erreur validation plateforme: {e}")
+
             return {'valid': False, 'error': str(e)}
     
     async def recommend_optimizations(self, avatar_data: Dict[str, Any], 
@@ -300,13 +322,20 @@ class PlatformAdapter:
         """Recommandations d'optimisation pour une plateforme"""
         try:
             validation = await self.validate_avatar_for_platform(avatar_data, platform)
+
+
             recommendations = []
             
             if 'polygon_reduction' in validation.get('required_optimizations', []):
                 constraints = self.platform_constraints[platform]
+
                 current_polygons = avatar_data.get('polygon_count', 0)
+
+
                 target_polygons = constraints.max_polygons
+
                 reduction_ratio = 1.0 - (target_polygons / current_polygons)
+
                 
                 recommendations.append({
                     'type': 'polygon_reduction',
@@ -315,6 +344,7 @@ class PlatformAdapter:
                     'settings': {'reduction_ratio': reduction_ratio},
                     'impact': 'Améliore les performances'
                 })
+
             
             if 'texture_compression' in validation.get('required_optimizations', []):
                 recommendations.append({
@@ -324,6 +354,7 @@ class PlatformAdapter:
                     'settings': {'compression': 'dxt', 'max_size': constraints.max_texture_size},
                     'impact': 'Réduit la taille et améliore le chargement'
                 })
+
             
             if 'format_conversion' in validation.get('required_optimizations', []):
                 optimal_format = constraints.supported_formats[0]
@@ -334,11 +365,13 @@ class PlatformAdapter:
                     'settings': {'target_format': optimal_format.value},
                     'impact': 'Optimise la compatibilité'
                 })
+
             
             return recommendations
             
         except Exception as e:
             self.logger.error(f"Erreur recommandations: {e}")
+
             return []
 
 
@@ -351,8 +384,10 @@ class FormatConverter:
         self._initialize_conversion_matrix()
     
     def _initialize_conversion_matrix(self):
-        """Initialisation de la matrice de conversion"""
+        """
+        Initialisation de la matrice de conversion"""
         # Définition des conversions possibles et leurs paramètres
+
         conversions = {
             (ExportFormat.FBX, ExportFormat.GLTF): {
                 'supported': True,
@@ -387,20 +422,25 @@ class FormatConverter:
                            source_format: ExportFormat,
                            target_format: ExportFormat,
                            conversion_settings: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Conversion d'avatar entre formats"""
+        """
+        Conversion d'avatar entre formats"""
         try:
             conversion_key = (source_format, target_format)
+
             
             if conversion_key not in self.conversion_matrix:
                 return {
                     'success': False,
                     'error': f'Conversion {source_format.value} → {target_format.value} non supportée'
                 }
+
             
             conversion_info = self.conversion_matrix[conversion_key]
+
             settings = conversion_settings or {}
             
             # Simulation de conversion
+
             result = {
                 'success': True,
                 'source_format': source_format.value,
@@ -417,6 +457,7 @@ class FormatConverter:
             
         except Exception as e:
             self.logger.error(f"Erreur conversion format: {e}")
+
             return {'success': False, 'error': str(e)}
     
     async def _perform_conversion(self, avatar_data: Dict[str, Any], 
@@ -424,6 +465,7 @@ class FormatConverter:
                                 settings: Dict[str, Any]) -> Dict[str, Any]:
         """Exécution de la conversion"""
         # Simulation de conversion
+
         converted_data = avatar_data.copy()
         
         # Appliquer les changements selon la conversion
@@ -437,8 +479,10 @@ class FormatConverter:
     
     async def _estimate_size_change(self, source_format: ExportFormat, 
                                   target_format: ExportFormat) -> float:
-        """Estimation du changement de taille"""
+        """
+        Estimation du changement de taille"""
         # Facteurs de compression par format
+
         compression_factors = {
             ExportFormat.FBX: 1.0,
             ExportFormat.GLTF: 0.8,
@@ -446,14 +490,18 @@ class FormatConverter:
             ExportFormat.VRM: 0.9,
             ExportFormat.OBJ: 1.2
         }
+
         
         source_factor = compression_factors.get(source_format, 1.0)
+
         target_factor = compression_factors.get(target_format, 1.0)
+
         
         return target_factor / source_factor
     
     def get_supported_conversions(self) -> List[Dict[str, Any]]:
-        """Liste des conversions supportées"""
+        """
+        Liste des conversions supportées"""
         conversions = []
         
         for (source, target), info in self.conversion_matrix.items():
@@ -463,12 +511,14 @@ class FormatConverter:
                 'quality_loss': info['quality_loss'],
                 'supported': info['supported']
             })
+
         
         return conversions
 
 
 class QualityScaler:
-    """Mise à l'échelle qualité"""
+    """
+        Mise à l'échelle qualité"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -476,7 +526,8 @@ class QualityScaler:
         self._initialize_quality_presets()
     
     def _initialize_quality_presets(self):
-        """Initialisation des préréglages qualité"""
+        """
+        Initialisation des préréglages qualité"""
         presets = {
             QualityProfile.MOBILE_LOW: {
                 'polygon_reduction': 0.8,
@@ -538,15 +589,19 @@ class QualityScaler:
     
     async def scale_avatar_quality(self, avatar_data: Dict[str, Any], 
                                  quality_profile: QualityProfile) -> Dict[str, Any]:
-        """Mise à l'échelle de la qualité d'un avatar"""
+        """
+        Mise à l'échelle de la qualité d'un avatar"""
         try:
             if quality_profile not in self.quality_presets:
                 return {'success': False, 'error': f'Profil {quality_profile.value} non trouvé'}
+
             
             preset = self.quality_presets[quality_profile]
+
             scaled_avatar = avatar_data.copy()
             
             # Application des optimisations
+
             optimization_report = {
                 'profile_applied': quality_profile.value,
                 'optimizations': [],
@@ -557,8 +612,12 @@ class QualityScaler:
             # Réduction de polygones
             if preset.get('polygon_reduction', 0) > 0:
                 original_polygons = scaled_avatar.get('polygon_count', 100000)
+
+
                 reduction = preset['polygon_reduction']
+
                 new_polygons = int(original_polygons * (1 - reduction))
+
                 scaled_avatar['polygon_count'] = new_polygons
                 
                 optimization_report['optimizations'].append({
@@ -573,6 +632,7 @@ class QualityScaler:
                 target_size = preset['texture_size']
                 scaled_avatar['max_texture_size'] = target_size
                 scaled_avatar['texture_compression'] = preset.get('texture_compression', 'auto')
+
                 
                 optimization_report['optimizations'].append({
                     'type': 'texture_scaling',
@@ -581,21 +641,30 @@ class QualityScaler:
                 })
             
             # Optimisations spéciales
+
             special_optimizations = []
             if preset.get('material_simplification'):
                 special_optimizations.append('material_simplification')
+
             if preset.get('remove_details'):
                 special_optimizations.append('detail_removal')
+
             if preset.get('stereo_optimization'):
                 special_optimizations.append('stereo_optimization')
+
             if preset.get('social_features'):
                 special_optimizations.append('social_optimization')
+
             
             scaled_avatar['special_optimizations'] = special_optimizations
             
             # Calcul de l'impact
+
             size_reduction = await self._calculate_size_reduction(preset)
+
+
             quality_impact = await self._calculate_quality_impact(preset)
+
             
             optimization_report['size_reduction'] = size_reduction
             optimization_report['quality_impact'] = quality_impact
@@ -609,6 +678,7 @@ class QualityScaler:
             
         except Exception as e:
             self.logger.error(f"Erreur mise à l'échelle qualité: {e}")
+
             return {'success': False, 'error': str(e)}
     
     async def _calculate_size_reduction(self, preset: Dict[str, Any]) -> float:
@@ -623,7 +693,8 @@ class QualityScaler:
         return min(0.9, sum(reduction_factors))
     
     async def _calculate_quality_impact(self, preset: Dict[str, Any]) -> float:
-        """Calcul de l'impact sur la qualité"""
+        """
+        Calcul de l'impact sur la qualité"""
         impact_factors = [
             preset.get('polygon_reduction', 0) * 0.5,
             preset.get('animation_compression', 0) * 0.3,
@@ -634,7 +705,8 @@ class QualityScaler:
 
 
 class PlatformOptimizer:
-    """Optimiseur spécifique plateforme"""
+    """
+        Optimiseur spécifique plateforme"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -645,7 +717,8 @@ class PlatformOptimizer:
     async def optimize_for_platform(self, avatar_data: Dict[str, Any],
                                   platform: PlatformType,
                                   optimization_settings: OptimizationSettings) -> Dict[str, Any]:
-        """Optimisation complète pour une plateforme"""
+        """
+        Optimisation complète pour une plateforme"""
         try:
             optimization_result = {
                 'success': False,
@@ -655,16 +728,20 @@ class PlatformOptimizer:
                 'performance_metrics': {},
                 'warnings': []
             }
+
             
             current_avatar = avatar_data.copy()
             
             # Étape 1: Validation initiale
+
             validation = await self.platform_adapter.validate_avatar_for_platform(
                 current_avatar, platform
             )
+
             
             if not validation['valid'] and not validation.get('required_optimizations'):
                 optimization_result['warnings'].append('Avatar non optimisable pour cette plateforme')
+
                 return optimization_result
             
             # Étape 2: Mise à l'échelle qualité
@@ -672,6 +749,7 @@ class PlatformOptimizer:
                 quality_result = await self.quality_scaler.scale_avatar_quality(
                     current_avatar, optimization_settings.quality_profile
                 )
+
                 
                 if quality_result['success']:
                     current_avatar = quality_result['scaled_avatar']
@@ -686,23 +764,29 @@ class PlatformOptimizer:
                 current_avatar = await self._apply_polygon_reduction(
                     current_avatar, optimization_settings.polygon_reduction
                 )
+
                 optimization_result['optimization_steps'].append({
                     'step': 'polygon_reduction',
                     'reduction': optimization_settings.polygon_reduction
                 })
             
             # Étape 4: Optimisations techniques
+
             technical_optimizations = await self._apply_technical_optimizations(
                 current_avatar, optimization_settings
             )
+
             
             current_avatar.update(technical_optimizations['avatar_updates'])
+
             optimization_result['optimization_steps'].extend(technical_optimizations['steps'])
             
             # Étape 5: Validation finale
+
             final_validation = await self.platform_adapter.validate_avatar_for_platform(
                 current_avatar, platform
             )
+
             
             optimization_result['success'] = final_validation['valid']
             optimization_result['optimized_avatar'] = current_avatar
@@ -712,11 +796,13 @@ class PlatformOptimizer:
             optimization_result['performance_metrics'] = await self._calculate_performance_metrics(
                 avatar_data, current_avatar, platform
             )
+
             
             return optimization_result
             
         except Exception as e:
             self.logger.error(f"Erreur optimisation plateforme: {e}")
+
             return {
                 'success': False,
                 'error': str(e),
@@ -727,35 +813,44 @@ class PlatformOptimizer:
                                      reduction_ratio: float) -> Dict[str, Any]:
         """Application de la réduction de polygones"""
         avatar = avatar_data.copy()
+
         
         if 'polygon_count' in avatar:
             original_count = avatar['polygon_count']
+
             new_count = int(original_count * (1 - reduction_ratio))
+
             avatar['polygon_count'] = new_count
         
         return avatar
     
     async def _apply_technical_optimizations(self, avatar_data: Dict[str, Any],
                                            settings: OptimizationSettings) -> Dict[str, Any]:
-        """Application des optimisations techniques"""
+        """
+        Application des optimisations techniques"""
         avatar_updates = {}
+
         optimization_steps = []
         
         if settings.lod_generation:
             avatar_updates['lod_levels'] = 4
             optimization_steps.append({'step': 'lod_generation', 'levels': 4})
+
         
         if settings.animation_compression:
             avatar_updates['animation_compressed'] = True
             optimization_steps.append({'step': 'animation_compression'})
+
         
         if settings.remove_hidden_faces:
             avatar_updates['hidden_faces_removed'] = True
             optimization_steps.append({'step': 'hidden_face_removal'})
+
         
         if settings.bake_textures:
             avatar_updates['textures_baked'] = True
             optimization_steps.append({'step': 'texture_baking'})
+
         
         return {
             'avatar_updates': avatar_updates,
@@ -765,12 +860,16 @@ class PlatformOptimizer:
     async def _calculate_performance_metrics(self, original_avatar: Dict[str, Any],
                                            optimized_avatar: Dict[str, Any],
                                            platform: PlatformType) -> Dict[str, Any]:
-        """Calcul des métriques de performance"""
+        """
+        Calcul des métriques de performance"""
         metrics = {}
         
         # Réduction de polygones
+
         original_polygons = original_avatar.get('polygon_count', 0)
+
         optimized_polygons = optimized_avatar.get('polygon_count', original_polygons)
+
         
         if original_polygons > 0:
             metrics['polygon_reduction_percent'] = (
@@ -778,17 +877,24 @@ class PlatformOptimizer:
             )
         
         # Estimation taille fichier
+
         polygon_factor = optimized_polygons / max(1, original_polygons)
+
         texture_factor = optimized_avatar.get('texture_compression_ratio', 1.0)
+
         
         metrics['estimated_size_reduction_percent'] = (1 - polygon_factor * texture_factor) * 100
         
         # Performance estimée
+
         constraints = self.platform_adapter.platform_constraints.get(platform)
         if constraints:
             target_fps = constraints.performance_targets.get('fps', 60)
+
+
             current_performance_ratio = optimized_polygons / constraints.max_polygons
             metrics['estimated_fps'] = target_fps * (2 - current_performance_ratio)
+
         
         return metrics
 

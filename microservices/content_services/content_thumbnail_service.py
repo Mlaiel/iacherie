@@ -16,8 +16,25 @@ import logging
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 import cv2
 import numpy as np
-from moviepy.editor import VideoFileClip
-import waveform
+# MoviePy import with fallback for Python 3.12 compatibility
+try:
+    from moviepy.editor import VideoFileClip
+    MOVIEPY_AVAILABLE = True
+except (ImportError, ModuleNotFoundError):
+    MOVIEPY_AVAILABLE = False
+    VideoFileClip = None  # Fallback
+try:
+    import waveform
+    WAVEFORM_AVAILABLE = True
+except ImportError:
+    WAVEFORM_AVAILABLE = False
+    # Alternative audio visualization
+    try:
+        import librosa
+        import librosa.display
+        AUDIO_VIS_AVAILABLE = True
+    except ImportError:
+        AUDIO_VIS_AVAILABLE = False
 
 logger = logging.getLogger(__name__)
 

@@ -1,4 +1,5 @@
-"""ML Pipeline Core - Enterprise Machine Learning Pipeline Engine
+"""
+ML Pipeline Core - Enterprise Machine Learning Pipeline Engine
 
 Central machine learning pipeline core for automated model training, validation, and deployment.
 Handles data pipelines, model lifecycle management, and inference optimization with enterprise standards.
@@ -30,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 # Pipeline Stage Status
 class PipelineStatus(Enum):
-    """ML Pipeline stage status"""
+    """
+ML Pipeline stage status"""
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -40,7 +42,8 @@ class PipelineStatus(Enum):
 
 # Model Training Status
 class TrainingStatus(Enum):
-    """Model training status"""
+    """
+Model training status"""
     INITIALIZING = "initializing"
     PREPROCESSING = "preprocessing"
     TRAINING = "training"
@@ -51,7 +54,8 @@ class TrainingStatus(Enum):
 
 # Data Quality Levels
 class DataQuality(Enum):
-    """Data quality assessment"""
+    """
+Data quality assessment"""
     EXCELLENT = "excellent"  # >95% quality
     GOOD = "good"           # 85-95% quality
     ACCEPTABLE = "acceptable" # 70-85% quality
@@ -60,7 +64,8 @@ class DataQuality(Enum):
 
 # Model Performance Tiers
 class PerformanceTier(Enum):
-    """Model performance classification"""
+    """
+Model performance classification"""
     PRODUCTION = "production"    # >90% accuracy
     STAGING = "staging"         # 80-90% accuracy
     DEVELOPMENT = "development" # 70-80% accuracy
@@ -68,7 +73,8 @@ class PerformanceTier(Enum):
 
 @dataclass
 class DatasetMetadata:
-    """Dataset metadata structure"""
+    """
+Dataset metadata structure"""
     dataset_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     version: str = "1.0.0"
@@ -86,7 +92,8 @@ class DatasetMetadata:
 
 @dataclass
 class ModelMetrics:
-    """Model performance metrics"""
+    """
+Model performance metrics"""
     model_id: str
     accuracy: float = 0.0
     precision: float = 0.0
@@ -104,7 +111,8 @@ class ModelMetrics:
 
 @dataclass
 class PipelineConfiguration:
-    """ML Pipeline configuration"""
+    """
+ML Pipeline configuration"""
     pipeline_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
@@ -120,7 +128,8 @@ class PipelineConfiguration:
 
 @dataclass
 class PipelineExecution:
-    """Pipeline execution instance"""
+    """
+Pipeline execution instance"""
     execution_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     pipeline_id: str = ""
     status: PipelineStatus = PipelineStatus.PENDING
@@ -145,7 +154,8 @@ class MLPipelineCore:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None, level: str = "enterprise"):
-        """Initialize ML Pipeline Core"""
+        """
+Initialize ML Pipeline Core"""
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -275,7 +285,8 @@ class MLPipelineCore:
     async def _execute_pipeline_stages(
         self, config: PipelineConfiguration, execution: PipelineExecution
     ) -> PipelineExecution:
-        """Execute pipeline stages"""
+        """
+Execute pipeline stages"""
         
         stages = [
             ("data_loading", self._stage_data_loading),
@@ -349,7 +360,8 @@ class MLPipelineCore:
         self, config: PipelineConfiguration, pipeline_data: Dict[str, Any], 
         execution: PipelineExecution
     ) -> Dict[str, Any]:
-        """Data loading stage"""
+        """
+Data loading stage"""
         
         start_time = datetime.now(timezone.utc)
         
@@ -407,7 +419,8 @@ class MLPipelineCore:
         self, config: PipelineConfiguration, pipeline_data: Dict[str, Any],
         execution: PipelineExecution
     ) -> Dict[str, Any]:
-        """Data validation stage"""
+        """
+Data validation stage"""
         
         start_time = datetime.now(timezone.utc)
         
@@ -488,7 +501,8 @@ class MLPipelineCore:
         self, config: PipelineConfiguration, pipeline_data: Dict[str, Any],
         execution: PipelineExecution
     ) -> Dict[str, Any]:
-        """Data preprocessing stage"""
+        """
+Data preprocessing stage"""
         
         start_time = datetime.now(timezone.utc)
         
@@ -577,7 +591,8 @@ class MLPipelineCore:
         self, config: PipelineConfiguration, pipeline_data: Dict[str, Any],
         execution: PipelineExecution
     ) -> Dict[str, Any]:
-        """Feature engineering stage"""
+        """
+Feature engineering stage"""
         
         start_time = datetime.now(timezone.utc)
         
@@ -638,7 +653,8 @@ class MLPipelineCore:
         self, config: PipelineConfiguration, pipeline_data: Dict[str, Any],
         execution: PipelineExecution
     ) -> Dict[str, Any]:
-        """Model training stage"""
+        """
+Model training stage"""
         
         start_time = datetime.now(timezone.utc)
         
@@ -718,7 +734,8 @@ class MLPipelineCore:
         self, config: PipelineConfiguration, pipeline_data: Dict[str, Any],
         execution: PipelineExecution
     ) -> Dict[str, Any]:
-        """Model validation stage"""
+        """
+Model validation stage"""
         
         start_time = datetime.now(timezone.utc)
         
@@ -768,7 +785,8 @@ class MLPipelineCore:
         self, config: PipelineConfiguration, pipeline_data: Dict[str, Any],
         execution: PipelineExecution
     ) -> Dict[str, Any]:
-        """Hyperparameter tuning stage"""
+        """
+Hyperparameter tuning stage"""
         
         start_time = datetime.now(timezone.utc)
         
@@ -807,7 +825,8 @@ class MLPipelineCore:
         self, config: PipelineConfiguration, pipeline_data: Dict[str, Any],
         execution: PipelineExecution
     ) -> Dict[str, Any]:
-        """Model evaluation stage"""
+        """
+Model evaluation stage"""
         
         start_time = datetime.now(timezone.utc)
         
@@ -856,7 +875,8 @@ class MLPipelineCore:
         self, config: PipelineConfiguration, pipeline_data: Dict[str, Any],
         execution: PipelineExecution
     ) -> Dict[str, Any]:
-        """Model deployment stage"""
+        """
+Model deployment stage"""
         
         start_time = datetime.now(timezone.utc)
         
@@ -911,7 +931,8 @@ class MLPipelineCore:
             }
             
     def _create_model(self, algorithm: str, parameters: Dict[str, Any]):
-        """Create model instance"""
+        """
+Create model instance"""
         from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
         from sklearn.svm import SVC
         from sklearn.neural_network import MLPClassifier
@@ -938,7 +959,8 @@ class MLPipelineCore:
     def _calculate_model_metrics(
         self, model, X_test, y_test, y_pred, model_id: str
     ) -> ModelMetrics:
-        """Calculate model performance metrics"""
+        """
+Calculate model performance metrics"""
         
         metrics = ModelMetrics(model_id=model_id)
         
@@ -960,12 +982,14 @@ class MLPipelineCore:
         return metrics
         
     def _check_missing_values(self, data: pd.DataFrame) -> Dict[str, float]:
-        """Check for missing values"""
+        """
+Check for missing values"""
         missing = data.isnull().sum()
         return {col: (count / len(data)) * 100 for col, count in missing.items() if count > 0}
         
     def _check_duplicates(self, data: pd.DataFrame) -> Dict[str, Any]:
-        """Check for duplicate rows"""
+        """
+Check for duplicate rows"""
         duplicate_count = data.duplicated().sum()
         return {
             "duplicate_rows": duplicate_count,
@@ -973,7 +997,8 @@ class MLPipelineCore:
         }
         
     def _check_outliers(self, data: pd.DataFrame) -> Dict[str, int]:
-        """Check for outliers using IQR method"""
+        """
+Check for outliers using IQR method"""
         outliers = {}
         for col in data.select_dtypes(include=[np.number]).columns:
             Q1 = data[col].quantile(0.25)
@@ -987,11 +1012,13 @@ class MLPipelineCore:
         return outliers
         
     def _check_data_types(self, data: pd.DataFrame) -> Dict[str, str]:
-        """Check data types"""
+        """
+Check data types"""
         return {col: str(dtype) for col, dtype in data.dtypes.items()}
         
     def _check_data_distribution(self, data: pd.DataFrame) -> Dict[str, Any]:
-        """Check data distribution"""
+        """
+Check data distribution"""
         distribution_info = {}
         for col in data.select_dtypes(include=[np.number]).columns:
             distribution_info[col] = {
@@ -1003,7 +1030,8 @@ class MLPipelineCore:
         return distribution_info
         
     def _calculate_quality_score(self, quality_checks: Dict[str, Any]) -> float:
-        """Calculate overall data quality score"""
+        """
+Calculate overall data quality score"""
         score = 100.0
         
         # Missing values penalty
@@ -1025,7 +1053,8 @@ class MLPipelineCore:
         return max(score, 0.0)
         
     def _remove_outliers(self, data: pd.DataFrame) -> pd.DataFrame:
-        """Remove outliers using IQR method"""
+        """
+Remove outliers using IQR method"""
         for col in data.select_dtypes(include=[np.number]).columns:
             Q1 = data[col].quantile(0.25)
             Q3 = data[col].quantile(0.75)
@@ -1036,7 +1065,8 @@ class MLPipelineCore:
         return data
         
     def _cap_outliers(self, data: pd.DataFrame) -> pd.DataFrame:
-        """Cap outliers using IQR method"""
+        """
+Cap outliers using IQR method"""
         for col in data.select_dtypes(include=[np.number]).columns:
             Q1 = data[col].quantile(0.25)
             Q3 = data[col].quantile(0.75)
@@ -1047,7 +1077,8 @@ class MLPipelineCore:
         return data
         
     def _remove_correlated_features(self, data: pd.DataFrame, threshold: float) -> pd.DataFrame:
-        """Remove highly correlated features"""
+        """
+Remove highly correlated features"""
         numeric_cols = data.select_dtypes(include=[np.number]).columns
         corr_matrix = data[numeric_cols].corr().abs()
         upper_triangle = corr_matrix.where(
@@ -1058,7 +1089,8 @@ class MLPipelineCore:
         return data.drop(columns=to_drop)
         
     async def _select_important_features(self, data: pd.DataFrame, target_column: str) -> pd.DataFrame:
-        """Select important features using a quick model"""
+        """
+Select important features using a quick model"""
         from sklearn.ensemble import RandomForestClassifier
         from sklearn.feature_selection import SelectFromModel
         
@@ -1073,7 +1105,8 @@ class MLPipelineCore:
         return data[selected_features + [target_column]]
         
     def _create_polynomial_features(self, data: pd.DataFrame, target_column: str) -> pd.DataFrame:
-        """Create polynomial features"""
+        """
+Create polynomial features"""
         from sklearn.preprocessing import PolynomialFeatures
         
         X = data.drop(columns=[target_column])
@@ -1088,7 +1121,8 @@ class MLPipelineCore:
         return poly_df
         
     def _create_interaction_features(self, data: pd.DataFrame, target_column: str) -> pd.DataFrame:
-        """Create interaction features"""
+        """
+Create interaction features"""
         from sklearn.preprocessing import PolynomialFeatures
         
         X = data.drop(columns=[target_column])
@@ -1103,7 +1137,8 @@ class MLPipelineCore:
         return interaction_df
         
     async def _validate_pipeline_config(self, config: PipelineConfiguration):
-        """Validate pipeline configuration"""
+        """
+Validate pipeline configuration"""
         
         if not config.dataset_config.get("source"):
             raise ValueError("Dataset source is required")
@@ -1116,7 +1151,8 @@ class MLPipelineCore:
             raise ValueError(f"Unsupported algorithm: {algorithm}")
             
     def _update_pipeline_statistics(self, execution: PipelineExecution):
-        """Update pipeline statistics"""
+        """
+Update pipeline statistics"""
         self.pipeline_stats["total_executions"] += 1
         
         if execution.status == PipelineStatus.COMPLETED:
@@ -1137,7 +1173,8 @@ class MLPipelineCore:
         )
         
     async def get_pipeline_status(self, execution_id: str) -> Optional[Dict[str, Any]]:
-        """Get pipeline execution status"""
+        """
+Get pipeline execution status"""
         if execution_id in self.active_executions:
             task = self.active_executions[execution_id]
             return {
@@ -1148,7 +1185,8 @@ class MLPipelineCore:
         return None
         
     def get_pipeline_statistics(self) -> Dict[str, Any]:
-        """Get pipeline statistics"""
+        """
+Get pipeline statistics"""
         success_rate = 0
         if self.pipeline_stats["total_executions"] > 0:
             success_rate = (
@@ -1167,7 +1205,8 @@ class MLPipelineCore:
         }
         
     def list_pipeline_executions(self, limit: int = 10) -> List[Dict[str, Any]]:
-        """List recent pipeline executions"""
+        """
+List recent pipeline executions"""
         recent_executions = sorted(
             self.execution_history, 
             key=lambda x: x.started_at or datetime.min, 

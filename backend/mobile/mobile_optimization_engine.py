@@ -32,7 +32,8 @@ import hashlib
 logger = logging.getLogger(__name__)
 
 class MobileSEOStrategy(Enum):
-    """Mobile SEO strategies"""
+    """
+        Mobile SEO strategies"""
     MOBILE_FIRST = "mobile_first"
     AMP_OPTIMIZATION = "amp_optimization"
     PWA_OPTIMIZATION = "pwa_optimization"
@@ -138,7 +139,8 @@ class MobileSEORequest:
 
 @dataclass
 class MobileSEOResult:
-    """Mobile SEO optimization result"""
+    """
+        Mobile SEO optimization result"""
     seo_id: str
     content_id: str
     optimizations_applied: List[MobileSEOStrategy]
@@ -152,7 +154,8 @@ class MobileSEOResult:
 
 @dataclass
 class MobileMetadataRequest:
-    """Mobile metadata optimization request"""
+    """
+        Mobile metadata optimization request"""
     content_id: str
     content_type: str
     content_data: Dict[str, Any]
@@ -164,7 +167,8 @@ class MobileMetadataRequest:
 
 @dataclass
 class OptimizedMetadata:
-    """Optimized metadata structure"""
+    """
+        Optimized metadata structure"""
     metadata_id: str
     content_id: str
     metadata: Dict[MobileMetadataType, str]
@@ -176,7 +180,8 @@ class OptimizedMetadata:
 
 @dataclass
 class MobileSocialRequest:
-    """Mobile social optimization request"""
+    """
+        Mobile social optimization request"""
     content_id: str
     creator_id: str
     content_metadata: Dict[str, Any]
@@ -186,8 +191,139 @@ class MobileSocialRequest:
     viral_optimization: bool = True
 
 @dataclass
+class MobileMetadataResult:
+    """
+    Mobile Metadata Optimization Result
+    ===================================
+    Résultat de l'optimisation des métadonnées pour mobile.
+    Contient les métadonnées optimisées et les scores de performance.
+    
+    Business Logic:
+    Content → Metadata Analysis → Mobile Optimization → Platform Adaptation → 
+    SEO Enhancement → Engagement Scoring → Result Generation
+    """
+    metadata_id: str
+    content_id: str
+    optimized_metadata: Dict[MobileMetadataType, str]
+    platform_specific_metadata: Dict[str, Dict[str, str]]
+    mobile_optimized: bool
+    seo_score: float
+    mobile_friendly_score: float
+    engagement_potential: float
+    readability_score: float
+    
+    # Recommendations
+    recommendations: List[str] = field(default_factory=list)
+    improvements_applied: List[str] = field(default_factory=list)
+    
+    # Multilingual Support
+    multilingual_versions: Dict[str, Dict[str, str]] = field(default_factory=dict)
+    detected_language: str = "en"
+    
+    # Performance Metrics
+    processing_time: float = 0.0
+    optimization_confidence: float = 0.0
+    
+    # Mobile-Specific
+    character_lengths: Dict[str, int] = field(default_factory=dict)
+    mobile_display_preview: str = ""
+    truncation_warnings: List[str] = field(default_factory=list)
+    
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert result to dictionary"""
+        return {
+            "metadata_id": self.metadata_id,
+            "content_id": self.content_id,
+            "optimized_metadata": {k.value: v for k, v in self.optimized_metadata.items()},
+            "mobile_optimized": self.mobile_optimized,
+            "scores": {
+                "seo": self.seo_score,
+                "mobile_friendly": self.mobile_friendly_score,
+                "engagement_potential": self.engagement_potential,
+                "readability": self.readability_score
+            },
+            "recommendations": self.recommendations,
+            "processing_time": self.processing_time
+        }
+
+@dataclass
+class MobileSocialResult:
+    """
+    Mobile Social Optimization Result
+    =================================
+    Résultat de l'optimisation sociale pour mobile.
+    Optimisations spécifiques à chaque plateforme sociale mobile.
+    
+    Business Logic:
+    Content → Social Analysis → Platform Rules → Mobile Optimization → 
+    Viral Potential → Hashtag Generation → Timing Optimization → Result
+    """
+    social_id: str
+    content_id: str
+    creator_id: str
+    platform_optimizations: Dict[SocialPlatform, Dict[str, Any]]
+    
+    # Mobile-First Scores
+    overall_mobile_score: float
+    viral_potential_score: float
+    engagement_prediction: float
+    reach_estimate: int
+    
+    # Platform-Specific Results
+    platform_scores: Dict[SocialPlatform, float] = field(default_factory=dict)
+    platform_recommendations: Dict[SocialPlatform, List[str]] = field(default_factory=dict)
+    
+    # Content Optimization
+    optimized_captions: Dict[SocialPlatform, str] = field(default_factory=dict)
+    hashtag_recommendations: Dict[SocialPlatform, List[str]] = field(default_factory=dict)
+    emoji_suggestions: List[str] = field(default_factory=list)
+    
+    # Timing & Strategy
+    best_posting_times: Dict[SocialPlatform, List[str]] = field(default_factory=dict)
+    content_format_recommendations: Dict[SocialPlatform, str] = field(default_factory=dict)
+    
+    # Mobile-Specific Features
+    mobile_preview_optimized: bool = True
+    thumbnail_recommendations: Dict[str, Any] = field(default_factory=dict)
+    mobile_aspect_ratios: Dict[SocialPlatform, str] = field(default_factory=dict)
+    
+    # Analytics
+    processing_time: float = 0.0
+    optimization_confidence: float = 0.0
+    estimated_performance: Dict[str, float] = field(default_factory=dict)
+    
+    # Warnings & Alerts
+    warnings: List[str] = field(default_factory=list)
+    platform_policy_checks: Dict[SocialPlatform, bool] = field(default_factory=dict)
+    
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert result to dictionary"""
+        return {
+            "social_id": self.social_id,
+            "content_id": self.content_id,
+            "overall_mobile_score": self.overall_mobile_score,
+            "viral_potential": self.viral_potential_score,
+            "engagement_prediction": self.engagement_prediction,
+            "reach_estimate": self.reach_estimate,
+            "platform_scores": {p.value: score for p, score in self.platform_scores.items()},
+            "best_posting_times": {p.value: times for p, times in self.best_posting_times.items()},
+            "hashtag_recommendations": {p.value: tags for p, tags in self.hashtag_recommendations.items()},
+            "processing_time": self.processing_time
+        }
+    
+    def get_best_platforms(self, top_n: int = 3) -> List[SocialPlatform]:
+        """Get top N platforms by score"""
+        sorted_platforms = sorted(
+            self.platform_scores.items(),
+            key=lambda x: x[1],
+            reverse=True
+        )
+        return [platform for platform, _ in sorted_platforms[:top_n]]
+
+@dataclass
 class SocialPlatformOptimization:
-    """Social platform optimization result"""
+    """
+        Social platform optimization result"""
     platform: SocialPlatform
     optimizations: Dict[str, Any]
     mobile_score: float
@@ -198,10 +334,12 @@ class SocialPlatformOptimization:
     content_format_recommendations: List[str]
 
 class MobileOptimizationEngine:
-    """Unified mobile optimization engine consolidating SEO, metadata, and social optimization"""
+    """
+        Unified mobile optimization engine consolidating SEO, metadata, and social optimization"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize mobile optimization engine with comprehensive capabilities"""
+        """
+        Initialize mobile optimization engine with comprehensive capabilities"""
         self.config = config or {}
         self.seo_orchestrator = MobileSEOOrchestrator(self.config)
         self.metadata_optimizer = MobileMetadataOptimizer(self.config)
@@ -236,6 +374,7 @@ class MobileOptimizationEngine:
             start_time = datetime.utcnow()
             
             # Create optimization requests
+
             seo_request = MobileSEORequest(
                 content_id=content_id,
                 creator_id=creator_id,
@@ -247,6 +386,8 @@ class MobileOptimizationEngine:
                     MobileSEOStrategy.SOCIAL_SEO
                 ]
             )
+
+
             
             metadata_request = MobileMetadataRequest(
                 content_id=content_id,
@@ -257,6 +398,8 @@ class MobileOptimizationEngine:
                 metadata_types=list(MobileMetadataType),
                 mobile_optimized=True
             )
+
+
             
             social_request = MobileSocialRequest(
                 content_id=content_id,
@@ -269,15 +412,22 @@ class MobileOptimizationEngine:
             )
             
             # Execute all optimizations in parallel
+
             seo_task = asyncio.create_task(self.seo_orchestrator.optimize_mobile_seo(seo_request))
+
+
             metadata_task = asyncio.create_task(self.metadata_optimizer.optimize_mobile_metadata(metadata_request))
+
+
             social_task = asyncio.create_task(self.social_optimizer.optimize_social_content(social_request))
+
             
             seo_result, metadata_result, social_result = await asyncio.gather(
                 seo_task, metadata_task, social_task
             )
             
             # Synthesize comprehensive optimization results
+
             comprehensive_optimization = {
                 "optimization_id": optimization_id,
                 "content_id": content_id,
@@ -306,11 +456,13 @@ class MobileOptimizationEngine:
             
             # Update metrics
             self._update_optimization_metrics(comprehensive_optimization)
+
             
             return comprehensive_optimization
             
         except Exception as e:
             logger.error(f"Comprehensive mobile optimization failed: {e}")
+
             raise
     
     async def optimize_seo(self, seo_request: MobileSEORequest) -> MobileSEOResult:
@@ -318,21 +470,26 @@ class MobileOptimizationEngine:
         return await self.seo_orchestrator.optimize_mobile_seo(seo_request)
     
     async def optimize_metadata(self, metadata_request: MobileMetadataRequest) -> OptimizedMetadata:
-        """Optimize metadata for mobile platforms"""
+        """
+        Optimize metadata for mobile platforms"""
         return await self.metadata_optimizer.optimize_mobile_metadata(metadata_request)
     
     async def optimize_social(self, social_request: MobileSocialRequest) -> Dict[str, Any]:
-        """Optimize content for social platforms"""
+        """
+        Optimize content for social platforms"""
         return await self.social_optimizer.optimize_social_content(social_request)
     
     async def get_optimization_recommendations(self, content_id: str, 
                                              target_improvement: float = 0.2) -> List[Dict[str, Any]]:
-        """Get personalized optimization recommendations for content"""
+        """
+        Get personalized optimization recommendations for content"""
         try:
             # Analyze current optimization status
+
             current_status = await self._analyze_current_optimization_status(content_id)
             
             # Generate targeted recommendations
+
             recommendations = []
             
             # SEO recommendations
@@ -340,6 +497,7 @@ class MobileOptimizationEngine:
                 seo_recommendations = await self._generate_seo_recommendations(
                     content_id, current_status, target_improvement
                 )
+
                 recommendations.extend(seo_recommendations)
             
             # Metadata recommendations
@@ -347,6 +505,7 @@ class MobileOptimizationEngine:
                 metadata_recommendations = await self._generate_metadata_recommendations(
                     content_id, current_status, target_improvement
                 )
+
                 recommendations.extend(metadata_recommendations)
             
             # Social recommendations
@@ -354,15 +513,18 @@ class MobileOptimizationEngine:
                 social_recommendations = await self._generate_social_recommendations(
                     content_id, current_status, target_improvement
                 )
+
                 recommendations.extend(social_recommendations)
             
             # Prioritize recommendations by impact
             recommendations.sort(key=lambda x: x.get("impact_score", 0), reverse=True)
+
             
             return recommendations[:10]  # Return top 10 recommendations
             
         except Exception as e:
             logger.error(f"Failed to generate optimization recommendations: {e}")
+
             return []
     
     async def get_optimization_metrics(self) -> Dict[str, Any]:
@@ -405,6 +567,7 @@ class MobileOptimizationEngine:
         recommendations = []
         
         # SEO recommendations
+
         seo_recommendations = seo_result.get("recommendations", [])
         recommendations.extend([f"SEO: {rec}" for rec in seo_recommendations[:3]])
         
@@ -413,10 +576,12 @@ class MobileOptimizationEngine:
             recommendations.append("Metadata: Enhance title and description for mobile search")
         
         # Social recommendations
+
         social_platforms = social_result.get("platform_optimizations", {})
         for platform, optimization in social_platforms.items():
             if optimization.get("mobile_score", 0) < 0.8:
                 recommendations.append(f"Social: Optimize content format for {platform} mobile users")
+
         
         return recommendations[:10]
     
@@ -427,6 +592,7 @@ class MobileOptimizationEngine:
         enhancements = []
         
         # Mobile SEO enhancements
+
         mobile_seo = seo_result.get("mobile_specific_improvements", [])
         enhancements.extend(mobile_seo)
         
@@ -435,8 +601,10 @@ class MobileOptimizationEngine:
             enhancements.append("Mobile-optimized metadata applied")
         
         # Mobile social enhancements
+
         mobile_social = social_result.get("mobile_enhancements", [])
         enhancements.extend(mobile_social)
+
         
         return enhancements
     
@@ -445,14 +613,19 @@ class MobileOptimizationEngine:
         self.optimization_metrics["seo_optimizations"] += 1
         self.optimization_metrics["metadata_optimizations"] += 1
         self.optimization_metrics["social_optimizations"] += 1
+
         
         improvement_score = optimization_result.get("overall_improvement", 0.0)
+
         current_avg = self.optimization_metrics["average_improvement_score"]
+
         total_optimizations = self.optimization_metrics["seo_optimizations"]
         
         self.optimization_metrics["average_improvement_score"] = (
             (current_avg * (total_optimizations - 1) + improvement_score) / total_optimizations
         )
+
+
         
         mobile_score = optimization_result.get("mobile_optimization_score", 0.0)
         self.optimization_metrics["mobile_optimization_success_rate"] = (
@@ -569,24 +742,32 @@ class MobileSEOOrchestrator:
         self.optimization_history = {}
         
     async def optimize_mobile_seo(self, request: MobileSEORequest) -> MobileSEOResult:
-        """Optimize content for mobile SEO across platforms"""
+        """
+        Optimize content for mobile SEO across platforms"""
         seo_id = f"seo_{uuid.uuid4().hex[:8]}"
         
         # Analyze content for SEO opportunities
+
         content_analysis = await self._analyze_content_for_seo(request)
         
         # Apply mobile-first SEO strategies
+
         mobile_optimizations = await self._apply_mobile_seo_strategies(request, content_analysis)
         
         # Calculate platform-specific scores
+
         platform_scores = await self._calculate_platform_scores(request, mobile_optimizations)
         
         # Generate SEO recommendations
+
         recommendations = await self._generate_seo_recommendations(request, content_analysis)
         
         # Calculate overall scores
+
         mobile_score = self._calculate_mobile_score(platform_scores)
+
         seo_score = self._calculate_seo_score(mobile_optimizations)
+
         
         return MobileSEOResult(
             seo_id=seo_id,
@@ -668,23 +849,29 @@ class MobileSEOOrchestrator:
     
     async def _generate_seo_recommendations(self, request: MobileSEORequest, 
                                           analysis: Dict[str, Any]) -> List[str]:
-        """Generate mobile SEO recommendations"""
+        """
+        Generate mobile SEO recommendations"""
         recommendations = []
         
         if analysis.get("mobile_readiness", 0) < 0.8:
             recommendations.append("Improve mobile responsiveness and touch interface")
+
         
         if analysis.get("page_speed", 0) < 0.8:
             recommendations.append("Optimize page loading speed for mobile devices")
+
         
         if analysis.get("keyword_optimization", 0) < 0.7:
             recommendations.append("Add mobile-specific keywords and long-tail phrases")
+
         
         if MobileSEOStrategy.VOICE_SEARCH_OPTIMIZATION in request.seo_strategies:
             recommendations.append("Optimize for voice search queries and natural language")
+
         
         if MobileSEOStrategy.LOCAL_SEO in request.seo_strategies:
             recommendations.append("Implement local SEO optimization for mobile discovery")
+
         
         return recommendations
     
@@ -695,9 +882,12 @@ class MobileSEOOrchestrator:
         return sum(platform_scores.values()) / len(platform_scores)
     
     def _calculate_seo_score(self, optimizations: Dict[str, Any]) -> float:
-        """Calculate overall SEO score"""
+        """
+        Calculate overall SEO score"""
         technical_score = len(optimizations.get("technical", {})) * 0.2
+
         content_score = len(optimizations.get("content", {})) * 0.15
+
         mobile_score = len(optimizations.get("mobile_improvements", [])) * 0.1
         
         return min(1.0, technical_score + content_score + mobile_score)
@@ -715,6 +905,7 @@ class MobileSEOOrchestrator:
                 MobileContentCategory.BUSINESS: ["mobile business", "mobile productivity", "mobile work"]
             }
             base_keywords.extend(category_keywords.get(request.content_category, []))
+
         
         return base_keywords
 
@@ -728,21 +919,25 @@ class MobileMetadataOptimizer:
         self.ai_models = {}
         
     async def optimize_mobile_metadata(self, request: MobileMetadataRequest) -> OptimizedMetadata:
-        """Optimize metadata for mobile platforms with AI enhancement"""
+        """
+        Optimize metadata for mobile platforms with AI enhancement"""
         metadata_id = f"metadata_{uuid.uuid4().hex[:8]}"
         
         # Generate base metadata using AI
         base_metadata = await self._generate_ai_metadata(request)
         
         # Optimize for mobile platforms
+
         mobile_optimized_metadata = await self._optimize_for_mobile(base_metadata, request)
         
         # Create platform-specific variations
+
         platform_specific = await self._create_platform_specific_metadata(
             mobile_optimized_metadata, request
         )
         
         # Generate multilingual versions if requested
+
         multilingual_versions = {}
         if request.multilingual:
             multilingual_versions = await self._generate_multilingual_metadata(
@@ -750,8 +945,11 @@ class MobileMetadataOptimizer:
             )
         
         # Calculate optimization scores
+
         seo_score = self._calculate_metadata_seo_score(mobile_optimized_metadata)
+
         engagement_potential = self._calculate_engagement_potential(mobile_optimized_metadata)
+
         
         return OptimizedMetadata(
             metadata_id=metadata_id,
@@ -797,12 +995,14 @@ class MobileMetadataOptimizer:
         for metadata_type in request.metadata_types:
             if metadata_type not in metadata:
                 metadata[metadata_type] = await self._generate_ai_metadata_type(request, metadata_type)
+
         
         return metadata
     
     async def _optimize_for_mobile(self, metadata: Dict[MobileMetadataType, str], 
                                  request: MobileMetadataRequest) -> Dict[MobileMetadataType, str]:
-        """Optimize metadata specifically for mobile consumption"""
+        """
+        Optimize metadata specifically for mobile consumption"""
         optimized = metadata.copy()
         
         # Optimize title for mobile (shorter, more impactful)
@@ -820,6 +1020,7 @@ class MobileMetadataOptimizer:
         # Add mobile-specific keywords
         if MobileMetadataType.KEYWORDS in optimized:
             keywords = optimized[MobileMetadataType.KEYWORDS]
+
             mobile_keywords = "mobile, smartphone, mobile-friendly, on-the-go"
             optimized[MobileMetadataType.KEYWORDS] = f"{keywords}, {mobile_keywords}"
         
@@ -861,8 +1062,9 @@ class MobileMetadataOptimizer:
     
     async def _generate_multilingual_metadata(self, metadata: Dict[MobileMetadataType, str]) -> Dict[str, Dict[str, str]]:
         """Generate multilingual versions of metadata"""
-        # Placeholder for multilingual generation
+        
         languages = ["es", "fr", "de", "pt", "ar"]
+
         multilingual = {}
         
         for lang in languages:
@@ -876,11 +1078,13 @@ class MobileMetadataOptimizer:
     def _calculate_metadata_seo_score(self, metadata: Dict[MobileMetadataType, str]) -> float:
         """Calculate SEO score for optimized metadata"""
         score = 0.0
+
         max_score = 0.0
         
         # Title score
         if MobileMetadataType.TITLE in metadata:
             title = metadata[MobileMetadataType.TITLE]
+
             title_score = min(1.0, len(title) / 60.0) if title else 0.0
             score += title_score * 0.3
         max_score += 0.3
@@ -888,6 +1092,7 @@ class MobileMetadataOptimizer:
         # Description score
         if MobileMetadataType.DESCRIPTION in metadata:
             description = metadata[MobileMetadataType.DESCRIPTION]
+
             desc_score = min(1.0, len(description) / 150.0) if description else 0.0
             score += desc_score * 0.3
         max_score += 0.3
@@ -895,16 +1100,22 @@ class MobileMetadataOptimizer:
         # Keywords score
         if MobileMetadataType.KEYWORDS in metadata:
             keywords = metadata[MobileMetadataType.KEYWORDS]
+
             keyword_count = len(keywords.split(",")) if keywords else 0
+
             keyword_score = min(1.0, keyword_count / 10.0)
+
             score += keyword_score * 0.2
         max_score += 0.2
         
         # Hashtags score
         if MobileMetadataType.HASHTAGS in metadata:
             hashtags = metadata[MobileMetadataType.HASHTAGS]
+
             hashtag_count = len([tag for tag in hashtags.split() if tag.startswith("#")]) if hashtags else 0
+
             hashtag_score = min(1.0, hashtag_count / 10.0)
+
             score += hashtag_score * 0.2
         max_score += 0.2
         
@@ -913,15 +1124,19 @@ class MobileMetadataOptimizer:
     def _calculate_engagement_potential(self, metadata: Dict[MobileMetadataType, str]) -> float:
         """Calculate engagement potential based on metadata quality"""
         # Simplified engagement potential calculation
+
         title_engagement = 0.8 if MobileMetadataType.TITLE in metadata else 0.0
+
         description_engagement = 0.7 if MobileMetadataType.DESCRIPTION in metadata else 0.0
+
         hashtag_engagement = 0.9 if MobileMetadataType.HASHTAGS in metadata else 0.0
         
         return (title_engagement + description_engagement + hashtag_engagement) / 3.0
     
     # AI metadata generation methods
     async def _generate_ai_title(self, request: MobileMetadataRequest) -> str:
-        """Generate AI-optimized title for mobile"""
+        """
+        Generate AI-optimized title for mobile"""
         content_type = request.content_type
         return f"Mobile-Optimized {content_type.title()}: Engaging Content"
     
@@ -947,6 +1162,7 @@ class MobileMetadataOptimizer:
             MobileMetadataType.LANGUAGE: lambda: "en",
             MobileMetadataType.ACCESSIBILITY: lambda: "Mobile-accessible"
         }
+
         
         generator = metadata_generators.get(metadata_type, lambda: "")
         return generator()
@@ -963,6 +1179,7 @@ class MobileMetadataOptimizer:
     def _optimize_for_tiktok_hashtags(self, hashtags: str) -> str:
         """Optimize hashtags for TikTok mobile format"""
         # TikTok favors trending hashtags
+
         trending_tags = " #fyp #viral #trending #mobilecontent"
         return f"{hashtags}{trending_tags}" if hashtags else trending_tags.strip()
     
@@ -977,10 +1194,12 @@ class MobileMetadataOptimizer:
     def _optimize_for_instagram_hashtags(self, hashtags: str) -> str:
         """Optimize hashtags for Instagram mobile format"""
         # Instagram allows up to 30 hashtags
+
         trending_tags = " #instagram #mobile #content #explore"
         combined = f"{hashtags}{trending_tags}" if hashtags else trending_tags.strip()
         
         # Limit to 30 hashtags
+
         hashtag_list = [tag for tag in combined.split() if tag.startswith("#")]
         return " ".join(hashtag_list[:30])
     
@@ -1006,25 +1225,31 @@ class MobileSocialOptimizer:
         self.social_trends = {}
         
     async def optimize_social_content(self, request: MobileSocialRequest) -> Dict[str, Any]:
-        """Optimize content for social platforms with mobile-first approach"""
+        """
+        Optimize content for social platforms with mobile-first approach"""
         optimization_id = f"social_opt_{uuid.uuid4().hex[:8]}"
         
         platform_optimizations = {}
+
         mobile_enhancements = []
         
         # Optimize for each target platform
         for platform in request.target_platforms:
             optimization = await self._optimize_for_platform(platform, request)
+
             platform_optimizations[platform.value] = optimization.__dict__
             
             if optimization.mobile_score > 0.8:
                 mobile_enhancements.append(f"Optimized for {platform.value} mobile users")
         
         # Calculate overall mobile optimization score
+
         mobile_scores = [opt.get("mobile_score", 0.0) for opt in platform_optimizations.values()]
+
         mobile_optimization_score = sum(mobile_scores) / len(mobile_scores) if mobile_scores else 0.0
         
         # Calculate optimization improvement
+
         optimization_improvement = mobile_optimization_score * 0.8  # Assume 80% of mobile score is improvement
         
         return {
@@ -1063,7 +1288,8 @@ class MobileSocialOptimizer:
             return await self._optimize_for_generic_platform(platform, request)
     
     async def _optimize_for_tiktok(self, request: MobileSocialRequest) -> SocialPlatformOptimization:
-        """Optimize specifically for TikTok mobile algorithm"""
+        """
+        Optimize specifically for TikTok mobile algorithm"""
         return SocialPlatformOptimization(
             platform=SocialPlatform.TIKTOK,
             optimizations={

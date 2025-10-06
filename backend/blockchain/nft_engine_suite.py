@@ -49,7 +49,8 @@ logger = logging.getLogger(__name__)
 # =============================================================================
 
 class NFTStandard(Enum):
-    """Supported NFT standards"""
+    """
+        Supported NFT standards"""
     ERC721 = "erc721"
     ERC1155 = "erc1155"
     ERC2981 = "erc2981"  # Royalty standard
@@ -114,7 +115,8 @@ class MintingResult:
 
 @dataclass
 class BatchMintingRequest:
-    """Batch minting request"""
+    """
+        Batch minting request"""
     batch_id: str
     owner_address: str
     metadata_uris: List[str]
@@ -123,7 +125,8 @@ class BatchMintingRequest:
     gas_limit: Optional[int] = None
 
 class MintingEngine:
-    """Professional NFT minting engine with optimization"""
+    """
+        Professional NFT minting engine with optimization"""
     
     def __init__(self, web3_provider: Web3, config: Dict[str, Any]):
         self.web3 = web3_provider
@@ -140,17 +143,21 @@ class MintingEngine:
         attributes: Dict[str, Any],
         standard: NFTStandard = NFTStandard.ERC721
     ) -> MintingResult:
-        """Mint single NFT"""
+        """
+        Mint single NFT"""
         try:
             mint_id = str(uuid.uuid4())
             
             # Get contract
+
             contract = await self._get_contract(contract_address, standard)
             
             # Generate token ID
             token_id = await self._generate_token_id(contract_address)
             
             # Mint NFT (simulated for demo)
+
+
             tx_hash = f"0x{hashlib.sha256(f'{mint_id}_{token_id}'.encode()).hexdigest()}"
             
             result = MintingResult(
@@ -161,17 +168,22 @@ class MintingEngine:
                 metadata_uri=metadata_uri,
                 transaction_hash=tx_hash,
                 block_number=0,  # Would be actual block number
+
                 gas_used=150000,  # Estimated gas
+
                 status=MintingStatus.MINTED
             )
+
             
             self.minted_tokens[mint_id] = result
             
             logger.info(f"NFT minted: {mint_id} -> Token {token_id}")
+
             return result
             
         except Exception as e:
             logger.error(f"Error minting NFT: {str(e)}")
+
             raise
 
     async def batch_mint_nfts(
@@ -193,28 +205,31 @@ class MintingEngine:
                     attrs,
                     batch_request.standard
                 )
+
                 results.append(result)
                 
                 # Add delay for rate limiting
                 if i > 0 and i % 10 == 0:
                     await asyncio.sleep(0.1)
+
             
             logger.info(f"Batch minted {len(results)} NFTs")
+
             return results
             
         except Exception as e:
             logger.error(f"Error batch minting: {str(e)}")
+
             raise
 
     async def _get_contract(self, address: str, standard: NFTStandard) -> Contract:
         """Get contract instance"""
         if address not in self.contracts:
             # Would load actual contract ABI here
-            self.contracts[address] = None  # Placeholder
-        return self.contracts[address]
-
+            self.contracts[address] = None
     async def _generate_token_id(self, contract_address: str) -> int:
-        """Generate unique token ID"""
+        """
+        Generate unique token ID"""
         # In real implementation, would query contract for next available ID
         return int(time.time() * 1000) % 1000000
 
@@ -224,7 +239,8 @@ class MintingEngine:
 
 @dataclass
 class NFTCollection:
-    """NFT collection record"""
+    """
+        NFT collection record"""
     collection_id: str
     name: str
     symbol: str
@@ -241,7 +257,8 @@ class NFTCollection:
 
 @dataclass
 class BatchOperation:
-    """Batch operation record"""
+    """
+        Batch operation record"""
     operation_id: str
     collection_id: str
     operation_type: str
@@ -252,7 +269,8 @@ class BatchOperation:
     completed_at: Optional[datetime] = None
 
 class CollectionOrchestrator:
-    """NFT collection orchestration with automated management"""
+    """
+        NFT collection orchestration with automated management"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -269,9 +287,12 @@ class CollectionOrchestrator:
         royalty_percentage: float = 2.5,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Create new NFT collection"""
+        """
+        Create new NFT collection"""
         try:
             collection_id = str(uuid.uuid4())
+
+
             
             collection = NFTCollection(
                 collection_id=collection_id,
@@ -280,6 +301,7 @@ class CollectionOrchestrator:
                 description=description,
                 creator_address=creator_address,
                 contract_address=None,  # Will be set when deployed
+
                 max_supply=max_supply,
                 current_supply=0,
                 status=CollectionStatus.DRAFT,
@@ -287,14 +309,17 @@ class CollectionOrchestrator:
                 created_at=datetime.utcnow(),
                 metadata=metadata or {}
             )
+
             
             self.collections[collection_id] = collection
             
             logger.info(f"Collection created: {collection_id}")
+
             return collection_id
             
         except Exception as e:
             logger.error(f"Error creating collection: {str(e)}")
+
             raise
 
     async def deploy_collection(self, collection_id: str) -> str:
@@ -302,20 +327,26 @@ class CollectionOrchestrator:
         try:
             if collection_id not in self.collections:
                 raise ValueError(f"Collection not found: {collection_id}")
+
+
             
             collection = self.collections[collection_id]
             
             # Deploy contract (simulated)
+
+
             contract_address = f"0x{hashlib.sha256(collection_id.encode()).hexdigest()[:40]}"
             
             collection.contract_address = contract_address
             collection.status = CollectionStatus.ACTIVE
             
             logger.info(f"Collection deployed: {collection_id} -> {contract_address}")
+
             return contract_address
             
         except Exception as e:
             logger.error(f"Error deploying collection: {str(e)}")
+
             raise
 
     async def add_traits_to_collection(
@@ -327,15 +358,19 @@ class CollectionOrchestrator:
         try:
             if collection_id not in self.collections:
                 return False
+
             
             collection = self.collections[collection_id]
             collection.traits.update(traits)
+
             
             logger.info(f"Traits added to collection: {collection_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Error adding traits: {str(e)}")
+
             return False
 
     async def generate_collection_metadata(
@@ -348,8 +383,11 @@ class CollectionOrchestrator:
         try:
             if collection_id not in self.collections:
                 raise ValueError(f"Collection not found: {collection_id}")
+
+
             
             collection = self.collections[collection_id]
+
             metadata_list = []
             
             for i in range(count):
@@ -359,20 +397,29 @@ class CollectionOrchestrator:
                 for trait_type, possible_values in collection.traits.items():
                     if trait_rarity and trait_type in trait_rarity:
                         # Use weighted selection based on rarity
+
                         rarity_weights = trait_rarity[trait_type]
+
                         values = list(rarity_weights.keys())
+
+
                         weights = list(rarity_weights.values())
                         
                         # Simple weighted selection (would use proper random in production)
+
+
                         selected_value = values[0]  # Simplified
                     else:
                         # Random selection
+
                         selected_value = possible_values[i % len(possible_values)]
                     
                     attributes.append({
                         "trait_type": trait_type,
                         "value": selected_value
                     })
+
+
                 
                 metadata = {
                     "name": f"{collection.name} #{i + 1}",
@@ -386,12 +433,15 @@ class CollectionOrchestrator:
                 }
                 
                 metadata_list.append(metadata)
+
             
             logger.info(f"Generated {count} metadata items for collection {collection_id}")
+
             return metadata_list
             
         except Exception as e:
             logger.error(f"Error generating metadata: {str(e)}")
+
             raise
 
 # =============================================================================
@@ -410,7 +460,8 @@ class MetadataUpdate:
     updated_by: str
 
 class DynamicMetadata:
-    """Smart metadata system with dynamic updates"""
+    """
+        Smart metadata system with dynamic updates"""
     
     def __init__(self):
         self.metadata_store: Dict[str, Dict[str, Any]] = {}
@@ -422,15 +473,19 @@ class DynamicMetadata:
         token_id: str,
         metadata: Dict[str, Any]
     ) -> bool:
-        """Set complete metadata for token"""
+        """
+        Set complete metadata for token"""
         try:
             self.metadata_store[token_id] = metadata.copy()
+
             
             logger.info(f"Metadata set for token: {token_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Error setting metadata: {str(e)}")
+
             return False
 
     async def update_metadata_field(
@@ -448,11 +503,14 @@ class DynamicMetadata:
             # Check update rules
             if not await self._validate_update(token_id, field, new_value):
                 return False
+
             
             old_value = self.metadata_store[token_id].get(field)
+
             self.metadata_store[token_id][field] = new_value
             
             # Record update
+
             update = MetadataUpdate(
                 update_id=str(uuid.uuid4()),
                 token_id=token_id,
@@ -462,16 +520,20 @@ class DynamicMetadata:
                 updated_at=datetime.utcnow(),
                 updated_by=updated_by
             )
+
             
             if token_id not in self.update_history:
                 self.update_history[token_id] = []
             self.update_history[token_id].append(update)
+
             
             logger.info(f"Metadata updated for token {token_id}: {field}")
+
             return True
             
         except Exception as e:
             logger.error(f"Error updating metadata: {str(e)}")
+
             return False
 
     async def _validate_update(
@@ -490,12 +552,16 @@ class DynamicMetadata:
                     return False
                 
                 # Check value type
+
                 expected_type = rules.get('type')
+
                 if expected_type and not isinstance(new_value, expected_type):
                     return False
                 
                 # Check allowed values
+
                 allowed_values = rules.get('allowed_values')
+
                 if allowed_values and new_value not in allowed_values:
                     return False
             
@@ -503,6 +569,7 @@ class DynamicMetadata:
             
         except Exception as e:
             logger.error(f"Error validating update: {str(e)}")
+
             return False
 
     async def get_metadata_with_dynamic_properties(
@@ -514,6 +581,7 @@ class DynamicMetadata:
         try:
             if token_id not in self.metadata_store:
                 return {}
+
             
             metadata = self.metadata_store[token_id].copy()
             
@@ -522,6 +590,7 @@ class DynamicMetadata:
                 # Level based on experience
                 if 'experience' in context:
                     level = min(100, context['experience'] // 1000)
+
                     metadata['level'] = level
                 
                 # Status based on usage
@@ -538,6 +607,7 @@ class DynamicMetadata:
             
         except Exception as e:
             logger.error(f"Error getting dynamic metadata: {str(e)}")
+
             return {}
 
 # =============================================================================
@@ -556,7 +626,8 @@ class OwnershipShare:
 
 @dataclass
 class NFTShares:
-    """NFT shares configuration"""
+    """
+        NFT shares configuration"""
     token_id: str
     total_shares: int
     available_shares: int
@@ -565,7 +636,8 @@ class NFTShares:
     shares: Dict[str, OwnershipShare] = field(default_factory=dict)
 
 class FractionalOwnership:
-    """Fractional NFT ownership management"""
+    """
+        Fractional NFT ownership management"""
     
     def __init__(self):
         self.fractional_nfts: Dict[str, NFTShares] = {}
@@ -579,10 +651,13 @@ class FractionalOwnership:
         share_price: Decimal,
         minimum_share: Decimal = Decimal('0.01')
     ) -> bool:
-        """Fractionalize NFT into shares"""
+        """
+        Fractionalize NFT into shares"""
         try:
             if token_id in self.fractional_nfts:
                 raise ValueError(f"NFT already fractionalized: {token_id}")
+
+
             
             nft_shares = NFTShares(
                 token_id=token_id,
@@ -593,6 +668,7 @@ class FractionalOwnership:
             )
             
             # Owner gets 100% initially
+
             owner_share = OwnershipShare(
                 share_id=str(uuid.uuid4()),
                 token_id=token_id,
@@ -600,6 +676,7 @@ class FractionalOwnership:
                 percentage=Decimal('100'),
                 acquired_at=datetime.utcnow()
             )
+
             
             nft_shares.shares[owner_share.share_id] = owner_share
             self.fractional_nfts[token_id] = nft_shares
@@ -607,12 +684,15 @@ class FractionalOwnership:
             if owner_address not in self.user_shares:
                 self.user_shares[owner_address] = []
             self.user_shares[owner_address].append(owner_share.share_id)
+
             
             logger.info(f"NFT fractionalized: {token_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Error fractionalizing NFT: {str(e)}")
+
             return False
 
     async def buy_shares(
@@ -626,6 +706,8 @@ class FractionalOwnership:
         try:
             if token_id not in self.fractional_nfts:
                 raise ValueError(f"NFT not fractionalized: {token_id}")
+
+
             
             nft_shares = self.fractional_nfts[token_id]
             
@@ -634,21 +716,28 @@ class FractionalOwnership:
                 raise ValueError(f"Share below minimum: {share_percentage}")
             
             # Check payment
+
             required_payment = nft_shares.share_price * share_percentage
             if payment_amount < required_payment:
                 raise ValueError(f"Insufficient payment: {payment_amount} < {required_payment}")
             
             # Find seller (for simplicity, take from largest holder)
+
+
             largest_holder = max(
                 nft_shares.shares.values(),
                 key=lambda x: x.percentage
             )
+
             
             if largest_holder.percentage < share_percentage:
                 raise ValueError("Insufficient shares available")
             
             # Transfer shares
+
             share_id = str(uuid.uuid4())
+
+
             new_share = OwnershipShare(
                 share_id=share_id,
                 token_id=token_id,
@@ -666,12 +755,15 @@ class FractionalOwnership:
             if buyer_address not in self.user_shares:
                 self.user_shares[buyer_address] = []
             self.user_shares[buyer_address].append(share_id)
+
             
             logger.info(f"Shares purchased: {share_percentage}% of {token_id}")
+
             return share_id
             
         except Exception as e:
             logger.error(f"Error buying shares: {str(e)}")
+
             raise
 
     async def get_ownership_distribution(self, token_id: str) -> Dict[str, Decimal]:
@@ -679,19 +771,23 @@ class FractionalOwnership:
         try:
             if token_id not in self.fractional_nfts:
                 return {}
+
             
             nft_shares = self.fractional_nfts[token_id]
+
             distribution = {}
             
             for share in nft_shares.shares.values():
                 if share.owner_address not in distribution:
                     distribution[share.owner_address] = Decimal('0')
+
                 distribution[share.owner_address] += share.percentage
             
             return distribution
             
         except Exception as e:
             logger.error(f"Error getting ownership distribution: {str(e)}")
+
             return {}
 
 # =============================================================================
@@ -708,7 +804,8 @@ class RarityAnalysis:
     rank: Optional[int] = None
 
 class RarityCalculator:
-    """Algorithmic rarity calculation with multiple methods"""
+    """
+        Algorithmic rarity calculation with multiple methods"""
     
     def __init__(self):
         self.collection_traits: Dict[str, Dict[str, Dict[str, int]]] = {}  # collection -> trait -> value -> count
@@ -719,16 +816,21 @@ class RarityCalculator:
         collection_id: str,
         metadata_list: List[Dict[str, Any]]
     ) -> bool:
-        """Analyze traits across collection for rarity calculation"""
+        """
+        Analyze traits across collection for rarity calculation"""
         try:
             trait_counts = {}
             
             for metadata in metadata_list:
                 attributes = metadata.get('attributes', [])
+
                 
                 for attr in attributes:
                     trait_type = attr.get('trait_type')
+
+
                     value = attr.get('value')
+
                     
                     if not trait_type or value is None:
                         continue
@@ -743,12 +845,15 @@ class RarityCalculator:
             
             self.collection_traits[collection_id] = trait_counts
             self.collection_sizes[collection_id] = len(metadata_list)
+
             
             logger.info(f"Analyzed traits for collection: {collection_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Error analyzing traits: {str(e)}")
+
             return False
 
     async def calculate_rarity(
@@ -761,21 +866,32 @@ class RarityCalculator:
         try:
             if collection_id not in self.collection_traits:
                 raise ValueError(f"Collection traits not analyzed: {collection_id}")
+
+
             
             token_id = token_metadata.get('name', 'unknown')
+
+
             trait_rarities = {}
+
             
             collection_size = self.collection_sizes[collection_id]
+
             attributes = token_metadata.get('attributes', [])
             
             # Calculate trait rarities
             for attr in attributes:
                 trait_type = attr.get('trait_type')
+
+
                 value = attr.get('value')
+
                 
                 if trait_type in self.collection_traits[collection_id]:
                     trait_counts = self.collection_traits[collection_id][trait_type]
+
                     value_count = trait_counts.get(value, 0)
+
                     
                     if value_count > 0:
                         rarity = value_count / collection_size
@@ -784,18 +900,24 @@ class RarityCalculator:
             # Calculate overall rarity score
             if method == "statistical":
                 # Statistical rarity (product of trait rarities)
+
+
                 overall_score = 1.0
                 for rarity in trait_rarities.values():
                     overall_score *= rarity
             elif method == "trait_count":
                 # Based on number of traits
+
                 overall_score = 1.0 / len(attributes) if attributes else 1.0
             else:
                 # Average rarity
+
                 overall_score = statistics.mean(trait_rarities.values()) if trait_rarities else 1.0
             
             # Determine rarity tier
+
             rarity_tier = self._get_rarity_tier(overall_score)
+
             
             return RarityAnalysis(
                 token_id=token_id,
@@ -803,9 +925,11 @@ class RarityCalculator:
                 rarity_tier=rarity_tier,
                 trait_rarities=trait_rarities
             )
+
             
         except Exception as e:
             logger.error(f"Error calculating rarity: {str(e)}")
+
             raise
 
     def _get_rarity_tier(self, score: float) -> RarityTier:
@@ -828,18 +952,22 @@ class RarityCalculator:
         collection_id: str,
         metadata_list: List[Dict[str, Any]]
     ) -> List[RarityAnalysis]:
-        """Rank entire collection by rarity"""
+        """
+        Rank entire collection by rarity"""
         try:
             # First analyze traits
             await self.analyze_collection_traits(collection_id, metadata_list)
             
             # Calculate rarity for each token
+
             rarity_analyses = []
             for metadata in metadata_list:
                 analysis = await self.calculate_rarity(collection_id, metadata)
+
                 rarity_analyses.append(analysis)
             
             # Sort by rarity score (ascending - rarer items have lower scores)
+
             rarity_analyses.sort(key=lambda x: x.overall_rarity_score)
             
             # Assign ranks
@@ -847,10 +975,12 @@ class RarityCalculator:
                 analysis.rank = i + 1
             
             logger.info(f"Ranked {len(rarity_analyses)} tokens by rarity")
+
             return rarity_analyses
             
         except Exception as e:
             logger.error(f"Error ranking collection: {str(e)}")
+
             raise
 
 # =============================================================================
@@ -871,7 +1001,8 @@ class MarketplaceListing:
     expires_at: Optional[datetime] = None
 
 class MarketplaceConnector:
-    """Multi-marketplace integration connector"""
+    """
+        Multi-marketplace integration connector"""
     
     def __init__(self):
         self.supported_marketplaces = {
@@ -892,16 +1023,23 @@ class MarketplaceConnector:
         seller: str,
         duration_days: Optional[int] = None
     ) -> str:
-        """List NFT on marketplace"""
+        """
+        List NFT on marketplace"""
         try:
             if marketplace not in self.supported_marketplaces:
                 raise ValueError(f"Unsupported marketplace: {marketplace}")
+
+
             
             listing_id = str(uuid.uuid4())
+
+
             expires_at = None
             
             if duration_days:
                 expires_at = datetime.utcnow() + timedelta(days=duration_days)
+
+
             
             listing = MarketplaceListing(
                 listing_id=listing_id,
@@ -916,17 +1054,23 @@ class MarketplaceConnector:
             )
             
             # Create listing on marketplace (simulated)
+
+
             success = await self._create_marketplace_listing(marketplace, listing)
+
             
             if success:
                 self.listings[listing_id] = listing
                 logger.info(f"NFT listed on {marketplace}: {listing_id}")
+
                 return listing_id
             else:
                 raise Exception(f"Failed to create listing on {marketplace}")
+
                 
         except Exception as e:
             logger.error(f"Error listing NFT: {str(e)}")
+
             raise
 
     async def cross_list_nft(
@@ -946,15 +1090,20 @@ class MarketplaceConnector:
                     listing_id = await self.list_nft(
                         token_id, marketplace, price, currency, seller
                     )
+
                     listing_ids.append(listing_id)
+
                 except Exception as e:
                     logger.warning(f"Failed to list on {marketplace}: {str(e)}")
+
             
             logger.info(f"Cross-listed NFT on {len(listing_ids)} marketplaces")
+
             return listing_ids
             
         except Exception as e:
             logger.error(f"Error cross-listing NFT: {str(e)}")
+
             raise
 
     async def _create_marketplace_listing(
@@ -966,6 +1115,7 @@ class MarketplaceConnector:
         try:
             # This would contain actual API calls to each marketplace
             # For demo purposes, we'll simulate success
+
             
             api_url = self.supported_marketplaces[marketplace]
             
@@ -981,6 +1131,7 @@ class MarketplaceConnector:
             
         except Exception as e:
             logger.error(f"Error creating {marketplace} listing: {str(e)}")
+
             return False
 
     async def update_listing_price(
@@ -992,16 +1143,21 @@ class MarketplaceConnector:
         try:
             if listing_id not in self.listings:
                 return False
+
             
             listing = self.listings[listing_id]
+
             old_price = listing.price
             listing.price = new_price
             
             # Update on marketplace
+
             success = await self._update_marketplace_listing(listing)
+
             
             if success:
                 logger.info(f"Price updated: {listing_id} from {old_price} to {new_price}")
+
                 return True
             else:
                 listing.price = old_price  # Revert
@@ -1009,6 +1165,7 @@ class MarketplaceConnector:
                 
         except Exception as e:
             logger.error(f"Error updating price: {str(e)}")
+
             return False
 
     async def _update_marketplace_listing(self, listing: MarketplaceListing) -> bool:
@@ -1022,7 +1179,8 @@ class MarketplaceConnector:
 
 @dataclass
 class RoyaltyConfig:
-    """Royalty configuration"""
+    """
+        Royalty configuration"""
     token_id: str
     creator_address: str
     royalty_percentage: Decimal
@@ -1030,7 +1188,8 @@ class RoyaltyConfig:
 
 @dataclass
 class RoyaltyPayment:
-    """Royalty payment record"""
+    """
+        Royalty payment record"""
     payment_id: str
     token_id: str
     sale_price: Decimal
@@ -1040,7 +1199,8 @@ class RoyaltyPayment:
     paid_at: datetime
 
 class RoyaltyEnforcer:
-    """Automated royalty enforcement system"""
+    """
+        Automated royalty enforcement system"""
     
     def __init__(self):
         self.royalty_configs: Dict[str, RoyaltyConfig] = {}
@@ -1053,7 +1213,8 @@ class RoyaltyEnforcer:
         royalty_percentage: Decimal,
         recipient_splits: Optional[Dict[str, Decimal]] = None
     ) -> bool:
-        """Configure royalty settings for token"""
+        """
+        Configure royalty settings for token"""
         try:
             if royalty_percentage > Decimal('50'):
                 raise ValueError("Royalty percentage cannot exceed 50%")
@@ -1061,10 +1222,13 @@ class RoyaltyEnforcer:
             # Validate splits sum to 100%
             if recipient_splits:
                 total_split = sum(recipient_splits.values())
+
                 if total_split != Decimal('100'):
                     raise ValueError(f"Recipient splits must sum to 100%, got {total_split}%")
+
             else:
                 recipient_splits = {creator_address: Decimal('100')}
+
             
             config = RoyaltyConfig(
                 token_id=token_id,
@@ -1072,14 +1236,17 @@ class RoyaltyEnforcer:
                 royalty_percentage=royalty_percentage,
                 recipient_splits=recipient_splits
             )
+
             
             self.royalty_configs[token_id] = config
             
             logger.info(f"Royalties configured for token: {token_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Error configuring royalties: {str(e)}")
+
             return False
 
     async def process_sale_royalties(
@@ -1092,18 +1259,27 @@ class RoyaltyEnforcer:
         try:
             if token_id not in self.royalty_configs:
                 logger.info(f"No royalty config for token: {token_id}")
+
                 return []
+
             
             config = self.royalty_configs[token_id]
+
             total_royalty = sale_price * (config.royalty_percentage / Decimal('100'))
+
+
             
             payment_ids = []
             
             # Distribute royalties according to splits
             for recipient, split_percentage in config.recipient_splits.items():
                 recipient_amount = total_royalty * (split_percentage / Decimal('100'))
+
+
                 
                 payment_id = str(uuid.uuid4())
+
+
                 payment = RoyaltyPayment(
                     payment_id=payment_id,
                     token_id=token_id,
@@ -1111,19 +1287,23 @@ class RoyaltyEnforcer:
                     royalty_amount=recipient_amount,
                     recipient=recipient,
                     transaction_hash=f"royalty_{payment_id}",  # Would be actual tx hash
+
                     paid_at=datetime.utcnow()
                 )
+
                 
                 self.payments[payment_id] = payment
                 payment_ids.append(payment_id)
                 
                 # Here would be actual payment execution
                 logger.info(f"Royalty paid: {recipient_amount} to {recipient}")
+
             
             return payment_ids
             
         except Exception as e:
             logger.error(f"Error processing royalties: {str(e)}")
+
             raise
 
 # =============================================================================
@@ -1142,7 +1322,8 @@ class NFTUtility:
     expires_at: Optional[datetime] = None
 
 class UtilityManager:
-    """NFT utility management system"""
+    """
+        NFT utility management system"""
     
     def __init__(self):
         self.utilities: Dict[str, NFTUtility] = {}
@@ -1155,9 +1336,12 @@ class UtilityManager:
         parameters: Dict[str, Any],
         expires_at: Optional[datetime] = None
     ) -> str:
-        """Add utility to NFT"""
+        """
+        Add utility to NFT"""
         try:
             utility_id = str(uuid.uuid4())
+
+
             
             utility = NFTUtility(
                 utility_id=utility_id,
@@ -1168,18 +1352,22 @@ class UtilityManager:
                 created_at=datetime.utcnow(),
                 expires_at=expires_at
             )
+
             
             self.utilities[utility_id] = utility
             
             if token_id not in self.token_utilities:
                 self.token_utilities[token_id] = []
             self.token_utilities[token_id].append(utility_id)
+
             
             logger.info(f"Utility added: {utility_type.value} to token {token_id}")
+
             return utility_id
             
         except Exception as e:
             logger.error(f"Error adding utility: {str(e)}")
+
             raise
 
     async def check_access_utility(
@@ -1201,7 +1389,9 @@ class UtilityManager:
                     (not utility.expires_at or utility.expires_at > datetime.utcnow())):
                     
                     # Check if resource is in allowed list
+
                     allowed_resources = utility.parameters.get('allowed_resources', [])
+
                     if resource_id in allowed_resources or '*' in allowed_resources:
                         return True
             
@@ -1209,6 +1399,7 @@ class UtilityManager:
             
         except Exception as e:
             logger.error(f"Error checking access utility: {str(e)}")
+
             return False
 
     async def get_staking_rewards(
@@ -1220,8 +1411,11 @@ class UtilityManager:
         try:
             if token_id not in self.token_utilities:
                 return Decimal('0')
+
+
             
             total_rewards = Decimal('0')
+
             
             for utility_id in self.token_utilities[token_id]:
                 utility = self.utilities[utility_id]
@@ -1230,18 +1424,25 @@ class UtilityManager:
                     utility.active):
                     
                     # Calculate rewards based on staking duration and rate
+
                     stake_rate = Decimal(str(utility.parameters.get('daily_rate', 0)))
+
+
                     stake_start = utility.parameters.get('stake_start_date')
+
                     
                     if stake_start:
                         days_staked = (datetime.utcnow() - stake_start).days
+
                         rewards = stake_rate * Decimal(str(days_staked))
+
                         total_rewards += rewards
             
             return total_rewards
             
         except Exception as e:
             logger.error(f"Error calculating staking rewards: {str(e)}")
+
             return Decimal('0')
 
 # =============================================================================
@@ -1257,7 +1458,8 @@ class TransferValidation:
     risk_factors: List[str] = field(default_factory=list)
 
 class TransferValidator:
-    """NFT transfer validation and security checks"""
+    """
+        NFT transfer validation and security checks"""
     
     def __init__(self):
         self.blacklisted_addresses: Set[str] = set()
@@ -1271,7 +1473,8 @@ class TransferValidator:
         to_address: str,
         transfer_type: TransferType = TransferType.STANDARD
     ) -> TransferValidation:
-        """Validate NFT transfer"""
+        """
+        Validate NFT transfer"""
         try:
             validation = TransferValidation(valid=True, security_score=1.0)
             
@@ -1280,12 +1483,14 @@ class TransferValidator:
                 validation.valid = False
                 validation.reason = "Recipient address is blacklisted"
                 validation.risk_factors.append("blacklisted_recipient")
+
                 return validation
             
             if from_address in self.blacklisted_addresses:
                 validation.valid = False
                 validation.reason = "Sender address is blacklisted"
                 validation.risk_factors.append("blacklisted_sender")
+
                 return validation
             
             # Check transfer limits
@@ -1293,8 +1498,12 @@ class TransferValidator:
                 limits = self.transfer_limits[token_id]
                 
                 # Check cooldown period
+
                 last_transfer = limits.get('last_transfer_time')
+
+
                 cooldown_hours = limits.get('cooldown_hours', 0)
+
                 
                 if last_transfer and cooldown_hours > 0:
                     time_since_transfer = datetime.utcnow() - last_transfer
@@ -1304,18 +1513,23 @@ class TransferValidator:
                         return validation
                 
                 # Check maximum transfers per day
+
                 max_transfers_per_day = limits.get('max_transfers_per_day')
+
                 if max_transfers_per_day:
                     daily_transfers = limits.get('daily_transfer_count', 0)
+
                     if daily_transfers >= max_transfers_per_day:
                         validation.valid = False
                         validation.reason = "Daily transfer limit exceeded"
                         return validation
             
             # Security scoring
+
             security_score = await self._calculate_security_score(
                 from_address, to_address, transfer_type
             )
+
             validation.security_score = security_score
             
             # Risk assessment
@@ -1334,6 +1548,7 @@ class TransferValidator:
             
         except Exception as e:
             logger.error(f"Error validating transfer: {str(e)}")
+
             return TransferValidation(valid=False, reason=f"Validation error: {str(e)}")
 
     async def _calculate_security_score(
@@ -1347,6 +1562,7 @@ class TransferValidator:
             score = 1.0
             
             # Check address reputation (simplified)
+
             if len(to_address) != 42 or not to_address.startswith('0x'):
                 score -= 0.3
             
@@ -1355,9 +1571,11 @@ class TransferValidator:
                 score -= 0.1  # Slightly higher risk
             
             return max(0.0, min(1.0, score))
+
             
         except Exception as e:
             logger.error(f"Error calculating security score: {str(e)}")
+
             return 0.5
 
     async def set_transfer_limits(
@@ -1370,6 +1588,7 @@ class TransferValidator:
         try:
             if token_id not in self.transfer_limits:
                 self.transfer_limits[token_id] = {}
+
             
             limits = self.transfer_limits[token_id]
             
@@ -1380,10 +1599,12 @@ class TransferValidator:
                 limits['max_transfers_per_day'] = max_transfers_per_day
             
             logger.info(f"Transfer limits set for token: {token_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Error setting transfer limits: {str(e)}")
+
             return False
 
 # =============================================================================
@@ -1402,7 +1623,8 @@ class BurnRecord:
     metadata_backup: Dict[str, Any] = field(default_factory=dict)
 
 class BurnController:
-    """NFT burn control with deflationary mechanisms"""
+    """
+        NFT burn control with deflationary mechanisms"""
     
     def __init__(self):
         self.burned_tokens: Dict[str, BurnRecord] = {}
@@ -1420,13 +1642,18 @@ class BurnController:
         burn_reason: str,
         backup_metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Burn NFT token"""
+        """
+        Burn NFT token"""
         try:
             # Validate burn permission
             if not await self._validate_burn_permission(token_id, owner_address):
                 raise ValueError("Burn not permitted for this token/owner")
+
+
             
             burn_id = str(uuid.uuid4())
+
+
             tx_hash = f"burn_{burn_id}"
             
             burn_record = BurnRecord(
@@ -1438,6 +1665,7 @@ class BurnController:
                 transaction_hash=tx_hash,
                 metadata_backup=backup_metadata or {}
             )
+
             
             self.burned_tokens[burn_id] = burn_record
             
@@ -1447,12 +1675,15 @@ class BurnController:
             
             # Calculate new burn rate
             await self._update_burn_rate()
+
             
             logger.info(f"Token burned: {token_id} by {owner_address}")
+
             return burn_id
             
         except Exception as e:
             logger.error(f"Error burning token: {str(e)}")
+
             raise
 
     async def _validate_burn_permission(
@@ -1471,9 +1702,12 @@ class BurnController:
                     return False
                 
                 # Check burn cooldown
+
                 cooldown_days = rules.get('burn_cooldown_days', 0)
+
                 if cooldown_days > 0:
                     creation_date = rules.get('creation_date')
+
                     if creation_date:
                         age = (datetime.utcnow() - creation_date).days
                         if age < cooldown_days:
@@ -1483,22 +1717,29 @@ class BurnController:
             
         except Exception as e:
             logger.error(f"Error validating burn permission: {str(e)}")
+
             return False
 
     async def _update_burn_rate(self) -> None:
         """Update burn rate calculation"""
         try:
             # Calculate burn rate over last 30 days
+
             thirty_days_ago = datetime.utcnow() - timedelta(days=30)
+
+
             recent_burns = [
                 burn for burn in self.burned_tokens.values()
+
                 if burn.burned_at >= thirty_days_ago
             ]
             
             if recent_burns:
                 self.deflation_metrics['burn_rate'] = Decimal(str(len(recent_burns))) / Decimal('30')
+
             else:
                 self.deflation_metrics['burn_rate'] = Decimal('0')
+
                 
         except Exception as e:
             logger.error(f"Error updating burn rate: {str(e)}")
@@ -1507,18 +1748,22 @@ class BurnController:
         """Get comprehensive deflation metrics"""
         try:
             total_burns = self.deflation_metrics['total_burned']
+
             burn_rate = self.deflation_metrics['burn_rate']
             
             # Calculate burn reasons distribution
+
             burn_reasons = {}
             for burn in self.burned_tokens.values():
                 reason = burn.burn_reason
                 burn_reasons[reason] = burn_reasons.get(reason, 0) + 1
             
             # Calculate time-based metrics
+
             burns_by_month = {}
             for burn in self.burned_tokens.values():
                 month_key = burn.burned_at.strftime('%Y-%m')
+
                 burns_by_month[month_key] = burns_by_month.get(month_key, 0) + 1
             
             return {
@@ -1531,6 +1776,7 @@ class BurnController:
             
         except Exception as e:
             logger.error(f"Error generating deflation report: {str(e)}")
+
             return {}
 
 # =============================================================================
@@ -1555,22 +1801,29 @@ class NFTEngineSuiteManager:
         self.utility_manager = UtilityManager()
         self.transfer_validator = TransferValidator()
         self.burn_controller = BurnController()
+
         
     async def initialize(self) -> bool:
-        """Initialize all NFT engine systems"""
+        """
+        Initialize all NFT engine systems"""
         try:
             logger.info("Initializing NFT Engine Suite...")
             
             # Setup default configurations
             await self._setup_default_metadata_rules()
+
             await self._setup_default_transfer_limits()
+
             await self._setup_marketplace_apis()
+
             
             logger.info("NFT Engine Suite initialized successfully")
+
             return True
             
         except Exception as e:
             logger.error(f"Error initializing NFT engine: {str(e)}")
+
             return False
 
     async def _setup_default_metadata_rules(self):
@@ -1586,8 +1839,10 @@ class NFTEngineSuiteManager:
         self.dynamic_metadata.update_rules = default_rules
 
     async def _setup_default_transfer_limits(self):
-        """Setup default transfer security settings"""
+        """
+        Setup default transfer security settings"""
         # Add common blacklisted addresses (example)
+
         suspicious_addresses = [
             "0x0000000000000000000000000000000000000000",  # Null address
             "0x000000000000000000000000000000000000dead"   # Burn address
@@ -1606,9 +1861,11 @@ class NFTEngineSuiteManager:
         collection_config: Dict[str, Any],
         tokens_config: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Create complete NFT collection with all features"""
+        """
+        Create complete NFT collection with all features"""
         try:
             # Create collection
+
             collection_id = await self.collection_orchestrator.create_collection(
                 name=collection_config['name'],
                 symbol=collection_config['symbol'],
@@ -1619,21 +1876,25 @@ class NFTEngineSuiteManager:
             )
             
             # Deploy collection contract
+
             contract_address = await self.collection_orchestrator.deploy_collection(collection_id)
             
             # Generate metadata for all tokens
+
             metadata_list = await self.collection_orchestrator.generate_collection_metadata(
                 collection_id,
                 len(tokens_config)
             )
             
             # Calculate rarity rankings
+
             rarity_analyses = await self.rarity_calculator.rank_collection_by_rarity(
                 collection_id,
                 metadata_list
             )
             
             # Mint NFTs
+
             minting_results = []
             for i, token_config in enumerate(tokens_config):
                 result = await self.minting_engine.mint_single_nft(
@@ -1642,6 +1903,7 @@ class NFTEngineSuiteManager:
                     metadata_list[i]['image'],  # Assuming image as metadata URI
                     metadata_list[i]['attributes']
                 )
+
                 minting_results.append(result)
                 
                 # Configure royalties
@@ -1659,6 +1921,7 @@ class NFTEngineSuiteManager:
                             UtilityType(utility_config['type']),
                             utility_config['parameters']
                         )
+
             
             return {
                 'collection_id': collection_id,
@@ -1670,6 +1933,7 @@ class NFTEngineSuiteManager:
             
         except Exception as e:
             logger.error(f"Error creating complete collection: {str(e)}")
+
             raise
 
     async def get_comprehensive_status(self) -> Dict[str, Any]:
@@ -1689,6 +1953,7 @@ class NFTEngineSuiteManager:
             
         except Exception as e:
             logger.error(f"Error getting comprehensive status: {str(e)}")
+
             return {}
 
 # =============================================================================

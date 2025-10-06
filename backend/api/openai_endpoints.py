@@ -77,12 +77,14 @@ async def quick_chat(
         ChatMessage(role="system", content=request.system_prompt),
         ChatMessage(role="user", content=request.message)
     ]
+
     
     completion_request = CompletionRequest(
         messages=messages,
         model=request.model,
         temperature=request.temperature
     )
+
     
     result = await openai_service.chat_completion(completion_request)
     await track_api_usage("openai_quick_chat", current_user.id, result.get("usage", {}))
@@ -97,14 +99,16 @@ async def generate_content(
     """Generate social media content using AI"""
     
     # Build context-aware prompt
-    system_prompt = f"""You are an expert social media content creator for the iaCherie platform. 
+    system_prompt = f"""
+        You are an expert social media content creator for the iaCherie platform. 
     Generate engaging {request.content_type} content for {request.platform} with a {request.tone} tone.
     Target audience: {request.target_audience or 'general'}
     Keywords to include: {', '.join(request.keywords) if request.keywords else 'none specified'}
     
     Provide content that is platform-optimized, engaging, and follows best practices."""
     
-    user_prompt = f"""Create a {request.content_type} about: {request.topic}
+    user_prompt = f"""
+        Create a {request.content_type} about: {request.topic}
     
     Platform: {request.platform}
     Tone: {request.tone}
@@ -119,12 +123,14 @@ async def generate_content(
         ChatMessage(role="system", content=system_prompt),
         ChatMessage(role="user", content=user_prompt)
     ]
+
     
     completion_request = CompletionRequest(
         messages=messages,
         model="gpt-4o-mini",
         temperature=0.8  # Higher creativity for content generation
     )
+
     
     result = await openai_service.chat_completion(completion_request)
     await track_api_usage("content_generation", current_user.id, result.get("usage", {}))
@@ -148,7 +154,8 @@ async def generate_script(
 ):
     """Generate video scripts for content creators"""
     
-    system_prompt = f"""You are a professional video script writer for the iaCherie platform.
+    system_prompt = f"""
+        You are a professional video script writer for the iaCherie platform.
     Create engaging {request.video_type} video scripts that are approximately {request.duration_minutes} minutes long.
     Style: {request.style}
     Include attention-grabbing hooks: {request.include_hooks}
@@ -161,7 +168,8 @@ async def generate_script(
     - Visual cues and suggestions
     - Call-to-action (if requested)"""
     
-    user_prompt = f"""Write a {request.duration_minutes}-minute {request.video_type} video script about: {request.topic}
+    user_prompt = f"""
+        Write a {request.duration_minutes}-minute {request.video_type} video script about: {request.topic}
     
     Please format with:
     [TIMESTAMP] - Action/Dialog
@@ -174,12 +182,14 @@ async def generate_script(
         ChatMessage(role="system", content=system_prompt),
         ChatMessage(role="user", content=user_prompt)
     ]
+
     
     completion_request = CompletionRequest(
         messages=messages,
         model="gpt-4o-mini",
         temperature=0.7
     )
+
     
     result = await openai_service.chat_completion(completion_request)
     await track_api_usage("script_generation", current_user.id, result.get("usage", {}))
@@ -221,6 +231,7 @@ async def transcribe_audio(
     with tempfile.NamedTemporaryFile(delete=False, suffix=f"_{file.filename}") as temp_file:
         content = await file.read()
         temp_file.write(content)
+
         temp_file_path = temp_file.name
     
     try:
@@ -229,9 +240,12 @@ async def transcribe_audio(
             model=model,
             language=language
         )
+
+
         
         result = await openai_service.transcribe_audio(request)
         await track_api_usage("audio_transcription", current_user.id, {"file_size": len(content)})
+
         
         return {
             **result,
@@ -285,6 +299,7 @@ async def analyze_content(
     
     if analysis_type not in analysis_prompts:
         raise HTTPException(status_code=400, detail="Invalid analysis type")
+
     
     system_prompt = f"""You are an AI content analyst for the iaCherie platform.
     Provide detailed {analysis_type} analysis with actionable insights and recommendations.
@@ -306,12 +321,14 @@ async def analyze_content(
         ChatMessage(role="system", content=system_prompt),
         ChatMessage(role="user", content=user_prompt)
     ]
+
     
     completion_request = CompletionRequest(
         messages=messages,
         model="gpt-4o-mini",
         temperature=0.3  # Lower temperature for analytical tasks
     )
+
     
     result = await openai_service.chat_completion(completion_request)
     await track_api_usage("content_analysis", current_user.id, result.get("usage", {}))

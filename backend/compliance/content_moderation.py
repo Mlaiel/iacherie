@@ -8,6 +8,7 @@ Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
 """
 
+
 import logging
 import uuid
 from datetime import datetime, timedelta
@@ -19,7 +20,10 @@ logger = logging.getLogger(__name__)
 
 
 class ViolationType(str, Enum):
-    """Types of content violations"""
+    """
+
+        Types of content violations"""
+
     HATE_SPEECH = "hate_speech"
     HARASSMENT = "harassment"
     VIOLENCE = "violence"
@@ -36,6 +40,7 @@ class ViolationType(str, Enum):
 
 class ModerationAction(str, Enum):
     """Content moderation actions"""
+
     APPROVED = "approved"
     REJECTED = "rejected"
     FLAGGED = "flagged"
@@ -49,6 +54,7 @@ class ModerationAction(str, Enum):
 
 class ModerationLevel(str, Enum):
     """Moderation severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -57,6 +63,7 @@ class ModerationLevel(str, Enum):
 
 class ContentType(str, Enum):
     """Types of content to moderate"""
+
     TEXT = "text"
     IMAGE = "image"
     VIDEO = "video"
@@ -69,6 +76,7 @@ class ContentType(str, Enum):
 @dataclass
 class ModerationResult:
     """Content moderation result"""
+
     content_id: str
     content_type: ContentType
     violation_type: Optional[ViolationType]
@@ -84,7 +92,10 @@ class ModerationResult:
 
 @dataclass
 class ComplianceViolation:
-    """Compliance violation record"""
+    """
+
+        Compliance violation record"""
+
     violation_id: str
     content_id: str
     user_id: int
@@ -99,7 +110,10 @@ class ComplianceViolation:
 
 @dataclass
 class ModerationReport:
-    """Content moderation compliance report"""
+    """
+
+        Content moderation compliance report"""
+
     report_id: str
     period_start: datetime
     period_end: datetime
@@ -113,9 +127,11 @@ class ModerationReport:
 
 class ContentModerationCompliance:
     """
+
     Enterprise content moderation compliance manager.
     Provides automated content moderation and regulatory compliance.
     """
+
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.logger = logger
@@ -145,7 +161,10 @@ class ContentModerationCompliance:
         self._initialize_moderation_rules()
     
     def _initialize_moderation_rules(self):
-        """Initialize content moderation rules by violation type"""
+        """
+
+        Initialize content moderation rules by violation type"""
+
         self.moderation_rules = {
             ViolationType.HATE_SPEECH: {
                 "keywords": ["hate", "discriminate", "supremacy"],
@@ -199,13 +218,16 @@ class ContentModerationCompliance:
         user_id: int
     ) -> ModerationResult:
         """Moderate content for compliance violations"""
+
         try:
             self.logger.info(f"Moderating content {content_id} of type {content_type}")
             
             # Perform AI-based moderation
+
             ai_result = await self._ai_moderation_check(content_data, content_type)
             
             # Determine if human review is needed
+
             needs_human_review = (
                 ai_result["confidence"] < self.human_review_threshold or
                 (ai_result["violation_type"] and 
@@ -213,9 +235,11 @@ class ContentModerationCompliance:
             )
             
             # Determine moderation action
+
             action = await self._determine_moderation_action(ai_result, needs_human_review)
             
             # Create moderation result
+
             result = ModerationResult(
                 content_id=content_id,
                 content_type=content_type,
@@ -228,6 +252,7 @@ class ContentModerationCompliance:
                 appeal_allowed=action in [ModerationAction.REMOVED, ModerationAction.REJECTED, ModerationAction.SUSPENDED],
                 reasoning=ai_result.get("reasoning")
             )
+
             
             self.moderation_results[content_id] = result
             
@@ -241,8 +266,10 @@ class ContentModerationCompliance:
             # Schedule human review if needed
             if needs_human_review:
                 await self._schedule_human_review(content_id, result)
+
             
             self.logger.info(f"Content {content_id} moderated: {action}")
+
             return result
             
         except Exception as e:
@@ -266,12 +293,17 @@ class ContentModerationCompliance:
         content_type: ContentType
     ) -> Dict[str, Any]:
         """Perform AI-based content moderation check"""
+
         # Simplified AI moderation simulation
+
         content_text = content_data.get("text", "").lower()
         
         # Check for violations based on keywords
+
         detected_violations = []
+
         max_confidence = 0.0
+
         primary_violation = None
         
         for violation_type, rules in self.moderation_rules.items():
@@ -283,9 +315,11 @@ class ContentModerationCompliance:
                         "confidence": confidence,
                         "severity": rules["severity"]
                     })
+
                     
                     if confidence > max_confidence:
                         max_confidence = confidence
+
                         primary_violation = violation_type
         
         # Image/Video specific checks
@@ -293,9 +327,11 @@ class ContentModerationCompliance:
             # Simulate image/video analysis
             if content_data.get("contains_faces", False):
                 max_confidence = max(max_confidence, 0.7)
+
             if content_data.get("adult_content", False):
                 primary_violation = ViolationType.NUDITY
                 max_confidence = 0.95
+
         
         severity = ModerationLevel.LOW
         if primary_violation:
@@ -315,7 +351,9 @@ class ContentModerationCompliance:
         needs_human_review: bool
     ) -> ModerationAction:
         """Determine appropriate moderation action"""
+
         violation_type = ai_result["violation_type"]
+
         confidence = ai_result["confidence"]
         
         if not violation_type:
@@ -326,8 +364,11 @@ class ContentModerationCompliance:
         
         if confidence >= self.auto_action_threshold:
             # Take automatic action based on violation type
+
             rule = self.moderation_rules.get(violation_type, {})
+
             return rule.get("auto_action", ModerationAction.FLAGGED)
+
         
         return ModerationAction.FLAGGED
 
@@ -340,10 +381,14 @@ class ContentModerationCompliance:
         action: ModerationAction
     ):
         """Record compliance violation for regulatory reporting"""
+
         violation_id = str(uuid.uuid4())
         
         # Determine applicable regulatory frameworks
+
         frameworks = self.moderation_rules.get(violation_type, {}).get("regulatory_frameworks", [])
+
+
         
         violation = ComplianceViolation(
             violation_id=violation_id,
@@ -357,13 +402,14 @@ class ContentModerationCompliance:
             status="active",
             appeal_deadline=datetime.utcnow() + timedelta(days=self.appeal_window_days)
         )
+
         
         self.violation_records[violation_id] = violation
         self.logger.info(f"Recorded compliance violation {violation_id} for content {content_id}")
 
     async def _schedule_human_review(self, content_id: str, result: ModerationResult):
         """Schedule content for human review"""
-        # Placeholder for human review scheduling
+
         self.logger.info(f"Scheduled human review for content {content_id}")
 
     async def process_appeal(
@@ -374,12 +420,14 @@ class ContentModerationCompliance:
         supporting_evidence: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Process content moderation appeal"""
+
         try:
             if content_id not in self.moderation_results:
                 return {
                     "status": "error",
                     "message": "Content not found or not moderated"
                 }
+
             
             result = self.moderation_results[content_id]
             
@@ -390,14 +438,19 @@ class ContentModerationCompliance:
                 }
             
             # Check appeal deadline
+
             appeal_deadline = result.moderated_at + timedelta(days=self.appeal_window_days)
+
             if datetime.utcnow() > appeal_deadline:
                 return {
                     "status": "denied",
                     "message": "Appeal deadline has passed"
                 }
+
             
             appeal_id = str(uuid.uuid4())
+
+
             appeal_record = {
                 "appeal_id": appeal_id,
                 "content_id": content_id,
@@ -415,6 +468,7 @@ class ContentModerationCompliance:
             
             # Schedule appeal review
             await self._schedule_appeal_review(appeal_id)
+
             
             return {
                 "status": "success",
@@ -425,6 +479,7 @@ class ContentModerationCompliance:
             
         except Exception as e:
             self.logger.error(f"Error processing appeal: {str(e)}")
+
             return {
                 "status": "error",
                 "message": f"Failed to process appeal: {str(e)}"
@@ -432,7 +487,7 @@ class ContentModerationCompliance:
 
     async def _schedule_appeal_review(self, appeal_id: str):
         """Schedule appeal for human review"""
-        # Placeholder for appeal review scheduling
+
         self.logger.info(f"Scheduled appeal review for {appeal_id}")
 
     async def generate_compliance_report(
@@ -442,34 +497,48 @@ class ContentModerationCompliance:
         regulatory_framework: Optional[str] = None
     ) -> ModerationReport:
         """Generate content moderation compliance report"""
+
         try:
             # Filter results by date range
+
             filtered_results = [
                 result for result in self.moderation_results.values()
+
                 if start_date <= result.moderated_at <= end_date
             ]
             
             # Calculate statistics
+
             total_reviewed = len(filtered_results)
+
+
             violations_detected = len([r for r in filtered_results if r.violation_type])
             
             # Count actions taken
+
             action_counts = {}
             for result in filtered_results:
                 action_counts[result.action] = action_counts.get(result.action, 0) + 1
             
             # Calculate appeal metrics
+
             period_appeals = [
                 appeal for appeal in self.appeal_records.values()
+
                 if start_date <= appeal["submitted_at"] <= end_date
             ]
+
             
             appeal_rate = len(period_appeals) / max(violations_detected, 1) * 100
             
             # Calculate overturn rate
+
             decided_appeals = [a for a in period_appeals if a["decision"]]
+
             overturned_appeals = [a for a in decided_appeals if a["decision"] == "upheld"]
+
             overturn_rate = len(overturned_appeals) / max(len(decided_appeals), 1) * 100
+
             
             report = ModerationReport(
                 report_id=str(uuid.uuid4()),
@@ -482,26 +551,36 @@ class ContentModerationCompliance:
                 appeal_rate=appeal_rate,
                 overturn_rate=overturn_rate
             )
+
             
             return report
             
         except Exception as e:
             self.logger.error(f"Error generating compliance report: {str(e)}")
+
             raise
 
     async def check_dsa_compliance(self) -> Dict[str, Any]:
         """Check Digital Services Act (DSA) compliance"""
+
         try:
             # DSA-specific compliance checks
+
             total_content = len(self.moderation_results)
-            flagged_content = len([r for r in self.moderation_results.values() 
+
+
+            flagged_content = len([r for r in self.moderation_results.values()
+ 
                                   if r.action in [ModerationAction.FLAGGED, ModerationAction.REMOVED]])
             
             # Check transparency requirements
+
             transparency_score = self._calculate_transparency_score()
             
             # Check user appeal mechanisms
+
             appeal_mechanism_score = self._calculate_appeal_mechanism_score()
+
             
             return {
                 "framework": "DSA",
@@ -520,14 +599,18 @@ class ContentModerationCompliance:
             
         except Exception as e:
             self.logger.error(f"Error checking DSA compliance: {str(e)}")
+
             return {"framework": "DSA", "compliance_status": "error", "error": str(e)}
 
     def _calculate_transparency_score(self) -> float:
         """Calculate transparency compliance score"""
+
         # Simplified scoring based on available data and processes
+
         score = 0.0
         
         # Check if moderation reasoning is provided
+
         results_with_reasoning = [r for r in self.moderation_results.values() if r.reasoning]
         if len(results_with_reasoning) / max(len(self.moderation_results), 1) > 0.8:
             score += 40.0
@@ -542,10 +625,14 @@ class ContentModerationCompliance:
         return score
 
     def _calculate_appeal_mechanism_score(self) -> float:
-        """Calculate appeal mechanism compliance score"""
+        """
+
+        Calculate appeal mechanism compliance score"""
+
         score = 0.0
         
         # Check if appeals are allowed
+
         appealable_actions = [r for r in self.moderation_results.values() if r.appeal_allowed]
         if len(appealable_actions) > 0:
             score += 50.0
@@ -560,7 +647,10 @@ class ContentModerationCompliance:
         self,
         content_batch: List[Dict[str, Any]]
     ) -> List[ModerationResult]:
-        """Moderate multiple content items in batch"""
+        """
+
+        Moderate multiple content items in batch"""
+
         results = []
         
         for content_item in content_batch:
@@ -571,7 +661,9 @@ class ContentModerationCompliance:
                     content_item["content_data"],
                     content_item["user_id"]
                 )
+
                 results.append(result)
+
             except Exception as e:
                 self.logger.error(f"Error in batch moderation: {str(e)}")
                 # Continue with other items

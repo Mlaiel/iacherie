@@ -24,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 
 class AccountType(str, Enum):
-    """Stripe Connect account types."""
+    """
+        Stripe Connect account types."""
     STANDARD = "standard"
     EXPRESS = "express" 
     CUSTOM = "custom"
@@ -72,7 +73,8 @@ class ConnectedAccount:
 
 @dataclass
 class PaymentIntent:
-    """Stripe Payment Intent with Connect."""
+    """
+        Stripe Payment Intent with Connect."""
     intent_id: str
     amount: int
     currency: str
@@ -87,7 +89,8 @@ class PaymentIntent:
 
 @dataclass
 class Transfer:
-    """Stripe Transfer."""
+    """
+        Stripe Transfer."""
     transfer_id: str
     amount: int
     currency: str
@@ -101,7 +104,8 @@ class Transfer:
 
 @dataclass
 class Payout:
-    """Stripe Payout."""
+    """
+        Stripe Payout."""
     payout_id: str
     amount: int
     currency: str
@@ -114,7 +118,8 @@ class Payout:
 
 
 class StripeConnectIntegration:
-    """Professional Stripe Connect integration."""
+    """
+        Professional Stripe Connect integration."""
     
     def __init__(
         self,
@@ -145,11 +150,13 @@ class StripeConnectIntegration:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+        Async context manager exit."""
         await self.close()
     
     async def _ensure_session(self):
-        """Ensure HTTP session is available."""
+        """
+        Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
                 "Authorization": f"Bearer {self.secret_key}",
@@ -178,6 +185,8 @@ class StripeConnectIntegration:
     ) -> ConnectedAccount:
         """Create a new connected account."""
         await self._ensure_session()
+
+
         
         data = {
             "type": account_type.value,
@@ -189,6 +198,7 @@ class StripeConnectIntegration:
         if metadata:
             for key, value in metadata.items():
                 data[f"metadata[{key}]"] = str(value)
+
         
         try:
             async with self.session.post(
@@ -197,9 +207,14 @@ class StripeConnectIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Stripe Connect account creation error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 
                 account = ConnectedAccount(
                     account_id=result["id"],
@@ -214,26 +229,35 @@ class StripeConnectIntegration:
                     created_at=datetime.fromtimestamp(result["created"]),
                     metadata=result.get("metadata", {})
                 )
+
                 
                 self.request_count += 1
                 logger.info(f"Connected account created: {account.account_id}")
+
                 return account
         
         except Exception as e:
             logger.error(f"Account creation failed: {e}")
+
             raise
     
     async def get_account(self, account_id: str) -> ConnectedAccount:
         """Get connected account details."""
         await self._ensure_session()
+
         
         try:
             async with self.session.get(f"{self.base_url}/accounts/{account_id}") as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Stripe Connect account retrieval error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 
                 account = ConnectedAccount(
                     account_id=result["id"],
@@ -248,12 +272,14 @@ class StripeConnectIntegration:
                     created_at=datetime.fromtimestamp(result["created"]),
                     metadata=result.get("metadata", {})
                 )
+
                 
                 self.request_count += 1
                 return account
         
         except Exception as e:
             logger.error(f"Account retrieval failed: {e}")
+
             raise
     
     async def create_account_link(
@@ -265,6 +291,8 @@ class StripeConnectIntegration:
     ) -> str:
         """Create account link for onboarding."""
         await self._ensure_session()
+
+
         
         data = {
             "account": account_id,
@@ -280,16 +308,22 @@ class StripeConnectIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Stripe Connect link creation error: {error_data}")
+
+
                 
                 result = await response.json()
+
                 
                 self.request_count += 1
                 logger.info(f"Account link created for: {account_id}")
+
                 return result["url"]
         
         except Exception as e:
             logger.error(f"Account link creation failed: {e}")
+
             raise
     
     async def create_payment_intent(
@@ -304,6 +338,8 @@ class StripeConnectIntegration:
     ) -> PaymentIntent:
         """Create payment intent with Connect."""
         await self._ensure_session()
+
+
         
         data = {
             "amount": amount,
@@ -320,12 +356,14 @@ class StripeConnectIntegration:
         if transfer_data:
             for key, value in transfer_data.items():
                 data[f"transfer_data[{key}]"] = str(value)
+
         
         if metadata:
             for key, value in metadata.items():
                 data[f"metadata[{key}]"] = str(value)
         
         # Set connected account header
+
         headers = {"Stripe-Account": connected_account_id}
         
         try:
@@ -336,9 +374,14 @@ class StripeConnectIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Stripe Connect payment intent error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 
                 payment_intent = PaymentIntent(
                     intent_id=result["id"],
@@ -352,6 +395,7 @@ class StripeConnectIntegration:
                     created_at=datetime.fromtimestamp(result["created"]),
                     metadata=result.get("metadata", {})
                 )
+
                 
                 self.request_count += 1
                 self.transaction_count += 1
@@ -361,10 +405,12 @@ class StripeConnectIntegration:
                     self.fee_collected += Decimal(str(application_fee_amount)) / 100
                 
                 logger.info(f"Payment intent created: {payment_intent.intent_id}")
+
                 return payment_intent
         
         except Exception as e:
             logger.error(f"Payment intent creation failed: {e}")
+
             raise
     
     async def create_transfer(
@@ -378,6 +424,8 @@ class StripeConnectIntegration:
     ) -> Transfer:
         """Create transfer to connected account."""
         await self._ensure_session()
+
+
         
         data = {
             "amount": amount,
@@ -394,6 +442,7 @@ class StripeConnectIntegration:
         if metadata:
             for key, value in metadata.items():
                 data[f"metadata[{key}]"] = str(value)
+
         
         try:
             async with self.session.post(
@@ -402,9 +451,14 @@ class StripeConnectIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Stripe Connect transfer error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 
                 transfer = Transfer(
                     transfer_id=result["id"],
@@ -417,13 +471,16 @@ class StripeConnectIntegration:
                     created_at=datetime.fromtimestamp(result["created"]),
                     metadata=result.get("metadata", {})
                 )
+
                 
                 self.request_count += 1
                 logger.info(f"Transfer created: {transfer.transfer_id}")
+
                 return transfer
         
         except Exception as e:
             logger.error(f"Transfer creation failed: {e}")
+
             raise
     
     async def list_accounts(
@@ -434,14 +491,18 @@ class StripeConnectIntegration:
     ) -> List[ConnectedAccount]:
         """List connected accounts."""
         await self._ensure_session()
+
+
         
         params = {"limit": limit}
         
         if created_after:
             params["created[gte]"] = int(created_after.timestamp())
+
         
         if created_before:
             params["created[lte]"] = int(created_before.timestamp())
+
         
         try:
             async with self.session.get(
@@ -450,9 +511,14 @@ class StripeConnectIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Stripe Connect accounts list error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 accounts = []
                 
                 for account_data in result["data"]:
@@ -469,19 +535,25 @@ class StripeConnectIntegration:
                         created_at=datetime.fromtimestamp(account_data["created"]),
                         metadata=account_data.get("metadata", {})
                     )
+
                     accounts.append(account)
+
                 
                 self.request_count += 1
                 logger.info(f"Retrieved {len(accounts)} accounts")
+
                 return accounts
         
         except Exception as e:
             logger.error(f"Accounts listing failed: {e}")
+
             raise
     
     async def get_balance(self, account_id: str) -> Dict[str, Any]:
         """Get account balance."""
         await self._ensure_session()
+
+
         
         headers = {"Stripe-Account": account_id}
         
@@ -492,16 +564,22 @@ class StripeConnectIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Stripe Connect balance error: {error_data}")
+
+
                 
                 result = await response.json()
+
                 
                 self.request_count += 1
                 logger.info(f"Balance retrieved for account: {account_id}")
+
                 return result
         
         except Exception as e:
             logger.error(f"Balance retrieval failed: {e}")
+
             raise
     
     async def create_payout(
@@ -514,6 +592,8 @@ class StripeConnectIntegration:
     ) -> Payout:
         """Create payout for connected account."""
         await self._ensure_session()
+
+
         
         data = {
             "amount": amount,
@@ -526,6 +606,8 @@ class StripeConnectIntegration:
         if metadata:
             for key, value in metadata.items():
                 data[f"metadata[{key}]"] = str(value)
+
+
         
         headers = {"Stripe-Account": account_id}
         
@@ -537,9 +619,14 @@ class StripeConnectIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Stripe Connect payout error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 
                 payout = Payout(
                     payout_id=result["id"],
@@ -552,13 +639,16 @@ class StripeConnectIntegration:
                     created_at=datetime.fromtimestamp(result["created"]),
                     metadata=result.get("metadata", {})
                 )
+
                 
                 self.request_count += 1
                 logger.info(f"Payout created: {payout.payout_id}")
+
                 return payout
         
         except Exception as e:
             logger.error(f"Payout creation failed: {e}")
+
             raise
     
     def verify_webhook_signature(
@@ -570,44 +660,61 @@ class StripeConnectIntegration:
         """Verify Stripe webhook signature."""
         if not self.webhook_secret:
             logger.warning("Webhook secret not configured")
+
             return False
         
         try:
             elements = signature_header.split(',')
+
+
             signature_dict = {}
             
             for element in elements:
                 key, value = element.split('=')
+
                 signature_dict[key] = value
+
             
             timestamp = int(signature_dict.get('t', '0'))
+
+
             signatures = signature_dict.get('v1', '').split(' ')
             
             # Check timestamp tolerance
+
             current_time = int(datetime.now().timestamp())
+
             if abs(current_time - timestamp) > tolerance:
                 logger.warning("Webhook timestamp outside tolerance")
+
                 return False
             
             # Verify signature
+
             expected_signature = hmac.new(
                 self.webhook_secret.encode('utf-8'),
                 f"{timestamp}.".encode('utf-8') + payload,
                 hashlib.sha256
             ).hexdigest()
+
             
             return expected_signature in signatures
         
         except Exception as e:
             logger.error(f"Webhook signature verification failed: {e}")
+
             return False
     
     async def handle_webhook_event(self, event_data: Dict[str, Any]) -> Dict[str, Any]:
         """Handle incoming webhook event."""
         event_type = event_data.get("type")
+
         event_object = event_data.get("data", {}).get("object", {})
+
         
         logger.info(f"Processing webhook event: {event_type}")
+
+
         
         handlers = {
             "account.updated": self._handle_account_updated,
@@ -616,12 +723,14 @@ class StripeConnectIntegration:
             "payout.paid": self._handle_payout_paid,
             "capability.updated": self._handle_capability_updated
         }
+
         
         handler = handlers.get(event_type)
         if handler:
             return await handler(event_object)
         else:
             logger.info(f"No handler for event type: {event_type}")
+
             return {"status": "ignored"}
     
     async def _handle_account_updated(self, account_data: Dict[str, Any]) -> Dict[str, Any]:
@@ -633,6 +742,7 @@ class StripeConnectIntegration:
     async def _handle_payment_succeeded(self, payment_data: Dict[str, Any]) -> Dict[str, Any]:
         """Handle payment succeeded event."""
         payment_id = payment_data.get("id")
+
         amount = payment_data.get("amount", 0)
         logger.info(f"Payment succeeded: {payment_id}, amount: {amount}")
         return {"status": "processed", "payment_id": payment_id}
@@ -652,7 +762,9 @@ class StripeConnectIntegration:
     async def _handle_capability_updated(self, capability_data: Dict[str, Any]) -> Dict[str, Any]:
         """Handle capability updated event."""
         account_id = capability_data.get("account")
+
         capability = capability_data.get("id")
+
         status = capability_data.get("status")
         logger.info(f"Capability updated: {account_id}, {capability}, {status}")
         return {"status": "processed", "account_id": account_id}
@@ -692,7 +804,8 @@ async def create_marketplace_payment(
     secret_key: str,
     publishable_key: str
 ) -> PaymentIntent:
-    """Quick marketplace payment creation."""
+    """
+        Quick marketplace payment creation."""
     application_fee = int(amount * platform_fee_percent / 100)
     
     async with StripeConnectIntegration(secret_key, publishable_key) as stripe:
@@ -708,24 +821,32 @@ if __name__ == "__main__":
     # Example usage
     async def main():
         import os
+
         secret_key = os.getenv("STRIPE_SECRET_KEY")
+
         publishable_key = os.getenv("STRIPE_PUBLISHABLE_KEY")
+
         
         if not all([secret_key, publishable_key]):
             print("Please set STRIPE_SECRET_KEY and STRIPE_PUBLISHABLE_KEY")
+
             return
         
         async with StripeConnectIntegration(secret_key, publishable_key) as stripe:
             # Test create account
+
             account = await stripe.create_account(
                 account_type=AccountType.EXPRESS,
                 email="creator@example.com",
                 country="US"
             )
+
             print(f"Created account: {account.account_id}")
             
             # Test usage stats
+
             stats = stripe.get_usage_stats()
+
             print(f"Usage stats: {stats}")
     
     asyncio.run(main())

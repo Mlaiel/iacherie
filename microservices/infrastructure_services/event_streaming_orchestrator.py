@@ -20,7 +20,7 @@ import asyncio
 import logging
 import json
 import time
-from typing import Dict, List, Any, Optional, Callable, Type, Union
+from typing import Dict, List, Any, Optional, Callable, Type, Union, Tuple
 from dataclasses import dataclass, field, asdict
 from enum import Enum
 from datetime import datetime, timedelta

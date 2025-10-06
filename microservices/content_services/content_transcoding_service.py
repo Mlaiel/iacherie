@@ -72,7 +72,7 @@ class ContentTranscodingService:
 
     def __init__(self):
         self.transcoding_jobs = {}
-        self.processing_queue = asyncio.Queue()
+        self._processing_queue = None  # Lazy init when event loop exists
         self.completed_jobs = {}
         self.profiles = {}
         self.worker_count = int(os.getenv("TRANSCODING_WORKERS", "2"))
@@ -83,6 +83,13 @@ class ContentTranscodingService:
         # Initialize directories
         os.makedirs(self.output_directory, exist_ok=True)
         os.makedirs(self.temp_directory, exist_ok=True)
+    
+    @property
+    def processing_queue(self):
+        """Lazy initialization of async queue"""
+        if self._processing_queue is None:
+            self._processing_queue = asyncio.Queue()
+        return self._processing_queue
         
         # Initialize standard profiles
         self._initialize_standard_profiles()

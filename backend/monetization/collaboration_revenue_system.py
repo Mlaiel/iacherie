@@ -64,7 +64,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class CollaborationType(Enum):
-    """Types de collaborations supportées"""
+    """
+        Types de collaborations supportées"""
     BRAND_SPONSORSHIP = "brand_sponsorship"
     CREATOR_COLLAB = "creator_collaboration"
     AFFILIATE_PARTNERSHIP = "affiliate_partnership"
@@ -108,7 +109,8 @@ class CollaborationMetrics:
 
 @dataclass
 class MatchingCriteria:
-    """Critères de matching pour collaborations"""
+    """
+        Critères de matching pour collaborations"""
     industry_match: float = 0.0
     audience_overlap: float = 0.0
     engagement_compatibility: float = 0.0
@@ -119,7 +121,8 @@ class MatchingCriteria:
     geographic_alignment: float = 0.0
 
 class CollaborationRevenue(Base):
-    """Modèle pour tracking des revenus de collaboration"""
+    """
+        Modèle pour tracking des revenus de collaboration"""
     __tablename__ = 'collaboration_revenues'
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -227,7 +230,8 @@ class CollaborationRevenueSystem:
         self.matchmaking_engine = CreatorMatchmakingEngine(db_session, redis_client)
     
     def _load_ml_models(self):
-        """Charger les modèles ML pour prédictions"""
+        """
+        Charger les modèles ML pour prédictions"""
         try:
             # Chargement ou initialisation des modèles
             self.matching_model = GradientBoostingClassifier(
@@ -236,12 +240,14 @@ class CollaborationRevenueSystem:
                 max_depth=6,
                 random_state=42
             )
+
             
             self.revenue_predictor = RandomForestRegressor(
                 n_estimators=200,
                 max_depth=10,
                 random_state=42
             )
+
             
             self.scaler = StandardScaler()
         except Exception as e:
@@ -259,14 +265,17 @@ class CollaborationRevenueSystem:
             collaboration_id = str(uuid.uuid4())
             
             # Validation des termes
+
             validated_terms = await self._validate_collaboration_terms(terms)
             
             # Calcul automatique de la distribution des revenus
+
             revenue_distribution = await self._calculate_revenue_distribution(
                 collaboration_type, validated_terms
             )
             
             # Création de l'enregistrement collaboration
+
             collaboration_revenue = CollaborationRevenue(
                 id=collaboration_id,
                 collaboration_id=collaboration_id,
@@ -280,6 +289,7 @@ class CollaborationRevenueSystem:
                 platform_fee=revenue_distribution['platform_fee'],
                 performance_metrics={}
             )
+
             
             self.db.add(collaboration_revenue)
             
@@ -291,8 +301,10 @@ class CollaborationRevenueSystem:
             
             # Notification et workflow
             await self._trigger_collaboration_workflow(collaboration_id, validated_terms)
+
             
             self.db.commit()
+
             
             return {
                 'collaboration_id': collaboration_id,
@@ -303,7 +315,9 @@ class CollaborationRevenueSystem:
             
         except Exception as e:
             self.db.rollback()
+
             self.logger.error(f"Erreur création collaboration: {e}")
+
             raise HTTPException(status_code=500, detail=str(e))
     
     async def _validate_collaboration_terms(self, terms: Dict[str, Any]) -> Dict[str, Any]:
@@ -321,6 +335,7 @@ class CollaborationRevenueSystem:
         # Validation des livrables
         if not terms['deliverables'] or len(terms['deliverables']) == 0:
             raise ValueError("Au moins un livrable requis")
+
         
         return terms
     
@@ -332,6 +347,7 @@ class CollaborationRevenueSystem:
         """Calculer la distribution automatique des revenus"""
         
         # Distribution par défaut selon le type
+
         distribution_templates = {
             CollaborationType.BRAND_SPONSORSHIP: {
                 'creator_share': Decimal('0.85'),
@@ -349,6 +365,7 @@ class CollaborationRevenueSystem:
                 'platform_fee': Decimal('0.05')
             }
         }
+
         
         base_distribution = distribution_templates.get(
             collaboration_type,
@@ -356,9 +373,12 @@ class CollaborationRevenueSystem:
         )
         
         # Ajustements basés sur les performances historiques
+
         creator_multiplier = await self._get_creator_performance_multiplier(
             terms.get('creator_id')
         )
+
+
         
         adjusted_distribution = {
             'creator_share': base_distribution['creator_share'] * creator_multiplier,
@@ -375,19 +395,23 @@ class CollaborationRevenueSystem:
         collaboration_id: str,
         metrics: CollaborationMetrics
     ) -> Dict[str, Any]:
-        """Tracker les performances d'une collaboration"""
+        """
+        Tracker les performances d'une collaboration"""
         try:
             collaboration = self.db.query(CollaborationRevenue).filter(
                 CollaborationRevenue.collaboration_id == collaboration_id
             ).first()
+
             
             if not collaboration:
                 raise ValueError("Collaboration non trouvée")
             
             # Mise à jour des métriques
+
             current_metrics = collaboration.performance_metrics or {}
             
             # Calcul du bonus de performance
+
             performance_bonus = await self._calculate_performance_bonus(
                 metrics, collaboration.base_amount
             )
@@ -397,7 +421,9 @@ class CollaborationRevenueSystem:
                 collaboration.total_revenue += performance_bonus
                 
                 # Redistribution du bonus selon les parts
+
                 creator_bonus = performance_bonus * collaboration.creator_share / 100
+
                 partner_bonus = performance_bonus * collaboration.partner_share / 100
                 
                 await self._process_performance_bonus_payment(
@@ -413,11 +439,14 @@ class CollaborationRevenueSystem:
                 'roi': metrics.roi,
                 'last_updated': datetime.utcnow().isoformat()
             })
+
             
             collaboration.performance_metrics = current_metrics
             collaboration.updated_at = datetime.utcnow()
+
             
             self.db.commit()
+
             
             return {
                 'collaboration_id': collaboration_id,
@@ -428,7 +457,9 @@ class CollaborationRevenueSystem:
             
         except Exception as e:
             self.db.rollback()
+
             self.logger.error(f"Erreur tracking performance: {e}")
+
             raise
 
     async def find_collaboration_matches(
@@ -444,32 +475,38 @@ class CollaborationRevenueSystem:
                 matches = await self.matchmaking_engine.find_brand_matches(
                     entity_id, collaboration_type, requirements
                 )
+
             else:
                 matches = await self.matchmaking_engine.find_creator_matches(
                     entity_id, collaboration_type, requirements
                 )
             
             # Scoring et ranking des matches
+
             scored_matches = []
             for match in matches:
                 score = await self._calculate_collaboration_score(
                     entity_id, match['id'], collaboration_type, requirements
                 )
+
                 
                 if score >= self.config['matching_score_threshold']:
                     match['compatibility_score'] = score
                     match['estimated_revenue'] = await self._predict_collaboration_revenue(
                         entity_id, match['id'], collaboration_type
                     )
+
                     scored_matches.append(match)
             
             # Tri par score de compatibilité
             scored_matches.sort(key=lambda x: x['compatibility_score'], reverse=True)
+
             
             return scored_matches[:10]  # Top 10 matches
             
         except Exception as e:
             self.logger.error(f"Erreur recherche matches: {e}")
+
             return []
 
     async def _calculate_collaboration_score(
@@ -482,27 +519,37 @@ class CollaborationRevenueSystem:
         """Calculer le score de compatibilité pour collaboration"""
         try:
             # Récupération des profils
+
             profile1 = await self._get_entity_profile(entity1_id)
+
+
             profile2 = await self._get_entity_profile(entity2_id)
+
             
             if not profile1 or not profile2:
                 return 0.0
             
             # Critères de matching
+
             criteria = MatchingCriteria()
             
             # Calcul des scores individuels
             criteria.industry_match = self._calculate_industry_match(profile1, profile2)
+
             criteria.audience_overlap = self._calculate_audience_overlap(profile1, profile2)
+
             criteria.engagement_compatibility = self._calculate_engagement_compatibility(
                 profile1, profile2
             )
+
             criteria.budget_alignment = self._calculate_budget_alignment(
                 profile1, profile2, requirements
             )
+
             criteria.brand_safety_score = self._calculate_brand_safety_score(
                 profile1, profile2
             )
+
             criteria.historical_performance = self._calculate_historical_performance(
                 entity1_id, entity2_id
             )
@@ -516,16 +563,20 @@ class CollaborationRevenueSystem:
                 'brand_safety_score': 0.15,
                 'historical_performance': 0.10
             }
+
             
             final_score = sum(
                 getattr(criteria, criterion) * weight
                 for criterion, weight in weights.items()
             )
+
             
             return min(final_score, 1.0)
+
             
         except Exception as e:
             self.logger.error(f"Erreur calcul score collaboration: {e}")
+
             return 0.0
 
     async def process_collaboration_payment(
@@ -538,24 +589,31 @@ class CollaborationRevenueSystem:
             collaboration = self.db.query(CollaborationRevenue).filter(
                 CollaborationRevenue.collaboration_id == collaboration_id
             ).first()
+
             
             if not collaboration:
                 raise ValueError("Collaboration non trouvée")
             
             # Calcul du montant à payer
+
             payment_amount = await self._calculate_payment_amount(
                 collaboration, payment_type
             )
+
             
             if payment_amount <= 0:
                 return {'status': 'no_payment_due', 'amount': 0}
             
             # Distribution des paiements
+
             creator_payment = payment_amount * collaboration.creator_share / 100
+
             partner_payment = payment_amount * collaboration.partner_share / 100
+
             platform_fee = payment_amount * collaboration.platform_fee / 100
             
             # Traitement des paiements
+
             payment_results = {}
             
             # Paiement créateur
@@ -565,6 +623,7 @@ class CollaborationRevenueSystem:
                 )
             
             # Paiement partenaire (si applicable)
+
             if partner_payment > 0:
                 payment_results['partner'] = await self._process_partner_payment(
                     collaboration.partner_id, partner_payment, collaboration_id
@@ -576,11 +635,13 @@ class CollaborationRevenueSystem:
                 collaboration.total_revenue - collaboration.paid_amount, 
                 Decimal('0')
             )
+
             
             if collaboration.pending_amount == 0:
                 collaboration.status = 'completed'
             
             self.db.commit()
+
             
             return {
                 'collaboration_id': collaboration_id,
@@ -591,7 +652,9 @@ class CollaborationRevenueSystem:
             
         except Exception as e:
             self.db.rollback()
+
             self.logger.error(f"Erreur traitement paiement collaboration: {e}")
+
             raise
 
     async def get_collaboration_analytics(
@@ -601,10 +664,14 @@ class CollaborationRevenueSystem:
         """Obtenir les analytics des collaborations"""
         try:
             # Période d'analyse
+
             end_date = datetime.utcnow()
+
+
             start_date = end_date - timedelta(days=filters.get('days', 30))
             
             # Requête de base
+
             query = self.db.query(CollaborationRevenue).filter(
                 CollaborationRevenue.created_at >= start_date,
                 CollaborationRevenue.created_at <= end_date
@@ -616,29 +683,42 @@ class CollaborationRevenueSystem:
                     query = query.filter(
                         CollaborationRevenue.collaboration_type == filters['collaboration_type']
                     )
+
                 if 'creator_id' in filters:
                     query = query.filter(
                         CollaborationRevenue.creator_id == filters['creator_id']
                     )
+
+
             
             collaborations = query.all()
             
             # Calcul des métriques
+
             total_collaborations = len(collaborations)
+
+
             total_revenue = sum(c.total_revenue for c in collaborations)
+
+
             avg_collaboration_value = total_revenue / total_collaborations if total_collaborations > 0 else 0
             
             # Répartition par type
+
             type_distribution = defaultdict(lambda: {'count': 0, 'revenue': Decimal('0')})
+
             for collab in collaborations:
                 type_distribution[collab.collaboration_type]['count'] += 1
                 type_distribution[collab.collaboration_type]['revenue'] += collab.total_revenue
             
             # Top performers
+
             creator_performance = defaultdict(lambda: {'collaborations': 0, 'revenue': Decimal('0')})
+
             for collab in collaborations:
                 creator_performance[collab.creator_id]['collaborations'] += 1
                 creator_performance[collab.creator_id]['revenue'] += collab.total_revenue
+
             
             top_creators = sorted(
                 creator_performance.items(),
@@ -647,7 +727,9 @@ class CollaborationRevenueSystem:
             )[:10]
             
             # Analyse des tendances
+
             monthly_trends = await self._calculate_collaboration_trends(collaborations)
+
             
             return {
                 'period': {
@@ -683,6 +765,7 @@ class CollaborationRevenueSystem:
             
         except Exception as e:
             self.logger.error(f"Erreur analytics collaborations: {e}")
+
             return {}
 
 class CollaborationRevenueTracker:
@@ -700,17 +783,22 @@ class CollaborationRevenueTracker:
         amount: Decimal,
         metadata: Dict[str, Any] = None
     ) -> bool:
-        """Tracker un événement de revenu"""
+        """
+        Tracker un événement de revenu"""
         try:
             # Mise à jour en temps réel dans Redis
+
             revenue_key = f"collaboration_revenue:{collaboration_id}"
             
             current_data = self.redis.hgetall(revenue_key)
+
             if not current_data:
                 current_data = {'total': '0', 'events': '[]'}
             
             # Ajout de l'événement
+
             events = json.loads(current_data.get('events', '[]'))
+
             events.append({
                 'type': event_type,
                 'amount': float(amount),
@@ -719,6 +807,7 @@ class CollaborationRevenueTracker:
             })
             
             # Mise à jour du total
+
             new_total = Decimal(current_data.get('total', '0')) + amount
             
             # Sauvegarde Redis
@@ -729,19 +818,25 @@ class CollaborationRevenueTracker:
             })
             
             # Mise à jour base de données (asynchrone)
+
+
             collaboration = self.db.query(CollaborationRevenue).filter(
                 CollaborationRevenue.collaboration_id == collaboration_id
             ).first()
+
             
             if collaboration:
                 collaboration.total_revenue = new_total
                 collaboration.updated_at = datetime.utcnow()
+
                 self.db.commit()
+
             
             return True
             
         except Exception as e:
             self.logger.error(f"Erreur tracking revenue event: {e}")
+
             return False
 
 class PartnershipRevenueManager:
@@ -757,7 +852,8 @@ class PartnershipRevenueManager:
         partner_id: str,
         agreement_terms: Dict[str, Any]
     ) -> str:
-        """Créer un accord de partenariat"""
+        """
+        Créer un accord de partenariat"""
         try:
             agreement = PartnershipAgreement(
                 partner_id=partner_id,
@@ -770,15 +866,20 @@ class PartnershipRevenueManager:
                 end_date=datetime.fromisoformat(agreement_terms['end_date']) if agreement_terms.get('end_date') else None,
                 auto_renewal=agreement_terms.get('auto_renewal', False)
             )
+
             
             self.db.add(agreement)
+
             self.db.commit()
+
             
             return agreement.id
             
         except Exception as e:
             self.db.rollback()
+
             self.logger.error(f"Erreur création accord partenariat: {e}")
+
             raise
 
 class BrandCollaborationTracker:
@@ -795,7 +896,8 @@ class BrandCollaborationTracker:
         creator_id: str,
         campaign_details: Dict[str, Any]
     ) -> str:
-        """Créer une collaboration avec une marque"""
+        """
+        Créer une collaboration avec une marque"""
         try:
             collaboration = BrandCollaboration(
                 brand_id=brand_id,
@@ -809,15 +911,20 @@ class BrandCollaborationTracker:
                 approval_workflow=campaign_details.get('approval_workflow'),
                 metrics_targets=campaign_details.get('metrics_targets')
             )
+
             
             self.db.add(collaboration)
+
             self.db.commit()
+
             
             return collaboration.id
             
         except Exception as e:
             self.db.rollback()
+
             self.logger.error(f"Erreur création collaboration marque: {e}")
+
             raise
 
 class CreatorMatchmakingEngine:
@@ -831,7 +938,8 @@ class CreatorMatchmakingEngine:
         self._initialize_ml_model()
     
     def _initialize_ml_model(self):
-        """Initialiser le modèle ML de matchmaking"""
+        """
+        Initialiser le modèle ML de matchmaking"""
         try:
             self.ml_model = GradientBoostingClassifier(
                 n_estimators=100,
@@ -851,14 +959,19 @@ class CreatorMatchmakingEngine:
         """Trouver des créateurs matchés pour une marque"""
         try:
             # Récupération des profils créateurs
+
             creator_profiles = self.db.query(CreatorMatchProfile).all()
+
+
             
             matches = []
             for profile in creator_profiles:
                 # Calcul du score de match
+
                 match_score = await self._calculate_creator_match_score(
                     profile, brand_id, requirements
                 )
+
                 
                 if match_score >= 0.6:  # Seuil minimum
                     matches.append({
@@ -872,10 +985,12 @@ class CreatorMatchmakingEngine:
             
             # Tri par score
             matches.sort(key=lambda x: x['match_score'], reverse=True)
+
             return matches
             
         except Exception as e:
             self.logger.error(f"Erreur recherche matches créateurs: {e}")
+
             return []
     
     async def _calculate_creator_match_score(
@@ -889,31 +1004,42 @@ class CreatorMatchmakingEngine:
             scores = []
             
             # Score d'industrie
+
             industry_score = self._calculate_industry_alignment(
                 creator_profile.industries, requirements.get('industry', [])
             )
+
             scores.append(industry_score * 0.25)
             
             # Score d'audience
+
             audience_score = self._calculate_audience_match(
                 creator_profile.audience_demographics, requirements.get('target_audience', {})
             )
+
             scores.append(audience_score * 0.30)
             
             # Score de contenu
+
             content_score = self._calculate_content_alignment(
                 creator_profile.content_categories, requirements.get('content_types', [])
             )
+
             scores.append(content_score * 0.20)
             
             # Score de performance historique
+
             performance_score = float(creator_profile.brand_alignment_score or 0)
+
             scores.append(performance_score * 0.25)
+
             
             return sum(scores)
+
             
         except Exception as e:
             self.logger.error(f"Erreur calcul score match: {e}")
+
             return 0.0
 
 # Configuration et initialisation

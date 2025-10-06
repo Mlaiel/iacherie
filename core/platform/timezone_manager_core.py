@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class TimezoneManagerCore:
-    """Advanced TimezoneManagerCore System"""
+    """
+Advanced TimezoneManagerCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class TimezoneManagerCore:
 # Module exports
 __all__ = ["TimezoneManagerCore"]
 
-logger.info("🕐 TimezoneManagerCore module loaded")
+logger.info("🕐 TimezoneManagerCore module initialized")

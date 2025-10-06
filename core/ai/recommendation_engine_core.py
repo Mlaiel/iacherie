@@ -40,7 +40,8 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class RecommendationType(str, Enum):
-    """Types of recommendations"""
+    """
+Types of recommendations"""
     CONTENT = "content"
     CREATOR = "creator"
     COLLABORATION = "collaboration"
@@ -49,7 +50,8 @@ class RecommendationType(str, Enum):
     CROSS_PLATFORM = "cross_platform"
 
 class RecommendationAlgorithm(str, Enum):
-    """Recommendation algorithms"""
+    """
+Recommendation algorithms"""
     COLLABORATIVE_FILTERING = "collaborative_filtering"
     CONTENT_BASED = "content_based"
     HYBRID = "hybrid"
@@ -58,7 +60,8 @@ class RecommendationAlgorithm(str, Enum):
     KNOWLEDGE_BASED = "knowledge_based"
 
 class InteractionType(str, Enum):
-    """User interaction types"""
+    """
+User interaction types"""
     VIEW = "view"
     LIKE = "like"
     SHARE = "share"
@@ -70,7 +73,8 @@ class InteractionType(str, Enum):
 
 @dataclass
 class UserInteraction:
-    """User interaction data"""
+    """
+User interaction data"""
     user_id: str
     item_id: str
     interaction_type: InteractionType
@@ -82,7 +86,8 @@ class UserInteraction:
 
 @dataclass
 class ContentItem:
-    """Content item for recommendations"""
+    """
+Content item for recommendations"""
     item_id: str
     title: str
     description: str
@@ -97,7 +102,8 @@ class ContentItem:
 
 @dataclass
 class UserProfile:
-    """User profile for personalization"""
+    """
+User profile for personalization"""
     user_id: str
     preferences: Dict[str, float] = field(default_factory=dict)
     interests: List[str] = field(default_factory=list)
@@ -108,7 +114,8 @@ class UserProfile:
 
 @dataclass
 class Recommendation:
-    """Recommendation result"""
+    """
+Recommendation result"""
     item_id: str
     user_id: str
     score: float
@@ -121,7 +128,8 @@ class Recommendation:
 
 @dataclass
 class RecommendationMetrics:
-    """Recommendation system metrics"""
+    """
+Recommendation system metrics"""
     total_recommendations: int = 0
     successful_recommendations: int = 0
     clicked_recommendations: int = 0
@@ -134,10 +142,12 @@ class RecommendationMetrics:
     avg_response_time: float = 0.0
 
 class RecommendationEngineCore:
-    """Enterprise recommendation engine system"""
+    """
+Enterprise recommendation engine system"""
     
     def __init__(self, level: str = "enterprise"):
-        """Initialize recommendation engine core"""
+        """
+Initialize recommendation engine core"""
         self.level = level
         self.user_profiles: Dict[str, UserProfile] = {}
         self.content_items: Dict[str, ContentItem] = {}
@@ -181,7 +191,8 @@ class RecommendationEngineCore:
         logger.info(f"🎯 Recommendation Engine Core initialized - Level: {level}")
 
     async def add_user_interaction(self, interaction: UserInteraction):
-        """Add user interaction for learning"""
+        """
+Add user interaction for learning"""
         
         # Store interaction
         self.interactions.append(interaction)
@@ -203,7 +214,8 @@ class RecommendationEngineCore:
         logger.debug(f"Added interaction: {interaction.user_id} -> {interaction.item_id}")
 
     async def _update_user_profile(self, interaction: UserInteraction):
-        """Update user profile based on interaction"""
+        """
+Update user profile based on interaction"""
         
         user_id = interaction.user_id
         if user_id not in self.user_profiles:
@@ -247,7 +259,8 @@ class RecommendationEngineCore:
                     profile.interests.append(tag)
 
     async def _update_item_popularity(self, interaction: UserInteraction):
-        """Update item popularity score"""
+        """
+Update item popularity score"""
         
         if interaction.item_id in self.content_items:
             item = self.content_items[interaction.item_id]
@@ -272,7 +285,8 @@ class RecommendationEngineCore:
             item.popularity_score *= decay_factor
 
     async def _online_learning_update(self, interaction: UserInteraction):
-        """Perform online learning update"""
+        """
+Perform online learning update"""
         
         # This is a simplified online learning approach
         # In a production system, you'd use more sophisticated algorithms
@@ -294,7 +308,8 @@ class RecommendationEngineCore:
         count: int = 10,
         context: Optional[Dict[str, Any]] = None
     ) -> List[Recommendation]:
-        """Get recommendations for user"""
+        """
+Get recommendations for user"""
         
         start_time = time.time()
         
@@ -351,7 +366,8 @@ class RecommendationEngineCore:
         count: int, 
         context: Dict[str, Any]
     ) -> List[Recommendation]:
-        """Collaborative filtering recommendations"""
+        """
+Collaborative filtering recommendations"""
         
         recommendations = []
         
@@ -411,7 +427,8 @@ class RecommendationEngineCore:
         count: int, 
         context: Dict[str, Any]
     ) -> List[Recommendation]:
-        """Content-based filtering recommendations"""
+        """
+Content-based filtering recommendations"""
         
         recommendations = []
         
@@ -458,7 +475,8 @@ class RecommendationEngineCore:
         count: int, 
         context: Dict[str, Any]
     ) -> List[Recommendation]:
-        """Hybrid recommendation approach"""
+        """
+Hybrid recommendation approach"""
         
         try:
             # Get recommendations from different algorithms
@@ -514,7 +532,8 @@ class RecommendationEngineCore:
         count: int, 
         context: Dict[str, Any]
     ) -> List[Recommendation]:
-        """Matrix factorization recommendations"""
+        """
+Matrix factorization recommendations"""
         
         if not SKLEARN_AVAILABLE:
             logger.warning("Scikit-learn not available for matrix factorization")
@@ -582,7 +601,8 @@ class RecommendationEngineCore:
         count: int, 
         context: Dict[str, Any]
     ) -> List[Recommendation]:
-        """Knowledge-based filtering recommendations"""
+        """
+Knowledge-based filtering recommendations"""
         
         recommendations = []
         
@@ -644,7 +664,8 @@ class RecommendationEngineCore:
         return recommendations
 
     async def _find_similar_users(self, user_id: str, top_k: int = 10) -> List[Tuple[str, float]]:
-        """Find users similar to the given user"""
+        """
+Find users similar to the given user"""
         
         if not SKLEARN_AVAILABLE:
             return []
@@ -675,7 +696,8 @@ class RecommendationEngineCore:
             return []
 
     def _calculate_user_similarity(self, prefs1: Dict[str, float], prefs2: Dict[str, float]) -> float:
-        """Calculate similarity between two user preference vectors"""
+        """
+Calculate similarity between two user preference vectors"""
         
         # Get common keys
         common_keys = set(prefs1.keys()) & set(prefs2.keys())
@@ -702,7 +724,8 @@ class RecommendationEngineCore:
         item_id: str, 
         similar_users: List[Tuple[str, float]]
     ) -> float:
-        """Calculate collaborative filtering score for an item"""
+        """
+Calculate collaborative filtering score for an item"""
         
         score = 0.0
         total_weight = 0.0
@@ -738,7 +761,8 @@ class RecommendationEngineCore:
         user_preferences: Dict[str, float], 
         user_interests: Set[str]
     ) -> float:
-        """Calculate content-based score for an item"""
+        """
+Calculate content-based score for an item"""
         
         score = 0.0
         
@@ -765,7 +789,8 @@ class RecommendationEngineCore:
         return score
 
     async def _build_user_item_matrix(self) -> Tuple[np.ndarray, Dict[str, int], Dict[str, int]]:
-        """Build user-item interaction matrix"""
+        """
+Build user-item interaction matrix"""
         
         # Create mappings
         users = list(self.user_profiles.keys())
@@ -804,7 +829,8 @@ class RecommendationEngineCore:
         count: int, 
         context: Dict[str, Any]
     ) -> List[Recommendation]:
-        """Post-process recommendations for diversity and quality"""
+        """
+Post-process recommendations for diversity and quality"""
         
         if not recommendations:
             return []
@@ -818,7 +844,8 @@ class RecommendationEngineCore:
         return filtered_recs[:count]
 
     async def _apply_diversity(self, recommendations: List[Recommendation], user_id: str) -> List[Recommendation]:
-        """Apply diversity to recommendations"""
+        """
+Apply diversity to recommendations"""
         
         if not recommendations:
             return recommendations
@@ -864,7 +891,8 @@ class RecommendationEngineCore:
         user_id: str, 
         context: Dict[str, Any]
     ) -> List[Recommendation]:
-        """Apply business rules to filter recommendations"""
+        """
+Apply business rules to filter recommendations"""
         
         filtered_recs = []
         
@@ -886,7 +914,8 @@ class RecommendationEngineCore:
         return filtered_recs
 
     async def add_content_item(self, content: ContentItem):
-        """Add content item to the system"""
+        """
+Add content item to the system"""
         self.content_items[content.item_id] = content
         logger.debug(f"Added content item: {content.item_id}")
 
@@ -897,7 +926,8 @@ class RecommendationEngineCore:
         feedback: str,
         context: Optional[Dict[str, Any]] = None
     ):
-        """Record feedback on recommendations"""
+        """
+Record feedback on recommendations"""
         
         if feedback == "clicked":
             self.metrics.clicked_recommendations += 1
@@ -919,7 +949,8 @@ class RecommendationEngineCore:
             )
 
     async def _rebuild_similarity_matrices(self):
-        """Rebuild similarity matrices for collaborative filtering"""
+        """
+Rebuild similarity matrices for collaborative filtering"""
         
         if not SKLEARN_AVAILABLE:
             return
@@ -942,11 +973,13 @@ class RecommendationEngineCore:
             logger.error(f"Failed to rebuild similarity matrices: {str(e)}")
 
     def get_metrics(self) -> RecommendationMetrics:
-        """Get recommendation system metrics"""
+        """
+Get recommendation system metrics"""
         return self.metrics
 
     async def health_check(self) -> bool:
-        """Health check for recommendation system"""
+        """
+Health check for recommendation system"""
         try:
             # Test basic recommendation generation
             if self.user_profiles:
@@ -967,4 +1000,4 @@ __all__ = [
     "Recommendation", "RecommendationMetrics"
 ]
 
-logger.info("🎯 Recommendation Engine Core module loaded")
+logger.info("🎯 Recommendation Engine Core module initialized")

@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class ServiceMeshCore:
-    """Advanced ServiceMeshCore System"""
+    """
+Advanced ServiceMeshCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class ServiceMeshCore:
 # Module exports
 __all__ = ["ServiceMeshCore"]
 
-logger.info("🕸️ ServiceMeshCore module loaded")
+logger.info("🕸️ ServiceMeshCore module initialized")

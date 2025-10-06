@@ -140,7 +140,8 @@ class CollaborationConfig:
 
 @dataclass
 class User:
-    """User representation"""
+    """
+        User representation"""
     user_id: str
     username: str
     email: str
@@ -153,7 +154,8 @@ class User:
 
 @dataclass
 class CollaborationSession:
-    """Real-time collaboration session"""
+    """
+        Real-time collaboration session"""
     session_id: str
     project_id: str
     active_users: List[User] = field(default_factory=list)
@@ -164,7 +166,8 @@ class CollaborationSession:
 
 @dataclass
 class Comment:
-    """Comment on content"""
+    """
+        Comment on content"""
     comment_id: str
     content_id: str
     user_id: str
@@ -179,7 +182,8 @@ class Comment:
 
 @dataclass
 class Annotation:
-    """Content annotation"""
+    """
+        Content annotation"""
     annotation_id: str
     content_id: str
     user_id: str
@@ -192,7 +196,8 @@ class Annotation:
 
 @dataclass
 class WorkflowTask:
-    """Individual workflow task"""
+    """
+        Individual workflow task"""
     task_id: str
     workflow_id: str
     name: str
@@ -209,7 +214,8 @@ class WorkflowTask:
 
 @dataclass
 class Workflow:
-    """Collaboration workflow definition"""
+    """
+        Collaboration workflow definition"""
     workflow_id: str
     name: str
     description: str
@@ -226,7 +232,8 @@ class Workflow:
 
 @dataclass
 class ApprovalRequest:
-    """Approval request for content or workflow"""
+    """
+        Approval request for content or workflow"""
     request_id: str
     content_id: str
     workflow_id: Optional[str] = None
@@ -242,7 +249,8 @@ class ApprovalRequest:
 
 @dataclass
 class TeamWorkspace:
-    """Team collaboration workspace"""
+    """
+        Team collaboration workspace"""
     workspace_id: str
     name: str
     description: str
@@ -255,7 +263,8 @@ class TeamWorkspace:
 
 
 class RealTimeCollaborationManager:
-    """Manages real-time collaboration features"""
+    """
+        Manages real-time collaboration features"""
     
     def __init__(self, config: CollaborationConfig):
         self.config = config
@@ -274,32 +283,40 @@ class RealTimeCollaborationManager:
         """Create new collaboration session"""
         try:
             session_id = str(uuid.uuid4())
+
+
             
             session = CollaborationSession(
                 session_id=session_id,
                 project_id=project_id,
                 active_users=[creator_user]
             )
+
             
             self.active_sessions[session_id] = session
             self.user_sessions[creator_user.user_id].add(session_id)
+
             
             await self._notify_session_event(session_id, CollaborationEventType.JOIN_SESSION, {
                 'user': self._serialize_user(creator_user),
                 'session_id': session_id
             })
+
             
             logger.info(f"Created collaboration session {session_id} for project {project_id}")
+
             return session
             
         except Exception as e:
             logger.error(f"Failed to create collaboration session: {e}")
+
             raise
     
     async def join_session(self, session_id: str, user: User) -> bool:
         """User joins collaboration session"""
         try:
             session = self.active_sessions.get(session_id)
+
             if not session:
                 return False
             
@@ -312,34 +329,43 @@ class RealTimeCollaborationManager:
                 return False
             
             session.active_users.append(user)
+
             session.last_activity = datetime.now(timezone.utc)
+
             self.user_sessions[user.user_id].add(session_id)
+
             
             await self._notify_session_event(session_id, CollaborationEventType.JOIN_SESSION, {
                 'user': self._serialize_user(user),
                 'active_users_count': len(session.active_users)
             })
+
             
             logger.info(f"User {user.user_id} joined session {session_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to join session: {e}")
+
             return False
     
     async def leave_session(self, session_id: str, user_id: str) -> bool:
         """User leaves collaboration session"""
         try:
             session = self.active_sessions.get(session_id)
+
             if not session:
                 return False
             
             # Remove user from session
             session.active_users = [u for u in session.active_users if u.user_id != user_id]
             session.last_activity = datetime.now(timezone.utc)
+
             
             if session_id in self.user_sessions[user_id]:
                 self.user_sessions[user_id].remove(session_id)
+
             
             await self._notify_session_event(session_id, CollaborationEventType.LEAVE_SESSION, {
                 'user_id': user_id,
@@ -351,10 +377,12 @@ class RealTimeCollaborationManager:
                 del self.active_sessions[session_id]
             
             logger.info(f"User {user_id} left session {session_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to leave session: {e}")
+
             return False
     
     async def broadcast_content_update(
@@ -366,8 +394,10 @@ class RealTimeCollaborationManager:
         """Broadcast content update to all session participants"""
         try:
             session = self.active_sessions.get(session_id)
+
             if not session:
                 return False
+
             
             event_data = {
                 'user_id': user_id,
@@ -384,11 +414,13 @@ class RealTimeCollaborationManager:
             # Auto-save if interval reached
             if self.config.real_time_sync:
                 await self._trigger_auto_save(session_id)
+
             
             return True
             
         except Exception as e:
             logger.error(f"Failed to broadcast content update: {e}")
+
             return False
     
     async def add_comment(
@@ -399,23 +431,30 @@ class RealTimeCollaborationManager:
         """Add comment and notify session participants"""
         try:
             session = self.active_sessions.get(session_id)
+
             if not session:
                 return False
             
             # Store comment (would use database in production)
+
+
             comment_data = self._serialize_comment(comment)
+
             
             await self._notify_session_event(
                 session_id, 
                 CollaborationEventType.COMMENT_ADD, 
                 comment_data
             )
+
             
             logger.info(f"Comment added to session {session_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to add comment: {e}")
+
             return False
     
     async def add_annotation(
@@ -426,22 +465,28 @@ class RealTimeCollaborationManager:
         """Add annotation and notify session participants"""
         try:
             session = self.active_sessions.get(session_id)
+
             if not session:
                 return False
+
             
             annotation_data = self._serialize_annotation(annotation)
+
             
             await self._notify_session_event(
                 session_id, 
                 CollaborationEventType.ANNOTATION_ADD, 
                 annotation_data
             )
+
             
             logger.info(f"Annotation added to session {session_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to add annotation: {e}")
+
             return False
     
     async def _notify_session_event(
@@ -454,6 +499,7 @@ class RealTimeCollaborationManager:
         session = self.active_sessions.get(session_id)
         if not session:
             return
+
         
         event_payload = {
             'type': event_type.value,
@@ -467,13 +513,14 @@ class RealTimeCollaborationManager:
             await self._send_to_user(user.user_id, event_payload)
     
     async def _send_to_user(self, user_id: str, payload: Dict[str, Any]):
-        """Send payload to specific user"""
-        # Placeholder for WebSocket implementation
+        """
+        Send payload to specific user"""
+        
         logger.debug(f"Sending to user {user_id}: {payload['type']}")
     
     async def _trigger_auto_save(self, session_id: str):
         """Trigger auto-save for session"""
-        # Placeholder for auto-save implementation
+        
         logger.debug(f"Auto-save triggered for session {session_id}")
     
     def _serialize_user(self, user: User) -> Dict[str, Any]:
@@ -488,7 +535,8 @@ class RealTimeCollaborationManager:
         }
     
     def _serialize_comment(self, comment: Comment) -> Dict[str, Any]:
-        """Serialize comment for transmission"""
+        """
+        Serialize comment for transmission"""
         return {
             'comment_id': comment.comment_id,
             'content_id': comment.content_id,
@@ -502,7 +550,8 @@ class RealTimeCollaborationManager:
         }
     
     def _serialize_annotation(self, annotation: Annotation) -> Dict[str, Any]:
-        """Serialize annotation for transmission"""
+        """
+        Serialize annotation for transmission"""
         return {
             'annotation_id': annotation.annotation_id,
             'content_id': annotation.content_id,
@@ -516,7 +565,8 @@ class RealTimeCollaborationManager:
 
 
 class WorkflowEngine:
-    """Manages collaboration workflows and task coordination"""
+    """
+        Manages collaboration workflows and task coordination"""
     
     def __init__(self, config: CollaborationConfig):
         self.config = config
@@ -542,6 +592,8 @@ class WorkflowEngine:
         """Create new collaboration workflow"""
         try:
             workflow_id = str(uuid.uuid4())
+
+
             
             workflow = Workflow(
                 workflow_id=workflow_id,
@@ -552,17 +604,21 @@ class WorkflowEngine:
                 participants=participants,
                 deadline=deadline
             )
+
             
             self.workflows[workflow_id] = workflow
             
             # Notify participants
             await self._notify_workflow_created(workflow)
+
             
             logger.info(f"Created workflow {workflow_id}: {name}")
+
             return workflow
             
         except Exception as e:
             logger.error(f"Failed to create workflow: {e}")
+
             raise
     
     async def add_task(
@@ -578,10 +634,15 @@ class WorkflowEngine:
         """Add task to workflow"""
         try:
             workflow = self.workflows.get(workflow_id)
+
             if not workflow:
                 raise ValueError(f"Workflow {workflow_id} not found")
+
+
             
             task_id = str(uuid.uuid4())
+
+
             
             task = WorkflowTask(
                 task_id=task_id,
@@ -593,18 +654,23 @@ class WorkflowEngine:
                 due_date=due_date,
                 dependencies=dependencies or []
             )
+
             
             workflow.tasks.append(task)
+
             workflow.updated_at = datetime.now(timezone.utc)
             
             # Notify assigned users
             await self._notify_task_assigned(task)
+
             
             logger.info(f"Added task {task_id} to workflow {workflow_id}")
+
             return task
             
         except Exception as e:
             logger.error(f"Failed to add task: {e}")
+
             raise
     
     async def update_task_status(
@@ -616,8 +682,10 @@ class WorkflowEngine:
         """Update task status"""
         try:
             task = self._find_task(task_id)
+
             if not task:
                 return False
+
             
             old_status = task.status
             task.status = new_status
@@ -626,33 +694,49 @@ class WorkflowEngine:
                 task.completed_at = datetime.now(timezone.utc)
             
             # Update workflow status if needed
+
             workflow = self.workflows.get(task.workflow_id)
+
             if workflow:
                 await self._update_workflow_status(workflow)
+
             
             await self._notify_task_status_changed(task, old_status, updated_by)
+
             
             logger.info(f"Task {task_id} status changed: {old_status.value} -> {new_status.value}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to update task status: {e}")
+
             return False
     
     async def get_workflow_progress(self, workflow_id: str) -> Dict[str, Any]:
         """Get workflow progress statistics"""
         try:
             workflow = self.workflows.get(workflow_id)
+
             if not workflow:
                 return {}
+
             
             total_tasks = len(workflow.tasks)
+
             if total_tasks == 0:
                 return {'progress': 0, 'total_tasks': 0, 'completed_tasks': 0}
+
             
             completed_tasks = sum(1 for task in workflow.tasks if task.status == WorkflowStatus.COMPLETED)
+
+
             in_progress_tasks = sum(1 for task in workflow.tasks if task.status == WorkflowStatus.IN_PROGRESS)
+
+
             pending_tasks = sum(1 for task in workflow.tasks if task.status == WorkflowStatus.PENDING)
+
+
             
             progress = (completed_tasks / total_tasks) * 100
             
@@ -669,15 +753,19 @@ class WorkflowEngine:
             
         except Exception as e:
             logger.error(f"Failed to get workflow progress: {e}")
+
             return {}
     
     async def _update_workflow_status(self, workflow: Workflow):
         """Update workflow status based on task statuses"""
         if not workflow.tasks:
             return
+
         
         completed_tasks = sum(1 for task in workflow.tasks if task.status == WorkflowStatus.COMPLETED)
+
         total_tasks = len(workflow.tasks)
+
         
         if completed_tasks == total_tasks:
             workflow.status = WorkflowStatus.COMPLETED
@@ -689,7 +777,8 @@ class WorkflowEngine:
         workflow.updated_at = datetime.now(timezone.utc)
     
     def _find_task(self, task_id: str) -> Optional[WorkflowTask]:
-        """Find task by ID across all workflows"""
+        """
+        Find task by ID across all workflows"""
         for workflow in self.workflows.values():
             for task in workflow.tasks:
                 if task.task_id == task_id:
@@ -697,13 +786,14 @@ class WorkflowEngine:
         return None
     
     async def _notify_workflow_created(self, workflow: Workflow):
-        """Notify participants about new workflow"""
-        # Placeholder for notification implementation
+        """
+        Notify participants about new workflow"""
+        
         logger.info(f"Notifying participants about workflow {workflow.workflow_id}")
     
     async def _notify_task_assigned(self, task: WorkflowTask):
         """Notify users about task assignment"""
-        # Placeholder for notification implementation
+        
         logger.info(f"Notifying users about task assignment {task.task_id}")
     
     async def _notify_task_status_changed(
@@ -713,7 +803,7 @@ class WorkflowEngine:
         updated_by: str
     ):
         """Notify about task status change"""
-        # Placeholder for notification implementation
+        
         logger.info(f"Task {task.task_id} status changed by {updated_by}")
 
 
@@ -738,12 +828,17 @@ class ApprovalWorkflowManager:
         """Create new approval request"""
         try:
             request_id = str(uuid.uuid4())
+
+
             
             deadline = None
             if deadline_hours:
                 deadline = datetime.now(timezone.utc) + timedelta(hours=deadline_hours)
+
             elif self.config.approval_timeout_hours > 0:
                 deadline = datetime.now(timezone.utc) + timedelta(hours=self.config.approval_timeout_hours)
+
+
             
             request = ApprovalRequest(
                 request_id=request_id,
@@ -754,17 +849,21 @@ class ApprovalWorkflowManager:
                 message=message,
                 deadline=deadline
             )
+
             
             self.approval_requests[request_id] = request
             
             # Notify approvers
             await self._notify_approval_requested(request)
+
             
             logger.info(f"Created approval request {request_id} for content {content_id}")
+
             return request
             
         except Exception as e:
             logger.error(f"Failed to create approval request: {e}")
+
             raise
     
     async def submit_approval(
@@ -777,6 +876,7 @@ class ApprovalWorkflowManager:
         """Submit approval decision"""
         try:
             request = self.approval_requests.get(request_id)
+
             if not request:
                 return False
             
@@ -801,22 +901,28 @@ class ApprovalWorkflowManager:
             # Check if all approvals received
             if len(request.approvals) == len(request.approvers):
                 await self._finalize_approval_request(request)
+
             
             await self._notify_approval_submitted(request, approver_id, decision)
+
             
             logger.info(f"Approval submitted for request {request_id} by {approver_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to submit approval: {e}")
+
             return False
     
     async def get_approval_status(self, request_id: str) -> Dict[str, Any]:
         """Get approval request status"""
         try:
             request = self.approval_requests.get(request_id)
+
             if not request:
                 return {}
+
             
             pending_approvers = [
                 approver for approver in request.approvers
@@ -837,6 +943,7 @@ class ApprovalWorkflowManager:
             
         except Exception as e:
             logger.error(f"Failed to get approval status: {e}")
+
             return {}
     
     async def _finalize_approval_request(self, request: ApprovalRequest):
@@ -853,12 +960,14 @@ class ApprovalWorkflowManager:
             request.status = ApprovalStatus.APPROVED  # Default to approved
         
         request.completed_at = datetime.now(timezone.utc)
+
         
         await self._notify_approval_completed(request)
     
     async def _notify_approval_requested(self, request: ApprovalRequest):
-        """Notify approvers about new approval request"""
-        # Placeholder for notification implementation
+        """
+        Notify approvers about new approval request"""
+        
         logger.info(f"Notifying approvers about request {request.request_id}")
     
     async def _notify_approval_submitted(
@@ -868,12 +977,12 @@ class ApprovalWorkflowManager:
         decision: ApprovalStatus
     ):
         """Notify about submitted approval"""
-        # Placeholder for notification implementation
+        
         logger.info(f"Approval {decision.value} submitted for request {request.request_id}")
     
     async def _notify_approval_completed(self, request: ApprovalRequest):
         """Notify about completed approval process"""
-        # Placeholder for notification implementation
+        
         logger.info(f"Approval process completed for request {request.request_id}: {request.status.value}")
 
 
@@ -896,6 +1005,8 @@ class TeamWorkspaceManager:
         """Create new team workspace"""
         try:
             workspace_id = str(uuid.uuid4())
+
+
             
             workspace = TeamWorkspace(
                 workspace_id=workspace_id,
@@ -904,17 +1015,21 @@ class TeamWorkspaceManager:
                 owner_id=owner_id,
                 members=initial_members or []
             )
+
             
             self.workspaces[workspace_id] = workspace
             
             # Notify members
             await self._notify_workspace_created(workspace)
+
             
             logger.info(f"Created workspace {workspace_id}: {name}")
+
             return workspace
             
         except Exception as e:
             logger.error(f"Failed to create workspace: {e}")
+
             raise
     
     async def add_member(
@@ -926,6 +1041,7 @@ class TeamWorkspaceManager:
         """Add member to workspace"""
         try:
             workspace = self.workspaces.get(workspace_id)
+
             if not workspace:
                 return False
             
@@ -934,15 +1050,20 @@ class TeamWorkspaceManager:
                 return True
             
             workspace.members.append(user)
+
             workspace.updated_at = datetime.now(timezone.utc)
+
             
             await self._notify_member_added(workspace, user, added_by)
+
             
             logger.info(f"Added member {user.user_id} to workspace {workspace_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to add member: {e}")
+
             return False
     
     async def remove_member(
@@ -954,6 +1075,7 @@ class TeamWorkspaceManager:
         """Remove member from workspace"""
         try:
             workspace = self.workspaces.get(workspace_id)
+
             if not workspace:
                 return False
             
@@ -963,14 +1085,18 @@ class TeamWorkspaceManager:
             
             workspace.members = [m for m in workspace.members if m.user_id != user_id]
             workspace.updated_at = datetime.now(timezone.utc)
+
             
             await self._notify_member_removed(workspace, user_id, removed_by)
+
             
             logger.info(f"Removed member {user_id} from workspace {workspace_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to remove member: {e}")
+
             return False
     
     async def add_project(
@@ -981,18 +1107,23 @@ class TeamWorkspaceManager:
         """Add project to workspace"""
         try:
             workspace = self.workspaces.get(workspace_id)
+
             if not workspace:
                 return False
             
             if project_id not in workspace.projects:
                 workspace.projects.append(project_id)
+
                 workspace.updated_at = datetime.now(timezone.utc)
+
             
             logger.info(f"Added project {project_id} to workspace {workspace_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to add project: {e}")
+
             return False
     
     async def get_workspace_activity(
@@ -1003,10 +1134,12 @@ class TeamWorkspaceManager:
         """Get workspace activity summary"""
         try:
             workspace = self.workspaces.get(workspace_id)
+
             if not workspace:
                 return {}
             
             # Calculate activity metrics (placeholder)
+
             return {
                 'workspace_id': workspace_id,
                 'name': workspace.name,
@@ -1023,21 +1156,22 @@ class TeamWorkspaceManager:
             
         except Exception as e:
             logger.error(f"Failed to get workspace activity: {e}")
+
             return {}
     
     async def _notify_workspace_created(self, workspace: TeamWorkspace):
         """Notify about workspace creation"""
-        # Placeholder for notification implementation
+        
         logger.info(f"Workspace created: {workspace.workspace_id}")
     
     async def _notify_member_added(self, workspace: TeamWorkspace, user: User, added_by: str):
         """Notify about member addition"""
-        # Placeholder for notification implementation
+        
         logger.info(f"Member {user.user_id} added to workspace {workspace.workspace_id}")
     
     async def _notify_member_removed(self, workspace: TeamWorkspace, user_id: str, removed_by: str):
         """Notify about member removal"""
-        # Placeholder for notification implementation
+        
         logger.info(f"Member {user_id} removed from workspace {workspace.workspace_id}")
 
 
@@ -1045,7 +1179,8 @@ class CollaborationWorkflowSystem:
     """Main collaboration workflow system orchestrating all components"""
     
     def __init__(self, config: Optional[CollaborationConfig] = None):
-        """Initialize collaboration workflow system"""
+        """
+        Initialize collaboration workflow system"""
         self.config = config or CollaborationConfig()
         
         # Initialize component managers
@@ -1072,9 +1207,11 @@ class CollaborationWorkflowSystem:
             project_id = str(uuid.uuid4())
             
             # Create collaboration session
+
             session = await self.realtime_manager.create_session(project_id, creator_user)
             
             # Create project workflow
+
             workflow = await self.workflow_engine.create_workflow(
                 name=f"{project_name} - Main Workflow",
                 description=f"Main workflow for {project_name}",
@@ -1091,6 +1228,8 @@ class CollaborationWorkflowSystem:
             if initial_collaborators:
                 for collaborator in initial_collaborators:
                     await self.realtime_manager.join_session(session.session_id, collaborator)
+
+
             
             project_data = {
                 'project_id': project_id,
@@ -1107,10 +1246,12 @@ class CollaborationWorkflowSystem:
             self.active_projects[project_id] = project_data
             
             logger.info(f"Created collaborative project {project_id}: {project_name}")
+
             return project_data
             
         except Exception as e:
             logger.error(f"Failed to create collaborative project: {e}")
+
             raise
     
     async def request_content_approval(
@@ -1124,10 +1265,12 @@ class CollaborationWorkflowSystem:
         """Request approval for project content"""
         try:
             project = self.active_projects.get(project_id)
+
             if not project:
                 raise ValueError(f"Project {project_id} not found")
             
             # Create approval request
+
             approval_request = await self.approval_manager.create_approval_request(
                 content_id=content_id,
                 requester_id=requester_id,
@@ -1144,28 +1287,36 @@ class CollaborationWorkflowSystem:
                 assigned_to=approvers,
                 priority=2
             )
+
             
             logger.info(f"Content approval requested for project {project_id}")
+
             return approval_request
             
         except Exception as e:
             logger.error(f"Failed to request content approval: {e}")
+
             raise
     
     async def get_project_status(self, project_id: str) -> Dict[str, Any]:
         """Get comprehensive project status"""
         try:
             project = self.active_projects.get(project_id)
+
             if not project:
                 return {}
             
             # Get workflow progress
+
             workflow_progress = await self.workflow_engine.get_workflow_progress(
                 project['workflow_id']
             )
             
             # Get active session info
+
             session = self.realtime_manager.active_sessions.get(project['session_id'])
+
+
             session_info = {
                 'active_users': len(session.active_users) if session else 0,
                 'last_activity': session.last_activity.isoformat() if session else None
@@ -1181,33 +1332,42 @@ class CollaborationWorkflowSystem:
             
         except Exception as e:
             logger.error(f"Failed to get project status: {e}")
+
             return {}
     
     async def get_user_dashboard(self, user_id: str) -> Dict[str, Any]:
         """Get user collaboration dashboard"""
         try:
             # Find user's active sessions
+
             active_sessions = [
                 session_id for session_id in self.realtime_manager.user_sessions.get(user_id, set())
+
                 if session_id in self.realtime_manager.active_sessions
             ]
             
             # Find user's workflows
+
             user_workflows = [
                 workflow for workflow in self.workflow_engine.workflows.values()
+
                 if user_id in workflow.participants
             ]
             
             # Find pending approvals
+
             pending_approvals = [
                 request for request in self.approval_manager.approval_requests.values()
+
                 if user_id in request.approvers and user_id not in request.approvals
                 and request.status == ApprovalStatus.PENDING
             ]
             
             # Find user's workspaces
+
             user_workspaces = [
                 workspace for workspace in self.workspace_manager.workspaces.values()
+
                 if workspace.owner_id == user_id or 
                 any(member.user_id == user_id for member in workspace.members)
             ]
@@ -1228,6 +1388,7 @@ class CollaborationWorkflowSystem:
             
         except Exception as e:
             logger.error(f"Failed to get user dashboard: {e}")
+
             return {}
 
 
@@ -1240,21 +1401,24 @@ class CollaborationTools_Legacy:
 
 
 class CollaborationWorkflowEngine_Legacy:
-    """Legacy wrapper for workflow engine"""
+    """
+        Legacy wrapper for workflow engine"""
     def __init__(self, *args, **kwargs):
         config = CollaborationConfig()
         self.engine = WorkflowEngine(config)
 
 
 class TeamMediaWorkspace_Legacy:
-    """Legacy wrapper for team workspace"""
+    """
+        Legacy wrapper for team workspace"""
     def __init__(self, *args, **kwargs):
         config = CollaborationConfig()
         self.manager = TeamWorkspaceManager(config)
 
 
 class ApprovalWorkflowManager_Legacy:
-    """Legacy wrapper for approval manager"""
+    """
+        Legacy wrapper for approval manager"""
     def __init__(self, *args, **kwargs):
         config = CollaborationConfig()
         self.manager = ApprovalWorkflowManager(config)

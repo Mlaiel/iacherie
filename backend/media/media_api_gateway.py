@@ -49,16 +49,19 @@ except ImportError:
 
 try:
     import aiohttp
+    
     # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+    try:
+        import aioredis
+        REDIS_AVAILABLE = True
+    except (ImportError, TypeError) as e:
+        # Handle Python 3.12 TimeoutError duplicate base class issue
+        from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+        import logging
+        logging.warning(f"Using Redis compatibility layer: {e}")
+    
     HAS_ASYNC_CLIENTS = True
+    
 except ImportError:
     HAS_ASYNC_CLIENTS = False
     logging.warning("Async HTTP clients not available - using basic implementations")
@@ -178,7 +181,8 @@ class Route:
 
 @dataclass
 class APIRequest:
-    """API request information"""
+    """
+        API request information"""
     request_id: str
     path: str
     method: str
@@ -206,7 +210,8 @@ class APIResponse:
 
 @dataclass
 class RateLimitRule:
-    """Rate limiting rule"""
+    """
+        Rate limiting rule"""
     rule_id: str
     identifier: str  # IP, user_id, api_key
     limit_type: RateLimitType
@@ -218,7 +223,8 @@ class RateLimitRule:
 
 
 class AuthenticationManager:
-    """Handles authentication and authorization"""
+    """
+        Handles authentication and authorization"""
     
     def __init__(self, config: GatewayConfig):
         self.config = config
@@ -237,34 +243,42 @@ class AuthenticationManager:
             
             elif auth_method == AuthMethod.JWT:
                 return await self._authenticate_jwt(request)
+
             
             elif auth_method == AuthMethod.API_KEY:
                 return await self._authenticate_api_key(request)
+
             
             elif auth_method == AuthMethod.OAUTH2:
                 return await self._authenticate_oauth2(request)
+
             
             elif auth_method == AuthMethod.BASIC:
                 return await self._authenticate_basic(request)
+
             
             else:
                 return {'authenticated': False, 'error': 'Unsupported auth method'}
             
         except Exception as e:
             logger.error(f"Authentication failed: {e}")
+
             return {'authenticated': False, 'error': str(e)}
     
     async def _authenticate_jwt(self, request: APIRequest) -> Dict[str, Any]:
         """Authenticate using JWT token"""
         try:
             auth_header = request.headers.get('Authorization', '')
+
             
             if not auth_header.startswith('Bearer '):
                 return {'authenticated': False, 'error': 'Missing or invalid Bearer token'}
+
             
             token = auth_header[7:]  # Remove 'Bearer ' prefix
             
             # Decode JWT token
+
             payload = jwt.decode(token, self.jwt_secret, algorithms=[self.jwt_algorithm])
             
             # Check expiration
@@ -273,7 +287,9 @@ class AuthenticationManager:
                     return {'authenticated': False, 'error': 'Token expired'}
             
             # Extract user information
+
             user_id = payload.get('user_id') or payload.get('sub')
+
             if not user_id:
                 return {'authenticated': False, 'error': 'Invalid token payload'}
             
@@ -292,14 +308,19 @@ class AuthenticationManager:
             return {'authenticated': False, 'error': f'JWT authentication failed: {str(e)}'}
     
     async def _authenticate_api_key(self, request: APIRequest) -> Dict[str, Any]:
-        """Authenticate using API key"""
+        """
+        Authenticate using API key"""
         try:
             # Try header first
+
             api_key = request.headers.get('X-API-Key') or request.headers.get('Authorization')
+
             
             if not api_key:
                 # Try query parameter
+
                 api_key = request.query_params.get('api_key')
+
             
             if not api_key:
                 return {'authenticated': False, 'error': 'Missing API key'}
@@ -309,7 +330,9 @@ class AuthenticationManager:
                 api_key = api_key[7:]
             
             # Validate API key
+
             key_info = self.api_keys.get(api_key)
+
             if not key_info:
                 return {'authenticated': False, 'error': 'Invalid API key'}
             
@@ -320,6 +343,7 @@ class AuthenticationManager:
             # Check expiration
             if 'expires_at' in key_info:
                 expires_at = datetime.fromisoformat(key_info['expires_at'])
+
                 if expires_at < datetime.now(timezone.utc):
                     return {'authenticated': False, 'error': 'API key expired'}
             
@@ -334,17 +358,20 @@ class AuthenticationManager:
             return {'authenticated': False, 'error': f'API key authentication failed: {str(e)}'}
     
     async def _authenticate_oauth2(self, request: APIRequest) -> Dict[str, Any]:
-        """Authenticate using OAuth2"""
+        """
+        Authenticate using OAuth2"""
         # Simplified OAuth2 implementation
         return {'authenticated': False, 'error': 'OAuth2 not implemented'}
     
     async def _authenticate_basic(self, request: APIRequest) -> Dict[str, Any]:
-        """Authenticate using Basic authentication"""
+        """
+        Authenticate using Basic authentication"""
         # Simplified Basic auth implementation
         return {'authenticated': False, 'error': 'Basic auth not implemented'}
     
     def create_jwt_token(self, user_id: str, scopes: List[str] = None) -> str:
-        """Create JWT token for user"""
+        """
+        Create JWT token for user"""
         try:
             payload = {
                 'user_id': user_id,
@@ -352,12 +379,15 @@ class AuthenticationManager:
                 'exp': datetime.now(timezone.utc) + timedelta(hours=self.config.jwt_expiry_hours),
                 'scopes': scopes or []
             }
+
             
             token = jwt.encode(payload, self.jwt_secret, algorithm=self.jwt_algorithm)
+
             return token
             
         except Exception as e:
             logger.error(f"Failed to create JWT token: {e}")
+
             raise
     
     def add_api_key(self, api_key: str, user_id: str, permissions: List[str] = None) -> bool:
@@ -373,6 +403,7 @@ class AuthenticationManager:
             
         except Exception as e:
             logger.error(f"Failed to add API key: {e}")
+
             return False
 
 
@@ -383,6 +414,7 @@ class RateLimiter:
         self.config = config
         self.rate_limit_rules: Dict[str, RateLimitRule] = {}
         self.request_counts: Dict[str, deque] = defaultdict(lambda: deque())
+
         
         logger.info("🚦 Rate Limiter initialized")
     
@@ -390,16 +422,23 @@ class RateLimiter:
         """Check if request exceeds rate limit"""
         try:
             # Determine identifier (IP, user_id, or API key)
+
+
             identifier = self._get_rate_limit_identifier(request)
             
             # Use provided limit or default
+
             request_limit = limit or self.config.default_rate_limit
             
             # Get current time
+
             current_time = datetime.now(timezone.utc)
+
+
             window_start = current_time - timedelta(hours=1)  # 1-hour window
             
             # Clean old requests from deque
+
             request_times = self.request_counts[identifier]
             while request_times and request_times[0] < window_start:
                 request_times.popleft()
@@ -416,6 +455,7 @@ class RateLimiter:
             
             # Add current request
             request_times.append(current_time)
+
             
             return {
                 'allowed': True,
@@ -427,6 +467,7 @@ class RateLimiter:
         except Exception as e:
             logger.error(f"Rate limit check failed: {e}")
             # Allow request on error (fail open)
+
             return {'allowed': True, 'error': str(e)}
     
     def _get_rate_limit_identifier(self, request: APIRequest) -> str:
@@ -462,35 +503,46 @@ class LoadBalancer:
                 return None
             
             # Filter healthy endpoints
+
             healthy_endpoints = [ep for ep in endpoints if ep.is_healthy]
             
             if not healthy_endpoints:
                 # If no healthy endpoints, use all (circuit breaker)
+
+
                 healthy_endpoints = endpoints
+
             
             strategy = strategy or self.config.default_route_strategy
             
             if strategy == RouteStrategy.ROUND_ROBIN:
                 return self._round_robin_select(healthy_endpoints)
+
             
             elif strategy == RouteStrategy.WEIGHTED:
                 return self._weighted_select(healthy_endpoints)
+
             
             elif strategy == RouteStrategy.HEALTH_BASED:
                 return self._health_based_select(healthy_endpoints)
+
             
             elif strategy == RouteStrategy.LEAST_CONNECTIONS:
                 return self._least_connections_select(healthy_endpoints)
+
             
             elif strategy == RouteStrategy.HASH_BASED:
                 return self._hash_based_select(healthy_endpoints, request)
+
             
             else:
                 # Default to round robin
                 return self._round_robin_select(healthy_endpoints)
+
             
         except Exception as e:
             logger.error(f"Endpoint selection failed: {e}")
+
             return endpoints[0] if endpoints else None
     
     def _round_robin_select(self, endpoints: List[ServiceEndpoint]) -> ServiceEndpoint:
@@ -499,8 +551,10 @@ class LoadBalancer:
             return None
         
         # Use combined service IDs as key
+
         key = "_".join(sorted(ep.service_id for ep in endpoints))
         self.endpoint_counters[key] = (self.endpoint_counters[key] + 1) % len(endpoints)
+
         
         return endpoints[self.endpoint_counters[key]]
     
@@ -510,14 +564,19 @@ class LoadBalancer:
             return None
         
         # Calculate total weight
+
         total_weight = sum(ep.weight for ep in endpoints)
+
         
         if total_weight == 0:
             return endpoints[0]
         
         # Generate random number and select based on weight
         import random
+
         rand_weight = random.randint(1, total_weight)
+
+
         
         current_weight = 0
         for endpoint in endpoints:
@@ -528,7 +587,8 @@ class LoadBalancer:
         return endpoints[-1]  # Fallback
     
     def _health_based_select(self, endpoints: List[ServiceEndpoint]) -> ServiceEndpoint:
-        """Health-based endpoint selection (best response time)"""
+        """
+        Health-based endpoint selection (best response time)"""
         if not endpoints:
             return None
         
@@ -536,26 +596,31 @@ class LoadBalancer:
         return min(endpoints, key=lambda ep: ep.response_time_ms)
     
     def _least_connections_select(self, endpoints: List[ServiceEndpoint]) -> ServiceEndpoint:
-        """Least connections endpoint selection"""
+        """
+        Least connections endpoint selection"""
         if not endpoints:
             return None
         
         return min(endpoints, key=lambda ep: ep.active_connections)
     
     def _hash_based_select(self, endpoints: List[ServiceEndpoint], request: Optional[APIRequest]) -> ServiceEndpoint:
-        """Hash-based endpoint selection (sticky sessions)"""
+        """
+        Hash-based endpoint selection (sticky sessions)"""
         if not endpoints or not request:
             return endpoints[0] if endpoints else None
         
         # Create hash from user_id or IP
         hash_key = request.user_id or request.client_ip
+
         hash_value = int(hashlib.md5(hash_key.encode()).hexdigest(), 16)
+
         
         return endpoints[hash_value % len(endpoints)]
 
 
 class CacheManager:
-    """Handles response caching"""
+    """
+        Handles response caching"""
     
     def __init__(self, config: GatewayConfig):
         self.config = config
@@ -569,8 +634,10 @@ class CacheManager:
         try:
             if not self.config.enable_caching:
                 return None
+
             
             cached_item = self.cache.get(cache_key)
+
             if not cached_item:
                 self.cache_stats['misses'] += 1
                 return None
@@ -585,6 +652,7 @@ class CacheManager:
             
             # Cache hit
             self.cache_stats['hits'] += 1
+
             response = cached_item['response']
             response.cache_hit = True
             
@@ -592,6 +660,7 @@ class CacheManager:
             
         except Exception as e:
             logger.error(f"Cache retrieval failed: {e}")
+
             return None
     
     async def cache_response(
@@ -608,9 +677,13 @@ class CacheManager:
             # Check cache size limit
             if len(self.cache) >= self.config.max_cache_size:
                 await self._evict_oldest()
+
+
             
             ttl = ttl or self.config.default_cache_ttl
+
             expires_at = datetime.now(timezone.utc) + timedelta(seconds=ttl)
+
             
             self.cache[cache_key] = {
                 'response': response,
@@ -624,11 +697,13 @@ class CacheManager:
             
         except Exception as e:
             logger.error(f"Response caching failed: {e}")
+
             return False
     
     def generate_cache_key(self, request: APIRequest) -> str:
         """Generate cache key for request"""
         # Include path, method, and relevant parameters
+
         key_parts = [
             request.method,
             request.path,
@@ -638,6 +713,8 @@ class CacheManager:
         # Include user context if relevant
         if request.user_id:
             key_parts.append(f"user:{request.user_id}")
+
+
         
         key_string = "|".join(key_parts)
         return hashlib.md5(key_string.encode()).hexdigest()
@@ -648,13 +725,16 @@ class CacheManager:
             return
         
         # Find oldest entry
+
         oldest_key = min(self.cache.keys(), key=lambda k: self.cache[k]['cached_at'])
         del self.cache[oldest_key]
         self.cache_stats['size'] -= 1
     
     def get_cache_stats(self) -> Dict[str, Any]:
-        """Get cache statistics"""
+        """
+        Get cache statistics"""
         total_requests = self.cache_stats['hits'] + self.cache_stats['misses']
+
         hit_rate = (self.cache_stats['hits'] / total_requests) if total_requests > 0 else 0
         
         return {
@@ -667,7 +747,8 @@ class CacheManager:
 
 
 class RequestRouter:
-    """Routes requests to appropriate services"""
+    """
+        Routes requests to appropriate services"""
     
     def __init__(self, config: GatewayConfig):
         self.config = config
@@ -687,7 +768,8 @@ class RequestRouter:
             self.service_endpoints[endpoint.service_id].append(endpoint)
     
     async def find_route(self, request: APIRequest) -> Optional[Route]:
-        """Find matching route for request"""
+        """
+        Find matching route for request"""
         try:
             for route in self.routes:
                 if self._matches_route(request, route):
@@ -697,6 +779,7 @@ class RequestRouter:
             
         except Exception as e:
             logger.error(f"Route finding failed: {e}")
+
             return None
     
     def _matches_route(self, request: APIRequest, route: Route) -> bool:
@@ -706,10 +789,13 @@ class RequestRouter:
             return False
         
         # Check path pattern (simplified regex matching)
+
         pattern = route.path_pattern.replace('*', '.*').replace('{', '(?P<').replace('}', '>[^/]+)')
+
         
         try:
             match = re.fullmatch(pattern, request.path)
+
             return match is not None
         except re.error:
             # Fallback to simple string matching
@@ -717,7 +803,8 @@ class RequestRouter:
 
 
 class ServiceProxy:
-    """Proxies requests to backend services"""
+    """
+        Proxies requests to backend services"""
     
     def __init__(self, config: GatewayConfig):
         self.config = config
@@ -738,7 +825,9 @@ class ServiceProxy:
             target_url = f"{endpoint.base_url.rstrip('/')}{request.path}"
             
             # Prepare headers
+
             headers = dict(request.headers)
+
             headers['X-Forwarded-For'] = request.client_ip
             headers['X-Request-ID'] = request.request_id
             
@@ -747,12 +836,14 @@ class ServiceProxy:
                 response = await self._make_async_request(
                     request.method, target_url, headers, request.query_params, request.body, endpoint
                 )
+
             else:
                 response = await self._make_basic_request(
                     request.method, target_url, headers, request.query_params, request.body
                 )
             
             # Calculate response time
+
             response_time = (time.time() - start_time) * 1000  # ms
             
             # Update endpoint metrics
@@ -766,9 +857,11 @@ class ServiceProxy:
                 response_time_ms=response_time,
                 service_endpoint=endpoint.service_id
             )
+
             
         except Exception as e:
             logger.error(f"Request proxying failed: {e}")
+
             return APIResponse(
                 request_id=request.request_id,
                 status_code=500,
@@ -791,7 +884,9 @@ class ServiceProxy:
         try:
             if not self.session:
                 timeout = aiohttp.ClientTimeout(total=endpoint.timeout_seconds)
+
                 self.session = aiohttp.ClientSession(timeout=timeout)
+
             
             async with self.session.request(
                 method=method,
@@ -801,7 +896,10 @@ class ServiceProxy:
                 data=body
             ) as response:
                 response_body = await response.read()
+
+
                 response_headers = dict(response.headers)
+
                 
                 return {
                     'status': response.status,
@@ -811,6 +909,7 @@ class ServiceProxy:
                 
         except Exception as e:
             logger.error(f"Async HTTP request failed: {e}")
+
             raise
     
     async def _make_basic_request(
@@ -830,16 +929,19 @@ class ServiceProxy:
         }
     
     async def close(self):
-        """Close HTTP session"""
+        """
+        Close HTTP session"""
         if self.session:
             await self.session.close()
 
 
 class MediaAPIGateway:
-    """Main API Gateway orchestrating all components"""
+    """
+        Main API Gateway orchestrating all components"""
     
     def __init__(self, config: Optional[GatewayConfig] = None):
-        """Initialize media API gateway"""
+        """
+        Initialize media API gateway"""
         self.config = config or GatewayConfig()
         
         # Initialize components
@@ -860,6 +962,7 @@ class MediaAPIGateway:
         self.request_count = 0
         self.error_count = 0
         self.start_time = datetime.now(timezone.utc)
+
         
         logger.info("🌐 Media API Gateway initialized")
     
@@ -914,6 +1017,7 @@ class MediaAPIGateway:
             self.request_count += 1
             
             # Create API request object
+
             api_request = APIRequest(
                 request_id=str(uuid.uuid4()),
                 path=request.url.path,
@@ -929,7 +1033,9 @@ class MediaAPIGateway:
                 return await call_next(request)
             
             # Find route
+
             route = await self.request_router.find_route(api_request)
+
             if not route:
                 return Response(
                     content=json.dumps({'error': 'Route not found'}),
@@ -938,7 +1044,9 @@ class MediaAPIGateway:
                 )
             
             # Authentication
+
             auth_result = await self.auth_manager.authenticate_request(api_request, route.auth_method)
+
             if not auth_result.get('authenticated', False):
                 return Response(
                     content=json.dumps({'error': 'Authentication failed', 'message': auth_result.get('error', 'Unknown error')}),
@@ -948,10 +1056,13 @@ class MediaAPIGateway:
             
             # Update request with auth info
             api_request.user_id = auth_result.get('user_id')
+
             api_request.api_key = auth_result.get('api_key')
             
             # Rate limiting
+
             rate_limit_result = await self.rate_limiter.check_rate_limit(api_request, route.rate_limit)
+
             if not rate_limit_result.get('allowed', True):
                 return Response(
                     content=json.dumps({'error': 'Rate limit exceeded', 'retry_after': rate_limit_result.get('retry_after')}),
@@ -961,8 +1072,12 @@ class MediaAPIGateway:
                 )
             
             # Check cache
+
             cache_key = self.cache_manager.generate_cache_key(api_request)
+
+
             cached_response = await self.cache_manager.get_cached_response(cache_key)
+
             
             if cached_response and route.cache_strategy != CacheStrategy.NO_CACHE:
                 return Response(
@@ -973,11 +1088,13 @@ class MediaAPIGateway:
                 )
             
             # Load balancing and service selection
+
             selected_endpoint = await self.load_balancer.select_endpoint(
                 route.service_endpoints, 
                 route.route_strategy, 
                 api_request
             )
+
             
             if not selected_endpoint:
                 return Response(
@@ -987,6 +1104,7 @@ class MediaAPIGateway:
                 )
             
             # Proxy request to service
+
             api_response = await self.service_proxy.proxy_request(api_request, selected_endpoint)
             
             # Cache response if applicable
@@ -1002,10 +1120,12 @@ class MediaAPIGateway:
                 headers=dict(api_response.headers),
                 media_type=api_response.headers.get('Content-Type', 'application/json')
             )
+
             
         except Exception as e:
             self.error_count += 1
             logger.error(f"Gateway request handling failed: {e}")
+
             
             return Response(
                 content=json.dumps({'error': 'Internal gateway error', 'message': str(e)}),
@@ -1018,16 +1138,20 @@ class MediaAPIGateway:
         try:
             if not HAS_FASTAPI:
                 logger.error("FastAPI not available - cannot start gateway")
+
                 return False
             
             self.is_running = True
             self.start_time = datetime.now(timezone.utc)
+
             
             logger.info(f"API Gateway starting on {self.config.host}:{self.config.port}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to start gateway: {e}")
+
             return False
     
     async def stop_gateway(self) -> bool:
@@ -1037,12 +1161,15 @@ class MediaAPIGateway:
             
             # Close service proxy
             await self.service_proxy.close()
+
             
             logger.info("API Gateway stopped")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to stop gateway: {e}")
+
             return False
     
     async def get_health_status(self) -> Dict[str, Any]:
@@ -1051,12 +1178,15 @@ class MediaAPIGateway:
             uptime_seconds = (datetime.now(timezone.utc) - self.start_time).total_seconds()
             
             # Calculate error rate
+
             error_rate = (self.error_count / self.request_count) if self.request_count > 0 else 0
             
             # Determine health status
             if error_rate > 0.1:  # 10% error rate
+
                 status = "unhealthy"
             elif error_rate > 0.05:  # 5% error rate
+
                 status = "degraded"
             else:
                 status = "healthy"
@@ -1074,12 +1204,14 @@ class MediaAPIGateway:
             
         except Exception as e:
             logger.error(f"Health status check failed: {e}")
+
             return {'status': 'unknown', 'error': str(e)}
     
     async def get_metrics(self) -> Dict[str, Any]:
         """Get gateway metrics"""
         try:
             uptime_seconds = (datetime.now(timezone.utc) - self.start_time).total_seconds()
+
             
             return {
                 'gateway_metrics': {
@@ -1099,6 +1231,7 @@ class MediaAPIGateway:
             
         except Exception as e:
             logger.error(f"Metrics collection failed: {e}")
+
             return {'error': str(e)}
     
     def add_route(self, route: Route):
@@ -1106,11 +1239,13 @@ class MediaAPIGateway:
         self.request_router.add_route(route)
     
     def add_api_key(self, api_key: str, user_id: str, permissions: List[str] = None) -> bool:
-        """Add API key for authentication"""
+        """
+        Add API key for authentication"""
         return self.auth_manager.add_api_key(api_key, user_id, permissions)
     
     def create_jwt_token(self, user_id: str, scopes: List[str] = None) -> str:
-        """Create JWT token for user"""
+        """
+        Create JWT token for user"""
         return self.auth_manager.create_jwt_token(user_id, scopes)
 
 

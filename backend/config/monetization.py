@@ -17,7 +17,8 @@ import os
 # ===== PAYMENT CONFIGURATION =====
 
 class PaymentProvider(str, Enum):
-    """Payment service providers"""
+    """
+        Payment service providers"""
     STRIPE = "stripe"
     PAYPAL = "paypal"
     SQUARE = "square"
@@ -75,7 +76,8 @@ class PaymentConfig:
 # ===== SUBSCRIPTION CONFIGURATION =====
 
 class SubscriptionTier(str, Enum):
-    """Subscription tiers"""
+    """
+        Subscription tiers"""
     FREE = "free"
     BASIC = "basic"
     PREMIUM = "premium"
@@ -100,7 +102,8 @@ class SubscriptionFeature:
 
 @dataclass
 class SubscriptionPlan:
-    """Subscription plan configuration"""
+    """
+        Subscription plan configuration"""
     tier: SubscriptionTier
     name: str
     description: str
@@ -128,7 +131,8 @@ class SubscriptionConfig:
 # ===== REVENUE SHARING CONFIGURATION =====
 
 class RevenueShareType(str, Enum):
-    """Revenue sharing types"""
+    """
+        Revenue sharing types"""
     PERCENTAGE = "percentage"
     FIXED_AMOUNT = "fixed_amount"
     TIERED = "tiered"
@@ -187,7 +191,8 @@ class PricingTier:
 
 @dataclass
 class PricingConfig:
-    """Pricing configuration"""
+    """
+        Pricing configuration"""
     model: PricingModel = PricingModel.FREEMIUM
     strategy: PricingStrategy = PricingStrategy.FIXED
     base_price: Decimal = Decimal("0.00")
@@ -296,7 +301,8 @@ class TaxConfig:
 
 @dataclass
 class FinancialReportingConfig:
-    """Financial reporting configuration"""
+    """
+        Financial reporting configuration"""
     enabled: bool = True
     automated_reports: bool = True
     report_frequency: str = "monthly"  # daily, weekly, monthly, quarterly

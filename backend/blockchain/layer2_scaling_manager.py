@@ -37,7 +37,8 @@ logger = logging.getLogger(__name__)
 # =============================================================================
 
 class Layer2Network(Enum):
-    """Supported Layer 2 networks"""
+    """
+        Supported Layer 2 networks"""
     POLYGON = "polygon"
     ARBITRUM_ONE = "arbitrum_one"
     ARBITRUM_NOVA = "arbitrum_nova"
@@ -102,7 +103,8 @@ class Layer2Config:
 
 @dataclass
 class ScalingOptimizer:
-    """Transaction scaling optimization"""
+    """
+        Transaction scaling optimization"""
     optimizer_id: str
     source_network: str
     target_networks: List[Layer2Network]
@@ -115,7 +117,8 @@ class ScalingOptimizer:
 
 @dataclass
 class PolygonManager:
-    """Polygon-specific management"""
+    """
+        Polygon-specific management"""
     validator_set: List[str]
     checkpoint_interval: int
     heimdall_url: str
@@ -127,7 +130,8 @@ class PolygonManager:
 
 @dataclass
 class Layer2Transaction:
-    """Layer 2 transaction record"""
+    """
+        Layer 2 transaction record"""
     tx_id: str
     source_network: str
     target_network: Layer2Network
@@ -145,7 +149,8 @@ class Layer2Transaction:
 
 @dataclass
 class CrossLayerBridge:
-    """Cross-layer bridge configuration"""
+    """
+        Cross-layer bridge configuration"""
     bridge_id: str
     source_layer: str
     target_layer: str
@@ -162,7 +167,8 @@ class CrossLayerBridge:
 # =============================================================================
 
 class Layer2Manager:
-    """Enterprise Layer 2 scaling management system"""
+    """
+        Enterprise Layer 2 scaling management system"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -174,7 +180,8 @@ class Layer2Manager:
         self.polygon_manager: Optional[PolygonManager] = None
         
     async def initialize(self) -> bool:
-        """Initialize Layer 2 manager"""
+        """
+        Initialize Layer 2 manager"""
         try:
             logger.info("Initializing Layer 2 Scaling Manager...")
             
@@ -192,18 +199,22 @@ class Layer2Manager:
             
             # Start performance monitoring
             await self._start_performance_monitoring()
+
             
             logger.info("Layer 2 Scaling Manager initialized successfully")
+
             return True
             
         except Exception as e:
             logger.error(f"Error initializing Layer 2 manager: {str(e)}")
+
             return False
 
     async def _setup_l2_networks(self):
         """Setup Layer 2 network configurations"""
         try:
             # Polygon (PoS)
+
             self.networks[Layer2Network.POLYGON] = Layer2Config(
                 network=Layer2Network.POLYGON,
                 scaling_type=ScalingType.SIDECHAIN,
@@ -216,6 +227,7 @@ class Layer2Manager:
                 finality_time=10,
                 max_tps=7000,
                 avg_gas_price=Decimal("30"),  # Gwei
+
                 bridge_fee=Decimal("0.1"),
                 withdrawal_delay=0  # No delay for sidechains
             )
@@ -265,6 +277,7 @@ class Layer2Manager:
                 native_token= os.getenv("TOKEN", "CHANGE_ME"),
                 avg_block_time=1.0,
                 finality_time=60,  # Proof generation time
+
                 max_tps=2000,
                 avg_gas_price=Decimal("0.25"),
                 bridge_fee=Decimal("0.02"),
@@ -272,6 +285,7 @@ class Layer2Manager:
             )
             
             # Base (Coinbase L2)
+
             self.networks[Layer2Network.BASE] = Layer2Config(
                 network=Layer2Network.BASE,
                 scaling_type=ScalingType.OPTIMISTIC_ROLLUP,
@@ -287,6 +301,7 @@ class Layer2Manager:
                 bridge_fee=Decimal("0.04"),
                 withdrawal_delay=168  # 7 days
             )
+
             
         except Exception as e:
             logger.error(f"Error setting up L2 networks: {str(e)}")
@@ -295,6 +310,7 @@ class Layer2Manager:
         """Initialize scaling optimizers"""
         try:
             # Gas optimization strategy
+
             gas_optimizer = ScalingOptimizer(
                 optimizer_id="gas_optimizer",
                 source_network="ethereum",
@@ -305,12 +321,15 @@ class Layer2Manager:
                 ],
                 optimization_strategy="minimize_gas_cost",
                 cost_savings=Decimal("85.0"),  # 85% cost reduction
+
                 speed_improvement=10.0,  # 10x faster
+
                 success_rate=0.98,
                 total_transactions=0
             )
             
             # Throughput optimization strategy
+
             throughput_optimizer = ScalingOptimizer(
                 optimizer_id="throughput_optimizer",
                 source_network="ethereum",
@@ -321,9 +340,11 @@ class Layer2Manager:
                 optimization_strategy="maximize_throughput",
                 cost_savings=Decimal("70.0"),
                 speed_improvement=50.0,  # 50x faster
+
                 success_rate=0.95,
                 total_transactions=0
             )
+
             
             self.optimizers[gas_optimizer.optimizer_id] = gas_optimizer
             self.optimizers[throughput_optimizer.optimizer_id] = throughput_optimizer
@@ -335,6 +356,7 @@ class Layer2Manager:
         """Setup cross-layer bridges"""
         try:
             # Ethereum <-> Polygon bridge
+
             eth_polygon_bridge = CrossLayerBridge(
                 bridge_id="eth_polygon",
                 source_layer="ethereum",
@@ -345,10 +367,12 @@ class Layer2Manager:
                 min_amount=Decimal("0.01"),
                 max_amount=Decimal("1000000"),
                 processing_time=600,  # 10 minutes
+
                 fee_structure={"ETH": Decimal("0.005"), "USDC": Decimal("5")}
             )
             
             # Ethereum <-> Arbitrum bridge
+
             eth_arbitrum_bridge = CrossLayerBridge(
                 bridge_id="eth_arbitrum",
                 source_layer="ethereum",
@@ -359,8 +383,10 @@ class Layer2Manager:
                 min_amount=Decimal("0.001"),
                 max_amount=Decimal("10000"),
                 processing_time=900,  # 15 minutes
+
                 fee_structure={"ETH": Decimal("0.002"), "USDC": Decimal("2")}
             )
+
             
             self.bridges[eth_polygon_bridge.bridge_id] = eth_polygon_bridge
             self.bridges[eth_arbitrum_bridge.bridge_id] = eth_arbitrum_bridge
@@ -378,6 +404,7 @@ class Layer2Manager:
                     "0x3456789012345678901234567890123456789012"
                 ],
                 checkpoint_interval=256,  # blocks
+
                 heimdall_url="https://heimdall.polygon.technology",
                 bor_url="https://polygon-rpc.com",
                 stake_manager_contract="0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908",
@@ -388,6 +415,7 @@ class Layer2Manager:
                 current_epoch=1000,
                 total_staked=Decimal("1000000000")  # 1B MATIC
             )
+
             
         except Exception as e:
             logger.error(f"Error initializing Polygon manager: {str(e)}")
@@ -419,15 +447,23 @@ class Layer2Manager:
         """Route transaction to optimal Layer 2 network"""
         try:
             # Analyze current network conditions
+
             network_scores = await self._analyze_network_conditions(amount, token, priority)
             
             # Select optimal network
+
             optimal_network = max(network_scores.items(), key=lambda x: x[1])
+
+
             selected_network = optimal_network[0]
+
             optimization_score = optimal_network[1]
             
             # Create transaction record
+
             tx_id = str(uuid.uuid4())
+
+
             transaction = Layer2Transaction(
                 tx_id=tx_id,
                 source_network="ethereum",
@@ -438,13 +474,21 @@ class Layer2Manager:
                 priority=priority,
                 status="routed"
             )
+
             
             self.transactions[tx_id] = transaction
             
             # Calculate savings and improvements
+
             l1_cost = await self._estimate_l1_cost(amount, token)
+
+
             l2_cost = await self._estimate_l2_cost(selected_network, amount, token)
+
+
             cost_savings = ((l1_cost - l2_cost) / l1_cost * 100) if l1_cost > 0 else Decimal("0")
+
+
             
             result = {
                 "transaction_id": tx_id,
@@ -456,10 +500,12 @@ class Layer2Manager:
             }
             
             logger.info(f"Transaction routed optimally: {tx_id} -> {selected_network}")
+
             return result
             
         except Exception as e:
             logger.error(f"Error routing transaction: {str(e)}")
+
             raise
 
     async def _analyze_network_conditions(
@@ -479,11 +525,17 @@ class Layer2Manager:
                 score += min(100, network_config.max_tps / 100)  # TPS score (0-100)
                 
                 # Gas cost efficiency (lower is better)
+
+
                 gas_efficiency = max(0, 100 - float(network_config.avg_gas_price))
+
                 score += gas_efficiency * 0.3
                 
                 # Speed score (lower finality time is better)
+
+
                 speed_score = max(0, 100 - network_config.finality_time)
+
                 score += speed_score * 0.2
                 
                 # Network status penalty
@@ -505,6 +557,7 @@ class Layer2Manager:
                         score *= 1.3
                 
                 # Token support check
+
                 bridge_id = f"eth_{network_name.value}"
                 if bridge_id in self.bridges:
                     bridge = self.bridges[bridge_id]
@@ -523,57 +576,73 @@ class Layer2Manager:
             
         except Exception as e:
             logger.error(f"Error analyzing network conditions: {str(e)}")
+
             return {}
 
     async def _estimate_l1_cost(self, amount: Decimal, token: str) -> Decimal:
         """Estimate cost on Ethereum L1"""
         try:
             # Simplified L1 cost estimation
+
             base_gas = 21000  # Basic transfer
             if token != "ETH":
                 base_gas = 65000  # ERC-20 transfer
+
             
             gas_price_gwei = Decimal("50")  # Current average
+
             eth_price = Decimal("2000")  # ETH price in USD
             
             gas_cost_eth = Decimal(str(base_gas)) * gas_price_gwei / Decimal("1000000000")
+
+
             gas_cost_usd = gas_cost_eth * eth_price
             
             return gas_cost_usd
             
         except Exception as e:
             logger.error(f"Error estimating L1 cost: {str(e)}")
+
             return Decimal("50")  # Default high cost
 
     async def _estimate_l2_cost(self, network: str, amount: Decimal, token: str) -> Decimal:
         """Estimate cost on Layer 2 network"""
         try:
             network_config = self.networks.get(Layer2Network(network))
+
             if not network_config:
                 return Decimal("10")  # Default cost
+
             
             base_gas = 21000
             if token != network_config.native_token:
                 base_gas = 65000
+
             
             gas_cost = Decimal(str(base_gas)) * network_config.avg_gas_price / Decimal("1000000000")
             
             # Convert to USD (simplified)
+
             if network_config.native_token == "ETH":
                 gas_cost_usd = gas_cost * Decimal("2000")
+
             else:  # MATIC or other
+
                 gas_cost_usd = gas_cost * Decimal("0.8")
             
             # Add bridge fee
+
             bridge_id = f"eth_{network}"
             if bridge_id in self.bridges:
                 bridge_fee = self.bridges[bridge_id].fee_structure.get(token, Decimal("1"))
+
                 gas_cost_usd += bridge_fee
             
             return gas_cost_usd
             
         except Exception as e:
             logger.error(f"Error estimating L2 cost: {str(e)}")
+
             return Decimal("5")  # Default L2 cost
 
     async def _explain_routing_decision(
@@ -584,35 +653,46 @@ class Layer2Manager:
         """Explain why this network was selected"""
         try:
             network_config = self.networks[Layer2Network(selected_network)]
+
             selected_score = all_scores[selected_network]
+
             
             reasons = []
             
             # Primary strengths
             if network_config.max_tps > 5000:
                 reasons.append("high throughput capability")
+
             
             if network_config.avg_gas_price < Decimal("1"):
                 reasons.append("low transaction costs")
+
             
             if network_config.finality_time < 30:
                 reasons.append("fast finality")
+
             
             if network_config.scaling_type == ScalingType.ZK_ROLLUP:
                 reasons.append("zero-knowledge security")
             
             # Comparative advantage
+
             avg_score = statistics.mean(all_scores.values())
+
             if selected_score > avg_score * 1.2:
                 reasons.append("significantly outperforms alternatives")
+
             
             if not reasons:
                 reasons.append("best overall balance of cost, speed, and security")
+
             
             return f"Selected {selected_network} due to: " + ", ".join(reasons)
+
             
         except Exception as e:
             logger.error(f"Error explaining routing decision: {str(e)}")
+
             return f"Selected {selected_network} based on optimization analysis"
 
     async def execute_cross_layer_transfer(
@@ -627,28 +707,37 @@ class Layer2Manager:
         try:
             if bridge_id not in self.bridges:
                 raise ValueError(f"Bridge not found: {bridge_id}")
+
+
             
             bridge = self.bridges[bridge_id]
             
             # Validate transfer
             if token not in bridge.supported_tokens:
                 raise ValueError(f"Token {token} not supported by bridge")
+
             
             if amount < bridge.min_amount or amount > bridge.max_amount:
                 raise ValueError(f"Amount {amount} outside allowed range")
             
             # Create transfer transaction
+
             tx_id = str(uuid.uuid4())
             
             # Determine networks based on direction
             if direction == BridgeDirection.L1_TO_L2:
                 source_network = bridge.source_layer
+
                 target_network = Layer2Network(bridge.target_layer)
+
             elif direction == BridgeDirection.L2_TO_L1:
                 source_network = bridge.target_layer
+
                 target_network = bridge.source_layer
             else:
                 raise ValueError("L2 to L2 transfers not yet supported")
+
+
             
             transaction = Layer2Transaction(
                 tx_id=tx_id,
@@ -660,17 +749,21 @@ class Layer2Manager:
                 priority=TransactionPriority.MEDIUM,
                 status="pending_bridge"
             )
+
             
             self.transactions[tx_id] = transaction
             
             # Simulate bridge execution
             await self._process_bridge_transfer(tx_id, bridge)
+
             
             logger.info(f"Cross-layer transfer executed: {tx_id}")
+
             return tx_id
             
         except Exception as e:
             logger.error(f"Error executing cross-layer transfer: {str(e)}")
+
             raise
 
     async def _process_bridge_transfer(self, tx_id: str, bridge: CrossLayerBridge):
@@ -688,11 +781,14 @@ class Layer2Manager:
             
             # Simulate finalization after processing time
             await asyncio.sleep(0.1)
+
             transaction.status = "completed"
             transaction.finalized_at = datetime.utcnow()
+
             
         except Exception as e:
             logger.error(f"Error processing bridge transfer: {str(e)}")
+
             if tx_id in self.transactions:
                 self.transactions[tx_id].status = "failed"
 
@@ -703,6 +799,7 @@ class Layer2Manager:
                 return {"error": "Polygon manager not initialized"}
             
             # Simulate validator monitoring
+
             validator_stats = {}
             
             for i, validator in enumerate(self.polygon_manager.validator_set):
@@ -728,34 +825,43 @@ class Layer2Manager:
             
         except Exception as e:
             logger.error(f"Error monitoring Polygon validators: {str(e)}")
+
             return {"error": str(e)}
 
     async def get_scaling_analytics(self) -> Dict[str, Any]:
         """Get comprehensive scaling analytics"""
         try:
             total_transactions = len(self.transactions)
+
+
             completed_transactions = len([
-                t for t in self.transactions.values() 
+                t for t in self.transactions.values()
+ 
                 if t.status == "completed"
             ])
             
             # Network performance analytics
+
             network_analytics = {}
             for network_name, network_config in self.networks.items():
                 network_transactions = [
                     t for t in self.transactions.values()
+
                     if t.target_network == network_name
                 ]
+
                 
                 avg_confirmation_time = 0
                 if network_transactions:
                     confirmation_times = [
                         (t.confirmed_at - t.submitted_at).total_seconds()
+
                         for t in network_transactions
                         if t.confirmed_at
                     ]
                     if confirmation_times:
                         avg_confirmation_time = statistics.mean(confirmation_times)
+
                 
                 network_analytics[network_name.value] = {
                     "total_transactions": len(network_transactions),
@@ -767,17 +873,26 @@ class Layer2Manager:
                 }
             
             # Cost savings analytics
+
             total_l1_cost = sum([
                 await self._estimate_l1_cost(t.amount, t.token)
+
                 for t in self.transactions.values()
+
                 if t.status == "completed"
             ])
+
+
             
             total_l2_cost = sum([
                 await self._estimate_l2_cost(t.target_network.value, t.amount, t.token)
+
                 for t in self.transactions.values()
+
                 if t.status == "completed"
             ])
+
+
             
             cost_savings_percentage = (
                 (total_l1_cost - total_l2_cost) / total_l1_cost * 100
@@ -785,6 +900,7 @@ class Layer2Manager:
             )
             
             # Optimizer performance
+
             optimizer_stats = {}
             for optimizer_id, optimizer in self.optimizers.items():
                 optimizer_stats[optimizer_id] = {
@@ -809,6 +925,7 @@ class Layer2Manager:
                 "bridge_usage": {
                     bridge_id: len([
                         t for t in self.transactions.values()
+
                         if f"eth_{t.target_network.value}" == bridge_id
                     ]) for bridge_id in self.bridges.keys()
                 }
@@ -816,6 +933,7 @@ class Layer2Manager:
             
         except Exception as e:
             logger.error(f"Error getting scaling analytics: {str(e)}")
+
             return {}
 
     async def optimize_gas_strategy(
@@ -828,8 +946,13 @@ class Layer2Manager:
             recommendations = []
             
             # Analyze transaction pattern
+
             daily_tx_count = transaction_pattern.get("daily_transactions", 0)
+
+
             avg_tx_amount = Decimal(str(transaction_pattern.get("average_amount", 100)))
+
+
             preferred_tokens = transaction_pattern.get("tokens", ["ETH"])
             
             # Recommend optimal networks based on usage pattern
@@ -840,6 +963,7 @@ class Layer2Manager:
                     "estimated_savings": "80-95%",
                     "networks": ["polygon", "arbitrum_one"]
                 })
+
             
             if avg_tx_amount < Decimal("50"):
                 recommendations.append({
@@ -852,6 +976,7 @@ class Layer2Manager:
             # Token-specific recommendations
             for token in preferred_tokens:
                 best_networks = await self._find_best_networks_for_token(token)
+
                 if best_networks:
                     recommendations.append({
                         "type": "token_optimization",
@@ -867,6 +992,7 @@ class Layer2Manager:
                     "message": "Consider batching transactions to further reduce costs",
                     "potential_savings": "30-50% additional savings"
                 })
+
             
             return {
                 "user_address": user_address,
@@ -885,6 +1011,7 @@ class Layer2Manager:
             
         except Exception as e:
             logger.error(f"Error optimizing gas strategy: {str(e)}")
+
             return {"error": str(e)}
 
     async def _find_best_networks_for_token(self, token: str) -> List[str]:
@@ -904,11 +1031,13 @@ class Layer2Manager:
                         if (network_config.avg_gas_price < Decimal("5") and 
                             network_config.max_tps > 1000):
                             best_networks.append(target_network)
+
             
             return best_networks[:3]  # Return top 3
             
         except Exception as e:
             logger.error(f"Error finding best networks for token: {str(e)}")
+
             return []
 
 # =============================================================================

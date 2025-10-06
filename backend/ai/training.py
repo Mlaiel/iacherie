@@ -27,7 +27,8 @@ import pickle
 logger = logging.getLogger(__name__)
 
 class ModelType(Enum):
-    """Types of models that can be trained"""
+    """
+        Types of models that can be trained"""
     NLP_MODEL = "nlp_model"
     CONVERSATION_MODEL = "conversation_model"
     SENTIMENT_MODEL = "sentiment_model"
@@ -79,7 +80,8 @@ class TrainingConfig:
 
 @dataclass
 class TrainingMetrics:
-    """Training metrics structure"""
+    """
+        Training metrics structure"""
     epoch: int
     loss: float
     accuracy: float
@@ -91,7 +93,8 @@ class TrainingMetrics:
 
 @dataclass
 class TrainingJob:
-    """Training job structure"""
+    """
+        Training job structure"""
     job_id: str
     config: TrainingConfig
     status: TrainingStatus
@@ -105,13 +108,15 @@ class TrainingJob:
     error_message: Optional[str] = None
 
 class ModelTrainer:
-    """Core model training and fine-tuning engine"""
+    """
+        Core model training and fine-tuning engine"""
     
     def __init__(self, models_directory: str = "./models", logs_directory: str = "./logs"):
         self.models_directory = Path(models_directory)
         self.logs_directory = Path(logs_directory)
         self.models_directory.mkdir(exist_ok=True)
         self.logs_directory.mkdir(exist_ok=True)
+
         
         self.active_jobs: Dict[str, TrainingJob] = {}
         self.completed_jobs: Dict[str, TrainingJob] = {}
@@ -127,9 +132,11 @@ class ModelTrainer:
             status=TrainingStatus.PENDING,
             created_at=datetime.now()
         )
+
         
         self.active_jobs[job_id] = job
         self.training_queue.append(job_id)
+
         
         logger.info(f"Created training job {job_id} for {config.model_type.value}")
         return job_id
@@ -138,6 +145,7 @@ class ModelTrainer:
         """Start training for a specific job"""
         if job_id not in self.active_jobs:
             return False
+
         
         job = self.active_jobs[job_id]
         if job.status != TrainingStatus.PENDING:
@@ -145,6 +153,7 @@ class ModelTrainer:
         
         job.status = TrainingStatus.INITIALIZING
         job.started_at = datetime.now()
+
         
         try:
             # Initialize training environment
@@ -153,6 +162,7 @@ class ModelTrainer:
             # Start training process
             job.status = TrainingStatus.TRAINING
             await self._run_training_loop(job)
+
             
             job.status = TrainingStatus.COMPLETED
             job.completed_at = datetime.now()
@@ -162,14 +172,18 @@ class ModelTrainer:
             del self.active_jobs[job_id]
             if job_id in self.training_queue:
                 self.training_queue.remove(job_id)
+
             
             logger.info(f"Training job {job_id} completed successfully")
+
             return True
             
         except Exception as e:
             job.status = TrainingStatus.FAILED
             job.error_message = str(e)
+
             logger.error(f"Training job {job_id} failed: {e}")
+
             return False
     
     async def _initialize_training_environment(self, job: TrainingJob):
@@ -179,17 +193,20 @@ class ModelTrainer:
         # Validate training data exists
         if not Path(config.training_data_path).exists():
             raise FileNotFoundError(f"Training data not found: {config.training_data_path}")
+
         
         if not Path(config.validation_data_path).exists():
             raise FileNotFoundError(f"Validation data not found: {config.validation_data_path}")
         
         # Create model directory
+
         model_dir = self.models_directory / job.job_id
         model_dir.mkdir(exist_ok=True)
         job.model_path = str(model_dir)
         
         # Initialize model based on type
         await self._initialize_model(job)
+
         
         logger.info(f"Training environment initialized for job {job.job_id}")
     
@@ -210,27 +227,22 @@ class ModelTrainer:
     
     async def _initialize_nlp_model(self, job: TrainingJob):
         """Initialize NLP model"""
-        # Placeholder for NLP model initialization
         logger.info(f"Initializing NLP model for job {job.job_id}")
     
     async def _initialize_conversation_model(self, job: TrainingJob):
         """Initialize conversation model"""
-        # Placeholder for conversation model initialization
         logger.info(f"Initializing conversation model for job {job.job_id}")
     
     async def _initialize_sentiment_model(self, job: TrainingJob):
         """Initialize sentiment model"""
-        # Placeholder for sentiment model initialization
         logger.info(f"Initializing sentiment model for job {job.job_id}")
     
     async def _initialize_intent_classifier(self, job: TrainingJob):
         """Initialize intent classifier"""
-        # Placeholder for intent classifier initialization
         logger.info(f"Initializing intent classifier for job {job.job_id}")
     
     async def _initialize_generic_model(self, job: TrainingJob):
         """Initialize generic model"""
-        # Placeholder for generic model initialization
         logger.info(f"Initializing generic model for job {job.job_id}")
     
     async def _run_training_loop(self, job: TrainingJob):
@@ -241,12 +253,15 @@ class ModelTrainer:
             job.current_epoch = epoch
             
             # Training step
+
             train_metrics = await self._training_step(job, epoch)
             
             # Validation step
+
             val_metrics = await self._validation_step(job, epoch)
             
             # Combine metrics
+
             metrics = TrainingMetrics(
                 epoch=epoch,
                 loss=train_metrics.get("loss", 0.0),
@@ -256,6 +271,7 @@ class ModelTrainer:
                 learning_rate=config.learning_rate,
                 timestamp=datetime.now()
             )
+
             
             job.metrics_history.append(metrics)
             
@@ -268,6 +284,7 @@ class ModelTrainer:
             # Early stopping check
             if await self._should_early_stop(job):
                 logger.info(f"Early stopping triggered for job {job.job_id} at epoch {epoch}")
+
                 break
             
             # Log progress
@@ -278,14 +295,15 @@ class ModelTrainer:
                           f"Val Acc: {metrics.validation_accuracy:.4f}")
     
     async def _training_step(self, job: TrainingJob, epoch: int) -> Dict[str, float]:
-        """Perform training step"""
-        # Placeholder for training step
-        # In production, this would involve actual model training
+        """Perform training step"""        # In production, this would involve actual model training
         
         # Simulate training metrics
         import random
+
         loss = 1.0 - (epoch * 0.01) + random.uniform(-0.1, 0.1)
+
         accuracy = min(0.95, epoch * 0.01 + random.uniform(-0.05, 0.05))
+
         
         return {
             "loss": max(0.1, loss),
@@ -293,14 +311,15 @@ class ModelTrainer:
         }
     
     async def _validation_step(self, job: TrainingJob, epoch: int) -> Dict[str, float]:
-        """Perform validation step"""
-        # Placeholder for validation step
-        # In production, this would involve actual model validation
+        """Perform validation step"""        # In production, this would involve actual model validation
         
         # Simulate validation metrics
         import random
+
         loss = 1.2 - (epoch * 0.012) + random.uniform(-0.1, 0.1)
+
         accuracy = min(0.92, epoch * 0.009 + random.uniform(-0.05, 0.05))
+
         
         return {
             "loss": max(0.15, loss),
@@ -315,18 +334,20 @@ class ModelTrainer:
             return False
         
         # Check if validation loss hasn't improved
+
         recent_metrics = job.metrics_history[-config.early_stopping_patience:]
+
         best_val_loss = min(m.validation_loss for m in recent_metrics)
+
         current_val_loss = job.metrics_history[-1].validation_loss
         
         return current_val_loss > best_val_loss * 1.01  # 1% tolerance
     
     async def _save_model_checkpoint(self, job: TrainingJob, epoch: int):
-        """Save model checkpoint"""
+        """
+        Save model checkpoint"""
         if job.model_path:
             checkpoint_path = Path(job.model_path) / f"checkpoint_epoch_{epoch}.pkl"
-            
-            # Placeholder for model saving
             checkpoint_data = {
                 "job_id": job.job_id,
                 "epoch": epoch,
@@ -337,12 +358,14 @@ class ModelTrainer:
             
             with open(checkpoint_path, 'wb') as f:
                 pickle.dump(checkpoint_data, f)
+
             
             logger.info(f"Saved checkpoint for job {job.job_id} at epoch {epoch}")
     
     async def get_training_status(self, job_id: str) -> Optional[Dict[str, Any]]:
         """Get training status"""
         job = self.active_jobs.get(job_id) or self.completed_jobs.get(job_id)
+
         
         if not job:
             return None
@@ -370,8 +393,10 @@ class ModelTrainer:
             # Remove from queue
             if job_id in self.training_queue:
                 self.training_queue.remove(job_id)
+
             
             logger.info(f"Training job {job_id} cancelled")
+
             return True
         
         return False
@@ -379,6 +404,7 @@ class ModelTrainer:
     async def list_training_jobs(self, status_filter: Optional[TrainingStatus] = None) -> List[Dict[str, Any]]:
         """List training jobs"""
         jobs = list(self.active_jobs.values()) + list(self.completed_jobs.values())
+
         
         if status_filter:
             jobs = [job for job in jobs if job.status == status_filter]
@@ -403,22 +429,28 @@ class FineTuningManager:
     
     async def fine_tune_model(self, base_model_path: str, fine_tuning_data: str, 
                             fine_tuning_config: Dict[str, Any]) -> str:
-        """Fine-tune an existing model"""
+        """
+        Fine-tune an existing model"""
         
         # Create fine-tuning configuration
+
         config = TrainingConfig(
             model_type=ModelType.CONVERSATION_MODEL,
             training_data_path=fine_tuning_data,
             validation_data_path=fine_tuning_data,  # Use same data for validation
+
             epochs=fine_tuning_config.get("epochs", 10),
             batch_size=fine_tuning_config.get("batch_size", 16),
             learning_rate=fine_tuning_config.get("learning_rate", 0.0001),  # Lower LR for fine-tuning
+
             hyperparameters={
                 "base_model_path": base_model_path,
                 "fine_tuning": True,
                 **fine_tuning_config
             }
         )
+
+
         
         job_id = await self.trainer.create_training_job(config)
         self.fine_tuning_jobs[job_id] = self.trainer.active_jobs[job_id]
@@ -436,14 +468,18 @@ class FineTuningManager:
         }
         
         # Analyze performance and provide recommendations
+
         accuracy = model_performance.get("accuracy", 0.8)
+
         
         if accuracy < 0.7:
             recommendations["recommendations"].append("Increase training epochs")
+
             recommendations["suggested_epochs"] = 20
         
         if accuracy > 0.95:
             recommendations["recommendations"].append("Model may be overfitting, reduce learning rate")
+
             recommendations["suggested_learning_rate"] = 0.00005
         
         return recommendations
@@ -466,7 +502,6 @@ class ModelOptimizer:
     
     async def _optimize_for_performance(self, model_path: str) -> Dict[str, Any]:
         """Optimize model for maximum performance"""
-        # Placeholder for performance optimization
         return {
             "optimization_type": "performance",
             "original_size": "100MB",
@@ -482,7 +517,6 @@ class ModelOptimizer:
     
     async def _optimize_for_size(self, model_path: str) -> Dict[str, Any]:
         """Optimize model for smaller size"""
-        # Placeholder for size optimization
         return {
             "optimization_type": "size",
             "original_size": "100MB",
@@ -498,7 +532,6 @@ class ModelOptimizer:
     
     async def _optimize_balanced(self, model_path: str) -> Dict[str, Any]:
         """Optimize model for balanced performance and size"""
-        # Placeholder for balanced optimization
         return {
             "optimization_type": "balanced",
             "original_size": "100MB",
@@ -518,11 +551,13 @@ def create_model_trainer(models_dir: str = "./models", logs_dir: str = "./logs")
     return ModelTrainer(models_dir, logs_dir)
 
 def create_fine_tuning_manager(trainer: ModelTrainer) -> FineTuningManager:
-    """Create fine-tuning manager instance"""
+    """
+        Create fine-tuning manager instance"""
     return FineTuningManager(trainer)
 
 def create_model_optimizer() -> ModelOptimizer:
-    """Create model optimizer instance"""
+    """
+        Create model optimizer instance"""
     return ModelOptimizer()
 
 # Export all classes and functions

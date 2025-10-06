@@ -36,7 +36,8 @@ from abc import ABC, abstractmethod
 # ===============================
 
 class ServiceType(str, Enum):
-    """Types of microservices"""
+    """
+        Types of microservices"""
     API_GATEWAY = "api_gateway"
     BUSINESS_SERVICE = "business_service"
     DATA_SERVICE = "data_service"
@@ -130,7 +131,8 @@ class LoadBalancerConfig:
 
 @dataclass
 class CircuitBreakerConfig:
-    """Circuit breaker configuration"""
+    """
+        Circuit breaker configuration"""
     failure_threshold: int = 5
     recovery_timeout: timedelta = timedelta(seconds=60)
     success_threshold: int = 3
@@ -142,7 +144,8 @@ class CircuitBreakerConfig:
 
 @dataclass
 class APIGatewayConfig:
-    """API Gateway configuration"""
+    """
+        API Gateway configuration"""
     gateway_host: str = "0.0.0.0"
     gateway_port: int = 8080
     rate_limiting_enabled: bool = True
@@ -170,7 +173,8 @@ class ServiceMeshConfig:
 
 @dataclass
 class DistributedTracingConfig:
-    """Distributed tracing configuration"""
+    """
+        Distributed tracing configuration"""
     tracing_enabled: bool = True
     tracer_type: str = "jaeger"  # jaeger, zipkin, opentelemetry
     sampling_rate: float = 0.1
@@ -195,7 +199,8 @@ class ServiceRegistry:
         self.registry_listeners: List[Callable] = []
     
     async def register_service(self, endpoint: ServiceEndpoint) -> Dict[str, Any]:
-        """Register a service endpoint"""
+        """
+        Register a service endpoint"""
         service_name = endpoint.service_name
         
         # Initialize service lists if not exists
@@ -205,6 +210,7 @@ class ServiceRegistry:
             self.last_health_check[service_name] = {}
         
         # Check if endpoint already registered
+
         existing_endpoint = None
         for i, existing in enumerate(self.registered_services[service_name]):
             if existing.host == endpoint.host and existing.port == endpoint.port:
@@ -219,14 +225,12 @@ class ServiceRegistry:
             self.registered_services[service_name].append(endpoint)
         
         # Initialize health status
-# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
-        self.service_health[service_name][endpoint_key] = True
+# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV        self.service_health[service_name][endpoint_key] = True
         self.last_health_check[service_name][endpoint_key] = datetime.now()
         
         # Notify listeners
         await self._notify_registry_change("register", service_name, endpoint)
+
         
         logging.info(f"Registered service {service_name} at {endpoint.host}:{endpoint.port}")
         return {
@@ -241,15 +245,16 @@ class ServiceRegistry:
             return {"status": "error", "message": "Service not found"}
         
         # Find and remove endpoint
+
         endpoints = self.registered_services[service_name]
         for i, endpoint in enumerate(endpoints):
             if endpoint.host == host and endpoint.port == port:
                 removed_endpoint = endpoints.pop(i)
                 
                 # Remove health status
-# SECURITY: # SECURITY: endpoint_key = f"{host}:{port}" # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
+                # SECURITY: MOVED TO ENV
+                endpoint_key = f"{host}:{port}"
+                
                 if endpoint_key in self.service_health[service_name]:
                     del self.service_health[service_name][endpoint_key]
                 if endpoint_key in self.last_health_check[service_name]:
@@ -257,8 +262,10 @@ class ServiceRegistry:
                 
                 # Notify listeners
                 await self._notify_registry_change("deregister", service_name, removed_endpoint)
+
                 
                 logging.info(f"Deregistered service {service_name} at {host}:{port}")
+
                 return {"status": "deregistered", "service_name": service_name}
         
         return {"status": "error", "message": "Endpoint not found"}
@@ -267,26 +274,23 @@ class ServiceRegistry:
         """Discover healthy endpoints for a service"""
         if service_name not in self.registered_services:
             return []
+
         
         healthy_endpoints = []
         for endpoint in self.registered_services[service_name]:
-# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
-            is_healthy = self.service_health[service_name].get(endpoint_key, False)
+# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV            is_healthy = self.service_health[service_name].get(endpoint_key, False)
+
             
             if is_healthy:
                 healthy_endpoints.append(endpoint)
+
         
         return healthy_endpoints
     
     async def health_check_service(self, service_name: str, endpoint: ServiceEndpoint) -> bool:
         """Perform health check on service endpoint"""
         try:
-# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
-            
+# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV            
             if self.config.health_check_type == HealthCheckType.HTTP:
                 health_url = f"{endpoint.protocol}://{endpoint.host}:{endpoint.port}{endpoint.health_check_path}"
                 
@@ -302,26 +306,29 @@ class ServiceRegistry:
                     asyncio.open_connection(endpoint.host, endpoint.port),
                     timeout=self.config.health_check_timeout.total_seconds()
                 )
+
                 writer.close()
+
                 await writer.wait_closed()
+
+
                 is_healthy = True
             
             else:
                 # Default to healthy for custom checks
+
                 is_healthy = True
             
             # Update health status
             self.service_health[service_name][endpoint_key] = is_healthy
             self.last_health_check[service_name][endpoint_key] = datetime.now()
+
             
             return is_healthy
             
         except Exception as e:
             logging.warning(f"Health check failed for {service_name} at {endpoint.host}:{endpoint.port}: {e}")
-# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
-            self.service_health[service_name][endpoint_key] = False
+# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV            self.service_health[service_name][endpoint_key] = False
             return False
     
     async def start_health_monitoring(self) -> None:
@@ -332,12 +339,16 @@ class ServiceRegistry:
                     for service_name, endpoints in self.registered_services.items():
                         for endpoint in endpoints:
                             await self.health_check_service(service_name, endpoint)
+
                     
                     await asyncio.sleep(self.config.health_check_interval.total_seconds())
+
                     
                 except Exception as e:
                     logging.error(f"Error in health monitoring: {e}")
+
                     await asyncio.sleep(self.config.health_check_interval.total_seconds())
+
         
         asyncio.create_task(health_monitor_loop())
         logging.info("Started health monitoring")
@@ -347,10 +358,12 @@ class ServiceRegistry:
         self.registry_listeners.append(listener)
     
     async def _notify_registry_change(self, action: str, service_name: str, endpoint: ServiceEndpoint) -> None:
-        """Notify listeners of registry changes"""
+        """
+        Notify listeners of registry changes"""
         for listener in self.registry_listeners:
             try:
                 await listener(action, service_name, endpoint)
+
             except Exception as e:
                 logging.error(f"Error in registry listener: {e}")
     
@@ -382,8 +395,10 @@ class LoadBalancer:
         self.circuit_breakers: Dict[str, Dict[str, 'CircuitBreaker']] = {}
     
     async def select_endpoint(self, service_name: str) -> Optional[ServiceEndpoint]:
-        """Select an endpoint based on load balancing strategy"""
+        """
+        Select an endpoint based on load balancing strategy"""
         available_endpoints = await self.service_registry.discover_services(service_name)
+
         
         if not available_endpoints:
             return None
@@ -412,9 +427,11 @@ class LoadBalancer:
             return available_endpoints[0]
     
     def _round_robin_select(self, service_name: str, endpoints: List[ServiceEndpoint]) -> ServiceEndpoint:
-        """Round-robin selection"""
+        """
+        Round-robin selection"""
         if service_name not in self.round_robin_counters:
             self.round_robin_counters[service_name] = 0
+
         
         selected_index = self.round_robin_counters[service_name] % len(endpoints)
         self.round_robin_counters[service_name] += 1
@@ -422,34 +439,39 @@ class LoadBalancer:
         return endpoints[selected_index]
     
     def _weighted_round_robin_select(self, service_name: str, endpoints: List[ServiceEndpoint]) -> ServiceEndpoint:
-        """Weighted round-robin selection"""
+        """
+        Weighted round-robin selection"""
         total_weight = sum(ep.weight for ep in endpoints)
         if total_weight == 0:
             return self._round_robin_select(service_name, endpoints)
         
         # Create weighted list
+
         weighted_endpoints = []
         for endpoint in endpoints:
             weighted_endpoints.extend([endpoint] * endpoint.weight)
+
         
         return self._round_robin_select(service_name, weighted_endpoints)
     
     def _least_connections_select(self, service_name: str, endpoints: List[ServiceEndpoint]) -> ServiceEndpoint:
-        """Least connections selection"""
+        """
+        Least connections selection"""
         if service_name not in self.connection_counts:
             self.connection_counts[service_name] = {}
+
         
         min_connections = float('inf')
+
         selected_endpoint = endpoints[0]
         
         for endpoint in endpoints:
-# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
-            connections = self.connection_counts[service_name].get(endpoint_key, 0)
+# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV            connections = self.connection_counts[service_name].get(endpoint_key, 0)
+
             
             if connections < min_connections:
                 min_connections = connections
+
                 selected_endpoint = endpoint
         
         return selected_endpoint
@@ -458,23 +480,25 @@ class LoadBalancer:
         """Least response time selection"""
         if service_name not in self.response_times:
             self.response_times[service_name] = {}
+
         
         min_response_time = float('inf')
+
         selected_endpoint = endpoints[0]
         
         for endpoint in endpoints:
-# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
-            response_times = self.response_times[service_name].get(endpoint_key, [])
+# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV            response_times = self.response_times[service_name].get(endpoint_key, [])
+
             
             if response_times:
                 avg_response_time = sum(response_times) / len(response_times)
+
             else:
                 avg_response_time = 0.0  # Prefer endpoints without data
             
             if avg_response_time < min_response_time:
                 min_response_time = avg_response_time
+
                 selected_endpoint = endpoint
         
         return selected_endpoint
@@ -484,22 +508,17 @@ class LoadBalancer:
         if service_name not in self.connection_counts:
             self.connection_counts[service_name] = {}
         
-# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
-        current_connections = self.connection_counts[service_name].get(endpoint_key, 0)
+# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV        current_connections = self.connection_counts[service_name].get(endpoint_key, 0)
         self.connection_counts[service_name][endpoint_key] = current_connections + 1
     
     def record_request_end(self, service_name: str, endpoint: ServiceEndpoint, 
                           response_time_ms: float, success: bool) -> None:
         """Record request completion"""
-# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
-        
+# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV        
         # Update connection count
         if service_name in self.connection_counts:
             current_connections = self.connection_counts[service_name].get(endpoint_key, 0)
+
             self.connection_counts[service_name][endpoint_key] = max(0, current_connections - 1)
         
         # Update response times
@@ -508,6 +527,7 @@ class LoadBalancer:
         
         if endpoint_key not in self.response_times[service_name]:
             self.response_times[service_name][endpoint_key] = []
+
         
         response_times = self.response_times[service_name][endpoint_key]
         response_times.append(response_time_ms)
@@ -525,10 +545,8 @@ class LoadBalancer:
         if service_name not in self.circuit_breakers:
             return False
         
-# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
-        circuit_breaker = self.circuit_breakers[service_name].get(endpoint_key)
+# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV        circuit_breaker = self.circuit_breakers[service_name].get(endpoint_key)
+
         
         return circuit_breaker and circuit_breaker.is_open()
     
@@ -537,10 +555,7 @@ class LoadBalancer:
         if service_name not in self.circuit_breakers:
             self.circuit_breakers[service_name] = {}
         
-# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
-        
+# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV        
         if endpoint_key not in self.circuit_breakers[service_name]:
             from .circuit_breaker import CircuitBreaker  # Would be implemented
             self.circuit_breakers[service_name][endpoint_key] = CircuitBreaker(
@@ -548,6 +563,8 @@ class LoadBalancer:
                 recovery_timeout=timedelta(seconds=60),
                 success_threshold=3
             )
+
+
         
         circuit_breaker = self.circuit_breakers[service_name][endpoint_key]
         
@@ -572,7 +589,8 @@ class APIGateway:
         self.middleware_stack: List[Callable] = []
     
     def add_route(self, path_pattern: str, service_name: str) -> None:
-        """Add route mapping"""
+        """
+        Add route mapping"""
         self.route_mappings[path_pattern] = service_name
         logging.info(f"Added route: {path_pattern} -> {service_name}")
     
@@ -581,14 +599,20 @@ class APIGateway:
         self.middleware_stack.append(middleware)
     
     async def handle_request(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle incoming request through gateway"""
+        """
+        Handle incoming request through gateway"""
         # Extract request information
+
         path = request.get("path", "/")
+
         method = request.get("method", "GET")
+
         headers = request.get("headers", {})
+
         client_ip = request.get("client_ip", "unknown")
         
         # Find matching service
+
         service_name = self._match_route(path)
         if not service_name:
             return {
@@ -601,10 +625,12 @@ class APIGateway:
         for middleware in self.middleware_stack:
             try:
                 request = await middleware(request)
+
                 if "error" in request:
                     return request
             except Exception as e:
                 logging.error(f"Middleware error: {e}")
+
                 return {
                     "status": 500,
                     "body": {"error": "Internal server error"},
@@ -614,6 +640,7 @@ class APIGateway:
         # Rate limiting
         if self.config.rate_limiting_enabled:
             rate_limit_result = await self._check_rate_limit(client_ip)
+
             if not rate_limit_result["allowed"]:
                 return {
                     "status": 429,
@@ -624,11 +651,15 @@ class APIGateway:
         # Check cache
         if self.config.response_caching and method == "GET":
             cache_key = self._generate_cache_key(service_name, path, headers)
+
+
             cached_response = self._get_cached_response(cache_key)
+
             if cached_response:
                 return cached_response
         
         # Select endpoint and forward request
+
         endpoint = await self.load_balancer.select_endpoint(service_name)
         if not endpoint:
             return {
@@ -638,12 +669,16 @@ class APIGateway:
             }
         
         # Forward request to service
+
         start_time = datetime.now()
         try:
             self.load_balancer.record_request_start(service_name, endpoint)
             
             # Simulate request forwarding
+
             response = await self._forward_request(endpoint, request)
+
+
             
             response_time = (datetime.now() - start_time).total_seconds() * 1000
             self.load_balancer.record_request_end(service_name, endpoint, response_time, True)
@@ -652,15 +687,19 @@ class APIGateway:
             if (self.config.response_caching and method == "GET" and 
                 response.get("status", 500) == 200):
                 cache_key = self._generate_cache_key(service_name, path, headers)
+
                 self._cache_response(cache_key, response)
+
             
             return response
             
         except Exception as e:
             response_time = (datetime.now() - start_time).total_seconds() * 1000
             self.load_balancer.record_request_end(service_name, endpoint, response_time, False)
+
             
             logging.error(f"Request forwarding error: {e}")
+
             return {
                 "status": 500,
                 "body": {"error": "Service error"},
@@ -675,44 +714,59 @@ class APIGateway:
         return None
     
     async def _check_rate_limit(self, client_ip: str) -> Dict[str, Any]:
-        """Check rate limiting for client"""
+        """
+        Check rate limiting for client"""
         current_time = datetime.now()
+
         minute_window = current_time.replace(second=0, microsecond=0)
+
         
         if client_ip not in self.rate_limiters:
             self.rate_limiters[client_ip] = {}
+
         
         client_limits = self.rate_limiters[client_ip]
         
         # Clean old entries
-        client_limits = {k: v for k, v in client_limits.items() 
+
+        client_limits = {k: v for k, v in client_limits.items()
+ 
                         if datetime.fromisoformat(k) >= current_time - timedelta(minutes=1)}
         self.rate_limiters[client_ip] = client_limits
         
         # Count requests in current minute
+
         minute_key = minute_window.isoformat()
+
         current_requests = client_limits.get(minute_key, 0)
+
         
         if current_requests >= self.config.rate_limit_requests_per_minute:
             return {"allowed": False, "remaining": 0}
         
         # Increment counter
         client_limits[minute_key] = current_requests + 1
+
         remaining = self.config.rate_limit_requests_per_minute - (current_requests + 1)
+
         
         return {"allowed": True, "remaining": remaining}
     
     def _generate_cache_key(self, service_name: str, path: str, headers: Dict[str, str]) -> str:
         """Generate cache key for request"""
         # Include relevant headers that might affect response
-        cache_headers = {k: v for k, v in headers.items() 
+
+        cache_headers = {k: v for k, v in headers.items()
+ 
                         if k.lower() in ['accept', 'accept-language', 'authorization']}
+
         
         cache_data = {
             "service": service_name,
             "path": path,
             "headers": cache_headers
         }
+
         
         cache_string = json.dumps(cache_data, sort_keys=True)
         return hashlib.md5(cache_string.encode()).hexdigest()
@@ -721,9 +775,12 @@ class APIGateway:
         """Get cached response if valid"""
         if cache_key not in self.cached_responses:
             return None
+
         
         cached_entry = self.cached_responses[cache_key]
+
         cached_time = datetime.fromisoformat(cached_entry["cached_at"])
+
         
         if datetime.now() - cached_time > self.config.cache_ttl:
             del self.cached_responses[cache_key]
@@ -741,6 +798,7 @@ class APIGateway:
         # Limit cache size
         if len(self.cached_responses) > 1000:
             # Remove oldest entries
+
             oldest_keys = sorted(self.cached_responses.keys(), 
                                key=lambda k: self.cached_responses[k]["cached_at"])[:100]
             for key in oldest_keys:
@@ -789,7 +847,8 @@ class MicroservicesConfigManager:
         self._initialize_default_services()
     
     def _initialize_default_services(self) -> None:
-        """Initialize default service configurations"""
+        """
+        Initialize default service configurations"""
         # Define core platform services
         self.service_definitions = {
             "ai-service": {
@@ -829,7 +888,7 @@ class MicroservicesConfigManager:
             },
             "database-service": {
                 "type": ServiceType.DATA_SERVICE,
-                "communication": CommunicationType.TCP,
+                "communication": CommunicationType.HTTP_REST,  # Database service API (not raw TCP)
                 "health_check_path": "/health",
                 "dependencies": [],
                 "scaling": {"min_instances": 1, "max_instances": 3}
@@ -865,26 +924,32 @@ class MicroservicesConfigManager:
         try:
             # Start service registry and health monitoring
             await self.service_registry.start_health_monitoring()
+
             startup_results["service_registry"] = True
             startup_results["health_monitoring"] = True
             
             # API Gateway is ready (no async startup required in this implementation)
+
             startup_results["api_gateway"] = True
             startup_results["load_balancer"] = True
             
             # Service mesh configuration (would integrate with actual service mesh)
+
             if self.service_mesh_config.mesh_type:
                 startup_results["service_mesh"] = True
             
             # Distributed tracing (would integrate with actual tracing system)
+
             if self.tracing_config.tracing_enabled:
                 startup_results["distributed_tracing"] = True
             
             logging.info("Microservices system started successfully")
+
             return {"status": "started", "components": startup_results}
             
         except Exception as e:
             logging.error(f"Failed to start microservices system: {e}")
+
             return {"status": "error", "error": str(e), "components": startup_results}
     
     async def register_service_instance(self, service_name: str, host: str, port: int,
@@ -892,8 +957,10 @@ class MicroservicesConfigManager:
         """Register a service instance"""
         if service_name not in self.service_definitions:
             return {"status": "error", "message": "Service not defined"}
+
         
         service_def = self.service_definitions[service_name]
+
         
         endpoint = ServiceEndpoint(
             service_name=service_name,
@@ -903,6 +970,7 @@ class MicroservicesConfigManager:
             health_check_path=service_def["health_check_path"],
             metadata=metadata or {}
         )
+
         
         return await self.service_registry.register_service(endpoint)
     
@@ -911,11 +979,13 @@ class MicroservicesConfigManager:
         return await self.service_registry.deregister_service(service_name, host, port)
     
     async def handle_api_request(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle API request through gateway"""
+        """
+        Handle API request through gateway"""
         return await self.api_gateway.handle_request(request)
     
     def configure_service_mesh(self, config: ServiceMeshConfig) -> Dict[str, Any]:
-        """Configure service mesh settings"""
+        """
+        Configure service mesh settings"""
         self.service_mesh_config = config
         
         return {
@@ -943,6 +1013,7 @@ class MicroservicesConfigManager:
         
         if dependency not in self.service_dependencies[service_name]:
             self.service_dependencies[service_name].append(dependency)
+
         
         return {
             "status": "added",
@@ -975,9 +1046,14 @@ class MicroservicesConfigManager:
         health_status = self.service_registry.get_service_health_status()
         
         # Calculate overall health
+
         total_services = len(self.service_definitions)
-        healthy_services = sum(1 for status in health_status.values() 
+
+        healthy_services = sum(1 for status in health_status.values()
+ 
                              if status["healthy_endpoints"] > 0)
+
+
         
         overall_health = (healthy_services / total_services * 100) if total_services > 0 else 0
         
@@ -993,11 +1069,13 @@ class MicroservicesConfigManager:
             },
             "load_balancer_metrics": {
                 "active_connections": sum(
-                    sum(connections.values()) 
+                    sum(connections.values())
+ 
                     for connections in self.load_balancer.connection_counts.values()
                 ),
                 "circuit_breakers": sum(
-                    len(breakers) 
+                    len(breakers)
+ 
                     for breakers in self.load_balancer.circuit_breakers.values()
                 )
             }
@@ -1017,6 +1095,7 @@ class MicroservicesConfigManager:
         # Check each service
         for service_name in self.service_definitions.keys():
             endpoints = await self.service_registry.discover_services(service_name)
+
             health_results["services"][service_name] = {
                 "healthy_instances": len(endpoints),
                 "status": "healthy" if endpoints else "unhealthy"

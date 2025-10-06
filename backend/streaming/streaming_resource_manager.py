@@ -29,14 +29,7 @@ from enum import Enum
 import json
 import uuid
 # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+from protection.utils.redis_compat import aioredis, REDIS_AVAILABLE
 from sqlalchemy.ext.asyncio import AsyncSession
 from collections import defaultdict
 import hashlib
@@ -45,7 +38,8 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 class ResourceType(Enum):
-    """Resource type classification"""
+    """
+        Resource type classification"""
     COMPUTE_INSTANCE = "compute_instance"
     STORAGE_VOLUME = "storage_volume"
     NETWORK_BANDWIDTH = "network_bandwidth"
@@ -133,7 +127,8 @@ class ResourceSpecification:
 
 @dataclass
 class ResourceInstance:
-    """Individual resource instance"""
+    """
+        Individual resource instance"""
     instance_id: str
     instance_name: str
     resource_type: ResourceType
@@ -156,7 +151,8 @@ class ResourceInstance:
 
 @dataclass
 class CapacityPlan:
-    """Capacity planning configuration"""
+    """
+        Capacity planning configuration"""
     plan_id: str
     plan_name: str
     planning_horizon: timedelta
@@ -178,7 +174,8 @@ class CapacityPlan:
 
 @dataclass
 class AllocationStrategy:
-    """Resource allocation strategy"""
+    """
+        Resource allocation strategy"""
     strategy_id: str
     strategy_name: str
     allocation_algorithm: str
@@ -199,7 +196,8 @@ class AllocationStrategy:
 
 @dataclass
 class CostOptimizationRule:
-    """Cost optimization rule definition"""
+    """
+        Cost optimization rule definition"""
     rule_id: str
     rule_name: str
     rule_description: str
@@ -221,7 +219,8 @@ class CostOptimizationRule:
 
 @dataclass
 class ScalingEvent:
-    """Resource scaling event record"""
+    """
+        Resource scaling event record"""
     event_id: str
     resource_id: str
     scaling_action: str
@@ -238,36 +237,46 @@ class ScalingEvent:
     metadata: Dict[str, Any]
 
 class InfrastructureResourceManager:
-    """Infrastructure resource discovery and management system"""
+    """
+        Infrastructure resource discovery and management system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.resource_discoverers = {}
         self.allocation_engines = {}
         
     async def initialize_resource_manager(self) -> Dict[str, Any]:
-        """Initialize infrastructure resource management"""
+        """
+        Initialize infrastructure resource management"""
         try:
             # Setup resource discoverers
+
             resource_discoverers = await self._setup_resource_discoverers()
             
             # Initialize allocation engines
+
             allocation_engines = await self._initialize_allocation_engines()
             
             # Configure monitoring systems
+
             monitoring_systems = await self._configure_monitoring_systems()
             
             # Setup inventory management
+
             inventory_management = await self._setup_inventory_management()
             
             # Configure lifecycle management
+
             lifecycle_management = await self._configure_lifecycle_management()
             
             # Setup integration APIs
+
             integration_apis = await self._setup_integration_apis()
+
             
             logger.info(f"🏗️ Infrastructure Resource Manager initialized with {len(resource_discoverers)} discoverers")
+
             
             return {
                 "resource_discoverers": len(resource_discoverers),
@@ -287,6 +296,7 @@ class InfrastructureResourceManager:
             
         except Exception as e:
             logger.error(f"Failed to initialize resource manager: {e}")
+
             raise
 
     async def discover_and_allocate_resources(
@@ -300,39 +310,47 @@ class InfrastructureResourceManager:
             allocation_id = str(uuid.uuid4())
             
             # Discover available resources
+
             resource_discovery = await self._discover_available_resources(
                 resource_requirements, allocation_config
             )
             
             # Analyze resource fit
+
             fit_analysis = await self._analyze_resource_fit(
                 resource_requirements, resource_discovery, allocation_strategy
             )
             
             # Execute allocation algorithm
+
             allocation_execution = await self._execute_allocation_algorithm(
                 fit_analysis, allocation_strategy, allocation_config
             )
             
             # Provision allocated resources
+
             resource_provisioning = await self._provision_allocated_resources(
                 allocation_execution, allocation_config
             )
             
             # Configure monitoring
+
             monitoring_setup = await self._configure_resource_monitoring(
                 resource_provisioning, allocation_strategy
             )
             
             # Update inventory
+
             inventory_update = await self._update_resource_inventory(
                 resource_provisioning, allocation_execution
             )
             
             # Generate allocation report
+
             allocation_report = await self._generate_allocation_report(
                 allocation_id, resource_requirements, allocation_execution
             )
+
             
             return {
                 "success": True,
@@ -349,39 +367,49 @@ class InfrastructureResourceManager:
             
         except Exception as e:
             logger.error(f"Failed to discover and allocate resources: {e}")
+
             raise
 
 class CapacityPlanningEngine:
     """Capacity planning and forecasting system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.forecasting_models = {}
         self.planning_algorithms = {}
         
     async def initialize_capacity_planning(self) -> Dict[str, Any]:
-        """Initialize capacity planning engine"""
+        """
+        Initialize capacity planning engine"""
         try:
             # Setup forecasting models
+
             forecasting_models = await self._setup_forecasting_models()
             
             # Initialize planning algorithms
+
             planning_algorithms = await self._initialize_planning_algorithms()
             
             # Configure data collection
+
             data_collection = await self._configure_data_collection()
             
             # Setup trend analysis
+
             trend_analysis = await self._setup_trend_analysis()
             
             # Configure scenario modeling
+
             scenario_modeling = await self._configure_scenario_modeling()
             
             # Setup optimization engines
+
             optimization_engines = await self._setup_optimization_engines()
+
             
             logger.info(f"📊 Capacity Planning Engine initialized with {len(forecasting_models)} models")
+
             
             return {
                 "forecasting_models": len(forecasting_models),
@@ -401,6 +429,7 @@ class CapacityPlanningEngine:
             
         except Exception as e:
             logger.error(f"Failed to initialize capacity planning: {e}")
+
             raise
 
     async def generate_capacity_plan(
@@ -414,36 +443,43 @@ class CapacityPlanningEngine:
             plan_id = str(uuid.uuid4())
             
             # Analyze historical patterns
+
             pattern_analysis = await self._analyze_historical_patterns(
                 historical_data, planning_config
             )
             
             # Generate demand forecasts
+
             demand_forecasting = await self._generate_demand_forecasts(
                 pattern_analysis, planning_requirements
             )
             
             # Model capacity scenarios
+
             scenario_modeling = await self._model_capacity_scenarios(
                 demand_forecasting, planning_requirements
             )
             
             # Optimize resource allocation
+
             resource_optimization = await self._optimize_resource_allocation(
                 scenario_modeling, planning_config
             )
             
             # Calculate cost projections
+
             cost_projections = await self._calculate_cost_projections(
                 resource_optimization, planning_requirements
             )
             
             # Generate implementation timeline
+
             implementation_timeline = await self._generate_implementation_timeline(
                 resource_optimization, planning_config
             )
             
             # Create capacity plan
+
             capacity_plan = CapacityPlan(
                 plan_id=plan_id,
                 plan_name=planning_requirements.get("plan_name", "Capacity Plan"),
@@ -466,7 +502,9 @@ class CapacityPlanningEngine:
             )
             
             # Validate capacity plan
+
             plan_validation = await self._validate_capacity_plan(capacity_plan)
+
             
             return {
                 "success": True,
@@ -484,12 +522,13 @@ class CapacityPlanningEngine:
             
         except Exception as e:
             logger.error(f"Failed to generate capacity plan: {e}")
+
             raise
 
 class CostOptimizationEngine:
     """Cost optimization and budget management system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.cost_analyzers = {}
@@ -501,39 +540,47 @@ class CostOptimizationEngine:
         current_resources: List[ResourceInstance],
         optimization_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute comprehensive cost optimization"""
+        """
+        Execute comprehensive cost optimization"""
         try:
             optimization_id = str(uuid.uuid4())
             
             # Analyze current costs
+
             cost_analysis = await self._analyze_current_costs(
                 current_resources, optimization_config
             )
             
             # Identify optimization opportunities
+
             optimization_opportunities = await self._identify_optimization_opportunities(
                 cost_analysis, optimization_rules
             )
             
             # Generate optimization recommendations
+
             optimization_recommendations = await self._generate_optimization_recommendations(
                 optimization_opportunities, optimization_config
             )
             
             # Simulate optimization impact
+
             impact_simulation = await self._simulate_optimization_impact(
                 optimization_recommendations, current_resources
             )
             
             # Execute approved optimizations
+
             optimization_execution = await self._execute_approved_optimizations(
                 optimization_recommendations, impact_simulation
             )
             
             # Monitor optimization results
+
             results_monitoring = await self._monitor_optimization_results(
                 optimization_execution, optimization_config
             )
+
             
             return {
                 "success": True,
@@ -549,12 +596,13 @@ class CostOptimizationEngine:
             
         except Exception as e:
             logger.error(f"Failed to execute cost optimization: {e}")
+
             raise
 
 class AutoScalingOrchestrator:
     """Automated scaling orchestration system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.scaling_engines = {}
@@ -565,34 +613,41 @@ class AutoScalingOrchestrator:
         performance_metrics: Dict[str, Any],
         scaling_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute automated scaling based on policies and metrics"""
+        """
+        Execute automated scaling based on policies and metrics"""
         try:
             scaling_id = str(uuid.uuid4())
             
             # Analyze scaling triggers
+
             trigger_analysis = await self._analyze_scaling_triggers(
                 performance_metrics, scaling_policies
             )
             
             # Determine scaling actions
+
             scaling_actions = await self._determine_scaling_actions(
                 trigger_analysis, scaling_policies, scaling_config
             )
             
             # Execute scaling operations
+
             scaling_execution = await self._execute_scaling_operations(
                 scaling_actions, scaling_config
             )
             
             # Monitor scaling impact
+
             impact_monitoring = await self._monitor_scaling_impact(
                 scaling_execution, performance_metrics
             )
             
             # Update scaling policies
+
             policy_updates = await self._update_scaling_policies(
                 scaling_execution, impact_monitoring
             )
+
             
             return {
                 "success": True,
@@ -607,12 +662,13 @@ class AutoScalingOrchestrator:
             
         except Exception as e:
             logger.error(f"Failed to execute auto scaling: {e}")
+
             raise
 
 class StreamingResourceManager:
     """Unified streaming resource manager - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         
@@ -632,24 +688,32 @@ class StreamingResourceManager:
         """Initialize comprehensive resource management system"""
         try:
             # Initialize infrastructure manager
+
             infrastructure_status = await self.infrastructure_manager.initialize_resource_manager()
             
             # Initialize capacity planner
+
             capacity_status = await self.capacity_planner.initialize_capacity_planning()
             
             # Setup resource policies
+
             resource_policies = await self._setup_resource_policies()
             
             # Configure monitoring and alerting
+
             monitoring_alerting = await self._configure_monitoring_and_alerting()
             
             # Setup cost tracking
+
             cost_tracking = await self._setup_cost_tracking()
             
             # Configure automation rules
+
             automation_rules = await self._configure_automation_rules()
+
             
             logger.info("🏗️ Streaming Resource Manager fully initialized")
+
             
             return {
                 "manager_status": "initialized",
@@ -671,6 +735,7 @@ class StreamingResourceManager:
             
         except Exception as e:
             logger.error(f"Failed to initialize resource manager: {e}")
+
             raise
     
     async def execute_comprehensive_resource_management_workflow(
@@ -682,6 +747,8 @@ class StreamingResourceManager:
             workflow_id = str(uuid.uuid4())
             
             # Create resource specifications (simplified for example)
+
+
             resource_requirements = [
                 ResourceSpecification(
                     spec_id=str(uuid.uuid4()),
@@ -707,6 +774,7 @@ class StreamingResourceManager:
                     updated_at=datetime.utcnow()
                 )
             ]
+
             
             allocation_strategy = AllocationStrategy(
                 strategy_id=str(uuid.uuid4()),
@@ -729,6 +797,7 @@ class StreamingResourceManager:
             )
             
             # Execute resource allocation
+
             resource_allocation = await self.infrastructure_manager.discover_and_allocate_resources(
                 resource_requirements,
                 allocation_strategy,
@@ -736,6 +805,7 @@ class StreamingResourceManager:
             )
             
             # Generate capacity plan
+
             capacity_planning = await self.capacity_planner.generate_capacity_plan(
                 management_request.get("planning_requirements", {}),
                 management_request.get("historical_data", {}),
@@ -743,6 +813,7 @@ class StreamingResourceManager:
             )
             
             # Execute cost optimization
+
             optimization_rules = [
                 CostOptimizationRule(
                     rule_id=str(uuid.uuid4()),
@@ -765,6 +836,7 @@ class StreamingResourceManager:
                     active=True
                 )
             ]
+
             
             cost_optimization = await self.cost_optimizer.execute_cost_optimization(
                 optimization_rules,
@@ -773,11 +845,13 @@ class StreamingResourceManager:
             )
             
             # Execute auto scaling
+
             auto_scaling = await self.scaling_orchestrator.execute_auto_scaling(
                 management_request.get("scaling_policies", {}),
                 management_request.get("performance_metrics", {}),
                 management_request.get("scaling_config", {})
             )
+
             
             return {
                 "success": True,
@@ -791,6 +865,7 @@ class StreamingResourceManager:
             
         except Exception as e:
             logger.error(f"Failed to execute comprehensive resource management workflow: {e}")
+
             raise
     
     # Additional helper methods implementation...
@@ -805,6 +880,7 @@ class StreamingResourceManager:
             }
         except Exception as e:
             logger.error(f"Failed to setup resource policies: {e}")
+
             return {}
 
     async def _configure_monitoring_and_alerting(self) -> Dict[str, Any]:
@@ -818,6 +894,7 @@ class StreamingResourceManager:
             }
         except Exception as e:
             logger.error(f"Failed to configure monitoring and alerting: {e}")
+
             return {}
 
 # Export main classes

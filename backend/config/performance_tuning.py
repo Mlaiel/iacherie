@@ -40,7 +40,8 @@ import statistics
 # ===============================
 
 class PerformanceMetricType(str, Enum):
-    """Types of performance metrics"""
+    """
+        Types of performance metrics"""
     CPU_USAGE = "cpu_usage"
     MEMORY_USAGE = "memory_usage"
     DISK_IO = "disk_io"
@@ -93,7 +94,8 @@ class AlertSeverity(IntEnum):
 
 @dataclass
 class PerformanceMetric:
-    """Individual performance metric"""
+    """
+        Individual performance metric"""
     metric_type: PerformanceMetricType
     value: float
     timestamp: datetime
@@ -103,7 +105,8 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceThreshold:
-    """Performance threshold configuration"""
+    """
+        Performance threshold configuration"""
     metric_type: PerformanceMetricType
     warning_threshold: float
     critical_threshold: float
@@ -113,7 +116,8 @@ class PerformanceThreshold:
 
 @dataclass
 class OptimizationRecommendation:
-    """Performance optimization recommendation"""
+    """
+        Performance optimization recommendation"""
     resource_type: ResourceType
     recommendation: str
     impact_estimate: float  # 0.0 to 1.0
@@ -135,7 +139,8 @@ class PerformanceBaseline:
 
 @dataclass
 class AutoScalingConfig:
-    """Auto-scaling configuration"""
+    """
+        Auto-scaling configuration"""
     resource_type: ResourceType
     min_instances: int
     max_instances: int
@@ -148,7 +153,8 @@ class AutoScalingConfig:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert"""
+    """
+        Performance alert"""
     alert_id: str
     metric_type: PerformanceMetricType
     severity: AlertSeverity
@@ -165,15 +171,18 @@ class PerformanceAlert:
 # ==============================
 
 class MetricsCollector(ABC):
-    """Abstract base for metrics collection"""
+    """
+        Abstract base for metrics collection"""
     
     @abstractmethod
     async def collect_metrics(self) -> List[PerformanceMetric]:
-        """Collect performance metrics"""
+        """
+        Collect performance metrics"""
         pass
 
 class SystemMetricsCollector(MetricsCollector):
-    """System-level metrics collector"""
+    """
+        System-level metrics collector"""
     
     def __init__(self):
         self.previous_disk_io = None
@@ -181,11 +190,14 @@ class SystemMetricsCollector(MetricsCollector):
         self.previous_time = None
     
     async def collect_metrics(self) -> List[PerformanceMetric]:
-        """Collect system performance metrics"""
+        """
+        Collect system performance metrics"""
         metrics = []
+
         current_time = datetime.now()
         
         # CPU metrics
+
         cpu_percent = psutil.cpu_percent(interval=1)
         metrics.append(PerformanceMetric(
             metric_type=PerformanceMetricType.CPU_USAGE,
@@ -196,6 +208,7 @@ class SystemMetricsCollector(MetricsCollector):
         ))
         
         # Memory metrics
+
         memory = psutil.virtual_memory()
         metrics.append(PerformanceMetric(
             metric_type=PerformanceMetricType.MEMORY_USAGE,
@@ -206,11 +219,14 @@ class SystemMetricsCollector(MetricsCollector):
         ))
         
         # Disk I/O metrics
+
         disk_io = psutil.disk_io_counters()
         if self.previous_disk_io and self.previous_time:
             time_delta = (current_time - self.previous_time).total_seconds()
+
             if time_delta > 0:
                 read_rate = (disk_io.read_bytes - self.previous_disk_io.read_bytes) / time_delta
+
                 write_rate = (disk_io.write_bytes - self.previous_disk_io.write_bytes) / time_delta
                 
                 metrics.append(PerformanceMetric(
@@ -221,15 +237,19 @@ class SystemMetricsCollector(MetricsCollector):
                     source="system",
                     metadata={"read_rate": read_rate, "write_rate": write_rate}
                 ))
+
         
         self.previous_disk_io = disk_io
         
         # Network I/O metrics
+
         network_io = psutil.net_io_counters()
         if self.previous_network_io and self.previous_time:
             time_delta = (current_time - self.previous_time).total_seconds()
+
             if time_delta > 0:
                 bytes_sent_rate = (network_io.bytes_sent - self.previous_network_io.bytes_sent) / time_delta
+
                 bytes_recv_rate = (network_io.bytes_recv - self.previous_network_io.bytes_recv) / time_delta
                 
                 metrics.append(PerformanceMetric(
@@ -240,6 +260,7 @@ class SystemMetricsCollector(MetricsCollector):
                     source="system",
                     metadata={"sent_rate": bytes_sent_rate, "recv_rate": bytes_recv_rate}
                 ))
+
         
         self.previous_network_io = network_io
         self.previous_time = current_time
@@ -256,13 +277,16 @@ class ApplicationMetricsCollector(MetricsCollector):
         self.start_time = datetime.now()
     
     async def collect_metrics(self) -> List[PerformanceMetric]:
-        """Collect application performance metrics"""
+        """
+        Collect application performance metrics"""
         metrics = []
+
         current_time = datetime.now()
         
         # Response time metrics
         if self.response_times:
             avg_response_time = statistics.mean(self.response_times)
+
             metrics.append(PerformanceMetric(
                 metric_type=PerformanceMetricType.RESPONSE_TIME,
                 value=avg_response_time,
@@ -272,6 +296,7 @@ class ApplicationMetricsCollector(MetricsCollector):
             ))
         
         # Throughput metrics
+
         uptime_seconds = (current_time - self.start_time).total_seconds()
         if uptime_seconds > 0:
             throughput = self.request_count / uptime_seconds
@@ -293,6 +318,7 @@ class ApplicationMetricsCollector(MetricsCollector):
                 unit="percent",
                 source="application"
             ))
+
         
         return metrics
     
@@ -308,7 +334,8 @@ class ApplicationMetricsCollector(MetricsCollector):
 # ==============================
 
 class PerformanceMonitor:
-    """Real-time performance monitoring system"""
+    """
+        Real-time performance monitoring system"""
     
     def __init__(self):
         self.collectors: List[MetricsCollector] = []
@@ -321,19 +348,23 @@ class PerformanceMonitor:
         self.collection_interval = 30  # seconds
     
     def add_collector(self, collector: MetricsCollector) -> None:
-        """Add metrics collector"""
+        """
+        Add metrics collector"""
         self.collectors.append(collector)
     
     def set_threshold(self, threshold: PerformanceThreshold) -> None:
-        """Set performance threshold"""
+        """
+        Set performance threshold"""
         self.thresholds[threshold.metric_type] = threshold
     
     def add_alert_callback(self, callback: Callable[[PerformanceAlert], None]) -> None:
-        """Add alert callback"""
+        """
+        Add alert callback"""
         self.alert_callbacks.append(callback)
     
     async def start_monitoring(self) -> None:
-        """Start performance monitoring"""
+        """
+        Start performance monitoring"""
         if self.monitoring_active:
             return
         
@@ -346,6 +377,7 @@ class PerformanceMonitor:
         self.monitoring_active = False
         if self.monitoring_task:
             self.monitoring_task.cancel()
+
             try:
                 await self.monitoring_task
             except asyncio.CancelledError:
@@ -357,9 +389,11 @@ class PerformanceMonitor:
         while self.monitoring_active:
             try:
                 # Collect metrics from all collectors
+
                 all_metrics = []
                 for collector in self.collectors:
                     metrics = await collector.collect_metrics()
+
                     all_metrics.extend(metrics)
                 
                 # Process metrics
@@ -368,9 +402,11 @@ class PerformanceMonitor:
                 
                 # Wait for next collection
                 await asyncio.sleep(self.collection_interval)
+
                 
             except Exception as e:
                 logging.error(f"Error in monitoring loop: {e}")
+
                 await asyncio.sleep(self.collection_interval)
     
     async def _process_metric(self, metric: PerformanceMetric) -> None:
@@ -383,11 +419,14 @@ class PerformanceMonitor:
             await self._check_threshold(metric)
     
     async def _check_threshold(self, metric: PerformanceMetric) -> None:
-        """Check metric against thresholds"""
+        """
+        Check metric against thresholds"""
         threshold = self.thresholds[metric.metric_type]
         
         # Determine severity
+
         severity = None
+
         threshold_value = None
         
         if metric.value >= threshold.emergency_threshold:
@@ -402,17 +441,21 @@ class PerformanceMonitor:
         
         if severity:
             # Check if we should trigger alert (consecutive violations)
+
+
             recent_metrics = list(self.metrics_history[metric.metric_type])[-threshold.consecutive_violations:]
             
             if len(recent_metrics) >= threshold.consecutive_violations:
                 all_violations = all(m.value >= threshold_value for m in recent_metrics)
+
                 
                 if all_violations:
                     await self._trigger_alert(metric, severity, threshold_value)
     
     async def _trigger_alert(self, metric: PerformanceMetric, 
                            severity: AlertSeverity, threshold_value: float) -> None:
-        """Trigger performance alert"""
+        """
+        Trigger performance alert"""
         alert = PerformanceAlert(
             alert_id=f"{metric.metric_type.value}_{int(time.time())}",
             metric_type=metric.metric_type,
@@ -422,6 +465,7 @@ class PerformanceMonitor:
             threshold_value=threshold_value,
             timestamp=metric.timestamp
         )
+
         
         self.alerts.append(alert)
         
@@ -429,8 +473,10 @@ class PerformanceMonitor:
         for callback in self.alert_callbacks:
             try:
                 await callback(alert)
+
             except Exception as e:
                 logging.error(f"Error in alert callback: {e}")
+
         
         logging.warning(f"Performance alert triggered: {alert.message}")
     
@@ -446,8 +492,10 @@ class PerformanceMonitor:
     
     def get_metric_statistics(self, metric_type: PerformanceMetricType, 
                             window: timedelta = timedelta(minutes=10)) -> Dict[str, float]:
-        """Get statistics for metric over time window"""
+        """
+        Get statistics for metric over time window"""
         cutoff_time = datetime.now() - window
+
         recent_metrics = [
             m for m in self.metrics_history[metric_type] 
             if m.timestamp >= cutoff_time
@@ -455,6 +503,7 @@ class PerformanceMonitor:
         
         if not recent_metrics:
             return {}
+
         
         values = [m.value for m in recent_metrics]
         
@@ -482,7 +531,8 @@ class AutoScaler:
         self.scale_callbacks: Dict[str, Callable] = {}
     
     def register_scaling_config(self, service_name: str, config: AutoScalingConfig) -> None:
-        """Register auto-scaling configuration"""
+        """
+        Register auto-scaling configuration"""
         self.scaling_configs[service_name] = config
         if service_name not in self.current_instances:
             self.current_instances[service_name] = config.min_instances
@@ -495,22 +545,29 @@ class AutoScaler:
     
     async def evaluate_scaling(self, service_name: str, 
                              current_metrics: Dict[PerformanceMetricType, float]) -> Dict[str, Any]:
-        """Evaluate if scaling is needed"""
+        """
+        Evaluate if scaling is needed"""
         if service_name not in self.scaling_configs:
             return {"action": "none", "reason": "no_config"}
+
         
         config = self.scaling_configs[service_name]
+
         current_count = self.current_instances[service_name]
         
         # Get target metric value
         if config.target_metric not in current_metrics:
             return {"action": "none", "reason": "metric_not_available"}
+
         
         current_value = current_metrics[config.target_metric]
+
         target_value = config.target_value
         
         # Check cooldown periods
+
         last_action_time = self.last_scale_actions.get(service_name)
+
         now = datetime.now()
         
         # Determine scaling action
@@ -521,9 +578,12 @@ class AutoScaler:
             
             if last_action_time and (now - last_action_time) < config.scale_up_cooldown:
                 return {"action": "none", "reason": "scale_up_cooldown"}
+
             
             new_count = min(config.max_instances, current_count + 1)
+
             return await self._execute_scaling(service_name, current_count, new_count, "scale_up", current_value)
+
         
         elif current_value < target_value * config.scale_down_threshold:
             # Scale down needed
@@ -532,9 +592,12 @@ class AutoScaler:
             
             if last_action_time and (now - last_action_time) < config.scale_down_cooldown:
                 return {"action": "none", "reason": "scale_down_cooldown"}
+
             
             new_count = max(config.min_instances, current_count - 1)
+
             return await self._execute_scaling(service_name, current_count, new_count, "scale_down", current_value)
+
         
         return {"action": "none", "reason": "within_thresholds"}
     
@@ -546,6 +609,7 @@ class AutoScaler:
         self.last_scale_actions[service_name] = datetime.now()
         
         # Record scaling event
+
         scaling_event = {
             "timestamp": datetime.now(),
             "service_name": service_name,
@@ -560,9 +624,12 @@ class AutoScaler:
             # Call scaling callback if registered
             if service_name in self.scale_callbacks:
                 await self.scale_callbacks[service_name](service_name, old_count, new_count)
+
             
             self.scaling_history.append(scaling_event)
+
             logging.info(f"Scaled {service_name} from {old_count} to {new_count} instances ({action})")
+
             
             return {
                 "action": action,
@@ -574,12 +641,14 @@ class AutoScaler:
         except Exception as e:
             scaling_event["success"] = False
             scaling_event["error"] = str(e)
+
             self.scaling_history.append(scaling_event)
             
             # Revert instance count on failure
             self.current_instances[service_name] = old_count
             
             logging.error(f"Failed to scale {service_name}: {e}")
+
             return {
                 "action": action,
                 "old_count": old_count,
@@ -608,7 +677,8 @@ class OptimizationEngine:
         self.optimization_history: List[Dict[str, Any]] = []
     
     def set_baseline(self, baseline: PerformanceBaseline) -> None:
-        """Set performance baseline"""
+        """
+        Set performance baseline"""
         self.baselines[baseline.profile_name] = baseline
         logging.info(f"Set performance baseline for profile: {baseline.profile_name}")
     
@@ -633,6 +703,7 @@ class OptimizationEngine:
         if profile_name in self.baselines:
             baseline = self.baselines[profile_name]
             analysis["baseline_comparison"] = self._compare_with_baseline(current_metrics, baseline)
+
             analysis["performance_score"] = self._calculate_performance_score(current_metrics, baseline)
         
         # Detect bottlenecks
@@ -642,12 +713,15 @@ class OptimizationEngine:
         for rule in self.optimization_rules:
             try:
                 recommendations = rule(current_metrics)
+
                 analysis["recommendations"].extend(recommendations)
+
             except Exception as e:
                 logging.error(f"Error in optimization rule: {e}")
         
         # Sort recommendations by impact
         analysis["recommendations"].sort(key=lambda r: r.impact_estimate, reverse=True)
+
         
         return analysis
     
@@ -659,6 +733,7 @@ class OptimizationEngine:
         for metric_type, baseline_value in baseline.metrics_baseline.items():
             if metric_type in current_metrics:
                 current_value = current_metrics[metric_type]
+
                 deviation = ((current_value - baseline_value) / baseline_value) * 100
                 
                 comparison[metric_type.value] = {
@@ -673,6 +748,7 @@ class OptimizationEngine:
     def _get_deviation_status(self, deviation: float, metric_type: PerformanceMetricType) -> str:
         """Get status based on metric deviation"""
         # For some metrics, higher is worse (like CPU usage, response time)
+
         higher_is_worse = metric_type in [
             PerformanceMetricType.CPU_USAGE,
             PerformanceMetricType.MEMORY_USAGE,
@@ -703,8 +779,10 @@ class OptimizationEngine:
         """Calculate overall performance score (0-100)"""
         if not baseline.metrics_baseline:
             return 50.0  # Neutral score
+
         
         total_score = 0.0
+
         metric_count = 0
         
         for metric_type, baseline_value in baseline.metrics_baseline.items():
@@ -712,13 +790,18 @@ class OptimizationEngine:
                 current_value = current_metrics[metric_type]
                 
                 # Calculate score for this metric (higher is better for the score)
+
                 if metric_type in [PerformanceMetricType.CPU_USAGE, PerformanceMetricType.MEMORY_USAGE,
                                  PerformanceMetricType.RESPONSE_TIME, PerformanceMetricType.ERROR_RATE]:
                     # Lower is better for these metrics
+
                     score = max(0, 100 - (current_value / baseline_value * 100))
+
                 else:
                     # Higher is better for these metrics
+
                     score = min(100, current_value / baseline_value * 100)
+
                 
                 total_score += score
                 metric_count += 1
@@ -726,10 +809,12 @@ class OptimizationEngine:
         return total_score / metric_count if metric_count > 0 else 50.0
     
     def _detect_bottlenecks(self, current_metrics: Dict[PerformanceMetricType, float]) -> List[Dict[str, Any]]:
-        """Detect performance bottlenecks"""
+        """
+        Detect performance bottlenecks"""
         bottlenecks = []
         
         # CPU bottleneck
+
         cpu_usage = current_metrics.get(PerformanceMetricType.CPU_USAGE, 0)
         if cpu_usage > 80:
             bottlenecks.append({
@@ -740,6 +825,7 @@ class OptimizationEngine:
             })
         
         # Memory bottleneck
+
         memory_usage = current_metrics.get(PerformanceMetricType.MEMORY_USAGE, 0)
         if memory_usage > 85:
             bottlenecks.append({
@@ -750,6 +836,7 @@ class OptimizationEngine:
             })
         
         # Response time bottleneck
+
         response_time = current_metrics.get(PerformanceMetricType.RESPONSE_TIME, 0)
         if response_time > 1000:  # 1 second
             bottlenecks.append({
@@ -760,6 +847,7 @@ class OptimizationEngine:
             })
         
         # Error rate bottleneck
+
         error_rate = current_metrics.get(PerformanceMetricType.ERROR_RATE, 0)
         if error_rate > 5:  # 5%
             bottlenecks.append({
@@ -768,6 +856,7 @@ class OptimizationEngine:
                 "description": f"High error rate: {error_rate:.1f}%",
                 "metric_value": error_rate
             })
+
         
         return bottlenecks
 
@@ -882,7 +971,8 @@ class PerformanceTuningManager:
         self._initialize_default_configuration()
     
     def _initialize_default_configuration(self) -> None:
-        """Initialize default configuration"""
+        """
+        Initialize default configuration"""
         # Add metrics collectors
         self.monitor.add_collector(self.system_collector)
         self.monitor.add_collector(self.app_collector)
@@ -899,7 +989,8 @@ class PerformanceTuningManager:
         self.monitor.add_alert_callback(self._handle_performance_alert)
     
     def _set_default_thresholds(self) -> None:
-        """Set default performance thresholds"""
+        """
+        Set default performance thresholds"""
         thresholds = [
             PerformanceThreshold(
                 metric_type=PerformanceMetricType.CPU_USAGE,
@@ -916,7 +1007,9 @@ class PerformanceTuningManager:
             PerformanceThreshold(
                 metric_type=PerformanceMetricType.RESPONSE_TIME,
                 warning_threshold=1000.0,  # 1 second
+
                 critical_threshold=3000.0,  # 3 seconds
+
                 emergency_threshold=10000.0  # 10 seconds
             ),
             PerformanceThreshold(
@@ -931,7 +1024,8 @@ class PerformanceTuningManager:
             self.monitor.set_threshold(threshold)
     
     async def start_performance_tuning(self) -> Dict[str, Any]:
-        """Start performance tuning system"""
+        """
+        Start performance tuning system"""
         if self.tuning_active:
             return {"status": "already_running"}
         
@@ -943,6 +1037,7 @@ class PerformanceTuningManager:
         # Start optimization loop if auto-optimization is enabled
         if self.auto_optimization_enabled:
             self.tuning_task = asyncio.create_task(self._optimization_loop())
+
         
         logging.info("Performance tuning system started")
         return {"status": "started", "auto_optimization": self.auto_optimization_enabled}
@@ -957,6 +1052,7 @@ class PerformanceTuningManager:
         # Stop optimization loop
         if self.tuning_task:
             self.tuning_task.cancel()
+
             try:
                 await self.tuning_task
             except asyncio.CancelledError:
@@ -971,42 +1067,53 @@ class PerformanceTuningManager:
             try:
                 if datetime.now() - self.last_optimization >= self.optimization_interval:
                     await self._run_optimization_cycle()
+
                     self.last_optimization = datetime.now()
+
                 
                 await asyncio.sleep(60)  # Check every minute
                 
             except Exception as e:
                 logging.error(f"Error in optimization loop: {e}")
+
                 await asyncio.sleep(60)
     
     async def _run_optimization_cycle(self) -> Dict[str, Any]:
         """Run optimization cycle"""
         # Get current metrics
+
         current_metrics_objects = self.monitor.get_current_metrics()
+
         current_metrics = {mt: m.value for mt, m in current_metrics_objects.items()}
         
         if not current_metrics:
             return {"status": "no_metrics"}
         
         # Analyze performance
+
         analysis = await self.optimization_engine.analyze_performance(
             current_metrics, self.current_profile.value
         )
         
         # Evaluate auto-scaling
+
         scaling_results = {}
         for service_name in self.auto_scaler.scaling_configs.keys():
             scaling_result = await self.auto_scaler.evaluate_scaling(service_name, current_metrics)
+
             if scaling_result["action"] != "none":
                 scaling_results[service_name] = scaling_result
         
         # Apply high-impact, low-effort optimizations automatically
+
         auto_applied = []
         for recommendation in analysis["recommendations"]:
             if (recommendation.impact_estimate > 0.7 and 
                 recommendation.implementation_effort == "low"):
                 # This would integrate with actual configuration management
                 auto_applied.append(recommendation)
+
+
         
         optimization_result = {
             "timestamp": datetime.now(),
@@ -1034,6 +1141,7 @@ class PerformanceTuningManager:
         
         # Adjust thresholds based on profile
         self._adjust_thresholds_for_profile(profile)
+
         
         return {"profile": profile.value, "status": "updated"}
     
@@ -1050,12 +1158,14 @@ class PerformanceTuningManager:
         
         if profile not in multipliers:
             return
+
         
         profile_multipliers = multipliers[profile]
         
         # Adjust CPU threshold
         if PerformanceMetricType.CPU_USAGE in self.monitor.thresholds:
             threshold = self.monitor.thresholds[PerformanceMetricType.CPU_USAGE]
+
             multiplier = profile_multipliers["cpu"]
             threshold.warning_threshold *= multiplier
             threshold.critical_threshold *= multiplier
@@ -1064,6 +1174,7 @@ class PerformanceTuningManager:
         # Adjust memory threshold
         if PerformanceMetricType.MEMORY_USAGE in self.monitor.thresholds:
             threshold = self.monitor.thresholds[PerformanceMetricType.MEMORY_USAGE]
+
             multiplier = profile_multipliers["memory"]
             threshold.warning_threshold *= multiplier
             threshold.critical_threshold *= multiplier
@@ -1072,6 +1183,7 @@ class PerformanceTuningManager:
         # Adjust response time threshold
         if PerformanceMetricType.RESPONSE_TIME in self.monitor.thresholds:
             threshold = self.monitor.thresholds[PerformanceMetricType.RESPONSE_TIME]
+
             multiplier = profile_multipliers["response_time"]
             threshold.warning_threshold *= multiplier
             threshold.critical_threshold *= multiplier
@@ -1085,6 +1197,7 @@ class PerformanceTuningManager:
             self.tuning_task = asyncio.create_task(self._optimization_loop())
         elif not enabled and self.tuning_task:
             self.tuning_task.cancel()
+
             self.tuning_task = None
         
         return {"auto_optimization": enabled, "status": "updated"}
@@ -1092,6 +1205,8 @@ class PerformanceTuningManager:
     async def get_performance_summary(self) -> Dict[str, Any]:
         """Get comprehensive performance summary"""
         current_metrics = self.monitor.get_current_metrics()
+
+
         
         summary = {
             "timestamp": datetime.now(),
@@ -1116,9 +1231,11 @@ class PerformanceTuningManager:
         # Add performance analysis if we have metrics
         if current_metrics:
             metrics_dict = {mt: m.value for mt, m in current_metrics.items()}
+
             analysis = await self.optimization_engine.analyze_performance(
                 metrics_dict, self.current_profile.value
             )
+
             summary["performance_score"] = analysis["performance_score"]
             summary["bottlenecks"] = analysis["bottlenecks"]
             summary["top_recommendations"] = analysis["recommendations"][:3]

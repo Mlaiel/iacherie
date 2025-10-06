@@ -4,46 +4,38 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { 
   ArrowLeft, Video, VideoOff, Mic, MicOff, Users, MessageCircle, 
-  Settings, Share2, Phone, PhoneOff, Camera, Monitor, Volume2,
-  Maximize2, Minimize2, UserPlus, Crown, Shield, Gift, Heart
+  Phone, PhoneOff, Monitor, Loader2, Crown, Plus
 } from 'lucide-react';
 
 interface ChatRoom {
-  id: string;
+  room_id: string;
   name: string;
   description: string;
-  category: 'music' | 'gaming' | 'art' | 'business' | 'social';
-  participants: number;
-  maxParticipants: number;
-  isPrivate: boolean;
-  isLive: boolean;
-  createdBy: string;
-  avatar: string;
-  tags: string[];
-  language: string;
-  createdAt: string;
+  category: string;
+  participants_count: number;
+  max_participants: number;
+  is_active: boolean;
+  host_id: string;
+  host_name: string;
+  created_at: string;
+  webrtc_url?: string;
 }
 
 interface Participant {
-  id: string;
-  name: string;
-  avatar: string;
-  isMuted: boolean;
-  isVideoOn: boolean;
-  isSpeaking: boolean;
-  role: 'host' | 'moderator' | 'participant';
-  joinedAt: string;
-  country: string;
+  user_id: string;
+  username: string;
+  is_muted: boolean;
+  is_video_on: boolean;
+  role: string;
+  joined_at: string;
 }
 
 interface ChatMessage {
-  id: string;
-  userId: string;
-  userName: string;
-  userAvatar: string;
+  message_id: string;
+  sender_id: string;
+  sender_name: string;
   message: string;
   timestamp: string;
-  type: 'text' | 'emoji' | 'gift' | 'system';
 }
 
 export default function VideoChatRoomsPage() {
@@ -53,553 +45,506 @@ export default function VideoChatRoomsPage() {
   const [rooms, setRooms] = useState<ChatRoom[]>([]);
   const [isVideoOn, setIsVideoOn] = useState(true);
   const [isMicOn, setIsMicOn] = useState(true);
-  const [isScreenSharing, setIsScreenSharing] = useState(false);
   const [newMessage, setNewMessage] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [localStream, setLocalStream] = useState<MediaStream | null>(null);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [roomName, setRoomName] = useState('');
+  const [roomDescription, setRoomDescription] = useState('');
+  const [roomCategory, setRoomCategory] = useState('social');
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const chatEndRef = useRef<HTMLDivElement | null>(null);
 
-  // Salles de chat simulées
-  const mockRooms: ChatRoom[] = [
-    {
-      id: '1',
-      name: '🎵 Studio Collaboratif Live',
-      description: 'Session de production musicale en direct avec des producteurs du monde entier',
-      category: 'music',
-      participants: 12,
-      maxParticipants: 50,
-      isPrivate: false,
-      isLive: true,
-      createdBy: 'DJ Producer Max',
-      avatar: '🎵',
-      tags: ['Electronic', 'Collaboration', 'Live Session'],
-      language: 'FR',
-      createdAt: '2025-09-25T14:00:00Z'
-    },
-    {
-      id: '2',
-      name: '🎮 Gaming & Stream Discussion',
-      description: 'Discussions sur le gaming, streaming et création de contenu',
-      category: 'gaming',
-      participants: 8,
-      maxParticipants: 25,
-      isPrivate: false,
-      isLive: true,
-      createdBy: 'StreamerPro',
-      avatar: '🎮',
-      tags: ['Gaming', 'Twitch', 'YouTube'],
-      language: 'EN',
-      createdAt: '2025-09-25T13:30:00Z'
-    },
-    {
-      id: '3',
-      name: '🎨 Art & Design Workshop',
-      description: 'Atelier créatif pour artistes et designers',
-      category: 'art',
-      participants: 15,
-      maxParticipants: 30,
-      isPrivate: false,
-      isLive: true,
-      createdBy: 'ArtistCreative',
-      avatar: '🎨',
-      tags: ['Digital Art', 'NFT', 'Design'],
-      language: 'FR',
-      createdAt: '2025-09-25T12:00:00Z'
-    },
-    {
-      id: '4',
-      name: '💼 Business & Networking',
-      description: 'Réunion professionnelle et opportunités de networking',
-      category: 'business',
-      participants: 22,
-      maxParticipants: 100,
-      isPrivate: false,
-      isLive: true,
-      createdBy: 'BusinessLeader',
-      avatar: '💼',
-      tags: ['Networking', 'Startup', 'Investment'],
-      language: 'EN',
-      createdAt: '2025-09-25T11:00:00Z'
-    }
-  ];
-
-  // Participants simulés
-  const mockParticipants: Participant[] = [
-    {
-      id: '1',
-      name: 'DJ Producer Max',
-      avatar: '👨‍🎤',
-      isMuted: false,
-      isVideoOn: true,
-      isSpeaking: true,
-      role: 'host',
-      joinedAt: '2025-09-25T14:00:00Z',
-      country: 'FR'
-    },
-    {
-      id: '2',
-      name: 'BeatMaker Sarah',
-      avatar: '👩‍🎵',
-      isMuted: false,
-      isVideoOn: true,
-      isSpeaking: false,
-      role: 'moderator',
-      joinedAt: '2025-09-25T14:05:00Z',
-      country: 'US'
-    },
-    {
-      id: '3',
-      name: 'Remix Artist Tom',
-      avatar: '🎧',
-      isMuted: true,
-      isVideoOn: false,
-      isSpeaking: false,
-      role: 'participant',
-      joinedAt: '2025-09-25T14:10:00Z',
-      country: 'DE'
-    }
-  ];
-
-  // Messages de chat simulés
-  const mockMessages: ChatMessage[] = [
-    {
-      id: '1',
-      userId: '1',
-      userName: 'DJ Producer Max',
-      userAvatar: '👨‍🎤',
-      message: 'Salut tout le monde! Prêts pour une session de folie? 🎵',
-      timestamp: '2025-09-25T14:05:00Z',
-      type: 'text'
-    },
-    {
-      id: '2',
-      userId: '2',
-      userName: 'BeatMaker Sarah',
-      userAvatar: '👩‍🎵',
-      message: 'J\'ai hâte d\'entendre vos dernières productions! 🔥',
-      timestamp: '2025-09-25T14:06:00Z',
-      type: 'text'
-    },
-    {
-      id: '3',
-      userId: '3',
-      userName: 'Remix Artist Tom',
-      userAvatar: '🎧',
-      message: '🎉🎉🎉',
-      timestamp: '2025-09-25T14:07:00Z',
-      type: 'emoji'
-    }
-  ];
-
   useEffect(() => {
-    // Charger les données
-    setTimeout(() => {
-      setRooms(mockRooms);
-      if (mockRooms.length > 0) {
-        setActiveRoom(mockRooms[0]);
-        setParticipants(mockParticipants);
-        setChatMessages(mockMessages);
-      }
-    }, 1000);
-
-    // Simuler l'activité du chat
-    const chatInterval = setInterval(() => {
-      const randomMessages = [
-        'Super session! 🎵',
-        'J\'adore ce beat!',
-        'Qui veut collaborer?',
-        '🔥🔥🔥',
-        'Incroyable talent!',
-        'Partage ton Instagram!',
-        'Next level! 💯'
-      ];
-      
-      const randomMessage = randomMessages[Math.floor(Math.random() * randomMessages.length)];
-      const newMsg: ChatMessage = {
-        id: Date.now().toString(),
-        userId: '4',
-        userName: 'Random User',
-        userAvatar: '😎',
-        message: randomMessage,
-        timestamp: new Date().toISOString(),
-        type: 'text'
-      };
-      
-      setChatMessages(prev => [...prev, newMsg]);
-    }, 15000);
-
-    return () => clearInterval(chatInterval);
+    fetchRooms();
+    const interval = setInterval(fetchRooms, 10000);
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-    // Auto-scroll du chat
+    if (activeRoom) {
+      fetchParticipants(activeRoom.room_id);
+      fetchMessages(activeRoom.room_id);
+      initializeWebRTC();
+      
+      const participantsInterval = setInterval(() => fetchParticipants(activeRoom.room_id), 5000);
+      const messagesInterval = setInterval(() => fetchMessages(activeRoom.room_id), 3000);
+      
+      return () => {
+        clearInterval(participantsInterval);
+        clearInterval(messagesInterval);
+        cleanupWebRTC();
+      };
+    }
+  }, [activeRoom]);
+
+  useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chatMessages]);
 
-  const joinRoom = (room: ChatRoom) => {
-    setActiveRoom(room);
-    setParticipants(mockParticipants);
-    setChatMessages(mockMessages);
+  const fetchRooms = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/video-chat/rooms', {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setRooms(data.rooms || []);
+      }
+    } catch (error) {
+      console.error('Error fetching rooms:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const leaveRoom = () => {
-    setActiveRoom(null);
-    setParticipants([]);
-    setChatMessages([]);
+  const fetchParticipants = async (roomId: string) => {
+    try {
+      const response = await fetch(`http://localhost:8000/video-chat/rooms/${roomId}/participants`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setParticipants(data.participants || []);
+      }
+    } catch (error) {
+      console.error('Error fetching participants:', error);
+    }
+  };
+
+  const fetchMessages = async (roomId: string) => {
+    try {
+      const response = await fetch(`http://localhost:8000/video-chat/rooms/${roomId}/messages`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setChatMessages(data.messages || []);
+      }
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+    }
+  };
+
+  const createRoom = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/video-chat/rooms/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({
+          name: roomName,
+          description: roomDescription,
+          category: roomCategory,
+          max_participants: 50,
+        }),
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setShowCreateModal(false);
+        setRoomName('');
+        setRoomDescription('');
+        await fetchRooms();
+      }
+    } catch (error) {
+      console.error('Error creating room:', error);
+    }
+  };
+
+  const joinRoom = async (room: ChatRoom) => {
+    try {
+      const response = await fetch(`http://localhost:8000/video-chat/rooms/${room.room_id}/join`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      
+      if (response.ok) {
+        setActiveRoom(room);
+      }
+    } catch (error) {
+      console.error('Error joining room:', error);
+    }
+  };
+
+  const leaveRoom = async () => {
+    if (!activeRoom) return;
+    
+    try {
+      await fetch(`http://localhost:8000/video-chat/rooms/${activeRoom.room_id}/leave`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      
+      cleanupWebRTC();
+      setActiveRoom(null);
+      setParticipants([]);
+      setChatMessages([]);
+    } catch (error) {
+      console.error('Error leaving room:', error);
+    }
+  };
+
+  const initializeWebRTC = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        video: isVideoOn, 
+        audio: isMicOn 
+      });
+      
+      setLocalStream(stream);
+      
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+    } catch (error) {
+      console.error('Error accessing media devices:', error);
+    }
+  };
+
+  const cleanupWebRTC = () => {
+    if (localStream) {
+      localStream.getTracks().forEach(track => track.stop());
+      setLocalStream(null);
+    }
   };
 
   const toggleVideo = () => {
-    setIsVideoOn(!isVideoOn);
+    if (localStream) {
+      const videoTrack = localStream.getVideoTracks()[0];
+      if (videoTrack) {
+        videoTrack.enabled = !videoTrack.enabled;
+        setIsVideoOn(videoTrack.enabled);
+      }
+    }
   };
 
   const toggleMic = () => {
-    setIsMicOn(!isMicOn);
+    if (localStream) {
+      const audioTrack = localStream.getAudioTracks()[0];
+      if (audioTrack) {
+        audioTrack.enabled = !audioTrack.enabled;
+        setIsMicOn(audioTrack.enabled);
+      }
+    }
   };
 
-  const toggleScreenShare = () => {
-    setIsScreenSharing(!isScreenSharing);
+  const sendMessage = async () => {
+    if (!activeRoom || !newMessage.trim()) return;
+
+    try {
+      const response = await fetch(`http://localhost:8000/video-chat/rooms/${activeRoom.room_id}/message`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({ message: newMessage }),
+      });
+      
+      if (response.ok) {
+        setNewMessage('');
+        await fetchMessages(activeRoom.room_id);
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
   };
 
-  const sendMessage = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newMessage.trim()) return;
-
-    const message: ChatMessage = {
-      id: Date.now().toString(),
-      userId: 'current-user',
-      userName: 'Vous',
-      userAvatar: '😊',
-      message: newMessage,
-      timestamp: new Date().toISOString(),
-      type: 'text'
-    };
-
-    setChatMessages([...chatMessages, message]);
-    setNewMessage('');
-  };
+  const categories = ['all', 'social', 'music', 'gaming', 'business', 'education'];
 
   const filteredRooms = selectedCategory === 'all' 
     ? rooms 
-    : rooms.filter(room => room.category === selectedCategory);
+    : rooms.filter(r => r.category === selectedCategory);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 flex items-center justify-center">
+        <Loader2 className="h-12 w-12 animate-spin text-purple-600" />
+      </div>
+    );
+  }
 
   if (activeRoom) {
     return (
-      <div className="h-screen bg-gray-900 flex">
-        {/* Zone Vidéo Principale */}
-        <div className="flex-1 flex flex-col">
-          {/* Header de la salle */}
-          <div className="bg-gray-800 px-6 py-4 flex items-center justify-between border-b border-gray-700">
+      <div className="min-h-screen bg-gray-900 flex flex-col">
+        {/* Header */}
+        <div className="bg-gray-800 border-b border-gray-700 px-6 py-4">
+          <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <button
-                onClick={leaveRoom}
-                className="text-red-400 hover:text-red-300 flex items-center space-x-2"
-              >
-                <PhoneOff className="h-5 w-5" />
-                <span>Quitter</span>
+              <button onClick={leaveRoom} className="text-red-400 hover:text-red-300">
+                <PhoneOff className="h-6 w-6" />
               </button>
-              <div className="h-6 w-px bg-gray-600"></div>
               <div>
-                <h2 className="text-white font-semibold">{activeRoom.name}</h2>
-                <p className="text-gray-400 text-sm">{participants.length} participants</p>
+                <h2 className="text-xl font-bold text-white">{activeRoom.name}</h2>
+                <p className="text-sm text-gray-400">{participants.length} participants</p>
               </div>
             </div>
-            <div className="flex items-center space-x-2">
-              <button className="text-gray-400 hover:text-white p-2">
-                <Settings className="h-5 w-5" />
-              </button>
-              <button className="text-gray-400 hover:text-white p-2">
-                <Share2 className="h-5 w-5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Grille de Vidéos */}
-          <div className="flex-1 p-4 bg-gray-900">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 h-full">
-              {participants.map((participant) => (
-                <div key={participant.id} className="relative bg-gray-800 rounded-lg overflow-hidden">
-                  {participant.isVideoOn ? (
-                    <video
-                      className="w-full h-full object-cover"
-                      autoPlay
-                      muted={participant.id !== 'current-user'}
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gray-700">
-                      <div className="text-center">
-                        <div className="text-4xl mb-2">{participant.avatar}</div>
-                        <p className="text-white font-medium">{participant.name}</p>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Overlay informations */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-3">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-white font-medium text-sm">{participant.name}</span>
-                        {participant.role === 'host' && <Crown className="h-4 w-4 text-yellow-400" />}
-                        {participant.role === 'moderator' && <Shield className="h-4 w-4 text-blue-400" />}
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        {!participant.isMuted ? (
-                          <Mic className={`h-4 w-4 ${participant.isSpeaking ? 'text-green-400' : 'text-white'}`} />
-                        ) : (
-                          <MicOff className="h-4 w-4 text-red-400" />
-                        )}
-                        {participant.isVideoOn ? (
-                          <Video className="h-4 w-4 text-white" />
-                        ) : (
-                          <VideoOff className="h-4 w-4 text-red-400" />
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Indicateur de parole */}
-                  {participant.isSpeaking && (
-                    <div className="absolute inset-0 border-4 border-green-400 rounded-lg pointer-events-none"></div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Contrôles de la vidéo */}
-          <div className="bg-gray-800 px-6 py-4 border-t border-gray-700">
-            <div className="flex items-center justify-center space-x-6">
+            <div className="flex items-center space-x-4">
               <button
                 onClick={toggleMic}
-                className={`p-4 rounded-full transition-colors ${
-                  isMicOn 
-                    ? 'bg-gray-700 hover:bg-gray-600 text-white' 
-                    : 'bg-red-600 hover:bg-red-700 text-white'
-                }`}
+                className={`p-3 rounded-full ${isMicOn ? 'bg-gray-700 hover:bg-gray-600' : 'bg-red-600 hover:bg-red-500'}`}
               >
-                {isMicOn ? <Mic className="h-6 w-6" /> : <MicOff className="h-6 w-6" />}
+                {isMicOn ? <Mic className="h-5 w-5 text-white" /> : <MicOff className="h-5 w-5 text-white" />}
               </button>
-
               <button
                 onClick={toggleVideo}
-                className={`p-4 rounded-full transition-colors ${
-                  isVideoOn 
-                    ? 'bg-gray-700 hover:bg-gray-600 text-white' 
-                    : 'bg-red-600 hover:bg-red-700 text-white'
-                }`}
+                className={`p-3 rounded-full ${isVideoOn ? 'bg-gray-700 hover:bg-gray-600' : 'bg-red-600 hover:bg-red-500'}`}
               >
-                {isVideoOn ? <Video className="h-6 w-6" /> : <VideoOff className="h-6 w-6" />}
-              </button>
-
-              <button
-                onClick={toggleScreenShare}
-                className={`p-4 rounded-full transition-colors ${
-                  isScreenSharing 
-                    ? 'bg-blue-600 hover:bg-blue-700 text-white' 
-                    : 'bg-gray-700 hover:bg-gray-600 text-white'
-                }`}
-              >
-                <Monitor className="h-6 w-6" />
-              </button>
-
-              <button className="p-4 rounded-full bg-gray-700 hover:bg-gray-600 text-white transition-colors">
-                <Settings className="h-6 w-6" />
-              </button>
-
-              <button
-                onClick={leaveRoom}
-                className="p-4 rounded-full bg-red-600 hover:bg-red-700 text-white transition-colors"
-              >
-                <PhoneOff className="h-6 w-6" />
+                {isVideoOn ? <Video className="h-5 w-5 text-white" /> : <VideoOff className="h-5 w-5 text-white" />}
               </button>
             </div>
           </div>
         </div>
 
-        {/* Panneau de Chat */}
-        <div className="w-80 bg-gray-800 border-l border-gray-700 flex flex-col">
-          <div className="p-4 border-b border-gray-700">
-            <h3 className="text-white font-semibold flex items-center">
-              <MessageCircle className="h-5 w-5 mr-2" />
-              Chat ({chatMessages.length})
-            </h3>
-          </div>
-
-          <div className="flex-1 overflow-y-auto p-4 space-y-3">
-            {chatMessages.map((message) => (
-              <div key={message.id} className="flex space-x-3">
-                <div className="text-2xl">{message.userAvatar}</div>
-                <div className="flex-1">
-                  <div className="flex items-center space-x-2 mb-1">
-                    <span className="text-white font-medium text-sm">{message.userName}</span>
-                    <span className="text-gray-500 text-xs">
-                      {new Date(message.timestamp).toLocaleTimeString()}
-                    </span>
-                  </div>
-                  <p className="text-gray-300 text-sm">{message.message}</p>
+        {/* Main Content */}
+        <div className="flex-1 flex overflow-hidden">
+          {/* Video Grid */}
+          <div className="flex-1 p-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 h-full">
+              {/* Local Video */}
+              <div className="relative bg-gray-800 rounded-lg overflow-hidden">
+                <video
+                  ref={videoRef}
+                  autoPlay
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute bottom-2 left-2 bg-black bg-opacity-60 px-2 py-1 rounded">
+                  <span className="text-white font-medium text-sm">You</span>
                 </div>
               </div>
-            ))}
-            <div ref={chatEndRef} />
+
+              {/* Participants Videos */}
+              {participants.map((participant) => (
+                <div key={participant.user_id} className="relative bg-gray-800 rounded-lg overflow-hidden">
+                  {participant.is_video_on ? (
+                    <div className="w-full h-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center">
+                      <Users className="h-12 w-12 text-white opacity-50" />
+                    </div>
+                  ) : (
+                    <div className="w-full h-full bg-gray-700 flex items-center justify-center">
+                      <Users className="h-12 w-12 text-gray-500" />
+                    </div>
+                  )}
+                  <div className="absolute bottom-2 left-2 bg-black bg-opacity-60 px-2 py-1 rounded flex items-center space-x-1">
+                    <span className="text-white font-medium text-sm">{participant.username}</span>
+                    {participant.role === 'host' && <Crown className="h-3 w-3 text-yellow-400" />}
+                    {participant.is_muted && <MicOff className="h-3 w-3 text-red-400" />}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <form onSubmit={sendMessage} className="p-4 border-t border-gray-700">
-            <div className="flex space-x-2">
-              <input
-                type="text"
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-                placeholder="Tapez votre message..."
-                className="flex-1 bg-gray-700 text-white px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <button
-                type="submit"
-                disabled={!newMessage.trim()}
-                className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white px-4 py-2 rounded-lg transition-colors"
-              >
-                ➤
-              </button>
+          {/* Chat Sidebar */}
+          <div className="w-80 bg-gray-800 border-l border-gray-700 flex flex-col">
+            <div className="p-4 border-b border-gray-700">
+              <h3 className="font-semibold text-white flex items-center">
+                <MessageCircle className="h-5 w-5 mr-2" />
+                Chat
+              </h3>
             </div>
-            <div className="flex space-x-2 mt-2">
-              <button type="button" className="text-gray-400 hover:text-white text-xl">❤️</button>
-              <button type="button" className="text-gray-400 hover:text-white text-xl">👏</button>
-              <button type="button" className="text-gray-400 hover:text-white text-xl">🔥</button>
-              <button type="button" className="text-gray-400 hover:text-white text-xl">😍</button>
-              <button type="button" className="text-gray-400 hover:text-white text-xl">🎉</button>
+            
+            <div className="flex-1 overflow-y-auto p-4 space-y-3">
+              {chatMessages.map((msg) => (
+                <div key={msg.message_id} className="bg-gray-700 rounded-lg p-3">
+                  <div className="flex items-center space-x-2 mb-1">
+                    <span className="font-semibold text-sm text-white">{msg.sender_name}</span>
+                    <span className="text-xs text-gray-400">
+                      {new Date(msg.timestamp).toLocaleTimeString()}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-300">{msg.message}</p>
+                </div>
+              ))}
+              <div ref={chatEndRef} />
             </div>
-          </form>
+
+            <div className="p-4 border-t border-gray-700">
+              <div className="flex space-x-2">
+                <input
+                  type="text"
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+                  placeholder="Type a message..."
+                  className="flex-1 px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+                <button
+                  onClick={sendMessage}
+                  className="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition"
+                >
+                  Send
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-100">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
       {/* Header */}
-      <div className="bg-white shadow-lg border-b">
+      <div className="bg-white shadow-md border-b sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <Link href="/" className="flex items-center text-gray-600 hover:text-blue-600">
-                <ArrowLeft className="h-5 w-5 mr-2" />
-                Retour
+              <Link href="/" className="text-gray-600 hover:text-purple-600 transition">
+                <ArrowLeft className="h-5 w-5" />
               </Link>
-              <div className="h-6 w-px bg-gray-300"></div>
-              <div className="flex items-center space-x-3">
-                <Video className="h-8 w-8 text-blue-600" />
-                <div>
-                  <h1 className="text-2xl font-bold text-gray-900">Video Chat Rooms</h1>
-                  <p className="text-sm text-gray-600">Rejoignez des conversations vidéo en direct</p>
-                </div>
+              <Video className="h-8 w-8 text-purple-600" />
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">Video Chat Rooms</h1>
+                <p className="text-sm text-gray-500">Real-time video communication with WebRTC</p>
               </div>
             </div>
+            <button
+              onClick={() => setShowCreateModal(true)}
+              className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl hover:shadow-lg transition"
+            >
+              <Plus className="h-5 w-5" />
+              <span>Create Room</span>
+            </button>
           </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 py-8">
-        {/* Filtres */}
-        <div className="mb-8">
-          <div className="flex flex-wrap gap-3">
-            {[
-              { id: 'all', label: '🌟 Toutes', count: rooms.length },
-              { id: 'music', label: '🎵 Musique', count: rooms.filter(r => r.category === 'music').length },
-              { id: 'gaming', label: '🎮 Gaming', count: rooms.filter(r => r.category === 'gaming').length },
-              { id: 'art', label: '🎨 Art & Design', count: rooms.filter(r => r.category === 'art').length },
-              { id: 'business', label: '💼 Business', count: rooms.filter(r => r.category === 'business').length },
-              { id: 'social', label: '💬 Social', count: rooms.filter(r => r.category === 'social').length }
-            ].map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 ${
-                  selectedCategory === category.id
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
-                }`}
-              >
-                <span>{category.label}</span>
-                <span className="text-sm bg-black bg-opacity-20 px-2 py-1 rounded-full">
-                  {category.count}
-                </span>
-              </button>
-            ))}
-          </div>
+        {/* Category Filter */}
+        <div className="flex space-x-2 mb-6 overflow-x-auto">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setSelectedCategory(cat)}
+              className={`px-4 py-2 rounded-lg font-semibold whitespace-nowrap transition ${
+                selectedCategory === cat
+                  ? 'bg-purple-600 text-white'
+                  : 'bg-white text-gray-600 hover:bg-gray-50'
+              }`}
+            >
+              {cat.charAt(0).toUpperCase() + cat.slice(1)}
+            </button>
+          ))}
         </div>
 
-        {/* Grille des salles */}
+        {/* Rooms Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredRooms.map((room) => (
-            <div key={room.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="relative">
-                <div className="h-48 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
-                  <div className="text-6xl">{room.avatar}</div>
-                </div>
-                <div className="absolute top-4 left-4">
-                  <span className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center space-x-1">
-                    <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                    <span>LIVE</span>
-                  </span>
-                </div>
-                <div className="absolute top-4 right-4">
-                  <span className="bg-black bg-opacity-50 text-white px-2 py-1 rounded-full text-xs">
-                    {room.participants}/{room.maxParticipants}
-                  </span>
+            <div key={room.room_id} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition">
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex-1">
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">{room.name}</h3>
+                  <p className="text-sm text-gray-600 mb-3">{room.description}</p>
+                  <div className="flex items-center space-x-4 text-sm text-gray-500">
+                    <span className="flex items-center">
+                      <Users className="h-4 w-4 mr-1" />
+                      {room.participants_count}/{room.max_participants}
+                    </span>
+                    <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-semibold">
+                      {room.category}
+                    </span>
+                  </div>
                 </div>
               </div>
-
-              <div className="p-6">
-                <div className="flex items-start justify-between mb-3">
-                  <h3 className="font-semibold text-lg text-gray-900 line-clamp-1">{room.name}</h3>
-                  {room.isPrivate && (
-                    <Shield className="h-5 w-5 text-gray-400" />
-                  )}
+              
+              <div className="flex items-center justify-between pt-4 border-t">
+                <div className="text-xs text-gray-500">
+                  Host: {room.host_name}
                 </div>
-
-                <p className="text-gray-600 text-sm mb-4 line-clamp-2">{room.description}</p>
-
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {room.tags.map((tag, index) => (
-                    <span key={index} className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center space-x-2">
-                    <Users className="h-4 w-4 text-gray-500" />
-                    <span className="text-sm text-gray-600">{room.participants} participants</span>
-                  </div>
-                  <span className="text-xs text-gray-500">{room.language}</span>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="text-sm text-gray-600">
-                    Par {room.createdBy}
-                  </div>
-                  <button
-                    onClick={() => joinRoom(room)}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
-                  >
-                    <Video className="h-4 w-4" />
-                    <span>Rejoindre</span>
-                  </button>
-                </div>
+                <button
+                  onClick={() => joinRoom(room)}
+                  className="px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:shadow-lg transition"
+                >
+                  Join Room
+                </button>
               </div>
             </div>
           ))}
         </div>
-
-        {/* Bouton Créer une salle */}
-        <div className="text-center mt-12">
-          <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all flex items-center space-x-3 mx-auto">
-            <UserPlus className="h-6 w-6" />
-            <span>Créer ma propre salle</span>
-          </button>
-        </div>
       </div>
+
+      {/* Create Room Modal */}
+      {showCreateModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full mx-4">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Create Video Room</h2>
+            
+            <div className="space-y-4 mb-6">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Room Name</label>
+                <input
+                  type="text"
+                  value={roomName}
+                  onChange={(e) => setRoomName(e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  placeholder="Enter room name"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Description</label>
+                <textarea
+                  value={roomDescription}
+                  onChange={(e) => setRoomDescription(e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  rows={3}
+                  placeholder="Describe your room"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Category</label>
+                <select
+                  value={roomCategory}
+                  onChange={(e) => setRoomCategory(e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                >
+                  {categories.filter(c => c !== 'all').map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            
+            <div className="flex space-x-4">
+              <button
+                onClick={() => setShowCreateModal(false)}
+                className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={createRoom}
+                disabled={!roomName.trim()}
+                className="flex-1 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:shadow-lg transition disabled:opacity-50"
+              >
+                Create
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

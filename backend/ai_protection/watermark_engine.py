@@ -36,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 class WatermarkType(Enum):
-    """Types of watermarks"""
+    """
+        Types of watermarks"""
     VISIBLE = "visible"
     INVISIBLE = "invisible"
     ROBUST = "robust"
@@ -64,7 +65,8 @@ class WatermarkConfig:
 
 @dataclass
 class WatermarkResult:
-    """Watermark operation result"""
+    """
+        Watermark operation result"""
     success: bool
     watermark_id: str
     content_hash: str
@@ -75,10 +77,12 @@ class WatermarkResult:
 
 
 class WatermarkEngine:
-    """Advanced watermarking engine for multimedia content"""
+    """
+        Advanced watermarking engine for multimedia content"""
     
     def __init__(self):
-        """Initialize watermark engine"""
+        """
+        Initialize watermark engine"""
         self.audio_engine = None
         self.video_engine = None
         self.image_engine = None
@@ -86,13 +90,18 @@ class WatermarkEngine:
         if MEDIA_AVAILABLE:
             try:
                 self.audio_engine = AudioWatermarkEngine()
+
                 self.video_engine = VideoWatermarkEngine()
+
                 self.image_engine = ImageWatermarkEngine()
+
                 logger.info("Watermark engines initialized successfully")
+
             except Exception as e:
                 logger.warning(f"Some watermark engines failed to initialize: {e}")
         else:
             logger.warning("Media processing libraries not available")
+
             
         self._watermark_registry = {}
     
@@ -117,6 +126,7 @@ class WatermarkEngine:
         """
         try:
             start_time = asyncio.get_event_loop().time()
+
             
             if config is None:
                 config = WatermarkConfig(WatermarkType.INVISIBLE)
@@ -129,7 +139,10 @@ class WatermarkEngine:
                 content_bytes = content_data
             else:
                 content_bytes = content_data.read()
+
                 content_data.seek(0)
+
+
             
             content_hash = hashlib.sha256(content_bytes).hexdigest()
             
@@ -138,20 +151,26 @@ class WatermarkEngine:
                 result = await self._embed_audio_watermark(
                     content_bytes, watermark_message, watermark_id, config
                 )
+
             elif content_type == ContentType.VIDEO:
                 result = await self._embed_video_watermark(
                     content_bytes, watermark_message, watermark_id, config
                 )
+
             elif content_type == ContentType.IMAGE:
                 result = await self._embed_image_watermark(
                     content_bytes, watermark_message, watermark_id, config
                 )
+
             else:
                 raise ValueError(f"Unsupported content type: {content_type}")
+
+
             
             processing_time = asyncio.get_event_loop().time() - start_time
             
             # Store watermark metadata
+
             watermark_metadata = {
                 'watermark_id': watermark_id,
                 'content_hash': content_hash,
@@ -173,9 +192,11 @@ class WatermarkEngine:
                 processing_time=processing_time,
                 quality_metrics=result.get('quality_metrics', {})
             )
+
             
         except Exception as e:
             logger.error(f"Watermark embedding failed: {e}")
+
             return WatermarkResult(
                 success=False,
                 watermark_id="",
@@ -209,17 +230,23 @@ class WatermarkEngine:
                 content_bytes = content_data
             else:
                 content_bytes = content_data.read()
+
                 content_data.seek(0)
             
             # Select appropriate engine and detect watermark
             if content_type == ContentType.AUDIO:
                 detection_result = await self._detect_audio_watermark(content_bytes)
+
             elif content_type == ContentType.VIDEO:
                 detection_result = await self._detect_video_watermark(content_bytes)
+
             elif content_type == ContentType.IMAGE:
                 detection_result = await self._detect_image_watermark(content_bytes)
+
             else:
                 raise ValueError(f"Unsupported content type: {content_type}")
+
+
             
             processing_time = asyncio.get_event_loop().time() - start_time
             
@@ -235,6 +262,7 @@ class WatermarkEngine:
             
         except Exception as e:
             logger.error(f"Watermark detection failed: {e}")
+
             return {
                 'detected': False,
                 'error': str(e),
@@ -258,7 +286,9 @@ class WatermarkEngine:
         """
         try:
             # First detect the watermark
+
             detection_result = await self.detect_watermark(content_data, content_type, watermark_id)
+
             
             if not detection_result.get('detected'):
                 return {
@@ -271,21 +301,28 @@ class WatermarkEngine:
                 content_bytes = content_data
             else:
                 content_bytes = content_data.read()
+
                 content_data.seek(0)
+
             
             if content_type == ContentType.AUDIO:
                 extraction_result = await self._extract_audio_watermark(content_bytes, watermark_id)
+
             elif content_type == ContentType.VIDEO:
                 extraction_result = await self._extract_video_watermark(content_bytes, watermark_id)
+
             elif content_type == ContentType.IMAGE:
                 extraction_result = await self._extract_image_watermark(content_bytes, watermark_id)
+
             else:
                 raise ValueError(f"Unsupported content type: {content_type}")
+
             
             return extraction_result
             
         except Exception as e:
             logger.error(f"Watermark extraction failed: {e}")
+
             return {
                 'extracted': False,
                 'error': str(e)
@@ -308,22 +345,33 @@ class WatermarkEngine:
         """
         try:
             # Detect watermarks in both versions
+
             original_detection = await self.detect_watermark(original_content, content_type)
+
+
             modified_detection = await self.detect_watermark(modified_content, content_type)
+
+
             
             integrity_score = 0.0
             
             if original_detection.get('detected') and modified_detection.get('detected'):
                 # Compare watermark strength and quality
+
                 original_strength = original_detection.get('strength', 0)
+
+
                 modified_strength = modified_detection.get('strength', 0)
+
                 
                 if original_strength > 0:
                     integrity_score = min(modified_strength / original_strength, 1.0)
                 
                 # Check if watermark IDs match
+
                 ids_match = (original_detection.get('watermark_id') == 
                            modified_detection.get('watermark_id'))
+
                 
                 return {
                     'integrity_verified': ids_match and integrity_score > 0.7,
@@ -342,6 +390,7 @@ class WatermarkEngine:
                 
         except Exception as e:
             logger.error(f"Integrity verification failed: {e}")
+
             return {
                 'integrity_verified': False,
                 'error': str(e)
@@ -357,16 +406,19 @@ class WatermarkEngine:
             raise Exception("Audio watermarking not available")
         
         # Convert message to bits for embedding
+
         message_bits = [int(b) for b in ''.join(format(ord(c), '08b') for c in message)]
         
         try:
             # Use existing audio watermarking functionality
+
             result = await self.audio_engine.embed_watermark(
                 content_bytes,
                 message_bits,
                 watermark_id=watermark_id,
                 strength=config.strength
             )
+
             
             return {
                 'watermarked_content': result.get('watermarked_audio', b''),
@@ -376,6 +428,7 @@ class WatermarkEngine:
             
         except Exception as e:
             logger.error(f"Audio watermark embedding failed: {e}")
+
             return {
                 'watermarked_content': b'',
                 'quality_metrics': {},
@@ -391,6 +444,8 @@ class WatermarkEngine:
         """Embed watermark in video content"""
         if not self.video_engine:
             raise Exception("Video watermarking not available")
+
+
         
         message_bits = [int(b) for b in ''.join(format(ord(c), '08b') for c in message)]
         
@@ -400,6 +455,7 @@ class WatermarkEngine:
                 message_bits,
                 watermark_id=watermark_id
             )
+
             
             return {
                 'watermarked_content': result.get('watermarked_video', b''),
@@ -409,6 +465,7 @@ class WatermarkEngine:
             
         except Exception as e:
             logger.error(f"Video watermark embedding failed: {e}")
+
             return {
                 'watermarked_content': b'',
                 'quality_metrics': {},
@@ -424,6 +481,7 @@ class WatermarkEngine:
         """Embed watermark in image content"""
         if not self.image_engine:
             raise Exception("Image watermarking not available")
+
         
         try:
             result = await self.image_engine.embed_text_watermark(
@@ -432,6 +490,7 @@ class WatermarkEngine:
                 watermark_id=watermark_id,
                 strength=config.strength
             )
+
             
             return {
                 'watermarked_content': result.get('watermarked_image', b''),
@@ -441,6 +500,7 @@ class WatermarkEngine:
             
         except Exception as e:
             logger.error(f"Image watermark embedding failed: {e}")
+
             return {
                 'watermarked_content': b'',
                 'quality_metrics': {},
@@ -455,6 +515,7 @@ class WatermarkEngine:
         
         try:
             result = await self.audio_engine.detect_watermark(content_bytes)
+
             return {
                 'detected': result.get('detected', False),
                 'watermark_id': result.get('watermark_id'),
@@ -465,12 +526,14 @@ class WatermarkEngine:
             return {'detected': False, 'error': str(e)}
     
     async def _detect_video_watermark(self, content_bytes: bytes) -> Dict[str, Any]:
-        """Detect watermark in video content"""
+        """
+        Detect watermark in video content"""
         if not self.video_engine:
             return {'detected': False, 'error': 'Video engine not available'}
         
         try:
             result = await self.video_engine.detect_watermark(content_bytes)
+
             return {
                 'detected': result.get('detected', False),
                 'watermark_id': result.get('watermark_id'),
@@ -481,12 +544,14 @@ class WatermarkEngine:
             return {'detected': False, 'error': str(e)}
     
     async def _detect_image_watermark(self, content_bytes: bytes) -> Dict[str, Any]:
-        """Detect watermark in image content"""
+        """
+        Detect watermark in image content"""
         if not self.image_engine:
             return {'detected': False, 'error': 'Image engine not available'}
         
         try:
             result = await self.image_engine.detect_watermark(content_bytes)
+
             return {
                 'detected': result.get('detected', False),
                 'watermark_id': result.get('watermark_id'),
@@ -497,12 +562,14 @@ class WatermarkEngine:
             return {'detected': False, 'error': str(e)}
     
     async def _extract_audio_watermark(self, content_bytes: bytes, watermark_id: str) -> Dict[str, Any]:
-        """Extract watermark message from audio"""
+        """
+        Extract watermark message from audio"""
         if not self.audio_engine:
             return {'extracted': False, 'error': 'Audio engine not available'}
         
         try:
             result = await self.audio_engine.extract_watermark(content_bytes, watermark_id)
+
             return {
                 'extracted': result.get('success', False),
                 'message': result.get('message', ''),
@@ -512,12 +579,14 @@ class WatermarkEngine:
             return {'extracted': False, 'error': str(e)}
     
     async def _extract_video_watermark(self, content_bytes: bytes, watermark_id: str) -> Dict[str, Any]:
-        """Extract watermark message from video"""
+        """
+        Extract watermark message from video"""
         if not self.video_engine:
             return {'extracted': False, 'error': 'Video engine not available'}
         
         try:
             result = await self.video_engine.extract_watermark(content_bytes, watermark_id)
+
             return {
                 'extracted': result.get('success', False),
                 'message': result.get('message', ''),
@@ -527,12 +596,14 @@ class WatermarkEngine:
             return {'extracted': False, 'error': str(e)}
     
     async def _extract_image_watermark(self, content_bytes: bytes, watermark_id: str) -> Dict[str, Any]:
-        """Extract watermark message from image"""
+        """
+        Extract watermark message from image"""
         if not self.image_engine:
             return {'extracted': False, 'error': 'Image engine not available'}
         
         try:
             result = await self.image_engine.extract_watermark(content_bytes, watermark_id)
+
             return {
                 'extracted': result.get('success', False),
                 'message': result.get('message', ''),

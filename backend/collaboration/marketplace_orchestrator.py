@@ -41,14 +41,15 @@ import hashlib
 # External dependencies pour enterprise features
 try:
     # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+    try:
+        import aioredis
+        REDIS_AVAILABLE = True
+    except (ImportError, TypeError) as e:
+        # Handle Python 3.12 TimeoutError duplicate base class issue
+        from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+        import logging
+        logging.warning(f"Using Redis compatibility layer: {e}")
+    
     from sqlalchemy.ext.asyncio import AsyncSession
     from sqlalchemy import select, update, delete, and_, or_
     import numpy as np
@@ -298,9 +299,11 @@ class AuctionEngine:
         self.proxy_bids = defaultdict(dict)
         self.auction_analytics = defaultdict(dict)
         self.bid_history = defaultdict(list)
+
         
     async def create_auction(self, seller_id: str, auction_data: Dict) -> Auction:
-        """Crée une nouvelle enchère"""
+        """
+        Crée une nouvelle enchère"""
         try:
             auction = Auction(
                 title=auction_data['title'],
@@ -336,12 +339,15 @@ class AuctionEngine:
             
             # Indexer pour la recherche
             await self._index_auction(auction)
+
             
             logger.info(f"Enchère créée: {auction.title} par {seller_id}")
+
             return auction
             
         except Exception as e:
             logger.error(f"Erreur lors de la création d'enchère: {e}")
+
             raise
     
     async def place_bid(self, auction_id: str, bidder_id: str, amount: Decimal, 
@@ -350,6 +356,8 @@ class AuctionEngine:
         try:
             if auction_id not in self.active_auctions:
                 raise ValueError("Enchère introuvable ou inactive")
+
+
             
             auction = self.active_auctions[auction_id]
             
@@ -357,6 +365,7 @@ class AuctionEngine:
             await self._validate_bid(auction, bidder_id, amount)
             
             # Créer l'offre
+
             bid = Bid(
                 auction_id=auction_id,
                 bidder_id=bidder_id,
@@ -368,16 +377,21 @@ class AuctionEngine:
             # Traiter selon le type d'enchère
             if auction.auction_type == AuctionType.ENGLISH:
                 success = await self._process_english_bid(auction, bid)
+
             elif auction.auction_type == AuctionType.DUTCH:
                 success = await self._process_dutch_bid(auction, bid)
+
             elif auction.auction_type == AuctionType.SEALED_BID:
                 success = await self._process_sealed_bid(auction, bid)
+
             else:
                 success = await self._process_standard_bid(auction, bid)
+
             
             if success:
                 # Ajouter à l'historique
                 auction.bids.append(bid.__dict__)
+
                 self.bid_history[auction_id].append(bid)
                 
                 # Mettre à jour le prix courant
@@ -395,16 +409,21 @@ class AuctionEngine:
                 # Persister
                 if self.db_session:
                     await self._persist_bid(bid)
+
                     await self._update_auction(auction)
+
                 
                 logger.info(f"Offre placée: {amount} sur {auction.title}")
+
                 return bid
             else:
                 bid.status = BidStatus.REJECTED
                 raise ValueError("Offre rejetée")
+
                 
         except Exception as e:
             logger.error(f"Erreur lors du placement d'offre: {e}")
+
             raise
     
     async def _validate_bid(self, auction: Auction, bidder_id: str, amount: Decimal):
@@ -422,6 +441,7 @@ class AuctionEngine:
             raise ValueError("Le vendeur ne peut pas enchérir sur son propre item")
         
         # Vérifier le montant minimum
+
         min_bid = auction.current_price + auction.increment
         if amount < min_bid:
             raise ValueError(f"Offre minimum: {min_bid}")
@@ -430,6 +450,7 @@ class AuctionEngine:
         if auction.buyout_price and amount >= auction.buyout_price:
             # Achat immédiat
             await self._process_buyout(auction, bidder_id)
+
             return
     
     async def _process_english_bid(self, auction: Auction, bid: Bid) -> bool:
@@ -447,6 +468,7 @@ class AuctionEngine:
             
         except Exception as e:
             logger.error(f"Erreur traitement offre anglaise: {e}")
+
             return False
     
     async def _process_proxy_bids(self, auction: Auction):
@@ -454,21 +476,26 @@ class AuctionEngine:
         try:
             if auction.id not in self.proxy_bids:
                 return
+
             
             proxy_bidders = self.proxy_bids[auction.id]
             
             # Trier par montant maximum décroissant
+
             sorted_proxies = sorted(proxy_bidders.items(), 
                                   key=lambda x: x[1]['max_amount'], reverse=True)
+
             
             for bidder_id, proxy_data in sorted_proxies:
                 max_amount = proxy_data['max_amount']
                 
                 # Calculer l'offre automatique
+
                 next_bid = auction.current_price + auction.increment
                 
                 if next_bid <= max_amount and bidder_id != self._get_current_winner(auction):
                     # Placer automatiquement l'offre
+
                     auto_bid = Bid(
                         auction_id=auction.id,
                         bidder_id=bidder_id,
@@ -476,13 +503,17 @@ class AuctionEngine:
                         is_automatic=True,
                         max_bid=max_amount
                     )
+
                     
                     await self._process_english_bid(auction, auto_bid)
+
                     auction.bids.append(auto_bid.__dict__)
+
                     auction.current_price = next_bid
                     
                     # Notifier l'offre automatique
                     await self._notify_automatic_bid(auction, auto_bid)
+
             
         except Exception as e:
             logger.error(f"Erreur traitement proxy bids: {e}")
@@ -491,6 +522,7 @@ class AuctionEngine:
         """Gère l'anti-sniping en étendant l'enchère"""
         if not auction.end_time:
             return
+
         
         time_remaining = (auction.end_time - datetime.utcnow()).total_seconds()
         
@@ -505,18 +537,23 @@ class AuctionEngine:
             await self._schedule_auction_end(auction.id, auction.end_time)
     
     async def end_auction(self, auction_id: str) -> Dict:
-        """Termine une enchère"""
+        """
+        Termine une enchère"""
         try:
             if auction_id not in self.active_auctions:
                 raise ValueError("Enchère introuvable")
+
+
             
             auction = self.active_auctions[auction_id]
             auction.is_active = False
             
             # Déterminer le gagnant
+
             winner = await self._determine_auction_winner(auction)
             
             # Créer le résultat
+
             result = {
                 'auction_id': auction_id,
                 'winner': winner,
@@ -549,10 +586,12 @@ class AuctionEngine:
             del self.active_auctions[auction_id]
             
             logger.info(f"Enchère terminée: {auction.title}, gagnant: {winner}")
+
             return result
             
         except Exception as e:
             logger.error(f"Erreur fin d'enchère: {e}")
+
             raise
     
     async def get_auction_analytics(self, auction_id: str) -> Dict:
@@ -560,11 +599,15 @@ class AuctionEngine:
         try:
             if auction_id not in self.active_auctions:
                 raise ValueError("Enchère introuvable")
+
+
             
             auction = self.active_auctions[auction_id]
+
             bids = self.bid_history.get(auction_id, [])
             
             # Calculer les métriques
+
             analytics = {
                 'auction_id': auction_id,
                 'title': auction.title,
@@ -584,6 +627,7 @@ class AuctionEngine:
             
         except Exception as e:
             logger.error(f"Erreur analytics enchère: {e}")
+
             return {}
     
     def _get_current_winner(self, auction: Auction) -> Optional[str]:
@@ -594,7 +638,8 @@ class AuctionEngine:
         return None
     
     def _is_reserve_met(self, auction: Auction) -> bool:
-        """Vérifie si le prix de réserve est atteint"""
+        """
+        Vérifie si le prix de réserve est atteint"""
         if not auction.reserve_price:
             return True
         return auction.current_price >= auction.reserve_price
@@ -627,9 +672,12 @@ class BiddingSystem:
         
     async def create_offer(self, buyer_id: str, seller_id: str, item_id: str, 
                           offer_data: Dict) -> str:
-        """Crée une offre directe"""
+        """
+        Crée une offre directe"""
         try:
             offer_id = str(uuid.uuid4())
+
+
             
             offer = {
                 'id': offer_id,
@@ -660,12 +708,15 @@ class BiddingSystem:
             # Planifier l'expiration si nécessaire
             if offer['expires_at']:
                 await self._schedule_offer_expiration(offer_id, offer['expires_at'])
+
             
             logger.info(f"Offre créée: {offer['amount']} pour {item_id}")
+
             return offer_id
             
         except Exception as e:
             logger.error(f"Erreur création offre: {e}")
+
             raise
     
     async def respond_to_offer(self, offer_id: str, seller_id: str, 
@@ -674,6 +725,8 @@ class BiddingSystem:
         try:
             if offer_id not in self.pending_offers:
                 raise ValueError("Offre introuvable")
+
+
             
             offer = self.pending_offers[offer_id]
             
@@ -690,6 +743,7 @@ class BiddingSystem:
                 offer['status'] = BidStatus.ACCEPTED
                 
                 # Créer la transaction
+
                 transaction_data = {
                     'buyer_id': offer['buyer_id'],
                     'seller_id': offer['seller_id'],
@@ -700,15 +754,18 @@ class BiddingSystem:
                 
                 # Notifier l'acceptation
                 await self._notify_offer_accepted(offer)
+
                 
                 return True
                 
             elif response == 'reject':
                 offer['status'] = BidStatus.REJECTED
                 await self._notify_offer_rejected(offer)
+
                 
             elif response == 'counter' and counter_offer:
                 # Créer une contre-offre
+
                 counter_offer_id = await self.create_offer(
                     seller_id, offer['buyer_id'], offer['item_id'], counter_offer
                 )
@@ -719,6 +776,7 @@ class BiddingSystem:
                     'counter_offer_id': counter_offer_id,
                     'timestamp': datetime.utcnow()
                 })
+
                 
                 offer['status'] = BidStatus.REJECTED
                 offer['counter_offer_id'] = counter_offer_id
@@ -726,17 +784,21 @@ class BiddingSystem:
             # Persister les changements
             if self.db_session:
                 await self._update_offer(offer)
+
             
             return True
             
         except Exception as e:
             logger.error(f"Erreur réponse offre: {e}")
+
             return False
     
     async def setup_auto_bidder(self, user_id: str, criteria: Dict) -> str:
         """Configure un système d'enchères automatiques"""
         try:
             auto_bidder_id = str(uuid.uuid4())
+
+
             
             auto_bidder = {
                 'id': auto_bidder_id,
@@ -761,12 +823,15 @@ class BiddingSystem:
             # Persister
             if self.db_session:
                 await self._persist_auto_bidder(auto_bidder)
+
             
             logger.info(f"Auto-bidder configuré pour {user_id}")
+
             return auto_bidder_id
             
         except Exception as e:
             logger.error(f"Erreur configuration auto-bidder: {e}")
+
             raise
     
     async def process_auto_bids(self, auction: Auction):
@@ -779,7 +844,9 @@ class BiddingSystem:
                 # Vérifier si l'enchère correspond aux critères
                 if await self._matches_auto_bidder_criteria(auction, auto_bidder):
                     # Calculer l'offre automatique
+
                     bid_amount = await self._calculate_auto_bid(auction, auto_bidder)
+
                     
                     if bid_amount and bid_amount <= auto_bidder['max_bid_per_item']:
                         # Placer l'offre automatique
@@ -791,6 +858,7 @@ class BiddingSystem:
                         auto_bidder['stats']['bids_placed'] += 1
                         
                         logger.debug(f"Offre automatique: {bid_amount} pour {auction.title}")
+
             
         except Exception as e:
             logger.error(f"Erreur traitement auto-bids: {e}")
@@ -804,6 +872,7 @@ class BiddingSystem:
         # Vérifier les mots-clés
         if auto_bidder['keywords']:
             content = f"{auction.title} {auction.description}".lower()
+
             if not any(keyword.lower() in content for keyword in auto_bidder['keywords']):
                 return False
         
@@ -826,8 +895,10 @@ class BiddingSystem:
         elif strategy == 'intelligent':
             # Basé sur l'analyse de marché
             market_value = await self._estimate_market_value(auction)
+
             if market_value:
                 return min(market_value * Decimal('0.8'), auction.current_price + auction.increment * 2)
+
         
         return None
 
@@ -857,7 +928,8 @@ class CommissionCalculator:
         self.performance_bonuses = {}
         
     def _initialize_commission_structures(self) -> Dict:
-        """Initialise les structures de commission"""
+        """
+        Initialise les structures de commission"""
         return {
             'standard': {
                 'buyer_fee': Decimal('0.025'),    # 2.5%
@@ -877,7 +949,8 @@ class CommissionCalculator:
         }
     
     def _initialize_volume_discounts(self) -> Dict:
-        """Initialise les remises sur volume"""
+        """
+        Initialise les remises sur volume"""
         return {
             'tier1': {'min_volume': Decimal('1000'), 'discount': Decimal('0.1')},    # 10% discount
             'tier2': {'min_volume': Decimal('5000'), 'discount': Decimal('0.15')},   # 15% discount
@@ -888,36 +961,56 @@ class CommissionCalculator:
     async def calculate_transaction_fees(self, transaction_amount: Decimal, 
                                        buyer_id: str, seller_id: str,
                                        transaction_type: str = 'standard') -> Dict:
-        """Calcule les frais d'une transaction"""
+        """
+        Calcule les frais d'une transaction"""
         try:
             # Déterminer la structure de commission
+
             buyer_tier = await self._get_user_tier(buyer_id)
+
+
             seller_tier = await self._get_user_tier(seller_id)
+
+
             
             buyer_structure = self.commission_structures.get(buyer_tier, self.commission_structures['standard'])
+
+
             seller_structure = self.commission_structures.get(seller_tier, self.commission_structures['standard'])
             
             # Calculer les frais de base
+
             buyer_fee = transaction_amount * buyer_structure['buyer_fee']
+
             seller_fee = transaction_amount * seller_structure['seller_fee']
+
             payment_fee = transaction_amount * buyer_structure['payment_processing']
             
             # Appliquer les remises sur volume
+
             buyer_discount = await self._calculate_volume_discount(buyer_id, buyer_fee)
+
+
             seller_discount = await self._calculate_volume_discount(seller_id, seller_fee)
+
             
             buyer_fee -= buyer_discount
             seller_fee -= seller_discount
             
             # Calculer les bonus de performance
+
             seller_bonus = await self._calculate_performance_bonus(seller_id, seller_fee)
+
             seller_fee -= seller_bonus
             
             # Frais totaux
+
             total_fees = buyer_fee + seller_fee + payment_fee
             
             # Montant net pour le vendeur
+
             seller_net = transaction_amount - seller_fee - payment_fee
+
             
             fee_breakdown = {
                 'transaction_amount': transaction_amount,
@@ -937,6 +1030,7 @@ class CommissionCalculator:
             
         except Exception as e:
             logger.error(f"Erreur calcul frais: {e}")
+
             raise
     
     async def _get_user_tier(self, user_id: str) -> str:
@@ -945,6 +1039,7 @@ class CommissionCalculator:
             # Récupérer les métriques utilisateur
             if self.redis_client:
                 user_volume = await self.redis_client.get(f"user_volume:{user_id}")
+
                 if user_volume:
                     monthly_volume = Decimal(user_volume)
                     
@@ -960,6 +1055,7 @@ class CommissionCalculator:
             
         except Exception as e:
             logger.error(f"Erreur détermination tier: {e}")
+
             return 'standard'
     
     async def _calculate_volume_discount(self, user_id: str, base_fee: Decimal) -> Decimal:
@@ -967,31 +1063,41 @@ class CommissionCalculator:
         try:
             if self.redis_client:
                 monthly_volume = await self.redis_client.get(f"monthly_volume:{user_id}")
+
                 if monthly_volume:
                     volume = Decimal(monthly_volume)
                     
                     # Trouver le tier de remise applicable
+
                     applicable_discount = Decimal('0')
+
                     for tier_data in self.volume_discounts.values():
                         if volume >= tier_data['min_volume']:
                             applicable_discount = max(applicable_discount, tier_data['discount'])
+
                     
                     return base_fee * applicable_discount
             
             return Decimal('0')
+
             
         except Exception as e:
             logger.error(f"Erreur calcul remise volume: {e}")
+
             return Decimal('0')
     
     async def _calculate_performance_bonus(self, seller_id: str, base_fee: Decimal) -> Decimal:
         """Calcule le bonus de performance"""
         try:
             # Récupérer les métriques de performance
+
             performance_metrics = await self._get_seller_performance(seller_id)
+
             
             if not performance_metrics:
                 return Decimal('0')
+
+
             
             bonus_percentage = Decimal('0')
             
@@ -1002,14 +1108,18 @@ class CommissionCalculator:
                 bonus_percentage += Decimal('0.05')  # 5%
             
             # Bonus basé sur le taux de completion
+
             completion_rate = performance_metrics.get('completion_rate', 0)
+
             if completion_rate >= 0.98:
                 bonus_percentage += Decimal('0.05')  # 5%
             elif completion_rate >= 0.95:
                 bonus_percentage += Decimal('0.025')  # 2.5%
             
             # Bonus basé sur la rapidité de livraison
+
             avg_delivery_score = performance_metrics.get('delivery_score', 0)
+
             if avg_delivery_score >= 0.9:
                 bonus_percentage += Decimal('0.05')  # 5%
             
@@ -1017,6 +1127,7 @@ class CommissionCalculator:
             
         except Exception as e:
             logger.error(f"Erreur calcul bonus performance: {e}")
+
             return Decimal('0')
     
     async def create_custom_commission_structure(self, structure_name: str, 
@@ -1035,12 +1146,15 @@ class CommissionCalculator:
             # Persister
             if self.db_session:
                 await self._persist_commission_structure(structure_name, self.commission_structures[structure_name])
+
             
             logger.info(f"Structure de commission créée: {structure_name}")
+
             return True
             
         except Exception as e:
             logger.error(f"Erreur création structure commission: {e}")
+
             return False
 
 # [CONTINUATION DES AUTRES CLASSES DU MARKETPLACE...]

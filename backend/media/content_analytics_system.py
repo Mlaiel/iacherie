@@ -131,7 +131,8 @@ class AnalyticsConfig:
 
 @dataclass
 class ContentMetrics:
-    """Content performance metrics"""
+    """
+        Content performance metrics"""
     content_id: str
     content_type: ContentType
     views: int = 0
@@ -148,7 +149,8 @@ class ContentMetrics:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis results"""
+    """
+        Trend analysis results"""
     trend_id: str
     status: TrendStatus
     growth_rate: float
@@ -162,7 +164,8 @@ class TrendAnalysis:
 
 @dataclass
 class EngagementPrediction:
-    """Engagement prediction results"""
+    """
+        Engagement prediction results"""
     prediction_id: str
     content_id: str
     predicted_engagement: float
@@ -175,7 +178,8 @@ class EngagementPrediction:
 
 @dataclass
 class MultimodalInsights:
-    """Multimodal content analysis insights"""
+    """
+        Multimodal content analysis insights"""
     insight_id: str
     content_id: str
     cross_modal_coherence: float
@@ -186,7 +190,8 @@ class MultimodalInsights:
 
 
 class TrendingContentAnalyzer:
-    """Advanced trending content analysis and viral pattern detection"""
+    """
+        Advanced trending content analysis and viral pattern detection"""
     
     def __init__(self, config: AnalyticsConfig):
         self.config = config
@@ -209,21 +214,27 @@ class TrendingContentAnalyzer:
             trends = []
             
             # Group content by type and platform
+
             grouped_content = self._group_content_by_category(content_data)
+
             
             for category, content_list in grouped_content.items():
                 trend = await self._analyze_category_trend(category, content_list)
+
                 if trend:
                     trends.append(trend)
             
             # Sort by viral probability
             trends.sort(key=lambda x: x.viral_probability, reverse=True)
+
             
             logger.info(f"Analyzed {len(trends)} trending patterns")
+
             return trends
             
         except Exception as e:
             logger.error(f"Trend analysis failed: {e}")
+
             return []
     
     async def detect_viral_content(
@@ -233,7 +244,10 @@ class TrendingContentAnalyzer:
         """Detect viral potential of specific content"""
         try:
             viral_score = self._calculate_viral_score(content_metrics)
+
+
             viral_indicators = self._identify_viral_indicators(content_metrics)
+
             
             return {
                 'viral_score': viral_score,
@@ -245,6 +259,7 @@ class TrendingContentAnalyzer:
             
         except Exception as e:
             logger.error(f"Viral detection failed: {e}")
+
             return {'viral_score': 0.0, 'is_viral': False}
     
     def _group_content_by_category(self, content_data: List[ContentMetrics]) -> Dict[str, List[ContentMetrics]]:
@@ -261,9 +276,13 @@ class TrendingContentAnalyzer:
             return None
         
         # Calculate trend metrics
+
         total_engagement = sum(c.likes + c.shares + c.comments for c in content_list)
+
         avg_engagement = total_engagement / len(content_list)
+
         growth_rate = self._calculate_growth_rate(content_list)
+
         momentum = self._calculate_momentum(content_list)
         
         # Determine trend status
@@ -285,19 +304,23 @@ class TrendingContentAnalyzer:
             momentum_score=momentum,
             viral_probability=min(growth_rate / 3.0, 1.0),
             peak_prediction=None,  # Would implement prediction logic
+
             related_hashtags=[],
             audience_demographics={},
             platform_performance={}
         )
     
     def _calculate_viral_score(self, metrics: ContentMetrics) -> float:
-        """Calculate viral potential score"""
+        """
+        Calculate viral potential score"""
         engagement_score = (metrics.likes + metrics.shares * 2 + metrics.comments * 3) / max(metrics.views, 1)
+
         velocity_bonus = 1.0  # Would calculate based on time since creation
         return engagement_score * velocity_bonus * 1000
     
     def _identify_viral_indicators(self, metrics: ContentMetrics) -> List[str]:
-        """Identify viral indicators in content"""
+        """
+        Identify viral indicators in content"""
         indicators = []
         
         if metrics.engagement_rate > 0.1:
@@ -306,14 +329,18 @@ class TrendingContentAnalyzer:
             indicators.append("high_share_ratio")
         if metrics.comments > metrics.likes * 0.3:
             indicators.append("high_comment_engagement")
+
         
         return indicators
     
     async def _predict_growth_trajectory(self, metrics: ContentMetrics) -> Dict[str, float]:
         """Predict content growth trajectory"""
         # Simplified prediction - would use ML models in production
+
         current_momentum = metrics.engagement_rate * metrics.views
+
         predicted_24h = current_momentum * 1.5
+
         predicted_7d = current_momentum * 3.0
         
         return {
@@ -323,31 +350,42 @@ class TrendingContentAnalyzer:
         }
     
     def _calculate_growth_rate(self, content_list: List[ContentMetrics]) -> float:
-        """Calculate growth rate for content list"""
+        """
+        Calculate growth rate for content list"""
         if len(content_list) < 2:
             return 1.0
+
         
         recent = sorted(content_list, key=lambda x: x.timestamp)[-len(content_list)//2:]
+
         older = sorted(content_list, key=lambda x: x.timestamp)[:len(content_list)//2]
+
         
         recent_avg = sum(c.views for c in recent) / len(recent)
+
         older_avg = sum(c.views for c in older) / len(older)
+
         
         return recent_avg / max(older_avg, 1)
     
     def _calculate_momentum(self, content_list: List[ContentMetrics]) -> float:
-        """Calculate momentum score"""
+        """
+        Calculate momentum score"""
         if not content_list:
             return 0.0
+
         
         total_engagement = sum(c.likes + c.shares + c.comments for c in content_list)
+
         total_views = sum(c.views for c in content_list)
+
         
         return total_engagement / max(total_views, 1)
 
 
 class EngagementPredictor:
-    """AI-powered engagement prediction and performance forecasting"""
+    """
+        AI-powered engagement prediction and performance forecasting"""
     
     def __init__(self, config: AnalyticsConfig):
         self.config = config
@@ -357,6 +395,7 @@ class EngagementPredictor:
         
         if HAS_SKLEARN:
             self._initialize_ml_models()
+
         
         logger.info("📊 Engagement Predictor initialized")
     
@@ -376,27 +415,37 @@ class EngagementPredictor:
         content_features: Dict[str, Any],
         historical_data: Optional[List[ContentMetrics]] = None
     ) -> EngagementPrediction:
-        """Predict content engagement performance"""
+        """
+        Predict content engagement performance"""
         try:
             # Extract features for prediction
+
             features = self._extract_prediction_features(content_features)
             
             # Make prediction
             if HAS_SKLEARN and self.models:
                 predicted_engagement = await self._ml_predict_engagement(features)
+
+
                 confidence = 0.85
             else:
                 predicted_engagement = self._simple_predict_engagement(features)
+
+
                 confidence = 0.65
             
             # Determine engagement level
+
             engagement_level = self._classify_engagement_level(predicted_engagement)
             
             # Calculate time to peak
+
             time_to_peak = self._estimate_time_to_peak(features)
             
             # Generate optimization suggestions
+
             suggestions = self._generate_optimization_suggestions(features)
+
             
             return EngagementPrediction(
                 prediction_id=str(uuid.uuid4()),
@@ -408,9 +457,11 @@ class EngagementPredictor:
                 audience_analysis={},
                 optimization_suggestions=suggestions
             )
+
             
         except Exception as e:
             logger.error(f"Engagement prediction failed: {e}")
+
             return EngagementPrediction(
                 prediction_id=str(uuid.uuid4()),
                 content_id=content_features.get('content_id', 'unknown'),
@@ -437,20 +488,26 @@ class EngagementPredictor:
         return features
     
     async def _ml_predict_engagement(self, features: List[float]) -> float:
-        """Make ML-based engagement prediction"""
+        """
+        Make ML-based engagement prediction"""
         # This would use trained models - simplified for now
+
         feature_array = np.array([features])
+
         base_prediction = np.sum(feature_array) * 0.1
         return max(base_prediction, 0.0)
     
     def _simple_predict_engagement(self, features: List[float]) -> float:
-        """Simple rule-based engagement prediction"""
+        """
+        Simple rule-based engagement prediction"""
         # Basic heuristic prediction
+
         base_score = sum(features) / len(features) if features else 0
         return base_score * 100
     
     def _classify_engagement_level(self, predicted_engagement: float) -> EngagementLevel:
-        """Classify predicted engagement into levels"""
+        """
+        Classify predicted engagement into levels"""
         if predicted_engagement > 10000:
             return EngagementLevel.VIRAL
         elif predicted_engagement > 1000:
@@ -461,25 +518,33 @@ class EngagementPredictor:
             return EngagementLevel.LOW
     
     def _estimate_time_to_peak(self, features: List[float]) -> timedelta:
-        """Estimate time to peak engagement"""
+        """
+        Estimate time to peak engagement"""
         # Simple estimation based on content characteristics
+
         base_hours = 6
+
         quality_factor = features[6] if len(features) > 6 else 0.5
+
         adjusted_hours = base_hours * (2 - quality_factor)
         return timedelta(hours=max(adjusted_hours, 1))
     
     def _generate_optimization_suggestions(self, features: List[float]) -> List[str]:
-        """Generate content optimization suggestions"""
+        """
+        Generate content optimization suggestions"""
         suggestions = []
         
         if len(features) > 1 and features[1] == 0:  # No hashtags
             suggestions.append("Add relevant hashtags to increase discoverability")
+
         
         if len(features) > 3 and (features[3] < 9 or features[3] > 21):  # Poor posting time
             suggestions.append("Consider posting during peak hours (9 AM - 9 PM)")
+
         
         if len(features) > 6 and features[6] < 0.7:  # Low quality score
             suggestions.append("Improve content quality with better visuals or copy")
+
         
         return suggestions
 
@@ -494,6 +559,7 @@ class MultimodalIntelligence:
         
         if HAS_TRANSFORMERS:
             self._initialize_nlp_models()
+
         
         logger.info("🧠 Multimodal Intelligence initialized")
     
@@ -518,32 +584,43 @@ class MultimodalIntelligence:
             content_id = content_data.get('content_id', str(uuid.uuid4()))
             
             # Analyze each modality
+
             text_analysis = await self._analyze_text_modality(content_data.get('text', ''))
+
+
             image_analysis = await self._analyze_image_modality(content_data.get('image_path'))
+
+
             audio_analysis = await self._analyze_audio_modality(content_data.get('audio_path'))
             
             # Cross-modal coherence analysis
+
             coherence_score = self._calculate_cross_modal_coherence(
                 text_analysis, image_analysis, audio_analysis
             )
             
             # Emotion analysis across modalities
+
             emotion_analysis = self._aggregate_emotion_analysis(
                 text_analysis, image_analysis, audio_analysis
             )
             
             # Semantic understanding
+
             semantic_understanding = self._extract_semantic_understanding(
                 text_analysis, image_analysis, audio_analysis
             )
             
             # Accessibility scoring
+
             accessibility_score = self._calculate_accessibility_score(content_data)
             
             # Quality assessment
+
             quality_assessment = self._assess_content_quality(
                 text_analysis, image_analysis, audio_analysis
             )
+
             
             return MultimodalInsights(
                 insight_id=str(uuid.uuid4()),
@@ -554,9 +631,11 @@ class MultimodalIntelligence:
                 accessibility_score=accessibility_score,
                 quality_assessment=quality_assessment
             )
+
             
         except Exception as e:
             logger.error(f"Multimodal analysis failed: {e}")
+
             return MultimodalInsights(
                 insight_id=str(uuid.uuid4()),
                 content_id=content_data.get('content_id', 'unknown'),
@@ -573,8 +652,11 @@ class MultimodalIntelligence:
             return {'sentiment': 0.0, 'topics': [], 'entities': []}
         
         # Basic text analysis
+
         word_count = len(text.split())
+
         sentiment_score = self._simple_sentiment_analysis(text)
+
         
         return {
             'word_count': word_count,
@@ -585,7 +667,8 @@ class MultimodalIntelligence:
         }
     
     async def _analyze_image_modality(self, image_path: Optional[str]) -> Dict[str, Any]:
-        """Analyze image content"""
+        """
+        Analyze image content"""
         if not image_path:
             return {'objects': [], 'scene': '', 'aesthetic_score': 0.0}
         
@@ -599,7 +682,8 @@ class MultimodalIntelligence:
         }
     
     async def _analyze_audio_modality(self, audio_path: Optional[str]) -> Dict[str, Any]:
-        """Analyze audio content"""
+        """
+        Analyze audio content"""
         if not audio_path:
             return {'emotion': 'neutral', 'energy': 0.5, 'tempo': 0}
         
@@ -613,13 +697,19 @@ class MultimodalIntelligence:
         }
     
     def _simple_sentiment_analysis(self, text: str) -> float:
-        """Simple rule-based sentiment analysis"""
+        """
+        Simple rule-based sentiment analysis"""
         positive_words = ['good', 'great', 'excellent', 'amazing', 'love', 'awesome']
+
         negative_words = ['bad', 'terrible', 'awful', 'hate', 'horrible', 'worst']
+
         
         words = text.lower().split()
+
         positive_count = sum(1 for word in words if word in positive_words)
+
         negative_count = sum(1 for word in words if word in negative_words)
+
         
         if positive_count + negative_count == 0:
             return 0.0
@@ -627,18 +717,24 @@ class MultimodalIntelligence:
         return (positive_count - negative_count) / (positive_count + negative_count)
     
     def _calculate_readability(self, text: str) -> float:
-        """Calculate text readability score"""
+        """
+        Calculate text readability score"""
         if not text:
             return 0.0
+
         
         words = text.split()
+
         sentences = text.split('.')
+
         
         if len(sentences) == 0:
             return 0.0
+
         
         avg_words_per_sentence = len(words) / len(sentences)
         # Simple readability metric
+
         readability = max(0, 1.0 - (avg_words_per_sentence - 15) / 20)
         return min(readability, 1.0)
     
@@ -648,9 +744,12 @@ class MultimodalIntelligence:
         image_analysis: Dict[str, Any],
         audio_analysis: Dict[str, Any]
     ) -> float:
-        """Calculate coherence across modalities"""
+        """
+        Calculate coherence across modalities"""
         # Simplified coherence calculation
+
         text_sentiment = text_analysis.get('sentiment', 0.0)
+
         audio_emotion = 0.0  # Would map audio emotion to sentiment
         
         if abs(text_sentiment - audio_emotion) < 0.3:
@@ -664,7 +763,8 @@ class MultimodalIntelligence:
         image_analysis: Dict[str, Any],
         audio_analysis: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Aggregate emotion analysis across modalities"""
+        """
+        Aggregate emotion analysis across modalities"""
         return {
             'joy': 0.3,
             'sadness': 0.1,
@@ -680,7 +780,8 @@ class MultimodalIntelligence:
         image_analysis: Dict[str, Any],
         audio_analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Extract semantic understanding across modalities"""
+        """
+        Extract semantic understanding across modalities"""
         return {
             'main_topics': [],
             'intent': 'informational',
@@ -689,7 +790,8 @@ class MultimodalIntelligence:
         }
     
     def _calculate_accessibility_score(self, content_data: Dict[str, Any]) -> float:
-        """Calculate content accessibility score"""
+        """
+        Calculate content accessibility score"""
         score = 0.0
         
         # Text accessibility
@@ -712,7 +814,8 @@ class MultimodalIntelligence:
         image_analysis: Dict[str, Any],
         audio_analysis: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Assess overall content quality"""
+        """
+        Assess overall content quality"""
         return {
             'overall_quality': 0.75,
             'text_quality': text_analysis.get('readability', 0.5),
@@ -723,10 +826,12 @@ class MultimodalIntelligence:
 
 
 class ContentAnalyticsSystem:
-    """Main content analytics system orchestrating all analysis components"""
+    """
+        Main content analytics system orchestrating all analysis components"""
     
     def __init__(self, config: Optional[AnalyticsConfig] = None):
-        """Initialize content analytics system"""
+        """
+        Initialize content analytics system"""
         self.config = config or AnalyticsConfig()
         
         # Initialize component analyzers
@@ -750,16 +855,19 @@ class ContentAnalyticsSystem:
             content_id = content_data.get('content_id', str(uuid.uuid4()))
             
             # Parallel analysis execution
+
             results = await asyncio.gather(
                 self._analyze_trends_for_content(content_data, historical_metrics),
                 self._predict_content_engagement(content_data),
                 self._analyze_multimodal_aspects(content_data),
                 return_exceptions=True
             )
+
             
             trend_analysis, engagement_prediction, multimodal_insights = results
             
             # Compile comprehensive report
+
             comprehensive_report = {
                 'content_id': content_id,
                 'analysis_timestamp': datetime.now(timezone.utc).isoformat(),
@@ -778,10 +886,12 @@ class ContentAnalyticsSystem:
             self.analytics_cache[content_id] = comprehensive_report
             
             logger.info(f"Comprehensive analysis completed for content {content_id}")
+
             return comprehensive_report
             
         except Exception as e:
             logger.error(f"Comprehensive analysis failed: {e}")
+
             return {
                 'content_id': content_data.get('content_id', 'unknown'),
                 'error': str(e),
@@ -798,6 +908,7 @@ class ContentAnalyticsSystem:
             return None
         
         # Create content metrics for analysis
+
         content_metrics = ContentMetrics(
             content_id=content_data.get('content_id', str(uuid.uuid4())),
             content_type=ContentType(content_data.get('content_type', 'text')),
@@ -806,17 +917,21 @@ class ContentAnalyticsSystem:
             shares=content_data.get('shares', 0),
             comments=content_data.get('comments', 0)
         )
+
+
         
         viral_analysis = await self.trend_analyzer.detect_viral_content(content_metrics)
         return viral_analysis
     
     async def _predict_content_engagement(self, content_data: Dict[str, Any]) -> Optional[EngagementPrediction]:
-        """Predict engagement for specific content"""
+        """
+        Predict engagement for specific content"""
         prediction = await self.engagement_predictor.predict_engagement(content_data)
         return prediction
     
     async def _analyze_multimodal_aspects(self, content_data: Dict[str, Any]) -> Optional[MultimodalInsights]:
-        """Analyze multimodal aspects of content"""
+        """
+        Analyze multimodal aspects of content"""
         insights = await self.multimodal_intelligence.analyze_multimodal_content(content_data)
         return insights
     
@@ -826,7 +941,8 @@ class ContentAnalyticsSystem:
         engagement_prediction: Any, 
         multimodal_insights: Any
     ) -> float:
-        """Calculate overall content performance score"""
+        """
+        Calculate overall content performance score"""
         score = 0.0
         
         # Trend score component
@@ -840,6 +956,7 @@ class ContentAnalyticsSystem:
         # Quality score component
         if multimodal_insights and hasattr(multimodal_insights, 'quality_assessment'):
             quality = multimodal_insights.quality_assessment.get('overall_quality', 0)
+
             score += quality * 0.3
         
         return min(score, 1.0)
@@ -850,7 +967,8 @@ class ContentAnalyticsSystem:
         engagement_prediction: Any, 
         multimodal_insights: Any
     ) -> List[str]:
-        """Generate comprehensive content recommendations"""
+        """
+        Generate comprehensive content recommendations"""
         recommendations = []
         
         # Add trend-based recommendations
@@ -866,6 +984,7 @@ class ContentAnalyticsSystem:
         if multimodal_insights and hasattr(multimodal_insights, 'accessibility_score'):
             if multimodal_insights.accessibility_score < 0.7:
                 recommendations.append("Improve accessibility with alt text and captions")
+
         
         return recommendations
     
@@ -877,22 +996,27 @@ class ContentAnalyticsSystem:
         try:
             tasks = [
                 self.analyze_content_comprehensive(content_data)
+
                 for content_data in content_batch
             ]
+
             
             results = await asyncio.gather(*tasks, return_exceptions=True)
             
             # Filter out exceptions and return valid results
+
             valid_results = [
                 result for result in results 
                 if not isinstance(result, Exception)
             ]
             
             logger.info(f"Batch analysis completed: {len(valid_results)}/{len(content_batch)} successful")
+
             return valid_results
             
         except Exception as e:
             logger.error(f"Batch analysis failed: {e}")
+
             return []
     
     async def get_analytics_summary(
@@ -902,9 +1026,12 @@ class ContentAnalyticsSystem:
         """Get analytics summary for specified time range"""
         try:
             end_time = datetime.now(timezone.utc)
+
+
             start_time = end_time - time_range
             
             # Filter metrics by time range
+
             relevant_metrics = [
                 metric for metric in self.metrics_history
                 if start_time <= metric.timestamp <= end_time
@@ -914,9 +1041,16 @@ class ContentAnalyticsSystem:
                 return {'error': 'No data available for the specified time range'}
             
             # Calculate summary statistics
+
             total_content = len(relevant_metrics)
+
+
             total_views = sum(m.views for m in relevant_metrics)
+
+
             total_engagement = sum(m.likes + m.shares + m.comments for m in relevant_metrics)
+
+
             avg_engagement_rate = sum(m.engagement_rate for m in relevant_metrics) / total_content
             
             return {
@@ -940,11 +1074,13 @@ class ContentAnalyticsSystem:
             
         except Exception as e:
             logger.error(f"Analytics summary generation failed: {e}")
+
             return {'error': str(e)}
     
     def _get_top_performing_content(self, metrics: List[ContentMetrics], limit: int = 5) -> List[Dict[str, Any]]:
         """Get top performing content from metrics"""
         sorted_metrics = sorted(metrics, key=lambda m: m.engagement_rate, reverse=True)
+
         
         return [
             {
@@ -960,17 +1096,20 @@ class ContentAnalyticsSystem:
 
 # Backward compatibility classes for existing imports
 class TrendingContentAnalyzer_Legacy(TrendingContentAnalyzer):
-    """Legacy wrapper for trending content analyzer"""
+    """
+        Legacy wrapper for trending content analyzer"""
     pass
 
 
 class EngagementPredictor_Legacy(EngagementPredictor):
-    """Legacy wrapper for engagement predictor"""
+    """
+        Legacy wrapper for engagement predictor"""
     pass
 
 
 class MultimodalIntelligence_Legacy(MultimodalIntelligence):
-    """Legacy wrapper for multimodal intelligence"""
+    """
+        Legacy wrapper for multimodal intelligence"""
     pass
 
 

@@ -38,7 +38,8 @@ import aiofiles
 logger = logging.getLogger(__name__)
 
 class VoiceFormat(Enum):
-    """Voice format enumeration"""
+    """
+        Voice format enumeration"""
     WAV = "wav"
     MP3 = "mp3"
     FLAC = "flac"
@@ -109,13 +110,15 @@ class SampleRate(Enum):
     SR_96K = 96000
 
 class BitDepth(Enum):
-    """Bit depth enumeration"""
+    """
+        Bit depth enumeration"""
     BIT_16 = 16
     BIT_24 = 24
     BIT_32 = 32
 
 class Channels(Enum):
-    """Audio channels enumeration"""
+    """
+        Audio channels enumeration"""
     MONO = 1
     STEREO = 2
     SURROUND_5_1 = 6
@@ -123,7 +126,8 @@ class Channels(Enum):
 
 @dataclass
 class VoiceProfile:
-    """Voice profile configuration"""
+    """
+        Voice profile configuration"""
     voice_id: str
     name: str
     gender: str
@@ -140,7 +144,8 @@ class VoiceProfile:
 
 @dataclass
 class VoiceCharacteristics:
-    """Voice characteristics data"""
+    """
+        Voice characteristics data"""
     pitch_mean: float
     pitch_std: float
     formants: List[float]
@@ -153,7 +158,8 @@ class VoiceCharacteristics:
 
 @dataclass
 class ProcessingPipeline:
-    """Voice processing pipeline configuration"""
+    """
+        Voice processing pipeline configuration"""
     pipeline_id: str
     name: str
     steps: List[str]
@@ -165,7 +171,8 @@ class ProcessingPipeline:
 
 @dataclass
 class ProcessingResult:
-    """Voice processing result data"""
+    """
+        Voice processing result data"""
     success: bool
     processed_audio: Optional[np.ndarray]
     output_path: Optional[str]
@@ -175,7 +182,8 @@ class ProcessingResult:
     errors: List[str]
 
 class VoiceBank:
-    """Voice bank management system"""
+    """
+        Voice bank management system"""
     
     def __init__(self, bank_path: str = "/data/voices/bank"):
         """Initialize voice bank"""
@@ -187,6 +195,7 @@ class VoiceBank:
         
         # Ensure bank directory exists
         self.bank_path.mkdir(parents=True, exist_ok=True)
+
         
         logger.info(f"🎤 Voice Bank initialized at {bank_path}")
     
@@ -194,10 +203,12 @@ class VoiceBank:
         """Load voice bank from storage"""
         try:
             # Load voice index
+
             index_path = self.bank_path / "voice_index.json"
             if index_path.exists():
                 async with aiofiles.open(index_path, 'r') as f:
                     content = await f.read()
+
                     self.voice_index = json.loads(content)
             
             # Load voice profiles
@@ -217,21 +228,26 @@ class VoiceBank:
                     created_at=datetime.fromisoformat(voice_data["created_at"]),
                     updated_at=datetime.fromisoformat(voice_data["updated_at"])
                 )
+
                 
                 self.voices[voice_id] = profile
             
             logger.info(f"✅ Loaded {len(self.voices)} voices from bank")
+
             return self.voices
             
         except Exception as e:
             logger.error(f"Failed to load voice bank: {e}")
+
             raise
     
     async def add_voice(self, voice_profile: VoiceProfile) -> bool:
         """Add voice to bank"""
         try:
             # Generate voice fingerprint
+
             fingerprint = await self._generate_voice_fingerprint(voice_profile)
+
             voice_profile.fingerprint = fingerprint
             
             # Store voice
@@ -255,12 +271,15 @@ class VoiceBank:
             
             # Persist to storage
             await self._save_voice_index()
+
             
             logger.info(f"✅ Added voice {voice_profile.voice_id} to bank")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to add voice to bank: {e}")
+
             return False
     
     async def search_voices(
@@ -275,6 +294,7 @@ class VoiceBank:
             for voice_id, voice in self.voices.items():
                 if await self._matches_criteria(voice, criteria):
                     results.append(voice)
+
                 
                 if len(results) >= limit:
                     break
@@ -283,6 +303,7 @@ class VoiceBank:
             
         except Exception as e:
             logger.error(f"Failed to search voices: {e}")
+
             return []
     
     async def _generate_voice_fingerprint(self, voice_profile: VoiceProfile) -> str:
@@ -292,11 +313,17 @@ class VoiceBank:
             audio_data, sample_rate = librosa.load(voice_profile.audio_path)
             
             # Extract features
+
             mfcc = librosa.feature.mfcc(y=audio_data, sr=sample_rate, n_mfcc=13)
+
+
             spectral_centroid = librosa.feature.spectral_centroid(y=audio_data, sr=sample_rate)
+
+
             spectral_rolloff = librosa.feature.spectral_rolloff(y=audio_data, sr=sample_rate)
             
             # Create fingerprint
+
             features = np.concatenate([
                 mfcc.mean(axis=1),
                 spectral_centroid.mean(axis=1),
@@ -304,12 +331,15 @@ class VoiceBank:
             ])
             
             # Hash features
+
             fingerprint = hashlib.sha256(features.tobytes()).hexdigest()
+
             
             return fingerprint
             
         except Exception as e:
             logger.error(f"Failed to generate voice fingerprint: {e}")
+
             return ""
     
     async def _save_voice_index(self):
@@ -318,9 +348,11 @@ class VoiceBank:
             index_path = self.bank_path / "voice_index.json"
             async with aiofiles.open(index_path, 'w') as f:
                 await f.write(json.dumps(self.voice_index, indent=2))
+
             
         except Exception as e:
             logger.error(f"Failed to save voice index: {e}")
+
             raise
     
     async def _matches_criteria(self, voice: VoiceProfile, criteria: Dict[str, Any]) -> bool:
@@ -342,13 +374,15 @@ class VoiceBank:
             
         except Exception as e:
             logger.error(f"Failed to match criteria: {e}")
+
             return False
 
 class VoiceBankManager:
     """Advanced voice bank management"""
     
     def __init__(self):
-        """Initialize voice bank manager"""
+        """
+        Initialize voice bank manager"""
         self.voice_bank = VoiceBank()
         self.analytics = {}
         self.cache = {}
@@ -359,21 +393,27 @@ class VoiceBankManager:
         """Initialize voice bank manager"""
         try:
             await self.voice_bank.load_voice_bank()
+
             await self._load_analytics_data()
+
             
             logger.info("✅ Voice Bank Manager initialized successfully")
+
             
         except Exception as e:
             logger.error(f"Failed to initialize voice bank manager: {e}")
+
             raise
     
     async def get_popular_voices(self, limit: int = 20) -> List[VoiceProfile]:
         """Get most popular voices"""
         try:
             # Get usage analytics
+
             voice_usage = await self._get_voice_usage_analytics()
             
             # Sort by popularity
+
             popular_voice_ids = sorted(
                 voice_usage.keys(),
                 key=lambda x: voice_usage[x]["usage_count"],
@@ -381,36 +421,44 @@ class VoiceBankManager:
             )[:limit]
             
             # Get voice profiles
+
             popular_voices = []
             for voice_id in popular_voice_ids:
                 if voice_id in self.voice_bank.voices:
                     popular_voices.append(self.voice_bank.voices[voice_id])
+
             
             return popular_voices
             
         except Exception as e:
             logger.error(f"Failed to get popular voices: {e}")
+
             return []
     
     async def recommend_voices(self, user_preferences: Dict[str, Any]) -> List[VoiceProfile]:
         """Recommend voices based on user preferences"""
         try:
             # Analyze user preferences
+
             recommendations = await self._analyze_voice_preferences(user_preferences)
             
             # Search matching voices
+
             recommended_voices = []
             for recommendation in recommendations:
                 voices = await self.voice_bank.search_voices(
                     recommendation["criteria"],
                     limit=recommendation["count"]
                 )
+
                 recommended_voices.extend(voices)
+
             
             return recommended_voices
             
         except Exception as e:
             logger.error(f"Failed to recommend voices: {e}")
+
             return []
     
     async def _load_analytics_data(self):
@@ -436,6 +484,7 @@ class VoiceBankManager:
             
         except Exception as e:
             logger.error(f"Failed to get voice usage analytics: {e}")
+
             return {}
     
     async def _analyze_voice_preferences(self, preferences: Dict[str, Any]) -> List[Dict[str, Any]]:
@@ -459,24 +508,28 @@ class VoiceBankManager:
                     "count": 10,
                     "score": 0.9
                 })
+
             
             return recommendations
             
         except Exception as e:
             logger.error(f"Failed to analyze voice preferences: {e}")
+
             return []
 
 class AccentGenerator:
     """Advanced accent generation system"""
     
     def __init__(self):
-        """Initialize accent generator"""
+        """
+        Initialize accent generator"""
         self.accent_models = {}
         self.accent_patterns = {}
         self.phoneme_mappings = {}
         
         # Load accent models
         asyncio.create_task(self._load_accent_models())
+
         
         logger.info("🗣️ Accent Generator initialized")
     
@@ -490,40 +543,50 @@ class AccentGenerator:
         """Generate text and audio with target accent"""
         try:
             # Get accent transformation model
+
             model = await self._get_accent_model(source_accent, target_accent)
             
             # Transform phonemes
+
             transformed_phonemes = await self._transform_phonemes(
                 text, model, intensity
             )
             
             # Generate modified text
+
             modified_text = await self._phonemes_to_text(transformed_phonemes)
             
             # Generate audio with accent
+
             audio_data = await self._synthesize_accented_audio(
                 modified_text, target_accent
             )
+
             
             return modified_text, audio_data
             
         except Exception as e:
             logger.error(f"Failed to generate accent: {e}")
+
             raise
     
     async def analyze_accent(self, audio_data: np.ndarray, sample_rate: int) -> AccentType:
         """Analyze and identify accent from audio"""
         try:
             # Extract acoustic features
+
             features = await self._extract_accent_features(audio_data, sample_rate)
             
             # Classify accent
+
             accent = await self._classify_accent(features)
+
             
             return accent
             
         except Exception as e:
             logger.error(f"Failed to analyze accent: {e}")
+
             return AccentType.AMERICAN
     
     async def _load_accent_models(self):
@@ -538,6 +601,7 @@ class AccentGenerator:
             }
             
             logger.info("✅ Accent models loaded")
+
             
         except Exception as e:
             logger.error(f"Failed to load accent models: {e}")
@@ -546,17 +610,21 @@ class AccentGenerator:
         """Get accent transformation model"""
         try:
             model_key = (source, target)
+
             if model_key in self.accent_models:
                 return self.accent_models[model_key]
             
             # Generate model if not exists
+
             model = await self._generate_accent_model(source, target)
+
             self.accent_models[model_key] = model
             
             return model
             
         except Exception as e:
             logger.error(f"Failed to get accent model: {e}")
+
             return {}
     
     async def _transform_phonemes(
@@ -568,25 +636,32 @@ class AccentGenerator:
         """Transform phonemes according to accent model"""
         try:
             # Convert text to phonemes
+
             phonemes = await self._text_to_phonemes(text)
             
             # Apply accent transformations
+
             transformed = []
             for phoneme in phonemes:
                 if phoneme in model.get("transformations", {}):
                     transformation = model["transformations"][phoneme]
                     # Apply intensity scaling
+
                     transformed_phoneme = await self._apply_transformation(
                         phoneme, transformation, intensity
                     )
+
                     transformed.append(transformed_phoneme)
+
                 else:
                     transformed.append(phoneme)
+
             
             return transformed
             
         except Exception as e:
             logger.error(f"Failed to transform phonemes: {e}")
+
             return []
     
     async def _extract_accent_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
@@ -605,11 +680,13 @@ class AccentGenerator:
             
             # Extract vowel characteristics
             features["vowel_space"] = await self._extract_vowel_space(audio_data, sample_rate)
+
             
             return features
             
         except Exception as e:
             logger.error(f"Failed to extract accent features: {e}")
+
             return {}
     
     # Additional helper methods would continue here...
@@ -618,7 +695,8 @@ class MultiFormatVoiceProcessor:
     """Multi-format voice processing system"""
     
     def __init__(self):
-        """Initialize multi-format processor"""
+        """
+        Initialize multi-format processor"""
         self.supported_formats = [format.value for format in VoiceFormat]
         self.processing_pipelines = {}
         self.format_converters = {}
@@ -639,11 +717,13 @@ class MultiFormatVoiceProcessor:
             audio_data, sample_rate = await self._load_audio_file(input_path)
             
             # Apply processing
+
             processed_audio = await self._apply_processing(
                 audio_data, sample_rate, processing_options or {}
             )
             
             # Convert to target format
+
             conversion_result = await self._convert_format(
                 processed_audio, sample_rate, target_format, quality
             )
@@ -657,20 +737,24 @@ class MultiFormatVoiceProcessor:
             )
             
             # Generate result
+
             result = ProcessingResult(
                 success=True,
                 processed_audio=processed_audio,
                 output_path=output_path,
                 metadata=conversion_result["metadata"],
                 processing_time=0.0,  # Would be calculated
+
                 quality_metrics=await self._calculate_quality_metrics(processed_audio),
                 errors=[]
             )
+
             
             return result
             
         except Exception as e:
             logger.error(f"Failed to process voice file: {e}")
+
             return ProcessingResult(
                 success=False,
                 processed_audio=None,
@@ -694,25 +778,33 @@ class MultiFormatVoiceProcessor:
             
             for i, input_file in enumerate(input_files):
                 # Generate output path
+
                 input_path = Path(input_file)
+
+
                 output_path = Path(output_dir) / f"{input_path.stem}_processed.{target_format.value}"
                 
                 # Process file
+
                 result = await self.process_voice_file(
                     str(input_path),
                     str(output_path),
                     target_format,
                     quality
                 )
+
                 
                 results.append(result)
+
                 
                 logger.info(f"Processed {i+1}/{len(input_files)}: {input_file}")
+
             
             return results
             
         except Exception as e:
             logger.error(f"Failed to batch process voices: {e}")
+
             return []
     
     # Additional processing methods would continue here...
@@ -721,7 +813,8 @@ class VoiceFormatConverter:
     """Advanced voice format conversion system"""
     
     def __init__(self):
-        """Initialize format converter"""
+        """
+        Initialize format converter"""
         self.conversion_matrices = {}
         self.quality_profiles = {}
         self.codec_settings = {}
@@ -751,15 +844,18 @@ class VoiceFormatConverter:
                     orig_sr=input_sample_rate,
                     target_sr=target_sample_rate
                 )
+
             else:
                 resampled_audio = input_audio
             
             # Apply format-specific processing
+
             processed_audio = await self._apply_format_processing(
                 resampled_audio, target_format, target_quality
             )
             
             # Generate conversion metadata
+
             metadata = {
                 "original_format": "array",
                 "target_format": target_format.value,
@@ -780,6 +876,7 @@ class VoiceFormatConverter:
             
         except Exception as e:
             logger.error(f"Failed to convert format: {e}")
+
             raise
     
     # Additional conversion methods would continue here...
@@ -788,7 +885,8 @@ class VoiceQualityOptimizer:
     """Voice quality optimization system"""
     
     def __init__(self):
-        """Initialize quality optimizer"""
+        """
+        Initialize quality optimizer"""
         self.optimization_algorithms = {}
         self.quality_metrics = {}
         self.enhancement_models = {}
@@ -805,15 +903,19 @@ class VoiceQualityOptimizer:
         """Optimize voice audio quality"""
         try:
             # Analyze current quality
+
             current_metrics = await self._analyze_audio_quality(audio_data, sample_rate)
             
             # Determine optimization strategy
+
             strategy = await self._determine_optimization_strategy(
                 current_metrics, target_metrics or {}, optimization_level
             )
             
             # Apply optimizations
+
             optimized_audio = audio_data.copy()
+
             
             for optimization in strategy:
                 optimized_audio = await self._apply_optimization(
@@ -821,12 +923,15 @@ class VoiceQualityOptimizer:
                 )
             
             # Measure final quality
+
             final_metrics = await self._analyze_audio_quality(optimized_audio, sample_rate)
+
             
             return optimized_audio, final_metrics
             
         except Exception as e:
             logger.error(f"Failed to optimize voice quality: {e}")
+
             raise
     
     # Additional optimization methods would continue here...
@@ -835,7 +940,8 @@ class VoiceEngineCore:
     """Unified voice engine core system"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize voice engine core"""
+        """
+        Initialize voice engine core"""
         self.config = config or {}
         self.voice_bank = VoiceBank()
         self.bank_manager = VoiceBankManager()
@@ -843,6 +949,7 @@ class VoiceEngineCore:
         self.format_processor = MultiFormatVoiceProcessor()
         self.format_converter = VoiceFormatConverter()
         self.quality_optimizer = VoiceQualityOptimizer()
+
         
         logger.info("🎤 Voice Engine Core initialized")
     
@@ -850,11 +957,14 @@ class VoiceEngineCore:
         """Initialize voice engine core"""
         try:
             await self.bank_manager.initialize()
+
             
             logger.info("✅ Voice Engine Core initialized successfully")
+
             
         except Exception as e:
             logger.error(f"Failed to initialize voice engine core: {e}")
+
             raise
     
     async def process_voice_workflow(
@@ -864,35 +974,45 @@ class VoiceEngineCore:
         """Process complete voice workflow"""
         try:
             workflow_type = workflow_config.get("type", "basic")
+
             
             if workflow_type == "voice_bank_search":
                 return await self._execute_voice_bank_workflow(workflow_config)
+
             elif workflow_type == "accent_generation":
                 return await self._execute_accent_workflow(workflow_config)
+
             elif workflow_type == "format_processing":
                 return await self._execute_format_workflow(workflow_config)
+
             elif workflow_type == "quality_optimization":
                 return await self._execute_quality_workflow(workflow_config)
+
             else:
                 return await self._execute_basic_workflow(workflow_config)
+
             
         except Exception as e:
             logger.error(f"Failed to process voice workflow: {e}")
+
             raise
     
     async def _execute_voice_bank_workflow(self, config: Dict[str, Any]) -> Dict[str, Any]:
         """Execute voice bank workflow"""
         try:
             # Search voices
+
             voices = await self.voice_bank.search_voices(
                 config.get("search_criteria", {}),
                 config.get("limit", 10)
             )
             
             # Get recommendations
+
             recommendations = await self.bank_manager.recommend_voices(
                 config.get("preferences", {})
             )
+
             
             return {
                 "success": True,
@@ -903,6 +1023,7 @@ class VoiceEngineCore:
             
         except Exception as e:
             logger.error(f"Failed to execute voice bank workflow: {e}")
+
             return {"success": False, "error": str(e)}
     
     async def _execute_accent_workflow(self, config: Dict[str, Any]) -> Dict[str, Any]:
@@ -915,6 +1036,7 @@ class VoiceEngineCore:
                 AccentType(config["target_accent"]),
                 config.get("intensity", 1.0)
             )
+
             
             return {
                 "success": True,
@@ -925,6 +1047,7 @@ class VoiceEngineCore:
             
         except Exception as e:
             logger.error(f"Failed to execute accent workflow: {e}")
+
             return {"success": False, "error": str(e)}
     
     # Additional workflow methods would continue here...

@@ -16,7 +16,8 @@ import logging
 logger = logging.getLogger(__name__)
 
 class TensorFlowManager:
-    """Gestionnaire singleton pour TensorFlow avec initialisation sécurisée."""
+    """
+Gestionnaire singleton pour TensorFlow avec initialisation sécurisée."""
     
     _instance = None
     _lock = threading.Lock()
@@ -35,7 +36,8 @@ class TensorFlowManager:
             self._initialize_tensorflow()
     
     def _initialize_tensorflow(self):
-        """Initialisation sécurisée de TensorFlow une seule fois."""
+        """
+Initialisation sécurisée de TensorFlow une seule fois."""
         if self._initialized:
             return
             
@@ -83,25 +85,29 @@ class TensorFlowManager:
     
     @property
     def tf(self):
-        """Accès sécurisé à TensorFlow."""
+        """
+Accès sécurisé à TensorFlow."""
         if not self._initialized:
             self._initialize_tensorflow()
         return self._tf
     
     @property
     def is_available(self):
-        """Vérifie si TensorFlow est disponible."""
+        """
+Vérifie si TensorFlow est disponible."""
         return self._tf is not None
 
 # Instance globale du gestionnaire
 _tf_manager = TensorFlowManager()
 
 def get_tensorflow():
-    """Obtient l'instance TensorFlow de manière sécurisée."""
+    """
+Obtient l'instance TensorFlow de manière sécurisée."""
     return _tf_manager.tf
 
 def is_tensorflow_available():
-    """Vérifie si TensorFlow est disponible."""
+    """
+Vérifie si TensorFlow est disponible."""
     return _tf_manager.is_available
 
 # Export des fonctions principales

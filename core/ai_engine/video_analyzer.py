@@ -22,7 +22,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class AnalysisType(Enum):
-    """Video analysis types"""
+    """
+Video analysis types"""
     MOTION_DETECTION = "motion_detection"
     OBJECT_RECOGNITION = "object_recognition"
     SCENE_ANALYSIS = "scene_analysis"
@@ -33,7 +34,8 @@ class AnalysisType(Enum):
     METADATA_EXTRACTION = "metadata_extraction"
 
 class VideoQuality(Enum):
-    """Video quality levels"""
+    """
+Video quality levels"""
     VERY_LOW = "very_low"
     LOW = "low"
     MEDIUM = "medium"
@@ -42,7 +44,8 @@ class VideoQuality(Enum):
 
 @dataclass
 class VideoFrame:
-    """Video frame data structure"""
+    """
+Video frame data structure"""
     timestamp: float
     frame_number: int
     width: int
@@ -51,7 +54,8 @@ class VideoFrame:
     
 @dataclass
 class MotionRegion:
-    """Motion detection region"""
+    """
+Motion detection region"""
     x: int
     y: int
     width: int
@@ -61,7 +65,8 @@ class MotionRegion:
 
 @dataclass
 class DetectedObject:
-    """Detected object in video"""
+    """
+Detected object in video"""
     object_id: str
     class_name: str
     confidence: float
@@ -70,7 +75,8 @@ class DetectedObject:
 
 @dataclass
 class SceneSegment:
-    """Scene segment in video"""
+    """
+Scene segment in video"""
     start_time: float
     end_time: float
     scene_type: str
@@ -80,7 +86,8 @@ class SceneSegment:
 
 @dataclass
 class AudioFeatures:
-    """Audio analysis features"""
+    """
+Audio analysis features"""
     volume_levels: List[float]
     frequency_spectrum: Dict[str, float]
     speech_segments: List[Tuple[float, float]]
@@ -89,7 +96,8 @@ class AudioFeatures:
 
 @dataclass
 class VideoMetadata:
-    """Video metadata information"""
+    """
+Video metadata information"""
     duration: float
     fps: float
     resolution: Tuple[int, int]
@@ -100,7 +108,8 @@ class VideoMetadata:
 
 @dataclass
 class VideoAnalysisResult:
-    """Comprehensive video analysis result"""
+    """
+Comprehensive video analysis result"""
     video_id: str
     analysis_types: List[AnalysisType]
     metadata: VideoMetadata
@@ -120,7 +129,8 @@ class VideoAnalyzer:
     """
     
     def __init__(self):
-        """Initialize video analyzer"""
+        """
+Initialize video analyzer"""
         self.supported_formats = ['.mp4', '.avi', '.mov', '.wmv', '.flv', '.webm', '.mkv']
         self.motion_threshold = 0.1
         self.object_confidence_threshold = 0.5
@@ -136,7 +146,8 @@ class VideoAnalyzer:
         logger.info("🎬 Video Analyzer initialized successfully")
         
     def _init_motion_detector(self):
-        """Initialize motion detection engine"""
+        """
+Initialize motion detection engine"""
         return {
             'algorithm': 'background_subtraction',
             'sensitivity': 0.1,
@@ -146,7 +157,8 @@ class VideoAnalyzer:
         }
     
     def _init_object_recognizer(self):
-        """Initialize object recognition engine"""
+        """
+Initialize object recognition engine"""
         return {
             'model': 'yolo_v5',
             'classes': [
@@ -169,7 +181,8 @@ class VideoAnalyzer:
         }
     
     def _init_scene_analyzer(self):
-        """Initialize scene analysis engine"""
+        """
+Initialize scene analysis engine"""
         return {
             'scene_types': [
                 'indoor', 'outdoor', 'nature', 'urban', 'office', 'home',
@@ -182,7 +195,8 @@ class VideoAnalyzer:
         }
     
     def _init_audio_processor(self):
-        """Initialize audio processing engine"""
+        """
+Initialize audio processing engine"""
         return {
             'sample_rate': 44100,
             'chunk_size': 1024,
@@ -194,7 +208,8 @@ class VideoAnalyzer:
         }
     
     def _init_quality_assessor(self):
-        """Initialize video quality assessment"""
+        """
+Initialize video quality assessment"""
         return {
             'metrics': [
                 'sharpness', 'brightness', 'contrast', 'saturation',
@@ -312,7 +327,8 @@ class VideoAnalyzer:
             )
     
     def _extract_metadata(self, video_data: Union[str, bytes]) -> VideoMetadata:
-        """Extract video metadata"""
+        """
+Extract video metadata"""
         # Simulated metadata extraction
         return VideoMetadata(
             duration=120.5,  # seconds
@@ -326,7 +342,8 @@ class VideoAnalyzer:
     
     def _detect_motion(self, video_data: Union[str, bytes], 
                       config: Optional[Dict[str, Any]]) -> List[MotionRegion]:
-        """Detect motion in video"""
+        """
+Detect motion in video"""
         # Simulated motion detection
         motion_regions = []
         
@@ -346,7 +363,8 @@ class VideoAnalyzer:
     
     def _recognize_objects(self, video_data: Union[str, bytes],
                          config: Optional[Dict[str, Any]]) -> List[DetectedObject]:
-        """Recognize objects in video"""
+        """
+Recognize objects in video"""
         # Simulated object recognition
         detected_objects = []
         
@@ -375,7 +393,8 @@ class VideoAnalyzer:
     
     def _analyze_scenes(self, video_data: Union[str, bytes],
                        config: Optional[Dict[str, Any]]) -> List[SceneSegment]:
-        """Analyze video scenes"""
+        """
+Analyze video scenes"""
         # Simulated scene analysis
         scene_segments = []
         
@@ -401,7 +420,8 @@ class VideoAnalyzer:
     
     def _analyze_audio(self, video_data: Union[str, bytes],
                       config: Optional[Dict[str, Any]]) -> Optional[AudioFeatures]:
-        """Analyze audio in video"""
+        """
+Analyze audio in video"""
         # Simulated audio analysis
         return AudioFeatures(
             volume_levels=[0.3, 0.5, 0.7, 0.4, 0.6, 0.2],
@@ -418,7 +438,8 @@ class VideoAnalyzer:
     def _assess_quality(self, video_data: Union[str, bytes],
                        metadata: VideoMetadata,
                        config: Optional[Dict[str, Any]]) -> float:
-        """Assess video quality"""
+        """
+Assess video quality"""
         # Simulated quality assessment
         quality_factors = {
             'resolution': self._assess_resolution_quality(metadata.resolution),
@@ -443,7 +464,8 @@ class VideoAnalyzer:
         return min(max(quality_score, 0.0), 1.0)
     
     def _assess_resolution_quality(self, resolution: Tuple[int, int]) -> float:
-        """Assess quality based on resolution"""
+        """
+Assess quality based on resolution"""
         width, height = resolution
         pixels = width * height
         
@@ -459,7 +481,8 @@ class VideoAnalyzer:
             return 0.3
     
     def _assess_bitrate_quality(self, bitrate: int, resolution: Tuple[int, int]) -> float:
-        """Assess quality based on bitrate"""
+        """
+Assess quality based on bitrate"""
         width, height = resolution
         pixels = width * height
         
@@ -478,7 +501,8 @@ class VideoAnalyzer:
             return 0.2
     
     def _assess_fps_quality(self, fps: float) -> float:
-        """Assess quality based on frame rate"""
+        """
+Assess quality based on frame rate"""
         if fps >= 60:
             return 1.0
         elif fps >= 30:
@@ -491,7 +515,8 @@ class VideoAnalyzer:
             return 0.3
     
     def _assess_codec_quality(self, codec: str) -> float:
-        """Assess quality based on codec"""
+        """
+Assess quality based on codec"""
         codec_scores = {
             'h265': 1.0,
             'h264': 0.9,
@@ -508,7 +533,8 @@ class VideoAnalyzer:
     def _classify_content(self, detected_objects: List[DetectedObject],
                          scene_segments: List[SceneSegment],
                          audio_features: Optional[AudioFeatures]) -> List[str]:
-        """Classify video content based on analysis results"""
+        """
+Classify video content based on analysis results"""
         classification_tags = []
         
         # Classify based on objects
@@ -549,7 +575,8 @@ class VideoAnalyzer:
     
     def extract_frames(self, video_data: Union[str, bytes],
                       timestamps: List[float]) -> List[VideoFrame]:
-        """Extract specific frames from video"""
+        """
+Extract specific frames from video"""
         frames = []
         
         for i, timestamp in enumerate(timestamps):
@@ -566,18 +593,21 @@ class VideoAnalyzer:
     
     def get_video_thumbnail(self, video_data: Union[str, bytes],
                            timestamp: float = 5.0) -> Optional[bytes]:
-        """Generate video thumbnail"""
+        """
+Generate video thumbnail"""
         # Simulated thumbnail generation
         return b"simulated_thumbnail_data"
     
     def detect_scene_changes(self, video_data: Union[str, bytes],
                            threshold: float = 0.3) -> List[float]:
-        """Detect scene change timestamps"""
+        """
+Detect scene change timestamps"""
         # Simulated scene change detection
         return [0.0, 30.0, 60.0, 90.0, 120.5]
     
     def analyze_video_stability(self, video_data: Union[str, bytes]) -> Dict[str, float]:
-        """Analyze video stability and camera shake"""
+        """
+Analyze video stability and camera shake"""
         return {
             'stability_score': 0.75,
             'shake_intensity': 0.25,
@@ -587,12 +617,14 @@ class VideoAnalyzer:
     
     def get_dominant_colors(self, video_data: Union[str, bytes],
                            sample_frames: int = 10) -> List[str]:
-        """Extract dominant colors from video"""
+        """
+Extract dominant colors from video"""
         # Simulated color extraction
         return ['#1f4e79', '#ffffff', '#8fbc8f', '#696969', '#ffd700']
     
     def estimate_content_rating(self, analysis_result: VideoAnalysisResult) -> str:
-        """Estimate content rating based on analysis"""
+        """
+Estimate content rating based on analysis"""
         # Simplified content rating estimation
         
         # Check for potentially sensitive content
@@ -610,7 +642,8 @@ class VideoAnalyzer:
         return 'general'
     
     def get_analysis_summary(self, result: VideoAnalysisResult) -> Dict[str, Any]:
-        """Get summary of video analysis results"""
+        """
+Get summary of video analysis results"""
         return {
             'video_id': result.video_id,
             'duration': result.metadata.duration,
@@ -647,5 +680,5 @@ __all__ = [
 ]
 
 # Log module initialization
-logger.info("🎬 Video Analyzer module loaded successfully")
+logger.info("🎬 Video Analyzer module initialized successfully")
 logger.info("✅ Ready for comprehensive video analysis and content classification")

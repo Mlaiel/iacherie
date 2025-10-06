@@ -49,6 +49,7 @@ interface GeneratedContent {
     realGeneration?: boolean;
     noFallback?: boolean;
     processingTime?: number;
+    cost?: number;
   };
 }
 
@@ -60,12 +61,16 @@ export default function Studio() {
   // States pour l'image
   const [imagePrompt, setImagePrompt] = useState('');
   const [imageStyle, setImageStyle] = useState('realistic');
+  const [imageQuality, setImageQuality] = useState<'draft' | 'standard' | 'premium' | 'ultra'>('standard');
+  const [imageProvider, setImageProvider] = useState<'auto' | 'dalle3' | 'leonardo' | 'replicate'>('auto');
   const [imageGenerating, setImageGenerating] = useState(false);
   
   // States pour le texte
   const [textPrompt, setTextPrompt] = useState('');
   const [textType, setTextType] = useState('article');
   const [textLength, setTextLength] = useState('medium');
+  const [textProvider, setTextProvider] = useState<'auto' | 'openai' | 'claude' | 'gemini'>('auto');
+  const [textModel, setTextModel] = useState<string>('auto');
   const [textGenerating, setTextGenerating] = useState(false);
   
   // States pour l'audio
@@ -95,7 +100,8 @@ export default function Studio() {
           prompt: imagePrompt,
           style: imageStyle,
           size: '1024x1024',
-          quality: 'hd'
+          quality: imageQuality,
+          provider: imageProvider === 'auto' ? undefined : imageProvider
         }),
       });
 
@@ -109,7 +115,16 @@ export default function Studio() {
         throw new Error(result.error || 'Génération échouée');
       }
       
-      console.log('✅ REAL IMAGE GENERATED:', result.provider);
+      // Calcul du coût estimé
+      const costMap = {
+        'dalle-3': 0.04,
+        'dalle-3-hd': 0.08,
+        'leonardo': 0.015,
+        'replicate': 0.008
+      };
+      const estimatedCost = costMap[result.provider as keyof typeof costMap] || 0;
+      
+      console.log('✅ REAL IMAGE GENERATED:', result.provider, `(~$${estimatedCost})`);
       
       const newImage: GeneratedContent = {
         id: Date.now().toString(),
@@ -122,7 +137,9 @@ export default function Studio() {
           source: result.provider,
           realGeneration: result.realGeneration,
           noFallback: result.noFallback,
-          processingTime: result.processingTime
+          processingTime: result.processingTime,
+          style: imageStyle,
+          cost: estimatedCost
         }
       };
       
@@ -158,7 +175,9 @@ export default function Studio() {
           type: textType,
           length: textLength,
           tone: 'professional',
-          language: 'fr'
+          language: 'fr',
+          provider: textProvider === 'auto' ? undefined : textProvider,
+          model: textModel === 'auto' ? undefined : textModel
         }),
       });
 
@@ -167,19 +186,33 @@ export default function Studio() {
       }
 
       const result = await response.json();
-      console.log('✅ REAL TEXT GENERATED:', result.data.source);
+      
+      // Calcul du coût estimé
+      const estimatedTokens = result.usage?.total_tokens || result.data?.tokens || 1000;
+      const costPer1M = {
+        'gpt-4o': 10,
+        'gpt-4o-mini': 0.375,
+        'gpt-3.5-turbo': 1,
+        'claude-sonnet-4.5': 9,
+        'gemini-pro': 1
+      };
+      const modelKey = (result.model || textModel) as keyof typeof costPer1M;
+      const estimatedCost = (estimatedTokens / 1000000) * (costPer1M[modelKey] || 1);
+      
+      console.log('✅ REAL TEXT GENERATED:', result.provider || result.data?.provider, `(~$${estimatedCost.toFixed(4)})`);
       
       const newText: GeneratedContent = {
         id: Date.now().toString(),
         type: 'text',
         prompt: textPrompt,
-        text: result.data.text,
+        text: result.text || result.data?.text,
         createdAt: new Date().toISOString(),
-        title: `${result.data.source}: ${textPrompt.substring(0, 30)}...`,
+        title: `${result.provider || result.data?.provider || 'AI'}: ${textPrompt.substring(0, 30)}...`,
         metadata: {
-          source: result.data.source,
-          fallback: result.data.fallback,
-          tokens: result.data.tokens
+          source: result.provider || result.data?.provider || 'unknown',
+          fallback: result.noFallback === false,
+          tokens: estimatedTokens,
+          cost: estimatedCost
         }
       };
       
@@ -378,6 +411,40 @@ export default function Studio() {
                       <option value="artistic">Artistic</option>
                       <option value="cartoon">Cartoon</option>
                       <option value="abstract">Abstract</option>
+                      <option value="professional">Professional</option>
+                      <option value="minimalist">Minimalist</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Quality / Cost 💰
+                    </label>
+                    <select
+                      value={imageQuality}
+                      onChange={(e) => setImageQuality(e.target.value as any)}
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    >
+                      <option value="draft">🟢 Draft (~$0.008) - Tests rapides</option>
+                      <option value="standard">⭐ Standard (~$0.015) - Recommandé</option>
+                      <option value="premium">💎 Premium (~$0.04) - Haute qualité</option>
+                      <option value="ultra">👑 Ultra (~$0.08) - Maximum qualité</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Provider (Auto recommandé)
+                    </label>
+                    <select
+                      value={imageProvider}
+                      onChange={(e) => setImageProvider(e.target.value as any)}
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    >
+                      <option value="auto">🎯 Auto (Optimise coût/qualité)</option>
+                      <option value="leonardo">Leonardo AI (Standard - $0.015)</option>
+                      <option value="replicate">Replicate Flux (Économique - $0.008)</option>
+                      <option value="dalle3">DALL-E 3 (Premium - $0.04-0.08)</option>
                     </select>
                   </div>
                   
@@ -398,6 +465,13 @@ export default function Studio() {
                       </>
                     )}
                   </button>
+
+                  {/* Info coût */}
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                    <p className="text-xs text-blue-800">
+                      <strong>💡 Astuce:</strong> Mode "Auto" sélectionne automatiquement le meilleur provider selon la qualité choisie pour optimiser les coûts.
+                    </p>
+                  </div>
                 </div>
               )}
 
@@ -433,6 +507,8 @@ export default function Studio() {
                         <option value="script">Script</option>
                         <option value="email">Email</option>
                         <option value="social">Social Post</option>
+                        <option value="marketing">Marketing</option>
+                        <option value="chat">Chat/Réponse</option>
                       </select>
                     </div>
                     
@@ -451,6 +527,44 @@ export default function Studio() {
                       </select>
                     </div>
                   </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      AI Provider 💰
+                    </label>
+                    <select
+                      value={textProvider}
+                      onChange={(e) => {
+                        setTextProvider(e.target.value as any);
+                        setTextModel('auto');
+                      }}
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    >
+                      <option value="auto">🎯 Auto (Optimise qualité/coût)</option>
+                      <option value="openai">OpenAI (GPT)</option>
+                      <option value="claude">Claude Sonnet 4.5</option>
+                      <option value="gemini">Google Gemini</option>
+                    </select>
+                  </div>
+
+                  {textProvider === 'openai' && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        OpenAI Model
+                      </label>
+                      <select
+                        value={textModel}
+                        onChange={(e) => setTextModel(e.target.value)}
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      >
+                        <option value="auto">Auto (Intelligent)</option>
+                        <option value="gpt-4o-mini">⭐ GPT-4o-mini (~$0.60/1M) - Recommandé</option>
+                        <option value="gpt-3.5-turbo">🟢 GPT-3.5-turbo (~$1.50/1M) - Rapide</option>
+                        <option value="gpt-4o">💎 GPT-4o (~$10/1M) - Premium</option>
+                        <option value="gpt-4-turbo">💎 GPT-4-turbo (~$10/1M) - Avancé</option>
+                      </select>
+                    </div>
+                  )}
                   
                   <button
                     onClick={handleTextGeneration}
@@ -469,6 +583,13 @@ export default function Studio() {
                       </>
                     )}
                   </button>
+
+                  {/* Info coût */}
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                    <p className="text-xs text-blue-800">
+                      <strong>💡 Mode Auto:</strong> Chatbot → GPT-3.5 | Article → GPT-4o-mini | Marketing → Claude Sonnet
+                    </p>
+                  </div>
                 </div>
               )}
 

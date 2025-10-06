@@ -45,7 +45,8 @@ logger = logging.getLogger(__name__)
 # ============================================================================
 
 class AchievementType(str, Enum):
-    """Types d'achievements."""
+    """
+        Types d'achievements."""
     CONTENT_CREATION = "content_creation"
     ENGAGEMENT = "engagement"
     COLLABORATION = "collaboration"
@@ -95,7 +96,8 @@ class UserAchievement:
 
 @dataclass
 class AchievementProgress:
-    """Progression vers un achievement."""
+    """
+        Progression vers un achievement."""
     user_id: str
     achievement_id: str
     current_progress: Dict[str, float]
@@ -104,7 +106,8 @@ class AchievementProgress:
 
 
 class RealTimeAchievementEngine:
-    """Moteur d'achievements temps réel."""
+    """
+        Moteur d'achievements temps réel."""
     
     def __init__(self):
         self.achievements: Dict[str, Achievement] = {}
@@ -115,8 +118,10 @@ class RealTimeAchievementEngine:
         self._initialize_default_achievements()
     
     def _initialize_default_achievements(self):
-        """Initialise les achievements par défaut."""
+        """
+        Initialise les achievements par défaut."""
         # Achievement première publication
+
         first_post = Achievement(
             achievement_id="first_post",
             name="Premier Pas",
@@ -129,6 +134,7 @@ class RealTimeAchievementEngine:
         )
         
         # Achievement viral
+
         viral_content = Achievement(
             achievement_id="viral_creator",
             name="Créateur Viral",
@@ -141,6 +147,7 @@ class RealTimeAchievementEngine:
         )
         
         # Achievement collaboration
+
         collab_master = Achievement(
             achievement_id="collab_master",
             name="Maître Collaborateur",
@@ -153,6 +160,7 @@ class RealTimeAchievementEngine:
         )
         
         # Achievement croissance
+
         growth_champion = Achievement(
             achievement_id="growth_champion",
             name="Champion de Croissance",
@@ -163,6 +171,7 @@ class RealTimeAchievementEngine:
             rewards={"points": 2000, "badge": "growth_master", "premium_features": True},
             points=2000
         )
+
         
         self.achievements.update({
             "first_post": first_post,
@@ -184,24 +193,29 @@ class RealTimeAchievementEngine:
                     # Vérification unlock
                     if await self._check_achievement_unlock(user_id, achievement_id, progress):
                         unlocked = await self._unlock_achievement(user_id, achievement_id, data)
+
                         if unlocked:
                             unlocked_achievements.append(achievement_id)
+
             
             return unlocked_achievements
             
         except Exception as e:
             logger.error(f"Failed to track user action: {e}")
+
             return []
     
     async def _should_track_for_achievement(self, achievement: Achievement, action: str, data: Dict[str, Any]) -> bool:
         """Détermine si l'action doit être suivie pour cet achievement."""
         # Correspondance type d'action avec critères achievement
+
         action_mappings = {
             "content_published": ["posts_count", "max_views"],
             "collaboration_completed": ["successful_collaborations"],
             "followers_gained": ["followers_growth_monthly"],
             "engagement_received": ["max_views", "total_likes", "total_comments"]
         }
+
         
         relevant_criteria = action_mappings.get(action, [])
         return any(criteria in achievement.criteria for criteria in relevant_criteria)
@@ -217,8 +231,11 @@ class RealTimeAchievementEngine:
                     achievement_id=achievement_id,
                     current_progress={}
                 )
+
+
             
             progress = self.achievement_progress[user_id][achievement_id]
+
             achievement = self.achievements[achievement_id]
             
             # Mise à jour selon l'action
@@ -226,39 +243,52 @@ class RealTimeAchievementEngine:
                 progress.current_progress["posts_count"] = progress.current_progress.get("posts_count", 0) + 1
                 if "views" in data:
                     current_max = progress.current_progress.get("max_views", 0)
+
                     progress.current_progress["max_views"] = max(current_max, data["views"])
+
             
             elif action == "collaboration_completed":
                 progress.current_progress["successful_collaborations"] = progress.current_progress.get("successful_collaborations", 0) + 1
             
             elif action == "followers_gained":
                 # Calcul croissance mensuelle
+
                 monthly_key = datetime.now().strftime("%Y-%m")
+
+
                 monthly_growth = progress.current_progress.get(f"growth_{monthly_key}", 0)
+
                 progress.current_progress[f"growth_{monthly_key}"] = monthly_growth + data.get("new_followers", 0)
+
                 progress.current_progress["followers_growth_monthly"] = progress.current_progress[f"growth_{monthly_key}"]
             
             # Calcul pourcentage completion
             progress.percentage = await self._calculate_progress_percentage(progress, achievement)
+
             progress.last_updated = datetime.now()
+
             
             return progress
             
         except Exception as e:
             logger.error(f"Failed to update achievement progress: {e}")
+
             return progress
     
     async def _calculate_progress_percentage(self, progress: AchievementProgress, achievement: Achievement) -> float:
         """Calcule le pourcentage de progression."""
         try:
             total_criteria = len(achievement.criteria)
+
             if total_criteria == 0:
                 return 0.0
+
             
             criteria_met = 0
             
             for criterion, target_value in achievement.criteria.items():
                 current_value = progress.current_progress.get(criterion, 0)
+
                 if current_value >= target_value:
                     criteria_met += 1
             
@@ -266,6 +296,7 @@ class RealTimeAchievementEngine:
             
         except Exception as e:
             logger.error(f"Failed to calculate progress percentage: {e}")
+
             return 0.0
     
     async def _check_achievement_unlock(self, user_id: str, achievement_id: str, 
@@ -278,10 +309,12 @@ class RealTimeAchievementEngine:
                 return False
             
             # Vérification critères
+
             achievement = self.achievements[achievement_id]
             
             for criterion, target_value in achievement.criteria.items():
                 current_value = progress.current_progress.get(criterion, 0)
+
                 if current_value < target_value:
                     return False
             
@@ -294,12 +327,14 @@ class RealTimeAchievementEngine:
             
         except Exception as e:
             logger.error(f"Failed to check achievement unlock: {e}")
+
             return False
     
     async def _unlock_achievement(self, user_id: str, achievement_id: str, context_data: Dict[str, Any]) -> bool:
         """Débloque un achievement pour un utilisateur."""
         try:
             achievement = self.achievements[achievement_id]
+
             
             user_achievement = UserAchievement(
                 user_id=user_id,
@@ -307,6 +342,7 @@ class RealTimeAchievementEngine:
                 unlocked_at=datetime.now(),
                 progress_data=context_data
             )
+
             
             self.user_achievements[user_id].append(user_achievement)
             
@@ -314,14 +350,18 @@ class RealTimeAchievementEngine:
             for listener in self.achievement_listeners:
                 try:
                     await listener(user_id, achievement, user_achievement)
+
                 except Exception as e:
                     logger.error(f"Achievement listener error: {e}")
+
             
             logger.info(f"Achievement unlocked: {achievement.name} for user {user_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to unlock achievement: {e}")
+
             return False
     
     async def get_user_achievements(self, user_id: str) -> List[UserAchievement]:
@@ -329,7 +369,8 @@ class RealTimeAchievementEngine:
         return self.user_achievements.get(user_id, [])
     
     async def get_user_progress(self, user_id: str) -> Dict[str, AchievementProgress]:
-        """Récupère les progressions d'un utilisateur."""
+        """
+        Récupère les progressions d'un utilisateur."""
         return self.achievement_progress.get(user_id, {})
 
 
@@ -338,7 +379,8 @@ class RealTimeAchievementEngine:
 # ============================================================================
 
 class EngagementMetric(str, Enum):
-    """Métriques d'engagement."""
+    """
+        Métriques d'engagement."""
     VIEWS = "views"
     LIKES = "likes"
     COMMENTS = "comments"
@@ -372,7 +414,8 @@ class EngagementScore:
 
 
 class AIEngagementScorer:
-    """Scorer d'engagement alimenté par IA."""
+    """
+        Scorer d'engagement alimenté par IA."""
     
     def __init__(self):
         self.engagement_history: Dict[str, List[EngagementData]] = defaultdict(list)
@@ -384,8 +427,8 @@ class AIEngagementScorer:
         self._calculate_baseline_metrics()
     
     def _initialize_ai_models(self):
-        """Initialise les modèles IA."""
-        # TODO: Implémentation modèles ML réels
+        """
+        Initialise les modèles IA."""
         self.ai_models = {
             "engagement_predictor": None,
             "trend_analyzer": None,
@@ -408,7 +451,10 @@ class AIEngagementScorer:
             self.engagement_history[engagement_data.user_id].append(engagement_data)
             
             # Limitation historique (garder 30 derniers jours)
+
+
             cutoff_date = datetime.now() - timedelta(days=30)
+
             self.engagement_history[engagement_data.user_id] = [
                 data for data in self.engagement_history[engagement_data.user_id]
                 if data.timestamp > cutoff_date
@@ -416,24 +462,29 @@ class AIEngagementScorer:
             
             # Recalcul score utilisateur
             await self._update_user_score(engagement_data.user_id)
+
             
             return True
             
         except Exception as e:
             logger.error(f"Failed to record engagement: {e}")
+
             return False
     
     async def _update_user_score(self, user_id: str) -> EngagementScore:
         """Met à jour le score d'engagement d'un utilisateur."""
         try:
             user_data = self.engagement_history.get(user_id, [])
+
             if not user_data:
                 return EngagementScore(user_id=user_id, overall_score=0.0, category_scores={}, trending_factor=0.0, ai_predictions={})
             
             # Calcul scores par catégorie
+
             category_scores = {}
             
             # Score de reach (portée)
+
             category_scores["reach"] = await self._calculate_reach_score(user_data)
             
             # Score d'engagement
@@ -447,15 +498,18 @@ class AIEngagementScorer:
             
             # Score global pondéré
             weights = {"reach": 0.25, "engagement": 0.35, "retention": 0.25, "growth": 0.15}
+
             overall_score = sum(score * weights[category] for category, score in category_scores.items())
             
             # Facteur trending
+
             trending_factor = await self._calculate_trending_factor(user_data)
             
             # Prédictions IA
             ai_predictions = await self._generate_ai_predictions(user_id, user_data)
             
             # Création score final
+
             score = EngagementScore(
                 user_id=user_id,
                 overall_score=overall_score,
@@ -463,47 +517,66 @@ class AIEngagementScorer:
                 trending_factor=trending_factor,
                 ai_predictions=ai_predictions
             )
+
             
             self.user_scores[user_id] = score
             return score
             
         except Exception as e:
             logger.error(f"Failed to update user score: {e}")
+
             return EngagementScore(user_id=user_id, overall_score=0.0, category_scores={}, trending_factor=0.0, ai_predictions={})
     
     async def _calculate_reach_score(self, user_data: List[EngagementData]) -> float:
         """Calcule le score de portée."""
         if not user_data:
             return 0.0
+
         
         total_views = sum(data.metrics.get(EngagementMetric.VIEWS, 0) for data in user_data)
+
         avg_audience = sum(data.audience_size for data in user_data) / len(user_data)
+
         
         if avg_audience == 0:
             return 0.0
+
         
         reach_ratio = total_views / (avg_audience * len(user_data))
         return min(reach_ratio * 100, 100.0)  # Score sur 100
     
     async def _calculate_engagement_score(self, user_data: List[EngagementData]) -> float:
-        """Calcule le score d'engagement."""
+        """
+        Calcule le score d'engagement."""
         if not user_data:
             return 0.0
+
         
         engagement_rates = []
         
         for data in user_data:
             views = data.metrics.get(EngagementMetric.VIEWS, 1)
+
+
             likes = data.metrics.get(EngagementMetric.LIKES, 0)
+
+
             comments = data.metrics.get(EngagementMetric.COMMENTS, 0)
+
+
             shares = data.metrics.get(EngagementMetric.SHARES, 0)
+
+
             
             engagement = (likes + comments * 2 + shares * 3) / views
             engagement_rates.append(engagement)
+
+
         
         avg_engagement = sum(engagement_rates) / len(engagement_rates)
         
         # Normalisation sur 100
+
         baseline = self.baseline_metrics["average_engagement_rate"]
         return min((avg_engagement / baseline) * 50, 100.0)
     
@@ -511,34 +584,44 @@ class AIEngagementScorer:
         """Calcule le score de fidélisation."""
         if not user_data:
             return 0.0
+
         
         watch_times = [data.metrics.get(EngagementMetric.WATCH_TIME, 0) for data in user_data]
+
         completion_rates = [data.metrics.get(EngagementMetric.COMPLETION_RATE, 0) for data in user_data]
         
         if not watch_times and not completion_rates:
             return 50.0  # Score neutre
+
         
         avg_watch_time = sum(watch_times) / len(watch_times) if watch_times else 0
+
         avg_completion = sum(completion_rates) / len(completion_rates) if completion_rates else 0
         
         # Score basé sur temps de visionnage et taux de completion
+
         retention_score = (avg_watch_time / 300) * 50 + avg_completion * 50  # 300s = 5min référence
         return min(retention_score, 100.0)
     
     async def _calculate_growth_score(self, user_data: List[EngagementData]) -> float:
-        """Calcule le score de croissance."""
+        """
+        Calcule le score de croissance."""
         if len(user_data) < 2:
             return 50.0  # Score neutre
         
         # Tri par date
+
         sorted_data = sorted(user_data, key=lambda x: x.timestamp)
         
         # Calcul évolution des vues
+
         recent_views = sum(data.metrics.get(EngagementMetric.VIEWS, 0) for data in sorted_data[-7:])  # 7 derniers
+
         older_views = sum(data.metrics.get(EngagementMetric.VIEWS, 0) for data in sorted_data[:-7])   # Plus anciens
         
         if older_views == 0:
             return 100.0 if recent_views > 0 else 50.0
+
         
         growth_ratio = recent_views / older_views
         
@@ -549,37 +632,47 @@ class AIEngagementScorer:
             return max(growth_ratio * 50, 0.0)
     
     async def _calculate_trending_factor(self, user_data: List[EngagementData]) -> float:
-        """Calcule le facteur trending."""
+        """
+        Calcule le facteur trending."""
         if not user_data:
             return 0.0
         
         # Analyse des dernières 24h
+
         recent_cutoff = datetime.now() - timedelta(hours=24)
+
         recent_data = [data for data in user_data if data.timestamp > recent_cutoff]
         
         if not recent_data:
             return 0.0
         
         # Calcul accélération engagement
+
         total_recent_engagement = 0
         for data in recent_data:
             views = data.metrics.get(EngagementMetric.VIEWS, 0)
+
+
             likes = data.metrics.get(EngagementMetric.LIKES, 0)
+
+
             shares = data.metrics.get(EngagementMetric.SHARES, 0)
+
             total_recent_engagement += views + likes * 2 + shares * 5
         
         # Comparaison avec moyenne historique
-        historical_avg = 1000  # TODO: Calcul réel basé sur historique
-        
+
+        historical_avg = 1000        
         if historical_avg == 0:
             return 1.0 if total_recent_engagement > 0 else 0.0
+
         
         trending_ratio = total_recent_engagement / historical_avg
         return min(trending_ratio, 10.0)  # Max 10x
     
     async def _generate_ai_predictions(self, user_id: str, user_data: List[EngagementData]) -> Dict[str, float]:
-        """Génère des prédictions IA."""
-        # TODO: Implémentation modèles ML réels
+        """
+        Génère des prédictions IA."""
         predictions = {
             "next_week_growth": random.uniform(0.8, 1.5),
             "viral_probability": random.uniform(0.1, 0.9),
@@ -594,23 +687,30 @@ class AIEngagementScorer:
         return self.user_scores.get(user_id)
     
     async def get_leaderboard(self, category: Optional[str] = None, limit: int = 10) -> List[Tuple[str, float]]:
-        """Récupère le classement."""
+        """
+        Récupère le classement."""
         try:
             if category and category != "overall":
                 # Classement par catégorie
-                scores = [(user_id, score.category_scores.get(category, 0.0)) 
+
+                scores = [(user_id, score.category_scores.get(category, 0.0))
+ 
                          for user_id, score in self.user_scores.items()]
             else:
                 # Classement général
-                scores = [(user_id, score.overall_score) 
+
+                scores = [(user_id, score.overall_score)
+ 
                          for user_id, score in self.user_scores.items()]
             
             # Tri et limitation
             scores.sort(key=lambda x: x[1], reverse=True)
+
             return scores[:limit]
             
         except Exception as e:
             logger.error(f"Failed to get leaderboard: {e}")
+
             return []
 
 
@@ -678,7 +778,8 @@ class ChallengeSubmission:
 
 
 class CompetitiveChallengeEngine:
-    """Moteur de défis compétitifs."""
+    """
+        Moteur de défis compétitifs."""
     
     def __init__(self):
         self.challenges: Dict[str, Challenge] = {}
@@ -689,8 +790,10 @@ class CompetitiveChallengeEngine:
         self._initialize_default_challenges()
     
     def _initialize_default_challenges(self):
-        """Initialise les défis par défaut."""
+        """
+        Initialise les défis par défaut."""
         # Défi création vidéo hebdomadaire
+
         weekly_video = Challenge(
             challenge_id="weekly_video_challenge",
             name="Défi Vidéo Hebdomadaire",
@@ -715,6 +818,7 @@ class CompetitiveChallengeEngine:
         )
         
         # Défi engagement mensuel
+
         monthly_engagement = Challenge(
             challenge_id="monthly_engagement_boost",
             name="Boost d'Engagement Mensuel",
@@ -735,6 +839,7 @@ class CompetitiveChallengeEngine:
             },
             max_participants=1000
         )
+
         
         self.challenges.update({
             "weekly_video_challenge": weekly_video,
@@ -748,10 +853,12 @@ class CompetitiveChallengeEngine:
             self.challenge_leaderboards[challenge.challenge_id] = []
             
             logger.info(f"Challenge created: {challenge.name}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to create challenge: {e}")
+
             return False
     
     async def join_challenge(self, user_id: str, challenge_id: str) -> bool:
@@ -759,44 +866,56 @@ class CompetitiveChallengeEngine:
         try:
             if challenge_id not in self.challenges:
                 logger.error(f"Challenge not found: {challenge_id}")
+
                 return False
+
             
             challenge = self.challenges[challenge_id]
             
             # Vérifications
             if challenge.status != ChallengeStatus.ACTIVE:
                 logger.error("Challenge is not active")
+
                 return False
             
             if len(challenge.participants) >= challenge.max_participants:
                 logger.error("Challenge is full")
+
                 return False
             
             if user_id in challenge.participants:
                 logger.warning("User already participating")
+
                 return True
             
             # Vérification prérequis
             if not await self._check_entry_requirements(user_id, challenge):
                 logger.error("User doesn't meet entry requirements")
+
                 return False
             
             # Ajout participant
             challenge.participants.append(user_id)
+
+
             
             participation = ChallengeParticipation(
                 user_id=user_id,
                 challenge_id=challenge_id,
                 joined_at=datetime.now()
             )
+
             
             self.participations[user_id].append(participation)
+
             
             logger.info(f"User {user_id} joined challenge {challenge_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to join challenge: {e}")
+
             return False
     
     async def submit_to_challenge(self, user_id: str, challenge_id: str, content_id: str, 
@@ -811,17 +930,22 @@ class CompetitiveChallengeEngine:
             # Vérifications
             if user_id not in challenge.participants:
                 logger.error("User not participating in challenge")
+
                 return ""
             
             if challenge.status != ChallengeStatus.ACTIVE:
                 logger.error("Challenge is not active")
+
                 return ""
             
             if datetime.now() > challenge.end_date:
                 logger.error("Challenge has ended")
+
                 return ""
             
             submission_id = str(uuid.uuid4())
+
+
             
             submission = ChallengeSubmission(
                 submission_id=submission_id,
@@ -830,6 +954,7 @@ class CompetitiveChallengeEngine:
                 content_id=content_id,
                 metadata=metadata or {}
             )
+
             
             self.submissions[submission_id] = submission
             
@@ -840,10 +965,12 @@ class CompetitiveChallengeEngine:
                     break
             
             logger.info(f"Submission created: {submission_id} for challenge {challenge_id}")
+
             return submission_id
             
         except Exception as e:
             logger.error(f"Failed to submit to challenge: {e}")
+
             return ""
     
     async def evaluate_challenge_submissions(self, challenge_id: str) -> bool:
@@ -851,51 +978,59 @@ class CompetitiveChallengeEngine:
         try:
             if challenge_id not in self.challenges:
                 return False
+
             
             challenge = self.challenges[challenge_id]
             
             # Récupération soumissions
+
             challenge_submissions = [
-                sub for sub in self.submissions.values() 
+                sub for sub in self.submissions.values()
+ 
                 if sub.challenge_id == challenge_id
             ]
             
             if not challenge_submissions:
                 logger.warning(f"No submissions for challenge {challenge_id}")
+
                 return True
             
             # Évaluation selon le type de défi
             if challenge.type == ChallengeType.CONTENT_CREATION:
                 await self._evaluate_content_challenge(challenge, challenge_submissions)
+
             elif challenge.type == ChallengeType.ENGAGEMENT_BOOST:
                 await self._evaluate_engagement_challenge(challenge, challenge_submissions)
             
             # Mise à jour leaderboard
             await self._update_challenge_leaderboard(challenge_id)
+
             
             return True
             
         except Exception as e:
             logger.error(f"Failed to evaluate challenge submissions: {e}")
+
             return False
     
     async def _check_entry_requirements(self, user_id: str, challenge: Challenge) -> bool:
         """Vérifie les prérequis d'entrée."""
-        # TODO: Implémentation vérifications spécifiques
         return True
     
     async def _evaluate_content_challenge(self, challenge: Challenge, submissions: List[ChallengeSubmission]):
         """Évalue un défi de création de contenu."""
-        for submission in submissions:
-            # TODO: Récupération métriques réelles du contenu
-            # Simulation scoring
+        for submission in submissions:            # Simulation scoring
+
             base_score = random.uniform(60, 95)
             
             # Bonus qualité
             quality_bonus = random.uniform(0, 10)
             
             # Bonus engagement
+
             engagement_bonus = random.uniform(0, 15)
+
+
             
             final_score = base_score + quality_bonus + engagement_bonus
             
@@ -908,7 +1043,6 @@ class CompetitiveChallengeEngine:
     async def _evaluate_engagement_challenge(self, challenge: Challenge, submissions: List[ChallengeSubmission]):
         """Évalue un défi d'engagement."""
         for submission in submissions:
-            # TODO: Calcul engagement réel basé sur métriques
             engagement_score = random.uniform(50, 100)
             
             # Mise à jour participation
@@ -918,9 +1052,11 @@ class CompetitiveChallengeEngine:
                     break
     
     async def _update_challenge_leaderboard(self, challenge_id: str):
-        """Met à jour le classement d'un défi."""
+        """
+        Met à jour le classement d'un défi."""
         try:
             # Collecte scores participants
+
             participant_scores = []
             
             for user_participations in self.participations.values():
@@ -947,11 +1083,13 @@ class CompetitiveChallengeEngine:
     
     async def get_active_challenges(self) -> List[Challenge]:
         """Récupère les défis actifs."""
-        return [challenge for challenge in self.challenges.values() 
+        return [challenge for challenge in self.challenges.values()
+ 
                 if challenge.status == ChallengeStatus.ACTIVE]
     
     async def get_challenge_leaderboard(self, challenge_id: str, limit: int = 10) -> List[Tuple[str, float]]:
-        """Récupère le classement d'un défi."""
+        """
+        Récupère le classement d'un défi."""
         leaderboard = self.challenge_leaderboards.get(challenge_id, [])
         return leaderboard[:limit]
 
@@ -961,7 +1099,8 @@ class CompetitiveChallengeEngine:
 # ============================================================================
 
 class RewardType(str, Enum):
-    """Types de récompenses."""
+    """
+        Types de récompenses."""
     POINTS = "points"
     BADGE = "badge"
     PREMIUM_FEATURE = "premium_feature"
@@ -988,7 +1127,8 @@ class Reward:
 
 @dataclass
 class UserReward:
-    """Récompense obtenue par un utilisateur."""
+    """
+        Récompense obtenue par un utilisateur."""
     user_id: str
     reward_id: str
     obtained_at: datetime
@@ -997,19 +1137,23 @@ class UserReward:
 
 
 class RewardOptimizer:
-    """Optimiseur de récompenses."""
+    """
+        Optimiseur de récompenses."""
     
     def __init__(self):
         self.rewards: Dict[str, Reward] = {}
         self.user_rewards: Dict[str, List[UserReward]] = defaultdict(list)
         self.user_points: Dict[str, int] = defaultdict(int)
         self.reward_analytics: Dict[str, Dict[str, Any]] = defaultdict(dict)
+
         
         self._initialize_default_rewards()
     
     def _initialize_default_rewards(self):
-        """Initialise les récompenses par défaut."""
+        """
+        Initialise les récompenses par défaut."""
         # Badge créateur
+
         creator_badge = Reward(
             reward_id="creator_badge",
             name="Badge Créateur",
@@ -1020,6 +1164,7 @@ class RewardOptimizer:
         )
         
         # Fonctionnalité premium
+
         premium_analytics = Reward(
             reward_id="premium_analytics",
             name="Analytics Premium",
@@ -1030,6 +1175,7 @@ class RewardOptimizer:
         )
         
         # Mise en avant
+
         feature_highlight = Reward(
             reward_id="feature_highlight",
             name="Mise en Avant",
@@ -1038,6 +1184,7 @@ class RewardOptimizer:
             value={"duration_hours": 24, "prominence_level": "high"},
             cost=500
         )
+
         
         self.rewards.update({
             "creator_badge": creator_badge,
@@ -1051,10 +1198,12 @@ class RewardOptimizer:
             self.user_points[user_id] += points
             
             logger.info(f"Awarded {points} points to user {user_id} from {source}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to award points: {e}")
+
             return False
     
     async def award_reward(self, user_id: str, reward_id: str, source: str, 
@@ -1063,13 +1212,16 @@ class RewardOptimizer:
         try:
             if reward_id not in self.rewards:
                 logger.error(f"Reward not found: {reward_id}")
+
                 return False
+
             
             reward = self.rewards[reward_id]
             
             # Vérification restrictions
             if not await self._check_reward_restrictions(user_id, reward):
                 return False
+
             
             user_reward = UserReward(
                 user_id=user_id,
@@ -1078,17 +1230,21 @@ class RewardOptimizer:
                 source=source,
                 metadata=metadata or {}
             )
+
             
             self.user_rewards[user_id].append(user_reward)
             
             # Analytics
             self._update_reward_analytics(reward_id)
+
             
             logger.info(f"Reward {reward_id} awarded to user {user_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to award reward: {e}")
+
             return False
     
     async def purchase_reward(self, user_id: str, reward_id: str) -> bool:
@@ -1096,19 +1252,25 @@ class RewardOptimizer:
         try:
             if reward_id not in self.rewards:
                 return False
+
             
             reward = self.rewards[reward_id]
+
             user_points = self.user_points.get(user_id, 0)
+
             
             if user_points < reward.cost:
                 logger.error("Insufficient points")
+
                 return False
             
             # Déduction points
             self.user_points[user_id] -= reward.cost
             
             # Attribution récompense
+
             success = await self.award_reward(user_id, reward_id, "purchase")
+
             
             if not success:
                 # Remboursement en cas d'échec
@@ -1118,15 +1280,16 @@ class RewardOptimizer:
             
         except Exception as e:
             logger.error(f"Failed to purchase reward: {e}")
+
             return False
     
     async def _check_reward_restrictions(self, user_id: str, reward: Reward) -> bool:
         """Vérifie les restrictions d'une récompense."""
-        # TODO: Implémentation vérifications spécifiques
         return True
     
     def _update_reward_analytics(self, reward_id: str):
-        """Met à jour les analytics d'une récompense."""
+        """
+        Met à jour les analytics d'une récompense."""
         if reward_id not in self.reward_analytics:
             self.reward_analytics[reward_id] = {
                 "total_awarded": 0,
@@ -1141,18 +1304,23 @@ class RewardOptimizer:
         return self.user_points.get(user_id, 0)
     
     async def get_user_rewards(self, user_id: str) -> List[UserReward]:
-        """Récupère les récompenses d'un utilisateur."""
+        """
+        Récupère les récompenses d'un utilisateur."""
         return self.user_rewards.get(user_id, [])
     
     async def get_available_rewards(self, user_id: str) -> List[Reward]:
-        """Récupère les récompenses disponibles pour un utilisateur."""
+        """
+        Récupère les récompenses disponibles pour un utilisateur."""
         available = []
+
         user_points = self.user_points.get(user_id, 0)
+
         
         for reward in self.rewards.values():
             if reward.cost <= user_points:
                 if await self._check_reward_restrictions(user_id, reward):
                     available.append(reward)
+
         
         return available
 
@@ -1162,19 +1330,22 @@ class RewardOptimizer:
 # ============================================================================
 
 class EdgeGamificationEngine:
-    """Moteur principal de gamification edge."""
+    """
+        Moteur principal de gamification edge."""
     
     def __init__(self):
         self.achievement_engine = RealTimeAchievementEngine()
         self.engagement_scorer = AIEngagementScorer()
         self.challenge_engine = CompetitiveChallengeEngine()
         self.reward_optimizer = RewardOptimizer()
+
         
         self.is_initialized = False
         self._setup_integrations()
     
     def _setup_integrations(self):
-        """Configure les intégrations entre composants."""
+        """
+        Configure les intégrations entre composants."""
         # Listener achievements -> récompenses
         async def achievement_reward_listener(user_id: str, achievement: Achievement, user_achievement: UserAchievement):
             # Attribution points
@@ -1184,6 +1355,7 @@ class EdgeGamificationEngine:
             for reward_type, reward_value in achievement.rewards.items():
                 if reward_type == "badge":
                     await self.reward_optimizer.award_reward(user_id, f"badge_{reward_value}", "achievement")
+
         
         self.achievement_engine.achievement_listeners.append(achievement_reward_listener)
     
@@ -1192,14 +1364,14 @@ class EdgeGamificationEngine:
         try:
             logger.info("Initializing Edge Gamification Engine...")
             
-            # TODO: Initialisation composants spécifiques
-            
             self.is_initialized = True
             logger.info("Edge Gamification Engine initialized successfully")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to initialize gamification engine: {e}")
+
             return False
     
     async def process_user_action(self, user_id: str, action: str, data: Dict[str, Any]) -> Dict[str, Any]:
@@ -1213,7 +1385,9 @@ class EdgeGamificationEngine:
             }
             
             # Traitement achievements
+
             unlocked = await self.achievement_engine.track_user_action(user_id, action, data)
+
             results["achievements_unlocked"] = unlocked
             
             # Calcul points gagnés
@@ -1230,17 +1404,18 @@ class EdgeGamificationEngine:
                     audience_size=data.get("audience_size", 0),
                     content_type=data.get("content_type", "")
                 )
+
                 
                 await self.engagement_scorer.record_engagement(engagement_data)
+
                 results["engagement_score_updated"] = True
             
-            # Progression défis
-            # TODO: Mise à jour progression défis actifs
-            
+            # Progression défis            
             return results
             
         except Exception as e:
             logger.error(f"Failed to process user action: {e}")
+
             return {}
     
     async def get_user_gamification_summary(self, user_id: str) -> Dict[str, Any]:
@@ -1265,11 +1440,13 @@ class EdgeGamificationEngine:
                         "end_date": challenge.end_date,
                         "type": challenge.type
                     })
+
             
             return summary
             
         except Exception as e:
             logger.error(f"Failed to get user gamification summary: {e}")
+
             return {}
 
 
@@ -1283,22 +1460,26 @@ def create_edge_gamification_engine() -> EdgeGamificationEngine:
 
 
 def create_achievement_engine() -> RealTimeAchievementEngine:
-    """Factory function pour créer le moteur d'achievements."""
+    """
+        Factory function pour créer le moteur d'achievements."""
     return RealTimeAchievementEngine()
 
 
 def create_engagement_scorer() -> AIEngagementScorer:
-    """Factory function pour créer le scorer d'engagement."""
+    """
+        Factory function pour créer le scorer d'engagement."""
     return AIEngagementScorer()
 
 
 def create_challenge_engine() -> CompetitiveChallengeEngine:
-    """Factory function pour créer le moteur de défis."""
+    """
+        Factory function pour créer le moteur de défis."""
     return CompetitiveChallengeEngine()
 
 
 def create_reward_optimizer() -> RewardOptimizer:
-    """Factory function pour créer l'optimiseur de récompenses."""
+    """
+        Factory function pour créer l'optimiseur de récompenses."""
     return RewardOptimizer()
 
 

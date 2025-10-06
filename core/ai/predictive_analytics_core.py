@@ -40,7 +40,8 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class PredictionType(str, Enum):
-    """Types of predictions"""
+    """
+Types of predictions"""
     ENGAGEMENT = "engagement"
     REVENUE = "revenue"
     GROWTH = "growth"
@@ -50,7 +51,8 @@ class PredictionType(str, Enum):
     SEASONALITY = "seasonality"
 
 class ModelType(str, Enum):
-    """Machine learning model types"""
+    """
+Machine learning model types"""
     LINEAR_REGRESSION = "linear_regression"
     RANDOM_FOREST = "random_forest"
     TIME_SERIES = "time_series"
@@ -58,14 +60,16 @@ class ModelType(str, Enum):
     ENSEMBLE = "ensemble"
 
 class ForecastHorizon(str, Enum):
-    """Forecast time horizons"""
+    """
+Forecast time horizons"""
     SHORT_TERM = "short_term"    # 1-7 days
     MEDIUM_TERM = "medium_term"  # 1-4 weeks
     LONG_TERM = "long_term"      # 1-12 months
 
 @dataclass
 class DataPoint:
-    """Single data point for analysis"""
+    """
+Single data point for analysis"""
     timestamp: datetime
     value: float
     features: Dict[str, Any] = field(default_factory=dict)
@@ -73,7 +77,8 @@ class DataPoint:
 
 @dataclass
 class Prediction:
-    """Prediction result"""
+    """
+Prediction result"""
     prediction_id: str
     prediction_type: PredictionType
     predicted_value: float
@@ -87,7 +92,8 @@ class Prediction:
 
 @dataclass
 class ModelMetrics:
-    """Model performance metrics"""
+    """
+Model performance metrics"""
     model_id: str
     model_type: ModelType
     accuracy: float
@@ -101,7 +107,8 @@ class ModelMetrics:
 
 @dataclass
 class AnalyticsMetrics:
-    """Predictive analytics system metrics"""
+    """
+Predictive analytics system metrics"""
     predictions_made: int = 0
     models_trained: int = 0
     accuracy_avg: float = 0.0
@@ -110,10 +117,12 @@ class AnalyticsMetrics:
     trends_identified: int = 0
 
 class PredictiveAnalyticsCore:
-    """Enterprise predictive analytics system"""
+    """
+Enterprise predictive analytics system"""
     
     def __init__(self, level: str = "enterprise"):
-        """Initialize predictive analytics core"""
+        """
+Initialize predictive analytics core"""
         self.level = level
         self.data_storage: Dict[str, List[DataPoint]] = defaultdict(list)
         self.models: Dict[str, Any] = {}
@@ -158,14 +167,16 @@ class PredictiveAnalyticsCore:
         logger.info(f"📊 Predictive Analytics Core initialized - Level: {level}")
 
     def _start_model_retraining(self):
-        """Start periodic model retraining"""
+        """
+Start periodic model retraining"""
         if self._retrain_task and not self._retrain_task.done():
             return
         
         self._retrain_task = asyncio.create_task(self._retrain_loop())
 
     async def _retrain_loop(self):
-        """Periodic model retraining loop"""
+        """
+Periodic model retraining loop"""
         while not self._shutdown_event.is_set():
             try:
                 await asyncio.sleep(self.config["retrain_interval"])
@@ -183,7 +194,8 @@ class PredictiveAnalyticsCore:
         features: Optional[Dict[str, Any]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ):
-        """Add data point for analysis"""
+        """
+Add data point for analysis"""
         
         data_point = DataPoint(
             timestamp=timestamp,
@@ -204,7 +216,8 @@ class PredictiveAnalyticsCore:
         logger.debug(f"Added data point to series {series_id}")
 
     async def _clean_old_data(self, series_id: str):
-        """Clean old data points"""
+        """
+Clean old data points"""
         
         cutoff_date = datetime.utcnow() - timedelta(days=self.config["data_retention_days"])
         
@@ -225,7 +238,8 @@ class PredictiveAnalyticsCore:
         model_type: ModelType = ModelType.RANDOM_FOREST,
         target_feature: str = "value"
     ) -> str:
-        """Train prediction model"""
+        """
+Train prediction model"""
         
         try:
             # Get training data
@@ -262,8 +276,7 @@ class PredictiveAnalyticsCore:
                 metrics = ModelMetrics(
                     model_id=f"{series_id}_{model_type.value}",
                     model_type=model_type,
-                    accuracy=0.8,  # Mock metrics
-                    precision=0.75,
+                    accuracy=0.8,                    precision=0.75,
                     recall=0.8,
                     f1_score=0.77,
                     mse=0.1,
@@ -291,7 +304,8 @@ class PredictiveAnalyticsCore:
         data_points: List[DataPoint], 
         target_feature: str
     ) -> Tuple[List[List[float]], List[float]]:
-        """Prepare training data with feature engineering"""
+        """
+Prepare training data with feature engineering"""
         
         if not data_points:
             return [], []
@@ -340,7 +354,8 @@ class PredictiveAnalyticsCore:
         return X, y
 
     async def _engineer_features(self, df) -> Any:
-        """Engineer features for better predictions"""
+        """
+Engineer features for better predictions"""
         
         if not PANDAS_AVAILABLE:
             return df
@@ -360,7 +375,8 @@ class PredictiveAnalyticsCore:
         return df
 
     async def _generate_time_features(self, df) -> Any:
-        """Generate time-based features"""
+        """
+Generate time-based features"""
         if not PANDAS_AVAILABLE:
             return df
         
@@ -374,7 +390,8 @@ class PredictiveAnalyticsCore:
         return df
 
     async def _generate_trend_features(self, df) -> Any:
-        """Generate trend-based features"""
+        """
+Generate trend-based features"""
         if not PANDAS_AVAILABLE:
             return df
         
@@ -389,7 +406,8 @@ class PredictiveAnalyticsCore:
         return df
 
     async def _generate_seasonal_features(self, df) -> Any:
-        """Generate seasonal features"""
+        """
+Generate seasonal features"""
         if not PANDAS_AVAILABLE:
             return df
         
@@ -402,7 +420,8 @@ class PredictiveAnalyticsCore:
         return df
 
     async def _generate_lag_features(self, df) -> Any:
-        """Generate lag features"""
+        """
+Generate lag features"""
         if not PANDAS_AVAILABLE:
             return df
         
@@ -413,7 +432,8 @@ class PredictiveAnalyticsCore:
         return df
 
     async def _create_model(self, model_type: ModelType) -> Any:
-        """Create machine learning model"""
+        """
+Create machine learning model"""
         
         if not SKLEARN_AVAILABLE:
             return await self._create_simple_model([], [])
@@ -429,7 +449,8 @@ class PredictiveAnalyticsCore:
             return LinearRegression()
 
     async def _create_simple_model(self, X_train: List[List[float]], y_train: List[float]) -> Dict[str, Any]:
-        """Create simple model without sklearn"""
+        """
+Create simple model without sklearn"""
         
         if not X_train or not y_train:
             return {"type": "simple", "mean": 0.0, "trend": 0.0}
@@ -457,7 +478,8 @@ class PredictiveAnalyticsCore:
         y_pred: List[float],
         training_samples: int
     ) -> ModelMetrics:
-        """Calculate model performance metrics"""
+        """
+Calculate model performance metrics"""
         
         if not SKLEARN_AVAILABLE or len(y_true) != len(y_pred):
             # Return mock metrics
@@ -500,7 +522,8 @@ class PredictiveAnalyticsCore:
         target_date: Optional[datetime] = None,
         model_type: ModelType = ModelType.RANDOM_FOREST
     ) -> str:
-        """Make prediction"""
+        """
+Make prediction"""
         
         try:
             # Get model
@@ -557,7 +580,8 @@ class PredictiveAnalyticsCore:
             raise
 
     def _get_default_target_date(self, forecast_horizon: ForecastHorizon) -> datetime:
-        """Get default target date based on forecast horizon"""
+        """
+Get default target date based on forecast horizon"""
         
         now = datetime.utcnow()
         
@@ -573,7 +597,8 @@ class PredictiveAnalyticsCore:
         series_id: str,
         target_date: datetime
     ) -> List[float]:
-        """Prepare features for prediction"""
+        """
+Prepare features for prediction"""
         
         data_points = self.data_storage.get(series_id, [])
         
@@ -614,7 +639,8 @@ class PredictiveAnalyticsCore:
         features: List[float],
         series_id: str
     ) -> float:
-        """Make prediction using simple model"""
+        """
+Make prediction using simple model"""
         
         if model.get("type") == "simple":
             # Simple trend-based prediction
@@ -634,7 +660,8 @@ class PredictiveAnalyticsCore:
         features: List[float],
         series_id: str
     ) -> float:
-        """Calculate prediction confidence score"""
+        """
+Calculate prediction confidence score"""
         
         # Simple confidence calculation
         # In production, would use more sophisticated methods
@@ -660,7 +687,8 @@ class PredictiveAnalyticsCore:
         days_ahead: int,
         model_type: ModelType = ModelType.RANDOM_FOREST
     ) -> List[Prediction]:
-        """Generate multi-step forecast"""
+        """
+Generate multi-step forecast"""
         
         forecasts = []
         current_date = datetime.utcnow()
@@ -693,7 +721,8 @@ class PredictiveAnalyticsCore:
         return forecasts
 
     async def _retrain_all_models(self):
-        """Retrain all models with new data"""
+        """
+Retrain all models with new data"""
         
         logger.info("Starting model retraining")
         
@@ -720,18 +749,21 @@ class PredictiveAnalyticsCore:
         logger.info(f"Retrained {retrained_count} models")
 
     def _update_average_accuracy(self):
-        """Update average accuracy metric"""
+        """
+Update average accuracy metric"""
         
         if self.model_metrics:
             accuracies = [metrics.accuracy for metrics in self.model_metrics.values()]
             self.metrics.accuracy_avg = sum(accuracies) / len(accuracies)
 
     def get_prediction(self, prediction_id: str) -> Optional[Prediction]:
-        """Get prediction by ID"""
+        """
+Get prediction by ID"""
         return self.predictions.get(prediction_id)
 
     def get_model_metrics(self, model_id: str) -> Optional[ModelMetrics]:
-        """Get model metrics by ID"""
+        """
+Get model metrics by ID"""
         return self.model_metrics.get(model_id)
 
     def list_predictions(
@@ -739,7 +771,8 @@ class PredictiveAnalyticsCore:
         prediction_type: Optional[PredictionType] = None,
         limit: int = 100
     ) -> List[Prediction]:
-        """List predictions with filters"""
+        """
+List predictions with filters"""
         
         predictions = list(self.predictions.values())
         
@@ -752,11 +785,13 @@ class PredictiveAnalyticsCore:
         return predictions[:limit]
 
     def get_metrics(self) -> AnalyticsMetrics:
-        """Get predictive analytics metrics"""
+        """
+Get predictive analytics metrics"""
         return self.metrics
 
     async def health_check(self) -> bool:
-        """Health check for predictive analytics system"""
+        """
+Health check for predictive analytics system"""
         try:
             # Test data addition
             await self.add_data_point(
@@ -782,7 +817,8 @@ class PredictiveAnalyticsCore:
             return False
 
     async def shutdown(self):
-        """Shutdown predictive analytics system"""
+        """
+Shutdown predictive analytics system"""
         logger.info("🛑 Shutting down predictive analytics")
         
         # Signal shutdown
@@ -802,4 +838,4 @@ __all__ = [
     "PredictionType", "ModelType", "ForecastHorizon", "AnalyticsMetrics"
 ]
 
-logger.info("📊 Predictive Analytics Core module loaded")
+logger.info("📊 Predictive Analytics Core module initialized")

@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class PaymentRoutingCore:
-    """Advanced PaymentRoutingCore System"""
+    """
+Advanced PaymentRoutingCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class PaymentRoutingCore:
 # Module exports
 __all__ = ["PaymentRoutingCore"]
 
-logger.info("🛣️ PaymentRoutingCore module loaded")
+logger.info("🛣️ PaymentRoutingCore module initialized")

@@ -1,4 +1,5 @@
-"""IA Chérie Core Cache - Enterprise Caching System
+"""
+IA Chérie Core Cache - Enterprise Caching System
 ============================================
 
 Advanced caching management providing Redis-based distributed caching,
@@ -28,13 +29,15 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class CacheType(str, Enum):
-    """Cache storage types"""
+    """
+Cache storage types"""
     REDIS = "redis"
     MEMORY = "memory"
     HYBRID = "hybrid"
 
 class CacheStrategy(str, Enum):
-    """Cache eviction strategies"""
+    """
+Cache eviction strategies"""
     LRU = "lru"  # Least Recently Used
     LFU = "lfu"  # Least Frequently Used
     TTL = "ttl"  # Time To Live
@@ -42,7 +45,8 @@ class CacheStrategy(str, Enum):
 
 @dataclass
 class CacheConfig:
-    """Cache configuration"""
+    """
+Cache configuration"""
     cache_type: CacheType = CacheType.REDIS
     redis_host: str = "localhost"
     redis_port: int = 6379
@@ -61,7 +65,8 @@ class CacheConfig:
 
 @dataclass
 class CacheMetrics:
-    """Cache performance metrics"""
+    """
+Cache performance metrics"""
     hits: int = 0
     misses: int = 0
     sets: int = 0
@@ -75,10 +80,12 @@ class CacheMetrics:
     last_health_check: float = field(default_factory=time.time)
 
 class CacheCore:
-    """Enterprise cache core management system"""
+    """
+Enterprise cache core management system"""
     
     def __init__(self, config: Optional[CacheConfig] = None, level: str = "enterprise"):
-        """Initialize cache core"""
+        """
+Initialize cache core"""
         self.config = config or CacheConfig()
         self.level = level
         self.metrics = CacheMetrics()
@@ -99,7 +106,8 @@ class CacheCore:
         self.cache_dependencies: Dict[str, List[str]] = {}
     
     async def initialize(self) -> bool:
-        """Initialize cache system"""
+        """
+Initialize cache system"""
         try:
             logger.info(f"🚀 Initializing cache core - Type: {self.config.cache_type.value}")
             
@@ -114,7 +122,8 @@ class CacheCore:
             return False
     
     async def _initialize_redis(self) -> bool:
-        """Initialize Redis connection"""
+        """
+Initialize Redis connection"""
         try:
             if redis:
                 connection_kwargs = {
@@ -149,7 +158,8 @@ class CacheCore:
             return False
     
     async def start(self) -> bool:
-        """Start cache core"""
+        """
+Start cache core"""
         try:
             if not hasattr(self, '_initialized'):
                 await self.initialize()
@@ -166,7 +176,8 @@ class CacheCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop cache core"""
+        """
+Stop cache core"""
         try:
             logger.info("🛑 Stopping cache core")
             
@@ -193,7 +204,8 @@ class CacheCore:
             return False
     
     async def get(self, key: str, default: Any = None) -> Any:
-        """Get value from cache"""
+        """
+Get value from cache"""
         start_time = time.time()
         
         try:
@@ -223,7 +235,8 @@ class CacheCore:
             return default
     
     async def set(self, key: str, value: Any, ttl: Optional[int] = None) -> bool:
-        """Set value in cache"""
+        """
+Set value in cache"""
         try:
             ttl = ttl or self.config.default_ttl
             ttl = min(ttl, self.config.max_ttl)
@@ -244,7 +257,8 @@ class CacheCore:
             return False
     
     async def delete(self, key: str) -> bool:
-        """Delete value from cache"""
+        """
+Delete value from cache"""
         try:
             deleted = False
             
@@ -271,7 +285,8 @@ class CacheCore:
             return False
     
     async def clear(self) -> bool:
-        """Clear all cache"""
+        """
+Clear all cache"""
         try:
             # Clear Redis
             if self.redis_client and self.config.cache_type in [CacheType.REDIS, CacheType.HYBRID]:
@@ -291,7 +306,8 @@ class CacheCore:
             return False
     
     async def _get_from_redis(self, key: str) -> Any:
-        """Get value from Redis"""
+        """
+Get value from Redis"""
         if not self.redis_client:
             return None
         
@@ -307,7 +323,8 @@ class CacheCore:
             return None
     
     async def _set_in_redis(self, key: str, value: Any, ttl: int) -> bool:
-        """Set value in Redis"""
+        """
+Set value in Redis"""
         if not self.redis_client:
             return False
         
@@ -321,7 +338,8 @@ class CacheCore:
             return False
     
     def _get_from_memory(self, key: str) -> Any:
-        """Get value from memory cache"""
+        """
+Get value from memory cache"""
         if key not in self.memory_cache:
             return None
         
@@ -342,7 +360,8 @@ class CacheCore:
         return cache_item["value"]
     
     def _set_in_memory(self, key: str, value: Any, ttl: int):
-        """Set value in memory cache"""
+        """
+Set value in memory cache"""
         # Check memory limits
         if len(self.memory_cache) >= self.config.max_memory_items:
             self._evict_memory_items()
@@ -358,7 +377,8 @@ class CacheCore:
         self.memory_access_counts[key] = 1
     
     def _evict_memory_items(self):
-        """Evict items from memory cache based on strategy"""
+        """
+Evict items from memory cache based on strategy"""
         if not self.memory_cache:
             return
         
@@ -396,7 +416,8 @@ class CacheCore:
             self.metrics.evictions += 1
     
     def _serialize(self, value: Any) -> str:
-        """Serialize value for storage"""
+        """
+Serialize value for storage"""
         if self.config.serialization == "json":
             return json.dumps(value, default=str)
         elif self.config.serialization == "pickle":
@@ -405,7 +426,8 @@ class CacheCore:
             return str(value)
     
     def _deserialize(self, value: str) -> Any:
-        """Deserialize value from storage"""
+        """
+Deserialize value from storage"""
         try:
             if self.config.serialization == "json":
                 return json.loads(value)
@@ -418,7 +440,8 @@ class CacheCore:
             return value
     
     def _update_access_time(self, start_time: float):
-        """Update average access time metric"""
+        """
+Update average access time metric"""
         access_time = time.time() - start_time
         total_operations = self.metrics.hits + self.metrics.misses
         
@@ -429,7 +452,8 @@ class CacheCore:
             )
     
     async def health_check(self) -> bool:
-        """Perform cache health check"""
+        """
+Perform cache health check"""
         try:
             # Test Redis if available
             if self.redis_client and self.config.cache_type in [CacheType.REDIS, CacheType.HYBRID]:
@@ -451,7 +475,8 @@ class CacheCore:
             return False
     
     async def _health_monitor_loop(self):
-        """Health monitoring loop"""
+        """
+Health monitoring loop"""
         while not self._shutdown_event.is_set():
             try:
                 await self.health_check()
@@ -463,11 +488,13 @@ class CacheCore:
                 await asyncio.sleep(60)  # Wait longer on error
     
     def get_metrics(self) -> CacheMetrics:
-        """Get current cache metrics"""
+        """
+Get current cache metrics"""
         return self.metrics
     
     def get_status_summary(self) -> Dict[str, Any]:
-        """Get cache status summary"""
+        """
+Get cache status summary"""
         return {
             "cache_type": self.config.cache_type.value,
             "strategy": self.config.strategy.value,

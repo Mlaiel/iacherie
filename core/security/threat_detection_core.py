@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class ThreatDetectionCore:
-    """Advanced ThreatDetectionCore System"""
+    """
+Advanced ThreatDetectionCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class ThreatDetectionCore:
 # Module exports
 __all__ = ["ThreatDetectionCore"]
 
-logger.info("🛡️ ThreatDetectionCore module loaded")
+logger.info("🛡️ ThreatDetectionCore module initialized")

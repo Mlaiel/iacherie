@@ -29,14 +29,7 @@ from enum import Enum
 import json
 import uuid
 # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+from protection.utils.redis_compat import aioredis, REDIS_AVAILABLE
 from sqlalchemy.ext.asyncio import AsyncSession
 from collections import defaultdict, deque
 import hashlib
@@ -48,7 +41,8 @@ from plotly.subplots import make_subplots
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Metric type classification"""
+    """
+        Metric type classification"""
     STREAMING_PERFORMANCE = "streaming_performance"
     AUDIENCE_METRICS = "audience_metrics"
     TECHNICAL_METRICS = "technical_metrics"
@@ -137,7 +131,8 @@ class MetricDefinition:
 
 @dataclass
 class DashboardWidget:
-    """Individual dashboard widget configuration"""
+    """
+        Individual dashboard widget configuration"""
     widget_id: str
     widget_name: str
     widget_type: VisualizationType
@@ -161,7 +156,8 @@ class DashboardWidget:
 
 @dataclass
 class Dashboard:
-    """Complete dashboard configuration"""
+    """
+        Complete dashboard configuration"""
     dashboard_id: str
     dashboard_name: str
     dashboard_type: DashboardType
@@ -185,7 +181,8 @@ class Dashboard:
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration"""
+    """
+        Alert rule configuration"""
     rule_id: str
     rule_name: str
     rule_description: str
@@ -207,7 +204,8 @@ class AlertRule:
 
 @dataclass
 class AlertInstance:
-    """Active alert instance"""
+    """
+        Active alert instance"""
     alert_id: str
     rule_id: str
     metric_id: str
@@ -228,7 +226,8 @@ class AlertInstance:
 
 @dataclass
 class HealthCheck:
-    """System health check configuration"""
+    """
+        System health check configuration"""
     check_id: str
     check_name: str
     check_description: str
@@ -250,36 +249,46 @@ class HealthCheck:
     active: bool
 
 class RealTimeMetricsCollector:
-    """Real-time metrics collection and processing system"""
+    """
+        Real-time metrics collection and processing system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.metric_collectors = {}
         self.data_processors = {}
         
     async def initialize_metrics_collector(self) -> Dict[str, Any]:
-        """Initialize real-time metrics collection system"""
+        """
+        Initialize real-time metrics collection system"""
         try:
             # Setup metric collectors
+
             metric_collectors = await self._setup_metric_collectors()
             
             # Initialize data processors
+
             data_processors = await self._initialize_data_processors()
             
             # Configure aggregation engines
+
             aggregation_engines = await self._configure_aggregation_engines()
             
             # Setup streaming pipelines
+
             streaming_pipelines = await self._setup_streaming_pipelines()
             
             # Configure data storage
+
             data_storage = await self._configure_data_storage()
             
             # Setup real-time processing
+
             realtime_processing = await self._setup_realtime_processing()
+
             
             logger.info(f"📊 Real-Time Metrics Collector initialized with {len(metric_collectors)} collectors")
+
             
             return {
                 "metric_collectors": len(metric_collectors),
@@ -299,6 +308,7 @@ class RealTimeMetricsCollector:
             
         except Exception as e:
             logger.error(f"Failed to initialize metrics collector: {e}")
+
             raise
 
     async def collect_streaming_metrics(
@@ -311,40 +321,49 @@ class RealTimeMetricsCollector:
             collection_id = str(uuid.uuid4())
             
             # Initialize metric collection sessions
+
             collection_sessions = {}
             for metric_def in metric_definitions:
                 session = await self._initialize_metric_collection_session(
                     metric_def, collection_config
                 )
+
                 collection_sessions[metric_def.metric_id] = session
             
             # Start real-time data collection
+
             collection_results = {}
             for metric_id, session in collection_sessions.items():
                 collection_result = await self._execute_metric_collection(
                     session, collection_config
                 )
+
                 collection_results[metric_id] = collection_result
             
             # Process and aggregate collected data
+
             data_processing = await self._process_collected_data(
                 collection_results, collection_config
             )
             
             # Store metrics data
+
             storage_result = await self._store_metrics_data(
                 data_processing, collection_config
             )
             
             # Update real-time feeds
+
             feed_updates = await self._update_realtime_feeds(
                 data_processing, collection_config
             )
             
             # Trigger alert evaluations
+
             alert_evaluations = await self._trigger_alert_evaluations(
                 data_processing, collection_config
             )
+
             
             return {
                 "success": True,
@@ -360,39 +379,49 @@ class RealTimeMetricsCollector:
             
         except Exception as e:
             logger.error(f"Failed to collect streaming metrics: {e}")
+
             raise
 
 class InteractiveDashboardEngine:
     """Interactive dashboard generation and management system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.dashboard_renderers = {}
         self.widget_factories = {}
         
     async def initialize_dashboard_engine(self) -> Dict[str, Any]:
-        """Initialize interactive dashboard engine"""
+        """
+        Initialize interactive dashboard engine"""
         try:
             # Setup dashboard renderers
+
             dashboard_renderers = await self._setup_dashboard_renderers()
             
             # Initialize widget factories
+
             widget_factories = await self._initialize_widget_factories()
             
             # Configure visualization engines
+
             visualization_engines = await self._configure_visualization_engines()
             
             # Setup interaction handlers
+
             interaction_handlers = await self._setup_interaction_handlers()
             
             # Configure real-time updates
+
             realtime_updates = await self._configure_realtime_updates()
             
             # Setup responsive layouts
+
             responsive_layouts = await self._setup_responsive_layouts()
+
             
             logger.info(f"📈 Interactive Dashboard Engine initialized with {len(dashboard_renderers)} renderers")
+
             
             return {
                 "dashboard_renderers": len(dashboard_renderers),
@@ -412,6 +441,7 @@ class InteractiveDashboardEngine:
             
         except Exception as e:
             logger.error(f"Failed to initialize dashboard engine: {e}")
+
             raise
 
     async def generate_interactive_dashboard(
@@ -425,42 +455,51 @@ class InteractiveDashboardEngine:
             dashboard_id = dashboard_config.dashboard_id
             
             # Generate dashboard widgets
+
             generated_widgets = {}
             for widget_config in widget_configs:
                 widget_generation = await self._generate_dashboard_widget(
                     widget_config, user_context
                 )
+
                 generated_widgets[widget_config.widget_id] = widget_generation
             
             # Create dashboard layout
+
             layout_creation = await self._create_dashboard_layout(
                 dashboard_config, generated_widgets, user_context
             )
             
             # Apply theme and styling
+
             theme_application = await self._apply_dashboard_theme(
                 dashboard_config, layout_creation
             )
             
             # Setup real-time data connections
+
             realtime_connections = await self._setup_realtime_data_connections(
                 dashboard_config, generated_widgets
             )
             
             # Configure user interactions
+
             interaction_setup = await self._configure_user_interactions(
                 dashboard_config, generated_widgets, user_context
             )
             
             # Generate dashboard export options
+
             export_options = await self._generate_export_options(
                 dashboard_config, generated_widgets
             )
             
             # Create dashboard metadata
+
             dashboard_metadata = await self._create_dashboard_metadata(
                 dashboard_config, generated_widgets, user_context
             )
+
             
             return {
                 "success": True,
@@ -477,39 +516,49 @@ class InteractiveDashboardEngine:
             
         except Exception as e:
             logger.error(f"Failed to generate interactive dashboard: {e}")
+
             raise
 
 class AlertManagementSystem:
     """Alert management and notification system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.alert_engines = {}
         self.notification_managers = {}
         
     async def initialize_alert_system(self) -> Dict[str, Any]:
-        """Initialize alert management system"""
+        """
+        Initialize alert management system"""
         try:
             # Setup alert engines
+
             alert_engines = await self._setup_alert_engines()
             
             # Initialize notification managers
+
             notification_managers = await self._initialize_notification_managers()
             
             # Configure alert rules
+
             alert_rules = await self._configure_alert_rules()
             
             # Setup escalation systems
+
             escalation_systems = await self._setup_escalation_systems()
             
             # Configure suppression rules
+
             suppression_rules = await self._configure_suppression_rules()
             
             # Setup alert correlation
+
             alert_correlation = await self._setup_alert_correlation()
+
             
             logger.info(f"🚨 Alert Management System initialized with {len(alert_engines)} engines")
+
             
             return {
                 "alert_engines": len(alert_engines),
@@ -529,6 +578,7 @@ class AlertManagementSystem:
             
         except Exception as e:
             logger.error(f"Failed to initialize alert system: {e}")
+
             raise
 
     async def process_alert_evaluation(
@@ -542,14 +592,17 @@ class AlertManagementSystem:
             evaluation_id = str(uuid.uuid4())
             
             # Evaluate alert condition
+
             condition_evaluation = await self._evaluate_alert_condition(
                 alert_rule, metric_data, evaluation_context
             )
             
             # Check alert suppression
+
             suppression_check = await self._check_alert_suppression(
                 alert_rule, condition_evaluation
             )
+
             
             if suppression_check["suppressed"]:
                 return {
@@ -560,6 +613,7 @@ class AlertManagementSystem:
                 }
             
             # Create alert instance if triggered
+
             alert_instance = None
             if condition_evaluation["triggered"]:
                 alert_instance = await self._create_alert_instance(
@@ -567,6 +621,7 @@ class AlertManagementSystem:
                 )
             
             # Send notifications
+
             notification_result = None
             if alert_instance:
                 notification_result = await self._send_alert_notifications(
@@ -574,14 +629,17 @@ class AlertManagementSystem:
                 )
             
             # Update alert state
+
             state_update = await self._update_alert_state(
                 alert_rule, alert_instance, condition_evaluation
             )
             
             # Log alert evaluation
+
             evaluation_logging = await self._log_alert_evaluation(
                 evaluation_id, alert_rule, condition_evaluation, alert_instance
             )
+
             
             return {
                 "success": True,
@@ -597,12 +655,13 @@ class AlertManagementSystem:
             
         except Exception as e:
             logger.error(f"Failed to process alert evaluation: {e}")
+
             raise
 
 class HealthMonitoringSystem:
     """System health monitoring and status tracking system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.health_checkers = {}
@@ -612,37 +671,45 @@ class HealthMonitoringSystem:
         health_checks: List[HealthCheck],
         monitoring_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute comprehensive health monitoring"""
+        """
+        Execute comprehensive health monitoring"""
         try:
             monitoring_id = str(uuid.uuid4())
             
             # Execute individual health checks
+
             health_results = {}
             for health_check in health_checks:
                 check_result = await self._execute_health_check(
                     health_check, monitoring_config
                 )
+
                 health_results[health_check.check_id] = check_result
             
             # Aggregate health status
+
             overall_health = await self._aggregate_health_status(
                 health_results, monitoring_config
             )
             
             # Generate health report
+
             health_report = await self._generate_health_report(
                 monitoring_id, health_results, overall_health
             )
             
             # Update health dashboard
+
             dashboard_update = await self._update_health_dashboard(
                 health_results, overall_health
             )
             
             # Trigger health alerts
+
             health_alerts = await self._trigger_health_alerts(
                 health_results, overall_health
             )
+
             
             return {
                 "success": True,
@@ -657,12 +724,13 @@ class HealthMonitoringSystem:
             
         except Exception as e:
             logger.error(f"Failed to execute health monitoring: {e}")
+
             raise
 
 class StreamingMonitoringDashboard:
     """Unified streaming monitoring dashboard - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         
@@ -682,24 +750,32 @@ class StreamingMonitoringDashboard:
         """Initialize comprehensive monitoring dashboard system"""
         try:
             # Initialize metrics collector
+
             collector_status = await self.metrics_collector.initialize_metrics_collector()
             
             # Initialize dashboard engine
+
             engine_status = await self.dashboard_engine.initialize_dashboard_engine()
             
             # Initialize alert system
+
             alert_status = await self.alert_system.initialize_alert_system()
             
             # Setup dashboard templates
+
             dashboard_templates = await self._setup_dashboard_templates()
             
             # Configure monitoring profiles
+
             monitoring_profiles = await self._configure_monitoring_profiles()
             
             # Setup data pipelines
+
             data_pipelines = await self._setup_data_pipelines()
+
             
             logger.info("📊 Streaming Monitoring Dashboard fully initialized")
+
             
             return {
                 "dashboard_status": "initialized",
@@ -721,6 +797,7 @@ class StreamingMonitoringDashboard:
             
         except Exception as e:
             logger.error(f"Failed to initialize monitoring dashboard: {e}")
+
             raise
     
     async def execute_comprehensive_monitoring_workflow(
@@ -732,6 +809,8 @@ class StreamingMonitoringDashboard:
             workflow_id = str(uuid.uuid4())
             
             # Create metric definitions (simplified for example)
+
+
             metric_definitions = [
                 MetricDefinition(
                     metric_id=str(uuid.uuid4()),
@@ -759,12 +838,14 @@ class StreamingMonitoringDashboard:
             ]
             
             # Collect real-time metrics
+
             metrics_collection = await self.metrics_collector.collect_streaming_metrics(
                 metric_definitions,
                 monitoring_request.get("collection_config", {})
             )
             
             # Generate dashboard
+
             dashboard_config = Dashboard(
                 dashboard_id=str(uuid.uuid4()),
                 dashboard_name=monitoring_request.get("dashboard_name", "Streaming Monitor"),
@@ -787,6 +868,8 @@ class StreamingMonitoringDashboard:
                 updated_at=datetime.utcnow(),
                 active=True
             )
+
+
             
             widget_configs = [
                 DashboardWidget(
@@ -812,6 +895,7 @@ class StreamingMonitoringDashboard:
                     active=True
                 )
             ]
+
             
             dashboard_generation = await self.dashboard_engine.generate_interactive_dashboard(
                 dashboard_config,
@@ -820,6 +904,7 @@ class StreamingMonitoringDashboard:
             )
             
             # Execute health monitoring
+
             health_checks = [
                 HealthCheck(
                     check_id=str(uuid.uuid4()),
@@ -843,11 +928,13 @@ class StreamingMonitoringDashboard:
                     active=True
                 )
             ]
+
             
             health_monitoring = await self.health_monitor.execute_health_monitoring(
                 health_checks,
                 monitoring_request.get("health_config", {})
             )
+
             
             return {
                 "success": True,
@@ -860,6 +947,7 @@ class StreamingMonitoringDashboard:
             
         except Exception as e:
             logger.error(f"Failed to execute comprehensive monitoring workflow: {e}")
+
             raise
     
     # Additional helper methods implementation...
@@ -874,6 +962,7 @@ class StreamingMonitoringDashboard:
             }
         except Exception as e:
             logger.error(f"Failed to setup dashboard templates: {e}")
+
             return {}
 
     async def _configure_monitoring_profiles(self) -> Dict[str, Any]:
@@ -887,6 +976,7 @@ class StreamingMonitoringDashboard:
             }
         except Exception as e:
             logger.error(f"Failed to configure monitoring profiles: {e}")
+
             return {}
 
 # Export main classes

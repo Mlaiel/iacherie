@@ -37,21 +37,15 @@ from sklearn.preprocessing import StandardScaler
 import cv2
 import librosa
 # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+from protection.utils.redis_compat import aioredis, REDIS_AVAILABLE
 from sqlalchemy.ext.asyncio import AsyncSession
 import pickle
 
 logger = logging.getLogger(__name__)
 
 class AIModelType(Enum):
-    """AI model type enumeration"""
+    """
+        AI model type enumeration"""
     CONTENT_ENHANCEMENT = "content_enhancement"
     QUALITY_PREDICTION = "quality_prediction"
     VIEWER_RECOMMENDATION = "viewer_recommendation"
@@ -108,7 +102,8 @@ class AIModel:
 
 @dataclass
 class ContentAnalysis:
-    """Content analysis results"""
+    """
+        Content analysis results"""
     analysis_id: str
     content_id: str
     content_type: ContentType
@@ -124,7 +119,8 @@ class ContentAnalysis:
 
 @dataclass
 class AIRecommendation:
-    """AI-generated recommendation"""
+    """
+        AI-generated recommendation"""
     recommendation_id: str
     user_id: str
     content_id: str
@@ -138,7 +134,8 @@ class AIRecommendation:
 
 @dataclass
 class PredictionResult:
-    """AI prediction result"""
+    """
+        AI prediction result"""
     prediction_id: str
     model_type: AIModelType
     input_data: Dict[str, Any]
@@ -149,30 +146,38 @@ class PredictionResult:
     model_version: str
 
 class AIStreamingProcessor:
-    """AI-powered streaming content processor"""
+    """
+        AI-powered streaming content processor"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Optional[Any]):
         self.redis = redis_client
         self.models = {}
         self.processing_queue = asyncio.Queue()
         self.enhancement_engines = {}
         
     async def initialize_ai_processor(self) -> Dict[str, Any]:
-        """Initialize AI streaming processor"""
+        """
+        Initialize AI streaming processor"""
         try:
             # Load AI models
+
             models_loaded = await self._load_ai_models()
             
             # Initialize enhancement engines
+
             enhancement_engines = await self._initialize_enhancement_engines()
             
             # Setup processing pipeline
+
             pipeline_setup = await self._setup_processing_pipeline()
             
             # Configure real-time optimization
+
             realtime_config = await self._configure_realtime_optimization()
+
             
             logger.info(f"🤖 AI Streaming Processor initialized with {len(models_loaded)} models")
+
             
             return {
                 "models_loaded": len(models_loaded),
@@ -189,6 +194,7 @@ class AIStreamingProcessor:
             
         except Exception as e:
             logger.error(f"Failed to initialize AI processor: {e}")
+
             raise
 
     async def process_streaming_content(
@@ -200,21 +206,26 @@ class AIStreamingProcessor:
         """Process streaming content with AI"""
         try:
             # Analyze content
+
             content_analysis = await self._analyze_content(content_data, content_type)
             
             # Determine enhancement strategy
+
             enhancement_strategy = await self._determine_enhancement_strategy(content_analysis)
             
             # Apply AI enhancements
+
             enhanced_content = await self._apply_ai_enhancements(
                 content_data, enhancement_strategy, processing_priority
             )
             
             # Generate quality predictions
+
             quality_predictions = await self._predict_content_quality(enhanced_content, content_type)
             
             # Update AI learning
             await self._update_ai_learning(content_analysis, enhancement_strategy, quality_predictions)
+
             
             return {
                 "success": True,
@@ -228,12 +239,13 @@ class AIStreamingProcessor:
             
         except Exception as e:
             logger.error(f"Failed to process streaming content: {e}")
+
             raise
 
 class AIContentStreamingEnhancer:
     """AI-powered content enhancement for streaming"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Optional[Any]):
         self.redis = redis_client
         self.enhancement_models = {}
         self.processing_cache = {}
@@ -248,17 +260,23 @@ class AIContentStreamingEnhancer:
         """Enhance streaming content using AI"""
         try:
             # Pre-process content for AI enhancement
+
             preprocessed_content = await self._preprocess_content(content_data, content_type)
             
             # Apply AI enhancements
+
             enhancement_results = []
+
             enhanced_content = preprocessed_content
             
             for enhancement_type in enhancement_types:
                 # Apply specific enhancement
+
                 enhancement_result = await self._apply_specific_enhancement(
                     enhanced_content, enhancement_type, target_quality
                 )
+
+
                 
                 enhanced_content = enhancement_result["enhanced_data"]
                 enhancement_results.append({
@@ -269,11 +287,16 @@ class AIContentStreamingEnhancer:
                 })
             
             # Post-process enhanced content
+
             final_content = await self._postprocess_enhanced_content(enhanced_content, content_type)
             
             # Calculate overall enhancement metrics
+
             overall_quality_improvement = np.mean([r["quality_improvement"] for r in enhancement_results])
+
+
             total_processing_time = sum(r["processing_time_ms"] for r in enhancement_results)
+
             
             return {
                 "success": True,
@@ -287,12 +310,13 @@ class AIContentStreamingEnhancer:
             
         except Exception as e:
             logger.error(f"Failed to enhance streaming content: {e}")
+
             raise
 
 class AIPredictionStreamingEngine:
     """AI prediction engine for streaming optimization"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.prediction_models = {}
@@ -304,47 +328,61 @@ class AIPredictionStreamingEngine:
         current_metrics: Dict[str, Any],
         prediction_horizon: int = 300  # seconds
     ) -> Dict[str, Any]:
-        """Predict streaming performance metrics"""
+        """
+        Predict streaming performance metrics"""
         try:
             # Collect historical data
+
             historical_data = await self._collect_historical_data(session_id)
             
             # Prepare prediction features
+
             prediction_features = await self._prepare_prediction_features(
                 current_metrics, historical_data
             )
             
             # Generate predictions
+
             predictions = {}
             
             # Predict viewer count
+
             viewer_prediction = await self._predict_viewer_metrics(
                 prediction_features, prediction_horizon
             )
+
             predictions["viewer_metrics"] = viewer_prediction
             
             # Predict quality metrics
+
             quality_prediction = await self._predict_quality_metrics(
                 prediction_features, prediction_horizon
             )
+
             predictions["quality_metrics"] = quality_prediction
             
             # Predict engagement metrics
+
             engagement_prediction = await self._predict_engagement_metrics(
                 prediction_features, prediction_horizon
             )
+
             predictions["engagement_metrics"] = engagement_prediction
             
             # Predict potential issues
+
             issue_prediction = await self._predict_potential_issues(
                 prediction_features, prediction_horizon
             )
+
             predictions["potential_issues"] = issue_prediction
             
             # Generate optimization recommendations
+
             optimization_recommendations = await self._generate_optimization_recommendations(
                 predictions, current_metrics
             )
+
             
             return {
                 "success": True,
@@ -357,12 +395,13 @@ class AIPredictionStreamingEngine:
             
         except Exception as e:
             logger.error(f"Failed to predict streaming performance: {e}")
+
             raise
 
 class AIStreamingRecommendationEngine:
     """AI-powered recommendation engine for streaming"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.recommendation_models = {}
@@ -374,31 +413,39 @@ class AIStreamingRecommendationEngine:
         user_context: Dict[str, Any],
         recommendation_count: int = 10
     ) -> List[AIRecommendation]:
-        """Generate AI-powered content recommendations"""
+        """
+        Generate AI-powered content recommendations"""
         try:
             # Get user profile and preferences
+
             user_profile = await self._get_user_profile(user_id)
             
             # Analyze user context and behavior
+
             context_analysis = await self._analyze_user_context(user_context, user_profile)
             
             # Generate candidate recommendations
+
             candidate_content = await self._generate_candidate_content(user_profile, context_analysis)
             
             # Score and rank recommendations
+
             scored_recommendations = await self._score_recommendations(
                 candidate_content, user_profile, context_analysis
             )
             
             # Apply diversity and freshness filters
+
             filtered_recommendations = await self._apply_recommendation_filters(
                 scored_recommendations, user_profile
             )
             
             # Select top recommendations
+
             top_recommendations = filtered_recommendations[:recommendation_count]
             
             # Create recommendation objects
+
             recommendations = []
             for i, rec in enumerate(top_recommendations):
                 recommendation = AIRecommendation(
@@ -413,21 +460,24 @@ class AIStreamingRecommendationEngine:
                     created_at=datetime.utcnow(),
                     expires_at=datetime.utcnow() + timedelta(hours=24)
                 )
+
                 recommendations.append(recommendation)
             
             # Store recommendations for analytics
             await self._store_recommendations(recommendations)
+
             
             return recommendations
             
         except Exception as e:
             logger.error(f"Failed to generate content recommendations: {e}")
+
             raise
 
 class ContentIntelligenceStreamer:
     """Content intelligence and analytics for streaming"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Optional[Any]):
         self.redis = redis_client
         self.intelligence_engines = {}
         self.analytics_cache = {}
@@ -438,43 +488,54 @@ class ContentIntelligenceStreamer:
         content_type: ContentType,
         context: Dict[str, Any]
     ) -> ContentAnalysis:
-        """Analyze content intelligence for streaming"""
+        """
+        Analyze content intelligence for streaming"""
         try:
             analysis_id = str(uuid.uuid4())
             
             # Extract visual features
+
             visual_features = await self._extract_visual_features(content_data, content_type)
             
             # Extract audio features
+
             audio_features = await self._extract_audio_features(content_data, content_type)
             
             # Extract metadata features
+
             metadata_features = await self._extract_metadata_features(context)
             
             # Calculate quality scores
+
             quality_scores = await self._calculate_quality_scores(
                 visual_features, audio_features, metadata_features
             )
             
             # Classify content
+
             classification_results = await self._classify_content(
                 visual_features, audio_features, metadata_features
             )
             
             # Generate enhancement recommendations
+
             enhancement_recommendations = await self._generate_enhancement_recommendations(
                 quality_scores, classification_results
             )
             
             # Predict engagement
+
             predicted_engagement = await self._predict_content_engagement(
                 visual_features, audio_features, metadata_features, classification_results
             )
             
             # Calculate confidence score
+
             confidence_score = await self._calculate_analysis_confidence(
                 visual_features, audio_features, classification_results
             )
+
+
             
             analysis = ContentAnalysis(
                 analysis_id=analysis_id,
@@ -493,17 +554,19 @@ class ContentIntelligenceStreamer:
             
             # Store analysis for learning
             await self._store_content_analysis(analysis)
+
             
             return analysis
             
         except Exception as e:
             logger.error(f"Failed to analyze content intelligence: {e}")
+
             raise
 
 class StreamingAIIntelligence:
     """Unified AI intelligence system - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         
@@ -524,24 +587,32 @@ class StreamingAIIntelligence:
         """Initialize AI intelligence system"""
         try:
             # Initialize AI processor
+
             processor_status = await self.ai_processor.initialize_ai_processor()
             
             # Setup AI model management
+
             model_management = await self._setup_ai_model_management()
             
             # Initialize training pipeline
+
             training_pipeline = await self._initialize_training_pipeline()
             
             # Configure real-time AI processing
+
             realtime_ai = await self._configure_realtime_ai_processing()
             
             # Setup AI analytics
+
             ai_analytics = await self._setup_ai_analytics()
             
             # Initialize continuous learning
+
             continuous_learning = await self._initialize_continuous_learning()
+
             
             logger.info("🤖 Streaming AI Intelligence fully initialized")
+
             
             return {
                 "ai_status": "initialized",
@@ -563,6 +634,7 @@ class StreamingAIIntelligence:
             
         except Exception as e:
             logger.error(f"Failed to initialize AI intelligence: {e}")
+
             raise
     
     async def process_intelligent_streaming(
@@ -575,29 +647,35 @@ class StreamingAIIntelligence:
         """Process intelligent streaming with full AI pipeline"""
         try:
             # AI content processing
+
             ai_processing = await self.ai_processor.process_streaming_content(
                 content_data, content_type, AIProcessingPriority.REAL_TIME
             )
             
             # Content enhancement
+
             content_enhancement = await self.content_enhancer.enhance_streaming_content(
                 content_data, content_type, [EnhancementType.UPSCALING, EnhancementType.DENOISING]
             )
             
             # Performance prediction
+
             performance_prediction = await self.prediction_engine.predict_streaming_performance(
                 session_id, user_context, 300
             )
             
             # Content intelligence analysis
+
             content_analysis = await self.content_intelligence.analyze_streaming_content_intelligence(
                 content_data, content_type, user_context
             )
             
             # Generate recommendations
+
             recommendations = await self.recommendation_engine.generate_content_recommendations(
                 user_context.get("user_id", "anonymous"), user_context, 5
             )
+
             
             return {
                 "success": True,
@@ -612,6 +690,7 @@ class StreamingAIIntelligence:
             
         except Exception as e:
             logger.error(f"Failed to process intelligent streaming: {e}")
+
             raise
     
     # Additional helper methods implementation...
@@ -626,6 +705,7 @@ class StreamingAIIntelligence:
             }
         except Exception as e:
             logger.error(f"Failed to setup AI model management: {e}")
+
             return {}
 
     async def _initialize_training_pipeline(self) -> Dict[str, Any]:
@@ -639,6 +719,7 @@ class StreamingAIIntelligence:
             }
         except Exception as e:
             logger.error(f"Failed to initialize training pipeline: {e}")
+
             return {}
 
 # Export main classes

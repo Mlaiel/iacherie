@@ -174,7 +174,8 @@ class CollaborationAnalytics:
         self._initialize_analytics_engine()
     
     def _initialize_analytics_engine(self):
-        """Initialise le moteur d'analytics"""
+        """
+        Initialise le moteur d'analytics"""
         # Règles d'alerte par défaut
         self.alert_rules = {
             'project_delay': {
@@ -198,9 +199,11 @@ class CollaborationAnalytics:
         }
     
     async def collect_metric(self, metric: CollaborationMetric) -> bool:
-        """Collecte une métrique"""
+        """
+        Collecte une métrique"""
         try:
             # Ajouter au buffer
+
             metric_key = f"{metric.type.value}_{metric.name}"
             self.metrics_buffer[metric_key].append(metric)
             
@@ -218,12 +221,15 @@ class CollaborationAnalytics:
             
             # Vérifier les alertes
             await self._check_alert_conditions(metric)
+
             
             logger.debug(f"Métrique collectée: {metric.name} = {metric.value}")
+
             return True
             
         except Exception as e:
             logger.error(f"Erreur collecte métrique: {e}")
+
             return False
     
     async def generate_collaboration_report(self, project_id: str, 
@@ -231,16 +237,22 @@ class CollaborationAnalytics:
         """Génère un rapport de collaboration"""
         try:
             # Récupérer les métriques
+
             metrics = await self._get_project_metrics(project_id, period)
             
             # Analyser les données
+
             insights = await self._analyze_collaboration_patterns(metrics)
+
+
             recommendations = await self._generate_recommendations(metrics, insights)
             
             # Créer les graphiques
+
             charts = await self._create_collaboration_charts(metrics)
             
             # Créer le rapport
+
             report = AnalyticsReport(
                 title=f"Rapport de Collaboration - Projet {project_id}",
                 description=f"Analyse de collaboration pour la période {period.value}",
@@ -255,34 +267,46 @@ class CollaborationAnalytics:
             # Persister
             if self.db_session:
                 await self._persist_report(report)
+
             
             logger.info(f"Rapport généré pour projet {project_id}")
+
             return report
             
         except Exception as e:
             logger.error(f"Erreur génération rapport: {e}")
+
             raise
     
     async def predict_collaboration_success(self, project_id: str) -> Dict[str, Any]:
         """Prédit le succès d'une collaboration"""
         try:
             # Récupérer les données du projet
+
             project_data = await self._get_project_features(project_id)
             
             # Charger ou entraîner le modèle
+
             model = await self._get_or_train_success_model()
             
             # Faire la prédiction
+
             features = self._extract_features(project_data)
+
+
             success_probability = model.predict_proba([features])[0][1]
             
             # Identifier les facteurs de risque
+
             risk_factors = await self._identify_risk_factors(project_data, model)
             
             # Générer des recommandations
+
             recommendations = await self._generate_success_recommendations(
                 project_data, success_probability, risk_factors
             )
+
+
             
             prediction = {
                 'project_id': project_id,
@@ -295,16 +319,20 @@ class CollaborationAnalytics:
             }
             
             logger.info(f"Prédiction succès: {success_probability:.2%} pour projet {project_id}")
+
             return prediction
             
         except Exception as e:
             logger.error(f"Erreur prédiction succès: {e}")
+
             raise
     
     async def create_dashboard(self, user_id: str, dashboard_config: Dict) -> str:
         """Crée un tableau de bord personnalisé"""
         try:
             dashboard_id = str(uuid.uuid4())
+
+
             
             dashboard = {
                 'id': dashboard_id,
@@ -331,21 +359,27 @@ class CollaborationAnalytics:
             
             # Planifier les mises à jour
             await self._schedule_dashboard_updates(dashboard_id)
+
             
             logger.info(f"Tableau de bord créé: {dashboard['title']}")
+
             return dashboard_id
             
         except Exception as e:
             logger.error(f"Erreur création tableau de bord: {e}")
+
             raise
     
     async def get_real_time_metrics(self, filters: Optional[Dict] = None) -> List[CollaborationMetric]:
         """Récupère les métriques en temps réel"""
         try:
             current_time = datetime.utcnow()
+
+
             time_threshold = current_time - timedelta(minutes=5)
             
             # Filtrer les métriques récentes
+
             recent_metrics = []
             for metric_key, metrics_list in self.metrics_buffer.items():
                 for metric in metrics_list:
@@ -356,11 +390,13 @@ class CollaborationAnalytics:
             
             # Trier par timestamp
             recent_metrics.sort(key=lambda m: m.timestamp, reverse=True)
+
             
             return recent_metrics[:100]  # Limiter à 100 métriques
             
         except Exception as e:
             logger.error(f"Erreur récupération métriques temps réel: {e}")
+
             return []
     
     async def _analyze_collaboration_patterns(self, metrics: List[CollaborationMetric]) -> List[Insight]:
@@ -369,9 +405,11 @@ class CollaborationAnalytics:
         
         try:
             # Analyser l'engagement dans le temps
+
             engagement_metrics = [m for m in metrics if m.type == MetricType.ENGAGEMENT]
             if engagement_metrics:
                 engagement_trend = self._calculate_trend(engagement_metrics)
+
                 
                 if engagement_trend == TrendDirection.DECREASING:
                     insight = Insight(
@@ -382,12 +420,14 @@ class CollaborationAnalytics:
                         evidence=["Diminution de 25% des interactions", "Réduction du temps passé sur les tâches"],
                         recommended_actions=["Organiser une réunion d'équipe", "Réviser la répartition des tâches"]
                     )
+
                     insights.append(insight)
             
             # Analyser la qualité
             quality_metrics = [m for m in metrics if m.type == MetricType.QUALITY]
             if quality_metrics:
                 avg_quality = statistics.mean([m.value for m in quality_metrics])
+
                 
                 if avg_quality < 75:
                     insight = Insight(
@@ -397,12 +437,14 @@ class CollaborationAnalytics:
                         confidence=0.9,
                         recommended_actions=["Renforcer les processus de review", "Formation qualité"]
                     )
+
                     insights.append(insight)
             
             # Analyser l'efficacité
             efficiency_metrics = [m for m in metrics if m.type == MetricType.EFFICIENCY]
             if efficiency_metrics:
                 efficiency_trend = self._calculate_trend(efficiency_metrics)
+
                 
                 if efficiency_trend == TrendDirection.INCREASING:
                     insight = Insight(
@@ -412,12 +454,15 @@ class CollaborationAnalytics:
                         confidence=0.8,
                         recommended_actions=["Documenter les bonnes pratiques", "Partager avec d'autres équipes"]
                     )
+
                     insights.append(insight)
+
             
             return insights
             
         except Exception as e:
             logger.error(f"Erreur analyse patterns: {e}")
+
             return []
     
     def _calculate_trend(self, metrics: List[CollaborationMetric]) -> TrendDirection:
@@ -426,19 +471,28 @@ class CollaborationAnalytics:
             return TrendDirection.STABLE
         
         # Trier par timestamp
+
         sorted_metrics = sorted(metrics, key=lambda m: m.timestamp)
+
         values = [m.value for m in sorted_metrics]
         
         # Calculer la régression linéaire simple
+
         n = len(values)
+
         x = list(range(n))
         
         # Calcul de la pente
+
         x_mean = sum(x) / n
+
         y_mean = sum(values) / n
+
         
         numerator = sum((x[i] - x_mean) * (values[i] - y_mean) for i in range(n))
+
         denominator = sum((x[i] - x_mean) ** 2 for i in range(n))
+
         
         if denominator == 0:
             return TrendDirection.STABLE
@@ -476,24 +530,31 @@ class PerformanceAnalyzer:
         self.anomaly_detectors = {}
         
     async def analyze_team_performance(self, team_id: str, period: AnalyticsPeriod) -> Dict[str, Any]:
-        """Analyse la performance d'une équipe"""
+        """
+        Analyse la performance d'une équipe"""
         try:
             # Récupérer les métriques de l'équipe
+
             metrics = await self._get_team_metrics(team_id, period)
             
             # Calculer les KPIs principaux
+
             kpis = await self._calculate_team_kpis(metrics)
             
             # Comparer avec les benchmarks
+
             benchmark_comparison = await self._compare_with_benchmarks(team_id, kpis)
             
             # Identifier les points forts et faibles
             strengths, weaknesses = await self._identify_strengths_weaknesses(kpis, benchmark_comparison)
             
             # Générer des recommandations
+
             recommendations = await self._generate_performance_recommendations(
                 team_id, kpis, strengths, weaknesses
             )
+
+
             
             analysis = {
                 'team_id': team_id,
@@ -511,17 +572,22 @@ class PerformanceAnalyzer:
             
         except Exception as e:
             logger.error(f"Erreur analyse performance équipe: {e}")
+
             raise
     
     async def detect_performance_anomalies(self, project_id: str) -> List[Dict[str, Any]]:
         """Détecte les anomalies de performance"""
         try:
             # Récupérer les données historiques
+
             historical_data = await self._get_historical_performance_data(project_id)
+
+
             
             anomalies = []
             
             # Analyser différents aspects
+
             aspects = ['productivity', 'quality', 'collaboration', 'timeline']
             
             for aspect in aspects:
@@ -529,12 +595,20 @@ class PerformanceAnalyzer:
                 
                 if len(aspect_data) >= 10:  # Besoin d'un historique minimum
                     # Utiliser l'écart-type pour détecter les anomalies
+
                     mean_val = statistics.mean(aspect_data)
+
+
                     std_val = statistics.stdev(aspect_data)
                     
                     # Les valeurs en dehors de 2 écarts-types sont considérées comme anomales
+
                     threshold_upper = mean_val + (2 * std_val)
+
+
                     threshold_lower = mean_val - (2 * std_val)
+
+
                     
                     latest_value = aspect_data[-1]
                     
@@ -548,11 +622,13 @@ class PerformanceAnalyzer:
                             'detected_at': datetime.utcnow()
                         }
                         anomalies.append(anomaly)
+
             
             return anomalies
             
         except Exception as e:
             logger.error(f"Erreur détection anomalies: {e}")
+
             return []
     
     def _calculate_anomaly_severity(self, value: float, mean: float, std: float) -> str:
@@ -590,21 +666,31 @@ class PredictiveIntelligence:
         self.feature_extractors = {}
         
     async def predict_project_outcome(self, project_id: str) -> Dict[str, Any]:
-        """Prédit l'issue d'un projet"""
+        """
+        Prédit l'issue d'un projet"""
         try:
             # Extraire les features du projet
+
             features = await self._extract_project_features(project_id)
             
             # Charger le modèle de prédiction
+
             model = await self._get_outcome_prediction_model()
             
             # Faire les prédictions
+
             success_probability = model.predict_proba([features])[0]
+
             predicted_completion_date = await self._predict_completion_date(project_id, features)
+
+
             resource_needs = await self._predict_resource_needs(project_id, features)
             
             # Identifier les facteurs de risque
+
             risk_factors = await self._identify_risk_factors(project_id, features, model)
+
+
             
             prediction = {
                 'project_id': project_id,
@@ -621,36 +707,47 @@ class PredictiveIntelligence:
             
         except Exception as e:
             logger.error(f"Erreur prédiction issue projet: {e}")
+
             raise
     
     async def forecast_team_workload(self, team_id: str, forecast_days: int) -> Dict[str, Any]:
         """Prévoit la charge de travail d'une équipe"""
         try:
             # Récupérer l'historique de charge
+
             historical_workload = await self._get_team_workload_history(team_id)
             
             # Récupérer les projets planifiés
+
             upcoming_projects = await self._get_upcoming_projects(team_id)
             
             # Analyser les patterns saisonniers
+
             seasonal_patterns = await self._analyze_seasonal_patterns(historical_workload)
             
             # Calculer la prévision
+
             forecast = []
+
             base_date = datetime.utcnow()
+
             
             for day in range(forecast_days):
                 forecast_date = base_date + timedelta(days=day)
                 
                 # Charge de base basée sur les patterns historiques
+
                 base_workload = await self._calculate_base_workload(
                     historical_workload, forecast_date, seasonal_patterns
                 )
                 
                 # Ajouter la charge des nouveaux projets
+
                 project_workload = await self._calculate_project_workload(
                     upcoming_projects, forecast_date
                 )
+
+
                 
                 total_workload = base_workload + project_workload
                 
@@ -663,15 +760,18 @@ class PredictiveIntelligence:
                 })
             
             # Identifier les périodes de surcharge
+
             overload_periods = [
                 f for f in forecast 
                 if f['capacity_utilization'] > 1.0
             ]
             
             # Générer des recommandations
+
             recommendations = await self._generate_workload_recommendations(
                 team_id, forecast, overload_periods
             )
+
             
             return {
                 'team_id': team_id,
@@ -684,6 +784,7 @@ class PredictiveIntelligence:
             
         except Exception as e:
             logger.error(f"Erreur prévision charge équipe: {e}")
+
             raise
 
 # ==========================================
@@ -710,15 +811,18 @@ async def create_collaboration_analytics(redis_url: Optional[str] = None,
     if redis_url:
         try:
             # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+            try:
+                import aioredis
+                REDIS_AVAILABLE = True
+            except (ImportError, TypeError) as e:
+                # Handle Python 3.12 TimeoutError duplicate base class issue
+                from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+                import logging
+                logging.warning(f"Using Redis compatibility layer: {e}")
+
+
             redis_client = await aioredis.from_url(redis_url)
+            
         except Exception as e:
             logger.warning(f"Impossible de se connecter à Redis: {e}")
     

@@ -11,7 +11,8 @@ from typing import Optional, Any
 logger = logging.getLogger(__name__)
 
 class SentenceTransformersManager:
-    """Gestionnaire singleton thread-safe pour sentence-transformers"""
+    """
+Gestionnaire singleton thread-safe pour sentence-transformers"""
     
     _instance = None
     _lock = threading.Lock()
@@ -27,7 +28,8 @@ class SentenceTransformersManager:
         return cls._instance
     
     def _initialize_sentence_transformers(self):
-        """Initialise sentence-transformers de manière sécurisée"""
+        """
+Initialise sentence-transformers de manière sécurisée"""
         if self._initialized:
             return
             
@@ -79,13 +81,15 @@ class SentenceTransformersManager:
                 self._initialized = True  # Éviter les boucles infinies
     
     def get_sentence_transformers(self):
-        """Récupère le module sentence_transformers principal"""
+        """
+Récupère le module sentence_transformers principal"""
         if not self._initialized:
             self._initialize_sentence_transformers()
         return self._sentence_transformers_module
     
     def get_sentence_transformer(self):
-        """Récupère la classe SentenceTransformer"""
+        """
+Récupère la classe SentenceTransformer"""
         if not self._initialized:
             self._initialize_sentence_transformers()
         return self._sentence_transformer_class
@@ -94,15 +98,18 @@ class SentenceTransformersManager:
 _manager = SentenceTransformersManager()
 
 def get_sentence_transformers():
-    """Fonction de convenance pour obtenir sentence_transformers"""
+    """
+Fonction de convenance pour obtenir sentence_transformers"""
     return _manager.get_sentence_transformers()
 
 def get_sentence_transformer():
-    """Fonction de convenance pour obtenir SentenceTransformer"""
+    """
+Fonction de convenance pour obtenir SentenceTransformer"""
     return _manager.get_sentence_transformer()
 
 def is_sentence_transformers_available() -> bool:
-    """Vérifie si sentence-transformers est disponible"""
+    """
+Vérifie si sentence-transformers est disponible"""
     sentence_transformers_module = get_sentence_transformers()
     return sentence_transformers_module is not None
 

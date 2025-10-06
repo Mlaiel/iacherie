@@ -22,7 +22,8 @@ logger = logging.getLogger(__name__)
 
 
 class AlertLevel(str, Enum):
-    """Niveaux d'alerte."""
+    """
+        Niveaux d'alerte."""
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -51,7 +52,8 @@ class Alert:
 
 @dataclass
 class Metric:
-    """Métrique système."""
+    """
+        Métrique système."""
     metric_id: str
     name: str
     metric_type: MetricType
@@ -61,7 +63,8 @@ class Metric:
 
 
 class AlertingSystemIntelligence:
-    """Système alertes intelligent."""
+    """
+        Système alertes intelligent."""
     
     def __init__(self):
         self.alerts: Dict[str, Alert] = {}
@@ -71,8 +74,11 @@ class AlertingSystemIntelligence:
     
     async def create_alert(self, title: str, level: AlertLevel, 
                           description: str, metadata: Dict[str, Any] = None) -> str:
-        """Crée une alerte."""
+        """
+        Crée une alerte."""
         alert_id = str(uuid.uuid4())
+
+
         
         alert = Alert(
             alert_id=alert_id,
@@ -82,15 +88,18 @@ class AlertingSystemIntelligence:
             timestamp=datetime.utcnow(),
             metadata=metadata or {}
         )
+
         
         self.alerts[alert_id] = alert
         self.alert_history.append(alert)
+
         
         logger.info(f"Alert created: {title} ({level.value})")
         
         # Auto-notification for critical alerts
         if level == AlertLevel.CRITICAL:
             await self._send_notification(alert)
+
         
         return alert_id
     
@@ -100,19 +109,22 @@ class AlertingSystemIntelligence:
         pass
     
     async def resolve_alert(self, alert_id: str) -> bool:
-        """Résout une alerte."""
+        """
+        Résout une alerte."""
         if alert_id in self.alerts:
             self.alerts[alert_id].resolved = True
             return True
         return False
     
     async def get_active_alerts(self) -> List[Alert]:
-        """Récupère les alertes actives."""
+        """
+        Récupère les alertes actives."""
         return [alert for alert in self.alerts.values() if not alert.resolved]
 
 
 class EdgeMetricsOptimization:
-    """Optimisation métriques edge."""
+    """
+        Optimisation métriques edge."""
     
     def __init__(self):
         self.metrics: Dict[str, List[Metric]] = defaultdict(list)
@@ -121,8 +133,11 @@ class EdgeMetricsOptimization:
     
     async def record_metric(self, name: str, value: float, 
                           metric_type: MetricType, labels: Dict[str, str] = None) -> str:
-        """Enregistre une métrique."""
+        """
+        Enregistre une métrique."""
         metric_id = str(uuid.uuid4())
+
+
         
         metric = Metric(
             metric_id=metric_id,
@@ -132,10 +147,12 @@ class EdgeMetricsOptimization:
             timestamp=datetime.utcnow(),
             labels=labels or {}
         )
+
         
         self.metrics[name].append(metric)
         
         # Keep only recent metrics (last 24 hours)
+
         cutoff_time = datetime.utcnow() - timedelta(hours=24)
         self.metrics[name] = [
             m for m in self.metrics[name] 
@@ -146,8 +163,10 @@ class EdgeMetricsOptimization:
     
     async def get_metric_stats(self, metric_name: str, 
                              time_range: timedelta = timedelta(hours=1)) -> Dict[str, Any]:
-        """Récupère les statistiques d'une métrique."""
+        """
+        Récupère les statistiques d'une métrique."""
         cutoff_time = datetime.utcnow() - time_range
+
         recent_metrics = [
             m for m in self.metrics[metric_name]
             if m.timestamp > cutoff_time
@@ -155,6 +174,7 @@ class EdgeMetricsOptimization:
         
         if not recent_metrics:
             return {"error": "No metrics found"}
+
         
         values = [m.value for m in recent_metrics]
         
@@ -178,8 +198,10 @@ class PerformanceMonitoringAI:
         self.baseline_metrics = {}
     
     async def monitor_performance(self, component: str, metrics: Dict[str, float]) -> Dict[str, Any]:
-        """Surveille les performances."""
+        """
+        Surveille les performances."""
         timestamp = datetime.utcnow()
+
         
         for metric_name, value in metrics.items():
             self.performance_data[f"{component}.{metric_name}"].append({
@@ -188,7 +210,9 @@ class PerformanceMonitoringAI:
             })
         
         # Détection d'anomalies
+
         anomalies = await self._detect_anomalies(component, metrics)
+
         
         return {
             "component": component,
@@ -210,9 +234,15 @@ class PerformanceMonitoringAI:
                 continue
             
             # Calcul de la moyenne et écart-type
+
             values = [d["value"] for d in historical_data[-50:]]  # 50 derniers points
+
             mean_value = sum(values) / len(values)
+
+
             variance = sum((x - mean_value) ** 2 for x in values) / len(values)
+
+
             std_dev = variance ** 0.5
             
             # Détection d'anomalie
@@ -223,6 +253,7 @@ class PerformanceMonitoringAI:
                     "expected_range": [mean_value - std_dev, mean_value + std_dev],
                     "severity": "high" if abs(current_value - mean_value) > 3 * std_dev else "medium"
                 })
+
         
         return anomalies
 
@@ -234,6 +265,7 @@ class EdgeMonitoringAnalytics:
         self.alerting_system = AlertingSystemIntelligence()
         self.metrics_optimizer = EdgeMetricsOptimization()
         self.performance_monitor = PerformanceMonitoringAI()
+
         
         self.monitoring_stats = {
             "total_metrics_collected": 0,
@@ -273,6 +305,7 @@ class EdgeMonitoringAnalytics:
                         AlertLevel.WARNING,
                         f"Anomaly detected in {anomaly['metric']}: {anomaly['current_value']}"
                     )
+
         
         return result
     
@@ -281,9 +314,11 @@ class EdgeMonitoringAnalytics:
         active_alerts = await self.alerting_system.get_active_alerts()
         
         # Métriques système récentes
+
         system_metrics = {}
         for metric_name in ["cpu_usage", "memory_usage", "network_latency"]:
             stats = await self.metrics_optimizer.get_metric_stats(metric_name)
+
             if "error" not in stats:
                 system_metrics[metric_name] = stats
         
@@ -324,13 +359,64 @@ def create_edge_monitoring_analytics() -> EdgeMonitoringAnalytics:
     return EdgeMonitoringAnalytics()
 
 
+# ============================================================================
+# ALIASES FOR COMPATIBILITY
+# ============================================================================
+
+# Import des stubs temporaires pour classes manquantes
+try:
+    from .missing_classes_stubs import (
+        AlertingSystem as MissingAlertingSystem,
+        MetricsCollector as MissingMetricsCollector,
+        PerformanceAnalyzer as MissingPerformanceAnalyzer,
+        LogAggregator as MissingLogAggregator
+    )
+except ImportError:
+    # Si le stub n'existe pas, créer des classes vides
+    class MissingAlertingSystem: pass
+    class MissingMetricsCollector: pass
+    class MissingPerformanceAnalyzer: pass
+    class MissingLogAggregator: pass
+
+# Créer des alias pour les noms attendus
+AlertingSystem = AlertingSystemIntelligence
+MetricsCollector = EdgeMetricsOptimization
+PerformanceAnalyzer = PerformanceMonitoringAI
+LogAggregator = EdgeMonitoringAnalytics
+
+# Aliases additionnels pour compatibilité
+DashboardAPI = EdgeMonitoringAnalytics  # API dashboard principal
+EdgeMetrics = EdgeMetricsOptimization  # Métriques edge
+HealthChecker = PerformanceMonitoringAI  # Vérification santé
+PerformanceMonitor = PerformanceMonitoringAI  # Monitoring performance
+TelemetryCollector = EdgeMetricsOptimization  # Collecte télémétrie
+
+# Enums manquants - créer des alias
+AlertType = AlertLevel  # Alias pour AlertType
+MonitoringScope = MetricType  # Alias pour MonitoringScope
+
+
 __all__ = [
     "EdgeMonitoringAnalytics",
     "AlertingSystemIntelligence",
     "EdgeMetricsOptimization",
     "PerformanceMonitoringAI",
+    # Aliases principaux
+    "AlertingSystem",
+    "MetricsCollector",
+    "PerformanceAnalyzer",
+    "LogAggregator",
+    # Aliases additionnels
+    "DashboardAPI",
+    "EdgeMetrics",
+    "HealthChecker",
+    "PerformanceMonitor",
+    "TelemetryCollector",
+    # Enums & Data classes
     "AlertLevel",
+    "AlertType",
     "MetricType",
+    "MonitoringScope",
     "Alert",
     "Metric",
     "create_edge_monitoring_analytics"

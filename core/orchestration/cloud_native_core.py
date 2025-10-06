@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class CloudNativeCore:
-    """Advanced CloudNativeCore System"""
+    """
+Advanced CloudNativeCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class CloudNativeCore:
 # Module exports
 __all__ = ["CloudNativeCore"]
 
-logger.info("☁️ CloudNativeCore module loaded")
+logger.info("☁️ CloudNativeCore module initialized")

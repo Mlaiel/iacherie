@@ -56,7 +56,8 @@ import os
 logger = logging.getLogger(__name__)
 
 class ReportFormat(Enum):
-    """Report output formats"""
+    """
+        Report output formats"""
     PDF = "pdf"
     EXCEL = "excel"
     POWERPOINT = "powerpoint"
@@ -148,7 +149,8 @@ class ReportConfiguration:
 
 @dataclass
 class GeneratedReport:
-    """Generated report result"""
+    """
+        Generated report result"""
     report_id: str
     generation_id: str
     report_name: str
@@ -168,7 +170,8 @@ class GeneratedReport:
 
 @dataclass
 class VisualizationConfig:
-    """Advanced visualization configuration"""
+    """
+        Advanced visualization configuration"""
     visualization_id: str
     title: str
     type: VisualizationType
@@ -182,7 +185,8 @@ class VisualizationConfig:
 
 @dataclass
 class DashboardConfig:
-    """Interactive dashboard configuration"""
+    """
+        Interactive dashboard configuration"""
     dashboard_id: str
     name: str
     description: str
@@ -196,7 +200,8 @@ class DashboardConfig:
     refresh_interval: int
 
 class AdvancedVisualizationEngine:
-    """Advanced visualization generation engine"""
+    """
+        Advanced visualization generation engine"""
     
     def __init__(self):
         self.chart_generators = {}
@@ -206,9 +211,11 @@ class AdvancedVisualizationEngine:
         
         # Initialize visualization components
         self._initialize_visualization_generators()
+
         
     def _initialize_visualization_generators(self):
-        """Initialize visualization generation components"""
+        """
+        Initialize visualization generation components"""
         self.chart_generators = {
             VisualizationType.LINE_CHART: self._generate_line_chart,
             VisualizationType.BAR_CHART: self._generate_bar_chart,
@@ -249,9 +256,11 @@ class AdvancedVisualizationEngine:
         """Generate advanced visualization"""
         try:
             # Validate data and configuration
+
             validated_data = await self._validate_visualization_data(data, config)
             
             # Apply data transformations
+
             transformed_data = await self._apply_data_transformations(
                 validated_data, config
             )
@@ -261,37 +270,46 @@ class AdvancedVisualizationEngine:
                 base_chart = await self.chart_generators[config.type](
                     transformed_data, config
                 )
+
             else:
                 base_chart = await self._generate_generic_chart(
                     transformed_data, config
                 )
             
             # Apply advanced styling
+
             styled_chart = await self._apply_advanced_styling(base_chart, config)
             
             # Add interactivity features
+
             interactive_chart = await self._add_interactivity(styled_chart, config)
             
             # Apply animations if configured
+
             animated_chart = await self._add_animations(interactive_chart, config)
             
             # Apply responsive design
+
             responsive_chart = await self._make_responsive(animated_chart, config)
             
             # Add accessibility features
+
             accessible_chart = await self._add_accessibility_features(
                 responsive_chart, config
             )
             
             # Generate output in requested format
+
             chart_output = await self._generate_chart_output(
                 accessible_chart, output_format, config
             )
             
             # Generate metadata
+
             metadata = await self._generate_visualization_metadata(
                 config, data, chart_output
             )
+
             
             return {
                 "visualization_id": config.visualization_id,
@@ -306,6 +324,7 @@ class AdvancedVisualizationEngine:
             
         except Exception as e:
             logger.error(f"Failed to generate advanced visualization: {e}")
+
             raise
     
     async def _generate_line_chart(
@@ -315,12 +334,17 @@ class AdvancedVisualizationEngine:
         fig = go.Figure()
         
         # Get styling configuration
+
         styling = config.styling
+
         color_palette = self.color_palettes.get(styling.get("palette", "corporate"))
         
         # Add lines for each series
+
         y_columns = config.data_query.get("y_columns", [])
+
         x_column = config.data_query.get("x_column", data.columns[0])
+
         
         for i, y_col in enumerate(y_columns):
             if y_col in data.columns:
@@ -371,6 +395,7 @@ class AdvancedVisualizationEngine:
                 x=1
             )
         )
+
         
         return fig
     
@@ -379,12 +404,19 @@ class AdvancedVisualizationEngine:
     ) -> go.Figure:
         """Generate advanced bar chart"""
         fig = go.Figure()
+
+
         
         styling = config.styling
+
         color_palette = self.color_palettes.get(styling.get("palette", "corporate"))
+
+
         
         x_column = config.data_query.get("x_column", data.columns[0])
+
         y_columns = config.data_query.get("y_columns", [])
+
         
         for i, y_col in enumerate(y_columns):
             if y_col in data.columns:
@@ -407,9 +439,11 @@ class AdvancedVisualizationEngine:
             xaxis=dict(title=styling.get("x_title", x_column)),
             yaxis=dict(title=styling.get("y_title", "Value")),
             barmode=styling.get("bar_mode", "group"),  # group, stack, relative
+
             plot_bgcolor=styling.get("background_color", "white"),
             paper_bgcolor=styling.get("paper_color", "white")
         )
+
         
         return fig
     
@@ -424,6 +458,7 @@ class AdvancedVisualizationEngine:
             correlation_data = data.select_dtypes(include=[np.number]).corr()
         else:
             correlation_data = data
+
         
         fig = go.Figure(data=go.Heatmap(
             z=correlation_data.values,
@@ -436,6 +471,7 @@ class AdvancedVisualizationEngine:
                 titleside="right"
             )
         ))
+
         
         fig.update_layout(
             title=dict(
@@ -446,6 +482,7 @@ class AdvancedVisualizationEngine:
             yaxis=dict(side="left"),
             plot_bgcolor=styling.get("background_color", "white")
         )
+
         
         return fig
     
@@ -456,15 +493,20 @@ class AdvancedVisualizationEngine:
         styling = config.styling
         
         # Get value for gauge
+
         value_column = config.data_query.get("value_column")
+
         current_value = data[value_column].iloc[-1] if value_column in data.columns else 0
         
         # Define gauge ranges
+
         ranges = config.data_query.get("ranges", [
             {"range": [0, 50], "color": "red", "label": "Low"},
             {"range": [50, 80], "color": "yellow", "label": "Medium"},
             {"range": [80, 100], "color": "green", "label": "High"}
         ])
+
+
         
         fig = go.Figure(go.Indicator(
             mode="gauge+number+delta",
@@ -485,6 +527,7 @@ class AdvancedVisualizationEngine:
                 }
             }
         ))
+
         
         return fig
     
@@ -493,18 +536,27 @@ class AdvancedVisualizationEngine:
     ) -> go.Figure:
         """Generate advanced Sankey diagram"""
         # Extract source, target, and value columns
+
         source_col = config.data_query.get("source_column")
+
         target_col = config.data_query.get("target_column")
+
         value_col = config.data_query.get("value_column")
         
         # Create unique labels
+
         sources = data[source_col].unique()
+
         targets = data[target_col].unique()
+
         all_labels = list(set(list(sources) + list(targets)))
         
         # Create indices for sources and targets
+
         source_indices = [all_labels.index(source) for source in data[source_col]]
+
         target_indices = [all_labels.index(target) for target in data[target_col]]
+
         
         fig = go.Figure(data=[go.Sankey(
             node=dict(
@@ -520,11 +572,13 @@ class AdvancedVisualizationEngine:
                 value=data[value_col]
             )
         )])
+
         
         fig.update_layout(
             title_text=config.title,
             font_size=10
         )
+
         
         return fig
 
@@ -538,9 +592,11 @@ class ReportTemplateEngine:
         
         # Initialize template engine
         self._initialize_templates()
+
         
     def _initialize_templates(self):
-        """Initialize report templates"""
+        """
+        Initialize report templates"""
         self.custom_templates = {
             "executive_summary": self._create_executive_template(),
             "financial_report": self._create_financial_template(),
@@ -611,7 +667,8 @@ class ReportTemplateEngine:
         """
     
     def _create_financial_template(self) -> str:
-        """Create financial report template"""
+        """
+        Create financial report template"""
         return """
         <!DOCTYPE html>
         <html>
@@ -696,7 +753,8 @@ class ReportTemplateEngine:
         template_data: Dict[str, Any],
         custom_template: Optional[str] = None
     ) -> str:
-        """Render report template with data"""
+        """
+        Render report template with data"""
         try:
             # Get template
             if custom_template:
@@ -707,6 +765,7 @@ class ReportTemplateEngine:
                 template_content = self.custom_templates["custom_report"]
             
             # Create Jinja2 template
+
             template = Template(template_content)
             
             # Add template functions
@@ -717,12 +776,15 @@ class ReportTemplateEngine:
             })
             
             # Render template
+
             rendered_html = template.render(**template_data)
+
             
             return rendered_html
             
         except Exception as e:
             logger.error(f"Failed to render template: {e}")
+
             raise
     
     def _format_number(self, value: float, decimals: int = 2) -> str:
@@ -734,7 +796,8 @@ class ReportTemplateEngine:
         return date.strftime(format_str)
     
     def _format_percentage(self, value: float, decimals: int = 1) -> str:
-        """Format percentage"""
+        """
+        Format percentage"""
         return f"{value:.{decimals}f}%"
 
 class ReportExportEngine:
@@ -746,9 +809,11 @@ class ReportExportEngine:
         
         # Initialize export engines
         self._initialize_exporters()
+
         
     def _initialize_exporters(self):
-        """Initialize export engines"""
+        """
+        Initialize export engines"""
         self.exporters = {
             ReportFormat.PDF: self._export_to_pdf,
             ReportFormat.EXCEL: self._export_to_excel,
@@ -770,12 +835,15 @@ class ReportExportEngine:
         try:
             if format in self.exporters:
                 export_result = await self.exporters[format](report_data, export_config or {})
+
                 return export_result
             else:
                 raise ValueError(f"Unsupported export format: {format}")
+
                 
         except Exception as e:
             logger.error(f"Failed to export report: {e}")
+
             raise
     
     async def _export_to_pdf(
@@ -784,9 +852,11 @@ class ReportExportEngine:
         """Export report to PDF format"""
         try:
             # Get HTML content
+
             html_content = report_data.get("html_content", "")
             
             # Configure PDF options
+
             pdf_options = {
                 'page-size': config.get('page_size', 'A4'),
                 'margin-top': config.get('margin_top', '0.75in'),
@@ -798,13 +868,18 @@ class ReportExportEngine:
             }
             
             # Generate PDF using weasyprint
+
             html = weasyprint.HTML(string=html_content)
+
+
             pdf_bytes = html.write_pdf()
+
             
             return pdf_bytes
             
         except Exception as e:
             logger.error(f"Failed to export to PDF: {e}")
+
             raise
     
     async def _export_to_excel(
@@ -813,59 +888,82 @@ class ReportExportEngine:
         """Export report to Excel format"""
         try:
             # Create workbook
+
             wb = Workbook()
+
+
             ws = wb.active
             ws.title = config.get("sheet_name", "Report")
             
             # Add header
+
             header_font = Font(bold=True, size=14)
+
+
             header_fill = PatternFill(start_color="366092", end_color="366092", fill_type="solid")
             
             # Add report title
             ws['A1'] = report_data.get("title", "Analytics Report")
+
             ws['A1'].font = Font(bold=True, size=16)
             
             # Add generation date
             ws['A2'] = f"Generated: {datetime.utcnow().strftime('%Y-%m-%d %H:%M')}"
             
             # Add metrics data
+
             metrics = report_data.get("metrics", [])
+
             if metrics:
                 start_row = 4
                 ws[f'A{start_row}'] = "Key Metrics"
                 ws[f'A{start_row}'].font = header_font
                 
                 # Headers
+
                 headers = ["Metric", "Value", "Change", "Trend"]
                 for col, header in enumerate(headers, 1):
                     cell = ws.cell(row=start_row + 1, column=col, value=header)
+
                     cell.font = header_font
                     cell.fill = header_fill
                 
                 # Data
                 for row, metric in enumerate(metrics, start_row + 2):
                     ws.cell(row=row, column=1, value=metric.get("name", ""))
+
                     ws.cell(row=row, column=2, value=metric.get("value", ""))
+
                     ws.cell(row=row, column=3, value=metric.get("change", ""))
+
                     ws.cell(row=row, column=4, value=metric.get("trend", ""))
             
             # Add data tables
+
             tables = report_data.get("tables", [])
+
+
             current_row = len(metrics) + 8 if metrics else 4
             
             for table in tables:
                 # Table title
                 ws.cell(row=current_row, column=1, value=table.get("title", "Data Table"))
+
                 ws.cell(row=current_row, column=1).font = header_font
                 current_row += 2
                 
                 # Table data
+
                 data = table.get("data", [])
+
                 if data and len(data) > 0:
                     # Headers
+
                     headers = list(data[0].keys())
+
                     for col, header in enumerate(headers, 1):
                         cell = ws.cell(row=current_row, column=col, value=header)
+
                         cell.font = header_font
                         cell.fill = header_fill
                     
@@ -873,19 +971,25 @@ class ReportExportEngine:
                     for row, item in enumerate(data, current_row + 1):
                         for col, header in enumerate(headers, 1):
                             ws.cell(row=row, column=col, value=item.get(header, ""))
+
                     
                     current_row += len(data) + 3
             
             # Save to bytes
             with tempfile.NamedTemporaryFile() as tmp:
                 wb.save(tmp.name)
+
                 tmp.seek(0)
+
+
                 excel_bytes = tmp.read()
+
             
             return excel_bytes
             
         except Exception as e:
             logger.error(f"Failed to export to Excel: {e}")
+
             raise
     
     async def _export_to_powerpoint(
@@ -894,37 +998,53 @@ class ReportExportEngine:
         """Export report to PowerPoint format"""
         try:
             # Create presentation
+
             prs = Presentation()
             
             # Title slide
+
             title_slide_layout = prs.slide_layouts[0]
+
             slide = prs.slides.add_slide(title_slide_layout)
+
+
             title = slide.shapes.title
+
             subtitle = slide.placeholders[1]
             
             title.text = report_data.get("title", "Analytics Report")
+
             subtitle.text = f"Generated on {datetime.utcnow().strftime('%Y-%m-%d')}"
             
             # Key metrics slide
             if "metrics" in report_data:
                 bullet_slide_layout = prs.slide_layouts[1]
+
                 slide = prs.slides.add_slide(bullet_slide_layout)
+
+
                 title = slide.shapes.title
+
                 body = slide.placeholders[1]
                 
                 title.text = "Key Metrics"
                 tf = body.text_frame
                 
                 for metric in report_data["metrics"][:5]:  # Limit to 5 metrics
+
                     p = tf.add_paragraph()
+
                     p.text = f"{metric.get('name', '')}: {metric.get('value', '')}"
                     p.level = 0
             
             # Charts slides
             if "visualizations" in report_data:
                 for viz in report_data["visualizations"][:3]:  # Limit to 3 charts
+
                     slide = prs.slides.add_slide(prs.slide_layouts[5])  # Blank layout
+
                     title = slide.shapes.add_textbox(Inches(1), Inches(0.5), Inches(8), Inches(1))
+
                     title.text_frame.text = viz.get("title", "Chart")
                     
                     # Note: In a real implementation, you would convert chart images
@@ -933,13 +1053,18 @@ class ReportExportEngine:
             # Save to bytes
             with tempfile.NamedTemporaryFile() as tmp:
                 prs.save(tmp.name)
+
                 tmp.seek(0)
+
+
                 pptx_bytes = tmp.read()
+
             
             return pptx_bytes
             
         except Exception as e:
             logger.error(f"Failed to export to PowerPoint: {e}")
+
             raise
     
     async def _export_to_html(
@@ -954,6 +1079,7 @@ class ReportExportEngine:
     ) -> bytes:
         """Export report to JSON format"""
         # Remove non-serializable content
+
         json_data = {
             "title": report_data.get("title"),
             "generated_at": report_data.get("generated_at", datetime.utcnow()).isoformat(),
@@ -970,18 +1096,22 @@ class ReportExportEngine:
     ) -> bytes:
         """Export report to CSV format"""
         # Extract tabular data
+
         tables = report_data.get("tables", [])
         if not tables:
             return b""
         
         # Use first table for CSV export
+
         table_data = tables[0].get("data", [])
         if not table_data:
             return b""
         
         # Convert to DataFrame and then CSV
         df = pd.DataFrame(table_data)
+
         csv_content = df.to_csv(index=False)
+
         
         return csv_content.encode('utf-8')
 
@@ -989,7 +1119,8 @@ class AnalyticsReportingService:
     """Ultra-advanced analytics reporting service"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize analytics reporting service"""
+        """
+        Initialize analytics reporting service"""
         self.config = config or {}
         self.report_cache = {}
         self.scheduled_reports = {}
@@ -1014,6 +1145,7 @@ class AnalyticsReportingService:
         
         # Initialize background tasks
         self._start_background_tasks()
+
         
         logger.info("🚀 Ultra-Advanced Analytics Reporting Service initialized")
     
@@ -1022,46 +1154,57 @@ class AnalyticsReportingService:
         asyncio.create_task(self._scheduled_reports_worker())
         asyncio.create_task(self._report_cleanup_worker())
         asyncio.create_task(self._dashboard_refresh_worker())
+
         
     async def generate_comprehensive_report(
         self,
         config: ReportConfiguration,
         data_sources: Dict[str, Any]
     ) -> GeneratedReport:
-        """Generate comprehensive analytics report"""
+        """
+        Generate comprehensive analytics report"""
         try:
             start_time = datetime.utcnow()
+
+
             generation_id = f"gen_{uuid.uuid4().hex[:12]}"
             
             # Validate report configuration
+
             validated_config = await self._validate_report_config(config)
             
             # Collect and process data
+
             processed_data = await self._collect_and_process_report_data(
                 validated_config, data_sources
             )
             
             # Generate visualizations
+
             visualizations = await self._generate_report_visualizations(
                 processed_data, validated_config
             )
             
             # Calculate key metrics
+
             key_metrics = await self._calculate_report_metrics(
                 processed_data, validated_config
             )
             
             # Generate insights
+
             insights = await self._generate_report_insights(
                 processed_data, key_metrics, validated_config
             )
             
             # Prepare template data
+
             template_data = await self._prepare_template_data(
                 processed_data, visualizations, key_metrics, insights, validated_config
             )
             
             # Render report template
+
             html_content = await self.template_engine.render_template(
                 validated_config.report_type.value,
                 template_data,
@@ -1069,10 +1212,12 @@ class AnalyticsReportingService:
             )
             
             # Generate exports for all requested formats
+
             exported_reports = {}
             for format in validated_config.output_formats:
                 if format == ReportFormat.HTML:
                     exported_reports[format.value] = html_content.encode('utf-8')
+
                 else:
                     report_data = {
                         "html_content": html_content,
@@ -1083,31 +1228,39 @@ class AnalyticsReportingService:
                         "tables": template_data.get("tables", []),
                         "generated_at": datetime.utcnow()
                     }
+
                     
                     exported_content = await self.export_engine.export_report(
                         report_data, format, validated_config.template_config
                     )
+
                     exported_reports[format.value] = exported_content
             
             # Calculate generation time
+
             generation_time = (datetime.utcnow() - start_time).total_seconds() * 1000
             
             # Calculate data freshness
+
             data_freshness = await self._calculate_data_freshness(processed_data)
             
             # Calculate quality score
+
             quality_score = await self._calculate_report_quality_score(
                 processed_data, visualizations, key_metrics
             )
             
             # Create generated report object
+
             generated_report = GeneratedReport(
                 report_id=config.report_id,
                 generation_id=generation_id,
                 report_name=config.name,
                 report_type=config.report_type,
                 output_format=validated_config.output_formats[0],  # Primary format
+
                 file_path=None,  # Would be set if saving to file system
+
                 file_content=exported_reports.get(validated_config.output_formats[0].value),
                 metadata={
                     "configuration": validated_config.__dict__,
@@ -1135,11 +1288,13 @@ class AnalyticsReportingService:
             # Send to recipients if configured
             if config.recipients:
                 await self._distribute_report(generated_report, config.recipients, exported_reports)
+
             
             return generated_report
             
         except Exception as e:
             logger.error(f"Failed to generate comprehensive report: {e}")
+
             raise
     
     async def create_interactive_dashboard(
@@ -1150,39 +1305,47 @@ class AnalyticsReportingService:
         """Create interactive analytics dashboard"""
         try:
             # Validate dashboard configuration
+
             validated_config = await self._validate_dashboard_config(config)
             
             # Initialize dashboard data processing
+
             dashboard_data = await self._initialize_dashboard_data(
                 validated_config, data_sources
             )
             
             # Create dashboard widgets
+
             widgets = await self._create_dashboard_widgets(
                 dashboard_data, validated_config
             )
             
             # Set up real-time data streams
+
             real_time_streams = await self._setup_dashboard_real_time_streams(
                 validated_config
             )
             
             # Configure dashboard layout
+
             layout_config = await self._configure_dashboard_layout(
                 widgets, validated_config
             )
             
             # Apply dashboard theme
+
             themed_config = await self._apply_dashboard_theme(
                 layout_config, validated_config
             )
             
             # Set up user permissions
+
             permission_config = await self._configure_dashboard_permissions(
                 validated_config
             )
             
             # Generate dashboard API endpoints
+
             api_endpoints = await self._generate_dashboard_api_endpoints(
                 validated_config.dashboard_id
             )
@@ -1213,6 +1376,7 @@ class AnalyticsReportingService:
             
         except Exception as e:
             logger.error(f"Failed to create interactive dashboard: {e}")
+
             raise
     
     async def schedule_automated_report(
@@ -1225,14 +1389,17 @@ class AnalyticsReportingService:
             schedule_id = f"schedule_{uuid.uuid4().hex[:12]}"
             
             # Validate scheduling configuration
+
             validated_schedule = await self._validate_schedule_config(schedule_config)
             
             # Calculate next execution time
+
             next_execution = await self._calculate_next_execution_time(
                 config.schedule, validated_schedule
             )
             
             # Create scheduled report entry
+
             scheduled_report = {
                 "schedule_id": schedule_id,
                 "report_config": config,
@@ -1248,11 +1415,13 @@ class AnalyticsReportingService:
             self.scheduled_reports[schedule_id] = scheduled_report
             
             logger.info(f"📅 Scheduled report '{config.name}' created with ID: {schedule_id}")
+
             
             return schedule_id
             
         except Exception as e:
             logger.error(f"Failed to schedule automated report: {e}")
+
             raise
     
     # Background workers for reporting automation
@@ -1272,9 +1441,11 @@ class AnalyticsReportingService:
                 
                 # Wait for next check
                 await asyncio.sleep(self.reporting_config["scheduled_report_check_interval"])
+
                 
             except Exception as e:
                 logger.error(f"Error in scheduled reports worker: {e}")
+
                 await asyncio.sleep(300)  # Wait 5 minutes before retrying
     
     async def _report_cleanup_worker(self):
@@ -1292,6 +1463,7 @@ class AnalyticsReportingService:
                 
             except Exception as e:
                 logger.error(f"Error in report cleanup worker: {e}")
+
                 await asyncio.sleep(3600)  # Wait 1 hour before retrying
     
     async def _dashboard_refresh_worker(self):
@@ -1305,9 +1477,11 @@ class AnalyticsReportingService:
                 
                 # Wait for next refresh cycle
                 await asyncio.sleep(self.reporting_config["dashboard_refresh_interval"])
+
                 
             except Exception as e:
                 logger.error(f"Error in dashboard refresh worker: {e}")
+
                 await asyncio.sleep(60)  # Wait 1 minute before retrying
     
     # Private helper methods (implementations simplified for demonstration)
@@ -1316,7 +1490,8 @@ class AnalyticsReportingService:
         return config
     
     async def _collect_and_process_report_data(self, config: ReportConfiguration, data_sources: Dict[str, Any]) -> Dict[str, Any]:
-        """Collect and process data for report"""
+        """
+        Collect and process data for report"""
         return {"sample_data": pd.DataFrame({"metric": ["Revenue", "Users"], "value": [100000, 1500]})}
     
     async def _generate_report_visualizations(self, data: Dict[str, Any], config: ReportConfiguration) -> List[Dict[str, Any]]:

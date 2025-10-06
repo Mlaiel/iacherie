@@ -25,7 +25,8 @@ from abc import ABC, abstractmethod
 logger = logging.getLogger(__name__)
 
 class SessionStatus(Enum):
-    """Session status"""
+    """
+Session status"""
     ACTIVE = "active"
     EXPIRED = "expired"
     TERMINATED = "terminated"
@@ -33,7 +34,8 @@ class SessionStatus(Enum):
     LOCKED = "locked"
 
 class DeviceType(Enum):
-    """Device types"""
+    """
+Device types"""
     DESKTOP = "desktop"
     MOBILE = "mobile"
     TABLET = "tablet"
@@ -42,7 +44,8 @@ class DeviceType(Enum):
     UNKNOWN = "unknown"
 
 class SessionSecurityLevel(Enum):
-    """Session security levels"""
+    """
+Session security levels"""
     LOW = "low"
     STANDARD = "standard"
     HIGH = "high"
@@ -50,7 +53,8 @@ class SessionSecurityLevel(Enum):
 
 @dataclass
 class SessionInfo:
-    """Session information"""
+    """
+Session information"""
     session_id: str
     user_id: str
     status: SessionStatus
@@ -67,7 +71,8 @@ class SessionInfo:
 
 @dataclass
 class SecurityEvent:
-    """Security event"""
+    """
+Security event"""
     event_id: str
     session_id: str
     event_type: str
@@ -77,7 +82,8 @@ class SecurityEvent:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class SessionManagementCore:
-    """Advanced Session Management Core System"""
+    """
+Advanced Session Management Core System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -95,7 +101,8 @@ class SessionManagementCore:
         logger.info(f"Session Management Core initialized - Level: {level}")
 
     async def create_session(self, user_id: str, session_data: Dict[str, Any]) -> str:
-        """Create new session"""
+        """
+Create new session"""
         try:
             session_id = self._generate_session_id()
             
@@ -149,11 +156,13 @@ class SessionManagementCore:
             return ""
 
     def _generate_session_id(self) -> str:
-        """Generate secure session ID"""
+        """
+Generate secure session ID"""
         return f"sess_{secrets.token_urlsafe(32)}"
 
     def _detect_device_type(self, user_agent: str) -> DeviceType:
-        """Detect device type from user agent"""
+        """
+Detect device type from user agent"""
         user_agent_lower = user_agent.lower()
         
         if "mobile" in user_agent_lower or "android" in user_agent_lower:
@@ -168,7 +177,8 @@ class SessionManagementCore:
             return DeviceType.UNKNOWN
 
     def _determine_security_level(self, session_data: Dict[str, Any]) -> SessionSecurityLevel:
-        """Determine security level based on session data"""
+        """
+Determine security level based on session data"""
         # Check for high-risk indicators
         risk_factors = 0
         
@@ -195,7 +205,8 @@ class SessionManagementCore:
             return SessionSecurityLevel.LOW
 
     async def _enforce_session_limits(self, user_id: str):
-        """Enforce session limits per user"""
+        """
+Enforce session limits per user"""
         try:
             user_session_ids = self.user_sessions.get(user_id, [])
             max_sessions = self.session_config["max_sessions_per_user"]
@@ -210,7 +221,8 @@ class SessionManagementCore:
             logger.error(f"Failed to enforce session limits: {str(e)}")
 
     async def validate_session(self, session_id: str) -> bool:
-        """Validate session"""
+        """
+Validate session"""
         try:
             if session_id not in self.sessions:
                 return False
@@ -236,7 +248,8 @@ class SessionManagementCore:
             return False
 
     async def refresh_session(self, session_id: str, extend_ttl: bool = True) -> bool:
-        """Refresh session"""
+        """
+Refresh session"""
         try:
             if session_id not in self.sessions:
                 return False
@@ -267,7 +280,8 @@ class SessionManagementCore:
             return False
 
     async def _rotate_session(self, old_session_id: str) -> bool:
-        """Rotate session ID for security"""
+        """
+Rotate session ID for security"""
         try:
             old_session = self.sessions.get(old_session_id)
             if not old_session:
@@ -315,7 +329,8 @@ class SessionManagementCore:
             return False
 
     async def terminate_session(self, session_id: str, reason: str = "manual") -> bool:
-        """Terminate session"""
+        """
+Terminate session"""
         try:
             if session_id not in self.sessions:
                 return False
@@ -340,7 +355,8 @@ class SessionManagementCore:
             return False
 
     async def expire_session(self, session_id: str) -> bool:
-        """Expire session"""
+        """
+Expire session"""
         try:
             if session_id not in self.sessions:
                 return False
@@ -359,7 +375,8 @@ class SessionManagementCore:
             return False
 
     async def get_user_sessions(self, user_id: str) -> List[SessionInfo]:
-        """Get all sessions for user"""
+        """
+Get all sessions for user"""
         try:
             session_ids = self.user_sessions.get(user_id, [])
             return [self.sessions[sid] for sid in session_ids if sid in self.sessions]
@@ -369,7 +386,8 @@ class SessionManagementCore:
             return []
 
     async def _log_security_event(self, session_id: str, event_type: str, severity: str, description: str):
-        """Log security event"""
+        """
+Log security event"""
         try:
             event_id = f"evt_{uuid.uuid4().hex[:8]}"
             
@@ -388,7 +406,8 @@ class SessionManagementCore:
             logger.error(f"Failed to log security event: {str(e)}")
 
     async def get_session_analytics(self, time_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Get session analytics"""
+        """
+Get session analytics"""
         try:
             analytics = {
                 "total_sessions": 0,
@@ -454,4 +473,4 @@ __all__ = [
     "SecurityEvent"
 ]
 
-logger.info("🔐 Session Management Core module loaded")
+logger.info("🔐 Session Management Core module initialized")

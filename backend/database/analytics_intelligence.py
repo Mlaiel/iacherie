@@ -45,7 +45,8 @@ Base = declarative_base()
 # ================================
 
 class AnalyticsType(Enum):
-    """Analytics categories and types."""
+    """
+        Analytics categories and types."""
     PREDICTIVE = "predictive"
     DESCRIPTIVE = "descriptive"
     PRESCRIPTIVE = "prescriptive"
@@ -156,7 +157,8 @@ class PredictiveAnalytics(Base):
 
 
 class BusinessIntelligence(Base):
-    """Advanced business intelligence and reporting."""
+    """
+        Advanced business intelligence and reporting."""
     __tablename__ = 'business_intelligence'
     __table_args__ = (
         Index('idx_business_intelligence_user', 'user_id'),
@@ -219,7 +221,8 @@ class BusinessIntelligence(Base):
 
 
 class PerformanceMetrics(Base):
-    """Real-time performance metrics and KPIs."""
+    """
+        Real-time performance metrics and KPIs."""
     __tablename__ = 'performance_metrics'
     __table_args__ = (
         Index('idx_performance_metrics_user', 'user_id'),
@@ -286,7 +289,8 @@ class PerformanceMetrics(Base):
 
 
 class UserBehaviorAnalytics(Base):
-    """User behavior analysis and segmentation."""
+    """
+        User behavior analysis and segmentation."""
     __tablename__ = 'user_behavior_analytics'
     __table_args__ = (
         Index('idx_user_behavior_analytics_user', 'user_id'),
@@ -356,7 +360,8 @@ class UserBehaviorAnalytics(Base):
 
 
 class MarketTrendAnalysis(Base):
-    """Market trend analysis and forecasting."""
+    """
+        Market trend analysis and forecasting."""
     __tablename__ = 'market_trend_analysis'
     __table_args__ = (
         Index('idx_market_trend_analysis_industry', 'industry_sector'),
@@ -417,7 +422,8 @@ class MarketTrendAnalysis(Base):
 
 
 class ROICalculationEngine(Base):
-    """ROI calculation and profitability analysis."""
+    """
+        ROI calculation and profitability analysis."""
     __tablename__ = 'roi_calculation_engine'
     __table_args__ = (
         Index('idx_roi_calculation_engine_user', 'user_id'),
@@ -487,7 +493,8 @@ class ROICalculationEngine(Base):
 
 
 class ForecastModeling(Base):
-    """Revenue and performance forecasting models."""
+    """
+        Revenue and performance forecasting models."""
     __tablename__ = 'forecast_modeling'
     __table_args__ = (
         Index('idx_forecast_modeling_user', 'user_id'),
@@ -548,7 +555,8 @@ class ForecastModeling(Base):
 # ================================
 
 def get_analytics_intelligence_models():
-    """Get all analytics intelligence models."""
+    """
+        Get all analytics intelligence models."""
     return [
         PredictiveAnalytics,
         BusinessIntelligence,
@@ -561,7 +569,8 @@ def get_analytics_intelligence_models():
 
 
 def create_analytics_intelligence_tables(engine):
-    """Create all analytics intelligence tables."""
+    """
+        Create all analytics intelligence tables."""
     try:
         Base.metadata.create_all(engine, tables=[model.__table__ for model in get_analytics_intelligence_models()])
         logger.info("Successfully created analytics intelligence tables")

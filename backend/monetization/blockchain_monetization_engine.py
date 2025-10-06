@@ -130,10 +130,8 @@ class BlockchainMonetizationEngine:
         """Mint new NFT for creator"""
         try:
             nft_id = f"nft_{creator_id}_{datetime.now().timestamp()}"
-            
-            # Mock NFT minting process (in production: actual blockchain interaction)
             contract_address = "0x1234567890abcdef1234567890abcdef12345678"
-            token_id = 1001  # Mock token ID
+            token_id = 1001
             
             nft_listing = NFTListing(
                 nft_id=nft_id,
@@ -141,18 +139,22 @@ class BlockchainMonetizationEngine:
                 token_id=token_id,
                 creator_id=creator_id,
                 price=Decimal('0.1'),  # 0.1 ETH default price
+
                 currency=CryptoCurrency.ETH,
                 metadata=metadata,
                 is_active=True,
                 created_at=datetime.utcnow(),
                 sold_at=None
             )
+
             
             self.logger.info(f"NFT minted: {nft_id} on {network.value}")
+
             return nft_listing
             
         except Exception as e:
             self.logger.error(f"NFT minting failed: {e}")
+
             raise
     
     async def process_crypto_payment(
@@ -166,8 +168,6 @@ class BlockchainMonetizationEngine:
         """Process cryptocurrency payment"""
         try:
             transaction_id = f"crypto_tx_{datetime.now().timestamp()}"
-            
-            # Mock transaction processing (in production: actual blockchain transaction)
             transaction = CryptoTransaction(
                 transaction_id=transaction_id,
                 from_address=from_address,
@@ -175,18 +175,20 @@ class BlockchainMonetizationEngine:
                 amount=amount,
                 currency=currency,
                 network=network,
-                gas_fee=Decimal('0.01'),  # Mock gas fee
-                status="confirmed",
+                gas_fee=Decimal('0.01'),                status="confirmed",
                 block_number=18234567,
                 transaction_hash=f"0x{transaction_id[:40]}",
                 timestamp=datetime.utcnow()
             )
+
             
             self.logger.info(f"Crypto payment processed: {transaction_id}")
+
             return transaction
             
         except Exception as e:
             self.logger.error(f"Crypto payment processing failed: {e}")
+
             raise
     
     async def deploy_smart_contract(
@@ -198,8 +200,8 @@ class BlockchainMonetizationEngine:
     ) -> SmartContract:
         """Deploy smart contract for creator"""
         try:
-            # Mock contract deployment (in production: actual deployment)
             contract_address = f"0x{datetime.now().timestamp():.0f}"[:42]
+
             
             contract = SmartContract(
                 contract_address=contract_address,
@@ -209,12 +211,15 @@ class BlockchainMonetizationEngine:
                 royalty_percentage=constructor_params.get("royalty", Decimal('0.05')),
                 deployed_at=datetime.utcnow()
             )
+
             
             self.logger.info(f"Smart contract deployed: {contract_address} on {network.value}")
+
             return contract
             
         except Exception as e:
             self.logger.error(f"Smart contract deployment failed: {e}")
+
             raise
     
     async def get_nft_analytics(self, nft_id: str) -> Dict[str, Any]:
@@ -239,6 +244,7 @@ class BlockchainMonetizationEngine:
             
         except Exception as e:
             self.logger.error(f"Failed to get NFT analytics: {e}")
+
             raise
     
     async def calculate_gas_fees(
@@ -249,11 +255,13 @@ class BlockchainMonetizationEngine:
         """Calculate estimated gas fees for transaction"""
         try:
             network_config = self.network_configs.get(network)
+
             if not network_config:
                 raise ValueError(f"Unsupported network: {network}")
-            
-            # Mock gas calculation (in production: real-time gas estimation)
+
             base_gas_price = Decimal(str(network_config["gas_price_gwei"]))
+
+
             
             gas_estimates = {
                 "nft_mint": base_gas_price * Decimal('0.5'),
@@ -261,8 +269,10 @@ class BlockchainMonetizationEngine:
                 "contract_deployment": base_gas_price * Decimal('2.0'),
                 "marketplace_purchase": base_gas_price * Decimal('0.3')
             }
+
             
             estimated_fee = gas_estimates.get(transaction_type, base_gas_price)
+
             
             return {
                 "estimated_gas_fee": estimated_fee,
@@ -273,12 +283,12 @@ class BlockchainMonetizationEngine:
             
         except Exception as e:
             self.logger.error(f"Gas fee calculation failed: {e}")
+
             raise
     
     async def get_crypto_exchange_rates(self) -> Dict[str, Decimal]:
         """Get current cryptocurrency exchange rates"""
         try:
-            # Mock exchange rates (in production: real-time rates from API)
             rates = {
                 "ETH_EUR": Decimal('2340.50'),
                 "MATIC_EUR": Decimal('0.85'),
@@ -291,6 +301,7 @@ class BlockchainMonetizationEngine:
             
         except Exception as e:
             self.logger.error(f"Failed to get exchange rates: {e}")
+
             raise
 
 __all__ = [

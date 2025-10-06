@@ -1,4 +1,5 @@
-"""Creator Multi-Format Core - Enterprise Business Logic
+"""
+Creator Multi-Format Core - Enterprise Business Logic
 
 Central creator multi-format business logic core for the IA Chérie Platform.
 Handles multi-format content processing and creator type-specific business logic.
@@ -22,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 # Creator Types Enumeration
 class CreatorType(Enum):
-    """Supported creator types with specialized business logic"""
+    """
+Supported creator types with specialized business logic"""
     MUSICIAN = "musician"
     BLOGGER = "blogger" 
     PHOTOGRAPHER = "photographer"
@@ -31,7 +33,8 @@ class CreatorType(Enum):
 
 # Content Format Enumeration
 class ContentFormat(Enum):
-    """Supported content formats"""
+    """
+Supported content formats"""
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -41,7 +44,8 @@ class ContentFormat(Enum):
 
 # Content Quality Levels
 class QualityLevel(Enum):
-    """Content quality assessment levels"""
+    """
+Content quality assessment levels"""
     PREMIUM = "premium"
     PROFESSIONAL = "professional"
     STANDARD = "standard"
@@ -49,7 +53,8 @@ class QualityLevel(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Creator profile with multi-format capabilities"""
+    """
+Creator profile with multi-format capabilities"""
     creator_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_type: CreatorType = CreatorType.INFLUENCER
     supported_formats: List[ContentFormat] = field(default_factory=list)
@@ -62,7 +67,8 @@ class CreatorProfile:
 
 @dataclass
 class ContentProcessingRequest:
-    """Content processing request with business context"""
+    """
+Content processing request with business context"""
     request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
     content_format: ContentFormat = ContentFormat.TEXT
@@ -74,7 +80,8 @@ class ContentProcessingRequest:
 
 @dataclass
 class ContentProcessingResult:
-    """Content processing result with business metrics"""
+    """
+Content processing result with business metrics"""
     result_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     request_id: str = ""
     success: bool = False
@@ -87,7 +94,8 @@ class ContentProcessingResult:
     completed_at: datetime = field(default_factory=datetime.utcnow)
 
 class CreatorMultiFormatCore:
-    """Enterprise Creator Multi-Format Business Logic Core
+    """
+Enterprise Creator Multi-Format Business Logic Core
     
     Handles creator type-specific business logic and multi-format content processing
     with enterprise-grade performance and reliability standards.
@@ -103,7 +111,8 @@ class CreatorMultiFormatCore:
         logger.info("Creator Multi-Format Core initialized")
     
     async def initialize(self) -> bool:
-        """Initialize the creator multi-format core system"""
+        """
+Initialize the creator multi-format core system"""
         try:
             await self._setup_business_rules()
             await self._setup_creator_types()
@@ -118,7 +127,8 @@ class CreatorMultiFormatCore:
             return False
     
     async def _setup_business_rules(self):
-        """Setup creator type-specific business rules"""
+        """
+Setup creator type-specific business rules"""
         self.business_rules = {
             CreatorType.MUSICIAN: {
                 "supported_formats": [ContentFormat.AUDIO, ContentFormat.VIDEO, ContentFormat.IMAGE],
@@ -200,11 +210,13 @@ class CreatorMultiFormatCore:
         logger.info("✅ Creator type business rules configured")
     
     async def _setup_creator_types(self):
-        """Setup creator type configurations"""
+        """
+Setup creator type configurations"""
         logger.info("✅ Creator type configurations loaded")
     
     async def _setup_performance_monitoring(self):
-        """Setup performance monitoring"""
+        """
+Setup performance monitoring"""
         self.performance_metrics = {
             "processing_speed_ms": 0.0,
             "success_rate": 100.0,
@@ -219,7 +231,8 @@ class CreatorMultiFormatCore:
         supported_formats: List[ContentFormat],
         specializations: Optional[List[str]] = None
     ) -> CreatorProfile:
-        """Create a new creator profile with business logic validation"""
+        """
+Create a new creator profile with business logic validation"""
         try:
             profile = CreatorProfile(
                 creator_type=creator_type,
@@ -242,7 +255,8 @@ class CreatorMultiFormatCore:
             raise
     
     async def _validate_creator_business_rules(self, profile: CreatorProfile) -> bool:
-        """Validate creator profile against business rules"""
+        """
+Validate creator profile against business rules"""
         try:
             rules = self.business_rules.get(profile.creator_type, {})
             
@@ -263,7 +277,8 @@ class CreatorMultiFormatCore:
         self, 
         request: ContentProcessingRequest
     ) -> ContentProcessingResult:
-        """Process multi-format content with creator-specific business logic"""
+        """
+Process multi-format content with creator-specific business logic"""
         start_time = datetime.utcnow()
         
         try:
@@ -323,7 +338,8 @@ class CreatorMultiFormatCore:
             return result
     
     async def _validate_processing_request(self, request: ContentProcessingRequest) -> bool:
-        """Validate content processing request"""
+        """
+Validate content processing request"""
         try:
             if not request.creator_id:
                 return False
@@ -342,7 +358,8 @@ class CreatorMultiFormatCore:
         request: ContentProcessingRequest,
         creator_profile: CreatorProfile
     ) -> Dict[str, Any]:
-        """Apply creator type-specific processing logic"""
+        """
+Apply creator type-specific processing logic"""
         try:
             processed_content = request.content_data.copy()
             
@@ -374,7 +391,8 @@ class CreatorMultiFormatCore:
             raise
     
     async def _process_audio_content(self, content: Dict[str, Any], requirements: Dict[str, Any]) -> Dict[str, Any]:
-        """Process audio content with quality requirements"""
+        """
+Process audio content with quality requirements"""
         content["audio_processing"] = {
             "target_bitrate": requirements.get("audio_bitrate", 320),
             "noise_reduction": True,
@@ -384,7 +402,8 @@ class CreatorMultiFormatCore:
         return content
     
     async def _process_video_content(self, content: Dict[str, Any], requirements: Dict[str, Any]) -> Dict[str, Any]:
-        """Process video content with quality requirements"""
+        """
+Process video content with quality requirements"""
         content["video_processing"] = {
             "target_resolution": requirements.get("video_resolution", "1080p"),
             "compression": True,
@@ -394,7 +413,8 @@ class CreatorMultiFormatCore:
         return content
     
     async def _process_image_content(self, content: Dict[str, Any], requirements: Dict[str, Any]) -> Dict[str, Any]:
-        """Process image content with quality requirements"""
+        """
+Process image content with quality requirements"""
         content["image_processing"] = {
             "target_dpi": requirements.get("image_dpi", 300),
             "color_correction": True,
@@ -404,7 +424,8 @@ class CreatorMultiFormatCore:
         return content
     
     async def _process_text_content(self, content: Dict[str, Any], requirements: Dict[str, Any]) -> Dict[str, Any]:
-        """Process text content with quality requirements"""
+        """
+Process text content with quality requirements"""
         content["text_processing"] = {
             "readability_target": requirements.get("readability_score", 8.0),
             "seo_optimization": requirements.get("seo_optimization", True),
@@ -418,7 +439,8 @@ class CreatorMultiFormatCore:
         content: Dict[str, Any], 
         creator_profile: CreatorProfile
     ) -> float:
-        """Calculate content quality score based on creator type requirements"""
+        """
+Calculate content quality score based on creator type requirements"""
         try:
             base_score = 8.0
             
@@ -449,7 +471,8 @@ class CreatorMultiFormatCore:
         creator_profile: CreatorProfile,
         quality_score: float
     ) -> Dict[str, Any]:
-        """Generate business insights for content"""
+        """
+Generate business insights for content"""
         try:
             insights = {
                 "quality_assessment": {
@@ -478,7 +501,8 @@ class CreatorMultiFormatCore:
             return {}
     
     async def _update_performance_metrics(self, result: ContentProcessingResult):
-        """Update system performance metrics"""
+        """
+Update system performance metrics"""
         try:
             # Update processing speed
             if "processing_speed_ms" not in self.performance_metrics:
@@ -508,7 +532,8 @@ class CreatorMultiFormatCore:
             logger.error(f"❌ Performance metrics update failed: {str(e)}")
     
     async def get_creator_analytics(self, creator_id: str) -> Dict[str, Any]:
-        """Get analytics for a specific creator"""
+        """
+Get analytics for a specific creator"""
         try:
             profile = self.creator_profiles.get(creator_id)
             if not profile:
@@ -533,7 +558,8 @@ class CreatorMultiFormatCore:
             return {}
     
     async def get_system_health(self) -> Dict[str, Any]:
-        """Get system health metrics"""
+        """
+Get system health metrics"""
         try:
             health = {
                 "status": "healthy" if self.initialized else "initializing",

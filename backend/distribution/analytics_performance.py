@@ -46,7 +46,8 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(str, Enum):
-    """Performance metric types."""
+    """
+        Performance metric types."""
     ENGAGEMENT_RATE = "engagement_rate"
     REACH = "reach"
     IMPRESSIONS = "impressions"
@@ -106,7 +107,8 @@ class PerformanceMetric:
 
 @dataclass
 class PlatformPerformance:
-    """Platform-specific performance data."""
+    """
+        Platform-specific performance data."""
     platform: str
     content_id: str
     metrics: Dict[MetricType, PerformanceMetric]
@@ -120,7 +122,8 @@ class PlatformPerformance:
 
 @dataclass
 class EngagementAnalysis:
-    """Detailed engagement analysis."""
+    """
+        Detailed engagement analysis."""
     content_id: str
     platform: str
     total_engagements: int
@@ -136,7 +139,8 @@ class EngagementAnalysis:
 
 @dataclass
 class ROIAnalysis:
-    """Return on Investment analysis."""
+    """
+        Return on Investment analysis."""
     content_id: str
     investment_cost: Decimal
     revenue_generated: Decimal
@@ -152,7 +156,8 @@ class ROIAnalysis:
 
 @dataclass
 class CompetitorMetrics:
-    """Competitor performance metrics."""
+    """
+        Competitor performance metrics."""
     competitor_id: str
     competitor_name: str
     tier: CompetitorTier
@@ -170,7 +175,8 @@ class CompetitorMetrics:
 
 @dataclass
 class PerformanceInsight:
-    """AI-generated performance insight."""
+    """
+        AI-generated performance insight."""
     insight_id: str
     type: str
     title: str
@@ -187,7 +193,8 @@ class PerformanceInsight:
 
 @dataclass
 class PerformanceDashboard:
-    """Comprehensive performance dashboard data."""
+    """
+        Comprehensive performance dashboard data."""
     dashboard_id: str
     time_period: AnalyticsPeriod
     start_date: datetime
@@ -207,7 +214,8 @@ class PerformanceDashboard:
 
 
 class AnalyticsPerformanceEngine:
-    """Core analytics performance engine."""
+    """
+        Core analytics performance engine."""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.AnalyticsPerformanceEngine")
@@ -243,13 +251,16 @@ class AnalyticsPerformanceEngine:
             
             # Start real-time monitoring
             await self._start_real_time_monitoring()
+
             
             self.initialized = True
             self.logger.info("✅ Analytics Performance Engine initialized")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Failed to initialize analytics engine: {e}")
+
             return False
     
     async def _load_platform_benchmarks(self):
@@ -320,8 +331,10 @@ class AnalyticsPerformanceEngine:
         }
     
     async def _load_competitor_data(self):
-        """Load competitor performance data."""
+        """
+        Load competitor performance data."""
         # Sample competitor data - in production, this would come from market research APIs
+
         sample_competitors = [
             CompetitorMetrics(
                 competitor_id="comp_001",
@@ -382,24 +395,35 @@ class AnalyticsPerformanceEngine:
         """Perform detailed engagement analysis."""
         if not self.initialized:
             await self.initialize()
+
         
         try:
             # Simulate engagement data collection
+
             engagement_data = await self._collect_engagement_data(content_id, platform, time_period)
             
             # Calculate engagement metrics
+
             total_engagements = sum(engagement_data["engagements"].values())
+
+
             total_reach = engagement_data["reach"]
+
             engagement_rate = (total_engagements / total_reach * 100) if total_reach > 0 else 0.0
             
             # Calculate engagement velocity (engagements per hour)
+
+
             time_elapsed = engagement_data["time_elapsed_hours"]
+
             engagement_velocity = total_engagements / time_elapsed if time_elapsed > 0 else 0.0
             
             # Calculate engagement quality score
+
             quality_score = await self._calculate_engagement_quality(engagement_data)
             
             # Identify top engagement types
+
             top_engagement_types = sorted(
                 engagement_data["engagements"].items(),
                 key=lambda x: x[1],
@@ -407,10 +431,14 @@ class AnalyticsPerformanceEngine:
             )[:5]
             
             # Find peak engagement time
+
             peak_time = await self._identify_peak_engagement_time(engagement_data)
             
             # Generate sentiment breakdown
+
             sentiment_breakdown = await self._analyze_sentiment(engagement_data)
+
+
             
             analysis = EngagementAnalysis(
                 content_id=content_id,
@@ -428,12 +456,15 @@ class AnalyticsPerformanceEngine:
             
             # Store analysis
             self.engagement_data[content_id].append(analysis)
+
             
             self.logger.info(f"✅ Engagement analysis completed for {content_id} on {platform}")
+
             return analysis
             
         except Exception as e:
             self.logger.error(f"Error analyzing engagement for {content_id}: {e}")
+
             return EngagementAnalysis(
                 content_id=content_id,
                 platform=platform,
@@ -447,6 +478,7 @@ class AnalyticsPerformanceEngine:
     async def _collect_engagement_data(self, content_id: str, platform: str, time_period: AnalyticsPeriod) -> Dict[str, Any]:
         """Collect engagement data from platform APIs."""
         # Simulate engagement data - in production, this would call actual platform APIs
+
         base_engagement = secrets.randbelow(10000) + 1000
         
         return {
@@ -468,6 +500,7 @@ class AnalyticsPerformanceEngine:
             },
             "trend": [
                 (datetime.utcnow() - timedelta(hours=i), secrets.randbelow(100) + 50)
+
                 for i in range(24, 0, -1)
             ]
         }
@@ -475,12 +508,15 @@ class AnalyticsPerformanceEngine:
     async def _calculate_engagement_quality(self, engagement_data: Dict[str, Any]) -> float:
         """Calculate engagement quality score based on engagement types."""
         engagements = engagement_data["engagements"]
+
         total = sum(engagements.values())
+
         
         if total == 0:
             return 0.0
         
         # Weight different engagement types by quality
+
         quality_weights = {
             "shares": 1.0,      # Highest quality
             "saves": 0.9,
@@ -488,11 +524,14 @@ class AnalyticsPerformanceEngine:
             "clicks": 0.7,
             "likes": 0.5        # Lowest quality
         }
+
         
         weighted_score = sum(
             (count / total) * quality_weights.get(eng_type, 0.5)
+
             for eng_type, count in engagements.items()
         )
+
         
         return min(weighted_score * 100, 100.0)  # Scale to 0-100
     
@@ -524,39 +563,57 @@ class AnalyticsPerformanceEngine:
         """Calculate comprehensive ROI analysis."""
         if not self.initialized:
             await self.initialize()
+
         
         try:
             # Calculate total revenue
+
             total_revenue = sum(revenue_data.values())
             
             # Calculate ROI percentage
+
             roi_percentage = float((total_revenue - investment_cost) / investment_cost * 100) if investment_cost > 0 else 0.0
             
             # Get engagement data for cost calculations
+
             engagement_data = await self._get_engagement_summary(content_id)
+
+
             total_engagements = engagement_data.get("total_engagements", 1)
+
+
             total_conversions = engagement_data.get("conversions", 1)
             
             # Calculate cost metrics
+
             cost_per_engagement = investment_cost / total_engagements if total_engagements > 0 else Decimal('0')
+
+
             cost_per_conversion = investment_cost / total_conversions if total_conversions > 0 else Decimal('0')
             
             # Calculate lifetime value (estimated)
+
+
             lifetime_value = total_revenue * Decimal('2.5')  # Estimated 2.5x multiplier
             
             # Calculate payback period
+
             daily_revenue = total_revenue / 30  # Assume 30-day period
+
             payback_period_days = int(investment_cost / daily_revenue) if daily_revenue > 0 else None
             
             # Calculate profit margin
+
             profit_margin = float((total_revenue - investment_cost) / total_revenue * 100) if total_revenue > 0 else 0.0
             
             # Create cost breakdown
+
             cost_breakdown = {
                 "content_creation": investment_cost * Decimal('0.6'),
                 "promotion": investment_cost * Decimal('0.3'),
                 "platform_fees": investment_cost * Decimal('0.1')
             }
+
             
             roi_analysis = ROIAnalysis(
                 content_id=content_id,
@@ -574,12 +631,15 @@ class AnalyticsPerformanceEngine:
             
             # Store analysis
             self.roi_data[content_id].append(roi_analysis)
+
             
             self.logger.info(f"✅ ROI analysis completed for {content_id}: {roi_percentage:.2f}%")
+
             return roi_analysis
             
         except Exception as e:
             self.logger.error(f"Error calculating ROI for {content_id}: {e}")
+
             return ROIAnalysis(
                 content_id=content_id,
                 investment_cost=investment_cost,
@@ -607,8 +667,11 @@ class AnalyticsPerformanceEngine:
         """Analyze competitor performance metrics."""
         if not self.initialized:
             await self.initialize()
+
+
         
         target_competitors = competitor_ids or list(self.competitor_data.keys())
+
         analysis_results = {}
         
         for competitor_id in target_competitors:
@@ -616,9 +679,12 @@ class AnalyticsPerformanceEngine:
                 competitor = self.competitor_data[competitor_id]
                 
                 # Update with fresh data (in production, this would fetch real data)
+
+
                 updated_competitor = await self._update_competitor_metrics(competitor)
                 
                 # Perform comparative analysis
+
                 comparative_analysis = await self._perform_competitive_analysis(updated_competitor)
                 
                 # Update strengths, weaknesses, opportunities
@@ -634,6 +700,7 @@ class AnalyticsPerformanceEngine:
     async def _update_competitor_metrics(self, competitor: CompetitorMetrics) -> CompetitorMetrics:
         """Update competitor metrics with fresh data."""
         # Simulate metric updates
+
         growth_factor = 1.0 + (secrets.randbelow(20) - 10) / 100.0  # -10% to +10%
         
         competitor.metrics["followers"] = int(competitor.metrics["followers"] * growth_factor)
@@ -655,19 +722,23 @@ class AnalyticsPerformanceEngine:
             analysis["strengths"].append("Exceptional engagement rate")
         elif competitor.engagement_rate < 2.0:
             analysis["weaknesses"].append("Low engagement rate")
+
         
         if competitor.growth_rate > 20.0:
             analysis["strengths"].append("Rapid audience growth")
         elif competitor.growth_rate < 5.0:
             analysis["weaknesses"].append("Slow growth rate")
+
         
         if competitor.content_frequency > 5.0:
             analysis["strengths"].append("High content frequency")
         elif competitor.content_frequency < 2.0:
             analysis["opportunities"].append("Increase content frequency")
+
         
         if len(competitor.platforms) < 3:
             analysis["opportunities"].append("Platform diversification")
+
         
         return analysis
     
@@ -679,20 +750,31 @@ class AnalyticsPerformanceEngine:
         """Generate AI-powered performance insights."""
         if not self.initialized:
             await self.initialize()
+
+
         
         insights = []
         
         try:
             # Analyze performance patterns
+
             performance_data = await self._aggregate_performance_data(content_ids, time_period)
             
             # Generate different types of insights
+
             trend_insights = await self._generate_trend_insights(performance_data)
+
+
             opportunity_insights = await self._generate_opportunity_insights(performance_data)
+
+
             optimization_insights = await self._generate_optimization_insights(performance_data)
+
             
             insights.extend(trend_insights)
+
             insights.extend(opportunity_insights)
+
             insights.extend(optimization_insights)
             
             # Sort by priority
@@ -701,12 +783,15 @@ class AnalyticsPerformanceEngine:
             # Store insights
             for content_id in content_ids:
                 self.insights_cache[content_id].extend(insights)
+
             
             self.logger.info(f"✅ Generated {len(insights)} performance insights")
+
             return insights[:10]  # Return top 10 insights
             
         except Exception as e:
             self.logger.error(f"Error generating insights: {e}")
+
             return []
     
     async def _aggregate_performance_data(self, content_ids: List[str], time_period: AnalyticsPeriod) -> Dict[str, Any]:
@@ -722,6 +807,7 @@ class AnalyticsPerformanceEngine:
         
         for content_id in content_ids:
             # Simulate performance data
+
             content_performance = {
                 "content_id": content_id,
                 "reach": secrets.randbelow(100000) + 10000,
@@ -733,6 +819,7 @@ class AnalyticsPerformanceEngine:
             aggregated["total_reach"] += content_performance["reach"]
             aggregated["total_engagements"] += content_performance["engagements"]
             aggregated["content_performance"].append(content_performance)
+
             aggregated["platform_performance"][content_performance["platforms"]].append(content_performance)
         
         # Calculate averages
@@ -740,12 +827,14 @@ class AnalyticsPerformanceEngine:
             aggregated["average_engagement_rate"] = statistics.mean([
                 cp["engagement_rate"] for cp in aggregated["content_performance"]
             ])
+
         
         return aggregated
     
     async def _generate_trend_insights(self, performance_data: Dict[str, Any]) -> List[PerformanceInsight]:
         """Generate trend-based insights."""
         insights = []
+
         
         avg_engagement_rate = performance_data["average_engagement_rate"]
         
@@ -783,12 +872,14 @@ class AnalyticsPerformanceEngine:
                 potential_impact=50.0,
                 implementation_effort="medium"
             ))
+
         
         return insights
     
     async def _generate_opportunity_insights(self, performance_data: Dict[str, Any]) -> List[PerformanceInsight]:
         """Generate opportunity-based insights."""
         insights = []
+
         
         platform_performance = performance_data["platform_performance"]
         
@@ -810,14 +901,17 @@ class AnalyticsPerformanceEngine:
                 potential_impact=40.0,
                 implementation_effort="medium"
             ))
+
         
         return insights
     
     async def _generate_optimization_insights(self, performance_data: Dict[str, Any]) -> List[PerformanceInsight]:
         """Generate optimization-based insights."""
         insights = []
+
         
         total_reach = performance_data["total_reach"]
+
         total_engagements = performance_data["total_engagements"]
         
         if total_reach > 100000 and total_engagements < total_reach * 0.02:  # Less than 2% engagement
@@ -837,6 +931,7 @@ class AnalyticsPerformanceEngine:
                 potential_impact=35.0,
                 implementation_effort="medium"
             ))
+
         
         return insights
     
@@ -849,11 +944,14 @@ class AnalyticsPerformanceEngine:
         """Create comprehensive performance dashboard."""
         if not self.initialized:
             await self.initialize()
+
+
         
         dashboard_id = f"dashboard_{uuid4().hex[:8]}"
         end_date = datetime.utcnow()
         
         # Calculate start date based on period
+
         period_mapping = {
             AnalyticsPeriod.DAILY: 1,
             AnalyticsPeriod.WEEKLY: 7,
@@ -861,29 +959,40 @@ class AnalyticsPerformanceEngine:
             AnalyticsPeriod.QUARTERLY: 90,
             AnalyticsPeriod.YEARLY: 365
         }
+
         days_back = period_mapping.get(time_period, 30)
+
         start_date = end_date - timedelta(days=days_back)
+
         
         try:
             # Aggregate performance data
+
             performance_data = await self._aggregate_performance_data(content_ids, time_period)
             
             # Calculate overall metrics
+
             overall_performance_score = await self._calculate_overall_performance_score(performance_data)
             
             # Get platform-specific performance
+
             platform_performance = await self._get_platform_performance_breakdown(content_ids)
             
             # Generate insights
+
             insights = await self.generate_performance_insights(content_ids, time_period)
             
             # Get competitor comparison
+
             competitor_comparison = {}
             if include_competitors:
                 competitor_comparison = await self.analyze_competitor_performance()
             
             # Generate recommendations
+
             recommendations = await self._generate_dashboard_recommendations(performance_data, insights)
+
+
             
             dashboard = PerformanceDashboard(
                 dashboard_id=dashboard_id,
@@ -895,20 +1004,26 @@ class AnalyticsPerformanceEngine:
                 total_engagements=performance_data["total_engagements"],
                 average_engagement_rate=performance_data["average_engagement_rate"],
                 total_revenue=Decimal('15000.00'),  # Simulated
+
                 overall_roi=245.5,  # Simulated
+
                 platform_performance=platform_performance,
                 top_content=performance_data["content_performance"][:5],
                 key_insights=insights[:5],
                 competitor_comparison=competitor_comparison,
                 trends={},  # Would be populated with trend data
+
                 recommendations=recommendations
             )
+
             
             self.logger.info(f"✅ Performance dashboard created: {dashboard_id}")
+
             return dashboard
             
         except Exception as e:
             self.logger.error(f"Error creating dashboard: {e}")
+
             return PerformanceDashboard(
                 dashboard_id=dashboard_id,
                 time_period=time_period,
@@ -934,8 +1049,10 @@ class AnalyticsPerformanceEngine:
             "reach": min(performance_data["total_reach"] / 1000000, 1.0),  # Cap at 1M
             "content_consistency": min(len(performance_data["content_performance"]) / 10.0, 1.0)
         }
+
         
         weights = {"engagement_rate": 0.5, "reach": 0.3, "content_consistency": 0.2}
+
         
         score = sum(factors[k] * weights[k] for k in factors.keys())
         return min(score * 100, 100.0)
@@ -943,10 +1060,12 @@ class AnalyticsPerformanceEngine:
     async def _get_platform_performance_breakdown(self, content_ids: List[str]) -> Dict[str, PlatformPerformance]:
         """Get platform-specific performance breakdown."""
         platforms = ["youtube", "instagram", "tiktok"]
+
         platform_performance = {}
         
         for platform in platforms:
             # Simulate platform performance
+
             metrics = {
                 MetricType.ENGAGEMENT_RATE: PerformanceMetric(
                     MetricType.ENGAGEMENT_RATE,
@@ -963,9 +1082,13 @@ class AnalyticsPerformanceEngine:
                     benchmark_value=self.platform_benchmarks.get(platform, {}).get(MetricType.CLICK_THROUGH_RATE, 2.0)
                 )
             }
+
             
             overall_score = statistics.mean([m.value for m in metrics.values()])
+
+
             performance_grade = self._get_performance_grade(overall_score)
+
             
             platform_performance[platform] = PlatformPerformance(
                 platform=platform,
@@ -977,6 +1100,7 @@ class AnalyticsPerformanceEngine:
                 improvement_areas=[MetricType.CLICK_THROUGH_RATE],
                 recommendations=[f"Optimize content for {platform} algorithm"]
             )
+
         
         return platform_performance
     
@@ -998,18 +1122,22 @@ class AnalyticsPerformanceEngine:
         performance_data: Dict[str, Any],
         insights: List[PerformanceInsight]
     ) -> List[str]:
-        """Generate dashboard-level recommendations."""
+        """
+        Generate dashboard-level recommendations."""
         recommendations = []
+
         
         avg_engagement = performance_data["average_engagement_rate"]
         
         if avg_engagement < 3.0:
             recommendations.append("Focus on improving content engagement through better storytelling")
+
         
         if len(performance_data["platform_performance"]) < 3:
             recommendations.append("Consider expanding to additional platforms for broader reach")
         
         # Add insight-based recommendations
+
         high_priority_insights = [i for i in insights if i.priority >= 8]
         for insight in high_priority_insights[:3]:
             recommendations.extend(insight.recommended_actions[:1])  # Take first action from each
@@ -1027,6 +1155,7 @@ class AnalyticsPerformanceEngine:
         self.performance_thresholds.clear()
         self.active_content.clear()
         self.monitoring_intervals.clear()
+
         
         self.logger.info("✅ Analytics Performance Engine cleaned up")
 

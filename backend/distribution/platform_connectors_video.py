@@ -47,7 +47,8 @@ logger = logging.getLogger(__name__)
 
 
 class VideoPlatformType(str, Enum):
-    """Supported video platform types."""
+    """
+        Supported video platform types."""
     VIMEO = "vimeo"
     DAILYMOTION = "dailymotion"
     TWITCH = "twitch"
@@ -160,7 +161,8 @@ class VideoPlatformResponse:
 
 @dataclass
 class VideoStreamingAnalytics:
-    """Video streaming analytics data."""
+    """
+        Video streaming analytics data."""
     platform: VideoPlatformType
     content_id: str
     views: int = 0
@@ -180,7 +182,8 @@ class VideoStreamingAnalytics:
 
 
 class BaseVideoConnector:
-    """Base class for video platform connectors."""
+    """
+        Base class for video platform connectors."""
     
     def __init__(self, platform: VideoPlatformType, credentials: Dict[str, Any]):
         self.platform = platform
@@ -205,18 +208,24 @@ class BaseVideoConnector:
                 timeout=aiohttp.ClientTimeout(total=30),
                 headers=self._get_default_headers()
             )
+
+
             
             authenticated = await self.authenticate()
+
             if authenticated:
                 self.authenticated = True
                 self.logger.info(f"✅ {self.platform.value} connector initialized")
+
                 return True
             else:
                 self.logger.error(f"❌ {self.platform.value} authentication failed")
+
                 return False
                 
         except Exception as e:
             self.logger.error(f"Error initializing {self.platform.value} connector: {e}")
+
             return False
     
     def _get_default_headers(self) -> Dict[str, str]:
@@ -233,7 +242,8 @@ class BaseVideoConnector:
         return True
     
     async def upload_video(self, metadata: VideoContentMetadata, file_data: bytes) -> VideoPlatformResponse:
-        """Upload video to the platform."""
+        """
+        Upload video to the platform."""
         if not self.authenticated:
             return VideoPlatformResponse(
                 success=False,
@@ -274,12 +284,14 @@ class BaseVideoConnector:
         )
     
     async def delete_video(self, content_id: str) -> bool:
-        """Delete video from platform."""
+        """
+        Delete video from platform."""
         # Platform-specific deletion implementation
         return True
     
     async def update_video(self, content_id: str, metadata: VideoContentMetadata) -> VideoPlatformResponse:
-        """Update video metadata."""
+        """
+        Update video metadata."""
         # Platform-specific update implementation
         return VideoPlatformResponse(
             success=True,
@@ -288,13 +300,15 @@ class BaseVideoConnector:
         )
     
     async def close(self):
-        """Close the connector and cleanup resources."""
+        """
+        Close the connector and cleanup resources."""
         if self.session:
             await self.session.close()
 
 
 class VimeoConnector(BaseVideoConnector):
-    """Vimeo API connector with Pro features."""
+    """
+        Vimeo API connector with Pro features."""
     
     def __init__(self, credentials: Dict[str, Any]):
         super().__init__(VideoPlatformType.VIMEO, credentials)
@@ -313,18 +327,21 @@ class VimeoConnector(BaseVideoConnector):
                 
         except Exception as e:
             self.logger.error(f"Vimeo authentication error: {e}")
+
             return False
     
     async def upload_video(self, metadata: VideoContentMetadata, file_data: bytes) -> VideoPlatformResponse:
         """Upload video to Vimeo with Pro features."""
         try:
             # Create video entry
+
             upload_data = {
                 "name": metadata.title,
                 "description": metadata.description,
                 "privacy": {"view": metadata.privacy},
                 "upload": {"approach": "tus", "size": len(file_data)}
             }
+
             
             headers = {
                 "Authorization": f"Bearer {self.credentials.get('access_token')}",
@@ -335,6 +352,7 @@ class VimeoConnector(BaseVideoConnector):
                                        json=upload_data, headers=headers) as response:
                 if response.status == 201:
                     data = await response.json()
+
                     return VideoPlatformResponse(
                         success=True,
                         platform=self.platform,
@@ -342,15 +360,18 @@ class VimeoConnector(BaseVideoConnector):
                         video_url=data.get("link"),
                         embed_url=data.get("embed", {}).get("html")
                     )
+
                 else:
                     return VideoPlatformResponse(
                         success=False,
                         platform=self.platform,
                         error_message=f"Upload failed: {response.status}"
                     )
+
                     
         except Exception as e:
             self.logger.error(f"Vimeo upload error: {e}")
+
             return VideoPlatformResponse(
                 success=False,
                 platform=self.platform,
@@ -378,12 +399,15 @@ class DailymotionConnector(BaseVideoConnector):
                                        data=auth_data) as response:
                 if response.status == 200:
                     data = await response.json()
+
                     self.credentials["access_token"] = data.get("access_token")
+
                     return True
                 return False
                 
         except Exception as e:
             self.logger.error(f"Dailymotion authentication error: {e}")
+
             return False
 
 
@@ -407,12 +431,15 @@ class TwitchConnector(BaseVideoConnector):
                                        data=auth_data) as response:
                 if response.status == 200:
                     data = await response.json()
+
                     self.credentials["access_token"] = data.get("access_token")
+
                     return True
                 return False
                 
         except Exception as e:
             self.logger.error(f"Twitch authentication error: {e}")
+
             return False
     
     async def start_live_stream(self, settings: LiveStreamSettings) -> VideoPlatformResponse:
@@ -423,6 +450,7 @@ class TwitchConnector(BaseVideoConnector):
                 "Client-ID": self.credentials.get("client_id"),
                 **self._get_default_headers()
             }
+
             
             stream_data = {
                 "game_id": settings.custom_settings.get("game_id"),
@@ -438,15 +466,18 @@ class TwitchConnector(BaseVideoConnector):
                         platform=self.platform,
                         stream_url=f"rtmp://live.twitch.tv/live/{self.credentials.get('stream_key')}"
                     )
+
                 else:
                     return VideoPlatformResponse(
                         success=False,
                         platform=self.platform,
                         error_message=f"Stream start failed: {response.status}"
                     )
+
                     
         except Exception as e:
             self.logger.error(f"Twitch stream start error: {e}")
+
             return VideoPlatformResponse(
                 success=False,
                 platform=self.platform,
@@ -463,16 +494,22 @@ class LiveStreamingConnector(BaseVideoConnector):
     
     async def start_multi_platform_stream(self, settings: LiveStreamSettings, 
                                         platforms: List[VideoPlatformType]) -> Dict[VideoPlatformType, VideoPlatformResponse]:
-        """Start live stream on multiple platforms simultaneously."""
+        """
+        Start live stream on multiple platforms simultaneously."""
         results = {}
         
         for platform in platforms:
             try:
                 # Create platform-specific connector
+
                 connector = self._get_platform_connector(platform)
+
                 if connector:
                     await connector.initialize()
+
+
                     result = await connector.start_live_stream(settings)
+
                     results[platform] = result
                     
                     if result.success:
@@ -485,11 +522,13 @@ class LiveStreamingConnector(BaseVideoConnector):
                         
             except Exception as e:
                 self.logger.error(f"Error starting stream on {platform.value}: {e}")
+
                 results[platform] = VideoPlatformResponse(
                     success=False,
                     platform=platform,
                     error_message=str(e)
                 )
+
         
         return results
     
@@ -500,6 +539,7 @@ class LiveStreamingConnector(BaseVideoConnector):
             VideoPlatformType.VIMEO: VimeoConnector,
             VideoPlatformType.DAILYMOTION: DailymotionConnector
         }
+
         
         connector_class = connectors.get(platform)
         if connector_class:
@@ -508,7 +548,8 @@ class LiveStreamingConnector(BaseVideoConnector):
 
 
 class VideoPlatformManager:
-    """Manager for all video platform connectors."""
+    """
+        Manager for all video platform connectors."""
     
     def __init__(self):
         self.connectors: Dict[VideoPlatformType, BaseVideoConnector] = {}
@@ -523,20 +564,26 @@ class VideoPlatformManager:
                 VideoPlatformType.TWITCH: TwitchConnector,
                 VideoPlatformType.LIVE_STREAMING: LiveStreamingConnector
             }
+
             
             connector_class = connector_classes.get(platform)
+
             if connector_class:
                 connector = connector_class(credentials)
+
                 if await connector.initialize():
                     self.connectors[platform] = connector
                     self.logger.info(f"✅ Added {platform.value} connector")
+
                     return True
                     
             self.logger.error(f"❌ Failed to add {platform.value} connector")
+
             return False
             
         except Exception as e:
             self.logger.error(f"Error adding {platform.value} connector: {e}")
+
             return False
     
     async def upload_to_platform(self, platform: VideoPlatformType, 
@@ -550,7 +597,8 @@ class VideoPlatformManager:
     
     async def start_live_stream_on_platform(self, platform: VideoPlatformType, 
                                           settings: LiveStreamSettings) -> Optional[VideoPlatformResponse]:
-        """Start live stream on specific platform."""
+        """
+        Start live stream on specific platform."""
         connector = self.connectors.get(platform)
         if connector:
             return await connector.start_live_stream(settings)
@@ -559,7 +607,8 @@ class VideoPlatformManager:
     async def get_platform_analytics(self, platform: VideoPlatformType, 
                                    content_id: str, 
                                    date_range: Tuple[datetime, datetime]) -> Optional[VideoStreamingAnalytics]:
-        """Get analytics for content on specific platform."""
+        """
+        Get analytics for content on specific platform."""
         connector = self.connectors.get(platform)
         if connector:
             return await connector.get_streaming_analytics(content_id, date_range)
@@ -568,13 +617,16 @@ class VideoPlatformManager:
     async def distribute_video(self, metadata: VideoContentMetadata, 
                              file_data: bytes, 
                              platforms: List[VideoPlatformType]) -> Dict[VideoPlatformType, VideoPlatformResponse]:
-        """Distribute video to multiple platforms."""
+        """
+        Distribute video to multiple platforms."""
         results = {}
         
         for platform in platforms:
             connector = self.connectors.get(platform)
+
             if connector:
                 result = await connector.upload_video(metadata, file_data)
+
                 results[platform] = result
             else:
                 results[platform] = VideoPlatformResponse(
@@ -582,6 +634,7 @@ class VideoPlatformManager:
                     platform=platform,
                     error_message="Platform not configured"
                 )
+
         
         return results
     
@@ -590,7 +643,8 @@ class VideoPlatformManager:
         return list(self.connectors.keys())
     
     async def close_all(self):
-        """Close all connectors."""
+        """
+        Close all connectors."""
         for connector in self.connectors.values():
             await connector.close()
 
@@ -600,7 +654,8 @@ _video_manager: Optional[VideoPlatformManager] = None
 
 
 async def get_video_platform_manager() -> VideoPlatformManager:
-    """Get the global video platform manager instance."""
+    """
+        Get the global video platform manager instance."""
     global _video_manager
     
     if _video_manager is None:

@@ -41,7 +41,8 @@ from contextlib import asynccontextmanager
 logger = logging.getLogger(__name__)
 
 class HealthStatus(str, Enum):
-    """Health status levels"""
+    """
+Health status levels"""
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -49,7 +50,8 @@ class HealthStatus(str, Enum):
     UNKNOWN = "unknown"
 
 class HealthCheckType(str, Enum):
-    """Types of health checks"""
+    """
+Types of health checks"""
     SHALLOW = "shallow"      # Quick checks (< 100ms)
     DEEP = "deep"           # Thorough checks (< 1s)
     CRITICAL = "critical"   # Essential service checks
@@ -57,7 +59,8 @@ class HealthCheckType(str, Enum):
     CUSTOM = "custom"       # User-defined checks
 
 class HealthCheckPriority(str, Enum):
-    """Health check priority levels"""
+    """
+Health check priority levels"""
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -65,7 +68,8 @@ class HealthCheckPriority(str, Enum):
 
 @dataclass
 class HealthCheckResult:
-    """Result of a health check"""
+    """
+Result of a health check"""
     name: str
     status: HealthStatus
     message: str = ""
@@ -75,7 +79,8 @@ class HealthCheckResult:
     error: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             "name": self.name,
             "status": self.status.value,
@@ -88,7 +93,8 @@ class HealthCheckResult:
 
 @dataclass
 class HealthCheckConfig:
-    """Configuration for a health check"""
+    """
+Configuration for a health check"""
     name: str
     check_type: HealthCheckType
     priority: HealthCheckPriority = HealthCheckPriority.MEDIUM
@@ -102,7 +108,8 @@ class HealthCheckConfig:
 
 @dataclass
 class ServiceHealth:
-    """Overall health status of a service"""
+    """
+Overall health status of a service"""
     service_name: str
     overall_status: HealthStatus
     checks: List[HealthCheckResult]
@@ -112,7 +119,8 @@ class ServiceHealth:
     dependencies_healthy: bool = True
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             "service_name": self.service_name,
             "overall_status": self.overall_status.value,
@@ -124,22 +132,26 @@ class ServiceHealth:
         }
 
 class HealthChecker(ABC):
-    """Abstract base class for health checkers"""
+    """
+Abstract base class for health checkers"""
     
     @abstractmethod
     async def check(self) -> HealthCheckResult:
-        """Perform health check"""
+        """
+Perform health check"""
         pass
 
 class DatabaseHealthChecker(HealthChecker):
-    """Database connectivity health checker"""
+    """
+Database connectivity health checker"""
     
     def __init__(self, db_pool: Any, name: str = "database"):
         self.db_pool = db_pool
         self.name = name
     
     async def check(self) -> HealthCheckResult:
-        """Check database connectivity"""
+        """
+Check database connectivity"""
         start_time = time.time()
         try:
             async with self.db_pool.acquire() as conn:
@@ -163,14 +175,16 @@ class DatabaseHealthChecker(HealthChecker):
             )
 
 class RedisHealthChecker(HealthChecker):
-    """Redis connectivity health checker"""
+    """
+Redis connectivity health checker"""
     
     def __init__(self, redis_client: Any, name: str = "redis"):
         self.redis_client = redis_client
         self.name = name
     
     async def check(self) -> HealthCheckResult:
-        """Check Redis connectivity"""
+        """
+Check Redis connectivity"""
         start_time = time.time()
         try:
             await self.redis_client.ping()
@@ -193,7 +207,8 @@ class RedisHealthChecker(HealthChecker):
             )
 
 class HttpServiceHealthChecker(HealthChecker):
-    """HTTP service health checker"""
+    """
+HTTP service health checker"""
     
     def __init__(self, url: str, name: str, timeout: int = 5):
         self.url = url
@@ -201,7 +216,8 @@ class HttpServiceHealthChecker(HealthChecker):
         self.timeout = timeout
     
     async def check(self) -> HealthCheckResult:
-        """Check HTTP service availability"""
+        """
+Check HTTP service availability"""
         start_time = time.time()
         try:
             async with aiohttp.ClientSession() as session:
@@ -235,13 +251,15 @@ class HttpServiceHealthChecker(HealthChecker):
             )
 
 class SystemResourcesHealthChecker(HealthChecker):
-    """System resources health checker"""
+    """
+System resources health checker"""
     
     def __init__(self, name: str = "system_resources"):
         self.name = name
     
     async def check(self) -> HealthCheckResult:
-        """Check system resources"""
+        """
+Check system resources"""
         start_time = time.time()
         try:
             # Get system metrics
@@ -302,14 +320,16 @@ class SystemResourcesHealthChecker(HealthChecker):
             )
 
 class CustomHealthChecker(HealthChecker):
-    """Custom health checker with user-defined function"""
+    """
+Custom health checker with user-defined function"""
     
     def __init__(self, name: str, check_function: Callable[[], Any]):
         self.name = name
         self.check_function = check_function
     
     async def check(self) -> HealthCheckResult:
-        """Execute custom health check"""
+        """
+Execute custom health check"""
         start_time = time.time()
         try:
             result = self.check_function()
@@ -347,18 +367,21 @@ class CustomHealthChecker(HealthChecker):
 
 @dataclass
 class HealthCheckHistory:
-    """Historical health check data"""
+    """
+Historical health check data"""
     results: List[HealthCheckResult] = field(default_factory=list)
     max_history: int = 100
     
     def add_result(self, result: HealthCheckResult):
-        """Add health check result to history"""
+        """
+Add health check result to history"""
         self.results.append(result)
         if len(self.results) > self.max_history:
             self.results.pop(0)
     
     def get_uptime_percentage(self, since: Optional[datetime] = None) -> float:
-        """Calculate uptime percentage"""
+        """
+Calculate uptime percentage"""
         if not self.results:
             return 100.0
         
@@ -374,7 +397,8 @@ class HealthCheckHistory:
         return (healthy_count / len(relevant_results)) * 100.0
     
     def get_average_response_time(self) -> float:
-        """Get average response time"""
+        """
+Get average response time"""
         if not self.results:
             return 0.0
         
@@ -382,7 +406,8 @@ class HealthCheckHistory:
         return statistics.mean(response_times) if response_times else 0.0
     
     def get_failure_rate(self) -> float:
-        """Get failure rate percentage"""
+        """
+Get failure rate percentage"""
         if not self.results:
             return 0.0
         
@@ -391,7 +416,8 @@ class HealthCheckHistory:
         return (failed_count / len(self.results)) * 100.0
 
 class HealthCheckCore:
-    """Advanced enterprise health check core"""
+    """
+Advanced enterprise health check core"""
     
     def __init__(self, level: str = "enterprise", service_name: str = "iacherie-service"):
         self.level = level
@@ -414,7 +440,8 @@ class HealthCheckCore:
         self.scheduler_task: Optional[asyncio.Task] = None
         
     def _get_performance_config(self) -> Dict[str, Any]:
-        """Get performance configuration based on level"""
+        """
+Get performance configuration based on level"""
         configs = {
             "basic": {
                 "max_checkers": 10,
@@ -444,7 +471,8 @@ class HealthCheckCore:
         return configs.get(self.level, configs["enterprise"])
     
     async def initialize(self) -> bool:
-        """Initialize health check system"""
+        """
+Initialize health check system"""
         try:
             logger.info(f"🚀 Initializing HealthCheckCore - Level: {self.level}")
             
@@ -462,7 +490,8 @@ class HealthCheckCore:
             return False
     
     async def _add_default_checkers(self):
-        """Add default health checkers"""
+        """
+Add default health checkers"""
         # System resources checker
         system_checker = SystemResourcesHealthChecker()
         await self.add_checker(
@@ -502,7 +531,8 @@ class HealthCheckCore:
         checker: HealthChecker, 
         config: HealthCheckConfig
     ) -> bool:
-        """Add health checker"""
+        """
+Add health checker"""
         try:
             async with self._lock:
                 if len(self.checkers) >= self.performance_config["max_checkers"]:
@@ -529,7 +559,8 @@ class HealthCheckCore:
             return False
     
     async def remove_checker(self, name: str) -> bool:
-        """Remove health checker"""
+        """
+Remove health checker"""
         try:
             async with self._lock:
                 if name in self._check_tasks:
@@ -551,7 +582,8 @@ class HealthCheckCore:
             return False
     
     async def add_database_checker(self, name: str, db_pool: Any) -> bool:
-        """Add database health checker"""
+        """
+Add database health checker"""
         checker = DatabaseHealthChecker(db_pool, name)
         config = HealthCheckConfig(
             name=name,
@@ -563,7 +595,8 @@ class HealthCheckCore:
         return await self.add_checker(name, checker, config)
     
     async def add_redis_checker(self, name: str, redis_client: Any) -> bool:
-        """Add Redis health checker"""
+        """
+Add Redis health checker"""
         checker = RedisHealthChecker(redis_client, name)
         config = HealthCheckConfig(
             name=name,
@@ -575,7 +608,8 @@ class HealthCheckCore:
         return await self.add_checker(name, checker, config)
     
     async def add_http_service_checker(self, name: str, url: str, timeout: int = 5) -> bool:
-        """Add HTTP service health checker"""
+        """
+Add HTTP service health checker"""
         checker = HttpServiceHealthChecker(url, name, timeout)
         config = HealthCheckConfig(
             name=name,
@@ -593,7 +627,8 @@ class HealthCheckCore:
         check_function: Callable[[], Any], 
         config: Optional[HealthCheckConfig] = None
     ) -> bool:
-        """Add custom health checker"""
+        """
+Add custom health checker"""
         checker = CustomHealthChecker(name, check_function)
         if not config:
             config = HealthCheckConfig(
@@ -605,14 +640,16 @@ class HealthCheckCore:
         return await self.add_checker(name, checker, config)
     
     async def check_health(self, checker_name: Optional[str] = None) -> Union[HealthCheckResult, Dict[str, HealthCheckResult]]:
-        """Run health check(s)"""
+        """
+Run health check(s)"""
         if checker_name:
             return await self._run_single_check(checker_name)
         else:
             return await self._run_all_checks()
     
     async def _run_single_check(self, name: str) -> Optional[HealthCheckResult]:
-        """Run single health check"""
+        """
+Run single health check"""
         try:
             checker = self.checkers.get(name)
             config = self.configs.get(name)
@@ -664,7 +701,8 @@ class HealthCheckCore:
             return result
     
     async def _run_all_checks(self) -> Dict[str, HealthCheckResult]:
-        """Run all health checks concurrently"""
+        """
+Run all health checks concurrently"""
         semaphore = asyncio.Semaphore(self.performance_config["max_concurrent"])
         
         async def run_with_semaphore(name: str):
@@ -685,7 +723,8 @@ class HealthCheckCore:
         }
     
     async def get_service_health(self) -> ServiceHealth:
-        """Get overall service health"""
+        """
+Get overall service health"""
         # Run all checks
         check_results = await self._run_all_checks()
         
@@ -705,7 +744,8 @@ class HealthCheckCore:
         )
     
     def _calculate_overall_status(self, results: Dict[str, HealthCheckResult]) -> HealthStatus:
-        """Calculate overall health status"""
+        """
+Calculate overall health status"""
         if not results:
             return HealthStatus.UNKNOWN
         
@@ -736,7 +776,8 @@ class HealthCheckCore:
             return HealthStatus.DEGRADED
     
     def _calculate_health_score(self, results: Dict[str, HealthCheckResult]) -> float:
-        """Calculate health score (0-100)"""
+        """
+Calculate health score (0-100)"""
         if not results:
             return 0.0
         
@@ -771,7 +812,8 @@ class HealthCheckCore:
         return weighted_score / total_weight if total_weight > 0 else 0.0
     
     def _calculate_uptime_percentage(self) -> float:
-        """Calculate overall uptime percentage"""
+        """
+Calculate overall uptime percentage"""
         if not self.history:
             return 100.0
         
@@ -785,7 +827,8 @@ class HealthCheckCore:
         return statistics.mean(uptimes) if uptimes else 100.0
     
     def _check_dependencies_health(self, results: Dict[str, HealthCheckResult]) -> bool:
-        """Check if all dependencies are healthy"""
+        """
+Check if all dependencies are healthy"""
         dependency_checks = [
             result for result in results.values()
             if self.configs.get(result.name, {}).check_type == HealthCheckType.DEPENDENCY
@@ -797,7 +840,8 @@ class HealthCheckCore:
         )
     
     async def start_scheduler(self) -> bool:
-        """Start health check scheduler"""
+        """
+Start health check scheduler"""
         try:
             if self.scheduler_running:
                 return True
@@ -816,7 +860,8 @@ class HealthCheckCore:
             return False
     
     async def _start_checker_task(self, name: str):
-        """Start individual health checker task"""
+        """
+Start individual health checker task"""
         config = self.configs[name]
         
         async def checker_loop():
@@ -833,7 +878,8 @@ class HealthCheckCore:
         self._check_tasks[name] = asyncio.create_task(checker_loop())
     
     async def stop_scheduler(self) -> bool:
-        """Stop health check scheduler"""
+        """
+Stop health check scheduler"""
         try:
             self.scheduler_running = False
             
@@ -853,11 +899,13 @@ class HealthCheckCore:
             return False
     
     async def get_checker_history(self, name: str) -> Optional[HealthCheckHistory]:
-        """Get history for specific checker"""
+        """
+Get history for specific checker"""
         return self.history.get(name)
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get health check metrics"""
+        """
+Get health check metrics"""
         total_checks = len(self.checkers)
         enabled_checks = sum(1 for config in self.configs.values() if config.enabled)
         
@@ -884,7 +932,8 @@ class HealthCheckCore:
         }
     
     async def health_check(self) -> bool:
-        """Self health check"""
+        """
+Self health check"""
         try:
             # Check if scheduler is running and we have checkers
             return self.scheduler_running and len(self.checkers) > 0
@@ -893,7 +942,8 @@ class HealthCheckCore:
             return False
     
     async def start(self) -> bool:
-        """Start health check service"""
+        """
+Start health check service"""
         try:
             logger.info("🚀 Starting HealthCheckCore service")
             return await self.start_scheduler()
@@ -902,7 +952,8 @@ class HealthCheckCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop health check service"""
+        """
+Stop health check service"""
         try:
             logger.info("🛑 Stopping HealthCheckCore service")
             return await self.stop_scheduler()

@@ -41,7 +41,8 @@ logger = logging.getLogger(__name__)
 
 
 class SEOPlatform(Enum):
-    """SEO-relevant platforms and search engines"""
+    """
+        SEO-relevant platforms and search engines"""
     GOOGLE = "google"
     YOUTUBE = "youtube"
     BING = "bing"
@@ -177,7 +178,8 @@ class ContentSEOAnalysis:
 
 @dataclass
 class PlatformSEOMetrics:
-    """Platform-specific SEO performance metrics"""
+    """
+        Platform-specific SEO performance metrics"""
     platform: SEOPlatform
     total_content: int
     total_impressions: int
@@ -206,7 +208,8 @@ class PlatformSEOMetrics:
 
 @dataclass
 class SEOAnalysisReport:
-    """Comprehensive SEO performance analysis report"""
+    """
+        Comprehensive SEO performance analysis report"""
     analysis_period: Tuple[datetime, datetime]
     total_content_analyzed: int
     
@@ -266,7 +269,8 @@ class SEOPerformanceIntelligence:
     """
     
     def __init__(self, retention_days: int = 365):
-        """Initialize the SEO Performance Intelligence Engine"""
+        """
+        Initialize the SEO Performance Intelligence Engine"""
         self.retention_days = retention_days
         self.content_seo_data: Dict[str, ContentSEOAnalysis] = {}
         self.keyword_data: Dict[str, KeywordData] = {}
@@ -284,6 +288,7 @@ class SEOPerformanceIntelligence:
         
         # Competition analysis
         self.competitor_analyzer = self._initialize_competitor_analyzer()
+
         
         logger.info("🚀 SEO Performance Intelligence Engine initialized")
     
@@ -413,6 +418,7 @@ class SEOPerformanceIntelligence:
         """
         try:
             # Create content analysis object
+
             analysis = ContentSEOAnalysis(
                 content_id=content_id,
                 content_type=ContentType(content_data.get("content_type", "blog_post")),
@@ -426,13 +432,18 @@ class SEOPerformanceIntelligence:
             
             # Perform SEO analysis
             await self._analyze_technical_seo(analysis, content_data)
+
             await self._analyze_content_optimization(analysis, content_data)
+
             await self._analyze_keyword_performance(analysis)
+
             await self._generate_optimization_recommendations(analysis)
             
             # Calculate overall scores
             analysis.seo_optimization_score = await self._calculate_seo_score(analysis)
+
             analysis.content_quality_score = await self._calculate_content_quality_score(analysis, content_data)
+
             analysis.user_experience_score = await self._calculate_ux_score(analysis)
             
             # Determine optimization status
@@ -442,10 +453,12 @@ class SEOPerformanceIntelligence:
             self.content_seo_data[content_id] = analysis
             
             logger.info(f"✅ SEO analysis completed for content {content_id}")
+
             return analysis
             
         except Exception as e:
             logger.error(f"❌ SEO analysis failed for content {content_id}: {e}")
+
             return None
     
     async def _analyze_technical_seo(self, analysis: ContentSEOAnalysis, content_data: Dict[str, Any]):
@@ -457,12 +470,14 @@ class SEOPerformanceIntelligence:
         analysis.ssl_secure = content_data.get("ssl_secure", random.choice([True, True, True, False]))
         
         # Extract headings structure
+
         content_text = content_data.get("content_text", "")
         analysis.headings = self._extract_headings(content_text)
     
     def _extract_headings(self, content_text: str) -> List[str]:
         """Extract heading structure from content"""
         # Simplified heading extraction (in production would use proper HTML parsing)
+
         headings = []
         
         # Simulate finding headings in content
@@ -472,6 +487,7 @@ class SEOPerformanceIntelligence:
             headings.append("H2: Conclusion")
         if len(content_text) > 500:
             headings.extend(["H2: Main Content", "H3: Subsection"])
+
         
         return headings
     
@@ -480,7 +496,9 @@ class SEOPerformanceIntelligence:
         content_text = content_data.get("content_text", "")
         
         # Keyword density analysis
+
         target_keywords = analysis.target_keywords
+
         keyword_densities = {}
         
         for keyword in target_keywords:
@@ -489,13 +507,19 @@ class SEOPerformanceIntelligence:
                 keyword_densities[keyword] = density
         
         # Image optimization analysis
+
         images = content_data.get("images", [])
+
         optimized_images = sum(1 for img in images if img.get("alt_text"))
+
         image_optimization_score = (optimized_images / len(images)) if images else 1.0
         
         # Internal/external links analysis
+
         links = content_data.get("links", [])
+
         internal_links = [link for link in links if "internal" in link.get("type", "")]
+
         external_links = [link for link in links if "external" in link.get("type", "")]
         
         # Store in metadata for scoring
@@ -512,7 +536,10 @@ class SEOPerformanceIntelligence:
         
         for keyword in analysis.target_keywords:
             # Simulate ranking position (in production would fetch from search console/tools)
+
+
             position = random.randint(1, 100)
+
             ranking_positions[keyword] = position
             
             # Update keyword data if it exists
@@ -527,7 +554,8 @@ class SEOPerformanceIntelligence:
         analysis.backlinks = random.randint(0, 50)
     
     async def _generate_optimization_recommendations(self, analysis: ContentSEOAnalysis):
-        """Generate specific optimization recommendations"""
+        """
+        Generate specific optimization recommendations"""
         recommendations = []
         
         # Title optimization
@@ -547,48 +575,62 @@ class SEOPerformanceIntelligence:
             recommendations.append("Increase content length to at least 300 words")
         
         # Keyword optimization
+
         keyword_densities = analysis.metadata.get("keyword_densities", {})
         for keyword, density in keyword_densities.items():
             if density < 0.5:
                 recommendations.append(f"Increase keyword density for '{keyword}' (currently {density:.1f}%)")
+
             elif density > 3.0:
                 recommendations.append(f"Reduce keyword density for '{keyword}' to avoid over-optimization")
         
         # Technical SEO
         if analysis.page_speed_score < 80:
             recommendations.append("Improve page speed - optimize images and minimize code")
+
         
         if not analysis.mobile_friendly:
             recommendations.append("Ensure mobile-friendly design and responsive layout")
+
         
         if not analysis.schema_markup:
             recommendations.append("Implement structured data markup for better rich snippets")
         
         # Links
+
         internal_links = analysis.metadata.get("internal_links_count", 0)
         if internal_links < 2:
             recommendations.append("Add more internal links to related content")
+
+
         
         external_links = analysis.metadata.get("external_links_count", 0)
         if external_links == 0:
             recommendations.append("Add authoritative external links to support content")
         
         # Image optimization
+
         image_score = analysis.metadata.get("image_optimization_score", 1.0)
         if image_score < 0.8:
             recommendations.append("Add alt text to all images for better accessibility and SEO")
+
         
         analysis.optimization_recommendations = recommendations
     
     async def _calculate_seo_score(self, analysis: ContentSEOAnalysis) -> float:
         """Calculate overall SEO optimization score (0-100)"""
         scoring_config = self.seo_algorithms["optimization_scoring"]
+
         total_score = 0
+
         max_possible_score = sum(config["max_score"] for config in scoring_config.values())
         
         # Title optimization score
+
         title_length = len(analysis.title)
+
         ideal_title_length = scoring_config["title_optimization"]["ideal_length"]
+
         title_score = max(0, scoring_config["title_optimization"]["max_score"] * (
             1 - abs(title_length - ideal_title_length) / ideal_title_length
         ))
@@ -597,14 +639,20 @@ class SEOPerformanceIntelligence:
         # Meta description score
         if analysis.meta_description:
             desc_length = len(analysis.meta_description)
+
+
             ideal_desc_length = scoring_config["meta_description"]["ideal_length"]
+
             desc_score = max(0, scoring_config["meta_description"]["max_score"] * (
                 1 - abs(desc_length - ideal_desc_length) / ideal_desc_length
             ))
+
             total_score += desc_score
         
         # Content length score
+
         content_length = analysis.content_length
+
         min_words = scoring_config["content_length"]["min_words"]
         if content_length >= min_words:
             total_score += scoring_config["content_length"]["max_score"]
@@ -612,56 +660,76 @@ class SEOPerformanceIntelligence:
             total_score += scoring_config["content_length"]["max_score"] * (content_length / min_words)
         
         # Keyword density score
+
         keyword_densities = analysis.metadata.get("keyword_densities", {})
         if keyword_densities:
             ideal_range = scoring_config["keyword_density"]["ideal_range"]
+
             avg_density = statistics.mean(keyword_densities.values())
+
             
             if ideal_range[0] <= avg_density <= ideal_range[1]:
                 total_score += scoring_config["keyword_density"]["max_score"]
             else:
                 # Penalty for being outside ideal range
+
                 penalty = min(abs(avg_density - ideal_range[0]), abs(avg_density - ideal_range[1]))
+
                 total_score += max(0, scoring_config["keyword_density"]["max_score"] * (1 - penalty / 5))
         
         # Technical SEO scores
+
         page_speed_target = scoring_config["page_speed"]["target_score"]
+
         page_speed_score = scoring_config["page_speed"]["max_score"] * (analysis.page_speed_score / page_speed_target)
         total_score += min(scoring_config["page_speed"]["max_score"], page_speed_score)
+
         
         if analysis.mobile_friendly:
             total_score += scoring_config["mobile_friendly"]["max_score"]
         
         # Link scores
+
         internal_links = analysis.metadata.get("internal_links_count", 0)
+
         min_internal = scoring_config["internal_links"]["min_links"]
+
         internal_score = min(scoring_config["internal_links"]["max_score"], 
                            (internal_links / min_internal) * scoring_config["internal_links"]["max_score"])
         total_score += internal_score
+
         
         external_links = analysis.metadata.get("external_links_count", 0)
+
         min_external = scoring_config["external_links"]["min_links"]
+
         external_score = min(scoring_config["external_links"]["max_score"], 
                            (external_links / min_external) * scoring_config["external_links"]["max_score"])
         total_score += external_score
         
         # Image optimization score
+
         image_score = analysis.metadata.get("image_optimization_score", 1.0)
         total_score += scoring_config["image_optimization"]["max_score"] * image_score
         
         # URL structure score (simplified)
+
         url_length = len(analysis.url)
+
         max_url_length = scoring_config["url_structure"]["max_length"]
         if url_length <= max_url_length:
             total_score += scoring_config["url_structure"]["max_score"]
         else:
             total_score += scoring_config["url_structure"]["max_score"] * (max_url_length / url_length)
+
         
         return (total_score / max_possible_score) * 100
     
     async def _calculate_content_quality_score(self, analysis: ContentSEOAnalysis, content_data: Dict[str, Any]) -> float:
         """Calculate content quality score based on various factors"""
         content_text = content_data.get("content_text", "")
+
+
         
         quality_factors = {
             "readability": 0.0,
@@ -674,12 +742,14 @@ class SEOPerformanceIntelligence:
         # Readability (simplified)
         if content_text:
             avg_sentence_length = len(content_text.split()) / max(1, content_text.count('.'))
+
             if 15 <= avg_sentence_length <= 25:  # Ideal range
                 quality_factors["readability"] = 0.9
             else:
                 quality_factors["readability"] = max(0.3, 1.0 - abs(avg_sentence_length - 20) / 20)
         
         # Content depth
+
         word_count = len(content_text.split())
         if word_count >= 1000:
             quality_factors["depth"] = 1.0
@@ -691,12 +761,14 @@ class SEOPerformanceIntelligence:
             quality_factors["depth"] = 0.3
         
         # Keyword relevance
+
         keyword_densities = analysis.metadata.get("keyword_densities", {})
         if keyword_densities:
             relevance_score = statistics.mean([
                 1.0 if 0.5 <= density <= 3.0 else 0.5 
                 for density in keyword_densities.values()
             ])
+
             quality_factors["relevance"] = relevance_score
         else:
             quality_factors["relevance"] = 0.5
@@ -705,10 +777,14 @@ class SEOPerformanceIntelligence:
         quality_factors["uniqueness"] = random.uniform(0.7, 0.95)
         
         # Engagement potential (based on content structure)
+
         has_headings = len(analysis.headings) > 0
+
         has_images = analysis.metadata.get("image_optimization_score", 0) > 0
+
         has_links = (analysis.metadata.get("internal_links_count", 0) + 
                     analysis.metadata.get("external_links_count", 0)) > 0
+
         
         engagement_score = (
             (0.4 if has_headings else 0) +
@@ -718,6 +794,7 @@ class SEOPerformanceIntelligence:
         quality_factors["engagement"] = engagement_score
         
         # Calculate weighted average
+
         weights = {
             "readability": 0.25,
             "uniqueness": 0.25,
@@ -725,6 +802,7 @@ class SEOPerformanceIntelligence:
             "relevance": 0.15,
             "engagement": 0.15
         }
+
         
         quality_score = sum(quality_factors[factor] * weights[factor] for factor in quality_factors)
         return quality_score * 100  # Convert to 0-100 scale
@@ -743,10 +821,12 @@ class SEOPerformanceIntelligence:
         ux_factors.append(1.0 if analysis.ssl_secure else 0.5)
         
         # Content structure
+
         has_headings = len(analysis.headings) > 0
         ux_factors.append(0.8 if has_headings else 0.4)
         
         # Internal navigation
+
         internal_links = analysis.metadata.get("internal_links_count", 0)
         ux_factors.append(min(1.0, internal_links / 3))  # 3 internal links = perfect score
         
@@ -761,20 +841,24 @@ class SEOPerformanceIntelligence:
         elif seo_score >= 70:
             return OptimizationStatus.PARTIALLY_OPTIMIZED
         elif seo_score >= 95:  # Over-optimized (too high keyword density, etc.)
+
             return OptimizationStatus.OVER_OPTIMIZED
         else:
             return OptimizationStatus.NOT_OPTIMIZED
     
     async def track_keyword_performance(self, keyword_data: KeywordData) -> bool:
-        """Track keyword performance over time"""
+        """
+        Track keyword performance over time"""
         try:
             self.keyword_data[keyword_data.keyword] = keyword_data
             
             logger.info(f"✅ Keyword performance tracked: {keyword_data.keyword}")
+
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to track keyword performance: {e}")
+
             return False
     
     async def analyze_platform_seo_performance(
@@ -794,50 +878,70 @@ class SEOPerformanceIntelligence:
         """
         try:
             # Filter content for the platform
+
             platform_content = [
                 content for content in self.content_seo_data.values()
+
                 if content.platform == platform
             ]
             
             if not platform_content:
                 logger.warning(f"No content found for platform {platform.value}")
+
                 return None
             
             # Calculate basic metrics
+
             total_content = len(platform_content)
+
+
             total_impressions = sum(content.organic_traffic for content in platform_content)
+
+
             total_clicks = sum(content.social_shares for content in platform_content)  # Simplified
             
             # Calculate average ranking
+
             all_rankings = []
             for content in platform_content:
                 all_rankings.extend(content.ranking_positions.values())
+
+
             
             average_ranking = statistics.mean(all_rankings) if all_rankings else 0
             
             # Calculate CTR (simplified)
+
+
             average_ctr = (total_clicks / total_impressions * 100) if total_impressions > 0 else 0
             
             # Analyze content type performance
+
             content_type_performance = await self._analyze_content_type_performance(platform_content)
             
             # Identify top content
+
             top_content = sorted(platform_content, 
                                key=lambda x: x.seo_optimization_score, 
                                reverse=True)[:5]
             
             # Analyze keywords
+
             top_keywords = await self._analyze_platform_keywords(platform_content)
             
             # Calculate optimization score
+
             optimization_score = statistics.mean([
                 content.seo_optimization_score for content in platform_content
             ])
             
             # Generate improvement opportunities
+
             improvement_opportunities = await self._identify_platform_improvements(
                 platform, platform_content
             )
+
+
             
             metrics = PlatformSEOMetrics(
                 platform=platform,
@@ -852,14 +956,17 @@ class SEOPerformanceIntelligence:
                 optimization_score=optimization_score,
                 improvement_opportunities=improvement_opportunities
             )
+
             
             self.platform_metrics[platform] = metrics
             
             logger.info(f"✅ Platform SEO analysis completed for {platform.value}")
+
             return metrics
             
         except Exception as e:
             logger.error(f"❌ Platform SEO analysis failed for {platform.value}: {e}")
+
             return None
     
     async def _analyze_content_type_performance(
@@ -868,14 +975,18 @@ class SEOPerformanceIntelligence:
     ) -> Dict[ContentType, Dict[str, float]]:
         """Analyze performance by content type"""
         type_performance = defaultdict(lambda: defaultdict(list))
+
         
         for content in platform_content:
             content_type = content.content_type
             type_performance[content_type]["seo_score"].append(content.seo_optimization_score)
+
             type_performance[content_type]["traffic"].append(content.organic_traffic)
+
             type_performance[content_type]["engagement"].append(content.social_shares)
         
         # Calculate averages
+
         result = {}
         for content_type, metrics in type_performance.items():
             result[content_type] = {
@@ -896,28 +1007,37 @@ class SEOPerformanceIntelligence:
             "content_count": 0,
             "avg_traffic": 0
         })
+
         
         for content in platform_content:
             for keyword, ranking in content.ranking_positions.items():
                 keyword_performance[keyword]["total_rankings"].append(ranking)
+
                 keyword_performance[keyword]["content_count"] += 1
                 keyword_performance[keyword]["avg_traffic"] += content.organic_traffic
         
         # Create KeywordData objects for top keywords
+
         top_keywords = []
         for keyword, data in keyword_performance.items():
             if data["content_count"] > 0:
                 avg_ranking = statistics.mean(data["total_rankings"])
+
+
                 avg_traffic = data["avg_traffic"] / data["content_count"]
+
                 
                 keyword_data = KeywordData(
                     keyword=keyword,
                     search_volume=int(avg_traffic * 10),  # Estimated
+
                     difficulty=random.uniform(30, 80),  # Simulated
+
                     current_ranking=int(avg_ranking),
                     clicks=int(avg_traffic),
                     impressions=int(avg_traffic * 10)
                 )
+
                 top_keywords.append(keyword_data)
         
         # Sort by performance and return top 10
@@ -933,41 +1053,60 @@ class SEOPerformanceIntelligence:
         improvements = []
         
         # Analyze average scores
+
         avg_seo_score = statistics.mean([content.seo_optimization_score for content in platform_content])
+
         avg_quality_score = statistics.mean([content.content_quality_score for content in platform_content])
+
         avg_ux_score = statistics.mean([content.user_experience_score for content in platform_content])
+
         
         if avg_seo_score < 70:
             improvements.append("Improve overall SEO optimization across content")
+
         
         if avg_quality_score < 75:
             improvements.append("Focus on content quality and depth")
+
         
         if avg_ux_score < 80:
             improvements.append("Enhance user experience and page performance")
         
         # Platform-specific recommendations
+
         platform_rules = self.platform_rules.get(platform, {})
+
         
         if platform == SEOPlatform.YOUTUBE:
             avg_engagement = statistics.mean([content.social_shares for content in platform_content])
+
             if avg_engagement < 50:
                 improvements.append("Optimize video thumbnails and titles for higher CTR")
+
                 improvements.append("Improve video retention with better content structure")
+
         
         elif platform == SEOPlatform.GOOGLE:
             # Check for technical SEO issues
+
             mobile_friendly_rate = sum(1 for content in platform_content if content.mobile_friendly) / len(platform_content)
+
             if mobile_friendly_rate < 0.9:
                 improvements.append("Ensure all content is mobile-friendly")
+
+
             
             avg_page_speed = statistics.mean([content.page_speed_score for content in platform_content])
+
             if avg_page_speed < 80:
                 improvements.append("Improve page speed across all content")
+
         
         elif platform in [SEOPlatform.INSTAGRAM, SEOPlatform.TIKTOK]:
             improvements.append("Optimize hashtag strategy for better discoverability")
+
             improvements.append("Improve posting timing based on audience activity")
+
         
         return improvements
     
@@ -986,54 +1125,71 @@ class SEOPerformanceIntelligence:
         """
         try:
             # Define analysis period
+
             end_date = datetime.now()
+
+
             start_date = end_date - timedelta(days=analysis_period_days)
             
             # Filter content for analysis period
+
             period_content = [
                 content for content in self.content_seo_data.values()
+
                 if start_date <= content.last_analyzed <= end_date
             ]
             
             if not period_content:
                 logger.warning("No content found in analysis period")
+
                 return None
             
             # Calculate overall performance metrics
+
             overall_metrics = await self._calculate_overall_seo_metrics(period_content)
             
             # Analyze platform performance
+
             platform_performance = {}
             for platform in SEOPlatform:
                 platform_metrics = await self.analyze_platform_seo_performance(platform, analysis_period_days)
+
                 if platform_metrics:
                     platform_performance[platform] = platform_metrics
             
             # Analyze content type performance
+
             content_type_performance = await self._analyze_content_type_performance(period_content)
             
             # Identify top and underperforming content
             top_content, underperforming_content = await self._identify_content_performance_outliers(period_content)
             
             # Keyword analysis
+
             keyword_analysis = await self._perform_comprehensive_keyword_analysis()
             
             # Technical SEO analysis
+
             technical_seo_health = await self._analyze_technical_seo_health(period_content)
             
             # Competitive analysis
+
             competitive_analysis = await self._perform_competitive_analysis()
             
             # Generate optimization recommendations
+
             optimization_recommendations = await self._generate_comprehensive_optimization_recommendations(
                 period_content, platform_performance
             )
             
             # Trend analysis
+
             trends = await self._analyze_seo_trends(analysis_period_days)
             
             # ROI analysis
+
             roi_analysis = await self._calculate_seo_roi(period_content)
+
             
             return SEOAnalysisReport(
                 analysis_period=(start_date, end_date),
@@ -1066,9 +1222,11 @@ class SEOPerformanceIntelligence:
                 seo_roi_analysis=roi_analysis,
                 optimization_impact_forecast=await self._forecast_optimization_impact(period_content)
             )
+
             
         except Exception as e:
             logger.error(f"❌ Failed to generate SEO report: {e}")
+
             return None
     
     async def _calculate_overall_seo_metrics(self, content: List[ContentSEOAnalysis]) -> Dict[str, Any]:
@@ -1090,25 +1248,32 @@ class SEOPerformanceIntelligence:
     ) -> Tuple[List[Tuple[str, float]], List[Tuple[str, float]]]:
         """Identify top performing and underperforming content"""
         # Sort by combined performance score
+
         content_scores = [
             (c.content_id, (c.seo_optimization_score + c.content_quality_score + c.user_experience_score) / 3)
+
             for c in content
         ]
         
         content_scores.sort(key=lambda x: x[1], reverse=True)
         
         # Top 10 and bottom 10
+
         top_content = content_scores[:10]
+
         underperforming_content = content_scores[-10:]
         
         return top_content, underperforming_content
     
     async def _perform_comprehensive_keyword_analysis(self) -> Dict[str, Any]:
-        """Perform comprehensive keyword analysis"""
+        """
+        Perform comprehensive keyword analysis"""
         # Analyze existing keyword data
+
         all_keywords = list(self.keyword_data.values())
         
         # Keyword performance summary
+
         summary = {
             "total_keywords": len(all_keywords),
             "average_ranking": statistics.mean([k.current_ranking for k in all_keywords if k.current_ranking]) if all_keywords else 0,
@@ -1117,20 +1282,25 @@ class SEOPerformanceIntelligence:
         }
         
         # Identify opportunities
+
         opportunities = [
             k for k in all_keywords 
             if k.current_ranking and 11 <= k.current_ranking <= 20  # Page 2 rankings
         ]
         
         # Identify cannibalization issues (simplified)
+
         keyword_content_map = defaultdict(list)
         for content in self.content_seo_data.values():
             for keyword in content.target_keywords:
                 keyword_content_map[keyword].append(content.content_id)
+
+
         
         cannibalization = [
             {"keyword": keyword, "competing_content": content_ids}
             for keyword, content_ids in keyword_content_map.items()
+
             if len(content_ids) > 1
         ]
         
@@ -1143,9 +1313,13 @@ class SEOPerformanceIntelligence:
     async def _analyze_technical_seo_health(self, content: List[ContentSEOAnalysis]) -> Dict[str, Any]:
         """Analyze technical SEO health across all content"""
         page_speed_scores = [c.page_speed_score for c in content]
+
         mobile_friendly_count = sum(1 for c in content if c.mobile_friendly)
+
         ssl_secure_count = sum(1 for c in content if c.ssl_secure)
+
         schema_markup_count = sum(1 for c in content if c.schema_markup)
+
         
         return {
             "overall_health_score": statistics.mean([
@@ -1202,12 +1376,17 @@ class SEOPerformanceIntelligence:
         """Generate comprehensive optimization recommendations"""
         
         priority_optimizations = []
+
         quick_wins = []
+
         long_term_strategies = []
         
         # Analyze common issues across content
+
         avg_seo_score = statistics.mean([c.seo_optimization_score for c in content])
+
         avg_page_speed = statistics.mean([c.page_speed_score for c in content])
+
         mobile_friendly_rate = sum(1 for c in content if c.mobile_friendly) / len(content)
         
         # Priority optimizations (high impact, urgent)
@@ -1219,6 +1398,7 @@ class SEOPerformanceIntelligence:
                 "effort": "high",
                 "estimated_improvement": "40% traffic increase"
             })
+
         
         if avg_page_speed < 70:
             priority_optimizations.append({
@@ -1232,10 +1412,13 @@ class SEOPerformanceIntelligence:
         # Quick wins (high impact, low effort)
         if mobile_friendly_rate < 0.9:
             quick_wins.append("Fix mobile responsiveness issues across all content")
+
+
         
         schema_markup_rate = sum(1 for c in content if c.schema_markup) / len(content)
         if schema_markup_rate < 0.5:
             quick_wins.append("Implement structured data markup for better rich snippets")
+
         
         quick_wins.extend([
             "Optimize meta descriptions for improved click-through rates",
@@ -1251,6 +1434,7 @@ class SEOPerformanceIntelligence:
             "Create platform-specific content optimization workflows",
             "Develop automated SEO performance tracking system"
         ])
+
         
         return {
             "priority": priority_optimizations,
@@ -1261,9 +1445,12 @@ class SEOPerformanceIntelligence:
     async def _analyze_seo_trends(self, period_days: int) -> Dict[str, Any]:
         """Analyze SEO trends over time"""
         # Simulated trend data
+
         daily_data_points = period_days
+
         
         traffic_trend = [random.randint(800, 1200) + i * 5 for i in range(daily_data_points)]
+
         ranking_trend = [random.uniform(15, 25) - i * 0.1 for i in range(daily_data_points)]
         
         return {
@@ -1289,8 +1476,11 @@ class SEOPerformanceIntelligence:
         total_organic_traffic = sum(c.organic_traffic for c in content)
         
         # Estimated values (in production would use actual cost and revenue data)
+
         estimated_seo_investment = len(content) * 500  # $500 per content piece
+
         estimated_traffic_value = total_organic_traffic * 2.5  # $2.50 per organic visitor
+
         
         roi = ((estimated_traffic_value - estimated_seo_investment) / estimated_seo_investment) * 100
         
@@ -1312,22 +1502,28 @@ class SEOPerformanceIntelligence:
         
         for platform, metrics in platform_performance.items():
             # Calculate composite performance score
+
             score = (
                 metrics.optimization_score * 0.4 +
                 min(100, metrics.average_ctr * 10) * 0.3 +  # CTR scaled to 0-100
                 min(100, (100 - metrics.average_ranking) * 2) * 0.3  # Ranking scaled to 0-100
             )
+
             platform_scores.append((platform, score))
+
         
         platform_scores.sort(key=lambda x: x[1], reverse=True)
         return platform_scores
     
     async def _forecast_optimization_impact(self, content: List[ContentSEOAnalysis]) -> Dict[str, float]:
-        """Forecast impact of optimization efforts"""
+        """
+        Forecast impact of optimization efforts"""
         current_avg_score = statistics.mean([c.seo_optimization_score for c in content])
+
         current_traffic = sum(c.organic_traffic for c in content)
         
         # Optimization scenarios
+
         scenarios = {
             "conservative_optimization": {
                 "score_improvement": 15,
@@ -1342,10 +1538,13 @@ class SEOPerformanceIntelligence:
                 "traffic_multiplier": 2.5
             }
         }
+
         
         forecasts = {}
         for scenario, params in scenarios.items():
             new_score = min(100, current_avg_score + params["score_improvement"])
+
+
             new_traffic = current_traffic * params["traffic_multiplier"]
             
             forecasts[scenario] = {
@@ -1371,6 +1570,6 @@ __all__ = [
 ]
 
 # Module initialization
-logger.info("🚀 SEO Performance Intelligence Engine module loaded")
+logger.info("🚀 SEO Performance Intelligence Engine module initialized")
 logger.info("✨ Features: Multi-platform SEO, keyword optimization, ranking analytics, competitive intelligence")
 logger.info("🚀 Performance: 35+ platform optimization, automated recommendations, predictive analytics")

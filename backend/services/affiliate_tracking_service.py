@@ -103,7 +103,8 @@ class AffiliateProgram:
 
 @dataclass
 class AffiliateProfile:
-    """Profil d'affilié"""
+    """
+        Profil d'affilié"""
     affiliate_id: str
     user_id: str
     username: str
@@ -124,7 +125,8 @@ class AffiliateProfile:
 
 @dataclass
 class TrackingLink:
-    """Lien de tracking"""
+    """
+        Lien de tracking"""
     link_id: str
     affiliate_id: str
     program_id: str
@@ -162,7 +164,8 @@ class ConversionEvent:
 
 @dataclass
 class CommissionTracking:
-    """Suivi des commissions"""
+    """
+        Suivi des commissions"""
     commission_id: str
     affiliate_id: str
     conversion_id: str
@@ -182,7 +185,8 @@ class CommissionTracking:
 
 @dataclass
 class AffiliateMetrics:
-    """Métriques d'affilié"""
+    """
+        Métriques d'affilié"""
     metrics_id: str
     affiliate_id: str
     period_start: datetime
@@ -200,7 +204,8 @@ class AffiliateMetrics:
     performance_rank: int
 
 class AffiliateManager:
-    """Gestionnaire principal d'affiliation"""
+    """
+        Gestionnaire principal d'affiliation"""
     
     def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
         self.redis = redis_client
@@ -210,24 +215,32 @@ class AffiliateManager:
         self.performance_cache = {}
         
     async def initialize_affiliate_system(self) -> Dict[str, Any]:
-        """Initialiser le système d'affiliation"""
+        """
+        Initialiser le système d'affiliation"""
         try:
             # Configurer les programmes d'affiliation
+
             affiliate_programs = await self._configure_affiliate_programs()
             
             # Initialiser le système de tracking
+
             tracking_system = await self._initialize_tracking_system()
             
             # Configurer la détection de fraude
+
             fraud_detection = await self._configure_fraud_detection()
             
             # Préparer les calculateurs de commission
+
             commission_calculators = await self._prepare_commission_calculators()
             
             # Initialiser les analytics
+
             analytics_system = await self._initialize_affiliate_analytics()
+
             
             logger.info("🤝 Affiliate system initialized successfully")
+
             
             return {
                 "affiliate_programs": len(affiliate_programs),
@@ -241,6 +254,7 @@ class AffiliateManager:
             
         except Exception as e:
             logger.error(f"Failed to initialize affiliate system: {e}")
+
             raise
     
     async def register_affiliate(
@@ -252,9 +266,11 @@ class AffiliateManager:
             affiliate_id = str(uuid.uuid4())
             
             # Valider les données d'enregistrement
+
             validation_result = await self._validate_affiliate_registration(
                 registration_data
             )
+
             
             if not validation_result["valid"]:
                 raise ValueError(f"Invalid registration data: {validation_result['reason']}")
@@ -263,6 +279,7 @@ class AffiliateManager:
             eligibility_check = await self._check_affiliate_eligibility(
                 registration_data
             )
+
             
             if not eligibility_check["eligible"]:
                 raise ValueError(f"Not eligible for affiliate program: {eligibility_check['reason']}")
@@ -295,6 +312,7 @@ class AffiliateManager:
             await self._save_affiliate_profile(affiliate_profile)
             
             # Générer les liens de tracking initiaux
+
             initial_tracking_links = await self._generate_initial_tracking_links(
                 affiliate_id, registration_data.get("programs", [])
             )
@@ -304,6 +322,8 @@ class AffiliateManager:
             
             # Envoyer l'email de bienvenue
             await self._send_welcome_email(affiliate_profile, initial_tracking_links)
+
+
             
             registration_result = {
                 "affiliate_id": affiliate_id,
@@ -316,6 +336,7 @@ class AffiliateManager:
             }
             
             logger.info(f"Affiliate registered: {affiliate_id} ({affiliate_profile.status.value})")
+
             
             return {
                 "success": True,
@@ -325,6 +346,7 @@ class AffiliateManager:
             
         except Exception as e:
             logger.error(f"Failed to register affiliate: {e}")
+
             raise
 
     async def generate_tracking_link(
@@ -337,21 +359,26 @@ class AffiliateManager:
         """Générer un lien de tracking"""
         try:
             # Valider l'affilié et le programme
+
             validation = await self._validate_affiliate_program(affiliate_id, program_id)
+
             if not validation["valid"]:
                 raise ValueError(f"Invalid affiliate or program: {validation['reason']}")
             
             # Générer le code de tracking unique
+
             tracking_code = await self._generate_tracking_code(
                 affiliate_id, program_id, original_url
             )
             
             # Construire l'URL de tracking
+
             tracking_url = await self._build_tracking_url(
                 original_url, tracking_code, campaign_data
             )
             
             # Créer le lien de tracking
+
             tracking_link = TrackingLink(
                 link_id=str(uuid.uuid4()),
                 affiliate_id=affiliate_id,
@@ -383,13 +410,16 @@ class AffiliateManager:
                     "original_url": original_url
                 })
             )
+
             
             logger.info(f"Tracking link generated: {tracking_link.link_id}")
+
             
             return tracking_link
             
         except Exception as e:
             logger.error(f"Failed to generate tracking link: {e}")
+
             raise
 
 class TrackingSystem:
@@ -406,16 +436,22 @@ class TrackingSystem:
         tracking_code: str,
         request_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Tracker un clic"""
+        """
+        Tracker un clic"""
         try:
             # Récupérer les données de tracking
+
             tracking_data = await self.redis.get(f"tracking:{tracking_code}")
+
             if not tracking_data:
                 raise ValueError("Invalid tracking code")
+
+
             
             tracking_info = json.loads(tracking_data)
             
             # Extraire les informations de la requête
+
             click_data = {
                 "click_id": str(uuid.uuid4()),
                 "tracking_code": tracking_code,
@@ -431,7 +467,9 @@ class TrackingSystem:
             }
             
             # Détecter les clics frauduleux
+
             fraud_score = await self._detect_click_fraud(click_data, tracking_info)
+
             click_data["fraud_score"] = fraud_score
             
             # Sauvegarder le clic
@@ -442,6 +480,7 @@ class TrackingSystem:
                 await self._update_click_counters(tracking_info["link_id"])
                 
                 # Définir le cookie d'attribution
+
                 attribution_token = await self._set_attribution_cookie(
                     tracking_info["affiliate_id"],
                     tracking_info["program_id"],
@@ -450,8 +489,10 @@ class TrackingSystem:
                 
                 # Enregistrer pour analytics en temps réel
                 await self._update_realtime_analytics(click_data)
+
                 
                 logger.debug(f"Click tracked: {click_data['click_id']}")
+
                 
                 return {
                     "success": True,
@@ -462,6 +503,7 @@ class TrackingSystem:
                 }
             else:
                 logger.warning(f"Fraudulent click detected: {tracking_code} (score: {fraud_score})")
+
                 return {
                     "success": False,
                     "reason": "fraudulent_click",
@@ -471,6 +513,7 @@ class TrackingSystem:
             
         except Exception as e:
             logger.error(f"Failed to track click: {e}")
+
             raise
 
     async def track_conversion(
@@ -480,33 +523,42 @@ class TrackingSystem:
         """Tracker une conversion"""
         try:
             # Récupérer le token d'attribution
+
             attribution_token = conversion_data.get("attribution_token")
+
             if not attribution_token:
                 # Essayer de récupérer depuis les cookies ou la session
+
                 attribution_token = await self._get_attribution_from_context(
                     conversion_data
                 )
+
             
             if not attribution_token:
                 raise ValueError("No attribution token found")
             
             # Décoder le token d'attribution
+
             attribution_data = await self._decode_attribution_token(attribution_token)
             
             # Valider la fenêtre d'attribution
+
             attribution_window = await self._validate_attribution_window(
                 attribution_data, conversion_data
             )
+
             
             if not attribution_window["valid"]:
                 raise ValueError(f"Outside attribution window: {attribution_window['reason']}")
             
             # Calculer la commission
+
             commission_calculation = await self._calculate_conversion_commission(
                 attribution_data, conversion_data
             )
             
             # Créer l'événement de conversion
+
             conversion_event = ConversionEvent(
                 conversion_id=str(uuid.uuid4()),
                 tracking_code=attribution_data["tracking_code"],
@@ -530,6 +582,7 @@ class TrackingSystem:
             await self._save_conversion_event(conversion_event)
             
             # Créer l'enregistrement de commission
+
             commission_record = await self._create_commission_record(
                 conversion_event, commission_calculation
             )
@@ -539,8 +592,10 @@ class TrackingSystem:
             
             # Notifier l'affilié
             await self._notify_affiliate_conversion(conversion_event)
+
             
             logger.info(f"Conversion tracked: {conversion_event.conversion_id}")
+
             
             return {
                 "success": True,
@@ -553,6 +608,7 @@ class TrackingSystem:
             
         except Exception as e:
             logger.error(f"Failed to track conversion: {e}")
+
             raise
 
 class AffiliateAnalytics:
@@ -568,35 +624,44 @@ class AffiliateAnalytics:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Générer un rapport de performance d'affilié"""
+        """
+        Générer un rapport de performance d'affilié"""
         try:
             # Récupérer les données de performance
+
             performance_data = await self._get_affiliate_performance_data(
                 affiliate_id, period_start, period_end
             )
             
             # Calculer les métriques clés
+
             key_metrics = await self._calculate_key_metrics(performance_data)
             
             # Analyser les tendances
+
             trend_analysis = await self._analyze_performance_trends(
                 affiliate_id, performance_data
             )
             
             # Comparer avec les pairs
+
             peer_comparison = await self._compare_with_peers(
                 affiliate_id, key_metrics
             )
             
             # Générer des insights
+
             performance_insights = await self._generate_performance_insights(
                 key_metrics, trend_analysis, peer_comparison
             )
             
             # Recommandations d'optimisation
+
             optimization_recommendations = await self._generate_optimization_recommendations(
                 affiliate_id, performance_data, performance_insights
             )
+
+
             
             performance_report = {
                 "report_id": str(uuid.uuid4()),
@@ -615,11 +680,13 @@ class AffiliateAnalytics:
             }
             
             logger.info(f"Performance report generated for affiliate: {affiliate_id}")
+
             
             return performance_report
             
         except Exception as e:
             logger.error(f"Failed to generate affiliate performance report: {e}")
+
             raise
 
 class AffiliateTrackingService:
@@ -631,26 +698,35 @@ class AffiliateTrackingService:
         self.affiliate_manager = AffiliateManager(redis_client, db_session)
         self.tracking_system = TrackingSystem(redis_client, db_session)
         self.affiliate_analytics = AffiliateAnalytics(redis_client, db_session)
+
         
     async def initialize_service(self) -> Dict[str, Any]:
-        """Initialiser le service de tracking d'affiliation"""
+        """
+        Initialiser le service de tracking d'affiliation"""
         try:
             # Initialiser le système d'affiliation
+
             affiliate_system = await self.affiliate_manager.initialize_affiliate_system()
             
             # Configurer le système de tracking
+
             tracking_config = await self._configure_tracking_system()
             
             # Initialiser les analytics
+
             analytics_config = await self._initialize_analytics_system()
             
             # Configurer les paiements
+
             payment_config = await self._configure_payment_system()
             
             # Démarrer les processus automatiques
+
             automated_processes = await self._start_automated_processes()
+
             
             logger.info("🤝 Affiliate Tracking Service initialized successfully")
+
             
             return {
                 "service": "AffiliateTrackingService",
@@ -668,6 +744,7 @@ class AffiliateTrackingService:
             
         except Exception as e:
             logger.error(f"Failed to initialize affiliate tracking service: {e}")
+
             raise
     
     # Méthodes privées pour l'implémentation détaillée...

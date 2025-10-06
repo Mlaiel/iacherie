@@ -22,7 +22,8 @@ logger = logging.getLogger(__name__)
 
 
 class OpenAIModel(str, Enum):
-    """OpenAI model types."""
+    """
+        OpenAI model types."""
     GPT_4 = "gpt-4"
     GPT_4_TURBO = "gpt-4-turbo"
     GPT_3_5_TURBO = "gpt-3.5-turbo"
@@ -52,7 +53,8 @@ class OpenAIMessage:
 
 @dataclass
 class OpenAICompletion:
-    """OpenAI completion response."""
+    """
+        OpenAI completion response."""
     id: str
     model: str
     content: str
@@ -64,7 +66,8 @@ class OpenAICompletion:
 
 @dataclass
 class OpenAIImageGeneration:
-    """OpenAI image generation response."""
+    """
+        OpenAI image generation response."""
     id: str
     url: str
     revised_prompt: Optional[str]
@@ -73,7 +76,8 @@ class OpenAIImageGeneration:
 
 
 class OpenAIIntegration:
-    """Professional OpenAI API integration."""
+    """
+        Professional OpenAI API integration."""
     
     def __init__(
         self,
@@ -103,11 +107,13 @@ class OpenAIIntegration:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+        Async context manager exit."""
         await self.close()
     
     async def _ensure_session(self):
-        """Ensure HTTP session is available."""
+        """
+        Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
                 "Authorization": f"Bearer {self.api_key}",
@@ -141,10 +147,12 @@ class OpenAIIntegration:
         functions: Optional[List[Dict[str, Any]]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Union[OpenAICompletion, AsyncGenerator[str, None]]:
-        """Generate chat completion."""
+        """
+        Generate chat completion."""
         await self._ensure_session()
         
         # Prepare request data
+
         data = {
             "model": model.value,
             "messages": [
@@ -173,16 +181,22 @@ class OpenAIIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"OpenAI API error: {error_data}")
+
                 
                 if stream:
                     return self._handle_stream_response(response)
+
                 else:
                     result = await response.json()
+
                     return self._parse_completion_response(result, metadata)
+
         
         except Exception as e:
             logger.error(f"Chat completion failed: {e}")
+
             raise
     
     async def generate_image(
@@ -197,6 +211,8 @@ class OpenAIIntegration:
     ) -> List[OpenAIImageGeneration]:
         """Generate images using DALL-E."""
         await self._ensure_session()
+
+
         
         data = {
             "model": model.value,
@@ -214,13 +230,19 @@ class OpenAIIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"OpenAI Image API error: {error_data}")
+
+
                 
                 result = await response.json()
+
                 return self._parse_image_response(result, metadata)
+
         
         except Exception as e:
             logger.error(f"Image generation failed: {e}")
+
             raise
     
     async def transcribe_audio(
@@ -238,17 +260,21 @@ class OpenAIIntegration:
         await self._ensure_session()
         
         # Prepare form data
+
         form_data = aiohttp.FormData()
         form_data.add_field('file', audio_file, filename=filename)
         form_data.add_field('model', model.value)
         form_data.add_field('response_format', response_format)
         form_data.add_field('temperature', str(temperature))
+
         
         if language:
             form_data.add_field('language', language)
+
         
         if prompt:
             form_data.add_field('prompt', prompt)
+
         
         try:
             async with self.session.post(
@@ -257,18 +283,23 @@ class OpenAIIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"OpenAI Transcription API error: {error_data}")
+
+
                 
                 result = await response.json()
                 
                 # Track usage
                 self.total_requests += 1
                 self._add_to_history("transcription", {"filename": filename}, result, metadata)
+
                 
                 return result
         
         except Exception as e:
             logger.error(f"Audio transcription failed: {e}")
+
             raise
     
     async def text_to_speech(
@@ -282,6 +313,8 @@ class OpenAIIntegration:
     ) -> bytes:
         """Convert text to speech."""
         await self._ensure_session()
+
+
         
         data = {
             "model": model.value,
@@ -298,7 +331,10 @@ class OpenAIIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"OpenAI TTS API error: {error_data}")
+
+
                 
                 audio_data = await response.read()
                 
@@ -306,11 +342,13 @@ class OpenAIIntegration:
                 self.total_requests += 1
                 self._add_to_history("tts", {"voice": voice, "text_length": len(text)}, 
                                    {"audio_size": len(audio_data)}, metadata)
+
                 
                 return audio_data
         
         except Exception as e:
             logger.error(f"Text-to-speech failed: {e}")
+
             raise
     
     async def get_embeddings(
@@ -321,6 +359,8 @@ class OpenAIIntegration:
     ) -> List[List[float]]:
         """Get text embeddings."""
         await self._ensure_session()
+
+
         
         data = {
             "model": model,
@@ -334,23 +374,30 @@ class OpenAIIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"OpenAI Embeddings API error: {error_data}")
+
+
                 
                 result = await response.json()
                 
                 # Track usage
                 self.total_requests += 1
                 self.total_tokens += result.get("usage", {}).get("total_tokens", 0)
+
+
                 
                 embeddings = [item["embedding"] for item in result["data"]]
                 
                 self._add_to_history("embeddings", {"input_length": len(input_text)}, 
                                    {"embedding_count": len(embeddings)}, metadata)
+
                 
                 return embeddings
         
         except Exception as e:
             logger.error(f"Embeddings generation failed: {e}")
+
             raise
     
     async def _handle_stream_response(self, response) -> AsyncGenerator[str, None]:
@@ -358,14 +405,17 @@ class OpenAIIntegration:
         async for line in response.content:
             if line:
                 line_str = line.decode('utf-8').strip()
+
                 if line_str.startswith('data: '):
                     data_str = line_str[6:]
                     if data_str == '[DONE]':
                         break
                     try:
                         data = json.loads(data_str)
+
                         if 'choices' in data and data['choices']:
                             delta = data['choices'][0].get('delta', {})
+
                             if 'content' in delta:
                                 yield delta['content']
                     except json.JSONDecodeError:
@@ -376,13 +426,17 @@ class OpenAIIntegration:
         response: Dict[str, Any],
         metadata: Optional[Dict[str, Any]] = None
     ) -> OpenAICompletion:
-        """Parse completion response."""
+        """
+        Parse completion response."""
         choice = response["choices"][0]
+
         usage = response.get("usage", {})
         
         # Track usage
         self.total_requests += 1
         self.total_tokens += usage.get("total_tokens", 0)
+
+
         
         completion = OpenAICompletion(
             id=response["id"],
@@ -393,8 +447,10 @@ class OpenAIIntegration:
             created_at=datetime.fromtimestamp(response["created"]),
             metadata=metadata or {}
         )
+
         
         self._add_to_history("completion", {"model": response["model"]}, completion, metadata)
+
         
         return completion
     
@@ -414,10 +470,13 @@ class OpenAIIntegration:
                 created_at=datetime.now(),
                 metadata=metadata or {}
             )
+
             images.append(image)
+
         
         self.total_requests += 1
         self._add_to_history("image_generation", {"count": len(images)}, images, metadata)
+
         
         return images
     
@@ -504,9 +563,11 @@ async def generate_content_with_openai(
     model: OpenAIModel = OpenAIModel.GPT_4_TURBO,
     max_tokens: Optional[int] = None
 ) -> str:
-    """Quick content generation utility."""
+    """
+        Quick content generation utility."""
     async with OpenAIIntegration(api_key) as openai:
         messages = [OpenAIMessage(role=OpenAIRole.USER, content=prompt)]
+
         completion = await openai.chat_completion(
             messages=messages,
             model=model,
@@ -519,21 +580,42 @@ if __name__ == "__main__":
     # Example usage
     async def main():
         import os
+
         api_key = os.getenv("OPENAI_API_KEY")
         if not api_key:
             print("Please set OPENAI_API_KEY environment variable")
+
             return
         
         async with OpenAIIntegration(api_key) as openai:
             # Test chat completion
+
             messages = [
                 OpenAIMessage(role=OpenAIRole.USER, content="Hello, how are you?")
             ]
+
             completion = await openai.chat_completion(messages)
+
             print(f"Response: {completion.content}")
             
             # Test usage stats
+
             stats = openai.get_usage_stats()
+
             print(f"Usage stats: {stats}")
     
     asyncio.run(main())
+
+
+# === ALIAS COMPATIBILITÉ ===
+OpenAI = OpenAIIntegration
+
+__all__ = [
+    'OpenAIIntegration',
+    'OpenAI',
+    'OpenAIModel',
+    'OpenAIRole',
+    'OpenAIMessage',
+    'OpenAICompletion',
+    'OpenAIImageGeneration'
+]

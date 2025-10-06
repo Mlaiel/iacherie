@@ -38,7 +38,8 @@ import hashlib
 logger = logging.getLogger(__name__)
 
 class TrendCategory(str, Enum):
-    """Trend categories"""
+    """
+Trend categories"""
     SOCIAL_MEDIA = "social_media"
     TECHNOLOGY = "technology"
     ENTERTAINMENT = "entertainment"
@@ -51,7 +52,8 @@ class TrendCategory(str, Enum):
     NEWS = "news"
 
 class TrendStatus(str, Enum):
-    """Trend lifecycle status"""
+    """
+Trend lifecycle status"""
     EMERGING = "emerging"
     GROWING = "growing"
     PEAK = "peak"
@@ -59,7 +61,8 @@ class TrendStatus(str, Enum):
     DEAD = "dead"
 
 class TrendScope(str, Enum):
-    """Geographical scope of trends"""
+    """
+Geographical scope of trends"""
     LOCAL = "local"
     REGIONAL = "regional"
     NATIONAL = "national"
@@ -67,7 +70,8 @@ class TrendScope(str, Enum):
 
 @dataclass
 class TrendData:
-    """Individual trend data point"""
+    """
+Individual trend data point"""
     keyword: str
     mentions: int
     engagement: float
@@ -78,7 +82,8 @@ class TrendData:
 
 @dataclass
 class TrendMetrics:
-    """Comprehensive trend metrics"""
+    """
+Comprehensive trend metrics"""
     velocity: float  # Rate of change
     acceleration: float  # Change in velocity
     reach: int  # Total audience reached
@@ -89,7 +94,8 @@ class TrendMetrics:
 
 @dataclass
 class Trend:
-    """Complete trend analysis"""
+    """
+Complete trend analysis"""
     trend_id: str = field(default_factory=lambda: str(time.time_ns()))
     keywords: List[str] = field(default_factory=list)
     category: TrendCategory = TrendCategory.SOCIAL_MEDIA
@@ -105,7 +111,8 @@ class Trend:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class TrendAnalysisCore:
-    """Advanced enterprise trend analysis core"""
+    """
+Advanced enterprise trend analysis core"""
     
     def __init__(self, level: str = "enterprise"):
         self.level = level
@@ -126,7 +133,8 @@ class TrendAnalysisCore:
         self._analysis_running = False
     
     def _get_performance_config(self) -> Dict[str, Any]:
-        """Get performance configuration based on level"""
+        """
+Get performance configuration based on level"""
         configs = {
             "basic": {
                 "max_trends": 50,
@@ -161,7 +169,6 @@ class TrendAnalysisCore:
     
     def _setup_analysis_components(self):
         """Setup trend analysis components"""
-        # Mock data sources for demonstration
         self.data_sources = {
             "social_media": self._mock_social_media_data,
             "news": self._mock_news_data,
@@ -178,7 +185,8 @@ class TrendAnalysisCore:
         }
     
     async def initialize(self) -> bool:
-        """Initialize trend analysis core"""
+        """
+Initialize trend analysis core"""
         try:
             logger.info(f"🚀 Initializing TrendAnalysisCore - Level: {self.level}")
             
@@ -193,7 +201,8 @@ class TrendAnalysisCore:
             return False
     
     async def start_analysis(self) -> bool:
-        """Start trend analysis background tasks"""
+        """
+Start trend analysis background tasks"""
         try:
             if self._analysis_running:
                 return True
@@ -223,7 +232,8 @@ class TrendAnalysisCore:
             return False
     
     async def _data_collection_loop(self):
-        """Data collection background loop"""
+        """
+Data collection background loop"""
         while self._analysis_running:
             try:
                 # Collect data from all sources
@@ -243,7 +253,8 @@ class TrendAnalysisCore:
                 await asyncio.sleep(60)
     
     async def _trend_detection_loop(self):
-        """Trend detection background loop"""
+        """
+Trend detection background loop"""
         while self._analysis_running:
             try:
                 # Run all detection algorithms
@@ -263,7 +274,8 @@ class TrendAnalysisCore:
                 await asyncio.sleep(120)
     
     async def _trend_tracking_loop(self):
-        """Trend tracking and lifecycle management loop"""
+        """
+Trend tracking and lifecycle management loop"""
         while self._analysis_running:
             try:
                 await self._update_trend_statuses()
@@ -278,7 +290,8 @@ class TrendAnalysisCore:
                 await asyncio.sleep(180)
     
     async def _process_data_points(self, data_points: List[TrendData], source: str):
-        """Process incoming data points"""
+        """
+Process incoming data points"""
         async with self._lock:
             for data_point in data_points:
                 keyword = data_point.keyword.lower()
@@ -298,7 +311,8 @@ class TrendAnalysisCore:
                 ]
     
     async def _detect_velocity_trends(self) -> List[Trend]:
-        """Detect trends based on velocity (rate of change)"""
+        """
+Detect trends based on velocity (rate of change)"""
         trends = []
         
         for keyword, data_points in self.keyword_tracking.items():
@@ -335,7 +349,8 @@ class TrendAnalysisCore:
         return trends
     
     async def _detect_volume_trends(self) -> List[Trend]:
-        """Detect trends based on volume spikes"""
+        """
+Detect trends based on volume spikes"""
         trends = []
         
         for keyword, data_points in self.keyword_tracking.items():
@@ -361,7 +376,8 @@ class TrendAnalysisCore:
         return trends
     
     async def _detect_engagement_trends(self) -> List[Trend]:
-        """Detect trends based on engagement patterns"""
+        """
+Detect trends based on engagement patterns"""
         trends = []
         
         for keyword, data_points in self.keyword_tracking.items():
@@ -380,7 +396,8 @@ class TrendAnalysisCore:
         return trends
     
     async def _detect_sentiment_trends(self) -> List[Trend]:
-        """Detect trends based on sentiment shifts"""
+        """
+Detect trends based on sentiment shifts"""
         trends = []
         
         for keyword, data_points in self.keyword_tracking.items():
@@ -404,7 +421,8 @@ class TrendAnalysisCore:
         return trends
     
     async def _create_trend_from_keyword(self, keyword: str, data_points: List[TrendData], detection_method: str) -> Trend:
-        """Create trend object from keyword and data"""
+        """
+Create trend object from keyword and data"""
         trend = Trend(
             keywords=[keyword],
             category=self._classify_trend_category(keyword),
@@ -420,7 +438,8 @@ class TrendAnalysisCore:
         return trend
     
     def _classify_trend_category(self, keyword: str) -> TrendCategory:
-        """Classify trend into category based on keyword"""
+        """
+Classify trend into category based on keyword"""
         # Simplified classification
         keyword_lower = keyword.lower()
         
@@ -438,7 +457,8 @@ class TrendAnalysisCore:
             return TrendCategory.SOCIAL_MEDIA  # Default
     
     def _determine_trend_scope(self, data_points: List[TrendData]) -> TrendScope:
-        """Determine geographical scope of trend"""
+        """
+Determine geographical scope of trend"""
         locations = [dp.location for dp in data_points if dp.location]
         unique_locations = set(locations)
         
@@ -452,7 +472,8 @@ class TrendAnalysisCore:
             return TrendScope.LOCAL
     
     async def _calculate_trend_metrics(self, data_points: List[TrendData]) -> TrendMetrics:
-        """Calculate comprehensive trend metrics"""
+        """
+Calculate comprehensive trend metrics"""
         if not data_points:
             return TrendMetrics(0, 0, 0, 0, 0, 0, 0)
         
@@ -491,7 +512,8 @@ class TrendAnalysisCore:
         )
     
     async def _process_detected_trends(self, trends: List[Trend], algorithm: str):
-        """Process newly detected trends"""
+        """
+Process newly detected trends"""
         async with self._lock:
             for trend in trends:
                 # Check if trend already exists
@@ -514,7 +536,8 @@ class TrendAnalysisCore:
                             logger.info(f"✅ New trend detected: {', '.join(trend.keywords)} ({algorithm})")
     
     async def _update_trend_statuses(self):
-        """Update trend lifecycle statuses"""
+        """
+Update trend lifecycle statuses"""
         async with self._lock:
             current_time = datetime.utcnow()
             
@@ -536,7 +559,8 @@ class TrendAnalysisCore:
                     trend.status = TrendStatus.DEAD
     
     async def _cleanup_expired_trends(self):
-        """Clean up expired trends"""
+        """
+Clean up expired trends"""
         async with self._lock:
             current_time = datetime.utcnow()
             expired_trends = []
@@ -555,7 +579,6 @@ class TrendAnalysisCore:
             if len(self.trend_history) > 1000:
                 self.trend_history = self.trend_history[-1000:]
     
-    # Mock data source functions
     async def _mock_social_media_data(self) -> List[TrendData]:
         """Mock social media data"""
         mock_keywords = ["AI", "sustainability", "remote work", "crypto", "wellness", "gaming"]
@@ -574,21 +597,25 @@ class TrendAnalysisCore:
         return data_points
     
     async def _mock_news_data(self) -> List[TrendData]:
-        """Mock news data"""
+        """
+Mock news data"""
         return []  # Simplified for demo
     
     async def _mock_search_data(self) -> List[TrendData]:
-        """Mock search data"""
+        """
+Mock search data"""
         return []  # Simplified for demo
     
     async def _mock_commerce_data(self) -> List[TrendData]:
-        """Mock commerce data"""
+        """
+Mock commerce data"""
         return []  # Simplified for demo
     
     # Public API methods
     async def get_active_trends(self, category: Optional[TrendCategory] = None, 
                                status: Optional[TrendStatus] = None) -> List[Trend]:
-        """Get currently active trends"""
+        """
+Get currently active trends"""
         async with self._lock:
             trends = list(self.active_trends.values())
             
@@ -604,11 +631,13 @@ class TrendAnalysisCore:
             return trends
     
     async def get_trend_by_id(self, trend_id: str) -> Optional[Trend]:
-        """Get specific trend by ID"""
+        """
+Get specific trend by ID"""
         return self.active_trends.get(trend_id)
     
     async def search_trends(self, query: str) -> List[Trend]:
-        """Search trends by keyword"""
+        """
+Search trends by keyword"""
         async with self._lock:
             matching_trends = []
             query_lower = query.lower()
@@ -622,7 +651,8 @@ class TrendAnalysisCore:
             return matching_trends
     
     async def get_trend_predictions(self, hours_ahead: int = 24) -> List[Dict[str, Any]]:
-        """Get trend predictions for specified time ahead"""
+        """
+Get trend predictions for specified time ahead"""
         predictions = []
         
         async with self._lock:
@@ -644,7 +674,8 @@ class TrendAnalysisCore:
         return sorted(predictions, key=lambda x: x["confidence"], reverse=True)
     
     async def get_analytics_summary(self) -> Dict[str, Any]:
-        """Get comprehensive analytics summary"""
+        """
+Get comprehensive analytics summary"""
         async with self._lock:
             active_count = len(self.active_trends)
             total_reach = sum(t.metrics.reach for t in self.active_trends.values())
@@ -674,7 +705,8 @@ class TrendAnalysisCore:
             }
     
     async def stop_analysis(self) -> bool:
-        """Stop trend analysis background tasks"""
+        """
+Stop trend analysis background tasks"""
         try:
             self._analysis_running = False
             
@@ -694,7 +726,8 @@ class TrendAnalysisCore:
             return False
     
     async def health_check(self) -> bool:
-        """Health check for trend analysis core"""
+        """
+Health check for trend analysis core"""
         try:
             return self._analysis_running and len(self.keyword_tracking) >= 0
         except Exception as e:
@@ -702,7 +735,8 @@ class TrendAnalysisCore:
             return False
     
     async def start(self) -> bool:
-        """Start trend analysis service"""
+        """
+Start trend analysis service"""
         try:
             logger.info("🚀 Starting TrendAnalysisCore service")
             return await self.start_analysis()
@@ -711,7 +745,8 @@ class TrendAnalysisCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop trend analysis service"""
+        """
+Stop trend analysis service"""
         try:
             logger.info("🛑 Stopping TrendAnalysisCore service")
             return await self.stop_analysis()

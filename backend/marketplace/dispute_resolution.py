@@ -31,7 +31,8 @@ import json
 logger = logging.getLogger(__name__)
 
 class DisputeType(Enum):
-    """Dispute type enumeration"""
+    """
+        Dispute type enumeration"""
     NON_DELIVERY = "non_delivery"
     ITEM_NOT_DESCRIBED = "item_not_described"
     PAYMENT_ISSUE = "payment_issue"
@@ -170,7 +171,8 @@ class DisputeAnalytics:
     generated_at: datetime = field(default_factory=datetime.utcnow)
 
 class DisputeResolutionEngine:
-    """Advanced dispute resolution and mediation system"""
+    """
+        Advanced dispute resolution and mediation system"""
     
     def __init__(self):
         self.disputes: Dict[str, Dispute] = {}
@@ -182,7 +184,8 @@ class DisputeResolutionEngine:
         self._initialize_auto_rules()
     
     def _initialize_auto_rules(self):
-        """Initialize automatic resolution rules"""
+        """
+        Initialize automatic resolution rules"""
         self.auto_resolution_rules = [
             {
                 "condition": "dispute_type == 'non_delivery' and days_elapsed > 14",
@@ -217,10 +220,14 @@ class DisputeResolutionEngine:
             dispute_id = f"dispute_{uuid.uuid4().hex[:12]}"
             
             # Determine priority based on type and amount
+
             priority = await self._calculate_priority(dispute_type, disputed_amount or transaction_amount)
             
             # Set deadline based on priority
+
             deadline = datetime.utcnow() + self._get_resolution_deadline(priority)
+
+
             
             dispute = Dispute(
                 dispute_id=dispute_id,
@@ -235,6 +242,7 @@ class DisputeResolutionEngine:
                 disputed_amount=disputed_amount,
                 deadline=deadline
             )
+
             
             self.disputes[dispute_id] = dispute
             
@@ -246,12 +254,15 @@ class DisputeResolutionEngine:
             
             # Generate AI recommendation
             await self._generate_ai_recommendation(dispute)
+
             
             logger.info(f"Dispute created: {dispute_id} for transaction {transaction_id}")
+
             return dispute
             
         except Exception as e:
             logger.error(f"Error creating dispute: {e}")
+
             raise
     
     async def _calculate_priority(
@@ -287,11 +298,13 @@ class DisputeResolutionEngine:
         return deadlines.get(priority, timedelta(days=7))
     
     async def _check_auto_resolution(self, dispute: Dispute):
-        """Check if dispute can be automatically resolved"""
+        """
+        Check if dispute can be automatically resolved"""
         try:
             for rule in self.auto_resolution_rules:
                 if await self._evaluate_rule(dispute, rule):
                     await self._apply_auto_resolution(dispute, rule)
+
                     break
         except Exception as e:
             logger.error(f"Error in auto-resolution check: {e}")
@@ -299,17 +312,25 @@ class DisputeResolutionEngine:
     async def _evaluate_rule(self, dispute: Dispute, rule: Dict[str, Any]) -> bool:
         """Evaluate if a rule applies to the dispute"""
         # Simplified rule evaluation - in production would use a proper rule engine
+
         condition = rule["condition"]
         
         # Replace variables in condition
+
         days_elapsed = (datetime.utcnow() - dispute.created_at).days
+
         dispute_type = dispute.dispute_type.value
+
         amount = float(dispute.disputed_amount or dispute.transaction_amount or 0)
         
         # Simple string replacement evaluation (unsafe in production)
+
         eval_condition = condition.replace("days_elapsed", str(days_elapsed))
+
         eval_condition = eval_condition.replace("dispute_type", f"'{dispute_type}'")
+
         eval_condition = eval_condition.replace("amount", str(amount))
+
         
         try:
             # In production, use a safe rule evaluation engine
@@ -320,7 +341,9 @@ class DisputeResolutionEngine:
     async def _apply_auto_resolution(self, dispute: Dispute, rule: Dict[str, Any]):
         """Apply automatic resolution based on rule"""
         action = rule["action"]
+
         refund_percentage = rule.get("refund_percentage", 0)
+
         
         if action == "favor_buyer":
             resolution = DisputeResolution.FAVOR_BUYER
@@ -332,9 +355,11 @@ class DisputeResolutionEngine:
             resolution = DisputeResolution.PARTIAL_REFUND
         
         # Calculate refund amount
+
         refund_amount = None
         if refund_percentage > 0 and dispute.disputed_amount:
             refund_amount = dispute.disputed_amount * Decimal(refund_percentage) / Decimal(100)
+
         
         await self.resolve_dispute(
             dispute.dispute_id,
@@ -356,6 +381,8 @@ class DisputeResolutionEngine:
         try:
             if dispute_id not in self.disputes:
                 raise ValueError(f"Dispute {dispute_id} not found")
+
+
             
             evidence_id = f"evidence_{uuid.uuid4().hex[:12]}"
             
@@ -367,18 +394,23 @@ class DisputeResolutionEngine:
                 file_path=file_path,
                 description=description
             )
+
             
             self.disputes[dispute_id].evidence.append(evidence)
+
             self.disputes[dispute_id].updated_at = datetime.utcnow()
             
             # Verify evidence if possible
             await self._verify_evidence(evidence)
+
             
             logger.info(f"Evidence added to dispute {dispute_id}: {evidence_id}")
+
             return evidence
             
         except Exception as e:
             logger.error(f"Error adding evidence: {e}")
+
             raise
     
     async def _verify_evidence(self, evidence: Evidence):
@@ -399,6 +431,8 @@ class DisputeResolutionEngine:
         try:
             if dispute_id not in self.disputes:
                 raise ValueError(f"Dispute {dispute_id} not found")
+
+
             
             message_id = f"msg_{uuid.uuid4().hex[:12]}"
             
@@ -410,24 +444,31 @@ class DisputeResolutionEngine:
                 content=content,
                 message_type=message_type
             )
+
             
             self.disputes[dispute_id].messages.append(message)
+
             self.disputes[dispute_id].updated_at = datetime.utcnow()
             
             # Check for resolution keywords
             await self._analyze_message_for_resolution(dispute_id, message)
+
             
             logger.info(f"Message added to dispute {dispute_id}: {message_id}")
+
             return message
             
         except Exception as e:
             logger.error(f"Error adding message: {e}")
+
             raise
     
     async def _analyze_message_for_resolution(self, dispute_id: str, message: DisputeMessage):
         """Analyze message for potential resolution opportunities"""
         resolution_keywords = ["agree", "accept", "settle", "resolve", "compromise"]
+
         content_lower = message.content.lower()
+
         
         if any(keyword in content_lower for keyword in resolution_keywords):
             # Suggest mediation or resolution
@@ -451,9 +492,13 @@ class DisputeResolutionEngine:
         try:
             if dispute_id not in self.disputes:
                 raise ValueError(f"Dispute {dispute_id} not found")
+
+
             
             proposal_id = f"proposal_{uuid.uuid4().hex[:12]}"
             expires_at = datetime.utcnow() + timedelta(hours=expires_in_hours)
+
+
             
             proposal = DisputeProposal(
                 proposal_id=proposal_id,
@@ -464,15 +509,20 @@ class DisputeResolutionEngine:
                 terms=terms,
                 expires_at=expires_at
             )
+
             
             self.disputes[dispute_id].proposals.append(proposal)
+
             self.disputes[dispute_id].updated_at = datetime.utcnow()
+
             
             logger.info(f"Proposal created for dispute {dispute_id}: {proposal_id}")
+
             return proposal
             
         except Exception as e:
             logger.error(f"Error creating proposal: {e}")
+
             raise
     
     async def respond_to_proposal(
@@ -485,10 +535,14 @@ class DisputeResolutionEngine:
         """Respond to a resolution proposal"""
         try:
             dispute = self.disputes.get(dispute_id)
+
             if not dispute:
                 raise ValueError(f"Dispute {dispute_id} not found")
+
+
             
             proposal = next((p for p in dispute.proposals if p.proposal_id == proposal_id), None)
+
             if not proposal:
                 raise ValueError(f"Proposal {proposal_id} not found")
             
@@ -499,13 +553,16 @@ class DisputeResolutionEngine:
             # Record response
             if accept:
                 proposal.accepted_by.append(user_id)
+
             else:
                 proposal.rejected_by.append(user_id)
             
             # Check if all parties have responded
+
             required_parties = {dispute.buyer_id, dispute.seller_id}
             if set(proposal.accepted_by) == required_parties:
                 # All parties accepted - resolve dispute
+
                 resolution = DisputeResolution.MUTUAL_AGREEMENT
                 await self.resolve_dispute(
                     dispute_id,
@@ -513,20 +570,25 @@ class DisputeResolutionEngine:
                     proposal.refund_amount,
                     f"Resolved via mutual agreement (proposal {proposal_id})"
                 )
+
             
             dispute.updated_at = datetime.utcnow()
+
             
             logger.info(f"Response to proposal {proposal_id}: {'accepted' if accept else 'rejected'} by {user_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Error responding to proposal: {e}")
+
             return False
     
     async def escalate_dispute(self, dispute_id: str, escalated_by: str, reason: str = "") -> bool:
         """Escalate dispute to next resolution level"""
         try:
             dispute = self.disputes.get(dispute_id)
+
             if not dispute:
                 raise ValueError(f"Dispute {dispute_id} not found")
             
@@ -534,6 +596,7 @@ class DisputeResolutionEngine:
             if dispute.status == DisputeStatus.IN_NEGOTIATION:
                 dispute.status = DisputeStatus.IN_MEDIATION
                 await self._assign_mediator(dispute)
+
             elif dispute.status == DisputeStatus.IN_MEDIATION:
                 dispute.status = DisputeStatus.IN_ARBITRATION
             elif dispute.status == DisputeStatus.IN_ARBITRATION:
@@ -553,12 +616,15 @@ class DisputeResolutionEngine:
                 f"Dispute escalated to {dispute.status.value} by {escalated_by}. Reason: {reason}",
                 message_type="system"
             )
+
             
             logger.info(f"Dispute {dispute_id} escalated to {dispute.status.value}")
+
             return True
             
         except Exception as e:
             logger.error(f"Error escalating dispute: {e}")
+
             return False
     
     async def _assign_mediator(self, dispute: Dispute):
@@ -578,14 +644,17 @@ class DisputeResolutionEngine:
         """Resolve dispute with final outcome"""
         try:
             dispute = self.disputes.get(dispute_id)
+
             if not dispute:
                 raise ValueError(f"Dispute {dispute_id} not found")
+
             
             dispute.status = DisputeStatus.RESOLVED
             dispute.resolution = resolution
             dispute.resolution_amount = refund_amount
             dispute.resolution_notes = resolution_notes
             dispute.resolved_at = datetime.utcnow()
+
             dispute.updated_at = datetime.utcnow()
             
             # Add resolution message
@@ -602,12 +671,15 @@ class DisputeResolutionEngine:
             
             # Update analytics
             self._invalidate_analytics_cache()
+
             
             logger.info(f"Dispute {dispute_id} resolved: {resolution.value}")
+
             return True
             
         except Exception as e:
             logger.error(f"Error resolving dispute: {e}")
+
             return False
     
     async def _process_refund(self, dispute: Dispute, amount: Decimal):
@@ -619,6 +691,7 @@ class DisputeResolutionEngine:
         """Generate AI-powered resolution recommendation"""
         try:
             # Simplified AI recommendation - in production would use ML models
+
             factors = {
                 "dispute_type": dispute.dispute_type.value,
                 "amount": float(dispute.disputed_amount or dispute.transaction_amount or 0),
@@ -664,54 +737,72 @@ class DisputeResolutionEngine:
         self.analytics_cache = None
     
     async def get_dispute(self, dispute_id: str) -> Optional[Dispute]:
-        """Get dispute by ID"""
+        """
+        Get dispute by ID"""
         return self.disputes.get(dispute_id)
     
     async def get_user_disputes(self, user_id: str) -> List[Dispute]:
-        """Get all disputes for a user"""
+        """
+        Get all disputes for a user"""
         return [
             dispute for dispute in self.disputes.values()
+
             if dispute.buyer_id == user_id or dispute.seller_id == user_id
         ]
     
     async def get_analytics(self) -> DisputeAnalytics:
-        """Get dispute analytics and metrics"""
+        """
+        Get dispute analytics and metrics"""
         if self.analytics_cache:
             return self.analytics_cache
+
         
         total_disputes = len(self.disputes)
+
         resolved_disputes = len([d for d in self.disputes.values() if d.status == DisputeStatus.RESOLVED])
+
+
         
         resolution_rate = (resolved_disputes / total_disputes * 100) if total_disputes > 0 else 0
         
         # Calculate average resolution time
+
         resolved_with_time = [
             d for d in self.disputes.values()
+
             if d.status == DisputeStatus.RESOLVED and d.resolved_at
         ]
         
         if resolved_with_time:
             total_time = sum(
                 (d.resolved_at - d.created_at).total_seconds()
+
                 for d in resolved_with_time
             )
+
+
             avg_seconds = total_time / len(resolved_with_time)
+
+
             average_resolution_time = timedelta(seconds=avg_seconds)
         else:
             average_resolution_time = timedelta()
         
         # Dispute types breakdown
+
         dispute_types_breakdown = {}
         for dispute in self.disputes.values():
             dispute_type = dispute.dispute_type.value
             dispute_types_breakdown[dispute_type] = dispute_types_breakdown.get(dispute_type, 0) + 1
         
         # Resolution outcomes
+
         resolution_outcomes = {}
         for dispute in self.disputes.values():
             if dispute.resolution:
                 outcome = dispute.resolution.value
                 resolution_outcomes[outcome] = resolution_outcomes.get(outcome, 0) + 1
+
         
         analytics = DisputeAnalytics(
             total_disputes=total_disputes,
@@ -721,13 +812,15 @@ class DisputeResolutionEngine:
             dispute_types_breakdown=dispute_types_breakdown,
             resolution_outcomes=resolution_outcomes
         )
+
         
         self.analytics_cache = analytics
         return analytics
 
 # Example usage
 async def main():
-    """Example usage of DisputeResolutionEngine"""
+    """
+        Example usage of DisputeResolutionEngine"""
     engine = DisputeResolutionEngine()
     
     # Create a dispute

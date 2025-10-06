@@ -38,7 +38,8 @@ logger = logging.getLogger(__name__)
 # ===== COMPANION SERVICE SECTION =====
 
 class CompanionPersonalityType(Enum):
-    """Types of companion personalities"""
+    """
+        Types of companion personalities"""
     FRIENDLY = "friendly"
     PROFESSIONAL = "professional"
     CREATIVE = "creative"
@@ -64,7 +65,8 @@ class CompanionMemory:
     relationship_level: float = 0.0
 
 class ICompanionService(ABC):
-    """Interface for companion service"""
+    """
+        Interface for companion service"""
     
     @abstractmethod
     async def start_conversation(self, user_id: str, context: ConversationContext) -> str:
@@ -79,7 +81,8 @@ class ICompanionService(ABC):
         pass
 
 class CompanionService(ICompanionService):
-    """Virtual AI Companion Service"""
+    """
+        Virtual AI Companion Service"""
     
     def __init__(self, personality_type: CompanionPersonalityType = CompanionPersonalityType.FRIENDLY):
         self.personality_type = personality_type
@@ -88,15 +91,19 @@ class CompanionService(ICompanionService):
         self.conversation_count = 0
         
     async def start_conversation(self, user_id: str, context: ConversationContext) -> str:
-        """Start a new companion conversation"""
+        """
+        Start a new companion conversation"""
         conversation_id = f"companion_{user_id}_{uuid.uuid4().hex[:8]}"
         
         # Initialize or load user memory
         if user_id not in self.user_memories:
             self.user_memories[user_id] = CompanionMemory(user_id=user_id)
+
+
         
         memory = self.user_memories[user_id]
         memory.last_interaction = datetime.now()
+
         
         self.active_conversations[conversation_id] = {
             "user_id": user_id,
@@ -113,15 +120,19 @@ class CompanionService(ICompanionService):
         """Process message with companion AI"""
         if conversation_id not in self.active_conversations:
             return {"error": "Conversation not found"}
+
         
         conversation = self.active_conversations[conversation_id]
+
         user_id = conversation["user_id"]
+
         memory = self.user_memories[user_id]
         
         # Update message count
         conversation["message_count"] += 1
         
         # Generate personalized response based on personality
+
         response = await self._generate_companion_response(message, memory, conversation)
         
         # Store interaction in memory
@@ -147,6 +158,7 @@ class CompanionService(ICompanionService):
         """End companion conversation"""
         if conversation_id in self.active_conversations:
             conversation = self.active_conversations[conversation_id]
+
             user_id = conversation["user_id"]
             
             # Update relationship level based on conversation
@@ -154,6 +166,7 @@ class CompanionService(ICompanionService):
                 memory = self.user_memories[user_id]
                 memory.relationship_level += 0.1  # Increase bond
                 memory.relationship_level = min(memory.relationship_level, 1.0)
+
             
             del self.active_conversations[conversation_id]
             return True
@@ -163,6 +176,7 @@ class CompanionService(ICompanionService):
                                          conversation: Dict[str, Any]) -> str:
         """Generate personalized companion response"""
         personality = conversation["personality"]
+
         context = conversation["context"]
         
         # Base response patterns by personality
@@ -217,7 +231,8 @@ class TherapySession:
     follow_up_needed: bool = False
 
 class TherapyAIService:
-    """Virtual Psychology Agent for emotional support"""
+    """
+        Virtual Psychology Agent for emotional support"""
     
     def __init__(self):
         self.active_sessions: Dict[str, TherapySession] = {}
@@ -225,7 +240,8 @@ class TherapyAIService:
         self.session_count = 0
         
     async def start_therapy_session(self, user_id: str, session_type: TherapySessionType) -> str:
-        """Start a new therapy session"""
+        """
+        Start a new therapy session"""
         session_id = f"therapy_{user_id}_{uuid.uuid4().hex[:8]}"
         
         session = TherapySession(
@@ -234,6 +250,7 @@ class TherapyAIService:
             session_type=session_type,
             started_at=datetime.now()
         )
+
         
         self.active_sessions[session_id] = session
         self.session_count += 1
@@ -257,9 +274,14 @@ class TherapyAIService:
         session = self.active_sessions[session_id]
         
         # Simple assessment algorithm
+
         stress_level = indicators.get("stress_level", 5)
+
         mood_score = indicators.get("mood_score", 5)
+
         sleep_quality = indicators.get("sleep_quality", 5)
+
+
         
         average_score = (stress_level + mood_score + sleep_quality) / 3
         
@@ -281,12 +303,15 @@ class TherapyAIService:
         """Provide therapeutic intervention"""
         if session_id not in self.active_sessions:
             return {"error": "Session not found"}
+
         
         session = self.active_sessions[session_id]
         
         # Generate intervention based on session type and concern
+
         intervention = await self._generate_intervention(session.session_type, concern)
         session.interventions.append(intervention)
+
         
         return {
             "intervention": intervention,
@@ -299,18 +324,22 @@ class TherapyAIService:
         """End therapy session and provide summary"""
         if session_id not in self.active_sessions:
             return {"error": "Session not found"}
+
         
         session = self.active_sessions[session_id]
         session.wellbeing_after = final_wellbeing
         session.duration = datetime.now() - session.started_at
         
         # Add to user profile history
+
         user_profile = self.user_profiles[session.user_id]
         user_profile["session_history"].append(session)
         user_profile["wellbeing_trend"].append({
             "timestamp": datetime.now(),
             "status": final_wellbeing.value
         })
+
+
         
         summary = {
             "session_duration": session.duration.total_seconds() / 60,  # minutes
@@ -395,7 +424,8 @@ class Course:
 
 @dataclass
 class StudentProfile:
-    """Student profile data structure"""
+    """
+        Student profile data structure"""
     student_id: str
     learning_style: LearningStyle
     skill_level: Dict[str, DifficultyLevel] = field(default_factory=dict)
@@ -405,7 +435,8 @@ class StudentProfile:
     progress_tracking: Dict[str, float] = field(default_factory=dict)
 
 class IEducationAIService(ABC):
-    """Interface for education AI service"""
+    """
+        Interface for education AI service"""
     
     @abstractmethod
     async def create_course(self, course_data: Dict[str, Any]) -> str:
@@ -420,7 +451,8 @@ class IEducationAIService(ABC):
         pass
 
 class EducationAIService(IEducationAIService):
-    """Personal AI Tutor & Learning Management Service"""
+    """
+        Personal AI Tutor & Learning Management Service"""
     
     def __init__(self):
         self.courses: Dict[str, Course] = {}
@@ -429,7 +461,8 @@ class EducationAIService(IEducationAIService):
         self.course_count = 0
         
     async def create_course(self, course_data: Dict[str, Any]) -> str:
-        """Create a new course"""
+        """
+        Create a new course"""
         course_id = f"course_{uuid.uuid4().hex[:8]}"
         
         course = Course(
@@ -442,6 +475,7 @@ class EducationAIService(IEducationAIService):
             prerequisites=course_data.get("prerequisites", []),
             learning_objectives=course_data.get("learning_objectives", [])
         )
+
         
         self.courses[course_id] = course
         self.course_count += 1
@@ -468,8 +502,10 @@ class EducationAIService(IEducationAIService):
             self.enrollments[student_id].append(course_id)
             
             # Update student profile
+
             profile = self.student_profiles[student_id]
             profile.current_courses.append(course_id)
+
             profile.progress_tracking[course_id] = 0.0
             
             return True
@@ -477,10 +513,12 @@ class EducationAIService(IEducationAIService):
         return False
     
     async def track_progress(self, student_id: str, course_id: str, progress: float) -> bool:
-        """Track student progress in course"""
+        """
+        Track student progress in course"""
         if (student_id not in self.student_profiles or 
             course_id not in self.enrollments.get(student_id, [])):
             return False
+
         
         profile = self.student_profiles[student_id]
         profile.progress_tracking[course_id] = min(progress, 1.0)
@@ -488,63 +526,78 @@ class EducationAIService(IEducationAIService):
         # Mark as completed if 100% progress
         if progress >= 1.0 and course_id not in profile.completed_courses:
             profile.completed_courses.append(course_id)
+
             if course_id in profile.current_courses:
                 profile.current_courses.remove(course_id)
+
         
         return True
     
     async def get_personalized_recommendations(self, student_id: str) -> List[str]:
-        """Get personalized course recommendations"""
+        """
+        Get personalized course recommendations"""
         if student_id not in self.student_profiles:
             return []
+
         
         profile = self.student_profiles[student_id]
         
         # Simple recommendation algorithm
+
         recommendations = []
         for course_id, course in self.courses.items():
             if (course_id not in profile.completed_courses and 
                 course_id not in profile.current_courses):
                 recommendations.append(course_id)
+
         
         return recommendations[:5]  # Return top 5 recommendations
 
 # ===== FACTORY FUNCTIONS =====
 
 def create_companion_service(personality_type: CompanionPersonalityType = CompanionPersonalityType.FRIENDLY) -> CompanionService:
-    """Create companion service instance"""
+    """
+        Create companion service instance"""
     return CompanionService(personality_type)
 
 def create_therapy_service() -> TherapyAIService:
-    """Create therapy service instance"""
+    """
+        Create therapy service instance"""
     return TherapyAIService()
 
 def create_education_service() -> EducationAIService:
-    """Create education service instance"""
+    """
+        Create education service instance"""
     return EducationAIService()
 
 def create_friendly_companion() -> CompanionService:
-    """Create friendly companion"""
+    """
+        Create friendly companion"""
     return CompanionService(CompanionPersonalityType.FRIENDLY)
 
 def create_professional_companion() -> CompanionService:
-    """Create professional companion"""
+    """
+        Create professional companion"""
     return CompanionService(CompanionPersonalityType.PROFESSIONAL)
 
 def create_creative_companion() -> CompanionService:
-    """Create creative companion"""
+    """
+        Create creative companion"""
     return CompanionService(CompanionPersonalityType.CREATIVE)
 
 def create_mentor_companion() -> CompanionService:
-    """Create mentor companion"""
+    """
+        Create mentor companion"""
     return CompanionService(CompanionPersonalityType.MENTOR)
 
 def create_content_creator_tutor() -> EducationAIService:
-    """Create content creator specialized tutor"""
+    """
+        Create content creator specialized tutor"""
     return EducationAIService()
 
 def create_business_development_tutor() -> EducationAIService:
-    """Create business development specialized tutor"""
+    """
+        Create business development specialized tutor"""
     return EducationAIService()
 
 # Export all classes and functions

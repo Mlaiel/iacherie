@@ -248,6 +248,7 @@ async def get_system_metrics():
         module.get("metrics", {}).get("total_requests", 0) 
         for module in MODULES_DATA.values()
     )
+
     
     success_rates = [
         module.get("metrics", {}).get("success_rate", 1.0) 
@@ -255,6 +256,7 @@ async def get_system_metrics():
         if module.get("metrics", {}).get("success_rate")
     ]
     avg_success_rate = sum(success_rates) / len(success_rates) if success_rates else 1.0
+
     
     response_times = [
         module.get("metrics", {}).get("avg_response_time", 100) 
@@ -269,6 +271,7 @@ async def get_system_metrics():
         avg_response_time=avg_response_time,
         error_rate=1.0 - avg_success_rate,
         active_connections=1200,  # Valeur simulée
+
         timestamp=datetime.now()
     )
 
@@ -654,6 +657,7 @@ async def schedule_payout(request: Dict[str, Any]):
     """Planification d'un paiement"""
     creator_id = request.get("creatorId")
     amount = request.get("amount")
+
     
     payout_id = f"payout_{int(time.time())}"
     logger.info(f"Scheduling payout: {payout_id} for creator: {creator_id}")
@@ -2208,6 +2212,8 @@ async def websocket_endpoint(websocket: WebSocket, channel: str):
         while True:
             # Envoie des mises à jour périodiques
             await asyncio.sleep(5)
+
+
             
             update_data = {
                 "channel": channel,
@@ -2220,6 +2226,7 @@ async def websocket_endpoint(websocket: WebSocket, channel: str):
             }
             
             await websocket.send_text(json.dumps(update_data))
+
             
     except Exception as e:
         logger.error(f"WebSocket error: {e}")

@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class MediaTranscodingCore:
-    """Advanced MediaTranscodingCore System"""
+    """
+Advanced MediaTranscodingCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class MediaTranscodingCore:
 # Module exports
 __all__ = ["MediaTranscodingCore"]
 
-logger.info("🎬 MediaTranscodingCore module loaded")
+logger.info("🎬 MediaTranscodingCore module initialized")

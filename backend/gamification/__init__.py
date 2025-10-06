@@ -60,7 +60,7 @@ try:
         get_gaming_achievements
     )
     achievement_engine_available = True
-    logger.info("✅ Unified Achievement Engine loaded successfully")
+    logger.info("✅ Unified Achievement Engine initialized successfully")
 except ImportError as e:
     logger.warning(f"❌ Unified Achievement Engine not available: {e}")
     achievement_engine_available = False
@@ -85,7 +85,7 @@ try:
         get_leaderboard
     )
     ranking_engine_available = True
-    logger.info("✅ Unified Ranking Engine loaded successfully")
+    logger.info("✅ Unified Ranking Engine initialized successfully")
 except ImportError as e:
     logger.warning(f"❌ Unified Ranking Engine not available: {e}")
     ranking_engine_available = False
@@ -108,7 +108,7 @@ try:
         award_gaming_reward
     )
     reward_system_available = True
-    logger.info("✅ Unified Reward System loaded successfully")
+    logger.info("✅ Unified Reward System initialized successfully")
 except ImportError as e:
     logger.warning(f"❌ Unified Reward System not available: {e}")
     reward_system_available = False
@@ -132,7 +132,7 @@ try:
         process_game_action
     )
     influencer_tycoon_available = True
-    logger.info("✅ Influencer Tycoon Game loaded successfully")
+    logger.info("✅ Influencer Tycoon Game initialized successfully")
 except ImportError as e:
     logger.warning(f"❌ Influencer Tycoon Game not available: {e}")
     influencer_tycoon_available = False
@@ -155,7 +155,7 @@ try:
         join_challenge
     )
     challenge_system_available = True
-    logger.info("✅ Challenge System loaded successfully")
+    logger.info("✅ Challenge System initialized successfully")
 except ImportError as e:
     logger.warning(f"❌ Challenge System not available: {e}")
     challenge_system_available = False
@@ -177,7 +177,7 @@ try:
         award_badge_to_user
     )
     badge_generator_available = True
-    logger.info("✅ Badge Generator loaded successfully")
+    logger.info("✅ Badge Generator initialized successfully")
 except ImportError as e:
     logger.warning(f"❌ Badge Generator not available: {e}")
     badge_generator_available = False
@@ -192,7 +192,8 @@ class GamificationOrchestrator:
     """
     
     def __init__(self):
-        """Initialize the gamification orchestrator."""
+        """
+        Initialize the gamification orchestrator."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.initialized = False
         
@@ -209,36 +210,45 @@ class GamificationOrchestrator:
         """Initialize all gamification modules."""
         try:
             # Initialize modules that are available
-            if achievement_system_available:
+            if achievement_engine_available:
                 self.achievement_system = await get_achievement_system()
+
             
             if ranking_engine_available:
                 self.ranking_engine = await get_ranking_engine()
+
             
-            if rewards_manager_available:
-                self.rewards_manager = await get_rewards_manager()
+            if reward_system_available:
+                self.rewards_manager = await get_reward_system()
+
             
             if challenge_system_available:
                 self.challenge_system = await get_challenge_system()
+
             
             if badge_generator_available:
                 self.badge_generator = await get_badge_generator()
+
             
             self.initialized = True
+
             
             available_modules = sum([
-                achievement_system_available,
+                achievement_engine_available,
                 ranking_engine_available,
-                rewards_manager_available,
+                reward_system_available,
                 challenge_system_available,
                 badge_generator_available
             ])
+
             
             self.logger.info(f"✅ Gamification orchestrator initialized with {available_modules}/5 modules")
+
             return True
             
         except Exception as e:
             self.logger.error(f"❌ Failed to initialize gamification orchestrator: {e}")
+
             return False
     
     async def process_user_action(
@@ -251,6 +261,8 @@ class GamificationOrchestrator:
         """Process a user action across all gamification systems."""
         if not self.initialized:
             await self.initialize()
+
+
         
         results = {
             "user_id": user_id,
@@ -265,7 +277,7 @@ class GamificationOrchestrator:
         
         try:
             # Track achievements
-            if achievement_system_available and self.achievement_system:
+            if achievement_engine_available and self.achievement_system:
                 metric_mappings = {
                     "content_upload": "total_uploads",
                     "collaboration_success": "collaborations_completed",
@@ -276,15 +288,19 @@ class GamificationOrchestrator:
                 
                 if action_type in metric_mappings:
                     metric_key = metric_mappings[action_type]
+
                     metric_value = action_data.get("value", 1)
+
+
                     
                     unlocked_achievements = await self.achievement_system.track_user_metric(
                         user_id, metric_key, metric_value, action_data
                     )
+
                     results["achievements_unlocked"] = unlocked_achievements
             
             # Calculate and award rewards
-            if rewards_manager_available and self.rewards_manager:
+            if reward_system_available and self.rewards_manager:
                 source_mappings = {
                     "content_upload": RewardSource.CONTENT_UPLOAD,
                     "achievement_unlock": RewardSource.ACHIEVEMENT_UNLOCK,
@@ -298,9 +314,11 @@ class GamificationOrchestrator:
                 
                 if action_type in source_mappings:
                     reward_source = source_mappings[action_type]
+
                     reward_bundle = await calculate_and_award_rewards(
                         user_id, reward_source, action_data, user_profile
                     )
+
                     results["rewards_earned"] = [r.id for r in reward_bundle.rewards]
                     results["total_points_earned"] = float(reward_bundle.total_value)
             
@@ -316,23 +334,32 @@ class GamificationOrchestrator:
                 
                 if action_type in challenge_metric_mappings:
                     metric_key = challenge_metric_mappings[action_type]
+
                     metric_value = action_data.get("value", 1)
+
+
                     
                     completed_challenges = await self.challenge_system.update_user_progress(
                         user_id, metric_key, metric_value, action_data
                     )
+
                     results["challenges_completed"] = completed_challenges
             
             # Update user ranking
             if ranking_engine_available and self.ranking_engine:
                 # Collect user data for ranking calculation
+
                 user_data = action_data.copy()
+
                 if user_profile:
                     user_data.update(user_profile)
+
+
                 
                 ranking_metrics = await self.ranking_engine.calculate_user_ranking(
                     user_id, user_data
                 )
+
                 results["ranking_updated"] = True
                 results["current_tier"] = ranking_metrics.tier.value
                 results["rank_position"] = ranking_metrics.rank_position
@@ -349,27 +376,36 @@ class GamificationOrchestrator:
                 
                 if action_type in badge_triggers:
                     trigger_data = badge_triggers[action_type].copy()
+
                     trigger_data.update(action_data)
+
+
                     
                     badge = await self.badge_generator.award_badge_to_user(
                         user_id, trigger_data, auto_mint=True
                     )
+
                     if badge:
                         results["badges_awarded"] = [badge.id]
             
             self.logger.info(f"🎮 Processed gamification action: {user_id} - {action_type}")
+
             
             return results
             
         except Exception as e:
             self.logger.error(f"Error processing user action: {e}")
+
             results["error"] = str(e)
+
             return results
     
     async def get_user_gamification_dashboard(self, user_id: str) -> Dict[str, Any]:
         """Get comprehensive gamification dashboard for a user."""
         if not self.initialized:
             await self.initialize()
+
+
         
         dashboard = {
             "user_id": user_id,
@@ -383,12 +419,13 @@ class GamificationOrchestrator:
         
         try:
             # Get achievement data
-            if achievement_system_available and self.achievement_system:
+            if achievement_engine_available and self.achievement_system:
                 dashboard["achievements"] = await self.achievement_system.get_user_achievement_summary(user_id)
             
             # Get ranking data
             if ranking_engine_available and self.ranking_engine:
                 ranking_metrics = await self.ranking_engine.get_user_ranking(user_id)
+
                 if ranking_metrics:
                     dashboard["ranking"] = {
                         "overall_score": ranking_metrics.overall_score,
@@ -400,12 +437,13 @@ class GamificationOrchestrator:
                     }
             
             # Get rewards data
-            if rewards_manager_available and self.rewards_manager:
+            if reward_system_available and self.rewards_manager:
                 dashboard["rewards"] = await self.rewards_manager.get_reward_analytics(user_id)
             
             # Get challenges data
             if challenge_system_available and self.challenge_system:
                 user_challenges = await self.challenge_system.get_user_challenges(user_id)
+
                 dashboard["challenges"] = {
                     "total_participations": len(user_challenges),
                     "completed": len([c for c in user_challenges if c["participation"].status == ParticipationStatus.COMPLETED]),
@@ -416,6 +454,7 @@ class GamificationOrchestrator:
             # Get badges data
             if badge_generator_available and self.badge_generator:
                 user_badges = await self.badge_generator.get_user_badges(user_id)
+
                 dashboard["badges"] = {
                     "total_badges": len(user_badges),
                     "rarity_distribution": {},
@@ -441,16 +480,25 @@ class GamificationOrchestrator:
             
         except Exception as e:
             self.logger.error(f"Error getting user gamification dashboard: {e}")
+
             dashboard["error"] = str(e)
+
             return dashboard
     
     def _calculate_engagement_level(self, dashboard: Dict[str, Any]) -> str:
         """Calculate user engagement level based on gamification data."""
         try:
             # Simple engagement calculation based on activity
+
             achievements = dashboard["achievements"].get("unlocked", 0)
+
+
             points = dashboard["ranking"].get("overall_score", 0)
+
+
             badges = dashboard["badges"].get("total_badges", 0)
+
+
             
             total_score = achievements * 10 + points + badges * 50
             
@@ -481,22 +529,26 @@ class GamificationOrchestrator:
             # Generate daily challenges
             if challenge_system_available and self.challenge_system:
                 daily_challenges = await self.challenge_system.generate_daily_challenges()
+
                 generated_content["daily_challenges"] = [c.id for c in daily_challenges]
             
             # Get leaderboard highlights
             if ranking_engine_available and self.ranking_engine:
                 leaderboard = await get_leaderboard(RankingCategory.OVERALL, RankingPeriod.DAILY, 10)
+
                 generated_content["leaderboard_highlights"] = {
                     "top_performers": [entry.user_id for entry in leaderboard[:3]],
                     "rising_stars": [entry.user_id for entry in leaderboard[3:6]]
                 }
             
             self.logger.info("✅ Daily gamification content generated")
+
             
             return generated_content
             
         except Exception as e:
             self.logger.error(f"Error generating daily gamification content: {e}")
+
             return {}
 
 
@@ -590,9 +642,9 @@ __all__ = [
     "award_badge_to_user",
     
     # Module availability flags
-    "achievement_system_available",
+    "achievement_engine_available",
     "ranking_engine_available",
-    "rewards_manager_available",
+    "reward_system_available",
     "challenge_system_available",
     "badge_generator_available"
 ]
@@ -604,9 +656,9 @@ logger.info("⚠️ Protected by copyright - Unauthorized use prohibited")
 
 # Availability summary
 available_count = sum([
-    achievement_system_available,
+    achievement_engine_available,
     ranking_engine_available,
-    rewards_manager_available,
+    reward_system_available,
     challenge_system_available,
     badge_generator_available
 ])

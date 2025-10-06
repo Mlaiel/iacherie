@@ -13,6 +13,7 @@ Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
 """
 
+
 # Core compliance modules (existing)
 from .gdpr import GDPRCompliance, GDPRRequestType, ConsentPurpose, ProcessingLawfulBasis
 from .ccpa import CCPACompliance, ConsumerRight, PrivacyRequestStatus
@@ -45,17 +46,16 @@ from .regulatory_compliance_hub import (
     NetzGCompliance, PDPACompliance, PIPEDACompliance, RegulationEngine
 )
 
-# Enterprise compliance engines (new)
+# Enterprise compliance engines
 from .compliance_orchestrator import (
-    ComplianceOrchestrator, MultiRegulationComplianceManager, 
-    CrossJurisdictionalComplianceManager, AutomatedComplianceWorkflow,
-    ComplianceStatusMonitor, RiskBasedCompliancePrioritizer
+    ComplianceOrchestrator,
+    ComplianceMonitor,
+    ComplianceReportGenerator,
+    ComplianceRiskAnalyzer
 )
 
 from .legal_framework_engine import (
-    LegalFrameworkEngine, LegalFrameworkAnalyzer, JurisdictionMappingAutomator,
-    LegalRiskAssessor, ContractComplianceVerifier, TermsOfServiceManager,
-    LegalDocumentGenerator, RegulatoryInterpretationEngine
+    LegalFrameworkEngine
 )
 
 from .compliance_analytics import (
@@ -95,14 +95,15 @@ from .creator_compliance import (
 )
 
 from .accessibility_compliance import (
-    AccessibilityCompliance, WCAGComplianceValidator, ADAComplianceVerifier,
+    AccessibilityComplianceEngine as AccessibilityCompliance,
+    WCAGComplianceValidator, ADAComplianceVerifier,
     AccessibilityAuditAutomator, InclusiveDesignCompliance, MultiLanguageAccessibility,
     DisabilityRightsCompliance, UniversalDesignValidator
 )
 
 from .environmental_compliance import (
-    EnvironmentalCompliance, CarbonFootprintCompliance, EnergyEfficiencyMonitor,
-    SustainableDevelopmentCompliance, EnvironmentalImpactAssessment, GreenTechnologyValidator,
+    EnvironmentalComplianceEngine, CarbonFootprintCompliance, EnergyEfficiencyMonitor,
+    SustainableDevelopmentCompliance, EnvironmentalImpactAssessor, GreenTechnologyValidator,
     SustainabilityReporter, EnvironmentalRegulationCompliance
 )
 
@@ -168,15 +169,15 @@ __all__ = [
     "AccessibilityAuditAutomator", "InclusiveDesignCompliance", "MultiLanguageAccessibility",
     "DisabilityRightsCompliance", "UniversalDesignValidator",
     
-    "EnvironmentalCompliance", "CarbonFootprintCompliance", "EnergyEfficiencyMonitor",
-    "SustainableDevelopmentCompliance", "EnvironmentalImpactAssessment", "GreenTechnologyValidator",
+    "EnvironmentalComplianceEngine", "CarbonFootprintCompliance", "EnergyEfficiencyMonitor",
+    "SustainableDevelopmentCompliance", "EnvironmentalImpactAssessor", "GreenTechnologyValidator",
     "SustainabilityReporter", "EnvironmentalRegulationCompliance"
 ]
 
 # Module initialization
 import logging
 logger = logging.getLogger(__name__)
-logger.info("🛡️ Enterprise Compliance Module loaded - Consolidated Architecture")
+logger.info("🛡️ Enterprise Compliance Module initialized - Consolidated Architecture")
 logger.info("📁 18 compliance files with 4 consolidated orchestrators + 10 enterprise engines")
 logger.info("✅ Architecture compliance: 3-level maximum depth respected")
 logger.info("⚠️ Protected by copyright - Unauthorized use prohibited")

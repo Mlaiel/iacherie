@@ -32,14 +32,7 @@ import hashlib
 import numpy as np
 import cv2
 # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+from protection.utils.redis_compat import aioredis, REDIS_AVAILABLE
 from sqlalchemy.ext.asyncio import AsyncSession
 import imagehash
 from PIL import Image
@@ -49,7 +42,8 @@ import re
 logger = logging.getLogger(__name__)
 
 class ProtectionLevel(Enum):
-    """Content protection level"""
+    """
+        Content protection level"""
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -113,7 +107,8 @@ class ContentFingerprint:
 
 @dataclass
 class WatermarkConfig:
-    """Watermark configuration"""
+    """
+        Watermark configuration"""
     watermark_id: str
     content_id: str
     watermark_type: str  # visible, invisible, audio, video
@@ -127,7 +122,8 @@ class WatermarkConfig:
 
 @dataclass
 class SecurityIncident:
-    """Security incident data structure"""
+    """
+        Security incident data structure"""
     incident_id: str
     threat_type: ThreatType
     detection_method: DetectionMethod
@@ -144,7 +140,8 @@ class SecurityIncident:
 
 @dataclass
 class PiracyAlert:
-    """Piracy detection alert"""
+    """
+        Piracy detection alert"""
     alert_id: str
     content_id: str
     piracy_source: str
@@ -160,7 +157,8 @@ class PiracyAlert:
 
 @dataclass
 class ProtectionMetrics:
-    """Protection system metrics"""
+    """
+        Protection system metrics"""
     metric_id: str
     content_id: str
     protection_level: ProtectionLevel
@@ -173,32 +171,41 @@ class ProtectionMetrics:
     last_updated: datetime
 
 class ContentFingerprinting:
-    """Content fingerprinting system"""
+    """
+        Content fingerprinting system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Optional[Any]):
         self.redis = redis_client
         self.fingerprint_algorithms = {}
         self.fingerprint_database = {}
         
     async def initialize_fingerprinting(self) -> Dict[str, Any]:
-        """Initialize content fingerprinting system"""
+        """
+        Initialize content fingerprinting system"""
         try:
             # Setup fingerprinting algorithms
+
             algorithms = await self._setup_fingerprinting_algorithms()
             
             # Initialize fingerprint database
+
             database_setup = await self._initialize_fingerprint_database()
             
             # Configure similarity matching
+
             similarity_matching = await self._configure_similarity_matching()
             
             # Setup batch processing
+
             batch_processing = await self._setup_batch_fingerprint_processing()
             
             # Configure real-time fingerprinting
+
             realtime_processing = await self._configure_realtime_fingerprinting()
+
             
             logger.info(f"🔍 Content Fingerprinting initialized with {len(algorithms)} algorithms")
+
             
             return {
                 "fingerprinting_algorithms": len(algorithms),
@@ -217,6 +224,7 @@ class ContentFingerprinting:
             
         except Exception as e:
             logger.error(f"Failed to initialize fingerprinting: {e}")
+
             raise
 
     async def generate_content_fingerprint(
@@ -231,9 +239,12 @@ class ContentFingerprinting:
             fingerprint_id = str(uuid.uuid4())
             
             # Analyze content type and extract features
+
             content_analysis = await self._analyze_content_features(content_data, content_type)
             
             # Generate audio fingerprint (if applicable)
+
+
             audio_fingerprint = None
             if content_analysis.get("has_audio", False):
                 audio_fingerprint = await self._generate_audio_fingerprint(
@@ -241,6 +252,8 @@ class ContentFingerprinting:
                 )
             
             # Generate video fingerprint (if applicable)
+
+
             video_fingerprint = None
             if content_analysis.get("has_video", False):
                 video_fingerprint = await self._generate_video_fingerprint(
@@ -248,6 +261,8 @@ class ContentFingerprinting:
                 )
             
             # Generate image fingerprint (if applicable)
+
+
             image_fingerprint = None
             if content_analysis.get("has_images", False):
                 image_fingerprint = await self._generate_image_fingerprint(
@@ -255,6 +270,8 @@ class ContentFingerprinting:
                 )
             
             # Generate text fingerprint (if applicable)
+
+
             text_fingerprint = None
             if content_analysis.get("has_text", False):
                 text_fingerprint = await self._generate_text_fingerprint(
@@ -262,16 +279,19 @@ class ContentFingerprinting:
                 )
             
             # Create combined fingerprint hash
+
             combined_fingerprint = await self._create_combined_fingerprint(
                 audio_fingerprint, video_fingerprint, image_fingerprint, text_fingerprint
             )
             
             # Calculate confidence score
+
             confidence_score = await self._calculate_fingerprint_confidence(
                 content_analysis, combined_fingerprint
             )
             
             # Create fingerprint record
+
             content_fingerprint = ContentFingerprint(
                 fingerprint_id=fingerprint_id,
                 content_id=content_id,
@@ -291,7 +311,9 @@ class ContentFingerprinting:
             await self._store_content_fingerprint(content_fingerprint)
             
             # Index fingerprint for fast matching
+
             indexing_result = await self._index_fingerprint_for_matching(content_fingerprint)
+
             
             return {
                 "success": True,
@@ -305,39 +327,49 @@ class ContentFingerprinting:
             
         except Exception as e:
             logger.error(f"Failed to generate content fingerprint: {e}")
+
             raise
 
 class PiracyDetection:
     """Real-time piracy detection system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.detection_engines = {}
         self.monitoring_sources = {}
         
     async def initialize_piracy_detection(self) -> Dict[str, Any]:
-        """Initialize piracy detection system"""
+        """
+        Initialize piracy detection system"""
         try:
             # Setup detection engines
+
             detection_engines = await self._setup_piracy_detection_engines()
             
             # Configure monitoring sources
+
             monitoring_sources = await self._configure_monitoring_sources()
             
             # Setup web crawling for piracy sites
+
             web_crawling = await self._setup_web_crawling_monitoring()
             
             # Configure social media monitoring
+
             social_monitoring = await self._configure_social_media_monitoring()
             
             # Setup P2P network monitoring
+
             p2p_monitoring = await self._setup_p2p_network_monitoring()
             
             # Configure automated alerts
+
             alert_system = await self._configure_automated_alert_system()
+
             
             logger.info(f"🚨 Piracy Detection initialized with {len(detection_engines)} engines")
+
             
             return {
                 "detection_engines": len(detection_engines),
@@ -350,6 +382,7 @@ class PiracyDetection:
             
         except Exception as e:
             logger.error(f"Failed to initialize piracy detection: {e}")
+
             raise
 
     async def scan_for_piracy(
@@ -363,45 +396,54 @@ class PiracyDetection:
             scan_id = str(uuid.uuid4())
             
             # Setup scan configuration
+
             scan_config = await self._setup_scan_configuration(
                 content_fingerprint, scan_scope, detection_sensitivity
             )
             
             # Scan web sources
+
             web_scan_results = await self._scan_web_sources(
                 content_fingerprint, scan_config
             )
             
             # Scan social media platforms
+
             social_scan_results = await self._scan_social_media_platforms(
                 content_fingerprint, scan_config
             )
             
             # Scan P2P networks
+
             p2p_scan_results = await self._scan_p2p_networks(
                 content_fingerprint, scan_config
             )
             
             # Scan file sharing sites
+
             filesharing_scan_results = await self._scan_file_sharing_sites(
                 content_fingerprint, scan_config
             )
             
             # Analyze scan results
+
             results_analysis = await self._analyze_scan_results([
                 web_scan_results, social_scan_results, 
                 p2p_scan_results, filesharing_scan_results
             ])
             
             # Generate piracy alerts
+
             piracy_alerts = await self._generate_piracy_alerts(
                 content_fingerprint, results_analysis
             )
             
             # Calculate threat assessment
+
             threat_assessment = await self._calculate_threat_assessment(
                 piracy_alerts, results_analysis
             )
+
             
             return {
                 "success": True,
@@ -421,12 +463,13 @@ class PiracyDetection:
             
         except Exception as e:
             logger.error(f"Failed to scan for piracy: {e}")
+
             raise
 
 class WatermarkingSystem:
     """Digital watermarking system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Optional[Any]):
         self.redis = redis_client
         self.watermark_algorithms = {}
         self.watermark_templates = {}
@@ -438,35 +481,43 @@ class WatermarkingSystem:
         watermark_config: Dict[str, Any],
         content_type: str
     ) -> Dict[str, Any]:
-        """Apply digital watermark to content"""
+        """
+        Apply digital watermark to content"""
         try:
             watermark_id = str(uuid.uuid4())
             
             # Validate watermark configuration
+
             config_validation = await self._validate_watermark_config(
                 watermark_config, content_type
             )
+
             if not config_validation["valid"]:
                 raise ValueError("Invalid watermark configuration")
             
             # Apply watermark based on content type
+
             watermarked_content = None
             if content_type.startswith("video"):
                 watermarked_content = await self._apply_video_watermark(
                     content_data, watermark_config
                 )
+
             elif content_type.startswith("audio"):
                 watermarked_content = await self._apply_audio_watermark(
                     content_data, watermark_config
                 )
+
             elif content_type.startswith("image"):
                 watermarked_content = await self._apply_image_watermark(
                     content_data, watermark_config
                 )
+
             else:
                 raise ValueError(f"Unsupported content type for watermarking: {content_type}")
             
             # Create watermark configuration record
+
             watermark_record = WatermarkConfig(
                 watermark_id=watermark_id,
                 content_id=content_id,
@@ -484,9 +535,11 @@ class WatermarkingSystem:
             await self._store_watermark_config(watermark_record)
             
             # Validate watermark quality
+
             quality_validation = await self._validate_watermark_quality(
                 watermarked_content, watermark_record
             )
+
             
             return {
                 "success": True,
@@ -499,12 +552,13 @@ class WatermarkingSystem:
             
         except Exception as e:
             logger.error(f"Failed to apply watermark: {e}")
+
             raise
 
 class SecurityAnalytics:
     """Security analytics and threat intelligence"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.analytics_engines = {}
@@ -515,36 +569,45 @@ class SecurityAnalytics:
         time_period: str,
         content_filters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze security threats and generate intelligence"""
+        """
+        Analyze security threats and generate intelligence"""
         try:
             # Collect security incident data
+
             incident_data = await self._collect_security_incident_data(
                 time_period, content_filters
             )
             
             # Analyze threat patterns
+
             threat_patterns = await self._analyze_threat_patterns(incident_data)
             
             # Calculate risk metrics
+
             risk_metrics = await self._calculate_security_risk_metrics(incident_data)
             
             # Generate threat intelligence
+
             threat_intelligence = await self._generate_threat_intelligence(
                 threat_patterns, risk_metrics
             )
             
             # Analyze attack vectors
+
             attack_vectors = await self._analyze_attack_vectors(incident_data)
             
             # Generate security recommendations
+
             security_recommendations = await self._generate_security_recommendations(
                 threat_patterns, risk_metrics, attack_vectors
             )
             
             # Calculate protection effectiveness
+
             protection_effectiveness = await self._calculate_protection_effectiveness(
                 incident_data, risk_metrics
             )
+
             
             return {
                 "analysis_period": time_period,
@@ -564,12 +627,13 @@ class SecurityAnalytics:
             
         except Exception as e:
             logger.error(f"Failed to analyze security threats: {e}")
+
             raise
 
 class IncidentResponse:
     """Automated incident response system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.response_workflows = {}
@@ -580,38 +644,47 @@ class IncidentResponse:
         incident: SecurityIncident,
         response_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Handle security incident with automated response"""
+        """
+        Handle security incident with automated response"""
         try:
             # Assess incident severity and priority
+
             incident_assessment = await self._assess_incident_severity(incident)
             
             # Determine response actions
+
             response_actions = await self._determine_response_actions(
                 incident, incident_assessment, response_config
             )
             
             # Execute immediate response actions
+
             immediate_response = await self._execute_immediate_response(
                 incident, response_actions
             )
             
             # Initiate investigation workflow
+
             investigation_workflow = await self._initiate_investigation_workflow(incident)
             
             # Send notifications and alerts
+
             notifications = await self._send_incident_notifications(
                 incident, incident_assessment
             )
             
             # Update incident status
+
             incident_update = await self._update_incident_status(
                 incident, response_actions, immediate_response
             )
             
             # Log response activities
+
             response_log = await self._log_response_activities(
                 incident, response_actions, immediate_response
             )
+
             
             return {
                 "success": True,
@@ -628,12 +701,13 @@ class IncidentResponse:
             
         except Exception as e:
             logger.error(f"Failed to handle security incident: {e}")
+
             raise
 
 class StreamingProtectionMonitor:
     """Unified streaming protection monitor - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         
@@ -654,24 +728,32 @@ class StreamingProtectionMonitor:
         """Initialize protection monitoring system"""
         try:
             # Initialize fingerprinting
+
             fingerprinting_status = await self.content_fingerprinting.initialize_fingerprinting()
             
             # Initialize piracy detection
+
             piracy_status = await self.piracy_detection.initialize_piracy_detection()
             
             # Setup protection policies
+
             protection_policies = await self._setup_protection_policies()
             
             # Configure monitoring workflows
+
             monitoring_workflows = await self._configure_monitoring_workflows()
             
             # Setup automated responses
+
             automated_responses = await self._setup_automated_response_system()
             
             # Configure threat intelligence
+
             threat_intelligence = await self._configure_threat_intelligence_system()
+
             
             logger.info("🛡️ Streaming Protection Monitor fully initialized")
+
             
             return {
                 "protection_status": "initialized",
@@ -693,6 +775,7 @@ class StreamingProtectionMonitor:
             
         except Exception as e:
             logger.error(f"Failed to initialize protection monitor: {e}")
+
             raise
     
     async def protect_streaming_content(
@@ -706,11 +789,13 @@ class StreamingProtectionMonitor:
         """Apply comprehensive protection to streaming content"""
         try:
             # Generate content fingerprint
+
             fingerprint_result = await self.content_fingerprinting.generate_content_fingerprint(
                 content_id, content_data, content_type, protection_level
             )
             
             # Apply watermarking if configured
+
             watermark_result = None
             if protection_config.get("enable_watermarking", False):
                 watermark_result = await self.watermarking_system.apply_watermark(
@@ -719,17 +804,21 @@ class StreamingProtectionMonitor:
                 )
             
             # Setup piracy monitoring
+
             monitoring_setup = await self._setup_content_piracy_monitoring(
                 content_id, fingerprint_result["content_fingerprint"]
             )
             
             # Configure automated protection
+
             automated_protection = await self._configure_automated_content_protection(
                 content_id, protection_level, protection_config
             )
             
             # Setup analytics tracking
+
             analytics_tracking = await self._setup_content_protection_analytics(content_id)
+
             
             return {
                 "success": True,
@@ -745,6 +834,7 @@ class StreamingProtectionMonitor:
             
         except Exception as e:
             logger.error(f"Failed to protect streaming content: {e}")
+
             raise
     
     # Additional helper methods implementation...
@@ -759,6 +849,7 @@ class StreamingProtectionMonitor:
             }
         except Exception as e:
             logger.error(f"Failed to setup protection policies: {e}")
+
             return {}
 
     async def _configure_monitoring_workflows(self) -> Dict[str, Any]:
@@ -772,6 +863,7 @@ class StreamingProtectionMonitor:
             }
         except Exception as e:
             logger.error(f"Failed to configure monitoring workflows: {e}")
+
             return {}
 
 # Export main classes

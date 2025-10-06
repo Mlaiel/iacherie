@@ -34,7 +34,8 @@ import statistics
 logger = logging.getLogger(__name__)
 
 class TrendDirection(Enum):
-    """Market trend direction"""
+    """
+        Market trend direction"""
     STRONGLY_RISING = "strongly_rising"
     RISING = "rising"
     STABLE = "stable"
@@ -100,7 +101,8 @@ class CompetitorProfile:
 
 @dataclass
 class MarketOpportunity:
-    """Market opportunity identification"""
+    """
+        Market opportunity identification"""
     opportunity_id: str
     title: str
     description: str
@@ -187,8 +189,10 @@ class MarketIntelligenceEngine:
         self._initialize_sample_data()
     
     def _initialize_sample_data(self):
-        """Initialize with sample market data"""
+        """
+        Initialize with sample market data"""
         # Sample competitors
+
         sample_competitors = [
             CompetitorProfile(
                 competitor_id="comp_001",
@@ -242,12 +246,17 @@ class MarketIntelligenceEngine:
         """Analyze market trends for a specific segment"""
         try:
             end_date = datetime.utcnow()
+
+
             start_date = end_date - timedelta(days=time_period_days)
             
             # Generate market metrics (simulated with realistic data)
+
+
             metrics = []
             
             # Market size metric
+
             market_size_value = random.uniform(50000000, 500000000)  # $50M - $500M
             market_size = MarketMetric(
                 metric_id=f"metric_{uuid.uuid4().hex[:12]}",
@@ -258,9 +267,11 @@ class MarketIntelligenceEngine:
                 change_percentage=random.uniform(2.0, 15.0),
                 confidence_level=0.85
             )
+
             metrics.append(market_size)
             
             # Growth rate metric
+
             growth_rate = MarketMetric(
                 metric_id=f"metric_{uuid.uuid4().hex[:12]}",
                 name="Growth Rate",
@@ -270,9 +281,11 @@ class MarketIntelligenceEngine:
                 change_percentage=random.uniform(-2.0, 5.0),
                 confidence_level=0.78
             )
+
             metrics.append(growth_rate)
             
             # Average selling price
+
             avg_price = MarketMetric(
                 metric_id=f"metric_{uuid.uuid4().hex[:12]}",
                 name="Average Selling Price",
@@ -282,9 +295,11 @@ class MarketIntelligenceEngine:
                 change_percentage=random.uniform(1.0, 8.0),
                 confidence_level=0.82
             )
+
             metrics.append(avg_price)
             
             # Customer acquisition cost
+
             cac = MarketMetric(
                 metric_id=f"metric_{uuid.uuid4().hex[:12]}",
                 name="Customer Acquisition Cost",
@@ -294,9 +309,11 @@ class MarketIntelligenceEngine:
                 change_percentage=random.uniform(3.0, 12.0),
                 confidence_level=0.75
             )
+
             metrics.append(cac)
             
             # Market concentration
+
             concentration = MarketMetric(
                 metric_id=f"metric_{uuid.uuid4().hex[:12]}",
                 name="Market Concentration (HHI)",
@@ -306,6 +323,7 @@ class MarketIntelligenceEngine:
                 change_percentage=random.uniform(-1.0, 2.0),
                 confidence_level=0.80
             )
+
             metrics.append(concentration)
             
             # Store metrics
@@ -313,10 +331,12 @@ class MarketIntelligenceEngine:
                 self.market_metrics[metric.metric_id] = metric
             
             logger.info(f"Market trend analysis completed for {market_segment}: {len(metrics)} metrics")
+
             return metrics
             
         except Exception as e:
             logger.error(f"Error analyzing market trends: {e}")
+
             return []
     
     def _determine_growth_trend(self) -> TrendDirection:
@@ -327,6 +347,7 @@ class MarketIntelligenceEngine:
             TrendDirection.STABLE,
             TrendDirection.DECLINING
         ]
+
         weights = [0.2, 0.4, 0.3, 0.1]  # Most markets are growing or stable
         return random.choice(trends, p=weights)
     
@@ -335,40 +356,55 @@ class MarketIntelligenceEngine:
         market_segment: str,
         update_existing: bool = True
     ) -> List[CompetitorProfile]:
-        """Analyze competitor landscape"""
+        """
+        Analyze competitor landscape"""
         try:
             if update_existing:
                 # Update existing competitor data
                 for competitor_id, competitor in self.competitors.items():
                     # Simulate data updates
                     competitor.market_share += random.uniform(-0.5, 0.5)
+
                     competitor.market_share = max(0.1, min(50.0, competitor.market_share))
+
+
                     
                     price_change = random.uniform(-0.05, 0.08)
+
                     competitor.avg_price *= Decimal(str(1 + price_change))
+
                     
                     competitor.customer_rating += random.uniform(-0.1, 0.1)
+
                     competitor.customer_rating = max(1.0, min(5.0, competitor.customer_rating))
+
                     
                     competitor.last_updated = datetime.utcnow()
             
             # Identify new competitors (simulation)
+
             if random.random() < 0.3:  # 30% chance of new competitor
+
                 new_competitor = await self._identify_new_competitor(market_segment)
+
                 self.competitors[new_competitor.competitor_id] = new_competitor
             
             # Return competitors sorted by market share
+
             sorted_competitors = sorted(
                 self.competitors.values(),
                 key=lambda x: x.market_share,
                 reverse=True
             )
+
             
             logger.info(f"Competitor analysis completed: {len(sorted_competitors)} competitors")
+
             return sorted_competitors
             
         except Exception as e:
             logger.error(f"Error analyzing competitors: {e}")
+
             return list(self.competitors.values())
     
     async def _identify_new_competitor(self, market_segment: str) -> CompetitorProfile:
@@ -399,6 +435,7 @@ class MarketIntelligenceEngine:
             opportunities = []
             
             # Opportunity 1: Underserved market segment
+
             opp1 = MarketOpportunity(
                 opportunity_id=f"opp_{uuid.uuid4().hex[:12]}",
                 title="Underserved Premium Segment",
@@ -413,9 +450,11 @@ class MarketIntelligenceEngine:
                 target_audience=["High-income professionals", "Luxury seekers"],
                 competitive_advantage=["Superior quality", "Exclusive features", "Premium service"]
             )
+
             opportunities.append(opp1)
             
             # Opportunity 2: Emerging technology adoption
+
             opp2 = MarketOpportunity(
                 opportunity_id=f"opp_{uuid.uuid4().hex[:12]}",
                 title="AI-Powered Personalization",
@@ -430,9 +469,11 @@ class MarketIntelligenceEngine:
                 target_audience=["Tech-savvy users", "Early adopters"],
                 competitive_advantage=["First-mover advantage", "Personalization", "Efficiency"]
             )
+
             opportunities.append(opp2)
             
             # Opportunity 3: Geographic expansion
+
             opp3 = MarketOpportunity(
                 opportunity_id=f"opp_{uuid.uuid4().hex[:12]}",
                 title="International Market Expansion",
@@ -447,6 +488,7 @@ class MarketIntelligenceEngine:
                 target_audience=["International customers", "Local businesses"],
                 competitive_advantage=["Market knowledge", "Local adaptation", "Price positioning"]
             )
+
             opportunities.append(opp3)
             
             # Filter by budget if provided
@@ -461,10 +503,12 @@ class MarketIntelligenceEngine:
                 self.opportunities[opp.opportunity_id] = opp
             
             logger.info(f"Market opportunities identified: {len(opportunities)}")
+
             return opportunities
             
         except Exception as e:
             logger.error(f"Error identifying opportunities: {e}")
+
             return []
     
     async def generate_market_forecast(
@@ -477,22 +521,38 @@ class MarketIntelligenceEngine:
             forecast_id = f"forecast_{uuid.uuid4().hex[:12]}"
             
             # Current market size (simulated)
+
+
             current_size = Decimal(str(random.uniform(50000000, 500000000)))
             
             # Growth prediction (simulated ML model)
+
+
             base_growth_rate = random.uniform(0.05, 0.25)  # 5-25% annual growth
+
             seasonality_factor = random.uniform(0.9, 1.1)
+
+
             trend_factor = random.uniform(0.95, 1.05)
+
+
             
             predicted_growth = base_growth_rate * seasonality_factor * trend_factor
+
             predicted_size = current_size * Decimal(str(1 + predicted_growth * (forecast_horizon_days / 365)))
             
             # Confidence interval (simulated)
+
+
             uncertainty = 0.15  # 15% uncertainty
+
             lower_bound = float(predicted_size) * (1 - uncertainty)
+
+
             upper_bound = float(predicted_size) * (1 + uncertainty)
             
             # Key drivers and risk factors
+
             key_drivers = [
                 "Digital transformation acceleration",
                 "Consumer behavior shift",
@@ -500,6 +560,7 @@ class MarketIntelligenceEngine:
                 "Economic growth",
                 "Regulatory support"
             ]
+
             
             risk_factors = [
                 "Economic downturn",
@@ -508,6 +569,7 @@ class MarketIntelligenceEngine:
                 "Technology disruption",
                 "Consumer preference shifts"
             ]
+
             
             forecast = MarketForecast(
                 forecast_id=forecast_id,
@@ -516,19 +578,23 @@ class MarketIntelligenceEngine:
                 current_size=current_size,
                 predicted_size=predicted_size,
                 growth_rate=predicted_growth * 100,  # Convert to percentage
+
                 confidence_interval=(lower_bound, upper_bound),
                 key_drivers=random.choice(key_drivers, size=3, replace=False).tolist(),
                 risk_factors=random.choice(risk_factors, size=2, replace=False).tolist(),
                 model_accuracy=random.uniform(0.75, 0.92)
             )
+
             
             self.forecasts[forecast_id] = forecast
             
             logger.info(f"Market forecast generated: {forecast_id}")
+
             return forecast
             
         except Exception as e:
             logger.error(f"Error generating market forecast: {e}")
+
             raise
     
     async def analyze_consumer_behavior(
@@ -540,6 +606,7 @@ class MarketIntelligenceEngine:
             insights = []
             
             # Insight 1: Purchase behavior
+
             insight1 = ConsumerInsight(
                 insight_id=f"insight_{uuid.uuid4().hex[:12]}",
                 title="Mobile-First Shopping Behavior",
@@ -563,9 +630,11 @@ class MarketIntelligenceEngine:
                 ],
                 confidence_score=0.85
             )
+
             insights.append(insight1)
             
             # Insight 2: Price sensitivity
+
             insight2 = ConsumerInsight(
                 insight_id=f"insight_{uuid.uuid4().hex[:12]}",
                 title="Increased Price Sensitivity",
@@ -589,9 +658,11 @@ class MarketIntelligenceEngine:
                 ],
                 confidence_score=0.78
             )
+
             insights.append(insight2)
             
             # Insight 3: Sustainability focus
+
             insight3 = ConsumerInsight(
                 insight_id=f"insight_{uuid.uuid4().hex[:12]}",
                 title="Sustainability Preference Growth",
@@ -615,6 +686,7 @@ class MarketIntelligenceEngine:
                 ],
                 confidence_score=0.82
             )
+
             insights.append(insight3)
             
             # Store insights
@@ -622,10 +694,12 @@ class MarketIntelligenceEngine:
                 self.consumer_insights[insight.insight_id] = insight
             
             logger.info(f"Consumer behavior analysis completed: {len(insights)} insights")
+
             return insights
             
         except Exception as e:
             logger.error(f"Error analyzing consumer behavior: {e}")
+
             return []
     
     async def generate_comprehensive_report(
@@ -637,34 +711,57 @@ class MarketIntelligenceEngine:
         try:
             report_id = f"report_{uuid.uuid4().hex[:12]}"
             end_date = datetime.utcnow()
+
+
             start_date = end_date - timedelta(days=period_days)
             
             # Gather all analysis components
+
             metrics = await self.analyze_market_trends(market_segment, period_days)
+
+
             competitors = await self.analyze_competitors(market_segment)
+
+
             opportunities = await self.identify_opportunities(market_segment)
+
+
             insights = await self.analyze_consumer_behavior(market_segment)
+
+
             forecast = await self.generate_market_forecast(market_segment)
             
             # Calculate market size and growth
+
             market_size_metric = next((m for m in metrics if m.name == "Market Size"), None)
+
+
             market_size = Decimal(str(market_size_metric.value)) if market_size_metric else Decimal("100000000")
+
+
             
             growth_metric = next((m for m in metrics if m.name == "Growth Rate"), None)
+
+
             growth_rate = growth_metric.value if growth_metric else 10.0
             
             # Determine market maturity
+
             maturity_stage = self._determine_market_maturity(growth_rate, len(competitors))
             
             # Generate executive summary
+
             executive_summary = self._generate_executive_summary(
                 market_segment, market_size, growth_rate, len(competitors), len(opportunities)
             )
             
             # Generate strategic recommendations
+
             strategic_recommendations = self._generate_strategic_recommendations(
                 metrics, competitors, opportunities, insights
             )
+
+
             
             report = MarketReport(
                 report_id=report_id,
@@ -677,20 +774,24 @@ class MarketIntelligenceEngine:
                 maturity_stage=maturity_stage,
                 key_metrics=metrics,
                 competitors=competitors[:10],  # Top 10 competitors
+
                 opportunities=opportunities,
                 consumer_insights=insights,
                 forecasts=[forecast],
                 executive_summary=executive_summary,
                 strategic_recommendations=strategic_recommendations
             )
+
             
             self.market_reports[report_id] = report
             
             logger.info(f"Comprehensive market report generated: {report_id}")
+
             return report
             
         except Exception as e:
             logger.error(f"Error generating comprehensive report: {e}")
+
             raise
     
     def _determine_market_maturity(self, growth_rate: float, competitor_count: int) -> MarketMaturity:
@@ -714,7 +815,8 @@ class MarketIntelligenceEngine:
         competitor_count: int,
         opportunity_count: int
     ) -> str:
-        """Generate executive summary"""
+        """
+        Generate executive summary"""
         summary = f"The {market_segment} market shows strong fundamentals with a total addressable market of ${market_size:,.0f}. "
         
         if growth_rate > 15:
@@ -742,6 +844,7 @@ class MarketIntelligenceEngine:
         recommendations = []
         
         # Market-based recommendations
+
         growth_metric = next((m for m in metrics if m.name == "Growth Rate"), None)
         if growth_metric and growth_metric.value > 15:
             recommendations.append("Accelerate market entry to capture growth momentum")
@@ -753,14 +856,18 @@ class MarketIntelligenceEngine:
             recommendations.append("Consider aggressive market share expansion given lower competition")
         
         # Opportunity-based recommendations
+
         high_value_opportunities = [opp for opp in opportunities if opp.potential_value > Decimal("10000000")]
         if high_value_opportunities:
             recommendations.append(f"Prioritize high-value opportunities: {high_value_opportunities[0].title}")
         
         # Consumer insight-based recommendations
+
         mobile_insights = [insight for insight in insights if "mobile" in insight.title.lower()]
         if mobile_insights:
             recommendations.append("Invest in mobile-first strategy based on consumer behavior trends")
+
+
         
         sustainability_insights = [insight for insight in insights if "sustainability" in insight.title.lower()]
         if sustainability_insights:
@@ -783,19 +890,23 @@ class MarketIntelligenceEngine:
         return self.market_reports.get(report_id)
     
     def get_competitor(self, competitor_id: str) -> Optional[CompetitorProfile]:
-        """Get competitor profile by ID"""
+        """
+        Get competitor profile by ID"""
         return self.competitors.get(competitor_id)
     
     def get_opportunity(self, opportunity_id: str) -> Optional[MarketOpportunity]:
-        """Get market opportunity by ID"""
+        """
+        Get market opportunity by ID"""
         return self.opportunities.get(opportunity_id)
     
     def get_forecast(self, forecast_id: str) -> Optional[MarketForecast]:
-        """Get market forecast by ID"""
+        """
+        Get market forecast by ID"""
         return self.forecasts.get(forecast_id)
     
     async def get_intelligence_analytics(self) -> Dict[str, Any]:
-        """Get market intelligence analytics"""
+        """
+        Get market intelligence analytics"""
         return {
             "total_reports": len(self.market_reports),
             "total_competitors": len(self.competitors),
@@ -811,6 +922,7 @@ class MarketIntelligenceEngine:
             ],
             "high_value_opportunities": len([
                 opp for opp in self.opportunities.values()
+
                 if opp.potential_value > Decimal("5000000")
             ])
         }

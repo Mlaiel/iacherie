@@ -14,7 +14,8 @@ from datetime import datetime
 
 @dataclass
 class ContentGenerationContext:
-    """Contexte de génération de contenu"""
+    """
+        Contexte de génération de contenu"""
     user_id: Optional[str] = None
     session_id: Optional[str] = None
     platform: str = "web"
@@ -41,9 +42,11 @@ class BaseContentGenerator:
         return True
     
     async def generate(self, context: ContentGenerationContext) -> Dict[str, Any]:
-        """Méthode de génération principale (à surcharger)"""
+        """
+        Méthode de génération principale (à surcharger)"""
         if not self.initialized:
             await self.initialize()
+
         
         return {
             'success': True,
@@ -53,9 +56,11 @@ class BaseContentGenerator:
         }
     
     def _supports_content_type(self, content_type: str) -> bool:
-        """Vérifier si ce générateur supporte le type de contenu"""
+        """
+        Vérifier si ce générateur supporte le type de contenu"""
         return True
     
     def get_supported_formats(self) -> list:
-        """Formats supportés par ce générateur"""
+        """
+        Formats supportés par ce générateur"""
         return ['json', 'dict']

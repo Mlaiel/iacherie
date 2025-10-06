@@ -1,4 +1,5 @@
-"""IA Chérie Core Database - Enterprise Database Management System
+"""
+IA Chérie Core Database - Enterprise Database Management System
 ============================================================
 
 Advanced database management providing connection pooling, query optimization,
@@ -37,7 +38,8 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class DatabaseType(str, Enum):
-    """Supported database types"""
+    """
+Supported database types"""
     POSTGRESQL = "postgresql"
     MYSQL = "mysql"
     SQLITE = "sqlite"
@@ -45,7 +47,8 @@ class DatabaseType(str, Enum):
     REDIS = "redis"
 
 class DatabaseStatus(str, Enum):
-    """Database connection status"""
+    """
+Database connection status"""
     DISCONNECTED = "disconnected"
     CONNECTING = "connecting"
     CONNECTED = "connected"
@@ -54,7 +57,8 @@ class DatabaseStatus(str, Enum):
 
 @dataclass
 class DatabaseConfig:
-    """Database configuration"""
+    """
+Database configuration"""
     db_type: DatabaseType = DatabaseType.POSTGRESQL
     host: str = "localhost"
     port: int = 5432
@@ -73,7 +77,8 @@ class DatabaseConfig:
 
 @dataclass
 class DatabaseMetrics:
-    """Database performance metrics"""
+    """
+Database performance metrics"""
     active_connections: int = 0
     total_connections: int = 0
     queries_executed: int = 0
@@ -85,10 +90,12 @@ class DatabaseMetrics:
     last_health_check: float = field(default_factory=time.time)
 
 class DatabaseCore:
-    """Enterprise database core management system"""
+    """
+Enterprise database core management system"""
     
     def __init__(self, config: Optional[DatabaseConfig] = None, level: str = "enterprise"):
-        """Initialize database core"""
+        """
+Initialize database core"""
         self.config = config or DatabaseConfig()
         self.level = level
         self.status = DatabaseStatus.DISCONNECTED
@@ -109,7 +116,8 @@ class DatabaseCore:
         self._shutdown_event = asyncio.Event()
     
     async def initialize(self) -> bool:
-        """Initialize database connection"""
+        """
+Initialize database connection"""
         try:
             logger.info(f"🗄️ Initializing database core - Type: {self.config.db_type.value}")
             self.status = DatabaseStatus.CONNECTING
@@ -152,7 +160,8 @@ class DatabaseCore:
             return False
     
     def _build_database_url(self) -> str:
-        """Build database connection URL"""
+        """
+Build database connection URL"""
         if self.config.db_type == DatabaseType.POSTGRESQL:
             return (f"postgresql+asyncpg://{self.config.username}:{self.config.password}"
                    f"@{self.config.host}:{self.config.port}/{self.config.database}")
@@ -165,7 +174,8 @@ class DatabaseCore:
             raise ValueError(f"Unsupported database type: {self.config.db_type}")
     
     async def _test_connection(self) -> bool:
-        """Test database connection"""
+        """
+Test database connection"""
         try:
             if self.engine:
                 async with self.engine.begin() as conn:
@@ -177,7 +187,8 @@ class DatabaseCore:
             return False
     
     async def start(self) -> bool:
-        """Start database core"""
+        """
+Start database core"""
         try:
             if self.status != DatabaseStatus.CONNECTED:
                 await self.initialize()
@@ -193,7 +204,8 @@ class DatabaseCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop database core"""
+        """
+Stop database core"""
         try:
             logger.info("🛑 Stopping database core")
             
@@ -222,7 +234,8 @@ class DatabaseCore:
     
     @asynccontextmanager
     async def get_session(self):
-        """Get database session context manager"""
+        """
+Get database session context manager"""
         if not self.session_factory:
             raise RuntimeError("Database not initialized")
         
@@ -237,7 +250,8 @@ class DatabaseCore:
             await session.close()
     
     async def execute_query(self, query: str, params: Optional[Dict[str, Any]] = None) -> Any:
-        """Execute raw SQL query"""
+        """
+Execute raw SQL query"""
         start_time = time.time()
         query_id = str(uuid.uuid4())
         
@@ -291,7 +305,8 @@ class DatabaseCore:
             raise
     
     async def health_check(self) -> bool:
-        """Perform database health check"""
+        """
+Perform database health check"""
         try:
             if not self.engine:
                 return False
@@ -316,7 +331,8 @@ class DatabaseCore:
             return False
     
     async def _health_monitor_loop(self):
-        """Health monitoring loop"""
+        """
+Health monitoring loop"""
         while not self._shutdown_event.is_set():
             try:
                 await self.health_check()
@@ -328,15 +344,18 @@ class DatabaseCore:
                 await asyncio.sleep(60)  # Wait longer on error
     
     def get_metrics(self) -> DatabaseMetrics:
-        """Get current database metrics"""
+        """
+Get current database metrics"""
         return self.metrics
     
     def get_query_history(self, limit: int = 100) -> List[Dict[str, Any]]:
-        """Get recent query history"""
+        """
+Get recent query history"""
         return self.query_history[-limit:]
     
     def get_status_summary(self) -> Dict[str, Any]:
-        """Get database status summary"""
+        """
+Get database status summary"""
         return {
             "status": self.status.value,
             "database_type": self.config.db_type.value,

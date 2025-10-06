@@ -30,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class IntegrationType(Enum):
-    """Types of system integrations."""
+    """
+        Types of system integrations."""
     PAYMENT_PROCESSOR = "payment_processor"
     SOCIAL_PLATFORM = "social_platform"
     CLOUD_STORAGE = "cloud_storage"
@@ -65,7 +66,8 @@ class IntegrationCredentials:
 
 @dataclass
 class IntegrationConfig:
-    """Integration configuration."""
+    """
+        Integration configuration."""
     integration_id: str
     name: str
     integration_type: IntegrationType
@@ -80,7 +82,8 @@ class IntegrationConfig:
 
 @dataclass
 class IntegrationRequest:
-    """Integration request data."""
+    """
+        Integration request data."""
     request_id: str
     integration_id: str
     method: str
@@ -92,7 +95,8 @@ class IntegrationRequest:
 
 @dataclass
 class IntegrationResponse:
-    """Integration response data."""
+    """
+        Integration response data."""
     request_id: str
     integration_id: str
     status_code: int
@@ -104,7 +108,8 @@ class IntegrationResponse:
 
 
 class BaseIntegration(ABC):
-    """Base class for all integrations."""
+    """
+        Base class for all integrations."""
     
     def __init__(self, config: IntegrationConfig):
         self.config = config
@@ -118,31 +123,38 @@ class BaseIntegration(ABC):
     
     @abstractmethod
     async def disconnect(self) -> bool:
-        """Disconnect from the external service."""
+        """
+        Disconnect from the external service."""
         pass
     
     @abstractmethod
     async def test_connection(self) -> bool:
-        """Test the connection to the external service."""
+        """
+        Test the connection to the external service."""
         pass
     
     @abstractmethod
     async def make_request(self, request: IntegrationRequest) -> IntegrationResponse:
-        """Make a request to the external service."""
+        """
+        Make a request to the external service."""
         pass
 
 
 class PaymentIntegration(BaseIntegration):
-    """Payment processor integration."""
+    """
+        Payment processor integration."""
     
     async def connect(self) -> bool:
-        """Connect to payment processor."""
+        """
+        Connect to payment processor."""
         try:
             self.status = IntegrationStatus.ACTIVE
             self.logger.info(f"Connected to payment processor: {self.config.name}")
+
             return True
         except Exception as e:
             self.logger.error(f"Failed to connect to payment processor: {str(e)}")
+
             self.status = IntegrationStatus.ERROR
             return False
     
@@ -152,23 +164,30 @@ class PaymentIntegration(BaseIntegration):
         return True
     
     async def test_connection(self) -> bool:
-        """Test payment processor connection."""
+        """
+        Test payment processor connection."""
         try:
             # Simulate connection test
             await asyncio.sleep(0.1)
+
             return self.status == IntegrationStatus.ACTIVE
         except Exception:
             return False
     
     async def make_request(self, request: IntegrationRequest) -> IntegrationResponse:
-        """Make payment request."""
+        """
+        Make payment request."""
         start_time = datetime.utcnow()
+
         
         try:
             # Simulate payment processing
             await asyncio.sleep(0.2)
+
+
             
             response_time = (datetime.utcnow() - start_time).total_seconds()
+
             
             return IntegrationResponse(
                 request_id=request.request_id,
@@ -178,9 +197,11 @@ class PaymentIntegration(BaseIntegration):
                 data={"transaction_id": str(uuid.uuid4()), "status": "completed"},
                 response_time=response_time
             )
+
             
         except Exception as e:
             response_time = (datetime.utcnow() - start_time).total_seconds()
+
             return IntegrationResponse(
                 request_id=request.request_id,
                 integration_id=request.integration_id,
@@ -203,6 +224,8 @@ class PaymentIntegration(BaseIntegration):
                 "payment_method": payment_method
             }
         )
+
+
         
         response = await self.make_request(request)
         return {
@@ -216,13 +239,16 @@ class SocialPlatformIntegration(BaseIntegration):
     """Social platform integration."""
     
     async def connect(self) -> bool:
-        """Connect to social platform."""
+        """
+        Connect to social platform."""
         try:
             self.status = IntegrationStatus.ACTIVE
             self.logger.info(f"Connected to social platform: {self.config.name}")
+
             return True
         except Exception as e:
             self.logger.error(f"Failed to connect to social platform: {str(e)}")
+
             self.status = IntegrationStatus.ERROR
             return False
     
@@ -232,20 +258,27 @@ class SocialPlatformIntegration(BaseIntegration):
         return True
     
     async def test_connection(self) -> bool:
-        """Test social platform connection."""
+        """
+        Test social platform connection."""
         try:
             await asyncio.sleep(0.1)
+
             return self.status == IntegrationStatus.ACTIVE
         except Exception:
             return False
     
     async def make_request(self, request: IntegrationRequest) -> IntegrationResponse:
-        """Make social platform request."""
+        """
+        Make social platform request."""
         start_time = datetime.utcnow()
+
         
         try:
             await asyncio.sleep(0.1)
+
+
             response_time = (datetime.utcnow() - start_time).total_seconds()
+
             
             return IntegrationResponse(
                 request_id=request.request_id,
@@ -255,9 +288,11 @@ class SocialPlatformIntegration(BaseIntegration):
                 data={"result": "success"},
                 response_time=response_time
             )
+
             
         except Exception as e:
             response_time = (datetime.utcnow() - start_time).total_seconds()
+
             return IntegrationResponse(
                 request_id=request.request_id,
                 integration_id=request.integration_id,
@@ -276,6 +311,8 @@ class SocialPlatformIntegration(BaseIntegration):
             endpoint="/posts",
             payload=content_data
         )
+
+
         
         response = await self.make_request(request)
         return {
@@ -289,13 +326,16 @@ class CloudStorageIntegration(BaseIntegration):
     """Cloud storage integration."""
     
     async def connect(self) -> bool:
-        """Connect to cloud storage."""
+        """
+        Connect to cloud storage."""
         try:
             self.status = IntegrationStatus.ACTIVE
             self.logger.info(f"Connected to cloud storage: {self.config.name}")
+
             return True
         except Exception as e:
             self.logger.error(f"Failed to connect to cloud storage: {str(e)}")
+
             self.status = IntegrationStatus.ERROR
             return False
     
@@ -305,20 +345,27 @@ class CloudStorageIntegration(BaseIntegration):
         return True
     
     async def test_connection(self) -> bool:
-        """Test cloud storage connection."""
+        """
+        Test cloud storage connection."""
         try:
             await asyncio.sleep(0.1)
+
             return self.status == IntegrationStatus.ACTIVE
         except Exception:
             return False
     
     async def make_request(self, request: IntegrationRequest) -> IntegrationResponse:
-        """Make cloud storage request."""
+        """
+        Make cloud storage request."""
         start_time = datetime.utcnow()
+
         
         try:
             await asyncio.sleep(0.15)
+
+
             response_time = (datetime.utcnow() - start_time).total_seconds()
+
             
             return IntegrationResponse(
                 request_id=request.request_id,
@@ -328,9 +375,11 @@ class CloudStorageIntegration(BaseIntegration):
                 data={"operation": "completed"},
                 response_time=response_time
             )
+
             
         except Exception as e:
             response_time = (datetime.utcnow() - start_time).total_seconds()
+
             return IntegrationResponse(
                 request_id=request.request_id,
                 integration_id=request.integration_id,
@@ -349,6 +398,8 @@ class CloudStorageIntegration(BaseIntegration):
             endpoint=f"/files/{destination}",
             payload={"file_path": file_path}
         )
+
+
         
         response = await self.make_request(request)
         return {
@@ -367,7 +418,8 @@ class SystemIntegrator:
     """
     
     def __init__(self):
-        """Initialize the system integrator."""
+        """
+        Initialize the system integrator."""
         self.integrations: Dict[str, BaseIntegration] = {}
         self.integration_configs: Dict[str, IntegrationConfig] = {}
         self.request_history: List[IntegrationResponse] = []
@@ -375,8 +427,10 @@ class SystemIntegrator:
         self._load_default_integrations()
     
     def _load_default_integrations(self):
-        """Load default integration configurations."""
+        """
+        Load default integration configurations."""
         # Payment processor integration
+
         stripe_config = IntegrationConfig(
             integration_id="stripe_payments",
             name="Stripe Payment Processor",
@@ -390,6 +444,7 @@ class SystemIntegrator:
         )
         
         # Social platform integrations
+
         youtube_config = IntegrationConfig(
             integration_id="youtube_api",
             name="YouTube Data API",
@@ -402,6 +457,8 @@ class SystemIntegrator:
             ),
             rate_limit={"requests_per_day": 10000}
         )
+
+
         
         spotify_config = IntegrationConfig(
             integration_id="spotify_api",
@@ -416,6 +473,7 @@ class SystemIntegrator:
         )
         
         # Cloud storage integration
+
         aws_s3_config = IntegrationConfig(
             integration_id="aws_s3",
             name="AWS S3 Storage",
@@ -437,9 +495,11 @@ class SystemIntegrator:
         try:
             self.integration_configs[config.integration_id] = config
             self.logger.info(f"Added integration config: {config.name} ({config.integration_id})")
+
             return config.integration_id
         except Exception as e:
             self.logger.error(f"Failed to add integration config {config.integration_id}: {str(e)}")
+
             raise
     
     async def initialize_integration(self, integration_id: str) -> bool:
@@ -447,33 +507,44 @@ class SystemIntegrator:
         try:
             if integration_id not in self.integration_configs:
                 raise ValueError(f"Integration config {integration_id} not found")
+
+
             
             config = self.integration_configs[integration_id]
             
             # Create appropriate integration instance
             if config.integration_type == IntegrationType.PAYMENT_PROCESSOR:
                 integration = PaymentIntegration(config)
+
             elif config.integration_type == IntegrationType.SOCIAL_PLATFORM:
                 integration = SocialPlatformIntegration(config)
+
             elif config.integration_type == IntegrationType.CLOUD_STORAGE:
                 integration = CloudStorageIntegration(config)
+
             else:
                 # Generic integration for other types
+
                 integration = BaseIntegration(config)
             
             # Connect to the service
+
             connected = await integration.connect()
+
             
             if connected:
                 self.integrations[integration_id] = integration
                 self.logger.info(f"Initialized integration: {config.name}")
+
                 return True
             else:
                 self.logger.error(f"Failed to connect integration: {config.name}")
+
                 return False
                 
         except Exception as e:
             self.logger.error(f"Error initializing integration {integration_id}: {str(e)}")
+
             return False
     
     async def disconnect_integration(self, integration_id: str) -> bool:
@@ -481,17 +552,21 @@ class SystemIntegrator:
         try:
             if integration_id in self.integrations:
                 integration = self.integrations[integration_id]
+
                 disconnected = await integration.disconnect()
+
                 
                 if disconnected:
                     del self.integrations[integration_id]
                     self.logger.info(f"Disconnected integration: {integration_id}")
+
                     return True
             
             return False
             
         except Exception as e:
             self.logger.error(f"Error disconnecting integration {integration_id}: {str(e)}")
+
             return False
     
     async def test_integration(self, integration_id: str) -> bool:
@@ -500,15 +575,18 @@ class SystemIntegrator:
             if integration_id not in self.integrations:
                 # Try to initialize if not connected
                 await self.initialize_integration(integration_id)
+
             
             if integration_id in self.integrations:
                 integration = self.integrations[integration_id]
                 return await integration.test_connection()
+
             
             return False
             
         except Exception as e:
             self.logger.error(f"Error testing integration {integration_id}: {str(e)}")
+
             return False
     
     async def make_integration_request(self, integration_id: str, request: IntegrationRequest) -> IntegrationResponse:
@@ -516,6 +594,7 @@ class SystemIntegrator:
         try:
             if integration_id not in self.integrations:
                 await self.initialize_integration(integration_id)
+
             
             if integration_id not in self.integrations:
                 return IntegrationResponse(
@@ -525,8 +604,11 @@ class SystemIntegrator:
                     success=False,
                     error="Integration not available"
                 )
+
+
             
             integration = self.integrations[integration_id]
+
             response = await integration.make_request(request)
             
             # Store request history
@@ -540,6 +622,7 @@ class SystemIntegrator:
             
         except Exception as e:
             self.logger.error(f"Error making integration request: {str(e)}")
+
             return IntegrationResponse(
                 request_id=request.request_id,
                 integration_id=integration_id,
@@ -553,15 +636,20 @@ class SystemIntegrator:
         try:
             if integration_id not in self.integrations:
                 await self.initialize_integration(integration_id)
+
+
             
             integration = self.integrations.get(integration_id)
+
             if not integration or not isinstance(integration, PaymentIntegration):
                 return {"success": False, "error": "Payment integration not available"}
             
             return await integration.process_payment(amount, currency, payment_method)
+
             
         except Exception as e:
             self.logger.error(f"Error processing payment: {str(e)}")
+
             return {"success": False, "error": str(e)}
     
     async def publish_to_social_platform(self, integration_id: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
@@ -569,15 +657,20 @@ class SystemIntegrator:
         try:
             if integration_id not in self.integrations:
                 await self.initialize_integration(integration_id)
+
+
             
             integration = self.integrations.get(integration_id)
+
             if not integration or not isinstance(integration, SocialPlatformIntegration):
                 return {"success": False, "error": "Social platform integration not available"}
             
             return await integration.publish_content(content_data)
+
             
         except Exception as e:
             self.logger.error(f"Error publishing to social platform: {str(e)}")
+
             return {"success": False, "error": str(e)}
     
     async def upload_to_cloud_storage(self, integration_id: str, file_path: str, destination: str) -> Dict[str, Any]:
@@ -585,15 +678,20 @@ class SystemIntegrator:
         try:
             if integration_id not in self.integrations:
                 await self.initialize_integration(integration_id)
+
+
             
             integration = self.integrations.get(integration_id)
+
             if not integration or not isinstance(integration, CloudStorageIntegration):
                 return {"success": False, "error": "Cloud storage integration not available"}
             
             return await integration.upload_file(file_path, destination)
+
             
         except Exception as e:
             self.logger.error(f"Error uploading to cloud storage: {str(e)}")
+
             return {"success": False, "error": str(e)}
     
     async def initialize_all_integrations(self) -> Dict[str, bool]:
@@ -603,8 +701,10 @@ class SystemIntegrator:
         for integration_id in self.integration_configs:
             try:
                 results[integration_id] = await self.initialize_integration(integration_id)
+
             except Exception as e:
                 self.logger.error(f"Failed to initialize {integration_id}: {str(e)}")
+
                 results[integration_id] = False
         
         return results
@@ -616,8 +716,10 @@ class SystemIntegrator:
         for integration_id in self.integrations:
             try:
                 results[integration_id] = await self.test_integration(integration_id)
+
             except Exception as e:
                 self.logger.error(f"Failed to test {integration_id}: {str(e)}")
+
                 results[integration_id] = False
         
         return results
@@ -627,9 +729,12 @@ class SystemIntegrator:
         try:
             if integration_id not in self.integration_configs:
                 return None
+
             
             config = self.integration_configs[integration_id]
+
             integration = self.integrations.get(integration_id)
+
             
             return {
                 "integration_id": integration_id,
@@ -644,6 +749,7 @@ class SystemIntegrator:
             
         except Exception as e:
             self.logger.error(f"Error getting integration status: {str(e)}")
+
             return None
     
     def get_integrations_summary(self) -> Dict[str, Any]:
@@ -657,6 +763,7 @@ class SystemIntegrator:
                 "failed_requests": len([r for r in self.request_history if not r.success]),
                 "integrations_by_type": {
                     itype.value: len([c for c in self.integration_configs.values() if c.integration_type == itype])
+
                     for itype in IntegrationType
                 },
                 "connected_integrations": list(self.integrations.keys()),
@@ -664,4 +771,5 @@ class SystemIntegrator:
             }
         except Exception as e:
             self.logger.error(f"Error getting integrations summary: {str(e)}")
+
             return {}

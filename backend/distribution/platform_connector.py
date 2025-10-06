@@ -48,7 +48,8 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(str, Enum):
-    """Supported platform types."""
+    """
+        Supported platform types."""
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -100,7 +101,8 @@ class PlatformCredentials:
 
 @dataclass
 class RateLimitInfo:
-    """Rate limiting information."""
+    """
+        Rate limiting information."""
     requests_per_hour: int
     requests_per_day: int
     current_hour_count: int = 0
@@ -112,7 +114,8 @@ class RateLimitInfo:
 
 @dataclass
 class APIResponse:
-    """Standardized API response."""
+    """
+        Standardized API response."""
     success: bool
     status_code: int
     data: Optional[Dict[str, Any]] = None
@@ -125,7 +128,8 @@ class APIResponse:
 
 @dataclass
 class ContentMetadata:
-    """Standardized content metadata."""
+    """
+        Standardized content metadata."""
     title: str
     description: str
     tags: List[str] = field(default_factory=list)
@@ -146,7 +150,8 @@ class BasePlatformConnector:
     """
     
     def __init__(self, platform: PlatformType, credentials: PlatformCredentials):
-        """Initialize base platform connector."""
+        """
+        Initialize base platform connector."""
         self.platform = platform
         self.credentials = credentials
         self.logger = logging.getLogger(f"{__name__}.{platform.value}")
@@ -179,7 +184,8 @@ class BasePlatformConnector:
         return {}
     
     async def initialize(self) -> bool:
-        """Initialize the platform connector."""
+        """
+        Initialize the platform connector."""
         try:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=30),
@@ -190,14 +196,17 @@ class BasePlatformConnector:
             if await self.validate_credentials():
                 self.status = ConnectionStatus.CONNECTED
                 self.logger.info(f"✅ {self.platform.value} connector initialized")
+
                 return True
             else:
                 self.status = ConnectionStatus.UNAUTHORIZED
                 self.logger.error(f"❌ {self.platform.value} credentials invalid")
+
                 return False
         
         except Exception as e:
             self.logger.error(f"Error initializing {self.platform.value} connector: {e}")
+
             self.status = ConnectionStatus.ERROR
             return False
     
@@ -205,10 +214,13 @@ class BasePlatformConnector:
         """Validate platform credentials."""
         try:
             # Make a simple API call to validate credentials
+
             response = await self._make_request("GET", "/me", {})
+
             return response.success
         except Exception as e:
             self.logger.error(f"Error validating credentials: {e}")
+
             return False
     
     async def refresh_access_token(self) -> bool:
@@ -219,6 +231,7 @@ class BasePlatformConnector:
             
             # Implementation would vary by platform
             # This is a generic OAuth2 refresh flow
+
             refresh_data = {
                 "grant_type": "refresh_token",
                 "refresh_token": self.credentials.refresh_token,
@@ -232,6 +245,7 @@ class BasePlatformConnector:
         
         except Exception as e:
             self.logger.error(f"Error refreshing access token: {e}")
+
             return False
     
     async def _check_rate_limit(self) -> bool:
@@ -262,6 +276,7 @@ class BasePlatformConnector:
         
         except Exception as e:
             self.logger.error(f"Error checking rate limit: {e}")
+
             return False
     
     async def _make_request(
@@ -287,14 +302,18 @@ class BasePlatformConnector:
             url = f"{self.base_url}{endpoint}"
             
             # Prepare headers
+
             request_headers = headers or {}
+
             auth_headers = await self._get_auth_headers()
+
             request_headers.update(auth_headers)
             
             # Prepare parameters
             if params:
                 if method.upper() == "GET":
                     url += "?" + urlencode(params)
+
                 else:
                     data = data or {}
                     data.update(params)
@@ -312,9 +331,11 @@ class BasePlatformConnector:
                 self.rate_limit.current_day_count += 1
                 
                 # Parse response
+
                 response_data = None
                 try:
                     response_data = await response.json()
+
                 except:
                     response_data = {"text": await response.text()}
                 
@@ -322,6 +343,7 @@ class BasePlatformConnector:
                 if response.status == 429:
                     self.status = ConnectionStatus.RATE_LIMITED
                     retry_after = response.headers.get("Retry-After")
+
                     if retry_after:
                         self.rate_limit.retry_after = int(retry_after)
                 
@@ -340,11 +362,13 @@ class BasePlatformConnector:
                     platform=self.platform,
                     request_id=str(uuid4())
                 )
+
                 
                 return api_response
         
         except Exception as e:
             self.logger.error(f"Error making API request: {e}")
+
             return APIResponse(
                 success=False,
                 status_code=500,
@@ -373,6 +397,7 @@ class BasePlatformConnector:
                 credentials = base64.b64encode(
                     f"{self.credentials.api_key}:{self.credentials.api_secret}".encode()
                 ).decode()
+
                 headers["Authorization"] = f"Basic {credentials}"
         
         return headers
@@ -400,7 +425,8 @@ class BasePlatformConnector:
 
 
 class YouTubeConnector(BasePlatformConnector):
-    """YouTube API connector."""
+    """
+        YouTube API connector."""
     
     def __init__(self, credentials: PlatformCredentials):
         super().__init__(PlatformType.YOUTUBE, credentials)
@@ -430,20 +456,24 @@ class YouTubeConnector(BasePlatformConnector):
                     "publishAt": content_metadata.scheduled_time.isoformat() if content_metadata.scheduled_time else None
                 }
             }
+
             
             response = await self._make_request(
                 "POST",
                 self.endpoints["upload"],
                 data=upload_data
             )
+
             
             if response.success:
                 self.logger.info(f"✅ Video uploaded to YouTube: {content_metadata.title}")
+
             
             return response
         
         except Exception as e:
             self.logger.error(f"Error uploading to YouTube: {e}")
+
             return APIResponse(
                 success=False,
                 status_code=500,
@@ -466,9 +496,11 @@ class YouTubeConnector(BasePlatformConnector):
                 self.endpoints["analytics"],
                 params=params
             )
+
         
         except Exception as e:
             self.logger.error(f"Error getting YouTube analytics: {e}")
+
             return APIResponse(
                 success=False,
                 status_code=500,
@@ -496,6 +528,7 @@ class InstagramConnector(BasePlatformConnector):
         """Upload content to Instagram."""
         try:
             # Step 1: Create media object
+
             media_data = {
                 "image_url": content_metadata.file_url,
                 "caption": f"{content_metadata.title}\n\n{content_metadata.description}",
@@ -504,6 +537,7 @@ class InstagramConnector(BasePlatformConnector):
             
             if content_metadata.tags:
                 hashtags = " ".join([f"#{tag}" for tag in content_metadata.tags])
+
                 media_data["caption"] += f"\n\n{hashtags}"
             
             response = await self._make_request(
@@ -511,23 +545,30 @@ class InstagramConnector(BasePlatformConnector):
                 self.endpoints["media"],
                 data=media_data
             )
+
             
             if response.success and response.data:
                 # Step 2: Publish media
+
                 media_id = response.data.get("id")
+
+
                 publish_data = {
                     "creation_id": media_id,
                     "access_token": self.credentials.access_token
                 }
+
                 
                 publish_response = await self._make_request(
                     "POST",
                     self.endpoints["media_publish"],
                     data=publish_data
                 )
+
                 
                 if publish_response.success:
                     self.logger.info(f"✅ Content published to Instagram: {content_metadata.title}")
+
                 
                 return publish_response
             
@@ -535,6 +576,7 @@ class InstagramConnector(BasePlatformConnector):
         
         except Exception as e:
             self.logger.error(f"Error uploading to Instagram: {e}")
+
             return APIResponse(
                 success=False,
                 status_code=500,
@@ -569,20 +611,24 @@ class TikTokConnector(BasePlatformConnector):
                 "disable_stitch": False,
                 "video_cover_timestamp_ms": 1000
             }
+
             
             response = await self._make_request(
                 "POST",
                 self.endpoints["upload"],
                 data=upload_data
             )
+
             
             if response.success:
                 self.logger.info(f"✅ Video uploaded to TikTok: {content_metadata.title}")
+
             
             return response
         
         except Exception as e:
             self.logger.error(f"Error uploading to TikTok: {e}")
+
             return APIResponse(
                 success=False,
                 status_code=500,
@@ -624,6 +670,7 @@ class SpotifyConnector(BasePlatformConnector):
             )
         except Exception as e:
             self.logger.error(f"Error getting Spotify track info: {e}")
+
             return APIResponse(
                 success=False,
                 status_code=500,
@@ -655,6 +702,7 @@ class TwitterConnector(BasePlatformConnector):
             
             if content_metadata.tags:
                 hashtags = " ".join([f"#{tag}" for tag in content_metadata.tags])
+
                 tweet_text += f"\n\n{hashtags}"
             
             # Trim to Twitter's character limit
@@ -664,20 +712,24 @@ class TwitterConnector(BasePlatformConnector):
             tweet_data = {
                 "text": tweet_text
             }
+
             
             response = await self._make_request(
                 "POST",
                 self.endpoints["tweets"],
                 data=tweet_data
             )
+
             
             if response.success:
                 self.logger.info(f"✅ Tweet posted: {content_metadata.title}")
+
             
             return response
         
         except Exception as e:
             self.logger.error(f"Error posting to Twitter: {e}")
+
             return APIResponse(
                 success=False,
                 status_code=500,
@@ -694,7 +746,8 @@ class PlatformConnectorFactory:
         platform: PlatformType,
         credentials: PlatformCredentials
     ) -> BasePlatformConnector:
-        """Create appropriate connector for platform."""
+        """
+        Create appropriate connector for platform."""
         connectors = {
             PlatformType.YOUTUBE: YouTubeConnector,
             PlatformType.INSTAGRAM: InstagramConnector,
@@ -702,6 +755,7 @@ class PlatformConnectorFactory:
             PlatformType.SPOTIFY: SpotifyConnector,
             PlatformType.TWITTER: TwitterConnector,
         }
+
         
         connector_class = connectors.get(platform, BasePlatformConnector)
         return connector_class(credentials)
@@ -713,7 +767,8 @@ class PlatformManager:
     """
     
     def __init__(self):
-        """Initialize platform manager."""
+        """
+        Initialize platform manager."""
         self.logger = logging.getLogger(f"{__name__}.PlatformManager")
         self.connectors: Dict[PlatformType, BasePlatformConnector] = {}
         self.connection_pool_size = 10
@@ -726,17 +781,21 @@ class PlatformManager:
         """Add a platform connector."""
         try:
             connector = PlatformConnectorFactory.create_connector(platform, credentials)
+
             
             if await connector.initialize():
                 self.connectors[platform] = connector
                 self.logger.info(f"✅ Platform added: {platform.value}")
+
                 return True
             else:
                 self.logger.error(f"❌ Failed to initialize {platform.value}")
+
                 return False
         
         except Exception as e:
             self.logger.error(f"Error adding platform {platform.value}: {e}")
+
             return False
     
     async def remove_platform(self, platform: PlatformType) -> bool:
@@ -744,13 +803,16 @@ class PlatformManager:
         try:
             if platform in self.connectors:
                 await self.connectors[platform].close()
+
                 del self.connectors[platform]
                 self.logger.info(f"✅ Platform removed: {platform.value}")
+
                 return True
             return False
         
         except Exception as e:
             self.logger.error(f"Error removing platform {platform.value}: {e}")
+
             return False
     
     async def get_connector(self, platform: PlatformType) -> Optional[BasePlatformConnector]:
@@ -758,7 +820,8 @@ class PlatformManager:
         return self.connectors.get(platform)
     
     async def get_connected_platforms(self) -> List[PlatformType]:
-        """Get list of connected platforms."""
+        """
+        Get list of connected platforms."""
         connected = []
         for platform, connector in self.connectors.items():
             if connector.status == ConnectionStatus.CONNECTED:
@@ -766,12 +829,14 @@ class PlatformManager:
         return connected
     
     async def check_connections(self) -> Dict[PlatformType, ConnectionStatus]:
-        """Check status of all connections."""
+        """
+        Check status of all connections."""
         statuses = {}
         for platform, connector in self.connectors.items():
             # Validate connection with a simple request
             try:
                 response = await connector.validate_credentials()
+
                 if response:
                     statuses[platform] = ConnectionStatus.CONNECTED
                 else:
@@ -782,7 +847,8 @@ class PlatformManager:
         return statuses
     
     async def cleanup(self):
-        """Cleanup all connections."""
+        """
+        Cleanup all connections."""
         for connector in self.connectors.values():
             await connector.close()
         self.connectors.clear()
@@ -793,7 +859,8 @@ _platform_manager: Optional[PlatformManager] = None
 
 
 async def get_platform_manager() -> PlatformManager:
-    """Get global platform manager instance."""
+    """
+        Get global platform manager instance."""
     global _platform_manager
     
     if _platform_manager is None:
@@ -803,14 +870,16 @@ async def get_platform_manager() -> PlatformManager:
 
 
 class PlatformConnector:
-    """Unified platform connector interface.
+    """
+        Unified platform connector interface.
     
     This class provides a simplified interface to the underlying
     platform management system for easier integration.
     """
     
     def __init__(self):
-        """Initialize platform connector."""
+        """
+        Initialize platform connector."""
         self.logger = logging.getLogger(f"{__name__}.PlatformConnector")
         self._manager: Optional[PlatformManager] = None
     
@@ -818,10 +887,13 @@ class PlatformConnector:
         """Initialize the platform connector."""
         try:
             self._manager = await get_platform_manager()
+
             self.logger.info("✅ Platform connector initialized")
+
             return True
         except Exception as e:
             self.logger.error(f"❌ Failed to initialize platform connector: {e}")
+
             return False
     
     async def connect(
@@ -843,6 +915,7 @@ class PlatformConnector:
                 await self.initialize()
             
             # Convert credentials dict to PlatformCredentials
+
             platform_creds = PlatformCredentials(
                 platform=platform,
                 auth_type=AuthenticationType(credentials.get('auth_type', 'oauth2')),
@@ -857,11 +930,14 @@ class PlatformConnector:
                 scope=credentials.get('scope', []),
                 metadata=credentials.get('metadata', {})
             )
+
             
             return await self._manager.add_platform(platform, platform_creds)
+
             
         except Exception as e:
             self.logger.error(f"Error connecting to {platform}: {e}")
+
             return False
     
     async def upload_content(
@@ -881,12 +957,16 @@ class PlatformConnector:
         try:
             if not self._manager:
                 await self.initialize()
+
+
             
             connector = await self._manager.get_connector(platform)
+
             if not connector:
                 return {"success": False, "error": f"Not connected to {platform}"}
             
             # Convert metadata dict to ContentMetadata
+
             metadata = ContentMetadata(
                 title=content_metadata.get('title', ''),
                 description=content_metadata.get('description', ''),
@@ -898,8 +978,11 @@ class PlatformConnector:
                 scheduled_time=content_metadata.get('scheduled_time'),
                 custom_fields=content_metadata.get('custom_fields', {})
             )
+
+
             
             response = await connector.upload_content(metadata)
+
             
             return {
                 "success": response.success,
@@ -911,6 +994,7 @@ class PlatformConnector:
             
         except Exception as e:
             self.logger.error(f"Error uploading content to {platform}: {e}")
+
             return {"success": False, "error": str(e)}
     
     async def get_analytics(
@@ -932,12 +1016,17 @@ class PlatformConnector:
         try:
             if not self._manager:
                 await self.initialize()
+
+
             
             connector = await self._manager.get_connector(platform)
+
             if not connector:
                 return {"success": False, "error": f"Not connected to {platform}"}
+
             
             response = await connector.get_analytics(content_id, metrics)
+
             
             return {
                 "success": response.success,
@@ -949,6 +1038,7 @@ class PlatformConnector:
             
         except Exception as e:
             self.logger.error(f"Error getting analytics from {platform}: {e}")
+
             return {"success": False, "error": str(e)}
     
     async def get_connected_platforms(self) -> List[str]:
@@ -960,12 +1050,16 @@ class PlatformConnector:
         try:
             if not self._manager:
                 await self.initialize()
+
+
             
             platforms = await self._manager.get_connected_platforms()
+
             return [platform.value for platform in platforms]
             
         except Exception as e:
             self.logger.error(f"Error getting connected platforms: {e}")
+
             return []
     
     async def disconnect(self, platform: PlatformType) -> bool:
@@ -982,9 +1076,11 @@ class PlatformConnector:
                 return False
             
             return await self._manager.remove_platform(platform)
+
             
         except Exception as e:
             self.logger.error(f"Error disconnecting from {platform}: {e}")
+
             return False
 
 

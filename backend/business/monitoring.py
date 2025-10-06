@@ -31,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringType(Enum):
-    """Types of monitoring."""
+    """
+        Types of monitoring."""
     SYSTEM_HEALTH = "system_health"
     BUSINESS_METRICS = "business_metrics"
     APPLICATION_PERFORMANCE = "application_performance"
@@ -75,7 +76,8 @@ class MonitoringMetric:
 
 @dataclass
 class Alert:
-    """Alert definition."""
+    """
+        Alert definition."""
     alert_id: str
     title: str
     description: str
@@ -91,7 +93,8 @@ class Alert:
 
 @dataclass
 class HealthCheck:
-    """Health check definition."""
+    """
+        Health check definition."""
     check_id: str
     name: str
     check_type: MonitoringType
@@ -112,7 +115,8 @@ class BusinessMonitor:
     """
     
     def __init__(self):
-        """Initialize the business monitor."""
+        """
+        Initialize the business monitor."""
         self.metrics: Dict[str, deque] = defaultdict(lambda: deque(maxlen=1000))  # Store last 1000 values
         self.alerts: Dict[str, Alert] = {}
         self.health_checks: Dict[str, HealthCheck] = {}
@@ -124,7 +128,8 @@ class BusinessMonitor:
         self._setup_default_health_checks()
     
     def _setup_default_monitoring(self):
-        """Setup default monitoring configuration."""
+        """
+        Setup default monitoring configuration."""
         self.monitoring_config.update({
             "system_health": {
                 "cpu_usage": {"warning": 70, "critical": 90},
@@ -217,9 +222,11 @@ class BusinessMonitor:
                 self._process_alerts(),
                 return_exceptions=True
             )
+
             
         except Exception as e:
             self.logger.error(f"Error starting monitoring: {str(e)}")
+
             self.is_monitoring = False
             raise
     
@@ -237,7 +244,9 @@ class BusinessMonitor:
             try:
                 if PSUTIL_AVAILABLE:
                     # CPU Usage
+
                     cpu_usage = psutil.cpu_percent(interval=1)
+
                     await self.record_metric(MonitoringMetric(
                         metric_id="cpu_usage",
                         name="CPU Usage",
@@ -248,7 +257,10 @@ class BusinessMonitor:
                     ))
                     
                     # Memory Usage
+
                     memory = psutil.virtual_memory()
+
+
                     memory_usage = memory.percent
                     await self.record_metric(MonitoringMetric(
                         metric_id="memory_usage",
@@ -260,7 +272,10 @@ class BusinessMonitor:
                     ))
                     
                     # Disk Usage
+
                     disk = psutil.disk_usage('/')
+
+
                     disk_usage = (disk.used / disk.total) * 100
                     await self.record_metric(MonitoringMetric(
                         metric_id="disk_usage",
@@ -270,6 +285,7 @@ class BusinessMonitor:
                         monitoring_type=MonitoringType.SYSTEM_HEALTH,
                         thresholds=self.monitoring_config["system_health"]["disk_usage"]
                     ))
+
                 else:
                     # Simulate system metrics when psutil is not available
                     import random
@@ -281,6 +297,7 @@ class BusinessMonitor:
                         monitoring_type=MonitoringType.SYSTEM_HEALTH,
                         thresholds=self.monitoring_config["system_health"]["cpu_usage"]
                     ))
+
                     
                     await self.record_metric(MonitoringMetric(
                         metric_id="memory_usage",
@@ -290,6 +307,7 @@ class BusinessMonitor:
                         monitoring_type=MonitoringType.SYSTEM_HEALTH,
                         thresholds=self.monitoring_config["system_health"]["memory_usage"]
                     ))
+
                     
                     await self.record_metric(MonitoringMetric(
                         metric_id="disk_usage",
@@ -299,11 +317,13 @@ class BusinessMonitor:
                         monitoring_type=MonitoringType.SYSTEM_HEALTH,
                         thresholds=self.monitoring_config["system_health"]["disk_usage"]
                     ))
+
                 
                 await asyncio.sleep(60)  # Monitor every minute
                 
             except Exception as e:
                 self.logger.error(f"Error monitoring system health: {str(e)}")
+
                 await asyncio.sleep(60)
     
     async def _monitor_business_metrics(self) -> None:
@@ -313,7 +333,9 @@ class BusinessMonitor:
                 import random
                 
                 # Simulate business metrics
+
                 revenue_per_hour = random.randint(80, 200)
+
                 await self.record_metric(MonitoringMetric(
                     metric_id="revenue_per_hour",
                     name="Revenue per Hour",
@@ -322,8 +344,11 @@ class BusinessMonitor:
                     monitoring_type=MonitoringType.BUSINESS_METRICS,
                     thresholds=self.monitoring_config["business_metrics"]["revenue_per_hour"]
                 ))
+
+
                 
                 active_users = random.randint(800, 1500)
+
                 await self.record_metric(MonitoringMetric(
                     metric_id="active_users",
                     name="Active Users",
@@ -332,8 +357,11 @@ class BusinessMonitor:
                     monitoring_type=MonitoringType.BUSINESS_METRICS,
                     thresholds=self.monitoring_config["business_metrics"]["active_users"]
                 ))
+
+
                 
                 error_rate = random.uniform(0.5, 8.0)
+
                 await self.record_metric(MonitoringMetric(
                     metric_id="error_rate",
                     name="Error Rate",
@@ -342,8 +370,11 @@ class BusinessMonitor:
                     monitoring_type=MonitoringType.BUSINESS_METRICS,
                     thresholds=self.monitoring_config["business_metrics"]["error_rate"]
                 ))
+
+
                 
                 conversion_rate = random.uniform(8.0, 15.0)
+
                 await self.record_metric(MonitoringMetric(
                     metric_id="conversion_rate",
                     name="Conversion Rate",
@@ -352,11 +383,13 @@ class BusinessMonitor:
                     monitoring_type=MonitoringType.BUSINESS_METRICS,
                     thresholds=self.monitoring_config["business_metrics"]["conversion_rate"]
                 ))
+
                 
                 await asyncio.sleep(300)  # Monitor every 5 minutes
                 
             except Exception as e:
                 self.logger.error(f"Error monitoring business metrics: {str(e)}")
+
                 await asyncio.sleep(300)
     
     async def _monitor_application_performance(self) -> None:
@@ -366,7 +399,9 @@ class BusinessMonitor:
                 import random
                 
                 # Simulate application performance metrics
+
                 api_response_time = random.randint(200, 2500)
+
                 await self.record_metric(MonitoringMetric(
                     metric_id="api_response_time",
                     name="API Response Time",
@@ -375,8 +410,11 @@ class BusinessMonitor:
                     monitoring_type=MonitoringType.APPLICATION_PERFORMANCE,
                     thresholds=self.monitoring_config["application_performance"]["api_response_time"]
                 ))
+
+
                 
                 db_connections = random.randint(40, 90)
+
                 await self.record_metric(MonitoringMetric(
                     metric_id="database_connections",
                     name="Database Connections",
@@ -385,8 +423,11 @@ class BusinessMonitor:
                     monitoring_type=MonitoringType.APPLICATION_PERFORMANCE,
                     thresholds=self.monitoring_config["application_performance"]["database_connections"]
                 ))
+
+
                 
                 cache_hit_ratio = random.uniform(70, 95)
+
                 await self.record_metric(MonitoringMetric(
                     metric_id="cache_hit_ratio",
                     name="Cache Hit Ratio",
@@ -395,8 +436,11 @@ class BusinessMonitor:
                     monitoring_type=MonitoringType.APPLICATION_PERFORMANCE,
                     thresholds=self.monitoring_config["application_performance"]["cache_hit_ratio"]
                 ))
+
+
                 
                 queue_length = random.randint(10, 200)
+
                 await self.record_metric(MonitoringMetric(
                     metric_id="queue_length",
                     name="Queue Length",
@@ -405,11 +449,13 @@ class BusinessMonitor:
                     monitoring_type=MonitoringType.APPLICATION_PERFORMANCE,
                     thresholds=self.monitoring_config["application_performance"]["queue_length"]
                 ))
+
                 
                 await asyncio.sleep(120)  # Monitor every 2 minutes
                 
             except Exception as e:
                 self.logger.error(f"Error monitoring application performance: {str(e)}")
+
                 await asyncio.sleep(120)
     
     async def _run_health_checks(self) -> None:
@@ -418,11 +464,13 @@ class BusinessMonitor:
             try:
                 for check_id, health_check in self.health_checks.items():
                     await self._perform_health_check(health_check)
+
                 
                 await asyncio.sleep(180)  # Run health checks every 3 minutes
                 
             except Exception as e:
                 self.logger.error(f"Error running health checks: {str(e)}")
+
                 await asyncio.sleep(180)
     
     async def _perform_health_check(self, health_check: HealthCheck) -> None:
@@ -431,11 +479,15 @@ class BusinessMonitor:
             start_time = time.time()
             
             # Simulate health check based on type
+
             success = await self._simulate_health_check(health_check.check_id)
+
+
             
             response_time = (time.time() - start_time) * 1000  # Convert to milliseconds
             
             health_check.last_check = datetime.utcnow()
+
             health_check.response_time = response_time
             
             if success:
@@ -459,6 +511,7 @@ class BusinessMonitor:
                         monitoring_type=health_check.check_type,
                         source=health_check.check_id
                     )
+
                 else:
                     health_check.status = MonitoringStatus.WARNING
                 
@@ -478,6 +531,7 @@ class BusinessMonitor:
         import random
         
         # Simulate different success rates for different checks
+
         success_rates = {
             "database_connection": 0.98,
             "redis_connection": 0.97,
@@ -486,6 +540,7 @@ class BusinessMonitor:
             "content_storage": 0.96,
             "user_authentication": 0.98
         }
+
         
         success_rate = success_rates.get(check_id, 0.95)
         return random.random() < success_rate
@@ -498,6 +553,7 @@ class BusinessMonitor:
             
             # Check thresholds and create alerts if necessary
             await self._check_metric_thresholds(metric)
+
             
         except Exception as e:
             self.logger.error(f"Error recording metric {metric.metric_id}: {str(e)}")
@@ -507,16 +563,21 @@ class BusinessMonitor:
         try:
             if not metric.thresholds:
                 return
+
             
             warning_threshold = metric.thresholds.get("warning")
+
+
             critical_threshold = metric.thresholds.get("critical")
             
             # Determine if metric value breaches thresholds
             # Different logic for different types of metrics
+
             is_reverse_metric = metric.metric_id in [
                 "revenue_per_hour", "active_users", "conversion_rate", 
                 "upload_success_rate", "payment_success_rate", "cache_hit_ratio"
             ]
+
             
             alert_severity = None
             
@@ -546,6 +607,7 @@ class BusinessMonitor:
                         "threshold_value": warning_threshold if alert_severity == AlertSeverity.HIGH else critical_threshold
                     }
                 )
+
             
         except Exception as e:
             self.logger.error(f"Error checking metric thresholds: {str(e)}")
@@ -555,8 +617,10 @@ class BusinessMonitor:
         """Create a new alert."""
         try:
             # Check if similar alert already exists and is active
+
             existing_alerts = [
                 alert for alert in self.alerts.values()
+
                 if alert.source == source and alert.is_active and 
                 (datetime.utcnow() - alert.triggered_at) < timedelta(minutes=30)
             ]
@@ -564,6 +628,7 @@ class BusinessMonitor:
             if existing_alerts:
                 # Don't create duplicate alerts within 30 minutes
                 return existing_alerts[0].alert_id
+
             
             alert = Alert(
                 alert_id=str(uuid.uuid4()),
@@ -574,6 +639,7 @@ class BusinessMonitor:
                 source=source,
                 metadata=metadata or {}
             )
+
             
             self.alerts[alert.alert_id] = alert
             
@@ -581,14 +647,18 @@ class BusinessMonitor:
             for handler in self.alert_handlers[severity]:
                 try:
                     await handler(alert)
+
                 except Exception as e:
                     self.logger.error(f"Error in alert handler: {str(e)}")
+
             
             self.logger.warning(f"Alert created: {alert.title} (Severity: {alert.severity.value})")
+
             return alert.alert_id
             
         except Exception as e:
             self.logger.error(f"Error creating alert: {str(e)}")
+
             return ""
     
     async def _process_alerts(self) -> None:
@@ -603,18 +673,22 @@ class BusinessMonitor:
                         # Auto-resolve alerts older than 24 hours
                         alert.is_active = False
                         alert.resolved_at = datetime.utcnow()
+
                         alert.actions_taken.append("Auto-resolved due to age")
+
                 
                 await asyncio.sleep(3600)  # Process alerts every hour
                 
             except Exception as e:
                 self.logger.error(f"Error processing alerts: {str(e)}")
+
                 await asyncio.sleep(3600)
     
     def register_alert_handler(self, severity: AlertSeverity, handler: Callable) -> None:
         """Register an alert handler for specific severity."""
         try:
             self.alert_handlers[severity].append(handler)
+
             self.logger.info(f"Registered alert handler for severity: {severity.value}")
         except Exception as e:
             self.logger.error(f"Error registering alert handler: {str(e)}")
@@ -624,23 +698,29 @@ class BusinessMonitor:
         try:
             if alert_id not in self.alerts:
                 return False
+
             
             alert = self.alerts[alert_id]
             alert.is_active = False
             alert.resolved_at = datetime.utcnow()
+
             alert.actions_taken.append(f"Manually resolved: {resolution_notes}")
+
             
             self.logger.info(f"Resolved alert: {alert_id}")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Error resolving alert {alert_id}: {str(e)}")
+
             return False
     
     async def get_monitoring_dashboard(self) -> Dict[str, Any]:
         """Get comprehensive monitoring dashboard."""
         try:
             # System health summary
+
             system_health = {}
             for metric_id in ["cpu_usage", "memory_usage", "disk_usage"]:
                 if metric_id in self.metrics and self.metrics[metric_id]:
@@ -652,13 +732,17 @@ class BusinessMonitor:
                     }
             
             # Active alerts summary
+
             active_alerts = [alert for alert in self.alerts.values() if alert.is_active]
+
             alerts_by_severity = {
                 severity.value: len([a for a in active_alerts if a.severity == severity])
+
                 for severity in AlertSeverity
             }
             
             # Health checks summary
+
             health_status = {
                 "healthy": len([h for h in self.health_checks.values() if h.status == MonitoringStatus.HEALTHY]),
                 "warning": len([h for h in self.health_checks.values() if h.status == MonitoringStatus.WARNING]),
@@ -667,6 +751,7 @@ class BusinessMonitor:
             }
             
             # Business metrics summary
+
             business_metrics = {}
             for metric_id in ["revenue_per_hour", "active_users", "conversion_rate", "error_rate"]:
                 if metric_id in self.metrics and self.metrics[metric_id]:
@@ -678,6 +763,7 @@ class BusinessMonitor:
                     }
             
             # Performance metrics summary
+
             performance_metrics = {}
             for metric_id in ["api_response_time", "database_connections", "cache_hit_ratio"]:
                 if metric_id in self.metrics and self.metrics[metric_id]:
@@ -725,6 +811,7 @@ class BusinessMonitor:
             
         except Exception as e:
             self.logger.error(f"Error getting monitoring dashboard: {str(e)}")
+
             return {"error": str(e)}
     
     async def get_metric_history(self, metric_id: str, hours: int = 24) -> List[Dict[str, Any]]:
@@ -732,8 +819,11 @@ class BusinessMonitor:
         try:
             if metric_id not in self.metrics:
                 return []
+
             
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
+
+
             recent_metrics = [
                 metric for metric in self.metrics[metric_id]
                 if metric.timestamp >= cutoff_time
@@ -749,14 +839,18 @@ class BusinessMonitor:
             
         except Exception as e:
             self.logger.error(f"Error getting metric history: {str(e)}")
+
             return []
     
     async def get_alert_history(self, hours: int = 24) -> List[Dict[str, Any]]:
         """Get alert history."""
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
+
+
             recent_alerts = [
                 alert for alert in self.alerts.values()
+
                 if alert.triggered_at >= cutoff_time
             ]
             
@@ -777,6 +871,7 @@ class BusinessMonitor:
             
         except Exception as e:
             self.logger.error(f"Error getting alert history: {str(e)}")
+
             return []
     
     def get_monitoring_summary(self) -> Dict[str, Any]:
@@ -797,4 +892,5 @@ class BusinessMonitor:
             }
         except Exception as e:
             self.logger.error(f"Error getting monitoring summary: {str(e)}")
+
             return {}

@@ -26,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 
 class Platform(Enum):
-    """Supported platforms for performance tracking"""
+    """
+        Supported platforms for performance tracking"""
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
@@ -352,6 +353,8 @@ class PlatformPerformanceTracker:
                     content_id=content_id,
                     creator_id=creator_id
                 )
+
+
             
             metrics = self.platform_metrics[content_id][platform]
             
@@ -371,14 +374,18 @@ class PlatformPerformanceTracker:
             
             # Generate optimization insights
             await self._generate_platform_optimization_insights(metrics)
+
             
             metrics.measurement_timestamp = datetime.now()
+
             
             logger.info(f"✅ Platform performance tracked: {content_id} on {platform.value}")
+
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to track platform performance: {e}")
+
             return False
     
     async def _calculate_derived_metrics(self, metrics: PlatformMetrics):
@@ -397,6 +404,7 @@ class PlatformPerformanceTracker:
                 metrics.click_through_rate = metrics.clicks / metrics.impressions
             
             # Calculate conversion rate (if revenue data available)
+
             if metrics.clicks > 0 and metrics.revenue_generated > 0:
                 metrics.conversion_rate = float(metrics.revenue_generated) / metrics.clicks
             
@@ -414,6 +422,7 @@ class PlatformPerformanceTracker:
         """Update platform-specific metrics"""
         try:
             platform_config = self.platform_configs.get(metrics.platform, {})
+
             
             if metrics.platform == Platform.INSTAGRAM:
                 metrics.platform_specific_metrics.update({
@@ -422,6 +431,7 @@ class PlatformPerformanceTracker:
                     "profile_visits": performance_data.get("profile_visits", 0),
                     "website_clicks": performance_data.get("website_clicks", 0)
                 })
+
             
             elif metrics.platform == Platform.TIKTOK:
                 metrics.platform_specific_metrics.update({
@@ -430,6 +440,7 @@ class PlatformPerformanceTracker:
                     "profile_view_rate": performance_data.get("profile_view_rate", 0.0),
                     "duet_count": performance_data.get("duet_count", 0)
                 })
+
             
             elif metrics.platform == Platform.YOUTUBE:
                 metrics.platform_specific_metrics.update({
@@ -438,6 +449,7 @@ class PlatformPerformanceTracker:
                     "subscriber_growth": performance_data.get("subscriber_growth", 0),
                     "thumbnail_ctr": performance_data.get("thumbnail_ctr", 0.0)
                 })
+
             
             elif metrics.platform == Platform.TWITTER:
                 metrics.platform_specific_metrics.update({
@@ -446,6 +458,7 @@ class PlatformPerformanceTracker:
                     "url_clicks": performance_data.get("url_clicks", 0),
                     "hashtag_clicks": performance_data.get("hashtag_clicks", 0)
                 })
+
             
             elif metrics.platform == Platform.LINKEDIN:
                 metrics.platform_specific_metrics.update({
@@ -454,6 +467,7 @@ class PlatformPerformanceTracker:
                     "job_inquiries": performance_data.get("job_inquiries", 0),
                     "article_reads": performance_data.get("article_reads", 0)
                 })
+
         
         except Exception as e:
             logger.error(f"❌ Failed to update platform-specific metrics: {e}")
@@ -462,41 +476,69 @@ class PlatformPerformanceTracker:
         """Calculate platform algorithm and optimization scores"""
         try:
             platform_config = self.platform_configs.get(metrics.platform, {})
+
+
             algorithm_factors = platform_config.get("algorithm_factors", [])
+
+
             
             algorithm_score = 0.0
             
             if metrics.platform == Platform.INSTAGRAM:
                 # Instagram algorithm factors
+
                 engagement_score = min(1.0, metrics.engagement_rate * 20)  # Normalize to 0-1
+
                 save_rate = metrics.platform_specific_metrics.get("save_rate", 0.0)
+
+
                 save_score = min(1.0, save_rate * 10)
+
+
                 
                 algorithm_score = (engagement_score * 0.4 + save_score * 0.3 + 
                                  metrics.click_through_rate * 0.3)
+
             
             elif metrics.platform == Platform.TIKTOK:
                 # TikTok algorithm factors
+
                 completion_rate = metrics.platform_specific_metrics.get("completion_rate", 0.0)
+
+
                 like_rate = metrics.likes / max(1, metrics.views)
+
+
                 share_rate = metrics.shares / max(1, metrics.views)
+
+
                 
                 algorithm_score = (completion_rate * 0.5 + like_rate * 10 * 0.3 + 
                                  share_rate * 20 * 0.2)
+
             
             elif metrics.platform == Platform.YOUTUBE:
                 # YouTube algorithm factors
+
                 watch_time = metrics.platform_specific_metrics.get("watch_time_minutes", 0)
+
+
                 ctr = metrics.platform_specific_metrics.get("thumbnail_ctr", 0.0)
+
+
                 
                 watch_time_score = min(1.0, watch_time / 1000)  # Normalize to 1000 minutes
+
                 ctr_score = min(1.0, ctr * 10)  # Normalize CTR
                 
                 algorithm_score = (watch_time_score * 0.6 + ctr_score * 0.4)
+
             
             else:
                 # Generic algorithm score based on engagement
+
                 algorithm_score = min(1.0, metrics.engagement_rate * 15)
+
             
             metrics.algorithm_score = max(0.0, min(1.0, algorithm_score))
             
@@ -505,6 +547,7 @@ class PlatformPerformanceTracker:
             
             # Calculate discoverability score
             metrics.discoverability_score = await self._calculate_discoverability_score(metrics)
+
             
         except Exception as e:
             logger.error(f"❌ Failed to calculate algorithm scores: {e}")
@@ -513,38 +556,53 @@ class PlatformPerformanceTracker:
         """Calculate viral potential score"""
         try:
             # Viral potential based on share rate and growth velocity
+
             share_rate = metrics.shares / max(1, metrics.views)
+
+
             engagement_velocity = metrics.engagement_rate * 100  # Normalize
             
             # Platform-specific viral factors
             if metrics.platform == Platform.TIKTOK:
                 completion_rate = metrics.platform_specific_metrics.get("completion_rate", 0.0)
+
+
                 viral_score = (share_rate * 20 + completion_rate + engagement_velocity) / 3
             elif metrics.platform == Platform.TWITTER:
                 retweet_rate = metrics.platform_specific_metrics.get("retweet_rate", 0.0)
+
+
                 viral_score = (retweet_rate * 15 + engagement_velocity) / 2
             else:
                 viral_score = (share_rate * 15 + engagement_velocity) / 2
             
             return min(1.0, viral_score)
+
             
         except Exception as e:
             logger.error(f"❌ Failed to calculate viral potential: {e}")
+
             return 0.0
     
     async def _calculate_discoverability_score(self, metrics: PlatformMetrics) -> float:
         """Calculate content discoverability score"""
         try:
             # Discoverability based on reach vs impressions and hashtag performance
+
             reach_rate = metrics.reach / max(1, metrics.impressions)
+
+
             hashtag_effectiveness = statistics.mean(metrics.hashtag_performance.values()) if metrics.hashtag_performance else 0.5
+
             
             discoverability = (reach_rate + hashtag_effectiveness + metrics.algorithm_score) / 3
             
             return min(1.0, discoverability)
+
             
         except Exception as e:
             logger.error(f"❌ Failed to calculate discoverability score: {e}")
+
             return 0.5
     
     async def _generate_platform_optimization_insights(self, metrics: PlatformMetrics):
@@ -553,6 +611,7 @@ class PlatformPerformanceTracker:
             optimization_strategies = self.optimization_strategies.get(metrics.platform, [])
             
             # Update optimal posting time based on performance
+
             current_hour = metrics.post_timestamp.hour if metrics.post_timestamp else 12
             
             # Simple heuristic: if engagement is high, this might be an optimal time
@@ -577,19 +636,24 @@ class PlatformPerformanceTracker:
             )
             
             # Get platform metrics for this content
+
             content_metrics = self.platform_metrics.get(content_id, {})
+
             
             if not content_metrics:
                 logger.warning(f"No platform metrics found for content {content_id}")
+
                 return analytics
             
             analytics.platform_performances = content_metrics.copy()
             
             # Calculate cross-platform totals
             analytics.total_reach = sum(m.reach for m in content_metrics.values())
+
             analytics.total_engagement = sum(
                 m.likes + m.comments + m.shares + m.saves for m in content_metrics.values()
             )
+
             analytics.total_revenue = sum(m.revenue_generated for m in content_metrics.values())
             
             # Calculate platform efficiency scores
@@ -597,6 +661,7 @@ class PlatformPerformanceTracker:
                 efficiency = (metrics.engagement_rate * 0.4 + 
                             metrics.algorithm_score * 0.3 + 
                             metrics.discoverability_score * 0.3)
+
                 analytics.platform_efficiency_scores[platform] = efficiency
             
             # Identify best and worst performing platforms
@@ -605,6 +670,7 @@ class PlatformPerformanceTracker:
                     analytics.platform_efficiency_scores,
                     key=analytics.platform_efficiency_scores.get
                 )
+
                 analytics.worst_performing_platform = min(
                     analytics.platform_efficiency_scores,
                     key=analytics.platform_efficiency_scores.get
@@ -620,21 +686,26 @@ class PlatformPerformanceTracker:
             for platform, metrics in content_metrics.items():
                 if metrics.revenue_generated > 0:
                     # Simple ROI calculation (would need cost data for accurate calculation)
+
                     analytics.platform_roi[platform] = float(metrics.revenue_generated) / max(1, metrics.impressions) * 1000
                 
                 # Cost per engagement (estimated)
+
+
                 total_engagement = metrics.likes + metrics.comments + metrics.shares
                 if total_engagement > 0:
-                    analytics.cost_per_engagement[platform] = Decimal('0.01')  # Placeholder cost
-            
+                    analytics.cost_per_engagement[platform] = Decimal('0.01')            
             # Store analytics
             self.cross_platform_analytics[content_id].append(analytics)
+
             
             logger.info(f"✅ Cross-platform analysis completed for {content_id}")
+
             return analytics
             
         except Exception as e:
             logger.error(f"❌ Failed to analyze cross-platform performance: {e}")
+
             return CrossPlatformAnalytics(creator_id=creator_id, content_id=content_id, analysis_period=analysis_period)
     
     async def _identify_cross_platform_opportunities(self, analytics: CrossPlatformAnalytics) -> List[str]:
@@ -647,8 +718,11 @@ class PlatformPerformanceTracker:
             # Identify underperforming platforms
             if platform_scores:
                 avg_score = statistics.mean(platform_scores.values())
+
+
                 underperforming = [
                     platform for platform, score in platform_scores.items()
+
                     if score < avg_score * 0.8
                 ]
                 
@@ -656,8 +730,12 @@ class PlatformPerformanceTracker:
                     opportunities.append(f"Optimize content for underperforming platforms: {', '.join(p.value for p in underperforming)}")
             
             # Check for missing platforms
+
             active_platforms = set(analytics.platform_performances.keys())
+
+
             major_platforms = {Platform.INSTAGRAM, Platform.TIKTOK, Platform.YOUTUBE, Platform.TWITTER}
+
             missing_platforms = major_platforms - active_platforms
             
             if missing_platforms:
@@ -666,16 +744,21 @@ class PlatformPerformanceTracker:
             # Cross-promotion opportunities
             if len(active_platforms) > 1:
                 opportunities.append("Create cross-platform content series to leverage audience across platforms")
+
                 opportunities.append("Use platform-specific features to drive traffic between platforms")
             
             # Content format optimization
+
             best_platform = analytics.best_performing_platform
             if best_platform:
                 best_formats = self.platform_configs.get(best_platform, {}).get("content_formats", [])
+
                 opportunities.append(f"Adapt content to formats that work well on {best_platform.value}: {', '.join(f.value for f in best_formats)}")
+
         
         except Exception as e:
             logger.error(f"❌ Failed to identify cross-platform opportunities: {e}")
+
         
         return opportunities
     
@@ -694,6 +777,7 @@ class PlatformPerformanceTracker:
                 # Algorithm optimization
                 if metrics.algorithm_score < 0.6:
                     platform_strategies = self.optimization_strategies.get(platform, [])
+
                     platform_recs.extend(platform_strategies[:2])  # Top 2 strategies
                 
                 # Discoverability optimization
@@ -704,21 +788,27 @@ class PlatformPerformanceTracker:
                 if platform == Platform.INSTAGRAM:
                     if metrics.platform_specific_metrics.get("save_rate", 0) < 0.02:
                         platform_recs.append("Create more saveable content like tutorials, quotes, or infographics")
+
                 
                 elif platform == Platform.TIKTOK:
                     completion_rate = metrics.platform_specific_metrics.get("completion_rate", 0)
+
                     if completion_rate < 0.7:
                         platform_recs.append("Improve video completion rate with stronger hooks and pacing")
+
                 
                 elif platform == Platform.YOUTUBE:
                     watch_time = metrics.platform_specific_metrics.get("watch_time_minutes", 0)
+
                     if watch_time < 100:
                         platform_recs.append("Focus on increasing watch time through better content retention strategies")
+
                 
                 recommendations[platform] = platform_recs
         
         except Exception as e:
             logger.error(f"❌ Failed to generate platform recommendations: {e}")
+
         
         return recommendations
     
@@ -731,30 +821,45 @@ class PlatformPerformanceTracker:
         """Get performance summary for creator on specific platform"""
         try:
             # Get all content for this creator on this platform
+
             creator_content = []
             for content_id, platform_metrics in self.platform_metrics.items():
                 if platform in platform_metrics and platform_metrics[platform].creator_id == creator_id:
                     metrics = platform_metrics[platform]
                     # Filter by time period
+
                     days_ago = (datetime.now() - metrics.measurement_timestamp).days
                     if days_ago <= period_days:
                         creator_content.append(metrics)
+
             
             if not creator_content:
                 return {"error": f"No content found for creator {creator_id} on {platform.value}"}
             
             # Calculate summary metrics
+
             total_views = sum(m.views for m in creator_content)
+
+
             total_engagement = sum(m.likes + m.comments + m.shares + m.saves for m in creator_content)
+
+
             avg_engagement_rate = statistics.mean(m.engagement_rate for m in creator_content)
+
+
             total_revenue = sum(m.revenue_generated for m in creator_content)
+
+
             avg_algorithm_score = statistics.mean(m.algorithm_score for m in creator_content)
             
             # Growth metrics
+
             follower_growth = sum(m.net_follower_growth for m in creator_content)
             
             # Top performing content
+
             top_content = max(creator_content, key=lambda x: x.engagement_rate)
+
             
             return {
                 "platform": platform.value,
@@ -777,6 +882,7 @@ class PlatformPerformanceTracker:
             
         except Exception as e:
             logger.error(f"❌ Failed to get platform performance summary: {e}")
+
             return {"error": str(e)}
     
     async def _get_platform_specific_insights(
@@ -792,6 +898,7 @@ class PlatformPerformanceTracker:
                 avg_save_rate = statistics.mean(
                     m.platform_specific_metrics.get("save_rate", 0) for m in content_metrics
                 )
+
                 insights["average_save_rate"] = avg_save_rate
                 insights["story_performance"] = "data_needed"  # Would calculate from story metrics
                 
@@ -799,20 +906,25 @@ class PlatformPerformanceTracker:
                 avg_completion_rate = statistics.mean(
                     m.platform_specific_metrics.get("completion_rate", 0) for m in content_metrics
                 )
+
                 insights["average_completion_rate"] = avg_completion_rate
                 insights["viral_potential"] = statistics.mean(m.viral_potential for m in content_metrics)
+
                 
             elif platform == Platform.YOUTUBE:
                 total_watch_time = sum(
                     m.platform_specific_metrics.get("watch_time_minutes", 0) for m in content_metrics
                 )
+
                 insights["total_watch_time_hours"] = total_watch_time / 60
                 insights["average_ctr"] = statistics.mean(
                     m.platform_specific_metrics.get("thumbnail_ctr", 0) for m in content_metrics
                 )
+
         
         except Exception as e:
             logger.error(f"❌ Failed to get platform-specific insights: {e}")
+
         
         return insights
     
@@ -835,9 +947,11 @@ class PlatformPerformanceTracker:
             }
             
             # Get metrics for all platforms for this creator
+
             platform_summaries = {}
             for platform in Platform:
                 summary = await self.get_platform_performance_summary(creator_id, platform, 30)
+
                 if "error" not in summary:
                     platform_summaries[platform] = summary
                     dashboard["platform_overview"][platform.value] = summary
@@ -849,19 +963,23 @@ class PlatformPerformanceTracker:
             dashboard["total_metrics"]["total_content"] = sum(
                 s["total_content_pieces"] for s in platform_summaries.values()
             )
+
             dashboard["total_metrics"]["total_engagement"] = sum(
                 s["total_engagement"] for s in platform_summaries.values()
             )
+
             dashboard["total_metrics"]["total_revenue"] = sum(
                 s["total_revenue"] for s in platform_summaries.values()
             )
             
             # Platform rankings by engagement rate
+
             platform_rankings = [
                 {"platform": platform.value, "engagement_rate": summary["average_engagement_rate"]}
                 for platform, summary in platform_summaries.items()
             ]
             platform_rankings.sort(key=lambda x: x["engagement_rate"], reverse=True)
+
             dashboard["platform_rankings"] = platform_rankings
             
             # Optimization priorities
@@ -872,19 +990,25 @@ class PlatformPerformanceTracker:
                     )
             
             # Growth opportunities
+
             active_platforms = set(platform_summaries.keys())
+
+
             major_platforms = {Platform.INSTAGRAM, Platform.TIKTOK, Platform.YOUTUBE, Platform.TWITTER}
+
             missing_platforms = major_platforms - active_platforms
             
             if missing_platforms:
                 dashboard["growth_opportunities"].append(
                     f"Expand to: {', '.join(p.value for p in missing_platforms)}"
                 )
+
             
             return dashboard
             
         except Exception as e:
             logger.error(f"❌ Failed to generate cross-platform dashboard: {e}")
+
             return {"error": str(e)}
 
 
@@ -901,9 +1025,11 @@ async def analyze_cross_platform_performance(creator_id: str, content_id: str, a
     return await platform_performance_tracker.analyze_cross_platform_performance(creator_id, content_id, analysis_period)
 
 async def get_platform_performance_summary(creator_id: str, platform: Platform, period_days: int = 30) -> Dict[str, Any]:
-    """Get platform performance summary - convenience function"""
+    """
+        Get platform performance summary - convenience function"""
     return await platform_performance_tracker.get_platform_performance_summary(creator_id, platform, period_days)
 
 async def get_cross_platform_dashboard(creator_id: str) -> Dict[str, Any]:
-    """Get cross-platform dashboard - convenience function"""
+    """
+        Get cross-platform dashboard - convenience function"""
     return await platform_performance_tracker.get_cross_platform_dashboard(creator_id)

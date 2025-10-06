@@ -1,4 +1,5 @@
-"""IA Chérie Core Infrastructure - Enterprise Infrastructure Management
+"""
+IA Chérie Core Infrastructure - Enterprise Infrastructure Management
 ================================================================
 
 Core infrastructure management providing database, caching, message queuing,

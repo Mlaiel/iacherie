@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class ModelOptimizationCore:
-    """Advanced ModelOptimizationCore System"""
+    """
+Advanced ModelOptimizationCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class ModelOptimizationCore:
 # Module exports
 __all__ = ["ModelOptimizationCore"]
 
-logger.info("⚡ ModelOptimizationCore module loaded")
+logger.info("⚡ ModelOptimizationCore module initialized")

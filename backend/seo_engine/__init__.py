@@ -17,12 +17,13 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 from datetime import datetime
 import logging
+from typing import Dict, List, Any, Optional
 
 # Core SEO content optimization
 from .seo_content_engine import (
     SEOContentEngine, ContentOptimizer, KeywordAnalyzer, MetadataGenerator,
-    OptimizedContent, OptimizationRecommendation, KeywordMetrics,
-    ContentType, OptimizationLevel, MetaTags, SchemaMarkup, ContentQualityScore
+    ContentType, OptimizationLevel, ContentQualityScore, 
+    ContentSEOAnalysis, ContentOptimizationResult, ContentSEOStrategy
 )
 
 # SEO intelligence and AI hub
@@ -204,21 +205,23 @@ class ConsolidatedSEOEngine:
     """
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize consolidated SEO engine"""
-        self.config = config or {}
+        """
+        Initialize consolidated SEO engine"""
+        self.config = config if config is not None else {}
         
         # Initialize core engines
-        self.content_engine = SEOContentEngine(config.get('content', {}))
-        self.intelligence_hub = SEOIntelligenceHub(config.get('intelligence', {}))
-        self.analytics_engine = SEOAnalyticsEngine(config.get('analytics', {}))
-        self.api_gateway = SEOAPIGateway(config.get('api', {}))
-        self.business_logic = SEOBusinessLogic(config.get('business', {}))
+        self.content_engine = SEOContentEngine(self.config.get('content', {}))
+        self.intelligence_hub = SEOIntelligenceHub(self.config.get('intelligence', {}))
+        self.analytics_engine = SEOAnalyticsEngine(self.config.get('analytics', {}))
+        self.api_gateway = SEOAPIGateway(self.config.get('api', {}))
+        self.business_logic = SEOBusinessLogic(self.config.get('business', {}))
         
         # Initialize specialized engines
-        self.creator_engine = CreatorSEOEngine(config.get('creator', {}))
-        self.platform_engine = PlatformSEOEngine(config.get('platform', {}))
-        self.performance_engine = SEOPerformanceEngine(config.get('performance', {}))
-        self.automation_manager = SEOAutomationManager(config.get('automation', {}))
+        self.creator_engine = CreatorSEOEngine(self.config.get('creator', {}))
+        self.platform_engine = PlatformSEOEngine(self.config.get('platform', {}))
+        self.performance_engine = SEOPerformanceEngine(self.config.get('performance', {}))
+        self.automation_manager = SEOAutomationManager(self.config.get('automation', {}))
+
         
         self.logger = logging.getLogger(__name__)
         self.logger.info(f"🔍 Consolidated SEO Engine v{__version__} initialized")
@@ -239,30 +242,36 @@ class ConsolidatedSEOEngine:
         """
         try:
             # 1. Content optimization
+
             content_result = await self.content_engine.optimize_content(
                 content, content_type, creator_profile.get('target_keywords', [])
             )
             
             # 2. Intelligence analysis
+
             intelligence_result = await self.intelligence_hub.analyze_seo_intelligence(
                 creator_profile.get('domain', ''), 
                 creator_profile.get('target_keywords', [])
             )
             
             # 3. Creator-specific optimization
+
             creator_result = await self.creator_engine.optimize_creator_content(
                 content_result.optimized_content, creator_profile
             )
             
             # 4. Business logic integration
+
             business_result = await self.business_logic.apply_business_strategies(
                 creator_result, business_goals or []
             )
             
             # 5. Performance prediction
+
             performance_prediction = await self.performance_engine.predict_performance(
                 business_result, creator_profile
             )
+
             
             return {
                 "content_optimization": content_result,
@@ -277,6 +286,7 @@ class ConsolidatedSEOEngine:
             
         except Exception as e:
             self.logger.error(f"Full-stack optimization failed: {e}")
+
             raise
     
     async def _calculate_consolidation_score(self, *results) -> float:
@@ -285,8 +295,10 @@ class ConsolidatedSEOEngine:
         for result in results:
             if hasattr(result, 'seo_score'):
                 scores.append(result.seo_score)
+
             elif hasattr(result, 'intelligence_score'):
                 scores.append(result.intelligence_score)
+
         
         return sum(scores) / len(scores) if scores else 0.0
 

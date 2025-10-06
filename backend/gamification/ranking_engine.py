@@ -49,7 +49,8 @@ logger = logging.getLogger(__name__)
 # ============================================================================
 
 class UserTier(str, Enum):
-    """Unified user tier levels."""
+    """
+        Unified user tier levels."""
     NEWCOMER = "newcomer"
     RISING = "rising"
     SKILLED = "skilled"
@@ -315,9 +316,11 @@ class UnifiedRankingEngine:
         self._initialize_score_components()
     
     def _create_default_leaderboards(self):
-        """Create default platform and gaming leaderboards."""
+        """
+        Create default platform and gaming leaderboards."""
         
         # Platform leaderboards
+
         platform_boards = [
             ("overall_ranking", "Overall Creator Ranking", RankingCategory.OVERALL),
             ("content_quality", "Content Quality Leaders", RankingCategory.CONTENT_QUALITY),
@@ -333,9 +336,11 @@ class UnifiedRankingEngine:
                 leaderboard_type=LeaderboardType.PLATFORM_RANKING,
                 is_gaming_leaderboard=False
             )
+
             self.leaderboards[board_id] = leaderboard
         
         # Gaming leaderboards
+
         gaming_boards = [
             ("wealth_leaders", "Wealth Leaderboard", RankingCategory.GLOBAL_WEALTH),
             ("level_masters", "Level Champions", RankingCategory.GLOBAL_LEVEL),
@@ -352,6 +357,7 @@ class UnifiedRankingEngine:
                 leaderboard_type=LeaderboardType.GAMING_LEADERBOARD,
                 is_gaming_leaderboard=True
             )
+
             self.leaderboards[board_id] = leaderboard
     
     def _initialize_score_components(self):
@@ -390,15 +396,23 @@ class UnifiedRankingEngine:
         """Calculate user score for a specific category."""
         try:
             components = self.score_components.get(category.value, [])
+
             if not components:
                 return 0.0
+
             
             total_score = 0.0
+
             total_weight = sum(comp.weight for comp in components)
+
             
             for component in components:
                 raw_value = user_metrics.get(component.name, 0)
+
+
                 normalized_value = self._normalize_value(raw_value, component)
+
+
                 weighted_score = normalized_value * component.weight
                 total_score += weighted_score
             
@@ -409,9 +423,11 @@ class UnifiedRankingEngine:
                 final_score = 0.0
             
             return max(0.0, min(100.0, final_score))
+
             
         except Exception as e:
             logger.error(f"Error calculating user score: {e}")
+
             return 0.0
     
     def _normalize_value(self, value: float, component: ScoreComponent) -> float:
@@ -419,9 +435,11 @@ class UnifiedRankingEngine:
         try:
             if component.normalization_method == "logarithmic":
                 normalized = math.log(max(1, value))
+
             elif component.normalization_method == "exponential":
                 normalized = math.pow(value, 0.5)  # Square root
             else:  # linear
+
                 normalized = float(value)
             
             # Apply max value constraints
@@ -435,6 +453,7 @@ class UnifiedRankingEngine:
             
         except Exception as e:
             logger.error(f"Error normalizing value: {e}")
+
             return 0.0
     
     async def update_user_ranking(self, user_id: str, user_metrics: Dict[str, Any],
@@ -455,35 +474,42 @@ class UnifiedRankingEngine:
                     continue
                 
                 # Calculate score for this category
+
                 score = await self.calculate_user_score(
                     user_id, leaderboard.category, user_metrics
                 )
                 
                 # Get or create rank entry
+
                 existing_entry = next(
                     (entry for entry in leaderboard.entries if entry.user_id == user_id),
                     None
                 )
+
                 
                 if existing_entry:
                     # Update existing entry
                     existing_entry.previous_rank = existing_entry.rank
                     existing_entry.score_change = Decimal(str(score)) - existing_entry.score
                     existing_entry.score = Decimal(str(score))
+
                     existing_entry.last_updated = datetime.now(timezone.utc)
                     
                     # Update gaming-specific data
                     if is_gaming_update:
                         existing_entry.gaming_level = user_metrics.get('level')
+
                         existing_entry.gaming_stats = {
                             'total_cash': user_metrics.get('total_cash', 0),
                             'assets_owned': user_metrics.get('assets_owned', 0),
                             'prestige_points': user_metrics.get('prestige_points', 0)
                         }
+
                     
                     rank_entry = existing_entry
                 else:
                     # Create new entry
+
                     rank_entry = RankEntry(
                         user_id=user_id,
                         username=user_metrics.get('username', ''),
@@ -491,9 +517,11 @@ class UnifiedRankingEngine:
                         score=Decimal(str(score)),
                         is_gaming_entry=is_gaming_update
                     )
+
                     
                     if is_gaming_update:
                         rank_entry.gaming_level = user_metrics.get('level')
+
                         rank_entry.gaming_stats = {
                             'total_cash': user_metrics.get('total_cash', 0),
                             'assets_owned': user_metrics.get('assets_owned', 0),
@@ -504,6 +532,7 @@ class UnifiedRankingEngine:
                 
                 # Update tier
                 rank_entry.tier = self._calculate_user_tier(float(rank_entry.score))
+
                 rank_entry.tier_progress = self._calculate_tier_progress(rank_entry.tier, float(rank_entry.score))
                 
                 # Update competitive rank for gaming entries
@@ -516,6 +545,7 @@ class UnifiedRankingEngine:
             
             # Recalculate positions for updated leaderboards
             await self._recalculate_leaderboard_positions(updated_rankings.keys())
+
             
             return {
                 "success": True,
@@ -525,6 +555,7 @@ class UnifiedRankingEngine:
             
         except Exception as e:
             logger.error(f"Error updating user ranking: {e}")
+
             return {"success": False, "error": str(e)}
     
     def _calculate_user_tier(self, score: float) -> UserTier:
@@ -535,23 +566,34 @@ class UnifiedRankingEngine:
         return UserTier.NEWCOMER
     
     def _calculate_tier_progress(self, current_tier: UserTier, score: float) -> float:
-        """Calculate progress to next tier."""
+        """
+        Calculate progress to next tier."""
         try:
             tiers = list(UserTier)
+
+
             current_index = tiers.index(current_tier)
+
             
             if current_index >= len(tiers) - 1:
                 return 100.0  # Already at max tier
+
             
             current_threshold = self.tier_thresholds[current_tier]
+
             next_tier = tiers[current_index + 1]
+
             next_threshold = self.tier_thresholds[next_tier]
+
             
             progress = (score - current_threshold) / (next_threshold - current_threshold)
+
             return max(0.0, min(100.0, progress * 100))
+
             
         except Exception as e:
             logger.error(f"Error calculating tier progress: {e}")
+
             return 0.0
     
     def _calculate_competitive_rank(self, score: float) -> CompetitiveRank:
@@ -562,18 +604,23 @@ class UnifiedRankingEngine:
         return CompetitiveRank.BRONZE
     
     async def _recalculate_leaderboard_positions(self, leaderboard_ids: List[str]):
-        """Recalculate positions for specified leaderboards."""
+        """
+        Recalculate positions for specified leaderboards."""
         try:
             for leaderboard_id in leaderboard_ids:
                 leaderboard = self.leaderboards.get(leaderboard_id)
+
                 if not leaderboard:
                     continue
                 
                 # Sort entries by score (descending)
+
                 leaderboard.entries.sort(key=lambda x: float(x.score), reverse=True)
                 
                 # Update positions and percentiles
+
                 total_entries = len(leaderboard.entries)
+
                 for i, entry in enumerate(leaderboard.entries):
                     new_rank = i + 1
                     entry.rank_change = (entry.previous_rank or new_rank) - new_rank
@@ -581,6 +628,7 @@ class UnifiedRankingEngine:
                     entry.percentile = ((total_entries - i) / total_entries) * 100 if total_entries > 0 else 0
                 
                 leaderboard.last_updated = datetime.now(timezone.utc)
+
                 
         except Exception as e:
             logger.error(f"Error recalculating leaderboard positions: {e}")
@@ -590,11 +638,14 @@ class UnifiedRankingEngine:
         """Get leaderboard with pagination."""
         try:
             leaderboard = self.leaderboards.get(leaderboard_id)
+
             if not leaderboard:
                 return {"error": "Leaderboard not found"}
             
             # Get paginated entries
+
             end_index = offset + limit
+
             entries = leaderboard.entries[offset:end_index]
             
             return {
@@ -610,6 +661,7 @@ class UnifiedRankingEngine:
             
         except Exception as e:
             logger.error(f"Error getting leaderboard: {e}")
+
             return {"error": str(e)}
     
     async def get_user_rankings(self, user_id: str) -> Dict[str, Any]:
@@ -618,13 +670,17 @@ class UnifiedRankingEngine:
             user_rankings = self.user_rankings.get(user_id, {})
             
             # Separate platform and gaming rankings
+
             platform_rankings = {}
+
             gaming_rankings = {}
             
             for leaderboard_id, rank_entry in user_rankings.items():
                 leaderboard = self.leaderboards.get(leaderboard_id)
+
                 if not leaderboard:
                     continue
+
                 
                 ranking_data = {
                     "leaderboard_name": leaderboard.name,
@@ -653,6 +709,7 @@ class UnifiedRankingEngine:
             
         except Exception as e:
             logger.error(f"Error getting user rankings: {e}")
+
             return {"error": str(e)}
     
     async def create_tournament(self, tournament_data: Dict[str, Any]) -> Tournament:
@@ -670,16 +727,20 @@ class UnifiedRankingEngine:
             # Set tournament schedule
             if 'registration_end' in tournament_data:
                 tournament.registration_end = datetime.fromisoformat(tournament_data['registration_end'])
+
             if 'tournament_start' in tournament_data:
                 tournament.tournament_start = datetime.fromisoformat(tournament_data['tournament_start'])
             
             # Set prize pool
             tournament.prize_pool = tournament_data.get('prize_pool', {})
+
             tournament.entry_fee = Decimal(str(tournament_data.get('entry_fee', 0)))
+
             
             self.tournaments[tournament.tournament_id] = tournament
             
             # Create tournament leaderboard
+
             tournament_leaderboard = Leaderboard(
                 leaderboard_id=f"tournament_{tournament.tournament_id}",
                 name=f"{tournament.name} - Tournament Bracket",
@@ -690,14 +751,17 @@ class UnifiedRankingEngine:
                 tournament_format=tournament.tournament_format,
                 is_gaming_leaderboard=True
             )
+
             
             self.leaderboards[tournament_leaderboard.leaderboard_id] = tournament_leaderboard
             
             logger.info(f"🏆 Created tournament: {tournament.name} ({tournament.tournament_id})")
+
             return tournament
             
         except Exception as e:
             logger.error(f"Error creating tournament: {e}")
+
             raise
 
 
@@ -715,12 +779,14 @@ def get_ranking_engine() -> UnifiedRankingEngine:
 
 async def update_user_ranking(user_id: str, user_metrics: Dict[str, Any], 
                             is_gaming_update: bool = False) -> Dict[str, Any]:
-    """Update user rankings across all leaderboards."""
+    """
+        Update user rankings across all leaderboards."""
     engine = get_ranking_engine()
     return await engine.update_user_ranking(user_id, user_metrics, is_gaming_update)
 
 
 async def get_leaderboard(leaderboard_id: str, limit: int = 100) -> Dict[str, Any]:
-    """Get leaderboard data."""
+    """
+        Get leaderboard data."""
     engine = get_ranking_engine()
     return await engine.get_leaderboard(leaderboard_id, limit)

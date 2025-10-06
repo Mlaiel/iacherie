@@ -48,7 +48,8 @@ logger = logging.getLogger(__name__)
 # ========================================
 
 class MetricType(Enum):
-    """Types de métriques"""
+    """
+        Types de métriques"""
     PERFORMANCE = "performance_metrics"
     QUANTUM_ADVANTAGE = "quantum_advantage_metrics"
     SYSTEM_HEALTH = "system_health_metrics"
@@ -89,7 +90,8 @@ class PerformanceThreshold(Enum):
 
 @dataclass
 class QuantumMetric:
-    """Métrique quantique"""
+    """
+        Métrique quantique"""
     metric_id: str
     metric_type: MetricType
     metric_name: str
@@ -102,7 +104,8 @@ class QuantumMetric:
 
 @dataclass
 class PerformanceMetrics:
-    """Métriques de performance"""
+    """
+        Métriques de performance"""
     response_time_ms: float
     throughput_ops_per_sec: float
     error_rate: float
@@ -116,7 +119,8 @@ class PerformanceMetrics:
 
 @dataclass
 class SystemHealthMetrics:
-    """Métriques santé système"""
+    """
+        Métriques santé système"""
     cpu_usage_percent: float
     memory_usage_percent: float
     disk_usage_percent: float
@@ -130,7 +134,8 @@ class SystemHealthMetrics:
 
 @dataclass
 class QuantumAdvantageMetrics:
-    """Métriques avantage quantique"""
+    """
+        Métriques avantage quantique"""
     speedup_factor: float
     accuracy_improvement: float
     cost_efficiency: float
@@ -145,7 +150,8 @@ class QuantumAdvantageMetrics:
 
 @dataclass
 class BusinessImpactMetrics:
-    """Métriques impact business"""
+    """
+        Métriques impact business"""
     revenue_impact: float
     user_satisfaction_score: float
     content_quality_improvement: float
@@ -158,7 +164,8 @@ class BusinessImpactMetrics:
 
 @dataclass
 class MonitoringAlert:
-    """Alerte monitoring"""
+    """
+        Alerte monitoring"""
     alert_id: str
     severity: AlertSeverity
     title: str
@@ -174,7 +181,8 @@ class MonitoringAlert:
 
 @dataclass
 class MonitoringDashboard:
-    """Données dashboard monitoring"""
+    """
+        Données dashboard monitoring"""
     overview_metrics: Dict[str, Any]
     performance_trends: Dict[str, List[float]]
     quantum_advantage_summary: Dict[str, Any]
@@ -231,6 +239,7 @@ class QuantumMonitoringSystem:
         self.monitoring_interval_seconds = self.config.get("monitoring_interval", 5)
         self.metrics_retention_days = self.config.get("metrics_retention_days", 30)
         self.alert_cooldown_minutes = self.config.get("alert_cooldown_minutes", 15)
+
         
         logger.info("📊 Quantum Monitoring System initialized")
     
@@ -254,13 +263,16 @@ class QuantumMonitoringSystem:
             
             # Initialisation dashboard
             await self._initialize_dashboard()
+
             
             self.is_monitoring_active = True
             
             logger.info("✅ Quantum monitoring system initialized successfully")
+
             
         except Exception as e:
             logger.error(f"❌ Failed to initialize monitoring system: {e}")
+
             raise
     
     async def shutdown(self):
@@ -275,8 +287,10 @@ class QuantumMonitoringSystem:
             
             # Fermeture executor
             self.executor.shutdown(wait=True)
+
             
             logger.info("✅ Quantum monitoring system shutdown completed")
+
             
         except Exception as e:
             logger.error(f"❌ Error during monitoring system shutdown: {e}")
@@ -303,6 +317,7 @@ class QuantumMonitoringSystem:
             # Calcul impact business si applicable
             if metric.metric_type in [MetricType.PERFORMANCE, MetricType.QUANTUM_ADVANTAGE]:
                 await self._update_business_impact_correlation(metric)
+
             
         except Exception as e:
             logger.error(f"❌ Failed to record metric: {e}")
@@ -326,6 +341,7 @@ class QuantumMonitoringSystem:
                 timestamp=metrics.timestamp,
                 source="performance_monitor"
             )
+
             
             await self.record_metric(performance_metric)
             
@@ -335,16 +351,21 @@ class QuantumMonitoringSystem:
                     speedup_factor=metrics.classical_comparison_time_ms / metrics.circuit_execution_time_ms,
                     accuracy_improvement=metrics.accuracy_score,
                     cost_efficiency=0.85,  # Calculé séparément
+
                     energy_efficiency=0.78,  # Calculé séparément
+
                     scalability_advantage=metrics.quantum_advantage_factor,
                     algorithm_type="mixed",
                     problem_size=100,  # À dériver des métriques
+
                     classical_baseline_time_ms=metrics.classical_comparison_time_ms,
                     quantum_execution_time_ms=metrics.circuit_execution_time_ms,
                     advantage_score=metrics.quantum_advantage_factor
                 )
+
                 
                 await self.record_quantum_advantage_metrics(advantage_metrics)
+
             
         except Exception as e:
             logger.error(f"❌ Failed to record performance metrics: {e}")
@@ -373,6 +394,7 @@ class QuantumMonitoringSystem:
                     "quantum_time": metrics.quantum_execution_time_ms
                 }
             )
+
             
             await self.record_metric(quantum_advantage_metric)
             
@@ -382,6 +404,7 @@ class QuantumMonitoringSystem:
             # Vérification si avantage quantique significatif
             if metrics.advantage_score >= 1.5:
                 await self._log_significant_quantum_advantage(metrics)
+
             
         except Exception as e:
             logger.error(f"❌ Failed to record quantum advantage metrics: {e}")
@@ -408,11 +431,13 @@ class QuantumMonitoringSystem:
                 timestamp=metrics.timestamp,
                 source="system_health_monitor"
             )
+
             
             await self.record_metric(health_metric)
             
             # Vérification alertes santé système
             await self._check_system_health_alerts(metrics)
+
             
         except Exception as e:
             logger.error(f"❌ Failed to record system health metrics: {e}")
@@ -438,6 +463,7 @@ class QuantumMonitoringSystem:
                 timestamp=metrics.timestamp,
                 source="business_impact_tracker"
             )
+
             
             await self.record_metric(business_metric)
             
@@ -448,6 +474,7 @@ class QuantumMonitoringSystem:
                     # Maintenir seulement les 100 dernières valeurs
                     if len(self.business_impact_tracker[key]) > 100:
                         self.business_impact_tracker[key].pop(0)
+
             
         except Exception as e:
             logger.error(f"❌ Failed to record business impact metrics: {e}")
@@ -461,50 +488,65 @@ class QuantumMonitoringSystem:
         try:
             if self.is_monitoring_active:
                 logger.warning("Monitoring already active")
+
                 return
             
             self.is_monitoring_active = True
             
             # Thread monitoring performance
+
             performance_thread = threading.Thread(
                 target=self._run_performance_monitoring,
                 name="performance_monitor",
                 daemon=True
             )
+
             performance_thread.start()
+
             self.monitoring_threads["performance"] = performance_thread
             
             # Thread monitoring santé système
+
             health_thread = threading.Thread(
                 target=self._run_system_health_monitoring,
                 name="health_monitor", 
                 daemon=True
             )
+
             health_thread.start()
+
             self.monitoring_threads["health"] = health_thread
             
             # Thread calcul quantum advantage
+
             advantage_thread = threading.Thread(
                 target=self._run_quantum_advantage_monitoring,
                 name="advantage_monitor",
                 daemon=True
             )
+
             advantage_thread.start()
+
             self.monitoring_threads["advantage"] = advantage_thread
             
             # Thread mise à jour dashboard
+
             dashboard_thread = threading.Thread(
                 target=self._run_dashboard_updates,
                 name="dashboard_updater",
                 daemon=True
             )
+
             dashboard_thread.start()
+
             self.monitoring_threads["dashboard"] = dashboard_thread
             
             logger.info("✅ Continuous monitoring started")
+
             
         except Exception as e:
             logger.error(f"❌ Failed to start continuous monitoring: {e}")
+
             raise
     
     async def stop_continuous_monitoring(self):
@@ -516,10 +558,13 @@ class QuantumMonitoringSystem:
             for thread_name, thread in self.monitoring_threads.items():
                 if thread.is_alive():
                     thread.join(timeout=10.0)
+
                     if thread.is_alive():
                         logger.warning(f"Thread {thread_name} did not stop gracefully")
+
             
             logger.info("✅ Continuous monitoring stopped")
+
             
         except Exception as e:
             logger.error(f"❌ Error stopping continuous monitoring: {e}")
@@ -563,6 +608,7 @@ class QuantumMonitoringSystem:
             
             # Log alerte
             logger.warning(f"🚨 ALERT [{severity.value.upper()}]: {title} - {description}")
+
             
         except Exception as e:
             logger.error(f"❌ Failed to create alert: {e}")
@@ -574,13 +620,16 @@ class QuantumMonitoringSystem:
                 if alert.alert_id == alert_id:
                     alert.acknowledged = True
                     logger.info(f"✅ Alert {alert_id} acknowledged by {acknowledged_by}")
+
                     return True
             
             logger.warning(f"Alert {alert_id} not found")
+
             return False
             
         except Exception as e:
             logger.error(f"❌ Failed to acknowledge alert {alert_id}: {e}")
+
             return False
     
     async def resolve_alert(self, alert_id: str, resolved_by: str = "system"):
@@ -590,14 +639,18 @@ class QuantumMonitoringSystem:
                 if alert.alert_id == alert_id:
                     alert.resolved = True
                     alert.resolution_time = datetime.utcnow()
+
                     logger.info(f"✅ Alert {alert_id} resolved by {resolved_by}")
+
                     return True
             
             logger.warning(f"Alert {alert_id} not found")
+
             return False
             
         except Exception as e:
             logger.error(f"❌ Failed to resolve alert {alert_id}: {e}")
+
             return False
     
     def add_alert_handler(self, severity: AlertSeverity, handler: Callable):
@@ -605,7 +658,8 @@ class QuantumMonitoringSystem:
         self.alert_handlers[severity].append(handler)
     
     def remove_alert_handler(self, severity: AlertSeverity, handler: Callable):
-        """Suppression handler alerte"""
+        """
+        Suppression handler alerte"""
         if handler in self.alert_handlers[severity]:
             self.alert_handlers[severity].remove(handler)
     
@@ -614,11 +668,13 @@ class QuantumMonitoringSystem:
     # ========================================
     
     async def get_performance_analytics(self, timeframe_hours: int = 24) -> Dict[str, Any]:
-        """Analytics performance sur période"""
+        """
+        Analytics performance sur période"""
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=timeframe_hours)
             
             # Collecte métriques performance
+
             performance_metrics = [
                 metric for metric in self.metrics_storage[MetricType.PERFORMANCE]
                 if metric.timestamp >= cutoff_time
@@ -628,10 +684,15 @@ class QuantumMonitoringSystem:
                 return {"message": "No performance data available"}
             
             # Calculs analytics
+
             response_times = [m.value["response_time_ms"] for m in performance_metrics]
+
             error_rates = [m.value["error_rate"] for m in performance_metrics]
+
             quantum_advantages = [m.value["quantum_advantage"] for m in performance_metrics]
+
             accuracy_scores = [m.value["accuracy_score"] for m in performance_metrics]
+
             
             analytics = {
                 "timeframe_hours": timeframe_hours,
@@ -666,6 +727,7 @@ class QuantumMonitoringSystem:
             
         except Exception as e:
             logger.error(f"❌ Failed to get performance analytics: {e}")
+
             return {"error": str(e)}
     
     async def get_quantum_advantage_trends(self) -> Dict[str, Any]:
@@ -673,8 +735,11 @@ class QuantumMonitoringSystem:
         try:
             if not self.quantum_advantage_history:
                 return {"message": "No quantum advantage data available"}
+
             
             advantage_values = list(self.quantum_advantage_history)
+
+
             
             trends = {
                 "total_measurements": len(advantage_values),
@@ -695,6 +760,7 @@ class QuantumMonitoringSystem:
             
         except Exception as e:
             logger.error(f"❌ Failed to get quantum advantage trends: {e}")
+
             return {"error": str(e)}
     
     async def get_business_impact_summary(self) -> Dict[str, Any]:
@@ -702,6 +768,7 @@ class QuantumMonitoringSystem:
         try:
             if not self.business_impact_tracker:
                 return {"message": "No business impact data available"}
+
             
             summary = {}
             
@@ -719,13 +786,16 @@ class QuantumMonitoringSystem:
             if summary:
                 overall_impact = statistics.mean([
                     data["average_value"] for data in summary.values()
+
                     if isinstance(data["average_value"], (int, float))
                 ])
+
                 summary["overall_business_impact"] = {
                     "combined_impact_score": overall_impact,
                     "impact_categories": len(summary),
                     "strong_performance_areas": [
                         impact_type for impact_type, data in summary.items()
+
                         if data["average_value"] > 0.5
                     ]
                 }
@@ -734,6 +804,7 @@ class QuantumMonitoringSystem:
             
         except Exception as e:
             logger.error(f"❌ Failed to get business impact summary: {e}")
+
             return {"error": str(e)}
     
     # ========================================
@@ -744,28 +815,38 @@ class QuantumMonitoringSystem:
         """Données dashboard monitoring"""
         try:
             # Overview metrics
+
             overview = await self._get_overview_metrics()
             
             # Performance trends
+
             trends = await self._get_performance_trends()
             
             # Quantum advantage summary
+
             qa_summary = await self.get_quantum_advantage_trends()
             
             # System health status
+
             health_status = await self._get_current_system_health()
             
             # Alertes actives
+
             active_alerts = [alert for alert in self.active_alerts if not alert.resolved]
             
             # Business impact summary
+
             business_impact = await self.get_business_impact_summary()
             
             # Top performing algorithms
+
             top_algorithms = await self._get_top_performing_algorithms()
             
             # Recommandations optimisation
+
             recommendations = await self._generate_optimization_recommendations()
+
+
             
             dashboard = MonitoringDashboard(
                 overview_metrics=overview,
@@ -777,6 +858,7 @@ class QuantumMonitoringSystem:
                 top_performing_algorithms=top_algorithms,
                 optimization_recommendations=recommendations
             )
+
             
             self.dashboard_data = dashboard
             
@@ -784,6 +866,7 @@ class QuantumMonitoringSystem:
             
         except Exception as e:
             logger.error(f"❌ Failed to get monitoring dashboard: {e}")
+
             raise
     
     # ========================================
@@ -795,10 +878,13 @@ class QuantumMonitoringSystem:
         while self.is_monitoring_active:
             try:
                 # Collecte métriques performance système
+
                 loop = asyncio.new_event_loop()
+
                 asyncio.set_event_loop(loop)
                 
                 # Simulation métriques performance
+
                 metrics = PerformanceMetrics(
                     response_time_ms=np.random.uniform(100, 500),
                     throughput_ops_per_sec=np.random.uniform(50, 200),
@@ -810,12 +896,16 @@ class QuantumMonitoringSystem:
                     resource_utilization={"cpu": np.random.uniform(20, 80), "memory": np.random.uniform(30, 70)},
                     accuracy_score=np.random.uniform(0.85, 0.98)
                 )
+
                 
                 loop.run_until_complete(self.record_performance_metrics(metrics))
+
                 loop.close()
+
                 
             except Exception as e:
                 logger.error(f"Performance monitoring error: {e}")
+
             
             time.sleep(self.monitoring_interval_seconds)
     
@@ -824,30 +914,43 @@ class QuantumMonitoringSystem:
         while self.is_monitoring_active:
             try:
                 loop = asyncio.new_event_loop()
+
                 asyncio.set_event_loop(loop)
                 
                 # Collecte vraies métriques système
+
                 cpu_percent = psutil.cpu_percent(interval=1)
+
+
                 memory_info = psutil.virtual_memory()
+
+
                 disk_info = psutil.disk_usage('/')
+
+
                 
                 metrics = SystemHealthMetrics(
                     cpu_usage_percent=cpu_percent,
                     memory_usage_percent=memory_info.percent,
                     disk_usage_percent=disk_info.percent,
                     network_io_mbps=np.random.uniform(10, 100),  # Simulation
+
                     quantum_backend_status="active",
                     active_circuits=np.random.randint(0, 10),
                     queued_requests=np.random.randint(0, 5),
                     system_uptime_seconds=time.time(),
                     error_count_last_hour=np.random.randint(0, 3)
                 )
+
                 
                 loop.run_until_complete(self.record_system_health_metrics(metrics))
+
                 loop.close()
+
                 
             except Exception as e:
                 logger.error(f"System health monitoring error: {e}")
+
             
             time.sleep(self.monitoring_interval_seconds * 2)  # Moins fréquent
     
@@ -856,9 +959,11 @@ class QuantumMonitoringSystem:
         while self.is_monitoring_active:
             try:
                 loop = asyncio.new_event_loop()
+
                 asyncio.set_event_loop(loop)
                 
                 # Simulation calcul quantum advantage
+
                 metrics = QuantumAdvantageMetrics(
                     speedup_factor=np.random.uniform(1.5, 4.0),
                     accuracy_improvement=np.random.uniform(0.1, 0.3),
@@ -871,12 +976,16 @@ class QuantumMonitoringSystem:
                     quantum_execution_time_ms=np.random.uniform(50, 300),
                     advantage_score=np.random.uniform(1.5, 3.2)
                 )
+
                 
                 loop.run_until_complete(self.record_quantum_advantage_metrics(metrics))
+
                 loop.close()
+
                 
             except Exception as e:
                 logger.error(f"Quantum advantage monitoring error: {e}")
+
             
             time.sleep(self.monitoring_interval_seconds * 3)  # Moins fréquent
     
@@ -885,13 +994,18 @@ class QuantumMonitoringSystem:
         while self.is_monitoring_active:
             try:
                 loop = asyncio.new_event_loop()
+
                 asyncio.set_event_loop(loop)
+
                 
                 loop.run_until_complete(self.get_monitoring_dashboard())
+
                 loop.close()
+
                 
             except Exception as e:
                 logger.error(f"Dashboard update error: {e}")
+
             
             time.sleep(30)  # Mise à jour toutes les 30 secondes
     
@@ -905,6 +1019,7 @@ class QuantumMonitoringSystem:
             return "insufficient_data"
         
         recent_avg = statistics.mean(values[-5:]) if len(values) >= 5 else values[-1]
+
         older_avg = statistics.mean(values[:5]) if len(values) >= 10 else values[0]
         
         if recent_avg > older_avg * 1.1:
@@ -922,7 +1037,8 @@ class QuantumMonitoringSystem:
         return (values[-1] - values[0]) / values[0] if values[0] != 0 else 0.0
     
     async def _validate_metric(self, metric: QuantumMetric):
-        """Validation métrique"""
+        """
+        Validation métrique"""
         if not metric.metric_id:
             raise ValueError("Metric ID is required")
         if not metric.metric_name:
@@ -934,12 +1050,14 @@ class QuantumMonitoringSystem:
         pass
     
     async def _update_metric_trends(self, metric: QuantumMetric):
-        """Mise à jour tendances métriques"""
+        """
+        Mise à jour tendances métriques"""
         # Implémentation tracking trends
         pass
     
     async def _update_business_impact_correlation(self, metric: QuantumMetric):
-        """Mise à jour corrélation impact business"""
+        """
+        Mise à jour corrélation impact business"""
         # Implémentation corrélation business
         pass
 
@@ -949,7 +1067,8 @@ class QuantumMonitoringSystem:
 # ========================================
 
 async def get_quantum_monitoring_instance() -> QuantumMonitoringSystem:
-    """Instance singleton monitoring system"""
+    """
+        Instance singleton monitoring system"""
     if not hasattr(get_quantum_monitoring_instance, "_instance"):
         get_quantum_monitoring_instance._instance = QuantumMonitoringSystem()
         await get_quantum_monitoring_instance._instance.initialize()
@@ -959,9 +1078,13 @@ async def get_quantum_monitoring_instance() -> QuantumMonitoringSystem:
 # EXPORT INTERFACES
 # ========================================
 
+# Enterprise aliases
+MonitoringRequest = QuantumMetric
+
 __all__ = [
     "QuantumMonitoringSystem",
     "QuantumMetric",
+    "MonitoringRequest",  # Alias
     "PerformanceMetrics",
     "SystemHealthMetrics", 
     "QuantumAdvantageMetrics",

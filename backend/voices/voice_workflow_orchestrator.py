@@ -25,7 +25,8 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class WorkflowStatus(Enum):
-    """Workflow execution status"""
+    """
+        Workflow execution status"""
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -55,7 +56,8 @@ class WorkflowPriority(Enum):
 
 @dataclass
 class WorkflowTask:
-    """Individual workflow task configuration"""
+    """
+        Individual workflow task configuration"""
     task_id: str
     task_type: TaskType
     name: str
@@ -69,7 +71,8 @@ class WorkflowTask:
     
 @dataclass
 class VoicePipeline:
-    """Voice processing pipeline definition"""
+    """
+        Voice processing pipeline definition"""
     pipeline_id: str
     name: str
     description: str
@@ -99,10 +102,12 @@ class WorkflowExecution:
     resource_usage: Dict[str, Any] = field(default_factory=dict)
 
 class WorkflowEngine:
-    """Core workflow execution engine"""
+    """
+        Core workflow execution engine"""
     
     def __init__(self, max_workers: int = 10):
-        """Initialize workflow engine"""
+        """
+        Initialize workflow engine"""
         self.max_workers = max_workers
         self.executor = ThreadPoolExecutor(max_workers=max_workers)
         self.active_executions = {}
@@ -112,6 +117,7 @@ class WorkflowEngine:
         
         # Start execution worker
         asyncio.create_task(self._execution_worker())
+
         
         logger.info(f"🔄 Workflow Engine initialized with {max_workers} workers")
     
@@ -130,10 +136,12 @@ class WorkflowEngine:
             }
             
             logger.info(f"Registered task handler: {task_type.value}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to register task handler {task_type.value}: {e}")
+
             return False
     
     async def execute_pipeline(
@@ -145,7 +153,10 @@ class WorkflowEngine:
         """Execute voice processing pipeline"""
         try:
             # Create execution tracking
+
             execution_id = str(uuid.uuid4())
+
+
             execution = WorkflowExecution(
                 execution_id=execution_id,
                 pipeline_id=pipeline.pipeline_id,
@@ -163,12 +174,15 @@ class WorkflowEngine:
                 "input_data": input_data,
                 "options": execution_options or {}
             })
+
             
             logger.info(f"Pipeline {pipeline.pipeline_id} queued for execution: {execution_id}")
+
             return execution_id
             
         except Exception as e:
             logger.error(f"Failed to execute pipeline: {e}")
+
             raise
     
     async def _execution_worker(self):
@@ -176,6 +190,7 @@ class WorkflowEngine:
         while True:
             try:
                 # Get next execution from queue
+
                 execution_item = await self.execution_queue.get()
                 
                 # Execute pipeline
@@ -188,9 +203,11 @@ class WorkflowEngine:
                 
                 # Mark queue task as done
                 self.execution_queue.task_done()
+
                 
             except Exception as e:
                 logger.error(f"Execution worker error: {e}")
+
                 await asyncio.sleep(1)
     
     async def _execute_pipeline_internal(
@@ -209,23 +226,29 @@ class WorkflowEngine:
             # Execute based on strategy
             if pipeline.execution_strategy == "sequential":
                 await self._execute_sequential(execution, pipeline, input_data, options)
+
             elif pipeline.execution_strategy == "parallel":
                 await self._execute_parallel(execution, pipeline, input_data, options)
+
             else:
                 await self._execute_mixed(execution, pipeline, input_data, options)
             
             # Mark as completed
             execution.status = WorkflowStatus.COMPLETED
             execution.completed_at = datetime.utcnow()
+
             execution.execution_time = (
                 execution.completed_at - execution.started_at
             ).total_seconds()
+
             
             logger.info(f"Pipeline execution completed: {execution_id}")
+
             
         except Exception as e:
             execution.status = WorkflowStatus.FAILED
             execution.errors.append(str(e))
+
             logger.error(f"Pipeline execution failed {execution_id}: {e}")
     
     async def _execute_sequential(
@@ -237,21 +260,26 @@ class WorkflowEngine:
     ):
         """Execute tasks sequentially"""
         current_data = input_data.copy()
+
         
         for task in pipeline.tasks:
             try:
                 execution.current_task = task.task_id
                 
                 # Execute task
+
                 result = await self._execute_task(task, current_data, options)
                 
                 # Store result and update data
                 execution.results[task.task_id] = result
                 execution.completed_tasks.append(task.task_id)
+
                 current_data.update(result.get("output_data", {}))
+
                 
             except Exception as e:
                 execution.failed_tasks.append(task.task_id)
+
                 execution.errors.append(f"Task {task.task_id} failed: {e}")
                 
                 # Check if we should continue or fail
@@ -267,17 +295,22 @@ class WorkflowEngine:
     ):
         """Execute tasks in parallel where possible"""
         # Build task dependency graph
+
         dependency_graph = self._build_dependency_graph(pipeline.tasks)
         
         # Execute tasks in batches based on dependencies
+
         ready_tasks = [task for task in pipeline.tasks if not task.dependencies]
+
         completed_tasks = set()
+
         
         while ready_tasks or completed_tasks != {task.task_id for task in pipeline.tasks}:
             # Execute ready tasks in parallel
             if ready_tasks:
                 batch_results = await asyncio.gather(*[
                     self._execute_task(task, input_data, options)
+
                     for task in ready_tasks
                 ], return_exceptions=True)
                 
@@ -285,13 +318,17 @@ class WorkflowEngine:
                 for task, result in zip(ready_tasks, batch_results):
                     if isinstance(result, Exception):
                         execution.failed_tasks.append(task.task_id)
+
                         execution.errors.append(f"Task {task.task_id} failed: {result}")
+
                     else:
                         execution.results[task.task_id] = result
                         execution.completed_tasks.append(task.task_id)
+
                         completed_tasks.add(task.task_id)
                 
                 # Find next ready tasks
+
                 ready_tasks = [
                     task for task in pipeline.tasks
                     if (task.task_id not in completed_tasks and 
@@ -312,13 +349,18 @@ class WorkflowEngine:
         """Execute individual task"""
         try:
             # Get task handler
+
             handler_info = self.task_registry.get(task.task_type)
+
             if not handler_info:
                 raise ValueError(f"No handler registered for task type: {task.task_type.value}")
+
+
             
             handler = handler_info["handler"]
             
             # Prepare task context
+
             task_context = {
                 "task_id": task.task_id,
                 "task_type": task.task_type,
@@ -329,10 +371,12 @@ class WorkflowEngine:
             }
             
             # Execute with timeout
+
             result = await asyncio.wait_for(
                 handler(task_context),
                 timeout=task.timeout
             )
+
             
             return result
             
@@ -340,6 +384,7 @@ class WorkflowEngine:
             raise Exception(f"Task {task.task_id} timed out after {task.timeout} seconds")
         except Exception as e:
             logger.error(f"Task execution failed {task.task_id}: {e}")
+
             raise
     
     def _build_dependency_graph(self, tasks: List[WorkflowTask]) -> Dict[str, List[str]]:
@@ -350,28 +395,34 @@ class WorkflowEngine:
         return graph
     
     async def get_execution_status(self, execution_id: str) -> Optional[WorkflowExecution]:
-        """Get execution status"""
+        """
+        Get execution status"""
         return self.active_executions.get(execution_id)
     
     async def cancel_execution(self, execution_id: str) -> bool:
-        """Cancel pipeline execution"""
+        """
+        Cancel pipeline execution"""
         try:
             execution = self.active_executions.get(execution_id)
+
             if execution:
                 execution.status = WorkflowStatus.CANCELLED
                 execution.completed_at = datetime.utcnow()
+
                 return True
             return False
             
         except Exception as e:
             logger.error(f"Failed to cancel execution {execution_id}: {e}")
+
             return False
 
 class WorkflowManagement:
     """High-level workflow management system"""
     
     def __init__(self):
-        """Initialize workflow management"""
+        """
+        Initialize workflow management"""
         self.workflow_engine = WorkflowEngine()
         self.pipeline_registry = {}
         self.execution_history = {}
@@ -379,6 +430,7 @@ class WorkflowManagement:
         
         # Initialize pre-built pipelines
         asyncio.create_task(self._initialize_standard_pipelines())
+
         
         logger.info("🎯 Workflow Management System initialized")
     
@@ -393,6 +445,7 @@ class WorkflowManagement:
             pipeline_id = str(uuid.uuid4())
             
             # Convert task definitions to WorkflowTask objects
+
             workflow_tasks = []
             for task_def in tasks:
                 task = WorkflowTask(
@@ -406,9 +459,11 @@ class WorkflowManagement:
                     timeout=task_def.get("timeout", 300),
                     priority=WorkflowPriority(task_def.get("priority", 2))
                 )
+
                 workflow_tasks.append(task)
             
             # Create pipeline
+
             pipeline = VoicePipeline(
                 pipeline_id=pipeline_id,
                 name=name,
@@ -423,10 +478,12 @@ class WorkflowManagement:
             self.pipeline_registry[pipeline_id] = pipeline
             
             logger.info(f"Created voice processing pipeline: {pipeline_id}")
+
             return pipeline_id
             
         except Exception as e:
             logger.error(f"Failed to create pipeline: {e}")
+
             raise
     
     async def _initialize_standard_pipelines(self):
@@ -481,8 +538,10 @@ class WorkflowManagement:
                     }
                 ]
             )
+
             
             logger.info("Standard voice pipelines initialized")
+
             
         except Exception as e:
             logger.error(f"Failed to initialize standard pipelines: {e}")
@@ -491,7 +550,8 @@ class TaskOrchestration:
     """Advanced task orchestration system"""
     
     def __init__(self):
-        """Initialize task orchestration"""
+        """
+        Initialize task orchestration"""
         self.task_scheduler = None
         self.resource_manager = None
         self.load_balancer = None
@@ -502,7 +562,8 @@ class ProcessAutomation:
     """Process automation engine"""
     
     def __init__(self):
-        """Initialize process automation"""
+        """
+        Initialize process automation"""
         self.automation_rules = {}
         self.trigger_system = None
         self.event_processor = None
@@ -513,7 +574,8 @@ class WorkflowAnalytics:
     """Workflow analytics and monitoring"""
     
     def __init__(self):
-        """Initialize workflow analytics"""
+        """
+        Initialize workflow analytics"""
         self.metrics_collector = None
         self.performance_analyzer = None
         self.optimization_engine = None
@@ -524,12 +586,14 @@ class VoiceWorkflowOrchestrator:
     """Main voice workflow orchestrator"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize voice workflow orchestrator"""
+        """
+        Initialize voice workflow orchestrator"""
         self.config = config or {}
         self.workflow_management = WorkflowManagement()
         self.task_orchestration = TaskOrchestration()
         self.process_automation = ProcessAutomation()
         self.workflow_analytics = WorkflowAnalytics()
+
         
         logger.info("🎤🔄 Voice Workflow Orchestrator initialized")
     
@@ -542,21 +606,28 @@ class VoiceWorkflowOrchestrator:
         """Process voice workflow"""
         try:
             # Get appropriate pipeline
+
             pipeline_id = await self._select_pipeline(workflow_type, input_data)
+
+
             pipeline = self.workflow_management.pipeline_registry.get(pipeline_id)
+
             
             if not pipeline:
                 raise ValueError(f"Pipeline not found: {pipeline_id}")
             
             # Execute workflow
+
             execution_id = await self.workflow_management.workflow_engine.execute_pipeline(
                 pipeline, input_data, options or {}
             )
+
             
             return execution_id
             
         except Exception as e:
             logger.error(f"Failed to process voice workflow: {e}")
+
             raise
     
     async def _select_pipeline(
@@ -566,6 +637,7 @@ class VoiceWorkflowOrchestrator:
     ) -> str:
         """Select appropriate pipeline for workflow"""
         # Pipeline selection logic based on workflow type and input data
+
         pipeline_mapping = {
             "voice_analysis": "voice_analysis_standard",
             "voice_synthesis": "voice_synthesis_standard",

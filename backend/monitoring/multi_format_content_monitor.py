@@ -26,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentFormat(Enum):
-    """Content formats supported by the platform"""
+    """
+        Content formats supported by the platform"""
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -195,6 +196,8 @@ class MultiFormatContentMonitor:
                     content_id=content_id,
                     content_format=content_format
                 )
+
+
             
             metrics = self.content_metrics[content_id]
             
@@ -207,7 +210,9 @@ class MultiFormatContentMonitor:
             await self._calculate_derived_metrics(metrics)
             
             # Generate format-specific analytics
+
             format_analytics = await self._generate_format_analytics(metrics)
+
             self.format_analytics[content_format].append(format_analytics)
             
             # Store historical data
@@ -215,14 +220,18 @@ class MultiFormatContentMonitor:
             
             # Generate optimization recommendations
             metrics.optimization_recommendations = await self._generate_optimization_recommendations(metrics)
+
             
             metrics.last_updated = datetime.now()
+
             
             logger.info(f"✅ Content performance tracked for {content_id} ({content_format.value})")
+
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to track content performance: {e}")
+
             return False
     
     async def _calculate_derived_metrics(self, metrics: ContentPerformanceMetrics):
@@ -242,6 +251,8 @@ class MultiFormatContentMonitor:
                 metrics.viral_coefficient = metrics.shares / metrics.views
             
             # Calculate engagement velocity (engagement per hour since creation)
+
+
             time_diff = (datetime.now() - metrics.created_at).total_seconds() / 3600
             if time_diff > 0:
                 total_engagement = metrics.likes + metrics.shares + metrics.comments
@@ -260,48 +271,57 @@ class MultiFormatContentMonitor:
     ) -> FormatSpecificAnalytics:
         """Generate format-specific analytics"""
         analytics = FormatSpecificAnalytics(format_type=metrics.content_format)
+
         
         try:
             # Audio/Voice/Podcast specific analytics
             if metrics.content_format in [ContentFormat.AUDIO, ContentFormat.VOICE, ContentFormat.PODCAST]:
                 analytics.audio_quality_score = await self._calculate_audio_quality(metrics)
+
                 analytics.audio_engagement_pattern = await self._analyze_audio_engagement(metrics)
                 
             # Video/Live Stream/Avatar specific analytics
             elif metrics.content_format in [ContentFormat.VIDEO, ContentFormat.LIVE_STREAM, ContentFormat.AVATAR]:
                 analytics.video_quality_score = await self._calculate_video_quality(metrics)
+
                 analytics.video_completion_rate = metrics.audience_retention_rate
                 analytics.video_replay_rate = await self._calculate_replay_rate(metrics)
                 
             # Image specific analytics
             elif metrics.content_format == ContentFormat.IMAGE:
                 analytics.image_quality_score = await self._calculate_image_quality(metrics)
+
                 analytics.visual_appeal_score = await self._calculate_visual_appeal(metrics)
                 
             # Text specific analytics
             elif metrics.content_format == ContentFormat.TEXT:
                 analytics.readability_score = await self._calculate_readability(metrics)
+
                 analytics.seo_score = await self._calculate_seo_score(metrics)
+
                 analytics.content_depth_score = await self._calculate_content_depth(metrics)
             
             # Generate format-specific optimization suggestions
             analytics.format_optimization_suggestions = await self._generate_format_optimizations(analytics)
+
             
         except Exception as e:
             logger.error(f"❌ Failed to generate format analytics: {e}")
+
         
         return analytics
     
     async def _calculate_audio_quality(self, metrics: ContentPerformanceMetrics) -> float:
-        """Calculate audio quality score"""
-        # Placeholder for audio quality analysis
-        # In production, this would analyze audio file properties
+        """Calculate audio quality score"""        # In production, this would analyze audio file properties
+
         base_score = metrics.technical_quality_score or 0.7
+
         engagement_bonus = min(0.3, metrics.engagement_rate * 0.5)
         return min(1.0, base_score + engagement_bonus)
     
     async def _analyze_audio_engagement(self, metrics: ContentPerformanceMetrics) -> Dict[str, float]:
-        """Analyze audio engagement patterns"""
+        """
+        Analyze audio engagement patterns"""
         return {
             "initial_engagement": min(1.0, metrics.engagement_velocity / 10),
             "sustained_engagement": metrics.audience_retention_rate,
@@ -311,12 +331,15 @@ class MultiFormatContentMonitor:
     async def _calculate_video_quality(self, metrics: ContentPerformanceMetrics) -> float:
         """Calculate video quality score"""
         base_score = metrics.technical_quality_score or 0.7
+
         completion_bonus = metrics.audience_retention_rate * 0.2
+
         engagement_bonus = min(0.1, metrics.engagement_rate * 0.2)
         return min(1.0, base_score + completion_bonus + engagement_bonus)
     
     async def _calculate_replay_rate(self, metrics: ContentPerformanceMetrics) -> float:
-        """Calculate video replay rate"""
+        """
+        Calculate video replay rate"""
         # Estimate replay rate based on engagement patterns
         if metrics.views > 0:
             replay_indicator = (metrics.likes + metrics.saves) / metrics.views
@@ -324,14 +347,18 @@ class MultiFormatContentMonitor:
         return 0.0
     
     async def _calculate_image_quality(self, metrics: ContentPerformanceMetrics) -> float:
-        """Calculate image quality score"""
+        """
+        Calculate image quality score"""
         base_score = metrics.technical_quality_score or 0.7
+
         viral_bonus = min(0.2, metrics.viral_coefficient * 0.1)
+
         engagement_bonus = min(0.1, metrics.engagement_rate * 0.2)
         return min(1.0, base_score + viral_bonus + engagement_bonus)
     
     async def _calculate_visual_appeal(self, metrics: ContentPerformanceMetrics) -> float:
-        """Calculate visual appeal score"""
+        """
+        Calculate visual appeal score"""
         # Based on saves and shares (indicating visual appeal)
         if metrics.views > 0:
             appeal_score = (metrics.saves + metrics.shares) / metrics.views
@@ -339,14 +366,18 @@ class MultiFormatContentMonitor:
         return 0.0
     
     async def _calculate_readability(self, metrics: ContentPerformanceMetrics) -> float:
-        """Calculate text readability score"""
+        """
+        Calculate text readability score"""
         # Estimate readability based on engagement and retention
+
         retention_score = metrics.audience_retention_rate
+
         engagement_score = min(1.0, metrics.engagement_rate * 10)
         return (retention_score + engagement_score) / 2
     
     async def _calculate_seo_score(self, metrics: ContentPerformanceMetrics) -> float:
-        """Calculate SEO performance score"""
+        """
+        Calculate SEO performance score"""
         # Estimate SEO effectiveness based on organic reach
         if metrics.impressions > 0:
             organic_rate = metrics.views / metrics.impressions
@@ -354,7 +385,8 @@ class MultiFormatContentMonitor:
         return 0.5
     
     async def _calculate_content_depth(self, metrics: ContentPerformanceMetrics) -> float:
-        """Calculate content depth score"""
+        """
+        Calculate content depth score"""
         # Based on comments and engagement quality
         if metrics.views > 0:
             depth_indicator = metrics.comments / metrics.views
@@ -365,39 +397,50 @@ class MultiFormatContentMonitor:
         self, 
         analytics: FormatSpecificAnalytics
     ) -> List[str]:
-        """Generate format-specific optimization recommendations"""
+        """
+        Generate format-specific optimization recommendations"""
         recommendations = []
         
         try:
             if analytics.format_type in [ContentFormat.AUDIO, ContentFormat.VOICE, ContentFormat.PODCAST]:
                 if analytics.audio_quality_score and analytics.audio_quality_score < 0.7:
                     recommendations.append("Consider improving audio quality through better recording equipment or post-processing")
+
                 if analytics.audio_engagement_pattern:
                     if analytics.audio_engagement_pattern.get("sustained_engagement", 0) < 0.5:
                         recommendations.append("Optimize content structure to maintain listener engagement throughout")
+
             
             elif analytics.format_type in [ContentFormat.VIDEO, ContentFormat.LIVE_STREAM]:
                 if analytics.video_completion_rate and analytics.video_completion_rate < 0.6:
                     recommendations.append("Optimize video length and pacing to improve completion rates")
+
                 if analytics.video_quality_score and analytics.video_quality_score < 0.7:
                     recommendations.append("Enhance video production quality for better viewer retention")
+
             
             elif analytics.format_type == ContentFormat.IMAGE:
                 if analytics.visual_appeal_score and analytics.visual_appeal_score < 0.5:
                     recommendations.append("Improve visual composition and aesthetic appeal")
+
                 if analytics.image_quality_score and analytics.image_quality_score < 0.7:
                     recommendations.append("Optimize image resolution and technical quality")
+
             
             elif analytics.format_type == ContentFormat.TEXT:
                 if analytics.readability_score and analytics.readability_score < 0.6:
                     recommendations.append("Improve text readability and structure")
+
                 if analytics.seo_score and analytics.seo_score < 0.5:
                     recommendations.append("Optimize for search engines with better keywords and structure")
+
                 if analytics.content_depth_score and analytics.content_depth_score < 0.3:
                     recommendations.append("Add more depth and substance to encourage reader engagement")
+
         
         except Exception as e:
             logger.error(f"❌ Failed to generate format optimizations: {e}")
+
         
         return recommendations
     
@@ -426,13 +469,16 @@ class MultiFormatContentMonitor:
                 recommendations.append("Implement better monetization strategies to increase revenue per view")
             
             # Platform-specific recommendations
+
             platform_performance = metrics.platform_performance
             for platform, perf_data in platform_performance.items():
                 if isinstance(perf_data, dict) and perf_data.get("engagement_rate", 0) < 0.03:
                     recommendations.append(f"Optimize content specifically for {platform} audience preferences")
+
         
         except Exception as e:
             logger.error(f"❌ Failed to generate optimization recommendations: {e}")
+
         
         return recommendations
     
@@ -444,10 +490,12 @@ class MultiFormatContentMonitor:
         self, 
         content_format: ContentFormat
     ) -> Dict[str, Any]:
-        """Get performance summary for specific content format"""
+        """
+        Get performance summary for specific content format"""
         try:
             format_contents = [
                 metrics for metrics in self.content_metrics.values()
+
                 if metrics.content_format == content_format
             ]
             
@@ -455,11 +503,21 @@ class MultiFormatContentMonitor:
                 return {"error": "No content found for this format"}
             
             # Calculate aggregate metrics
+
             total_views = sum(m.views for m in format_contents)
+
+
             total_engagement = sum(m.likes + m.shares + m.comments for m in format_contents)
+
+
             avg_quality = statistics.mean(m.content_quality_score for m in format_contents)
+
+
             avg_viral_coefficient = statistics.mean(m.viral_coefficient for m in format_contents)
+
+
             total_revenue = sum(m.revenue_generated for m in format_contents)
+
             
             return {
                 "format": content_format.value,
@@ -476,21 +534,27 @@ class MultiFormatContentMonitor:
             
         except Exception as e:
             logger.error(f"❌ Failed to get format performance summary: {e}")
+
             return {"error": str(e)}
     
     async def get_real_time_dashboard(self) -> Dict[str, Any]:
         """Get real-time multi-format performance dashboard"""
         try:
             current_time = datetime.now()
+
+
             recent_threshold = current_time - timedelta(minutes=self.analytics_config["real_time_threshold"])
             
             # Get recent content
+
             recent_content = [
                 metrics for metrics in self.content_metrics.values()
+
                 if metrics.last_updated >= recent_threshold
             ]
             
             # Calculate real-time metrics by format
+
             format_metrics = {}
             for format_type in ContentFormat:
                 format_content = [m for m in recent_content if m.content_format == format_type]
@@ -516,6 +580,7 @@ class MultiFormatContentMonitor:
             
         except Exception as e:
             logger.error(f"❌ Failed to generate real-time dashboard: {e}")
+
             return {"error": str(e)}
     
     async def _generate_performance_alerts(self, content_list: List[ContentPerformanceMetrics]) -> List[Dict[str, Any]]:
@@ -553,9 +618,11 @@ class MultiFormatContentMonitor:
                         "message": f"Quality below threshold: {content.content_quality_score:.2f}",
                         "severity": "warning"
                     })
+
         
         except Exception as e:
             logger.error(f"❌ Failed to generate performance alerts: {e}")
+
         
         return alerts
 
@@ -569,13 +636,16 @@ async def track_content_performance(content_id: str, content_format: ContentForm
     return await multi_format_content_monitor.track_content_performance(content_id, content_format, performance_data)
 
 async def get_content_analytics(content_id: str) -> Optional[ContentPerformanceMetrics]:
-    """Get content analytics - convenience function"""
+    """
+        Get content analytics - convenience function"""
     return await multi_format_content_monitor.get_content_analytics(content_id)
 
 async def get_format_performance_summary(content_format: ContentFormat) -> Dict[str, Any]:
-    """Get format performance summary - convenience function"""
+    """
+        Get format performance summary - convenience function"""
     return await multi_format_content_monitor.get_format_performance_summary(content_format)
 
 async def get_real_time_dashboard() -> Dict[str, Any]:
-    """Get real-time dashboard - convenience function"""
+    """
+        Get real-time dashboard - convenience function"""
     return await multi_format_content_monitor.get_real_time_dashboard()

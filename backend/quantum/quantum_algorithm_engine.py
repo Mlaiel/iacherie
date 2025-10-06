@@ -40,7 +40,8 @@ logger = logging.getLogger(__name__)
 # ========================================
 
 class QuantumAlgorithmCategory(Enum):
-    """Catégories d'algorithmes quantiques"""
+    """
+        Catégories d'algorithmes quantiques"""
     OPTIMIZATION = "optimization_algorithms"
     SEARCH = "search_algorithms"
     CONTENT_PROCESSING = "content_processing_algorithms"
@@ -152,7 +153,8 @@ class AlgorithmExecutionResult:
 
 @dataclass
 class QuantumCircuitConfig:
-    """Configuration circuit quantique"""
+    """
+        Configuration circuit quantique"""
     num_qubits: int
     circuit_depth: int
     gate_set: List[str]
@@ -166,7 +168,8 @@ class QuantumCircuitConfig:
 # ========================================
 
 class QuantumOptimizationProcessor(ABC):
-    """Interface pour processeur d'optimisation quantique"""
+    """
+        Interface pour processeur d'optimisation quantique"""
     
     @abstractmethod
     async def optimize_problem(self, problem: Dict[str, Any], algorithm_type: OptimizationAlgorithmType) -> Dict[str, Any]:
@@ -177,7 +180,8 @@ class QuantumOptimizationProcessor(ABC):
         pass
 
 class QuantumSearchProcessor(ABC):
-    """Interface pour processeur de recherche quantique"""
+    """
+        Interface pour processeur de recherche quantique"""
     
     @abstractmethod
     async def search_database(self, database: Dict[str, Any], query: Dict[str, Any], algorithm_type: SearchAlgorithmType) -> Dict[str, Any]:
@@ -188,7 +192,8 @@ class QuantumSearchProcessor(ABC):
         pass
 
 class ContentProcessingProcessor(ABC):
-    """Interface pour processeur de contenu quantique"""
+    """
+        Interface pour processeur de contenu quantique"""
     
     @abstractmethod
     async def process_content(self, content: Dict[str, Any], processing_type: ContentProcessingType) -> Dict[str, Any]:
@@ -199,7 +204,8 @@ class ContentProcessingProcessor(ABC):
         pass
 
 class EngagementPredictionProcessor(ABC):
-    """Interface pour processeur de prédiction d'engagement"""
+    """
+        Interface pour processeur de prédiction d'engagement"""
     
     @abstractmethod
     async def predict_engagement(self, content_data: Dict[str, Any], prediction_type: EngagementPredictionType) -> Dict[str, Any]:
@@ -271,34 +277,44 @@ class QuantumAlgorithmEngine:
             logger.info(f"🎯 Optimizing with quantum algorithm: {algorithm_type.value}")
             
             # Sélection ou création du processeur d'optimisation
+
             optimizer = await self._get_or_create_optimization_processor(algorithm_type)
             
             # Préparation du problème pour optimisation quantique
+
             quantum_problem = await self._prepare_optimization_problem(problem_data, optimization_targets)
             
             # Configuration du circuit quantique pour l'algorithme
+
             circuit_config = await self._configure_optimization_circuit(algorithm_type, quantum_problem)
             
             # Exécution de l'algorithme d'optimisation quantique
+
             optimization_result = await optimizer.optimize_problem(quantum_problem, algorithm_type)
             
             # Évaluation de la qualité de la solution
+
             solution_quality = await optimizer.evaluate_solution_quality(optimization_result, quantum_problem)
             
             # Calcul des métriques d'optimisation
+
             optimization_metrics = await self._calculate_optimization_metrics(
                 optimization_result, solution_quality, algorithm_type
             )
             
             # Validation avec cibles d'optimisation
+
             target_validation = await self._validate_optimization_targets(
                 optimization_result, optimization_targets
             )
             
             # Calcul de l'avantage quantique
+
             quantum_advantage = await self._calculate_optimization_quantum_advantage(
                 optimization_result, algorithm_type
             )
+
+
             
             result = {
                 "optimization_algorithm": algorithm_type.value,
@@ -317,11 +333,13 @@ class QuantumAlgorithmEngine:
             }
             
             logger.info(f"✅ Quantum optimization completed with {quantum_advantage:.2f}x advantage and {solution_quality:.4f} quality")
+
             
             return result
             
         except Exception as e:
             logger.error(f"❌ Failed to perform quantum optimization: {e}")
+
             raise
     
     # ========================================
@@ -351,35 +369,47 @@ class QuantumAlgorithmEngine:
             logger.info(f"🔍 Searching with quantum algorithm: {algorithm_type.value}")
             
             # Sélection ou création du processeur de recherche
+
             searcher = await self._get_or_create_search_processor(algorithm_type)
             
             # Préparation des données pour recherche quantique
+
             quantum_database = await self._prepare_search_database(database_data, algorithm_type)
+
+
             quantum_query = await self._prepare_search_query(search_query, algorithm_type)
             
             # Estimation de la complexité de recherche
+
             complexity_analysis = await searcher.estimate_search_complexity(
                 len(database_data.get("items", [])), algorithm_type
             )
             
             # Configuration du circuit de recherche
+
             search_circuit_config = await self._configure_search_circuit(algorithm_type, quantum_database)
             
             # Exécution de la recherche quantique
+
             search_result = await searcher.search_database(quantum_database, quantum_query, algorithm_type)
             
             # Validation des résultats de recherche
+
             result_validation = await self._validate_search_results(search_result, search_query)
             
             # Calcul des métriques de recherche
+
             search_metrics = await self._calculate_search_metrics(
                 search_result, complexity_analysis, algorithm_type
             )
             
             # Calcul de l'accélération quantique
+
             quantum_speedup = await self._calculate_search_quantum_speedup(
                 search_metrics, algorithm_type, len(database_data.get("items", []))
             )
+
+
             
             result = {
                 "search_algorithm": algorithm_type.value,
@@ -398,11 +428,13 @@ class QuantumAlgorithmEngine:
             }
             
             logger.info(f"✅ Quantum search completed with {quantum_speedup:.2f}x speedup and {result_validation.get('accuracy', 0.0):.4f} accuracy")
+
             
             return result
             
         except Exception as e:
             logger.error(f"❌ Failed to perform quantum search: {e}")
+
             raise
     
     # ========================================
@@ -430,39 +462,49 @@ class QuantumAlgorithmEngine:
         """
         try:
             logger.info(f"📝 Processing content with quantum: {processing_type.value}")
+
             
             if enhancement_targets is None:
                 enhancement_targets = ["quality", "accuracy", "efficiency"]
             
             # Sélection ou création du processeur de contenu
+
             processor = await self._get_or_create_content_processor(processing_type)
             
             # Préparation du contenu pour traitement quantique
+
             quantum_content = await self._prepare_content_for_quantum_processing(content_data, processing_type)
             
             # Configuration du traitement quantique
+
             processing_config = await self._configure_content_processing(processing_type, enhancement_targets)
             
             # Exécution du traitement quantique
+
             processed_content = await processor.process_content(quantum_content, processing_type)
             
             # Analyse de la qualité du contenu traité
             quality_analysis = await processor.analyze_content_quality(processed_content)
             
             # Application des améliorations ciblées
+
             enhanced_content = await self._apply_content_enhancements(
                 processed_content, enhancement_targets, processing_type
             )
             
             # Calcul des métriques de traitement
+
             processing_metrics = await self._calculate_content_processing_metrics(
                 enhanced_content, quality_analysis, processing_type
             )
             
             # Calcul de l'amélioration quantique
+
             quantum_improvement = await self._calculate_content_quantum_improvement(
                 enhanced_content, content_data, processing_type
             )
+
+
             
             result = {
                 "processing_type": processing_type.value,
@@ -483,11 +525,13 @@ class QuantumAlgorithmEngine:
             }
             
             logger.info(f"✅ Content processing completed with {quantum_improvement:.2f}x improvement and {quality_analysis.get('quality_score', 0.0):.4f} quality")
+
             
             return result
             
         except Exception as e:
             logger.error(f"❌ Failed to process content with quantum: {e}")
+
             raise
     
     # ========================================
@@ -517,38 +561,51 @@ class QuantumAlgorithmEngine:
             logger.info(f"📊 Predicting engagement with quantum: {prediction_type.value}")
             
             # Sélection ou création du processeur de prédiction
+
             predictor = await self._get_or_create_engagement_processor(prediction_type)
             
             # Préparation des données pour prédiction quantique
+
             quantum_content_data = await self._prepare_content_for_prediction(content_data, prediction_type)
+
+
             quantum_audience_data = await self._prepare_audience_for_prediction(audience_data, prediction_type)
             
             # Fusion des données pour modèle quantique
+
             combined_data = await self._combine_prediction_data(quantum_content_data, quantum_audience_data)
             
             # Configuration du modèle de prédiction quantique
+
             prediction_model_config = await self._configure_prediction_model(prediction_type, combined_data)
             
             # Exécution de la prédiction quantique
+
             prediction_result = await predictor.predict_engagement(combined_data, prediction_type)
             
             # Analyse de confiance de la prédiction
+
             confidence_analysis = await self._analyze_prediction_confidence(prediction_result, prediction_type)
             
             # Génération de recommandations basées sur la prédiction
+
             recommendations = await self._generate_engagement_recommendations(
                 prediction_result, content_data, audience_data
             )
             
             # Calcul des métriques de prédiction
+
             prediction_metrics = await self._calculate_prediction_metrics(
                 prediction_result, confidence_analysis, prediction_type
             )
             
             # Calcul de l'avantage prédictif quantique
+
             quantum_prediction_advantage = await self._calculate_prediction_quantum_advantage(
                 prediction_result, prediction_type
             )
+
+
             
             result = {
                 "prediction_type": prediction_type.value,
@@ -567,11 +624,13 @@ class QuantumAlgorithmEngine:
             }
             
             logger.info(f"✅ Engagement prediction completed with {quantum_prediction_advantage:.2f}x advantage and {confidence_analysis.get('confidence', 0.0):.4f} confidence")
+
             
             return result
             
         except Exception as e:
             logger.error(f"❌ Failed to predict engagement with quantum: {e}")
+
             raise
     
     # ========================================
@@ -590,9 +649,11 @@ class QuantumAlgorithmEngine:
         """
         try:
             start_time = datetime.utcnow()
+
             logger.info(f"🚀 Executing quantum algorithm: {request.algorithm_type}")
             
             # Détermination de la catégorie d'algorithme
+
             algorithm_category = await self._determine_algorithm_category(request.algorithm_type)
             
             # Exécution selon la catégorie
@@ -600,6 +661,7 @@ class QuantumAlgorithmEngine:
                 execution_output = await self.optimize_quantum(
                     request.input_data, request.algorithm_type, request.optimization_targets
                 )
+
             
             elif algorithm_category == QuantumAlgorithmCategory.SEARCH:
                 execution_output = await self.search_quantum(
@@ -607,6 +669,7 @@ class QuantumAlgorithmEngine:
                     request.input_data.get("query", {}),
                     request.algorithm_type
                 )
+
             
             elif algorithm_category == QuantumAlgorithmCategory.CONTENT_PROCESSING:
                 execution_output = await self.process_content_quantum(
@@ -614,6 +677,7 @@ class QuantumAlgorithmEngine:
                     request.algorithm_type,
                     request.input_data.get("enhancement_targets", [])
                 )
+
             
             elif algorithm_category == QuantumAlgorithmCategory.ENGAGEMENT_PREDICTION:
                 execution_output = await self.predict_engagement_quantum(
@@ -621,25 +685,33 @@ class QuantumAlgorithmEngine:
                     request.input_data.get("audience", {}),
                     request.algorithm_type
                 )
+
             
             else:
                 raise ValueError(f"Unsupported algorithm category: {algorithm_category}")
             
             # Calcul des métriques unifiées
+
             quantum_metrics = await self._calculate_unified_quantum_metrics(execution_output, request)
             
             # Analyse de performance
+
             performance_analysis = await self._analyze_algorithm_performance(execution_output, request)
             
             # Calcul de l'avantage quantique global
+
             quantum_advantage = execution_output.get("quantum_advantage", 
                                                    execution_output.get("quantum_speedup", 
                                                                        execution_output.get("quantum_improvement", 1.0)))
             
             # Calcul du score de précision
+
             accuracy_score = await self._calculate_unified_accuracy_score(execution_output, request)
+
+
             
             processing_time = (datetime.utcnow() - start_time).total_seconds() * 1000
+
             
             result = AlgorithmExecutionResult(
                 request_id=request.request_id,
@@ -656,13 +728,17 @@ class QuantumAlgorithmEngine:
             
             # Stockage dans l'historique
             self.execution_history.append(result)
+
             
             logger.info(f"✅ Algorithm execution completed with {quantum_advantage:.2f}x advantage and {accuracy_score:.4f} accuracy in {processing_time:.0f}ms")
+
             
             return result
             
         except Exception as e:
             logger.error(f"❌ Failed to execute quantum algorithm: {e}")
+
+
             
             processing_time = (datetime.utcnow() - start_time).total_seconds() * 1000
             
@@ -691,7 +767,8 @@ class QuantumAlgorithmEngine:
         return self.optimization_processors[algorithm_type]
     
     async def _create_optimization_processor(self, algorithm_type: OptimizationAlgorithmType):
-        """Création processeur optimisation"""
+        """
+        Création processeur optimisation"""
         class MockOptimizationProcessor(QuantumOptimizationProcessor):
             async def optimize_problem(self, problem: Dict[str, Any], alg_type: OptimizationAlgorithmType) -> Dict[str, Any]:
                 return {
@@ -705,6 +782,7 @@ class QuantumAlgorithmEngine:
             
             async def evaluate_solution_quality(self, solution: Dict[str, Any], problem: Dict[str, Any]) -> float:
                 return np.random.uniform(0.8, 0.95)
+
         
         return MockOptimizationProcessor()
     
@@ -722,18 +800,25 @@ class QuantumAlgorithmEngine:
     async def _configure_optimization_circuit(self, algorithm_type: OptimizationAlgorithmType, problem: Dict[str, Any]) -> QuantumCircuitConfig:
         """Configuration circuit optimisation"""
         problem_size = problem.get("problem_size", 10)
+
         
         if algorithm_type == OptimizationAlgorithmType.QAOA:
             num_qubits = problem_size
+
             circuit_depth = 2 * problem_size  # p layers for QAOA
             gate_set = ["RX", "RZ", "CNOT"]
         elif algorithm_type == OptimizationAlgorithmType.VQE:
             num_qubits = problem_size
+
             circuit_depth = 4
+
             gate_set = ["RY", "RZ", "CNOT"]
         else:
             num_qubits = max(4, problem_size)
+
+
             circuit_depth = 6
+
             gate_set = ["RX", "RY", "RZ", "CNOT"]
         
         return QuantumCircuitConfig(
@@ -774,6 +859,7 @@ class QuantumAlgorithmEngine:
         base_advantage = 1.0
         
         # Advantage spécifique à l'algorithme
+
         algorithm_advantages = {
             OptimizationAlgorithmType.QAOA: 2.8,
             OptimizationAlgorithmType.VQE: 2.5,
@@ -788,16 +874,20 @@ class QuantumAlgorithmEngine:
     # ========================================
     
     async def _get_or_create_search_processor(self, algorithm_type: SearchAlgorithmType):
-        """Récupération ou création processeur recherche"""
+        """
+        Récupération ou création processeur recherche"""
         if algorithm_type not in self.search_processors:
             self.search_processors[algorithm_type] = await self._create_search_processor(algorithm_type)
         return self.search_processors[algorithm_type]
     
     async def _create_search_processor(self, algorithm_type: SearchAlgorithmType):
-        """Création processeur recherche"""
+        """
+        Création processeur recherche"""
         class MockSearchProcessor(QuantumSearchProcessor):
             async def search_database(self, database: Dict[str, Any], query: Dict[str, Any], alg_type: SearchAlgorithmType) -> Dict[str, Any]:
                 items = database.get("items", [])
+
+
                 matches = items[:min(5, len(items))]  # Simulation de résultats
                 return {
                     "matches": matches,
@@ -811,9 +901,12 @@ class QuantumAlgorithmEngine:
             async def estimate_search_complexity(self, database_size: int, alg_type: SearchAlgorithmType) -> Dict[str, Any]:
                 if alg_type == SearchAlgorithmType.GROVER:
                     quantum_iterations = max(1, int(math.sqrt(database_size)))
+
+
                     classical_iterations = database_size
                 else:
                     quantum_iterations = max(1, int(math.log2(database_size))) if database_size > 0 else 1
+
                     classical_iterations = database_size
                 
                 return {
@@ -848,18 +941,30 @@ class QuantumAlgorithmEngine:
     async def _configure_search_circuit(self, algorithm_type: SearchAlgorithmType, database: Dict[str, Any]) -> QuantumCircuitConfig:
         """Configuration circuit recherche"""
         database_size = database.get("database_size", 100)
+
         
         if algorithm_type == SearchAlgorithmType.GROVER:
             num_qubits = max(4, int(math.log2(database_size)) + 1)
+
+
             circuit_depth = max(1, int(math.sqrt(database_size)))
+
+
             gate_set = ["H", "X", "Z", "CNOT", "oracle"]
         elif algorithm_type == SearchAlgorithmType.QUANTUM_WALK:
             num_qubits = max(6, int(math.log2(database_size)) + 2)
+
+
             circuit_depth = int(math.sqrt(database_size))
+
+
             gate_set = ["H", "RY", "CNOT", "shift_operator"]
         else:
             num_qubits = max(4, int(math.log2(database_size)))
+
+
             circuit_depth = 8
+
             gate_set = ["H", "RY", "RZ", "CNOT"]
         
         return QuantumCircuitConfig(
@@ -906,13 +1011,15 @@ class QuantumAlgorithmEngine:
     # ========================================
     
     async def _get_or_create_content_processor(self, processing_type: ContentProcessingType):
-        """Récupération ou création processeur contenu"""
+        """
+        Récupération ou création processeur contenu"""
         if processing_type not in self.content_processors:
             self.content_processors[processing_type] = await self._create_content_processor(processing_type)
         return self.content_processors[processing_type]
     
     async def _create_content_processor(self, processing_type: ContentProcessingType):
-        """Création processeur contenu"""
+        """
+        Création processeur contenu"""
         class MockContentProcessor(ContentProcessingProcessor):
             async def process_content(self, content: Dict[str, Any], proc_type: ContentProcessingType) -> Dict[str, Any]:
                 return {
@@ -958,10 +1065,12 @@ class QuantumAlgorithmEngine:
     async def _apply_content_enhancements(self, content: Dict[str, Any], targets: List[str], processing_type: ContentProcessingType) -> Dict[str, Any]:
         """Application améliorations contenu"""
         enhanced_content = content.copy()
+
         
         for target in targets:
             enhanced_content[f"{target}_enhanced"] = True
             enhanced_content[f"{target}_improvement_score"] = np.random.uniform(0.7, 0.9)
+
         
         return enhanced_content
     
@@ -981,6 +1090,7 @@ class QuantumAlgorithmEngine:
         base_improvement = 1.0
         
         # Amélioration spécifique au type de traitement
+
         processing_improvements = {
             ContentProcessingType.TEXT_ANALYSIS: 1.8,
             ContentProcessingType.IMAGE_PROCESSING: 2.2,
@@ -991,7 +1101,8 @@ class QuantumAlgorithmEngine:
         return processing_improvements.get(processing_type, base_improvement)
     
     async def _validate_enhancement_targets(self, content: Dict[str, Any], targets: List[str]) -> Dict[str, Any]:
-        """Validation cibles amélioration"""
+        """
+        Validation cibles amélioration"""
         validation = {}
         for target in targets:
             validation[target] = {
@@ -1012,7 +1123,8 @@ class QuantumAlgorithmEngine:
         return self.engagement_processors[prediction_type]
     
     async def _create_engagement_processor(self, prediction_type: EngagementPredictionType):
-        """Création processeur prédiction"""
+        """
+        Création processeur prédiction"""
         class MockEngagementProcessor(EngagementPredictionProcessor):
             async def predict_engagement(self, content_data: Dict[str, Any], pred_type: EngagementPredictionType) -> Dict[str, Any]:
                 return {
@@ -1025,6 +1137,7 @@ class QuantumAlgorithmEngine:
             
             async def validate_prediction_accuracy(self, prediction: Dict[str, Any], actual_data: Dict[str, Any]) -> float:
                 return np.random.uniform(0.8, 0.93)
+
         
         return MockEngagementProcessor()
     
@@ -1082,15 +1195,20 @@ class QuantumAlgorithmEngine:
     async def _generate_engagement_recommendations(self, prediction: Dict[str, Any], content_data: Dict[str, Any], audience_data: Dict[str, Any]) -> List[str]:
         """Génération recommandations engagement"""
         recommendations = []
+
         
         engagement_score = prediction.get("engagement_score", 0.8)
+
         viral_potential = prediction.get("viral_potential", 0.7)
+
         
         if engagement_score < 0.8:
             recommendations.append("Optimize content for higher audience engagement")
+
         
         if viral_potential < 0.7:
             recommendations.append("Add viral elements and trending topics")
+
         
         recommendations.extend([
             "Leverage quantum-optimized posting schedule",
@@ -1098,6 +1216,7 @@ class QuantumAlgorithmEngine:
             "Use quantum-enhanced SEO strategies",
             "Apply cross-platform synergy optimization"
         ])
+
         
         return recommendations[:5]
     
@@ -1118,6 +1237,7 @@ class QuantumAlgorithmEngine:
         base_advantage = 1.0
         
         # Avantage spécifique au type de prédiction
+
         prediction_advantages = {
             EngagementPredictionType.AUDIENCE_BEHAVIOR: 2.3,
             EngagementPredictionType.VIRAL_POTENTIAL: 2.8,
@@ -1132,7 +1252,8 @@ class QuantumAlgorithmEngine:
     # ========================================
     
     async def _determine_algorithm_category(self, algorithm_type) -> QuantumAlgorithmCategory:
-        """Détermination catégorie algorithme"""
+        """
+        Détermination catégorie algorithme"""
         if isinstance(algorithm_type, OptimizationAlgorithmType):
             return QuantumAlgorithmCategory.OPTIMIZATION
         elif isinstance(algorithm_type, SearchAlgorithmType):
@@ -1192,20 +1313,26 @@ class QuantumAlgorithmOptimizationEngine(QuantumAlgorithmEngine):
     pass
 
 class QuantumContentProcessingAccelerator(QuantumAlgorithmEngine):
-    """Alias pour compatibilité - Content Processing Accelerator"""
+    """
+        Alias pour compatibilité - Content Processing Accelerator"""
     pass
 
 class QuantumSearchAlgorithmAccelerator(QuantumAlgorithmEngine):
-    """Alias pour compatibilité - Search Algorithm Accelerator"""
+    """
+        Alias pour compatibilité - Search Algorithm Accelerator"""
     pass
 
 class QuantumEngagementPredictionAccelerator(QuantumAlgorithmEngine):
-    """Alias pour compatibilité - Engagement Prediction Accelerator"""
+    """
+        Alias pour compatibilité - Engagement Prediction Accelerator"""
     pass
 
 # ========================================
 # EXPORT INTERFACES
 # ========================================
+
+# Enterprise aliases
+AlgorithmRequest = AlgorithmExecutionRequest
 
 __all__ = [
     "QuantumAlgorithmEngine",
@@ -1215,6 +1342,7 @@ __all__ = [
     "QuantumEngagementPredictionAccelerator",
     "QuantumAlgorithm",
     "AlgorithmExecutionRequest",
+    "AlgorithmRequest",  # Alias
     "AlgorithmExecutionResult",
     "QuantumCircuitConfig",
     "QuantumAlgorithmCategory",

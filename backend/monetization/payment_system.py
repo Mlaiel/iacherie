@@ -43,7 +43,8 @@ warnings.filterwarnings('ignore')
 
 # Enums
 class PaymentMethod(Enum):
-    """Payment method types"""
+    """
+        Payment method types"""
     CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     PAYPAL = "paypal"
@@ -148,7 +149,8 @@ class PaymentTransaction:
 
 @dataclass
 class CryptoWallet:
-    """Crypto wallet data"""
+    """
+        Crypto wallet data"""
     wallet_id: str
     user_id: str
     network: CryptoNetwork
@@ -162,7 +164,8 @@ class CryptoWallet:
 
 @dataclass
 class SubscriptionModel:
-    """Subscription model data"""
+    """
+        Subscription model data"""
     subscription_id: str
     user_id: str
     plan: SubscriptionPlan
@@ -179,7 +182,8 @@ class SubscriptionModel:
 
 @dataclass
 class TaxCalculation:
-    """Tax calculation result"""
+    """
+        Tax calculation result"""
     calculation_id: str
     transaction_id: str
     region: TaxRegion
@@ -192,7 +196,8 @@ class TaxCalculation:
 
 @dataclass
 class PaymentGatewayResponse:
-    """Payment gateway response"""
+    """
+        Payment gateway response"""
     gateway_name: str
     transaction_id: str
     status: PaymentStatus
@@ -204,23 +209,28 @@ class PaymentGatewayResponse:
 
 # Exceptions
 class PaymentSystemError(Exception):
-    """Base payment system error"""
+    """
+        Base payment system error"""
     pass
 
 class PaymentProcessingError(PaymentSystemError):
-    """Payment processing error"""
+    """
+        Payment processing error"""
     pass
 
 class CryptoWalletError(PaymentSystemError):
-    """Crypto wallet error"""
+    """
+        Crypto wallet error"""
     pass
 
 class SubscriptionError(PaymentSystemError):
-    """Subscription error"""
+    """
+        Subscription error"""
     pass
 
 class TaxCalculationError(PaymentSystemError):
-    """Tax calculation error"""
+    """
+        Tax calculation error"""
     pass
 
 # Core Payment System
@@ -264,18 +274,24 @@ class EnterprisePaymentSystem:
         self.fraud_detection_enabled = self.config.enable_fraud_detection
         
     def _init_encryption(self):
-        """Initialize encryption for sensitive data"""
+        """
+        Initialize encryption for sensitive data"""
         try:
             if self.config.encryption_key:
                 self.cipher_suite = Fernet(self.config.encryption_key.encode())
+
             else:
                 # Generate key for development
+
                 key = Fernet.generate_key()
+
                 self.cipher_suite = Fernet(key)
+
                 
             self.logger.info("Encryption system initialized")
         except Exception as e:
             self.logger.error(f"Encryption initialization failed: {e}")
+
             raise PaymentSystemError(f"Failed to initialize encryption: {e}")
 
     def _init_payment_gateways(self):
@@ -292,6 +308,7 @@ class EnterprisePaymentSystem:
                 }
             
             # PayPal gateway (mock implementation)
+
             if self.config.paypal_client_id:
                 self.gateways['paypal'] = {
                     'client': None,  # Would be PayPal SDK client
@@ -321,9 +338,7 @@ class EnterprisePaymentSystem:
                 }
             
             # Ethereum handler
-            if CryptoNetwork.ETHEREUM in self.config.crypto_networks:
-                # Mock Web3 connection (in production: use real RPC endpoints)
-                self.crypto_handlers['ethereum'] = {
+            if CryptoNetwork.ETHEREUM in self.config.crypto_networks:                self.crypto_handlers['ethereum'] = {
                     'network': 'ethereum',
                     'web3': None,  # Would be Web3() instance
                     'processor': self._process_ethereum_payment
@@ -346,6 +361,7 @@ class EnterprisePaymentSystem:
             }
             
             # Tax rates database (simplified)
+
             self.tax_rates = {
                 TaxRegion.US: Decimal('0.0875'),  # 8.75% average
                 TaxRegion.EU: Decimal('0.20'),    # 20% VAT average
@@ -364,6 +380,7 @@ class EnterprisePaymentSystem:
         try:
             # Initialize Redis
             self.redis_client = redis.from_url(self.config.redis_url)
+
             await self.redis_client.ping()
             
             # Initialize PostgreSQL pool
@@ -373,10 +390,12 @@ class EnterprisePaymentSystem:
                 max_size=20,
                 command_timeout=30
             )
+
             
             self.logger.info("Database and Redis connections established")
         except Exception as e:
             self.logger.error(f"Connection initialization failed: {e}")
+
             raise PaymentSystemError(f"Failed to initialize connections: {e}")
 
     async def process_payment(
@@ -404,6 +423,8 @@ class EnterprisePaymentSystem:
         """
         try:
             transaction_id = str(uuid.uuid4())
+
+
             metadata = metadata or {}
             
             # Validate payment parameters
@@ -414,18 +435,23 @@ class EnterprisePaymentSystem:
                 await self._check_fraud_indicators(user_id, amount, payment_method)
             
             # Calculate taxes
+
             tax_calculation = await self._calculate_transaction_tax(
                 amount, currency, user_id, metadata.get('billing_region')
             )
             
             # Calculate fees
+
             processing_fees = await self._calculate_processing_fees(amount, payment_method)
             
             # Calculate net amount
+
             total_fees = processing_fees + tax_calculation.tax_amount
+
             net_amount = amount - total_fees
             
             # Create initial transaction record
+
             transaction = PaymentTransaction(
                 transaction_id=transaction_id,
                 user_id=user_id,
@@ -444,12 +470,14 @@ class EnterprisePaymentSystem:
             )
             
             # Process payment based on method
+
             gateway_response = await self._route_payment_to_gateway(transaction)
             
             # Update transaction with gateway response
             transaction.status = gateway_response.status
             transaction.gateway_transaction_id = gateway_response.gateway_reference
             transaction.updated_at = datetime.utcnow()
+
             
             if gateway_response.error_message:
                 transaction.metadata['error'] = gateway_response.error_message
@@ -470,12 +498,15 @@ class EnterprisePaymentSystem:
             
             # Send notifications based on status
             await self._send_payment_notifications(transaction)
+
             
             self.logger.info(f"Payment processed: {transaction_id} - {transaction.status.value}")
+
             return transaction
             
         except Exception as e:
             self.logger.error(f"Payment processing failed: {e}")
+
             raise PaymentProcessingError(f"Failed to process payment: {e}")
 
     async def _validate_payment_parameters(
@@ -520,7 +551,9 @@ class EnterprisePaymentSystem:
                 fraud_score += 20
             
             # Check for rapid transactions
+
             recent_transactions = await self._get_recent_user_transactions(user_id, hours=1)
+
             if len(recent_transactions) > 5:
                 fraud_score += 30
             
@@ -531,6 +564,7 @@ class EnterprisePaymentSystem:
             # Threshold check
             if fraud_score > 50:
                 raise PaymentProcessingError("Transaction flagged for fraud review")
+
             
         except PaymentProcessingError:
             raise
@@ -547,22 +581,28 @@ class EnterprisePaymentSystem:
         """Calculate tax for transaction"""
         try:
             # Determine tax region
+
             region = TaxRegion.GLOBAL
             if billing_region:
                 try:
                     region = TaxRegion(billing_region.lower())
+
                 except ValueError:
                     region = TaxRegion.GLOBAL
             
             # Get tax rate
+
             tax_rate = self.tax_rates.get(region, Decimal('0.15'))
             
             # Calculate tax amount
+
             tax_amount = amount * tax_rate
+
             
             calculation = TaxCalculation(
                 calculation_id=str(uuid.uuid4()),
                 transaction_id="",  # Will be set later
+
                 region=region,
                 tax_rate=tax_rate,
                 tax_amount=tax_amount,
@@ -570,11 +610,13 @@ class EnterprisePaymentSystem:
                 calculation_date=datetime.utcnow(),
                 tax_rules_applied=[f"{region.value}_standard_rate"]
             )
+
             
             return calculation
             
         except Exception as e:
             self.logger.error(f"Tax calculation failed: {e}")
+
             raise TaxCalculationError(f"Failed to calculate tax: {e}")
 
     async def _calculate_processing_fees(
@@ -585,6 +627,7 @@ class EnterprisePaymentSystem:
         """Calculate processing fees"""
         try:
             # Fee rates by payment method
+
             fee_rates = {
                 PaymentMethod.CREDIT_CARD: Decimal('0.029'),  # 2.9%
                 PaymentMethod.DEBIT_CARD: Decimal('0.025'),   # 2.5%
@@ -597,12 +640,15 @@ class EnterprisePaymentSystem:
                 PaymentMethod.CRYPTO_ETHEREUM: Decimal('0.015'), # 1.5%
                 PaymentMethod.CRYPTO_USDC: Decimal('0.01')    # 1%
             }
+
             
             rate = fee_rates.get(payment_method, Decimal('0.03'))
+
             return amount * rate
             
         except Exception as e:
             self.logger.warning(f"Fee calculation failed: {e}")
+
             return Decimal('0.00')
 
     async def _route_payment_to_gateway(
@@ -613,17 +659,23 @@ class EnterprisePaymentSystem:
         try:
             if transaction.payment_method in [PaymentMethod.CREDIT_CARD, PaymentMethod.DEBIT_CARD, PaymentMethod.STRIPE]:
                 return await self._process_stripe_payment(transaction)
+
             elif transaction.payment_method == PaymentMethod.PAYPAL:
                 return await self._process_paypal_payment(transaction)
+
             elif transaction.payment_method == PaymentMethod.BANK_TRANSFER:
                 return await self._process_bank_transfer(transaction)
+
             elif transaction.payment_method in [PaymentMethod.CRYPTO_BITCOIN, PaymentMethod.CRYPTO_ETHEREUM, PaymentMethod.CRYPTO_USDC]:
                 return await self._process_crypto_payment(transaction)
+
             else:
                 raise PaymentProcessingError(f"Unsupported payment method: {transaction.payment_method}")
+
                 
         except Exception as e:
             self.logger.error(f"Payment routing failed: {e}")
+
             return PaymentGatewayResponse(
                 gateway_name="unknown",
                 transaction_id=transaction.transaction_id,
@@ -638,13 +690,14 @@ class EnterprisePaymentSystem:
     async def _process_stripe_payment(self, transaction: PaymentTransaction) -> PaymentGatewayResponse:
         """Process Stripe payment"""
         try:
-            # Mock Stripe payment processing
             # In production: use actual Stripe API
             
             # Simulate processing delay
             await asyncio.sleep(0.1)
             
             # Simulate success/failure (90% success rate)
+
+
             success = np.random.random() > 0.1
             
             if success:
@@ -653,6 +706,7 @@ class EnterprisePaymentSystem:
                 error_msg = None
             else:
                 gateway_ref = None
+
                 status = PaymentStatus.FAILED
                 error_msg = "Card declined"
             
@@ -669,9 +723,11 @@ class EnterprisePaymentSystem:
                 },
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             self.logger.error(f"Stripe payment failed: {e}")
+
             return PaymentGatewayResponse(
                 gateway_name="stripe",
                 transaction_id=transaction.transaction_id,
@@ -686,7 +742,6 @@ class EnterprisePaymentSystem:
     async def _process_paypal_payment(self, transaction: PaymentTransaction) -> PaymentGatewayResponse:
         """Process PayPal payment"""
         try:
-            # Mock PayPal payment processing
             await asyncio.sleep(0.15)
             
             success = np.random.random() > 0.05  # 95% success rate
@@ -697,6 +752,7 @@ class EnterprisePaymentSystem:
                 error_msg = None
             else:
                 gateway_ref = None
+
                 status = PaymentStatus.FAILED
                 error_msg = "PayPal transaction declined"
             
@@ -713,6 +769,7 @@ class EnterprisePaymentSystem:
                 },
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             return PaymentGatewayResponse(
@@ -743,6 +800,7 @@ class EnterprisePaymentSystem:
                 },
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             return PaymentGatewayResponse(
@@ -759,7 +817,6 @@ class EnterprisePaymentSystem:
     async def _process_crypto_payment(self, transaction: PaymentTransaction) -> PaymentGatewayResponse:
         """Process cryptocurrency payment"""
         try:
-            # Mock crypto payment processing
             await asyncio.sleep(0.2)  # Simulate blockchain processing time
             
             # Determine network
@@ -771,9 +828,11 @@ class EnterprisePaymentSystem:
                 network = "ethereum"  # Default for USDC
             
             # Simulate transaction hash
+
             tx_hash = f"0x{uuid.uuid4().hex}"
             
             # Crypto payments have higher success rate due to pre-validation
+
             success = np.random.random() > 0.02  # 98% success rate
             
             if success:
@@ -798,6 +857,7 @@ class EnterprisePaymentSystem:
                 },
                 timestamp=datetime.utcnow()
             )
+
             
         except Exception as e:
             return PaymentGatewayResponse(
@@ -830,21 +890,32 @@ class EnterprisePaymentSystem:
             wallet_id = str(uuid.uuid4())
             
             # Generate wallet address and keys (mock implementation)
+
             if network == CryptoNetwork.BITCOIN:
                 address = self._generate_bitcoin_address()
+
                 private_key, public_key = self._generate_bitcoin_keys()
+
             elif network in [CryptoNetwork.ETHEREUM, CryptoNetwork.POLYGON]:
                 address = self._generate_ethereum_address()
+
                 private_key, public_key = self._generate_ethereum_keys()
+
             else:
                 raise CryptoWalletError(f"Unsupported network: {network}")
             
             # Encrypt private key
+
             private_key_encrypted = self._encrypt_sensitive_data(private_key)
             
             # Generate backup phrase and encrypt
+
             backup_phrase = self._generate_backup_phrase()
+
+
             backup_phrase_encrypted = self._encrypt_sensitive_data(backup_phrase)
+
+
             
             wallet = CryptoWallet(
                 wallet_id=wallet_id,
@@ -863,8 +934,10 @@ class EnterprisePaymentSystem:
             await self._store_crypto_wallet(wallet)
             
             # Cache wallet info (without sensitive data)
+
             if self.redis_client:
                 wallet_cache = asdict(wallet)
+
                 wallet_cache['private_key_encrypted'] = '[ENCRYPTED]'
                 wallet_cache['backup_phrase_encrypted'] = '[ENCRYPTED]'
                 
@@ -873,17 +946,21 @@ class EnterprisePaymentSystem:
                     3600,
                     json.dumps(wallet_cache, default=str)
                 )
+
             
             self.logger.info(f"Crypto wallet created: {wallet_id} on {network.value}")
+
             return wallet
             
         except Exception as e:
             self.logger.error(f"Crypto wallet creation failed: {e}")
+
             raise CryptoWalletError(f"Failed to create crypto wallet: {e}")
 
     def _generate_bitcoin_address(self) -> str:
         """Generate Bitcoin address (mock)"""
         # In production: use proper Bitcoin address generation
+
         prefix = np.random.choice(['1', '3', 'bc1'])
         if prefix == 'bc1':
             return f"bc1q{uuid.uuid4().hex[:39]}"
@@ -909,7 +986,6 @@ class EnterprisePaymentSystem:
 
     def _generate_backup_phrase(self) -> str:
         """Generate backup phrase for wallet"""
-        # Mock backup phrase generation
         words = [
             'apple', 'banana', 'cherry', 'dragon', 'elephant', 'forest',
             'guitar', 'house', 'island', 'jungle', 'kitchen', 'lemon'
@@ -917,22 +993,29 @@ class EnterprisePaymentSystem:
         return ' '.join(np.random.choice(words, 12, replace=False))
 
     def _encrypt_sensitive_data(self, data: str) -> str:
-        """Encrypt sensitive data"""
+        """
+        Encrypt sensitive data"""
         try:
             encrypted_bytes = self.cipher_suite.encrypt(data.encode())
+
             return base64.b64encode(encrypted_bytes).decode()
         except Exception as e:
             self.logger.error(f"Encryption failed: {e}")
+
             raise PaymentSystemError(f"Failed to encrypt data: {e}")
 
     def _decrypt_sensitive_data(self, encrypted_data: str) -> str:
         """Decrypt sensitive data"""
         try:
             encrypted_bytes = base64.b64decode(encrypted_data.encode())
+
+
             decrypted_bytes = self.cipher_suite.decrypt(encrypted_bytes)
+
             return decrypted_bytes.decode()
         except Exception as e:
             self.logger.error(f"Decryption failed: {e}")
+
             raise PaymentSystemError(f"Failed to decrypt data: {e}")
 
     async def create_subscription(
@@ -950,6 +1033,7 @@ class EnterprisePaymentSystem:
             plan: Subscription plan
             payment_method_id: Payment method for billing
             billing_cycle: Billing cycle (monthly, yearly)
+
             
         Returns:
             Created subscription
@@ -958,15 +1042,22 @@ class EnterprisePaymentSystem:
             subscription_id = str(uuid.uuid4())
             
             # Get plan pricing
+
             plan_pricing = await self._get_plan_pricing(plan, billing_cycle)
             
             # Calculate dates
+
             start_date = datetime.utcnow()
+
+
             trial_end_date = None
             
             if plan != SubscriptionPlan.FREE:
                 # Most plans have 7-day trial
+
                 trial_end_date = start_date + timedelta(days=7)
+
+
                 next_billing_date = trial_end_date
             else:
                 next_billing_date = None
@@ -974,8 +1065,10 @@ class EnterprisePaymentSystem:
             # Determine end date for non-recurring plans
             if billing_cycle == "yearly":
                 end_date = start_date + timedelta(days=365)
+
             else:
                 end_date = None  # Recurring subscription
+
             
             subscription = SubscriptionModel(
                 subscription_id=subscription_id,
@@ -1010,18 +1103,22 @@ class EnterprisePaymentSystem:
                     3600,
                     json.dumps(asdict(subscription), default=str)
                 )
+
             
             self.logger.info(f"Subscription created: {subscription_id} for user {user_id}")
+
             return subscription
             
         except Exception as e:
             self.logger.error(f"Subscription creation failed: {e}")
+
             raise SubscriptionError(f"Failed to create subscription: {e}")
 
     async def _get_plan_pricing(self, plan: SubscriptionPlan, billing_cycle: str) -> Dict[str, Any]:
         """Get pricing for subscription plan"""
         try:
             # Plan pricing database
+
             pricing = {
                 SubscriptionPlan.FREE: {
                     'monthly': {'amount': Decimal('0.00'), 'currency': 'USD'},
@@ -1048,10 +1145,12 @@ class EnterprisePaymentSystem:
                     'yearly': {'amount': Decimal('999.99'), 'currency': 'USD'}
                 }
             }
+
             
             plan_data = pricing[plan][billing_cycle]
             
             # Add features based on plan
+
             features = {
                 SubscriptionPlan.FREE: ['Basic content access', 'Limited uploads'],
                 SubscriptionPlan.BASIC: ['Standard content access', 'Basic analytics', 'Email support'],
@@ -1069,12 +1168,15 @@ class EnterprisePaymentSystem:
             
         except Exception as e:
             self.logger.error(f"Plan pricing lookup failed: {e}")
+
             return {'amount': Decimal('0.00'), 'currency': 'USD', 'features': []}
 
     async def _schedule_subscription_billing(self, subscription: SubscriptionModel):
         """Schedule subscription billing"""
         try:
             # In production: use task queue (Celery, RQ, etc.)
+
+
             billing_data = {
                 'subscription_id': subscription.subscription_id,
                 'user_id': subscription.user_id,
@@ -1088,8 +1190,10 @@ class EnterprisePaymentSystem:
                     "subscription_billing_queue",
                     json.dumps(billing_data, default=str)
                 )
+
             
             self.logger.info(f"Billing scheduled for subscription {subscription.subscription_id}")
+
             
         except Exception as e:
             self.logger.error(f"Billing scheduling failed: {e}")
@@ -1098,7 +1202,9 @@ class EnterprisePaymentSystem:
     async def _calculate_us_tax(self, amount: Decimal, metadata: Dict[str, Any]) -> TaxCalculation:
         """Calculate US tax"""
         # Simplified US tax calculation
+
         state = metadata.get('state', 'CA')
+
         tax_rate = Decimal('0.0875')  # California rate as example
         
         return TaxCalculation(
@@ -1115,6 +1221,7 @@ class EnterprisePaymentSystem:
     async def _calculate_eu_tax(self, amount: Decimal, metadata: Dict[str, Any]) -> TaxCalculation:
         """Calculate EU VAT"""
         country = metadata.get('country', 'DE')
+
         tax_rate = Decimal('0.19')  # German VAT as example
         
         return TaxCalculation(
@@ -1146,6 +1253,7 @@ class EnterprisePaymentSystem:
     async def _calculate_canada_tax(self, amount: Decimal, metadata: Dict[str, Any]) -> TaxCalculation:
         """Calculate Canada tax"""
         province = metadata.get('province', 'ON')
+
         tax_rate = Decimal('0.13')  # Ontario HST as example
         
         return TaxCalculation(
@@ -1201,6 +1309,7 @@ class EnterprisePaymentSystem:
                         (transaction_id, user_id, content_id, amount, currency, payment_method, 
                          status, gateway_transaction_id, created_at, updated_at, metadata, 
                          fees, tax_amount, net_amount)
+
                         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
                         """,
                         transaction.transaction_id, transaction.user_id, transaction.content_id,
@@ -1222,6 +1331,7 @@ class EnterprisePaymentSystem:
                         INSERT INTO tax_calculations 
                         (calculation_id, transaction_id, region, tax_rate, tax_amount, 
                          tax_jurisdiction, calculation_date, tax_rules_applied, exemption_applied)
+
                         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
                         """,
                         tax_calc.calculation_id, tax_calc.transaction_id, tax_calc.region.value,
@@ -1241,6 +1351,7 @@ class EnterprisePaymentSystem:
                         INSERT INTO crypto_wallets 
                         (wallet_id, user_id, network, address, private_key_encrypted, 
                          public_key, balance, created_at, is_active, backup_phrase_encrypted)
+
                         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
                         """,
                         wallet.wallet_id, wallet.user_id, wallet.network.value, wallet.address,
@@ -1261,6 +1372,7 @@ class EnterprisePaymentSystem:
                         (subscription_id, user_id, plan, status, start_date, end_date, 
                          next_billing_date, amount, currency, billing_cycle, trial_end_date, 
                          payment_method_id, metadata)
+
                         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
                         """,
                         subscription.subscription_id, subscription.user_id, subscription.plan.value,
@@ -1274,16 +1386,14 @@ class EnterprisePaymentSystem:
 
     async def _get_recent_user_transactions(self, user_id: str, hours: int = 1) -> List[PaymentTransaction]:
         """Get recent transactions for user"""
-        try:
-            # Mock implementation
-            return []  # In production: query from database
+        try:            return []  # In production: query from database
         except Exception:
             return []
 
     async def _send_payment_notifications(self, transaction: PaymentTransaction):
-        """Send payment notifications"""
+        """
+        Send payment notifications"""
         try:
-            # Mock notification system
             notification_data = {
                 'user_id': transaction.user_id,
                 'transaction_id': transaction.transaction_id,
@@ -1297,6 +1407,7 @@ class EnterprisePaymentSystem:
                     "payment_notifications",
                     json.dumps(notification_data)
                 )
+
             
         except Exception as e:
             self.logger.error(f"Notification sending failed: {e}")
@@ -1309,7 +1420,8 @@ class PaymentProcessor:
         self.system = system
     
     async def process_payment(self, payment_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Legacy payment processing interface"""
+        """
+        Legacy payment processing interface"""
         transaction = await self.system.process_payment(
             user_id=payment_data['user_id'],
             amount=Decimal(str(payment_data['amount'])),
@@ -1319,13 +1431,15 @@ class PaymentProcessor:
         return asdict(transaction)
 
 class CryptoWalletLegacy:
-    """Legacy crypto wallet interface"""
+    """
+        Legacy crypto wallet interface"""
     
     def __init__(self, system: EnterprisePaymentSystem):
         self.system = system
     
     async def create_wallet(self, user_id: str, network: str) -> Dict[str, Any]:
-        """Legacy wallet creation interface"""
+        """
+        Legacy wallet creation interface"""
         wallet = await self.system.create_crypto_wallet(
             user_id=user_id,
             network=CryptoNetwork(network)
@@ -1333,13 +1447,15 @@ class CryptoWalletLegacy:
         return asdict(wallet)
 
 class TaxCalculatorLegacy:
-    """Legacy tax calculator interface"""
+    """
+        Legacy tax calculator interface"""
     
     def __init__(self, system: EnterprisePaymentSystem):
         self.system = system
     
     async def calculate_tax(self, amount: float, region: str) -> Dict[str, Any]:
-        """Legacy tax calculation interface"""
+        """
+        Legacy tax calculation interface"""
         tax_calc = await self.system._calculate_transaction_tax(
             Decimal(str(amount)), "USD", "user123", region
         )
@@ -1352,7 +1468,8 @@ class SubscriptionEngineLegacy:
         self.system = system
     
     async def create_subscription(self, subscription_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Legacy subscription creation interface"""
+        """
+        Legacy subscription creation interface"""
         subscription = await self.system.create_subscription(
             user_id=subscription_data['user_id'],
             plan=SubscriptionPlan(subscription_data['plan']),
@@ -1363,16 +1480,19 @@ class SubscriptionEngineLegacy:
 
 # Factory Pattern
 class PaymentSystemFactory:
-    """Factory for creating payment systems"""
+    """
+        Factory for creating payment systems"""
     
     @staticmethod
     def create_standard_system() -> EnterprisePaymentSystem:
-        """Create standard payment system"""
+        """
+        Create standard payment system"""
         return EnterprisePaymentSystem()
     
     @staticmethod
     def create_enterprise_system() -> EnterprisePaymentSystem:
-        """Create enterprise payment system with advanced features"""
+        """
+        Create enterprise payment system with advanced features"""
         config = PaymentSystemConfig(
             enable_crypto_payments=True,
             enable_subscription_management=True,

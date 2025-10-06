@@ -33,7 +33,8 @@ import hashlib
 logger = logging.getLogger(__name__)
 
 class ContractType(Enum):
-    """Contract type enumeration"""
+    """
+        Contract type enumeration"""
     USER_AGREEMENT = "user_agreement"
     SELLER_AGREEMENT = "seller_agreement"
     BUYER_AGREEMENT = "buyer_agreement"
@@ -136,7 +137,8 @@ class ComplianceRule:
 
 @dataclass
 class LegalValidation:
-    """Legal validation result"""
+    """
+        Legal validation result"""
     validation_id: str
     entity_type: str  # contract, agreement, policy
     entity_id: str
@@ -186,6 +188,7 @@ class LegalFrameworkEngine:
         # Initialize default templates and rules
         self._initialize_default_templates()
         self._initialize_compliance_rules()
+
         
         logger.info("⚖️ Legal Framework Engine initialized")
     
@@ -396,12 +399,17 @@ Last updated: {last_updated}
         """Create legal contract from template"""
         try:
             template_id = contract_data["template_id"]
+
             template = self.legal_templates.get(template_id)
+
             if not template:
                 raise ValueError(f"Legal template not found: {template_id}")
             
             # Generate contract content from template
+
             content = await self._generate_contract_content(template, contract_data.get("variables", {}))
+
+
             
             contract = LegalContract(
                 contract_id=str(uuid.uuid4()),
@@ -421,16 +429,19 @@ Last updated: {last_updated}
             # Perform automatic validation if enabled
             if self.auto_validation_enabled:
                 validation = await self.validate_contract(contract.contract_id)
+
                 contract.compliance_checks = {
                     validation.validation_type: validation.status == "passed"
                 }
                 contract.legal_review_required = validation.legal_review_required
             
             logger.info(f"Contract created: {contract.contract_id} - Type: {contract.contract_type.value}")
+
             return contract
         
         except Exception as e:
             logger.error(f"Contract creation error: {e}")
+
             raise
     
     async def _generate_contract_content(self, template: LegalTemplate, variables: Dict[str, Any]) -> str:
@@ -442,23 +453,33 @@ Last updated: {last_updated}
             for variable in template.variables:
                 placeholder = "{" + variable + "}"
                 value = variables.get(variable, f"[{variable.upper()}_NOT_PROVIDED]")
+
+
                 content = content.replace(placeholder, str(value))
             
             # Add common variables
+
             content = content.replace("{current_date}", datetime.utcnow().strftime("%Y-%m-%d"))
+
+
             content = content.replace("{current_year}", str(datetime.utcnow().year))
+
             
             return content
         except Exception as e:
             logger.error(f"Contract content generation error: {e}")
+
             return template.content
     
     async def validate_contract(self, contract_id: str) -> LegalValidation:
         """Validate contract for legal compliance"""
         try:
             contract = self.legal_contracts.get(contract_id)
+
             if not contract:
                 raise ValueError(f"Contract not found: {contract_id}")
+
+
             
             validation = LegalValidation(
                 validation_id=str(uuid.uuid4()),
@@ -469,29 +490,44 @@ Last updated: {last_updated}
             )
             
             # Perform validation checks
+
             issues_found = []
+
             recommendations = []
+
             compliance_score = 100.0
             
             # Check contract structure
+
             structure_score = await self._validate_contract_structure(contract)
+
             if structure_score < 80.0:
                 issues_found.append("incomplete_contract_structure")
+
                 recommendations.append("ensure_all_required_sections_present")
+
                 compliance_score -= (100.0 - structure_score) * 0.3
             
             # Check jurisdiction-specific compliance
+
             jurisdiction_score = await self._validate_jurisdiction_compliance(contract)
+
             if jurisdiction_score < 90.0:
                 issues_found.append("jurisdiction_compliance_issues")
+
                 recommendations.append("review_jurisdiction_specific_requirements")
+
                 compliance_score -= (100.0 - jurisdiction_score) * 0.4
             
             # Check for required clauses
+
             clauses_score = await self._validate_required_clauses(contract)
+
             if clauses_score < 85.0:
                 issues_found.append("missing_required_clauses")
+
                 recommendations.append("add_mandatory_clauses_for_contract_type")
+
                 compliance_score -= (100.0 - clauses_score) * 0.3
             
             # Determine validation status
@@ -511,10 +547,12 @@ Last updated: {last_updated}
             self.legal_validations[validation.validation_id] = validation
             
             logger.info(f"Contract validation completed: {contract_id} - Score: {compliance_score:.2f}")
+
             return validation
         
         except Exception as e:
             logger.error(f"Contract validation error: {e}")
+
             raise
     
     async def _validate_contract_structure(self, contract: LegalContract) -> float:
@@ -525,46 +563,63 @@ Last updated: {last_updated}
                 ContractType.LICENSE_AGREEMENT: ["grant", "restrictions", "payment", "termination"],
                 ContractType.PRIVACY_POLICY: ["data_collection", "legal_basis", "rights", "retention"]
             }
+
             
             content_lower = contract.content.lower()
+
+
             required = required_sections.get(contract.contract_type, [])
+
             
             if not required:
                 return 90.0  # Default score for unknown contract types
+
             
             found_sections = sum(1 for section in required if section in content_lower)
+
+
             score = (found_sections / len(required)) * 100.0
             
             return score
         except Exception as e:
             logger.error(f"Contract structure validation error: {e}")
+
             return 50.0
     
     async def _validate_jurisdiction_compliance(self, contract: LegalContract) -> float:
         """Validate jurisdiction-specific compliance requirements"""
         try:
             # Get applicable compliance rules for jurisdiction
-            applicable_rules = [rule for rule in self.compliance_rules.values() 
+
+            applicable_rules = [rule for rule in self.compliance_rules.values()
+ 
                               if rule.jurisdiction == contract.jurisdiction and rule.active]
             
             if not applicable_rules:
                 return 90.0  # Default score if no specific rules
+
             
             content_lower = contract.content.lower()
+
+
             compliance_count = 0
             
             for rule in applicable_rules:
                 # Check if rule requirements are met in contract
+
                 requirements_met = sum(1 for req in rule.requirements 
                                      if any(keyword in content_lower for keyword in req.split('_')))
+
                 
                 if requirements_met >= len(rule.requirements) * 0.7:  # 70% threshold
                     compliance_count += 1
+
             
             score = (compliance_count / len(applicable_rules)) * 100.0 if applicable_rules else 90.0
             return score
         except Exception as e:
             logger.error(f"Jurisdiction compliance validation error: {e}")
+
             return 75.0
     
     async def _validate_required_clauses(self, contract: LegalContract) -> float:
@@ -590,33 +645,44 @@ Last updated: {last_updated}
                     "contact information"
                 ]
             }
+
             
             content_lower = contract.content.lower()
+
+
             required = required_clauses.get(contract.contract_type, [])
+
             
             if not required:
                 return 85.0  # Default score
+
             
             found_clauses = sum(1 for clause in required 
                               if any(word in content_lower for word in clause.split()))
+
+
             
             score = (found_clauses / len(required)) * 100.0
             return score
         except Exception as e:
             logger.error(f"Required clauses validation error: {e}")
+
             return 70.0
     
     async def sign_contract(self, contract_id: str, signer_id: str, signature_data: Dict[str, Any]) -> bool:
         """Add digital signature to contract"""
         try:
             contract = self.legal_contracts.get(contract_id)
+
             if not contract:
                 raise ValueError(f"Contract not found: {contract_id}")
+
             
             if signer_id not in contract.parties:
                 raise ValueError(f"Signer not authorized for this contract: {signer_id}")
             
             # Generate signature hash
+
             signature_content = f"{contract_id}:{signer_id}:{signature_data.get('timestamp', datetime.utcnow().isoformat())}"
             signature_hash = hashlib.sha256(signature_content.encode()).hexdigest()
             
@@ -629,12 +695,15 @@ Last updated: {last_updated}
                 contract.status = ContractStatus.ACTIVE
                 if not contract.effective_date:
                     contract.effective_date = datetime.utcnow()
+
             
             logger.info(f"Contract signed: {contract_id} by {signer_id}")
+
             return True
         
         except Exception as e:
             logger.error(f"Contract signing error: {e}")
+
             return False
     
     async def create_dispute(self, dispute_data: Dict[str, Any]) -> LegalDispute:
@@ -651,29 +720,38 @@ Last updated: {last_updated}
             )
             
             # Set estimated resolution date based on priority
+
             resolution_days = {
                 "low": 30,
                 "medium": 14,
                 "high": 7,
                 "critical": 3
             }
+
             
             days = resolution_days.get(dispute.priority, 14)
+
             dispute.estimated_resolution_date = datetime.utcnow() + timedelta(days=days)
+
             
             self.legal_disputes[dispute.dispute_id] = dispute
             
             # Update contract status
+
             contract = self.legal_contracts.get(dispute.contract_id)
+
             if contract:
                 contract.status = ContractStatus.DISPUTED
                 contract.updated_at = datetime.utcnow()
+
             
             logger.info(f"Legal dispute created: {dispute.dispute_id} - Type: {dispute.dispute_type}")
+
             return dispute
         
         except Exception as e:
             logger.error(f"Dispute creation error: {e}")
+
             raise
     
     async def get_contract_status(self, contract_id: str) -> Optional[LegalContract]:
@@ -683,15 +761,19 @@ Last updated: {last_updated}
     async def get_compliance_status(self, entity_id: str, entity_type: str = "contract") -> List[LegalValidation]:
         """Get compliance validation status for entity"""
         try:
-            validations = [v for v in self.legal_validations.values() 
+            validations = [v for v in self.legal_validations.values()
+ 
                           if v.entity_id == entity_id and v.entity_type == entity_type]
             
             # Sort by validation date (newest first)
+
             validations.sort(key=lambda v: v.validated_at, reverse=True)
+
             
             return validations
         except Exception as e:
             logger.error(f"Compliance status retrieval error: {e}")
+
             return []
     
     async def generate_compliance_report(self, jurisdiction: LegalJurisdiction = None, 
@@ -701,39 +783,56 @@ Last updated: {last_updated}
         try:
             if not start_date:
                 start_date = datetime.utcnow() - timedelta(days=30)
+
             if not end_date:
                 end_date = datetime.utcnow()
             
             # Filter contracts and validations by criteria
+
             contracts = list(self.legal_contracts.values())
+
             if jurisdiction:
                 contracts = [c for c in contracts if c.jurisdiction == jurisdiction]
+
             
             contracts = [c for c in contracts if start_date <= c.created_at <= end_date]
+
             
-            validations = [v for v in self.legal_validations.values() 
+            validations = [v for v in self.legal_validations.values()
+ 
                           if start_date <= v.validated_at <= end_date]
             
             if jurisdiction:
                 validations = [v for v in validations if v.jurisdiction == jurisdiction]
             
             # Calculate statistics
+
             total_contracts = len(contracts)
+
+
             active_contracts = len([c for c in contracts if c.status == ContractStatus.ACTIVE])
+
+
             disputed_contracts = len([c for c in contracts if c.status == ContractStatus.DISPUTED])
             
             # Validation statistics
+
             passed_validations = len([v for v in validations if v.status == "passed"])
+
+
             failed_validations = len([v for v in validations if v.status == "failed"])
             
             # Contract type distribution
+
             contract_types = {}
             for contract in contracts:
                 contract_type = contract.contract_type.value
                 contract_types[contract_type] = contract_types.get(contract_type, 0) + 1
             
             # Compliance score distribution
+
             avg_compliance_score = sum(v.compliance_score for v in validations) / len(validations) if validations else 0
+
             
             report = {
                 "report_id": str(uuid.uuid4()),
@@ -755,16 +854,19 @@ Last updated: {last_updated}
             }
             
             logger.info(f"Legal compliance report generated: {report['report_id']}")
+
             return report
         
         except Exception as e:
             logger.error(f"Compliance report generation error: {e}")
+
             return {}
     
     async def update_template(self, template_id: str, updates: Dict[str, Any]) -> bool:
         """Update legal template"""
         try:
             template = self.legal_templates.get(template_id)
+
             if not template:
                 return False
             
@@ -774,16 +876,23 @@ Last updated: {last_updated}
                     setattr(template, key, value)
             
             # Increment version and update review dates
+
             current_version = float(template.version)
+
             template.version = str(current_version + 0.1)
+
             template.last_reviewed = datetime.utcnow()
+
             template.next_review = datetime.utcnow() + timedelta(days=365)
+
             
             logger.info(f"Legal template updated: {template_id} - Version: {template.version}")
+
             return True
         
         except Exception as e:
             logger.error(f"Template update error: {e}")
+
             return False
 
 # Export classes
@@ -802,4 +911,4 @@ __all__ = [
 ]
 
 # Module initialization
-logger.info("⚖️ Legal Framework Engine module loaded")
+logger.info("⚖️ Legal Framework Engine module initialized")

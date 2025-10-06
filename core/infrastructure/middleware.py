@@ -12,13 +12,15 @@ logger = get_logger("middleware")
 
 
 class RequestLoggingMiddleware:
-    """Middleware for logging HTTP requests and responses"""
+    """
+Middleware for logging HTTP requests and responses"""
     
     def __init__(self):
         self.logger = get_logger("requests")
     
     async def __call__(self, request: Any, call_next: Callable) -> Any:
-        """Process request with logging"""
+        """
+Process request with logging"""
         start_time = time.time()
         
         # Log incoming request
@@ -40,7 +42,8 @@ class RequestLoggingMiddleware:
 
 
 class CORSMiddleware:
-    """Middleware for handling Cross-Origin Resource Sharing (CORS)"""
+    """
+Middleware for handling Cross-Origin Resource Sharing (CORS)"""
     
     def __init__(self, allowed_origins: list = None, allowed_methods: list = None):
         self.allowed_origins = allowed_origins or ["*"]
@@ -48,7 +51,8 @@ class CORSMiddleware:
         self.logger = get_logger("cors")
     
     async def __call__(self, request: Any, call_next: Callable) -> Any:
-        """Process CORS headers"""
+        """
+Process CORS headers"""
         try:
             response = await call_next(request)
             
@@ -65,7 +69,8 @@ class CORSMiddleware:
 
 
 class RateLimitMiddleware:
-    """Middleware for rate limiting requests"""
+    """
+Middleware for rate limiting requests"""
     
     def __init__(self, max_requests: int = 100, window_seconds: int = 60):
         self.max_requests = max_requests
@@ -74,7 +79,8 @@ class RateLimitMiddleware:
         self.logger = get_logger("ratelimit")
     
     async def __call__(self, request: Any, call_next: Callable) -> Any:
-        """Process request with rate limiting"""
+        """
+Process request with rate limiting"""
         client_ip = self._get_client_ip(request)
         
         if self._is_rate_limited(client_ip):
@@ -85,11 +91,13 @@ class RateLimitMiddleware:
         return await call_next(request)
     
     def _get_client_ip(self, request: Any) -> str:
-        """Extract client IP from request"""
+        """
+Extract client IP from request"""
         return getattr(request, 'client', {}).get('host', 'unknown')
     
     def _is_rate_limited(self, client_ip: str) -> bool:
-        """Check if client IP is rate limited"""
+        """
+Check if client IP is rate limited"""
         current_time = time.time()
         
         if client_ip not in self.request_counts:
@@ -109,7 +117,8 @@ class RateLimitMiddleware:
 
 
 class SecurityHeadersMiddleware:
-    """Middleware for adding security headers"""
+    """
+Middleware for adding security headers"""
     
     def __init__(self):
         self.logger = get_logger("security_headers")
@@ -122,7 +131,8 @@ class SecurityHeadersMiddleware:
         }
     
     async def __call__(self, request: Any, call_next: Callable) -> Any:
-        """Add security headers to response"""
+        """
+Add security headers to response"""
         try:
             response = await call_next(request)
             
@@ -139,22 +149,26 @@ class SecurityHeadersMiddleware:
 
 # Middleware factory functions
 def create_logging_middleware() -> RequestLoggingMiddleware:
-    """Create a request logging middleware instance"""
+    """
+Create a request logging middleware instance"""
     return RequestLoggingMiddleware()
 
 
 def create_cors_middleware(allowed_origins: list = None) -> CORSMiddleware:
-    """Create a CORS middleware instance"""
+    """
+Create a CORS middleware instance"""
     return CORSMiddleware(allowed_origins=allowed_origins)
 
 
 def create_rate_limit_middleware(max_requests: int = 100, window_seconds: int = 60) -> RateLimitMiddleware:
-    """Create a rate limiting middleware instance"""
+    """
+Create a rate limiting middleware instance"""
     return RateLimitMiddleware(max_requests=max_requests, window_seconds=window_seconds)
 
 
 def create_security_headers_middleware() -> SecurityHeadersMiddleware:
-    """Create a security headers middleware instance"""
+    """
+Create a security headers middleware instance"""
     return SecurityHeadersMiddleware()
 
 

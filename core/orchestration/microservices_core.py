@@ -23,7 +23,8 @@ from collections import defaultdict, deque
 logger = logging.getLogger(__name__)
 
 class ServiceType(Enum):
-    """Types of microservices"""
+    """
+Types of microservices"""
     API_GATEWAY = "api_gateway"
     BUSINESS_LOGIC = "business_logic"
     DATA_SERVICE = "data_service"
@@ -36,7 +37,8 @@ class ServiceType(Enum):
     PAYMENT_PROCESSING = "payment_processing"
 
 class ServiceStatus(Enum):
-    """Service status states"""
+    """
+Service status states"""
     STARTING = "starting"
     HEALTHY = "healthy"
     DEGRADED = "degraded"
@@ -47,7 +49,8 @@ class ServiceStatus(Enum):
     UPDATING = "updating"
 
 class HealthCheckType(Enum):
-    """Health check types"""
+    """
+Health check types"""
     HTTP = "http"
     TCP = "tcp"
     GRPC = "grpc"
@@ -56,7 +59,8 @@ class HealthCheckType(Enum):
     EXTERNAL_API = "external_api"
 
 class ScalingStrategy(Enum):
-    """Service scaling strategies"""
+    """
+Service scaling strategies"""
     HORIZONTAL = "horizontal"
     VERTICAL = "vertical"
     AUTO = "auto"
@@ -65,7 +69,8 @@ class ScalingStrategy(Enum):
 
 @dataclass
 class ServiceDefinition:
-    """Microservice definition and configuration"""
+    """
+Microservice definition and configuration"""
     service_id: str
     service_name: str
     service_type: ServiceType
@@ -85,7 +90,8 @@ class ServiceDefinition:
 
 @dataclass
 class ServiceInstance:
-    """Individual service instance"""
+    """
+Individual service instance"""
     instance_id: str
     service_id: str
     host: str
@@ -103,7 +109,8 @@ class ServiceInstance:
 
 @dataclass
 class ServiceMesh:
-    """Service mesh configuration and state"""
+    """
+Service mesh configuration and state"""
     mesh_id: str
     mesh_name: str
     services: List[str]
@@ -119,7 +126,8 @@ class ServiceMesh:
 
 @dataclass
 class ServiceCommunication:
-    """Service-to-service communication tracking"""
+    """
+Service-to-service communication tracking"""
     communication_id: str
     source_service: str
     target_service: str
@@ -138,7 +146,8 @@ class ServiceCommunication:
 
 @dataclass
 class CircuitBreakerState:
-    """Circuit breaker state management"""
+    """
+Circuit breaker state management"""
     service_id: str
     target_service: str
     state: str  # CLOSED, OPEN, HALF_OPEN
@@ -161,7 +170,8 @@ class MicroservicesCore:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None, level: str = "enterprise"):
-        """Initialize microservices core"""
+        """
+Initialize microservices core"""
         self.config = config or {}
         self.level = level
         self.service_definitions: Dict[str, ServiceDefinition] = {}
@@ -199,7 +209,8 @@ class MicroservicesCore:
         logger.info("Microservices Core initialized")
     
     def _initialize_api_gateway(self) -> Dict[str, Any]:
-        """Initialize API gateway configuration"""
+        """
+Initialize API gateway configuration"""
         return {
             'version': '2.1.0',
             'features': [
@@ -218,7 +229,8 @@ class MicroservicesCore:
         }
     
     def _initialize_service_mesh(self) -> Dict[str, Any]:
-        """Initialize service mesh infrastructure"""
+        """
+Initialize service mesh infrastructure"""
         return {
             'mesh_type': 'istio_compatible',
             'version': '1.8.0',
@@ -236,7 +248,8 @@ class MicroservicesCore:
         }
     
     def _initialize_distributed_tracing(self) -> Dict[str, Any]:
-        """Initialize distributed tracing system"""
+        """
+Initialize distributed tracing system"""
         return {
             'tracing_system': 'jaeger',
             'version': '1.45.0',
@@ -248,7 +261,8 @@ class MicroservicesCore:
         }
     
     def _initialize_monitoring_system(self) -> Dict[str, Any]:
-        """Initialize monitoring and metrics system"""
+        """
+Initialize monitoring and metrics system"""
         return {
             'metrics_system': 'prometheus',
             'version': '2.40.0',
@@ -270,7 +284,8 @@ class MicroservicesCore:
         self, 
         service_definition: ServiceDefinition
     ) -> bool:
-        """Register a new microservice"""
+        """
+Register a new microservice"""
         try:
             service_id = service_definition.service_id
             
@@ -301,7 +316,8 @@ class MicroservicesCore:
             return False
     
     async def _validate_service_definition(self, service_def: ServiceDefinition) -> bool:
-        """Validate service definition"""
+        """
+Validate service definition"""
         try:
             # Check required fields
             if not service_def.service_id or not service_def.service_name:
@@ -329,7 +345,8 @@ class MicroservicesCore:
             return False
     
     async def _setup_service_health_checks(self, service_def: ServiceDefinition):
-        """Setup health checks for service"""
+        """
+Setup health checks for service"""
         try:
             service_id = service_def.service_id
             
@@ -354,7 +371,8 @@ class MicroservicesCore:
         service_id: str, 
         health_check_config: Dict[str, Any]
     ):
-        """Schedule periodic health check"""
+        """
+Schedule periodic health check"""
         # Simplified health check scheduling (would use real scheduler in production)
         self.health_check_scheduler[service_id] = {
             'config': health_check_config,
@@ -363,7 +381,8 @@ class MicroservicesCore:
         }
     
     async def _setup_circuit_breakers(self, service_def: ServiceDefinition):
-        """Setup circuit breakers for service dependencies"""
+        """
+Setup circuit breakers for service dependencies"""
         try:
             service_id = service_def.service_id
             
@@ -390,7 +409,8 @@ class MicroservicesCore:
             logger.error(f"Error setting up circuit breakers: {e}")
     
     async def _register_with_service_mesh(self, service_def: ServiceDefinition):
-        """Register service with service mesh"""
+        """
+Register service with service mesh"""
         try:
             # Create or update service mesh configuration
             mesh_id = f"mesh-{service_def.service_type.value}"
@@ -418,7 +438,8 @@ class MicroservicesCore:
             logger.error(f"Error registering with service mesh: {e}")
     
     async def _create_communication_policies(self, service_def: ServiceDefinition) -> Dict[str, Any]:
-        """Create communication policies for service"""
+        """
+Create communication policies for service"""
         return {
             'encryption': 'mtls',
             'authentication': 'jwt',
@@ -429,7 +450,8 @@ class MicroservicesCore:
         }
     
     async def _create_security_policies(self, service_def: ServiceDefinition) -> Dict[str, Any]:
-        """Create security policies for service"""
+        """
+Create security policies for service"""
         return {
             'tls_version': 'TLS1.3',
             'cipher_suites': ['TLS_AES_256_GCM_SHA384', 'TLS_CHACHA20_POLY1305_SHA256'],
@@ -440,7 +462,8 @@ class MicroservicesCore:
         }
     
     async def _create_traffic_management_config(self, service_def: ServiceDefinition) -> Dict[str, Any]:
-        """Create traffic management configuration"""
+        """
+Create traffic management configuration"""
         return {
             'load_balancing_algorithm': 'round_robin',
             'circuit_breaker_enabled': True,
@@ -457,7 +480,8 @@ class MicroservicesCore:
         }
     
     async def _create_observability_config(self, service_def: ServiceDefinition) -> Dict[str, Any]:
-        """Create observability configuration"""
+        """
+Create observability configuration"""
         return {
             'metrics_collection': True,
             'distributed_tracing': True,
@@ -468,7 +492,8 @@ class MicroservicesCore:
         }
     
     async def _create_load_balancing_config(self, service_def: ServiceDefinition) -> Dict[str, Any]:
-        """Create load balancing configuration"""
+        """
+Create load balancing configuration"""
         return {
             'algorithm': 'round_robin',
             'health_check_enabled': True,
@@ -481,7 +506,8 @@ class MicroservicesCore:
         }
     
     async def _create_retry_policies(self, service_def: ServiceDefinition) -> Dict[str, Any]:
-        """Create retry policies"""
+        """
+Create retry policies"""
         return {
             'max_retries': 3,
             'backoff_strategy': 'exponential',
@@ -492,7 +518,8 @@ class MicroservicesCore:
         }
     
     async def _create_timeout_policies(self, service_def: ServiceDefinition) -> Dict[str, Any]:
-        """Create timeout policies"""
+        """
+Create timeout policies"""
         return {
             'request_timeout': '30s',
             'connection_timeout': '5s',
@@ -506,7 +533,8 @@ class MicroservicesCore:
         host: str, 
         port: int
     ) -> ServiceInstance:
-        """Start a new service instance"""
+        """
+Start a new service instance"""
         try:
             if service_id not in self.service_definitions:
                 raise ValueError(f"Service not registered: {service_id}")
@@ -550,13 +578,15 @@ class MicroservicesCore:
             raise
     
     async def _start_instance_monitoring(self, instance: ServiceInstance):
-        """Start monitoring for service instance"""
+        """
+Start monitoring for service instance"""
         # Start health checks, metrics collection, etc.
         # This would integrate with actual monitoring systems
         pass
     
     async def _register_with_load_balancer(self, instance: ServiceInstance):
-        """Register instance with load balancer"""
+        """
+Register instance with load balancer"""
         service_id = instance.service_id
         
         if service_id not in self.load_balancers:
@@ -580,7 +610,8 @@ class MicroservicesCore:
         service_id: str, 
         request_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Route request to appropriate service instance"""
+        """
+Route request to appropriate service instance"""
         try:
             # Check circuit breaker
             if not await self._check_circuit_breaker(service_id):
@@ -640,7 +671,8 @@ class MicroservicesCore:
             raise
     
     async def _check_circuit_breaker(self, service_id: str) -> bool:
-        """Check if circuit breaker allows request"""
+        """
+Check if circuit breaker allows request"""
         # For dependencies, check circuit breaker state
         for cb_key, cb_state in self.circuit_breakers.items():
             if cb_state.target_service == service_id:
@@ -659,7 +691,8 @@ class MicroservicesCore:
         return True  # No circuit breaker found, allow request
     
     async def _get_healthy_instance(self, service_id: str) -> Optional[ServiceInstance]:
-        """Get healthy instance using load balancing"""
+        """
+Get healthy instance using load balancing"""
         instances = self.service_instances.get(service_id, [])
         healthy_instances = [i for i in instances if i.status == ServiceStatus.HEALTHY]
         
@@ -684,7 +717,8 @@ class MicroservicesCore:
         trace_id: str, 
         span_id: str
     ) -> Dict[str, Any]:
-        """Execute request on service instance"""
+        """
+Execute request on service instance"""
         # Simulate service request execution
         await asyncio.sleep(0.1)  # Simulate network delay
         
@@ -706,7 +740,8 @@ class MicroservicesCore:
         instance: ServiceInstance, 
         communication: ServiceCommunication
     ):
-        """Update service and instance metrics"""
+        """
+Update service and instance metrics"""
         # Update instance metrics
         instance.last_health_check = datetime.utcnow()
         if communication.success:
@@ -729,7 +764,8 @@ class MicroservicesCore:
         self.metrics['average_response_time'] = communication.duration_ms
     
     async def _record_circuit_breaker_failure(self, service_id: str):
-        """Record circuit breaker failure"""
+        """
+Record circuit breaker failure"""
         for cb_key, cb_state in self.circuit_breakers.items():
             if cb_state.target_service == service_id:
                 cb_state.failure_count += 1
@@ -741,7 +777,8 @@ class MicroservicesCore:
                     logger.warning(f"Circuit breaker opened for {service_id}")
     
     async def get_service_health(self, service_id: str) -> Dict[str, Any]:
-        """Get comprehensive service health information"""
+        """
+Get comprehensive service health information"""
         try:
             if service_id not in self.service_definitions:
                 raise ValueError(f"Service not found: {service_id}")
@@ -794,7 +831,8 @@ class MicroservicesCore:
             raise
     
     async def _get_circuit_breaker_status(self, service_id: str) -> Dict[str, Any]:
-        """Get circuit breaker status for service"""
+        """
+Get circuit breaker status for service"""
         status = {}
         
         for cb_key, cb_state in self.circuit_breakers.items():
@@ -809,7 +847,8 @@ class MicroservicesCore:
         return status
     
     def get_core_metrics(self) -> Dict[str, Any]:
-        """Get core microservices metrics"""
+        """
+Get core microservices metrics"""
         total_instances = sum(len(instances) for instances in self.service_instances.values())
         healthy_instances = sum(
             len([i for i in instances if i.status == ServiceStatus.HEALTHY])

@@ -27,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceType(str, Enum):
-    """MEC service types."""
+    """
+        MEC service types."""
     CONTENT_DELIVERY = "content_delivery"
     AUGMENTED_REALITY = "augmented_reality"
     VIDEO_STREAMING = "video_streaming"
@@ -90,7 +91,8 @@ class EdgeNode:
 
 @dataclass
 class ServiceInstance:
-    """MEC service instance."""
+    """
+        MEC service instance."""
     instance_id: str
     service_type: ServiceType
     node_id: str
@@ -108,7 +110,8 @@ class ServiceInstance:
 
 @dataclass
 class MobileDevice:
-    """Connected mobile device."""
+    """
+        Connected mobile device."""
     device_id: str
     imsi: str
     ip_address: str
@@ -146,7 +149,8 @@ class NetworkSlice:
 
 @dataclass
 class ServiceMigration:
-    """Service migration between edge nodes."""
+    """
+        Service migration between edge nodes."""
     migration_id: str
     service_instance_id: str
     source_node_id: str
@@ -217,19 +221,25 @@ class MECOrchestrator:
         # Start background monitoring tasks
         if self.enable_auto_scaling:
             task = asyncio.create_task(self._auto_scaling_monitor())
+
             self.monitoring_tasks.append(task)
+
         
         if self.enable_service_migration:
             task = asyncio.create_task(self._migration_monitor())
+
             self.monitoring_tasks.append(task)
         
         # Start node health monitoring
+
         task = asyncio.create_task(self._node_health_monitor())
         self.monitoring_tasks.append(task)
         
         # Start device tracking
+
         task = asyncio.create_task(self._device_tracker())
         self.monitoring_tasks.append(task)
+
         
         logger.info("MEC Orchestrator started")
     
@@ -240,11 +250,14 @@ class MECOrchestrator:
         # Cancel monitoring tasks
         for task in self.monitoring_tasks:
             task.cancel()
+
         
         await asyncio.gather(*self.monitoring_tasks, return_exceptions=True)
+
         
         if self.session:
             await self.session.close()
+
         
         logger.info("MEC Orchestrator stopped")
     
@@ -264,12 +277,17 @@ class MECOrchestrator:
         resources: Dict[str, Any],
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Register a new edge node."""
+        """
+        Register a new edge node."""
         node_id = str(uuid.uuid4())
         
         # Test connectivity to node
+
         latency = await self._measure_latency(ip_address)
+
         bandwidth = await self._measure_bandwidth(ip_address, port)
+
+
         
         node = EdgeNode(
             node_id=node_id,
@@ -293,6 +311,7 @@ class MECOrchestrator:
             last_heartbeat=datetime.now(),
             metadata=metadata or {}
         )
+
         
         self.edge_nodes[node_id] = node
         
@@ -305,8 +324,10 @@ class MECOrchestrator:
             return False
         
         # Migrate all services from this node
+
         services_to_migrate = [
             instance for instance in self.service_instances.values()
+
             if instance.node_id == node_id
         ]
         
@@ -338,16 +359,19 @@ class MECOrchestrator:
             target_node_id = await self._select_optimal_node(
                 service_type, resource_requirements, qos_requirements
             )
+
         
         if target_node_id not in self.edge_nodes:
             raise ValueError(f"Target node {target_node_id} not found")
         
         # Deploy container/service
+
         container_id = await self._deploy_container(
             target_node_id, image_name, resource_requirements, configuration
         )
         
         # Create service instance
+
         service_instance = ServiceInstance(
             instance_id=instance_id,
             service_type=service_type,
@@ -363,12 +387,14 @@ class MECOrchestrator:
             last_updated=datetime.now(),
             metadata=metadata or {}
         )
+
         
         self.service_instances[instance_id] = service_instance
         self.total_services_deployed += 1
         
         # Update node load
         await self._update_node_load(target_node_id)
+
         
         logger.info(f"Service deployed: {service_type.value} on node {target_node_id}")
         return instance_id
@@ -377,6 +403,7 @@ class MECOrchestrator:
         """Undeploy a service."""
         if instance_id not in self.service_instances:
             return False
+
         
         service = self.service_instances[instance_id]
         
@@ -389,6 +416,7 @@ class MECOrchestrator:
         
         # Update node load
         await self._update_node_load(service.node_id)
+
         
         logger.info(f"Service undeployed: {instance_id}")
         return True
@@ -405,7 +433,9 @@ class MECOrchestrator:
     ) -> bool:
         """Register a mobile device."""
         # Find nearest edge node
+
         node_id = await self._find_nearest_node(location) if location else None
+
         
         device = MobileDevice(
             device_id=device_id,
@@ -424,6 +454,7 @@ class MECOrchestrator:
             last_seen=datetime.now(),
             metadata=metadata or {}
         )
+
         
         self.mobile_devices[device_id] = device
         
@@ -443,11 +474,14 @@ class MECOrchestrator:
         """Handle device handover between cells."""
         if device_id not in self.mobile_devices:
             return False
+
         
         device = self.mobile_devices[device_id]
+
         old_node_id = device.current_node_id
         
         # Find new optimal node
+
         new_node_id = await self._find_nearest_node(new_location) if new_location else old_node_id
         
         # Update device info
@@ -473,6 +507,7 @@ class MECOrchestrator:
                         target_node_id=new_node_id,
                         trigger_reason="device_handover"
                     )
+
         
         self.total_handovers_handled += 1
         
@@ -490,6 +525,8 @@ class MECOrchestrator:
     ) -> str:
         """Create a 5G network slice."""
         slice_id = str(uuid.uuid4())
+
+
         
         network_slice = NetworkSlice(
             slice_id=slice_id,
@@ -517,6 +554,7 @@ class MECOrchestrator:
             expires_at=expires_at,
             metadata=metadata or {}
         )
+
         
         self.network_slices[slice_id] = network_slice
         
@@ -542,8 +580,11 @@ class MECOrchestrator:
                 continue
             
             # Calculate suitability score
+
             score = self._calculate_node_score(node, qos_requirements)
+
             suitable_nodes.append((node_id, score))
+
         
         if not suitable_nodes:
             raise RuntimeError("No suitable edge node found")
@@ -555,12 +596,19 @@ class MECOrchestrator:
     def _check_node_resources(self, node: EdgeNode, requirements: Dict[str, Any]) -> bool:
         """Check if node has sufficient resources."""
         cpu_required = requirements.get("cpu_cores", 1)
+
         memory_required = requirements.get("memory_mb", 512)
+
         storage_required = requirements.get("storage_mb", 1024)
+
+
         
         cpu_available = node.resources.get("cpu_cores", 0) * (1 - node.load_percentage / 100)
+
         memory_available = node.resources.get("memory_mb", 0) * (1 - node.load_percentage / 100)
+
         storage_available = node.resources.get("storage_mb", 0)
+
         
         return (
             cpu_available >= cpu_required and
@@ -576,11 +624,13 @@ class MECOrchestrator:
         score -= node.load_percentage
         
         # Penalize high latency
+
         target_latency = qos_requirements.get("latency_ms", 50)
         if node.latency_ms > target_latency:
             score -= (node.latency_ms - target_latency) * 2
         
         # Reward high bandwidth
+
         min_bandwidth = qos_requirements.get("bandwidth_mbps", 10)
         if node.bandwidth_mbps >= min_bandwidth:
             score += min(node.bandwidth_mbps / min_bandwidth * 10, 20)
@@ -604,6 +654,7 @@ class MECOrchestrator:
         
         # Simulate deployment delay
         await asyncio.sleep(2.0)
+
         
         logger.info(f"Container deployed: {container_id} on node {node_id}")
         return container_id
@@ -612,6 +663,7 @@ class MECOrchestrator:
         """Stop container on edge node."""
         # In a real implementation, this would use Docker/Kubernetes APIs
         await asyncio.sleep(1.0)
+
         
         logger.info(f"Container stopped: {container_id} on node {node_id}")
         return True
@@ -625,8 +677,10 @@ class MECOrchestrator:
         """Migrate service to another edge node."""
         if service_instance_id not in self.service_instances:
             return False
+
         
         service = self.service_instances[service_instance_id]
+
         source_node_id = service.node_id
         
         # Select target node if not specified
@@ -636,11 +690,15 @@ class MECOrchestrator:
                 service.resource_allocation,
                 service.qos_requirements
             )
+
         
         if target_node_id == source_node_id:
             return True  # No migration needed
+
         
         migration_id = str(uuid.uuid4())
+
+
         
         migration = ServiceMigration(
             migration_id=migration_id,
@@ -658,14 +716,17 @@ class MECOrchestrator:
             completed_at=None,
             metadata={}
         )
+
         
         self.active_migrations[migration_id] = migration
         
         try:
             # Perform migration
+
             start_time = time.time()
             
             # Deploy on target node
+
             new_container_id = await self._deploy_container(
                 target_node_id,
                 service.image_name,
@@ -683,50 +744,64 @@ class MECOrchestrator:
             service.last_updated = datetime.now()
             
             # Complete migration
+
             end_time = time.time()
+
             migration.actual_downtime_ms = (end_time - start_time) * 1000
             migration.status = "completed"
             migration.completed_at = datetime.now()
             
             # Move to history
             self.migration_history.append(migration)
+
             del self.active_migrations[migration_id]
             
             self.total_migrations_performed += 1
             
             logger.info(f"Service migrated: {service_instance_id} from {source_node_id} to {target_node_id}")
+
             return True
             
         except Exception as e:
             migration.status = "failed"
             migration.completed_at = datetime.now()
+
             migration.metadata["error"] = str(e)
+
             
             self.migration_history.append(migration)
+
             del self.active_migrations[migration_id]
             
             logger.error(f"Service migration failed: {e}")
+
             return False
     
     async def _find_nearest_node(self, location: Optional[Dict[str, float]]) -> Optional[str]:
         """Find nearest edge node to a location."""
         if not location or not self.edge_nodes:
             return None
+
         
         min_distance = float('inf')
+
         nearest_node_id = None
         
         for node_id, node in self.edge_nodes.items():
             distance = self._calculate_distance(location, node.location)
+
             if distance < min_distance:
                 min_distance = distance
+
                 nearest_node_id = node_id
         
         return nearest_node_id
     
     def _calculate_distance(self, loc1: Dict[str, float], loc2: Dict[str, float]) -> float:
-        """Calculate distance between two locations (simplified)."""
+        """
+        Calculate distance between two locations (simplified)."""
         lat_diff = loc1.get("latitude", 0) - loc2.get("latitude", 0)
+
         lon_diff = loc1.get("longitude", 0) - loc2.get("longitude", 0)
         return (lat_diff ** 2 + lon_diff ** 2) ** 0.5
     
@@ -736,12 +811,20 @@ class MECOrchestrator:
             start_time = time.time()
             
             # Simple TCP connection test
+
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
             sock.settimeout(5.0)
+
+
             result = sock.connect_ex((ip_address, 80))
+
             sock.close()
+
+
             
             end_time = time.time()
+
             
             if result == 0:
                 return (end_time - start_time) * 1000  # Convert to ms
@@ -752,28 +835,37 @@ class MECOrchestrator:
             return 100.0
     
     async def _measure_bandwidth(self, ip_address: str, port: int) -> float:
-        """Measure bandwidth to a node (simplified)."""
+        """
+        Measure bandwidth to a node (simplified)."""
         # In a real implementation, this would perform actual bandwidth testing
         # For simulation, return a mock value based on IP
         return hash(ip_address) % 1000 + 100  # 100-1100 Mbps
     
     async def _update_node_load(self, node_id: str):
-        """Update node load percentage."""
+        """
+        Update node load percentage."""
         if node_id not in self.edge_nodes:
             return
+
         
         node = self.edge_nodes[node_id]
         
         # Calculate load based on running services
+
         total_cpu_allocated = 0
+
         total_memory_allocated = 0
         
         for service in self.service_instances.values():
             if service.node_id == node_id:
                 total_cpu_allocated += service.resource_allocation.get("cpu_cores", 1)
+
                 total_memory_allocated += service.resource_allocation.get("memory_mb", 512)
+
+
         
         cpu_load = (total_cpu_allocated / node.resources.get("cpu_cores", 1)) * 100
+
         memory_load = (total_memory_allocated / node.resources.get("memory_mb", 1024)) * 100
         
         node.load_percentage = max(cpu_load, memory_load)
@@ -791,11 +883,13 @@ class MECOrchestrator:
                     # Scale down if load is low
                     elif node.load_percentage < 20:
                         await self._trigger_scale_down(node_id)
+
                 
                 await asyncio.sleep(30)  # Check every 30 seconds
                 
             except Exception as e:
                 logger.error(f"Auto-scaling monitor error: {e}")
+
                 await asyncio.sleep(30)
     
     async def _migration_monitor(self):
@@ -806,8 +900,10 @@ class MECOrchestrator:
                 for node_id, node in self.edge_nodes.items():
                     if node.load_percentage > 90:
                         # Find services to migrate
+
                         services_to_migrate = [
                             s for s in self.service_instances.values()
+
                             if s.node_id == node_id
                         ]
                         
@@ -817,11 +913,13 @@ class MECOrchestrator:
                                 service.instance_id,
                                 trigger_reason="load_balancing"
                             )
+
                 
                 await asyncio.sleep(60)  # Check every minute
                 
             except Exception as e:
                 logger.error(f"Migration monitor error: {e}")
+
                 await asyncio.sleep(60)
     
     async def _node_health_monitor(self):
@@ -829,18 +927,24 @@ class MECOrchestrator:
         while self.running:
             try:
                 current_time = datetime.now()
+
                 
                 for node_id, node in list(self.edge_nodes.items()):
                     # Check if node is responsive
+
                     time_since_heartbeat = (current_time - node.last_heartbeat).total_seconds()
+
                     
                     if time_since_heartbeat > 300:  # 5 minutes
                         logger.warning(f"Node {node_id} appears to be unresponsive")
+
                         node.status = "unresponsive"
                         
                         # Migrate services from unresponsive node
+
                         services_to_migrate = [
                             s for s in self.service_instances.values()
+
                             if s.node_id == node_id
                         ]
                         
@@ -849,11 +953,13 @@ class MECOrchestrator:
                                 service.instance_id,
                                 trigger_reason="node_failure"
                             )
+
                 
                 await asyncio.sleep(60)  # Check every minute
                 
             except Exception as e:
                 logger.error(f"Node health monitor error: {e}")
+
                 await asyncio.sleep(60)
     
     async def _device_tracker(self):
@@ -861,24 +967,30 @@ class MECOrchestrator:
         while self.running:
             try:
                 current_time = datetime.now()
+
                 
                 for device_id, device in self.mobile_devices.items():
                     # Remove stale devices
+
                     time_since_seen = (current_time - device.last_seen).total_seconds()
+
                     
                     if time_since_seen > 3600:  # 1 hour
                         logger.info(f"Removing stale device: {device_id}")
+
                         del self.mobile_devices[device_id]
                         continue
                     
                     # Predict movement and pre-migrate services
                     if device.connected_services:
                         await self._predict_and_premigrate(device)
+
                 
                 await asyncio.sleep(30)  # Check every 30 seconds
                 
             except Exception as e:
                 logger.error(f"Device tracker error: {e}")
+
                 await asyncio.sleep(30)
     
     async def _predict_and_premigrate(self, device: MobileDevice):
@@ -891,7 +1003,8 @@ class MECOrchestrator:
             pass
     
     async def _trigger_scale_up(self, node_id: str):
-        """Trigger scale-up for overloaded node."""
+        """
+        Trigger scale-up for overloaded node."""
         logger.info(f"Triggering scale-up for node {node_id}")
         # In reality, this would provision additional resources
     
@@ -905,20 +1018,25 @@ class MECOrchestrator:
         return list(self.edge_nodes.values())
     
     def get_service_instances(self) -> List[ServiceInstance]:
-        """Get list of service instances."""
+        """
+        Get list of service instances."""
         return list(self.service_instances.values())
     
     def get_mobile_devices(self) -> List[MobileDevice]:
-        """Get list of mobile devices."""
+        """
+        Get list of mobile devices."""
         return list(self.mobile_devices.values())
     
     def get_network_slices(self) -> List[NetworkSlice]:
-        """Get list of network slices."""
+        """
+        Get list of network slices."""
         return list(self.network_slices.values())
     
     def get_orchestrator_status(self) -> Dict[str, Any]:
-        """Get orchestrator status and metrics."""
+        """
+        Get orchestrator status and metrics."""
         uptime = (datetime.now() - self.orchestrator_start_time).total_seconds()
+
         
         return {
             "orchestrator_id": self.orchestrator_id,
@@ -966,7 +1084,8 @@ async def deploy_edge_service(
     memory_mb: int = 512,
     latency_requirement_ms: int = 50
 ) -> str:
-    """Quick service deployment utility."""
+    """
+        Quick service deployment utility."""
     return await orchestrator.deploy_service(
         service_type=service_type,
         image_name=image_name,
@@ -989,9 +1108,11 @@ if __name__ == "__main__":
     # Example usage
     async def main():
         orchestrator = await create_mec_orchestrator()
+
         
         try:
             # Register edge nodes
+
             node1_id = await orchestrator.register_edge_node(
                 node_type=EdgeNodeType.BASE_STATION,
                 location={"latitude": 52.5200, "longitude": 13.4050},
@@ -1000,6 +1121,8 @@ if __name__ == "__main__":
                 capabilities=[ServiceType.AI_INFERENCE, ServiceType.VIDEO_STREAMING],
                 resources={"cpu_cores": 8, "memory_mb": 16384, "storage_mb": 102400}
             )
+
+
             
             node2_id = await orchestrator.register_edge_node(
                 node_type=EdgeNodeType.REGIONAL_DATA_CENTER,
@@ -1009,10 +1132,12 @@ if __name__ == "__main__":
                 capabilities=[ServiceType.CONTENT_DELIVERY, ServiceType.REAL_TIME_ANALYTICS],
                 resources={"cpu_cores": 16, "memory_mb": 32768, "storage_mb": 204800}
             )
+
             
             print(f"Registered nodes: {node1_id}, {node2_id}")
             
             # Deploy services
+
             service1_id = await deploy_edge_service(
                 orchestrator=orchestrator,
                 service_type=ServiceType.AI_INFERENCE,
@@ -1021,6 +1146,8 @@ if __name__ == "__main__":
                 memory_mb=2048,
                 latency_requirement_ms=10
             )
+
+
             
             service2_id = await deploy_edge_service(
                 orchestrator=orchestrator,
@@ -1030,10 +1157,12 @@ if __name__ == "__main__":
                 memory_mb=4096,
                 latency_requirement_ms=25
             )
+
             
             print(f"Deployed services: {service1_id}, {service2_id}")
             
             # Register mobile device
+
             device_registered = await orchestrator.register_mobile_device(
                 device_id="device_001",
                 imsi="123456789012345",
@@ -1042,34 +1171,42 @@ if __name__ == "__main__":
                 location={"latitude": 52.5250, "longitude": 13.4100},
                 qos_profile=QoSClass.LOW_LATENCY
             )
+
             
             print(f"Device registered: {device_registered}")
             
             # Create network slice
+
             slice_id = await orchestrator.create_network_slice(
                 slice_type=NetworkSliceType.ULTRA_RELIABLE_LOW_LATENCY,
                 tenant_id="tenant_001",
                 sla_requirements={"latency_ms": 1, "reliability": 0.9999},
                 resource_allocation={"bandwidth_mbps": 100, "cpu_cores": 4}
             )
+
             
             print(f"Network slice created: {slice_id}")
             
             # Get status
+
             status = orchestrator.get_orchestrator_status()
+
             print(f"Orchestrator status: {status}")
             
             # Simulate some time passing
             await asyncio.sleep(5)
             
             # Simulate device handover
+
             handover_success = await orchestrator.handle_device_handover(
                 device_id="device_001",
                 new_cell_id="cell_002",
                 new_location={"latitude": 52.5280, "longitude": 13.4120}
             )
+
             
             print(f"Handover handled: {handover_success}")
+
             
         finally:
             await orchestrator.stop()

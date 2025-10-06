@@ -16,7 +16,8 @@ from decimal import Decimal
 # ===== WORKFLOW CONFIGURATION =====
 
 class ContentType(str, Enum):
-    """Content types"""
+    """
+        Content types"""
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -56,7 +57,8 @@ class StageConfiguration:
 
 @dataclass
 class WorkflowConfig:
-    """Content workflow configuration"""
+    """
+        Content workflow configuration"""
     enabled: bool = True
     default_priority: ProcessingPriority = ProcessingPriority.NORMAL
     stages: List[StageConfiguration] = field(default_factory=list)
@@ -101,7 +103,8 @@ class ResourceLimits:
 
 @dataclass
 class FeatureAccess:
-    """Feature access configuration"""
+    """
+        Feature access configuration"""
     ai_analysis: bool = True
     advanced_fingerprinting: bool = False
     real_time_monitoring: bool = False
@@ -112,7 +115,8 @@ class FeatureAccess:
 
 @dataclass
 class TenantConfig:
-    """Multi-tenant configuration"""
+    """
+        Multi-tenant configuration"""
     enabled: bool = True
     isolation_level: IsolationLevel = IsolationLevel.SHARED
     default_tier: TenantTier = TenantTier.FREE
@@ -125,7 +129,8 @@ class TenantConfig:
 # ===== USER ROLES CONFIGURATION =====
 
 class UserRole(str, Enum):
-    """User roles"""
+    """
+        User roles"""
     OWNER = "owner"
     ADMIN = "admin"
     CREATOR = "creator"
@@ -156,7 +161,8 @@ class RoleDefinition:
 
 @dataclass
 class UserRolesConfig:
-    """User roles and permissions configuration"""
+    """
+        User roles and permissions configuration"""
     enabled: bool = True
     default_role: UserRole = UserRole.CREATOR
     role_definitions: List[RoleDefinition] = field(default_factory=list)
@@ -167,7 +173,8 @@ class UserRolesConfig:
 # ===== CONTENT LIFECYCLE CONFIGURATION =====
 
 class ContentStatus(str, Enum):
-    """Content lifecycle status"""
+    """
+        Content lifecycle status"""
     DRAFT = "draft"
     PENDING = "pending"
     PROCESSING = "processing"
@@ -199,7 +206,8 @@ class StateTransition:
 
 @dataclass
 class ContentLifecycleConfig:
-    """Content lifecycle management configuration"""
+    """
+        Content lifecycle management configuration"""
     enabled: bool = True
     auto_archival_days: int = 365
     auto_deletion_days: int = 1095  # 3 years
@@ -212,7 +220,8 @@ class ContentLifecycleConfig:
 # ===== COLLABORATION CONFIGURATION =====
 
 class CollaborationType(str, Enum):
-    """Types of collaboration"""
+    """
+        Types of collaboration"""
     REMIX = "remix"
     COVER = "cover"
     FEATURE = "feature"
@@ -241,7 +250,8 @@ class MatchingCriteria:
 
 @dataclass
 class RevenueShareModel:
-    """Revenue sharing model for collaborations"""
+    """
+        Revenue sharing model for collaborations"""
     original_creator_percentage: float = 60.0
     collaborator_percentage: float = 35.0
     platform_fee_percentage: float = 5.0
@@ -263,7 +273,8 @@ class CollaborationConfig:
 # ===== NOTIFICATION CONFIGURATION =====
 
 class NotificationType(str, Enum):
-    """Notification types"""
+    """
+        Notification types"""
     CONTENT_UPLOADED = "content_uploaded"
     ANALYSIS_COMPLETE = "analysis_complete"
     INFRINGEMENT_DETECTED = "infringement_detected"
@@ -330,7 +341,8 @@ class FeatureFlagsConfig:
 # ===== COMPLIANCE CONFIGURATION =====
 
 class ComplianceStandard(str, Enum):
-    """Compliance standards"""
+    """
+        Compliance standards"""
     GDPR = "gdpr"
     CCPA = "ccpa"
     COPPA = "coppa"
@@ -365,7 +377,8 @@ class ComplianceConfig:
 
 @dataclass
 class BusinessConfig:
-    """Main business configuration"""
+    """
+        Main business configuration"""
     workflow: WorkflowConfig = field(default_factory=WorkflowConfig)
     tenant: TenantConfig = field(default_factory=TenantConfig)
     user_roles: UserRolesConfig = field(default_factory=UserRolesConfig)
@@ -441,7 +454,8 @@ def get_testing_business_config() -> BusinessConfig:
 # ===== BUSINESS CONFIGURATION FACTORY =====
 
 class BusinessConfigurationFactory:
-    """Factory for creating business configurations"""
+    """
+        Factory for creating business configurations"""
     
     @staticmethod
     def create_config(environment: str = "development") -> BusinessConfig:

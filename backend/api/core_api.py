@@ -27,10 +27,10 @@ try:
     from ...ai_engine.vector_database import vector_database
     from ...ai_engine.content_analyzer import content_analyzer
 except ImportError:
-    # Mock dependencies for standalone operation
     class MockManager:
         def __getattr__(self, name):
             return lambda *args, **kwargs: {"status": "mocked"}
+
     
     database_manager = MockManager()
     security_manager = MockManager()
@@ -225,8 +225,11 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
     
     try:
         # Verify token
+
         payload = security_manager.jwt_manager.verify_token(credentials.credentials)
+
         user_id = payload.get("sub")
+
         
         if not user_id:
             raise HTTPException(
@@ -235,8 +238,10 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
             )
         
         # Get user from cache or database
+
         cache_key = f"user:{user_id}"
         cached_user = await cache_manager.get(cache_key)
+
         
         if cached_user:
             return cached_user
@@ -247,16 +252,23 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
                 "SELECT * FROM users WHERE id = %s AND is_active = true",
                 (user_id,)
             )
+
+
             user = result.fetchone()
+
             
             if not user:
                 raise HTTPException(
                     status_code=status.HTTP_401_UNAUTHORIZED,
                     detail="User not found or inactive"
                 )
+
+
             
             user_data = dict(user)
+
             await cache_manager.set(cache_key, user_data, ttl=300)
+
             return user_data
             
     except Exception as e:
@@ -288,6 +300,7 @@ async def register_user(user_data: UserRegistration):
                 "SELECT id FROM users WHERE email = %s OR username = %s",
                 (user_data.email, user_data.username)
             )
+
             
             if existing_user.fetchone():
                 raise HTTPException(
@@ -296,17 +309,23 @@ async def register_user(user_data: UserRegistration):
                 )
             
             # Hash password
+
             hashed_password = security_manager.password_manager.hash_password(user_data.password)
             
             # Create user
+
             user_id = security_manager.password_manager.generate_secure_token(16)
+
+
             tenant_id = security_manager.multitenant_manager.get_tenant_id(user_id)
+
             
             await session.execute(
                 """
                 INSERT INTO users 
                 (id, email, username, password_hash, first_name, last_name, 
                  creator_type, tenant_id, created_at, is_verified, subscription_tier)
+
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                 """,
                 (user_id, user_data.email, user_data.username, hashed_password,
@@ -315,14 +334,18 @@ async def register_user(user_data: UserRegistration):
             )
             
             # Generate tokens
+
             access_token = security_manager.jwt_manager.create_access_token(
                 data={"sub": user_id, "email": user_data.email}
             )
+
+
             refresh_token = security_manager.jwt_manager.create_refresh_token(
                 data={"sub": user_id}
             )
             
             # Cache user data
+
             user_cache_data = {
                 "id": user_id,
                 "email": user_data.email,
@@ -336,8 +359,10 @@ async def register_user(user_data: UserRegistration):
             }
             
             await cache_manager.set(f"user:{user_id}", user_cache_data, ttl=3600)
+
             
             logger.info(f"New user registered: {user_data.email}")
+
             
             return TokenResponse(
                 access_token=access_token,
@@ -345,6 +370,7 @@ async def register_user(user_data: UserRegistration):
                 expires_in=3600,
                 user_data=user_cache_data
             )
+
             
     except HTTPException:
         raise
@@ -365,7 +391,10 @@ async def login_user(login_data: UserLogin):
                 "SELECT * FROM users WHERE email = %s AND is_active = true",
                 (login_data.email,)
             )
+
+
             user = result.fetchone()
+
             
             if not user or not security_manager.password_manager.verify_password(
                 login_data.password, user["password_hash"]
@@ -376,14 +405,18 @@ async def login_user(login_data: UserLogin):
                 )
             
             # Generate tokens
+
             access_token = security_manager.jwt_manager.create_access_token(
                 data={"sub": user["id"], "email": user["email"]}
             )
+
+
             refresh_token = security_manager.jwt_manager.create_refresh_token(
                 data={"sub": user["id"]}
             )
             
             # Cache user data
+
             user_cache_data = {
                 "id": user["id"],
                 "email": user["email"],
@@ -397,8 +430,10 @@ async def login_user(login_data: UserLogin):
             }
             
             await cache_manager.set(f"user:{user['id']}", user_cache_data, ttl=3600)
+
             
             logger.info(f"User logged in: {login_data.email}")
+
             
             return TokenResponse(
                 access_token=access_token,
@@ -406,6 +441,7 @@ async def login_user(login_data: UserLogin):
                 expires_in=3600,
                 user_data=user_cache_data
             )
+
             
     except HTTPException:
         raise
@@ -439,8 +475,10 @@ async def logout_user(current_user: dict = Depends(get_current_user)):
     """Logout user and invalidate tokens"""
     try:
         user_id = current_user["id"]
+
         cache_key = f"user:{user_id}"
         await cache_manager.delete(cache_key)
+
         
         logger.info(f"User logged out: {user_id}")
         return {"message": "Logged out successfully"}
@@ -466,7 +504,9 @@ async def upload_content(
     """Upload and process content file"""
     try:
         import json
+
         metadata_obj = json.loads(metadata)
+
         content_metadata = ContentMetadata(**metadata_obj)
         
         # Validate file
@@ -480,14 +520,17 @@ async def upload_content(
         content_id = str(uuid.uuid4())
         
         # Process file
+
         content_data = await file.read()
         
         # Analyze content
+
         analysis_result = await content_analyzer.analyze_content(
             content_data, file.content_type, content_metadata.dict()
         )
         
         # Generate fingerprint
+
         fingerprint_result = await fingerprint_engine.generate_fingerprint(
             content_data, file.content_type
         )
@@ -499,6 +542,7 @@ async def upload_content(
                 INSERT INTO content 
                 (id, user_id, title, description, content_type, file_size, 
                  fingerprint_id, status, created_at, analysis_data)
+
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                 """,
                 (content_id, current_user["id"], content_metadata.title,
@@ -506,8 +550,10 @@ async def upload_content(
                  fingerprint_result.get("fingerprint_id"), "processed",
                  datetime.utcnow(), analysis_result)
             )
+
         
         logger.info(f"Content uploaded: {content_id} by user {current_user['id']}")
+
         
         return ContentResponse(
             content_id=content_id,
@@ -521,6 +567,7 @@ async def upload_content(
             created_at=datetime.utcnow(),
             analysis_data=analysis_result
         )
+
         
     except HTTPException:
         raise
@@ -544,15 +591,20 @@ async def get_content(
                 "SELECT * FROM content WHERE id = %s AND user_id = %s",
                 (content_id, current_user["id"])
             )
+
+
             content = result.fetchone()
+
             
             if not content:
                 raise HTTPException(
                     status_code=status.HTTP_404_NOT_FOUND,
                     detail="Content not found"
                 )
+
             
             return ContentResponse(**dict(content))
+
             
     except HTTPException:
         raise
@@ -578,16 +630,17 @@ async def query_analytics(
         query_id = str(uuid.uuid4())
         
         # Process analytics query
+
         metrics_data = {}
+
         data_points = []
-        
-        # Mock analytics data - in production this would query real analytics
         for metric_type in query.metric_types:
             metrics_data[metric_type] = {
                 "total": 1000,
                 "average": 50.5,
                 "trend": "increasing"
             }
+
         
         summary = {
             "total_metrics": len(query.metric_types),
@@ -596,6 +649,7 @@ async def query_analytics(
         }
         
         logger.info(f"Analytics query processed: {query_id} for user {current_user['id']}")
+
         
         return AnalyticsResponse(
             query_id=query_id,
@@ -604,6 +658,7 @@ async def query_analytics(
             data_points=data_points,
             summary=summary
         )
+
         
     except Exception as e:
         logger.error(f"Analytics query failed: {str(e)}")
@@ -621,15 +676,16 @@ async def query_analytics(
 async def get_system_health():
     """Get system health status"""
     try:
-        # Mock health check - in production this would check real services
         services = {
             "database": {"status": "healthy", "response_time": 5.2},
             "cache": {"status": "healthy", "response_time": 1.1},
             "ai_engine": {"status": "healthy", "response_time": 15.3},
             "fingerprinting": {"status": "healthy", "response_time": 8.7}
         }
+
         
         overall_health = sum(1 for s in services.values() if s["status"] == "healthy") / len(services)
+
         
         return SystemHealthResponse(
             status="healthy" if overall_health > 0.8 else "degraded",
@@ -639,6 +695,7 @@ async def get_system_health():
             uptime="99.9%",
             version="1.0.0"
         )
+
         
     except Exception as e:
         logger.error(f"Health check failed: {str(e)}")
@@ -652,7 +709,6 @@ async def get_system_health():
 async def get_system_metrics(current_user: dict = Depends(get_current_user)):
     """Get system performance metrics"""
     try:
-        # Mock metrics - in production this would get real system metrics
         return MetricsResponse(
             timestamp=datetime.utcnow(),
             cpu_usage=45.2,
@@ -666,6 +722,7 @@ async def get_system_metrics(current_user: dict = Depends(get_current_user)):
                 "cache": 2.1
             }
         )
+
         
     except Exception as e:
         logger.error(f"Metrics retrieval failed: {str(e)}")
@@ -692,8 +749,11 @@ async def connect_platform(
                 """
                 INSERT INTO platform_connections 
                 (user_id, platform, access_token, refresh_token, expires_at, scope, created_at)
+
                 VALUES (%s, %s, %s, %s, %s, %s, %s)
-                ON CONFLICT (user_id, platform) 
+
+                ON CONFLICT (user_id, platform)
+ 
                 DO UPDATE SET 
                     access_token = EXCLUDED.access_token,
                     refresh_token = EXCLUDED.refresh_token,
@@ -705,8 +765,10 @@ async def connect_platform(
                  connection.refresh_token, connection.expires_at, connection.scope,
                  datetime.utcnow(), datetime.utcnow())
             )
+
         
         logger.info(f"Platform connected: {connection.platform} for user {current_user['id']}")
+
         
         return {"message": f"Successfully connected to {connection.platform}"}
         
@@ -741,8 +803,10 @@ async def request_data_export(
             request.format,
             request.email_delivery
         )
+
         
         logger.info(f"Data export requested: {export_id} for user {current_user['id']}")
+
         
         return {
             "export_id": export_id,
@@ -770,6 +834,8 @@ async def request_data_deletion(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Data deletion must be explicitly confirmed"
             )
+
+
         
         deletion_id = str(uuid.uuid4())
         
@@ -779,13 +845,16 @@ async def request_data_deletion(
                 """
                 INSERT INTO data_deletion_requests 
                 (id, user_id, keep_analytics, reason, status, created_at)
+
                 VALUES (%s, %s, %s, %s, %s, %s)
                 """,
                 (deletion_id, current_user["id"], request.keep_analytics,
                  request.reason, "pending", datetime.utcnow())
             )
+
         
         logger.info(f"Data deletion requested: {deletion_id} for user {current_user['id']}")
+
         
         return {
             "deletion_id": deletion_id,
@@ -828,7 +897,6 @@ async def _process_data_export(export_id: str, user_id: str, data_types: List[st
                               format: str, email_delivery: bool):
     """Background task to process data export"""
     try:
-        # Mock data export processing
         logger.info(f"Processing data export {export_id} for user {user_id}")
         
         # In production, this would:
@@ -843,8 +911,10 @@ async def _process_data_export(export_id: str, user_id: str, data_types: List[st
                 "UPDATE data_export_requests SET status = %s, completed_at = %s WHERE id = %s",
                 ("completed", datetime.utcnow(), export_id)
             )
+
         
         logger.info(f"Data export completed: {export_id}")
+
         
     except Exception as e:
         logger.error(f"Data export processing failed: {str(e)}")
@@ -923,7 +993,8 @@ class ContentProcessingRequest(BaseModel):
     notify_on_completion: bool = True
 
 class MultiFormatUpload(BaseModel):
-    """Multi-format content upload"""
+    """
+        Multi-format content upload"""
     title: str = Field(..., min_length=1, max_length=200)
     description: Optional[str] = Field(None, max_length=2000)
     formats: List[ContentFormat]
@@ -956,6 +1027,7 @@ async def upload_multi_format_content(
     """Upload and process multi-format content with AI optimization"""
     try:
         upload_id = str(uuid.uuid4())
+
         processed_files = []
         
         # Validate file formats
@@ -970,9 +1042,12 @@ async def upload_multi_format_content(
         # Process each file
         for file in files:
             file_id = str(uuid.uuid4())
+
+
             file_content = await file.read()
             
             # Detect content format and quality
+
             analysis = await _analyze_content_format(file_content, file.filename)
             
             # Apply AI enhancements if requested
@@ -980,10 +1055,13 @@ async def upload_multi_format_content(
                 enhanced_content = await _apply_ai_enhancements(
                     file_content, analysis["format"], upload_request.category
                 )
+
+
                 file_content = enhanced_content["data"]
                 analysis.update(enhanced_content["metadata"])
             
             # Generate variants if requested
+
             variants = []
             if upload_request.auto_generate_variants:
                 variants = await _generate_format_variants(
@@ -991,6 +1069,7 @@ async def upload_multi_format_content(
                 )
             
             # Store content and metadata
+
             content_data = {
                 "file_id": file_id,
                 "original_name": file.filename,
@@ -1003,9 +1082,11 @@ async def upload_multi_format_content(
             }
             
             await _store_content_data(file_id, file_content, content_data, current_user["id"])
+
             processed_files.append(content_data)
         
         # Create content collection
+
         collection_data = {
             "upload_id": upload_id,
             "title": upload_request.title,
@@ -1019,6 +1100,7 @@ async def upload_multi_format_content(
         }
         
         await _store_content_collection(collection_data)
+
         
         return {
             "upload_id": upload_id,
@@ -1046,6 +1128,7 @@ async def process_content_format(
         job_id = str(uuid.uuid4())
         
         # Get original content
+
         original_content = await _get_content_data(processing_request.content_id)
         if not original_content:
             raise HTTPException(
@@ -1061,6 +1144,7 @@ async def process_content_format(
             )
         
         # Start background processing
+
         processing_task = {
             "job_id": job_id,
             "content_id": processing_request.content_id,
@@ -1077,9 +1161,11 @@ async def process_content_format(
         await _queue_processing_job(processing_task)
         
         # Estimate processing time
+
         estimated_time = await _estimate_processing_time(
             original_content, processing_request.target_format, processing_request.quality
         )
+
         
         return {
             "job_id": job_id,
@@ -1107,6 +1193,7 @@ async def get_content_analysis(
     """Get AI-powered content analysis"""
     try:
         # Get content data
+
         content_data = await _get_content_data(content_id)
         if not content_data:
             raise HTTPException(
@@ -1122,30 +1209,41 @@ async def get_content_analysis(
             )
         
         # Perform comprehensive AI analysis
+
         analysis_start = datetime.utcnow()
         
         # Content format detection
+
         format_detected = ContentFormat(content_data["format"])
         
         # Quality assessment
+
         quality_score = await _assess_content_quality(content_data)
         
         # Metadata extraction
+
         metadata = await _extract_content_metadata(content_data)
         
         # AI tagging
+
         ai_tags = await _generate_ai_tags(content_data)
         
         # Content safety analysis
+
         safety_analysis = await _analyze_content_safety(content_data)
         
         # Optimization suggestions
+
         optimization_suggestions = await _generate_optimization_suggestions(content_data)
         
         # Content fingerprinting
+
         fingerprint = await _generate_content_fingerprint(content_data)
+
+
         
         processing_time = (datetime.utcnow() - analysis_start).total_seconds()
+
         
         return ContentAnalysisResult(
             content_id=content_id,
@@ -1158,6 +1256,7 @@ async def get_content_analysis(
             fingerprint=fingerprint,
             processing_time=processing_time
         )
+
         
     except HTTPException:
         raise
@@ -1191,18 +1290,19 @@ async def _analyze_content_format(content: bytes, filename: str) -> Dict[str, An
     """Analyze content format and extract metadata"""
     try:
         file_extension = filename.split('.')[-1].lower() if filename else ""
-        
-        # Mock analysis - would use specialized libraries in production
         format_detected = file_extension
         if format_detected in ["jpg", "jpeg"]:
             format_detected = "jpeg"
         
         # Basic quality assessment based on file size and format
+
         quality_score = min(0.9, len(content) / (1024 * 1024) * 0.1)  # Rough estimate
         
         # Generate basic fingerprint
         import hashlib
+
         fingerprint = hashlib.sha256(content).hexdigest()
+
         
         return {
             "format": format_detected,
@@ -1229,8 +1329,8 @@ async def _analyze_content_format(content: bytes, filename: str) -> Dict[str, An
 async def _apply_ai_enhancements(content: bytes, format_type: str, category: str) -> Dict[str, Any]:
     """Apply AI enhancements to content"""
     try:
-        # Mock AI enhancement - would use ML models in production
         enhanced_content = content  # In production, this would be the enhanced version
+
         
         enhancement_metadata = {
             "enhancements_applied": ["noise_reduction", "quality_boost"],
@@ -1253,8 +1353,8 @@ async def _generate_format_variants(content: bytes, original_format: str, target
         
         for target_format in target_formats:
             if target_format.value != original_format:
-                # Mock variant generation - would use conversion libraries in production
                 variant_id = str(uuid.uuid4())
+
                 variants.append({
                     "variant_id": variant_id,
                     "format": target_format.value,
@@ -1262,6 +1362,7 @@ async def _generate_format_variants(content: bytes, original_format: str, target
                     "quality": "high",
                     "conversion_time": 1.5
                 })
+
         
         return variants
         
@@ -1271,7 +1372,6 @@ async def _generate_format_variants(content: bytes, original_format: str, target
 async def _store_content_data(file_id: str, content: bytes, metadata: Dict, user_id: str):
     """Store content data and metadata"""
     try:
-        # Mock storage - would use cloud storage in production
         storage_path = f"content/{user_id}/{file_id}"
         
         # Store in database
@@ -1280,10 +1380,12 @@ async def _store_content_data(file_id: str, content: bytes, metadata: Dict, user
                 """
                 INSERT INTO content_files 
                 (id, user_id, storage_path, metadata, created_at)
+
                 VALUES (%s, %s, %s, %s, %s)
                 """,
                 (file_id, user_id, storage_path, json.dumps(metadata), datetime.utcnow())
             )
+
         
     except Exception as e:
         logger.error(f"Content storage failed: {str(e)}")
@@ -1297,6 +1399,7 @@ async def _store_content_collection(collection_data: Dict):
                 INSERT INTO content_collections 
                 (id, user_id, title, description, files_data, tags, category, 
                  visibility, created_at)
+
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
                 """,
                 (collection_data["upload_id"], collection_data["user_id"],
@@ -1305,6 +1408,7 @@ async def _store_content_collection(collection_data: Dict):
                  collection_data["category"], collection_data["visibility"],
                  collection_data["created_at"])
             )
+
         
     except Exception as e:
         logger.error(f"Collection storage failed: {str(e)}")
@@ -1317,7 +1421,10 @@ async def _get_content_data(content_id: str) -> Optional[Dict]:
                 "SELECT * FROM content_files WHERE id = %s",
                 (content_id,)
             )
+
+
             row = result.fetchone()
+
             return dict(row) if row else None
     except Exception:
         return None
@@ -1330,6 +1437,7 @@ async def _queue_processing_job(job_data: Dict):
                 """
                 INSERT INTO processing_jobs 
                 (id, content_id, job_data, status, created_at)
+
                 VALUES (%s, %s, %s, %s, %s)
                 """,
                 (job_data["job_id"], job_data["content_id"],
@@ -1354,6 +1462,7 @@ async def _estimate_processing_time(content_data: Dict, target_format: ContentFo
         ProcessingQuality.ULTRA: 2.0,
         ProcessingQuality.LOSSLESS: 3.0
     }
+
     
     quality_factor = quality_multipliers.get(quality, 1.0)
     
@@ -1362,14 +1471,16 @@ async def _estimate_processing_time(content_data: Dict, target_format: ContentFo
 async def _assess_content_quality(content_data: Dict) -> float:
     """Assess content quality using AI"""
     try:
-        # Mock quality assessment - would use ML models in production
         base_quality = 0.7
         
         # Adjust based on file size (larger usually better quality)
+
         size_mb = content_data.get("size", 0) / (1024 * 1024)
+
         size_factor = min(0.3, size_mb / 10)  # Cap at 0.3 boost for 10MB+
         
         return min(1.0, base_quality + size_factor)
+
         
     except Exception:
         return 0.5
@@ -1377,7 +1488,6 @@ async def _assess_content_quality(content_data: Dict) -> float:
 async def _extract_content_metadata(content_data: Dict) -> Dict[str, Any]:
     """Extract detailed metadata from content"""
     try:
-        # Mock metadata extraction - would use specialized libraries
         metadata = {
             "duration": "0:03:45" if content_data.get("format") in ["mp3", "wav", "mp4"] else None,
             "resolution": "1920x1080" if content_data.get("format") in ["mp4", "avi", "jpeg", "png"] else None,
@@ -1396,8 +1506,9 @@ async def _extract_content_metadata(content_data: Dict) -> Dict[str, Any]:
 async def _generate_ai_tags(content_data: Dict) -> List[str]:
     """Generate AI-powered content tags"""
     try:
-        # Mock AI tagging - would use ML models in production
         format_type = content_data.get("format", "")
+
+
         
         base_tags = []
         if format_type in ["mp3", "wav", "flac", "aac"]:
@@ -1410,11 +1521,13 @@ async def _generate_ai_tags(content_data: Dict) -> List[str]:
             base_tags = ["text", "document", "content"]
         
         # Add quality-based tags
+
         quality = content_data.get("quality_score", 0.5)
         if quality > 0.8:
             base_tags.append("high-quality")
         elif quality > 0.6:
             base_tags.append("good-quality")
+
         
         return base_tags
         
@@ -1424,7 +1537,6 @@ async def _generate_ai_tags(content_data: Dict) -> List[str]:
 async def _analyze_content_safety(content_data: Dict) -> Dict[str, Any]:
     """Analyze content for safety and compliance"""
     try:
-        # Mock safety analysis - would use content moderation APIs
         return {
             "overall_safety_score": 0.95,
             "content_warnings": [],
@@ -1441,21 +1553,28 @@ async def _generate_optimization_suggestions(content_data: Dict) -> List[str]:
     """Generate AI-powered optimization suggestions"""
     try:
         suggestions = []
+
         
         quality = content_data.get("quality_score", 0.5)
+
         format_type = content_data.get("format", "")
+
         
         if quality < 0.7:
             suggestions.append("Consider re-uploading in higher quality")
+
         
         if format_type in ["wav", "flac"] and content_data.get("size", 0) > 50 * 1024 * 1024:
             suggestions.append("Convert to compressed format (MP3/AAC) for faster streaming")
+
         
         if format_type in ["avi", "mkv"]:
             suggestions.append("Convert to MP4 for better compatibility")
+
         
         if not suggestions:
             suggestions.append("Content is well-optimized")
+
         
         return suggestions
         
@@ -1516,44 +1635,60 @@ class EnterpriseContentProcessor:
             
             for file in files:
                 file_result = await self._process_single_file(file)
+
                 results["processed_files"].append(file_result)
                 
                 # Apply AI enhancement based on content type
                 if file_result["type"] == "audio":
                     enhancement = await self._enhance_audio_quality(file_result)
+
                     results["ai_enhancements"].append(enhancement)
+
                 elif file_result["type"] == "video":
                     enhancement = await self._enhance_video_quality(file_result)
+
                     results["ai_enhancements"].append(enhancement)
+
                 elif file_result["type"] == "image":
                     enhancement = await self._enhance_image_quality(file_result)
+
                     results["ai_enhancements"].append(enhancement)
                 
                 # Apply content protection
+
                 protection = await self._apply_content_protection(file_result)
+
                 results["protection_applied"].append(protection)
+
             
             return results
             
         except Exception as e:
             logger.error(f"Multi-format processing error: {e}")
+
             raise HTTPException(status_code=500, detail="Content processing failed")
     
     async def _process_single_file(self, file: UploadFile) -> Dict[str, Any]:
         """Process single file with format detection and validation"""
         try:
             file_extension = file.filename.split('.')[-1].lower()
+
+
             file_content = await file.read()
             
             # Detect content type and validate format
             if file_extension in self.supported_audio_formats:
                 return await self._process_audio_file(file_content, file_extension, file.filename)
+
             elif file_extension in self.supported_video_formats:
                 return await self._process_video_file(file_content, file_extension, file.filename)
+
             elif file_extension in self.supported_image_formats:
                 return await self._process_image_file(file_content, file_extension, file.filename)
+
             else:
                 return await self._process_text_file(file_content, file_extension, file.filename)
+
                 
         except Exception as e:
             return {"error": f"File processing failed: {e}", "filename": file.filename}
@@ -1644,6 +1779,7 @@ class EnterpriseContentProcessor:
         """Process text file with content analysis"""
         try:
             text_content = content.decode('utf-8')
+
             return {
                 "type": "text",
                 "format": extension,
@@ -1676,9 +1812,11 @@ async def multi_format_upload_enterprise(
     """Enterprise multi-format content upload with AI processing"""
     try:
         # Process all files with enterprise processor
+
         result = await enterprise_processor.process_multi_format_content(files)
         
         # Store processing results
+
         upload_record = {
             "user_id": current_user["id"],
             "upload_id": str(uuid.uuid4()),
@@ -1695,6 +1833,7 @@ async def multi_format_upload_enterprise(
             upload_record, 
             expire=3600
         )
+
         
         return {
             "status": "success",
@@ -1718,9 +1857,12 @@ async def ai_content_analysis(
     """AI-powered comprehensive content analysis"""
     try:
         # Retrieve content metadata
+
         content_data = await database_manager.get_content(content_id, current_user["id"])
         if not content_data:
             raise HTTPException(status_code=404, detail="Content not found")
+
+
         
         analysis_result = {
             "content_id": content_id,

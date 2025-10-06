@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class PenetrationTestingCore:
-    """Advanced PenetrationTestingCore System"""
+    """
+Advanced PenetrationTestingCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class PenetrationTestingCore:
 # Module exports
 __all__ = ["PenetrationTestingCore"]
 
-logger.info("🔐 PenetrationTestingCore module loaded")
+logger.info("🔐 PenetrationTestingCore module initialized")

@@ -26,7 +26,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
-"""Advanced Voice Module - Enterprise Voice Intelligence System
+"""
+        Advanced Voice Module - Enterprise Voice Intelligence System
 =============================================================
 
 Comprehensive voice ecosystem providing AI-powered voice synthesis,
@@ -77,37 +78,38 @@ from .voice_ai_intelligence import (
 # Infrastructure orchestration
 from .voice_workflow_orchestrator import (
     VoiceWorkflowOrchestrator, WorkflowEngine, VoicePipeline, TaskOrchestration,
-    WorkflowStep, PipelineExecution, TaskManagement, WorkflowAutomation,
-    ProcessingQueue, AsyncProcessing, WorkflowMonitoring, PipelineOptimization
+    WorkflowTask, WorkflowExecution, WorkflowManagement, ProcessAutomation,
+    WorkflowAnalytics
 )
 
 from .voice_platform_integrator import (
-    VoicePlatformIntegrator, PlatformIntegration, CrossPlatformVoice,
-    APIManager, ContentDistribution, PlatformOptimization, MultiPlatformSync,
-    PlatformAnalytics, IntegrationMonitoring, PlatformAdaptation
+    VoicePlatformIntegrator, Platform, IntegrationStatus,
+    PlatformCredentials, PlatformSync, APIManager, CrossPlatformVoice,
+    PlatformOptimization, IntegrationEngine, PlatformAnalytics,
+    PlatformIntegration, ContentDistribution, MultiPlatformSync,
+    IntegrationMonitoring, PlatformAdaptation
 )
 
 from .voice_notification_manager import (
     VoiceNotificationManager, NotificationEngine, AlertSystem,
-    RealTimeNotifications, NotificationDelivery, EventNotifications,
-    SystemAlerts, UserNotifications, NotificationHistory, AlertManagement
+    RealTimeNotifications, NotificationDelivery, NotificationAnalytics,
+    UserNotifications, AlertManagement
 )
 
 from .voice_backup_recovery import (
-    VoiceBackupRecovery, BackupSystem, DisasterRecovery, DataProtection,
-    AutomatedBackup, RecoveryManager, BackupStrategy, DataIntegrity,
-    BackupMonitoring, RecoveryTesting, BackupAnalytics
+    VoiceBackupEngine, VoiceRecoveryManager, VoiceVersionControl,
+    BackupType, RecoveryStatus, BackupMetadata, RecoveryPoint
 )
 
 from .voice_configuration_manager import (
     VoiceConfigurationManager, ConfigurationEngine, SettingsManager,
-    VoiceSettings, DynamicConfiguration, ConfigurationValidation,
-    SettingsEncryption, ConfigurationMonitoring, SettingsSync
+    VoiceSettings, ConfigurationAnalytics, SettingsOptimization,
+    ConfigurationManagement
 )
 
 # Business intelligence
 from .voice_business_engine import (
-    VoiceBusinessIntelligence, VoiceMonetizationEngine, VoiceBrandManager,
+    VoiceBusinessEngine, VoiceMonetizationEngine, VoiceBrandManager,
     VoicePartnershipMatcher, MonetizationStrategy, BrandManagement,
     PartnershipMatching, RevenueOptimization, BusinessAnalytics,
     MarketingIntegration, SponsorshipManager, BusinessIntelligence
@@ -135,6 +137,8 @@ from .voice_processing_security_intelligence import (
     VoiceFingerprint, ContentProtection, QualityAnalysis, ProcessingEffect,
     SecurityThreat, AudioFormat, QualityMetric, SecurityLevel, ProcessingPipeline
 )
+
+from .voice_collaboration_engine import (
     VoiceCollaborationManager, VoiceCollaborationHub, VoiceDuetCoordinator,
     VoiceProjectManager, CollaborationPlatform, DuetMatching, ProjectWorkflow,
     CollaborationAnalytics, TeamManagement, SocialFeatures, CommunityHub
@@ -142,23 +146,20 @@ from .voice_processing_security_intelligence import (
 
 from .voice_gamification_engine import (
     VoiceGamificationEngine, VoiceChallengeManager, GamificationSystem,
-    ChallengeFramework, RewardSystem, AchievementSystem, UserEngagement,
-    CompetitionManager, LeaderboardSystem, BadgeSystem, PointsSystem
+    LeaderboardManager, RewardSystem, ProgressTracking, MilestoneManager, 
+    CompetitionEngine, AchievementType, ChallengeType
 )
 
 # SEO and distribution
 from .voice_seo_intelligence import (
-    VoiceSEOIntelligence, VoiceSEOOptimizer, VoiceSearchIndexer,
-    VoiceContentStrategyEngine, SEOOptimization, SearchRanking,
-    ContentStrategy, DiscoverabilityEngine, SearchAnalytics, SEOMetrics,
-    KeywordOptimization, ContentOptimization, RankingFactors
+    VoiceSEOIntelligence, SEOAnalyzer, KeywordResearch, TrendAnalysis,
+    SearchOptimizer, MetadataGenerator, DiscoverabilityEngine, SEOMetadata, SEOScore
 )
 
 from .voice_distribution_manager import (
-    VoiceDistributionManager, VoiceDistributionEngine, VoiceContentOrchestrator,
-    DistributionStrategy, ContentOrchestration, PlatformDistribution,
-    MultiChannelDelivery, DistributionAnalytics, ContentSyndication,
-    DeliveryOptimization, DistributionMetrics, ChannelManagement
+    VoiceDistributionManager, PlatformIntegration, ContentSyndication,
+    CrossPlatformPublisher, DistributionAnalytics, SchedulingEngine,
+    PlatformOptimizer, DistributionPlatform, DistributionStatus
 )
 
 # Infrastructure services
@@ -178,8 +179,8 @@ from .voice_notification_manager import (
 )
 
 from .voice_backup_recovery import (
-    VoiceBackupRecovery, BackupSystem, DisasterRecovery, DataProtection,
-    VoiceBackup, RecoverySystem, BackupAnalytics, RecoveryManagement
+    VoiceBackupEngine, VoiceRecoveryManager, VoiceVersionControl,
+    BackupType, BackupMetadata, RecoveryPoint
 )
 
 from .voice_configuration_manager import (
@@ -212,39 +213,32 @@ logger.info(f"🎤 Advanced Voice Module v{__version__} loaded")
 logger.info(f"Created by: {__author__} ({__email__})")
 logger.info("⚠️ Protected by copyright - Unauthorized use prohibited")
 logger.info("🎯 Business Logic: Creator → Voice Analysis → AI Enhancement → Security → SEO → Collaboration → Gamification → Distribution → Analytics")
-from .voice_bank import VoiceBank, VoiceBankManager
-from .accent_generator import AccentGenerator
-from .emotion_voice import EmotionVoiceGenerator
-from .age_voice import AgeVoiceGenerator
-from .celebrity_cloner import CelebrityVoiceCloner
+# ✅ Imports consolidés depuis voice_engine_core.py
+from .voice_engine_core import (
+    VoiceBank, VoiceBankManager, AccentGenerator,
+    MultiFormatVoiceProcessor, VoiceFormatConverter, VoiceQualityOptimizer,
+    ProcessingFormat, ProcessingQuality, ProcessingPipeline, ProcessingResult
+)
 
-# Enterprise Voice Business Logic modules - Phase 2: Content Enhancement & Processing
-from .multi_format_voice_processor import (
-    MultiFormatVoiceProcessor,
-    ProcessingFormat,
-    ProcessingQuality,
-    EnhancementType,
-    ProcessingPipeline,
-    ProcessingSettings,
-    ProcessingResult
+# ✅ Imports consolidés depuis voice_synthesis_engine.py
+from .voice_synthesis_engine import (
+    EmotionVoiceGenerator, AgeVoiceGenerator, CelebrityVoiceCloner,
+    VoiceEmotion, VoiceAge, EmotionIntensity, SynthesisQuality
 )
-from .voice_content_enhancer import (
-    VoiceContentEnhancer,
-    EnhancementMode,
-    VoiceCharacteristic,
-    EnhancementAlgorithm,
-    EnhancementProfile,
-    EnhancementResult
+
+# ✅ Imports consolidés depuis voice_ai_intelligence.py
+from .voice_ai_intelligence import (
+    VoiceContentEnhancer, VoiceContentClassifier, VoiceKeywordExtractor,
+    CreatorVoiceIntelligence, VoiceAnalysisResult, ContentClassificationResult,
+    EnhancementResult, KeywordResult
 )
-from .voice_quality_optimizer import (
-    VoiceQualityOptimizer,
-    QualityMetric,
-    OptimizationTarget,
-    OptimizationStrategy,
-    QualityAnalysis,
-    OptimizationSettings,
-    OptimizationResult
+# ✅ Imports consolidés depuis voice_content_distribution_intelligence.py
+from .voice_content_distribution_intelligence import (
+    VoiceSEOOptimizer, VoiceCollaborationHub,
+    SEOMetric, CollaborationType, AchievementType
 )
+
+# ⚠️ MODULES À CRÉER (7 modules manquants)
 from .voice_transcription_engine import (
     VoiceTranscriptionEngine,
     TranscriptionModel,
@@ -308,252 +302,16 @@ from .voice_metadata_generator import (
     VoiceMetadata,
     MetadataExtractionResult
 )
-from .voice_content_classifier import (
-    VoiceContentClassifier,
-    ClassificationMethod,
-    ContentGenre,
-    AudioQuality,
-    SpeechPattern,
-    VoiceContentClassification,
-    ClassificationConfidence,
-    ClassificationResult
-)
-from .voice_format_converter import (
-    VoiceFormatConverter,
-    AudioFormat,
-    ConversionQuality,
-    CompressionType,
-    PlatformFormat,
-    ConversionSettings,
-    FormatCapabilities,
-    ConversionResult
-)
-from .voice_subtitle_generator import (
-    VoiceSubtitleGenerator,
-    SubtitleFormat,
-    TimingAccuracy,
-    SubtitleStyle,
-    SubtitleSegment,
-    SubtitleTrack,
-    SubtitleSettings,
-    SubtitleGenerationResult
-)
 
-# Enterprise Voice Business Logic modules - Phase 4: SEO & Discovery
-from .voice_seo_optimizer import (
-    VoiceSEOOptimizer,
-    SEOStrategy,
-    ContentCategory,
-    Platform,
-    SEOKeywords,
-    SEOOptimization,
-    TrendingAnalysis,
-    CompetitorAnalysis
-)
-
-# Enterprise Voice Business Logic modules - Phase 5: Collaboration & Networking
-from .voice_collaboration_hub import (
-    VoiceCollaborationHub,
-    CollaborationType,
-    CollaborationStatus,
-    PartnershipLevel,
-    SkillLevel,
-    CreatorProfile,
-    CollaborationProject,
-    PartnershipMatch,
-    CollaborationAnalytics
-)
-from .creator_voice_intelligence import (
-    CreatorVoiceIntelligenceEngine,
-    CreatorType,
-    VoiceContentType,
-    VoiceAnalysisResult,
-    CreatorVoiceProfile
-)
-from .voice_content_orchestrator import (
-    VoiceContentOrchestrator,
-    WorkflowStage,
-    BusinessLogicTier,
-    VoiceContentWorkflow
-)
-from .creator_voice_analytics import (
-    CreatorVoiceAnalytics,
-    AnalyticsMetric,
-    PerformanceMetric,
-    AnalyticsSnapshot,
-    ContentPerformanceAnalysis
-)
-from .voice_monetization_engine import (
-    VoiceContentMonetizationEngine,
-    RevenueStream,
-    MonetizationStrategy,
-    RevenueOpportunity,
-    PricingOptimization
-)
-
-# Enterprise Voice Business Logic modules - Phase 6: Advanced Components
-from .voice_distribution_engine import (
-    VoiceDistributionEngine,
-    DistributionPlatform,
-    DistributionStatus,
-    ContentType as DistributionContentType,
-    DistributionQuality,
-    PlatformConfiguration,
-    DistributionMetadata,
-    DistributionJob,
-    DistributionResult
-)
-from .voice_analytics_dashboard import (
-    VoiceAnalyticsDashboard,
-    AnalyticsMetric as DashboardAnalyticsMetric,
-    TimeRange,
-    PlatformType,
-    AudienceSegment,
-    AnalyticsDataPoint,
-    AudienceInsight,
-    ContentPerformance,
-    RevenueAnalytics,
-    EngagementAnalytics,
-    DashboardWidget
-)
-from .voice_duet_coordinator import (
-    VoiceDuetCoordinator,
-    DuetType,
-    VoiceRole,
-    SynchronizationMode,
-    HarmonyType,
-    CollaborationStatus as DuetCollaborationStatus,
-    VoiceProfile,
-    DuetConfiguration,
-    VoiceRecording,
-    SynchronizationData,
-    DuetProject
-)
-from .voice_challenge_manager import (
-    VoiceChallengeManager,
-    ChallengeType,
-    ChallengeDifficulty,
-    ChallengeStatus,
-    ParticipationStatus,
-    JudgingMethod,
-    ChallengeRequirements,
-    ChallengeRewards,
-    ChallengeSubmission,
-    Challenge,
-    ChallengeParticipant,
-    ChallengeLeaderboard
-)
-from .voice_keyword_extractor import (
-    VoiceKeywordExtractor,
-    KeywordType,
-    ExtractionMethod,
-    SearchVolume,
-    CompetitionLevel,
-    TrendDirection,
-    KeywordMetrics,
-    ExtractedKeyword,
-    VoiceContentAnalysis,
-    CompetitorKeywordData,
-    KeywordTrend
-)
-
-# Enterprise Voice Business Logic modules - Phase 7: New Critical Components
-from .voice_brand_manager import (
-    VoiceBrandManager,
-    BrandArchetype,
-    BrandMaturity,
-    BrandStrategy,
-    VoiceBrandIdentity,
-    BrandPerformanceMetrics,
-    BrandOptimizationRecommendation
-)
-from .voice_audience_targeting import (
-    VoiceAudienceTargeting,
-    AudienceSegment,
-    TargetingStrategy,
-    EngagementLevel,
-    AudienceProfile,
-    TargetingRecommendation,
-    AudienceInsight
-)
-from .voice_content_strategy_engine import (
-    VoiceContentStrategyEngine,
-    ContentStrategyType,
-    ContentGoal,
-    ContentFormat,
-    ContentPillar,
-    ContentTheme,
-    ContentCalendarEntry,
-    StrategyPerformanceMetrics,
-    ContentStrategy
-)
-from .voice_copyright_validator import (
-    VoiceCopyrightValidator,
-    CopyrightStatus,
-    CopyrightType,
-    ValidationMethod,
-    ComplianceLevel,
-    CopyrightRecord,
-    ValidationResult,
-    CopyrightClaim
-)
-from .voice_watermarking_engine import (
-    VoiceWatermarkingEngine,
-    WatermarkType,
-    WatermarkMethod,
-    WatermarkStrength,
-    DetectionResult,
-    WatermarkPayload,
-    WatermarkConfig,
-    WatermarkResult,
-    WatermarkAnalysis
-)
-from .voice_theft_prevention import (
-    VoiceTheftPrevention,
-    TheftType,
-    ThreatLevel,
-    PreventionMethod,
-    ResponseAction,
-    TheftAlert,
-    PreventionPolicy,
-    TheftResponse,
-    ProtectionMetrics
-)
-from .voice_search_indexer import (
-    VoiceSearchIndexer,
-    IndexingStatus,
-    SearchEngine,
-    ContentType as IndexingContentType,
-    IndexingPriority,
-    SearchMetadata,
-    IndexingRequest,
-    IndexingResult,
-    SearchPerformance
-)
-from .voice_partnership_matcher import (
-    VoicePartnershipMatcher,
-    PartnershipType,
-    CollaborationScope,
-    CompatibilityFactor,
-    MatchConfidence,
-    CreatorProfile as PartnershipCreatorProfile,
-    PartnershipMatch,
-    CollaborationOpportunity,
-    PartnershipAnalytics
-)
-from .voice_project_manager import (
-    VoiceProjectManager,
-    ProjectStatus,
-    TaskStatus,
-    TaskPriority,
-    ProjectType,
-    ResourceType,
-    ProjectResource,
-    ProjectTask,
-    ProjectMilestone,
-    VoiceProject,
-    ProjectAnalytics
-)
+# ========================================================================
+# ⚠️ MODULES CONSOLIDÉS: Ces imports sont déjà faits dans les fichiers consolidés ci-dessus!
+# - creator_voice_analytics → voice_analytics_intelligence.py
+# - creator_voice_intelligence → voice_ai_intelligence.py
+# - voice_analytics_dashboard → voice_analytics_intelligence.py
+# - voice_monetization_engine → voice_business_engine.py
+# - voice_distribution_engine → voice_content_distribution_intelligence.py
+# - etc...
+# ========================================================================
 
 __all__ = [
     # Core voice modules

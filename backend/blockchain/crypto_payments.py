@@ -37,7 +37,8 @@ logger = logging.getLogger(__name__)
 
 
 class CryptoCurrency(Enum):
-    """Supported cryptocurrencies"""
+    """
+        Supported cryptocurrencies"""
     BITCOIN = "BTC"
     ETHEREUM = "ETH"
     POLYGON = "MATIC"
@@ -99,7 +100,8 @@ class PaymentRequest:
 
 @dataclass
 class PaymentResult:
-    """Payment processing result"""
+    """
+        Payment processing result"""
     payment_id: str
     transaction_hash: str
     amount: Decimal
@@ -118,7 +120,8 @@ class PaymentResult:
 
 @dataclass
 class WalletInfo:
-    """Cryptocurrency wallet information"""
+    """
+        Cryptocurrency wallet information"""
     address: str
     currency: CryptoCurrency
     network: NetworkType
@@ -153,6 +156,7 @@ class CryptoPaymentProcessor:
         
         # Payment gateways
         self.payment_gateways = config.get("gateways", {})
+
         
     def _init_fee_structures(self) -> Dict[str, Dict[str, Decimal]]:
         """Initialize fee structures for different networks"""
@@ -193,6 +197,7 @@ class CryptoPaymentProcessor:
         """
         try:
             payment_id = str(uuid.uuid4())
+
             
             self.logger.info(f"Creating crypto payment: {request.amount} {request.currency.value}")
             
@@ -200,9 +205,11 @@ class CryptoPaymentProcessor:
             await self._validate_payment_request(request)
             
             # Determine network if not specified
+
             network = request.network or self._get_default_network(request.currency)
             
             # Calculate transaction fee
+
             transaction_fee = await self._calculate_transaction_fee(
                 request.amount, request.currency, network
             )
@@ -210,14 +217,18 @@ class CryptoPaymentProcessor:
             # Generate wallet address if needed
             if not request.sender_address:
                 wallet_info = await self._generate_wallet_address(request.currency, network)
+
+
                 sender_address = wallet_info.address
             else:
                 sender_address = request.sender_address
             
             # Create payment record
+
             payment_result = PaymentResult(
                 payment_id=payment_id,
                 transaction_hash="",  # Will be set when transaction is broadcast
+
                 amount=request.amount,
                 currency=request.currency,
                 sender_address=sender_address,
@@ -236,16 +247,19 @@ class CryptoPaymentProcessor:
             self.active_payments[payment_id] = payment_result
             
             self.logger.info(f"Crypto payment created: {payment_id}")
+
             return payment_result
             
         except Exception as e:
             self.logger.error(f"Payment creation failed: {e}")
+
             raise
     
     async def _validate_payment_request(self, request: PaymentRequest) -> None:
         """Validate payment request parameters"""
         if request.amount <= 0:
             raise ValueError("Payment amount must be positive")
+
         
         if not request.recipient_address:
             raise ValueError("Recipient address is required")
@@ -255,12 +269,14 @@ class CryptoPaymentProcessor:
             raise ValueError(f"Invalid {request.currency.value} address")
         
         # Check minimum payment amount
+
         min_amounts = {
             CryptoCurrency.BITCOIN: Decimal("0.0001"),
             CryptoCurrency.ETHEREUM: Decimal("0.001"),
             CryptoCurrency.USDT: Decimal("1.0"),
             CryptoCurrency.USDC: Decimal("1.0")
         }
+
         
         min_amount = min_amounts.get(request.currency, Decimal("0.001"))
         if request.amount < min_amount:
@@ -270,6 +286,7 @@ class CryptoPaymentProcessor:
         """Validate cryptocurrency address format"""
         if currency == CryptoCurrency.BITCOIN:
             # Bitcoin address validation (simplified)
+
             return address.startswith(('1', '3', 'bc1')) and len(address) >= 26
         elif currency in [CryptoCurrency.ETHEREUM, CryptoCurrency.USDT, CryptoCurrency.USDC]:
             # Ethereum address validation
@@ -279,7 +296,8 @@ class CryptoPaymentProcessor:
             return len(address) >= 20
     
     def _get_default_network(self, currency: CryptoCurrency) -> NetworkType:
-        """Get default network for currency"""
+        """
+        Get default network for currency"""
         network_mapping = {
             CryptoCurrency.BITCOIN: NetworkType.BITCOIN,
             CryptoCurrency.ETHEREUM: NetworkType.ETHEREUM,
@@ -298,25 +316,40 @@ class CryptoPaymentProcessor:
         currency: CryptoCurrency,
         network: NetworkType
     ) -> Decimal:
-        """Calculate transaction fee for payment"""
+        """
+        Calculate transaction fee for payment"""
         fee_structure = self.fee_structures.get(network.value, {})
+
         
         if network == NetworkType.BITCOIN:
             # Bitcoin fee calculation (simplified)
+
+
             sat_per_byte = fee_structure.get("sat_per_byte", Decimal("10"))
+
+
             tx_size = 250  # Average transaction size in bytes
+
             fee_satoshis = sat_per_byte * tx_size
             return fee_satoshis / Decimal("100000000")  # Convert to BTC
         
         elif network in [NetworkType.ETHEREUM, NetworkType.POLYGON, NetworkType.BSC]:
             # EVM-based network fee calculation
+
             base_fee = fee_structure.get("base_fee", Decimal("0.001"))
+
+
             priority_fee = fee_structure.get("priority_fee", Decimal("0.0005"))
+
+
             gas_limit = 21000  # Standard transfer gas limit
+
             gas_price = fee_structure.get("gas_price", Decimal("20"))
             
             # Fee in native currency
+
             fee_wei = gas_limit * gas_price * Decimal("1000000000")  # Convert gwei to wei
+
             fee_native = fee_wei / Decimal("1000000000000000000")  # Convert wei to native currency
             
             return fee_native
@@ -331,15 +364,17 @@ class CryptoPaymentProcessor:
         network: NetworkType
     ) -> WalletInfo:
         """Generate new wallet address for payment"""
-        # Mock wallet generation - in real implementation would use proper key derivation
         address_prefix = {
             NetworkType.BITCOIN: "bc1",
             NetworkType.ETHEREUM: "0x",
             NetworkType.POLYGON: "0x",
             NetworkType.BSC: "0x"
         }.get(network, "0x")
+
+
         
         random_suffix = hashlib.sha256(str(uuid.uuid4()).encode()).hexdigest()[:20]
+
         address = f"{address_prefix}{random_suffix}"
         
         return WalletInfo(
@@ -368,15 +403,20 @@ class CryptoPaymentProcessor:
         try:
             if payment_id not in self.active_payments:
                 raise ValueError(f"Payment not found: {payment_id}")
+
+
             
             payment = self.active_payments[payment_id]
             
             self.logger.info(f"Processing payment: {payment_id}")
             
             # Check wallet balance
+
             available_balance = await self._get_wallet_balance(
                 payment.sender_address, payment.currency, payment.network
             )
+
+
             
             total_required = payment.amount + payment.transaction_fee
             if available_balance < total_required:
@@ -384,18 +424,23 @@ class CryptoPaymentProcessor:
                 raise ValueError(f"Insufficient balance: {available_balance} < {total_required}")
             
             # Broadcast transaction
+
             transaction_hash = await self._broadcast_transaction(payment, sender_private_key)
+
             payment.transaction_hash = transaction_hash
             payment.status = PaymentStatus.PROCESSING
             
             # Start monitoring transaction
             asyncio.create_task(self._monitor_transaction(payment_id))
+
             
             self.logger.info(f"Payment broadcasted: {payment_id} - {transaction_hash}")
+
             return payment
             
         except Exception as e:
             self.logger.error(f"Payment processing failed: {e}")
+
             if payment_id in self.active_payments:
                 self.active_payments[payment_id].status = PaymentStatus.FAILED
             raise
@@ -407,17 +452,14 @@ class CryptoPaymentProcessor:
         network: NetworkType
     ) -> Decimal:
         """Get wallet balance for address"""
-        # Mock balance check - in real implementation would query blockchain
         balance_key = f"{address}_{currency.value}_{network.value}"
-        return self.wallet_balances.get(balance_key, Decimal("10.0"))  # Mock balance
-    
+        return self.wallet_balances.get(balance_key, Decimal("10.0"))    
     async def _broadcast_transaction(
         self,
         payment: PaymentResult,
         private_key: Optional[str] = None
     ) -> str:
         """Broadcast transaction to blockchain"""
-        # Mock transaction broadcasting
         transaction_data = {
             "from": payment.sender_address,
             "to": payment.recipient_address,
@@ -427,8 +469,11 @@ class CryptoPaymentProcessor:
         }
         
         # Generate transaction hash
+
         tx_data_str = json.dumps(transaction_data, sort_keys=True)
+
         transaction_hash = hashlib.sha256(tx_data_str.encode()).hexdigest()
+
         
         return f"0x{transaction_hash}"
     
@@ -436,9 +481,8 @@ class CryptoPaymentProcessor:
         """Monitor transaction confirmations"""
         try:
             payment = self.active_payments[payment_id]
+
             required_confirmations = self._get_required_confirmations(payment.network)
-            
-            # Mock confirmation monitoring
             for confirmation in range(1, required_confirmations + 1):
                 await asyncio.sleep(10)  # Wait 10 seconds between confirmations
                 
@@ -447,16 +491,19 @@ class CryptoPaymentProcessor:
                 if confirmation >= required_confirmations:
                     payment.status = PaymentStatus.CONFIRMED
                     payment.confirmed_at = datetime.utcnow()
+
                     payment.block_number = 12345678 + confirmation
                     
                     # Mark as completed
                     payment.status = PaymentStatus.COMPLETED
                     
                     self.logger.info(f"Payment completed: {payment_id}")
+
                     break
                 
         except Exception as e:
             self.logger.error(f"Transaction monitoring failed: {e}")
+
             if payment_id in self.active_payments:
                 self.active_payments[payment_id].status = PaymentStatus.FAILED
     
@@ -472,9 +519,11 @@ class CryptoPaymentProcessor:
         return confirmations.get(network, 12)
     
     async def get_payment_status(self, payment_id: str) -> PaymentResult:
-        """Get current payment status"""
+        """
+        Get current payment status"""
         if payment_id not in self.active_payments:
             raise ValueError(f"Payment not found: {payment_id}")
+
         
         return self.active_payments[payment_id]
     
@@ -482,11 +531,14 @@ class CryptoPaymentProcessor:
         """Cancel a pending payment"""
         if payment_id not in self.active_payments:
             raise ValueError(f"Payment not found: {payment_id}")
+
+
         
         payment = self.active_payments[payment_id]
         
         if payment.status not in [PaymentStatus.PENDING, PaymentStatus.PROCESSING]:
             raise ValueError(f"Cannot cancel payment in status: {payment.status.value}")
+
         
         payment.status = PaymentStatus.CANCELLED
         
@@ -504,15 +556,20 @@ class CryptoPaymentProcessor:
         """Process payment refund"""
         if payment_id not in self.active_payments:
             raise ValueError(f"Payment not found: {payment_id}")
+
+
         
         payment = self.active_payments[payment_id]
         
         if payment.status != PaymentStatus.COMPLETED:
             raise ValueError(f"Cannot refund payment in status: {payment.status.value}")
+
+
         
         refund_amount = refund_amount or payment.amount
         
         # Create refund payment
+
         refund_request = PaymentRequest(
             amount=refund_amount,
             currency=payment.currency,
@@ -523,8 +580,11 @@ class CryptoPaymentProcessor:
             sender_address=payment.recipient_address,
             network=payment.network
         )
+
+
         
         refund_payment = await self.create_payment(refund_request)
+
         
         return {
             "original_payment_id": payment_id,
@@ -557,6 +617,7 @@ class PaymentGateway:
         
         # Payment routing rules
         self.routing_rules = config.get("routing", {})
+
         
     async def route_payment(
         self,
@@ -573,22 +634,29 @@ class PaymentGateway:
         """
         try:
             # Select processor based on currency and amount
+
             processor_name = self._select_processor(request)
+
             
             if processor_name not in self.processors:
                 raise ValueError(f"Processor not available: {processor_name}")
+
+
             
             processor = self.processors[processor_name]
             
             self.logger.info(f"Routing payment to processor: {processor_name}")
             
             # Create payment through selected processor
+
             payment_result = await processor.create_payment(request)
+
             
             return payment_result
             
         except Exception as e:
             self.logger.error(f"Payment routing failed: {e}")
+
             raise
     
     def _select_processor(self, request: PaymentRequest) -> str:
@@ -620,9 +688,11 @@ class PaymentGateway:
         results = []
         
         # Group requests by processor
+
         processor_groups = {}
         for request in requests:
             processor_name = self._select_processor(request)
+
             if processor_name not in processor_groups:
                 processor_groups[processor_name] = []
             processor_groups[processor_name].append(request)
@@ -635,7 +705,9 @@ class PaymentGateway:
                 for request in group_requests:
                     try:
                         result = await processor.create_payment(request)
+
                         results.append(result)
+
                     except Exception as e:
                         self.logger.error(f"Batch payment failed: {e}")
                         # Continue with other payments
@@ -653,6 +725,7 @@ class PaymentGateway:
         
         for processor_name, processor in self.processors.items():
             payment_count = len(processor.active_payments)
+
             stats["payment_counts"][processor_name] = payment_count
             stats["total_payments"] += payment_count
         

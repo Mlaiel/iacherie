@@ -16,7 +16,8 @@ import json
 # ===== CACHE STRATEGIES =====
 
 class CacheStrategy(str, Enum):
-    """Cache strategy types"""
+    """
+        Cache strategy types"""
     CACHE_ASIDE = "cache_aside"
     WRITE_THROUGH = "write_through"
     WRITE_BEHIND = "write_behind"
@@ -75,7 +76,8 @@ class CacheMetrics:
 
 @dataclass
 class MetricDefinition:
-    """Definition for a cache metric"""
+    """
+        Definition for a cache metric"""
     name: str
     metric_type: MetricType
     description: str
@@ -97,7 +99,8 @@ class AlertRule:
 # ===== COMPRESSION =====
 
 class CompressionAlgorithm(str, Enum):
-    """Compression algorithms for cache data"""
+    """
+        Compression algorithms for cache data"""
     GZIP = "gzip"
     LZ4 = "lz4"
     ZSTD = "zstd"
@@ -114,7 +117,8 @@ class CompressionLevel(int, Enum):
 
 @dataclass
 class CompressionProfile:
-    """Compression profile for specific content types"""
+    """
+        Compression profile for specific content types"""
     name: str
     algorithm: CompressionAlgorithm
     level: CompressionLevel
@@ -124,7 +128,8 @@ class CompressionProfile:
 # ===== CACHE INVALIDATION =====
 
 class InvalidationStrategy(str, Enum):
-    """Cache invalidation strategies"""
+    """
+        Cache invalidation strategies"""
     TTL_BASED = "ttl_based"
     EVENT_BASED = "event_based"
     MANUAL = "manual"
@@ -132,10 +137,7 @@ class InvalidationStrategy(str, Enum):
 
 class InvalidationScope(str, Enum):
     """Invalidation scope"""
-# SECURITY: # SECURITY: SINGLE_KEY = "single_key" # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
-    PATTERN = "pattern"
+# SECURITY: # SECURITY: SINGLE_KEY = "single_key" # MOVED TO ENV # MOVED TO ENV    PATTERN = "pattern"
     TAG_BASED = "tag_based"
     GLOBAL = "global"
 
@@ -153,7 +155,8 @@ class InvalidationRule:
 # ===== CACHE WARMING =====
 
 class WarmingStrategy(str, Enum):
-    """Cache warming strategies"""
+    """
+        Cache warming strategies"""
     PRELOAD = "preload"
     LAZY_LOAD = "lazy_load"
     BACKGROUND_REFRESH = "background_refresh"
@@ -175,7 +178,8 @@ class WarmingPriority(int, Enum):
 
 @dataclass
 class WarmingRule:
-    """Cache warming rule"""
+    """
+        Cache warming rule"""
     name: str
     strategy: WarmingStrategy
     trigger: WarmingTrigger
@@ -188,7 +192,8 @@ class WarmingRule:
 
 @dataclass
 class CacheKeyConfig:
-    """Cache key configuration"""
+    """
+        Cache key configuration"""
     prefix: str = "ia_influencer"
     separator: str = ":"
     max_length: int = 250
@@ -208,7 +213,8 @@ class CacheStrategiesConfig:
 
 @dataclass
 class CacheMetricsConfig:
-    """Cache metrics configuration"""
+    """
+        Cache metrics configuration"""
     enabled: bool = True
     collection_interval: int = 60  # seconds
     retention_period: int = 604800  # 7 days
@@ -217,7 +223,8 @@ class CacheMetricsConfig:
 
 @dataclass
 class CacheCompressionConfig:
-    """Cache compression configuration"""
+    """
+        Cache compression configuration"""
     enabled: bool = False
     default_algorithm: CompressionAlgorithm = CompressionAlgorithm.LZ4
     default_level: CompressionLevel = CompressionLevel.BALANCED
@@ -226,7 +233,8 @@ class CacheCompressionConfig:
 
 @dataclass
 class CacheInvalidationConfig:
-    """Cache invalidation configuration"""
+    """
+        Cache invalidation configuration"""
     enabled: bool = True
     default_strategy: InvalidationStrategy = InvalidationStrategy.TTL_BASED
     batch_size: int = 100
@@ -235,7 +243,8 @@ class CacheInvalidationConfig:
 
 @dataclass
 class CacheWarmingConfig:
-    """Cache warming configuration"""
+    """
+        Cache warming configuration"""
     enabled: bool = True
     max_concurrent_jobs: int = 5
     timeout_seconds: int = 300
@@ -246,7 +255,8 @@ class CacheWarmingConfig:
 
 @dataclass
 class ContentFingerprintCacheConfig:
-    """Content fingerprint cache configuration"""
+    """
+        Content fingerprint cache configuration"""
     enabled: bool = True
     ttl: int = 86400  # 24 hours
     max_fingerprints: int = 1000000  # 1M fingerprints
@@ -264,7 +274,8 @@ class MLModelCacheConfig:
 
 @dataclass
 class PlatformAPICacheConfig:
-    """Platform API cache configuration"""
+    """
+        Platform API cache configuration"""
     enabled: bool = True
     default_ttl: int = 600  # 10 minutes
     rate_limit_cache_ttl: int = 3600  # 1 hour
@@ -273,7 +284,8 @@ class PlatformAPICacheConfig:
 
 @dataclass
 class RevenueCacheConfig:
-    """Revenue data cache configuration"""
+    """
+        Revenue data cache configuration"""
     enabled: bool = True
     revenue_ttl: int = 300  # 5 minutes
     analytics_ttl: int = 3600  # 1 hour
@@ -283,10 +295,12 @@ class RevenueCacheConfig:
 # ===== ENVIRONMENT-SPECIFIC CONFIGURATIONS =====
 
 def get_development_cache_config() -> Dict[str, Any]:
-    """Get development cache configuration"""
+    """
+        Get development cache configuration"""
     return {
         "strategies": CacheStrategiesConfig(
             default_ttl=300,  # 5 minutes
+
             max_ttl=3600     # 1 hour
         ),
         "metrics": CacheMetricsConfig(
@@ -309,6 +323,7 @@ def get_production_cache_config() -> Dict[str, Any]:
     return {
         "strategies": CacheStrategiesConfig(
             default_ttl=3600,   # 1 hour
+
             max_ttl=86400      # 24 hours
         ),
         "metrics": CacheMetricsConfig(
@@ -333,6 +348,7 @@ def get_testing_cache_config() -> Dict[str, Any]:
     return {
         "strategies": CacheStrategiesConfig(
             default_ttl=60,    # 1 minute
+
             max_ttl=300       # 5 minutes
         ),
         "metrics": CacheMetricsConfig(

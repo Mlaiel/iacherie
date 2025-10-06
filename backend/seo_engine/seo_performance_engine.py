@@ -33,7 +33,8 @@ import statistics
 logger = logging.getLogger(__name__)
 
 class LinkType(Enum):
-    """Types de liens pour le link building"""
+    """
+        Types de liens pour le link building"""
     INTERNAL = "internal"
     EXTERNAL = "external"  
     BACKLINK = "backlink"
@@ -95,7 +96,8 @@ class PerformanceMetrics:
     predictions: Dict[str, float] = field(default_factory=dict)
     
     def calculate_weighted_score(self) -> float:
-        """Calcule le score pondéré global"""
+        """
+        Calcule le score pondéré global"""
         weights = {
             'traffic': 0.25,
             'ranking': 0.20,
@@ -105,6 +107,7 @@ class PerformanceMetrics:
             'link_authority': 0.10,
             'content_quality': 0.05
         }
+
         
         scores = {
             'traffic': statistics.mean(self.traffic_metrics.values()) if self.traffic_metrics else 0,
@@ -115,13 +118,15 @@ class PerformanceMetrics:
             'link_authority': statistics.mean(self.link_metrics.values()) if self.link_metrics else 0,
             'content_quality': statistics.mean(self.content_metrics.values()) if self.content_metrics else 0
         }
+
         
         weighted_score = sum(scores[metric] * weight for metric, weight in weights.items())
         return min(100, max(0, weighted_score))
 
 @dataclass
 class LinkOpportunity:
-    """Opportunité de link building"""
+    """
+        Opportunité de link building"""
     domain: str
     url: str
     authority_score: float
@@ -137,7 +142,8 @@ class LinkOpportunity:
 
 @dataclass
 class LinkProfile:
-    """Profil de liens d'un domaine"""
+    """
+        Profil de liens d'un domaine"""
     domain: str
     total_backlinks: int
     referring_domains: int
@@ -152,7 +158,8 @@ class LinkProfile:
 
 @dataclass
 class PerformancePrediction:
-    """Prédiction de performance SEO"""
+    """
+        Prédiction de performance SEO"""
     timeframe: str
     predicted_metrics: Dict[str, float]
     confidence_level: float
@@ -174,7 +181,8 @@ class SEOPerformanceEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialise le moteur de performance SEO"""
+        """
+        Initialise le moteur de performance SEO"""
         self.config = config or {}
         self.session: Optional[aiohttp.ClientSession] = None
         
@@ -223,11 +231,14 @@ class SEOPerformanceEngine:
             
             # Configuration des webhooks et alertes
             await self._setup_alerting_system()
+
             
             logger.info("✅ Moteur de performance SEO initialisé")
+
             
         except Exception as e:
             logger.error(f"❌ Erreur initialisation moteur performance: {e}")
+
             raise
     
     async def _load_prediction_models(self) -> None:
@@ -252,7 +263,8 @@ class SEOPerformanceEngine:
         }
     
     async def _setup_alerting_system(self) -> None:
-        """Configure le système d'alertes"""
+        """
+        Configure le système d'alertes"""
         # Configuration des canaux d'alerte
         self.alert_channels = {
             'email': self.config.get('alert_email', []),
@@ -274,6 +286,7 @@ class SEOPerformanceEngine:
         Args:
             domain: Domaine à analyser
             content: Contenu spécifique (optionnel)
+
             performance_data: Données de performance existantes
             include_predictions: Inclure les prédictions ML
             
@@ -284,18 +297,33 @@ class SEOPerformanceEngine:
             logger.info(f"📊 Analyse performance SEO pour {domain}")
             
             # Collecte des métriques multiples sources
+
             traffic_metrics = await self._collect_traffic_metrics(domain)
+
+
             ranking_metrics = await self._collect_ranking_metrics(domain)
+
+
             engagement_metrics = await self._collect_engagement_metrics(domain)
+
+
             technical_metrics = await self._collect_technical_metrics(domain)
+
+
             core_web_vitals = await self._collect_core_web_vitals(domain)
+
+
             link_metrics = await self._collect_link_metrics(domain)
+
+
             content_metrics = await self._collect_content_metrics(domain, content)
             
             # Analyse comparative
+
             competitive_metrics = await self._analyze_competitive_performance(domain)
             
             # Données historiques
+
             historical_data = self.historical_data.get(domain, [])
             
             # Prédictions ML
@@ -310,6 +338,7 @@ class SEOPerformanceEngine:
                 )
             
             # Calcul du score global
+
             all_metrics = {
                 **traffic_metrics,
                 **ranking_metrics,
@@ -319,10 +348,12 @@ class SEOPerformanceEngine:
                 **link_metrics,
                 **content_metrics
             }
+
             
             overall_score = await self._calculate_overall_score(all_metrics)
             
             # Création de l'objet PerformanceMetrics
+
             metrics = PerformanceMetrics(
                 overall_score=overall_score,
                 traffic_metrics=traffic_metrics,
@@ -345,12 +376,15 @@ class SEOPerformanceEngine:
             
             # Vérification des alertes
             await self._check_performance_alerts(domain, metrics)
+
             
             logger.info(f"✅ Analyse terminée - Score global: {overall_score:.1f}")
+
             return metrics
             
         except Exception as e:
             logger.error(f"❌ Erreur analyse performance: {e}")
+
             raise
     
     async def _collect_traffic_metrics(self, domain: str) -> Dict[str, float]:
@@ -373,7 +407,8 @@ class SEOPerformanceEngine:
         }
     
     async def _collect_ranking_metrics(self, domain: str) -> Dict[str, float]:
-        """Collecte les métriques de classement"""
+        """
+        Collecte les métriques de classement"""
         return {
             'average_position': np.random.uniform(5, 25),
             'keywords_top_3': np.random.randint(10, 100),
@@ -391,7 +426,8 @@ class SEOPerformanceEngine:
         }
     
     async def _collect_engagement_metrics(self, domain: str) -> Dict[str, float]:
-        """Collecte les métriques d'engagement"""
+        """
+        Collecte les métriques d'engagement"""
         return {
             'bounce_rate': np.random.uniform(0.30, 0.80),
             'exit_rate': np.random.uniform(0.25, 0.70),
@@ -408,7 +444,8 @@ class SEOPerformanceEngine:
         }
     
     async def _collect_technical_metrics(self, domain: str) -> Dict[str, float]:
-        """Collecte les métriques techniques"""
+        """
+        Collecte les métriques techniques"""
         return {
             'page_load_time': np.random.uniform(1.0, 5.0),  # secondes
             'server_response_time': np.random.uniform(0.1, 1.0),  # secondes
@@ -425,7 +462,8 @@ class SEOPerformanceEngine:
         }
     
     async def _collect_core_web_vitals(self, domain: str) -> Dict[str, float]:
-        """Collecte les Core Web Vitals"""
+        """
+        Collecte les Core Web Vitals"""
         return {
             'largest_contentful_paint': np.random.uniform(1.0, 4.0),  # secondes
             'first_input_delay': np.random.uniform(50, 200),  # millisecondes
@@ -440,7 +478,8 @@ class SEOPerformanceEngine:
         }
     
     async def _collect_link_metrics(self, domain: str) -> Dict[str, float]:
-        """Collecte les métriques de liens"""
+        """
+        Collecte les métriques de liens"""
         return {
             'domain_authority': np.random.uniform(30, 90),
             'page_authority': np.random.uniform(25, 85),
@@ -461,7 +500,8 @@ class SEOPerformanceEngine:
         domain: str,
         content: Optional[str] = None
     ) -> Dict[str, float]:
-        """Collecte les métriques de contenu"""
+        """
+        Collecte les métriques de contenu"""
         metrics = {
             'content_freshness_score': np.random.uniform(60, 95),
             'content_depth_score': np.random.uniform(70, 90),
@@ -478,7 +518,9 @@ class SEOPerformanceEngine:
         # Analyse spécifique si du contenu est fourni
         if content:
             content_length = len(content.split())
+
             metrics['word_count'] = float(content_length)
+
             metrics['content_completeness'] = min(1.0, content_length / 1500)  # Score basé sur 1500 mots optimaux
         
         return metrics
@@ -487,7 +529,8 @@ class SEOPerformanceEngine:
         self,
         domain: str
     ) -> Dict[str, float]:
-        """Analyse la performance competitive"""
+        """
+        Analyse la performance competitive"""
         return {
             'market_share': np.random.uniform(0.05, 0.30),
             'competitive_ranking_advantage': np.random.uniform(-0.20, 0.40),
@@ -506,15 +549,20 @@ class SEOPerformanceEngine:
         domain: str,
         current_metrics: Dict[str, Dict[str, float]]
     ) -> Dict[str, float]:
-        """Génère des prédictions de performance ML"""
+        """
+        Génère des prédictions de performance ML"""
         # Simulation de prédictions ML basées sur les tendances
+
         predictions = {}
         
         # Prédictions de trafic (30 jours)
+
         current_traffic = current_metrics['traffic'].get('organic_traffic', 0)
+
         traffic_trend = current_metrics['traffic'].get('organic_growth_rate', 0)
         
         # Simulation d'un modèle de prédiction
+
         traffic_prediction = current_traffic * (1 + traffic_trend * 0.1)  # Facteur d'atténuation
         traffic_prediction += np.random.normal(0, current_traffic * 0.05)  # Bruit
         
@@ -529,6 +577,7 @@ class SEOPerformanceEngine:
         
         # Confidence scores
         predictions['prediction_confidence'] = np.random.uniform(0.70, 0.90)
+
         
         return predictions
     
@@ -536,37 +585,51 @@ class SEOPerformanceEngine:
         self,
         all_metrics: Dict[str, float]
     ) -> float:
-        """Calcule le score global de performance"""
+        """
+        Calcule le score global de performance"""
         # Normalisation et pondération des métriques principales
+
         normalized_scores = {}
         
         # Traffic score (0-100)
+
         organic_traffic = all_metrics.get('organic_traffic', 0)
+
         traffic_score = min(100, (organic_traffic / 10000) * 100)  # 10k trafic = 100 points
         normalized_scores['traffic'] = traffic_score
         
         # Ranking score (0-100)
+
         avg_position = all_metrics.get('average_position', 50)
+
         ranking_score = max(0, 100 - (avg_position - 1) * 5)  # Position 1 = 100, Position 20 = 5
         normalized_scores['ranking'] = ranking_score
         
         # Engagement score (0-100)
+
         bounce_rate = all_metrics.get('bounce_rate', 0.5)
+
         time_on_page = all_metrics.get('time_on_page', 120)
+
         engagement_score = (1 - bounce_rate) * 50 + min(50, time_on_page / 6)  # 6s = 1 point
         normalized_scores['engagement'] = engagement_score
         
         # Technical score (0-100)
+
         page_speed = all_metrics.get('mobile_page_speed_score', 70)
+
         cwv_pass_rate = all_metrics.get('cwv_pass_rate', 0.7) * 100
+
         technical_score = (page_speed + cwv_pass_rate) / 2
         normalized_scores['technical'] = technical_score
         
         # Link score (0-100)
+
         domain_authority = all_metrics.get('domain_authority', 50)
         normalized_scores['link_authority'] = domain_authority
         
         # Score pondéré final
+
         weights = {
             'traffic': 0.30,
             'ranking': 0.25,
@@ -574,11 +637,13 @@ class SEOPerformanceEngine:
             'technical': 0.15,
             'link_authority': 0.10
         }
+
         
         overall_score = sum(
             normalized_scores.get(metric, 0) * weight
             for metric, weight in weights.items()
         )
+
         
         return min(100, max(0, overall_score))
     
@@ -587,7 +652,8 @@ class SEOPerformanceEngine:
         domain: str,
         metrics: PerformanceMetrics
     ) -> None:
-        """Ajoute les métriques aux données historiques"""
+        """
+        Ajoute les métriques aux données historiques"""
         historical_entry = {
             'timestamp': datetime.now(),
             'overall_score': metrics.overall_score,
@@ -601,6 +667,7 @@ class SEOPerformanceEngine:
         self.historical_data[domain].append(historical_entry)
         
         # Limiter l'historique à 90 jours
+
         cutoff_date = datetime.now() - timedelta(days=90)
         self.historical_data[domain] = [
             entry for entry in self.historical_data[domain]
@@ -612,13 +679,17 @@ class SEOPerformanceEngine:
         domain: str,
         metrics: PerformanceMetrics
     ) -> None:
-        """Vérifie et déclenche les alertes de performance"""
+        """
+        Vérifie et déclenche les alertes de performance"""
         alerts = []
         
         # Alerte baisse de trafic
         if len(self.historical_data[domain]) > 1:
             current_traffic = metrics.traffic_metrics.get('organic_traffic', 0)
+
+
             previous_traffic = self.historical_data[domain][-2].get('traffic_organic', 0)
+
             
             if previous_traffic > 0:
                 traffic_change = (current_traffic - previous_traffic) / previous_traffic
@@ -633,6 +704,7 @@ class SEOPerformanceEngine:
                     })
         
         # Alerte Core Web Vitals
+
         lcp = metrics.core_web_vitals.get('largest_contentful_paint', 0)
         if lcp > self.alert_thresholds['cwv_lcp']:
             alerts.append({
@@ -645,6 +717,7 @@ class SEOPerformanceEngine:
             })
         
         # Alerte bounce rate
+
         bounce_rate = metrics.engagement_metrics.get('bounce_rate', 0)
         if bounce_rate > self.alert_thresholds['bounce_rate']:
             alerts.append({
@@ -685,8 +758,10 @@ class SEOPerformanceEngine:
                         ) as response:
                             if response.status == 200:
                                 logger.info(f"✅ Alerte envoyée via webhook pour {domain}")
+
                     except Exception as e:
                         logger.error(f"❌ Erreur envoi webhook: {e}")
+
         
         except Exception as e:
             logger.error(f"❌ Erreur envoi alertes: {e}")
@@ -700,11 +775,14 @@ class SEOPerformanceEngine:
         try:
             if domain not in self.historical_data:
                 return {'error': 'Aucune donnée historique disponible'}
+
             
             historical = self.historical_data[domain]
+
             cutoff_date = datetime.now() - timedelta(days=days)
             
             # Filtrage par période
+
             period_data = [
                 entry for entry in historical
                 if entry['timestamp'] > cutoff_date
@@ -714,6 +792,7 @@ class SEOPerformanceEngine:
                 return {'error': f'Aucune donnée pour les {days} derniers jours'}
             
             # Calcul des tendances
+
             trends = {}
             
             for metric in ['overall_score', 'traffic_organic', 'average_position', 'bounce_rate', 'domain_authority']:
@@ -721,8 +800,13 @@ class SEOPerformanceEngine:
                 
                 if len(values) > 1:
                     # Régression linéaire simple
+
                     x = np.arange(len(values))
+
+
                     z = np.polyfit(x, values, 1)
+
+
                     slope = z[0]
                     
                     trends[metric] = {
@@ -745,6 +829,7 @@ class SEOPerformanceEngine:
             
         except Exception as e:
             logger.error(f"❌ Erreur récupération tendances: {e}")
+
             raise
     
     async def get_performance_recommendations(
@@ -755,14 +840,19 @@ class SEOPerformanceEngine:
         try:
             if domain not in self.metrics_cache:
                 raise ValueError(f"Aucune donnée de performance pour {domain}")
+
+
             
             metrics = self.metrics_cache[domain]
+
             recommendations = []
             
             # Recommandations basées sur les métriques
             
             # Trafic
+
             organic_growth = metrics.traffic_metrics.get('organic_growth_rate', 0)
+
             if organic_growth < 0.1:  # Moins de 10% de croissance
                 recommendations.append({
                     'category': 'Traffic',
@@ -779,7 +869,9 @@ class SEOPerformanceEngine:
                 })
             
             # Core Web Vitals
+
             lcp = metrics.core_web_vitals.get('largest_contentful_paint', 0)
+
             if lcp > 2.5:
                 recommendations.append({
                     'category': 'Technical',
@@ -797,7 +889,9 @@ class SEOPerformanceEngine:
                 })
             
             # Engagement
+
             bounce_rate = metrics.engagement_metrics.get('bounce_rate', 0)
+
             if bounce_rate > 0.6:
                 recommendations.append({
                     'category': 'Engagement',
@@ -815,7 +909,9 @@ class SEOPerformanceEngine:
                 })
             
             # Authority et liens
+
             domain_authority = metrics.link_metrics.get('domain_authority', 0)
+
             if domain_authority < 50:
                 recommendations.append({
                     'category': 'Authority',
@@ -833,7 +929,9 @@ class SEOPerformanceEngine:
                 })
             
             # Rankings
+
             avg_position = metrics.ranking_metrics.get('average_position', 50)
+
             if avg_position > 10:
                 recommendations.append({
                     'category': 'Rankings',
@@ -853,11 +951,13 @@ class SEOPerformanceEngine:
             # Tri par priorité
             priority_order = {'high': 0, 'medium': 1, 'low': 2}
             recommendations.sort(key=lambda x: priority_order.get(x['priority'], 3))
+
             
             return recommendations
             
         except Exception as e:
             logger.error(f"❌ Erreur génération recommandations: {e}")
+
             raise
     
     async def cleanup(self) -> None:
@@ -867,13 +967,19 @@ class SEOPerformanceEngine:
                 await self.session.close()
             
             # Sauvegarde des données importantes
+
             total_domains = len(self.metrics_cache)
+
+
             total_historical_points = sum(len(data) for data in self.historical_data.values())
+
             
             logger.info(f"🧹 Nettoyage moteur performance - {total_domains} domaines, {total_historical_points} points historiques")
+
             
         except Exception as e:
             logger.error(f"❌ Erreur nettoyage: {e}")
+
             raise
 
 class IntelligentLinkBuildingEngine:
@@ -890,7 +996,8 @@ class IntelligentLinkBuildingEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialise le moteur de link building"""
+        """
+        Initialise le moteur de link building"""
         self.config = config or {}
         self.session: Optional[aiohttp.ClientSession] = None
         
@@ -954,11 +1061,14 @@ class IntelligentLinkBuildingEngine:
             
             # Configuration des outils de prospection
             await self._setup_prospecting_tools()
+
             
             logger.info("✅ Moteur de link building initialisé")
+
             
         except Exception as e:
             logger.error(f"❌ Erreur initialisation link building: {e}")
+
             raise
     
     async def _load_outreach_templates(self) -> None:
@@ -1033,7 +1143,8 @@ Merci pour le travail formidable que vous faites !
         }
     
     async def _setup_prospecting_tools(self) -> None:
-        """Configure les outils de prospection"""
+        """
+        Configure les outils de prospection"""
         # Configuration des sources de prospection
         self.prospecting_sources = {
             'search_operators': [
@@ -1072,41 +1183,52 @@ Merci pour le travail formidable que vous faites !
             logger.info(f"🎯 Création stratégie link building pour {domain}")
             
             # Analyse du profil de lien actuel
+
             current_profile = await self._analyze_current_link_profile(domain)
             
             # Analyse concurrentielle
+
             competitor_analysis = await self._analyze_competitor_links(domain, target_keywords)
             
             # Identification des opportunités
+
             opportunities = await self._identify_link_opportunities(
                 domain, target_keywords, strategy_type
             )
             
             # Configuration de la stratégie
+
             strategy_config = self.available_strategies[strategy_type]
             
             # Calcul des objectifs et timeline
+
             objectives = await self._calculate_link_building_objectives(
                 current_profile, strategy_config, monthly_budget
             )
             
             # Plan de campagne
+
             campaign_plan = await self._create_campaign_plan(
                 opportunities, objectives, strategy_config
             )
             
             # Allocation du budget
+
             budget_allocation = await self._allocate_budget(
                 campaign_plan, monthly_budget
             )
             
             # Métriques de suivi
+
             tracking_metrics = await self._define_tracking_metrics(objectives)
             
             # Timeline détaillée
+
             implementation_timeline = await self._create_implementation_timeline(
                 campaign_plan, objectives
             )
+
+
             
             strategy = {
                 'domain': domain,
@@ -1125,19 +1247,25 @@ Merci pour le travail formidable que vous faites !
             }
             
             logger.info(f"✅ Stratégie créée - {len(opportunities)} opportunités identifiées")
+
             return strategy
             
         except Exception as e:
             logger.error(f"❌ Erreur création stratégie: {e}")
+
             raise
     
     async def _analyze_current_link_profile(self, domain: str) -> LinkProfile:
         """Analyse le profil de liens actuel du domaine"""
         # Simulation d'analyse de profil de liens
         # Dans la réalité, cela utiliserait des APIs comme Ahrefs, SEMrush, Majestic
+
         
         total_backlinks = np.random.randint(100, 10000)
+
         referring_domains = np.random.randint(50, min(1000, total_backlinks // 2))
+
+
         
         profile = LinkProfile(
             domain=domain,
@@ -1176,6 +1304,7 @@ Merci pour le travail formidable que vous faites !
             toxic_links=[],
             competitive_gap={}
         )
+
         
         self.domain_profiles[domain] = profile
         return profile
@@ -1185,11 +1314,14 @@ Merci pour le travail formidable que vous faites !
         domain: str,
         keywords: List[str]
     ) -> Dict[str, Any]:
-        """Analyse les profils de liens des concurrents"""
+        """
+        Analyse les profils de liens des concurrents"""
         # Simulation d'analyse concurrentielle
+
         competitor_domains = [
             f'competitor-{i}.com' for i in range(1, 6)
         ]
+
         
         competitor_analysis = {
             'top_competitors': [],
@@ -1215,6 +1347,7 @@ Merci pour le travail formidable que vous faites !
                 ]
             }
             competitor_analysis['top_competitors'].append(competitor_profile)
+
         
         return competitor_analysis
     
@@ -1224,13 +1357,16 @@ Merci pour le travail formidable que vous faites !
         keywords: List[str],
         strategy_type: LinkBuildingStrategy
     ) -> List[LinkOpportunity]:
-        """Identifie les opportunités de link building"""
+        """
+        Identifie les opportunités de link building"""
         opportunities = []
+
         strategy_config = self.available_strategies[strategy_type]
         
         # Simulation de recherche d'opportunités
         for i in range(np.random.randint(20, 100)):
             # Génération d'une opportunité aléatoire
+
             opportunity_domain = f'opportunity-{i}.com'
             
             opportunity = LinkOpportunity(
@@ -1265,6 +1401,7 @@ Merci pour le travail formidable que vous faites !
             key=lambda x: (x.authority_score * 0.4 + x.relevance_score * 100 * 0.3 + x.estimated_success_rate * 100 * 0.3),
             reverse=True
         )
+
         
         self.link_opportunities[domain] = opportunities
         return opportunities[:50]  # Limiter aux 50 meilleures opportunités
@@ -1288,8 +1425,11 @@ Merci pour le travail formidable que vous faites !
         if budget:
             if budget < 1000:
                 monthly_target = int(monthly_target * 0.6)
+
             elif budget > 5000:
                 monthly_target = int(monthly_target * 1.3)
+
+
         
         objectives = {
             'monthly_links_target': monthly_target,
@@ -1319,8 +1459,10 @@ Merci pour le travail formidable que vous faites !
         objectives: Dict[str, Any],
         strategy_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Crée le plan de campagne détaillé"""
+        """
+        Crée le plan de campagne détaillé"""
         # Segmentation des opportunités par tactique
+
         tactics_distribution = {}
         for tactic in strategy_config['tactics']:
             tactics_distribution[tactic] = [
@@ -1329,6 +1471,7 @@ Merci pour le travail formidable que vous faites !
             ]
         
         # Plan mensuel
+
         monthly_plan = {
             'month_1': {
                 'focus': 'High-authority targets',
@@ -1351,6 +1494,7 @@ Merci pour le travail formidable que vous faites !
         }
         
         # Ressources nécessaires
+
         resource_requirements = {
             'content_creation': {
                 'guest_posts_needed': len([o for o in opportunities if o.strategy == 'guest_posting']),
@@ -1380,7 +1524,8 @@ Merci pour le travail formidable que vous faites !
         campaign_plan: Dict[str, Any],
         total_budget: Optional[float]
     ) -> Dict[str, Any]:
-        """Alloue le budget selon les tactiques"""
+        """
+        Alloue le budget selon les tactiques"""
         if not total_budget:
             return {'message': 'Aucun budget spécifié - plan organique recommandé'}
         
@@ -1394,6 +1539,7 @@ Merci pour le travail formidable que vous faites !
         }
         
         # Détail par tactique
+
         tactic_costs = {
             'guest_posting': {
                 'content_creation': 200,  # Par article
@@ -1425,21 +1571,28 @@ Merci pour le travail formidable que vous faites !
         objectives: Dict[str, Any],
         budget: Optional[float]
     ) -> Dict[str, float]:
-        """Calcule le ROI estimé de la stratégie"""
+        """
+        Calcule le ROI estimé de la stratégie"""
         if not budget:
             return {'roi_estimate': 'Budget requis pour calcul ROI'}
         
         # Estimation de l'impact sur le trafic organique
+
         authority_increase = objectives.get('target_authority_increase', 5)
+
         links_target = objectives.get('quarterly_links_target', 30)
         
         # Formule simplifiée d'estimation ROI
         estimated_traffic_increase = (authority_increase * 0.1 + links_target * 0.02) * 100  # %
         
         # Estimation de la valeur du trafic (hypothèse: 1€ par visiteur organique)
+
         current_monthly_traffic = 10000  # Hypothèse de base
+
         traffic_value_increase = current_monthly_traffic * (estimated_traffic_increase / 100) * 1  # 1€/visiteur
+
         quarterly_value = traffic_value_increase * 3
+
         
         roi_percentage = ((quarterly_value - budget) / budget) * 100
         
@@ -1459,14 +1612,19 @@ Merci pour le travail formidable que vous faites !
         opportunities: List[LinkOpportunity],
         template_type: str = 'guest_post'
     ) -> Dict[str, Any]:
-        """Exécute une campagne d'outreach automatisée"""
+        """
+        Exécute une campagne d'outreach automatisée"""
         try:
             logger.info(f"📧 Lancement campagne outreach {campaign_id} pour {domain}")
+
             
             if template_type not in self.outreach_templates:
                 raise ValueError(f"Template {template_type} non disponible")
+
+
             
             template = self.outreach_templates[template_type]
+
             campaign_results = {
                 'campaign_id': campaign_id,
                 'domain': domain,
@@ -1484,28 +1642,34 @@ Merci pour le travail formidable que vous faites !
             for opportunity in opportunities[:20]:  # Limiter à 20 pour éviter le spam
                 
                 # Personnalisation du message
+
                 personalized_message = await self._personalize_outreach_message(
                     template, opportunity, domain
                 )
                 
                 # Simulation d'envoi d'email
+
                 email_sent = await self._send_outreach_email(
                     opportunity, personalized_message
                 )
+
                 
                 if email_sent:
                     campaign_results['emails_sent'] += 1
                     campaign_results['targets_contacted'] += 1
                     
                     # Simulation de réponse (20% de taux de réponse)
+
                     if np.random.random() < 0.20:
                         campaign_results['responses_received'] += 1
                         
                         # Simulation de réponse positive (60% des réponses)
+
                         if np.random.random() < 0.60:
                             campaign_results['positive_responses'] += 1
                             
                             # Simulation d'acquisition de lien (80% des réponses positives)
+
                             if np.random.random() < 0.80:
                                 campaign_results['links_acquired'] += 1
                 
@@ -1521,6 +1685,7 @@ Merci pour le travail formidable que vous faites !
                 if template.get('follow_up_days'):
                     for days in template['follow_up_days']:
                         follow_up_date = datetime.now() + timedelta(days=days)
+
                         campaign_results['follow_ups_scheduled'].append({
                             'domain': opportunity.domain,
                             'scheduled_date': follow_up_date,
@@ -1543,10 +1708,12 @@ Merci pour le travail formidable que vous faites !
                 self.campaign_metrics['success_rate'] = self.campaign_metrics['links_acquired'] / self.campaign_metrics['emails_sent']
             
             logger.info(f"✅ Campagne terminée - {campaign_results['links_acquired']} liens acquis sur {campaign_results['emails_sent']} contacts")
+
             return campaign_results
             
         except Exception as e:
             logger.error(f"❌ Erreur campagne outreach: {e}")
+
             raise
     
     async def _personalize_outreach_message(
@@ -1557,6 +1724,7 @@ Merci pour le travail formidable que vous faites !
     ) -> Dict[str, str]:
         """Personnalise le message d'outreach"""
         # Variables de personnalisation
+
         variables = {
             'domain': opportunity.domain,
             'name': opportunity.contact_info.get('name', 'Bonjour') if opportunity.contact_info else 'Bonjour',
@@ -1577,8 +1745,11 @@ Merci pour le travail formidable que vous faites !
         }
         
         # Personnalisation du sujet et du contenu
+
         personalized_subject = template['subject'].format(**variables)
+
         personalized_content = template['template'].format(**variables)
+
         
         return {
             'subject': personalized_subject,
@@ -1602,15 +1773,19 @@ Merci pour le travail formidable que vous faites !
                 return False
             
             # Simulation d'envoi (95% de succès)
+
             if np.random.random() < 0.95:
                 logger.debug(f"📧 Email envoyé à {opportunity.domain}")
+
                 return True
             else:
                 logger.warning(f"❌ Échec envoi email à {opportunity.domain}")
+
                 return False
                 
         except Exception as e:
             logger.error(f"❌ Erreur envoi email: {e}")
+
             return False
     
     async def track_link_building_progress(
@@ -1621,8 +1796,13 @@ Merci pour le travail formidable que vous faites !
         """Suit les progrès du link building"""
         try:
             # Simulation de suivi des progrès
+
             current_date = datetime.now()
+
+
             start_date = current_date - timedelta(days=timeframe_days)
+
+
             
             progress_data = {
                 'domain': domain,
@@ -1675,6 +1855,7 @@ Merci pour le travail formidable que vous faites !
             
         except Exception as e:
             logger.error(f"❌ Erreur suivi link building: {e}")
+
             raise
     
     async def cleanup(self) -> None:
@@ -1684,12 +1865,16 @@ Merci pour le travail formidable que vous faites !
                 await self.session.close()
             
             # Sauvegarde des métriques finales
+
             total_opportunities = sum(len(opps) for opps in self.link_opportunities.values())
+
             
             logger.info(f"🧹 Nettoyage link building - {total_opportunities} opportunités analysées")
+
             
         except Exception as e:
             logger.error(f"❌ Erreur nettoyage: {e}")
+
             raise
 
 # Instances globales des moteurs
@@ -1697,9 +1882,17 @@ seo_performance_engine = SEOPerformanceEngine()
 link_building_engine = IntelligentLinkBuildingEngine()
 
 # Export des classes et fonctions
+# === ALIASES COMPATIBILITÉ ===
+AchievementBasedSEOBooster = SEOPerformanceEngine
+PerformanceOptimization = PerformanceMetrics
+AchievementBoost = PerformancePrediction
+
 __all__ = [
     'SEOPerformanceEngine',
+    'AchievementBasedSEOBooster',
     'IntelligentLinkBuildingEngine',
+    'PerformanceOptimization',
+    'AchievementBoost',
     'PerformanceMetrics',
     'LinkOpportunity',
     'LinkProfile',
@@ -1717,16 +1910,22 @@ if __name__ == "__main__":
     async def test_performance_and_link_engines():
         # Test moteur de performance
         await seo_performance_engine.initialize()
+
+
         
         performance_metrics = await seo_performance_engine.analyze_seo_performance(
             "example.com",
             include_predictions=True
         )
+
+
         
         recommendations = await seo_performance_engine.get_performance_recommendations("example.com")
         
         # Test moteur de link building
         await link_building_engine.initialize()
+
+
         
         link_strategy = await link_building_engine.create_link_building_strategy(
             "example.com",
@@ -1743,8 +1942,11 @@ if __name__ == "__main__":
                 link_strategy['opportunities'][:5],
                 "guest_post"
             )
+
+
         
         progress = await link_building_engine.track_link_building_progress("example.com")
+
         
         print(f"✅ Tests réussis:")
         print(f"📊 Performance: Score global {performance_metrics.overall_score:.1f}")

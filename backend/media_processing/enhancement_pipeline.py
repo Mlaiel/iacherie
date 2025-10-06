@@ -71,7 +71,8 @@ logger = structlog.get_logger(__name__)
 # =============================================================================
 
 class EnhancementMode(Enum):
-    """Enhancement modes"""
+    """
+        Enhancement modes"""
     CONSERVATIVE = "conservative"  # Minimal enhancement, preserve original
     BALANCED = "balanced"         # Moderate enhancement
     AGGRESSIVE = "aggressive"     # Maximum enhancement
@@ -112,7 +113,8 @@ class QualityAssessment:
 
 @dataclass
 class EnhancementParams:
-    """Enhancement parameters"""
+    """
+        Enhancement parameters"""
     mode: EnhancementMode = EnhancementMode.BALANCED
     target_resolution: Optional[Tuple[int, int]] = None
     enhancement_types: List[EnhancementType] = field(default_factory=list)
@@ -122,7 +124,8 @@ class EnhancementParams:
 
 @dataclass
 class EnhancementResult:
-    """Enhancement operation result"""
+    """
+        Enhancement operation result"""
     enhanced_path: str
     original_quality: QualityAssessment
     enhanced_quality: QualityAssessment
@@ -136,7 +139,8 @@ class EnhancementResult:
 # =============================================================================
 
 class SRResNet(nn.Module):
-    """Super-Resolution ResNet for image enhancement"""
+    """
+        Super-Resolution ResNet for image enhancement"""
     
     def __init__(self, scale_factor=2, num_channels=3, num_features=64, num_blocks=16):
         super(SRResNet, self).__init__()
@@ -168,7 +172,8 @@ class SRResNet(nn.Module):
         self.conv_final = nn.Conv2d(num_features, num_channels, kernel_size=9, padding=4)
     
     def _make_res_block(self, num_features):
-        """Create residual block"""
+        """
+        Create residual block"""
         return nn.Sequential(
             nn.Conv2d(num_features, num_features, kernel_size=3, padding=1),
             nn.BatchNorm2d(num_features),
@@ -178,18 +183,25 @@ class SRResNet(nn.Module):
         )
     
     def forward(self, x):
-        """Forward pass"""
+        """
+        Forward pass"""
         # Initial features
+
         out = self.relu1(self.conv1(x))
+
         residual = out
         
         # Residual blocks
         for res_block in self.res_blocks:
             res_out = res_block(out)
+
+
             out = out + res_out
         
         # Post-residual
+
         out = self.bn2(self.conv2(out))
+
         out = out + residual
         
         # Upsampling
@@ -197,11 +209,13 @@ class SRResNet(nn.Module):
             out = layer(out)
         
         # Final output
+
         out = self.conv_final(out)
         return out
 
 class DenoisingAutoEncoder(nn.Module):
-    """Denoising autoencoder for noise reduction"""
+    """
+        Denoising autoencoder for noise reduction"""
     
     def __init__(self, num_channels=3, base_features=64):
         super(DenoisingAutoEncoder, self).__init__()
@@ -247,8 +261,10 @@ class DenoisingAutoEncoder(nn.Module):
         )
     
     def forward(self, x):
-        """Forward pass"""
+        """
+        Forward pass"""
         encoded = self.encoder(x)
+
         decoded = self.decoder(encoded)
         return decoded
 
@@ -257,7 +273,8 @@ class DenoisingAutoEncoder(nn.Module):
 # =============================================================================
 
 class QualityAssessor:
-    """Intelligent quality assessment engine"""
+    """
+        Intelligent quality assessment engine"""
     
     def __init__(self):
         self.perceptual_model = None
@@ -269,13 +286,17 @@ class QualityAssessor:
             if _AI_AVAILABLE:
                 # Initialize perceptual model for quality assessment
                 self.perceptual_model = vgg19(pretrained=True).features[:36].eval()
+
                 self.perceptual_model.to(self.device)
+
                 for param in self.perceptual_model.parameters():
                     param.requires_grad = False
                 
                 logger.info("Quality assessor initialized successfully")
+
             else:
                 logger.warning("AI libraries not available, using basic quality assessment")
+
                 
         except Exception as e:
             logger.warning(f"Failed to initialize advanced quality assessor: {e}")
@@ -284,19 +305,29 @@ class QualityAssessor:
         """Assess image quality comprehensively"""
         try:
             image = cv2.imread(image_path)
+
             if image is None:
                 raise ValueError(f"Could not load image: {image_path}")
+
+
             
             image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+
             
             metrics = {}
+
             issues = []
+
             recommendations = []
             
             # Basic quality metrics
             metrics[QualityMetric.SHARPNESS] = self._calculate_sharpness(image)
+
             metrics[QualityMetric.CONTRAST] = self._calculate_contrast(image)
+
             metrics[QualityMetric.BRIGHTNESS] = self._calculate_brightness(image)
+
             metrics[QualityMetric.NOISE_LEVEL] = self._estimate_noise_level(image)
             
             # Advanced metrics if AI available
@@ -307,7 +338,9 @@ class QualityAssessor:
             issues, recommendations = self._analyze_quality_issues(metrics, image.shape)
             
             # Calculate overall score
+
             overall_score = self._calculate_overall_score(metrics)
+
             
             return QualityAssessment(
                 overall_score=overall_score,
@@ -316,48 +349,65 @@ class QualityAssessor:
                 recommendations=recommendations,
                 confidence=0.8 if _AI_AVAILABLE else 0.6
             )
+
             
         except Exception as e:
             logger.error(f"Image quality assessment failed: {e}")
+
             return QualityAssessment(overall_score=0.5, confidence=0.1)
     
     async def assess_audio_quality(self, audio_path: str) -> QualityAssessment:
         """Assess audio quality"""
         try:
             audio, sr = librosa.load(audio_path, sr=None)
+
+
             
             metrics = {}
+
             issues = []
+
             recommendations = []
             
             # Audio quality metrics
             metrics[QualityMetric.NOISE_LEVEL] = self._calculate_audio_noise(audio)
+
             metrics[QualityMetric.PEAK_SNR] = self._calculate_audio_snr(audio)
             
             # Dynamic range
+
             dynamic_range = np.max(audio) - np.min(audio)
+
             metrics['dynamic_range'] = float(dynamic_range)
             
             # Spectral analysis
+
             spectral_centroid = librosa.feature.spectral_centroid(y=audio, sr=sr).mean()
+
             metrics['spectral_quality'] = float(min(spectral_centroid / 4000, 1.0))
             
             # Analyze issues
             if metrics[QualityMetric.NOISE_LEVEL] > 0.1:
                 issues.append("High noise level detected")
+
                 recommendations.append("Apply noise reduction")
+
             
             if dynamic_range < 0.5:
                 issues.append("Low dynamic range")
+
                 recommendations.append("Consider dynamic range enhancement")
             
             # Calculate overall score
+
             score_factors = [
                 1.0 - metrics[QualityMetric.NOISE_LEVEL],
                 dynamic_range,
                 metrics['spectral_quality']
             ]
+
             overall_score = sum(score_factors) / len(score_factors)
+
             
             return QualityAssessment(
                 overall_score=overall_score,
@@ -366,54 +416,69 @@ class QualityAssessor:
                 recommendations=recommendations,
                 confidence=0.7
             )
+
             
         except Exception as e:
             logger.error(f"Audio quality assessment failed: {e}")
+
             return QualityAssessment(overall_score=0.5, confidence=0.1)
     
     def _calculate_sharpness(self, image: np.ndarray) -> float:
         """Calculate image sharpness using Laplacian variance"""
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
         laplacian_var = cv2.Laplacian(gray, cv2.CV_64F).var()
         # Normalize to 0-1 range
         return min(laplacian_var / 1000.0, 1.0)
     
     def _calculate_contrast(self, image: np.ndarray) -> float:
-        """Calculate image contrast"""
+        """
+        Calculate image contrast"""
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
         contrast = gray.std() / 255.0
         return float(contrast)
     
     def _calculate_brightness(self, image: np.ndarray) -> float:
-        """Calculate image brightness"""
+        """
+        Calculate image brightness"""
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
         brightness = gray.mean() / 255.0
         return float(brightness)
     
     def _estimate_noise_level(self, image: np.ndarray) -> float:
-        """Estimate noise level in image"""
+        """
+        Estimate noise level in image"""
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         
         # Use bilateral filter to separate noise from edges
+
         filtered = cv2.bilateralFilter(gray, 9, 75, 75)
+
         noise = gray.astype(float) - filtered.astype(float)
+
         noise_level = np.std(noise) / 255.0
         
         return float(noise_level)
     
     async def _calculate_perceptual_quality(self, image: np.ndarray) -> float:
-        """Calculate perceptual quality using VGG features"""
+        """
+        Calculate perceptual quality using VGG features"""
         if not _AI_AVAILABLE or self.perceptual_model is None:
             return 0.5
         
         try:
             # Preprocess image
+
             transform = transforms.Compose([
                 transforms.ToPILImage(),
                 transforms.Resize((224, 224)),
                 transforms.ToTensor(),
                 transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
             ])
+
+
             
             image_tensor = transform(image).unsqueeze(0).to(self.device)
             
@@ -422,90 +487,119 @@ class QualityAssessor:
                 features = self.perceptual_model(image_tensor)
                 
             # Calculate quality score based on feature statistics
+
             feature_mean = features.mean().item()
+
+
             feature_std = features.std().item()
             
             # Normalize to 0-1 range (heuristic)
+
+
             quality_score = min(max(feature_mean * feature_std / 10.0, 0.0), 1.0)
+
             
             return quality_score
             
         except Exception as e:
             logger.warning(f"Perceptual quality calculation failed: {e}")
+
             return 0.5
     
     def _calculate_audio_noise(self, audio: np.ndarray) -> float:
         """Calculate audio noise level"""
         # Estimate noise using spectral gating
         # Find quiet segments
+
         frame_length = 2048
+
         hop_length = 512
         
         # Calculate RMS energy
+
         rms = librosa.feature.rms(y=audio, frame_length=frame_length, hop_length=hop_length)[0]
         
         # Estimate noise floor from quietest 10% of frames
+
         noise_threshold = np.percentile(rms, 10)
+
         noise_level = float(noise_threshold)
+
         
         return min(noise_level * 10, 1.0)  # Normalize
     
     def _calculate_audio_snr(self, audio: np.ndarray) -> float:
-        """Calculate signal-to-noise ratio"""
+        """
+        Calculate signal-to-noise ratio"""
         # Simple SNR estimation
+
         signal_power = np.mean(audio ** 2)
         
         # Estimate noise power from quiet segments
+
         rms = librosa.feature.rms(y=audio)[0]
+
         noise_power = np.percentile(rms, 10) ** 2
         
         if noise_power > 0:
             snr = 10 * np.log10(signal_power / noise_power)
             # Normalize to 0-1 range (assuming good SNR is > 20dB)
+
             return min(max(snr / 40.0, 0.0), 1.0)
         else:
             return 1.0
     
     def _analyze_quality_issues(self, metrics: Dict, image_shape: Tuple) -> Tuple[List[str], List[str]]:
-        """Analyze quality issues and generate recommendations"""
+        """
+        Analyze quality issues and generate recommendations"""
         issues = []
+
         recommendations = []
         
         # Check sharpness
         if metrics.get(QualityMetric.SHARPNESS, 0) < 0.3:
             issues.append("Image appears blurry or out of focus")
+
             recommendations.append("Apply sharpening or deblurring")
         
         # Check contrast
         if metrics.get(QualityMetric.CONTRAST, 0) < 0.2:
             issues.append("Low contrast detected")
+
             recommendations.append("Enhance contrast")
         
         # Check brightness
+
         brightness = metrics.get(QualityMetric.BRIGHTNESS, 0.5)
         if brightness < 0.2:
             issues.append("Image is too dark")
+
             recommendations.append("Increase brightness")
         elif brightness > 0.8:
             issues.append("Image is too bright")
+
             recommendations.append("Reduce brightness")
         
         # Check noise
         if metrics.get(QualityMetric.NOISE_LEVEL, 0) > 0.1:
             issues.append("High noise level detected")
+
             recommendations.append("Apply noise reduction")
         
         # Check resolution
         height, width = image_shape[:2]
         if width * height < 500000:  # Less than 0.5MP
             issues.append("Low resolution")
+
             recommendations.append("Consider super-resolution upscaling")
+
         
         return issues, recommendations
     
     def _calculate_overall_score(self, metrics: Dict) -> float:
         """Calculate overall quality score"""
         # Weight different metrics
+
         weights = {
             QualityMetric.SHARPNESS: 0.25,
             QualityMetric.CONTRAST: 0.20,
@@ -513,14 +607,17 @@ class QualityAssessor:
             QualityMetric.NOISE_LEVEL: 0.25,  # Negative impact
             QualityMetric.PERCEPTUAL_QUALITY: 0.15
         }
+
         
         weighted_score = 0.0
+
         total_weight = 0.0
         
         for metric, weight in weights.items():
             if metric in metrics:
                 if metric == QualityMetric.NOISE_LEVEL:
                     # Noise is negative (lower is better)
+
                     weighted_score += (1.0 - metrics[metric]) * weight
                 else:
                     weighted_score += metrics[metric] * weight
@@ -536,7 +633,8 @@ class QualityAssessor:
 # =============================================================================
 
 class ImageEnhancer:
-    """Advanced image enhancement engine"""
+    """
+        Advanced image enhancement engine"""
     
     def __init__(self):
         self.sr_model = None
@@ -549,17 +647,24 @@ class ImageEnhancer:
             if _AI_AVAILABLE:
                 # Initialize super-resolution model
                 self.sr_model = SRResNet(scale_factor=2, num_channels=3)
+
                 self.sr_model.to(self.device)
+
                 self.sr_model.eval()
                 
                 # Initialize denoising model
                 self.denoising_model = DenoisingAutoEncoder(num_channels=3)
+
                 self.denoising_model.to(self.device)
+
                 self.denoising_model.eval()
+
                 
                 logger.info("Image enhancer initialized successfully")
+
             else:
                 logger.warning("AI libraries not available, using traditional enhancement")
+
                 
         except Exception as e:
             logger.warning(f"Failed to initialize AI enhancement models: {e}")
@@ -574,9 +679,13 @@ class ImageEnhancer:
         
         try:
             # Load image
+
             image = cv2.imread(image_path)
+
             if image is None:
                 raise ValueError(f"Could not load image: {image_path}")
+
+
             
             enhanced_image = image.copy()
             
@@ -584,61 +693,87 @@ class ImageEnhancer:
             for enhancement_type in params.enhancement_types:
                 if enhancement_type == EnhancementType.SUPER_RESOLUTION:
                     enhanced_image = await self._apply_super_resolution(enhanced_image, params)
+
                 elif enhancement_type == EnhancementType.DENOISING:
                     enhanced_image = await self._apply_denoising(enhanced_image, params)
+
                 elif enhancement_type == EnhancementType.SHARPENING:
                     enhanced_image = self._apply_sharpening(enhanced_image, params)
+
                 elif enhancement_type == EnhancementType.CONTRAST_ENHANCEMENT:
                     enhanced_image = self._enhance_contrast(enhanced_image, params)
+
                 elif enhancement_type == EnhancementType.BRIGHTNESS_ADJUSTMENT:
                     enhanced_image = self._adjust_brightness(enhanced_image, params, quality_assessment)
+
                 elif enhancement_type == EnhancementType.COLOR_CORRECTION:
                     enhanced_image = self._correct_colors(enhanced_image, params)
+
                 elif enhancement_type == EnhancementType.ARTIFACT_REMOVAL:
                     enhanced_image = self._remove_artifacts(enhanced_image, params)
             
             # Save enhanced image
+
             output_path = self._generate_output_path(image_path, "enhanced")
+
             cv2.imwrite(output_path, enhanced_image)
+
             
             return output_path
             
         except Exception as e:
             logger.error(f"Image enhancement failed: {e}")
+
             raise
     
     async def _apply_super_resolution(self, image: np.ndarray, params: EnhancementParams) -> np.ndarray:
         """Apply AI-based super-resolution"""
         if not _AI_AVAILABLE or self.sr_model is None:
             return self._apply_traditional_upscaling(image, params)
+
         
         try:
             # Prepare image for model
+
             image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+
             image_pil = Image.fromarray(image_rgb)
             
             # Convert to tensor
+
             transform = transforms.Compose([
                 transforms.ToTensor()
             ])
+
+
             
             image_tensor = transform(image_pil).unsqueeze(0).to(self.device)
             
             # Apply super-resolution
             with torch.no_grad():
                 sr_tensor = self.sr_model(image_tensor)
+
+
                 sr_tensor = torch.clamp(sr_tensor, 0, 1)
             
             # Convert back to numpy
+
             sr_image = sr_tensor.squeeze(0).cpu().numpy()
+
+
             sr_image = np.transpose(sr_image, (1, 2, 0))
+
+
             sr_image = (sr_image * 255).astype(np.uint8)
             
             # Convert back to BGR
             return cv2.cvtColor(sr_image, cv2.COLOR_RGB2BGR)
+
             
         except Exception as e:
             logger.warning(f"AI super-resolution failed, using traditional: {e}")
+
             return self._apply_traditional_upscaling(image, params)
     
     def _apply_traditional_upscaling(self, image: np.ndarray, params: EnhancementParams) -> np.ndarray:
@@ -647,23 +782,31 @@ class ImageEnhancer:
         if target_res is None:
             # Default 2x upscaling
             height, width = image.shape[:2]
+
             target_res = (width * 2, height * 2)
         
         # Use LANCZOS interpolation for better quality
+
         upscaled = cv2.resize(image, target_res, interpolation=cv2.INTER_LANCZOS4)
         return upscaled
     
     async def _apply_denoising(self, image: np.ndarray, params: EnhancementParams) -> np.ndarray:
-        """Apply AI-based denoising"""
+        """
+        Apply AI-based denoising"""
         if not _AI_AVAILABLE or self.denoising_model is None:
             return self._apply_traditional_denoising(image, params)
+
         
         try:
             # Prepare image for model
+
             image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+
             image_normalized = image_rgb.astype(np.float32) / 255.0
             
             # Convert to tensor
+
             image_tensor = torch.from_numpy(image_normalized).permute(2, 0, 1).unsqueeze(0).to(self.device)
             
             # Apply denoising
@@ -671,14 +814,19 @@ class ImageEnhancer:
                 denoised_tensor = self.denoising_model(image_tensor)
             
             # Convert back to numpy
+
             denoised_image = denoised_tensor.squeeze(0).permute(1, 2, 0).cpu().numpy()
+
+
             denoised_image = (denoised_image * 255).astype(np.uint8)
             
             # Convert back to BGR
             return cv2.cvtColor(denoised_image, cv2.COLOR_RGB2BGR)
+
             
         except Exception as e:
             logger.warning(f"AI denoising failed, using traditional: {e}")
+
             return self._apply_traditional_denoising(image, params)
     
     def _apply_traditional_denoising(self, image: np.ndarray, params: EnhancementParams) -> np.ndarray:
@@ -696,43 +844,58 @@ class ImageEnhancer:
             return cv2.fastNlMeansDenoisingColored(image, None, 20, 20, 7, 21)
     
     def _apply_sharpening(self, image: np.ndarray, params: EnhancementParams) -> np.ndarray:
-        """Apply image sharpening"""
+        """
+        Apply image sharpening"""
         strength = params.strength
         
         # Create sharpening kernel
+
         kernel = np.array([[-1, -1, -1],
                           [-1,  9, -1],
                           [-1, -1, -1]]) * strength
+
         
         sharpened = cv2.filter2D(image, -1, kernel)
         
         # Blend with original based on strength
         if params.preserve_original:
             alpha = min(strength, 1.0)
+
+
             sharpened = cv2.addWeighted(image, 1 - alpha, sharpened, alpha, 0)
+
         
         return sharpened
     
     def _enhance_contrast(self, image: np.ndarray, params: EnhancementParams) -> np.ndarray:
-        """Enhance image contrast"""
+        """
+        Enhance image contrast"""
         strength = params.strength
         
         # Convert to LAB color space for better contrast enhancement
+
         lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
+
         l_channel = lab[:, :, 0]
         
         # Apply CLAHE (Contrast Limited Adaptive Histogram Equalization)
+
         clahe = cv2.createCLAHE(clipLimit=2.0 * strength, tileGridSize=(8, 8))
+
         enhanced_l = clahe.apply(l_channel)
         
         # Merge back
         lab[:, :, 0] = enhanced_l
+
         enhanced = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
         
         # Blend with original if preserving
         if params.preserve_original:
             alpha = min(strength, 1.0)
+
+
             enhanced = cv2.addWeighted(image, 1 - alpha, enhanced, alpha, 0)
+
         
         return enhanced
     
@@ -742,62 +905,89 @@ class ImageEnhancer:
         params: EnhancementParams,
         quality_assessment: QualityAssessment
     ) -> np.ndarray:
-        """Adjust image brightness based on assessment"""
+        """
+        Adjust image brightness based on assessment"""
         
         current_brightness = quality_assessment.metrics.get(QualityMetric.BRIGHTNESS, 0.5)
+
         target_brightness = 0.5  # Target middle brightness
         
         # Calculate adjustment needed
+
         brightness_diff = target_brightness - current_brightness
+
         adjustment = brightness_diff * params.strength * 255
         
         # Apply brightness adjustment
+
         adjusted = cv2.convertScaleAbs(image, alpha=1.0, beta=adjustment)
         
         # Blend with original if preserving
         if params.preserve_original:
             alpha = min(params.strength, 1.0)
+
+
             adjusted = cv2.addWeighted(image, 1 - alpha, adjusted, alpha, 0)
+
         
         return adjusted
     
     def _correct_colors(self, image: np.ndarray, params: EnhancementParams) -> np.ndarray:
-        """Apply color correction"""
+        """
+        Apply color correction"""
         # Simple white balance correction
+
         result = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
+
         avg_a = np.average(result[:, :, 1])
+
         avg_b = np.average(result[:, :, 2])
+
         
         result[:, :, 1] = result[:, :, 1] - ((avg_a - 128) * (params.strength * 0.5))
         result[:, :, 2] = result[:, :, 2] - ((avg_b - 128) * (params.strength * 0.5))
+
+
         
         corrected = cv2.cvtColor(result, cv2.COLOR_LAB2BGR)
         
         # Blend with original
         if params.preserve_original:
             alpha = min(params.strength, 1.0)
+
+
             corrected = cv2.addWeighted(image, 1 - alpha, corrected, alpha, 0)
+
         
         return corrected
     
     def _remove_artifacts(self, image: np.ndarray, params: EnhancementParams) -> np.ndarray:
-        """Remove compression artifacts and other noise"""
+        """
+        Remove compression artifacts and other noise"""
         # Apply median filter to remove small artifacts
+
         filtered = cv2.medianBlur(image, 3)
         
         # Apply gentle Gaussian blur
+
         blurred = cv2.GaussianBlur(filtered, (3, 3), 0.5 * params.strength)
         
         # Blend with original
+
         alpha = min(params.strength * 0.5, 0.5)
         return cv2.addWeighted(image, 1 - alpha, blurred, alpha, 0)
     
     def _generate_output_path(self, input_path: str, suffix: str) -> str:
-        """Generate output path for enhanced image"""
+        """
+        Generate output path for enhanced image"""
         path = Path(input_path)
+
         stem = path.stem
+
         extension = path.suffix
+
         parent = path.parent
+
         
         output_filename = f"{stem}_{suffix}{extension}"
         return str(parent / output_filename)
@@ -813,7 +1003,8 @@ class AudioEnhancer:
         self.initialized = False
     
     async def initialize(self):
-        """Initialize audio enhancement"""
+        """
+        Initialize audio enhancement"""
         self.initialized = True
         logger.info("Audio enhancer initialized successfully")
     
@@ -828,25 +1019,33 @@ class AudioEnhancer:
         try:
             # Load audio
             audio, sr = librosa.load(audio_path, sr=None)
+
+
             enhanced_audio = audio.copy()
             
             # Apply enhancements
             for enhancement_type in params.enhancement_types:
                 if enhancement_type == EnhancementType.DENOISING:
                     enhanced_audio = self._apply_audio_denoising(enhanced_audio, sr, params)
+
                 elif enhancement_type == EnhancementType.RESTORATION:
                     enhanced_audio = self._apply_audio_restoration(enhanced_audio, sr, params)
+
                 elif enhancement_type == EnhancementType.BRIGHTNESS_ADJUSTMENT:
                     enhanced_audio = self._adjust_audio_brightness(enhanced_audio, sr, params)
             
             # Save enhanced audio
+
             output_path = self._generate_audio_output_path(audio_path, "enhanced")
+
             librosa.output.write_wav(output_path, enhanced_audio, sr)
+
             
             return output_path
             
         except Exception as e:
             logger.error(f"Audio enhancement failed: {e}")
+
             raise
     
     def _apply_audio_denoising(self, audio: np.ndarray, sr: int, params: EnhancementParams) -> np.ndarray:
@@ -854,52 +1053,72 @@ class AudioEnhancer:
         strength = params.strength
         
         # Spectral subtraction for noise reduction
+
         stft = librosa.stft(audio)
+
         magnitude = np.abs(stft)
+
         phase = np.angle(stft)
         
         # Estimate noise from quiet segments
+
         noise_estimate = np.percentile(magnitude, 10, axis=1, keepdims=True)
         
         # Apply spectral subtraction
+
         alpha = strength * 2.0  # Oversubtraction factor
+
         enhanced_magnitude = magnitude - alpha * noise_estimate
+
         enhanced_magnitude = np.maximum(enhanced_magnitude, 0.1 * magnitude)
         
         # Reconstruct audio
+
         enhanced_stft = enhanced_magnitude * np.exp(1j * phase)
+
         enhanced_audio = librosa.istft(enhanced_stft)
+
         
         return enhanced_audio
     
     def _apply_audio_restoration(self, audio: np.ndarray, sr: int, params: EnhancementParams) -> np.ndarray:
-        """Apply audio restoration techniques"""
+        """
+        Apply audio restoration techniques"""
         # Apply Wiener filtering for restoration
         # This is a simplified implementation
         
         # High-pass filter to remove low-frequency noise
         b, a = scipy.signal.butter(4, 80 / (sr / 2), btype='high')
+
         filtered_audio = scipy.signal.filtfilt(b, a, audio)
         
         # Blend with original
+
         alpha = min(params.strength, 1.0)
         return audio * (1 - alpha) + filtered_audio * alpha
     
     def _adjust_audio_brightness(self, audio: np.ndarray, sr: int, params: EnhancementParams) -> np.ndarray:
-        """Adjust audio brightness (high-frequency emphasis)"""
+        """
+        Adjust audio brightness (high-frequency emphasis)"""
         # Apply mild high-frequency emphasis
         b, a = scipy.signal.butter(2, 4000 / (sr / 2), btype='high')
+
         bright_audio = scipy.signal.filtfilt(b, a, audio)
         
         # Blend with original
+
         alpha = params.strength * 0.3  # Gentle enhancement
         return audio + bright_audio * alpha
     
     def _generate_audio_output_path(self, input_path: str, suffix: str) -> str:
-        """Generate output path for enhanced audio"""
+        """
+        Generate output path for enhanced audio"""
         path = Path(input_path)
+
         stem = path.stem
+
         parent = path.parent
+
         
         output_filename = f"{stem}_{suffix}.wav"
         return str(parent / output_filename)
@@ -912,7 +1131,8 @@ class EnhancementPipeline:
     """Main enhancement pipeline orchestrator"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize enhancement pipeline"""
+        """
+        Initialize enhancement pipeline"""
         self.config = config or self._get_default_config()
         
         # Initialize components
@@ -951,7 +1171,8 @@ class EnhancementPipeline:
         }
     
     async def initialize(self):
-        """Initialize all enhancement components"""
+        """
+        Initialize all enhancement components"""
         if self._initialized:
             return
         
@@ -961,10 +1182,12 @@ class EnhancementPipeline:
                 self.image_enhancer.initialize(),
                 self.audio_enhancer.initialize()
             )
+
             self._initialized = True
             logger.info("Enhancement pipeline fully initialized")
         except Exception as e:
             logger.error(f"Failed to initialize enhancement pipeline: {e}")
+
             raise
     
     @handle_processing_errors("content_enhancement")
@@ -979,8 +1202,11 @@ class EnhancementPipeline:
         
         if not self._initialized:
             await self.initialize()
+
+
         
         start_time = time.time()
+
         options = options or {}
         
         # Update statistics
@@ -988,6 +1214,7 @@ class EnhancementPipeline:
         
         try:
             # Assess original quality
+
             original_quality = await self._assess_content_quality(content_path, content_type)
             
             # Determine enhancement parameters
@@ -995,13 +1222,17 @@ class EnhancementPipeline:
                 params = await self._determine_enhancement_params(original_quality, content_type, options)
             
             # Apply enhancements
+
             enhanced_path = await self._apply_enhancements(content_path, content_type, params, original_quality)
             
             # Assess enhanced quality
+
             enhanced_quality = await self._assess_content_quality(enhanced_path, content_type)
             
             # Calculate improvement
+
             improvement_score = enhanced_quality.overall_score - original_quality.overall_score
+
             
             processing_time = int((time.time() - start_time) * 1000)
             
@@ -1011,11 +1242,14 @@ class EnhancementPipeline:
                 (self.processing_stats['average_improvement'] * (self.processing_stats['successful_enhancements'] - 1) + improvement_score) /
                 self.processing_stats['successful_enhancements']
             )
+
             
             for enhancement_type in params.enhancement_types:
                 self.processing_stats['enhancement_types_used'][enhancement_type.value] = (
                     self.processing_stats['enhancement_types_used'].get(enhancement_type.value, 0) + 1
                 )
+
+
             
             result = EnhancementResult(
                 enhanced_path=enhanced_path,
@@ -1030,6 +1264,7 @@ class EnhancementPipeline:
                     'ai_enhancement_used': _AI_AVAILABLE and self.config.get('enable_ai_enhancement', True)
                 }
             )
+
             
             logger.info(
                 "Content enhancement completed",
@@ -1038,12 +1273,14 @@ class EnhancementPipeline:
                 processing_time_ms=processing_time,
                 enhancements_applied=len(params.enhancement_types)
             )
+
             
             return result
             
         except Exception as e:
             self.processing_stats['failed_enhancements'] += 1
             logger.error(f"Content enhancement failed: {e}")
+
             raise
     
     async def _assess_content_quality(self, content_path: str, content_type: str) -> QualityAssessment:
@@ -1062,9 +1299,11 @@ class EnhancementPipeline:
         content_type: str,
         options: Dict[str, Any]
     ) -> EnhancementParams:
-        """Intelligently determine enhancement parameters"""
+        """
+        Intelligently determine enhancement parameters"""
         
         # Start with default parameters
+
         params = EnhancementParams()
         
         # Set mode based on options or quality
@@ -1078,6 +1317,7 @@ class EnhancementPipeline:
             params.mode = EnhancementMode.CONSERVATIVE
         
         # Set strength based on mode
+
         strength_mapping = {
             EnhancementMode.CONSERVATIVE: 0.5,
             EnhancementMode.BALANCED: 1.0,
@@ -1087,17 +1327,22 @@ class EnhancementPipeline:
         params.strength = strength_mapping[params.mode]
         
         # Determine enhancement types based on detected issues
+
         enhancement_types = []
         
         for issue in quality_assessment.issues_detected:
             if "blurry" in issue.lower() or "focus" in issue.lower():
                 enhancement_types.append(EnhancementType.SHARPENING)
+
             elif "noise" in issue.lower():
                 enhancement_types.append(EnhancementType.DENOISING)
+
             elif "contrast" in issue.lower():
                 enhancement_types.append(EnhancementType.CONTRAST_ENHANCEMENT)
+
             elif "bright" in issue.lower() or "dark" in issue.lower():
                 enhancement_types.append(EnhancementType.BRIGHTNESS_ADJUSTMENT)
+
             elif "resolution" in issue.lower():
                 enhancement_types.append(EnhancementType.SUPER_RESOLUTION)
         
@@ -1114,6 +1359,7 @@ class EnhancementPipeline:
                     EnhancementType.DENOISING,
                     EnhancementType.RESTORATION
                 ])
+
         
         params.enhancement_types = enhancement_types
         
@@ -1123,6 +1369,7 @@ class EnhancementPipeline:
         
         # Custom parameters
         params.custom_params = options.get('custom_params', {})
+
         
         return params
     
@@ -1141,9 +1388,11 @@ class EnhancementPipeline:
             return await self.audio_enhancer.enhance_audio(content_path, params, quality_assessment)
         else:
             # For unknown types, just copy the file
+
             output_path = Path(content_path).parent / f"{Path(content_path).stem}_enhanced{Path(content_path).suffix}"
             import shutil
             shutil.copy2(content_path, output_path)
+
             return str(output_path)
     
     def get_processing_stats(self) -> Dict[str, Any]:
@@ -1158,7 +1407,8 @@ class EnhancementPipeline:
         }
     
     async def cleanup(self):
-        """Cleanup resources"""
+        """
+        Cleanup resources"""
         # Clear any cached models or data
         self._initialized = False
         logger.info("Enhancement pipeline cleanup completed")

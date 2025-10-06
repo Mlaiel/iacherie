@@ -30,14 +30,7 @@ import json
 import uuid
 from decimal import Decimal
 # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+from protection.utils.redis_compat import aioredis, REDIS_AVAILABLE
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, insert
 import hashlib
@@ -46,7 +39,8 @@ import statistics
 logger = logging.getLogger(__name__)
 
 class CreatorTier(Enum):
-    """Creator tier enumeration"""
+    """
+        Creator tier enumeration"""
     STARTER = "starter"
     CREATOR = "creator"
     PROFESSIONAL = "professional"
@@ -120,7 +114,8 @@ class CreatorProfile:
 
 @dataclass
 class ContentSchedule:
-    """Content schedule configuration"""
+    """
+        Content schedule configuration"""
     schedule_id: str
     creator_id: str
     content_type: ContentType
@@ -138,7 +133,8 @@ class ContentSchedule:
 
 @dataclass
 class MonetizationConfig:
-    """Monetization configuration"""
+    """
+        Monetization configuration"""
     config_id: str
     creator_id: str
     enabled_methods: List[MonetizationMethod]
@@ -153,7 +149,8 @@ class MonetizationConfig:
 
 @dataclass
 class AudienceAnalytics:
-    """Audience analytics data"""
+    """
+        Audience analytics data"""
     analytics_id: str
     creator_id: str
     time_period: str
@@ -171,7 +168,8 @@ class AudienceAnalytics:
 
 @dataclass
 class CreatorMetrics:
-    """Creator performance metrics"""
+    """
+        Creator performance metrics"""
     metric_id: str
     creator_id: str
     metric_type: str
@@ -185,7 +183,8 @@ class CreatorMetrics:
 
 @dataclass
 class RevenueReport:
-    """Revenue report data"""
+    """
+        Revenue report data"""
     report_id: str
     creator_id: str
     period_start: datetime
@@ -200,33 +199,42 @@ class RevenueReport:
     growth_metrics: Dict[str, float]
 
 class CreatorAccountManager:
-    """Creator account management system"""
+    """
+        Creator account management system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.creator_profiles = {}
         self.account_settings = {}
         
     async def initialize_account_manager(self) -> Dict[str, Any]:
-        """Initialize creator account manager"""
+        """
+        Initialize creator account manager"""
         try:
             # Setup creator tiers
+
             creator_tiers = await self._setup_creator_tiers()
             
             # Configure account features
+
             account_features = await self._configure_account_features()
             
             # Setup verification system
+
             verification_system = await self._setup_verification_system()
             
             # Configure notification preferences
+
             notification_system = await self._configure_notification_system()
             
             # Setup account security
+
             security_features = await self._setup_account_security()
+
             
             logger.info(f"👤 Creator Account Manager initialized with {len(creator_tiers)} tiers")
+
             
             return {
                 "creator_tiers": len(creator_tiers),
@@ -244,6 +252,7 @@ class CreatorAccountManager:
             
         except Exception as e:
             logger.error(f"Failed to initialize account manager: {e}")
+
             raise
 
     async def create_creator_account(
@@ -258,13 +267,16 @@ class CreatorAccountManager:
             creator_id = str(uuid.uuid4())
             
             # Validate account information
+
             validation_result = await self._validate_account_information(
                 username, email, account_details
             )
+
             if not validation_result["valid"]:
                 raise ValueError(f"Account validation failed: {validation_result['errors']}")
             
             # Create creator profile
+
             creator_profile = CreatorProfile(
                 creator_id=creator_id,
                 username=username,
@@ -290,18 +302,24 @@ class CreatorAccountManager:
             await self._store_creator_profile(creator_profile)
             
             # Setup default monetization config
+
             monetization_config = await self._setup_default_monetization(creator_id)
             
             # Initialize creator analytics
+
             analytics_setup = await self._initialize_creator_analytics(creator_id)
             
             # Send welcome notification
+
             welcome_notification = await self._send_welcome_notification(creator_profile)
             
             # Setup onboarding flow
+
             onboarding_flow = await self._setup_onboarding_flow(creator_id)
+
             
             logger.info(f"✅ Creator account created: {username} ({creator_id})")
+
             
             return {
                 "success": True,
@@ -316,36 +334,45 @@ class CreatorAccountManager:
             
         except Exception as e:
             logger.error(f"Failed to create creator account: {e}")
+
             raise
 
 class ContentManager:
     """Content management system for creators"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.content_library = {}
         self.schedules = {}
         
     async def initialize_content_manager(self) -> Dict[str, Any]:
-        """Initialize content management system"""
+        """
+        Initialize content management system"""
         try:
             # Setup content organization
+
             content_organization = await self._setup_content_organization()
             
             # Configure scheduling system
+
             scheduling_system = await self._configure_scheduling_system()
             
             # Setup content templates
+
             content_templates = await self._setup_content_templates()
             
             # Configure auto-publishing
+
             auto_publishing = await self._configure_auto_publishing()
             
             # Setup content analytics
+
             content_analytics = await self._setup_content_analytics()
+
             
             logger.info("📚 Content Manager initialized")
+
             
             return {
                 "content_organization": content_organization,
@@ -357,6 +384,7 @@ class ContentManager:
             
         except Exception as e:
             logger.error(f"Failed to initialize content manager: {e}")
+
             raise
 
     async def schedule_content(
@@ -370,11 +398,14 @@ class ContentManager:
             schedule_id = str(uuid.uuid4())
             
             # Validate content details
+
             content_validation = await self._validate_content_details(content_details)
+
             if not content_validation["valid"]:
                 raise ValueError("Invalid content details")
             
             # Create content schedule
+
             content_schedule = ContentSchedule(
                 schedule_id=schedule_id,
                 creator_id=creator_id,
@@ -396,13 +427,17 @@ class ContentManager:
             await self._store_content_schedule(content_schedule)
             
             # Setup scheduling automation
+
             automation_setup = await self._setup_schedule_automation(content_schedule)
             
             # Configure notifications
+
             notification_config = await self._configure_schedule_notifications(content_schedule)
             
             # Setup pre-publish validation
+
             validation_setup = await self._setup_pre_publish_validation(content_schedule)
+
             
             return {
                 "success": True,
@@ -416,12 +451,13 @@ class ContentManager:
             
         except Exception as e:
             logger.error(f"Failed to schedule content: {e}")
+
             raise
 
 class MonetizationManager:
     """Monetization management system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.monetization_configs = {}
@@ -432,21 +468,26 @@ class MonetizationManager:
         creator_id: str,
         monetization_preferences: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Setup monetization for creator"""
+        """
+        Setup monetization for creator"""
         try:
             config_id = str(uuid.uuid4())
             
             # Validate monetization eligibility
+
             eligibility_check = await self._check_monetization_eligibility(creator_id)
+
             if not eligibility_check["eligible"]:
                 raise ValueError("Creator not eligible for monetization")
             
             # Create monetization configuration
+
             monetization_config = MonetizationConfig(
                 config_id=config_id,
                 creator_id=creator_id,
                 enabled_methods=[
-                    MonetizationMethod(method) 
+                    MonetizationMethod(method)
+ 
                     for method in monetization_preferences.get("methods", ["subscriptions"])
                 ],
                 subscription_tiers=monetization_preferences.get("subscription_tiers", []),
@@ -460,19 +501,24 @@ class MonetizationManager:
             )
             
             # Setup payment processing
+
             payment_setup = await self._setup_payment_processing(monetization_config)
             
             # Configure subscription management
+
             subscription_setup = await self._configure_subscription_management(monetization_config)
             
             # Setup revenue tracking
+
             revenue_tracking = await self._setup_revenue_tracking(creator_id, monetization_config)
             
             # Configure tax reporting
+
             tax_reporting = await self._configure_tax_reporting(monetization_config)
             
             # Store monetization config
             await self._store_monetization_config(monetization_config)
+
             
             return {
                 "success": True,
@@ -487,12 +533,13 @@ class MonetizationManager:
             
         except Exception as e:
             logger.error(f"Failed to setup creator monetization: {e}")
+
             raise
 
 class AudienceAnalyticsEngine:
     """Audience analytics and insights engine"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.analytics_processors = {}
@@ -504,35 +551,43 @@ class AudienceAnalyticsEngine:
         time_period: str,
         analytics_scope: List[str]
     ) -> Dict[str, Any]:
-        """Generate comprehensive audience analytics"""
+        """
+        Generate comprehensive audience analytics"""
         try:
             # Collect audience data
+
             audience_data = await self._collect_audience_data(creator_id, time_period)
             
             # Calculate engagement metrics
+
             engagement_metrics = await self._calculate_engagement_metrics(
                 audience_data, analytics_scope
             )
             
             # Analyze audience demographics
+
             demographics_analysis = await self._analyze_audience_demographics(audience_data)
             
             # Generate growth insights
+
             growth_insights = await self._generate_growth_insights(
                 creator_id, audience_data, time_period
             )
             
             # Calculate content performance
+
             content_performance = await self._calculate_content_performance(
                 creator_id, audience_data, time_period
             )
             
             # Generate recommendations
+
             audience_recommendations = await self._generate_audience_recommendations(
                 engagement_metrics, demographics_analysis, growth_insights
             )
             
             # Create analytics report
+
             analytics_report = AudienceAnalytics(
                 analytics_id=str(uuid.uuid4()),
                 creator_id=creator_id,
@@ -552,6 +607,7 @@ class AudienceAnalyticsEngine:
             
             # Store analytics report
             await self._store_analytics_report(analytics_report)
+
             
             return {
                 "success": True,
@@ -566,12 +622,13 @@ class AudienceAnalyticsEngine:
             
         except Exception as e:
             logger.error(f"Failed to generate audience analytics: {e}")
+
             raise
 
 class StreamingCreatorManager:
     """Unified streaming creator manager - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         
@@ -591,24 +648,32 @@ class StreamingCreatorManager:
         """Initialize creator management system"""
         try:
             # Initialize account manager
+
             account_status = await self.account_manager.initialize_account_manager()
             
             # Initialize content manager
+
             content_status = await self.content_manager.initialize_content_manager()
             
             # Setup creator dashboard
+
             dashboard_setup = await self._setup_creator_dashboard()
             
             # Configure creator tools
+
             creator_tools = await self._configure_creator_tools()
             
             # Setup support system
+
             support_system = await self._setup_creator_support_system()
             
             # Configure growth programs
+
             growth_programs = await self._configure_growth_programs()
+
             
             logger.info("👥 Streaming Creator Manager fully initialized")
+
             
             return {
                 "manager_status": "initialized",
@@ -630,6 +695,7 @@ class StreamingCreatorManager:
             
         except Exception as e:
             logger.error(f"Failed to initialize creator manager: {e}")
+
             raise
     
     async def onboard_new_creator(
@@ -640,38 +706,49 @@ class StreamingCreatorManager:
         """Complete creator onboarding process"""
         try:
             # Create creator account
+
             account_creation = await self.account_manager.create_creator_account(
                 creator_details["username"],
                 creator_details["email"],
                 creator_details["display_name"],
                 creator_details
             )
+
+
             
             creator_id = account_creation["creator_id"]
             
             # Setup content management
+
             content_setup = await self.content_manager.initialize_content_manager()
             
             # Configure monetization (if eligible)
+
+
             monetization_setup = None
             if onboarding_preferences.get("enable_monetization", False):
                 try:
                     monetization_setup = await self.monetization_manager.setup_creator_monetization(
                         creator_id, onboarding_preferences.get("monetization_preferences", {})
                     )
+
                 except Exception as e:
                     logger.warning(f"Monetization setup failed for {creator_id}: {e}")
             
             # Initialize analytics
+
             analytics_setup = await self.analytics_engine.generate_audience_analytics(
                 creator_id, "30d", ["engagement", "demographics"]
             )
             
             # Setup creator tools
+
             tools_setup = await self._setup_creator_tools_for_user(creator_id, onboarding_preferences)
             
             # Send onboarding completion notification
+
             completion_notification = await self._send_onboarding_completion_notification(creator_id)
+
             
             return {
                 "success": True,
@@ -688,6 +765,7 @@ class StreamingCreatorManager:
             
         except Exception as e:
             logger.error(f"Failed to onboard new creator: {e}")
+
             raise
     
     # Additional helper methods implementation...
@@ -702,6 +780,7 @@ class StreamingCreatorManager:
             }
         except Exception as e:
             logger.error(f"Failed to setup creator dashboard: {e}")
+
             return {}
 
     async def _configure_creator_tools(self) -> Dict[str, Any]:
@@ -715,6 +794,7 @@ class StreamingCreatorManager:
             }
         except Exception as e:
             logger.error(f"Failed to configure creator tools: {e}")
+
             return {}
 
 # Export main classes

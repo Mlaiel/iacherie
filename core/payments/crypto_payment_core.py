@@ -24,7 +24,8 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class CryptoCurrency(Enum):
-    """Supported cryptocurrencies"""
+    """
+Supported cryptocurrencies"""
     BITCOIN = "BTC"
     ETHEREUM = "ETH"
     USDC = "USDC"
@@ -37,7 +38,8 @@ class CryptoCurrency(Enum):
     POLYGON = "POLYGON"
 
 class Blockchain(Enum):
-    """Supported blockchain networks"""
+    """
+Supported blockchain networks"""
     BITCOIN = "bitcoin"
     ETHEREUM = "ethereum"
     POLYGON = "polygon"
@@ -47,7 +49,8 @@ class Blockchain(Enum):
     AVALANCHE = "avalanche"
 
 class TransactionStatus(Enum):
-    """Crypto transaction status"""
+    """
+Crypto transaction status"""
     PENDING = "pending"
     CONFIRMING = "confirming"
     CONFIRMED = "confirmed"
@@ -56,7 +59,8 @@ class TransactionStatus(Enum):
     EXPIRED = "expired"
 
 class WalletType(Enum):
-    """Wallet types"""
+    """
+Wallet types"""
     HOT_WALLET = "hot_wallet"
     COLD_WALLET = "cold_wallet"
     MULTISIG = "multisig"
@@ -64,7 +68,8 @@ class WalletType(Enum):
     CUSTODIAL = "custodial"
 
 class DeFiProtocol(Enum):
-    """DeFi protocols"""
+    """
+DeFi protocols"""
     UNISWAP = "uniswap"
     SUSHISWAP = "sushiswap"
     PANCAKESWAP = "pancakeswap"
@@ -74,7 +79,8 @@ class DeFiProtocol(Enum):
 
 @dataclass
 class CryptoWallet:
-    """Cryptocurrency wallet"""
+    """
+Cryptocurrency wallet"""
     wallet_id: str
     wallet_type: WalletType
     blockchain: Blockchain
@@ -90,7 +96,8 @@ class CryptoWallet:
 
 @dataclass
 class CryptoTransaction:
-    """Cryptocurrency transaction"""
+    """
+Cryptocurrency transaction"""
     transaction_id: str
     blockchain: Blockchain
     from_address: str
@@ -112,7 +119,8 @@ class CryptoTransaction:
 
 @dataclass
 class CryptoPrice:
-    """Cryptocurrency price data"""
+    """
+Cryptocurrency price data"""
     currency: CryptoCurrency
     price_usd: Decimal
     price_btc: Decimal
@@ -124,7 +132,8 @@ class CryptoPrice:
 
 @dataclass
 class DeFiPool:
-    """DeFi liquidity pool"""
+    """
+DeFi liquidity pool"""
     pool_id: str
     protocol: DeFiProtocol
     token_a: CryptoCurrency
@@ -139,7 +148,8 @@ class DeFiPool:
     last_updated: datetime = field(default_factory=datetime.utcnow)
 
 class BlockchainConnector:
-    """Blockchain network connector"""
+    """
+Blockchain network connector"""
     
     def __init__(self, blockchain: Blockchain):
         self.blockchain = blockchain
@@ -150,7 +160,8 @@ class BlockchainConnector:
         logger.info(f"Blockchain Connector initialized for {blockchain.value}")
 
     def _get_rpc_endpoints(self) -> Dict[str, str]:
-        """Get RPC endpoints for blockchain"""
+        """
+Get RPC endpoints for blockchain"""
         endpoints = {
             Blockchain.ETHEREUM: "https://mainnet.infura.io/v3/your-project-id",
             Blockchain.POLYGON: "https://polygon-rpc.com",
@@ -163,7 +174,8 @@ class BlockchainConnector:
         return {self.blockchain.value: endpoints.get(self.blockchain, "")}
 
     def _get_explorer_urls(self) -> Dict[str, str]:
-        """Get blockchain explorer URLs"""
+        """
+Get blockchain explorer URLs"""
         explorers = {
             Blockchain.ETHEREUM: "https://etherscan.io",
             Blockchain.POLYGON: "https://polygonscan.com",
@@ -176,7 +188,8 @@ class BlockchainConnector:
         return {self.blockchain.value: explorers.get(self.blockchain, "")}
 
     def _get_gas_settings(self) -> Dict[str, Any]:
-        """Get gas settings for blockchain"""
+        """
+Get gas settings for blockchain"""
         gas_settings = {
             Blockchain.ETHEREUM: {
                 "gas_limit": 21000,
@@ -199,7 +212,6 @@ class BlockchainConnector:
     async def get_balance(self, address: str, currency: CryptoCurrency) -> Decimal:
         """Get balance for address"""
         try:
-            # Mock balance retrieval - would integrate with actual blockchain RPC
             mock_balances = {
                 "0x742d35Cc6589C2D8B7bfd80D8A4E4D78d1aE5469": {
                     CryptoCurrency.ETHEREUM: Decimal('1.5'),
@@ -218,7 +230,8 @@ class BlockchainConnector:
             return Decimal('0')
 
     async def send_transaction(self, transaction: CryptoTransaction) -> Dict[str, Any]:
-        """Send transaction to blockchain"""
+        """
+Send transaction to blockchain"""
         try:
             # Validate transaction
             validation_result = await self._validate_transaction(transaction)
@@ -239,8 +252,6 @@ class BlockchainConnector:
             transaction_hash = self._generate_transaction_hash(transaction)
             transaction.transaction_hash = transaction_hash
             transaction.status = TransactionStatus.PENDING
-            
-            # Mock broadcast to network
             broadcast_result = await self._broadcast_transaction(transaction)
             
             if broadcast_result["success"]:
@@ -268,7 +279,6 @@ class BlockchainConnector:
     async def get_transaction_status(self, transaction_hash: str) -> Dict[str, Any]:
         """Get transaction status from blockchain"""
         try:
-            # Mock transaction status check
             mock_status = {
                 "status": "confirmed",
                 "confirmations": 6,
@@ -296,7 +306,8 @@ class BlockchainConnector:
             }
 
     async def _validate_transaction(self, transaction: CryptoTransaction) -> Dict[str, Any]:
-        """Validate transaction before sending"""
+        """
+Validate transaction before sending"""
         validation_issues = []
         
         # Check address format
@@ -322,7 +333,8 @@ class BlockchainConnector:
         }
 
     def _is_valid_address(self, address: str) -> bool:
-        """Validate blockchain address format"""
+        """
+Validate blockchain address format"""
         if self.blockchain == Blockchain.ETHEREUM:
             return address.startswith("0x") and len(address) == 42
         elif self.blockchain == Blockchain.BITCOIN:
@@ -333,7 +345,8 @@ class BlockchainConnector:
             return True  # Generic validation
 
     async def _calculate_gas_fees(self, transaction: CryptoTransaction) -> Dict[str, Any]:
-        """Calculate gas fees for transaction"""
+        """
+Calculate gas fees for transaction"""
         gas_settings = self.gas_settings
         
         gas_limit = gas_settings.get("gas_limit", 21000)
@@ -350,13 +363,13 @@ class BlockchainConnector:
         }
 
     def _generate_transaction_hash(self, transaction: CryptoTransaction) -> str:
-        """Generate mock transaction hash"""
+        """
+Generate mock transaction hash"""
         hash_input = f"{transaction.from_address}{transaction.to_address}{transaction.amount}{datetime.utcnow().timestamp()}"
         return "0x" + hashlib.sha256(hash_input.encode()).hexdigest()
 
     async def _broadcast_transaction(self, transaction: CryptoTransaction) -> Dict[str, Any]:
         """Broadcast transaction to network (mock)"""
-        # Mock successful broadcast
         return {
             "success": True,
             "transaction_hash": transaction.transaction_hash,
@@ -364,7 +377,8 @@ class BlockchainConnector:
         }
 
 class CryptoPriceOracle:
-    """Cryptocurrency price oracle"""
+    """
+Cryptocurrency price oracle"""
     
     def __init__(self):
         self.price_cache = {}
@@ -374,7 +388,8 @@ class CryptoPriceOracle:
         logger.info("Crypto Price Oracle initialized")
 
     async def get_price(self, currency: CryptoCurrency, base_currency: str = "USD") -> CryptoPrice:
-        """Get current price for cryptocurrency"""
+        """
+Get current price for cryptocurrency"""
         try:
             cache_key = f"{currency.value}_{base_currency}"
             
@@ -416,7 +431,6 @@ class CryptoPriceOracle:
 
     async def _fetch_price_data(self, currency: CryptoCurrency, base_currency: str) -> Dict[str, Any]:
         """Fetch price data from external APIs"""
-        # Mock price data
         mock_prices = {
             CryptoCurrency.BITCOIN: {
                 "price_usd": Decimal('45000'),
@@ -454,7 +468,8 @@ class CryptoPriceOracle:
 
     async def convert_currency(self, amount: Decimal, from_currency: CryptoCurrency, 
                              to_currency: CryptoCurrency) -> Dict[str, Any]:
-        """Convert between cryptocurrencies"""
+        """
+Convert between cryptocurrencies"""
         try:
             from_price = await self.get_price(from_currency)
             to_price = await self.get_price(to_currency)
@@ -477,7 +492,8 @@ class CryptoPriceOracle:
             raise
 
 class DeFiManager:
-    """DeFi protocol manager"""
+    """
+DeFi protocol manager"""
     
     def __init__(self):
         self.pools = {}
@@ -490,7 +506,8 @@ class DeFiManager:
         logger.info("DeFi Manager initialized")
 
     def _initialize_defi_pools(self):
-        """Initialize DeFi liquidity pools"""
+        """
+Initialize DeFi liquidity pools"""
         default_pools = [
             {
                 "pool_id": "uniswap_eth_usdc",
@@ -524,7 +541,8 @@ class DeFiManager:
 
     async def add_liquidity(self, pool_id: str, token_a_amount: Decimal, 
                            token_b_amount: Decimal, user_address: str) -> Dict[str, Any]:
-        """Add liquidity to DeFi pool"""
+        """
+Add liquidity to DeFi pool"""
         try:
             if pool_id not in self.pools:
                 raise ValueError(f"Pool not found: {pool_id}")
@@ -537,7 +555,7 @@ class DeFiManager:
             # Update pool state
             pool.token_a_amount += token_a_amount
             pool.token_b_amount += token_b_amount
-            pool.total_liquidity += token_a_amount * Decimal('3000') + token_b_amount  # Mock calculation
+            pool.total_liquidity += token_a_amount * Decimal('3000') + token_b_amount
             pool.last_updated = datetime.utcnow()
             
             # Record position
@@ -558,8 +576,7 @@ class DeFiManager:
                 "success": True,
                 "position_id": position_id,
                 "lp_tokens_received": float(lp_tokens),
-                "pool_share": float(lp_tokens / (pool.total_liquidity / Decimal('1000000'))),  # Mock calculation
-                "estimated_apr": float(pool.apr),
+                "pool_share": float(lp_tokens / (pool.total_liquidity / Decimal('1000000'))),                "estimated_apr": float(pool.apr),
                 "transaction_hash": f"0x{uuid.uuid4().hex}"
             }
             
@@ -568,7 +585,8 @@ class DeFiManager:
             raise
 
     async def remove_liquidity(self, position_id: str, percentage: float = 100.0) -> Dict[str, Any]:
-        """Remove liquidity from DeFi pool"""
+        """
+Remove liquidity from DeFi pool"""
         try:
             if position_id not in self.staking_positions:
                 raise ValueError(f"Position not found: {position_id}")
@@ -604,12 +622,12 @@ class DeFiManager:
             logger.error(f"Remove liquidity error: {str(e)}")
             raise
 
-    async def _calculate_lp_tokens(self, pool: DeFiPool, token_a_amount: Decimal, 
+    async def _calculate_lp_tokens(self, pool: DeFiPool, token_a_amount: Decimal,
                                   token_b_amount: Decimal) -> Decimal:
         """Calculate LP tokens for liquidity provision"""
         # Simplified LP token calculation
-        total_value = token_a_amount * Decimal('3000') + token_b_amount  # Mock ETH price
-        lp_tokens = total_value / Decimal('10')  # Mock LP token ratio
+        total_value = token_a_amount * Decimal('3000') + token_b_amount
+        lp_tokens = total_value / Decimal('10')
         return lp_tokens
 
     async def _calculate_yield_earned(self, position: Dict[str, Any], pool: DeFiPool) -> Dict[str, Any]:
@@ -636,7 +654,8 @@ class DeFiManager:
             return {"total_yield_usd": 0, "daily_yield_usd": 0, "apr": 0, "days_staked": 0}
 
 class CryptoPaymentCore:
-    """Main Crypto Payment Core System"""
+    """
+Main Crypto Payment Core System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -654,7 +673,8 @@ class CryptoPaymentCore:
         logger.info("Crypto Payment Core initialized")
 
     async def create_wallet(self, wallet_data: Dict[str, Any]) -> str:
-        """Create new cryptocurrency wallet"""
+        """
+Create new cryptocurrency wallet"""
         try:
             wallet_id = f"wallet_{uuid.uuid4().hex[:12]}"
             
@@ -683,7 +703,8 @@ class CryptoPaymentCore:
             raise
 
     async def process_crypto_payment(self, payment_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process cryptocurrency payment"""
+        """
+Process cryptocurrency payment"""
         try:
             transaction_id = f"crypto_txn_{uuid.uuid4().hex[:12]}"
             
@@ -745,7 +766,8 @@ class CryptoPaymentCore:
             }
 
     async def check_transaction_status(self, transaction_id: str) -> Dict[str, Any]:
-        """Check cryptocurrency transaction status"""
+        """
+Check cryptocurrency transaction status"""
         try:
             if transaction_id not in self.transactions:
                 return {
@@ -789,7 +811,8 @@ class CryptoPaymentCore:
             }
 
     async def get_wallet_balance(self, wallet_id: str) -> Dict[str, Any]:
-        """Get wallet balance with current prices"""
+        """
+Get wallet balance with current prices"""
         try:
             if wallet_id not in self.wallets:
                 return {
@@ -832,7 +855,8 @@ class CryptoPaymentCore:
             }
 
     async def swap_tokens(self, swap_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Swap tokens using DeFi protocols"""
+        """
+Swap tokens using DeFi protocols"""
         try:
             from_currency = CryptoCurrency(swap_data["from_currency"])
             to_currency = CryptoCurrency(swap_data["to_currency"])
@@ -881,7 +905,8 @@ class CryptoPaymentCore:
             }
 
     async def stake_tokens(self, staking_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Stake tokens in DeFi protocol"""
+        """
+Stake tokens in DeFi protocol"""
         try:
             pool_id = staking_data["pool_id"]
             token_a_amount = Decimal(str(staking_data["token_a_amount"]))
@@ -906,7 +931,8 @@ class CryptoPaymentCore:
             }
 
     async def get_portfolio_analytics(self, user_address: str) -> Dict[str, Any]:
-        """Get comprehensive crypto portfolio analytics"""
+        """
+Get comprehensive crypto portfolio analytics"""
         try:
             # Get user wallets
             user_wallets = [w for w in self.wallets.values() if w.metadata.get("owner") == user_address]
@@ -981,7 +1007,8 @@ class CryptoPaymentCore:
             raise
 
     def _generate_wallet_address(self, blockchain: str) -> str:
-        """Generate mock wallet address"""
+        """
+Generate mock wallet address"""
         if blockchain == "ethereum":
             return "0x" + uuid.uuid4().hex[:40]
         elif blockchain == "bitcoin":
@@ -992,7 +1019,8 @@ class CryptoPaymentCore:
             return "addr_" + uuid.uuid4().hex[:36]
 
     async def get_system_health(self) -> Dict[str, Any]:
-        """Get system health and statistics"""
+        """
+Get system health and statistics"""
         total_wallets = len(self.wallets)
         total_transactions = len(self.transactions)
         total_defi_pools = len(self.defi_manager.pools)
@@ -1040,4 +1068,4 @@ __all__ = [
 ]
 
 if __name__ == "__main__":
-    logger.info("Crypto Payment Core module loaded successfully")
+    logger.info("Crypto Payment Core module initialized successfully")

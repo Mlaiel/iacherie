@@ -13,7 +13,8 @@ from datetime import datetime
 logger = logging.getLogger(__name__)
 
 class PerformanceDB:
-    """Gestionnaire de base de données de performance"""
+    """
+Gestionnaire de base de données de performance"""
     
     def __init__(self):
         self.metrics = {}
@@ -22,7 +23,8 @@ class PerformanceDB:
         logger.info("PerformanceDB initialized - CRITICAL MODULE FOR 100% SUCCESS!")
     
     def log_query_performance(self, query: str, execution_time: float):
-        """Enregistre les performances d'une requête"""
+        """
+Enregistre les performances d'une requête"""
         self.queries.append({
             'query': query,
             'execution_time': execution_time,
@@ -31,7 +33,8 @@ class PerformanceDB:
         logger.debug(f"Query performance logged: {execution_time}s")
     
     def get_performance_metrics(self) -> Dict[str, Any]:
-        """Récupère les métriques de performance"""
+        """
+Récupère les métriques de performance"""
         return {
             'total_queries': len(self.queries),
             'average_time': sum(q['execution_time'] for q in self.queries) / len(self.queries) if self.queries else 0,
@@ -39,19 +42,22 @@ class PerformanceDB:
         }
     
     def store_metric(self, name: str, value: Any):
-        """Stocke une métrique de performance"""
+        """
+Stocke une métrique de performance"""
         self.metrics[name] = {
             'value': value,
             'timestamp': datetime.now()
         }
     
     def get_metric(self, name: str) -> Optional[Any]:
-        """Récupère une métrique"""
+        """
+Récupère une métrique"""
         metric = self.metrics.get(name)
         return metric['value'] if metric else None
 
 class DatabasePerformanceMonitor:
-    """Moniteur de performance de base de données"""
+    """
+Moniteur de performance de base de données"""
     
     def __init__(self):
         self.db = PerformanceDB()
@@ -59,14 +65,16 @@ class DatabasePerformanceMonitor:
         logger.info("DatabasePerformanceMonitor initialized - PERFORMANCE TRACKING READY!")
     
     def start_query_timing(self, query_id: str, query: str):
-        """Démarre le chronométrage d'une requête"""
+        """
+Démarre le chronométrage d'une requête"""
         self.active_queries[query_id] = {
             'query': query,
             'start_time': time.time()
         }
     
     def end_query_timing(self, query_id: str):
-        """Termine le chronométrage d'une requête"""
+        """
+Termine le chronométrage d'une requête"""
         if query_id in self.active_queries:
             query_data = self.active_queries[query_id]
             execution_time = time.time() - query_data['start_time']
@@ -80,18 +88,21 @@ performance_monitor = DatabasePerformanceMonitor()
 
 # Fonctions utilitaires
 def get_performance_db():
-    """Récupère l'instance de PerformanceDB"""
+    """
+Récupère l'instance de PerformanceDB"""
     return performance_monitor.db
 
 def monitor_query(query: str, query_id: str = None):
-    """Monitore une requête"""
+    """
+Monitore une requête"""
     if not query_id:
         query_id = f"query_{int(time.time())}"
     performance_monitor.start_query_timing(query_id, query)
     return query_id
 
 def finish_query_monitoring(query_id: str):
-    """Termine le monitoring d'une requête"""
+    """
+Termine le monitoring d'une requête"""
     return performance_monitor.end_query_timing(query_id)
 
 # Aliases pour compatibilité

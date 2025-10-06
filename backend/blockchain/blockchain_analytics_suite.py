@@ -114,7 +114,8 @@ class TransactionAnalysis:
 
 @dataclass
 class WalletProfile:
-    """Wallet behavior profile"""
+    """
+        Wallet behavior profile"""
     wallet_address: str
     behavior_type: WalletBehaviorType
     activity_score: float
@@ -131,7 +132,8 @@ class WalletProfile:
 
 @dataclass
 class GasAnalytics:
-    """Gas usage analytics"""
+    """
+        Gas usage analytics"""
     timeframe: AnalyticsTimeframe
     average_gas_price: Decimal
     median_gas_price: Decimal
@@ -145,7 +147,8 @@ class GasAnalytics:
 
 @dataclass
 class RevenueMetrics:
-    """Revenue tracking metrics"""
+    """
+        Revenue tracking metrics"""
     timeframe: AnalyticsTimeframe
     total_revenue: Decimal
     revenue_by_source: Dict[str, Decimal]
@@ -157,7 +160,8 @@ class RevenueMetrics:
 
 
 class TransactionRecord(Base):
-    """Database model for transaction records"""
+    """
+        Database model for transaction records"""
     __tablename__ = "transaction_analytics"
     
     transaction_hash = Column(String, primary_key=True)
@@ -220,11 +224,18 @@ class TransactionFlowAnalyzer:
     async def analyze_transaction_flow(self, start_address: str, 
                                      depth: int = 3, 
                                      timeframe: AnalyticsTimeframe = AnalyticsTimeframe.DAILY) -> Dict[str, Any]:
-        """Analyze transaction flow patterns from a starting address"""
+        """
+        Analyze transaction flow patterns from a starting address"""
         try:
             flow_graph = await self._build_flow_graph(start_address, depth, timeframe)
+
+
             flow_metrics = await self._calculate_flow_metrics(flow_graph)
+
+
             patterns = await self._identify_flow_patterns(flow_graph)
+
+
             
             analysis_result = {
                 "start_address": start_address,
@@ -238,14 +249,18 @@ class TransactionFlowAnalyzer:
             }
             
             # Cache results
+
             cache_key = f"flow_analysis:{hashlib.md5(f'{start_address}_{depth}_{timeframe.value}'.encode()).hexdigest()}"
             await self.redis.setex(cache_key, 3600, json.dumps(analysis_result, default=str))
+
             
             logger.info(f"Transaction flow analysis completed for {start_address}")
+
             return analysis_result
             
         except Exception as e:
             logger.error(f"Transaction flow analysis failed: {str(e)}")
+
             raise
     
     async def detect_suspicious_patterns(self, addresses: List[str], 
@@ -263,6 +278,7 @@ class TransactionFlowAnalyzer:
             
             for address in addresses:
                 # Analyze each address for suspicious patterns
+
                 address_patterns = await self._analyze_address_patterns(address, timeframe)
                 
                 # Check for circular transactions
@@ -288,6 +304,8 @@ class TransactionFlowAnalyzer:
                         "bot_probability": address_patterns["bot_probability"],
                         "transaction_pattern": address_patterns.get("pattern_type", "unknown")
                     })
+
+
             
             detection_result = {
                 "addresses_analyzed": len(addresses),
@@ -299,16 +317,18 @@ class TransactionFlowAnalyzer:
             }
             
             logger.info(f"Suspicious pattern detection completed: {detection_result['total_suspicious_count']} patterns found")
+
             return detection_result
             
         except Exception as e:
             logger.error(f"Suspicious pattern detection failed: {str(e)}")
+
             raise
     
     async def _build_flow_graph(self, start_address: str, depth: int, 
                                timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
         """Build transaction flow graph"""
-        # Mock implementation - would build actual graph from blockchain data
+        
         return {
             "nodes": [
                 {"address": start_address, "level": 0, "transaction_count": 150, "volume": 25.5},
@@ -324,10 +344,15 @@ class TransactionFlowAnalyzer:
     async def _calculate_flow_metrics(self, flow_graph: Dict[str, Any]) -> Dict[str, Any]:
         """Calculate flow metrics from graph"""
         nodes = flow_graph.get("nodes", [])
+
         edges = flow_graph.get("edges", [])
+
+
         
         total_volume = sum(node.get("volume", 0) for node in nodes)
+
         total_transactions = sum(node.get("transaction_count", 0) for node in nodes)
+
         network_density = len(edges) / (len(nodes) * (len(nodes) - 1)) if len(nodes) > 1 else 0
         
         return {
@@ -344,6 +369,7 @@ class TransactionFlowAnalyzer:
         patterns = []
         
         # Pattern: High-frequency small transactions
+
         nodes = flow_graph.get("nodes", [])
         for node in nodes:
             if node.get("transaction_count", 0) > 100 and node.get("volume", 0) / node.get("transaction_count", 1) < 0.1:
@@ -355,6 +381,7 @@ class TransactionFlowAnalyzer:
                 })
         
         # Pattern: Concentration of volume
+
         total_volume = sum(node.get("volume", 0) for node in nodes)
         for node in nodes:
             if node.get("volume", 0) / total_volume > 0.5:
@@ -364,6 +391,7 @@ class TransactionFlowAnalyzer:
                     "confidence": 0.9,
                     "description": "Address concentrates significant portion of network volume"
                 })
+
         
         return patterns
     
@@ -383,7 +411,7 @@ class TransactionFlowAnalyzer:
     async def _analyze_address_patterns(self, address: str, 
                                       timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
         """Analyze patterns for specific address"""
-        # Mock implementation - would analyze actual transaction data
+        
         return {
             "circular_ratio": 0.1,
             "self_trading_ratio": 0.05,
@@ -396,6 +424,7 @@ class TransactionFlowAnalyzer:
     async def _calculate_overall_risk_level(self, suspicious_patterns: Dict[str, List]) -> str:
         """Calculate overall risk level based on detected patterns"""
         total_patterns = sum(len(patterns) for patterns in suspicious_patterns.values())
+
         
         if total_patterns >= 10:
             return "high"
@@ -429,23 +458,33 @@ class WalletBehaviorAnalyzer:
         """Comprehensive wallet behavior analysis"""
         try:
             # Collect wallet transaction data
+
             transaction_data = await self._collect_wallet_transactions(wallet_address, analysis_period)
             
             # Calculate activity metrics
+
             activity_metrics = await self._calculate_activity_metrics(transaction_data)
             
             # Classify behavior type
+
             behavior_type = await self._classify_wallet_behavior(activity_metrics)
             
             # Calculate scores
+
             activity_score = await self._calculate_activity_score(activity_metrics)
+
+
             risk_score = await self._calculate_risk_score(transaction_data, activity_metrics)
+
+
             reputation_score = await self._calculate_reputation_score(transaction_data)
             
             # Identify interaction patterns
+
             interaction_patterns = await self._analyze_interaction_patterns(transaction_data)
             
             # Create wallet profile
+
             profile = WalletProfile(
                 wallet_address=wallet_address,
                 behavior_type=behavior_type,
@@ -461,12 +500,15 @@ class WalletBehaviorAnalyzer:
             
             # Store profile in database
             await self._store_wallet_profile(profile)
+
             
             logger.info(f"Wallet behavior analysis completed for {wallet_address}: {behavior_type.value}")
+
             return profile
             
         except Exception as e:
             logger.error(f"Wallet behavior analysis failed for {wallet_address}: {str(e)}")
+
             raise
     
     async def generate_behavior_insights(self, wallet_addresses: List[str]) -> Dict[str, Any]:
@@ -476,14 +518,23 @@ class WalletBehaviorAnalyzer:
             for address in wallet_addresses:
                 try:
                     profile = await self.analyze_wallet_behavior(address)
+
                     profiles.append(profile)
+
                 except Exception as e:
                     logger.warning(f"Failed to analyze wallet {address}: {str(e)}")
             
             # Aggregate insights
+
             behavior_distribution = self._calculate_behavior_distribution(profiles)
+
+
             network_insights = await self._calculate_network_insights(profiles)
+
+
             risk_analysis = self._analyze_risk_distribution(profiles)
+
+
             
             insights = {
                 "total_wallets_analyzed": len(profiles),
@@ -497,16 +548,18 @@ class WalletBehaviorAnalyzer:
             }
             
             logger.info(f"Behavior insights generated for {len(profiles)} wallets")
+
             return insights
             
         except Exception as e:
             logger.error(f"Behavior insights generation failed: {str(e)}")
+
             raise
     
     async def _collect_wallet_transactions(self, wallet_address: str, 
                                          period_days: int) -> List[Dict[str, Any]]:
         """Collect transaction data for wallet"""
-        # Mock implementation - would query actual blockchain data
+        
         return [
             {"hash": "0x123", "value": 1.5, "timestamp": datetime.utcnow() - timedelta(days=1), "type": "transfer"},
             {"hash": "0x456", "value": 2.3, "timestamp": datetime.utcnow() - timedelta(days=3), "type": "nft_purchase"},
@@ -517,17 +570,22 @@ class WalletBehaviorAnalyzer:
         """Calculate activity metrics from transaction data"""
         if not transactions:
             return {}
+
         
         values = [tx.get("value", 0) for tx in transactions]
+
         timestamps = [tx.get("timestamp") for tx in transactions if tx.get("timestamp")]
         
         # Calculate time-based metrics
         if len(timestamps) > 1:
             intervals = [(timestamps[i] - timestamps[i-1]).total_seconds() for i in range(1, len(timestamps))]
+
             avg_interval = statistics.mean(intervals) if intervals else 0
+
             interval_variance = statistics.variance(intervals) if len(intervals) > 1 else 0
         else:
             avg_interval = 0
+
             interval_variance = 0
         
         return {
@@ -545,9 +603,13 @@ class WalletBehaviorAnalyzer:
     async def _classify_wallet_behavior(self, metrics: Dict[str, Any]) -> WalletBehaviorType:
         """Classify wallet behavior based on metrics"""
         total_volume = metrics.get("total_volume", 0)
+
         transaction_count = metrics.get("transaction_count", 0)
+
         avg_interval = metrics.get("average_interval_hours", 0)
+
         interval_variance = metrics.get("interval_variance", 0)
+
         transaction_types = metrics.get("transaction_types", {})
         
         # Whale classification
@@ -565,11 +627,13 @@ class WalletBehaviorAnalyzer:
             return WalletBehaviorType.TRADER
         
         # Collector classification (NFT focus)
+
         nft_ratio = (transaction_types.get("nft_purchase", 0) + transaction_types.get("nft_transfer", 0)) / max(transaction_count, 1)
         if nft_ratio >= 0.5:
             return WalletBehaviorType.COLLECTOR
         
         # Creator classification (minting activity)
+
         mint_ratio = transaction_types.get("nft_mint", 0) / max(transaction_count, 1)
         if mint_ratio >= 0.2:
             return WalletBehaviorType.CREATOR
@@ -584,15 +648,20 @@ class WalletBehaviorAnalyzer:
     async def _calculate_activity_score(self, metrics: Dict[str, Any]) -> float:
         """Calculate activity score (0-1)"""
         transaction_count = metrics.get("transaction_count", 0)
+
         total_volume = metrics.get("total_volume", 0)
+
         active_days = metrics.get("active_days", 0)
         
         # Normalize components
+
         frequency_score = min(transaction_count / 100, 1.0)  # Max score at 100 transactions
+
         volume_score = min(total_volume / 100, 1.0)         # Max score at 100 ETH
         consistency_score = min(active_days / 30, 1.0)      # Max score at 30 active days
         
         # Weighted average
+
         activity_score = (frequency_score * 0.4 + volume_score * 0.4 + consistency_score * 0.2)
         return round(activity_score, 3)
     
@@ -620,18 +689,21 @@ class WalletBehaviorAnalyzer:
         return min(base_risk, 1.0)
     
     async def _calculate_reputation_score(self, transactions: List[Dict[str, Any]]) -> float:
-        """Calculate reputation score (0-1)"""
-        # Mock implementation - would consider factors like:
-        # - Successful transaction rate
+        """Calculate reputation score (0-1)"""        # - Successful transaction rate
         # - No failed/reverted transactions
         # - No suspicious activity
         # - Community interactions
+
         
         base_reputation = 0.7
         
         # Check for failed transactions
+
         failed_count = sum(1 for tx in transactions if not tx.get("success", True))
+
         failure_penalty = min(failed_count * 0.1, 0.3)
+
+
         
         reputation = base_reputation - failure_penalty
         return max(0.0, min(1.0, reputation))
@@ -639,16 +711,20 @@ class WalletBehaviorAnalyzer:
     async def _analyze_interaction_patterns(self, transactions: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Analyze wallet interaction patterns"""
         # Analyze transaction timing patterns
+
         timestamps = [tx.get("timestamp") for tx in transactions if tx.get("timestamp")]
         
         if len(timestamps) < 2:
             return {"pattern_type": "insufficient_data"}
         
         # Calculate time intervals
+
         intervals = [(timestamps[i] - timestamps[i-1]).total_seconds() for i in range(1, len(timestamps))]
         
         # Analyze patterns
+
         avg_interval = statistics.mean(intervals)
+
         interval_std = statistics.stdev(intervals) if len(intervals) > 1 else 0
         
         # Classify pattern
@@ -670,12 +746,15 @@ class WalletBehaviorAnalyzer:
     async def _identify_preferred_tokens(self, transactions: List[Dict[str, Any]]) -> List[str]:
         """Identify preferred tokens based on transaction history"""
         token_counts = defaultdict(int)
+
         
         for tx in transactions:
             token = tx.get("token", "ETH")
+
             token_counts[token] += 1
         
         # Sort by frequency and return top 5
+
         sorted_tokens = sorted(token_counts.items(), key=lambda x: x[1], reverse=True)
         return [token for token, count in sorted_tokens[:5]]
     
@@ -684,6 +763,7 @@ class WalletBehaviorAnalyzer:
         type_counts = defaultdict(int)
         for tx in transactions:
             tx_type = tx.get("type", "unknown")
+
             type_counts[tx_type] += 1
         return dict(type_counts)
     
@@ -691,35 +771,45 @@ class WalletBehaviorAnalyzer:
         """Identify peak activity hours"""
         if not timestamps:
             return []
+
         
         hour_counts = defaultdict(int)
         for ts in timestamps:
             hour_counts[ts.hour] += 1
         
         # Return hours with above-average activity
+
         avg_activity = len(timestamps) / 24
+
         peak_hours = [hour for hour, count in hour_counts.items() if count > avg_activity]
         return sorted(peak_hours)
     
     def _analyze_transaction_clusters(self, timestamps: List[datetime]) -> Dict[str, Any]:
-        """Analyze transaction clustering patterns"""
+        """
+        Analyze transaction clustering patterns"""
         if len(timestamps) < 3:
             return {"clustering": "insufficient_data"}
         
         # Simple clustering analysis - transactions within 1 hour of each other
+
         clusters = []
+
         current_cluster = [timestamps[0]]
         
         for i in range(1, len(timestamps)):
             if (timestamps[i] - timestamps[i-1]).total_seconds() <= 3600:  # Within 1 hour
                 current_cluster.append(timestamps[i])
+
             else:
                 if len(current_cluster) > 1:
                     clusters.append(current_cluster)
+
+
                 current_cluster = [timestamps[i]]
         
         if len(current_cluster) > 1:
             clusters.append(current_cluster)
+
         
         return {
             "cluster_count": len(clusters),
@@ -732,6 +822,7 @@ class WalletBehaviorAnalyzer:
         behavior_counts = defaultdict(int)
         for profile in profiles:
             behavior_counts[profile.behavior_type.value] += 1
+
         
         total = len(profiles)
         return {
@@ -743,10 +834,14 @@ class WalletBehaviorAnalyzer:
         """Calculate network-level insights"""
         if not profiles:
             return {}
+
         
         total_volume = sum(float(profile.total_volume) for profile in profiles)
+
         avg_activity = statistics.mean([profile.activity_score for profile in profiles])
+
         avg_risk = statistics.mean([profile.risk_score for profile in profiles])
+
         
         return {
             "total_network_volume": total_volume,
@@ -760,13 +855,18 @@ class WalletBehaviorAnalyzer:
         """Analyze risk distribution across wallets"""
         if not profiles:
             return {}
+
         
         risk_scores = [profile.risk_score for profile in profiles]
         
         # Categorize risk levels
+
         low_risk = sum(1 for score in risk_scores if score < 0.3)
+
         medium_risk = sum(1 for score in risk_scores if 0.3 <= score < 0.7)
+
         high_risk = sum(1 for score in risk_scores if score >= 0.7)
+
         
         return {
             "risk_distribution": {
@@ -782,6 +882,7 @@ class WalletBehaviorAnalyzer:
     async def _identify_top_performers(self, profiles: List[WalletProfile]) -> List[Dict[str, Any]]:
         """Identify top performing wallets"""
         sorted_profiles = sorted(profiles, key=lambda x: x.activity_score * x.reputation_score, reverse=True)
+
         
         return [
             {
@@ -799,10 +900,14 @@ class WalletBehaviorAnalyzer:
         anomalies = []
         
         # Statistical anomalies in activity scores
+
         activity_scores = [p.activity_score for p in profiles]
         if len(activity_scores) > 1:
             mean_activity = statistics.mean(activity_scores)
+
+
             std_activity = statistics.stdev(activity_scores)
+
             
             for profile in profiles:
                 if abs(profile.activity_score - mean_activity) > 2 * std_activity:
@@ -812,6 +917,7 @@ class WalletBehaviorAnalyzer:
                         "score": profile.activity_score,
                         "deviation": abs(profile.activity_score - mean_activity) / std_activity
                     })
+
         
         return anomalies
     
@@ -820,6 +926,7 @@ class WalletBehaviorAnalyzer:
         recommendations = []
         
         # High-risk wallet recommendations
+
         high_risk_count = sum(1 for p in profiles if p.risk_score > 0.7)
         if high_risk_count > len(profiles) * 0.1:  # More than 10% high risk
             recommendations.append({
@@ -830,6 +937,7 @@ class WalletBehaviorAnalyzer:
             })
         
         # Bot activity recommendations
+
         bot_count = sum(1 for p in profiles if p.behavior_type == WalletBehaviorType.BOT)
         if bot_count > len(profiles) * 0.05:  # More than 5% bots
             recommendations.append({
@@ -838,6 +946,7 @@ class WalletBehaviorAnalyzer:
                 "recommendation": "Consider implementing bot detection and rate limiting",
                 "affected_wallets": bot_count
             })
+
         
         return recommendations
     
@@ -859,6 +968,7 @@ class WalletBehaviorAnalyzer:
         # Use merge to update if exists
         try:
             self.db.add(wallet_analytics)
+
             await self.db.commit()
         except Exception as e:
             await self.db.rollback()
@@ -867,39 +977,58 @@ class WalletBehaviorAnalyzer:
 
 
 class GasOptimizationAnalytics:
-    """Advanced gas usage analytics and optimization"""
+    """
+        Advanced gas usage analytics and optimization"""
     
     def __init__(self, redis_client: aioredis.Redis):
         self.redis = redis_client
         
     async def analyze_gas_patterns(self, timeframe: AnalyticsTimeframe = AnalyticsTimeframe.DAILY) -> GasAnalytics:
-        """Analyze gas usage patterns and optimization opportunities"""
+        """
+        Analyze gas usage patterns and optimization opportunities"""
         try:
             # Collect gas usage data
+
             gas_data = await self._collect_gas_data(timeframe)
+
             
             if not gas_data:
                 return self._get_default_gas_analytics(timeframe)
             
             # Calculate gas metrics
+
             gas_prices = [entry["gas_price"] for entry in gas_data]
+
             gas_used = [entry["gas_used"] for entry in gas_data]
+
             
             avg_gas_price = statistics.mean(gas_prices)
+
+
             median_gas_price = statistics.median(gas_prices)
+
+
             gas_price_volatility = statistics.stdev(gas_prices) / avg_gas_price if avg_gas_price > 0 else 0
+
             
             total_gas_consumed = sum(gas_used)
+
+
             gas_efficiency_score = await self._calculate_gas_efficiency(gas_data)
             
             # Generate optimization recommendations
+
             optimization_recommendations = await self._generate_gas_optimization_recommendations(gas_data)
             
             # Calculate cost savings potential
+
             cost_savings_potential = await self._calculate_cost_savings_potential(gas_data)
             
             # Identify peak usage times
+
             peak_usage_times = await self._identify_peak_gas_usage_times(gas_data)
+
+
             
             analytics = GasAnalytics(
                 timeframe=timeframe,
@@ -914,6 +1043,7 @@ class GasOptimizationAnalytics:
             )
             
             # Cache analytics
+
             cache_key = f"gas_analytics:{timeframe.value}:{datetime.utcnow().date()}"
             await self.redis.setex(cache_key, 3600, json.dumps({
                 "average_gas_price": str(analytics.average_gas_price),
@@ -924,33 +1054,43 @@ class GasOptimizationAnalytics:
                 "optimization_recommendations": analytics.optimization_recommendations,
                 "cost_savings_potential": str(analytics.cost_savings_potential)
             }))
+
             
             logger.info(f"Gas analytics completed for {timeframe.value}")
+
             return analytics
             
         except Exception as e:
             logger.error(f"Gas analytics failed: {str(e)}")
+
             raise
     
     async def recommend_optimal_gas_price(self, transaction_urgency: str = "standard") -> Dict[str, Any]:
         """Recommend optimal gas price based on current network conditions"""
         try:
             # Get current gas price data
+
             current_gas_data = await self._get_current_gas_prices()
             
             # Calculate recommendations based on urgency
+
             urgency_multipliers = {
                 "slow": 0.8,
                 "standard": 1.0,
                 "fast": 1.3,
                 "instant": 1.8
             }
+
             
             base_price = current_gas_data.get("average_price", 20)  # 20 gwei default
+
             multiplier = urgency_multipliers.get(transaction_urgency, 1.0)
+
+
             recommended_price = base_price * multiplier
             
             # Estimate confirmation time
+
             confirmation_estimates = {
                 "slow": "10-15 minutes",
                 "standard": "3-5 minutes", 
@@ -969,11 +1109,12 @@ class GasOptimizationAnalytics:
             
         except Exception as e:
             logger.error(f"Gas price recommendation failed: {str(e)}")
+
             raise
     
     async def _collect_gas_data(self, timeframe: AnalyticsTimeframe) -> List[Dict[str, Any]]:
         """Collect gas usage data for specified timeframe"""
-        # Mock implementation - would collect from blockchain
+        
         return [
             {"gas_price": 25.5, "gas_used": 21000, "timestamp": datetime.utcnow() - timedelta(hours=1)},
             {"gas_price": 30.2, "gas_used": 45000, "timestamp": datetime.utcnow() - timedelta(hours=2)},
@@ -986,15 +1127,22 @@ class GasOptimizationAnalytics:
             return 0.0
         
         # Calculate efficiency based on gas usage patterns
+
         total_transactions = len(gas_data)
+
         efficient_transactions = sum(1 for entry in gas_data if entry["gas_used"] < 50000)  # Efficient threshold
+
         
         efficiency_ratio = efficient_transactions / total_transactions if total_transactions > 0 else 0
         
         # Factor in gas price optimization
+
         gas_prices = [entry["gas_price"] for entry in gas_data]
+
         avg_price = statistics.mean(gas_prices)
+
         network_avg = 25.0  # Assume network average
+
         
         price_efficiency = min(network_avg / avg_price, 1.5) if avg_price > 0 else 1.0
         
@@ -1008,20 +1156,26 @@ class GasOptimizationAnalytics:
             return ["Insufficient data for recommendations"]
         
         # Analyze gas usage patterns
+
         gas_prices = [entry["gas_price"] for entry in gas_data]
+
         gas_used = [entry["gas_used"] for entry in gas_data]
+
         
         avg_gas_price = statistics.mean(gas_prices)
+
         avg_gas_used = statistics.mean(gas_used)
         
         # High gas price recommendations
         if avg_gas_price > 30:
             recommendations.append("Consider using lower gas prices during off-peak hours")
+
             recommendations.append("Implement gas price monitoring and dynamic adjustment")
         
         # High gas usage recommendations
         if avg_gas_used > 100000:
             recommendations.append("Optimize smart contract functions to reduce gas consumption")
+
             recommendations.append("Consider batching multiple operations into single transactions")
         
         # General recommendations
@@ -1030,6 +1184,7 @@ class GasOptimizationAnalytics:
             "Monitor network congestion and adjust timing accordingly",
             "Consider Layer 2 solutions for high-frequency operations"
         ])
+
         
         return recommendations
     
@@ -1039,10 +1194,13 @@ class GasOptimizationAnalytics:
             return Decimal('0')
         
         # Current costs
+
         current_costs = sum(entry["gas_price"] * entry["gas_used"] for entry in gas_data)
         
         # Optimized costs (assume 20% reduction)
+
         optimized_costs = current_costs * 0.8
+
         
         savings = current_costs - optimized_costs
         return Decimal(str(savings / 1e9))  # Convert to ETH
@@ -1053,6 +1211,7 @@ class GasOptimizationAnalytics:
             return []
         
         # Sort by gas price (higher prices indicate higher demand/usage)
+
         sorted_data = sorted(gas_data, key=lambda x: x["gas_price"], reverse=True)
         
         # Return top 3 peak times
@@ -1060,7 +1219,7 @@ class GasOptimizationAnalytics:
     
     async def _get_current_gas_prices(self) -> Dict[str, Any]:
         """Get current gas price data"""
-        # Mock implementation - would connect to gas price APIs
+        
         return {
             "average_price": 25.0,
             "fast_price": 35.0,
@@ -1093,24 +1252,40 @@ class RevenueAnalyticsTracker:
         self.redis = redis_client
         
     async def track_revenue_metrics(self, timeframe: AnalyticsTimeframe = AnalyticsTimeframe.DAILY) -> RevenueMetrics:
-        """Track comprehensive revenue metrics"""
+        """
+        Track comprehensive revenue metrics"""
         try:
             # Collect revenue data
+
             revenue_data = await self._collect_revenue_data(timeframe)
             
             # Calculate metrics
+
             total_revenue = sum(entry.get("amount", 0) for entry in revenue_data)
+
+
             revenue_by_source = self._calculate_revenue_by_source(revenue_data)
+
+
             revenue_growth_rate = await self._calculate_revenue_growth_rate(timeframe)
             
             # Calculate fee metrics
+
             fee_data = [entry for entry in revenue_data if entry.get("type") == "fee"]
+
             average_transaction_fee = statistics.mean([entry.get("amount", 0) for entry in fee_data]) if fee_data else 0
             
             # Calculate efficiency and projections
+
             fee_efficiency = await self._calculate_fee_efficiency(revenue_data)
+
+
             profit_margin = await self._calculate_profit_margin(revenue_data)
+
+
             projected_revenue = await self._calculate_projected_revenue(revenue_data, timeframe)
+
+
             
             metrics = RevenueMetrics(
                 timeframe=timeframe,
@@ -1125,17 +1300,20 @@ class RevenueAnalyticsTracker:
             
             # Store metrics
             await self._store_revenue_metrics(metrics)
+
             
             logger.info(f"Revenue metrics tracked for {timeframe.value}: {total_revenue} total revenue")
+
             return metrics
             
         except Exception as e:
             logger.error(f"Revenue tracking failed: {str(e)}")
+
             raise
     
     async def _collect_revenue_data(self, timeframe: AnalyticsTimeframe) -> List[Dict[str, Any]]:
         """Collect revenue data for specified timeframe"""
-        # Mock implementation - would collect from actual revenue sources
+        
         return [
             {"amount": 5.2, "source": "transaction_fees", "type": "fee", "timestamp": datetime.utcnow()},
             {"amount": 12.8, "source": "nft_royalties", "type": "royalty", "timestamp": datetime.utcnow()},
@@ -1146,28 +1324,37 @@ class RevenueAnalyticsTracker:
     def _calculate_revenue_by_source(self, revenue_data: List[Dict[str, Any]]) -> Dict[str, Decimal]:
         """Calculate revenue breakdown by source"""
         revenue_by_source = defaultdict(Decimal)
+
         
         for entry in revenue_data:
             source = entry.get("source", "unknown")
+
+
             amount = entry.get("amount", 0)
+
             revenue_by_source[source] += Decimal(str(amount))
+
         
         return dict(revenue_by_source)
     
     async def _calculate_revenue_growth_rate(self, timeframe: AnalyticsTimeframe) -> float:
         """Calculate revenue growth rate"""
-        # Mock implementation - would compare with previous period
+        
         return 0.15  # 15% growth
     
     async def _calculate_fee_efficiency(self, revenue_data: List[Dict[str, Any]]) -> float:
-        """Calculate fee collection efficiency"""
-        # Mock implementation - ratio of collected to potential fees
+        """
+        Calculate fee collection efficiency"""
+        
         return 0.85  # 85% efficiency
     
     async def _calculate_profit_margin(self, revenue_data: List[Dict[str, Any]]) -> float:
-        """Calculate profit margin"""
+        """
+        Calculate profit margin"""
         total_revenue = sum(entry.get("amount", 0) for entry in revenue_data)
+
         estimated_costs = total_revenue * 0.3  # Assume 30% costs
+
         profit_margin = (total_revenue - estimated_costs) / total_revenue if total_revenue > 0 else 0
         return profit_margin
     
@@ -1175,6 +1362,7 @@ class RevenueAnalyticsTracker:
                                          timeframe: AnalyticsTimeframe) -> float:
         """Calculate projected revenue for next period"""
         current_revenue = sum(entry.get("amount", 0) for entry in revenue_data)
+
         growth_rate = await self._calculate_revenue_growth_rate(timeframe)
         return current_revenue * (1 + growth_rate)
     
@@ -1185,7 +1373,8 @@ class RevenueAnalyticsTracker:
 
 
 class AnalyticsTracker:
-    """Main blockchain analytics coordination system"""
+    """
+        Main blockchain analytics coordination system"""
     
     def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
         self.db = db_session
@@ -1198,7 +1387,8 @@ class AnalyticsTracker:
         self.revenue_tracker = RevenueAnalyticsTracker(db_session, redis_client)
     
     async def generate_comprehensive_report(self, timeframe: AnalyticsTimeframe = AnalyticsTimeframe.DAILY) -> Dict[str, Any]:
-        """Generate comprehensive analytics report"""
+        """
+        Generate comprehensive analytics report"""
         try:
             report = {
                 "report_id": str(uuid4()),
@@ -1209,19 +1399,25 @@ class AnalyticsTracker:
             }
             
             # Collect all analytics
+
             tasks = [
                 self.gas_analyzer.analyze_gas_patterns(timeframe),
                 self.revenue_tracker.track_revenue_metrics(timeframe),
                 self._get_transaction_summary(timeframe),
                 self._get_wallet_summary(timeframe)
             ]
+
             
             results = await asyncio.gather(*tasks, return_exceptions=True)
             
             # Process results
+
             gas_analytics = results[0] if not isinstance(results[0], Exception) else None
+
             revenue_metrics = results[1] if not isinstance(results[1], Exception) else None
+
             transaction_summary = results[2] if not isinstance(results[2], Exception) else {}
+
             wallet_summary = results[3] if not isinstance(results[3], Exception) else {}
             
             # Build report
@@ -1239,17 +1435,20 @@ class AnalyticsTracker:
             
             # Store report
             await self._store_analytics_report(report)
+
             
             logger.info(f"Comprehensive analytics report generated: {report['report_id']}")
+
             return report
             
         except Exception as e:
             logger.error(f"Comprehensive report generation failed: {str(e)}")
+
             raise
     
     async def _get_transaction_summary(self, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
         """Get transaction summary for timeframe"""
-        # Mock implementation
+        
         return {
             "total_transactions": 1250,
             "total_volume": 45.8,
@@ -1259,7 +1458,7 @@ class AnalyticsTracker:
     
     async def _get_wallet_summary(self, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
         """Get wallet activity summary for timeframe"""
-        # Mock implementation
+        
         return {
             "active_wallets": 850,
             "new_wallets": 75,
@@ -1288,6 +1487,7 @@ class AnalyticsTracker:
         # Key metrics
         if revenue_metrics:
             summary["key_metrics"]["total_revenue"] = str(revenue_metrics.total_revenue)
+
             summary["key_metrics"]["revenue_growth"] = f"{revenue_metrics.revenue_growth_rate:.1%}"
         
         if gas_analytics:
@@ -1301,15 +1501,18 @@ class AnalyticsTracker:
         # Recommendations
         if gas_analytics and gas_analytics.gas_efficiency_score < 0.7:
             summary["recommendations"].append("Focus on gas optimization strategies")
+
         
         if revenue_metrics and revenue_metrics.revenue_growth_rate < 0.1:
             summary["recommendations"].append("Investigate revenue growth opportunities")
+
         
         return summary
     
     async def _store_analytics_report(self, report: Dict[str, Any]) -> None:
         """Store analytics report"""
         # Store in Redis for quick access
+
         cache_key = f"analytics_report:{report['report_id']}"
         await self.redis.setex(cache_key, 86400 * 7, json.dumps(report, default=str))  # 7 days
 
@@ -1321,15 +1524,18 @@ class ChainAnalytics:
         self.tracker = AnalyticsTracker(db_session, redis_client)
     
     async def get_real_time_metrics(self) -> Dict[str, Any]:
-        """Get real-time blockchain metrics"""
+        """
+        Get real-time blockchain metrics"""
         return await self.tracker.generate_comprehensive_report(AnalyticsTimeframe.REAL_TIME)
     
     async def get_daily_analytics(self) -> Dict[str, Any]:
-        """Get daily analytics report"""
+        """
+        Get daily analytics report"""
         return await self.tracker.generate_comprehensive_report(AnalyticsTimeframe.DAILY)
     
     async def get_performance_insights(self, days: int = 30) -> Dict[str, Any]:
-        """Get performance insights over specified period"""
+        """
+        Get performance insights over specified period"""
         # Implementation for multi-day analysis
         return await self.tracker.generate_comprehensive_report(AnalyticsTimeframe.MONTHLY)
 

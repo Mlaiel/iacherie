@@ -16,7 +16,8 @@ from enum import Enum
 # ===== ENVIRONMENT CONFIGURATION =====
 
 class Environment(str, Enum):
-    """Deployment environments"""
+    """
+        Deployment environments"""
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -123,7 +124,8 @@ class CICDConfig:
 # ===== LOAD BALANCER CONFIGURATION =====
 
 class LoadBalancerType(str, Enum):
-    """Load balancer types"""
+    """
+        Load balancer types"""
     NGINX = "nginx"
     HAPROXY = "haproxy"
     TRAEFIK = "traefik"
@@ -194,7 +196,8 @@ class SecurityDeploymentConfig:
 
 @dataclass
 class MonitoringDeploymentConfig:
-    """Monitoring deployment configuration"""
+    """
+        Monitoring deployment configuration"""
     prometheus_enabled: bool = True
     grafana_enabled: bool = True
     alertmanager_enabled: bool = True
@@ -208,7 +211,8 @@ class MonitoringDeploymentConfig:
 
 @dataclass
 class AutoScalingConfig:
-    """Auto-scaling configuration"""
+    """
+        Auto-scaling configuration"""
     enabled: bool = True
     min_instances: int = 2
     max_instances: int = 10
@@ -222,7 +226,8 @@ class AutoScalingConfig:
 
 @dataclass
 class DeploymentConfig:
-    """Main deployment configuration"""
+    """
+        Main deployment configuration"""
     environment: EnvironmentConfig
     docker: DockerConfig = field(default_factory=DockerConfig)
     kubernetes: KubernetesConfig = field(default_factory=KubernetesConfig)
@@ -239,7 +244,8 @@ class DeploymentConfig:
 # ===== ENVIRONMENT-SPECIFIC CONFIGURATIONS =====
 
 def get_development_deployment_config() -> DeploymentConfig:
-    """Get development deployment configuration"""
+    """
+        Get development deployment configuration"""
     return DeploymentConfig(
         environment=EnvironmentConfig(
             name=Environment.DEVELOPMENT,
@@ -293,6 +299,7 @@ def get_production_deployment_config() -> DeploymentConfig:
         ),
         cicd=CICDConfig(
             auto_deploy_production=False,  # Manual approval required
+
             run_security_scan=True
         ),
         database=DatabaseDeploymentConfig(

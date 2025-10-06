@@ -1,4 +1,5 @@
-"""IA Chérie Core AI - Deep Learning Core
+"""
+IA Chérie Core AI - Deep Learning Core
 =====================================
 
 Enterprise-grade deep learning infrastructure providing neural network
@@ -28,7 +29,8 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 class ModelArchitecture(str, Enum):
-    """Supported neural network architectures"""
+    """
+Supported neural network architectures"""
     CNN = "cnn"
     RNN = "rnn"
     LSTM = "lstm"
@@ -46,7 +48,8 @@ class ModelArchitecture(str, Enum):
     DIFFUSION = "diffusion"
 
 class TrainingStatus(str, Enum):
-    """Training status"""
+    """
+Training status"""
     INITIALIZED = "initialized"
     TRAINING = "training"
     VALIDATING = "validating"
@@ -56,7 +59,8 @@ class TrainingStatus(str, Enum):
     PAUSED = "paused"
 
 class OptimizationAlgorithm(str, Enum):
-    """Optimization algorithms"""
+    """
+Optimization algorithms"""
     SGD = "sgd"
     ADAM = "adam"
     ADAMW = "adamw"
@@ -65,7 +69,8 @@ class OptimizationAlgorithm(str, Enum):
     ADADELTA = "adadelta"
 
 class LossFunction(str, Enum):
-    """Loss functions"""
+    """
+Loss functions"""
     MSE = "mse"
     MAE = "mae"
     CROSS_ENTROPY = "cross_entropy"
@@ -77,7 +82,8 @@ class LossFunction(str, Enum):
 
 @dataclass
 class ModelConfig:
-    """Deep learning model configuration"""
+    """
+Deep learning model configuration"""
     architecture: ModelArchitecture
     input_shape: Tuple[int, ...]
     output_shape: Tuple[int, ...]
@@ -99,7 +105,8 @@ class ModelConfig:
 
 @dataclass
 class TrainingConfig:
-    """Training configuration"""
+    """
+Training configuration"""
     batch_size: int = 32
     epochs: int = 100
     learning_rate: float = 0.001
@@ -122,7 +129,8 @@ class TrainingConfig:
 
 @dataclass
 class TrainingMetrics:
-    """Training metrics"""
+    """
+Training metrics"""
     epoch: int = 0
     train_loss: float = 0.0
     val_loss: float = 0.0
@@ -134,7 +142,8 @@ class TrainingMetrics:
 
 @dataclass
 class ModelCheckpoint:
-    """Model checkpoint data"""
+    """
+Model checkpoint data"""
     epoch: int
     model_state: Dict[str, Any]
     optimizer_state: Dict[str, Any]
@@ -144,7 +153,8 @@ class ModelCheckpoint:
     checkpoint_id: str = field(default_factory=lambda: str(uuid.uuid4()))
 
 class NeuralNetwork(ABC):
-    """Abstract neural network base class"""
+    """
+Abstract neural network base class"""
     
     def __init__(self, config: ModelConfig):
         self.config = config
@@ -154,36 +164,43 @@ class NeuralNetwork(ABC):
         
     @abstractmethod
     def build_model(self) -> Any:
-        """Build the neural network model"""
+        """
+Build the neural network model"""
         pass
     
     @abstractmethod
     def compile_model(self, training_config: TrainingConfig):
-        """Compile the model with optimizer and loss function"""
+        """
+Compile the model with optimizer and loss function"""
         pass
     
     @abstractmethod
     def forward(self, inputs: np.ndarray) -> np.ndarray:
-        """Forward pass through the network"""
+        """
+Forward pass through the network"""
         pass
     
     @abstractmethod
     def backward(self, gradients: np.ndarray):
-        """Backward pass for gradient computation"""
+        """
+Backward pass for gradient computation"""
         pass
     
     @abstractmethod
     def get_parameters(self) -> Dict[str, np.ndarray]:
-        """Get model parameters"""
+        """
+Get model parameters"""
         pass
     
     @abstractmethod
     def set_parameters(self, parameters: Dict[str, np.ndarray]):
-        """Set model parameters"""
+        """
+Set model parameters"""
         pass
 
 class SimpleNeuralNetwork(NeuralNetwork):
-    """Simple feedforward neural network implementation"""
+    """
+Simple feedforward neural network implementation"""
     
     def __init__(self, config: ModelConfig):
         super().__init__(config)
@@ -193,7 +210,8 @@ class SimpleNeuralNetwork(NeuralNetwork):
         self.gradients = {}
         
     def build_model(self) -> Any:
-        """Build simple feedforward network"""
+        """
+Build simple feedforward network"""
         try:
             # Initialize layers
             layer_sizes = [self.config.input_shape[0]] + self.config.hidden_layers + [self.config.output_shape[0]]
@@ -216,26 +234,31 @@ class SimpleNeuralNetwork(NeuralNetwork):
             raise
     
     def compile_model(self, training_config: TrainingConfig):
-        """Compile the simple model"""
+        """
+Compile the simple model"""
         self.training_config = training_config
         self.compiled = True
         logger.info("Model compiled successfully")
     
     def _relu(self, x: np.ndarray) -> np.ndarray:
-        """ReLU activation function"""
+        """
+ReLU activation function"""
         return np.maximum(0, x)
     
     def _relu_derivative(self, x: np.ndarray) -> np.ndarray:
-        """ReLU derivative"""
+        """
+ReLU derivative"""
         return (x > 0).astype(float)
     
     def _softmax(self, x: np.ndarray) -> np.ndarray:
-        """Softmax activation function"""
+        """
+Softmax activation function"""
         exp_x = np.exp(x - np.max(x, axis=1, keepdims=True))
         return exp_x / np.sum(exp_x, axis=1, keepdims=True)
     
     def forward(self, inputs: np.ndarray) -> np.ndarray:
-        """Forward pass"""
+        """
+Forward pass"""
         try:
             self.activations = [inputs]
             current_input = inputs
@@ -261,7 +284,8 @@ class SimpleNeuralNetwork(NeuralNetwork):
             raise
     
     def backward(self, targets: np.ndarray):
-        """Backward pass"""
+        """
+Backward pass"""
         try:
             batch_size = targets.shape[0]
             num_layers = len(self.config.hidden_layers) + 1
@@ -286,15 +310,18 @@ class SimpleNeuralNetwork(NeuralNetwork):
             raise
     
     def get_parameters(self) -> Dict[str, np.ndarray]:
-        """Get model parameters"""
+        """
+Get model parameters"""
         return self.parameters.copy()
     
     def set_parameters(self, parameters: Dict[str, np.ndarray]):
-        """Set model parameters"""
+        """
+Set model parameters"""
         self.parameters = parameters.copy()
 
 class ModelTrainer:
-    """Neural network training manager"""
+    """
+Neural network training manager"""
     
     def __init__(self, model: NeuralNetwork, config: TrainingConfig):
         self.model = model
@@ -309,7 +336,8 @@ class ModelTrainer:
     async def train(self, train_data: np.ndarray, train_labels: np.ndarray,
                    val_data: Optional[np.ndarray] = None, 
                    val_labels: Optional[np.ndarray] = None) -> bool:
-        """Train the neural network"""
+        """
+Train the neural network"""
         try:
             self.status = TrainingStatus.TRAINING
             logger.info(f"Starting training for {self.config.epochs} epochs")
@@ -370,7 +398,8 @@ class ModelTrainer:
             return False
     
     async def _train_epoch(self, data: np.ndarray, labels: np.ndarray) -> Tuple[float, float]:
-        """Train single epoch"""
+        """
+Train single epoch"""
         total_loss = 0.0
         total_accuracy = 0.0
         num_batches = 0
@@ -408,7 +437,8 @@ class ModelTrainer:
         return total_loss / num_batches, total_accuracy / num_batches
     
     async def _validate_epoch(self, data: np.ndarray, labels: np.ndarray) -> Tuple[float, float]:
-        """Validate single epoch"""
+        """
+Validate single epoch"""
         total_loss = 0.0
         total_accuracy = 0.0
         num_batches = 0
@@ -432,7 +462,8 @@ class ModelTrainer:
         return total_loss / num_batches, total_accuracy / num_batches
     
     def _compute_loss(self, predictions: np.ndarray, targets: np.ndarray) -> float:
-        """Compute loss based on configured loss function"""
+        """
+Compute loss based on configured loss function"""
         if self.config.loss_function == LossFunction.CROSS_ENTROPY:
             # Cross-entropy loss
             epsilon = 1e-15
@@ -446,13 +477,15 @@ class ModelTrainer:
             return np.mean(np.square(predictions - targets))
     
     def _compute_accuracy(self, predictions: np.ndarray, targets: np.ndarray) -> float:
-        """Compute classification accuracy"""
+        """
+Compute classification accuracy"""
         pred_classes = np.argmax(predictions, axis=1)
         true_classes = np.argmax(targets, axis=1)
         return np.mean(pred_classes == true_classes)
     
     def _update_parameters(self):
-        """Update model parameters using gradients"""
+        """
+Update model parameters using gradients"""
         for param_name in self.model.parameters:
             if param_name in self.model.gradients:
                 gradient = self.model.gradients[param_name]
@@ -461,7 +494,8 @@ class ModelTrainer:
                 self.model.parameters[param_name] -= self.config.learning_rate * gradient
     
     def _should_early_stop(self, current_metric: float) -> bool:
-        """Check if training should stop early"""
+        """
+Check if training should stop early"""
         if current_metric < self.best_metric:
             self.best_metric = current_metric
             self.patience_counter = 0
@@ -471,7 +505,8 @@ class ModelTrainer:
         return self.patience_counter >= self.config.early_stopping_patience
     
     def _update_learning_rate(self, current_metric: float):
-        """Update learning rate based on validation metric"""
+        """
+Update learning rate based on validation metric"""
         if self.patience_counter >= self.config.reduce_lr_patience:
             self.config.learning_rate *= self.config.reduce_lr_factor
             self.config.learning_rate = max(self.config.learning_rate, self.config.min_learning_rate)
@@ -479,7 +514,8 @@ class ModelTrainer:
             logger.info(f"Reduced learning rate to {self.config.learning_rate}")
     
     async def _create_checkpoint(self):
-        """Create training checkpoint"""
+        """
+Create training checkpoint"""
         try:
             checkpoint = ModelCheckpoint(
                 epoch=self.current_epoch,
@@ -494,7 +530,8 @@ class ModelTrainer:
             logger.error(f"Failed to create checkpoint: {str(e)}")
 
 class DeepLearningCore:
-    """Core deep learning management system"""
+    """
+Core deep learning management system"""
     
     def __init__(self, level: str = "enterprise"):
         self.level = level
@@ -513,7 +550,8 @@ class DeepLearningCore:
         logger.info(f"Deep Learning Core initialized - Level: {level}")
     
     async def initialize(self) -> bool:
-        """Initialize deep learning system"""
+        """
+Initialize deep learning system"""
         try:
             # Register default model architectures
             self._register_default_models()
@@ -525,7 +563,8 @@ class DeepLearningCore:
             return False
     
     async def start(self) -> bool:
-        """Start deep learning system"""
+        """
+Start deep learning system"""
         try:
             self.is_running = True
             logger.info("Deep Learning Core started")
@@ -535,7 +574,8 @@ class DeepLearningCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop deep learning system"""
+        """
+Stop deep learning system"""
         try:
             self.is_running = False
             
@@ -554,7 +594,8 @@ class DeepLearningCore:
             return False
     
     async def health_check(self) -> bool:
-        """Check system health"""
+        """
+Check system health"""
         try:
             # Check if system is responsive
             active_jobs = len([job for job in self.training_jobs.values() if not job.done()])
@@ -570,7 +611,8 @@ class DeepLearningCore:
             return False
     
     def _register_default_models(self):
-        """Register default model configurations"""
+        """
+Register default model configurations"""
         # Simple feedforward network
         feedforward_config = ModelConfig(
             architecture=ModelArchitecture.CNN,
@@ -590,7 +632,8 @@ class DeepLearningCore:
         self.model_registry['image_classifier'] = image_config
     
     def create_model(self, model_id: str, config: ModelConfig) -> bool:
-        """Create new model"""
+        """
+Create new model"""
         try:
             if config.architecture == ModelArchitecture.CNN:
                 model = SimpleNeuralNetwork(config)
@@ -611,7 +654,8 @@ class DeepLearningCore:
                          train_data: np.ndarray, train_labels: np.ndarray,
                          val_data: Optional[np.ndarray] = None,
                          val_labels: Optional[np.ndarray] = None) -> str:
-        """Start model training"""
+        """
+Start model training"""
         try:
             if model_id not in self.models:
                 raise Exception(f"Model {model_id} not found")
@@ -636,25 +680,30 @@ class DeepLearningCore:
             raise
     
     def get_model(self, model_id: str) -> Optional[NeuralNetwork]:
-        """Get model by ID"""
+        """
+Get model by ID"""
         return self.models.get(model_id)
     
     def get_trainer(self, model_id: str) -> Optional[ModelTrainer]:
-        """Get trainer by model ID"""
+        """
+Get trainer by model ID"""
         return self.trainers.get(model_id)
     
     def get_training_status(self, model_id: str) -> Optional[TrainingStatus]:
-        """Get training status for model"""
+        """
+Get training status for model"""
         trainer = self.trainers.get(model_id)
         return trainer.status if trainer else None
     
     def get_training_metrics(self, model_id: str) -> List[TrainingMetrics]:
-        """Get training metrics for model"""
+        """
+Get training metrics for model"""
         trainer = self.trainers.get(model_id)
         return trainer.training_metrics if trainer else []
     
     async def predict(self, model_id: str, inputs: np.ndarray) -> np.ndarray:
-        """Make predictions with model"""
+        """
+Make predictions with model"""
         try:
             if model_id not in self.models:
                 raise Exception(f"Model {model_id} not found")
@@ -668,7 +717,8 @@ class DeepLearningCore:
             raise
     
     def save_model(self, model_id: str, filepath: str) -> bool:
-        """Save model to file"""
+        """
+Save model to file"""
         try:
             if model_id not in self.models:
                 return False
@@ -690,7 +740,8 @@ class DeepLearningCore:
             return False
     
     def load_model(self, model_id: str, filepath: str) -> bool:
-        """Load model from file"""
+        """
+Load model from file"""
         try:
             with open(filepath, 'rb') as f:
                 model_data = pickle.load(f)
@@ -718,7 +769,8 @@ class DeepLearningCore:
             return False
     
     def get_system_metrics(self) -> Dict[str, Any]:
-        """Get system metrics"""
+        """
+Get system metrics"""
         active_training_jobs = len([job for job in self.training_jobs.values() if not job.done()])
         
         return {
@@ -738,16 +790,19 @@ deep_learning_core = DeepLearningCore()
 
 # Convenience functions
 def create_model(model_id: str, config: ModelConfig) -> bool:
-    """Create new deep learning model"""
+    """
+Create new deep learning model"""
     return deep_learning_core.create_model(model_id, config)
 
 async def train_model(model_id: str, training_config: TrainingConfig,
                      train_data: np.ndarray, train_labels: np.ndarray) -> str:
-    """Train deep learning model"""
+    """
+Train deep learning model"""
     return await deep_learning_core.train_model(model_id, training_config, train_data, train_labels)
 
 async def predict(model_id: str, inputs: np.ndarray) -> np.ndarray:
-    """Make predictions with model"""
+    """
+Make predictions with model"""
     return await deep_learning_core.predict(model_id, inputs)
 
 # Module exports
@@ -758,4 +813,4 @@ __all__ = [
     "deep_learning_core", "create_model", "train_model", "predict"
 ]
 
-logger.info("Deep Learning Core module loaded")
+logger.info("Deep Learning Core module initialized")

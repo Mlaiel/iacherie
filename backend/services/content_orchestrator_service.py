@@ -111,7 +111,8 @@ class ContentMetadata:
 
 @dataclass
 class ContentWorkflow:
-    """Workflow de contenu"""
+    """
+        Workflow de contenu"""
     workflow_id: str
     content_id: str
     workflow_type: str
@@ -128,7 +129,8 @@ class ContentWorkflow:
 
 @dataclass
 class ProcessingPipeline:
-    """Pipeline de traitement"""
+    """
+        Pipeline de traitement"""
     pipeline_id: str
     pipeline_name: str
     content_types: List[ContentType]
@@ -142,7 +144,8 @@ class ProcessingPipeline:
 
 @dataclass
 class ContentResult:
-    """Résultat de traitement de contenu"""
+    """
+        Résultat de traitement de contenu"""
     result_id: str
     content_id: str
     pipeline_id: str
@@ -158,7 +161,8 @@ class ContentResult:
 
 @dataclass
 class ContentOptimization:
-    """Optimisation de contenu"""
+    """
+        Optimisation de contenu"""
     optimization_id: str
     content_id: str
     optimization_type: str
@@ -171,7 +175,8 @@ class ContentOptimization:
     applied_at: datetime
 
 class ContentOrchestrator:
-    """Orchestrateur principal de contenu"""
+    """
+        Orchestrateur principal de contenu"""
     
     def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
         self.redis = redis_client
@@ -182,24 +187,31 @@ class ContentOrchestrator:
         self.optimization_engines = {}
         
     async def initialize_content_orchestrator(self) -> Dict[str, Any]:
-        """Initialiser l'orchestrateur de contenu"""
+        """
+        Initialiser l'orchestrateur de contenu"""
         try:
             # Configurer les pipelines de traitement
+
             processing_pipelines = await self._configure_processing_pipelines()
             
             # Initialiser les moteurs de workflow
+
             workflow_engines = await self._initialize_workflow_engines()
             
             # Charger les modèles IA
             ai_models = await self._load_ai_models()
             
             # Configurer les moteurs d'optimisation
+
             optimization_engines = await self._configure_optimization_engines()
             
             # Préparer le stockage de contenu
+
             storage_config = await self._prepare_content_storage()
+
             
             logger.info("🎬 Content orchestrator initialized successfully")
+
             
             return {
                 "processing_pipelines": len(processing_pipelines),
@@ -213,6 +225,7 @@ class ContentOrchestrator:
             
         except Exception as e:
             logger.error(f"Failed to initialize content orchestrator: {e}")
+
             raise
     
     async def orchestrate_content_lifecycle(
@@ -224,26 +237,31 @@ class ContentOrchestrator:
             content_id = str(uuid.uuid4())
             
             # Phase 1: Validation et métadonnées
+
             validation_result = await self._validate_and_extract_metadata(
                 content_data, content_id
             )
             
             # Phase 2: Création du workflow
+
             workflow = await self._create_content_workflow(
                 content_id, content_data, validation_result
             )
             
             # Phase 3: Sélection du pipeline de traitement
+
             processing_pipeline = await self._select_processing_pipeline(
                 validation_result["metadata"]
             )
             
             # Phase 4: Traitement du contenu
+
             processing_result = await self._execute_content_processing(
                 content_id, content_data, processing_pipeline
             )
             
             # Phase 5: Optimisation intelligente
+
             optimization_result = await self._apply_intelligent_optimization(
                 content_id, processing_result
             )
@@ -254,11 +272,13 @@ class ContentOrchestrator:
             )
             
             # Phase 7: Finalisation et préparation
+
             finalization_result = await self._finalize_content_preparation(
                 content_id, quality_control
             )
             
             # Créer le résultat d'orchestration
+
             orchestration_result = {
                 "content_id": content_id,
                 "workflow_id": workflow.workflow_id,
@@ -279,8 +299,10 @@ class ContentOrchestrator:
             
             # Déclencher les événements post-traitement
             await self._trigger_post_processing_events(orchestration_result)
+
             
             logger.info(f"Content lifecycle orchestrated: {content_id}")
+
             
             return {
                 "success": True,
@@ -290,6 +312,7 @@ class ContentOrchestrator:
             
         except Exception as e:
             logger.error(f"Failed to orchestrate content lifecycle: {e}")
+
             raise
 
     async def _validate_and_extract_metadata(
@@ -300,29 +323,36 @@ class ContentOrchestrator:
         """Valider et extraire les métadonnées"""
         try:
             # Validation de base
+
             basic_validation = await self._perform_basic_validation(content_data)
+
             if not basic_validation["valid"]:
                 raise ValueError(f"Content validation failed: {basic_validation['reason']}")
             
             # Détection du type de contenu
+
             content_type = await self._detect_content_type(content_data)
             
             # Extraction des métadonnées techniques
+
             technical_metadata = await self._extract_technical_metadata(
                 content_data, content_type
             )
             
             # Analyse IA du contenu
+
             ai_analysis = await self._perform_ai_content_analysis(
                 content_data, content_type, technical_metadata
             )
             
             # Calcul des métriques de qualité initiales
+
             quality_metrics = await self._calculate_initial_quality_metrics(
                 content_data, technical_metadata, ai_analysis
             )
             
             # Création des métadonnées complètes
+
             metadata = ContentMetadata(
                 content_id=content_id,
                 title=content_data.get("title", ""),
@@ -339,6 +369,7 @@ class ContentOrchestrator:
                 updated_at=datetime.utcnow(),
                 version=1
             )
+
             
             return {
                 "status": "validated",
@@ -351,6 +382,7 @@ class ContentOrchestrator:
             
         except Exception as e:
             logger.error(f"Failed to validate and extract metadata: {e}")
+
             raise
 
     async def _execute_content_processing(
@@ -364,12 +396,15 @@ class ContentOrchestrator:
             processing_start = datetime.utcnow()
             
             # Préparer l'environnement de traitement
+
             processing_env = await self._prepare_processing_environment(
                 content_id, pipeline
             )
             
             # Exécuter chaque étape du pipeline
+
             stage_results = []
+
             current_data = content_data
             
             for i, stage in enumerate(pipeline.stages):
@@ -377,12 +412,15 @@ class ContentOrchestrator:
                     stage_start = datetime.utcnow()
                     
                     # Exécuter l'étape
+
                     stage_result = await self._execute_processing_stage(
                         stage, current_data, processing_env
                     )
                     
                     # Calculer le temps d'exécution
+
                     stage_duration = (datetime.utcnow() - stage_start).total_seconds()
+
                     
                     stage_results.append({
                         "stage_index": i,
@@ -394,10 +432,13 @@ class ContentOrchestrator:
                     })
                     
                     # Préparer pour l'étape suivante
+
                     current_data = stage_result.get("output_data", current_data)
+
                     
                 except Exception as e:
                     logger.error(f"Processing stage {i} failed: {e}")
+
                     stage_results.append({
                         "stage_index": i,
                         "stage_name": stage.get("name", f"stage_{i}"),
@@ -411,15 +452,20 @@ class ContentOrchestrator:
                         raise Exception(f"Critical stage failed: {e}")
             
             # Calculer les métriques globales
+
             total_duration = (datetime.utcnow() - processing_start).total_seconds()
+
+
             success_rate = len([r for r in stage_results if r["status"] == "completed"]) / len(stage_results)
             
             # Générer les fichiers de sortie
+
             output_files = await self._generate_output_files(
                 content_id, current_data, pipeline
             )
             
             # Calculer les métriques de performance
+
             performance_metrics = {
                 "total_duration": total_duration,
                 "stages_completed": len([r for r in stage_results if r["status"] == "completed"]),
@@ -428,6 +474,7 @@ class ContentOrchestrator:
                 "throughput": len(output_files) / total_duration if total_duration > 0 else 0,
                 "resource_efficiency": await self._calculate_resource_efficiency(processing_env)
             }
+
             
             processing_result = ContentResult(
                 result_id=str(uuid.uuid4()),
@@ -436,6 +483,7 @@ class ContentOrchestrator:
                 processing_status="completed" if success_rate > 0.8 else "partial",
                 quality_score=await self._calculate_post_processing_quality(current_data),
                 optimization_applied=[],  # Sera rempli plus tard
+
                 performance_metrics=performance_metrics,
                 output_files=output_files,
                 processing_time=total_duration,
@@ -443,6 +491,7 @@ class ContentOrchestrator:
                 errors=[r.get("error") for r in stage_results if r.get("error")],
                 processed_at=datetime.utcnow()
             )
+
             
             return {
                 "status": processing_result.processing_status,
@@ -453,6 +502,7 @@ class ContentOrchestrator:
             
         except Exception as e:
             logger.error(f"Failed to execute content processing: {e}")
+
             raise
 
 class ContentProcessor:
@@ -467,13 +517,16 @@ class ContentProcessor:
         audio_data: Dict[str, Any],
         processing_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Traiter le contenu audio"""
+        """
+        Traiter le contenu audio"""
         try:
             # Charger l'audio
+
             audio_file = audio_data["file_path"]
             y, sr = librosa.load(audio_file, sr=None)
             
             # Analyse audio de base
+
             audio_analysis = {
                 "duration": len(y) / sr,
                 "sample_rate": sr,
@@ -483,30 +536,39 @@ class ContentProcessor:
             }
             
             # Analyse spectrale
+
             spectral_analysis = await self._perform_spectral_analysis(y, sr)
             
             # Détection des caractéristiques
+
             audio_features = await self._extract_audio_features(y, sr)
             
             # Normalisation et amélioration
             if processing_config.get("normalize", True):
                 y = await self._normalize_audio(y)
+
             
             if processing_config.get("denoise", False):
                 y = await self._denoise_audio(y, sr)
+
             
             if processing_config.get("enhance", False):
                 y = await self._enhance_audio(y, sr)
             
             # Génération des formats de sortie
+
             output_formats = processing_config.get("output_formats", ["mp3", "wav"])
+
+
             output_files = []
             
             for format_type in output_formats:
                 output_file = await self._export_audio_format(
                     y, sr, format_type, audio_data["content_id"]
                 )
+
                 output_files.append(output_file)
+
             
             return {
                 "success": True,
@@ -520,6 +582,7 @@ class ContentProcessor:
             
         except Exception as e:
             logger.error(f"Failed to process audio content: {e}")
+
             raise
 
     async def process_video_content(
@@ -530,10 +593,13 @@ class ContentProcessor:
         """Traiter le contenu vidéo"""
         try:
             # Charger la vidéo
+
             video_file = video_data["file_path"]
+
             cap = cv2.VideoCapture(video_file)
             
             # Analyse vidéo de base
+
             video_analysis = {
                 "duration": cap.get(cv2.CAP_PROP_FRAME_COUNT) / cap.get(cv2.CAP_PROP_FPS),
                 "fps": cap.get(cv2.CAP_PROP_FPS),
@@ -544,12 +610,15 @@ class ContentProcessor:
             }
             
             # Analyse des frames
+
             frame_analysis = await self._analyze_video_frames(cap)
             
             # Détection des scènes
+
             scene_detection = await self._detect_video_scenes(cap)
             
             # Extraction des thumbnails
+
             thumbnails = await self._extract_video_thumbnails(
                 cap, processing_config.get("thumbnail_count", 5)
             )
@@ -559,20 +628,27 @@ class ContentProcessor:
                 optimized_video = await self._optimize_video(
                     video_file, processing_config
                 )
+
             else:
                 optimized_video = video_file
             
             # Génération des formats de sortie
+
             output_formats = processing_config.get("output_formats", ["mp4", "webm"])
+
+
             output_files = []
             
             for format_type in output_formats:
                 output_file = await self._export_video_format(
                     optimized_video, format_type, video_data["content_id"]
                 )
+
                 output_files.append(output_file)
+
             
             cap.release()
+
             
             return {
                 "success": True,
@@ -587,6 +663,7 @@ class ContentProcessor:
             
         except Exception as e:
             logger.error(f"Failed to process video content: {e}")
+
             raise
 
 class ContentOrchestratorService:
@@ -601,24 +678,32 @@ class ContentOrchestratorService:
         self.optimization_manager = None
         
     async def initialize_service(self) -> Dict[str, Any]:
-        """Initialiser le service d'orchestration"""
+        """
+        Initialiser le service d'orchestration"""
         try:
             # Initialiser l'orchestrateur de contenu
+
             orchestrator_status = await self.content_orchestrator.initialize_content_orchestrator()
             
             # Configurer les processeurs
+
             processor_config = await self._configure_content_processors()
             
             # Initialiser le gestionnaire de workflow
+
             workflow_config = await self._initialize_workflow_manager()
             
             # Configurer l'optimisation
+
             optimization_config = await self._configure_optimization_manager()
             
             # Démarrer les processus automatiques
+
             automated_processes = await self._start_automated_processes()
+
             
             logger.info("🎬 Content Orchestrator Service initialized successfully")
+
             
             return {
                 "service": "ContentOrchestratorService",
@@ -636,6 +721,7 @@ class ContentOrchestratorService:
             
         except Exception as e:
             logger.error(f"Failed to initialize content orchestrator service: {e}")
+
             raise
     
     # Méthodes privées pour l'implémentation détaillée...

@@ -48,7 +48,8 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueStreamType(str, Enum):
-    """Revenue stream types."""
+    """
+        Revenue stream types."""
     ADVERTISING = "advertising"
     SPONSORSHIP = "sponsorship"
     AFFILIATE = "affiliate"
@@ -126,7 +127,8 @@ class RevenueStreamConfig:
 
 @dataclass
 class SponsorshipOpportunity:
-    """Brand sponsorship opportunity."""
+    """
+        Brand sponsorship opportunity."""
     id: str
     brand_name: str
     campaign_title: str
@@ -148,7 +150,8 @@ class SponsorshipOpportunity:
 
 @dataclass
 class AffiliateProgram:
-    """Affiliate program configuration."""
+    """
+        Affiliate program configuration."""
     id: str
     program_name: str
     merchant_name: str
@@ -187,7 +190,8 @@ class MonetizationMetrics:
 
 @dataclass
 class MonetizationRecommendation:
-    """AI-driven monetization recommendation."""
+    """
+        AI-driven monetization recommendation."""
     id: str
     title: str
     description: str
@@ -206,7 +210,8 @@ class MonetizationRecommendation:
 
 @dataclass
 class BrandCollaborationMatch:
-    """AI-matched brand collaboration opportunity."""
+    """
+        AI-matched brand collaboration opportunity."""
     match_id: str
     brand_info: Dict[str, Any]
     creator_info: Dict[str, Any]
@@ -224,7 +229,8 @@ class BrandCollaborationMatch:
 
 
 class RevenueOptimizer:
-    """AI-driven revenue optimization engine."""
+    """
+        AI-driven revenue optimization engine."""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.optimizer")
@@ -240,38 +246,51 @@ class RevenueOptimizer:
             recommendations = []
             
             # Analyze current performance
+
             current_metrics = await self._analyze_current_performance(creator_profile, content_performance)
             
             # Generate recommendations based on goal
             if goal == OptimizationGoal.MAXIMIZE_REVENUE:
                 recommendations.extend(await self._generate_revenue_maximization_recommendations(current_metrics))
+
             elif goal == OptimizationGoal.MAXIMIZE_ENGAGEMENT:
                 recommendations.extend(await self._generate_engagement_optimization_recommendations(current_metrics))
+
             elif goal == OptimizationGoal.LONG_TERM_GROWTH:
                 recommendations.extend(await self._generate_growth_optimization_recommendations(current_metrics))
+
             else:
                 recommendations.extend(await self._generate_balanced_recommendations(current_metrics))
             
             # Score and prioritize recommendations
+
             prioritized_recommendations = await self._prioritize_recommendations(recommendations, creator_profile)
+
             
             return prioritized_recommendations[:5]  # Return top 5 recommendations
             
         except Exception as e:
             self.logger.error(f"Revenue optimization error: {e}")
+
             return []
     
     async def _analyze_current_performance(self, creator_profile: Dict[str, Any], 
                                          content_performance: Dict[str, Any]) -> MonetizationMetrics:
         """Analyze current monetization performance."""
         # Simulate performance analysis
+
         total_views = content_performance.get("total_views", 0)
+
         total_engagement = content_performance.get("total_engagement", 0)
+
         follower_count = creator_profile.get("follower_count", 0)
         
         # Calculate metrics
+
         engagement_rate = total_engagement / total_views if total_views > 0 else 0
+
         revenue_per_view = Decimal(str(random.uniform(0.001, 0.05)))
+
         total_revenue = revenue_per_view * total_views
         
         return MonetizationMetrics(
@@ -305,6 +324,7 @@ class RevenueOptimizer:
                 risks=["Potential audience resistance", "Content creation workload increase"],
                 success_metrics=["Subscription conversion rate", "Revenue per subscriber", "Content engagement"]
             ))
+
         
         if metrics.conversion_rate < 0.03:
             recommendations.append(MonetizationRecommendation(
@@ -325,6 +345,7 @@ class RevenueOptimizer:
                 risks=["Over-commercialization perception"],
                 success_metrics=["Affiliate click-through rate", "Conversion rate", "Commission earnings"]
             ))
+
         
         return recommendations
     
@@ -351,6 +372,7 @@ class RevenueOptimizer:
                 risks=["Longer monetization timeline"],
                 success_metrics=["Community engagement rate", "Fan funding participation", "Repeat purchase rate"]
             ))
+
         
         return recommendations
     
@@ -376,6 +398,7 @@ class RevenueOptimizer:
             risks=["Higher initial investment", "Complex management"],
             success_metrics=["Revenue stream diversity", "Passive income percentage", "Brand partnership retention"]
         ))
+
         
         return recommendations
     
@@ -401,6 +424,7 @@ class RevenueOptimizer:
             risks=["Complex coordination"],
             success_metrics=["Overall revenue growth", "Stream performance balance", "Audience satisfaction"]
         ))
+
         
         return recommendations
     
@@ -414,7 +438,8 @@ class RevenueOptimizer:
 
 
 class SponsorshipMatcher:
-    """AI-driven sponsorship and brand collaboration matching engine."""
+    """
+        AI-driven sponsorship and brand collaboration matching engine."""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.sponsorship_matcher")
@@ -430,8 +455,10 @@ class SponsorshipMatcher:
             # Simulate brand matching algorithm
             for opportunity in self.sponsorship_opportunities:
                 match_score = await self._calculate_brand_compatibility(creator_profile, content_analytics, opportunity)
+
                 
                 if match_score > 0.7:  # Minimum compatibility threshold
+
                     match = BrandCollaborationMatch(
                         match_id=str(uuid4()),
                         brand_info={
@@ -453,6 +480,7 @@ class SponsorshipMatcher:
                         recommended_content_types=opportunity.content_requirements,
                         success_probability=match_score * 0.9
                     )
+
                     matches.append(match)
             
             # Sort by compatibility score
@@ -460,6 +488,7 @@ class SponsorshipMatcher:
             
         except Exception as e:
             self.logger.error(f"Brand matching error: {e}")
+
             return []
     
     async def _calculate_brand_compatibility(self, creator_profile: Dict[str, Any], 
@@ -469,25 +498,34 @@ class SponsorshipMatcher:
         score = 0.0
         
         # Audience size compatibility
+
         follower_count = creator_profile.get("follower_count", 0)
+
         min_followers = opportunity.creator_requirements.get("min_followers", 0)
         if follower_count >= min_followers:
             score += 0.3
         
         # Engagement rate compatibility
+
         engagement_rate = content_analytics.get("engagement_rate", 0)
+
         min_engagement = opportunity.creator_requirements.get("min_engagement_rate", 0)
         if engagement_rate >= min_engagement:
             score += 0.2
         
         # Content category match
+
         creator_categories = creator_profile.get("content_categories", [])
+
         brand_categories = opportunity.target_audience.get("content_categories", [])
+
         category_overlap = len(set(creator_categories) & set(brand_categories)) / max(len(brand_categories), 1)
         score += category_overlap * 0.3
         
         # Geographic targeting match
+
         creator_locations = creator_profile.get("primary_locations", [])
+
         brand_targeting = opportunity.geographic_targeting
         if not brand_targeting or any(loc in brand_targeting for loc in creator_locations):
             score += 0.2
@@ -498,13 +536,19 @@ class SponsorshipMatcher:
                                       creator_profile: Dict[str, Any]) -> Decimal:
         """Estimate potential revenue from collaboration."""
         min_budget, max_budget = opportunity.budget_range
+
         follower_count = creator_profile.get("follower_count", 0)
+
         engagement_rate = creator_profile.get("engagement_rate", 0.03)
         
         # Simple revenue estimation based on followers and engagement
+
         base_rate = min_budget + (max_budget - min_budget) * 0.5
+
         follower_multiplier = min(follower_count / 100000, 2.0)  # Cap at 2x for very large accounts
+
         engagement_multiplier = min(engagement_rate / 0.03, 1.5)  # Bonus for high engagement
+
         
         estimated_revenue = base_rate * follower_multiplier * engagement_multiplier
         return Decimal(str(estimated_revenue))
@@ -529,6 +573,7 @@ class SponsorshipMatcher:
                 brand_guidelines=opp_data.get("brand_guidelines", {}),
                 creator_requirements=opp_data.get("creator_requirements", {})
             )
+
             self.sponsorship_opportunities.append(opportunity)
 
 
@@ -546,7 +591,9 @@ class AffiliateManager:
         recommendations = []
         
         # Analyze current affiliate performance
+
         current_conversion_rate = content_performance.get("affiliate_conversion_rate", 0.02)
+
         
         if current_conversion_rate < 0.03:
             recommendations.append(MonetizationRecommendation(
@@ -567,17 +614,21 @@ class AffiliateManager:
                 risks=["Audience trust concerns"],
                 success_metrics=["Conversion rate improvement", "Commission per click", "Audience engagement"]
             ))
+
         
         return recommendations
     
     async def find_relevant_programs(self, creator_profile: Dict[str, Any]) -> List[AffiliateProgram]:
         """Find affiliate programs relevant to creator's audience."""
         relevant_programs = []
+
         
         creator_categories = creator_profile.get("content_categories", [])
+
         
         for program in self.affiliate_programs.values():
             # Check category relevance
+
             program_categories = program.product_categories
             if any(cat in program_categories for cat in creator_categories):
                 relevant_programs.append(program)
@@ -602,12 +653,15 @@ class MonetizationDistributionManager:
         try:
             # Load default configurations
             await self._load_default_configurations()
+
             
             self.logger.info("✅ Monetization distribution manager initialized")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Error initializing monetization manager: {e}")
+
             return False
     
     async def optimize_creator_monetization(self, creator_id: str, 
@@ -627,42 +681,55 @@ class MonetizationDistributionManager:
             }
             
             # Get revenue optimization recommendations
+
             revenue_recommendations = await self.revenue_optimizer.optimize_revenue_streams(
                 creator_profile, content_analytics, goal
             )
+
             results["recommendations"] = [rec.__dict__ for rec in revenue_recommendations]
             
             # Find brand collaboration matches
+
             brand_matches = await self.sponsorship_matcher.find_brand_matches(
                 creator_profile, content_analytics
             )
+
             results["brand_matches"] = [match.__dict__ for match in brand_matches]
             
             # Get affiliate opportunities
+
             affiliate_recommendations = await self.affiliate_manager.optimize_affiliate_strategy(
                 creator_profile, content_analytics
             )
+
+
             affiliate_programs = await self.affiliate_manager.find_relevant_programs(creator_profile)
+
             results["affiliate_opportunities"] = {
                 "recommendations": [rec.__dict__ for rec in affiliate_recommendations],
                 "programs": [prog.__dict__ for prog in affiliate_programs[:5]]
             }
             
             # Calculate current performance metrics
+
             current_metrics = await self._calculate_performance_metrics(creator_profile, content_analytics)
+
             results["performance_metrics"] = current_metrics.__dict__
             
             return results
             
         except Exception as e:
             self.logger.error(f"Creator monetization optimization error: {e}")
+
             return {"error": str(e)}
     
     async def _calculate_performance_metrics(self, creator_profile: Dict[str, Any], 
                                            content_analytics: Dict[str, Any]) -> MonetizationMetrics:
         """Calculate comprehensive monetization performance metrics."""
         total_views = content_analytics.get("total_views", 0)
+
         total_revenue = Decimal(str(content_analytics.get("total_revenue", 0)))
+
         
         return MonetizationMetrics(
             total_revenue=total_revenue,
@@ -676,6 +743,7 @@ class MonetizationDistributionManager:
     async def _load_default_configurations(self):
         """Load default monetization configurations."""
         # Load sample sponsorship opportunities
+
         sample_opportunities = [
             {
                 "id": "brand_tech_1",
@@ -709,6 +777,7 @@ class MonetizationDistributionManager:
         """Get overall performance summary."""
         if not self.performance_history:
             return {"message": "No performance data available"}
+
         
         latest_metrics = self.performance_history[-1]
         return {

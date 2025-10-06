@@ -24,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 # Individual platform collector classes (simplified implementations)
 class YouTubeCollector(BaseCollector):
-    """YouTube content collector."""
+    """
+        YouTube content collector."""
     def __init__(self, **kwargs):
         super().__init__("youtube", rate_limit=100)
     
@@ -66,14 +67,17 @@ class VideoPlatformsCollector(BaseCollector):
     """
     
     def __init__(self, platform_configs: Optional[Dict[str, Dict]] = None):
-        """Initialize with platform-specific configurations."""
+        """
+        Initialize with platform-specific configurations."""
         super().__init__("video_platforms", rate_limit=150)
         
         # Initialize individual platform collectors
+
         configs = platform_configs or {}
         
         self.youtube = YouTubeCollector(**configs.get('youtube', {}))
         self.twitch = TwitchCollector(**configs.get('twitch', {}))
+
         
         self.collectors = {
             'youtube': self.youtube,
@@ -91,20 +95,25 @@ class VideoPlatformsCollector(BaseCollector):
             query: Search query
             config: Collection configuration
             platforms: List of platforms to search (default: all)
+
             
         Returns:
             List of collected video content from all platforms
         """
         if platforms is None:
             platforms = list(self.collectors.keys())
+
+
         
         results = []
+
         tasks = []
         
         # Create search tasks for each platform
         for platform in platforms:
             if platform in self.collectors:
                 task = self.collectors[platform].search_content(query, config)
+
                 tasks.append((platform, task))
         
         # Execute searches concurrently
@@ -112,9 +121,12 @@ class VideoPlatformsCollector(BaseCollector):
             try:
                 platform_results = await task
                 results.extend(platform_results)
+
                 logger.info(f"Collected {len(platform_results)} video results from {platform}")
+
             except Exception as e:
                 logger.error(f"Video search failed for {platform}: {e}")
+
         
         return results
     
@@ -125,6 +137,7 @@ class VideoPlatformsCollector(BaseCollector):
         Args:
             content_id: ID of video content to retrieve
             platform: Specific platform (auto-detect if None)
+
             
         Returns:
             Detailed video content information
@@ -136,10 +149,12 @@ class VideoPlatformsCollector(BaseCollector):
         for platform_name, collector in self.collectors.items():
             try:
                 result = await collector.get_content_details(content_id)
+
                 if result:
                     return result
             except Exception as e:
                 logger.debug(f"Video content not found on {platform_name}: {e}")
+
         
         return None
     
@@ -158,21 +173,28 @@ class VideoPlatformsCollector(BaseCollector):
         """
         if platforms is None:
             platforms = list(self.collectors.keys())
+
+
         
         results = []
+
         tasks = []
         
         for platform in platforms:
             if platform in self.collectors:
                 task = self.collectors[platform].get_user_content(user_id, config)
+
                 tasks.append((platform, task))
+
         
         for platform, task in tasks:
             try:
                 platform_results = await task
                 results.extend(platform_results)
+
             except Exception as e:
                 logger.error(f"Creator video content collection failed for {platform}: {e}")
+
         
         return results
     
@@ -193,12 +215,15 @@ class VideoPlatformsCollector(BaseCollector):
             platforms = list(self.collectors.keys())
         
         # Create async generators for each platform
+
         generators = []
         for platform in platforms:
             if platform in self.collectors:
                 try:
                     gen = self.collectors[platform].monitor_hashtags(hashtags, config)
+
                     generators.append(gen)
+
                 except Exception as e:
                     logger.error(f"Video hashtag monitoring failed for {platform}: {e}")
         
@@ -207,11 +232,14 @@ class VideoPlatformsCollector(BaseCollector):
             for i, gen in enumerate(generators[:]):
                 try:
                     result = await gen.__anext__()
+
                     yield result
                 except StopAsyncIteration:
                     generators.remove(gen)
+
                 except Exception as e:
                     logger.error(f"Video hashtag monitoring error: {e}")
+
                     generators.remove(gen)
     
     async def get_trending_content(self, config: CollectionConfig,
@@ -228,21 +256,28 @@ class VideoPlatformsCollector(BaseCollector):
         """
         if platforms is None:
             platforms = list(self.collectors.keys())
+
+
         
         results = []
+
         tasks = []
         
         for platform in platforms:
             if platform in self.collectors:
                 task = self.collectors[platform].get_trending_content(config)
+
                 tasks.append((platform, task))
+
         
         for platform, task in tasks:
             try:
                 platform_results = await task
                 results.extend(platform_results)
+
             except Exception as e:
                 logger.error(f"Trending video content collection failed for {platform}: {e}")
+
         
         return results
     
@@ -260,6 +295,8 @@ class VideoPlatformsCollector(BaseCollector):
         """
         if platforms is None:
             platforms = list(self.collectors.keys())
+
+
         
         results = []
         
@@ -267,9 +304,11 @@ class VideoPlatformsCollector(BaseCollector):
             if platform in self.collectors:
                 try:
                     # Get live content from each platform
+
                     live_content = await self.collectors[platform].get_trending_content(config)
                     
                     # Filter for live streams
+
                     live_streams = [
                         content for content in live_content
                         if content.metadata.get('is_live', False) or 
@@ -277,10 +316,13 @@ class VideoPlatformsCollector(BaseCollector):
                     ]
                     
                     results.extend(live_streams)
+
                     logger.info(f"Found {len(live_streams)} live streams on {platform}")
+
                     
                 except Exception as e:
                     logger.error(f"Live streams collection failed for {platform}: {e}")
+
         
         return results
     
@@ -291,19 +333,24 @@ class VideoPlatformsCollector(BaseCollector):
         Args:
             video_id: Video identifier
             platform: Specific platform (auto-detect if None)
+
             
         Returns:
             Comprehensive video performance analytics
         """
         performance_data = {}
+
         
         platforms_to_check = [platform] if platform else list(self.collectors.keys())
+
         
         for platform_name in platforms_to_check:
             if platform_name in self.collectors:
                 try:
                     # Get video details
+
                     video_data = await self.collectors[platform_name].get_content_details(video_id)
+
                     
                     if video_data:
                         performance_data[platform_name] = {
@@ -332,9 +379,11 @@ class VideoPlatformsCollector(BaseCollector):
                                 'average_viewers': video_data.metadata.get('average_viewers', 0),
                                 'follower_growth': video_data.metadata.get('follower_growth', 0)
                             })
+
                 
                 except Exception as e:
                     logger.error(f"Video performance analysis failed for {platform_name}: {e}")
+
                     performance_data[platform_name] = {'error': str(e)}
         
         return {
@@ -359,11 +408,17 @@ class VideoPlatformsCollector(BaseCollector):
         for platform_name, collector in self.collectors.items():
             try:
                 # Get creator's recent content
+
                 config = CollectionConfig(max_results=100)
+
+
                 recent_content = await collector.get_user_content(creator_id, config)
                 
                 # Filter content by date range
+
                 cutoff_date = datetime.now() - timedelta(days=days)
+
+
                 period_content = [
                     content for content in recent_content
                     if datetime.fromtimestamp(content.timestamp) >= cutoff_date
@@ -371,16 +426,21 @@ class VideoPlatformsCollector(BaseCollector):
                 
                 if period_content:
                     total_views = sum(
-                        content.engagement_metrics.get('views', 0) 
+                        content.engagement_metrics.get('views', 0)
+ 
                         for content in period_content 
                         if content.engagement_metrics
                     )
+
+
                     
                     total_engagement = sum(
-                        content.engagement_metrics.get('total_engagement', 0) 
+                        content.engagement_metrics.get('total_engagement', 0)
+ 
                         for content in period_content 
                         if content.engagement_metrics
                     )
+
                     
                     growth_data[platform_name] = {
                         'videos_published': len(period_content),
@@ -399,6 +459,7 @@ class VideoPlatformsCollector(BaseCollector):
                 
             except Exception as e:
                 logger.error(f"Creator growth tracking failed for {platform_name}: {e}")
+
                 growth_data[platform_name] = {'error': str(e)}
         
         return {
@@ -412,16 +473,20 @@ class VideoPlatformsCollector(BaseCollector):
         """Calculate engagement rate for video content."""
         if not content.engagement_metrics:
             return 0.0
+
         
         views = content.engagement_metrics.get('views', 0)
+
         total_engagement = content.engagement_metrics.get('total_engagement', 0)
+
         
         if views > 0:
             return (total_engagement / views) * 100
         return 0.0
     
     def get_platform_status(self) -> Dict[str, Any]:
-        """Get status of all video platform collectors."""
+        """
+        Get status of all video platform collectors."""
         status = {
             'unified_collector': {
                 'status': self.status.value,
@@ -433,5 +498,6 @@ class VideoPlatformsCollector(BaseCollector):
         
         for platform_name, collector in self.collectors.items():
             status['platforms'][platform_name] = collector.get_platform_info()
+
         
         return status

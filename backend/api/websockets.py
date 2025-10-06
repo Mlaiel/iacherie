@@ -33,7 +33,8 @@ import redis.asyncio as redis
 # ========================================
 
 class EventType(str, Enum):
-    """WebSocket event types"""
+    """
+        WebSocket event types"""
     # Connection events
     CONNECT = "connect"
     DISCONNECT = "disconnect"
@@ -110,8 +111,11 @@ class WebSocketManager:
         self.heartbeat_interval = 30  # seconds
         
     async def connect(self, websocket: WebSocket, user_id: str, client_info: Dict[str, Any]) -> str:
-        """Accept WebSocket connection and register client"""
+        """
+        Accept WebSocket connection and register client"""
         await websocket.accept()
+
+
         
         connection_id = str(uuid.uuid4())
         
@@ -141,6 +145,7 @@ class WebSocketManager:
                 "server_time": datetime.utcnow().isoformat()
             }
         ))
+
         
         return connection_id
     
@@ -148,6 +153,7 @@ class WebSocketManager:
         """Disconnect WebSocket client"""
         if connection_id not in self.active_connections:
             return
+
         
         connection_info = self.connection_info.get(connection_id)
         
@@ -158,9 +164,11 @@ class WebSocketManager:
                     self.channel_subscriptions[channel].discard(connection_id)
             
             # Remove from user connections
+
             user_id = connection_info.user_id
             if user_id in self.user_connections:
                 self.user_connections[user_id].discard(connection_id)
+
                 if not self.user_connections[user_id]:
                     del self.user_connections[user_id]
         
@@ -170,7 +178,8 @@ class WebSocketManager:
             del self.connection_info[connection_id]
     
     async def send_to_connection(self, connection_id: str, message: WebSocketMessage):
-        """Send message to specific connection"""
+        """
+        Send message to specific connection"""
         if connection_id in self.active_connections:
             websocket = self.active_connections[connection_id]
             try:
@@ -179,37 +188,46 @@ class WebSocketManager:
                 # Update last activity
                 if connection_id in self.connection_info:
                     self.connection_info[connection_id].last_activity = datetime.utcnow()
+
                     
             except WebSocketDisconnect:
                 await self.disconnect(connection_id)
+
             except Exception as e:
                 print(f"Error sending message to {connection_id}: {e}")
+
                 await self.disconnect(connection_id)
     
     async def send_to_user(self, user_id: str, message: WebSocketMessage):
         """Send message to all connections of a user"""
         if user_id in self.user_connections:
             connections = self.user_connections[user_id].copy()
+
             for connection_id in connections:
                 await self.send_to_connection(connection_id, message)
     
     async def send_to_channel(self, channel: str, message: WebSocketMessage):
-        """Send message to all subscribers of a channel"""
+        """
+        Send message to all subscribers of a channel"""
         if channel in self.channel_subscriptions:
             connections = self.channel_subscriptions[channel].copy()
+
             for connection_id in connections:
                 await self.send_to_connection(connection_id, message)
     
     async def broadcast(self, message: WebSocketMessage, exclude_connections: Set[str] = None):
-        """Broadcast message to all connected clients"""
+        """
+        Broadcast message to all connected clients"""
         exclude_connections = exclude_connections or set()
+
         
         for connection_id in list(self.active_connections.keys()):
             if connection_id not in exclude_connections:
                 await self.send_to_connection(connection_id, message)
     
     async def subscribe_to_channel(self, connection_id: str, channel: str) -> bool:
-        """Subscribe connection to a channel"""
+        """
+        Subscribe connection to a channel"""
         if connection_id not in self.connection_info:
             return False
         
@@ -230,6 +248,7 @@ class WebSocketManager:
                 "status": "subscribed"
             }
         ))
+
         
         return True
     
@@ -254,6 +273,7 @@ class WebSocketManager:
                 "status": "unsubscribed"
             }
         ))
+
         
         return True
     
@@ -277,7 +297,8 @@ class ContentEventHandler:
         self.manager = manager
     
     async def handle_content_upload_progress(self, user_id: str, content_id: str, progress: float):
-        """Handle content upload progress updates"""
+        """
+        Handle content upload progress updates"""
         message = WebSocketMessage(
             event_type=EventType.CONTENT_UPLOADED,
             data={
@@ -288,6 +309,7 @@ class ContentEventHandler:
             sender_id="system",
             target_id=user_id
         )
+
         
         await self.manager.send_to_user(user_id, message)
     
@@ -304,6 +326,7 @@ class ContentEventHandler:
             sender_id="system",
             target_id=user_id
         )
+
         
         await self.manager.send_to_user(user_id, message)
         
@@ -317,18 +340,21 @@ class CollaborationEventHandler:
         self.manager = manager
     
     async def handle_collaboration_request(self, from_user_id: str, to_user_id: str, collaboration_data: Dict[str, Any]):
-        """Handle new collaboration request"""
+        """
+        Handle new collaboration request"""
         message = WebSocketMessage(
             event_type=EventType.COLLABORATION_REQUEST,
             data=collaboration_data,
             sender_id=from_user_id,
             target_id=to_user_id
         )
+
         
         await self.manager.send_to_user(to_user_id, message)
     
     async def handle_collaboration_response(self, from_user_id: str, to_user_id: str, response: str, collaboration_id: str):
-        """Handle collaboration request response"""
+        """
+        Handle collaboration request response"""
         event_type = EventType.COLLABORATION_ACCEPTED if response == "accepted" else EventType.COLLABORATION_DECLINED
         
         message = WebSocketMessage(
@@ -341,6 +367,7 @@ class CollaborationEventHandler:
             sender_id=from_user_id,
             target_id=to_user_id
         )
+
         
         await self.manager.send_to_user(to_user_id, message)
 
@@ -351,13 +378,15 @@ class AnalyticsEventHandler:
         self.manager = manager
     
     async def handle_real_time_analytics(self, user_id: str, analytics_data: Dict[str, Any]):
-        """Handle real-time analytics updates"""
+        """
+        Handle real-time analytics updates"""
         message = WebSocketMessage(
             event_type=EventType.ANALYTICS_UPDATE,
             data=analytics_data,
             sender_id="system",
             target_id=user_id
         )
+
         
         await self.manager.send_to_user(user_id, message)
     
@@ -369,6 +398,7 @@ class AnalyticsEventHandler:
             sender_id="system",
             target_id=user_id
         )
+
         
         await self.manager.send_to_user(user_id, message)
 
@@ -386,13 +416,18 @@ class WebSocketHandler:
         self.analytics_handler = AnalyticsEventHandler(self.manager)
     
     async def handle_connection(self, websocket: WebSocket, user_id: str, client_info: Dict[str, Any]):
-        """Handle new WebSocket connection"""
+        """
+        Handle new WebSocket connection"""
         connection_id = await self.manager.connect(websocket, user_id, client_info)
+
         
         try:
             while True:
                 # Receive message from client
+
                 data = await websocket.receive_text()
+
+
                 message_data = json.loads(data)
                 
                 # Update last activity
@@ -401,42 +436,56 @@ class WebSocketHandler:
                 
                 # Handle different message types
                 await self.handle_message(connection_id, message_data)
+
                 
         except WebSocketDisconnect:
             await self.manager.disconnect(connection_id)
         except Exception as e:
             print(f"WebSocket error for connection {connection_id}: {e}")
+
             await self.manager.disconnect(connection_id)
     
     async def handle_message(self, connection_id: str, message_data: Dict[str, Any]):
         """Handle incoming WebSocket message"""
         message_type = message_data.get("type")
+
         
         if message_type == "subscribe":
             channel = message_data.get("channel")
+
             if channel:
                 await self.manager.subscribe_to_channel(connection_id, channel)
+
         
         elif message_type == "unsubscribe":
             channel = message_data.get("channel")
+
             if channel:
                 await self.manager.unsubscribe_from_channel(connection_id, channel)
+
         
         elif message_type == "ping":
             # Respond with pong for heartbeat
+
             pong_message = WebSocketMessage(
                 event_type=EventType.SYSTEM_NOTIFICATION,
                 data={"type": "pong", "timestamp": datetime.utcnow().isoformat()}
             )
+
             await self.manager.send_to_connection(connection_id, pong_message)
+
         
         elif message_type == "get_stats":
             # Send connection statistics
+
             stats = self.manager.get_connection_stats()
+
+
             stats_message = WebSocketMessage(
                 event_type=EventType.SYSTEM_NOTIFICATION,
                 data={"type": "stats", "stats": stats}
             )
+
             await self.manager.send_to_connection(connection_id, stats_message)
 
 # ========================================
@@ -522,7 +571,8 @@ class RealTimeCollaborationManager:
         collaboration_type: CollaborationType,
         content_id: str = None
     ) -> Dict[str, Any]:
-        """Create new collaboration session"""
+        """
+        Create new collaboration session"""
         try:
             session_data = {
                 "session_id": session_id,
@@ -550,11 +600,13 @@ class RealTimeCollaborationManager:
                     "content_id": content_id
                 }
             )
+
             
             return session_data
             
         except Exception as e:
             logger.error(f"Failed to create collaboration session: {str(e)}")
+
             raise
     
     async def join_collaboration_session(
@@ -567,12 +619,15 @@ class RealTimeCollaborationManager:
         try:
             if session_id not in self.active_sessions:
                 raise ValueError("Collaboration session not found")
+
+
             
             session = self.active_sessions[session_id]
             
             # Add participant
             if user_id not in session["participants"]:
                 session["participants"].append(user_id)
+
                 session["permissions"][user_id] = permission
             
             # Initialize user state
@@ -601,11 +656,13 @@ class RealTimeCollaborationManager:
                     "participants": session["participants"]
                 }
             )
+
             
             return session
             
         except Exception as e:
             logger.error(f"Failed to join collaboration session: {str(e)}")
+
             raise
     
     async def handle_live_edit(
@@ -618,11 +675,14 @@ class RealTimeCollaborationManager:
         try:
             if session_id not in self.active_sessions:
                 return
+
             
             session = self.active_sessions[session_id]
             
             # Check permissions
+
             user_permission = session["permissions"].get(user_id)
+
             if user_permission not in [CollaborationPermission.EDIT, CollaborationPermission.ADMIN]:
                 return
             
@@ -633,6 +693,7 @@ class RealTimeCollaborationManager:
             session["version"] += 1
             
             # Broadcast to all participants except sender
+
             participants = [p for p in session["participants"] if p != user_id]
             for participant in participants:
                 await self.websocket_manager.send_to_user(
@@ -646,6 +707,7 @@ class RealTimeCollaborationManager:
                         "timestamp": datetime.utcnow().isoformat()
                     }
                 )
+
             
         except Exception as e:
             logger.error(f"Failed to handle live edit: {str(e)}")
@@ -665,7 +727,10 @@ class RealTimeCollaborationManager:
             self.cursor_positions[session_id][user_id] = cursor_position
             
             # Broadcast to all other participants
+
             session = self.active_sessions.get(session_id, {})
+
+
             participants = [p for p in session.get("participants", []) if p != user_id]
             
             for participant in participants:
@@ -679,6 +744,7 @@ class RealTimeCollaborationManager:
                         "timestamp": datetime.utcnow().isoformat()
                     }
                 )
+
             
         except Exception as e:
             logger.error(f"Failed to handle cursor movement: {str(e)}")
@@ -692,6 +758,8 @@ class RealTimeCollaborationManager:
         """Add comment to collaboration session"""
         try:
             comment_id = str(uuid.uuid4())
+
+
             comment = {
                 "comment_id": comment_id,
                 "user_id": user_id,
@@ -711,7 +779,9 @@ class RealTimeCollaborationManager:
             self.collaboration_state[session_id]["comments"].append(comment)
             
             # Broadcast to all participants
+
             session = self.active_sessions.get(session_id, {})
+
             for participant in session.get("participants", []):
                 await self.websocket_manager.send_to_user(
                     participant,
@@ -721,11 +791,13 @@ class RealTimeCollaborationManager:
                         "comment": comment
                     }
                 )
+
             
             return comment
             
         except Exception as e:
             logger.error(f"Failed to add comment: {str(e)}")
+
             raise
     
     async def save_collaboration_state(self, session_id: str) -> Dict[str, Any]:
@@ -733,11 +805,15 @@ class RealTimeCollaborationManager:
         try:
             if session_id not in self.active_sessions:
                 raise ValueError("Session not found")
+
+
             
             session = self.active_sessions[session_id]
+
             state = self.collaboration_state[session_id]
             
             # Create save checkpoint
+
             checkpoint = {
                 "checkpoint_id": str(uuid.uuid4()),
                 "session_id": session_id,
@@ -748,6 +824,7 @@ class RealTimeCollaborationManager:
             }
             
             # Store checkpoint (in production, save to database)
+
             if session_id not in self.version_control:
                 self.version_control[session_id] = []
             
@@ -764,11 +841,13 @@ class RealTimeCollaborationManager:
                         "timestamp": checkpoint["saved_at"]
                     }
                 )
+
             
             return checkpoint
             
         except Exception as e:
             logger.error(f"Failed to save collaboration state: {str(e)}")
+
             raise
     
     async def _apply_edit_operation(
@@ -780,33 +859,58 @@ class RealTimeCollaborationManager:
         """Apply edit operation to collaboration state"""
         try:
             state = self.collaboration_state[session_id]
+
             
             operation_type = operation.get("type")
+
             
             if operation_type == "insert":
                 # Insert text at position
+
                 position = operation.get("position", 0)
+
+
                 text = operation.get("text", "")
+
+
                 current_content = state.get("content", "")
+
+
                 
                 new_content = current_content[:position] + text + current_content[position:]
                 state["content"] = new_content
                 
             elif operation_type == "delete":
                 # Delete text range
+
                 start = operation.get("start", 0)
+
+
                 end = operation.get("end", 0)
+
+
                 current_content = state.get("content", "")
+
+
                 
                 new_content = current_content[:start] + current_content[end:]
                 state["content"] = new_content
                 
             elif operation_type == "replace":
                 # Replace text range
+
                 start = operation.get("start", 0)
+
+
                 end = operation.get("end", 0)
+
+
                 text = operation.get("text", "")
+
+
                 current_content = state.get("content", "")
+
+
                 
                 new_content = current_content[:start] + text + current_content[end:]
                 state["content"] = new_content
@@ -814,6 +918,7 @@ class RealTimeCollaborationManager:
             # Record change
             if "changes" not in state:
                 state["changes"] = []
+
             
             change_record = {
                 "change_id": str(uuid.uuid4()),
@@ -823,6 +928,7 @@ class RealTimeCollaborationManager:
             }
             
             state["changes"].append(change_record)
+
             
         except Exception as e:
             logger.error(f"Failed to apply edit operation: {str(e)}")
@@ -834,6 +940,7 @@ class LiveStreamManager:
         self.websocket_manager = websocket_manager
         self.active_streams = {}
         self.stream_viewers = defaultdict(set)
+
         
     async def start_live_stream(
         self, 
@@ -841,7 +948,8 @@ class LiveStreamManager:
         creator_id: str, 
         stream_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Start live streaming session"""
+        """
+        Start live streaming session"""
         try:
             stream_data = {
                 "stream_id": stream_id,
@@ -869,11 +977,13 @@ class LiveStreamManager:
                     "started_at": stream_data["started_at"].isoformat()
                 }
             )
+
             
             return stream_data
             
         except Exception as e:
             logger.error(f"Failed to start live stream: {str(e)}")
+
             raise
     
     async def join_stream(self, stream_id: str, viewer_id: str) -> Dict[str, Any]:
@@ -881,11 +991,14 @@ class LiveStreamManager:
         try:
             if stream_id not in self.active_streams:
                 raise ValueError("Stream not found")
+
+
             
             stream = self.active_streams[stream_id]
             
             # Add viewer
             self.stream_viewers[stream_id].add(viewer_id)
+
             stream["viewer_count"] = len(self.stream_viewers[stream_id])
             
             # Notify stream
@@ -897,11 +1010,13 @@ class LiveStreamManager:
                     "viewer_count": stream["viewer_count"]
                 }
             )
+
             
             return stream
             
         except Exception as e:
             logger.error(f"Failed to join stream: {str(e)}")
+
             raise
     
     async def send_chat_message(
@@ -914,10 +1029,12 @@ class LiveStreamManager:
         try:
             if stream_id not in self.active_streams:
                 return
+
             
             stream = self.active_streams[stream_id]
             if not stream.get("chat_enabled", True):
                 return
+
             
             chat_message = {
                 "type": "chat_message",
@@ -932,6 +1049,7 @@ class LiveStreamManager:
                 f"stream.{stream_id}",
                 chat_message
             )
+
             
         except Exception as e:
             logger.error(f"Failed to send chat message: {str(e)}")
@@ -955,48 +1073,75 @@ class EnhancedWebSocketHandler(WebSocketHandler):
         self.live_stream_manager = live_stream_manager
     
     async def handle_collaboration_message(self, websocket, message: Dict[str, Any]):
-        """Handle collaboration-specific messages"""
+        """
+        Handle collaboration-specific messages"""
         try:
             message_type = message.get("type")
+
             
             if message_type == "join_collaboration":
                 session_id = message.get("session_id")
+
+
                 user_id = message.get("user_id")
+
+
                 permission = CollaborationPermission(message.get("permission", "edit"))
+
                 
                 await self.collaboration_manager.join_collaboration_session(
                     session_id, user_id, permission
                 )
+
                 
             elif message_type == "live_edit":
                 session_id = message.get("session_id")
+
+
                 user_id = message.get("user_id")
+
+
                 operation = message.get("operation")
+
                 
                 await self.collaboration_manager.handle_live_edit(
                     session_id, user_id, operation
                 )
+
                 
             elif message_type == "cursor_movement":
                 session_id = message.get("session_id")
+
+
                 user_id = message.get("user_id")
+
+
                 position = message.get("position")
+
                 
                 await self.collaboration_manager.handle_cursor_movement(
                     session_id, user_id, position
                 )
+
                 
             elif message_type == "add_comment":
                 session_id = message.get("session_id")
+
+
                 user_id = message.get("user_id")
+
+
                 comment_data = message.get("comment_data")
+
                 
                 await self.collaboration_manager.add_comment(
                     session_id, user_id, comment_data
                 )
+
                 
         except Exception as e:
             logger.error(f"Failed to handle collaboration message: {str(e)}")
+
             await websocket.send_json({
                 "type": "error",
                 "message": "Failed to process collaboration message"
@@ -1042,18 +1187,21 @@ class EnterpriseCollaborationManager:
             }
             
             # Initialize session
+
             session_id = session_data["session_id"]
             self.active_sessions[session_id] = session_data
             
             # Setup user sessions
             for participant in [creator_id] + participants:
                 self.user_sessions[participant].add(session_id)
+
                 await self.presence_manager.user_joined(session_id, participant)
             
             # Initialize permissions
             self.session_permissions[session_id] = await self._setup_session_permissions(
                 creator_id, participants, session_type
             )
+
             
             return {
                 "session_id": session_id,
@@ -1074,6 +1222,7 @@ class EnterpriseCollaborationManager:
         """Handle real-time collaborative editing with conflict resolution"""
         try:
             session = self.active_sessions.get(session_id)
+
             if not session:
                 raise ValueError("Session not found")
             
@@ -1082,6 +1231,7 @@ class EnterpriseCollaborationManager:
                 raise PermissionError("Insufficient permissions")
             
             # Apply operational transformation
+
             transformed_operation = await self.conflict_resolution.transform_operation(
                 session_id, operation, session["version"]
             )
@@ -1092,6 +1242,7 @@ class EnterpriseCollaborationManager:
             # Update version and history
             session["version"] += 1
             session["last_activity"] = datetime.utcnow().isoformat()
+
             self.change_history[session_id].append({
                 "operation": transformed_operation,
                 "user_id": user_id,
@@ -1101,6 +1252,7 @@ class EnterpriseCollaborationManager:
             
             # Broadcast to all participants
             await self._broadcast_operation(session_id, user_id, transformed_operation)
+
             
             return {
                 "success": True,
@@ -1131,6 +1283,7 @@ class EnterpriseCollaborationManager:
             
             # Broadcast cursor update to other participants
             await self._broadcast_cursor_update(session_id, user_id, cursor_data)
+
             
         except Exception as e:
             logger.error(f"Cursor movement error: {e}")
@@ -1173,9 +1326,13 @@ class EnterpriseCollaborationManager:
     ) -> bool:
         """Check if user has permission to perform operation"""
         permissions = self.session_permissions.get(session_id, {})
+
         user_perms = permissions.get(user_id, {})
+
+
         
         operation_type = operation.get("type", "edit")
+
         
         if operation_type == "edit":
             return user_perms.get("edit", False)
@@ -1183,6 +1340,7 @@ class EnterpriseCollaborationManager:
             return user_perms.get("comment", False)
         elif operation_type == "invite":
             return user_perms.get("invite", False)
+
         
         return False
     
@@ -1215,6 +1373,7 @@ class EnterpriseCollaborationManager:
         session = self.active_sessions.get(session_id)
         if not session:
             return
+
         
         message = {
             "type": "operation",
@@ -1240,6 +1399,7 @@ class EnterpriseCollaborationManager:
         session = self.active_sessions.get(session_id)
         if not session:
             return
+
         
         message = {
             "type": "cursor_update",
@@ -1256,12 +1416,12 @@ class EnterpriseCollaborationManager:
     
     async def _send_to_user(self, user_id: str, message: Dict[str, Any]) -> None:
         """Send message to specific user (would integrate with WebSocket manager)"""
-        # Mock implementation - would use actual WebSocket connections
         pass
 
 
 class ConflictResolutionEngine:
-    """Operational transformation engine for conflict resolution"""
+    """
+        Operational transformation engine for conflict resolution"""
     
     def __init__(self):
         self.pending_operations = defaultdict(list)
@@ -1272,7 +1432,8 @@ class ConflictResolutionEngine:
         operation: Dict[str, Any],
         current_version: int
     ) -> Dict[str, Any]:
-        """Transform operation using operational transformation algorithm"""
+        """
+        Transform operation using operational transformation algorithm"""
         # Simplified OT implementation
         operation["id"] = f"op_{secrets.token_hex(8)}"
         operation["version"] = current_version + 1
@@ -1290,7 +1451,8 @@ class PresenceManager:
         self.user_presence = {}  # session_id -> {user_id -> presence_data}
     
     async def user_joined(self, session_id: str, user_id: str) -> None:
-        """Handle user joining session"""
+        """
+        Handle user joining session"""
         if session_id not in self.user_presence:
             self.user_presence[session_id] = {}
         
@@ -1327,12 +1489,15 @@ class HighConcurrencyWebSocketManager:
         self.scaling_manager = AutoScalingManager()
     
     async def handle_connection(self, websocket, user_id: str) -> None:
-        """Handle new WebSocket connection with load balancing"""
+        """
+        Handle new WebSocket connection with load balancing"""
         try:
             # Select optimal server pool
+
             server_pool = await self.load_balancer.select_server_pool()
             
             # Register connection
+
             connection_id = await self._register_connection(websocket, user_id, server_pool)
             
             # Start monitoring
@@ -1341,6 +1506,7 @@ class HighConcurrencyWebSocketManager:
             # Handle messages
             async for message in websocket:
                 await self.message_queue.enqueue_message(connection_id, message)
+
             
         except Exception as e:
             logger.error(f"Connection handling error: {e}")
@@ -1356,6 +1522,7 @@ class HighConcurrencyWebSocketManager:
         """Broadcast message to all users in channel"""
         try:
             # Get channel subscribers
+
             subscribers = await self._get_channel_subscribers(channel)
             
             # Filter excluded users
@@ -1364,6 +1531,7 @@ class HighConcurrencyWebSocketManager:
             
             # Batch send messages
             await self.message_queue.broadcast_batch(subscribers, message)
+
             
         except Exception as e:
             logger.error(f"Broadcast error: {e}")
@@ -1392,7 +1560,6 @@ class HighConcurrencyWebSocketManager:
     
     async def _get_channel_subscribers(self, channel: str) -> List[str]:
         """Get list of users subscribed to channel"""
-        # Mock implementation - would query subscription database
         return [f"user_{i}" for i in range(100)]
 
 
@@ -1410,23 +1577,27 @@ class WebSocketLoadBalancer:
 
 
 class ConnectionMonitor:
-    """Monitor WebSocket connection health and performance"""
+    """
+        Monitor WebSocket connection health and performance"""
     
     async def start_monitoring(self, connection_id: str) -> None:
-        """Start monitoring connection health"""
+        """
+        Start monitoring connection health"""
         # Would implement connection health checks
         pass
 
 
 class MessageQueue:
-    """High-performance message queue for WebSocket messages"""
+    """
+        High-performance message queue for WebSocket messages"""
     
     def __init__(self):
         self.queue = asyncio.Queue(maxsize=10000)
         self.batch_processor = MessageBatchProcessor()
     
     async def enqueue_message(self, connection_id: str, message: str) -> None:
-        """Enqueue message for processing"""
+        """
+        Enqueue message for processing"""
         await self.queue.put({"connection_id": connection_id, "message": message})
     
     async def broadcast_batch(self, recipients: List[str], message: Dict[str, Any]) -> None:
@@ -1435,24 +1606,29 @@ class MessageQueue:
 
 
 class MessageBatchProcessor:
-    """Process messages in batches for better performance"""
+    """
+        Process messages in batches for better performance"""
     
     async def process_batch(self, recipients: List[str], message: Dict[str, Any]) -> None:
-        """Process message batch"""
+        """
+        Process message batch"""
         # Batch processing implementation
+
         batch_size = 100
         for i in range(0, len(recipients), batch_size):
             batch = recipients[i:i + batch_size]
             await self._send_batch(batch, message)
     
     async def _send_batch(self, batch: List[str], message: Dict[str, Any]) -> None:
-        """Send message to batch of recipients"""
+        """
+        Send message to batch of recipients"""
         # Would send to actual WebSocket connections
         pass
 
 
 class AutoScalingManager:
-    """Automatic scaling manager for WebSocket infrastructure"""
+    """
+        Automatic scaling manager for WebSocket infrastructure"""
     
     def __init__(self):
         self.scaling_thresholds = {
@@ -1483,18 +1659,21 @@ def get_enhanced_websocket_handler() -> EnhancedWebSocketHandler:
     return enhanced_websocket_handler
 
 def get_enterprise_collaboration_manager() -> EnterpriseCollaborationManager:
-    """Get enterprise collaboration manager instance"""
+    """
+        Get enterprise collaboration manager instance"""
     return enterprise_collaboration_manager
 
 def get_high_concurrency_manager() -> HighConcurrencyWebSocketManager:
-    """Get high concurrency WebSocket manager instance"""
+    """
+        Get high concurrency WebSocket manager instance"""
     return high_concurrency_manager
 
 # Keep backward compatibility
 websocket_handler = WebSocketHandler()
 
 def get_websocket_handler() -> WebSocketHandler:
-    """Get WebSocket handler instance (backward compatibility)"""
+    """
+        Get WebSocket handler instance (backward compatibility)"""
     return websocket_handler
 
 

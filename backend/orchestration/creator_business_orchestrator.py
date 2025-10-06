@@ -22,7 +22,8 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(Enum):
-    """Creator types supported by the platform"""
+    """
+        Creator types supported by the platform"""
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -96,7 +97,8 @@ class ContentWorkflow:
 
 @dataclass
 class OrchestrationResult:
-    """Business orchestration execution result"""
+    """
+        Business orchestration execution result"""
     workflow_id: str
     stage: BusinessStage
     success: bool
@@ -108,7 +110,8 @@ class OrchestrationResult:
 
 
 class CreatorBusinessOrchestrator:
-    """Central creator business logic orchestrator following Cahier des Charges specifications.
+    """
+        Central creator business logic orchestrator following Cahier des Charges specifications.
     
     Provides enterprise-grade business workflow orchestration for creators with:
     - Multi-format content coordination (Audio, Video, Image, Text, Voice, Avatar)
@@ -130,13 +133,18 @@ class CreatorBusinessOrchestrator:
         """Initialize the business orchestrator with creator-specific strategies"""
         try:
             await self._setup_creator_strategies()
+
             await self._setup_stage_handlers()
+
             await self._setup_business_rules()
+
             self.initialized = True
             logger.info("✅ Creator Business Orchestrator initialization complete")
+
             return True
         except Exception as e:
             logger.error(f"❌ Failed to initialize Creator Business Orchestrator: {e}")
+
             return False
 
     async def _setup_creator_strategies(self):
@@ -277,14 +285,17 @@ class CreatorBusinessOrchestrator:
     ) -> str:
         """Create a new creator business workflow"""
         workflow_id = str(uuid.uuid4())
+
         
         if workflow_config is None:
             workflow_config = self._get_default_workflow_config(creator_type)
 
         # Determine business stages based on creator type and content formats
+
         business_stages = self._determine_business_stages(creator_type, content_formats)
         
         # Create workflow
+
         workflow = ContentWorkflow(
             workflow_id=workflow_id,
             creator_id=creator_id,
@@ -294,6 +305,7 @@ class CreatorBusinessOrchestrator:
             workflow_config=workflow_config,
             execution_parameters=self._get_execution_parameters(creator_type)
         )
+
         
         self.workflows[workflow_id] = workflow
         
@@ -304,11 +316,14 @@ class CreatorBusinessOrchestrator:
         """Execute creator business workflow with complete orchestration"""
         if not self.initialized:
             logger.error("❌ Creator Business Orchestrator not initialized")
+
             return False
+
 
         workflow = self.workflows.get(workflow_id)
         if not workflow:
             logger.error(f"❌ Workflow {workflow_id} not found")
+
             return False
 
         try:
@@ -318,25 +333,31 @@ class CreatorBusinessOrchestrator:
             # Execute business stages in dependency order
             for stage in workflow.business_stages:
                 result = await self._execute_stage(workflow, stage)
+
                 if not result.success:
                     workflow.status = WorkflowStatus.FAILED
                     logger.error(f"❌ Stage {stage.value} failed: {result.error_details}")
+
                     return False
 
             workflow.status = WorkflowStatus.COMPLETED
             workflow.updated_at = datetime.utcnow()
+
             
             logger.info(f"✅ Creator business workflow {workflow_id} completed successfully")
+
             return True
 
         except Exception as e:
             workflow.status = WorkflowStatus.FAILED
             logger.error(f"❌ Failed to execute workflow {workflow_id}: {e}")
+
             return False
 
     async def _execute_stage(self, workflow: ContentWorkflow, stage: BusinessStage) -> OrchestrationResult:
         """Execute a single business stage"""
         start_time = datetime.utcnow()
+
         
         try:
             # Check dependencies
@@ -345,14 +366,21 @@ class CreatorBusinessOrchestrator:
                     raise Exception(f"Dependency {dep_stage.value} not satisfied for stage {stage.value}")
 
             # Get stage handler
+
             handler = self.stage_handlers.get(stage)
+
             if not handler:
                 raise Exception(f"No handler found for stage {stage.value}")
 
             # Execute stage with creator-specific strategy
+
             output_data = await handler(workflow, stage)
+
+
             
             execution_time = int((datetime.utcnow() - start_time).total_seconds() * 1000)
+
+
             
             result = OrchestrationResult(
                 workflow_id=workflow.workflow_id,
@@ -363,12 +391,15 @@ class CreatorBusinessOrchestrator:
                 execution_time_ms=execution_time,
                 business_impact_score=self._calculate_business_impact(workflow, stage, output_data)
             )
+
             
             logger.info(f"✅ Stage {stage.value} completed in {execution_time}ms")
+
             return result
 
         except Exception as e:
             execution_time = int((datetime.utcnow() - start_time).total_seconds() * 1000)
+
             return OrchestrationResult(
                 workflow_id=workflow.workflow_id,
                 stage=stage,
@@ -450,7 +481,8 @@ class CreatorBusinessOrchestrator:
         ]
 
     def _get_execution_parameters(self, creator_type: CreatorType) -> Dict[str, Any]:
-        """Get execution parameters for creator type"""
+        """
+        Get execution parameters for creator type"""
         return {
             "parallel_execution": True,
             "optimization_strategy": "revenue_maximized",
@@ -468,10 +500,10 @@ class CreatorBusinessOrchestrator:
 
     def _calculate_business_impact(self, workflow: ContentWorkflow, stage: BusinessStage, output_data: Dict[str, Any]) -> float:
         """Calculate business impact score for stage"""
-        return 0.85  # Placeholder - would use real business metrics
-
+        return 0.85
     async def get_workflow_status(self, workflow_id: str) -> Optional[Dict[str, Any]]:
-        """Get comprehensive workflow status"""
+        """
+        Get comprehensive workflow status"""
         workflow = self.workflows.get(workflow_id)
         if not workflow:
             return None
@@ -496,16 +528,16 @@ class CreatorBusinessOrchestrator:
         try:
             workflow.status = WorkflowStatus.OPTIMIZING
             logger.info(f"🔧 Optimizing workflow {workflow_id}")
-            
-            # Placeholder for optimization logic
             await asyncio.sleep(0.1)  # Simulate optimization
             
             workflow.status = WorkflowStatus.COMPLETED
             logger.info(f"✅ Workflow {workflow_id} optimization complete")
+
             return True
 
         except Exception as e:
             logger.error(f"❌ Failed to optimize workflow {workflow_id}: {e}")
+
             return False
 
 

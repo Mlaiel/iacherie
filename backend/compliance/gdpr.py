@@ -8,6 +8,7 @@ Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
 """
 
+
 import asyncio
 import json
 import logging
@@ -21,7 +22,10 @@ logger = logging.getLogger(__name__)
 
 
 class GDPRRequestType(str, Enum):
-    """GDPR data subject request types"""
+    """
+
+        GDPR data subject request types"""
+
     ACCESS = "access"
     PORTABILITY = "portability"
     RECTIFICATION = "rectification"
@@ -32,6 +36,7 @@ class GDPRRequestType(str, Enum):
 
 class ConsentPurpose(str, Enum):
     """Data processing consent purposes"""
+
     ESSENTIAL = "essential"
     ANALYTICS = "analytics"
     MARKETING = "marketing"
@@ -43,6 +48,7 @@ class ConsentPurpose(str, Enum):
 
 class ProcessingLawfulBasis(str, Enum):
     """GDPR lawful basis for processing"""
+
     CONSENT = "consent"
     CONTRACT = "contract"
     LEGAL_OBLIGATION = "legal_obligation"
@@ -54,6 +60,7 @@ class ProcessingLawfulBasis(str, Enum):
 @dataclass
 class PersonalDataInventory:
     """Personal data inventory for GDPR compliance"""
+
     data_category: str
     data_elements: List[str]
     processing_purpose: str
@@ -67,7 +74,10 @@ class PersonalDataInventory:
 
 @dataclass
 class GDPRRequest:
-    """GDPR data subject request"""
+    """
+
+        GDPR data subject request"""
+
     request_id: str
     user_id: int
     request_type: GDPRRequestType
@@ -81,7 +91,10 @@ class GDPRRequest:
 
 @dataclass
 class ConsentRecord:
-    """User consent record"""
+    """
+
+        User consent record"""
+
     user_id: int
     purpose: ConsentPurpose
     granted: bool
@@ -94,6 +107,7 @@ class ConsentRecord:
 @dataclass
 class GDPRComplianceReport:
     """GDPR compliance status report"""
+
     user_id: int
     report_date: datetime
     consent_status: Dict[str, bool]
@@ -106,9 +120,11 @@ class GDPRComplianceReport:
 
 class GDPRCompliance:
     """
+
     Enterprise GDPR compliance manager with automation.
     Provides comprehensive GDPR compliance services for the iacherie platform.
     """
+
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.logger = logger
@@ -128,7 +144,10 @@ class GDPRCompliance:
         self._initialize_data_inventory()
     
     def _initialize_data_inventory(self):
-        """Initialize personal data inventory mapping"""
+        """
+
+        Initialize personal data inventory mapping"""
+
         self.data_inventory = {
             "user_profile": PersonalDataInventory(
                 data_category="Identity Data",
@@ -136,6 +155,7 @@ class GDPRCompliance:
                 processing_purpose="User account management",
                 lawful_basis=ProcessingLawfulBasis.CONTRACT,
                 retention_period=2555,  # 7 years
+
                 storage_location="EU database",
                 third_party_sharing=False,
                 cross_border_transfer=False,
@@ -147,6 +167,7 @@ class GDPRCompliance:
                 processing_purpose="Content protection services",
                 lawful_basis=ProcessingLawfulBasis.CONTRACT,
                 retention_period=1825,  # 5 years
+
                 storage_location="EU storage",
                 third_party_sharing=True,
                 cross_border_transfer=False,
@@ -158,6 +179,7 @@ class GDPRCompliance:
                 processing_purpose="Service improvement and analytics",
                 lawful_basis=ProcessingLawfulBasis.CONSENT,
                 retention_period=730,  # 2 years
+
                 storage_location="EU analytics cluster",
                 third_party_sharing=False,
                 cross_border_transfer=False,
@@ -173,8 +195,11 @@ class GDPRCompliance:
         requester_ip: str
     ) -> Dict[str, Any]:
         """Process GDPR data subject request"""
+
         try:
             request_id = str(uuid.uuid4())
+
+
             
             gdpr_request = GDPRRequest(
                 request_id=request_id,
@@ -185,18 +210,23 @@ class GDPRCompliance:
                 status="submitted",
                 requester_ip=requester_ip
             )
+
             
             self.gdpr_requests[request_id] = gdpr_request
             
             # Process based on request type
             if request_type == GDPRRequestType.ACCESS:
                 response = await self._process_access_request(user_id)
+
             elif request_type == GDPRRequestType.ERASURE:
                 response = await self._process_erasure_request(user_id)
+
             elif request_type == GDPRRequestType.PORTABILITY:
                 response = await self._process_portability_request(user_id)
+
             elif request_type == GDPRRequestType.RECTIFICATION:
                 response = await self._process_rectification_request(user_id, request_details)
+
             else:
                 response = {"status": "pending", "message": "Request is being processed"}
             
@@ -204,8 +234,10 @@ class GDPRCompliance:
             gdpr_request.status = "completed" if response.get("status") == "success" else "processing"
             gdpr_request.response_data = response
             gdpr_request.completed_at = datetime.utcnow()
+
             
             self.logger.info(f"GDPR request {request_id} processed for user {user_id}")
+
             
             return {
                 "request_id": request_id,
@@ -215,6 +247,7 @@ class GDPRCompliance:
             
         except Exception as e:
             self.logger.error(f"Error processing GDPR request: {str(e)}")
+
             return {
                 "status": "error",
                 "message": f"Failed to process request: {str(e)}"
@@ -222,6 +255,7 @@ class GDPRCompliance:
 
     async def _process_access_request(self, user_id: int) -> Dict[str, Any]:
         """Process access request (Article 15)"""
+
         try:
             user_data = {
                 "personal_data": self._get_user_personal_data(user_id),
@@ -242,9 +276,12 @@ class GDPRCompliance:
 
     async def _process_erasure_request(self, user_id: int) -> Dict[str, Any]:
         """Process erasure request (Article 17 - Right to be forgotten)"""
+
         try:
             # Check if erasure is legally permitted
+
             legal_basis = self._check_erasure_legal_basis(user_id)
+
             
             if not legal_basis["can_erase"]:
                 return {
@@ -253,7 +290,9 @@ class GDPRCompliance:
                 }
             
             # Perform data erasure
+
             erasure_log = await self._perform_data_erasure(user_id)
+
             
             return {
                 "status": "success",
@@ -266,6 +305,7 @@ class GDPRCompliance:
 
     async def _process_portability_request(self, user_id: int) -> Dict[str, Any]:
         """Process data portability request (Article 20)"""
+
         try:
             portable_data = {
                 "user_profile": self._get_user_personal_data(user_id),
@@ -285,14 +325,19 @@ class GDPRCompliance:
 
     async def _process_rectification_request(self, user_id: int, details: Dict[str, Any]) -> Dict[str, Any]:
         """Process rectification request (Article 16)"""
+
         try:
             corrections = details.get("corrections", {})
+
+
             updated_fields = []
             
             for field, new_value in corrections.items():
                 if self._validate_field_correction(field, new_value):
                     self._update_user_field(user_id, field, new_value)
+
                     updated_fields.append(field)
+
             
             return {
                 "status": "success",
@@ -310,6 +355,7 @@ class GDPRCompliance:
         version: str = "1.0"
     ) -> Dict[str, Any]:
         """Manage user consent for data processing"""
+
         try:
             consent_record = ConsentRecord(
                 user_id=user_id,
@@ -318,6 +364,7 @@ class GDPRCompliance:
                 granted_at=datetime.utcnow(),
                 version=version
             )
+
             
             if not granted:
                 consent_record.withdrawn_at = datetime.utcnow()
@@ -327,8 +374,10 @@ class GDPRCompliance:
                 self.consent_records[user_id] = []
             
             self.consent_records[user_id].append(consent_record)
+
             
             self.logger.info(f"Consent {'granted' if granted else 'withdrawn'} for user {user_id}, purpose: {purpose}")
+
             
             return {
                 "status": "success",
@@ -339,17 +388,31 @@ class GDPRCompliance:
             
         except Exception as e:
             self.logger.error(f"Error managing consent: {str(e)}")
+
             return {"status": "error", "message": str(e)}
 
     async def generate_compliance_report(self, user_id: int) -> GDPRComplianceReport:
         """Generate comprehensive GDPR compliance report"""
+
         try:
             consent_status = self._get_consent_status(user_id)
+
+
             data_inventory = list(self.data_inventory.values())
+
+
             active_processing = self._get_active_processing(user_id)
+
+
             retention_compliance = self._check_retention_compliance(user_id)
+
+
             outstanding_requests = self._get_outstanding_requests(user_id)
+
+
             compliance_score = self._calculate_compliance_score(user_id)
+
+
             
             report = GDPRComplianceReport(
                 user_id=user_id,
@@ -361,16 +424,18 @@ class GDPRCompliance:
                 outstanding_requests=outstanding_requests,
                 compliance_score=compliance_score
             )
+
             
             return report
             
         except Exception as e:
             self.logger.error(f"Error generating compliance report: {str(e)}")
+
             raise
 
     def _get_user_personal_data(self, user_id: int) -> Dict[str, Any]:
         """Get user's personal data"""
-        # Placeholder implementation
+
         return {
             "user_id": user_id,
             "profile_data": "encrypted_profile_data",
@@ -379,6 +444,7 @@ class GDPRCompliance:
 
     def _get_processing_purposes(self, user_id: int) -> List[str]:
         """Get data processing purposes for user"""
+
         return [
             "Account management", 
             "Service provision", 
@@ -388,12 +454,15 @@ class GDPRCompliance:
 
     def _get_third_party_recipients(self, user_id: int) -> List[str]:
         """Get third-party data recipients"""
+
         return ["Content delivery partners", "Payment processors"]
 
     def _get_consent_status(self, user_id: int) -> Dict[str, bool]:
         """Get current consent status for all purposes"""
+
         if user_id not in self.consent_records:
             return {}
+
         
         consent_status = {}
         for record in self.consent_records[user_id]:
@@ -403,7 +472,10 @@ class GDPRCompliance:
         return consent_status
 
     def _check_erasure_legal_basis(self, user_id: int) -> Dict[str, Any]:
-        """Check if data erasure is legally permitted"""
+        """
+
+        Check if data erasure is legally permitted"""
+
         # Simplified implementation
         return {
             "can_erase": True,
@@ -412,7 +484,7 @@ class GDPRCompliance:
 
     async def _perform_data_erasure(self, user_id: int) -> Dict[str, Any]:
         """Perform actual data erasure"""
-        # Placeholder implementation for data erasure
+
         erasure_log = {
             "user_profile": "erased",
             "content_metadata": "erased",
@@ -424,6 +496,7 @@ class GDPRCompliance:
 
     def _get_user_content_data(self, user_id: int) -> Dict[str, Any]:
         """Get user's content data for portability"""
+
         return {
             "uploads": [],
             "metadata": {},
@@ -432,6 +505,7 @@ class GDPRCompliance:
 
     def _get_user_preferences(self, user_id: int) -> Dict[str, Any]:
         """Get user preferences"""
+
         return {
             "notification_settings": {},
             "privacy_settings": {},
@@ -440,34 +514,49 @@ class GDPRCompliance:
 
     def _validate_field_correction(self, field: str, value: Any) -> bool:
         """Validate field correction request"""
+
         # Basic validation
         return field in ["name", "email", "phone", "address"] and value is not None
 
     def _update_user_field(self, user_id: int, field: str, value: Any):
         """Update user field with new value"""
-        # Placeholder implementation
+
         pass
 
     def _get_active_processing(self, user_id: int) -> List[str]:
-        """Get active data processing activities"""
+        """
+
+        Get active data processing activities"""
+
         return ["Account management", "Content protection"]
 
     def _check_retention_compliance(self, user_id: int) -> bool:
         """Check data retention compliance"""
+
         return True
 
     def _get_outstanding_requests(self, user_id: int) -> List[Dict[str, Any]]:
-        """Get outstanding GDPR requests"""
-        return [req for req in self.gdpr_requests.values() 
+        """
+
+        Get outstanding GDPR requests"""
+
+        return [req for req in self.gdpr_requests.values()
+ 
                 if req.user_id == user_id and req.status != "completed"]
 
     def _calculate_compliance_score(self, user_id: int) -> float:
         """Calculate compliance score"""
+
         # Simplified scoring algorithm
+
         consent_status = self._get_consent_status(user_id)
+
         has_valid_consents = len(consent_status) > 0
+
         retention_compliant = self._check_retention_compliance(user_id)
+
         no_outstanding_requests = len(self._get_outstanding_requests(user_id)) == 0
+
         
         score = 0.0
         if has_valid_consents:

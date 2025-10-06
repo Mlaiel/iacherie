@@ -22,7 +22,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class FederatedLearningCore:
-    """Advanced Federated Learning Core System"""
+    """
+Advanced Federated Learning Core System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -32,4 +33,4 @@ class FederatedLearningCore:
 # Module exports
 __all__ = ["FederatedLearningCore"]
 
-logger.info("🤝 Federated Learning Core module loaded")
+logger.info("🤝 Federated Learning Core module initialized")

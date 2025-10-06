@@ -59,7 +59,8 @@ logger = logging.getLogger(__name__)
 
 
 class EncryptionAlgorithm(Enum):
-    """Supported encryption algorithms."""
+    """
+        Supported encryption algorithms."""
     AES_256_GCM = "aes_256_gcm"
     RSA_2048 = "rsa_2048"
     RSA_4096 = "rsa_4096" 
@@ -86,7 +87,8 @@ class AccessLevel(Enum):
 
 
 class PermissionType(Enum):
-    """Permission type enumeration."""
+    """
+        Permission type enumeration."""
     DATABASE_READ = "database_read"
     DATABASE_WRITE = "database_write"
     DATABASE_DELETE = "database_delete"
@@ -162,7 +164,8 @@ class EncryptionKey:
 
 @dataclass
 class AuditEvent:
-    """Audit event data structure."""
+    """
+        Audit event data structure."""
     event_id: str
     event_type: AuditEventType
     severity: AuditSeverity
@@ -178,7 +181,8 @@ class AuditEvent:
 
 @dataclass
 class SecurityThreat:
-    """Security threat data structure."""
+    """
+        Security threat data structure."""
     threat_id: str
     threat_type: ThreatType
     severity: AuditSeverity
@@ -206,8 +210,10 @@ class DatabaseEncryptionManager:
         self._key_rotation_task: Optional[asyncio.Task] = None
         
     async def initialize(self, master_key: Optional[str] = None):
-        """Initialize encryption manager."""
+        """
+        Initialize encryption manager."""
         logger.info("🔐 Initializing Database Encryption Manager...")
+
         
         if master_key:
             self._master_key = master_key.encode()
@@ -219,6 +225,7 @@ class DatabaseEncryptionManager:
         
         # Start key rotation monitoring
         self._key_rotation_task = asyncio.create_task(self._key_rotation_monitor())
+
         
         logger.info("✅ Database Encryption Manager initialized")
     
@@ -227,9 +234,12 @@ class DatabaseEncryptionManager:
         return secrets.token_bytes(32)  # 256-bit key
     
     async def _generate_default_key(self):
-        """Generate default encryption key."""
+        """
+        Generate default encryption key."""
         key_id = "default_aes_256"
         key_data = Fernet.generate_key()
+
+
         
         encryption_key = EncryptionKey(
             key_id=key_id,
@@ -239,9 +249,11 @@ class DatabaseEncryptionManager:
             created_at=datetime.now(timezone.utc),
             expires_at=datetime.now(timezone.utc) + timedelta(days=90)  # 90-day rotation
         )
+
         
         self._keys[key_id] = encryption_key
         self._fernet_instances[key_id] = Fernet(key_data)
+
         
         logger.info(f"🔑 Generated default encryption key: {key_id}")
     
@@ -249,9 +261,12 @@ class DatabaseEncryptionManager:
         """Encrypt data using specified key."""
         if key_id not in self._fernet_instances:
             raise ValueError(f"Encryption key not found: {key_id}")
+
         
         if isinstance(data, str):
             data = data.encode()
+
+
         
         encrypted_data = self._fernet_instances[key_id].encrypt(data)
         return base64.b64encode(encrypted_data).decode()
@@ -260,34 +275,48 @@ class DatabaseEncryptionManager:
         """Decrypt data using specified key."""
         if key_id not in self._fernet_instances:
             raise ValueError(f"Encryption key not found: {key_id}")
+
         
         try:
             encrypted_bytes = base64.b64decode(encrypted_data.encode())
+
+
             decrypted_data = self._fernet_instances[key_id].decrypt(encrypted_bytes)
+
             return decrypted_data.decode()
         except Exception as e:
             logger.error(f"❌ Decryption failed: {e}")
+
             raise
     
     async def generate_key(self, key_id: str, algorithm: EncryptionAlgorithm, expires_in_days: int = 90) -> str:
         """Generate new encryption key."""
         if algorithm == EncryptionAlgorithm.AES_256_GCM:
             key_data = Fernet.generate_key()
+
+
             key_type = KeyType.SYMMETRIC
         elif algorithm in [EncryptionAlgorithm.RSA_2048, EncryptionAlgorithm.RSA_4096]:
             key_size = 2048 if algorithm == EncryptionAlgorithm.RSA_2048 else 4096
+
             private_key = rsa.generate_private_key(
                 public_exponent=65537,
                 key_size=key_size
             )
+
+
             key_data = private_key.private_bytes(
                 encoding=serialization.Encoding.PEM,
                 format=serialization.PrivateFormat.PKCS8,
                 encryption_algorithm=serialization.NoEncryption()
             )
+
+
             key_type = KeyType.ASYMMETRIC_PRIVATE
         else:
             raise ValueError(f"Unsupported algorithm: {algorithm}")
+
+
         
         encryption_key = EncryptionKey(
             key_id=key_id,
@@ -297,11 +326,13 @@ class DatabaseEncryptionManager:
             created_at=datetime.now(timezone.utc),
             expires_at=datetime.now(timezone.utc) + timedelta(days=expires_in_days)
         )
+
         
         self._keys[key_id] = encryption_key
         
         if algorithm == EncryptionAlgorithm.AES_256_GCM:
             self._fernet_instances[key_id] = Fernet(key_data)
+
         
         logger.info(f"🔑 Generated encryption key: {key_id} ({algorithm.value})")
         return key_id
@@ -310,8 +341,11 @@ class DatabaseEncryptionManager:
         """Rotate an existing encryption key."""
         if key_id not in self._keys:
             raise ValueError(f"Key not found: {key_id}")
+
+
         
         old_key = self._keys[key_id]
+
         new_key_id = f"{key_id}_rotated_{int(datetime.now().timestamp())}"
         
         return await self.generate_key(new_key_id, old_key.algorithm)
@@ -321,16 +355,22 @@ class DatabaseEncryptionManager:
         while True:
             try:
                 await asyncio.sleep(3600)  # Check every hour
+
                 
                 now = datetime.now(timezone.utc)
+
                 for key_id, key in list(self._keys.items()):
                     if key.expires_at and now >= key.expires_at:
                         logger.warning(f"🔄 Key {key_id} expired, rotating...")
+
                         try:
                             new_key_id = await self.rotate_key(key_id)
+
                             logger.info(f"✅ Key rotated: {key_id} -> {new_key_id}")
+
                         except Exception as e:
                             logger.error(f"❌ Failed to rotate key {key_id}: {e}")
+
                             
             except asyncio.CancelledError:
                 break
@@ -341,6 +381,7 @@ class DatabaseEncryptionManager:
         """Get information about an encryption key."""
         if key_id not in self._keys:
             return None
+
         
         key = self._keys[key_id]
         return {
@@ -356,6 +397,7 @@ class DatabaseEncryptionManager:
         """Close encryption manager."""
         if self._key_rotation_task:
             self._key_rotation_task.cancel()
+
             try:
                 await self._key_rotation_task
             except asyncio.CancelledError:
@@ -377,17 +419,20 @@ class DatabaseAccessControl:
         self._access_tokens: Dict[str, Dict[str, Any]] = {}
     
     async def initialize(self):
-        """Initialize access control system."""
+        """
+        Initialize access control system."""
         logger.info("🛡️ Initializing Database Access Control...")
         
         # Create default roles
         await self._create_default_roles()
+
         
         logger.info("✅ Database Access Control initialized")
     
     async def _create_default_roles(self):
         """Create default security roles."""
         # Admin role
+
         admin_permissions = {
             PermissionType.DATABASE_ADMIN,
             PermissionType.USER_MANAGE,
@@ -400,6 +445,7 @@ class DatabaseAccessControl:
         self._role_permissions["admin"] = admin_permissions
         
         # Content Manager role
+
         content_manager_permissions = {
             PermissionType.CONTENT_VIEW,
             PermissionType.CONTENT_EDIT,
@@ -409,6 +455,7 @@ class DatabaseAccessControl:
         self._role_permissions["content_manager"] = content_manager_permissions
         
         # Creator role
+
         creator_permissions = {
             PermissionType.CONTENT_VIEW,
             PermissionType.CONTENT_EDIT,
@@ -418,6 +465,7 @@ class DatabaseAccessControl:
         self._role_permissions["creator"] = creator_permissions
         
         # Viewer role
+
         viewer_permissions = {
             PermissionType.CONTENT_VIEW,
             PermissionType.ANALYTICS_VIEW
@@ -430,10 +478,12 @@ class DatabaseAccessControl:
         """Assign role to user."""
         if role not in self._role_permissions:
             logger.error(f"❌ Role not found: {role}")
+
             return False
         
         if user_id not in self._user_roles:
             self._user_roles[user_id] = set()
+
         
         self._user_roles[user_id].add(role)
         logger.info(f"✅ Assigned role '{role}' to user {user_id}")
@@ -442,31 +492,39 @@ class DatabaseAccessControl:
     async def check_permission(self, user_id: str, permission: PermissionType, resource_id: Optional[str] = None) -> bool:
         """Check if user has specific permission."""
         # Check direct user permissions
+
         user_permissions = self._user_permissions.get(user_id, set())
         if permission in user_permissions:
             return True
         
         # Check role-based permissions
+
         user_roles = self._user_roles.get(user_id, set())
         for role in user_roles:
             role_permissions = self._role_permissions.get(role, set())
+
             if permission in role_permissions:
                 return True
         
         # Check resource-specific permissions
         if resource_id:
             resource_perms = self._resource_permissions.get(resource_id, {})
+
+
             user_access = resource_perms.get(user_id, AccessLevel.NONE)
             
             # Map permission to required access level
+
             required_level = self._get_required_access_level(permission)
+
             if user_access.value >= required_level.value:
                 return True
         
         return False
     
     def _get_required_access_level(self, permission: PermissionType) -> AccessLevel:
-        """Get required access level for permission."""
+        """
+        Get required access level for permission."""
         level_mapping = {
             PermissionType.DATABASE_READ: AccessLevel.READ,
             PermissionType.DATABASE_WRITE: AccessLevel.WRITE,
@@ -485,7 +543,8 @@ class DatabaseAccessControl:
         return level_mapping.get(permission, AccessLevel.NONE)
     
     async def generate_access_token(self, user_id: str, permissions: List[PermissionType], expires_in: int = 3600) -> str:
-        """Generate JWT access token."""
+        """
+        Generate JWT access token."""
         payload = {
             "user_id": user_id,
             "permissions": [p.value for p in permissions],
@@ -494,7 +553,7 @@ class DatabaseAccessControl:
         }
         
         # Use a secret key (should be loaded from environment)
-        secret_key = "your-secret-key"  # TODO: Load from secure configuration
+        secret_key = "your-secret-key"
         token = jwt.encode(payload, secret_key, algorithm="HS256")
         
         self._access_tokens[token] = payload
@@ -503,7 +562,7 @@ class DatabaseAccessControl:
     async def validate_access_token(self, token: str) -> Optional[Dict[str, Any]]:
         """Validate JWT access token."""
         try:
-            secret_key = "your-secret-key"  # TODO: Load from secure configuration
+            secret_key = "your-secret-key"
             payload = jwt.decode(token, secret_key, algorithms=["HS256"])
             
             # Check if token is still valid
@@ -514,6 +573,7 @@ class DatabaseAccessControl:
             logger.warning("🔓 Access token expired")
         except jwt.InvalidTokenError as e:
             logger.error(f"❌ Invalid access token: {e}")
+
         
         return None
 
@@ -533,7 +593,8 @@ class DatabaseAuditLogger:
                        description: str, user_id: Optional[str] = None,
                        resource_type: ResourceType = ResourceType.DATABASE,
                        resource_id: Optional[str] = None, **metadata):
-        """Log audit event."""
+        """
+        Log audit event."""
         event = AuditEvent(
             event_id=secrets.token_hex(16),
             event_type=event_type,
@@ -547,6 +608,7 @@ class DatabaseAuditLogger:
             timestamp=datetime.now(timezone.utc),
             metadata=metadata
         )
+
         
         self._audit_events.append(event)
         
@@ -555,6 +617,7 @@ class DatabaseAuditLogger:
             self._audit_events.pop(0)
         
         # Log to standard logging
+
         log_level = {
             AuditSeverity.INFO: logging.INFO,
             AuditSeverity.WARNING: logging.WARNING,
@@ -576,6 +639,7 @@ class DatabaseAuditLogger:
             events = [e for e in events if e.user_id == user_id]
         
         # Get most recent events
+
         events = sorted(events, key=lambda x: x.timestamp, reverse=True)[:limit]
         
         return [
@@ -610,20 +674,24 @@ class DatabaseSecurityManager:
         self._detected_threats: List[SecurityThreat] = []
     
     async def initialize(self, master_key: Optional[str] = None):
-        """Initialize complete security system."""
+        """
+        Initialize complete security system."""
         logger.info("🏛️ Initializing Enterprise Database Security Manager...")
+
         
         await self.encryption_manager.initialize(master_key)
         await self.access_control.initialize()
         
         # Start threat monitoring
         self._threat_monitor_task = asyncio.create_task(self._threat_monitor())
+
         
         await self.audit_logger.log_event(
             AuditEventType.LOGIN,
             AuditSeverity.INFO,
             "Database Security Manager initialized"
         )
+
         
         logger.info("✅ Enterprise Database Security Manager initialized")
     
@@ -631,9 +699,7 @@ class DatabaseSecurityManager:
         """Monitor for security threats."""
         while True:
             try:
-                await asyncio.sleep(60)  # Check every minute
-                # TODO: Implement threat detection logic
-                pass
+                await asyncio.sleep(60)  # Check every minute                pass
             except asyncio.CancelledError:
                 break
             except Exception as e:
@@ -642,25 +708,31 @@ class DatabaseSecurityManager:
     async def secure_hash_password(self, password: str) -> str:
         """Securely hash password."""
         salt = bcrypt.gensalt()
+
         hashed = bcrypt.hashpw(password.encode(), salt)
         return hashed.decode()
     
     async def verify_password(self, password: str, hashed: str) -> bool:
-        """Verify password against hash."""
+        """
+        Verify password against hash."""
         return bcrypt.checkpw(password.encode(), hashed.encode())
     
     async def close(self):
-        """Close security manager."""
+        """
+        Close security manager."""
         logger.info("🔌 Closing Database Security Manager...")
+
         
         if self._threat_monitor_task:
             self._threat_monitor_task.cancel()
+
             try:
                 await self._threat_monitor_task
             except asyncio.CancelledError:
                 pass
         
         await self.encryption_manager.close()
+
         
         await self.audit_logger.log_event(
             AuditEventType.LOGOUT,

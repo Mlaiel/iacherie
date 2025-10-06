@@ -71,7 +71,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class ContentProtectionType(Enum):
-    """Types de protection de contenu"""
+    """
+        Types de protection de contenu"""
     WATERMARK = "watermark"
     FINGERPRINT = "fingerprint"
     COPYRIGHT = "copyright"
@@ -123,7 +124,8 @@ class ProtectionMetrics:
 
 @dataclass
 class WatermarkConfig:
-    """Configuration de watermark"""
+    """
+        Configuration de watermark"""
     opacity: float = 0.3
     position: str = "center"
     size_ratio: float = 0.1
@@ -247,7 +249,8 @@ class ContentProtectionRevenueSystem:
         self.watermark_engine = WatermarkMonetizationEngine(db_session, redis_client)
     
     def _initialize_ml_models(self):
-        """Initialiser les modèles ML pour détection"""
+        """
+        Initialiser les modèles ML pour détection"""
         try:
             # Modèle de détection de violations
             self.violation_detector = IsolationForest(
@@ -261,6 +264,7 @@ class ContentProtectionRevenueSystem:
                 max_depth=15,
                 random_state=42
             )
+
             
         except Exception as e:
             self.logger.error(f"Erreur initialisation modèles ML: {e}")
@@ -274,23 +278,29 @@ class ContentProtectionRevenueSystem:
         """Protéger un asset de contenu et activer la monétisation"""
         try:
             # Lecture et analyse du fichier
+
             content_data = await content_file.read()
+
+
             file_hash = hashlib.sha256(content_data).hexdigest()
             
             # Vérification unicité
             existing_asset = self.db.query(ContentAsset).filter(
                 ContentAsset.file_hash == file_hash
             ).first()
+
             
             if existing_asset:
                 raise ValueError("Asset déjà protégé")
             
             # Génération du fingerprint
+
             fingerprint = await self._generate_content_fingerprint(
                 content_data, content_file.content_type
             )
             
             # Application des protections
+
             protection_results = {}
             
             # Watermark si demandé
@@ -298,6 +308,7 @@ class ContentProtectionRevenueSystem:
                 watermark_result = await self.watermark_engine.apply_watermark(
                     content_data, protection_config.get('watermark_config', {})
                 )
+
                 protection_results['watermark'] = watermark_result
             
             # Enregistrement blockchain si demandé
@@ -305,6 +316,7 @@ class ContentProtectionRevenueSystem:
                 blockchain_result = await self._register_blockchain_proof(
                     file_hash, creator_id, protection_config
                 )
+
                 protection_results['blockchain'] = blockchain_result
             
             # Création de l'asset protégé
@@ -322,15 +334,18 @@ class ContentProtectionRevenueSystem:
                 estimated_value=Decimal(str(protection_config.get('estimated_value', 0))),
                 protection_level=protection_config.get('protection_level', 3)
             )
+
             
             if 'blockchain' in protection_results:
                 asset.blockchain_hash = protection_results['blockchain']['hash']
             
             self.db.add(asset)
+
             self.db.commit()
             
             # Activation du monitoring automatique
             await self._activate_violation_monitoring(asset.id)
+
             
             return {
                 'asset_id': asset.id,
@@ -342,7 +357,9 @@ class ContentProtectionRevenueSystem:
             
         except Exception as e:
             self.db.rollback()
+
             self.logger.error(f"Erreur protection asset: {e}")
+
             raise HTTPException(status_code=500, detail=str(e))
     
     async def _generate_content_fingerprint(
@@ -355,18 +372,23 @@ class ContentProtectionRevenueSystem:
             if content_type.startswith('image/'):
                 # Fingerprint d'image
                 return await self._generate_image_fingerprint(content_data)
+
             elif content_type.startswith('video/'):
                 # Fingerprint de vidéo
                 return await self._generate_video_fingerprint(content_data)
+
             elif content_type.startswith('audio/'):
                 # Fingerprint audio
                 return await self._generate_audio_fingerprint(content_data)
+
             else:
                 # Fingerprint générique basé sur hash
                 return hashlib.sha256(content_data).digest()
+
                 
         except Exception as e:
             self.logger.error(f"Erreur génération fingerprint: {e}")
+
             return hashlib.sha256(content_data).digest()
     
     async def _generate_image_fingerprint(self, image_data: bytes) -> bytes:
@@ -376,16 +398,24 @@ class ContentProtectionRevenueSystem:
             image = Image.open(io.BytesIO(image_data))
             
             # Génération de hash perceptuel
+
             dhash = imagehash.dhash(image)
+
+
             phash = imagehash.phash(image)
+
+
             ahash = imagehash.average_hash(image)
             
             # Combinaison des hashes
+
             combined_hash = f"{dhash}{phash}{ahash}"
             return combined_hash.encode('utf-8')
+
             
         except Exception as e:
             self.logger.error(f"Erreur fingerprint image: {e}")
+
             return hashlib.sha256(image_data).digest()
     
     async def create_content_license(
@@ -397,22 +427,27 @@ class ContentProtectionRevenueSystem:
         """Créer une licence de contenu avec revenus automatiques"""
         try:
             # Vérification de l'asset
+
             asset = self.db.query(ContentAsset).filter(
                 ContentAsset.id == asset_id
             ).first()
+
             
             if not asset:
                 raise ValueError("Asset non trouvé")
             
             # Validation des termes
+
             validated_terms = await self._validate_license_terms(license_terms)
             
             # Calcul des frais de licence
+
             license_fees = await self._calculate_license_fees(
                 asset, validated_terms
             )
             
             # Création de la licence
+
             license = CopyrightLicense(
                 asset_id=asset_id,
                 licensee_id=licensee_id,
@@ -429,6 +464,7 @@ class ContentProtectionRevenueSystem:
                 start_date=datetime.fromisoformat(validated_terms['start_date']),
                 end_date=datetime.fromisoformat(validated_terms['end_date']) if validated_terms.get('end_date') else None
             )
+
             
             self.db.add(license)
             
@@ -441,14 +477,18 @@ class ContentProtectionRevenueSystem:
                     amount=license_fees['base_fee'],
                     description=f"Licence {validated_terms['type']}"
                 )
+
             
             self.db.commit()
+
             
             return license.id
             
         except Exception as e:
             self.db.rollback()
+
             self.logger.error(f"Erreur création licence: {e}")
+
             raise
     
     async def detect_content_violations(
@@ -469,38 +509,46 @@ class ContentProtectionRevenueSystem:
                 assets = self.db.query(ContentAsset).filter(
                     ContentAsset.status == "active"
                 ).all()
+
             
             for asset in assets:
                 if not asset:
                     continue
                 
                 # Scan sur différentes sources
+
                 sources = scan_sources or ['web', 'social_media', 'marketplace']
                 
                 for source in sources:
                     source_violations = await self._scan_source_for_violations(
                         asset, source
                     )
+
                     violations.extend(source_violations)
             
             # Traitement des violations détectées
+
             processed_violations = []
             for violation in violations:
                 if violation['confidence_score'] >= self.config['detection_confidence_threshold']:
                     # Enregistrement de la violation
+
                     violation_record = await self._record_violation(violation)
                     
                     # Action automatique si confiance élevée
                     if violation['confidence_score'] >= self.config['auto_enforcement_threshold']:
                         enforcement_result = await self._auto_enforce_violation(violation_record)
+
                         violation['enforcement_action'] = enforcement_result
                     
                     processed_violations.append(violation)
+
             
             return processed_violations
             
         except Exception as e:
             self.logger.error(f"Erreur détection violations: {e}")
+
             return []
     
     async def _scan_source_for_violations(
@@ -514,23 +562,33 @@ class ContentProtectionRevenueSystem:
             
             if source == 'web':
                 # Scan web avec recherche inverse d'images
+
                 web_violations = await self._scan_web_violations(asset)
+
                 violations.extend(web_violations)
+
                 
             elif source == 'social_media':
                 # Scan réseaux sociaux
+
                 social_violations = await self._scan_social_media_violations(asset)
+
                 violations.extend(social_violations)
+
                 
             elif source == 'marketplace':
                 # Scan marketplaces
+
                 marketplace_violations = await self._scan_marketplace_violations(asset)
+
                 violations.extend(marketplace_violations)
+
             
             return violations
             
         except Exception as e:
             self.logger.error(f"Erreur scan source {source}: {e}")
+
             return []
     
     async def process_violation_recovery(
@@ -543,30 +601,46 @@ class ContentProtectionRevenueSystem:
             violation = self.db.query(ViolationDetection).filter(
                 ViolationDetection.id == violation_id
             ).first()
+
             
             if not violation:
                 raise ValueError("Violation non trouvée")
+
+
             
             recovery_amount = Decimal('0')
+
             
             if recovery_action == 'takedown':
                 # Demande de retrait
+
                 recovery_result = await self._process_takedown_request(violation)
+
+
                 recovery_amount = violation.estimated_damages * Decimal('0.1')  # Frais évités
                 
             elif recovery_action == 'license_enforcement':
                 # Enforcement de licence rétroactive
+
                 recovery_result = await self._enforce_retroactive_license(violation)
+
+
                 recovery_amount = violation.estimated_damages
                 
             elif recovery_action == 'legal_action':
                 # Action légale
+
                 recovery_result = await self._initiate_legal_action(violation)
+
+
                 recovery_amount = violation.estimated_damages * self.config['violation_penalty_multiplier']
                 
             elif recovery_action == 'settlement':
                 # Règlement amiable
+
                 recovery_result = await self._negotiate_settlement(violation)
+
+
                 recovery_amount = violation.recovery_potential
             
             # Enregistrement du revenu récupéré
@@ -583,8 +657,10 @@ class ContentProtectionRevenueSystem:
             violation.resolution_status = 'processed'
             violation.resolution_details = recovery_result
             violation.resolved_at = datetime.utcnow()
+
             
             self.db.commit()
+
             
             return {
                 'violation_id': violation_id,
@@ -596,7 +672,9 @@ class ContentProtectionRevenueSystem:
             
         except Exception as e:
             self.db.rollback()
+
             self.logger.error(f"Erreur récupération violation: {e}")
+
             raise
     
     async def _record_protection_revenue(
@@ -610,8 +688,11 @@ class ContentProtectionRevenueSystem:
         """Enregistrer un revenu de protection"""
         try:
             # Calcul des parts
+
             platform_fee = amount * self.config['royalty_collection_fee']
+
             creator_share = amount - platform_fee
+
             
             revenue = ProtectionRevenue(
                 asset_id=asset_id,
@@ -622,15 +703,20 @@ class ContentProtectionRevenueSystem:
                 platform_fee=platform_fee,
                 description=description
             )
+
             
             self.db.add(revenue)
+
             self.db.commit()
+
             
             return revenue.id
             
         except Exception as e:
             self.db.rollback()
+
             self.logger.error(f"Erreur enregistrement revenu protection: {e}")
+
             raise
     
     async def get_protection_analytics(
@@ -641,54 +727,77 @@ class ContentProtectionRevenueSystem:
         """Obtenir les analytics de protection de contenu"""
         try:
             end_date = datetime.utcnow()
+
+
             start_date = end_date - timedelta(days=period_days)
             
             # Requête de base pour assets
+
             asset_query = self.db.query(ContentAsset).filter(
                 ContentAsset.created_at >= start_date,
                 ContentAsset.created_at <= end_date
             )
+
             
             if creator_id:
                 asset_query = asset_query.filter(ContentAsset.creator_id == creator_id)
+
+
             
             assets = asset_query.all()
             
             # Requête pour violations
+
             violation_query = self.db.query(ViolationDetection).filter(
                 ViolationDetection.detected_at >= start_date,
                 ViolationDetection.detected_at <= end_date
             )
+
             
             if creator_id:
                 asset_ids = [asset.id for asset in assets]
+
                 violation_query = violation_query.filter(
                     ViolationDetection.asset_id.in_(asset_ids)
                 )
+
+
             
             violations = violation_query.all()
             
             # Requête pour revenus
+
             revenue_query = self.db.query(ProtectionRevenue).filter(
                 ProtectionRevenue.created_at >= start_date,
                 ProtectionRevenue.created_at <= end_date
             )
+
             
             if creator_id:
                 asset_ids = [asset.id for asset in assets]
+
                 revenue_query = revenue_query.filter(
                     ProtectionRevenue.asset_id.in_(asset_ids)
                 )
+
+
             
             revenues = revenue_query.all()
             
             # Calcul des métriques
+
             metrics = ProtectionMetrics()
+
             metrics.total_protected_assets = len(assets)
+
             metrics.violations_detected = len(violations)
+
             metrics.violations_resolved = len([v for v in violations if v.resolution_status == 'resolved'])
+
             metrics.revenue_protected = sum(asset.estimated_value or 0 for asset in assets)
+
             metrics.revenue_recovered = sum(r.amount for r in revenues if r.revenue_type == 'recovery')
+
             
             if violations:
                 metrics.detection_accuracy = sum(
@@ -696,17 +805,24 @@ class ContentProtectionRevenueSystem:
                 ) / len(violations)
             
             # Répartition par type de protection
+
             protection_distribution = defaultdict(int)
+
             for asset in assets:
                 for protection_type in asset.protection_types or []:
                     protection_distribution[protection_type] += 1
             
             # Tendances de violations
+
             violation_trends = await self._calculate_violation_trends(violations)
             
             # ROI de protection
+
             total_protection_cost = len(assets) * Decimal('100')  # Coût estimé protection
+
             total_revenue_generated = sum(r.amount for r in revenues)
+
+
             protection_roi = float(total_revenue_generated / total_protection_cost) if total_protection_cost > 0 else 0
             
             return {
@@ -746,6 +862,7 @@ class ContentProtectionRevenueSystem:
             
         except Exception as e:
             self.logger.error(f"Erreur analytics protection: {e}")
+
             return {}
 
 class CopyrightRevenueManager:
@@ -761,25 +878,31 @@ class CopyrightRevenueManager:
         license_id: str,
         usage_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Traiter un paiement de royalties"""
+        """
+        Traiter un paiement de royalties"""
         try:
             license = self.db.query(CopyrightLicense).filter(
                 CopyrightLicense.id == license_id
             ).first()
+
             
             if not license:
                 raise ValueError("Licence non trouvée")
             
             # Calcul des royalties basé sur l'usage
+
             royalty_amount = await self._calculate_usage_royalties(
                 license, usage_data
             )
+
             
             if royalty_amount > 0:
                 # Enregistrement du revenu
+
                 revenue_id = await self._record_royalty_revenue(
                     license, royalty_amount, usage_data
                 )
+
                 
                 return {
                     'license_id': license_id,
@@ -792,6 +915,7 @@ class CopyrightRevenueManager:
             
         except Exception as e:
             self.logger.error(f"Erreur traitement royalties: {e}")
+
             raise
 
 class AntiPiracyRevenueSystem:
@@ -806,26 +930,32 @@ class AntiPiracyRevenueSystem:
         self,
         asset_id: str
     ) -> List[Dict[str, Any]]:
-        """Scanner les réseaux de piratage"""
+        """
+        Scanner les réseaux de piratage"""
         try:
             # Simulation de scan piratage
+
             piracy_sources = [
                 'torrent_networks',
                 'streaming_sites',
                 'download_platforms',
                 'social_networks'
             ]
+
             
             detected_piracy = []
             
             for source in piracy_sources:
                 source_results = await self._scan_piracy_source(asset_id, source)
+
                 detected_piracy.extend(source_results)
+
             
             return detected_piracy
             
         except Exception as e:
             self.logger.error(f"Erreur scan piratage: {e}")
+
             return []
 
 class WatermarkMonetizationEngine:
@@ -841,17 +971,22 @@ class WatermarkMonetizationEngine:
         content_data: bytes,
         watermark_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Appliquer un watermark monétisé"""
+        """
+        Appliquer un watermark monétisé"""
         try:
             # Configuration du watermark
+
             config = WatermarkConfig(**watermark_config)
             
             # Application du watermark (simulation)
+
+
             watermarked_data = await self._apply_watermark_to_content(
                 content_data, config
             )
             
             # Génération des données de tracking
+
             tracking_data = {
                 'watermark_id': str(uuid.uuid4()),
                 'config': watermark_config,
@@ -866,6 +1001,7 @@ class WatermarkMonetizationEngine:
             
         except Exception as e:
             self.logger.error(f"Erreur application watermark: {e}")
+
             raise
 
 # Factory function

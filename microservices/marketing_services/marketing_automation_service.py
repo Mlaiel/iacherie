@@ -157,11 +157,11 @@ class MarketingAutomationService:
     - AI Prompt: Intelligent content generation and personalization
     """
     
-    def __init__(self, config: Dict[str, Any]):
-        self.config = config
+    def __init__(self, config: Dict[str, Any] = None):
+        self.config = config or {}
         self.redis_client = redis.Redis(
-            host=config.get('redis_host', 'localhost'),
-            port=config.get('redis_port', 6379),
+            host=self.config.get('redis_host', 'localhost'),
+            port=self.config.get('redis_port', 6379),
             decode_responses=True
         )
         

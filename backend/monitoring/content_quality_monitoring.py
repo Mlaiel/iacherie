@@ -27,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 
 class QualityDimension(Enum):
-    """Quality dimensions for content assessment"""
+    """
+        Quality dimensions for content assessment"""
     TECHNICAL_QUALITY = "technical_quality"
     AESTHETIC_QUALITY = "aesthetic_quality"
     CONTENT_RELEVANCE = "content_relevance"
@@ -169,6 +170,7 @@ class ContentQualityMonitor:
         
         # Quality issue detection patterns
         self.issue_detection_patterns = self._initialize_issue_patterns()
+
         
         logger.info("🔍 Content Quality Monitor initialized")
     
@@ -268,16 +270,19 @@ class ContentQualityMonitor:
     ) -> QualityAnalysisResult:
         """Perform comprehensive content quality analysis"""
         start_time = datetime.now()
+
         analysis_id = hashlib.md5(f"{content_id}_{start_time.isoformat()}".encode()).hexdigest()[:16]
         
         try:
             # Initialize quality metrics
+
             quality_metrics = QualityMetrics(
                 content_id=content_id,
                 content_format=content_format
             )
             
             # Perform format-specific analysis
+
             format_analysis = await self._analyze_format_specific_quality(
                 content_format, content_data
             )
@@ -334,6 +339,7 @@ class ContentQualityMonitor:
             # Check if AI enhancement is needed
             if quality_metrics.overall_quality_score < self.monitoring_config["enhancement_threshold"]:
                 enhancement_results = await self._suggest_ai_enhancement(quality_metrics)
+
                 quality_metrics.ai_improvement_score = enhancement_results.get("potential_improvement", 0.0)
             
             # Predict engagement based on quality
@@ -343,14 +349,14 @@ class ContentQualityMonitor:
             self.quality_metrics_cache[content_id] = quality_metrics
             
             # Create analysis result
+
             analysis_result = QualityAnalysisResult(
                 content_id=content_id,
                 analysis_id=analysis_id,
                 quality_metrics=quality_metrics,
                 format_specific_analysis=format_analysis,
                 analysis_duration_ms=int((datetime.now() - start_time).total_seconds() * 1000),
-                analysis_confidence=0.85,  # Placeholder confidence score
-                analysis_completeness=1.0 if detailed_analysis else 0.8
+                analysis_confidence=0.85,                analysis_completeness=1.0 if detailed_analysis else 0.8
             )
             
             # Add historical comparison if available
@@ -372,8 +378,10 @@ class ContentQualityMonitor:
             
             # Store in history
             self.analysis_history[content_id].append(analysis_result)
+
             
             logger.info(f"✅ Quality analysis completed for {content_id}: {quality_metrics.overall_quality_score:.2f}")
+
             return analysis_result
             
         except Exception as e:
@@ -397,18 +405,25 @@ class ContentQualityMonitor:
         try:
             if content_format == ContentFormat.AUDIO:
                 analysis.update(await self._analyze_audio_quality(content_data))
+
             elif content_format == ContentFormat.VIDEO:
                 analysis.update(await self._analyze_video_quality(content_data))
+
             elif content_format == ContentFormat.IMAGE:
                 analysis.update(await self._analyze_image_quality(content_data))
+
             elif content_format == ContentFormat.TEXT:
                 analysis.update(await self._analyze_text_quality(content_data))
+
             elif content_format == ContentFormat.VOICE:
                 analysis.update(await self._analyze_voice_quality(content_data))
+
             
         except Exception as e:
             logger.error(f"❌ Failed format-specific analysis: {e}")
+
             analysis["error"] = str(e)
+
         
         return analysis
     
@@ -423,11 +438,16 @@ class ContentQualityMonitor:
         }
         
         # Calculate audio quality scores
+
         criteria = self.format_quality_criteria[ContentFormat.AUDIO]["technical_criteria"]
+
         
         bitrate_score = min(1.0, analysis["bitrate"] / criteria["min_bitrate"])
+
         loudness_score = 1.0 - abs(analysis["loudness"] - criteria["optimal_loudness"]) / 20
+
         dynamic_range_score = min(1.0, analysis["dynamic_range"] / criteria["min_dynamic_range"])
+
         
         analysis["quality_scores"] = {
             "bitrate_score": bitrate_score,
@@ -448,9 +468,13 @@ class ContentQualityMonitor:
         }
         
         # Calculate video quality scores
+
         resolution_score = 1.0 if analysis["resolution"] >= "720p" else 0.7
+
         fps_score = min(1.0, analysis["fps"] / 30)
+
         bitrate_score = min(1.0, analysis["bitrate"] / 2000)
+
         
         analysis["quality_scores"] = {
             "resolution_score": resolution_score,
@@ -471,14 +495,21 @@ class ContentQualityMonitor:
         }
         
         # Calculate image quality scores
+
         min_dimension = min(analysis["resolution"]) if isinstance(analysis["resolution"], list) else 1080
+
         resolution_score = min(1.0, min_dimension / 1080)
         
         # Format scoring (PNG > JPEG > others)
+
         format_scores = {"PNG": 1.0, "JPEG": 0.9, "WebP": 0.95}
+
         format_score = format_scores.get(analysis["format"], 0.8)
+
+
         
         color_depth_score = min(1.0, analysis["color_depth"] / 24)
+
         
         analysis["quality_scores"] = {
             "resolution_score": resolution_score,
@@ -491,7 +522,9 @@ class ContentQualityMonitor:
     async def _analyze_text_quality(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze text content quality"""
         text_content = content_data.get("text", "")
+
         word_count = len(text_content.split()) if text_content else 0
+
         
         analysis = {
             "word_count": word_count,
@@ -501,15 +534,18 @@ class ContentQualityMonitor:
         }
         
         # Calculate text quality scores
+
         criteria = self.format_quality_criteria[ContentFormat.TEXT]["technical_criteria"]
+
         
         word_count_score = min(1.0, word_count / criteria["min_word_count"])
-        readability_score = 0.8  # Placeholder - would use actual readability analysis
+
+        readability_score = 0.8
         
         analysis["quality_scores"] = {
             "word_count_score": word_count_score,
             "readability_score": readability_score,
-            "structure_score": 0.8  # Placeholder
+            "structure_score": 0.8
         }
         
         return analysis
@@ -517,6 +553,7 @@ class ContentQualityMonitor:
     async def _analyze_voice_quality(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze voice content quality"""
         # Voice analysis is similar to audio but with speech-specific metrics
+
         analysis = await self._analyze_audio_quality(content_data)
         
         # Add voice-specific metrics
@@ -526,6 +563,7 @@ class ContentQualityMonitor:
             "pace_score": content_data.get("pace_score", 0.8),
             "pronunciation_score": content_data.get("pronunciation_score", 0.9)
         })
+
         
         return analysis
     
@@ -538,15 +576,19 @@ class ContentQualityMonitor:
         """Calculate technical quality score"""
         try:
             quality_scores = format_analysis.get("quality_scores", {})
+
             if not quality_scores:
                 return 0.7  # Default score
             
             # Average all technical quality scores
+
             scores = list(quality_scores.values())
+
             return statistics.mean(scores) if scores else 0.7
             
         except Exception as e:
             logger.error(f"❌ Failed to calculate technical quality: {e}")
+
             return 0.7
     
     async def _calculate_aesthetic_quality(
@@ -560,33 +602,56 @@ class ContentQualityMonitor:
             # Aesthetic quality is format-dependent
             if content_format in [ContentFormat.IMAGE, ContentFormat.VIDEO]:
                 # Visual aesthetic scoring
+
                 composition_score = content_data.get("composition_score", 0.7)
+
+
                 color_harmony_score = content_data.get("color_harmony", 0.7)
+
+
                 visual_appeal_score = content_data.get("visual_appeal", 0.7)
+
                 
                 return statistics.mean([composition_score, color_harmony_score, visual_appeal_score])
+
             
             elif content_format in [ContentFormat.AUDIO, ContentFormat.VOICE, ContentFormat.PODCAST]:
                 # Audio aesthetic scoring
+
                 clarity_score = content_data.get("clarity_score", 0.8)
+
+
                 balance_score = content_data.get("balance_score", 0.8)
+
+
                 production_quality = content_data.get("production_quality", 0.7)
+
                 
                 return statistics.mean([clarity_score, balance_score, production_quality])
+
             
             elif content_format == ContentFormat.TEXT:
                 # Text aesthetic scoring (readability, structure)
+
+
                 structure_score = content_data.get("structure_score", 0.8)
+
+
                 flow_score = content_data.get("flow_score", 0.7)
+
+
                 formatting_score = content_data.get("formatting_score", 0.8)
+
                 
                 return statistics.mean([structure_score, flow_score, formatting_score])
+
             
             else:
                 return 0.7  # Default for other formats
                 
         except Exception as e:
             logger.error(f"❌ Failed to calculate aesthetic quality: {e}")
+
             return 0.7
     
     async def _calculate_content_relevance(
@@ -597,23 +662,34 @@ class ContentQualityMonitor:
         """Calculate content relevance score"""
         try:
             # Analyze content relevance factors
+
             topic_relevance = content_data.get("topic_relevance", 0.8)
+
+
             target_audience_match = content_data.get("audience_match", 0.7)
+
+
             trending_factor = content_data.get("trending_factor", 0.6)
+
+
             keyword_relevance = content_data.get("keyword_relevance", 0.7)
             
             # Weight the factors
+
             relevance_score = (
                 topic_relevance * 0.3 +
                 target_audience_match * 0.3 +
                 trending_factor * 0.2 +
                 keyword_relevance * 0.2
             )
+
             
             return min(1.0, relevance_score)
+
             
         except Exception as e:
             logger.error(f"❌ Failed to calculate content relevance: {e}")
+
             return 0.7
     
     async def _calculate_engagement_potential(
@@ -625,23 +701,35 @@ class ContentQualityMonitor:
         """Calculate engagement potential score"""
         try:
             # Base engagement potential on various factors
+
             technical_contribution = quality_metrics.technical_quality_score * 0.3
+
             aesthetic_contribution = quality_metrics.aesthetic_quality_score * 0.3
+
             relevance_contribution = quality_metrics.content_relevance_score * 0.2
             
             # Format-specific engagement factors
+
             format_engagement_factor = 0.2
             if content_format == ContentFormat.VIDEO:
                 # Videos typically have higher engagement potential
+
                 format_engagement_factor = min(1.0, content_data.get("duration", 60) / 300) * 0.2  # Optimal around 5 minutes
             elif content_format == ContentFormat.IMAGE:
                 # Images with faces or vibrant colors have higher engagement
+
                 visual_impact = content_data.get("visual_impact", 0.7)
+
+
                 format_engagement_factor = visual_impact * 0.2
             elif content_format == ContentFormat.TEXT:
                 # Text engagement depends on readability and structure
+
                 readability = content_data.get("readability_score", 0.7)
+
+
                 format_engagement_factor = (readability / 100) * 0.2  # Normalize readability score
+
             
             engagement_potential = (
                 technical_contribution +
@@ -649,11 +737,14 @@ class ContentQualityMonitor:
                 relevance_contribution +
                 format_engagement_factor
             )
+
             
             return min(1.0, engagement_potential)
+
             
         except Exception as e:
             logger.error(f"❌ Failed to calculate engagement potential: {e}")
+
             return 0.7
     
     async def _calculate_quality_dimensions(
@@ -689,9 +780,11 @@ class ContentQualityMonitor:
             
             # Originality dimension
             dimensions[QualityDimension.ORIGINALITY] = content_data.get("originality_score", 0.7)
+
             
         except Exception as e:
             logger.error(f"❌ Failed to calculate quality dimensions: {e}")
+
         
         return dimensions
     
@@ -699,12 +792,14 @@ class ContentQualityMonitor:
         """Calculate overall quality score from all dimensions"""
         try:
             # Weight the main quality components
+
             weights = {
                 "technical": 0.25,
                 "aesthetic": 0.25,
                 "relevance": 0.25,
                 "engagement": 0.25
             }
+
             
             overall_score = (
                 quality_metrics.technical_quality_score * weights["technical"] +
@@ -712,11 +807,14 @@ class ContentQualityMonitor:
                 quality_metrics.content_relevance_score * weights["relevance"] +
                 quality_metrics.engagement_potential_score * weights["engagement"]
             )
+
             
             return min(1.0, overall_score)
+
             
         except Exception as e:
             logger.error(f"❌ Failed to calculate overall quality: {e}")
+
             return 0.7
     
     def _determine_quality_level(self, overall_score: float) -> QualityLevel:
@@ -738,7 +836,8 @@ class ContentQualityMonitor:
         content_data: Dict[str, Any],
         quality_metrics: QualityMetrics
     ) -> List[Dict[str, Any]]:
-        """Detect quality issues in content"""
+        """
+        Detect quality issues in content"""
         issues = []
         
         try:
@@ -761,7 +860,9 @@ class ContentQualityMonitor:
                 })
             
             # Check optimization issues
+
             seo_score = quality_metrics.quality_dimensions.get(QualityDimension.SEO_OPTIMIZATION, 0.6)
+
             if seo_score < 0.5:
                 issues.append({
                     "type": QualityIssueType.OPTIMIZATION_ISSUE.value,
@@ -771,7 +872,9 @@ class ContentQualityMonitor:
                 })
             
             # Check accessibility issues
+
             accessibility_score = quality_metrics.quality_dimensions.get(QualityDimension.ACCESSIBILITY, 0.8)
+
             if accessibility_score < 0.7:
                 issues.append({
                     "type": QualityIssueType.ACCESSIBILITY_ISSUE.value,
@@ -779,9 +882,11 @@ class ContentQualityMonitor:
                     "description": "Accessibility features missing or inadequate",
                     "score": accessibility_score
                 })
+
         
         except Exception as e:
             logger.error(f"❌ Failed to detect quality issues: {e}")
+
         
         return issues
     
@@ -803,22 +908,28 @@ class ContentQualityMonitor:
             # Check format-specific compliance
             if content_format == ContentFormat.VIDEO:
                 duration = content_data.get("duration", 0)
+
                 if duration > 900:  # 15 minutes
                     compliance["instagram"] = False  # Instagram has limits on video length
                 
             elif content_format == ContentFormat.AUDIO:
                 duration = content_data.get("duration", 0)
+
                 if duration > 600:  # 10 minutes
                     compliance["twitter"] = False  # Twitter has audio length limits
             
             # Check general content compliance (placeholder)
+
+
             content_rating = content_data.get("content_rating", "safe")
+
             if content_rating != "safe":
                 for platform in compliance:
                     compliance[platform] = False
         
         except Exception as e:
             logger.error(f"❌ Failed to check platform compliance: {e}")
+
         
         return compliance
     
@@ -834,46 +945,60 @@ class ContentQualityMonitor:
             # Technical optimization recommendations
             if quality_metrics.technical_quality_score < 0.7:
                 recommendations.append("Improve technical quality through better recording/capture equipment")
+
                 
                 if quality_metrics.content_format == ContentFormat.AUDIO:
                     recommendations.append("Consider audio post-processing to enhance sound quality")
+
                 elif quality_metrics.content_format == ContentFormat.VIDEO:
                     recommendations.append("Optimize video encoding settings for better quality")
+
                 elif quality_metrics.content_format == ContentFormat.IMAGE:
                     recommendations.append("Increase image resolution and reduce compression artifacts")
             
             # Aesthetic optimization recommendations
             if quality_metrics.aesthetic_quality_score < 0.7:
                 recommendations.append("Enhance visual/aesthetic appeal through better composition and design")
+
                 
                 if quality_metrics.content_format in [ContentFormat.IMAGE, ContentFormat.VIDEO]:
                     recommendations.append("Apply color grading and improve visual composition")
+
                 elif quality_metrics.content_format in [ContentFormat.AUDIO, ContentFormat.VOICE]:
                     recommendations.append("Improve audio mixing and production quality")
             
             # Content relevance recommendations
             if quality_metrics.content_relevance_score < 0.7:
                 recommendations.append("Improve content relevance by targeting trending topics and keywords")
+
                 recommendations.append("Better align content with target audience preferences")
             
             # Engagement potential recommendations
             if quality_metrics.engagement_potential_score < 0.7:
                 recommendations.append("Add interactive elements to increase engagement potential")
+
                 recommendations.append("Optimize content length and pacing for better audience retention")
             
             # SEO optimization recommendations
+
             seo_score = quality_metrics.quality_dimensions.get(QualityDimension.SEO_OPTIMIZATION, 0.6)
+
             if seo_score < 0.7:
                 recommendations.append("Optimize titles, descriptions, and tags for better discoverability")
+
                 recommendations.append("Include relevant keywords naturally in content")
             
             # Accessibility recommendations
+
             accessibility_score = quality_metrics.quality_dimensions.get(QualityDimension.ACCESSIBILITY, 0.8)
+
             if accessibility_score < 0.8:
                 recommendations.append("Add captions, alt text, and other accessibility features")
+
         
         except Exception as e:
             logger.error(f"❌ Failed to generate optimization recommendations: {e}")
+
         
         return recommendations
     
@@ -899,12 +1024,16 @@ class ContentQualityMonitor:
                 improvements.append("MEDIUM: Optimize for better audience engagement")
             
             # Priority 5: SEO and discoverability
+
             seo_score = quality_metrics.quality_dimensions.get(QualityDimension.SEO_OPTIMIZATION, 0.6)
+
             if seo_score < 0.6:
                 improvements.append("LOW: Improve SEO and discoverability")
+
         
         except Exception as e:
             logger.error(f"❌ Failed to prioritize improvements: {e}")
+
         
         return improvements
     
@@ -922,7 +1051,9 @@ class ContentQualityMonitor:
             # Calculate potential improvement
             if quality_metrics.content_format == ContentFormat.IMAGE:
                 # Image AI enhancements
+
                 potential_improvement = min(0.3, (0.8 - current_score))
+
                 suggestions["recommended_enhancements"] = [
                     "AI-powered image upscaling",
                     "Automatic color correction",
@@ -931,7 +1062,9 @@ class ContentQualityMonitor:
             
             elif quality_metrics.content_format == ContentFormat.AUDIO:
                 # Audio AI enhancements
+
                 potential_improvement = min(0.25, (0.8 - current_score))
+
                 suggestions["recommended_enhancements"] = [
                     "AI audio enhancement",
                     "Noise reduction",
@@ -940,7 +1073,9 @@ class ContentQualityMonitor:
             
             elif quality_metrics.content_format == ContentFormat.VIDEO:
                 # Video AI enhancements
+
                 potential_improvement = min(0.2, (0.8 - current_score))
+
                 suggestions["recommended_enhancements"] = [
                     "AI video stabilization",
                     "Automatic color grading",
@@ -949,7 +1084,9 @@ class ContentQualityMonitor:
             
             elif quality_metrics.content_format == ContentFormat.TEXT:
                 # Text AI enhancements
+
                 potential_improvement = min(0.15, (0.8 - current_score))
+
                 suggestions["recommended_enhancements"] = [
                     "AI grammar and style correction",
                     "SEO optimization",
@@ -958,11 +1095,13 @@ class ContentQualityMonitor:
             
             else:
                 potential_improvement = min(0.1, (0.8 - current_score))
+
             
             suggestions["potential_improvement"] = potential_improvement
         
         except Exception as e:
             logger.error(f"❌ Failed to suggest AI enhancement: {e}")
+
         
         return suggestions
     
@@ -970,6 +1109,7 @@ class ContentQualityMonitor:
         """Predict engagement rate based on quality metrics"""
         try:
             # Simple correlation model between quality and engagement
+
             base_engagement = quality_metrics.overall_quality_score * 0.1  # 10% max base engagement
             
             # Boost for exceptional quality
@@ -979,6 +1119,7 @@ class ContentQualityMonitor:
                 base_engagement *= 1.2
             
             # Format-specific adjustments
+
             format_multipliers = {
                 ContentFormat.VIDEO: 1.3,
                 ContentFormat.IMAGE: 1.1,
@@ -986,14 +1127,18 @@ class ContentQualityMonitor:
                 ContentFormat.TEXT: 0.8,
                 ContentFormat.VOICE: 0.9
             }
+
             
             multiplier = format_multipliers.get(quality_metrics.content_format, 1.0)
+
+
             predicted_engagement = base_engagement * multiplier
             
             return min(0.2, predicted_engagement)  # Cap at 20% engagement rate
             
         except Exception as e:
             logger.error(f"❌ Failed to predict engagement: {e}")
+
             return 0.05  # Default 5% engagement rate
     
     async def _compare_with_history(
@@ -1004,12 +1149,16 @@ class ContentQualityMonitor:
         """Compare current quality with historical data"""
         try:
             history = self.analysis_history.get(content_id, [])
+
             if len(history) < 2:
                 return {"trend": "insufficient_data"}
             
             # Get previous quality score
+
             previous_score = history[-2].quality_metrics.overall_quality_score
+
             current_score = current_metrics.overall_quality_score
+
             
             improvement = current_score - previous_score
             
@@ -1022,6 +1171,7 @@ class ContentQualityMonitor:
             
         except Exception as e:
             logger.error(f"❌ Failed to compare with history: {e}")
+
             return {"trend": "unknown"}
     
     async def _compare_with_peers(
@@ -1032,19 +1182,26 @@ class ContentQualityMonitor:
         """Compare quality with peer content of same format"""
         try:
             # Get all content of same format
+
             peer_scores = [
                 metrics.overall_quality_score
                 for metrics in self.quality_metrics_cache.values()
+
                 if metrics.content_format == content_format
             ]
             
             if len(peer_scores) < 5:
                 return {"comparison": "insufficient_peer_data"}
+
             
             current_score = quality_metrics.overall_quality_score
+
             avg_peer_score = statistics.mean(peer_scores)
+
+
             
             percentile = len([score for score in peer_scores if score <= current_score]) / len(peer_scores)
+
             
             return {
                 "peer_average": avg_peer_score,
@@ -1055,6 +1212,7 @@ class ContentQualityMonitor:
             
         except Exception as e:
             logger.error(f"❌ Failed to compare with peers: {e}")
+
             return {"comparison": "unknown"}
     
     async def _generate_immediate_actions(self, quality_metrics: QualityMetrics) -> List[str]:
@@ -1063,14 +1221,17 @@ class ContentQualityMonitor:
         
         if quality_metrics.overall_quality_score < 0.4:
             actions.append("URGENT: Content quality critically low - consider re-creating or major enhancement")
+
         
         if quality_metrics.quality_issues:
             high_severity_issues = [issue for issue in quality_metrics.quality_issues if issue.get("severity") == "high"]
             if high_severity_issues:
                 actions.append("Fix high-severity quality issues before publishing")
+
         
         if not quality_metrics.copyright_compliance:
             actions.append("CRITICAL: Resolve copyright compliance issues immediately")
+
         
         return actions
     
@@ -1080,13 +1241,17 @@ class ContentQualityMonitor:
         
         if quality_metrics.overall_quality_score < 0.7:
             improvements.append("Develop content quality improvement strategy")
+
             improvements.append("Invest in better tools and training for content creation")
+
         
         if quality_metrics.ai_optimization_level < 0.5:
             improvements.append("Explore AI-powered content enhancement tools")
+
         
         improvements.append("Establish quality benchmarks and regular quality audits")
         improvements.append("Create quality guidelines and best practices documentation")
+
         
         return improvements
     
@@ -1095,14 +1260,19 @@ class ContentQualityMonitor:
         return self.quality_metrics_cache.get(content_id)
     
     async def get_quality_dashboard(self) -> Dict[str, Any]:
-        """Get quality monitoring dashboard"""
+        """
+        Get quality monitoring dashboard"""
         try:
             current_time = datetime.now()
+
+
             recent_threshold = current_time - timedelta(minutes=self.monitoring_config["real_time_threshold"])
             
             # Get recent content
+
             recent_metrics = [
                 metrics for metrics in self.quality_metrics_cache.values()
+
                 if metrics.analysis_timestamp >= recent_threshold
             ]
             
@@ -1110,13 +1280,17 @@ class ContentQualityMonitor:
                 return {"message": "No recent content to analyze"}
             
             # Calculate dashboard metrics
+
             avg_quality = statistics.mean(m.overall_quality_score for m in recent_metrics)
+
+
             quality_distribution = {level.value: 0 for level in QualityLevel}
             
             for metrics in recent_metrics:
                 quality_distribution[metrics.quality_level.value] += 1
             
             # Identify quality alerts
+
             quality_alerts = [
                 {
                     "content_id": m.content_id,
@@ -1139,6 +1313,7 @@ class ContentQualityMonitor:
             
         except Exception as e:
             logger.error(f"❌ Failed to generate quality dashboard: {e}")
+
             return {"error": str(e)}
 
 
@@ -1151,9 +1326,11 @@ async def analyze_content_quality(content_id: str, content_format: ContentFormat
     return await content_quality_monitor.analyze_content_quality(content_id, content_format, content_data)
 
 async def get_quality_metrics(content_id: str) -> Optional[QualityMetrics]:
-    """Get quality metrics - convenience function"""
+    """
+        Get quality metrics - convenience function"""
     return await content_quality_monitor.get_quality_metrics(content_id)
 
 async def get_quality_dashboard() -> Dict[str, Any]:
-    """Get quality dashboard - convenience function"""
+    """
+        Get quality dashboard - convenience function"""
     return await content_quality_monitor.get_quality_dashboard()

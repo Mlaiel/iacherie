@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class DeFiProtocolsCore:
-    """Advanced DeFiProtocolsCore System"""
+    """
+Advanced DeFiProtocolsCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class DeFiProtocolsCore:
 # Module exports
 __all__ = ["DeFiProtocolsCore"]
 
-logger.info("🏦 DeFiProtocolsCore module loaded")
+logger.info("🏦 DeFiProtocolsCore module initialized")

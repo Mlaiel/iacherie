@@ -106,7 +106,8 @@ class TaskPriority(IntEnum):
 
 
 class TaskStatus(Enum):
-    """Task execution status"""
+    """
+        Task execution status"""
     QUEUED = "queued"
     ASSIGNED = "assigned"
     RUNNING = "running"
@@ -169,7 +170,8 @@ class AgentTask:
 # ============================================================================
 
 class BaseAIAgent(ABC):
-    """Base class for all AI agents"""
+    """
+        Base class for all AI agents"""
     
     def __init__(
         self,
@@ -218,7 +220,8 @@ class BaseAIAgent(ABC):
         pass
     
     async def can_handle_task(self, task: AgentTask) -> bool:
-        """Check if agent can handle the given task"""
+        """
+        Check if agent can handle the given task"""
         return (
             task.agent_type == self.agent_type and
             task.capability_required in self.capabilities and
@@ -227,7 +230,8 @@ class BaseAIAgent(ABC):
         )
     
     async def assign_task(self, task: AgentTask) -> bool:
-        """Assign task to this agent"""
+        """
+        Assign task to this agent"""
         try:
             if not await self.can_handle_task(task):
                 return False
@@ -238,10 +242,12 @@ class BaseAIAgent(ABC):
             task.assigned_agent_id = self.agent_id
             
             logger.info(f"Agent {self.name} assigned task {task.task_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to assign task to agent {self.name}: {e}")
+
             return False
     
     async def execute_task(self, task: AgentTask) -> bool:
@@ -249,24 +255,34 @@ class BaseAIAgent(ABC):
         try:
             if task.assigned_agent_id != self.agent_id:
                 logger.error(f"Task {task.task_id} not assigned to agent {self.agent_id}")
+
                 return False
             
             # Start task execution
             task.status = TaskStatus.RUNNING
             task.started_at = datetime.now(timezone.utc)
+
+
             start_time = time.time()
+
             
             logger.info(f"Agent {self.name} starting task {task.task_id}")
             
             # Process the task (implemented by subclasses)
+
+
             result = await self.process_task(task)
             
             # Complete task
+
             end_time = time.time()
+
+
             processing_time = end_time - start_time
             
             task.status = TaskStatus.COMPLETED
             task.completed_at = datetime.now(timezone.utc)
+
             task.output_data = result
             task.performance_metrics = {
                 "processing_time": processing_time,
@@ -283,20 +299,25 @@ class BaseAIAgent(ABC):
             
             # Add to history
             self._task_history.append(task)
+
             if len(self._task_history) > 100:  # Keep last 100 tasks
                 self._task_history = self._task_history[-100:]
             
             # Update performance metrics
             await self._update_metrics()
+
             
             logger.info(f"Agent {self.name} completed task {task.task_id} in {processing_time:.2f}s")
+
             return True
             
         except Exception as e:
             # Handle task failure
             task.status = TaskStatus.FAILED
             task.error_message = str(e)
+
             task.completed_at = datetime.now(timezone.utc)
+
             
             self.tasks_failed += 1
             self.current_task = None
@@ -304,6 +325,7 @@ class BaseAIAgent(ABC):
             self.metrics["error_count"] += 1
             
             logger.error(f"Agent {self.name} failed task {task.task_id}: {e}")
+
             return False
     
     async def _update_metrics(self):
@@ -317,6 +339,7 @@ class BaseAIAgent(ABC):
             self.metrics["avg_processing_time"] = self.total_processing_time / self.tasks_completed
         
         # Calculate uptime
+
         uptime = (datetime.now(timezone.utc) - self._start_time).total_seconds()
         self.metrics["uptime_seconds"] = uptime
         
@@ -327,6 +350,7 @@ class BaseAIAgent(ABC):
     async def health_check(self) -> Dict[str, Any]:
         """Perform agent health check"""
         await self._update_metrics()
+
         
         return {
             "agent_id": self.agent_id,
@@ -350,7 +374,8 @@ class BaseAIAgent(ABC):
 # ============================================================================
 
 class AudioAnalysisAgent(BaseAIAgent):
-    """Agent for audio content analysis and processing"""
+    """
+        Agent for audio content analysis and processing"""
     
     def __init__(self):
         capabilities = [
@@ -392,19 +417,25 @@ class AudioAnalysisAgent(BaseAIAgent):
         """Process audio analysis task"""
         try:
             capability = task.capability_required
+
             input_data = task.input_data
             
             if capability == "audio_fingerprinting":
                 return await self._generate_audio_fingerprint(input_data)
+
             elif capability == "audio_feature_extraction":
                 return await self._extract_audio_features(input_data)
+
             elif capability == "audio_quality_analysis":
                 return await self._analyze_audio_quality(input_data)
+
             else:
                 raise ValueError(f"Unknown capability: {capability}")
+
                 
         except Exception as e:
             logger.error(f"Audio analysis failed: {e}")
+
             raise
     
     async def _generate_audio_fingerprint(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
@@ -424,6 +455,7 @@ class AudioAnalysisAgent(BaseAIAgent):
     async def _extract_audio_features(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         """Extract audio features"""
         await asyncio.sleep(0.8)
+
         
         return {
             "tempo": 120.5,
@@ -441,6 +473,7 @@ class AudioAnalysisAgent(BaseAIAgent):
     async def _analyze_audio_quality(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze audio quality"""
         await asyncio.sleep(0.6)
+
         
         return {
             "bitrate": input_data.get("bitrate", 320),
@@ -498,24 +531,31 @@ class VideoAnalysisAgent(BaseAIAgent):
         """Process video analysis task"""
         try:
             capability = task.capability_required
+
             input_data = task.input_data
             
             if capability == "video_scene_detection":
                 return await self._detect_video_scenes(input_data)
+
             elif capability == "video_object_detection":
                 return await self._detect_video_objects(input_data)
+
             elif capability == "video_quality_metrics":
                 return await self._analyze_video_quality(input_data)
+
             else:
                 raise ValueError(f"Unknown capability: {capability}")
+
                 
         except Exception as e:
             logger.error(f"Video analysis failed: {e}")
+
             raise
     
     async def _detect_video_scenes(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         """Detect video scenes"""
         await asyncio.sleep(2)
+
         
         return {
             "scenes": [
@@ -531,6 +571,7 @@ class VideoAnalysisAgent(BaseAIAgent):
     async def _detect_video_objects(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         """Detect objects in video"""
         await asyncio.sleep(3)
+
         
         return {
             "objects_detected": [
@@ -547,6 +588,7 @@ class VideoAnalysisAgent(BaseAIAgent):
     async def _analyze_video_quality(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze video quality"""
         await asyncio.sleep(1.5)
+
         
         return {
             "resolution": input_data.get("resolution", "1920x1080"),
@@ -606,24 +648,31 @@ class ImageAnalysisAgent(BaseAIAgent):
         """Process image analysis task"""
         try:
             capability = task.capability_required
+
             input_data = task.input_data
             
             if capability == "image_content_detection":
                 return await self._detect_image_content(input_data)
+
             elif capability == "image_aesthetic_analysis":
                 return await self._analyze_image_aesthetics(input_data)
+
             elif capability == "image_similarity_hash":
                 return await self._generate_similarity_hash(input_data)
+
             else:
                 raise ValueError(f"Unknown capability: {capability}")
+
                 
         except Exception as e:
             logger.error(f"Image analysis failed: {e}")
+
             raise
     
     async def _detect_image_content(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         """Detect content in image"""
         await asyncio.sleep(0.5)
+
         
         return {
             "objects": ["person", "musical_instrument", "stage"],
@@ -639,6 +688,7 @@ class ImageAnalysisAgent(BaseAIAgent):
     async def _analyze_image_aesthetics(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze image aesthetics"""
         await asyncio.sleep(0.4)
+
         
         return {
             "composition_score": 0.82,
@@ -656,6 +706,7 @@ class ImageAnalysisAgent(BaseAIAgent):
     async def _generate_similarity_hash(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         """Generate image similarity hash"""
         await asyncio.sleep(0.2)
+
         
         return {
             "perceptual_hash": f"ph_{hashlib.md5(str(input_data).encode()).hexdigest()[:16]}",
@@ -711,24 +762,31 @@ class TextAnalysisAgent(BaseAIAgent):
         """Process text analysis task"""
         try:
             capability = task.capability_required
+
             input_data = task.input_data
             
             if capability == "text_sentiment_analysis":
                 return await self._analyze_text_sentiment(input_data)
+
             elif capability == "text_keyword_extraction":
                 return await self._extract_keywords(input_data)
+
             elif capability == "text_language_detection":
                 return await self._detect_language(input_data)
+
             else:
                 raise ValueError(f"Unknown capability: {capability}")
+
                 
         except Exception as e:
             logger.error(f"Text analysis failed: {e}")
+
             raise
     
     async def _analyze_text_sentiment(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze text sentiment"""
         await asyncio.sleep(0.3)
+
         
         return {
             "sentiment": "positive",
@@ -750,6 +808,7 @@ class TextAnalysisAgent(BaseAIAgent):
     async def _extract_keywords(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         """Extract keywords from text"""
         await asyncio.sleep(0.25)
+
         
         return {
             "keywords": [
@@ -773,6 +832,7 @@ class TextAnalysisAgent(BaseAIAgent):
     async def _detect_language(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         """Detect text language"""
         await asyncio.sleep(0.1)
+
         
         return {
             "primary_language": "en",
@@ -835,24 +895,31 @@ class ContentProtectionAgent(BaseAIAgent):
         """Process content protection task"""
         try:
             capability = task.capability_required
+
             input_data = task.input_data
             
             if capability == "copyright_infringement_detection":
                 return await self._detect_copyright_infringement(input_data)
+
             elif capability == "dmca_takedown_automation":
                 return await self._generate_dmca_takedown(input_data)
+
             elif capability == "watermark_generation":
                 return await self._generate_watermark(input_data)
+
             else:
                 raise ValueError(f"Unknown capability: {capability}")
+
                 
         except Exception as e:
             logger.error(f"Content protection failed: {e}")
+
             raise
     
     async def _detect_copyright_infringement(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         """Detect copyright infringement"""
         await asyncio.sleep(2)
+
         
         return {
             "infringement_detected": True,
@@ -881,6 +948,7 @@ class ContentProtectionAgent(BaseAIAgent):
     async def _generate_dmca_takedown(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         """Generate DMCA takedown notice"""
         await asyncio.sleep(0.8)
+
         
         return {
             "takedown_notice_id": f"dmca_{uuid.uuid4().hex[:12]}",
@@ -896,6 +964,7 @@ class ContentProtectionAgent(BaseAIAgent):
     async def _generate_watermark(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         """Generate digital watermark"""
         await asyncio.sleep(1.2)
+
         
         return {
             "watermark_id": f"wm_{uuid.uuid4().hex[:16]}",
@@ -955,24 +1024,31 @@ class SecurityMonitoringAgent(BaseAIAgent):
         """Process security monitoring task"""
         try:
             capability = task.capability_required
+
             input_data = task.input_data
             
             if capability == "fraud_detection":
                 return await self._detect_fraud(input_data)
+
             elif capability == "account_security_analysis":
                 return await self._analyze_account_security(input_data)
+
             elif capability == "threat_intelligence":
                 return await self._analyze_threats(input_data)
+
             else:
                 raise ValueError(f"Unknown capability: {capability}")
+
                 
         except Exception as e:
             logger.error(f"Security monitoring failed: {e}")
+
             raise
     
     async def _detect_fraud(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         """Detect fraudulent activities"""
         await asyncio.sleep(1)
+
         
         return {
             "fraud_detected": False,
@@ -990,6 +1066,7 @@ class SecurityMonitoringAgent(BaseAIAgent):
     async def _analyze_account_security(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze account security"""
         await asyncio.sleep(0.6)
+
         
         return {
             "security_score": 0.85,
@@ -1008,6 +1085,7 @@ class SecurityMonitoringAgent(BaseAIAgent):
     async def _analyze_threats(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze threat intelligence"""
         await asyncio.sleep(1.2)
+
         
         return {
             "threat_level": "low",
@@ -1098,9 +1176,11 @@ class AIAgentsOrchestrator:
         # Platform & Distribution Agents (6 agents)
         
         # For this example, we'll create placeholder agents
+
         total_agents_needed = 53 - len(self.agents)
         for i in range(total_agents_needed):
             # Create placeholder agents (in production, these would be fully implemented)
+
             pass
         
         logger.info(f"Initialized {len(self.agents)} AI agents")
@@ -1127,11 +1207,13 @@ class AIAgentsOrchestrator:
         # Add to queue (maintain priority order)
         self.task_queue.append(task)
         self.task_queue.sort(key=lambda t: t.priority.value, reverse=True)
+
         
         logger.info(f"Task {task.task_id} submitted to queue (priority: {priority.name})")
         
         # Start task processing
         asyncio.create_task(self._process_task_queue())
+
         
         return task.task_id
     
@@ -1141,8 +1223,10 @@ class AIAgentsOrchestrator:
             return
         
         # Get available agents
+
         available_agents = [
             agent for agent in self.agents.values()
+
             if agent.status in [AgentStatus.IDLE, AgentStatus.BUSY] and
             len(agent._task_history) < agent.max_concurrent_tasks
         ]
@@ -1151,10 +1235,12 @@ class AIAgentsOrchestrator:
             return
         
         # Process high-priority tasks first
+
         tasks_to_process = self.task_queue[:min(len(available_agents), self.max_concurrent_tasks)]
         
         for task in tasks_to_process:
             # Find suitable agent
+
             suitable_agent = None
             for agent in available_agents:
                 if await agent.can_handle_task(task):
@@ -1166,43 +1252,58 @@ class AIAgentsOrchestrator:
                 self.task_queue.remove(task)
                 
                 # Start task execution
+
                 task_coroutine = self._execute_task_with_agent(suitable_agent, task)
+
+
                 task_future = asyncio.create_task(task_coroutine)
+
                 self._running_tasks[task.task_id] = task_future
                 
                 available_agents.remove(suitable_agent)
     
     async def _execute_task_with_agent(self, agent: BaseAIAgent, task: AgentTask):
-        """Execute task with specific agent"""
+        """
+        Execute task with specific agent"""
         try:
             # Assign task to agent
             if await agent.assign_task(task):
                 # Execute task
+
                 success = await agent.execute_task(task)
+
                 
                 if success:
                     self.completed_tasks.append(task)
+
                     self.metrics["total_tasks_processed"] += 1
                     
                     if task.duration():
                         self.metrics["total_processing_time"] += task.duration()
+
                         self.metrics["average_task_time"] = (
                             self.metrics["total_processing_time"] / 
                             max(self.metrics["total_tasks_processed"], 1)
                         )
+
                 else:
                     self.failed_tasks.append(task)
                 
                 # Update success rate
+
                 total_tasks = len(self.completed_tasks) + len(self.failed_tasks)
+
                 if total_tasks > 0:
                     self.metrics["success_rate"] = (len(self.completed_tasks) / total_tasks) * 100
             
         except Exception as e:
             logger.error(f"Task execution failed: {e}")
+
             task.status = TaskStatus.FAILED
             task.error_message = str(e)
+
             self.failed_tasks.append(task)
+
         
         finally:
             # Remove from running tasks
@@ -1259,11 +1360,14 @@ class AIAgentsOrchestrator:
         """Comprehensive orchestrator health check"""
         try:
             # Agent health checks
+
             agent_health = {}
+
             healthy_agents = 0
             
             for agent_id, agent in self.agents.items():
                 health = await agent.health_check()
+
                 agent_health[agent_id] = health
                 if health["healthy"]:
                     healthy_agents += 1
@@ -1273,6 +1377,7 @@ class AIAgentsOrchestrator:
             self.metrics["queue_length"] = len(self.task_queue)
             
             # Calculate throughput
+
             uptime_hours = (datetime.now(timezone.utc) - self._start_time).total_seconds() / 3600
             if uptime_hours > 0:
                 self.metrics["throughput_per_hour"] = self.metrics["total_tasks_processed"] / uptime_hours
@@ -1294,6 +1399,7 @@ class AIAgentsOrchestrator:
             
         except Exception as e:
             logger.error(f"Health check failed: {e}")
+
             return {
                 "orchestrator": {"healthy": False, "error": str(e)},
                 "agents": {}
@@ -1310,6 +1416,7 @@ class AIAgentsOrchestrator:
             logger.info(f"🤖 Generating content: {prompt[:100]}...")
             
             # Map content types to agent types
+
             agent_mapping = {
                 'content-generation': AgentType.CONTENT_PROCESSING,
                 'text-generation': AgentType.CONTENT_PROCESSING,
@@ -1322,10 +1429,12 @@ class AIAgentsOrchestrator:
                 'seo-optimization': AgentType.SEO_OPTIMIZATION,
                 'analytics': AgentType.ANALYTICS
             }
+
             
             agent_type = agent_mapping.get(content_type, AgentType.CONTENT_PROCESSING)
             
             # Submit task to appropriate agent
+
             task_id = await self.submit_task(
                 agent_type=agent_type,
                 capability_required="content_generation",
@@ -1342,10 +1451,13 @@ class AIAgentsOrchestrator:
             await asyncio.sleep(1)
             
             # Get task status
+
             task_status = await self.get_task_status(task_id)
+
             
             if task_status and task_status.get('status') == 'completed':
                 result = task_status.get('result', {})
+
                 return {
                     'content': result.get('content', self._generate_fallback_content(prompt, content_type)),
                     'agent': result.get('agent_id', 'IA-Agent-Enterprise'),
@@ -1365,6 +1477,7 @@ class AIAgentsOrchestrator:
                 
         except Exception as e:
             logger.error(f"Content generation failed: {e}")
+
             return {
                 'content': self._generate_fallback_content(prompt, content_type),
                 'agent': 'IA-Agent-Error-Fallback',
@@ -1379,6 +1492,7 @@ class AIAgentsOrchestrator:
         import random
         
         # Advanced fallback responses with more intelligence
+
         templates = {
             'content-generation': [
                 f"🎯 Contenu créatif optimisé pour: {prompt}",
@@ -1413,6 +1527,7 @@ class AIAgentsOrchestrator:
         }
         
         # Get random template for the content type
+
         content_templates = templates.get(content_type, templates['content-generation'])
         return random.choice(content_templates)
     
@@ -1428,11 +1543,13 @@ class AIAgentsOrchestrator:
             for cap_id in agent.capabilities:
                 if cap_id not in capabilities[agent_type]:
                     capabilities[agent_type].append(cap_id)
+
         
         return capabilities
     
     async def shutdown(self):
-        """Graceful shutdown of the orchestrator"""
+        """
+        Graceful shutdown of the orchestrator"""
         logger.info("Shutting down AI Agents Orchestrator...")
         
         # Cancel running tasks
@@ -1441,6 +1558,7 @@ class AIAgentsOrchestrator:
         
         # Shutdown executor
         self._executor.shutdown(wait=True)
+
         
         logger.info("AI Agents Orchestrator shutdown complete")
 
@@ -1465,7 +1583,8 @@ async def process_content(
     input_data: Dict[str, Any],
     priority: TaskPriority = TaskPriority.NORMAL
 ) -> str:
-    """Convenience function to process content with AI agents"""
+    """
+        Convenience function to process content with AI agents"""
     
     orchestrator = get_orchestrator()
     
@@ -1476,6 +1595,7 @@ async def process_content(
         "image": AgentType.CONTENT_PROCESSOR,
         "text": AgentType.CONTENT_PROCESSOR
     }
+
     
     agent_type = agent_type_map.get(content_type, AgentType.CONTENT_PROCESSOR)
     
@@ -1536,6 +1656,13 @@ __all__ = [
 ]
 
 # ============================================================================
+# BACKWARD COMPATIBILITY ALIASES
+# ============================================================================
+
+# Alias for common misspellings / variations
+IAAgentsOrchestrator = AIAgentsOrchestrator
+
+# ============================================================================
 # MODULE INITIALIZATION
 # ============================================================================
 
@@ -1546,17 +1673,22 @@ if __name__ == "__main__":
     async def main():
         print("🤖 IA Agents Orchestrator Test")
         print("=" * 50)
+
         
         try:
             # Get orchestrator
+
             orchestrator = get_orchestrator()
             
             # Submit test tasks
+
             audio_task = await process_content(
                 content_type="audio",
                 capability="audio_fingerprinting",
                 input_data={"file_path": "/test/audio.mp3", "duration": 180}
             )
+
+
             
             video_task = await process_content(
                 content_type="video", 
@@ -1568,22 +1700,34 @@ if __name__ == "__main__":
             await asyncio.sleep(2)
             
             # Check task status
+
             audio_status = await orchestrator.get_task_status(audio_task)
+
+
             video_status = await orchestrator.get_task_status(video_task)
+
             
             print(f"✅ Audio task: {audio_status['status'] if audio_status else 'not found'}")
+
             print(f"✅ Video task: {video_status['status'] if video_status else 'not found'}")
             
             # Health check
+
             health = await orchestrator.health_check()
+
             print(f"📊 Orchestrator healthy: {health['orchestrator']['healthy']}")
+
             print(f"📊 Active agents: {health['orchestrator']['healthy_agents']}")
             
             # Available capabilities
+
             capabilities = orchestrator.get_available_capabilities()
+
             print(f"🎯 Available capabilities: {len(capabilities)} agent types")
+
             
             print("🎉 IA Agents Orchestrator test completed successfully!")
+
             
         except Exception as e:
             print(f"❌ IA Agents Orchestrator test failed: {e}")

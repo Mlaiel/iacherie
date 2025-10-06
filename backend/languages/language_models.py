@@ -94,7 +94,8 @@ class ModelRequest:
 
 @dataclass
 class ModelResult:
-    """Result from language model processing"""
+    """
+        Result from language model processing"""
     embeddings: Optional[np.ndarray] = None
     predictions: Optional[Dict[str, Any]] = None
     similarity_scores: Optional[List[float]] = None
@@ -106,7 +107,8 @@ class ModelResult:
 
 @dataclass
 class SimilarityRequest:
-    """Request for semantic similarity calculation"""
+    """
+        Request for semantic similarity calculation"""
     text1: str
     text2: str
     language1: Optional[str] = None
@@ -116,7 +118,8 @@ class SimilarityRequest:
 
 @dataclass
 class SimilarityResult:
-    """Result from similarity calculation"""
+    """
+        Result from similarity calculation"""
     similarity_score: float
     confidence: float
     cross_lingual: bool
@@ -131,7 +134,8 @@ class LanguageModelEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize language model engine"""
+        """
+        Initialize language model engine"""
         self.config = config or {}
         self.models = {}
         self.tokenizers = {}
@@ -163,9 +167,11 @@ class LanguageModelEngine:
         
         # Initialize model capabilities
         self.supported_languages = self._load_supported_languages()
+
         
         if not TRANSFORMERS_AVAILABLE:
             logger.warning("Transformers library not available. Install with: pip install transformers torch sentence-transformers")
+
         
         logger.info("LanguageModelEngine initialized with multi-model support")
     
@@ -181,17 +187,22 @@ class LanguageModelEngine:
         """
         if not TRANSFORMERS_AVAILABLE:
             raise RuntimeError("Transformers library not available")
+
         
         try:
             start_time = datetime.now(timezone.utc)
             
             # Select optimal model for task and language
+
             model_type = await self._select_model(request)
             
             # Load model if not cached
             model, tokenizer = await self._load_model(model_type)
+
+
             
             result = ModelResult()
+
             result.model_used = model_type
             
             # Process based on task type
@@ -199,25 +210,30 @@ class LanguageModelEngine:
                 result.embeddings = await self._generate_embeddings(
                     request.text, model, tokenizer, model_type
                 )
+
                 
             elif request.task == TaskType.SIMILARITY:
                 # For similarity, we need two texts
+
                 texts = request.text.split('\n') if '\n' in request.text else [request.text]
                 if len(texts) >= 2:
                     similarity_score = await self._calculate_similarity(
                         texts[0], texts[1], model, tokenizer, model_type
                     )
+
                     result.similarity_scores = [similarity_score]
                     
             elif request.task == TaskType.SENTIMENT_ANALYSIS:
                 result.predictions = await self._analyze_sentiment(
                     request.text, model, tokenizer, model_type
                 )
+
                 
             elif request.task == TaskType.LANGUAGE_DETECTION:
                 result.predictions = await self._detect_language_features(
                     request.text, model, tokenizer, model_type
                 )
+
                 
             elif request.task == TaskType.CONTENT_ANALYSIS:
                 result.predictions = await self._analyze_content(
@@ -226,8 +242,10 @@ class LanguageModelEngine:
             
             # Calculate confidence based on model certainty
             result.confidence = await self._calculate_confidence(result)
+
             
             result.processing_time = (datetime.now(timezone.utc) - start_time).total_seconds()
+
             result.metadata = {
                 "model_name": self.model_configs[model_type]["model_name"],
                 "language": request.language,
@@ -237,11 +255,13 @@ class LanguageModelEngine:
             
             logger.info(f"Model processing completed: {request.task.value} "
                        f"(Model: {model_type.value}, Confidence: {result.confidence:.3f})")
+
             
             return result
             
         except Exception as e:
             logger.error(f"Error in model processing: {str(e)}")
+
             return ModelResult(
                 confidence=0.0,
                 metadata={"error": str(e)}
@@ -259,23 +279,32 @@ class LanguageModelEngine:
         """
         if not TRANSFORMERS_AVAILABLE:
             raise RuntimeError("Transformers library not available")
+
         
         try:
             start_time = datetime.now(timezone.utc)
             
             # Select model based on cross-lingual requirement
+
             model_type = ModelType.XLMR if request.cross_lingual else ModelType.SENTENCE_TRANSFORMER
             model, tokenizer = await self._load_model(model_type)
             
             # Generate embeddings for both texts
+
             embedding1 = await self._generate_embeddings(request.text1, model, tokenizer, model_type)
+
+
             embedding2 = await self._generate_embeddings(request.text2, model, tokenizer, model_type)
             
             # Calculate cosine similarity
+
             similarity_score = await self._cosine_similarity(embedding1, embedding2)
             
             # Calculate confidence based on embedding quality
+
             confidence = min(0.9, max(0.1, similarity_score * 0.8 + 0.2))
+
+
             
             result = SimilarityResult(
                 similarity_score=similarity_score,
@@ -290,14 +319,17 @@ class LanguageModelEngine:
                     "text2_length": len(request.text2)
                 }
             )
+
             
             logger.info(f"Similarity calculated: {similarity_score:.3f} "
                        f"(Cross-lingual: {request.cross_lingual})")
+
             
             return result
             
         except Exception as e:
             logger.error(f"Error in similarity calculation: {str(e)}")
+
             return SimilarityResult(
                 similarity_score=0.0,
                 confidence=0.0,
@@ -320,12 +352,16 @@ class LanguageModelEngine:
         """
         if not TRANSFORMERS_AVAILABLE:
             raise RuntimeError("Transformers library not available")
+
+
         
         embeddings = {}
         model, tokenizer = await self._load_model(ModelType.XLMR)
+
         
         for text, language in zip(texts, languages):
             embedding = await self._generate_embeddings(text, model, tokenizer, ModelType.XLMR)
+
             embeddings[text] = embedding
         
         return embeddings
@@ -346,22 +382,31 @@ class LanguageModelEngine:
             return ModelType.MBERT
     
     async def _load_model(self, model_type: ModelType) -> Tuple[Any, Any]:
-        """Load and cache model and tokenizer"""
+        """
+        Load and cache model and tokenizer"""
         if model_type in self.model_cache:
             return self.model_cache[model_type]
+
         
         model_name = self.model_configs[model_type]["model_name"]
         
         try:
             if model_type == ModelType.SENTENCE_TRANSFORMER:
                 model = get_sentence_transformer(model_name)
+
+
                 tokenizer = None
             else:
                 tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+
                 model = AutoModel.from_pretrained(model_name)
+
             
             self.model_cache[model_type] = (model, tokenizer)
+
             logger.info(f"Loaded model: {model_name}")
+
             
             return model, tokenizer
             
@@ -370,6 +415,7 @@ class LanguageModelEngine:
             # Fallback to a simpler model
             if model_type != ModelType.DISTILBERT:
                 return await self._load_model(ModelType.DISTILBERT)
+
             raise
     
     async def _generate_embeddings(self, text: str, model: Any, 
@@ -377,16 +423,21 @@ class LanguageModelEngine:
         """Generate embeddings for text using the specified model"""
         if model_type == ModelType.SENTENCE_TRANSFORMER:
             embeddings = model.encode([text])
+
             return embeddings[0]
         else:
             # For transformer models
+
             inputs = tokenizer(text, return_tensors="pt", truncation=True, 
                              padding=True, max_length=512)
+
             
             with torch.no_grad():
                 outputs = model(**inputs)
                 # Use mean pooling of last hidden states
+
                 embeddings = outputs.last_hidden_state.mean(dim=1)
+
                 return embeddings.numpy()[0]
     
     async def _calculate_similarity(self, text1: str, text2: str, 
@@ -394,16 +445,22 @@ class LanguageModelEngine:
                                   model_type: ModelType) -> float:
         """Calculate similarity between two texts"""
         embedding1 = await self._generate_embeddings(text1, model, tokenizer, model_type)
+
         embedding2 = await self._generate_embeddings(text2, model, tokenizer, model_type)
+
         
         return await self._cosine_similarity(embedding1, embedding2)
     
     async def _cosine_similarity(self, embedding1: np.ndarray, 
                                embedding2: np.ndarray) -> float:
-        """Calculate cosine similarity between two embeddings"""
+        """
+        Calculate cosine similarity between two embeddings"""
         dot_product = np.dot(embedding1, embedding2)
+
         norm1 = np.linalg.norm(embedding1)
+
         norm2 = np.linalg.norm(embedding2)
+
         
         if norm1 == 0 or norm2 == 0:
             return 0.0
@@ -412,7 +469,8 @@ class LanguageModelEngine:
     
     async def _analyze_sentiment(self, text: str, model: Any, 
                                tokenizer: Any, model_type: ModelType) -> Dict[str, Any]:
-        """Analyze sentiment of text"""
+        """
+        Analyze sentiment of text"""
         # Simple sentiment analysis using model outputs
         # This is a placeholder - would use specialized sentiment models in production
         return {
@@ -425,6 +483,7 @@ class LanguageModelEngine:
                                       tokenizer: Any, model_type: ModelType) -> Dict[str, Any]:
         """Detect language features using model"""
         # Extract language-specific features from embeddings
+
         embeddings = await self._generate_embeddings(text, model, tokenizer, model_type)
         
         # Simple feature extraction (placeholder)
@@ -439,6 +498,7 @@ class LanguageModelEngine:
                              tokenizer: Any, model_type: ModelType) -> Dict[str, Any]:
         """Perform comprehensive content analysis"""
         embeddings = await self._generate_embeddings(text, model, tokenizer, model_type)
+
         
         return {
             "complexity_score": float(np.std(embeddings)),
@@ -454,7 +514,9 @@ class LanguageModelEngine:
         """Calculate confidence score for model result"""
         if result.embeddings is not None:
             # Base confidence on embedding quality
+
             std_dev = np.std(result.embeddings)
+
             return min(0.95, max(0.1, 1.0 - (std_dev / 10.0)))
         elif result.similarity_scores:
             # Use similarity scores as confidence
@@ -476,7 +538,8 @@ class LanguageModelEngine:
         ]
     
     async def get_model_capabilities(self) -> Dict[str, Any]:
-        """Get information about available models and capabilities"""
+        """
+        Get information about available models and capabilities"""
         return {
             "available_models": [model.value for model in ModelType],
             "supported_tasks": [task.value for task in TaskType],

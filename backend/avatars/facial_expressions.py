@@ -24,7 +24,8 @@ from ._base_generator import BaseContentGenerator, ContentGenerationContext
 
 
 class BaseEmotion(Enum):
-    """Basic emotional states (Ekman's 6 basic emotions + neutral)"""
+    """
+        Basic emotional states (Ekman's 6 basic emotions + neutral)"""
     NEUTRAL = "neutral"
     HAPPINESS = "happiness"
     SADNESS = "sadness"
@@ -206,9 +207,11 @@ class ExpressionConfig:
         self.export_format = kwargs.get('export_format', 'json')  # json, fbx, bvh
         self.keyframe_optimization = kwargs.get('keyframe_optimization', True)
         self.compression_level = kwargs.get('compression_level', 'medium')
+
         
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""
+        """
+        Convert configuration to dictionary"""
         return {
             "target_emotion": self.target_emotion.value if isinstance(self.target_emotion, BaseEmotion) else self.target_emotion,
             "intensity": self.intensity,
@@ -256,9 +259,11 @@ class FacialExpressionSystem(BaseContentGenerator):
         self._setup_facial_anatomy()
         self._setup_emotion_mappings()
         self._setup_micro_expressions()
+
         
     def _setup_expression_engine(self) -> None:
-        """Setup facial expression generation engine"""
+        """
+        Setup facial expression generation engine"""
         try:
             # Initialize expression models
             self.models = {
@@ -289,9 +294,11 @@ class FacialExpressionSystem(BaseContentGenerator):
             }
             
             self.logger.info("Facial expression engine initialized successfully")
+
             
         except Exception as e:
             self.logger.error(f"Failed to initialize expression engine: {str(e)}")
+
             raise
     
     def _setup_facial_anatomy(self) -> None:
@@ -366,7 +373,8 @@ class FacialExpressionSystem(BaseContentGenerator):
         }
     
     def _setup_emotion_mappings(self) -> None:
-        """Setup emotion to facial expression mappings"""
+        """
+        Setup emotion to facial expression mappings"""
         self.emotion_mappings = {
             BaseEmotion.HAPPINESS: {
                 'primary_blend_shapes': {
@@ -469,7 +477,8 @@ class FacialExpressionSystem(BaseContentGenerator):
         }
     
     def _setup_micro_expressions(self) -> None:
-        """Setup micro-expression definitions"""
+        """
+        Setup micro-expression definitions"""
         self.micro_expressions = {
             BaseEmotion.HAPPINESS: MicroExpression(
                 emotion=BaseEmotion.HAPPINESS,
@@ -530,12 +539,15 @@ class FacialExpressionSystem(BaseContentGenerator):
             Dict containing expression data and metadata
         """
         start_time = datetime.now()
+
         
         try:
             # Create expression config
+
             config = self._create_config_from_options(prompt, options or {})
             
             # Generate expression sequence
+
             expression_data = await self._generate_expression_sequence(prompt, config, context)
             
             # Add micro-expressions if enabled
@@ -543,9 +555,11 @@ class FacialExpressionSystem(BaseContentGenerator):
                 expression_data = await self._add_micro_expressions(expression_data, config)
             
             # Post-process expression
+
             processed_data = await self._post_process_expression(expression_data, config)
             
             # Package results
+
             result = {
                 'content': processed_data,
                 'metadata': {
@@ -563,28 +577,35 @@ class FacialExpressionSystem(BaseContentGenerator):
             }
             
             self.logger.info(f"Facial expression generated successfully in {result['metadata']['generation_time']:.2f}s")
+
             return result
             
         except Exception as e:
             self.logger.error(f"Facial expression generation failed: {str(e)}")
+
             raise
     
     def _create_config_from_options(self, prompt: str, options: Dict[str, Any]) -> ExpressionConfig:
         """Create expression config from prompt and options"""
         # Extract emotion from prompt
+
         extracted_config = self._extract_emotion_from_prompt(prompt)
         
         # Merge with options
+
         config_data = {**extracted_config, **options}
         
         return ExpressionConfig(**config_data)
     
     def _extract_emotion_from_prompt(self, prompt: str) -> Dict[str, Any]:
-        """Extract emotion and expression parameters from text prompt"""
+        """
+        Extract emotion and expression parameters from text prompt"""
         prompt_lower = prompt.lower()
+
         config = {}
         
         # Basic emotion detection
+
         emotion_keywords = {
             'happiness': ['happy', 'joy', 'smile', 'cheerful', 'pleased', 'delighted'],
             'sadness': ['sad', 'cry', 'tear', 'melancholy', 'sorrow', 'grief'],
@@ -598,9 +619,11 @@ class FacialExpressionSystem(BaseContentGenerator):
         for emotion, keywords in emotion_keywords.items():
             if any(word in prompt_lower for word in keywords):
                 config['target_emotion'] = BaseEmotion(emotion)
+
                 break
         
         # Intensity detection
+
         intensity_keywords = {
             'micro': ['micro', 'tiny', 'barely'],
             'subtle': ['subtle', 'slight', 'gentle', 'soft'],
@@ -642,12 +665,15 @@ class FacialExpressionSystem(BaseContentGenerator):
         config: ExpressionConfig,
         context: ContentGenerationContext
     ) -> Dict[str, Any]:
-        """Generate main expression sequence"""
+        """
+        Generate main expression sequence"""
         
         # Get emotion mapping
+
         emotion_data = self.emotion_mappings.get(config.target_emotion, {})
         
         # Create expression state
+
         emotion_state = EmotionState(
             primary_emotion=config.target_emotion,
             intensity=config.intensity,
@@ -656,13 +682,17 @@ class FacialExpressionSystem(BaseContentGenerator):
         )
         
         # Generate blend shapes
+
         blend_shapes = await self._generate_blend_shapes(emotion_data, config)
         
         # Generate muscle tensions
+
         muscle_tensions = await self._generate_muscle_tensions(emotion_data, config)
         
         # Create timeline
+
         timeline = await self._create_expression_timeline(config, blend_shapes, muscle_tensions)
+
         
         return {
             'emotion_state': emotion_state.to_dict(),
@@ -674,53 +704,68 @@ class FacialExpressionSystem(BaseContentGenerator):
         }
     
     async def _generate_blend_shapes(self, emotion_data: Dict[str, Any], config: ExpressionConfig) -> Dict[str, BlendShape]:
-        """Generate blend shapes for expression"""
+        """
+        Generate blend shapes for expression"""
         await asyncio.sleep(0.05)  # Simulate processing
+
         
         generated_blend_shapes = {}
+
         primary_shapes = emotion_data.get('primary_blend_shapes', {})
+
         
         for shape_name, base_value in primary_shapes.items():
             if shape_name in self.blend_shapes:
                 # Apply intensity scaling
+
                 adjusted_value = base_value * config.intensity
                 
                 # Apply style modifications
                 if config.style == 'exaggerated':
                     adjusted_value = min(1.0, adjusted_value * 1.3)
+
                 elif config.style == 'subtle':
                     adjusted_value *= 0.7
                 
                 # Create blend shape
+
                 blend_shape = BlendShape(
                     name=shape_name,
                     target_value=adjusted_value,
                     blend_speed=config.transition_speed
                 )
+
                 
                 generated_blend_shapes[shape_name] = blend_shape
         
         # Add asymmetry if configured
         if config.asymmetry_factor > 0:
             generated_blend_shapes = self._add_asymmetry(generated_blend_shapes, config.asymmetry_factor)
+
         
         return generated_blend_shapes
     
     async def _generate_muscle_tensions(self, emotion_data: Dict[str, Any], config: ExpressionConfig) -> Dict[str, float]:
-        """Generate muscle tension values"""
+        """
+        Generate muscle tension values"""
         await asyncio.sleep(0.03)  # Simulate processing
+
         
         muscle_tensions = {}
+
         base_tensions = emotion_data.get('muscle_tensions', {})
+
         
         for muscle_name, base_tension in base_tensions.items():
             if muscle_name in self.facial_muscles:
                 # Apply intensity scaling
+
                 adjusted_tension = base_tension * config.intensity
                 
                 # Apply style modifications
                 if config.style == 'exaggerated':
                     adjusted_tension = min(1.0, adjusted_tension * 1.2)
+
                 elif config.style == 'subtle':
                     adjusted_tension *= 0.8
                 
@@ -734,31 +779,43 @@ class FacialExpressionSystem(BaseContentGenerator):
         blend_shapes: Dict[str, BlendShape],
         muscle_tensions: Dict[str, float]
     ) -> List[Dict[str, Any]]:
-        """Create expression animation timeline"""
+        """
+        Create expression animation timeline"""
         await asyncio.sleep(0.02)  # Simulate processing
+
         
         timeline = []
+
         fps = 30  # Fixed FPS for expression animation
+
         total_frames = int(config.duration * fps)
         
         # Build-up phase (20% of duration)
+
         buildup_frames = max(1, int(total_frames * 0.2))
         
         # Hold phase (60% of duration)
+
         hold_frames = int(total_frames * 0.6)
         
         # Release phase (20% of duration)
+
         release_frames = total_frames - buildup_frames - hold_frames
+
         
         frame = 0
         
         # Build-up phase
         for i in range(buildup_frames):
             timestamp = frame / fps
+
             progress = i / buildup_frames
             
             # Ease-in curve
+
             ease_progress = 1 - math.cos(progress * math.pi / 2)
+
+
             
             frame_data = {
                 'timestamp': timestamp,
@@ -773,11 +830,13 @@ class FacialExpressionSystem(BaseContentGenerator):
                 frame_data['muscle_tensions'][name] = tension * ease_progress
             
             timeline.append(frame_data)
+
             frame += 1
         
         # Hold phase
         for i in range(hold_frames):
             timestamp = frame / fps
+
             
             frame_data = {
                 'timestamp': timestamp,
@@ -786,15 +845,19 @@ class FacialExpressionSystem(BaseContentGenerator):
             }
             
             timeline.append(frame_data)
+
             frame += 1
         
         # Release phase
         for i in range(release_frames):
             timestamp = frame / fps
+
             progress = i / release_frames
             
             # Ease-out curve
+
             ease_progress = 1 - progress
+
             
             frame_data = {
                 'timestamp': timestamp,
@@ -809,36 +872,44 @@ class FacialExpressionSystem(BaseContentGenerator):
                 frame_data['muscle_tensions'][name] = tension * ease_progress
             
             timeline.append(frame_data)
+
             frame += 1
         
         return timeline
     
     def _add_asymmetry(self, blend_shapes: Dict[str, BlendShape], asymmetry_factor: float) -> Dict[str, BlendShape]:
-        """Add natural facial asymmetry to expressions"""
+        """
+        Add natural facial asymmetry to expressions"""
         asymmetric_shapes = blend_shapes.copy()
         
         # Add slight asymmetry to symmetric expressions
         for name, shape in blend_shapes.items():
             if 'left' not in name and 'right' not in name:
                 # Create asymmetric variations
+
                 left_name = f"{name}_left"
                 right_name = f"{name}_right"
                 
                 if left_name in self.blend_shapes:
                     left_intensity = shape.target_value * (1 - asymmetry_factor * 0.5)
+
+
                     right_intensity = shape.target_value * (1 + asymmetry_factor * 0.5)
+
                     
                     asymmetric_shapes[left_name] = BlendShape(
                         name=left_name,
                         target_value=left_intensity,
                         blend_speed=shape.blend_speed
                     )
+
                     
                     asymmetric_shapes[right_name] = BlendShape(
                         name=right_name,
                         target_value=right_intensity,
                         blend_speed=shape.blend_speed
                     )
+
         
         return asymmetric_shapes
     
@@ -848,28 +919,40 @@ class FacialExpressionSystem(BaseContentGenerator):
         
         if not config.enable_micro_expressions:
             return expression_data
+
         
         micro_expressions = []
+
         duration = config.duration
+
         frequency = config.micro_expression_frequency
         
         # Calculate number of micro-expressions
+
         num_micro = max(0, int(duration * frequency))
+
         
         for i in range(num_micro):
             # Random timing within duration
+
             timestamp = (i + 0.5) * (duration / max(1, num_micro))
             
             # Select micro-expression type
+
             available_emotions = list(self.micro_expressions.keys())
+
             if config.target_emotion in available_emotions:
                 # Prefer micro-expressions related to main emotion
+
                 micro_emotion = config.target_emotion
             else:
                 # Random micro-expression
+
                 micro_emotion = available_emotions[i % len(available_emotions)]
+
             
             micro_expr = self.micro_expressions[micro_emotion]
+
             
             micro_data = {
                 'timestamp': timestamp,
@@ -880,12 +963,14 @@ class FacialExpressionSystem(BaseContentGenerator):
             }
             
             micro_expressions.append(micro_data)
+
         
         expression_data['micro_expressions'] = micro_expressions
         return expression_data
     
     async def _post_process_expression(self, expression_data: Dict[str, Any], config: ExpressionConfig) -> bytes:
-        """Post-process and export expression data"""
+        """
+        Post-process and export expression data"""
         await asyncio.sleep(0.1)  # Simulate processing
         
         # In production, this would:
@@ -893,9 +978,8 @@ class FacialExpressionSystem(BaseContentGenerator):
         # - Apply compression
         # - Export in requested format (FBX, JSON, etc.)
         # - Validate expression data
-        
-        # Mock processed expression data
         processed_data = json.dumps(expression_data, indent=2).encode('utf-8')
+
         
         self.logger.info(f"Post-processed facial expression ({len(processed_data)} bytes)")
         return processed_data
@@ -906,12 +990,15 @@ class FacialExpressionSystem(BaseContentGenerator):
             return False
         
         # Check required fields
+
         required_fields = ['content', 'metadata']
         if not all(field in content for field in required_fields):
             return False
         
         # Check metadata
+
         metadata = content.get('metadata', {})
+
         required_metadata = ['type', 'target_emotion', 'intensity', 'duration']
         if not all(field in metadata for field in required_metadata):
             return False
@@ -923,7 +1010,8 @@ class FacialExpressionSystem(BaseContentGenerator):
         return True
     
     def _supports_content_type(self, content_type: str) -> bool:
-        """Check if this generator supports the content type"""
+        """
+        Check if this generator supports the content type"""
         supported_types = [
             'facial_expression',
             'emotion_animation',

@@ -27,11 +27,18 @@ except (ImportError, TypeError) as e:
     from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
     import logging
     logging.warning(f"Using Redis compatibility layer: {e}")
-from email.mime.text import MimeText
-from email.mime.multipart import MimeMultipart
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 import websockets
-import firebase_admin
-from firebase_admin import messaging
+
+# Optional Firebase dependency
+try:
+    import firebase_admin
+    from firebase_admin import messaging
+    FIREBASE_AVAILABLE = True
+except ImportError:
+    FIREBASE_AVAILABLE = False
+    logging.warning("Firebase Admin SDK not available - push notifications will be simulated")
 
 logger = logging.getLogger(__name__)
 
@@ -57,7 +64,8 @@ class NotificationPriority(Enum):
     CRITICAL = 5
 
 class NotificationChannel(Enum):
-    """Notification delivery channels"""
+    """
+        Notification delivery channels"""
     EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
@@ -92,7 +100,8 @@ class NotificationTemplate:
 
 @dataclass
 class NotificationRecipient:
-    """Notification recipient information"""
+    """
+        Notification recipient information"""
     user_id: str
     email: Optional[str] = None
     phone: Optional[str] = None
@@ -124,10 +133,12 @@ class Notification:
     error_message: Optional[str] = None
 
 class NotificationEngine:
-    """Core notification processing engine"""
+    """
+        Core notification processing engine"""
     
     def __init__(self):
-        """Initialize notification engine"""
+        """
+        Initialize notification engine"""
         self.templates = {}
         self.recipients = {}
         self.notification_queue = asyncio.Queue()
@@ -140,6 +151,7 @@ class NotificationEngine:
         
         # Start notification processor
         asyncio.create_task(self._notification_processor())
+
         
         logger.info("📬 Notification Engine initialized")
     
@@ -155,6 +167,8 @@ class NotificationEngine:
         """Create notification template"""
         try:
             template_id = str(uuid.uuid4())
+
+
             
             template = NotificationTemplate(
                 template_id=template_id,
@@ -165,14 +179,17 @@ class NotificationEngine:
                 html_template=html_template,
                 channels=channels or [NotificationChannel.EMAIL]
             )
+
             
             self.templates[template_id] = template
             
             logger.info(f"Created notification template: {template_id}")
+
             return template_id
             
         except Exception as e:
             logger.error(f"Failed to create template: {e}")
+
             raise
     
     async def send_notification(
@@ -187,7 +204,9 @@ class NotificationEngine:
         """Send notification"""
         try:
             # Get template
+
             template = await self._get_template_for_type(notification_type)
+
             if not template:
                 raise ValueError(f"No template found for type: {notification_type.value}")
             
@@ -197,7 +216,10 @@ class NotificationEngine:
             )
             
             # Create notification
+
             notification_id = str(uuid.uuid4())
+
+
             notification = Notification(
                 notification_id=notification_id,
                 notification_type=notification_type,
@@ -213,12 +235,15 @@ class NotificationEngine:
             
             # Queue for delivery
             await self.notification_queue.put(notification)
+
             
             logger.info(f"Queued notification: {notification_id}")
+
             return notification_id
             
         except Exception as e:
             logger.error(f"Failed to send notification: {e}")
+
             raise
     
     async def _notification_processor(self):
@@ -226,13 +251,16 @@ class NotificationEngine:
         while True:
             try:
                 # Get next notification
+
                 notification = await self.notification_queue.get()
                 
                 # Check if scheduled
                 if notification.scheduled_at and notification.scheduled_at > datetime.utcnow():
                     # Re-queue for later
                     await asyncio.sleep(1)
+
                     await self.notification_queue.put(notification)
+
                     continue
                 
                 # Process notification
@@ -240,9 +268,11 @@ class NotificationEngine:
                 
                 # Mark queue task as done
                 self.notification_queue.task_done()
+
                 
             except Exception as e:
                 logger.error(f"Notification processor error: {e}")
+
                 await asyncio.sleep(1)
     
     async def _process_notification(self, notification: Notification):
@@ -254,22 +284,27 @@ class NotificationEngine:
                 return
             
             # Deliver through all channels
+
             delivery_results = {}
             
             for channel in notification.channels:
                 try:
                     handler = self.delivery_handlers.get(channel)
+
                     if handler:
                         result = await handler(notification)
+
                         delivery_results[channel.value] = result
                     else:
                         logger.warning(f"No handler for channel: {channel.value}")
+
                         
                 except Exception as e:
                     delivery_results[channel.value] = {"success": False, "error": str(e)}
                     logger.error(f"Delivery failed for {channel.value}: {e}")
             
             # Update notification status
+
             successful_deliveries = [
                 r for r in delivery_results.values() if r.get("success", False)
             ]
@@ -277,6 +312,7 @@ class NotificationEngine:
             if successful_deliveries:
                 notification.status = NotificationStatus.DELIVERED
                 notification.delivered_at = datetime.utcnow()
+
             else:
                 notification.status = NotificationStatus.FAILED
                 
@@ -286,10 +322,12 @@ class NotificationEngine:
                     notification.status = NotificationStatus.RETRY
                     await asyncio.sleep(60)  # Wait before retry
                     await self.notification_queue.put(notification)
+
             
         except Exception as e:
             notification.status = NotificationStatus.FAILED
             notification.error_message = str(e)
+
             logger.error(f"Failed to process notification {notification.notification_id}: {e}")
     
     async def _initialize_delivery_handlers(self):
@@ -314,6 +352,7 @@ class NotificationEngine:
             self.delivery_handlers[NotificationChannel.WEBHOOK] = self._deliver_webhook
             
             logger.info("Delivery handlers initialized")
+
             
         except Exception as e:
             logger.error(f"Failed to initialize delivery handlers: {e}")
@@ -325,24 +364,30 @@ class NotificationEngine:
                 return {"success": False, "error": "No email address"}
             
             # Create email message
-            msg = MimeMultipart('alternative')
+
+            msg = MIMEMultipart('alternative')
+
             msg['Subject'] = notification.subject
             msg['From'] = "noreply@iacherie.com"
             msg['To'] = notification.recipient.email
             
             # Add text part
-            text_part = MimeText(notification.body, 'plain')
+
+            text_part = MIMEText(notification.body, 'plain')
+
             msg.attach(text_part)
             
             # Add HTML part if available
             if notification.html_body:
-                html_part = MimeText(notification.html_body, 'html')
+                html_part = MIMEText(notification.html_body, 'html')
+
                 msg.attach(html_part)
             
             # Send email
             # Implementation would use actual SMTP server
             # smtp_server = smtplib.SMTP('smtp.gmail.com', 587)
             # smtp_server.send_message(msg)
+
             
             return {"success": True, "channel": "email"}
             
@@ -356,6 +401,7 @@ class NotificationEngine:
                 return {"success": False, "error": "No phone number"}
             
             # Implementation would use SMS service (Twilio, AWS SNS, etc.)
+
             return {"success": True, "channel": "sms"}
             
         except Exception as e:
@@ -379,8 +425,10 @@ class NotificationEngine:
             websocket_id = notification.recipient.websocket_id
             if not websocket_id or websocket_id not in self.websocket_connections:
                 return {"success": False, "error": "No WebSocket connection"}
+
             
             websocket = self.websocket_connections[websocket_id]
+
             
             message = {
                 "type": "notification",
@@ -393,6 +441,7 @@ class NotificationEngine:
             }
             
             await websocket.send(json.dumps(message))
+
             
             return {"success": True, "channel": "websocket"}
             
@@ -405,6 +454,8 @@ class NotificationEngine:
             # Store in Redis for in-app retrieval
             if not self.redis_client:
                 self.redis_client = await aioredis.from_url("redis://localhost")
+
+
             
             notification_data = {
                 "notification_id": notification.notification_id,
@@ -423,10 +474,12 @@ class NotificationEngine:
             )
             
             # Set expiration (30 days)
+
             await self.redis_client.expire(
                 f"notifications:{notification.recipient.user_id}",
                 30 * 24 * 3600
             )
+
             
             return {"success": True, "channel": "in_app"}
             
@@ -457,25 +510,35 @@ class NotificationEngine:
         template: NotificationTemplate,
         data: Dict[str, Any]
     ) -> Tuple[str, str, Optional[str]]:
-        """Render notification content from template"""
+        """
+        Render notification content from template"""
         try:
             # Simple template rendering (would use Jinja2 in production)
+
+
             subject = template.subject_template
+
             body = template.body_template
+
             html_body = template.html_template
             
             # Replace variables
             for key, value in data.items():
                 placeholder = f"{{{key}}}"
                 subject = subject.replace(placeholder, str(value))
+
+
                 body = body.replace(placeholder, str(value))
+
                 if html_body:
                     html_body = html_body.replace(placeholder, str(value))
+
             
             return subject, body, html_body
             
         except Exception as e:
             logger.error(f"Failed to render notification: {e}")
+
             raise
     
     async def _check_recipient_preferences(
@@ -487,6 +550,7 @@ class NotificationEngine:
             preferences = notification.recipient.preferences
             
             # Check if notification type is enabled
+
             type_key = f"enable_{notification.notification_type.value}"
             if type_key in preferences and not preferences[type_key]:
                 return False
@@ -502,13 +566,15 @@ class NotificationEngine:
             
         except Exception as e:
             logger.error(f"Failed to check preferences: {e}")
+
             return True
 
 class AlertSystem:
     """System alert management"""
     
     def __init__(self):
-        """Initialize alert system"""
+        """
+        Initialize alert system"""
         self.alert_rules = {}
         self.active_alerts = {}
         self.escalation_policies = {}
@@ -526,6 +592,7 @@ class AlertSystem:
         """Create alert rule"""
         try:
             rule_id = str(uuid.uuid4())
+
             
             self.alert_rules[rule_id] = {
                 "name": name,
@@ -541,6 +608,7 @@ class AlertSystem:
             
         except Exception as e:
             logger.error(f"Failed to create alert rule: {e}")
+
             raise
     
     async def trigger_alert(
@@ -551,8 +619,10 @@ class AlertSystem:
         """Trigger system alert"""
         try:
             rule = self.alert_rules.get(rule_id)
+
             if not rule or not rule["enabled"]:
                 return
+
             
             alert_id = str(uuid.uuid4())
             
@@ -567,6 +637,7 @@ class AlertSystem:
             }
             
             logger.warning(f"Alert triggered: {rule['name']}")
+
             
         except Exception as e:
             logger.error(f"Failed to trigger alert: {e}")
@@ -575,7 +646,8 @@ class AlertManagement:
     """Alert management system"""
     
     def __init__(self):
-        """Initialize alert management"""
+        """
+        Initialize alert management"""
         self.notification_rules = {}
         self.alert_history = {}
         
@@ -585,7 +657,8 @@ class UserNotifications:
     """User notification management"""
     
     def __init__(self):
-        """Initialize user notifications"""
+        """
+        Initialize user notifications"""
         self.user_preferences = {}
         self.notification_history = {}
         
@@ -605,6 +678,7 @@ class UserNotifications:
             }
             
             logger.info(f"Updated preferences for user: {user_id}")
+
             
         except Exception as e:
             logger.error(f"Failed to update preferences: {e}")
@@ -613,7 +687,8 @@ class RealTimeNotifications:
     """Real-time notification delivery"""
     
     def __init__(self):
-        """Initialize real-time notifications"""
+        """
+        Initialize real-time notifications"""
         self.websocket_server = None
         self.connection_pool = {}
         
@@ -623,7 +698,8 @@ class NotificationDelivery:
     """Notification delivery management"""
     
     def __init__(self):
-        """Initialize notification delivery"""
+        """
+        Initialize notification delivery"""
         self.delivery_queue = asyncio.Queue()
         self.delivery_workers = []
         
@@ -633,7 +709,8 @@ class NotificationAnalytics:
     """Notification analytics and insights"""
     
     def __init__(self):
-        """Initialize notification analytics"""
+        """
+        Initialize notification analytics"""
         self.delivery_metrics = {}
         self.engagement_metrics = {}
         self.performance_analyzer = None
@@ -644,7 +721,8 @@ class VoiceNotificationManager:
     """Main voice notification manager"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize voice notification manager"""
+        """
+        Initialize voice notification manager"""
         self.config = config or {}
         self.notification_engine = NotificationEngine()
         self.alert_system = AlertSystem()
@@ -656,6 +734,7 @@ class VoiceNotificationManager:
         
         # Initialize standard templates
         asyncio.create_task(self._initialize_standard_templates())
+
         
         logger.info("🎤📬 Voice Notification Manager initialized")
     
@@ -670,17 +749,21 @@ class VoiceNotificationManager:
         """Send voice-related notification"""
         try:
             # Get recipient info
+
             recipient = await self._get_recipient_info(user_id)
             
             # Send notification
+
             notification_id = await self.notification_engine.send_notification(
                 notification_type, recipient, data, channels, priority
             )
+
             
             return notification_id
             
         except Exception as e:
             logger.error(f"Failed to send voice notification: {e}")
+
             raise
     
     async def _initialize_standard_templates(self):
@@ -712,8 +795,10 @@ class VoiceNotificationManager:
                 "We detected suspicious activity on your account: {description}. Please review your account security settings.",
                 channels=[NotificationChannel.EMAIL, NotificationChannel.SMS, NotificationChannel.PUSH]
             )
+
             
             logger.info("Standard notification templates initialized")
+
             
         except Exception as e:
             logger.error(f"Failed to initialize templates: {e}")

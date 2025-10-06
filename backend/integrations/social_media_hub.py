@@ -25,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 
 class SocialPlatform(str, Enum):
-    """Supported social media platforms."""
+    """
+        Supported social media platforms."""
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -82,7 +83,8 @@ class SocialAccount:
 
 @dataclass
 class ContentPost:
-    """Social media post data."""
+    """
+        Social media post data."""
     post_id: str
     platform: SocialPlatform
     content_type: ContentType
@@ -101,7 +103,8 @@ class ContentPost:
 
 @dataclass
 class AnalyticsReport:
-    """Social media analytics report."""
+    """
+        Social media analytics report."""
     platform: SocialPlatform
     period_start: datetime
     period_end: datetime
@@ -115,7 +118,8 @@ class AnalyticsReport:
 
 
 class SocialMediaHubIntegration:
-    """Professional social media hub integration."""
+    """
+        Professional social media hub integration."""
     
     def __init__(
         self,
@@ -177,11 +181,13 @@ class SocialMediaHubIntegration:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+        Async context manager exit."""
         await self.close()
     
     async def _ensure_session(self):
-        """Ensure HTTP session is available."""
+        """
+        Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
                 "User-Agent": "iacherie/1.0 Social Media Hub",
@@ -205,7 +211,8 @@ class SocialMediaHubIntegration:
         state: str,
         scopes: Optional[List[str]] = None
     ) -> str:
-        """Generate OAuth authorization URL for platform."""
+        """
+        Generate OAuth authorization URL for platform."""
         platform_scopes = {
             SocialPlatform.YOUTUBE: ["https://www.googleapis.com/auth/youtube.upload",
                                    "https://www.googleapis.com/auth/youtube.readonly"],
@@ -217,8 +224,10 @@ class SocialMediaHubIntegration:
             SocialPlatform.TWITTER: ["tweet.read", "tweet.write", "users.read"],
             SocialPlatform.LINKEDIN: ["r_liteprofile", "r_emailaddress", "w_member_social"]
         }
+
         
         scopes = scopes or platform_scopes.get(platform, [])
+
         callback_url = f"{self.base_callback_url}/{platform.value}"
         
         oauth_urls = {
@@ -286,6 +295,8 @@ class SocialMediaHubIntegration:
     ) -> SocialAccount:
         """Exchange OAuth authorization code for access token."""
         await self._ensure_session()
+
+
         
         callback_url = f"{self.base_callback_url}/{platform.value}"
         
@@ -321,20 +332,26 @@ class SocialMediaHubIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"YouTube OAuth error: {error_data}")
+
+
                 
                 token_data = await response.json()
                 
                 # Get user info
+
                 headers = {"Authorization": f"Bearer {token_data['access_token']}"}
                 async with self.session.get(
                     f"{self.platform_urls[SocialPlatform.YOUTUBE]}/channels?part=snippet&mine=true",
                     headers=headers
                 ) as user_response:
                     user_data = await user_response.json()
+
                     
                     if user_data.get("items"):
                         channel = user_data["items"][0]
+
                         account = SocialAccount(
                             platform=SocialPlatform.YOUTUBE,
                             account_id=channel["id"],
@@ -348,18 +365,23 @@ class SocialMediaHubIntegration:
                             follower_count=int(channel["statistics"].get("subscriberCount", 0)),
                             metadata={"channel_data": channel}
                         )
+
                         
                         self.connected_accounts[f"{SocialPlatform.YOUTUBE}_{account.account_id}"] = account
                         self.platforms_connected.add(SocialPlatform.YOUTUBE)
+
                         self.request_count += 2
                         
                         logger.info(f"YouTube account connected: {account.username}")
+
                         return account
                     else:
                         raise Exception("Failed to get YouTube channel information")
+
         
         except Exception as e:
             logger.error(f"YouTube OAuth exchange failed: {e}")
+
             raise
     
     async def _exchange_instagram_code(self, code: str, redirect_uri: str) -> SocialAccount:
@@ -379,9 +401,14 @@ class SocialMediaHubIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Instagram OAuth error: {error_data}")
+
+
                 
                 token_data = await response.json()
+
+
                 
                 account = SocialAccount(
                     platform=SocialPlatform.INSTAGRAM,
@@ -393,16 +420,20 @@ class SocialMediaHubIntegration:
                     verified=True,
                     metadata={"user_data": token_data["user"]}
                 )
+
                 
                 self.connected_accounts[f"{SocialPlatform.INSTAGRAM}_{account.account_id}"] = account
                 self.platforms_connected.add(SocialPlatform.INSTAGRAM)
+
                 self.request_count += 1
                 
                 logger.info(f"Instagram account connected: {account.username}")
+
                 return account
         
         except Exception as e:
             logger.error(f"Instagram OAuth exchange failed: {e}")
+
             raise
     
     async def _exchange_tiktok_code(self, code: str, redirect_uri: str) -> SocialAccount:
@@ -422,19 +453,28 @@ class SocialMediaHubIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"TikTok OAuth error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 token_data = result["data"]
                 
                 # Get user info
+
                 headers = {"Authorization": f"Bearer {token_data['access_token']}"}
                 async with self.session.get(
                     f"{self.platform_urls[SocialPlatform.TIKTOK]}/user/info/",
                     headers=headers
                 ) as user_response:
                     user_result = await user_response.json()
+
+
                     user_data = user_result["data"]["user"]
+
                     
                     account = SocialAccount(
                         platform=SocialPlatform.TIKTOK,
@@ -449,16 +489,20 @@ class SocialMediaHubIntegration:
                         follower_count=user_data.get("follower_count", 0),
                         metadata={"user_data": user_data}
                     )
+
                     
                     self.connected_accounts[f"{SocialPlatform.TIKTOK}_{account.account_id}"] = account
                     self.platforms_connected.add(SocialPlatform.TIKTOK)
+
                     self.request_count += 2
                     
                     logger.info(f"TikTok account connected: {account.username}")
+
                     return account
         
         except Exception as e:
             logger.error(f"TikTok OAuth exchange failed: {e}")
+
             raise
     
     async def _exchange_facebook_code(self, code: str, redirect_uri: str) -> SocialAccount:
@@ -477,17 +521,23 @@ class SocialMediaHubIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Facebook OAuth error: {error_data}")
+
+
                 
                 token_data = await response.json()
                 
                 # Get user info and pages
+
                 headers = {"Authorization": f"Bearer {token_data['access_token']}"}
                 async with self.session.get(
                     f"{self.platform_urls[SocialPlatform.FACEBOOK]}/me?fields=id,name",
                     headers=headers
                 ) as user_response:
                     user_data = await user_response.json()
+
+
                     
                     account = SocialAccount(
                         platform=SocialPlatform.FACEBOOK,
@@ -499,16 +549,20 @@ class SocialMediaHubIntegration:
                         verified=True,
                         metadata={"user_data": user_data}
                     )
+
                     
                     self.connected_accounts[f"{SocialPlatform.FACEBOOK}_{account.account_id}"] = account
                     self.platforms_connected.add(SocialPlatform.FACEBOOK)
+
                     self.request_count += 2
                     
                     logger.info(f"Facebook account connected: {account.username}")
+
                     return account
         
         except Exception as e:
             logger.error(f"Facebook OAuth exchange failed: {e}")
+
             raise
     
     async def _exchange_twitter_code(self, code: str, redirect_uri: str, code_verifier: str) -> SocialAccount:
@@ -523,7 +577,9 @@ class SocialMediaHubIntegration:
             }
             
             # Twitter OAuth 2.0 requires Basic auth
+
             auth = aiohttp.BasicAuth(self.twitter_api_key, self.twitter_api_secret)
+
             
             async with self.session.post(
                 "https://api.twitter.com/2/oauth2/token",
@@ -532,18 +588,25 @@ class SocialMediaHubIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Twitter OAuth error: {error_data}")
+
+
                 
                 token_data = await response.json()
                 
                 # Get user info
+
                 headers = {"Authorization": f"Bearer {token_data['access_token']}"}
                 async with self.session.get(
                     f"{self.platform_urls[SocialPlatform.TWITTER]}/users/me",
                     headers=headers
                 ) as user_response:
                     user_result = await user_response.json()
+
+
                     user_data = user_result["data"]
+
                     
                     account = SocialAccount(
                         platform=SocialPlatform.TWITTER,
@@ -558,16 +621,20 @@ class SocialMediaHubIntegration:
                         follower_count=user_data.get("public_metrics", {}).get("followers_count", 0),
                         metadata={"user_data": user_data}
                     )
+
                     
                     self.connected_accounts[f"{SocialPlatform.TWITTER}_{account.account_id}"] = account
                     self.platforms_connected.add(SocialPlatform.TWITTER)
+
                     self.request_count += 2
                     
                     logger.info(f"Twitter account connected: {account.username}")
+
                     return account
         
         except Exception as e:
             logger.error(f"Twitter OAuth exchange failed: {e}")
+
             raise
     
     async def _exchange_linkedin_code(self, code: str, redirect_uri: str) -> SocialAccount:
@@ -587,17 +654,23 @@ class SocialMediaHubIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"LinkedIn OAuth error: {error_data}")
+
+
                 
                 token_data = await response.json()
                 
                 # Get user info
+
                 headers = {"Authorization": f"Bearer {token_data['access_token']}"}
                 async with self.session.get(
                     f"{self.platform_urls[SocialPlatform.LINKEDIN]}/me",
                     headers=headers
                 ) as user_response:
                     user_data = await user_response.json()
+
+
                     
                     account = SocialAccount(
                         platform=SocialPlatform.LINKEDIN,
@@ -610,16 +683,20 @@ class SocialMediaHubIntegration:
                         verified=True,
                         metadata={"user_data": user_data}
                     )
+
                     
                     self.connected_accounts[f"{SocialPlatform.LINKEDIN}_{account.account_id}"] = account
                     self.platforms_connected.add(SocialPlatform.LINKEDIN)
+
                     self.request_count += 2
                     
                     logger.info(f"LinkedIn account connected: {account.username}")
+
                     return account
         
         except Exception as e:
             logger.error(f"LinkedIn OAuth exchange failed: {e}")
+
             raise
     
     async def publish_content(
@@ -636,10 +713,14 @@ class SocialMediaHubIntegration:
     ) -> ContentPost:
         """Publish content to specified platform."""
         await self._ensure_session()
+
+
         
         account_key = f"{platform}_{account_id}"
         if account_key not in self.connected_accounts:
             raise ValueError(f"Account not connected: {platform} - {account_id}")
+
+
         
         account = self.connected_accounts[account_key]
         
@@ -673,6 +754,8 @@ class SocialMediaHubIntegration:
         try:
             if content_type != ContentType.VIDEO:
                 raise ValueError("YouTube only supports video content")
+
+
             
             video_data = {
                 "snippet": {
@@ -686,6 +769,7 @@ class SocialMediaHubIntegration:
                     "publishAt": schedule_time.isoformat() if schedule_time else None
                 }
             }
+
             
             headers = {"Authorization": f"Bearer {account.access_token}"}
             
@@ -697,9 +781,14 @@ class SocialMediaHubIntegration:
             ) as response:
                 if response.status not in [200, 201]:
                     error_data = await response.json()
+
                     raise Exception(f"YouTube upload error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 
                 post = ContentPost(
                     post_id=result["id"],
@@ -717,15 +806,18 @@ class SocialMediaHubIntegration:
                     monetization_data={},
                     metadata=metadata or {}
                 )
+
                 
                 self.total_posts += 1
                 self.request_count += 1
                 
                 logger.info(f"YouTube content published: {post.post_id}")
+
                 return post
         
         except Exception as e:
             logger.error(f"YouTube content publishing failed: {e}")
+
             raise
     
     async def _publish_instagram_content(
@@ -756,12 +848,18 @@ class SocialMediaHubIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Instagram media creation error: {error_data}")
+
+
                 
                 media_result = await response.json()
+
+
                 creation_id = media_result["id"]
                 
                 # Publish the media
+
                 publish_data = {
                     "creation_id": creation_id,
                     "access_token": account.access_token
@@ -773,9 +871,14 @@ class SocialMediaHubIntegration:
                 ) as publish_response:
                     if publish_response.status != 200:
                         error_data = await publish_response.json()
+
                         raise Exception(f"Instagram publish error: {error_data}")
+
+
                     
                     publish_result = await publish_response.json()
+
+
                     
                     post = ContentPost(
                         post_id=publish_result["id"],
@@ -793,15 +896,18 @@ class SocialMediaHubIntegration:
                         monetization_data={},
                         metadata=metadata or {}
                     )
+
                     
                     self.total_posts += 1
                     self.request_count += 2
                     
                     logger.info(f"Instagram content published: {post.post_id}")
+
                     return post
         
         except Exception as e:
             logger.error(f"Instagram content publishing failed: {e}")
+
             raise
     
     async def _publish_tiktok_content(
@@ -819,6 +925,8 @@ class SocialMediaHubIntegration:
         try:
             if content_type != ContentType.VIDEO:
                 raise ValueError("TikTok only supports video content")
+
+
             
             video_data = {
                 "video": {
@@ -827,6 +935,7 @@ class SocialMediaHubIntegration:
                     "privacy_level": "SELF_ONLY" if schedule_time else "PUBLIC_TO_EVERYONE"
                 }
             }
+
             
             headers = {"Authorization": f"Bearer {account.access_token}"}
             
@@ -837,9 +946,14 @@ class SocialMediaHubIntegration:
             ) as response:
                 if response.status not in [200, 201]:
                     error_data = await response.json()
+
                     raise Exception(f"TikTok upload error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 
                 post = ContentPost(
                     post_id=result["data"]["video_id"],
@@ -857,15 +971,18 @@ class SocialMediaHubIntegration:
                     monetization_data={},
                     metadata=metadata or {}
                 )
+
                 
                 self.total_posts += 1
                 self.request_count += 1
                 
                 logger.info(f"TikTok content published: {post.post_id}")
+
                 return post
         
         except Exception as e:
             logger.error(f"TikTok content publishing failed: {e}")
+
             raise
     
     async def _publish_facebook_content(
@@ -894,6 +1011,7 @@ class SocialMediaHubIntegration:
             if schedule_time:
                 data["published"] = "false"
                 data["scheduled_publish_time"] = int(schedule_time.timestamp())
+
             
             async with self.session.post(
                 f"{self.platform_urls[SocialPlatform.FACEBOOK]}/{account.account_id}/feed",
@@ -901,9 +1019,14 @@ class SocialMediaHubIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Facebook publish error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 
                 post = ContentPost(
                     post_id=result["id"],
@@ -921,15 +1044,18 @@ class SocialMediaHubIntegration:
                     monetization_data={},
                     metadata=metadata or {}
                 )
+
                 
                 self.total_posts += 1
                 self.request_count += 1
                 
                 logger.info(f"Facebook content published: {post.post_id}")
+
                 return post
         
         except Exception as e:
             logger.error(f"Facebook content publishing failed: {e}")
+
             raise
     
     async def _publish_twitter_content(
@@ -950,6 +1076,7 @@ class SocialMediaHubIntegration:
             tweet_data = {
                 "text": text[:280]  # Twitter character limit
             }
+
             
             headers = {"Authorization": f"Bearer {account.access_token}"}
             
@@ -960,9 +1087,14 @@ class SocialMediaHubIntegration:
             ) as response:
                 if response.status not in [200, 201]:
                     error_data = await response.json()
+
                     raise Exception(f"Twitter publish error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 
                 post = ContentPost(
                     post_id=result["data"]["id"],
@@ -980,15 +1112,18 @@ class SocialMediaHubIntegration:
                     monetization_data={},
                     metadata=metadata or {}
                 )
+
                 
                 self.total_posts += 1
                 self.request_count += 1
                 
                 logger.info(f"Twitter content published: {post.post_id}")
+
                 return post
         
         except Exception as e:
             logger.error(f"Twitter content publishing failed: {e}")
+
             raise
     
     async def _publish_linkedin_content(
@@ -1021,6 +1156,7 @@ class SocialMediaHubIntegration:
                     "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC"
                 }
             }
+
             
             headers = {"Authorization": f"Bearer {account.access_token}"}
             
@@ -1031,9 +1167,14 @@ class SocialMediaHubIntegration:
             ) as response:
                 if response.status not in [200, 201]:
                     error_data = await response.json()
+
                     raise Exception(f"LinkedIn publish error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 
                 post = ContentPost(
                     post_id=result["id"],
@@ -1051,15 +1192,18 @@ class SocialMediaHubIntegration:
                     monetization_data={},
                     metadata=metadata or {}
                 )
+
                 
                 self.total_posts += 1
                 self.request_count += 1
                 
                 logger.info(f"LinkedIn content published: {post.post_id}")
+
                 return post
         
         except Exception as e:
             logger.error(f"LinkedIn content publishing failed: {e}")
+
             raise
     
     async def get_analytics_report(
@@ -1072,16 +1216,21 @@ class SocialMediaHubIntegration:
     ) -> AnalyticsReport:
         """Get analytics report for specified platform and time period."""
         await self._ensure_session()
+
+
         
         account_key = f"{platform}_{account_id}"
         if account_key not in self.connected_accounts:
             raise ValueError(f"Account not connected: {platform} - {account_id}")
+
+
         
         account = self.connected_accounts[account_key]
         
         try:
             # Platform-specific analytics implementation would go here
             # This is a simplified example
+
             
             total_engagement = {
                 EngagementType.VIEWS: 0,
@@ -1090,6 +1239,7 @@ class SocialMediaHubIntegration:
                 EngagementType.SHARES: 0,
                 EngagementType.SUBSCRIBERS: 0
             }
+
             
             report = AnalyticsReport(
                 platform=platform,
@@ -1103,13 +1253,16 @@ class SocialMediaHubIntegration:
                 growth_metrics={},
                 metadata={}
             )
+
             
             self.request_count += 1
             logger.info(f"Analytics report generated for {platform} - {account_id}")
+
             return report
         
         except Exception as e:
             logger.error(f"Analytics report generation failed: {e}")
+
             raise
     
     async def get_connected_accounts(self) -> List[SocialAccount]:
@@ -1117,7 +1270,8 @@ class SocialMediaHubIntegration:
         return list(self.connected_accounts.values())
     
     async def disconnect_account(self, platform: SocialPlatform, account_id: str) -> bool:
-        """Disconnect a social media account."""
+        """
+        Disconnect a social media account."""
         account_key = f"{platform}_{account_id}"
         if account_key in self.connected_accounts:
             del self.connected_accounts[account_key]
@@ -1125,8 +1279,10 @@ class SocialMediaHubIntegration:
             # Remove platform from connected set if no accounts remain
             if not any(key.startswith(f"{platform}_") for key in self.connected_accounts.keys()):
                 self.platforms_connected.discard(platform)
+
             
             logger.info(f"Account disconnected: {platform} - {account_id}")
+
             return True
         
         return False
@@ -1173,7 +1329,8 @@ async def publish_to_multiple_platforms(
     media_urls: List[str] = None,
     hashtags: List[str] = None
 ) -> List[ContentPost]:
-    """Publish content to multiple platforms simultaneously."""
+    """
+        Publish content to multiple platforms simultaneously."""
     tasks = []
     
     for platform, account_id in zip(platforms, account_ids):
@@ -1187,6 +1344,7 @@ async def publish_to_multiple_platforms(
             hashtags=hashtags
         )
         tasks.append(task)
+
     
     results = await asyncio.gather(*tasks, return_exceptions=True)
     
@@ -1211,11 +1369,15 @@ if __name__ == "__main__":
             tiktok_client_secret=os.getenv("TIKTOK_CLIENT_SECRET")
         ) as hub:
             # Get OAuth URLs for connecting accounts
+
             youtube_url = await hub.get_oauth_url(SocialPlatform.YOUTUBE, "random_state_123")
+
             print(f"YouTube OAuth URL: {youtube_url}")
             
             # Check usage stats
+
             stats = hub.get_usage_stats()
+
             print(f"Usage stats: {stats}")
     
     asyncio.run(main())

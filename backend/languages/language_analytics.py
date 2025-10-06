@@ -37,7 +37,8 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsMetric(Enum):
-    """Analytics metrics for language usage"""
+    """
+        Analytics metrics for language usage"""
     USAGE_FREQUENCY = "usage_frequency"
     TRANSLATION_VOLUME = "translation_volume"
     QUALITY_SCORES = "quality_scores"
@@ -94,7 +95,8 @@ class AnalyticsRequest:
 
 @dataclass
 class LanguageUsageData:
-    """Language usage statistics"""
+    """
+        Language usage statistics"""
     language_code: str
     total_requests: int
     unique_users: int
@@ -108,7 +110,8 @@ class LanguageUsageData:
 
 @dataclass
 class TranslationPerformanceData:
-    """Translation performance metrics"""
+    """
+        Translation performance metrics"""
     language_pair: str
     total_translations: int
     average_quality: float
@@ -121,7 +124,8 @@ class TranslationPerformanceData:
 
 @dataclass
 class CulturalEngagementData:
-    """Cultural engagement metrics"""
+    """
+        Cultural engagement metrics"""
     culture_region: str
     adaptation_requests: int
     engagement_score: float
@@ -133,7 +137,8 @@ class CulturalEngagementData:
 
 @dataclass
 class MarketPenetrationData:
-    """Market penetration analysis"""
+    """
+        Market penetration analysis"""
     market_region: str
     total_addressable_market: int
     current_users: int
@@ -145,7 +150,8 @@ class MarketPenetrationData:
 
 @dataclass
 class ROIAnalysisData:
-    """ROI analysis for language investments"""
+    """
+        ROI analysis for language investments"""
     language_code: str
     investment_cost: float
     revenue_generated: float
@@ -157,7 +163,8 @@ class ROIAnalysisData:
 
 @dataclass
 class AnalyticsResult:
-    """Comprehensive analytics result"""
+    """
+        Comprehensive analytics result"""
     language_usage: List[LanguageUsageData] = field(default_factory=list)
     translation_performance: List[TranslationPerformanceData] = field(default_factory=list)
     cultural_engagement: List[CulturalEngagementData] = field(default_factory=list)
@@ -172,7 +179,8 @@ class AnalyticsResult:
 
 @dataclass
 class UsageEvent:
-    """Individual usage event for tracking"""
+    """
+        Individual usage event for tracking"""
     event_id: str
     timestamp: datetime
     user_id: str
@@ -183,7 +191,8 @@ class UsageEvent:
 
 @dataclass
 class LanguageInsight:
-    """Business insight about language usage"""
+    """
+        Business insight about language usage"""
     insight_type: str
     language_code: str
     description: str
@@ -199,7 +208,8 @@ class LanguageAnalyticsEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize language analytics engine"""
+        """
+        Initialize language analytics engine"""
         self.config = config or {}
         self.usage_events = []
         self.cached_analytics = {}
@@ -238,6 +248,8 @@ class LanguageAnalyticsEngine:
         """
         try:
             start_time = datetime.now(timezone.utc)
+
+
             
             result = AnalyticsResult()
             
@@ -245,17 +257,22 @@ class LanguageAnalyticsEngine:
             for metric in request.metrics:
                 if metric == AnalyticsMetric.USAGE_FREQUENCY:
                     result.language_usage = await self._analyze_language_usage(request)
+
                 elif metric == AnalyticsMetric.TRANSLATION_VOLUME:
                     result.translation_performance = await self._analyze_translation_performance(request)
+
                 elif metric == AnalyticsMetric.CULTURAL_ADAPTATION:
                     result.cultural_engagement = await self._analyze_cultural_engagement(request)
+
                 elif metric == AnalyticsMetric.MARKET_PENETRATION:
                     result.market_penetration = await self._analyze_market_penetration(request)
+
                 elif metric == AnalyticsMetric.ROI_ANALYSIS:
                     result.roi_analysis = await self._analyze_roi(request)
             
             # Generate insights and recommendations
             result.insights = await self._generate_insights(request, result)
+
             result.recommendations = await self._generate_recommendations(request, result)
             
             # Identify trends
@@ -264,6 +281,7 @@ class LanguageAnalyticsEngine:
             # Generate projections if requested
             if request.include_projections:
                 result.projections = await self._generate_projections(request, result)
+
             
             result.metadata = {
                 "request_id": f"analytics_{int(start_time.timestamp())}",
@@ -275,11 +293,13 @@ class LanguageAnalyticsEngine:
             
             logger.info(f"Analytics generated for {len(request.metrics)} metrics "
                        f"({request.granularity.value} granularity)")
+
             
             return result
             
         except Exception as e:
             logger.error(f"Error generating analytics: {str(e)}")
+
             return AnalyticsResult(
                 metadata={"error": str(e)}
             )
@@ -298,21 +318,26 @@ class LanguageAnalyticsEngine:
             self.usage_events.append(event)
             
             # Maintain event history within retention period
+
             cutoff_date = datetime.now(timezone.utc) - timedelta(
                 days=self.analytics_config["retention_days"]
             )
+
             self.usage_events = [
                 e for e in self.usage_events if e.timestamp >= cutoff_date
             ]
             
             # Clear relevant caches
             self._invalidate_analytics_cache()
+
             
             logger.debug(f"Usage event tracked: {event.event_type.value} for {event.language_code}")
+
             return True
             
         except Exception as e:
             logger.error(f"Error tracking usage event: {str(e)}")
+
             return False
     
     async def get_language_insights(self, language_code: str, 
@@ -330,8 +355,12 @@ class LanguageAnalyticsEngine:
         insights = []
         
         # Get usage data for the language
+
         end_date = datetime.now(timezone.utc)
+
         start_date = end_date - timedelta(days=days_back)
+
+
         
         language_events = [
             e for e in self.usage_events
@@ -342,24 +371,29 @@ class LanguageAnalyticsEngine:
             return insights
         
         # Growth trend insight
+
         growth_insight = await self._analyze_growth_trend(language_code, language_events)
         if growth_insight:
             insights.append(growth_insight)
         
         # Quality trend insight
+
         quality_insight = await self._analyze_quality_trend(language_code, language_events)
         if quality_insight:
             insights.append(quality_insight)
         
         # Usage pattern insight
+
         pattern_insight = await self._analyze_usage_patterns(language_code, language_events)
         if pattern_insight:
             insights.append(pattern_insight)
         
         # Revenue opportunity insight
+
         revenue_insight = await self._analyze_revenue_opportunity(language_code, language_events)
         if revenue_insight:
             insights.append(revenue_insight)
+
         
         return insights
     
@@ -386,20 +420,26 @@ class LanguageAnalyticsEngine:
             # Add metric-specific score
             if metric == AnalyticsMetric.USAGE_FREQUENCY:
                 language_scores[lang].append(1.0)
+
             elif metric == AnalyticsMetric.USER_ENGAGEMENT:
                 engagement_score = event.metadata.get("engagement_score", 0.5)
+
                 language_scores[lang].append(engagement_score)
+
             elif metric == AnalyticsMetric.QUALITY_SCORES:
                 quality_score = event.metadata.get("quality_score", 0.7)
+
                 language_scores[lang].append(quality_score)
         
         # Calculate average scores
+
         avg_scores = {
             lang: statistics.mean(scores) if scores else 0.0
             for lang, scores in language_scores.items()
         }
         
         # Sort and return top performers
+
         sorted_languages = sorted(avg_scores.items(), key=lambda x: x[1], reverse=True)
         return sorted_languages[:limit]
     
@@ -408,34 +448,50 @@ class LanguageAnalyticsEngine:
         usage_data = []
         
         # Filter events by request criteria
+
         filtered_events = self._filter_events_by_request(request)
         
         # Group by language
+
         language_groups = defaultdict(list)
         for event in filtered_events:
             language_groups[event.language_code].append(event)
+
         
         for language_code, events in language_groups.items():
             # Calculate usage metrics
+
             total_requests = len(events)
+
+
             unique_users = len(set(e.user_id for e in events))
             
             # Calculate quality score
+
             quality_scores = [e.metadata.get("quality_score", 0.7) for e in events]
+
             avg_quality = statistics.mean(quality_scores) if quality_scores else 0.7
             
             # Calculate engagement rate
+
             engagement_events = [e for e in events if e.event_type == EngagementType.UI_INTERACTION]
+
             engagement_rate = len(engagement_events) / total_requests if total_requests > 0 else 0.0
             
             # Calculate revenue impact (placeholder)
+
+
             revenue_impact = total_requests * self.revenue_models["api_per_request"]
             
             # Calculate growth rate
+
             growth_rate = await self._calculate_growth_rate(language_code, request.start_date, request.end_date)
             
             # Calculate market share
+
             total_all_requests = len(filtered_events)
+
+
             market_share = total_requests / total_all_requests if total_all_requests > 0 else 0.0
             
             usage_data.append(LanguageUsageData(
@@ -449,6 +505,7 @@ class LanguageAnalyticsEngine:
                 growth_rate=growth_rate,
                 market_share=market_share
             ))
+
         
         return sorted(usage_data, key=lambda x: x.total_requests, reverse=True)
     
@@ -457,38 +514,59 @@ class LanguageAnalyticsEngine:
         performance_data = []
         
         # Filter translation events
+
         translation_events = [
             e for e in self._filter_events_by_request(request)
+
             if e.event_type == EngagementType.TRANSLATION_REQUEST
         ]
         
         # Group by language pairs
+
         pair_groups = defaultdict(list)
         for event in translation_events:
             source_lang = event.metadata.get("source_language", "auto")
+
+
             target_lang = event.language_code
+
             pair_key = f"{source_lang}-{target_lang}"
             pair_groups[pair_key].append(event)
+
         
         for pair_key, events in pair_groups.items():
             if len(events) < 10:  # Skip pairs with insufficient data
                 continue
             
             # Calculate performance metrics
+
             total_translations = len(events)
+
+
             
             quality_scores = [e.metadata.get("quality_score", 0.7) for e in events]
+
             average_quality = statistics.mean(quality_scores)
+
+
             
             latencies = [e.metadata.get("latency_ms", 500) for e in events]
+
             average_latency = statistics.mean(latencies) / 1000.0  # Convert to seconds
+
             
             success_events = [e for e in events if e.metadata.get("success", True)]
+
             success_rate = len(success_events) / total_translations
+
             error_rate = 1.0 - success_rate
+
             
             satisfaction_scores = [e.metadata.get("user_satisfaction", 0.8) for e in events]
+
             user_satisfaction = statistics.mean(satisfaction_scores)
+
+
             
             cost_per_translation = self.revenue_models["api_per_request"]
             
@@ -502,6 +580,7 @@ class LanguageAnalyticsEngine:
                 user_satisfaction=user_satisfaction,
                 cost_per_translation=cost_per_translation
             ))
+
         
         return sorted(performance_data, key=lambda x: x.total_translations, reverse=True)
     
@@ -510,34 +589,52 @@ class LanguageAnalyticsEngine:
         engagement_data = []
         
         # Filter cultural adaptation events
+
         cultural_events = [
             e for e in self._filter_events_by_request(request)
+
             if e.event_type == EngagementType.CULTURAL_ADAPTATION
         ]
         
         # Group by culture regions
+
         region_groups = defaultdict(list)
         for event in cultural_events:
             region = event.metadata.get("culture_region", "unknown")
+
             region_groups[region].append(event)
+
         
         for region, events in region_groups.items():
             if len(events) < 5:  # Skip regions with insufficient data
                 continue
+
             
             adaptation_requests = len(events)
+
+
             
             engagement_scores = [e.metadata.get("engagement_score", 0.6) for e in events]
+
             engagement_score = statistics.mean(engagement_scores)
+
+
             
             accuracy_scores = [e.metadata.get("cultural_accuracy", 0.7) for e in events]
+
             cultural_accuracy = statistics.mean(accuracy_scores)
+
+
             
             sentiment_scores = [e.metadata.get("feedback_sentiment", 0.6) for e in events]
+
             feedback_sentiment = statistics.mean(sentiment_scores)
             
             # Calculate retention and conversion (placeholder)
+
+
             retention_rate = 0.75
+
             conversion_rate = 0.15
             
             engagement_data.append(CulturalEngagementData(
@@ -549,6 +646,7 @@ class LanguageAnalyticsEngine:
                 retention_rate=retention_rate,
                 conversion_rate=conversion_rate
             ))
+
         
         return sorted(engagement_data, key=lambda x: x.engagement_score, reverse=True)
     
@@ -562,13 +660,20 @@ class LanguageAnalyticsEngine:
                 continue
             
             # Get events for this market
+
             market_events = [
                 e for e in self._filter_events_by_request(request)
+
                 if e.metadata.get("market_region") == market_region
             ]
+
             
             current_users = len(set(e.user_id for e in market_events))
+
+
             total_addressable_market = market_info.get("population", 1000000)
+
+
             
             penetration_rate = current_users / total_addressable_market * 100
             
@@ -579,11 +684,13 @@ class LanguageAnalyticsEngine:
                 growth_potential = 0.7
             else:
                 growth_potential = 0.3
+
             
             competitive_position = "growing" if penetration_rate > 1.0 else "emerging"
             
             revenue_opportunity = (total_addressable_market * 0.05 * 
                                  self.revenue_models["subscription_monthly"] * 12)
+
             
             penetration_data.append(MarketPenetrationData(
                 market_region=market_region,
@@ -594,6 +701,7 @@ class LanguageAnalyticsEngine:
                 competitive_position=competitive_position,
                 revenue_opportunity=revenue_opportunity
             ))
+
         
         return sorted(penetration_data, key=lambda x: x.revenue_opportunity, reverse=True)
     
@@ -602,26 +710,37 @@ class LanguageAnalyticsEngine:
         roi_data = []
         
         # Filter events by request criteria
+
         filtered_events = self._filter_events_by_request(request)
         
         # Group by language
+
         language_groups = defaultdict(list)
         for event in filtered_events:
             language_groups[event.language_code].append(event)
+
         
         for language_code, events in language_groups.items():
             if len(events) < 50:  # Skip languages with insufficient data
                 continue
             
             # Calculate investment cost (placeholder)
+
+
             investment_cost = 10000.0  # Base localization cost
             
             # Calculate revenue generated
+
             translation_requests = len([e for e in events if e.event_type == EngagementType.TRANSLATION_REQUEST])
+
+
             api_revenue = translation_requests * self.revenue_models["api_per_request"]
+
             
             subscription_users = len(set(e.user_id for e in events)) * 0.1  # 10% conversion rate
+
             subscription_revenue = subscription_users * self.revenue_models["subscription_monthly"] * 12
+
             
             revenue_generated = api_revenue + subscription_revenue
             
@@ -629,11 +748,16 @@ class LanguageAnalyticsEngine:
             roi_percentage = ((revenue_generated - investment_cost) / investment_cost) * 100 if investment_cost > 0 else 0
             
             # Calculate payback period
+
             monthly_revenue = revenue_generated / 12
+
             payback_period_days = int((investment_cost / monthly_revenue) * 30) if monthly_revenue > 0 else 999
             
             # Calculate CAC and LTV (placeholder)
+
+
             customer_acquisition_cost = investment_cost / len(set(e.user_id for e in events)) if events else 0
+
             customer_lifetime_value = subscription_revenue / subscription_users if subscription_users > 0 else 0
             
             roi_data.append(ROIAnalysisData(
@@ -645,6 +769,7 @@ class LanguageAnalyticsEngine:
                 customer_acquisition_cost=customer_acquisition_cost,
                 customer_lifetime_value=customer_lifetime_value
             ))
+
         
         return sorted(roi_data, key=lambda x: x.roi_percentage, reverse=True)
     
@@ -655,8 +780,11 @@ class LanguageAnalyticsEngine:
         # Language usage insights
         if result.language_usage:
             top_language = max(result.language_usage, key=lambda x: x.total_requests)
+
             insights.append(f"Top performing language: {top_language.language_code} "
                           f"with {top_language.total_requests:,} requests")
+
+
             
             high_growth_langs = [l for l in result.language_usage if l.growth_rate > 0.2]
             if high_growth_langs:
@@ -667,6 +795,8 @@ class LanguageAnalyticsEngine:
             low_quality_pairs = [p for p in result.translation_performance if p.average_quality < 0.7]
             if low_quality_pairs:
                 insights.append(f"{len(low_quality_pairs)} language pairs need quality improvement")
+
+
             
             high_latency_pairs = [p for p in result.translation_performance if p.average_latency > 2.0]
             if high_latency_pairs:
@@ -682,10 +812,13 @@ class LanguageAnalyticsEngine:
         if result.roi_analysis:
             profitable_languages = [r for r in result.roi_analysis if r.roi_percentage > 100]
             insights.append(f"{len(profitable_languages)} languages showing positive ROI")
+
+
             
             quick_payback_languages = [r for r in result.roi_analysis if r.payback_period_days < 365]
             if quick_payback_languages:
                 insights.append(f"{len(quick_payback_languages)} languages with quick payback (<1 year)")
+
         
         return insights
     
@@ -717,6 +850,7 @@ class LanguageAnalyticsEngine:
             negative_roi_languages = [r for r in result.roi_analysis if r.roi_percentage < 0]
             if negative_roi_languages:
                 recommendations.append("Review investment strategy for languages with negative ROI")
+
         
         return recommendations
     
@@ -726,15 +860,21 @@ class LanguageAnalyticsEngine:
         
         if result.language_usage:
             # Growth trend
+
             avg_growth = statistics.mean([l.growth_rate for l in result.language_usage])
+
             trends["overall_growth_rate"] = avg_growth
             
             # Quality trend
+
             avg_quality = statistics.mean([l.quality_score for l in result.language_usage])
+
             trends["overall_quality_score"] = avg_quality
             
             # Engagement trend
+
             avg_engagement = statistics.mean([l.engagement_rate for l in result.language_usage])
+
             trends["overall_engagement_rate"] = avg_engagement
         
         return trends
@@ -745,16 +885,24 @@ class LanguageAnalyticsEngine:
         
         if result.language_usage and NUMPY_AVAILABLE:
             # Simple linear projection based on growth rates
+
             total_requests_current = sum(l.total_requests for l in result.language_usage)
+
+
             avg_growth_rate = statistics.mean([l.growth_rate for l in result.language_usage])
             
             # Project 6 months ahead
+
             projected_requests_6m = total_requests_current * (1 + avg_growth_rate * 0.5)
+
             projections["total_requests_6m"] = int(projected_requests_6m)
             
             # Project 12 months ahead
+
             projected_requests_12m = total_requests_current * (1 + avg_growth_rate)
+
             projections["total_requests_12m"] = int(projected_requests_12m)
+
         
         return projections
     
@@ -774,22 +922,27 @@ class LanguageAnalyticsEngine:
             # Check market filter
             if request.markets:
                 event_market = event.metadata.get("market_region")
+
                 if event_market not in request.markets:
                     continue
             
             filtered_events.append(event)
+
         
         return filtered_events
     
     async def _calculate_growth_rate(self, language_code: str, start_date: datetime, end_date: datetime) -> float:
         """Calculate growth rate for a language"""
         # Split period in half to compare
+
         mid_date = start_date + (end_date - start_date) / 2
+
         
         first_half_events = [
             e for e in self.usage_events
             if e.language_code == language_code and start_date <= e.timestamp <= mid_date
         ]
+
         
         second_half_events = [
             e for e in self.usage_events
@@ -798,20 +951,25 @@ class LanguageAnalyticsEngine:
         
         if len(first_half_events) == 0:
             return 1.0 if len(second_half_events) > 0 else 0.0
+
         
         growth_rate = (len(second_half_events) - len(first_half_events)) / len(first_half_events)
         return max(-0.9, min(5.0, growth_rate))  # Cap between -90% and 500%
     
     async def _analyze_growth_trend(self, language_code: str, events: List[UsageEvent]) -> Optional[LanguageInsight]:
-        """Analyze growth trend for a language"""
+        """
+        Analyze growth trend for a language"""
         if len(events) < 30:
             return None
         
         # Calculate weekly usage
+
         weekly_usage = defaultdict(int)
         for event in events:
             week_key = event.timestamp.strftime("%Y-W%U")
+
             weekly_usage[week_key] += 1
+
         
         usage_values = list(weekly_usage.values())
         if len(usage_values) < 3:
@@ -820,10 +978,14 @@ class LanguageAnalyticsEngine:
         # Calculate trend
         if NUMPY_AVAILABLE:
             x = np.arange(len(usage_values))
+
+
             slope = np.polyfit(x, usage_values, 1)[0]
         else:
             # Simple slope calculation
+
             slope = (usage_values[-1] - usage_values[0]) / len(usage_values)
+
         
         if slope > 5:
             return LanguageInsight(
@@ -834,6 +996,7 @@ class LanguageAnalyticsEngine:
                 confidence=0.85,
                 recommended_actions=["Increase marketing investment", "Expand language support"]
             )
+
         
         return None
     
@@ -843,8 +1006,10 @@ class LanguageAnalyticsEngine:
         
         if len(quality_scores) < 20:
             return None
+
         
         avg_quality = statistics.mean(quality_scores)
+
         
         if avg_quality < 0.7:
             return LanguageInsight(
@@ -855,12 +1020,14 @@ class LanguageAnalyticsEngine:
                 confidence=0.9,
                 recommended_actions=["Improve translation models", "Add human review"]
             )
+
         
         return None
     
     async def _analyze_usage_patterns(self, language_code: str, events: List[UsageEvent]) -> Optional[LanguageInsight]:
         """Analyze usage patterns for a language"""
         # Analyze usage by hour
+
         hourly_usage = defaultdict(int)
         for event in events:
             hour = event.timestamp.hour
@@ -868,6 +1035,7 @@ class LanguageAnalyticsEngine:
         
         if hourly_usage:
             peak_hour = max(hourly_usage.items(), key=lambda x: x[1])
+
             if peak_hour[1] > len(events) * 0.2:  # >20% of usage in one hour
                 return LanguageInsight(
                     insight_type="usage_pattern",
@@ -877,15 +1045,18 @@ class LanguageAnalyticsEngine:
                     confidence=0.8,
                     recommended_actions=["Optimize server capacity for peak hours"]
                 )
+
         
         return None
     
     async def _analyze_revenue_opportunity(self, language_code: str, events: List[UsageEvent]) -> Optional[LanguageInsight]:
         """Analyze revenue opportunity for a language"""
         unique_users = len(set(e.user_id for e in events))
+
         current_revenue = len(events) * self.revenue_models["api_per_request"]
         
         # Estimate potential with 5% conversion to premium
+
         potential_revenue = unique_users * 0.05 * self.revenue_models["subscription_monthly"] * 12
         
         if potential_revenue > current_revenue * 10:
@@ -897,6 +1068,7 @@ class LanguageAnalyticsEngine:
                 confidence=0.7,
                 recommended_actions=["Implement premium features", "Target enterprise customers"]
             )
+
         
         return None
     
@@ -920,7 +1092,8 @@ class LanguageAnalyticsEngine:
         self.insights_cache.clear()
     
     async def get_analytics_summary(self) -> Dict[str, Any]:
-        """Get summary of analytics capabilities and current data"""
+        """
+        Get summary of analytics capabilities and current data"""
         return {
             "total_events_tracked": len(self.usage_events),
             "unique_languages": len(set(e.language_code for e in self.usage_events)),

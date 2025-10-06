@@ -38,7 +38,8 @@ from sklearn.preprocessing import StandardScaler
 logger = logging.getLogger(__name__)
 
 class AnalyticsMetric(Enum):
-    """Analytics metric types"""
+    """
+        Analytics metric types"""
     ENGAGEMENT_RATE = "engagement_rate"
     AUDIENCE_GROWTH = "audience_growth"
     CONTENT_PERFORMANCE = "content_performance"
@@ -100,7 +101,8 @@ class PerformanceAnalytics:
 
 @dataclass
 class AudienceInsights:
-    """Audience insights and segmentation"""
+    """
+        Audience insights and segmentation"""
     insight_id: str
     creator_id: str
     segment_type: AudienceSegment
@@ -115,7 +117,8 @@ class AudienceInsights:
 
 @dataclass
 class EngagementMetrics:
-    """Engagement tracking metrics"""
+    """
+        Engagement tracking metrics"""
     metric_id: str
     creator_id: str
     content_id: Optional[str]
@@ -132,7 +135,8 @@ class EngagementMetrics:
 
 @dataclass
 class VoicePerformance:
-    """Voice performance metrics"""
+    """
+        Voice performance metrics"""
     performance_id: str
     creator_id: str
     voice_content_id: str
@@ -147,7 +151,8 @@ class VoicePerformance:
 
 @dataclass
 class DataVisualization:
-    """Data visualization configuration"""
+    """
+        Data visualization configuration"""
     viz_id: str
     creator_id: str
     chart_type: str
@@ -159,7 +164,8 @@ class DataVisualization:
 
 @dataclass
 class AnalyticsReporting:
-    """Analytics reporting configuration"""
+    """
+        Analytics reporting configuration"""
     report_id: str
     creator_id: str
     report_type: str
@@ -173,7 +179,8 @@ class AnalyticsReporting:
 
 @dataclass
 class BusinessIntelligence:
-    """Business intelligence insights"""
+    """
+        Business intelligence insights"""
     intelligence_id: str
     creator_id: str
     insight_type: InsightType
@@ -188,7 +195,8 @@ class BusinessIntelligence:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis data"""
+    """
+        Trend analysis data"""
     analysis_id: str
     creator_id: str
     metric: AnalyticsMetric
@@ -201,14 +209,17 @@ class TrendAnalysis:
     timestamp: datetime = field(default_factory=datetime.utcnow)
 
 class CreatorVoiceAnalytics:
-    """Creator-specific voice analytics system"""
+    """
+        Creator-specific voice analytics system"""
     
     def __init__(self):
-        """Initialize creator voice analytics"""
+        """
+        Initialize creator voice analytics"""
         self.analytics_data = {}
         self.performance_metrics = {}
         self.trend_analyzer = None
         self.redis_client = redis.Redis(decode_responses=True)
+
         
         logger.info("👤📊 Creator Voice Analytics initialized")
     
@@ -223,11 +234,17 @@ class CreatorVoiceAnalytics:
             analytics_id = str(uuid.uuid4())
             
             # Extract key metrics
+
             engagement_rate = performance_data.get("engagement_rate", 0.0)
+
+
             audience_growth = performance_data.get("audience_growth", 0.0)
+
+
             content_quality = performance_data.get("content_quality", 0.0)
             
             # Create performance analytics
+
             performance = PerformanceAnalytics(
                 analytics_id=analytics_id,
                 creator_id=creator_id,
@@ -254,12 +271,15 @@ class CreatorVoiceAnalytics:
             
             # Generate insights
             await self._generate_performance_insights(creator_id, performance)
+
             
             logger.info(f"Tracked creator performance: {analytics_id}")
+
             return analytics_id
             
         except Exception as e:
             logger.error(f"Failed to track creator performance: {e}")
+
             raise
     
     async def analyze_creator_trends(
@@ -270,17 +290,21 @@ class CreatorVoiceAnalytics:
         """Analyze creator performance trends"""
         try:
             # Get historical data
+
             historical_data = await self._get_historical_data(creator_id, time_period)
             
             # Perform trend analysis
+
             trend_analysis = await self._perform_trend_analysis(
                 creator_id, historical_data, time_period
             )
+
             
             return trend_analysis
             
         except Exception as e:
             logger.error(f"Failed to analyze creator trends: {e}")
+
             raise
     
     async def generate_creator_insights(
@@ -292,25 +316,35 @@ class CreatorVoiceAnalytics:
             insights = []
             
             # Performance insights
+
             performance_insights = await self._generate_performance_insights(creator_id)
+
             insights.extend(performance_insights)
             
             # Audience insights
+
             audience_insights = await self._generate_audience_insights(creator_id)
+
             insights.extend(audience_insights)
             
             # Content insights
+
             content_insights = await self._generate_content_insights(creator_id)
+
             insights.extend(content_insights)
             
             # Monetization insights
+
             monetization_insights = await self._generate_monetization_insights(creator_id)
+
             insights.extend(monetization_insights)
+
             
             return insights
             
         except Exception as e:
             logger.error(f"Failed to generate creator insights: {e}")
+
             raise
     
     def _calculate_change_percentage(self, current: float, previous: float) -> float:
@@ -320,8 +354,10 @@ class CreatorVoiceAnalytics:
         return ((current - previous) / previous) * 100
     
     def _determine_trend(self, current_value: float, data: Dict[str, Any]) -> MetricTrend:
-        """Determine metric trend"""
+        """
+        Determine metric trend"""
         previous_value = data.get("previous_value", 0.0)
+
         change = current_value - previous_value
         
         if abs(change) < 0.05:  # Less than 5% change
@@ -342,6 +378,7 @@ class CreatorVoiceAnalytics:
             }
             
             await self.redis_client.setex(cache_key, 3600, json.dumps(cache_data))
+
             
         except Exception as e:
             logger.warning(f"Failed to cache analytics: {e}")
@@ -361,8 +398,10 @@ class CreatorVoiceAnalytics:
         data: List[PerformanceAnalytics],
         time_period: TimeFrame
     ) -> TrendAnalysis:
-        """Perform statistical trend analysis"""
+        """
+        Perform statistical trend analysis"""
         analysis_id = str(uuid.uuid4())
+
         
         if not data:
             return TrendAnalysis(
@@ -378,14 +417,17 @@ class CreatorVoiceAnalytics:
             )
         
         # Calculate trend strength and direction
+
         values = [d.value for d in data]
         if len(values) > 1:
             trend_strength = np.corrcoef(range(len(values)), values)[0, 1]
+
             trend_direction = MetricTrend.INCREASING if trend_strength > 0.1 else \
                             MetricTrend.DECREASING if trend_strength < -0.1 else \
                             MetricTrend.STABLE
         else:
             trend_strength = 0.0
+
             trend_direction = MetricTrend.STABLE
         
         return TrendAnalysis(
@@ -401,18 +443,25 @@ class CreatorVoiceAnalytics:
         )
     
     async def _generate_forecast(self, values: List[float]) -> Dict[str, Any]:
-        """Generate forecast data"""
+        """
+        Generate forecast data"""
         if len(values) < 2:
             return {"forecast": [], "confidence": 0.0}
         
         # Simple linear forecast
+
         x = np.array(range(len(values)))
+
         y = np.array(values)
+
         coefficients = np.polyfit(x, y, 1)
         
         # Forecast next 5 periods
+
         future_x = np.array(range(len(values), len(values) + 5))
+
         forecast = np.polyval(coefficients, future_x)
+
         
         return {
             "forecast": forecast.tolist(),
@@ -423,8 +472,6 @@ class CreatorVoiceAnalytics:
     async def _generate_performance_insights(self, creator_id: str) -> List[BusinessIntelligence]:
         """Generate performance-based insights"""
         insights = []
-        
-        # Mock insight generation
         insights.append(BusinessIntelligence(
             intelligence_id=str(uuid.uuid4()),
             creator_id=creator_id,
@@ -441,6 +488,7 @@ class CreatorVoiceAnalytics:
             supporting_data={},
             implementation_priority=7
         ))
+
         
         return insights
     
@@ -449,18 +497,22 @@ class CreatorVoiceAnalytics:
         return []  # Implementation would analyze audience data
     
     async def _generate_content_insights(self, creator_id: str) -> List[BusinessIntelligence]:
-        """Generate content-based insights"""
+        """
+        Generate content-based insights"""
         return []  # Implementation would analyze content performance
     
     async def _generate_monetization_insights(self, creator_id: str) -> List[BusinessIntelligence]:
-        """Generate monetization insights"""
+        """
+        Generate monetization insights"""
         return []  # Implementation would analyze revenue opportunities
 
 class VoiceAnalyticsDashboard:
-    """Voice analytics dashboard and visualization"""
+    """
+        Voice analytics dashboard and visualization"""
     
     def __init__(self):
-        """Initialize analytics dashboard"""
+        """
+        Initialize analytics dashboard"""
         self.dashboard_configs = {}
         self.visualization_cache = {}
         self.chart_generators = {}
@@ -486,12 +538,15 @@ class VoiceAnalyticsDashboard:
             
             # Generate dashboard components
             await self._generate_dashboard_components(dashboard_id, dashboard_config)
+
             
             logger.info(f"Created analytics dashboard: {dashboard_id}")
+
             return dashboard_id
             
         except Exception as e:
             logger.error(f"Failed to create dashboard: {e}")
+
             raise
     
     async def generate_visualization(
@@ -506,12 +561,15 @@ class VoiceAnalyticsDashboard:
             viz_id = str(uuid.uuid4())
             
             # Get data for visualization
+
             data = await self._get_visualization_data(creator_id, data_source)
             
             # Generate chart
             chart_path, interactive_data = await self._generate_chart(
                 chart_type, data, config
             )
+
+
             
             visualization = DataVisualization(
                 viz_id=viz_id,
@@ -522,11 +580,13 @@ class VoiceAnalyticsDashboard:
                 generated_chart_path=chart_path,
                 interactive_chart_data=interactive_data
             )
+
             
             return visualization
             
         except Exception as e:
             logger.error(f"Failed to generate visualization: {e}")
+
             raise
     
     async def _generate_dashboard_components(
@@ -537,14 +597,18 @@ class VoiceAnalyticsDashboard:
         """Generate dashboard components"""
         try:
             components = config.get("components", [])
+
             
             for component in components:
                 if component["type"] == "chart":
                     await self._generate_chart_component(dashboard_id, component)
+
                 elif component["type"] == "metric":
                     await self._generate_metric_component(dashboard_id, component)
+
                 elif component["type"] == "table":
                     await self._generate_table_component(dashboard_id, component)
+
             
         except Exception as e:
             logger.error(f"Failed to generate dashboard components: {e}")
@@ -555,19 +619,22 @@ class VoiceAnalyticsDashboard:
         pass
     
     async def _generate_metric_component(self, dashboard_id: str, component: Dict[str, Any]):
-        """Generate metric component"""
+        """
+        Generate metric component"""
         # Implementation would generate metric displays
         pass
     
     async def _generate_table_component(self, dashboard_id: str, component: Dict[str, Any]):
-        """Generate table component"""
+        """
+        Generate table component"""
         # Implementation would generate data tables
         pass
     
     async def _get_visualization_data(self, creator_id: str, data_source: str) -> pd.DataFrame:
-        """Get data for visualization"""
-        # Mock data generation
+        """
+        Get data for visualization"""
         dates = pd.date_range(start='2024-01-01', end='2024-12-31', freq='D')
+
         data = {
             'date': dates,
             'engagement_rate': np.random.normal(0.08, 0.02, len(dates)),
@@ -582,21 +649,27 @@ class VoiceAnalyticsDashboard:
         data: pd.DataFrame,
         config: Dict[str, Any]
     ) -> Tuple[Optional[str], Optional[Dict[str, Any]]]:
-        """Generate chart visualization"""
+        """
+        Generate chart visualization"""
         try:
             if chart_type == "line":
                 return await self._generate_line_chart(data, config)
+
             elif chart_type == "bar":
                 return await self._generate_bar_chart(data, config)
+
             elif chart_type == "pie":
                 return await self._generate_pie_chart(data, config)
+
             elif chart_type == "heatmap":
                 return await self._generate_heatmap(data, config)
+
             else:
                 return None, None
                 
         except Exception as e:
             logger.error(f"Failed to generate chart: {e}")
+
             return None, None
     
     async def _generate_line_chart(
@@ -611,9 +684,12 @@ class VoiceAnalyticsDashboard:
             y=config.get("y_column", "engagement_rate"),
             title=config.get("title", "Performance Trend")
         )
+
+
         
         chart_path = f"/tmp/chart_{uuid.uuid4()}.html"
         fig.write_html(chart_path)
+
         
         return chart_path, fig.to_dict()
     
@@ -629,9 +705,12 @@ class VoiceAnalyticsDashboard:
             y=config.get("y_column", "revenue"),
             title=config.get("title", "Revenue Analysis")
         )
+
+
         
         chart_path = f"/tmp/chart_{uuid.uuid4()}.html"
         fig.write_html(chart_path)
+
         
         return chart_path, fig.to_dict()
     
@@ -657,7 +736,8 @@ class VoiceAudienceTargeting:
     """Voice audience targeting and segmentation"""
     
     def __init__(self):
-        """Initialize audience targeting"""
+        """
+        Initialize audience targeting"""
         self.audience_segments = {}
         self.targeting_models = {}
         self.engagement_predictors = {}
@@ -674,20 +754,25 @@ class VoiceAudienceTargeting:
             segments = []
             
             # Get audience data
+
             audience_data = await self._get_audience_data(creator_id)
             
             # Perform segmentation
             if segmentation_criteria.get("type") == "demographic":
                 segments.extend(await self._demographic_segmentation(creator_id, audience_data))
+
             elif segmentation_criteria.get("type") == "behavioral":
                 segments.extend(await self._behavioral_segmentation(creator_id, audience_data))
+
             elif segmentation_criteria.get("type") == "engagement":
                 segments.extend(await self._engagement_segmentation(creator_id, audience_data))
+
             
             return segments
             
         except Exception as e:
             logger.error(f"Failed to segment audience: {e}")
+
             raise
     
     async def predict_audience_response(
@@ -697,7 +782,6 @@ class VoiceAudienceTargeting:
     ) -> Dict[str, float]:
         """Predict audience response to content"""
         try:
-            # Mock prediction
             predictions = {
                 "engagement_probability": 0.75,
                 "viral_potential": 0.45,
@@ -709,6 +793,7 @@ class VoiceAudienceTargeting:
             
         except Exception as e:
             logger.error(f"Failed to predict audience response: {e}")
+
             raise
     
     async def optimize_targeting(
@@ -719,12 +804,15 @@ class VoiceAudienceTargeting:
         """Optimize audience targeting strategy"""
         try:
             # Analyze current targeting performance
+
             current_performance = await self._analyze_targeting_performance(creator_id)
             
             # Generate optimization recommendations
+
             optimizations = await self._generate_targeting_optimizations(
                 creator_id, current_performance, campaign_objectives
             )
+
             
             return {
                 "current_performance": current_performance,
@@ -734,11 +822,11 @@ class VoiceAudienceTargeting:
             
         except Exception as e:
             logger.error(f"Failed to optimize targeting: {e}")
+
             raise
     
     async def _get_audience_data(self, creator_id: str) -> Dict[str, Any]:
         """Get audience data for analysis"""
-        # Mock audience data
         return {
             "total_audience": 10000,
             "demographics": {
@@ -759,9 +847,12 @@ class VoiceAudienceTargeting:
     ) -> List[AudienceInsights]:
         """Perform demographic segmentation"""
         segments = []
+
         
         demographics = audience_data.get("demographics", {})
+
         age_groups = demographics.get("age_groups", {})
+
         
         for age_group, percentage in age_groups.items():
             segment = AudienceInsights(
@@ -776,7 +867,9 @@ class VoiceAudienceTargeting:
                 content_preferences=[],
                 growth_trends={"monthly_growth": 0.05}
             )
+
             segments.append(segment)
+
         
         return segments
     
@@ -794,12 +887,14 @@ class VoiceAudienceTargeting:
         creator_id: str,
         audience_data: Dict[str, Any]
     ) -> List[AudienceInsights]:
-        """Perform engagement-based segmentation"""
+        """
+        Perform engagement-based segmentation"""
         # Implementation would analyze engagement levels
         return []
     
     async def _analyze_targeting_performance(self, creator_id: str) -> Dict[str, Any]:
-        """Analyze current targeting performance"""
+        """
+        Analyze current targeting performance"""
         return {
             "reach_effectiveness": 0.72,
             "engagement_quality": 0.68,
@@ -833,7 +928,8 @@ class VoiceAnalyticsIntelligence:
     """Main voice analytics intelligence system"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize voice analytics intelligence"""
+        """
+        Initialize voice analytics intelligence"""
         self.config = config or {}
         self.creator_analytics = CreatorVoiceAnalytics()
         self.analytics_dashboard = VoiceAnalyticsDashboard()
@@ -851,21 +947,25 @@ class VoiceAnalyticsIntelligence:
         """Generate comprehensive analytics report"""
         try:
             # Creator performance analytics
+
             performance_trends = await self.creator_analytics.analyze_creator_trends(
                 creator_id, time_period
             )
             
             # Business insights
+
             business_insights = await self.creator_analytics.generate_creator_insights(
                 creator_id
             )
             
             # Audience insights
+
             audience_segments = await self.audience_targeting.segment_audience(
                 creator_id, {"type": "demographic"}
             )
             
             # Generate visualizations
+
             dashboard_id = await self.analytics_dashboard.create_dashboard(
                 creator_id,
                 {
@@ -876,6 +976,8 @@ class VoiceAnalyticsIntelligence:
                     ]
                 }
             )
+
+
             
             comprehensive_report = {
                 "creator_id": creator_id,
@@ -894,6 +996,7 @@ class VoiceAnalyticsIntelligence:
             
         except Exception as e:
             logger.error(f"Failed to generate comprehensive analytics: {e}")
+
             raise
     
     async def _generate_analytics_summary(

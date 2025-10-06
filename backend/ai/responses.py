@@ -27,7 +27,8 @@ import re
 logger = logging.getLogger(__name__)
 
 class ResponseType(Enum):
-    """Types of responses that can be generated"""
+    """
+        Types of responses that can be generated"""
     INFORMATIONAL = "informational"
     CONVERSATIONAL = "conversational"
     INSTRUCTIONAL = "instructional"
@@ -82,7 +83,8 @@ class ResponseContext:
 
 @dataclass
 class ResponseCandidate:
-    """A candidate response with metadata"""
+    """
+        A candidate response with metadata"""
     content: str
     response_type: ResponseType
     tone: ResponseTone
@@ -94,7 +96,8 @@ class ResponseCandidate:
 
 @dataclass
 class GeneratedResponse:
-    """Final generated response with all metadata"""
+    """
+        Final generated response with all metadata"""
     content: str
     response_type: ResponseType
     tone: ResponseTone
@@ -107,7 +110,8 @@ class GeneratedResponse:
 
 @dataclass
 class ResponseTemplate:
-    """Template for response generation"""
+    """
+        Template for response generation"""
     template_id: str
     name: str
     template_text: str
@@ -118,20 +122,24 @@ class ResponseTemplate:
     effectiveness_score: float = 0.0
 
 class BaseResponseGenerator(ABC):
-    """Base class for response generators"""
+    """
+        Base class for response generators"""
     
     @abstractmethod
     async def generate(self, context: ResponseContext) -> GeneratedResponse:
-        """Generate response based on context"""
+        """
+        Generate response based on context"""
         pass
     
     @abstractmethod
     async def optimize_response(self, response: str, context: ResponseContext) -> str:
-        """Optimize a response for the given context"""
+        """
+        Optimize a response for the given context"""
         pass
 
 class TemplateEngine:
-    """Template-based response generation engine"""
+    """
+        Template-based response generation engine"""
     
     def __init__(self):
         self.templates: Dict[str, ResponseTemplate] = {}
@@ -139,7 +147,8 @@ class TemplateEngine:
         self._initialize_default_templates()
     
     def _initialize_default_templates(self):
-        """Initialize default response templates"""
+        """
+        Initialize default response templates"""
         default_templates = [
             ResponseTemplate(
                 template_id="greeting_friendly",
@@ -190,9 +199,12 @@ class TemplateEngine:
     
     async def generate_from_template(self, template_id: str, variables: Dict[str, Any], 
                                    tone: ResponseTone = ResponseTone.NEUTRAL) -> str:
-        """Generate response from template"""
+        """
+        Generate response from template"""
         if template_id not in self.templates:
             raise ValueError(f"Template {template_id} not found")
+
+
         
         template = self.templates[template_id]
         
@@ -203,6 +215,7 @@ class TemplateEngine:
             template_text = template.template_text
         
         # Replace variables
+
         response = template_text
         for var_name, var_value in variables.items():
             placeholder = "{" + var_name + "}"
@@ -217,17 +230,20 @@ class TemplateEngine:
         """Find the best template for given type and context"""
         if response_type not in self.template_categories:
             return None
+
         
         templates = self.template_categories[response_type]
         if not templates:
             return None
         
         # Simple selection - return template with highest effectiveness score
+
         best_template = max(templates, key=lambda t: self.templates[t].effectiveness_score)
         return best_template
 
 class PersonalizedResponseGenerator(BaseResponseGenerator):
-    """Advanced personalized response generator"""
+    """
+        Advanced personalized response generator"""
     
     def __init__(self):
         self.template_engine = TemplateEngine()
@@ -235,32 +251,43 @@ class PersonalizedResponseGenerator(BaseResponseGenerator):
         self.response_history: Dict[str, List[str]] = {}
     
     async def generate(self, context: ResponseContext) -> GeneratedResponse:
-        """Generate personalized response"""
+        """
+        Generate personalized response"""
         start_time = datetime.now()
         
         # Analyze user preferences and context
+
         user_preferences = await self._analyze_user_preferences(context)
         
         # Determine response type based on context
+
         response_type = await self._determine_response_type(context)
         
         # Determine appropriate tone
+
         tone = await self._determine_tone(context, user_preferences)
         
         # Generate multiple response candidates
+
         candidates = await self._generate_candidates(context, response_type, tone)
         
         # Select best candidate
+
         best_candidate = await self._select_best_candidate(candidates, context)
         
         # Apply optimization
+
         optimized_content = await self.optimize_response(best_candidate.content, context)
         
         # Calculate quality metrics
+
         quality_metrics = await self._calculate_quality_metrics(optimized_content, context)
         
         # Determine personalization level
+
         personalization_level = await self._assess_personalization_level(context, user_preferences)
+
+
         
         generation_time = (datetime.now() - start_time).total_seconds()
         
@@ -268,6 +295,7 @@ class PersonalizedResponseGenerator(BaseResponseGenerator):
         if context.user_id not in self.response_history:
             self.response_history[context.user_id] = []
         self.response_history[context.user_id].append(optimized_content)
+
         
         return GeneratedResponse(
             content=optimized_content,
@@ -289,8 +317,10 @@ class PersonalizedResponseGenerator(BaseResponseGenerator):
             user_name = context.user_profile["name"]
             if "{user_name}" in optimized:
                 optimized = optimized.replace("{user_name}", user_name)
+
             elif not any(name.lower() in optimized.lower() for name in [user_name]):
                 # Add user name if not present
+
                 optimized = f"Hi {user_name}! {optimized}"
         
         # Apply platform-specific optimization
@@ -302,7 +332,9 @@ class PersonalizedResponseGenerator(BaseResponseGenerator):
             optimized = await self._optimize_for_business_context(optimized, context.business_context)
         
         # Apply length optimization
+
         optimized = await self._optimize_length(optimized, context)
+
         
         return optimized
     
@@ -313,6 +345,7 @@ class PersonalizedResponseGenerator(BaseResponseGenerator):
         # Use cached preferences if available
         if user_id in self.personalization_cache:
             return self.personalization_cache[user_id]
+
         
         preferences = {
             "preferred_tone": ResponseTone.FRIENDLY,
@@ -358,6 +391,7 @@ class PersonalizedResponseGenerator(BaseResponseGenerator):
     async def _determine_tone(self, context: ResponseContext, preferences: Dict[str, Any]) -> ResponseTone:
         """Determine appropriate response tone"""
         # Check user preferences
+
         preferred_tone = preferences.get("preferred_tone")
         if preferred_tone and isinstance(preferred_tone, ResponseTone):
             return preferred_tone
@@ -382,12 +416,16 @@ class PersonalizedResponseGenerator(BaseResponseGenerator):
         candidates = []
         
         # Template-based generation
+
         template_id = await self.template_engine.find_best_template(response_type, context)
         if template_id:
             variables = await self._extract_template_variables(context)
+
+
             template_response = await self.template_engine.generate_from_template(
                 template_id, variables, tone
             )
+
             candidates.append(ResponseCandidate(
                 content=template_response,
                 response_type=response_type,
@@ -399,6 +437,7 @@ class PersonalizedResponseGenerator(BaseResponseGenerator):
             ))
         
         # Rule-based generation
+
         rule_based_response = await self._generate_rule_based_response(context, response_type, tone)
         if rule_based_response:
             candidates.append(ResponseCandidate(
@@ -412,6 +451,7 @@ class PersonalizedResponseGenerator(BaseResponseGenerator):
             ))
         
         # Creative generation
+
         creative_response = await self._generate_creative_response(context, response_type, tone)
         if creative_response:
             candidates.append(ResponseCandidate(
@@ -423,11 +463,13 @@ class PersonalizedResponseGenerator(BaseResponseGenerator):
                 relevance_score=0.75,
                 creativity_score=0.9
             ))
+
         
         return candidates
     
     async def _extract_template_variables(self, context: ResponseContext) -> Dict[str, Any]:
-        """Extract variables for template filling"""
+        """
+        Extract variables for template filling"""
         variables = {}
         
         # User information
@@ -487,6 +529,7 @@ class PersonalizedResponseGenerator(BaseResponseGenerator):
                 "This could be the start of something amazing!"
             ]
             return random.choice(creative_elements)
+
         
         elif response_type == ResponseType.SUPPORTIVE:
             supportive_elements = [
@@ -496,6 +539,7 @@ class PersonalizedResponseGenerator(BaseResponseGenerator):
                 "Every challenge is an opportunity to grow."
             ]
             return random.choice(supportive_elements)
+
         
         return None
     
@@ -522,6 +566,7 @@ class PersonalizedResponseGenerator(BaseResponseGenerator):
                 candidate.relevance_score * 0.3 +
                 candidate.creativity_score * 0.15
             )
+
         
         return max(candidates, key=score_candidate)
     
@@ -537,6 +582,7 @@ class PersonalizedResponseGenerator(BaseResponseGenerator):
         }
         
         # Calculate overall quality as weighted average
+
         weights = {
             "length_appropriateness": 0.15,
             "relevance": 0.25,
@@ -548,6 +594,7 @@ class PersonalizedResponseGenerator(BaseResponseGenerator):
         metrics["overall_quality"] = sum(
             metrics[metric] * weight for metric, weight in weights.items()
         )
+
         
         return metrics
     
@@ -566,36 +613,47 @@ class PersonalizedResponseGenerator(BaseResponseGenerator):
             return 0.3
     
     async def _assess_relevance(self, response: str, context: ResponseContext) -> float:
-        """Assess relevance of response to user message"""
+        """
+        Assess relevance of response to user message"""
         # Simple keyword overlap assessment
+
         user_words = set(context.user_message.lower().split())
+
         response_words = set(response.lower().split())
         
         # Remove common stop words
+
         stop_words = {"the", "a", "an", "and", "or", "but", "in", "on", "at", "to", "for", "of", "with", "by"}
         user_words -= stop_words
         response_words -= stop_words
         
         if not user_words:
             return 0.7  # Neutral score if no content words
+
         
         overlap = len(user_words.intersection(response_words))
+
         relevance = overlap / len(user_words)
+
         
         return min(1.0, relevance + 0.5)  # Boost score as exact keyword matching is limited
     
     async def _assess_coherence(self, response: str) -> float:
         """Assess coherence and flow of response"""
         # Simple coherence assessment based on structure
+
         sentences = response.split('.')
         if len(sentences) < 2:
             return 0.9  # Single sentence is coherent
         
         # Check for logical connectors
+
         connectors = ["however", "therefore", "also", "furthermore", "additionally", "meanwhile"]
+
         has_connectors = any(connector in response.lower() for connector in connectors)
         
         # Basic structural coherence
+
         base_score = 0.8
         if has_connectors:
             base_score += 0.1
@@ -635,11 +693,13 @@ class PersonalizedResponseGenerator(BaseResponseGenerator):
             engagement_score += 0.2
         
         # Check for enthusiasm markers
+
         enthusiasm_markers = ["!", "great", "awesome", "exciting", "amazing", "fantastic"]
         if any(marker in response.lower() for marker in enthusiasm_markers):
             engagement_score += 0.2
         
         # Check for actionable suggestions
+
         action_words = ["try", "consider", "check out", "explore", "discover"]
         if any(word in response.lower() for word in action_words):
             engagement_score += 0.1
@@ -683,8 +743,10 @@ class PersonalizedResponseGenerator(BaseResponseGenerator):
             return PersonalizationLevel.NONE
     
     async def _optimize_for_platform(self, response: str, platform: str) -> str:
-        """Optimize response for specific platform"""
+        """
+        Optimize response for specific platform"""
         platform_lower = platform.lower()
+
         
         if platform_lower == "twitter":
             # Keep it concise for Twitter
@@ -692,6 +754,7 @@ class PersonalizedResponseGenerator(BaseResponseGenerator):
                 response = response[:197] + "..."
         elif platform_lower == "linkedin":
             # More professional tone for LinkedIn
+
             response = response.replace("Hey!", "Hello").replace("awesome", "excellent")
         elif platform_lower == "instagram":
             # Add some visual elements suggestion
@@ -703,10 +766,13 @@ class PersonalizedResponseGenerator(BaseResponseGenerator):
     async def _optimize_for_business_context(self, response: str, business_context: Dict[str, Any]) -> str:
         """Optimize response for business context"""
         industry = business_context.get("industry", "")
+
         focus_area = business_context.get("focus_area", "")
+
         
         if industry:
             # Add industry-specific insights
+
             response = f"In the {industry} space, {response.lower()}"
         
         return response
@@ -714,11 +780,15 @@ class PersonalizedResponseGenerator(BaseResponseGenerator):
     async def _optimize_length(self, response: str, context: ResponseContext) -> str:
         """Optimize response length based on context"""
         preferences = context.preferences.get("response_length_preference", "medium")
+
+
         
         words = response.split()
+
         
         if preferences == "short" and len(words) > 30:
             # Truncate to key points
+
             response = " ".join(words[:25]) + "..."
         elif preferences == "long" and len(words) < 20:
             # Add elaboration
@@ -730,9 +800,11 @@ class PersonalizedResponseGenerator(BaseResponseGenerator):
                                            preferences: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze conversation history to update preferences"""
         # Analyze response lengths user seems to prefer
+
         response_lengths = [len(msg.get("content", "").split()) for msg in history if "content" in msg]
         if response_lengths:
             avg_length = sum(response_lengths) / len(response_lengths)
+
             if avg_length < 15:
                 preferences["response_length_preference"] = "short"
             elif avg_length > 40:
@@ -749,14 +821,18 @@ class MultiModalResponseGenerator(BaseResponseGenerator):
         self.personalized_generator = PersonalizedResponseGenerator()
     
     async def generate(self, context: ResponseContext) -> GeneratedResponse:
-        """Generate multi-modal response"""
+        """
+        Generate multi-modal response"""
         # Generate base text response
+
         base_response = await self.personalized_generator.generate(context)
         
         # Add multi-modal suggestions
+
         media_suggestions = await self._generate_media_suggestions(context, base_response.content)
         
         # Enhance content with media references
+
         enhanced_content = await self._enhance_with_media_suggestions(base_response.content, media_suggestions)
         
         # Update metadata
@@ -779,12 +855,14 @@ class MultiModalResponseGenerator(BaseResponseGenerator):
                 creativity_score=0.85,
                 metadata={"media_type": suggestion["type"], "media_suggestion": suggestion["suggestion"]}
             ))
+
         
         return base_response
     
     async def optimize_response(self, response: str, context: ResponseContext) -> str:
         """Optimize response with multi-modal considerations"""
         # First apply standard optimization
+
         optimized = await self.personalized_generator.optimize_response(response, context)
         
         # Add media integration suggestions
@@ -809,6 +887,7 @@ class MultiModalResponseGenerator(BaseResponseGenerator):
                 "suggestion": "Create an infographic or visual diagram",
                 "description": "A visual representation would enhance this explanation"
             })
+
         
         if any(word in text_response.lower() for word in ["step", "process", "how to", "tutorial"]):
             suggestions.append({
@@ -816,6 +895,7 @@ class MultiModalResponseGenerator(BaseResponseGenerator):
                 "suggestion": "Record a step-by-step video tutorial",
                 "description": "A video walkthrough would be very helpful here"
             })
+
         
         if any(word in text_response.lower() for word in ["story", "experience", "journey"]):
             suggestions.append({
@@ -823,6 +903,7 @@ class MultiModalResponseGenerator(BaseResponseGenerator):
                 "suggestion": "Share this as a personal story in audio format",
                 "description": "Your personal narrative would be engaging as audio content"
             })
+
         
         return suggestions
     
@@ -858,13 +939,16 @@ class ABTestingResponseEngine:
         for variant in test_variants:
             if variant in self.generators:
                 generator = self.generators[variant]
+
                 response = await generator.generate(context)
+
                 responses[variant] = response
         
         return responses
     
     async def record_test_result(self, test_id: str, variant: str, user_feedback: Dict[str, Any]):
-        """Record A/B test result"""
+        """
+        Record A/B test result"""
         if test_id not in self.test_results:
             self.test_results[test_id] = {}
         
@@ -880,8 +964,10 @@ class ABTestingResponseEngine:
         """Get analytics for A/B test"""
         if test_id not in self.test_results:
             return {"error": "Test not found"}
+
         
         analytics = {}
+
         test_data = self.test_results[test_id]
         
         for variant, results in test_data.items():
@@ -901,15 +987,18 @@ def create_personalized_response_generator() -> PersonalizedResponseGenerator:
     return PersonalizedResponseGenerator()
 
 def create_template_engine() -> TemplateEngine:
-    """Create template engine"""
+    """
+        Create template engine"""
     return TemplateEngine()
 
 def create_multimodal_response_generator() -> MultiModalResponseGenerator:
-    """Create multimodal response generator"""
+    """
+        Create multimodal response generator"""
     return MultiModalResponseGenerator()
 
 def create_ab_testing_response_engine() -> ABTestingResponseEngine:
-    """Create A/B testing response engine"""
+    """
+        Create A/B testing response engine"""
     return ABTestingResponseEngine()
 
 # Export all classes and functions

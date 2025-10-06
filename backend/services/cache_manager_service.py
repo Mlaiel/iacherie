@@ -102,7 +102,8 @@ class CacheEntry(Generic[T]):
 
 @dataclass
 class CacheResult(Generic[T]):
-    """Résultat de cache"""
+    """
+        Résultat de cache"""
     hit: bool
     value: Optional[T]
     cache_level: Optional[CacheLevel]
@@ -113,7 +114,8 @@ class CacheResult(Generic[T]):
 
 @dataclass
 class CacheMetrics:
-    """Métriques de cache"""
+    """
+        Métriques de cache"""
     cache_name: str
     hit_rate: float
     miss_rate: float
@@ -129,7 +131,8 @@ class CacheMetrics:
 
 @dataclass
 class PerformanceCache:
-    """Cache haute performance"""
+    """
+        Cache haute performance"""
     cache_id: str
     cache_name: str
     cache_type: str
@@ -144,7 +147,8 @@ class PerformanceCache:
 
 @dataclass
 class DistributedCache:
-    """Cache distribué"""
+    """
+        Cache distribué"""
     cluster_id: str
     nodes: List[str]
     replication_factor: int
@@ -156,7 +160,8 @@ class DistributedCache:
     health_status: Dict[str, Any]
 
 class L1MemoryCache(Generic[T]):
-    """Cache mémoire L1 haute performance"""
+    """
+        Cache mémoire L1 haute performance"""
     
     def __init__(self, max_size: int = 1000, ttl_seconds: Optional[int] = None):
         self.max_size = max_size
@@ -167,8 +172,10 @@ class L1MemoryCache(Generic[T]):
         self._access_counts = {}
         
     async def get(self, key: str) -> CacheResult[T]:
-        """Récupérer une valeur du cache L1"""
+        """
+        Récupérer une valeur du cache L1"""
         start_time = time.time()
+
         
         async with self._lock:
             if key in self._cache:
@@ -181,6 +188,7 @@ class L1MemoryCache(Generic[T]):
                         del self._access_times[key]
                     if key in self._access_counts:
                         del self._access_counts[key]
+
                     
                     access_time = (time.time() - start_time) * 1000
                     return CacheResult(
@@ -195,12 +203,17 @@ class L1MemoryCache(Generic[T]):
                 
                 # Mettre à jour les statistiques d'accès
                 entry.accessed_at = datetime.utcnow()
+
                 entry.access_count += 1
                 self._access_times[key] = time.time()
+
                 self._access_counts[key] = self._access_counts.get(key, 0) + 1
                 
                 # Déplacer vers la fin (LRU)
+
                 self._cache.move_to_end(key)
+
+
                 
                 access_time = (time.time() - start_time) * 1000
                 return CacheResult(
@@ -212,6 +225,8 @@ class L1MemoryCache(Generic[T]):
                     metadata={"access_count": entry.access_count},
                     size_bytes=entry.size_bytes
                 )
+
+
             
             access_time = (time.time() - start_time) * 1000
             return CacheResult(
@@ -228,9 +243,11 @@ class L1MemoryCache(Generic[T]):
         """Définir une valeur dans le cache L1"""
         async with self._lock:
             # Calculer la taille
+
             size_bytes = len(pickle.dumps(value))
             
             # Calculer l'expiration
+
             expires_at = None
             if ttl_seconds or self.ttl_seconds:
                 expires_at = datetime.utcnow() + timedelta(
@@ -240,7 +257,10 @@ class L1MemoryCache(Generic[T]):
             # Éviction si nécessaire
             while len(self._cache) >= self.max_size:
                 # Supprimer le plus ancien (LRU)
+
+
                 oldest_key = next(iter(self._cache))
+
                 del self._cache[oldest_key]
                 if oldest_key in self._access_times:
                     del self._access_times[oldest_key]
@@ -248,6 +268,7 @@ class L1MemoryCache(Generic[T]):
                     del self._access_counts[oldest_key]
             
             # Créer l'entrée
+
             entry = CacheEntry(
                 key=key,
                 value=value,
@@ -261,15 +282,18 @@ class L1MemoryCache(Generic[T]):
                 tags=[],
                 version=1
             )
+
             
             self._cache[key] = entry
             self._access_times[key] = time.time()
+
             self._access_counts[key] = 0
             
             return True
 
 class CacheManager:
-    """Gestionnaire principal de cache"""
+    """
+        Gestionnaire principal de cache"""
     
     def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
         self.redis = redis_client
@@ -281,24 +305,32 @@ class CacheManager:
         self.performance_monitors = {}
         
     async def initialize_cache_system(self) -> Dict[str, Any]:
-        """Initialiser le système de cache"""
+        """
+        Initialiser le système de cache"""
         try:
             # Configurer les stratégies de cache
+
             cache_strategies = await self._configure_cache_strategies()
             
             # Initialiser les caches distribués
+
             distributed_caches = await self._initialize_distributed_caches()
             
             # Configurer le monitoring de performance
+
             performance_monitoring = await self._configure_performance_monitoring()
             
             # Préparer les optimiseurs de cache
+
             cache_optimizers = await self._prepare_cache_optimizers()
             
             # Démarrer les processus de maintenance
+
             maintenance_processes = await self._start_cache_maintenance()
+
             
             logger.info("⚡ Cache system initialized successfully")
+
             
             return {
                 "cache_strategies": len(cache_strategies),
@@ -313,6 +345,7 @@ class CacheManager:
             
         except Exception as e:
             logger.error(f"Failed to initialize cache system: {e}")
+
             raise
     
     async def get_cached_data(
@@ -337,44 +370,60 @@ class CacheManager:
                 try:
                     if cache_level == CacheLevel.L1_MEMORY:
                         result = await self.l1_cache.get(normalized_key)
+
                         if result.hit:
                             await self._update_cache_metrics(cache_level, True)
+
                             return result
                     
                     elif cache_level == CacheLevel.L2_REDIS:
                         result = await self._get_from_redis_cache(normalized_key)
+
                         if result.hit:
                             # Promouvoir vers L1
                             await self.l1_cache.set(normalized_key, result.value)
+
                             await self._update_cache_metrics(cache_level, True)
+
                             return result
                     
                     elif cache_level == CacheLevel.L3_DATABASE:
                         result = await self._get_from_database_cache(normalized_key)
+
                         if result.hit:
                             # Promouvoir vers L2 et L1
                             await self._set_redis_cache(normalized_key, result.value)
+
                             await self.l1_cache.set(normalized_key, result.value)
+
                             await self._update_cache_metrics(cache_level, True)
+
                             return result
                     
                     await self._update_cache_metrics(cache_level, False)
+
                     
                 except Exception as e:
                     logger.warning(f"Cache level {cache_level.value} failed: {e}")
+
                     continue
             
             # Si aucun cache n'a la donnée, utiliser la fonction fallback
             if fallback_function:
                 try:
                     start_time = time.time()
+
+
                     fallback_value = await fallback_function(key)
+
+
                     access_time = (time.time() - start_time) * 1000
                     
                     # Mettre en cache le résultat dans tous les niveaux
                     await self._populate_all_cache_levels(
                         normalized_key, fallback_value, cache_levels
                     )
+
                     
                     return CacheResult(
                         hit=False,
@@ -385,9 +434,11 @@ class CacheManager:
                         metadata={"source": "fallback_function"},
                         size_bytes=len(pickle.dumps(fallback_value))
                     )
+
                     
                 except Exception as e:
                     logger.error(f"Fallback function failed: {e}")
+
                     raise
             
             # Aucune donnée trouvée
@@ -400,9 +451,11 @@ class CacheManager:
                 metadata={"reason": "not_found"},
                 size_bytes=None
             )
+
             
         except Exception as e:
             logger.error(f"Failed to get cached data: {e}")
+
             raise
 
     async def set_cached_data(
@@ -424,9 +477,11 @@ class CacheManager:
             normalized_key = await self._normalize_cache_key(key)
             
             # Calculer les métriques
+
             size_bytes = len(pickle.dumps(value))
             
             # Résultats par niveau
+
             set_results = {}
             
             # Définir dans chaque niveau de cache
@@ -436,27 +491,32 @@ class CacheManager:
                         result = await self.l1_cache.set(
                             normalized_key, value, ttl_seconds
                         )
+
                         set_results[cache_level.value] = result
                     
                     elif cache_level == CacheLevel.L2_REDIS:
                         result = await self._set_redis_cache(
                             normalized_key, value, ttl_seconds, tags
                         )
+
                         set_results[cache_level.value] = result
                     
                     elif cache_level == CacheLevel.L3_DATABASE:
                         result = await self._set_database_cache(
                             normalized_key, value, ttl_seconds, tags
                         )
+
                         set_results[cache_level.value] = result
                     
                     # Mettre à jour les métriques
                     await self._update_cache_write_metrics(
                         cache_level, size_bytes
                     )
+
                     
                 except Exception as e:
                     logger.warning(f"Failed to set cache level {cache_level.value}: {e}")
+
                     set_results[cache_level.value] = False
                     continue
             
@@ -464,13 +524,16 @@ class CacheManager:
             await self._log_cache_event(
                 "set", normalized_key, size_bytes, cache_levels, set_results
             )
+
             
             logger.debug(f"Cached data set: {normalized_key} ({size_bytes} bytes)")
+
             
             return set_results
             
         except Exception as e:
             logger.error(f"Failed to set cached data: {e}")
+
             raise
 
     async def _get_from_redis_cache(self, key: str) -> CacheResult:
@@ -479,12 +542,16 @@ class CacheManager:
             start_time = time.time()
             
             # Récupérer la valeur
+
             cached_data = await self.redis.get(f"cache:{key}")
+
             
             if cached_data:
                 # Désérialiser
                 try:
                     value = pickle.loads(cached_data)
+
+
                     access_time = (time.time() - start_time) * 1000
                     
                     return CacheResult(
@@ -496,10 +563,13 @@ class CacheManager:
                         metadata={},
                         size_bytes=len(cached_data)
                     )
+
                 except Exception as e:
                     logger.warning(f"Failed to deserialize Redis cache data: {e}")
                     # Supprimer la donnée corrompue
                     await self.redis.delete(f"cache:{key}")
+
+
             
             access_time = (time.time() - start_time) * 1000
             return CacheResult(
@@ -511,9 +581,11 @@ class CacheManager:
                 metadata={},
                 size_bytes=None
             )
+
             
         except Exception as e:
             logger.error(f"Failed to get from Redis cache: {e}")
+
             raise
 
     async def _set_redis_cache(
@@ -526,11 +598,13 @@ class CacheManager:
         """Définir dans le cache Redis L2"""
         try:
             # Sérialiser la valeur
+
             serialized_value = pickle.dumps(value)
             
             # Définir avec TTL si spécifié
             if ttl_seconds:
                 await self.redis.setex(f"cache:{key}", ttl_seconds, serialized_value)
+
             else:
                 await self.redis.set(f"cache:{key}", serialized_value)
             
@@ -538,11 +612,13 @@ class CacheManager:
             if tags:
                 for tag in tags:
                     await self.redis.sadd(f"cache:tag:{tag}", key)
+
             
             return True
             
         except Exception as e:
             logger.error(f"Failed to set Redis cache: {e}")
+
             return False
 
 class CacheOptimization:
@@ -557,33 +633,42 @@ class CacheOptimization:
         self,
         optimization_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimiser les performances du cache"""
+        """
+        Optimiser les performances du cache"""
         try:
             # Analyser les patterns d'accès
+
             access_analysis = await self._analyze_access_patterns()
             
             # Identifier les opportunités d'optimisation
+
             optimization_opportunities = await self._identify_optimization_opportunities(
                 access_analysis
             )
             
             # Appliquer les optimisations
+
             optimization_results = []
             
             for opportunity in optimization_opportunities:
                 try:
                     result = await self._apply_cache_optimization(opportunity)
+
                     optimization_results.append(result)
+
                 except Exception as e:
                     logger.warning(f"Failed to apply optimization {opportunity['type']}: {e}")
+
                     continue
             
             # Mesurer l'impact des optimisations
+
             performance_impact = await self._measure_optimization_impact(
                 optimization_results
             )
             
             # Générer le rapport d'optimisation
+
             optimization_report = {
                 "optimization_id": str(uuid.uuid4()),
                 "access_analysis": access_analysis,
@@ -598,6 +683,7 @@ class CacheOptimization:
             }
             
             logger.info(f"Cache optimization completed: {len(optimization_results)} optimizations applied")
+
             
             return {
                 "success": True,
@@ -606,6 +692,7 @@ class CacheOptimization:
             
         except Exception as e:
             logger.error(f"Failed to optimize cache performance: {e}")
+
             raise
 
 class CacheManagerService:
@@ -619,24 +706,32 @@ class CacheManagerService:
         self.cache_analytics = {}
         
     async def initialize_service(self) -> Dict[str, Any]:
-        """Initialiser le service de cache"""
+        """
+        Initialiser le service de cache"""
         try:
             # Initialiser le système de cache
+
             cache_system = await self.cache_manager.initialize_cache_system()
             
             # Configurer l'optimisation
+
             optimization_config = await self._configure_cache_optimization()
             
             # Initialiser les analytics
+
             analytics_config = await self._initialize_cache_analytics()
             
             # Démarrer le monitoring
+
             monitoring_status = await self._start_cache_monitoring()
             
             # Configurer les alertes
+
             alerts_config = await self._configure_cache_alerts()
+
             
             logger.info("⚡ Cache Manager Service initialized successfully")
+
             
             return {
                 "service": "CacheManagerService",
@@ -654,6 +749,7 @@ class CacheManagerService:
             
         except Exception as e:
             logger.error(f"Failed to initialize cache manager service: {e}")
+
             raise
     
     # Méthodes privées pour l'implémentation détaillée...

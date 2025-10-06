@@ -23,7 +23,8 @@ from collections import defaultdict, deque
 logger = logging.getLogger(__name__)
 
 class EngagementMetric(Enum):
-    """Types of engagement metrics"""
+    """
+Types of engagement metrics"""
     CONTENT_CREATION = "content_creation"
     COLLABORATION_PARTICIPATION = "collaboration_participation"
     PLATFORM_ACTIVITY = "platform_activity"
@@ -34,7 +35,8 @@ class EngagementMetric(Enum):
     MENTORSHIP_ACTIVITY = "mentorship_activity"
 
 class MotivationType(Enum):
-    """Types of user motivation"""
+    """
+Types of user motivation"""
     INTRINSIC = "intrinsic"
     EXTRINSIC = "extrinsic"
     SOCIAL = "social"
@@ -45,7 +47,8 @@ class MotivationType(Enum):
     COMPETITION = "competition"
 
 class EngagementStage(Enum):
-    """User engagement lifecycle stages"""
+    """
+User engagement lifecycle stages"""
     ONBOARDING = "onboarding"
     EXPLORATION = "exploration"
     ENGAGEMENT = "engagement"
@@ -55,7 +58,8 @@ class EngagementStage(Enum):
     CHURNED = "churned"
 
 class AchievementCategory(Enum):
-    """Categories of achievements for organization"""
+    """
+Categories of achievements for organization"""
     CREATOR_MILESTONES = "creator_milestones"
     SKILL_PROGRESSION = "skill_progression"
     COLLABORATION_SUCCESS = "collaboration_success"
@@ -67,7 +71,8 @@ class AchievementCategory(Enum):
 
 @dataclass
 class EngagementProfile:
-    """User engagement profile and preferences"""
+    """
+User engagement profile and preferences"""
     user_id: str
     primary_motivations: List[MotivationType]
     engagement_stage: EngagementStage
@@ -87,7 +92,8 @@ class EngagementProfile:
 
 @dataclass
 class EngagementSession:
-    """Individual engagement session tracking"""
+    """
+Individual engagement session tracking"""
     session_id: str
     user_id: str
     start_time: datetime
@@ -106,7 +112,8 @@ class EngagementSession:
 
 @dataclass
 class AchievementPath:
-    """Structured achievement progression path"""
+    """
+Structured achievement progression path"""
     path_id: str
     name: str
     description: str
@@ -124,7 +131,8 @@ class AchievementPath:
 
 @dataclass
 class UserAchievementProgress:
-    """Detailed user progress on achievement paths"""
+    """
+Detailed user progress on achievement paths"""
     user_id: str
     path_id: str
     current_position: int
@@ -141,7 +149,8 @@ class UserAchievementProgress:
 
 @dataclass
 class EngagementChallenge:
-    """Personalized engagement challenge"""
+    """
+Personalized engagement challenge"""
     challenge_id: str
     user_id: str
     challenge_type: str
@@ -161,7 +170,8 @@ class EngagementChallenge:
 
 @dataclass
 class MotivationalIntervention:
-    """Targeted motivational intervention"""
+    """
+Targeted motivational intervention"""
     intervention_id: str
     user_id: str
     trigger_event: str
@@ -186,7 +196,8 @@ class AchievementEngagementCore:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize achievement engagement core"""
+        """
+Initialize achievement engagement core"""
         self.config = config or {}
         self.engagement_profiles: Dict[str, EngagementProfile] = {}
         self.engagement_sessions: Dict[str, List[EngagementSession]] = {}
@@ -229,7 +240,8 @@ class AchievementEngagementCore:
         logger.info("Achievement Engagement Core initialized")
     
     def _initialize_engagement_model(self) -> Dict[str, Any]:
-        """Initialize engagement prediction model"""
+        """
+Initialize engagement prediction model"""
         return {
             'model_version': '2.1.0',
             'prediction_accuracy': 0.85,
@@ -249,7 +261,8 @@ class AchievementEngagementCore:
         }
     
     def _initialize_personalization_engine(self) -> Dict[str, Any]:
-        """Initialize personalization engine"""
+        """
+Initialize personalization engine"""
         return {
             'algorithm_version': '1.5.0',
             'personalization_factors': [
@@ -265,7 +278,8 @@ class AchievementEngagementCore:
         }
     
     def _initialize_achievement_paths(self):
-        """Initialize default achievement paths"""
+        """
+Initialize default achievement paths"""
         default_paths = [
             {
                 'path_id': 'creator_journey',
@@ -325,7 +339,8 @@ class AchievementEngagementCore:
         user_id: str, 
         profile_data: Dict[str, Any]
     ) -> EngagementProfile:
-        """Create comprehensive engagement profile for user"""
+        """
+Create comprehensive engagement profile for user"""
         try:
             # Analyze user preferences and behavior patterns
             motivations = [MotivationType(m) for m in profile_data.get('motivations', ['achievement'])]
@@ -363,7 +378,8 @@ class AchievementEngagementCore:
             raise
     
     async def start_engagement_session(self, user_id: str) -> EngagementSession:
-        """Start tracking user engagement session"""
+        """
+Start tracking user engagement session"""
         try:
             if user_id not in self.engagement_profiles:
                 await self.create_engagement_profile(user_id, {})
@@ -400,7 +416,8 @@ class AchievementEngagementCore:
         activity_type: str, 
         activity_data: Dict[str, Any]
     ) -> bool:
-        """Track user activity during engagement session"""
+        """
+Track user activity during engagement session"""
         try:
             if user_id not in self.engagement_sessions or not self.engagement_sessions[user_id]:
                 await self.start_engagement_session(user_id)
@@ -447,7 +464,8 @@ class AchievementEngagementCore:
         activity_type: str, 
         activity_data: Dict[str, Any]
     ) -> float:
-        """Calculate engagement value of an activity"""
+        """
+Calculate engagement value of an activity"""
         base_values = {
             'content_creation': 5.0,
             'content_consumption': 1.0,
@@ -475,7 +493,8 @@ class AchievementEngagementCore:
         return base_value * quality_multiplier * duration_multiplier
     
     async def _update_session_scores(self, session: EngagementSession):
-        """Update engagement and quality scores for session"""
+        """
+Update engagement and quality scores for session"""
         try:
             if not session.activities:
                 return
@@ -506,7 +525,8 @@ class AchievementEngagementCore:
         session: EngagementSession, 
         activity: Dict[str, Any]
     ):
-        """Check for achievements and milestones during session"""
+        """
+Check for achievements and milestones during session"""
         try:
             # Check for session-based achievements
             session_achievements = []
@@ -536,7 +556,8 @@ class AchievementEngagementCore:
             logger.error(f"Error checking session achievements: {e}")
     
     async def _check_engagement_milestones(self, user_id: str, session: EngagementSession):
-        """Check for engagement milestones"""
+        """
+Check for engagement milestones"""
         try:
             user_sessions = self.engagement_sessions[user_id]
             total_sessions = len(user_sessions)
@@ -571,7 +592,8 @@ class AchievementEngagementCore:
             logger.error(f"Error checking engagement milestones: {e}")
     
     async def end_engagement_session(self, user_id: str) -> EngagementSession:
-        """End current engagement session"""
+        """
+End current engagement session"""
         try:
             if user_id not in self.engagement_sessions or not self.engagement_sessions[user_id]:
                 raise ValueError("No active session found")
@@ -606,7 +628,8 @@ class AchievementEngagementCore:
             raise
     
     async def _analyze_session_completion(self, user_id: str, session: EngagementSession):
-        """Analyze completed session and trigger interventions if needed"""
+        """
+Analyze completed session and trigger interventions if needed"""
         try:
             profile = self.engagement_profiles.get(user_id)
             if not profile:
@@ -627,7 +650,8 @@ class AchievementEngagementCore:
             logger.error(f"Error analyzing session completion: {e}")
     
     async def _trigger_engagement_intervention(self, user_id: str, trigger_type: str):
-        """Trigger personalized engagement intervention"""
+        """
+Trigger personalized engagement intervention"""
         try:
             profile = self.engagement_profiles[user_id]
             
@@ -675,7 +699,8 @@ class AchievementEngagementCore:
         profile: EngagementProfile, 
         trigger_type: str
     ) -> Dict[str, Any]:
-        """Generate personalized intervention content"""
+        """
+Generate personalized intervention content"""
         try:
             # Customize based on user's primary motivations
             primary_motivation = profile.primary_motivations[0] if profile.primary_motivations else MotivationType.ACHIEVEMENT
@@ -724,7 +749,8 @@ class AchievementEngagementCore:
             }
     
     async def _trigger_achievement_encouragement(self, user_id: str):
-        """Trigger achievement encouragement for high-quality session"""
+        """
+Trigger achievement encouragement for high-quality session"""
         try:
             # Find nearby achievements user could work towards
             available_paths = [
@@ -768,7 +794,8 @@ class AchievementEngagementCore:
             logger.error(f"Error triggering achievement encouragement: {e}")
     
     def _is_path_available_for_user(self, user_id: str, path: AchievementPath) -> bool:
-        """Check if achievement path is available for user"""
+        """
+Check if achievement path is available for user"""
         # For now, simple availability check
         # In production, this would check user's progress, prerequisites, etc.
         user_progress = [
@@ -779,7 +806,8 @@ class AchievementEngagementCore:
         return len(user_progress) == 0 or user_progress[0].progress_percentage < 100.0
     
     async def _update_engagement_profile(self, user_id: str, session: EngagementSession):
-        """Update engagement profile based on session data"""
+        """
+Update engagement profile based on session data"""
         try:
             profile = self.engagement_profiles[user_id]
             
@@ -812,7 +840,8 @@ class AchievementEngagementCore:
             logger.error(f"Error updating engagement profile: {e}")
     
     async def get_engagement_analytics(self, user_id: str) -> Dict[str, Any]:
-        """Get comprehensive engagement analytics for user"""
+        """
+Get comprehensive engagement analytics for user"""
         try:
             if user_id not in self.engagement_profiles:
                 raise ValueError(f"User engagement profile not found: {user_id}")
@@ -876,7 +905,8 @@ class AchievementEngagementCore:
             raise
     
     def _calculate_engagement_trends(self, sessions: List[EngagementSession]) -> Dict[str, Any]:
-        """Calculate engagement trends over time"""
+        """
+Calculate engagement trends over time"""
         if len(sessions) < 2:
             return {'trend': 'insufficient_data'}
         
@@ -902,7 +932,8 @@ class AchievementEngagementCore:
         profile: EngagementProfile, 
         sessions: List[EngagementSession]
     ) -> List[str]:
-        """Generate personalized engagement recommendations"""
+        """
+Generate personalized engagement recommendations"""
         recommendations = []
         
         if not sessions:
@@ -936,7 +967,8 @@ class AchievementEngagementCore:
         return recommendations
     
     def get_core_metrics(self) -> Dict[str, Any]:
-        """Get core achievement engagement metrics"""
+        """
+Get core achievement engagement metrics"""
         total_users = len(self.engagement_profiles)
         total_interventions = sum(len(interventions) for interventions in self.motivational_interventions.values())
         

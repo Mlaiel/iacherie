@@ -22,7 +22,8 @@ from decimal import Decimal
 
 
 class ProductType(Enum):
-    """Types de produits monétisables"""
+    """
+        Types de produits monétisables"""
     AVATAR_BASE = "avatar_base"
     AVATAR_PREMIUM = "avatar_premium"
     CLOTHING_ITEM = "clothing_item"
@@ -134,7 +135,8 @@ class NFTAsset:
 
 @dataclass
 class Transaction:
-    """Transaction financière"""
+    """
+        Transaction financière"""
     transaction_id: str
     user_id: str
     product_id: str
@@ -151,7 +153,8 @@ class Transaction:
 
 @dataclass
 class RevenueReport:
-    """Rapport de revenus"""
+    """
+        Rapport de revenus"""
     report_id: str
     period_start: datetime
     period_end: datetime
@@ -165,7 +168,8 @@ class RevenueReport:
 
 
 class AvatarCommerce:
-    """Commerce avatars et accessoires"""
+    """
+        Commerce avatars et accessoires"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -174,7 +178,8 @@ class AvatarCommerce:
         self._initialize_default_products()
     
     def _initialize_default_products(self):
-        """Initialisation des produits par défaut"""
+        """
+        Initialisation des produits par défaut"""
         default_products = [
             Product(
                 product_id="premium_avatar_male",
@@ -239,13 +244,16 @@ class AvatarCommerce:
                 digital_assets=product_data.get('digital_assets', []),
                 preview_urls=product_data.get('preview_urls', [])
             )
+
             
             self.products[product.product_id] = product
             self.logger.info(f"Produit créé: {product.name} ({product.product_id})")
+
             return product
             
         except Exception as e:
             self.logger.error(f"Erreur création produit: {e}")
+
             raise
     
     async def purchase_product(self, user_id: str, product_id: str, 
@@ -254,11 +262,15 @@ class AvatarCommerce:
         try:
             if product_id not in self.products:
                 raise ValueError(f"Produit {product_id} non trouvé")
+
+
             
             product = self.products[product_id]
             
             if not product.available:
                 raise ValueError(f"Produit {product_id} non disponible")
+
+
             
             transaction = Transaction(
                 transaction_id=str(uuid.uuid4()),
@@ -269,11 +281,13 @@ class AvatarCommerce:
                 status=TransactionStatus.PENDING,
                 payment_method=payment_method,
                 commission_rate=0.10,  # 10% commission
+
                 commission_amount=product.base_price * Decimal('0.10')
             )
             
             # Simulation du traitement de paiement
             await self._process_payment(transaction)
+
             
             self.transactions[transaction.transaction_id] = transaction
             
@@ -281,10 +295,12 @@ class AvatarCommerce:
             product.download_count += 1
             
             self.logger.info(f"Achat traité: {product.name} par {user_id}")
+
             return transaction
             
         except Exception as e:
             self.logger.error(f"Erreur achat produit: {e}")
+
             raise
     
     async def _process_payment(self, transaction: Transaction) -> None:
@@ -298,6 +314,7 @@ class AvatarCommerce:
             if random.random() < 0.95:
                 transaction.status = TransactionStatus.COMPLETED
                 transaction.completed_at = datetime.now()
+
             else:
                 transaction.status = TransactionStatus.FAILED
                 
@@ -316,33 +333,44 @@ class AvatarCommerce:
                 products = [p for p in products if p.product_type == category]
             
             # Filtrage des produits disponibles
+
             products = [p for p in products if p.available]
             
             # Tri
             if sort_by == "popularity":
                 products.sort(key=lambda p: p.download_count, reverse=True)
+
             elif sort_by == "price_low":
                 products.sort(key=lambda p: p.base_price)
+
             elif sort_by == "price_high":
                 products.sort(key=lambda p: p.base_price, reverse=True)
+
             elif sort_by == "rating":
                 products.sort(key=lambda p: p.rating, reverse=True)
+
             elif sort_by == "newest":
                 products.sort(key=lambda p: p.created_at, reverse=True)
+
             
             return products
             
         except Exception as e:
             self.logger.error(f"Erreur récupération marketplace: {e}")
+
             return []
     
     async def search_products(self, query: str, filters: Optional[Dict[str, Any]] = None) -> List[Product]:
         """Recherche de produits"""
         try:
             products = list(self.products.values())
+
+
             results = []
+
             
             query_lower = query.lower()
+
             
             for product in products:
                 if not product.available:
@@ -363,11 +391,13 @@ class AvatarCommerce:
                             continue
                     
                     results.append(product)
+
             
             return results
             
         except Exception as e:
             self.logger.error(f"Erreur recherche produits: {e}")
+
             return []
 
 
@@ -380,9 +410,12 @@ class DigitalAssetManager:
         self.access_tokens: Dict[str, Dict[str, Any]] = {}
     
     async def register_asset(self, asset_data: Dict[str, Any]) -> str:
-        """Enregistrement d'un actif numérique"""
+        """
+        Enregistrement d'un actif numérique"""
         try:
             asset_id = str(uuid.uuid4())
+
+
             
             asset = {
                 'asset_id': asset_id,
@@ -401,10 +434,12 @@ class DigitalAssetManager:
             
             self.assets[asset_id] = asset
             self.logger.info(f"Actif enregistré: {asset['name']} ({asset_id})")
+
             return asset_id
             
         except Exception as e:
             self.logger.error(f"Erreur enregistrement actif: {e}")
+
             raise
     
     async def generate_access_token(self, asset_id: str, user_id: str,
@@ -413,9 +448,14 @@ class DigitalAssetManager:
         try:
             if asset_id not in self.assets:
                 raise ValueError(f"Actif {asset_id} non trouvé")
+
+
             
             token = str(uuid.uuid4())
+
+
             expiry_time = datetime.now() + timedelta(hours=expiry_hours)
+
             
             self.access_tokens[token] = {
                 'token': token,
@@ -432,6 +472,7 @@ class DigitalAssetManager:
             
         except Exception as e:
             self.logger.error(f"Erreur génération token: {e}")
+
             raise
     
     async def download_asset(self, token: str) -> Dict[str, Any]:
@@ -439,6 +480,8 @@ class DigitalAssetManager:
         try:
             if token not in self.access_tokens:
                 raise ValueError("Token d'accès invalide")
+
+
             
             token_data = self.access_tokens[token]
             
@@ -449,8 +492,11 @@ class DigitalAssetManager:
             # Vérification utilisation
             if token_data['usage_count'] >= token_data['max_usage']:
                 raise ValueError("Token d'accès épuisé")
+
+
             
             asset_id = token_data['asset_id']
+
             asset = self.assets[asset_id]
             
             # Mise à jour des statistiques
@@ -467,6 +513,7 @@ class DigitalAssetManager:
             
         except Exception as e:
             self.logger.error(f"Erreur téléchargement actif: {e}")
+
             raise
 
 
@@ -480,17 +527,22 @@ class NFTIntegration:
     
     async def mint_avatar_nft(self, avatar_id: str, creator_address: str,
                             blockchain: NFTStandard = NFTStandard.ERC721) -> NFTAsset:
-        """Création d'un NFT avatar"""
+        """
+        Création d'un NFT avatar"""
         try:
             nft_id = str(uuid.uuid4())
+
+
             token_id = str(hash(avatar_id + str(datetime.now())))
             
             # Simulation d'une adresse de contrat
+
             contract_addresses = {
                 NFTStandard.ERC721: "0x1234567890abcdef1234567890abcdef12345678",
                 NFTStandard.POLYGON: "0xabcdef1234567890abcdef1234567890abcdef12",
                 NFTStandard.SOLANA: "AbCdEf123456789AbCdEf123456789AbCdEf123456"
             }
+
             
             nft_asset = NFTAsset(
                 nft_id=nft_id,
@@ -504,13 +556,16 @@ class NFTIntegration:
                 mint_price=Decimal('0.1'),  # Prix en ETH
                 rarity_score=await self._calculate_rarity_score(avatar_id)
             )
+
             
             self.nft_assets[nft_id] = nft_asset
             self.logger.info(f"NFT créé: {avatar_id} -> {nft_id}")
+
             return nft_asset
             
         except Exception as e:
             self.logger.error(f"Erreur création NFT: {e}")
+
             raise
     
     async def _calculate_rarity_score(self, avatar_id: str) -> float:
@@ -521,10 +576,13 @@ class NFTIntegration:
     
     async def transfer_nft(self, nft_id: str, from_address: str, 
                          to_address: str, price: Optional[Decimal] = None) -> bool:
-        """Transfert d'un NFT"""
+        """
+        Transfert d'un NFT"""
         try:
             if nft_id not in self.nft_assets:
                 raise ValueError(f"NFT {nft_id} non trouvé")
+
+
             
             nft = self.nft_assets[nft_id]
             
@@ -532,6 +590,7 @@ class NFTIntegration:
                 raise ValueError("Adresse propriétaire incorrecte")
             
             # Enregistrement du transfert
+
             transfer_record = {
                 'from_address': from_address,
                 'to_address': to_address,
@@ -541,22 +600,26 @@ class NFTIntegration:
             }
             
             nft.transfer_history.append(transfer_record)
+
             nft.owner_address = to_address
             
             if price:
                 nft.current_price = price
             
             self.logger.info(f"NFT transféré: {nft_id} de {from_address} vers {to_address}")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Erreur transfert NFT: {e}")
+
             return False
     
     def get_nft_metadata(self, nft_id: str) -> Dict[str, Any]:
         """Métadonnées NFT au format standard"""
         if nft_id not in self.nft_assets:
             return {}
+
         
         nft = self.nft_assets[nft_id]
         
@@ -585,7 +648,8 @@ class RevenueTracker:
         self.subscriptions: Dict[str, Subscription] = {}
     
     async def track_transaction(self, transaction: Transaction) -> None:
-        """Suivi d'une transaction"""
+        """
+        Suivi d'une transaction"""
         self.transactions.append(transaction)
         self.logger.info(f"Transaction suivie: {transaction.transaction_id}")
     
@@ -596,6 +660,7 @@ class RevenueTracker:
             report_id = str(uuid.uuid4())
             
             # Filtrage des transactions par période
+
             period_transactions = [
                 t for t in self.transactions
                 if start_date <= t.created_at <= end_date and 
@@ -603,21 +668,29 @@ class RevenueTracker:
             ]
             
             # Calculs des revenus
+
             total_revenue = sum(t.amount for t in period_transactions)
+
+
             total_commission = sum(t.commission_amount for t in period_transactions)
             
             # Revenus par type de produit
+
             revenue_by_type = {}
             for transaction in period_transactions:
                 # Simulation du type de produit depuis transaction metadata
+
                 product_type = transaction.metadata.get('product_type', 'unknown')
+
                 revenue_by_type[product_type] = revenue_by_type.get(product_type, Decimal('0')) + transaction.amount
             
             # Top produits
+
             product_revenues = {}
             for transaction in period_transactions:
                 product_id = transaction.product_id
                 product_revenues[product_id] = product_revenues.get(product_id, Decimal('0')) + transaction.amount
+
             
             top_products = [
                 {'product_id': pid, 'revenue': float(revenue)}
@@ -626,15 +699,21 @@ class RevenueTracker:
             ]
             
             # Métriques utilisateur
+
             unique_users = len(set(t.user_id for t in period_transactions))
+
+
             avg_transaction_value = total_revenue / len(period_transactions) if period_transactions else Decimal('0')
             
             # Métriques de croissance (simulation)
+
+
             growth_metrics = {
                 'revenue_growth_percent': 15.5,
                 'user_growth_percent': 12.3,
                 'transaction_growth_percent': 18.7
             }
+
             
             report = RevenueReport(
                 report_id=report_id,
@@ -652,11 +731,13 @@ class RevenueTracker:
                 },
                 growth_metrics=growth_metrics
             )
+
             
             return report
             
         except Exception as e:
             self.logger.error(f"Erreur génération rapport: {e}")
+
             raise
     
     async def get_user_lifetime_value(self, user_id: str) -> Dict[str, Any]:
@@ -665,10 +746,14 @@ class RevenueTracker:
         
         if not user_transactions:
             return {'user_id': user_id, 'lifetime_value': 0.0, 'transaction_count': 0}
+
         
         total_spent = sum(t.amount for t in user_transactions if t.status == TransactionStatus.COMPLETED)
+
         first_transaction = min(user_transactions, key=lambda t: t.created_at)
+
         last_transaction = max(user_transactions, key=lambda t: t.created_at)
+
         
         return {
             'user_id': user_id,

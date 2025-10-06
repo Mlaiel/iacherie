@@ -240,7 +240,8 @@ class ProcessingJob:
 # ============================================================================
 
 class ContentValidator:
-    """Content validation and security checking"""
+    """
+        Content validation and security checking"""
     
     def __init__(self, limits: ContentLimits):
         self.limits = limits
@@ -258,8 +259,12 @@ class ContentValidator:
                 return ValidationResult.INVALID_FORMAT, {"error": "File not found"}
             
             # Basic file checks
+
             file_size = os.path.getsize(file_path)
+
             mime_type, _ = mimetypes.guess_type(file_path)
+
+
             
             validation_info = {
                 "file_size": file_size,
@@ -285,19 +290,25 @@ class ContentValidator:
             # Content-specific validation
             if mime_type and mime_type.startswith("audio/"):
                 result, info = await self._validate_audio(file_path)
+
                 validation_info.update(info)
+
                 if result != ValidationResult.VALID:
                     return result, validation_info
             
             elif mime_type and mime_type.startswith("video/"):
                 result, info = await self._validate_video(file_path)
+
                 validation_info.update(info)
+
                 if result != ValidationResult.VALID:
                     return result, validation_info
             
             elif mime_type and mime_type.startswith("image/"):
                 result, info = await self._validate_image(file_path)
+
                 validation_info.update(info)
+
                 if result != ValidationResult.VALID:
                     return result, validation_info
             
@@ -312,6 +323,7 @@ class ContentValidator:
             
         except Exception as e:
             logger.error(f"Content validation failed: {e}")
+
             return ValidationResult.CORRUPTED, {"error": str(e)}
     
     def _is_supported_format(self, mime_type: str) -> bool:
@@ -324,7 +336,8 @@ class ContentValidator:
         return mime_type in all_formats
     
     async def _validate_audio(self, file_path: str) -> Tuple[ValidationResult, Dict[str, Any]]:
-        """Validate audio content"""
+        """
+        Validate audio content"""
         try:
             info = {}
             
@@ -332,6 +345,8 @@ class ContentValidator:
                 try:
                     # Load audio file
                     y, sr = librosa.load(file_path, duration=None)
+
+
                     duration = len(y) / sr
                     
                     info.update({
@@ -363,16 +378,26 @@ class ContentValidator:
             if HAS_CV2:
                 try:
                     cap = cv2.VideoCapture(file_path)
+
                     
                     if not cap.isOpened():
                         return ValidationResult.CORRUPTED, {"error": "Cannot open video file"}
+
                     
                     fps = cap.get(cv2.CAP_PROP_FPS)
+
+
                     frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+
                     duration = frame_count / fps if fps > 0 else 0
+
                     
                     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+
+
                     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
                     
                     info.update({
                         "duration": duration,
@@ -381,6 +406,7 @@ class ContentValidator:
                         "height": height,
                         "frame_count": frame_count
                     })
+
                     
                     cap.release()
                     
@@ -436,10 +462,12 @@ class ContentValidator:
         """Simple malware scanning"""
         try:
             # Read file in chunks to check for malware signatures
+
             chunk_size = 8192
             with open(file_path, 'rb') as f:
                 while True:
                     chunk = f.read(chunk_size)
+
                     if not chunk:
                         break
                     
@@ -452,6 +480,7 @@ class ContentValidator:
             
         except Exception as e:
             logger.error(f"Malware scan failed: {e}")
+
             return False
 
 
@@ -463,7 +492,8 @@ class AudioProcessor:
     """Audio content processing and analysis"""
     
     async def process_audio(self, file_path: str) -> Dict[str, Any]:
-        """Process audio content"""
+        """
+        Process audio content"""
         try:
             result = {
                 "type": "audio",
@@ -477,13 +507,20 @@ class AudioProcessor:
                 try:
                     # Load audio
                     y, sr = librosa.load(file_path)
+
+
                     duration = len(y) / sr
                     
                     # Extract features
                     tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
+
+
                     spectral_centroids = librosa.feature.spectral_centroid(y=y, sr=sr)[0]
+
                     spectral_rolloff = librosa.feature.spectral_rolloff(y=y, sr=sr)[0]
+
                     mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
+
                     
                     result["features"] = {
                         "duration": duration,
@@ -513,12 +550,15 @@ class AudioProcessor:
                     
                 except Exception as e:
                     logger.error(f"Audio processing failed: {e}")
+
                     result["error"] = str(e)
+
             
             return result
             
         except Exception as e:
             logger.error(f"Audio processor failed: {e}")
+
             return {"type": "audio", "processed": False, "error": str(e)}
 
 
@@ -526,7 +566,8 @@ class VideoProcessor:
     """Video content processing and analysis"""
     
     async def process_video(self, file_path: str) -> Dict[str, Any]:
-        """Process video content"""
+        """
+        Process video content"""
         try:
             result = {
                 "type": "video",
@@ -539,15 +580,25 @@ class VideoProcessor:
             if HAS_CV2:
                 try:
                     cap = cv2.VideoCapture(file_path)
+
                     
                     if not cap.isOpened():
                         return {"type": "video", "processed": False, "error": "Cannot open video"}
                     
                     # Basic video info
+
                     fps = cap.get(cv2.CAP_PROP_FPS)
+
+
                     frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+
                     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+
+
                     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+
                     duration = frame_count / fps if fps > 0 else 0
                     
                     result["features"] = {
@@ -560,17 +611,27 @@ class VideoProcessor:
                     }
                     
                     # Sample frames for analysis
+
                     frame_samples = []
+
                     sample_interval = max(1, frame_count // 10)  # Sample 10 frames
                     
                     for i in range(0, frame_count, sample_interval):
                         cap.set(cv2.CAP_PROP_POS_FRAMES, i)
+
                         ret, frame = cap.read()
+
                         if ret:
                             # Analyze frame
+
                             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+
                             brightness = np.mean(gray)
+
+
                             contrast = np.std(gray)
+
                             
                             frame_samples.append({
                                 "frame_number": i,
@@ -578,12 +639,14 @@ class VideoProcessor:
                                 "brightness": float(brightness),
                                 "contrast": float(contrast)
                             })
+
                     
                     result["scenes"] = frame_samples
                     
                     # Quality metrics
                     if frame_samples:
                         brightnesses = [f["brightness"] for f in frame_samples]
+
                         contrasts = [f["contrast"] for f in frame_samples]
                         
                         result["quality"] = {
@@ -594,15 +657,19 @@ class VideoProcessor:
                         }
                     
                     cap.release()
+
                     
                 except Exception as e:
                     logger.error(f"Video processing failed: {e}")
+
                     result["error"] = str(e)
+
             
             return result
             
         except Exception as e:
             logger.error(f"Video processor failed: {e}")
+
             return {"type": "video", "processed": False, "error": str(e)}
 
 
@@ -610,7 +677,8 @@ class ImageProcessor:
     """Image content processing and analysis"""
     
     async def process_image(self, file_path: str) -> Dict[str, Any]:
-        """Process image content"""
+        """
+        Process image content"""
         try:
             result = {
                 "type": "image",
@@ -639,10 +707,14 @@ class ImageProcessor:
                             img = img.convert("RGB")
                         
                         # Color analysis
+
                         img_array = np.array(img)
                         
                         # Dominant colors (simplified)
+
+
                         avg_color = np.mean(img_array, axis=(0, 1))
+
                         
                         result["colors"] = {
                             "average_rgb": avg_color.tolist(),
@@ -654,8 +726,12 @@ class ImageProcessor:
                         }
                         
                         # Quality metrics
+
                         gray = img.convert("L")
+
+
                         gray_array = np.array(gray)
+
                         
                         result["quality"] = {
                             "sharpness": float(np.var(gray_array)),
@@ -665,12 +741,15 @@ class ImageProcessor:
                     
                 except Exception as e:
                     logger.error(f"Image processing failed: {e}")
+
                     result["error"] = str(e)
+
             
             return result
             
         except Exception as e:
             logger.error(f"Image processor failed: {e}")
+
             return {"type": "image", "processed": False, "error": str(e)}
 
 
@@ -682,7 +761,8 @@ class FingerprintEngine:
     """Content fingerprinting for similarity detection and protection"""
     
     async def generate_fingerprint(self, file_path: str, content_type: str) -> Dict[str, Any]:
-        """Generate content fingerprint"""
+        """
+        Generate content fingerprint"""
         try:
             fingerprint = {
                 "fingerprint_id": f"fp_{uuid.uuid4().hex[:16]}",
@@ -694,18 +774,24 @@ class FingerprintEngine:
             }
             
             # File hash
+
             file_hash = await self._calculate_file_hash(file_path)
+
             fingerprint["hash_values"]["file_hash"] = file_hash
             
             # Content-specific fingerprinting
             if content_type.startswith("audio"):
                 fp_data = await self._fingerprint_audio(file_path)
+
             elif content_type.startswith("video"):
                 fp_data = await self._fingerprint_video(file_path)
+
             elif content_type.startswith("image"):
                 fp_data = await self._fingerprint_image(file_path)
+
             else:
                 fp_data = await self._fingerprint_generic(file_path)
+
             
             fingerprint["fingerprint_data"] = fp_data
             
@@ -713,6 +799,7 @@ class FingerprintEngine:
             
         except Exception as e:
             logger.error(f"Fingerprint generation failed: {e}")
+
             return {
                 "fingerprint_id": f"fp_error_{uuid.uuid4().hex[:8]}",
                 "error": str(e),
@@ -734,16 +821,26 @@ class FingerprintEngine:
                 y, sr = librosa.load(file_path)
                 
                 # Chroma features for harmonic content
+
                 chroma = librosa.feature.chroma(y=y, sr=sr)
+
+
                 chroma_fingerprint = np.mean(chroma, axis=1).tolist()
                 
                 # Spectral contrast for texture
+
                 contrast = librosa.feature.spectral_contrast(y=y, sr=sr)
+
+
                 contrast_fingerprint = np.mean(contrast, axis=1).tolist()
                 
                 # Tonnetz for harmonic analysis
+
                 tonnetz = librosa.feature.tonnetz(y=librosa.effects.harmonic(y), sr=sr)
+
+
                 tonnetz_fingerprint = np.mean(tonnetz, axis=1).tolist()
+
                 
                 return {
                     "chroma_fingerprint": chroma_fingerprint,
@@ -756,6 +853,7 @@ class FingerprintEngine:
                 
         except Exception as e:
             logger.error(f"Audio fingerprinting failed: {e}")
+
             return {"error": str(e)}
     
     async def _fingerprint_video(self, file_path: str) -> Dict[str, Any]:
@@ -763,30 +861,50 @@ class FingerprintEngine:
         try:
             if HAS_CV2:
                 cap = cv2.VideoCapture(file_path)
+
                 
                 if not cap.isOpened():
                     return {"error": "Cannot open video file"}
                 
                 # Sample frames and create fingerprint
+
                 frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+
                 sample_frames = min(50, frame_count)  # Sample up to 50 frames
+
                 interval = max(1, frame_count // sample_frames)
+
+
                 
                 frame_hashes = []
                 
                 for i in range(0, frame_count, interval):
                     cap.set(cv2.CAP_PROP_POS_FRAMES, i)
+
                     ret, frame = cap.read()
+
                     if ret:
                         # Create frame hash
+
                         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+
                         resized = cv2.resize(gray, (8, 8))
+
+
                         avg = resized.mean()
+
+
                         diff = resized > avg
+
                         frame_hash = ''.join(['1' if bit else '0' for bit in diff.flatten()])
+
                         frame_hashes.append(frame_hash)
+
                 
                 cap.release()
+
                 
                 return {
                     "frame_hashes": frame_hashes,
@@ -798,6 +916,7 @@ class FingerprintEngine:
                 
         except Exception as e:
             logger.error(f"Video fingerprinting failed: {e}")
+
             return {"error": str(e)}
     
     async def _fingerprint_image(self, file_path: str) -> Dict[str, Any]:
@@ -806,24 +925,39 @@ class FingerprintEngine:
             if HAS_PIL:
                 with Image.open(file_path) as img:
                     # Convert to grayscale and resize
+
                     gray = img.convert("L")
+
+
                     resized = gray.resize((8, 8), Image.Resampling.LANCZOS)
                     
                     # Calculate average hash
+
                     avg = sum(resized.getdata()) / 64
+
                     bits = ['1' if pixel > avg else '0' for pixel in resized.getdata()]
+
                     ahash = ''.join(bits)
                     
                     # Calculate difference hash
+
                     resized = gray.resize((9, 8), Image.Resampling.LANCZOS)
+
+
                     pixels = list(resized.getdata())
+
+
                     dhash_bits = []
                     for row in range(8):
                         for col in range(8):
                             pixel_left = pixels[row * 9 + col]
+
                             pixel_right = pixels[row * 9 + col + 1]
                             dhash_bits.append('1' if pixel_left > pixel_right else '0')
+
+
                     dhash = ''.join(dhash_bits)
+
                     
                     return {
                         "average_hash": ahash,
@@ -835,13 +969,17 @@ class FingerprintEngine:
                 
         except Exception as e:
             logger.error(f"Image fingerprinting failed: {e}")
+
             return {"error": str(e)}
     
     async def _fingerprint_generic(self, file_path: str) -> Dict[str, Any]:
         """Generate generic content fingerprint"""
         try:
             file_hash = await self._calculate_file_hash(file_path)
+
+
             file_size = os.path.getsize(file_path)
+
             
             return {
                 "file_hash": file_hash,
@@ -851,6 +989,7 @@ class FingerprintEngine:
             
         except Exception as e:
             logger.error(f"Generic fingerprinting failed: {e}")
+
             return {"error": str(e)}
     
     async def compare_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
@@ -858,23 +997,34 @@ class FingerprintEngine:
         try:
             if fp1.get("content_type") != fp2.get("content_type"):
                 return 0.0
+
             
             fp1_data = fp1.get("fingerprint_data", {})
+
+
             fp2_data = fp2.get("fingerprint_data", {})
+
+
             
             content_type = fp1.get("content_type", "")
+
             
             if content_type.startswith("audio"):
                 return await self._compare_audio_fingerprints(fp1_data, fp2_data)
+
             elif content_type.startswith("video"):
                 return await self._compare_video_fingerprints(fp1_data, fp2_data)
+
             elif content_type.startswith("image"):
                 return await self._compare_image_fingerprints(fp1_data, fp2_data)
+
             else:
                 return await self._compare_generic_fingerprints(fp1_data, fp2_data)
+
                 
         except Exception as e:
             logger.error(f"Fingerprint comparison failed: {e}")
+
             return 0.0
     
     async def _compare_audio_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
@@ -882,16 +1032,22 @@ class FingerprintEngine:
         try:
             if "chroma_fingerprint" in fp1 and "chroma_fingerprint" in fp2:
                 chroma1 = np.array(fp1["chroma_fingerprint"])
+
+
                 chroma2 = np.array(fp2["chroma_fingerprint"])
                 
                 # Calculate cosine similarity
+
                 similarity = np.dot(chroma1, chroma2) / (np.linalg.norm(chroma1) * np.linalg.norm(chroma2))
+
                 return float(similarity)
+
             
             return 0.0
             
         except Exception as e:
             logger.error(f"Audio fingerprint comparison failed: {e}")
+
             return 0.0
     
     async def _compare_video_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
@@ -899,16 +1055,24 @@ class FingerprintEngine:
         try:
             if "frame_hashes" in fp1 and "frame_hashes" in fp2:
                 hashes1 = fp1["frame_hashes"]
+
                 hashes2 = fp2["frame_hashes"]
                 
                 # Compare frame hashes
+
                 matches = 0
+
                 total_comparisons = min(len(hashes1), len(hashes2))
+
                 
                 for i in range(total_comparisons):
                     # Hamming distance for hash comparison
+
                     hamming_dist = sum(c1 != c2 for c1, c2 in zip(hashes1[i], hashes2[i]))
+
+
                     similarity = 1.0 - (hamming_dist / len(hashes1[i]))
+
                     if similarity > 0.8:  # Threshold for match
                         matches += 1
                 
@@ -918,6 +1082,7 @@ class FingerprintEngine:
             
         except Exception as e:
             logger.error(f"Video fingerprint comparison failed: {e}")
+
             return 0.0
     
     async def _compare_image_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
@@ -925,17 +1090,23 @@ class FingerprintEngine:
         try:
             if "average_hash" in fp1 and "average_hash" in fp2:
                 hash1 = fp1["average_hash"]
+
                 hash2 = fp2["average_hash"]
                 
                 # Hamming distance
+
                 hamming_dist = sum(c1 != c2 for c1, c2 in zip(hash1, hash2))
+
+
                 similarity = 1.0 - (hamming_dist / len(hash1))
+
                 return similarity
             
             return 0.0
             
         except Exception as e:
             logger.error(f"Image fingerprint comparison failed: {e}")
+
             return 0.0
     
     async def _compare_generic_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
@@ -948,6 +1119,7 @@ class FingerprintEngine:
             
         except Exception as e:
             logger.error(f"Generic fingerprint comparison failed: {e}")
+
             return 0.0
 
 
@@ -1004,18 +1176,24 @@ class ContentProcessingEngine:
         
         try:
             # Create temporary file
+
             file_extension = Path(file_name).suffix
+
             temp_file = tempfile.NamedTemporaryFile(
                 delete=False,
                 suffix=file_extension,
                 dir=self.storage_path
             )
+
             
             with temp_file:
                 temp_file.write(file_data)
+
+
                 temp_file_path = temp_file.name
             
             # Create processing job
+
             job = ProcessingJob(
                 job_id=f"job_{uuid.uuid4().hex[:12]}",
                 creator_id=creator_id,
@@ -1033,28 +1211,35 @@ class ContentProcessingEngine:
             
             # Start processing asynchronously
             asyncio.create_task(self._process_job(job))
+
             
             logger.info(f"Content processing job {job.job_id} submitted for creator {creator_id}")
+
             return job.job_id
             
         except Exception as e:
             logger.error(f"Content submission failed: {e}")
+
             raise
     
     async def _process_job(self, job: ProcessingJob):
         """Process a content job through the entire pipeline"""
         try:
             job.started_at = datetime.now(timezone.utc)
+
             logger.info(f"Starting content processing job {job.job_id}")
             
             # Stage 1: Validation
             await self._update_job_progress(job, ProcessingStage.VALIDATION, 10.0)
+
             validation_result, validation_info = await self.validator.validate_content(job.file_path)
+
             
             if validation_result != ValidationResult.VALID:
                 raise Exception(f"Content validation failed: {validation_info.get('error', 'Unknown error')}")
             
             # Initialize metadata
+
             metadata = ContentMetadata(
                 file_name=Path(job.file_path).name,
                 file_size=os.path.getsize(job.file_path),
@@ -1064,25 +1249,33 @@ class ContentProcessingEngine:
             
             # Stage 2: Content Analysis
             await self._update_job_progress(job, ProcessingStage.ANALYSIS, 30.0)
+
+
             
             mime_type = metadata.mime_type
             if mime_type.startswith("audio/"):
                 analysis_result = await self.audio_processor.process_audio(job.file_path)
+
             elif mime_type.startswith("video/"):
                 analysis_result = await self.video_processor.process_video(job.file_path)
+
             elif mime_type.startswith("image/"):
                 analysis_result = await self.image_processor.process_image(job.file_path)
+
             else:
                 analysis_result = {"type": "unknown", "processed": False}
             
             metadata.ai_analysis = analysis_result
             
             # Stage 3: AI Analysis (if enabled and AI orchestrator available)
+
             if job.enable_ai_analysis and HAS_AI_ORCHESTRATOR:
                 await self._update_job_progress(job, ProcessingStage.ANALYSIS, 50.0)
+
                 
                 try:
                     # Submit AI analysis task
+
                     content_type = mime_type.split("/")[0]  # audio, video, image
                     
                     if content_type == "audio":
@@ -1092,6 +1285,7 @@ class ContentProcessingEngine:
                             input_data={"file_path": job.file_path, "duration": metadata.duration},
                             priority=TaskPriority.NORMAL
                         )
+
                     elif content_type == "video":
                         ai_task_id = await process_content(
                             content_type="video",
@@ -1099,6 +1293,7 @@ class ContentProcessingEngine:
                             input_data={"file_path": job.file_path},
                             priority=TaskPriority.NORMAL
                         )
+
                     elif content_type == "image":
                         ai_task_id = await process_content(
                             content_type="image",
@@ -1108,13 +1303,19 @@ class ContentProcessingEngine:
                         )
                     
                     # Wait for AI analysis (with timeout)
+
                     await asyncio.sleep(2)  # Give AI some time to process
+
                     
                     orchestrator = get_orchestrator()
+
+
                     ai_result = await orchestrator.get_task_status(ai_task_id)
+
                     
                     if ai_result and ai_result.get("status") == "completed":
                         metadata.ai_analysis.update(ai_result.get("output_data", {}))
+
                     
                 except Exception as e:
                     logger.warning(f"AI analysis failed for job {job.job_id}: {e}")
@@ -1122,18 +1323,24 @@ class ContentProcessingEngine:
             # Stage 4: Fingerprinting
             if job.enable_fingerprinting:
                 await self._update_job_progress(job, ProcessingStage.FINGERPRINTING, 70.0)
+
+
                 
                 fingerprint = await self.fingerprint_engine.generate_fingerprint(
                     job.file_path, metadata.mime_type
                 )
+
                 metadata.fingerprint_data = fingerprint
             
             # Stage 5: Protection (if enabled)
+
             if job.enable_protection and HAS_AI_ORCHESTRATOR:
                 await self._update_job_progress(job, ProcessingStage.PROTECTION, 85.0)
+
                 
                 try:
                     # Submit protection task
+
                     protection_task_id = await protect_content(
                         protection_type="copyright_infringement_detection",
                         input_data={
@@ -1146,12 +1353,18 @@ class ContentProcessingEngine:
                     
                     # Wait for protection analysis
                     await asyncio.sleep(1)
+
+
                     
                     orchestrator = get_orchestrator()
+
+
                     protection_result = await orchestrator.get_task_status(protection_task_id)
+
                     
                     if protection_result and protection_result.get("status") == "completed":
                         metadata.protection_status = protection_result.get("output_data", {})
+
                     
                 except Exception as e:
                     logger.warning(f"Protection analysis failed for job {job.job_id}: {e}")
@@ -1160,14 +1373,19 @@ class ContentProcessingEngine:
             await self._update_job_progress(job, ProcessingStage.STORAGE, 95.0)
             
             # Move file to permanent storage
+
             final_path = self._get_storage_path(job.creator_id, metadata.file_name)
+
             final_path.parent.mkdir(parents=True, exist_ok=True)
+
             shutil.move(job.file_path, final_path)
+
             job.output_paths["final_path"] = str(final_path)
             
             # Complete job
             job.metadata = metadata
             job.completed_at = datetime.now(timezone.utc)
+
             await self._update_job_progress(job, ProcessingStage.COMPLETED, 100.0)
             
             # Move to completed jobs
@@ -1178,17 +1396,22 @@ class ContentProcessingEngine:
             self.metrics["total_jobs_processed"] += 1
             if job.duration():
                 self.metrics["total_processing_time"] += job.duration()
+
                 self.metrics["average_job_time"] = (
                     self.metrics["total_processing_time"] / 
                     self.metrics["total_jobs_processed"]
                 )
+
             
             logger.info(f"Content processing job {job.job_id} completed successfully")
+
             
         except Exception as e:
             # Handle job failure
             job.error_message = str(e)
+
             job.completed_at = datetime.now(timezone.utc)
+
             job.stage = ProcessingStage.FAILED
             
             # Move to failed jobs
@@ -1199,6 +1422,7 @@ class ContentProcessingEngine:
             # Cleanup temporary file
             if os.path.exists(job.file_path):
                 os.unlink(job.file_path)
+
             
             logger.error(f"Content processing job {job.job_id} failed: {e}")
     
@@ -1211,6 +1435,7 @@ class ContentProcessingEngine:
     def _get_storage_path(self, creator_id: str, file_name: str) -> Path:
         """Get final storage path for content"""
         # Organize by creator and date
+
         date_str = datetime.now().strftime("%Y/%m/%d")
         return self.storage_path / "content" / creator_id / date_str / file_name
     
@@ -1261,15 +1486,19 @@ class ContentProcessingEngine:
         """Content processing engine health check"""
         try:
             # Update storage metrics
+
             total_size = 0
             for root, dirs, files in os.walk(self.storage_path):
                 for file in files:
                     total_size += os.path.getsize(os.path.join(root, file))
+
             
             self.metrics["storage_used_gb"] = total_size / (1024**3)
             
             # Calculate success rate
+
             total_jobs = len(self.completed_jobs) + len(self.failed_jobs)
+
             if total_jobs > 0:
                 self.metrics["success_rate"] = (len(self.completed_jobs) / total_jobs) * 100
             
@@ -1304,6 +1533,7 @@ class ContentProcessingEngine:
             
         except Exception as e:
             logger.error(f"Health check failed: {e}")
+
             return {
                 "engine": {"healthy": False, "error": str(e)},
                 "components": {},
@@ -1331,7 +1561,8 @@ async def process_content_file(
     file_name: str,
     **kwargs
 ) -> str:
-    """Convenience function to process content file"""
+    """
+        Convenience function to process content file"""
     engine = get_processing_engine()
     return await engine.submit_content(
         creator_id=creator_id,
@@ -1380,15 +1611,19 @@ if __name__ == "__main__":
     async def main():
         print("🎯 Content Processing Engine Test")
         print("=" * 50)
+
         
         try:
             # Get processing engine
+
             engine = get_processing_engine()
             
             # Create test file
+
             test_content = b"This is test content for processing"
             
             # Submit test job
+
             job_id = await engine.submit_content(
                 creator_id="test_creator_001",
                 file_data=test_content,
@@ -1396,6 +1631,7 @@ if __name__ == "__main__":
                 content_title="Test Content",
                 content_description="Test content for processing engine"
             )
+
             
             print(f"✅ Submitted job: {job_id}")
             
@@ -1403,16 +1639,23 @@ if __name__ == "__main__":
             await asyncio.sleep(3)
             
             # Check job status
+
             status = await engine.get_job_status(job_id)
+
             if status:
                 print(f"📊 Job status: {status['status']} ({status.get('progress', 0):.1f}%)")
             
             # Health check
+
             health = await engine.health_check()
+
             print(f"🏥 Engine healthy: {health['engine']['healthy']}")
+
             print(f"📁 Storage used: {health['engine']['metrics']['storage_used_gb']:.2f} GB")
+
             
             print("🎉 Content Processing Engine test completed successfully!")
+
             
         except Exception as e:
             print(f"❌ Content Processing Engine test failed: {e}")

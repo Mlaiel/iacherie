@@ -19,14 +19,12 @@ import os
 # ===== AUTHENTICATION CONFIGURATION =====
 
 class AuthenticationMethod(str, Enum):
-    """Authentication methods"""
+    """
+        Authentication methods"""
     JWT = "jwt"
     OAUTH2 = "oauth2"
     BASIC_AUTH = "basic_auth"
-# SECURITY: # SECURITY: API_KEY = os.getenv("API_KEY", "CHANGE_ME") # MOVED TO ENV # MOVED TO ENV
-# TODO: Move to environment variables or secure vault
-# TODO: Move to environment variables or secure vault
-    MULTI_FACTOR = "multi_factor"
+# SECURITY: # SECURITY: API_KEY = os.getenv("API_KEY", "CHANGE_ME") # MOVED TO ENV # MOVED TO ENV    MULTI_FACTOR = "multi_factor"
     SAML = "saml"
     LDAP = "ldap"
 
@@ -84,7 +82,8 @@ class RoleDefinition:
 
 @dataclass
 class AuthorizationConfig:
-    """Authorization configuration"""
+    """
+        Authorization configuration"""
     enabled: bool = True
     default_role: UserRole = UserRole.USER
     require_permissions: bool = True
@@ -95,7 +94,8 @@ class AuthorizationConfig:
 # ===== ENCRYPTION CONFIGURATION =====
 
 class EncryptionAlgorithm(str, Enum):
-    """Encryption algorithms"""
+    """
+        Encryption algorithms"""
     AES_256_GCM = "aes_256_gcm"
     AES_256_CBC = "aes_256_cbc"
     RSA_2048 = "rsa_2048"
@@ -148,7 +148,8 @@ class RateLimitRule:
 
 @dataclass
 class RateLimitingConfig:
-    """Rate limiting configuration"""
+    """
+        Rate limiting configuration"""
     enabled: bool = True
     default_requests_per_minute: int = 60
     default_requests_per_hour: int = 1000
@@ -162,7 +163,8 @@ class RateLimitingConfig:
 # ===== CONTENT VALIDATION CONFIGURATION =====
 
 class ValidationLevel(str, Enum):
-    """Content validation levels"""
+    """
+        Content validation levels"""
     BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
@@ -191,7 +193,8 @@ class ContentValidationRule:
 
 @dataclass
 class ContentValidationConfig:
-    """Content validation configuration"""
+    """
+        Content validation configuration"""
     enabled: bool = True
     validation_level: ValidationLevel = ValidationLevel.STANDARD
     max_upload_size: int = 104857600  # 100MB
@@ -204,7 +207,8 @@ class ContentValidationConfig:
 # ===== AUDIT LOGGING CONFIGURATION =====
 
 class AuditEventType(str, Enum):
-    """Audit event types"""
+    """
+        Audit event types"""
     LOGIN = "login"
     LOGOUT = "logout"
     UPLOAD = "upload"
@@ -236,7 +240,8 @@ class AuditLoggingConfig:
 # ===== THREAT DETECTION CONFIGURATION =====
 
 class ThreatLevel(str, Enum):
-    """Threat severity levels"""
+    """
+        Threat severity levels"""
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -267,7 +272,8 @@ class ThreatDetectionRule:
 
 @dataclass
 class ThreatDetectionConfig:
-    """Threat detection configuration"""
+    """
+        Threat detection configuration"""
     enabled: bool = True
     real_time_monitoring: bool = True
     machine_learning_enabled: bool = True
@@ -313,7 +319,8 @@ class ApiSecurityConfig:
 # ===== COMPLIANCE CONFIGURATION =====
 
 class ComplianceStandard(str, Enum):
-    """Compliance standards"""
+    """
+        Compliance standards"""
     GDPR = "gdpr"
     CCPA = "ccpa"
     HIPAA = "hipaa"
@@ -338,7 +345,8 @@ class ComplianceConfig:
 # ===== ENVIRONMENT-SPECIFIC CONFIGURATIONS =====
 
 def get_development_security_config() -> Dict[str, Any]:
-    """Get development security configuration"""
+    """
+        Get development security configuration"""
     return {
         "authentication": AuthenticationConfig(
             jwt_secret_key="dev-secret-key",

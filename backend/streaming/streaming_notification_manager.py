@@ -29,14 +29,7 @@ from enum import Enum
 import json
 import uuid
 # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+from protection.utils.redis_compat import aioredis, REDIS_AVAILABLE
 from sqlalchemy.ext.asyncio import AsyncSession
 from collections import defaultdict
 import hashlib
@@ -47,7 +40,8 @@ from email.mime.multipart import MIMEMultipart
 logger = logging.getLogger(__name__)
 
 class NotificationType(Enum):
-    """Notification type classification"""
+    """
+        Notification type classification"""
     STREAM_START = "stream_start"
     STREAM_END = "stream_end"
     CONTENT_UPLOAD = "content_upload"
@@ -87,7 +81,8 @@ class NotificationPriority(Enum):
     CRITICAL = 5
 
 class DeliveryStatus(Enum):
-    """Notification delivery status"""
+    """
+        Notification delivery status"""
     PENDING = "pending"
     QUEUED = "queued"
     SENDING = "sending"
@@ -143,7 +138,8 @@ class NotificationTemplate:
 
 @dataclass
 class NotificationRule:
-    """Notification automation rule"""
+    """
+        Notification automation rule"""
     rule_id: str
     rule_name: str
     rule_description: str
@@ -166,7 +162,8 @@ class NotificationRule:
 
 @dataclass
 class NotificationMessage:
-    """Individual notification message"""
+    """
+        Individual notification message"""
     message_id: str
     notification_type: NotificationType
     recipient_id: str
@@ -188,7 +185,8 @@ class NotificationMessage:
 
 @dataclass
 class AudienceProfile:
-    """Audience member profile for notifications"""
+    """
+        Audience member profile for notifications"""
     user_id: str
     user_preferences: Dict[str, Any]
     notification_settings: Dict[str, bool]
@@ -208,7 +206,8 @@ class AudienceProfile:
 
 @dataclass
 class NotificationCampaign:
-    """Notification campaign management"""
+    """
+        Notification campaign management"""
     campaign_id: str
     campaign_name: str
     campaign_description: str
@@ -230,36 +229,46 @@ class NotificationCampaign:
     updated_at: datetime
 
 class RealTimeNotificationEngine:
-    """Real-time notification processing engine"""
+    """
+        Real-time notification processing engine"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.notification_queue = None
         self.delivery_workers = {}
         
     async def initialize_notification_engine(self) -> Dict[str, Any]:
-        """Initialize real-time notification engine"""
+        """
+        Initialize real-time notification engine"""
         try:
             # Setup notification queue
+
             notification_queue = await self._setup_notification_queue()
             
             # Initialize delivery workers
+
             delivery_workers = await self._initialize_delivery_workers()
             
             # Configure real-time processing
+
             realtime_processing = await self._configure_realtime_processing()
             
             # Setup event listeners
+
             event_listeners = await self._setup_event_listeners()
             
             # Configure message routing
+
             message_routing = await self._configure_message_routing()
             
             # Setup delivery optimization
+
             delivery_optimization = await self._setup_delivery_optimization()
+
             
             logger.info(f"⚡ Real-Time Notification Engine initialized with {len(delivery_workers)} workers")
+
             
             return {
                 "notification_queue": notification_queue,
@@ -279,6 +288,7 @@ class RealTimeNotificationEngine:
             
         except Exception as e:
             logger.error(f"Failed to initialize notification engine: {e}")
+
             raise
 
     async def process_notification_event(
@@ -291,37 +301,45 @@ class RealTimeNotificationEngine:
             event_id = str(uuid.uuid4())
             
             # Analyze event for notification triggers
+
             trigger_analysis = await self._analyze_event_triggers(
                 event_data, event_context
             )
             
             # Get applicable notification rules
+
             applicable_rules = await self._get_applicable_notification_rules(
                 trigger_analysis, event_data
             )
             
             # Generate notification messages
+
             notification_messages = []
             for rule in applicable_rules:
                 messages = await self._generate_notification_messages(
                     rule, event_data, event_context
                 )
+
                 notification_messages.extend(messages)
             
             # Optimize delivery timing
+
             delivery_optimization = await self._optimize_delivery_timing(
                 notification_messages, event_context
             )
             
             # Queue notifications for delivery
+
             delivery_queuing = await self._queue_notifications_for_delivery(
                 notification_messages, delivery_optimization
             )
             
             # Track event processing
+
             event_tracking = await self._track_event_processing(
                 event_id, trigger_analysis, notification_messages
             )
+
             
             return {
                 "success": True,
@@ -337,39 +355,49 @@ class RealTimeNotificationEngine:
             
         except Exception as e:
             logger.error(f"Failed to process notification event: {e}")
+
             raise
 
 class MultiChannelDeliverySystem:
     """Multi-channel notification delivery system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.channel_handlers = {}
         self.delivery_queues = {}
         
     async def initialize_delivery_system(self) -> Dict[str, Any]:
-        """Initialize multi-channel delivery system"""
+        """
+        Initialize multi-channel delivery system"""
         try:
             # Setup channel handlers
+
             channel_handlers = await self._setup_channel_handlers()
             
             # Initialize delivery queues
+
             delivery_queues = await self._initialize_delivery_queues()
             
             # Configure rate limiting
+
             rate_limiting = await self._configure_delivery_rate_limiting()
             
             # Setup retry mechanisms
+
             retry_mechanisms = await self._setup_delivery_retry_mechanisms()
             
             # Configure delivery tracking
+
             delivery_tracking = await self._configure_delivery_tracking()
             
             # Setup failure handling
+
             failure_handling = await self._setup_delivery_failure_handling()
+
             
             logger.info(f"📬 Multi-Channel Delivery System initialized with {len(channel_handlers)} channels")
+
             
             return {
                 "channel_handlers": len(channel_handlers),
@@ -389,6 +417,7 @@ class MultiChannelDeliverySystem:
             
         except Exception as e:
             logger.error(f"Failed to initialize delivery system: {e}")
+
             raise
 
     async def deliver_notification(
@@ -401,9 +430,11 @@ class MultiChannelDeliverySystem:
             delivery_id = str(uuid.uuid4())
             
             # Validate delivery configuration
+
             config_validation = await self._validate_delivery_config(
                 notification_message, delivery_config
             )
+
             
             if not config_validation["valid"]:
                 return {
@@ -413,32 +444,39 @@ class MultiChannelDeliverySystem:
                 }
             
             # Execute multi-channel delivery
+
             delivery_results = {}
             for channel in notification_message.delivery_channels:
                 channel_result = await self._deliver_to_channel(
                     notification_message, channel, delivery_config
                 )
+
                 delivery_results[channel.value] = channel_result
             
             # Track delivery status
+
             delivery_tracking = await self._track_delivery_status(
                 notification_message, delivery_results
             )
             
             # Update message status
+
             message_update = await self._update_message_status(
                 notification_message, delivery_results
             )
             
             # Handle delivery failures
+
             failure_handling = await self._handle_delivery_failures(
                 notification_message, delivery_results
             )
             
             # Log delivery analytics
+
             analytics_logging = await self._log_delivery_analytics(
                 delivery_id, notification_message, delivery_results
             )
+
             
             return {
                 "success": True,
@@ -453,12 +491,13 @@ class MultiChannelDeliverySystem:
             
         except Exception as e:
             logger.error(f"Failed to deliver notification: {e}")
+
             raise
 
 class AudienceSegmentationEngine:
     """Intelligent audience segmentation and targeting system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.segmentation_rules = {}
@@ -470,37 +509,45 @@ class AudienceSegmentationEngine:
         targeting_criteria: Dict[str, Any],
         segmentation_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Segment audience for targeted notifications"""
+        """
+        Segment audience for targeted notifications"""
         try:
             segmentation_id = str(uuid.uuid4())
             
             # Load audience profiles
+
             audience_profiles = await self._load_audience_profiles(targeting_criteria)
             
             # Apply segmentation rules
+
             segmentation_results = await self._apply_segmentation_rules(
                 audience_profiles, notification_type, targeting_criteria
             )
             
             # Optimize audience targeting
+
             targeting_optimization = await self._optimize_audience_targeting(
                 segmentation_results, segmentation_config
             )
             
             # Create personalization data
+
             personalization_data = await self._create_personalization_data(
                 targeting_optimization, notification_type
             )
             
             # Calculate delivery preferences
+
             delivery_preferences = await self._calculate_delivery_preferences(
                 targeting_optimization, segmentation_config
             )
             
             # Generate audience insights
+
             audience_insights = await self._generate_audience_insights(
                 segmentation_results, targeting_optimization
             )
+
             
             return {
                 "success": True,
@@ -516,12 +563,13 @@ class AudienceSegmentationEngine:
             
         except Exception as e:
             logger.error(f"Failed to segment audience: {e}")
+
             raise
 
 class NotificationAnalyticsTracker:
     """Notification performance analytics and tracking system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.analytics_collectors = {}
@@ -531,39 +579,47 @@ class NotificationAnalyticsTracker:
         notification_campaign: NotificationCampaign,
         tracking_period: Dict[str, datetime]
     ) -> Dict[str, Any]:
-        """Track notification performance and analytics"""
+        """
+        Track notification performance and analytics"""
         try:
             tracking_id = str(uuid.uuid4())
             
             # Collect delivery metrics
+
             delivery_metrics = await self._collect_delivery_metrics(
                 notification_campaign, tracking_period
             )
             
             # Analyze engagement data
+
             engagement_analysis = await self._analyze_engagement_data(
                 notification_campaign, tracking_period
             )
             
             # Calculate conversion metrics
+
             conversion_metrics = await self._calculate_conversion_metrics(
                 notification_campaign, engagement_analysis
             )
             
             # Generate performance insights
+
             performance_insights = await self._generate_performance_insights(
                 delivery_metrics, engagement_analysis, conversion_metrics
             )
             
             # Create optimization recommendations
+
             optimization_recommendations = await self._create_optimization_recommendations(
                 performance_insights, notification_campaign
             )
             
             # Update campaign performance
+
             campaign_update = await self._update_campaign_performance(
                 notification_campaign, performance_insights
             )
+
             
             return {
                 "success": True,
@@ -579,12 +635,13 @@ class NotificationAnalyticsTracker:
             
         except Exception as e:
             logger.error(f"Failed to track notification performance: {e}")
+
             raise
 
 class StreamingNotificationManager:
     """Unified streaming notification manager - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         
@@ -604,24 +661,32 @@ class StreamingNotificationManager:
         """Initialize notification management system"""
         try:
             # Initialize notification engine
+
             engine_status = await self.notification_engine.initialize_notification_engine()
             
             # Initialize delivery system
+
             delivery_status = await self.delivery_system.initialize_delivery_system()
             
             # Setup notification templates
+
             template_setup = await self._setup_notification_templates()
             
             # Configure automation rules
+
             automation_rules = await self._configure_notification_automation_rules()
             
             # Setup campaign management
+
             campaign_management = await self._setup_campaign_management()
             
             # Configure analytics tracking
+
             analytics_setup = await self._configure_analytics_tracking()
+
             
             logger.info("📢 Streaming Notification Manager fully initialized")
+
             
             return {
                 "manager_status": "initialized",
@@ -643,6 +708,7 @@ class StreamingNotificationManager:
             
         except Exception as e:
             logger.error(f"Failed to initialize notification manager: {e}")
+
             raise
     
     async def execute_comprehensive_notification_workflow(
@@ -654,12 +720,14 @@ class StreamingNotificationManager:
             workflow_id = str(uuid.uuid4())
             
             # Process notification event
+
             event_processing = await self.notification_engine.process_notification_event(
                 notification_request.get("event_data", {}),
                 notification_request.get("event_context", {})
             )
             
             # Segment target audience
+
             audience_segmentation = await self.segmentation_engine.segment_audience_for_notification(
                 NotificationType(notification_request.get("notification_type", "stream_start")),
                 notification_request.get("targeting_criteria", {}),
@@ -667,9 +735,12 @@ class StreamingNotificationManager:
             )
             
             # Create and deliver notifications
+
             delivery_results = []
             for message_data in event_processing.get("notification_messages", []):
                 # Create notification message (simplified for example)
+
+
                 notification_message = NotificationMessage(
                     message_id=str(uuid.uuid4()),
                     notification_type=NotificationType(notification_request.get("notification_type", "stream_start")),
@@ -690,17 +761,22 @@ class StreamingNotificationManager:
                     created_at=datetime.utcnow(),
                     updated_at=datetime.utcnow()
                 )
+
+
                 
                 delivery_result = await self.delivery_system.deliver_notification(
                     notification_message,
                     notification_request.get("delivery_config", {})
                 )
+
                 delivery_results.append(delivery_result)
             
             # Track performance
+
             performance_tracking = await self._track_workflow_performance(
                 workflow_id, event_processing, audience_segmentation, delivery_results
             )
+
             
             return {
                 "success": True,
@@ -714,6 +790,7 @@ class StreamingNotificationManager:
             
         except Exception as e:
             logger.error(f"Failed to execute comprehensive notification workflow: {e}")
+
             raise
     
     # Additional helper methods implementation...
@@ -728,6 +805,7 @@ class StreamingNotificationManager:
             }
         except Exception as e:
             logger.error(f"Failed to setup notification templates: {e}")
+
             return {}
 
     async def _configure_notification_automation_rules(self) -> Dict[str, Any]:
@@ -741,6 +819,7 @@ class StreamingNotificationManager:
             }
         except Exception as e:
             logger.error(f"Failed to configure automation rules: {e}")
+
             return {}
 
 # Export main classes

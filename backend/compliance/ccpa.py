@@ -8,6 +8,7 @@ Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
 """
 
+
 import logging
 import uuid
 from datetime import datetime, timedelta
@@ -19,7 +20,10 @@ logger = logging.getLogger(__name__)
 
 
 class ConsumerRight(str, Enum):
-    """CCPA consumer rights"""
+    """
+
+        CCPA consumer rights"""
+
     KNOW = "right_to_know"
     DELETE = "right_to_delete"
     OPT_OUT = "right_to_opt_out"
@@ -28,6 +32,7 @@ class ConsumerRight(str, Enum):
 
 class PrivacyRequestStatus(str, Enum):
     """Privacy request processing status"""
+
     SUBMITTED = "submitted"
     UNDER_REVIEW = "under_review"
     VERIFIED = "verified"
@@ -38,6 +43,7 @@ class PrivacyRequestStatus(str, Enum):
 
 class PersonalInfoCategory(str, Enum):
     """Categories of personal information under CCPA"""
+
     IDENTIFIERS = "identifiers"
     PERSONAL_RECORDS = "personal_records"
     PROTECTED_CHARACTERISTICS = "protected_characteristics"
@@ -54,6 +60,7 @@ class PersonalInfoCategory(str, Enum):
 @dataclass
 class PrivacyRequest:
     """CCPA consumer privacy request"""
+
     request_id: str
     consumer_id: int
     right_type: ConsumerRight
@@ -68,7 +75,10 @@ class PrivacyRequest:
 
 @dataclass
 class PersonalInfoDisclosure:
-    """Personal information disclosure record"""
+    """
+
+        Personal information disclosure record"""
+
     category: PersonalInfoCategory
     sources: List[str]
     business_purposes: List[str]
@@ -79,7 +89,10 @@ class PersonalInfoDisclosure:
 
 @dataclass
 class CCPAComplianceReport:
-    """CCPA compliance status report"""
+    """
+
+        CCPA compliance status report"""
+
     consumer_id: int
     report_date: datetime
     personal_info_categories: List[PersonalInfoCategory]
@@ -91,9 +104,11 @@ class CCPAComplianceReport:
 
 class CCPACompliance:
     """
+
     Enterprise CCPA compliance manager with automation.
     Provides comprehensive CCPA compliance services for California consumers.
     """
+
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.logger = logger
@@ -113,7 +128,10 @@ class CCPACompliance:
         self._initialize_personal_info_categories()
     
     def _initialize_personal_info_categories(self):
-        """Initialize personal information categories and their handling"""
+        """
+
+        Initialize personal information categories and their handling"""
+
         self.personal_info_categories = {
             PersonalInfoCategory.IDENTIFIERS: PersonalInfoDisclosure(
                 category=PersonalInfoCategory.IDENTIFIERS,
@@ -158,10 +176,12 @@ class CCPACompliance:
         verification_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Process CCPA consumer privacy request"""
+
         try:
             request_id = str(uuid.uuid4())
             
             # Create privacy request
+
             privacy_request = PrivacyRequest(
                 request_id=request_id,
                 consumer_id=consumer_id,
@@ -172,6 +192,7 @@ class CCPACompliance:
                 requester_ip=requester_ip,
                 verification_method="identity_verification"
             )
+
             
             self.privacy_requests[request_id] = privacy_request
             
@@ -180,6 +201,7 @@ class CCPACompliance:
                 verification_result = await self._verify_consumer_identity(
                     consumer_id, verification_data
                 )
+
                 if not verification_result["verified"]:
                     privacy_request.status = PrivacyRequestStatus.DENIED
                     return {
@@ -203,10 +225,13 @@ class CCPACompliance:
             
             if right_type == ConsumerRight.KNOW:
                 response = await self._process_right_to_know(consumer_id)
+
             elif right_type == ConsumerRight.DELETE:
                 response = await self._process_right_to_delete(consumer_id)
+
             elif right_type == ConsumerRight.OPT_OUT:
                 response = await self._process_right_to_opt_out(consumer_id)
+
             else:
                 response = {"status": "pending", "message": "Request is being processed"}
             
@@ -214,8 +239,10 @@ class CCPACompliance:
             privacy_request.status = PrivacyRequestStatus.COMPLETED if response.get("status") == "success" else PrivacyRequestStatus.UNDER_REVIEW
             privacy_request.response_data = response
             privacy_request.completed_at = datetime.utcnow()
+
             
             self.logger.info(f"CCPA request {request_id} processed for consumer {consumer_id}")
+
             
             return {
                 "request_id": request_id,
@@ -225,6 +252,7 @@ class CCPACompliance:
             
         except Exception as e:
             self.logger.error(f"Error processing CCPA request: {str(e)}")
+
             return {
                 "status": "error",
                 "message": f"Failed to process request: {str(e)}"
@@ -232,21 +260,29 @@ class CCPACompliance:
 
     async def _process_right_to_know(self, consumer_id: int) -> Dict[str, Any]:
         """Process right to know request"""
+
         try:
             # Gather personal information categories
+
             personal_info = self._get_personal_info_categories(consumer_id)
             
             # Get sources of personal information
+
             sources = self._get_personal_info_sources(consumer_id)
             
             # Get business purposes
+
             business_purposes = self._get_business_purposes(consumer_id)
             
             # Get third parties
+
             third_parties = self._get_third_parties(consumer_id)
             
             # Check if personal information was sold or shared
+
             sale_info = self._get_sale_information(consumer_id)
+
+
             
             disclosure_info = {
                 "personal_info_categories": personal_info,
@@ -268,9 +304,12 @@ class CCPACompliance:
 
     async def _process_right_to_delete(self, consumer_id: int) -> Dict[str, Any]:
         """Process right to delete request"""
+
         try:
             # Check if deletion is legally permitted
+
             legal_basis = self._check_deletion_legal_basis(consumer_id)
+
             
             if not legal_basis["can_delete"]:
                 return {
@@ -280,10 +319,12 @@ class CCPACompliance:
                 }
             
             # Perform data deletion
+
             deletion_log = await self._perform_data_deletion(consumer_id)
             
             # Notify third parties if required
             await self._notify_third_parties_deletion(consumer_id)
+
             
             return {
                 "status": "success",
@@ -297,8 +338,10 @@ class CCPACompliance:
 
     async def _process_right_to_opt_out(self, consumer_id: int) -> Dict[str, Any]:
         """Process right to opt-out request"""
+
         try:
             # Record opt-out preference
+
             opt_out_record = {
                 "consumer_id": consumer_id,
                 "opted_out": True,
@@ -314,6 +357,7 @@ class CCPACompliance:
             
             # Update third-party partners
             await self._notify_partners_opt_out(consumer_id)
+
             
             return {
                 "status": "success",
@@ -330,12 +374,16 @@ class CCPACompliance:
         verification_data: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
         """Verify consumer identity for privacy requests"""
+
         if not verification_data:
             return {"verified": False, "reason": "No verification data provided"}
         
         # Simplified verification logic
+
         required_fields = ["email", "last_name", "phone_partial"]
+
         provided_fields = verification_data.keys()
+
         
         if all(field in provided_fields for field in required_fields):
             return {"verified": True, "method": "identity_verification"}
@@ -344,43 +392,62 @@ class CCPACompliance:
 
     def _is_excessive_request(self, consumer_id: int) -> bool:
         """Check if this is an excessive request that may incur a fee"""
+
         # Count requests in the last 12 months
+
         twelve_months_ago = datetime.utcnow() - timedelta(days=365)
+
         recent_requests = [
             req for req in self.privacy_requests.values()
+
             if req.consumer_id == consumer_id and req.submitted_at > twelve_months_ago
         ]
         
         return len(recent_requests) >= self.fee_threshold
 
     def _get_personal_info_categories(self, consumer_id: int) -> List[str]:
-        """Get categories of personal information collected"""
+        """
+
+        Get categories of personal information collected"""
+
         # Return categories based on consumer's data
         return [category.value for category in PersonalInfoCategory]
 
     def _get_personal_info_sources(self, consumer_id: int) -> List[str]:
-        """Get sources from which personal information is collected"""
+        """
+
+        Get sources from which personal information is collected"""
+
         sources = set()
         for disclosure in self.personal_info_categories.values():
             sources.update(disclosure.sources)
         return list(sources)
 
     def _get_business_purposes(self, consumer_id: int) -> List[str]:
-        """Get business purposes for collecting personal information"""
+        """
+
+        Get business purposes for collecting personal information"""
+
         purposes = set()
         for disclosure in self.personal_info_categories.values():
             purposes.update(disclosure.business_purposes)
         return list(purposes)
 
     def _get_third_parties(self, consumer_id: int) -> List[str]:
-        """Get third parties with whom personal information is shared"""
+        """
+
+        Get third parties with whom personal information is shared"""
+
         third_parties = set()
         for disclosure in self.personal_info_categories.values():
             third_parties.update(disclosure.third_parties)
         return list(third_parties)
 
     def _get_sale_information(self, consumer_id: int) -> Dict[str, Any]:
-        """Get information about sale or sharing of personal information"""
+        """
+
+        Get information about sale or sharing of personal information"""
+
         return {
             "personal_info_sold": False,
             "personal_info_shared_for_cross_context_advertising": False,
@@ -391,6 +458,7 @@ class CCPACompliance:
 
     def _check_deletion_legal_basis(self, consumer_id: int) -> Dict[str, Any]:
         """Check if deletion is legally permitted"""
+
         # Simplified implementation - in practice, check various legal exceptions
         return {
             "can_delete": True,
@@ -400,6 +468,7 @@ class CCPACompliance:
 
     async def _perform_data_deletion(self, consumer_id: int) -> Dict[str, Any]:
         """Perform actual data deletion"""
+
         deletion_log = {
             "identifiers": "deleted",
             "commercial_info": "deleted", 
@@ -413,27 +482,37 @@ class CCPACompliance:
 
     async def _notify_third_parties_deletion(self, consumer_id: int):
         """Notify third parties about consumer data deletion"""
-        # Placeholder for third-party notifications
+
         self.logger.info(f"Notifying third parties about deletion for consumer {consumer_id}")
 
     async def _stop_sale_sharing(self, consumer_id: int):
         """Stop sale/sharing of consumer's personal information"""
-        # Placeholder for stopping sale/sharing mechanisms
+
         self.logger.info(f"Stopping sale/sharing for consumer {consumer_id}")
 
     async def _notify_partners_opt_out(self, consumer_id: int):
         """Notify partners about consumer opt-out"""
-        # Placeholder for partner notifications
+
         self.logger.info(f"Notifying partners about opt-out for consumer {consumer_id}")
 
     async def generate_compliance_report(self, consumer_id: int) -> CCPAComplianceReport:
         """Generate comprehensive CCPA compliance report"""
+
         try:
             personal_info_categories = list(PersonalInfoCategory)
+
+
             disclosure_records = list(self.personal_info_categories.values())
+
+
             opt_out_status = consumer_id in self.opt_out_records
+
             outstanding_requests = self._get_outstanding_requests(consumer_id)
+
+
             compliance_score = self._calculate_compliance_score(consumer_id)
+
+
             
             report = CCPAComplianceReport(
                 consumer_id=consumer_id,
@@ -444,15 +523,18 @@ class CCPACompliance:
                 outstanding_requests=outstanding_requests,
                 compliance_score=compliance_score
             )
+
             
             return report
             
         except Exception as e:
             self.logger.error(f"Error generating CCPA compliance report: {str(e)}")
+
             raise
 
     def _get_outstanding_requests(self, consumer_id: int) -> List[Dict[str, Any]]:
         """Get outstanding privacy requests"""
+
         return [
             {
                 "request_id": req.request_id,
@@ -461,11 +543,13 @@ class CCPACompliance:
                 "submitted_at": req.submitted_at.isoformat()
             }
             for req in self.privacy_requests.values()
+
             if req.consumer_id == consumer_id and req.status != PrivacyRequestStatus.COMPLETED
         ]
 
     def _calculate_compliance_score(self, consumer_id: int) -> float:
         """Calculate CCPA compliance score"""
+
         score = 0.0
         
         # Check disclosure completeness
@@ -476,8 +560,10 @@ class CCPACompliance:
         score += 25.0  # Always available
         
         # Check request processing timeliness
+
         recent_requests = [
             req for req in self.privacy_requests.values()
+
             if req.consumer_id == consumer_id
         ]
         
@@ -491,7 +577,10 @@ class CCPACompliance:
         return min(score, 100.0)
 
     async def check_do_not_sell_compliance(self, consumer_id: int) -> Dict[str, Any]:
-        """Check Do Not Sell compliance for consumer"""
+        """
+
+        Check Do Not Sell compliance for consumer"""
+
         opt_out_status = consumer_id in self.opt_out_records
         
         return {

@@ -37,7 +37,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContractType(Enum):
-    """Types of smart contracts supported"""
+    """
+        Types of smart contracts supported"""
     COPYRIGHT_PROTECTION = "copyright_protection"
     CONTENT_LICENSING = "content_licensing"
     ROYALTY_DISTRIBUTION = "royalty_distribution"
@@ -84,7 +85,8 @@ class ContractConfig:
 
 @dataclass
 class DeploymentResult:
-    """Contract deployment result"""
+    """
+        Contract deployment result"""
     contract_id: str
     contract_address: str
     transaction_hash: str
@@ -135,6 +137,7 @@ class SmartContractManager:
         self.network_configs = config.get("networks", {})
         self.contract_templates = self._load_contract_templates()
         self.gas_strategies = self._init_gas_strategies()
+
         
     def _load_contract_templates(self) -> Dict[str, Dict[str, Any]]:
         """Load smart contract templates"""
@@ -241,21 +244,28 @@ class SmartContractManager:
         """
         try:
             contract_id = str(uuid.uuid4())
+
             
             self.logger.info(f"Deploying contract: {config.name}")
             
             # Get contract template
+
             template = self.contract_templates.get(config.contract_type.value)
+
             if not template:
                 raise ValueError(f"Template not found for contract type: {config.contract_type.value}")
             
             # Prepare deployment
+
             deployment_data = await self._prepare_deployment(config, template)
             
             # Deploy to blockchain
+
             deployment_result = await self._deploy_to_blockchain(
                 config, deployment_data
             )
+
+
             
             result = DeploymentResult(
                 contract_id=contract_id,
@@ -274,10 +284,12 @@ class SmartContractManager:
             self.deployed_contracts[contract_id] = result
             
             self.logger.info(f"Contract deployed: {contract_id} at {result.contract_address}")
+
             return result
             
         except Exception as e:
             self.logger.error(f"Contract deployment failed: {e}")
+
             raise
     
     async def _prepare_deployment(
@@ -302,7 +314,6 @@ class SmartContractManager:
         deployment_data: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Deploy contract to blockchain"""
-        # Mock deployment - in real implementation would use Web3
         contract_address = f"0x{''.join([f'{ord(c):02x}' for c in config.name[:20]])}"
         
         return {
@@ -348,18 +359,26 @@ class SmartContractManager:
         """
         try:
             interaction_id = str(uuid.uuid4())
+
             
             self.logger.info(f"Interacting with contract: {contract_address}")
             
             # Prepare transaction
+
             tx_params = transaction_params or {}
+
             gas_limit = tx_params.get("gas_limit", 200000)
+
+
             gas_price = tx_params.get("gas_price", 20000000000)
             
             # Execute function call
+
             result = await self._execute_contract_function(
                 contract_address, function_name, parameters, caller_address, tx_params
             )
+
+
             
             interaction = ContractInteraction(
                 interaction_id=interaction_id,
@@ -375,14 +394,18 @@ class SmartContractManager:
                 timestamp=datetime.utcnow(),
                 error_message=result.get("error")
             )
+
             
             self.contract_interactions.append(interaction)
+
             
             self.logger.info(f"Contract interaction completed: {interaction_id}")
+
             return interaction
             
         except Exception as e:
             self.logger.error(f"Contract interaction failed: {e}")
+
             raise
     
     async def _execute_contract_function(
@@ -394,8 +417,8 @@ class SmartContractManager:
         tx_params: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Execute contract function call"""
-        # Mock execution - in real implementation would use Web3
         success = True
+
         return_value = None
         
         # Simulate different function behaviors
@@ -435,12 +458,13 @@ class SmartContractManager:
         try:
             if contract_id not in self.deployed_contracts:
                 raise ValueError(f"Contract not found: {contract_id}")
+
+
             
             contract = self.deployed_contracts[contract_id]
             
             self.logger.info(f"Upgrading contract: {contract_id}")
-            
-            # Mock upgrade transaction
+
             tx_hash = f"0x{''.join([f'{i:02x}' for i in range(32)])}"
             
             result = {
@@ -456,10 +480,12 @@ class SmartContractManager:
             }
             
             self.logger.info(f"Contract upgraded successfully: {contract_id}")
+
             return result
             
         except Exception as e:
             self.logger.error(f"Contract upgrade failed: {e}")
+
             raise
     
     async def verify_contract(
@@ -482,12 +508,13 @@ class SmartContractManager:
         try:
             if contract_id not in self.deployed_contracts:
                 raise ValueError(f"Contract not found: {contract_id}")
+
+
             
             contract = self.deployed_contracts[contract_id]
             
             self.logger.info(f"Verifying contract: {contract_id}")
-            
-            # Mock verification process
+
             verification_result = {
                 "contract_id": contract_id,
                 "contract_address": contract.contract_address,
@@ -502,10 +529,12 @@ class SmartContractManager:
             contract.verification_status = "verified"
             
             self.logger.info(f"Contract verified successfully: {contract_id}")
+
             return verification_result
             
         except Exception as e:
             self.logger.error(f"Contract verification failed: {e}")
+
             raise
     
     async def pause_contract(
@@ -515,6 +544,7 @@ class SmartContractManager:
     ) -> Dict[str, Any]:
         """
         Pause a contract (if it supports pausing)
+
         
         Args:
             contract_id: Contract ID to pause
@@ -526,10 +556,12 @@ class SmartContractManager:
         try:
             if contract_id not in self.deployed_contracts:
                 raise ValueError(f"Contract not found: {contract_id}")
+
             
             self.logger.info(f"Pausing contract: {contract_id}")
             
             # Execute pause function
+
             interaction = await self.interact_with_contract(
                 self.deployed_contracts[contract_id].contract_address,
                 "pause",
@@ -549,16 +581,20 @@ class SmartContractManager:
             }
             
             self.logger.info(f"Contract paused: {contract_id}")
+
             return result
             
         except Exception as e:
             self.logger.error(f"Contract pause failed: {e}")
+
             raise
     
     async def get_contract_info(self, contract_id: str) -> Dict[str, Any]:
         """Get detailed contract information"""
         if contract_id not in self.deployed_contracts:
             raise ValueError(f"Contract not found: {contract_id}")
+
+
         
         contract = self.deployed_contracts[contract_id]
         
@@ -634,6 +670,8 @@ class ContractDeployer:
         """
         try:
             self.logger.info("Deploying content protection suite")
+
+
             
             contracts_to_deploy = [
                 ContractConfig(
@@ -670,17 +708,21 @@ class ContractDeployer:
                     upgradeable=True
                 )
             ]
+
             
             results = {}
             for config in contracts_to_deploy:
                 result = await self.manager.deploy_contract(config)
+
                 results[config.contract_type.value] = result
             
             self.logger.info(f"Content protection suite deployed: {len(results)} contracts")
+
             return results
             
         except Exception as e:
             self.logger.error(f"Suite deployment failed: {e}")
+
             raise
     
     async def deploy_governance_contracts(
@@ -702,6 +744,8 @@ class ContractDeployer:
         """
         try:
             self.logger.info("Deploying governance contracts")
+
+
             
             governance_config = ContractConfig(
                 contract_type=ContractType.GOVERNANCE_TOKEN,
@@ -719,6 +763,8 @@ class ContractDeployer:
                 proxy_enabled=True,
                 upgradeable=True
             )
+
+
             
             staking_config = ContractConfig(
                 contract_type=ContractType.STAKING_REWARDS,
@@ -731,15 +777,20 @@ class ContractDeployer:
                 proxy_enabled=True,
                 upgradeable=True
             )
+
+
             
             results = {}
             for config in [governance_config, staking_config]:
                 result = await self.manager.deploy_contract(config)
+
                 results[config.contract_type.value] = result
             
             self.logger.info(f"Governance contracts deployed: {len(results)} contracts")
+
             return results
             
         except Exception as e:
             self.logger.error(f"Governance deployment failed: {e}")
+
             raise

@@ -173,7 +173,8 @@ class ClassificationResult:
 
 @dataclass
 class MetadataExtractionResult:
-    """Metadata extraction result"""
+    """
+        Metadata extraction result"""
     title: Optional[str] = None
     description: Optional[str] = None
     keywords: List[str] = field(default_factory=list)
@@ -186,7 +187,8 @@ class MetadataExtractionResult:
 
 @dataclass
 class ContentAnalysisResult:
-    """Complete content analysis result"""
+    """
+        Complete content analysis result"""
     classification: ClassificationResult
     metadata: MetadataExtractionResult
     processing_time_ms: int = 0
@@ -198,7 +200,8 @@ class ContentAnalysisResult:
 # =============================================================================
 
 class ImageClassifier:
-    """Specialized image content classifier"""
+    """
+        Specialized image content classifier"""
     
     def __init__(self):
         self.clip_model = None
@@ -210,12 +213,15 @@ class ImageClassifier:
         """Initialize image classification models"""
         if not _AI_AVAILABLE:
             logger.warning("AI libraries not available, using fallback classification")
+
             return
         
         try:
             # Initialize CLIP for general understanding
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
+
             self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
+
             self.clip_model.to(self.device)
             
             # Initialize specialized image classifier
@@ -224,8 +230,10 @@ class ImageClassifier:
                 model="google/vit-base-patch16-224",
                 device=0 if self.device == "cuda" else -1
             )
+
             
             logger.info("Image classifier initialized successfully")
+
             
         except Exception as e:
             logger.error(f"Failed to initialize image classifier: {e}")
@@ -240,6 +248,7 @@ class ImageClassifier:
                 return self._fallback_image_classification(image, image_path)
             
             # CLIP-based classification
+
             category_prompts = [
                 "a professional photograph",
                 "amateur photography",
@@ -252,6 +261,7 @@ class ImageClassifier:
                 "food photography",
                 "travel photography"
             ]
+
             
             inputs = self.clip_processor(
                 text=category_prompts,
@@ -259,17 +269,25 @@ class ImageClassifier:
                 return_tensors="pt",
                 padding=True
             )
+
+
             inputs = {k: v.to(self.device) for k, v in inputs.items()}
             
             with torch.no_grad():
                 outputs = self.clip_model(**inputs)
+
+
                 probs = outputs.logits_per_image.softmax(dim=1)
                 
             # Get best match
+
             best_idx = probs.argmax().item()
+
+
             confidence = probs[0][best_idx].item()
             
             # Map to content categories
+
             category_mapping = {
                 0: ContentCategory.PHOTOGRAPHY,
                 1: ContentCategory.PHOTOGRAPHY,
@@ -282,14 +300,18 @@ class ImageClassifier:
                 8: ContentCategory.FOOD,
                 9: ContentCategory.TRAVEL
             }
+
             
             category = category_mapping.get(best_idx, ContentCategory.PHOTOGRAPHY)
             
             # Determine quality level based on image properties
+
             quality_level = self._assess_image_quality(image)
             
             # Extract tags
+
             tags = self._extract_image_tags(image, category_prompts[best_idx])
+
             
             return ClassificationResult(
                 category=category,
@@ -300,9 +322,11 @@ class ImageClassifier:
                 tags=tags,
                 metadata={'source': 'clip_classification'}
             )
+
             
         except Exception as e:
             logger.error(f"Image classification failed: {e}")
+
             return ClassificationResult(
                 category=ContentCategory.OTHER,
                 confidence=0.0,
@@ -312,6 +336,7 @@ class ImageClassifier:
     def _fallback_image_classification(self, image: Image.Image, image_path: str) -> ClassificationResult:
         """Fallback image classification without AI"""
         width, height = image.size
+
         aspect_ratio = width / height
         
         # Basic classification based on image properties
@@ -324,8 +349,10 @@ class ImageClassifier:
         else:
             category = ContentCategory.PHOTOGRAPHY
             subcategories = ["portrait_format"]
+
         
         quality_level = self._assess_image_quality(image)
+
         
         return ClassificationResult(
             category=category,
@@ -340,6 +367,7 @@ class ImageClassifier:
     def _assess_image_quality(self, image: Image.Image) -> QualityLevel:
         """Assess image quality level"""
         width, height = image.size
+
         total_pixels = width * height
         
         if total_pixels >= 4000000:  # 4MP+
@@ -354,7 +382,8 @@ class ImageClassifier:
             return QualityLevel.LOW_QUALITY
     
     def _extract_image_tags(self, image: Image.Image, category_prompt: str) -> List[str]:
-        """Extract relevant tags from image"""
+        """
+        Extract relevant tags from image"""
         tags = ["visual_content", "image"]
         
         # Add tags based on classification
@@ -373,6 +402,7 @@ class ImageClassifier:
             tags.append("portrait")
         else:
             tags.append("square")
+
         
         return tags
 
@@ -384,7 +414,8 @@ class AudioClassifier:
         self.emotion_classifier = None
     
     async def initialize(self):
-        """Initialize audio classification models"""
+        """
+        Initialize audio classification models"""
         try:
             if _AI_AVAILABLE:
                 # Initialize audio classification pipeline
@@ -393,10 +424,13 @@ class AudioClassifier:
                     model="facebook/wav2vec2-base-960h",
                     device=0 if torch.cuda.is_available() else -1
                 )
+
                 
                 logger.info("Audio classifier initialized successfully")
+
             else:
                 logger.warning("AI libraries not available, using fallback audio classification")
+
                 
         except Exception as e:
             logger.warning(f"Failed to initialize AI audio classifier: {e}")
@@ -408,31 +442,41 @@ class AudioClassifier:
             audio, sr = librosa.load(audio_path, sr=16000)
             
             # Extract audio features for classification
+
             features = self._extract_audio_features(audio, sr)
             
             # Classify based on features
+
             category = self._classify_audio_by_features(features)
             
             # Determine quality and mood
+
             quality_level = self._assess_audio_quality(audio, sr)
+
+
             mood = self._detect_audio_mood(features)
             
             # Extract tags
+
             tags = self._extract_audio_tags(features, category)
+
             
             return ClassificationResult(
                 category=category,
                 subcategories=self._get_audio_subcategories(features),
                 confidence=0.75,  # Based on feature analysis
+
                 quality_level=quality_level,
                 audience_type=self._determine_audio_audience(features),
                 mood=mood,
                 tags=tags,
                 metadata={'source': 'feature_based_classification', 'features': features}
             )
+
             
         except Exception as e:
             logger.error(f"Audio classification failed: {e}")
+
             return ClassificationResult(
                 category=ContentCategory.OTHER,
                 confidence=0.0,
@@ -450,28 +494,36 @@ class AudioClassifier:
             
             # Spectral features
             features['spectral_centroid'] = float(librosa.feature.spectral_centroid(y=audio, sr=sr).mean())
+
             features['spectral_bandwidth'] = float(librosa.feature.spectral_bandwidth(y=audio, sr=sr).mean())
+
             features['spectral_rolloff'] = float(librosa.feature.spectral_rolloff(y=audio, sr=sr).mean())
             
             # Rhythmic features
             tempo, _ = librosa.beat.beat_track(y=audio, sr=sr)
+
             features['tempo'] = float(tempo)
             
             # Harmonic features
             features['zero_crossing_rate'] = float(librosa.feature.zero_crossing_rate(audio).mean())
             
             # MFCC features
+
             mfccs = librosa.feature.mfcc(y=audio, sr=sr, n_mfcc=13)
+
             features['mfcc_mean'] = mfccs.mean(axis=1).tolist()
+
             features['mfcc_std'] = mfccs.std(axis=1).tolist()
             
             # Energy features
             features['rms_energy'] = float(librosa.feature.rms(y=audio).mean())
+
             
             return features
             
         except Exception as e:
             logger.warning(f"Audio feature extraction failed: {e}")
+
             return {}
     
     def _classify_audio_by_features(self, features: Dict[str, Any]) -> ContentCategory:
@@ -480,7 +532,9 @@ class AudioClassifier:
             return ContentCategory.OTHER
         
         tempo = features.get('tempo', 0)
+
         spectral_centroid = features.get('spectral_centroid', 0)
+
         duration = features.get('duration', 0)
         
         # Music classification
@@ -501,9 +555,12 @@ class AudioClassifier:
         return ContentCategory.ENTERTAINMENT
     
     def _assess_audio_quality(self, audio: np.ndarray, sr: int) -> QualityLevel:
-        """Assess audio quality level"""
+        """
+        Assess audio quality level"""
         # Calculate signal-to-noise ratio estimation
+
         rms_energy = librosa.feature.rms(y=audio).mean()
+
         
         if sr >= 44100 and rms_energy > 0.1:
             return QualityLevel.PROFESSIONAL
@@ -517,9 +574,12 @@ class AudioClassifier:
             return QualityLevel.LOW_QUALITY
     
     def _detect_audio_mood(self, features: Dict[str, Any]) -> ContentMood:
-        """Detect audio mood from features"""
+        """
+        Detect audio mood from features"""
         tempo = features.get('tempo', 0)
+
         energy = features.get('rms_energy', 0)
+
         
         if tempo > 120 and energy > 0.1:
             return ContentMood.ENERGETIC
@@ -531,8 +591,10 @@ class AudioClassifier:
             return ContentMood.NEUTRAL
     
     def _get_audio_subcategories(self, features: Dict[str, Any]) -> List[str]:
-        """Get audio subcategories based on features"""
+        """
+        Get audio subcategories based on features"""
         subcategories = []
+
         
         tempo = features.get('tempo', 0)
         if tempo > 140:
@@ -541,6 +603,8 @@ class AudioClassifier:
             subcategories.append("low_tempo")
         else:
             subcategories.append("medium_tempo")
+
+
         
         duration = features.get('duration', 0)
         if duration > 300:
@@ -549,13 +613,16 @@ class AudioClassifier:
             subcategories.append("short_form")
         else:
             subcategories.append("medium_form")
+
         
         return subcategories
     
     def _determine_audio_audience(self, features: Dict[str, Any]) -> AudienceType:
         """Determine target audience based on audio features"""
         tempo = features.get('tempo', 0)
+
         duration = features.get('duration', 0)
+
         
         if tempo > 120 and duration < 240:  # Fast, short
             return AudienceType.YOUNG_ADULTS
@@ -565,7 +632,8 @@ class AudioClassifier:
             return AudienceType.GENERAL
     
     def _extract_audio_tags(self, features: Dict[str, Any], category: ContentCategory) -> List[str]:
-        """Extract relevant tags from audio features"""
+        """
+        Extract relevant tags from audio features"""
         tags = ["audio_content"]
         
         # Add category-specific tags
@@ -575,11 +643,13 @@ class AudioClassifier:
             tags.extend(["podcast", "speech", "voice"])
         
         # Add tempo-based tags
+
         tempo = features.get('tempo', 0)
         if tempo > 140:
             tags.append("upbeat")
         elif tempo < 80:
             tags.append("slow")
+
         
         return tags
 
@@ -592,7 +662,8 @@ class TextClassifier:
         self.text_classifier = None
     
     async def initialize(self):
-        """Initialize text classification models"""
+        """
+        Initialize text classification models"""
         try:
             if _AI_AVAILABLE:
                 # Initialize sentiment analysis
@@ -612,12 +683,16 @@ class TextClassifier:
                 # Initialize spaCy for NER and linguistic analysis
                 try:
                     self.nlp_model = spacy.load("en_core_web_sm")
+
                 except OSError:
                     logger.warning("spaCy model not found, some features will be limited")
+
                 
                 logger.info("Text classifier initialized successfully")
+
             else:
                 logger.warning("AI libraries not available, using fallback text classification")
+
                 
         except Exception as e:
             logger.warning(f"Failed to initialize AI text classifier: {e}")
@@ -626,20 +701,28 @@ class TextClassifier:
         """Classify text content"""
         try:
             # Basic text analysis
+
             word_count = len(text.split())
+
+
             char_count = len(text)
             
             # Classify content type based on text characteristics
+
             category = self._classify_text_by_characteristics(text, word_count)
             
             # Determine quality level
+
             quality_level = self._assess_text_quality(text, word_count, char_count)
             
             # Detect mood/sentiment
+
             mood = await self._detect_text_mood(text)
             
             # Extract tags
+
             tags = self._extract_text_tags(text, category)
+
             
             return ClassificationResult(
                 category=category,
@@ -655,9 +738,11 @@ class TextClassifier:
                     'source': 'text_analysis'
                 }
             )
+
             
         except Exception as e:
             logger.error(f"Text classification failed: {e}")
+
             return ClassificationResult(
                 category=ContentCategory.OTHER,
                 confidence=0.0,
@@ -700,20 +785,26 @@ class TextClassifier:
             return ContentCategory.OTHER
     
     def _assess_text_quality(self, text: str, word_count: int, char_count: int) -> QualityLevel:
-        """Assess text quality level"""
+        """
+        Assess text quality level"""
         # Calculate readability metrics
+
         sentences = len([s for s in text.split('.') if s.strip()])
+
         avg_sentence_length = word_count / max(sentences, 1)
         
         # Professional indicators
+
         professional_indicators = [
             word_count > 500,
             avg_sentence_length > 10,
             char_count / word_count > 4,  # Average word length
             text.count(',') / word_count > 0.02,  # Comma usage
         ]
+
         
         professional_score = sum(professional_indicators)
+
         
         if professional_score >= 3:
             return QualityLevel.PROFESSIONAL
@@ -727,14 +818,21 @@ class TextClassifier:
             return QualityLevel.LOW_QUALITY
     
     async def _detect_text_mood(self, text: str) -> ContentMood:
-        """Detect text mood using sentiment analysis"""
+        """
+        Detect text mood using sentiment analysis"""
         try:
             if self.sentiment_classifier and len(text.strip()) > 0:
                 # Truncate text if too long for model
+
                 text_sample = text[:512] if len(text) > 512 else text
+
                 
                 result = self.sentiment_classifier(text_sample)
+
+
                 label = result[0]['label'].lower()
+
+
                 confidence = result[0]['score']
                 
                 if 'positive' in label and confidence > 0.7:
@@ -745,12 +843,20 @@ class TextClassifier:
                     return ContentMood.NEUTRAL
             else:
                 # Fallback sentiment analysis
+
                 positive_words = ['good', 'great', 'excellent', 'amazing', 'wonderful', 'fantastic']
+
                 negative_words = ['bad', 'terrible', 'awful', 'horrible', 'disappointing']
+
                 
                 text_lower = text.lower()
+
+
                 positive_count = sum(1 for word in positive_words if word in text_lower)
+
+
                 negative_count = sum(1 for word in negative_words if word in text_lower)
+
                 
                 if positive_count > negative_count:
                     return ContentMood.POSITIVE
@@ -761,6 +867,7 @@ class TextClassifier:
                     
         except Exception as e:
             logger.warning(f"Mood detection failed: {e}")
+
             return ContentMood.NEUTRAL
     
     def _get_text_subcategories(self, text: str, word_count: int) -> List[str]:
@@ -775,11 +882,13 @@ class TextClassifier:
             subcategories.append("short_form")
         
         # Add content type indicators
+
         text_lower = text.lower()
         if any(keyword in text_lower for keyword in ['opinion', 'think', 'believe']):
             subcategories.append("opinion")
         if any(keyword in text_lower for keyword in ['fact', 'research', 'study']):
             subcategories.append("factual")
+
         
         return subcategories
     
@@ -811,7 +920,8 @@ class TextClassifier:
             return AudienceType.GENERAL
     
     def _extract_text_tags(self, text: str, category: ContentCategory) -> List[str]:
-        """Extract relevant tags from text"""
+        """
+        Extract relevant tags from text"""
         tags = ["text_content"]
         
         # Add category-specific tags
@@ -823,6 +933,7 @@ class TextClassifier:
             tags.extend(["education", "learning", "knowledge"])
         
         # Extract keywords based on content
+
         text_lower = text.lower()
         
         # Technology tags
@@ -836,6 +947,7 @@ class TextClassifier:
         # Business tags
         if any(keyword in text_lower for keyword in ['business', 'marketing', 'strategy']):
             tags.append("business")
+
         
         return tags
 
@@ -851,18 +963,23 @@ class MetadataExtractor:
         self.keyword_extractor = None
     
     async def initialize(self):
-        """Initialize metadata extraction models"""
+        """
+        Initialize metadata extraction models"""
         try:
             if _AI_AVAILABLE:
                 # Initialize spaCy for NER
                 try:
                     self.nlp_model = spacy.load("en_core_web_sm")
+
                 except OSError:
                     logger.warning("spaCy model not found, using limited metadata extraction")
+
                 
                 logger.info("Metadata extractor initialized successfully")
+
             else:
                 logger.warning("AI libraries not available, using basic metadata extraction")
+
                 
         except Exception as e:
             logger.warning(f"Failed to initialize metadata extractor: {e}")
@@ -878,17 +995,23 @@ class MetadataExtractor:
         try:
             if content_type.lower() == 'image':
                 return await self._extract_image_metadata(content_path, classification_result)
+
             elif content_type.lower() == 'audio':
                 return await self._extract_audio_metadata(content_path, classification_result)
+
             elif content_type.lower() == 'video':
                 return await self._extract_video_metadata(content_path, classification_result)
+
             elif content_type.lower() == 'text':
                 return await self._extract_text_metadata(content_path, classification_result)
+
             else:
                 return await self._extract_generic_metadata(content_path, classification_result)
+
                 
         except Exception as e:
             logger.error(f"Metadata extraction failed: {e}")
+
             return MetadataExtractionResult()
     
     async def _extract_image_metadata(
@@ -902,6 +1025,7 @@ class MetadataExtractor:
             image = Image.open(image_path)
             
             # Technical metadata
+
             technical_metadata = {
                 'width': image.width,
                 'height': image.height,
@@ -915,11 +1039,13 @@ class MetadataExtractor:
                 exif = {
                     ExifTags.TAGS[k]: v
                     for k, v in image._getexif().items()
+
                     if k in ExifTags.TAGS
                 }
                 technical_metadata['exif'] = exif
             
             # Generate semantic metadata
+
             semantic_metadata = {
                 'aspect_ratio': image.width / image.height,
                 'orientation': 'landscape' if image.width > image.height else 'portrait' if image.height > image.width else 'square',
@@ -927,6 +1053,7 @@ class MetadataExtractor:
             }
             
             # Business metadata
+
             business_metadata = {
                 'commercial_use_potential': self._assess_commercial_potential(classification),
                 'platform_suitability': self._assess_platform_suitability(classification, technical_metadata),
@@ -934,7 +1061,9 @@ class MetadataExtractor:
             }
             
             # Generate keywords
+
             keywords = self._generate_image_keywords(classification, semantic_metadata)
+
             
             return MetadataExtractionResult(
                 title=f"{classification.category.value.title()} Image",
@@ -943,9 +1072,11 @@ class MetadataExtractor:
                 semantic_metadata=semantic_metadata,
                 business_metadata=business_metadata
             )
+
             
         except Exception as e:
             logger.error(f"Image metadata extraction failed: {e}")
+
             return MetadataExtractionResult()
     
     async def _extract_audio_metadata(
@@ -958,9 +1089,12 @@ class MetadataExtractor:
         try:
             # Load audio for analysis
             audio, sr = librosa.load(audio_path, sr=None)
+
+
             duration = len(audio) / sr
             
             # Technical metadata
+
             technical_metadata = {
                 'duration_seconds': duration,
                 'sample_rate': sr,
@@ -970,7 +1104,11 @@ class MetadataExtractor:
             
             # Extract advanced audio features
             tempo, _ = librosa.beat.beat_track(y=audio, sr=sr)
+
+
             spectral_centroid = librosa.feature.spectral_centroid(y=audio, sr=sr).mean()
+
+
             
             semantic_metadata = {
                 'tempo': float(tempo),
@@ -979,6 +1117,7 @@ class MetadataExtractor:
             }
             
             # Business metadata
+
             business_metadata = {
                 'streaming_platform_suitability': self._assess_audio_platform_suitability(classification, semantic_metadata),
                 'monetization_potential': self._assess_audio_monetization(classification, duration),
@@ -986,7 +1125,9 @@ class MetadataExtractor:
             }
             
             # Generate keywords
+
             keywords = self._generate_audio_keywords(classification, semantic_metadata)
+
             
             return MetadataExtractionResult(
                 title=f"{classification.category.value.title()} Audio",
@@ -995,9 +1136,11 @@ class MetadataExtractor:
                 semantic_metadata=semantic_metadata,
                 business_metadata=business_metadata
             )
+
             
         except Exception as e:
             logger.error(f"Audio metadata extraction failed: {e}")
+
             return MetadataExtractionResult()
     
     async def _extract_text_metadata(
@@ -1013,6 +1156,7 @@ class MetadataExtractor:
                 text = f.read()
             
             # Technical metadata
+
             technical_metadata = {
                 'character_count': len(text),
                 'word_count': len(text.split()),
@@ -1021,22 +1165,28 @@ class MetadataExtractor:
             }
             
             # Extract entities and keywords
+
             entities = []
+
             keywords = []
             
             if self.nlp_model:
                 doc = self.nlp_model(text[:1000000])  # Limit for performance
                 
                 # Extract named entities
+
                 entities = [
                     {'text': ent.text, 'label': ent.label_, 'start': ent.start_char, 'end': ent.end_char}
                     for ent in doc.ents
                 ]
                 
                 # Extract keywords (noun phrases)
+
+
                 keywords = [chunk.text.lower() for chunk in doc.noun_chunks if len(chunk.text) > 2]
             
             # Semantic metadata
+
             semantic_metadata = {
                 'readability_level': self._assess_readability(text),
                 'content_density': len(set(text.lower().split())) / len(text.split()) if text.split() else 0,
@@ -1044,6 +1194,7 @@ class MetadataExtractor:
             }
             
             # Business metadata
+
             business_metadata = {
                 'seo_potential': self._assess_seo_potential(text, keywords),
                 'social_sharing_potential': self._assess_social_sharing(classification, text),
@@ -1051,21 +1202,27 @@ class MetadataExtractor:
             }
             
             # Generate summary
+
             content_summary = self._generate_text_summary(text)
+
             
             return MetadataExtractionResult(
                 title=self._extract_title(text),
                 description=content_summary,
                 keywords=keywords[:20],  # Limit keywords
+
                 technical_metadata=technical_metadata,
                 semantic_metadata=semantic_metadata,
                 business_metadata=business_metadata,
                 extracted_entities=entities[:50],  # Limit entities
+
                 content_summary=content_summary
             )
+
             
         except Exception as e:
             logger.error(f"Text metadata extraction failed: {e}")
+
             return MetadataExtractionResult()
     
     async def _extract_video_metadata(
@@ -1078,14 +1235,25 @@ class MetadataExtractor:
         try:
             # Extract video information using OpenCV
             cap = cv2.VideoCapture(video_path)
+
+
             fps = cap.get(cv2.CAP_PROP_FPS)
+
+
             frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+
             width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+
+
             height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+
             duration = frame_count / fps if fps > 0 else 0
             cap.release()
             
             # Technical metadata
+
             technical_metadata = {
                 'duration_seconds': duration,
                 'fps': fps,
@@ -1096,6 +1264,7 @@ class MetadataExtractor:
             }
             
             # Semantic metadata
+
             semantic_metadata = {
                 'aspect_ratio': width / height if height > 0 else 1,
                 'resolution_category': self._categorize_video_resolution(width, height),
@@ -1103,6 +1272,7 @@ class MetadataExtractor:
             }
             
             # Business metadata
+
             business_metadata = {
                 'platform_optimization': self._optimize_for_video_platforms(semantic_metadata),
                 'monetization_strategy': self._suggest_video_monetization(classification, duration),
@@ -1110,7 +1280,9 @@ class MetadataExtractor:
             }
             
             # Generate keywords
+
             keywords = self._generate_video_keywords(classification, semantic_metadata)
+
             
             return MetadataExtractionResult(
                 title=f"{classification.category.value.title()} Video",
@@ -1119,9 +1291,11 @@ class MetadataExtractor:
                 semantic_metadata=semantic_metadata,
                 business_metadata=business_metadata
             )
+
             
         except Exception as e:
             logger.error(f"Video metadata extraction failed: {e}")
+
             return MetadataExtractionResult()
     
     async def _extract_generic_metadata(
@@ -1133,6 +1307,8 @@ class MetadataExtractor:
         
         try:
             file_stats = Path(content_path).stat()
+
+
             
             technical_metadata = {
                 'file_size': file_stats.st_size,
@@ -1146,9 +1322,11 @@ class MetadataExtractor:
                 keywords=[classification.category.value],
                 technical_metadata=technical_metadata
             )
+
             
         except Exception as e:
             logger.error(f"Generic metadata extraction failed: {e}")
+
             return MetadataExtractionResult()
     
     # Helper methods for metadata extraction
@@ -1176,6 +1354,8 @@ class MetadataExtractor:
     def _assess_platform_suitability(self, classification: ClassificationResult, technical: Dict) -> Dict[str, float]:
         """Assess suitability for different platforms"""
         aspect_ratio = technical.get('width', 1) / technical.get('height', 1)
+
+
         
         suitability = {
             'instagram': 0.9 if 0.8 <= aspect_ratio <= 1.91 else 0.5,
@@ -1188,12 +1368,14 @@ class MetadataExtractor:
         return suitability
     
     def _estimate_engagement(self, classification: ClassificationResult, semantic: Dict) -> str:
-        """Estimate potential engagement"""
+        """
+        Estimate potential engagement"""
         factors = [
             classification.quality_level in [QualityLevel.PROFESSIONAL, QualityLevel.SEMI_PROFESSIONAL],
             classification.audience_type == AudienceType.YOUNG_ADULTS,
             semantic.get('orientation') == 'portrait'
         ]
+
         
         score = sum(factors)
         if score >= 2:
@@ -1217,7 +1399,8 @@ class MetadataExtractor:
         return list(set(keywords))  # Remove duplicates
     
     def _generate_audio_keywords(self, classification: ClassificationResult, semantic: Dict) -> List[str]:
-        """Generate keywords for audio"""
+        """
+        Generate keywords for audio"""
         keywords = [
             classification.category.value,
             semantic.get('duration_category', 'unknown'),
@@ -1229,12 +1412,14 @@ class MetadataExtractor:
             keywords.append('upbeat')
         elif semantic.get('tempo', 0) < 80:
             keywords.append('slow')
+
         
         keywords.extend(classification.tags)
         return list(set(keywords))
     
     def _generate_video_keywords(self, classification: ClassificationResult, semantic: Dict) -> List[str]:
-        """Generate keywords for videos"""
+        """
+        Generate keywords for videos"""
         keywords = [
             classification.category.value,
             semantic.get('resolution_category', 'unknown'),
@@ -1247,17 +1432,23 @@ class MetadataExtractor:
             keywords.append('widescreen')
         elif semantic.get('aspect_ratio', 1) < 0.7:
             keywords.append('vertical')
+
         
         keywords.extend(classification.tags)
         return list(set(keywords))
     
     def _assess_readability(self, text: str) -> str:
-        """Assess text readability level"""
+        """
+        Assess text readability level"""
         words = text.split()
+
         sentences = [s for s in text.split('.') if s.strip()]
+
         
         avg_sentence_length = len(words) / max(len(sentences), 1)
+
         avg_word_length = sum(len(word) for word in words) / max(len(words), 1)
+
         
         if avg_sentence_length > 20 or avg_word_length > 6:
             return "advanced"
@@ -1269,7 +1460,9 @@ class MetadataExtractor:
     def _assess_formality(self, text: str) -> str:
         """Assess text formality level"""
         formal_indicators = text.count(',') + text.count(';') + text.count(':')
+
         informal_indicators = text.count('!') + text.count('?') + len([w for w in text.split() if w.lower() in ['you', 'your', 'we', 'our']])
+
         
         if formal_indicators > informal_indicators * 2:
             return "formal"
@@ -1287,24 +1480,29 @@ class MetadataExtractor:
             return lines[0].strip()
         
         # Generate title from first sentence
+
         sentences = text.split('.')
         if sentences:
             first_sentence = sentences[0].strip()
+
             if len(first_sentence) < 100:
                 return first_sentence
         
         # Fallback to first few words
+
         words = text.split()[:10]
         return ' '.join(words) + ('...' if len(text.split()) > 10 else '')
     
     def _generate_text_summary(self, text: str) -> str:
-        """Generate a summary of text content"""
+        """
+        Generate a summary of text content"""
         sentences = [s.strip() for s in text.split('.') if s.strip()]
         
         if len(sentences) <= 2:
             return text[:200] + ('...' if len(text) > 200 else '')
         
         # Return first sentence or first 200 characters
+
         first_sentence = sentences[0]
         if len(first_sentence) <= 200:
             return first_sentence
@@ -1316,10 +1514,12 @@ class MetadataExtractor:
 # =============================================================================
 
 class ContentClassifier:
-    """Main content classification and metadata extraction engine"""
+    """
+        Main content classification and metadata extraction engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize content classifier"""
+        """
+        Initialize content classifier"""
         self.config = config or self._get_default_config()
         
         # Initialize specialized classifiers
@@ -1364,7 +1564,8 @@ class ContentClassifier:
         }
     
     async def initialize(self):
-        """Initialize all classifiers"""
+        """
+        Initialize all classifiers"""
         if self._initialized:
             return
         
@@ -1375,10 +1576,12 @@ class ContentClassifier:
                 self.text_classifier.initialize(),
                 self.metadata_extractor.initialize()
             )
+
             self._initialized = True
             logger.info("All content classifiers initialized")
         except Exception as e:
             logger.error(f"Failed to initialize content classifier: {e}")
+
             raise
     
     @handle_processing_errors("content_classification")
@@ -1392,8 +1595,11 @@ class ContentClassifier:
         
         if not self._initialized:
             await self.initialize()
+
+
         
         start_time = time.time()
+
         options = options or {}
         
         # Update statistics
@@ -1403,24 +1609,33 @@ class ContentClassifier:
             # Check cache first
             if self.config.get('cache_enabled'):
                 cache_key = self._generate_cache_key(content_path, content_type, options)
+
                 if cache_key in self.classification_cache:
                     cached_result = self.classification_cache[cache_key]
                     logger.info("Using cached classification result", cache_key=cache_key)
+
                     return cached_result
             
             # Perform classification based on content type
+
             classification_result = None
             
             if content_type.lower() in ['image', 'photo', 'picture']:
                 classification_result = await self.image_classifier.classify_image(content_path)
+
             elif content_type.lower() in ['audio', 'music', 'sound']:
                 classification_result = await self.audio_classifier.classify_audio(content_path)
+
             elif content_type.lower() in ['text', 'document', 'article']:
                 with open(content_path, 'r', encoding='utf-8') as f:
                     text_content = f.read()
+
+
                 classification_result = await self.text_classifier.classify_text(text_content)
+
             else:
                 # Default classification for unknown types
+
                 classification_result = ClassificationResult(
                     category=ContentCategory.OTHER,
                     confidence=0.5,
@@ -1429,23 +1644,30 @@ class ContentClassifier:
                 )
             
             # Extract metadata if enabled
+
             metadata_result = MetadataExtractionResult()
+
             if self.config.get('enable_metadata_extraction', True):
                 metadata_result = await self.metadata_extractor.extract_metadata(
                     content_path, content_type, classification_result
                 )
             
             # Generate recommendations if enabled
+
             recommendations = []
             if self.config.get('enable_recommendations', True):
                 recommendations = self._generate_recommendations(classification_result, metadata_result)
             
             # Calculate confidence scores
+
             confidence_scores = self._calculate_confidence_scores(classification_result, metadata_result)
+
+
             
             processing_time = int((time.time() - start_time) * 1000)
             
             # Create final result
+
             result = ContentAnalysisResult(
                 classification=classification_result,
                 metadata=metadata_result,
@@ -1468,12 +1690,14 @@ class ContentClassifier:
                 confidence=classification_result.confidence,
                 processing_time_ms=processing_time
             )
+
             
             return result
             
         except Exception as e:
             self.processing_stats['failed_classifications'] += 1
             logger.error(f"Content classification failed: {e}")
+
             raise
     
     def _generate_recommendations(
@@ -1513,9 +1737,13 @@ class ContentClassifier:
         # Platform-specific recommendations
         if hasattr(metadata, 'business_metadata') and metadata.business_metadata:
             platform_suitability = metadata.business_metadata.get('platform_suitability', {})
+
+
             best_platform = max(platform_suitability.items(), key=lambda x: x[1], default=(None, 0))
+
             if best_platform[0] and best_platform[1] > 0.8:
                 recommendations.append(f"Optimize for {best_platform[0]} - highest platform compatibility")
+
         
         return recommendations[:5]  # Limit to top 5 recommendations
     
@@ -1532,6 +1760,7 @@ class ContentClassifier:
         }
         
         # Calculate metadata completeness
+
         metadata_fields = [
             metadata.title,
             metadata.description,
@@ -1539,11 +1768,13 @@ class ContentClassifier:
             metadata.technical_metadata,
             metadata.semantic_metadata
         ]
+
         
         non_empty_fields = sum(1 for field in metadata_fields if field)
         scores['metadata_completeness'] = non_empty_fields / len(metadata_fields)
         
         # Calculate overall quality
+
         quality_factors = [
             classification.confidence,
             scores['metadata_completeness'],
@@ -1551,6 +1782,7 @@ class ContentClassifier:
         ]
         
         scores['overall_quality'] = sum(quality_factors) / len(quality_factors)
+
         
         return scores
     
@@ -1560,7 +1792,8 @@ class ContentClassifier:
         content_type: str,
         options: Dict[str, Any]
     ) -> str:
-        """Generate cache key for classification request"""
+        """
+        Generate cache key for classification request"""
         import hashlib
         
         # Get file modification time for cache invalidation
@@ -1568,6 +1801,7 @@ class ContentClassifier:
             mtime = Path(content_path).stat().st_mtime
         except:
             mtime = 0
+
         
         key_components = [
             content_path,
@@ -1575,6 +1809,7 @@ class ContentClassifier:
             str(mtime),
             str(sorted(options.items()))
         ]
+
         
         key_string = "|".join(key_components)
         return hashlib.md5(key_string.encode()).hexdigest()
@@ -1588,7 +1823,8 @@ class ContentClassifier:
         }
     
     async def cleanup(self):
-        """Cleanup resources"""
+        """
+        Cleanup resources"""
         # Clear cache
         self.classification_cache.clear()
         

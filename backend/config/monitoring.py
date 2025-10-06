@@ -17,7 +17,8 @@ import os
 # ===== LOGGING CONFIGURATION =====
 
 class LogLevel(str, Enum):
-    """Log levels"""
+    """
+        Log levels"""
     DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
@@ -133,7 +134,8 @@ class HealthCheck:
 
 @dataclass
 class HealthChecksConfig:
-    """Health checks configuration"""
+    """
+        Health checks configuration"""
     enabled: bool = True
     endpoint: str = "/health"
     detailed_endpoint: str = "/health/detailed"
@@ -176,7 +178,8 @@ class AlertRule:
 
 @dataclass
 class AlertingConfig:
-    """Alerting configuration"""
+    """
+        Alerting configuration"""
     enabled: bool = True
     rules: List[AlertRule] = field(default_factory=list)
     default_channels: List[AlertChannel] = field(default_factory=lambda: [AlertChannel.EMAIL])
@@ -188,7 +191,8 @@ class AlertingConfig:
 
 @dataclass
 class PrometheusConfig:
-    """Prometheus monitoring configuration"""
+    """
+        Prometheus monitoring configuration"""
     enabled: bool = True
     endpoint: str = "/metrics"
     port: int = 9090
@@ -255,7 +259,8 @@ class PerformanceConfig:
 
 @dataclass
 class BusinessMetricsConfig:
-    """Business metrics configuration"""
+    """
+        Business metrics configuration"""
     enabled: bool = True
     user_registration_tracking: bool = True
     content_upload_tracking: bool = True
@@ -269,7 +274,8 @@ class BusinessMetricsConfig:
 
 @dataclass
 class SecurityMonitoringConfig:
-    """Security monitoring configuration"""
+    """
+        Security monitoring configuration"""
     enabled: bool = True
     failed_login_tracking: bool = True
     suspicious_activity_detection: bool = True
@@ -282,7 +288,8 @@ class SecurityMonitoringConfig:
 # ===== ENVIRONMENT-SPECIFIC CONFIGURATIONS =====
 
 def get_development_monitoring_config() -> Dict[str, Any]:
-    """Get development monitoring configuration"""
+    """
+        Get development monitoring configuration"""
     return {
         "logging": LoggingConfig(
             root_level=LogLevel.DEBUG,

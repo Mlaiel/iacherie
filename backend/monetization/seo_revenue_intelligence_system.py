@@ -74,7 +74,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class SEOMetricType(Enum):
-    """Types de métriques SEO"""
+    """
+        Types de métriques SEO"""
     KEYWORD_RANKING = "keyword_ranking"
     ORGANIC_TRAFFIC = "organic_traffic"
     CLICK_THROUGH_RATE = "click_through_rate"
@@ -126,7 +127,8 @@ class SEOPerformanceMetrics:
 
 @dataclass
 class KeywordOpportunity:
-    """Opportunité de mot-clé"""
+    """
+        Opportunité de mot-clé"""
     keyword: str
     search_volume: int
     difficulty: KeywordDifficulty
@@ -138,7 +140,8 @@ class KeywordOpportunity:
     conversion_likelihood: float
 
 class SEOKeywordTracking(Base):
-    """Modèle pour tracking des mots-clés SEO"""
+    """
+        Modèle pour tracking des mots-clés SEO"""
     __tablename__ = 'seo_keyword_tracking'
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -184,7 +187,8 @@ class SEOContentPerformance(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class SEORevenueAttribution(Base):
-    """Modèle pour attribution des revenus SEO"""
+    """
+        Modèle pour attribution des revenus SEO"""
     __tablename__ = 'seo_revenue_attribution'
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -280,7 +284,8 @@ class SEORevenueIntelligenceSystem:
         self.performance_analyzer = SEOPerformanceRevenueAnalyzer(db_session, redis_client)
     
     def _initialize_ml_models(self):
-        """Initialiser les modèles ML pour SEO"""
+        """
+        Initialiser les modèles ML pour SEO"""
         try:
             # Modèle de prédiction de ranking
             self.ranking_predictor = GradientBoostingRegressor(
@@ -304,8 +309,10 @@ class SEORevenueIntelligenceSystem:
                 max_depth=6,
                 random_state=42
             )
+
             
             self.scaler = StandardScaler()
+
             
         except Exception as e:
             self.logger.error(f"Erreur initialisation modèles ML SEO: {e}")
@@ -319,19 +326,23 @@ class SEORevenueIntelligenceSystem:
         """Optimiser le contenu pour maximiser les revenus via SEO"""
         try:
             # Analyse actuelle du contenu
+
             current_performance = await self._analyze_content_seo_performance(content_id)
             
             # Analyse des opportunités de mots-clés
+
             keyword_opportunities = await self._analyze_keyword_opportunities(
                 target_keywords, content_id
             )
             
             # Génération des recommandations d'optimisation
+
             optimization_recommendations = await self._generate_optimization_recommendations(
                 content_id, current_performance, keyword_opportunities, optimization_goals
             )
             
             # Prédiction de l'impact revenue
+
             predicted_impact = await self._predict_optimization_impact(
                 content_id, optimization_recommendations
             )
@@ -344,6 +355,7 @@ class SEORevenueIntelligenceSystem:
             # Enregistrement des recommandations
             for recommendation in prioritized_recommendations:
                 await self._save_optimization_recommendation(content_id, recommendation)
+
             
             return {
                 'content_id': content_id,
@@ -358,15 +370,18 @@ class SEORevenueIntelligenceSystem:
             
         except Exception as e:
             self.logger.error(f"Erreur optimisation contenu revenue: {e}")
+
             raise HTTPException(status_code=500, detail=str(e))
     
     async def _analyze_content_seo_performance(self, content_id: str) -> Dict[str, Any]:
         """Analyser les performances SEO actuelles du contenu"""
         try:
             # Récupération des données de performance
+
             performance = self.db.query(SEOContentPerformance).filter(
                 SEOContentPerformance.content_id == content_id
             ).first()
+
             
             if not performance:
                 return {
@@ -378,14 +393,20 @@ class SEORevenueIntelligenceSystem:
                 }
             
             # Analyse des tendances
+
             performance_history = await self._get_performance_history(content_id)
+
+
             trends = await self._calculate_performance_trends(performance_history)
             
             # Analyse des mots-clés actuels
+
             keyword_performance = await self._analyze_keyword_performance(content_id)
             
             # Score de qualité du contenu
+
             content_quality_score = await self._calculate_content_quality_score(content_id)
+
             
             return {
                 'organic_traffic': performance.organic_traffic,
@@ -402,6 +423,7 @@ class SEORevenueIntelligenceSystem:
             
         except Exception as e:
             self.logger.error(f"Erreur analyse performance SEO: {e}")
+
             return {}
     
     async def _analyze_keyword_opportunities(
@@ -418,17 +440,22 @@ class SEORevenueIntelligenceSystem:
                 keyword_data = await self._get_keyword_data(keyword)
                 
                 # Analyse de la compétition
+
                 competition_analysis = await self._analyze_keyword_competition(keyword)
                 
                 # Prédiction du ranking potentiel
+
                 potential_ranking = await self._predict_keyword_ranking_potential(
                     keyword, content_id
                 )
                 
                 # Calcul du potentiel de revenus
+
                 revenue_potential = await self._calculate_keyword_revenue_potential(
                     keyword, potential_ranking, keyword_data
                 )
+
+
                 
                 opportunity = KeywordOpportunity(
                     keyword=keyword,
@@ -441,16 +468,19 @@ class SEORevenueIntelligenceSystem:
                     cpc=Decimal(str(keyword_data.get('cpc', 0))),
                     conversion_likelihood=keyword_data.get('conversion_likelihood', 0.02)
                 )
+
                 
                 opportunities.append(opportunity)
             
             # Tri par potentiel de revenus
             opportunities.sort(key=lambda x: x.revenue_potential, reverse=True)
+
             
             return opportunities
             
         except Exception as e:
             self.logger.error(f"Erreur analyse opportunités mots-clés: {e}")
+
             return []
     
     async def _generate_optimization_recommendations(
@@ -470,36 +500,46 @@ class SEORevenueIntelligenceSystem:
                     keyword_rec = await self._generate_keyword_recommendation(
                         content_id, opportunity
                     )
+
                     recommendations.append(keyword_rec)
             
             # Recommandations techniques SEO
             technical_recs = await self._generate_technical_seo_recommendations(
                 content_id, current_performance
             )
+
             recommendations.extend(technical_recs)
             
             # Recommandations de contenu
+
             content_recs = await self._generate_content_recommendations(
                 content_id, current_performance, keyword_opportunities
             )
+
             recommendations.extend(content_recs)
             
             # Recommandations de conversion
+
             conversion_recs = await self._generate_conversion_recommendations(
                 content_id, current_performance, optimization_goals
             )
+
             recommendations.extend(conversion_recs)
             
             # Recommandations de link building
+
             linkbuilding_recs = await self._generate_linkbuilding_recommendations(
                 content_id, current_performance
             )
+
             recommendations.extend(linkbuilding_recs)
+
             
             return recommendations
             
         except Exception as e:
             self.logger.error(f"Erreur génération recommandations: {e}")
+
             return []
     
     async def _generate_keyword_recommendation(
@@ -513,6 +553,8 @@ class SEORevenueIntelligenceSystem:
             current_optimization = await self._analyze_keyword_optimization(
                 content_id, opportunity.keyword
             )
+
+
             
             implementation_steps = []
             
@@ -565,6 +607,7 @@ class SEORevenueIntelligenceSystem:
             
         except Exception as e:
             self.logger.error(f"Erreur génération recommandation mot-clé: {e}")
+
             return {}
     
     async def track_seo_revenue_attribution(
@@ -575,17 +618,21 @@ class SEORevenueIntelligenceSystem:
         """Tracker l'attribution des revenus SEO"""
         try:
             # Analyse de la source de trafic
+
             traffic_source = await self._analyze_traffic_source(session_data)
+
             
             if traffic_source['type'] != 'organic':
                 return None
             
             # Identification du contenu de landing
+
             content_id = await self._identify_landing_content(
                 session_data.get('landing_page')
             )
             
             # Identification du mot-clé source
+
             keyword_id = await self._identify_source_keyword(
                 session_data, traffic_source
             )
@@ -596,6 +643,7 @@ class SEORevenueIntelligenceSystem:
             )
             
             # Enregistrement de l'attribution
+
             attribution = SEORevenueAttribution(
                 creator_id=conversion_data['creator_id'],
                 content_id=content_id,
@@ -612,20 +660,25 @@ class SEORevenueIntelligenceSystem:
                 session_data=session_data,
                 converted_at=datetime.fromisoformat(conversion_data['converted_at'])
             )
+
             
             self.db.add(attribution)
+
             self.db.commit()
             
             # Mise à jour des métriques en temps réel
             await self._update_realtime_seo_metrics(
                 content_id, keyword_id, conversion_data['revenue_amount']
             )
+
             
             return attribution.id
             
         except Exception as e:
             self.db.rollback()
+
             self.logger.error(f"Erreur tracking attribution SEO: {e}")
+
             raise
     
     async def generate_seo_revenue_forecast(
@@ -636,11 +689,13 @@ class SEORevenueIntelligenceSystem:
         """Générer des prévisions de revenus SEO"""
         try:
             # Récupération des données historiques
+
             historical_data = await self._get_historical_seo_revenue_data(
                 creator_id, days=365
             )
             
             # Préparation des features pour le modèle
+
             features = await self._prepare_forecast_features(historical_data)
             
             # Prédiction avec modèle ML
@@ -649,19 +704,23 @@ class SEORevenueIntelligenceSystem:
             )
             
             # Analyse des facteurs d'influence
+
             influence_factors = await self._analyze_forecast_influence_factors(
                 creator_id, historical_data
             )
             
             # Recommandations pour améliorer les prévisions
+
             improvement_recommendations = await self._generate_forecast_improvement_recommendations(
                 creator_id, revenue_forecast, influence_factors
             )
             
             # Scénarios optimiste/pessimiste
+
             scenarios = await self._generate_revenue_scenarios(
                 revenue_forecast, influence_factors
             )
+
             
             return {
                 'creator_id': creator_id,
@@ -681,6 +740,7 @@ class SEORevenueIntelligenceSystem:
             
         except Exception as e:
             self.logger.error(f"Erreur génération prévisions SEO: {e}")
+
             return {}
     
     async def get_seo_revenue_analytics(
@@ -692,67 +752,89 @@ class SEORevenueIntelligenceSystem:
         """Obtenir les analytics détaillées SEO-revenue"""
         try:
             end_date = datetime.utcnow()
+
+
             start_date = end_date - timedelta(days=period_days)
             
             # Requête de base pour attributions
+
             attribution_query = self.db.query(SEORevenueAttribution).filter(
                 SEORevenueAttribution.converted_at >= start_date,
                 SEORevenueAttribution.converted_at <= end_date
             )
+
             
             if creator_id:
                 attribution_query = attribution_query.filter(
                     SEORevenueAttribution.creator_id == creator_id
                 )
+
+
             
             attributions = attribution_query.all()
             
             # Requête pour performances de contenu
+
             content_query = self.db.query(SEOContentPerformance).filter(
                 SEOContentPerformance.updated_at >= start_date,
                 SEOContentPerformance.updated_at <= end_date
             )
+
             
             if creator_id:
                 content_query = content_query.filter(
                     SEOContentPerformance.creator_id == creator_id
                 )
+
+
             
             content_performances = content_query.all()
             
             # Métriques globales
+
             total_seo_revenue = sum(attr.revenue_amount for attr in attributions)
+
+
             total_organic_traffic = sum(perf.organic_traffic for perf in content_performances)
+
+
             avg_conversion_rate = statistics.mean([perf.conversion_rate for perf in content_performances if perf.conversion_rate > 0]) if content_performances else 0
             
             # Analyse par mot-clé
             keyword_performance = await self._analyze_keyword_revenue_performance(attributions)
             
             # Analyse par contenu
+
             content_performance = await self._analyze_content_revenue_performance(
                 content_performances, attributions
             )
             
             # Tendances temporelles
+
             temporal_trends = await self._calculate_temporal_seo_trends(
                 attributions, granularity
             )
             
             # ROI SEO
             seo_investment = await self._calculate_seo_investment(creator_id, period_days)
+
+
             seo_roi = float(total_seo_revenue / seo_investment) if seo_investment > 0 else 0
             
             # Comparaison avec autres canaux
+
             channel_comparison = await self._compare_seo_with_other_channels(
                 creator_id, period_days
             )
             
             # Top performers
+
             top_keywords = sorted(
                 keyword_performance.items(),
                 key=lambda x: x[1]['revenue'],
                 reverse=True
             )[:10]
+
             
             top_content = sorted(
                 content_performance.items(),
@@ -808,6 +890,7 @@ class SEORevenueIntelligenceSystem:
             
         except Exception as e:
             self.logger.error(f"Erreur analytics SEO revenue: {e}")
+
             return {}
 
 class KeywordMonetizationEngine:
@@ -824,12 +907,14 @@ class KeywordMonetizationEngine:
         creator_id: str,
         monetization_strategy: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Monétiser une opportunité de mot-clé"""
+        """
+        Monétiser une opportunité de mot-clé"""
         try:
             # Analyse de la valeur du mot-clé
             keyword_value = await self._calculate_keyword_value(keyword)
             
             # Création du tracking
+
             keyword_tracking = SEOKeywordTracking(
                 creator_id=creator_id,
                 keyword=keyword,
@@ -839,9 +924,12 @@ class KeywordMonetizationEngine:
                 revenue_potential=Decimal(str(keyword_value['revenue_potential'])),
                 conversion_rate=keyword_value['conversion_rate']
             )
+
             
             self.db.add(keyword_tracking)
+
             self.db.commit()
+
             
             return {
                 'keyword': keyword,
@@ -852,7 +940,9 @@ class KeywordMonetizationEngine:
             
         except Exception as e:
             self.db.rollback()
+
             self.logger.error(f"Erreur monétisation mot-clé: {e}")
+
             raise
 
 class ContentSEORevenueTracker:
@@ -868,12 +958,15 @@ class ContentSEORevenueTracker:
         content_id: str,
         performance_data: Dict[str, Any]
     ) -> bool:
-        """Tracker les performances SEO du contenu"""
+        """
+        Tracker les performances SEO du contenu"""
         try:
             # Mise à jour ou création de l'enregistrement
+
             performance = self.db.query(SEOContentPerformance).filter(
                 SEOContentPerformance.content_id == content_id
             ).first()
+
             
             if not performance:
                 performance = SEOContentPerformance(
@@ -882,23 +975,33 @@ class ContentSEORevenueTracker:
                     content_type=performance_data['content_type'],
                     title=performance_data['title']
                 )
+
                 self.db.add(performance)
             
             # Mise à jour des métriques
             performance.organic_traffic = performance_data.get('organic_traffic', 0)
+
             performance.click_through_rate = performance_data.get('click_through_rate', 0.0)
+
             performance.conversion_rate = performance_data.get('conversion_rate', 0.0)
+
             performance.revenue_generated = Decimal(str(performance_data.get('revenue_generated', 0)))
+
             performance.seo_score = performance_data.get('seo_score', 0.0)
+
             performance.updated_at = datetime.utcnow()
+
             
             self.db.commit()
+
             
             return True
             
         except Exception as e:
             self.db.rollback()
+
             self.logger.error(f"Erreur tracking performance contenu SEO: {e}")
+
             return False
 
 class OrganicTrafficMonetizer:
@@ -913,16 +1016,19 @@ class OrganicTrafficMonetizer:
         self,
         traffic_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimiser la monétisation du trafic organique"""
+        """
+        Optimiser la monétisation du trafic organique"""
         try:
             # Segmentation du trafic par qualité
             traffic_segments = await self._segment_traffic_by_quality(traffic_data)
             
             # Stratégies de monétisation par segment
+
             monetization_strategies = {}
             
             for segment, data in traffic_segments.items():
                 strategy = await self._determine_monetization_strategy(segment, data)
+
                 monetization_strategies[segment] = strategy
             
             return {
@@ -936,6 +1042,7 @@ class OrganicTrafficMonetizer:
             
         except Exception as e:
             self.logger.error(f"Erreur optimisation monétisation trafic: {e}")
+
             return {}
 
 class SEOPerformanceRevenueAnalyzer:
@@ -951,13 +1058,18 @@ class SEOPerformanceRevenueAnalyzer:
         creator_id: str,
         analysis_period_days: int = 90
     ) -> Dict[str, Any]:
-        """Analyser la corrélation entre performance SEO et revenus"""
+        """
+        Analyser la corrélation entre performance SEO et revenus"""
         try:
             # Récupération des données
+
             seo_data = await self._get_seo_performance_data(creator_id, analysis_period_days)
+
+
             revenue_data = await self._get_revenue_data(creator_id, analysis_period_days)
             
             # Calcul des corrélations
+
             correlations = {}
             
             # Corrélation trafic organique - revenus
@@ -972,9 +1084,11 @@ class SEOPerformanceRevenueAnalyzer:
             )
             
             # Analyse des facteurs clés
+
             key_factors = await self._identify_key_performance_factors(
                 seo_data, revenue_data
             )
+
             
             return {
                 'correlations': correlations,
@@ -986,6 +1100,7 @@ class SEOPerformanceRevenueAnalyzer:
             
         except Exception as e:
             self.logger.error(f"Erreur analyse corrélation SEO-revenue: {e}")
+
             return {}
 
 # Factory function

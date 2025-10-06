@@ -38,7 +38,8 @@ from pathlib import Path
 # ===============================
 
 class ComplianceFramework(str, Enum):
-    """Major compliance frameworks"""
+    """
+        Major compliance frameworks"""
     GDPR = "gdpr"  # General Data Protection Regulation (EU)
     CCPA = "ccpa"  # California Consumer Privacy Act (US)
     HIPAA = "hipaa"  # Health Insurance Portability and Accountability Act (US)
@@ -94,7 +95,8 @@ class AuditLevel(IntEnum):
     FORENSIC = 4
 
 class ComplianceRiskLevel(str, Enum):
-    """Compliance risk levels"""
+    """
+        Compliance risk levels"""
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -122,7 +124,8 @@ class DataProtectionSettings:
 
 @dataclass
 class RetentionRule:
-    """Data retention rule"""
+    """
+        Data retention rule"""
     data_category: DataCategory
     retention_period: timedelta
     retention_policy: DataRetentionPolicy
@@ -133,7 +136,8 @@ class RetentionRule:
 
 @dataclass
 class ConsentConfiguration:
-    """Consent management configuration"""
+    """
+        Consent management configuration"""
     granular_consent: bool = True
     consent_withdrawal: bool = True
     consent_tracking: bool = True
@@ -146,7 +150,8 @@ class ConsentConfiguration:
 
 @dataclass
 class AuditConfiguration:
-    """Audit logging configuration"""
+    """
+        Audit logging configuration"""
     audit_level: AuditLevel = AuditLevel.COMPREHENSIVE
     log_data_access: bool = True
     log_data_modifications: bool = True
@@ -160,7 +165,8 @@ class AuditConfiguration:
 
 @dataclass
 class PrivacySettings:
-    """Privacy configuration settings"""
+    """
+        Privacy configuration settings"""
     privacy_notices: bool = True
     cookie_consent: bool = True
     tracking_opt_out: bool = True
@@ -173,7 +179,8 @@ class PrivacySettings:
 
 @dataclass
 class ComplianceRule:
-    """Individual compliance rule"""
+    """
+        Individual compliance rule"""
     rule_id: str
     framework: ComplianceFramework
     rule_type: str
@@ -186,7 +193,8 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceViolation:
-    """Compliance violation record"""
+    """
+        Compliance violation record"""
     violation_id: str
     rule_id: str
     framework: ComplianceFramework
@@ -202,7 +210,8 @@ class ComplianceViolation:
 
 @dataclass
 class ComplianceReport:
-    """Compliance assessment report"""
+    """
+        Compliance assessment report"""
     report_id: str
     framework: ComplianceFramework
     assessment_date: datetime
@@ -218,7 +227,8 @@ class ComplianceReport:
 # ==============================
 
 class JurisdictionConfig:
-    """Base jurisdiction configuration"""
+    """
+        Base jurisdiction configuration"""
     
     def __init__(self, jurisdiction_code: str, jurisdiction_name: str):
         self.jurisdiction_code = jurisdiction_code
@@ -232,7 +242,8 @@ class JurisdictionConfig:
         self.maximum_fines: Dict[ComplianceFramework, float] = {}
 
 class EUGDPRConfig(JurisdictionConfig):
-    """European Union GDPR configuration"""
+    """
+        European Union GDPR configuration"""
     
     def __init__(self):
         super().__init__("EU", "European Union")
@@ -304,8 +315,10 @@ class ComplianceValidator:
         self._initialize_jurisdictions()
     
     def _initialize_default_rules(self) -> None:
-        """Initialize default compliance rules"""
+        """
+        Initialize default compliance rules"""
         # GDPR Rules
+
         gdpr_rules = [
             ComplianceRule(
                 rule_id="gdpr_consent_required",
@@ -343,6 +356,7 @@ class ComplianceValidator:
         ]
         
         # CCPA Rules
+
         ccpa_rules = [
             ComplianceRule(
                 rule_id="ccpa_opt_out_right",
@@ -369,6 +383,7 @@ class ComplianceValidator:
         ]
         
         # HIPAA Rules
+
         hipaa_rules = [
             ComplianceRule(
                 rule_id="hipaa_minimum_necessary",
@@ -408,6 +423,7 @@ class ComplianceValidator:
                                 data_processing_context: Dict[str, Any]) -> ComplianceReport:
         """Validate compliance for specific framework"""
         violations = []
+
         recommendations = []
         
         if framework not in self.validation_rules:
@@ -422,13 +438,16 @@ class ComplianceValidator:
             )
         
         # Validate each rule
+
         total_rules = len(self.validation_rules[framework])
+
         passed_rules = 0
         
         for rule in self.validation_rules[framework]:
             try:
                 if rule.validation_function:
                     is_compliant = await rule.validation_function(data_processing_context)
+
                     
                     if is_compliant:
                         passed_rules += 1
@@ -444,16 +463,21 @@ class ComplianceValidator:
                             remediation_required=True,
                             remediation_deadline=datetime.now() + timedelta(days=30)
                         )
+
                         violations.append(violation)
+
                         recommendations.extend(rule.remediation_actions)
+
                 
             except Exception as e:
                 logging.error(f"Error validating rule {rule.rule_id}: {e}")
         
         # Calculate compliance score
+
         compliance_score = (passed_rules / total_rules * 100) if total_rules > 0 else 0.0
         
         # Generate report
+
         report = ComplianceReport(
             report_id=f"compliance_{framework.value}_{int(datetime.now().timestamp())}",
             framework=framework,
@@ -461,8 +485,10 @@ class ComplianceValidator:
             overall_compliance_score=compliance_score,
             violations_found=violations,
             recommendations=list(set(recommendations)),  # Remove duplicates
+
             next_assessment_date=datetime.now() + timedelta(days=90)
         )
+
         
         return report
     
@@ -499,7 +525,9 @@ class ComplianceValidator:
             return False
         
         # Check if data collection is limited to purpose
+
         collected_fields = data_collection.get("collected_fields", [])
+
         necessary_fields = data_collection.get("necessary_fields", [])
         
         # Simple check: collected fields should not exceed necessary fields
@@ -540,6 +568,8 @@ class ComplianceValidator:
     async def _validate_ccpa_disclosures(self, context: Dict[str, Any]) -> bool:
         """Validate CCPA disclosure requirements"""
         disclosures = context.get("disclosures", {})
+
+
         
         required_disclosures = [
             "categories_collected",
@@ -606,7 +636,8 @@ class DataClassifier:
         self._initialize_classification_patterns()
     
     def _initialize_classification_patterns(self) -> None:
-        """Initialize data classification patterns"""
+        """
+        Initialize data classification patterns"""
         # Personal data patterns
         self.classification_patterns[DataCategory.PERSONAL_DATA] = [
             r"email", r"phone", r"address", r"name", r"id", r"ssn", r"passport",
@@ -646,12 +677,15 @@ class DataClassifier:
     def classify_data_field(self, field_name: str, field_value: Any = None) -> List[DataCategory]:
         """Classify a data field into categories"""
         classifications = []
+
         field_name_lower = field_name.lower()
+
         
         for category, patterns in self.classification_patterns.items():
             for pattern in patterns:
                 if re.search(pattern, field_name_lower):
                     classifications.append(category)
+
                     break
         
         # Additional classification based on field value
@@ -676,6 +710,7 @@ class DataClassifier:
         # Default to technical data if no other classification
         if not classifications:
             classifications.append(DataCategory.TECHNICAL_DATA)
+
         
         return classifications
     
@@ -685,7 +720,10 @@ class DataClassifier:
         
         for field_name, field_info in dataset_schema.items():
             sample_value = field_info.get("sample_value")
+
+
             classifications = self.classify_data_field(field_name, sample_value)
+
             field_classifications[field_name] = classifications
         
         return field_classifications
@@ -705,7 +743,8 @@ class ConsentManager:
         self._initialize_consent_templates()
     
     def _initialize_consent_templates(self) -> None:
-        """Initialize consent templates for different purposes"""
+        """
+        Initialize consent templates for different purposes"""
         self.consent_templates["marketing"] = {
             "purpose": "Marketing communications",
             "description": "We would like to send you marketing emails about our products and services",
@@ -756,6 +795,7 @@ class ConsentManager:
         if user_id not in self.consent_history:
             self.consent_history[user_id] = []
         self.consent_history[user_id].append(consent_record.copy())
+
         
         logging.info(f"Recorded consent for user {user_id}")
         return {"status": "recorded", "consent_id": f"{user_id}_{int(datetime.now().timestamp())}"}
@@ -764,15 +804,18 @@ class ConsentManager:
         """Withdraw consent for specific purpose"""
         if user_id not in self.consent_records:
             return {"status": "error", "message": "No consent record found"}
+
         
         consent_record = self.consent_records[user_id]
         
         if purpose in consent_record["purposes"]:
             consent_record["purposes"][purpose] = False
             consent_record["withdrawal_date"] = datetime.now()
+
             consent_record["withdrawal_method"] = "user_request"
             
             # Add withdrawal to history
+
             withdrawal_record = {
                 "action": "withdrawal",
                 "purpose": purpose,
@@ -780,8 +823,10 @@ class ConsentManager:
                 "method": "user_request"
             }
             self.consent_history[user_id].append(withdrawal_record)
+
             
             logging.info(f"Consent withdrawn for user {user_id}, purpose {purpose}")
+
             return {"status": "withdrawn", "purpose": purpose}
         
         return {"status": "error", "message": "Purpose not found in consent record"}
@@ -790,6 +835,7 @@ class ConsentManager:
         """Check if user has given consent for specific purpose"""
         if user_id not in self.consent_records:
             return False
+
         
         consent_record = self.consent_records[user_id]
         
@@ -809,7 +855,8 @@ class ConsentManager:
 # ==============================
 
 class ComplianceConfigManager:
-    """Main compliance configuration and management system"""
+    """
+        Main compliance configuration and management system"""
     
     def __init__(self):
         # Core components
@@ -842,6 +889,7 @@ class ComplianceConfigManager:
         self.retention_rules[DataCategory.PERSONAL_DATA] = RetentionRule(
             data_category=DataCategory.PERSONAL_DATA,
             retention_period=timedelta(days=1095),  # 3 years
+
             retention_policy=DataRetentionPolicy.MEDIUM_TERM,
             auto_delete=True,
             archive_before_delete=True,
@@ -852,6 +900,7 @@ class ComplianceConfigManager:
         self.retention_rules[DataCategory.FINANCIAL_DATA] = RetentionRule(
             data_category=DataCategory.FINANCIAL_DATA,
             retention_period=timedelta(days=2555),  # 7 years
+
             retention_policy=DataRetentionPolicy.LEGAL_REQUIREMENT,
             auto_delete=False,
             archive_before_delete=True
@@ -861,6 +910,7 @@ class ComplianceConfigManager:
         self.retention_rules[DataCategory.HEALTH_DATA] = RetentionRule(
             data_category=DataCategory.HEALTH_DATA,
             retention_period=timedelta(days=2190),  # 6 years
+
             retention_policy=DataRetentionPolicy.LEGAL_REQUIREMENT,
             auto_delete=False,
             archive_before_delete=True,
@@ -871,6 +921,7 @@ class ComplianceConfigManager:
         self.retention_rules[DataCategory.TECHNICAL_DATA] = RetentionRule(
             data_category=DataCategory.TECHNICAL_DATA,
             retention_period=timedelta(days=365),  # 1 year
+
             retention_policy=DataRetentionPolicy.SHORT_TERM,
             auto_delete=True,
             archive_before_delete=False
@@ -887,22 +938,27 @@ class ComplianceConfigManager:
             "critical_violations": [],
             "recommendations": []
         }
+
         
         total_score = 0.0
+
         framework_count = 0
         
         # Assess each applicable framework
         for jurisdiction in self.active_jurisdictions:
             jurisdiction_config = self.validator.jurisdiction_configs.get(jurisdiction)
+
             if jurisdiction_config:
                 for framework in jurisdiction_config.applicable_frameworks:
                     report = await self.validator.validate_compliance(framework, data_processing_context)
+
                     assessment_results["framework_reports"][framework.value] = report
                     
                     total_score += report.overall_compliance_score
                     framework_count += 1
                     
                     # Collect critical violations
+
                     critical_violations = [v for v in report.violations_found 
                                          if v.severity == ComplianceRiskLevel.CRITICAL]
                     assessment_results["critical_violations"].extend(critical_violations)
@@ -920,6 +976,7 @@ class ComplianceConfigManager:
         # Store assessment results
         for report in assessment_results["framework_reports"].values():
             self.compliance_reports.append(report)
+
         
         return assessment_results
     
@@ -961,30 +1018,41 @@ class ComplianceConfigManager:
         return self.retention_rules.get(data_category)
     
     async def classify_and_assess_data(self, dataset_schema: Dict[str, Any]) -> Dict[str, Any]:
-        """Classify data and assess compliance implications"""
+        """
+        Classify data and assess compliance implications"""
         # Classify data
+
         field_classifications = self.data_classifier.classify_dataset(dataset_schema)
         
         # Determine applicable frameworks based on data categories
+
         applicable_frameworks = set()
+
         sensitive_categories = []
         
         for field_name, categories in field_classifications.items():
             for category in categories:
                 if category in [DataCategory.PERSONAL_DATA, DataCategory.SENSITIVE_DATA]:
                     applicable_frameworks.add(ComplianceFramework.GDPR)
+
                     applicable_frameworks.add(ComplianceFramework.CCPA)
+
                     sensitive_categories.append(category)
+
                 
                 if category == DataCategory.HEALTH_DATA:
                     applicable_frameworks.add(ComplianceFramework.HIPAA)
+
                     sensitive_categories.append(category)
+
                 
                 if category == DataCategory.FINANCIAL_DATA:
                     applicable_frameworks.add(ComplianceFramework.PCI_DSS)
+
                     sensitive_categories.append(category)
         
         # Generate compliance requirements
+
         requirements = []
         for framework in applicable_frameworks:
             if framework == ComplianceFramework.GDPR:
@@ -994,18 +1062,21 @@ class ComplianceConfigManager:
                     "Data minimization principle",
                     "Privacy by design"
                 ])
+
             elif framework == ComplianceFramework.CCPA:
                 requirements.extend([
                     "Do not sell opt-out",
                     "Disclosure requirements",
                     "Consumer request verification"
                 ])
+
             elif framework == ComplianceFramework.HIPAA:
                 requirements.extend([
                     "Minimum necessary standard",
                     "Business associate agreements",
                     "Encryption requirements"
                 ])
+
         
         return {
             "field_classifications": {k: [c.value for c in v] for k, v in field_classifications.items()},
@@ -1015,6 +1086,7 @@ class ComplianceConfigManager:
             "retention_recommendations": {
                 cat.value: self.retention_rules[cat].retention_period.days 
                 for cat in set(cat for cats in field_classifications.values() for cat in cats)
+
                 if cat in self.retention_rules
             }
         }
@@ -1030,6 +1102,7 @@ class ComplianceConfigManager:
         
         # Data collection
         notice_sections.append("WHAT INFORMATION WE COLLECT")
+
         collected_data = data_processing_context.get("data_categories", [])
         for category in collected_data:
             notice_sections.append(f"• {category.replace('_', ' ').title()}")
@@ -1037,6 +1110,7 @@ class ComplianceConfigManager:
         
         # Purposes
         notice_sections.append("HOW WE USE YOUR INFORMATION")
+
         purposes = data_processing_context.get("processing_purposes", [])
         for purpose in purposes:
             notice_sections.append(f"• {purpose.replace('_', ' ').title()}")
@@ -1045,9 +1119,13 @@ class ComplianceConfigManager:
         # Legal basis (GDPR)
         if ComplianceFramework.GDPR in data_processing_context.get("applicable_frameworks", []):
             notice_sections.append("LEGAL BASIS FOR PROCESSING (EU USERS)")
+
             notice_sections.append("• Consent for marketing and optional features")
+
             notice_sections.append("• Legitimate interests for service improvement")
+
             notice_sections.append("• Contract performance for service delivery")
+
             notice_sections.append("")
         
         # Your rights
@@ -1056,9 +1134,11 @@ class ComplianceConfigManager:
         notice_sections.append("• Right to correct inaccurate information")
         notice_sections.append("• Right to delete your information")
         notice_sections.append("• Right to data portability")
+
         
         if ComplianceFramework.CCPA in data_processing_context.get("applicable_frameworks", []):
             notice_sections.append("• Right to opt out of sale of personal information")
+
         
         notice_sections.append("")
         
@@ -1067,18 +1147,23 @@ class ComplianceConfigManager:
         notice_sections.append("If you have questions about this privacy notice, please contact:")
         notice_sections.append("Email: privacy@example.com")
         notice_sections.append("Address: [Company Address]")
+
         
         return "\n".join(notice_sections)
     
     def get_compliance_dashboard(self) -> Dict[str, Any]:
         """Get compliance dashboard data"""
         # Calculate compliance metrics
+
         recent_reports = [r for r in self.compliance_reports 
                          if (datetime.now() - r.assessment_date).days <= 30]
+
         
         avg_compliance_score = 0.0
         if recent_reports:
             avg_compliance_score = sum(r.overall_compliance_score for r in recent_reports) / len(recent_reports)
+
+
         
         active_violations_by_severity = {}
         for violation in self.active_violations:
@@ -1090,6 +1175,7 @@ class ComplianceConfigManager:
             "active_jurisdictions": self.active_jurisdictions,
             "total_frameworks": len(set(
                 framework for config in self.validator.jurisdiction_configs.values()
+
                 for framework in config.applicable_frameworks
             )),
             "active_violations": active_violations_by_severity,

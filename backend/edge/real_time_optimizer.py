@@ -24,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationStrategy(str, Enum):
-    """Real-time optimization strategies."""
+    """
+        Real-time optimization strategies."""
     LATENCY_FIRST = "latency_first"
     THROUGHPUT_FIRST = "throughput_first"
     BALANCED = "balanced"
@@ -70,7 +71,8 @@ class PerformanceMetric:
 
 @dataclass
 class OptimizationTarget:
-    """Optimization target configuration."""
+    """
+        Optimization target configuration."""
     metric_type: MetricType
     target_value: float
     tolerance: float
@@ -80,7 +82,8 @@ class OptimizationTarget:
 
 @dataclass
 class OptimizationResult:
-    """Optimization result."""
+    """
+        Optimization result."""
     optimization_id: str
     timestamp: datetime
     strategy: OptimizationStrategy
@@ -93,7 +96,8 @@ class OptimizationResult:
 
 
 class RealTimeOptimizer:
-    """Advanced real-time optimizer for edge computing."""
+    """
+        Advanced real-time optimizer for edge computing."""
     
     def __init__(self, 
                  strategy: OptimizationStrategy = OptimizationStrategy.ADAPTIVE,
@@ -127,6 +131,7 @@ class RealTimeOptimizer:
         """Start the real-time optimization engine."""
         if self.running:
             logger.warning("Optimizer already running")
+
             return
         
         self.running = True
@@ -140,9 +145,11 @@ class RealTimeOptimizer:
         # Cancel active optimizations
         for task in self.active_optimizations.values():
             task.cancel()
+
         
         if self.optimization_task:
             self.optimization_task.cancel()
+
             try:
                 await self.optimization_task
             except asyncio.CancelledError:
@@ -173,20 +180,28 @@ class RealTimeOptimizer:
     async def trigger_optimization(self, scope: OptimizationScope = OptimizationScope.LOCAL) -> OptimizationResult:
         """Trigger immediate optimization."""
         optimization_id = str(uuid.uuid4())
+
         start_time = time.time()
+
         
         try:
             # Analyze current state
+
             analysis = await self._analyze_performance()
             
             # Determine optimization actions
+
             actions = await self._determine_actions(analysis, scope)
             
             # Execute optimizations
+
             execution_results = await self._execute_optimizations(actions)
             
             # Measure improvements
+
             improvements = await self._measure_improvements(analysis)
+
+
             
             result = OptimizationResult(
                 optimization_id=optimization_id,
@@ -199,14 +214,18 @@ class RealTimeOptimizer:
                 metrics_before=analysis['current_metrics'],
                 metrics_after=await self._get_current_metrics_summary()
             )
+
             
             self.optimization_history.append(result)
+
             
             logger.info(f"Optimization {optimization_id} completed: {result.success}")
+
             return result
             
         except Exception as e:
             logger.error(f"Optimization failed: {e}")
+
             return OptimizationResult(
                 optimization_id=optimization_id,
                 timestamp=datetime.now(),
@@ -226,13 +245,16 @@ class RealTimeOptimizer:
                 # Check if optimization is needed
                 if await self._should_optimize():
                     await self.trigger_optimization()
+
                 
                 await asyncio.sleep(self.optimization_interval)
+
                 
             except asyncio.CancelledError:
                 break
             except Exception as e:
                 logger.error(f"Error in optimization loop: {e}")
+
                 await asyncio.sleep(self.optimization_interval)
     
     async def _should_optimize(self) -> bool:
@@ -244,8 +266,10 @@ class RealTimeOptimizer:
         # Check for target violations
         for target in self.optimization_targets:
             current_value = await self._get_metric_value(target.metric_type)
+
             if current_value is None:
                 continue
+
             
             deviation = abs(current_value - target.target_value) / target.target_value
             if deviation > target.tolerance:
@@ -262,7 +286,8 @@ class RealTimeOptimizer:
         return False
     
     async def _analyze_performance(self) -> Dict[str, Any]:
-        """Analyze current performance state."""
+        """
+        Analyze current performance state."""
         analysis = {
             'current_metrics': await self._get_current_metrics_summary(),
             'trends': await self.trend_analyzer.get_trends(),
@@ -274,7 +299,8 @@ class RealTimeOptimizer:
         return analysis
     
     async def _determine_actions(self, analysis: Dict[str, Any], scope: OptimizationScope) -> List[Dict[str, Any]]:
-        """Determine optimization actions based on analysis."""
+        """
+        Determine optimization actions based on analysis."""
         actions = []
         
         # Strategy-specific action determination
@@ -288,22 +314,29 @@ class RealTimeOptimizer:
             actions.extend(await self._get_adaptive_actions(analysis))
         
         # Filter actions by scope
+
         actions = [action for action in actions if action.get('scope', scope) == scope]
         
         return actions
     
     async def _execute_optimizations(self, actions: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Execute optimization actions."""
+        """
+        Execute optimization actions."""
         results = {'success': True, 'executed': [], 'failed': []}
         
         for action in actions:
             try:
                 await self._execute_single_action(action)
+
                 results['executed'].append(action)
+
                 logger.info(f"Executed optimization action: {action['type']}")
+
             except Exception as e:
                 results['failed'].append({'action': action, 'error': str(e)})
+
                 logger.error(f"Failed to execute action {action['type']}: {e}")
+
                 results['success'] = False
         
         return results
@@ -335,17 +368,20 @@ class RealTimeOptimizer:
                 'priority': 1,
                 'parameters': {'strategy': 'aggressive_prefetch'}
             })
+
             
             actions.append({
                 'type': 'adjust_resource_allocation',
                 'priority': 2,
                 'parameters': {'cpu_priority': 'high', 'memory_allocation': 'increased'}
             })
+
         
         return actions
     
     async def _get_throughput_actions(self, analysis: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Get throughput-focused optimization actions."""
+        """
+        Get throughput-focused optimization actions."""
         actions = []
         
         if analysis['current_metrics'].get('throughput', 0) < 1000:  # <1000 RPS
@@ -354,89 +390,112 @@ class RealTimeOptimizer:
                 'priority': 1,
                 'parameters': {'direction': 'up', 'resource_type': 'compute'}
             })
+
             
             actions.append({
                 'type': 'load_balance',
                 'priority': 2,
                 'parameters': {'strategy': 'round_robin', 'health_check_interval': 1}
             })
+
         
         return actions
     
     async def _get_balanced_actions(self, analysis: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Get balanced optimization actions."""
+        """
+        Get balanced optimization actions."""
         actions = []
         
         # Combine latency and throughput optimizations with lower priority
+
         latency_actions = await self._get_latency_actions(analysis)
+
         throughput_actions = await self._get_throughput_actions(analysis)
         
         # Reduce priority of all actions
         for action in latency_actions + throughput_actions:
             action['priority'] = action.get('priority', 1) + 1
             actions.append(action)
+
         
         return actions
     
     async def _get_adaptive_actions(self, analysis: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Get adaptive optimization actions based on current conditions."""
+        """
+        Get adaptive optimization actions based on current conditions."""
         actions = []
         
         # Analyze which optimization is most needed
+
         metrics = analysis['current_metrics']
+
         
         latency_score = metrics.get('latency', 0) / 10.0  # Normalize to 0-1
+
         throughput_score = (1000 - metrics.get('throughput', 1000)) / 1000.0  # Normalize to 0-1
         
         if latency_score > throughput_score:
             actions.extend(await self._get_latency_actions(analysis))
         else:
             actions.extend(await self._get_throughput_actions(analysis))
+
         
         return actions
     
     async def _get_metric_value(self, metric_type: MetricType) -> Optional[float]:
-        """Get current value for a specific metric type."""
+        """
+        Get current value for a specific metric type."""
         for key, metric in self.current_metrics.items():
             if metric.metric_type == metric_type:
                 return metric.value
         return None
     
     async def _get_current_metrics_summary(self) -> Dict[str, float]:
-        """Get summary of current metrics."""
+        """
+        Get summary of current metrics."""
         summary = {}
         for key, metric in self.current_metrics.items():
             summary[metric.metric_type.value] = metric.value
         return summary
     
     async def _identify_bottlenecks(self) -> List[str]:
-        """Identify performance bottlenecks."""
+        """
+        Identify performance bottlenecks."""
         bottlenecks = []
+
         
         metrics = await self._get_current_metrics_summary()
+
         
         if metrics.get('cpu_utilization', 0) > 80:
             bottlenecks.append('cpu_bottleneck')
+
         
         if metrics.get('memory_utilization', 0) > 85:
             bottlenecks.append('memory_bottleneck')
+
         
         if metrics.get('network_bandwidth', 0) > 90:
             bottlenecks.append('network_bottleneck')
+
         
         if metrics.get('disk_io', 0) > 80:
             bottlenecks.append('disk_bottleneck')
+
         
         return bottlenecks
     
     async def _check_target_violations(self) -> List[Dict[str, Any]]:
-        """Check for optimization target violations."""
+        """
+        Check for optimization target violations."""
         violations = []
         
         for target in self.optimization_targets:
             current_value = await self._get_metric_value(target.metric_type)
+
             if current_value is None:
                 continue
+
             
             deviation = abs(current_value - target.target_value) / target.target_value
             if deviation > target.tolerance:
@@ -445,30 +504,34 @@ class RealTimeOptimizer:
                     'current_value': current_value,
                     'deviation': deviation
                 })
+
         
         return violations
     
     async def _measure_improvements(self, baseline_analysis: Dict[str, Any]) -> Dict[str, float]:
-        """Measure optimization improvements."""
+        """
+        Measure optimization improvements."""
         improvements = {}
         
         # Wait a moment for metrics to update
         await asyncio.sleep(0.5)
+
+
         
         current_metrics = await self._get_current_metrics_summary()
+
         baseline_metrics = baseline_analysis['current_metrics']
         
         for metric_name, current_value in current_metrics.items():
             baseline_value = baseline_metrics.get(metric_name, 0)
+
             if baseline_value > 0:
                 improvement = (current_value - baseline_value) / baseline_value * 100
                 improvements[metric_name] = improvement
         
-        return improvements
-    
-    # Placeholder implementation methods
-    async def _adjust_resource_allocation(self, parameters: Dict[str, Any]):
-        """Adjust resource allocation."""
+        return improvements    async def _adjust_resource_allocation(self, parameters: Dict[str, Any]):
+        """
+        Adjust resource allocation."""
         logger.info(f"Adjusting resource allocation: {parameters}")
         # Implementation would integrate with resource manager
     
@@ -500,7 +563,8 @@ class TrendAnalyzer:
         self.trends: Dict[str, List[float]] = defaultdict(list)
     
     async def update(self, metric: PerformanceMetric):
-        """Update trend analysis with new metric."""
+        """
+        Update trend analysis with new metric."""
         key = f"{metric.source}_{metric.metric_type.value}"
         self.trends[key].append(metric.value)
         
@@ -515,28 +579,38 @@ class TrendAnalyzer:
         for key, values in self.trends.items():
             if len(values) >= 5:
                 recent_trend = self._calculate_trend(values[-10:])
+
                 trends[key] = recent_trend
         
         return trends
     
     async def has_negative_trends(self) -> bool:
-        """Check if there are any negative trends."""
+        """
+        Check if there are any negative trends."""
         trends = await self.get_trends()
         return any(trend == 'declining' for trend in trends.values())
     
     def _calculate_trend(self, values: List[float]) -> str:
-        """Calculate trend direction."""
+        """
+        Calculate trend direction."""
         if len(values) < 3:
             return 'insufficient_data'
         
         # Simple linear regression slope
+
         n = len(values)
+
         x = list(range(n))
+
         x_mean = sum(x) / n
+
         y_mean = sum(values) / n
+
         
         numerator = sum((x[i] - x_mean) * (values[i] - y_mean) for i in range(n))
+
         denominator = sum((x[i] - x_mean) ** 2 for i in range(n))
+
         
         if denominator == 0:
             return 'stable'
@@ -552,7 +626,8 @@ class TrendAnalyzer:
 
 
 class AnomalyDetector:
-    """Detect performance anomalies."""
+    """
+        Detect performance anomalies."""
     
     def __init__(self, sensitivity: float = 2.0):
         self.sensitivity = sensitivity
@@ -560,7 +635,8 @@ class AnomalyDetector:
         self.recent_anomalies: List[Dict[str, Any]] = []
     
     async def update(self, metric: PerformanceMetric):
-        """Update anomaly detection with new metric."""
+        """
+        Update anomaly detection with new metric."""
         key = f"{metric.source}_{metric.metric_type.value}"
         
         # Initialize baseline if not exists
@@ -569,8 +645,10 @@ class AnomalyDetector:
             return
         
         # Update baseline statistics
+
         stats = self.baseline_stats[key]
         stats['count'] += 1
+
         old_mean = stats['mean']
         stats['mean'] = old_mean + (metric.value - old_mean) / stats['count']
         
@@ -587,7 +665,9 @@ class AnomalyDetector:
             })
             
             # Keep only recent anomalies
+
             cutoff_time = datetime.now() - timedelta(minutes=10)
+
             self.recent_anomalies = [a for a in self.recent_anomalies if a['timestamp'] > cutoff_time]
     
     async def has_anomalies(self) -> bool:
@@ -595,26 +675,31 @@ class AnomalyDetector:
         return len(self.recent_anomalies) > 0
     
     async def get_anomalies(self) -> List[Dict[str, Any]]:
-        """Get recent anomalies."""
+        """
+        Get recent anomalies."""
         return self.recent_anomalies.copy()
     
     async def _is_anomaly(self, metric: PerformanceMetric, stats: Dict[str, float]) -> bool:
-        """Check if metric value is anomalous."""
+        """
+        Check if metric value is anomalous."""
         if stats['count'] < 10 or stats['std'] == 0:
             return False
+
         
         z_score = abs(metric.value - stats['mean']) / stats['std']
         return z_score > self.sensitivity
 
 
 class PredictionEngine:
-    """Predict future performance metrics."""
+    """
+        Predict future performance metrics."""
     
     def __init__(self):
         self.metric_history: Dict[str, List[Tuple[datetime, float]]] = defaultdict(list)
     
     async def update(self, metric: PerformanceMetric):
-        """Update prediction engine with new metric."""
+        """
+        Update prediction engine with new metric."""
         key = f"{metric.source}_{metric.metric_type.value}"
         self.metric_history[key].append((metric.timestamp, metric.value))
         
@@ -629,23 +714,29 @@ class PredictionEngine:
         for key, history in self.metric_history.items():
             if len(history) >= 10:
                 prediction = self._predict_value(history, horizon_minutes)
+
                 predictions[key] = prediction
         
         return predictions
     
     def _predict_value(self, history: List[Tuple[datetime, float]], horizon_minutes: int) -> float:
-        """Predict future value using simple linear extrapolation."""
+        """
+        Predict future value using simple linear extrapolation."""
         if len(history) < 2:
             return history[-1][1] if history else 0.0
         
         # Use last 10 points for prediction
+
         recent_history = history[-10:]
         
         # Calculate trend
+
         values = [point[1] for point in recent_history]
+
         trend = (values[-1] - values[0]) / len(values)
         
         # Extrapolate
+
         prediction = values[-1] + trend * horizon_minutes
         return max(0, prediction)  # Ensure non-negative
 
@@ -655,7 +746,8 @@ def create_real_time_optimizer(
     optimization_interval: float = 1.0,
     metrics_window: int = 100
 ) -> RealTimeOptimizer:
-    """Create and configure a real-time optimizer instance."""
+    """
+        Create and configure a real-time optimizer instance."""
     return RealTimeOptimizer(
         strategy=strategy,
         optimization_interval=optimization_interval,
@@ -673,7 +765,9 @@ if __name__ == "__main__":
         optimizer.add_optimization_target(OptimizationTarget(
             metric_type=MetricType.LATENCY,
             target_value=2.0,  # 2ms target
+
             tolerance=0.5,     # 50% tolerance
+
             priority=1
         ))
         
@@ -685,14 +779,17 @@ if __name__ == "__main__":
             await optimizer.add_metric(PerformanceMetric(
                 metric_type=MetricType.LATENCY,
                 value=3.0 + i * 0.5,  # Increasing latency
+
                 timestamp=datetime.now(),
                 source="test_service",
                 tags={"environment": "test"}
             ))
+
             
             await asyncio.sleep(0.5)
         
         # Trigger optimization
+
         result = await optimizer.trigger_optimization()
         print(f"Optimization result: {result.success}")
         

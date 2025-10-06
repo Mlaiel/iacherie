@@ -19,7 +19,8 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(Enum):
-    """Types of creators"""
+    """
+        Types of creators"""
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -80,7 +81,8 @@ class CreatorProfile:
 
 @dataclass
 class MatchRequest:
-    """Collaboration match request"""
+    """
+        Collaboration match request"""
     request_id: str
     requester_id: str
     collaboration_type: CollaborationType
@@ -98,7 +100,8 @@ class MatchRequest:
 
 @dataclass
 class MatchResult:
-    """AI matching result"""
+    """
+        AI matching result"""
     match_id: str
     requester_id: str
     matched_creator_id: str
@@ -120,7 +123,8 @@ class MatchResult:
 
 @dataclass
 class MatchAnalysis:
-    """Comprehensive match analysis result"""
+    """
+        Comprehensive match analysis result"""
     request_id: str
     top_matches: List[MatchResult]
     alternative_matches: List[MatchResult]
@@ -131,7 +135,8 @@ class MatchAnalysis:
 
 
 class AIMatcher:
-    """AI-powered creator matching engine"""
+    """
+        AI-powered creator matching engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -172,16 +177,19 @@ class AIMatcher:
                 creator_pool = await self._get_available_creators(match_request)
             
             # Filter creators by basic requirements
+
             filtered_creators = await self._filter_creators_by_requirements(
                 creator_pool, match_request
             )
             
             # Calculate compatibility scores
+
             match_results = []
             for creator in filtered_creators:
                 compatibility = await self._calculate_comprehensive_compatibility(
                     match_request, creator
                 )
+
                 
                 if compatibility.compatibility_score >= self.min_compatibility_score:
                     match_results.append(compatibility)
@@ -190,23 +198,30 @@ class AIMatcher:
             match_results.sort(key=lambda x: x.compatibility_score, reverse=True)
             
             # Categorize matches
+
             top_matches = match_results[:self.max_matches_per_request]
+
             alternative_matches = match_results[self.max_matches_per_request:self.max_matches_per_request*2]
             
             # Generate match statistics
+
             match_statistics = await self._generate_match_statistics(
                 match_request, match_results, creator_pool
             )
             
             # Generate market insights
+
             market_insights = await self._generate_market_insights(
                 match_request, creator_pool
             )
             
             # Generate optimization suggestions
+
             optimization_suggestions = await self._generate_optimization_suggestions(
                 match_request, match_results
             )
+
+
             
             analysis = MatchAnalysis(
                 request_id=match_request.request_id,
@@ -216,50 +231,72 @@ class AIMatcher:
                 market_insights=market_insights,
                 optimization_suggestions=optimization_suggestions
             )
+
             
             logger.info(f"Found {len(top_matches)} top matches for request {match_request.request_id}")
+
             return analysis
             
         except Exception as e:
             logger.error(f"Match finding failed for request {match_request.request_id}: {e}")
+
             raise
     
     async def _get_available_creators(self, match_request: MatchRequest) -> List[CreatorProfile]:
         """Get available creators from database (simulated)"""
         # In real implementation, query database with availability filters
+
         creators = []
         
         # Simulate creator database
+
         creator_types = list(CreatorType)
+
         
         for i in range(50):  # Generate 50 sample creators
+
             creator = await self._generate_sample_creator(i, creator_types)
+
             creators.append(creator)
+
         
         return creators
     
     async def _generate_sample_creator(self, creator_id: int, creator_types: List[CreatorType]) -> CreatorProfile:
-        """Generate sample creator profile for demonstration"""
+        """
+        Generate sample creator profile for demonstration"""
         import random
+
         
         creator_type = random.choice(creator_types)
         
         # Generate realistic data based on creator type
         if creator_type == CreatorType.MUSICIAN:
             genres = random.sample(['pop', 'rock', 'jazz', 'electronic', 'hip-hop', 'classical'], k=random.randint(1, 3))
+
+
             skills = ['music_production', 'songwriting', 'performance', 'mixing']
+
             equipment = ['microphone', 'audio_interface', 'daw', 'instruments']
         elif creator_type == CreatorType.PHOTOGRAPHER:
             genres = random.sample(['portrait', 'landscape', 'fashion', 'wildlife', 'street'], k=random.randint(1, 3))
+
+
             skills = ['photo_editing', 'lighting', 'composition', 'post_processing']
+
             equipment = ['camera', 'lenses', 'lighting_kit', 'editing_software']
         elif creator_type == CreatorType.VIDEO_CREATOR:
             genres = random.sample(['tutorial', 'entertainment', 'review', 'vlog', 'documentary'], k=random.randint(1, 3))
+
+
             skills = ['video_editing', 'cinematography', 'storytelling', 'animation']
+
             equipment = ['camera', 'microphone', 'editing_software', 'lighting']
         else:
             genres = ['general']
+
             skills = ['content_creation', 'social_media', 'writing']
+
             equipment = ['computer', 'software']
         
         return CreatorProfile(
@@ -331,11 +368,14 @@ class AIMatcher:
                     continue
             
             # Check budget alignment
+
             creator_min_budget = creator.pricing.get('project_minimum', 0)
+
             if creator_min_budget > match_request.budget_range[1]:
                 continue
             
             # Check audience requirements
+
             audience_reqs = match_request.audience_requirements
             if audience_reqs.get('min_audience_size'):
                 if creator.audience_size < audience_reqs['min_audience_size']:
@@ -346,6 +386,7 @@ class AIMatcher:
                     continue
             
             filtered.append(creator)
+
         
         return filtered
     
@@ -354,17 +395,26 @@ class AIMatcher:
         match_request: MatchRequest,
         creator: CreatorProfile
     ) -> MatchResult:
-        """Calculate comprehensive compatibility between request and creator"""
+        """
+        Calculate comprehensive compatibility between request and creator"""
         # Calculate individual compatibility scores
+
         skill_alignment = await self._calculate_skill_alignment(match_request, creator)
+
         audience_compatibility = await self._calculate_audience_compatibility(match_request, creator)
+
         content_synergy = await self._calculate_content_synergy(match_request, creator)
+
         logistics_feasibility = await self._calculate_logistics_feasibility(match_request, creator)
+
         financial_alignment = await self._calculate_financial_alignment(match_request, creator)
+
         reputation_compatibility = await self._calculate_reputation_compatibility(creator)
+
         collaboration_history_score = await self._calculate_collaboration_history_score(creator)
         
         # Calculate weighted overall compatibility score
+
         compatibility_score = (
             skill_alignment['overall_score'] * self.matching_weights['skill_compatibility'] +
             audience_compatibility * self.matching_weights['audience_alignment'] +
@@ -376,20 +426,27 @@ class AIMatcher:
         )
         
         # Calculate match confidence
+
         match_confidence = await self._calculate_match_confidence(
             compatibility_score, skill_alignment, creator
         )
         
         # Predict success rate
+
         predicted_success_rate = await self._predict_collaboration_success(
             compatibility_score, match_request, creator
         )
         
         # Generate recommendations and insights
+
         collaboration_format = await self._recommend_collaboration_format(match_request, creator)
+
         challenges = await self._identify_potential_challenges(match_request, creator)
+
         success_factors = await self._identify_success_factors(match_request, creator)
+
         next_steps = await self._generate_next_steps(match_request, creator)
+
         
         return MatchResult(
             match_id=f"match_{match_request.request_id}_{creator.creator_id}",
@@ -417,11 +474,15 @@ class AIMatcher:
     ) -> Dict[str, float]:
         """Calculate skill alignment between request and creator"""
         required_skills = set(match_request.required_skills)
+
         creator_skills = set(creator.skills)
         
         # Calculate skill overlap
+
         overlapping_skills = required_skills.intersection(creator_skills)
+
         missing_skills = required_skills - creator_skills
+
         additional_skills = creator_skills - required_skills
         
         # Calculate alignment scores
@@ -431,10 +492,13 @@ class AIMatcher:
             skill_coverage = 1.0
         
         # Bonus for additional relevant skills
+
         additional_skill_bonus = min(0.2, len(additional_skills) * 0.05)
         
         # Overall skill score
+
         overall_score = min(1.0, skill_coverage + additional_skill_bonus)
+
         
         return {
             'overall_score': overall_score,
@@ -453,18 +517,22 @@ class AIMatcher:
         match_request: MatchRequest,
         creator: CreatorProfile
     ) -> float:
-        """Calculate audience compatibility"""
+        """
+        Calculate audience compatibility"""
         audience_reqs = match_request.audience_requirements
         
         if not audience_reqs:
             return 0.8  # Default good compatibility if no specific requirements
+
         
         compatibility_factors = []
         
         # Audience size compatibility
         if 'target_audience_size' in audience_reqs:
             target_size = audience_reqs['target_audience_size']
+
             size_ratio = min(creator.audience_size / target_size, target_size / creator.audience_size)
+
             compatibility_factors.append(size_ratio)
         
         # Engagement rate compatibility
@@ -472,6 +540,7 @@ class AIMatcher:
             min_engagement = audience_reqs['min_engagement_rate']
             if creator.engagement_rate >= min_engagement:
                 engagement_score = min(1.0, creator.engagement_rate / min_engagement)
+
             else:
                 engagement_score = creator.engagement_rate / min_engagement
             compatibility_factors.append(engagement_score)
@@ -480,6 +549,7 @@ class AIMatcher:
         if 'target_demographics' in audience_reqs:
             demographics_match = 0.7  # Simplified assumption
             compatibility_factors.append(demographics_match)
+
         
         if compatibility_factors:
             return sum(compatibility_factors) / len(compatibility_factors)
@@ -491,22 +561,30 @@ class AIMatcher:
         match_request: MatchRequest,
         creator: CreatorProfile
     ) -> float:
-        """Calculate content synergy potential"""
+        """
+        Calculate content synergy potential"""
         content_reqs = match_request.content_requirements
         
         if not content_reqs:
             return 0.7  # Default moderate synergy
+
         
         synergy_factors = []
         
         # Genre/category alignment
         if 'preferred_genres' in content_reqs:
             preferred_genres = set(content_reqs['preferred_genres'])
+
+
             creator_genres = set(creator.genres)
+
+
             genre_overlap = len(preferred_genres.intersection(creator_genres))
+
             
             if preferred_genres:
                 genre_score = genre_overlap / len(preferred_genres)
+
             else:
                 genre_score = 0.5
             
@@ -515,13 +593,17 @@ class AIMatcher:
         # Content style compatibility
         if 'content_style_preferences' in content_reqs:
             style_prefs = content_reqs['content_style_preferences']
+
             style_compatibility = 0.0
+
             style_count = 0
             
             for style, importance in style_prefs.items():
                 if style in creator.content_style:
                     creator_style_score = creator.content_style[style]
+
                     compatibility = 1.0 - abs(importance - creator_style_score)
+
                     style_compatibility += compatibility
                     style_count += 1
             
@@ -530,8 +612,10 @@ class AIMatcher:
                 synergy_factors.append(style_score)
         
         # Quality alignment
+
         quality_score = min(1.0, creator.reputation_score / 4.0)  # Normalize 5-star rating
         synergy_factors.append(quality_score)
+
         
         if synergy_factors:
             return sum(synergy_factors) / len(synergy_factors)
@@ -543,7 +627,8 @@ class AIMatcher:
         match_request: MatchRequest,
         creator: CreatorProfile
     ) -> float:
-        """Calculate logistics feasibility"""
+        """
+        Calculate logistics feasibility"""
         feasibility_factors = []
         
         # Location compatibility
@@ -552,6 +637,7 @@ class AIMatcher:
                 location_score = 1.0
             else:
                 # Could add distance calculation here
+
                 location_score = 0.3  # Assume some compatibility for different locations
         else:
             location_score = 0.7  # Remote work assumption
@@ -559,6 +645,7 @@ class AIMatcher:
         feasibility_factors.append(location_score)
         
         # Timeline compatibility
+
         timeline_score = 0.8  # Simplified assumption
         feasibility_factors.append(timeline_score)
         
@@ -566,6 +653,8 @@ class AIMatcher:
         if creator.availability:
             available_hours = creator.availability.get('hours_per_week', 20)
             # Estimate required hours (simplified)
+
+
             required_hours = 10  # Default assumption
             
             if available_hours >= required_hours:
@@ -576,6 +665,7 @@ class AIMatcher:
             availability_score = 0.6
         
         feasibility_factors.append(availability_score)
+
         
         return sum(feasibility_factors) / len(feasibility_factors)
     
@@ -584,11 +674,14 @@ class AIMatcher:
         match_request: MatchRequest,
         creator: CreatorProfile
     ) -> float:
-        """Calculate financial alignment"""
+        """
+        Calculate financial alignment"""
         budget_min, budget_max = match_request.budget_range
         
         # Creator's minimum requirements
+
         creator_min = creator.pricing.get('project_minimum', 0)
+
         creator_rate = creator.pricing.get('collaboration_rate', creator_min)
         
         # Check if budgets are compatible
@@ -601,10 +694,13 @@ class AIMatcher:
         # Calculate proportional alignment
         if creator_rate <= budget_max:
             # Creator's rate is within budget range
+
             alignment = 1.0 - ((creator_rate - budget_min) / (budget_max - budget_min)) * 0.3
         else:
             # Creator's rate exceeds budget
+
             overage = creator_rate - budget_max
+
             max_acceptable_overage = budget_max * 0.2  # 20% overage tolerance
             
             if overage <= max_acceptable_overage:
@@ -615,23 +711,32 @@ class AIMatcher:
         return max(0.0, alignment)
     
     async def _calculate_reputation_compatibility(self, creator: CreatorProfile) -> float:
-        """Calculate reputation compatibility"""
+        """
+        Calculate reputation compatibility"""
         # Normalize reputation score (assuming 5-star scale)
+
         reputation_score = creator.reputation_score / 5.0
         
         # Verification bonus
+
         verification_bonus = 0.1 if creator.verification_status else 0.0
         
         # Collaboration history bonus
+
         history_bonus = min(0.1, len(creator.collaboration_history) * 0.02)
+
+
         
         total_score = min(1.0, reputation_score + verification_bonus + history_bonus)
+
         
         return total_score
     
     async def _calculate_collaboration_history_score(self, creator: CreatorProfile) -> float:
-        """Calculate collaboration history score"""
+        """
+        Calculate collaboration history score"""
         history_count = len(creator.collaboration_history)
+
         
         if history_count == 0:
             return 0.3  # New creators get some benefit of doubt
@@ -650,32 +755,41 @@ class AIMatcher:
         skill_alignment: Dict[str, float],
         creator: CreatorProfile
     ) -> float:
-        """Calculate confidence in the match"""
+        """
+        Calculate confidence in the match"""
         confidence_factors = []
         
         # Base confidence from compatibility score
+
         base_confidence = compatibility_score
         confidence_factors.append(base_confidence)
         
         # Skill coverage confidence
+
         skill_confidence = skill_alignment['skill_coverage']
         confidence_factors.append(skill_confidence)
         
         # Experience confidence
+
         experience_factor = min(1.0, len(creator.collaboration_history) / 5)
         confidence_factors.append(experience_factor)
         
         # Reputation confidence
+
         reputation_factor = creator.reputation_score / 5.0
         confidence_factors.append(reputation_factor)
         
         # Verification confidence
+
         verification_factor = 1.0 if creator.verification_status else 0.7
         confidence_factors.append(verification_factor)
         
         # Calculate weighted average
+
         weights = [0.4, 0.25, 0.15, 0.15, 0.05]
+
         confidence = sum(factor * weight for factor, weight in zip(confidence_factors, weights))
+
         
         return confidence
     
@@ -685,34 +799,44 @@ class AIMatcher:
         match_request: MatchRequest,
         creator: CreatorProfile
     ) -> float:
-        """Predict collaboration success rate using ML-like approach"""
+        """
+        Predict collaboration success rate using ML-like approach"""
         # Success factors
+
         success_factors = []
         
         # Compatibility contribution
         success_factors.append(compatibility_score * 0.4)
         
         # Experience contribution
+
         experience_score = min(1.0, len(creator.collaboration_history) / 3)
         success_factors.append(experience_score * 0.2)
         
         # Reputation contribution
+
         reputation_score = creator.reputation_score / 5.0
         success_factors.append(reputation_score * 0.2)
         
         # Engagement rate contribution (proxy for creator quality)
+
         engagement_score = min(1.0, creator.engagement_rate / 0.08)  # 8% is excellent
         success_factors.append(engagement_score * 0.1)
         
         # Budget alignment contribution
+
         budget_alignment = await self._calculate_financial_alignment(match_request, creator)
         success_factors.append(budget_alignment * 0.1)
+
+
         
         predicted_success = sum(success_factors)
         
         # Add some randomness to simulate ML prediction uncertainty
         import random
+
         uncertainty = random.uniform(-0.05, 0.05)
+
         
         return max(0.0, min(1.0, predicted_success + uncertainty))
     
@@ -721,9 +845,12 @@ class AIMatcher:
         match_request: MatchRequest,
         creator: CreatorProfile
     ) -> str:
-        """Recommend optimal collaboration format"""
+        """
+        Recommend optimal collaboration format"""
         collaboration_type = match_request.collaboration_type
+
         creator_type = creator.creator_type
+
         
         format_recommendations = {
             (CollaborationType.CONTENT_CREATION, CreatorType.MUSICIAN): "Joint music production and cross-platform release",
@@ -733,11 +860,13 @@ class AIMatcher:
             (CollaborationType.GUEST_APPEARANCE, CreatorType.PODCASTER): "Guest appearance on podcast with reciprocal feature",
             (CollaborationType.REMIX_COLLABORATION, CreatorType.MUSICIAN): "Remix exchange with dual release strategy"
         }
+
         
         recommendation = format_recommendations.get(
             (collaboration_type, creator_type),
             f"Collaborative {collaboration_type.value} project optimized for both creators' strengths"
         )
+
         
         return recommendation
     
@@ -750,6 +879,7 @@ class AIMatcher:
         challenges = []
         
         # Budget challenges
+
         budget_alignment = await self._calculate_financial_alignment(match_request, creator)
         if budget_alignment < 0.7:
             challenges.append("Budget alignment may require negotiation")
@@ -768,12 +898,16 @@ class AIMatcher:
             challenges.append("Limited availability may affect project timeline")
         
         # Skill gap challenges
+
         required_skills = set(match_request.required_skills)
+
         creator_skills = set(creator.skills)
+
         missing_skills = required_skills - creator_skills
         
         if missing_skills:
             challenges.append(f"Skill development needed in: {', '.join(missing_skills)}")
+
         
         return challenges[:5]  # Limit to top 5 challenges
     
@@ -786,6 +920,7 @@ class AIMatcher:
         success_factors = []
         
         # Strong skill alignment
+
         skill_alignment = await self._calculate_skill_alignment(match_request, creator)
         if skill_alignment['skill_coverage'] > 0.8:
             success_factors.append("Excellent skill alignment ensures project capability")
@@ -809,6 +944,7 @@ class AIMatcher:
         # Audience size
         if creator.audience_size > 50000:
             success_factors.append("Large audience provides significant reach potential")
+
         
         return success_factors[:5]  # Limit to top 5 factors
     
@@ -826,6 +962,7 @@ class AIMatcher:
         ]
         
         # Budget-related steps
+
         budget_alignment = await self._calculate_financial_alignment(match_request, creator)
         if budget_alignment < 0.8:
             next_steps.append("Negotiate budget and payment terms")
@@ -838,8 +975,10 @@ class AIMatcher:
             next_steps.append("Discuss music rights and distribution strategy")
         elif creator.creator_type == CreatorType.VIDEO_CREATOR:
             next_steps.append("Plan video production schedule and equipment sharing")
+
         
         next_steps.append("Begin collaboration with clearly defined milestones")
+
         
         return next_steps[:8]  # Limit to 8 steps
     
@@ -851,16 +990,23 @@ class AIMatcher:
     ) -> Dict[str, Any]:
         """Generate match statistics"""
         total_creators = len(creator_pool)
+
         qualified_matches = len(match_results)
+
         
         if match_results:
             avg_compatibility = sum(match.compatibility_score for match in match_results) / len(match_results)
+
+
             max_compatibility = max(match.compatibility_score for match in match_results)
+
+
             min_compatibility = min(match.compatibility_score for match in match_results)
         else:
             avg_compatibility = max_compatibility = min_compatibility = 0.0
         
         # Creator type distribution
+
         creator_type_dist = {}
         for creator in creator_pool:
             creator_type = creator.creator_type.value
@@ -882,37 +1028,49 @@ class AIMatcher:
         match_request: MatchRequest,
         creator_pool: List[CreatorProfile]
     ) -> Dict[str, Any]:
-        """Generate market insights for the collaboration request"""
+        """
+        Generate market insights for the collaboration request"""
         # Calculate market metrics
+
         total_creators = len(creator_pool)
+
         desired_types = match_request.desired_creator_types
         
         # Availability by creator type
+
         type_availability = {}
         for creator_type in desired_types:
             count = sum(1 for creator in creator_pool if creator.creator_type == creator_type)
+
             type_availability[creator_type.value] = count
         
         # Budget analysis
         budget_min, budget_max = match_request.budget_range
+
         budget_compatible_creators = 0
+
         avg_creator_rate = 0
         
         for creator in creator_pool:
             creator_rate = creator.pricing.get('collaboration_rate', 1000)
+
             avg_creator_rate += creator_rate
             
             if creator_rate <= budget_max:
                 budget_compatible_creators += 1
+
         
         avg_creator_rate = avg_creator_rate / max(total_creators, 1)
         
         # Skills availability
+
         required_skills = match_request.required_skills
+
         skill_availability = {}
         
         for skill in required_skills:
             count = sum(1 for creator in creator_pool if skill in creator.skills)
+
             skill_availability[skill] = {
                 'available_creators': count,
                 'availability_rate': round(count / max(total_creators, 1), 3)
@@ -933,7 +1091,8 @@ class AIMatcher:
         match_request: MatchRequest,
         match_results: List[MatchResult]
     ) -> List[str]:
-        """Generate optimization suggestions for better matches"""
+        """
+        Generate optimization suggestions for better matches"""
         suggestions = []
         
         if not match_results:
@@ -943,23 +1102,29 @@ class AIMatcher:
                 "Broaden geographic preferences to include remote collaboration",
                 "Reduce required skills to essential items only"
             ])
+
             return suggestions
         
         # Analyze match quality
         if match_results:
             avg_score = sum(match.compatibility_score for match in match_results) / len(match_results)
+
             
             if avg_score < 0.7:
                 suggestions.append("Consider adjusting requirements for higher compatibility scores")
             
             # Budget analysis
+
             financial_scores = [match.financial_alignment for match in match_results]
+
             avg_financial = sum(financial_scores) / len(financial_scores)
+
             
             if avg_financial < 0.6:
                 suggestions.append("Consider increasing budget range for better creator options")
             
             # Skill analysis
+
             skill_issues = 0
             for match in match_results[:5]:  # Check top 5 matches
                 if any('Skill development needed' in challenge for challenge in match.potential_challenges):
@@ -969,8 +1134,10 @@ class AIMatcher:
                 suggestions.append("Consider prioritizing essential skills over nice-to-have skills")
             
             # Location analysis
+
             location_issues = sum(1 for match in match_results[:5] 
                                  if any('Geographic distance' in challenge for challenge in match.potential_challenges))
+
             
             if location_issues > 2:
                 suggestions.append("Consider remote collaboration options to expand creator pool")
@@ -981,9 +1148,21 @@ class AIMatcher:
             "Consider offering non-monetary benefits (exposure, portfolio pieces)",
             "Build relationships with creators before formal collaboration requests"
         ])
+
         
         return suggestions[:6]  # Limit to 6 suggestions
 
 
-# Export main class
-__all__ = ['AIMatcher', 'CreatorProfile', 'MatchRequest', 'MatchResult', 'MatchAnalysis', 'CreatorType', 'CollaborationType']
+# Export main class with alias for backward compatibility
+AICollaborationMatcher = AIMatcher  # Alias for collaboration_engine.py
+
+__all__ = [
+    'AIMatcher', 
+    'AICollaborationMatcher',  # Export alias
+    'CreatorProfile', 
+    'MatchRequest', 
+    'MatchResult', 
+    'MatchAnalysis', 
+    'CreatorType', 
+    'CollaborationType'
+]

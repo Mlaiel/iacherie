@@ -45,7 +45,8 @@ logger = logging.getLogger(__name__)
 # ========================================
 
 class DeploymentEnvironment(Enum):
-    """Environnements de déploiement"""
+    """
+        Environnements de déploiement"""
     DEVELOPMENT = "development_environment"
     STAGING = "staging_environment"
     TESTING = "testing_environment"
@@ -124,7 +125,8 @@ class DeploymentRequest:
 
 @dataclass
 class ScalingRequest:
-    """Requête de scaling"""
+    """
+        Requête de scaling"""
     scaling_id: str
     resource_type: ResourceType
     scaling_strategy: ScalingStrategy
@@ -136,7 +138,8 @@ class ScalingRequest:
 
 @dataclass
 class MonitoringRequest:
-    """Requête de monitoring"""
+    """
+        Requête de monitoring"""
     monitoring_id: str
     target_resources: List[str]
     metrics: List[MonitoringMetric]
@@ -146,7 +149,8 @@ class MonitoringRequest:
 
 @dataclass
 class PerformanceOptimizationRequest:
-    """Requête optimisation performance"""
+    """
+        Requête optimisation performance"""
     optimization_id: str
     target_performance: PerformanceLevel
     current_metrics: Dict[str, float]
@@ -156,7 +160,8 @@ class PerformanceOptimizationRequest:
 
 @dataclass
 class InfrastructureResult:
-    """Résultat infrastructure"""
+    """
+        Résultat infrastructure"""
     operation_id: str
     success: bool
     deployment_status: str
@@ -170,7 +175,8 @@ class InfrastructureResult:
 
 @dataclass
 class ResourceAllocation:
-    """Allocation ressources"""
+    """
+        Allocation ressources"""
     resource_type: ResourceType
     allocated_amount: float
     utilization_percentage: float
@@ -183,7 +189,8 @@ class ResourceAllocation:
 # ========================================
 
 class DeploymentAutomator(ABC):
-    """Interface automatiseur déploiement"""
+    """
+        Interface automatiseur déploiement"""
     
     @abstractmethod
     async def deploy_application(self, request: DeploymentRequest) -> Dict[str, Any]:
@@ -194,7 +201,8 @@ class DeploymentAutomator(ABC):
         pass
 
 class ScalabilityManager(ABC):
-    """Interface gestionnaire scalabilité"""
+    """
+        Interface gestionnaire scalabilité"""
     
     @abstractmethod
     async def scale_resources(self, request: ScalingRequest) -> Dict[str, Any]:
@@ -205,7 +213,8 @@ class ScalabilityManager(ABC):
         pass
 
 class PerformanceOptimizer(ABC):
-    """Interface optimiseur performance"""
+    """
+        Interface optimiseur performance"""
     
     @abstractmethod
     async def optimize_performance(self, request: PerformanceOptimizationRequest) -> Dict[str, Any]:
@@ -216,7 +225,8 @@ class PerformanceOptimizer(ABC):
         pass
 
 class MonitoringSystem(ABC):
-    """Interface système monitoring"""
+    """
+        Interface système monitoring"""
     
     @abstractmethod
     async def setup_monitoring(self, request: MonitoringRequest) -> Dict[str, Any]:
@@ -227,7 +237,8 @@ class MonitoringSystem(ABC):
         pass
 
 class ResourceManager(ABC):
-    """Interface gestionnaire ressources"""
+    """
+        Interface gestionnaire ressources"""
     
     @abstractmethod
     async def allocate_resources(self, requirements: Dict[ResourceType, float]) -> List[ResourceAllocation]:
@@ -278,6 +289,7 @@ class QuantumInfrastructureEngine:
         
         # Initialisation infrastructure par défaut
         self._initialize_default_infrastructure()
+
         
         logger.info("🏗️ Quantum Infrastructure Engine initialized with comprehensive infrastructure capabilities")
     
@@ -306,10 +318,14 @@ class QuantumInfrastructureEngine:
         """
         try:
             start_time = datetime.utcnow()
+
             logger.info(f"🚀 Orchestrating infrastructure for {deployment_request.application_name}")
             
             # 1. Planification et allocation ressources
+
             resource_planning = await self._plan_resource_allocation(deployment_request)
+
+
             allocated_resources = await self._allocate_infrastructure_resources(resource_planning)
             
             # 2. Déploiement automatisé
@@ -321,19 +337,23 @@ class QuantumInfrastructureEngine:
                 scaling_setup = await self._configure_auto_scaling(scaling_request)
             
             # 4. Optimisation performance
+
             performance_optimization = {}
             if optimization_request:
                 performance_optimization = await self._apply_performance_optimization(optimization_request)
             
             # 5. Setup monitoring
+
             monitoring_setup = {}
             if monitoring_request:
                 monitoring_setup = await self._setup_infrastructure_monitoring(monitoring_request)
             
             # 6. Vérification santé infrastructure
+
             health_verification = await self._verify_infrastructure_health(deployment_request.deployment_id)
             
             # 7. Application améliorations quantiques
+
             quantum_enhancements = await self._apply_quantum_infrastructure_enhancements(
                 deployment_request, allocated_resources
             )
@@ -342,19 +362,25 @@ class QuantumInfrastructureEngine:
             network_security_config = await self._configure_network_and_security(deployment_request)
             
             # 9. Mise en place disaster recovery
+
             disaster_recovery_setup = await self._setup_disaster_recovery(deployment_request)
             
             # 10. Optimisation coûts infrastructure
+
             cost_optimization = await self._optimize_infrastructure_costs(allocated_resources)
             
             # Consolidation résultats
+
             orchestration_success = (
                 deployment_result.get("success", False) and
                 health_verification.get("healthy", False) and
                 len(allocated_resources) > 0
             )
+
+
             
             execution_time = (datetime.utcnow() - start_time).total_seconds() * 1000
+
             
             result = InfrastructureResult(
                 operation_id=deployment_request.deployment_id,
@@ -375,13 +401,16 @@ class QuantumInfrastructureEngine:
             
             # Stockage état infrastructure
             await self._store_infrastructure_state(deployment_request.deployment_id, result)
+
             
             logger.info(f"✅ Infrastructure orchestration completed: {'success' if orchestration_success else 'failed'} in {execution_time:.1f}ms")
+
             
             return result
             
         except Exception as e:
             logger.error(f"❌ Failed to orchestrate infrastructure: {e}")
+
             raise
     
     # ========================================
@@ -409,37 +438,46 @@ class QuantumInfrastructureEngine:
             logger.info(f"🚀 Automating deployment: {request.application_name} to {request.environment.value}")
             
             # Sélection ou création automatiseur déploiement
+
             automator = await self._get_or_create_deployment_automator(request.environment)
             
             # Validation prérequis déploiement
+
             prerequisites_check = await self._validate_deployment_prerequisites(request)
+
             
             if not prerequisites_check.get("valid", False):
                 raise ValueError(f"Deployment prerequisites not met: {prerequisites_check.get('issues', [])}")
             
             # Préparation environnement cible
+
             environment_preparation = await self._prepare_target_environment(request)
             
             # Déploiement automatisé principal
+
             deployment_execution = await automator.deploy_application(request)
             
             # Configuration infrastructure post-déploiement
+
             post_deployment_config = await self._configure_post_deployment_infrastructure(
                 request, deployment_execution
             )
             
             # Vérification déploiement
+
             deployment_verification = await self._verify_deployment_success(
                 request.deployment_id, request.health_checks
             )
             
             # Configuration load balancing
+
             load_balancing_config = await self._configure_load_balancing(request, deployment_execution)
             
             # Setup SSL/TLS et sécurité
             security_configuration = await self._configure_deployment_security(request)
             
             # Configuration backup et recovery
+
             backup_configuration = await self._configure_deployment_backup(request)
             
             # Mise à jour registre déploiements
@@ -448,6 +486,8 @@ class QuantumInfrastructureEngine:
                 "verification": deployment_verification,
                 "timestamp": datetime.utcnow().isoformat()
             })
+
+
             
             result = {
                 "deployment_id": request.deployment_id,
@@ -466,11 +506,13 @@ class QuantumInfrastructureEngine:
             }
             
             logger.info(f"✅ Deployment automation completed: {result['status']}")
+
             
             return result
             
         except Exception as e:
             logger.error(f"❌ Failed to automate deployment: {e}")
+
             raise
     
     async def rollback_deployment(
@@ -483,18 +525,28 @@ class QuantumInfrastructureEngine:
             logger.info(f"⏪ Rolling back deployment: {deployment_id}")
             
             # Récupération informations déploiement
+
             deployment_info = self.active_deployments.get(deployment_id)
+
             if not deployment_info:
                 raise ValueError(f"Deployment not found: {deployment_id}")
+
+
             
             environment = DeploymentEnvironment(deployment_info["environment"])
+
+
             automator = await self._get_or_create_deployment_automator(environment)
             
             # Exécution rollback
+
             rollback_result = await automator.rollback_deployment(deployment_id)
             
             # Vérification post-rollback
+
             rollback_verification = await self._verify_rollback_success(deployment_id)
+
+
             
             result = {
                 "deployment_id": deployment_id,
@@ -506,11 +558,13 @@ class QuantumInfrastructureEngine:
             }
             
             logger.info(f"✅ Deployment rollback completed: {result['rollback_success']}")
+
             
             return result
             
         except Exception as e:
             logger.error(f"❌ Failed to rollback deployment: {e}")
+
             raise
     
     # ========================================
@@ -541,39 +595,50 @@ class QuantumInfrastructureEngine:
             manager = await self._get_or_create_scalability_manager("intelligent")
             
             # Analyse besoins scaling actuels
+
             current_scaling_needs = await self._analyze_current_scaling_needs(request)
             
             # Prédiction besoins scaling futurs
+
             predicted_scaling_needs = await manager.predict_scaling_needs(request.target_metrics)
             
             # Exécution scaling principal
+
             scaling_execution = await manager.scale_resources(request)
             
             # Optimisation stratégie scaling
+
             scaling_strategy_optimization = await self._optimize_scaling_strategy(
                 request, current_scaling_needs, predicted_scaling_needs
             )
             
             # Configuration policies auto-scaling
+
             auto_scaling_policies = await self._configure_auto_scaling_policies(
                 request, scaling_strategy_optimization
             )
             
             # Mise en place monitoring scaling
+
             scaling_monitoring = await self._setup_scaling_monitoring(request)
             
             # Calcul efficacité scaling
+
             scaling_efficiency = await self._calculate_scaling_efficiency(
                 scaling_execution, request.target_metrics
             )
             
             # Configuration alerts scaling
+
             scaling_alerts = await self._configure_scaling_alerts(request, scaling_efficiency)
             
             # Optimisation coûts scaling
+
             scaling_cost_optimization = await self._optimize_scaling_costs(
                 scaling_execution, auto_scaling_policies
             )
+
+
             
             result = {
                 "scaling_id": request.scaling_id,
@@ -593,11 +658,13 @@ class QuantumInfrastructureEngine:
             }
             
             logger.info(f"✅ Scalability management completed with {scaling_efficiency:.2%} efficiency")
+
             
             return result
             
         except Exception as e:
             logger.error(f"❌ Failed to manage scalability: {e}")
+
             raise
     
     # ========================================
@@ -622,41 +689,53 @@ class QuantumInfrastructureEngine:
             logger.info(f"⚡ Optimizing infrastructure performance: target {request.target_performance.value}")
             
             # Sélection ou création optimiseur performance
+
             optimizer = await self._get_or_create_performance_optimizer(request.target_performance)
             
             # Analyse performance actuelle
+
             current_performance_analysis = await self._analyze_current_performance(request.current_metrics)
             
             # Identification goulots d'étranglement
+
             performance_bottlenecks = await optimizer.analyze_performance_bottlenecks(request.current_metrics)
             
             # Optimisation performance principale
+
             performance_optimization = await optimizer.optimize_performance(request)
             
             # Optimisation cache et mémoire
+
             cache_memory_optimization = await self._optimize_cache_and_memory(request)
             
             # Optimisation réseau et I/O
             network_io_optimization = await self._optimize_network_and_io(request)
             
             # Optimisation base de données
+
             database_optimization = await self._optimize_database_performance(request)
             
             # Optimisation algorithmes et code
+
             algorithm_code_optimization = await self._optimize_algorithms_and_code(request)
             
             # Application améliorations quantiques
+
             quantum_performance_enhancement = await self._apply_quantum_performance_enhancements(
                 request, performance_optimization
             )
             
             # Validation gains performance
+
             performance_validation = await self._validate_performance_improvements(
                 request.current_metrics, performance_optimization
             )
             
             # Configuration monitoring performance
+
             performance_monitoring_setup = await self._setup_performance_monitoring(request)
+
+
             
             result = {
                 "optimization_id": request.optimization_id,
@@ -682,13 +761,16 @@ class QuantumInfrastructureEngine:
                 "timestamp": datetime.utcnow(),
                 "performance_improvement": performance_validation.get("improvement_percentage", 0)
             })
+
             
             logger.info(f"✅ Performance optimization completed: {performance_validation.get('improvement_percentage', 0):.1f}% improvement")
+
             
             return result
             
         except Exception as e:
             logger.error(f"❌ Failed to optimize infrastructure performance: {e}")
+
             raise
     
     # ========================================
@@ -716,34 +798,44 @@ class QuantumInfrastructureEngine:
             logger.info(f"📊 Setting up monitoring for {len(request.target_resources)} resources")
             
             # Sélection ou création système monitoring
+
             monitoring_system = await self._get_or_create_monitoring_system("comprehensive")
             
             # Setup monitoring principal
+
             monitoring_setup = await monitoring_system.setup_monitoring(request)
             
             # Configuration collecte métriques
+
             metrics_collection_config = await self._configure_metrics_collection(request)
             
             # Setup alerting intelligent
+
             intelligent_alerting = await self._setup_intelligent_alerting(request)
             
             # Configuration dashboards
+
             dashboard_configuration = await self._configure_monitoring_dashboards(request)
             
             # Setup logs aggregation
+
             logs_aggregation_setup = await self._setup_logs_aggregation(request)
             
             # Configuration tracing distribué
             distributed_tracing_config = await self._configure_distributed_tracing(request)
             
             # Setup anomaly detection
+
             anomaly_detection_setup = await self._setup_anomaly_detection_monitoring(request)
             
             # Configuration reporting automatisé
             automated_reporting_config = await self._configure_automated_reporting(request)
             
             # Validation setup monitoring
+
             monitoring_validation = await self._validate_monitoring_setup(request.monitoring_id)
+
+
             
             result = {
                 "monitoring_id": request.monitoring_id,
@@ -762,13 +854,16 @@ class QuantumInfrastructureEngine:
             
             # Démarrage collecte monitoring
             await self._start_monitoring_collection(request.monitoring_id, request.target_resources)
+
             
             logger.info(f"✅ Monitoring setup completed for {len(request.target_resources)} resources")
+
             
             return result
             
         except Exception as e:
             logger.error(f"❌ Failed to setup monitoring: {e}")
+
             raise
     
     async def collect_real_time_metrics(
@@ -780,23 +875,30 @@ class QuantumInfrastructureEngine:
         try:
             if metrics is None:
                 metrics = list(MonitoringMetric)
+
             
             logger.info(f"📈 Collecting real-time metrics for {len(resource_ids)} resources")
             
             # Sélection système monitoring
+
             monitoring_system = await self._get_or_create_monitoring_system("realtime")
             
             # Collecte métriques
+
             collected_metrics = await monitoring_system.collect_metrics(resource_ids)
             
             # Analyse tendances temps réel
+
             real_time_trends = await self._analyze_real_time_trends(collected_metrics)
             
             # Détection anomalies
+
             anomaly_detection = await self._detect_real_time_anomalies(collected_metrics)
             
             # Calcul scores santé
             health_scores = await self._calculate_infrastructure_health_scores(collected_metrics)
+
+
             
             result = {
                 "collection_timestamp": datetime.utcnow().isoformat(),
@@ -815,6 +917,7 @@ class QuantumInfrastructureEngine:
             
         except Exception as e:
             logger.error(f"❌ Failed to collect real-time metrics: {e}")
+
             raise
     
     # ========================================
@@ -828,10 +931,12 @@ class QuantumInfrastructureEngine:
         return self.deployment_automators[environment]
     
     async def _create_deployment_automator(self, environment: DeploymentEnvironment):
-        """Création automatiseur déploiement"""
+        """
+        Création automatiseur déploiement"""
         class MockDeploymentAutomator(DeploymentAutomator):
             async def deploy_application(self, request: DeploymentRequest) -> Dict[str, Any]:
                 # Simulation déploiement
+
                 deployment_success = np.random.random() > 0.1  # 90% success rate
                 
                 return {
@@ -846,6 +951,7 @@ class QuantumInfrastructureEngine:
             
             async def rollback_deployment(self, deployment_id: str) -> Dict[str, Any]:
                 # Simulation rollback
+
                 rollback_success = np.random.random() > 0.05  # 95% success rate
                 
                 return {
@@ -869,6 +975,7 @@ class QuantumInfrastructureEngine:
         # Vérification configuration
         if not request.configuration:
             issues.append("No configuration provided")
+
         
         return {
             "valid": len(issues) == 0,
@@ -887,16 +994,22 @@ class QuantumInfrastructureEngine:
         return self.scalability_managers[manager_type]
     
     async def _create_scalability_manager(self, manager_type: str):
-        """Création gestionnaire scalabilité"""
+        """
+        Création gestionnaire scalabilité"""
         class MockScalabilityManager(ScalabilityManager):
             async def scale_resources(self, request: ScalingRequest) -> Dict[str, Any]:
                 # Simulation scaling
+
                 scaling_success = np.random.random() > 0.05  # 95% success rate
+
                 
                 current_instances = np.random.randint(request.min_instances, request.max_instances + 1)
+
+
                 target_instances = max(request.min_instances, 
                                      min(request.max_instances, 
                                          current_instances + np.random.randint(-2, 3)))
+
                 
                 return {
                     "success": scaling_success,
@@ -911,8 +1024,13 @@ class QuantumInfrastructureEngine:
             
             async def predict_scaling_needs(self, metrics: Dict[str, float]) -> Dict[str, Any]:
                 # Prédiction besoins scaling
+
                 cpu_usage = metrics.get("cpu_utilization", 0.5)
+
+
                 memory_usage = metrics.get("memory_usage", 0.5)
+
+
                 
                 scaling_recommendation = "scale_up" if max(cpu_usage, memory_usage) > 0.8 else "scale_down" if max(cpu_usage, memory_usage) < 0.3 else "maintain"
                 
@@ -948,11 +1066,14 @@ class QuantumInfrastructureEngine:
         return self.performance_optimizers[performance_level]
     
     async def _create_performance_optimizer(self, performance_level: PerformanceLevel):
-        """Création optimiseur performance"""
+        """
+        Création optimiseur performance"""
         class MockPerformanceOptimizer(PerformanceOptimizer):
             async def optimize_performance(self, request: PerformanceOptimizationRequest) -> Dict[str, Any]:
                 # Simulation optimisation performance
+
                 optimization_success = np.random.random() > 0.05  # 95% success rate
+
                 
                 performance_improvement = {
                     PerformanceLevel.BASELINE: np.random.uniform(0.1, 0.2),
@@ -961,6 +1082,7 @@ class QuantumInfrastructureEngine:
                     PerformanceLevel.ULTRA_PERFORMANCE: np.random.uniform(0.6, 0.8),
                     PerformanceLevel.QUANTUM_PERFORMANCE: np.random.uniform(0.8, 1.2)
                 }.get(request.target_performance, 0.3)
+
                 
                 return {
                     "success": optimization_success,
@@ -980,12 +1102,16 @@ class QuantumInfrastructureEngine:
                 
                 if metrics.get("cpu_utilization", 0) > 0.8:
                     bottlenecks.append("cpu_bottleneck")
+
                 if metrics.get("memory_usage", 0) > 0.85:
                     bottlenecks.append("memory_bottleneck")
+
                 if metrics.get("disk_usage", 0) > 0.9:
                     bottlenecks.append("disk_bottleneck")
+
                 if metrics.get("response_time", 0) > 2.0:
                     bottlenecks.append("response_time_bottleneck")
+
                 
                 return bottlenecks
         
@@ -1002,7 +1128,8 @@ class QuantumInfrastructureEngine:
         return self.monitoring_systems[system_type]
     
     async def _create_monitoring_system(self, system_type: str):
-        """Création système monitoring"""
+        """
+        Création système monitoring"""
         class MockMonitoringSystem(MonitoringSystem):
             async def setup_monitoring(self, request: MonitoringRequest) -> Dict[str, Any]:
                 return {
@@ -1079,10 +1206,12 @@ class QuantumInfrastructureEngine:
         # Limitation taille stockage
         if len(self.active_deployments) > 1000:
             # Suppression déploiements les plus anciens
+
             sorted_deployments = sorted(
                 self.active_deployments.items(),
                 key=lambda x: x[1]["timestamp"]
             )
+
             self.active_deployments = dict(sorted_deployments[-500:])
 
 
@@ -1095,28 +1224,36 @@ class QuantumDeploymentAutomation(QuantumInfrastructureEngine):
     pass
 
 class QuantumScalabilityManager(QuantumInfrastructureEngine):
-    """Alias pour compatibilité - Scalability Manager"""
+    """
+        Alias pour compatibilité - Scalability Manager"""
     pass
 
 class QuantumPerformanceOptimizer(QuantumInfrastructureEngine):
-    """Alias pour compatibilité - Performance Optimizer"""
+    """
+        Alias pour compatibilité - Performance Optimizer"""
     pass
 
 class QuantumMonitoringSystem(QuantumInfrastructureEngine):
-    """Alias pour compatibilité - Monitoring System"""
+    """
+        Alias pour compatibilité - Monitoring System"""
     pass
 
 class QuantumInfrastructureOrchestrator(QuantumInfrastructureEngine):
-    """Alias pour compatibilité - Infrastructure Orchestrator"""
+    """
+        Alias pour compatibilité - Infrastructure Orchestrator"""
     pass
 
 class QuantumResourceManager(QuantumInfrastructureEngine):
-    """Alias pour compatibilité - Resource Manager"""
+    """
+        Alias pour compatibilité - Resource Manager"""
     pass
 
 # ========================================
 # EXPORT INTERFACES
 # ========================================
+
+# Enterprise aliases
+InfrastructureRequest = DeploymentRequest
 
 __all__ = [
     "QuantumInfrastructureEngine",
@@ -1127,6 +1264,7 @@ __all__ = [
     "QuantumInfrastructureOrchestrator",
     "QuantumResourceManager",
     "DeploymentRequest",
+    "InfrastructureRequest",  # Alias
     "ScalingRequest",
     "MonitoringRequest",
     "PerformanceOptimizationRequest",

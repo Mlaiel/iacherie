@@ -30,7 +30,8 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class DistributionStrategy(Enum):
-    """Distribution strategies for mobile platforms"""
+    """
+        Distribution strategies for mobile platforms"""
     SIMULTANEOUS = "simultaneous"
     SEQUENTIAL = "sequential"
     PRIORITY_BASED = "priority_based"
@@ -127,7 +128,8 @@ class PlatformDistributionResult:
 
 @dataclass
 class MobileDistributionRequest:
-    """Mobile distribution request"""
+    """
+        Mobile distribution request"""
     content_id: str
     creator_id: str
     target_platforms: List[MobilePlatformType]
@@ -139,7 +141,8 @@ class MobileDistributionRequest:
 
 @dataclass
 class MobileDistributionResult:
-    """Mobile distribution result"""
+    """
+        Mobile distribution result"""
     distribution_id: str
     content_id: str
     overall_status: DistributionStatus
@@ -151,7 +154,8 @@ class MobileDistributionResult:
 
 @dataclass
 class MobilePlatformRequest:
-    """Mobile platform adaptation request"""
+    """
+        Mobile platform adaptation request"""
     content_id: str
     platform: MobilePlatformType
     device_categories: List[MobileDeviceCategory]
@@ -161,7 +165,8 @@ class MobilePlatformRequest:
 
 @dataclass
 class PlatformAdaptationResult:
-    """Platform adaptation result"""
+    """
+        Platform adaptation result"""
     adaptation_id: str
     platform: MobilePlatformType
     adaptations_applied: List[MobileAdaptationType]
@@ -171,8 +176,41 @@ class PlatformAdaptationResult:
     mobile_compatibility: Dict[MobileDeviceCategory, float]
 
 @dataclass
+class PlatformAdaptationRequest:
+    """Platform Adaptation Request - Requête d'adaptation multi-plateforme"""
+    content_id: str
+    creator_id: str
+    target_platforms: List[MobilePlatformType]
+    adaptation_types: List[MobileAdaptationType]
+    mobile_optimized: bool = True
+    quality_priority: str = "balanced"  # quality, speed, balanced
+
+@dataclass
+class ProjectManagementRequest:
+    """Project Management Request - Requête de gestion de projet mobile"""
+    creator_id: str
+    project_name: str
+    project_description: str
+    target_platforms: List[MobilePlatformType]
+    mobile_optimized: bool = True
+    team_members: List[str] = field(default_factory=list)
+
+@dataclass
+class ProjectManagementResult:
+    """Project Management Result - Résultat de gestion de projet"""
+    project_id: str
+    project_name: str
+    creator_id: str
+    status: str
+    mobile_optimized: bool
+    team_size: int = 0
+    tasks_count: int = 0
+    completion_percentage: float = 0.0
+
+@dataclass
 class ProjectTask:
-    """Project task structure"""
+    """
+        Project task structure"""
     task_id: str
     title: str
     description: str
@@ -187,7 +225,8 @@ class ProjectTask:
 
 @dataclass
 class ProjectMilestone:
-    """Project milestone structure"""
+    """
+        Project milestone structure"""
     milestone_id: str
     title: str
     description: str
@@ -210,7 +249,8 @@ class MobileProjectRequest:
 
 @dataclass
 class MobileProjectResult:
-    """Mobile project result"""
+    """
+        Mobile project result"""
     project_id: str
     project_status: ProjectStatus
     mobile_optimization_score: float
@@ -219,10 +259,12 @@ class MobileProjectResult:
     distribution_readiness: float
 
 class MobileDistributionEngine:
-    """Unified mobile distribution engine consolidating distribution, platform adaptation, and project management"""
+    """
+        Unified mobile distribution engine consolidating distribution, platform adaptation, and project management"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize mobile distribution engine with comprehensive capabilities"""
+        """
+        Initialize mobile distribution engine with comprehensive capabilities"""
         self.config = config or {}
         self.distribution_manager = MobileDistributionManager(self.config)
         self.platform_adapter = MobilePlatformAdapter(self.config)
@@ -256,11 +298,13 @@ class MobileDistributionEngine:
             start_time = datetime.utcnow()
             
             # Create or get project for tracking
+
             project_result = await self.project_manager.create_distribution_project(
                 distribution_request, distribution_id
             )
             
             # Adapt content for each target platform
+
             platform_adaptations = {}
             for platform in distribution_request.target_platforms:
                 adaptation_request = MobilePlatformRequest(
@@ -270,23 +314,29 @@ class MobileDistributionEngine:
                     optimization_level=ContentOptimizationLevel.ADVANCED,
                     mobile_specific=distribution_request.mobile_optimization
                 )
+
+
                 
                 adaptation_result = await self.platform_adapter.adapt_content_for_platform(
                     adaptation_request
                 )
+
                 platform_adaptations[platform] = adaptation_result
             
             # Execute distribution across platforms
+
             distribution_result = await self.distribution_manager.execute_distribution(
                 distribution_request, platform_adaptations, distribution_id
             )
             
             # Calculate mobile optimization score
+
             mobile_optimization_score = self._calculate_mobile_optimization_score(
                 distribution_result, platform_adaptations
             )
             
             # Create comprehensive result
+
             comprehensive_result = MobileDistributionResult(
                 distribution_id=distribution_id,
                 content_id=distribution_request.content_id,
@@ -311,11 +361,13 @@ class MobileDistributionEngine:
             # Update metrics
             self.distribution_metrics["distributions_executed"] += 1
             self._update_distribution_metrics(comprehensive_result)
+
             
             return comprehensive_result
             
         except Exception as e:
             logger.error(f"Mobile content distribution failed: {e}")
+
             raise
     
     async def schedule_distribution(self, distribution_request: MobileDistributionRequest, 
@@ -324,6 +376,7 @@ class MobileDistributionEngine:
         scheduled_id = f"scheduled_dist_{uuid.uuid4().hex[:8]}"
         
         # Create scheduled distribution project
+
         project_request = MobileProjectRequest(
             creator_id=distribution_request.creator_id,
             project_name=f"Scheduled Distribution - {distribution_request.content_id}",
@@ -332,8 +385,11 @@ class MobileDistributionEngine:
             project_timeline={"scheduled_distribution": schedule_time},
             mobile_focused=distribution_request.mobile_optimization
         )
+
+
         
         project_result = await self.project_manager.create_mobile_project(project_request)
+
         
         return scheduled_id
     
@@ -341,10 +397,12 @@ class MobileDistributionEngine:
         """Get comprehensive distribution status"""
         if distribution_id not in self.active_distributions:
             return {"error": "Distribution not found", "distribution_id": distribution_id}
+
         
         distribution = self.active_distributions[distribution_id]
         
         # Get real-time platform performance
+
         platform_status = {}
         for platform_result in distribution.platform_results:
             platform_status[platform_result.platform.value] = {
@@ -366,7 +424,8 @@ class MobileDistributionEngine:
         return await self.platform_adapter.optimize_platform_performance(platform)
     
     async def get_distribution_analytics(self) -> Dict[str, Any]:
-        """Get comprehensive distribution analytics"""
+        """
+        Get comprehensive distribution analytics"""
         return {
             "distribution_metrics": self.distribution_metrics,
             "platform_performance": await self._get_platform_performance_analytics(),
@@ -378,17 +437,23 @@ class MobileDistributionEngine:
                                            platform_adaptations: Dict[MobilePlatformType, Any]) -> float:
         """Calculate mobile optimization score for distribution"""
         # Platform optimization scores
+
         platform_scores = []
         for platform, adaptation in platform_adaptations.items():
             platform_scores.append(adaptation.adaptation_score)
+
+
         
         avg_platform_score = sum(platform_scores) / len(platform_scores) if platform_scores else 0.0
         
         # Distribution success rate
+
         success_rate = len([r for r in distribution_result["platform_results"] if r.status == DistributionStatus.COMPLETED]) / len(distribution_result["platform_results"])
         
         # Mobile adaptations applied
+
         total_adaptations = sum(len(adaptation.adaptations_applied) for adaptation in platform_adaptations.values())
+
         adaptation_score = min(1.0, total_adaptations / (len(platform_adaptations) * 3))  # Assuming 3 is optimal
         
         return (avg_platform_score * 0.4 + success_rate * 0.4 + adaptation_score * 0.2)
@@ -405,6 +470,7 @@ class MobileDistributionEngine:
         # Update mobile optimization success rate
         if distribution_result.mobile_optimization_score > 0.8:
             current_rate = self.distribution_metrics["mobile_optimization_success_rate"]
+
             total_distributions = self.distribution_metrics["distributions_executed"]
             
             self.distribution_metrics["mobile_optimization_success_rate"] = (
@@ -414,7 +480,10 @@ class MobileDistributionEngine:
         # Update average distribution time
         if distribution_result.completed_at and distribution_result.started_at:
             duration = (distribution_result.completed_at - distribution_result.started_at).total_seconds()
+
+
             current_avg = self.distribution_metrics["average_distribution_time"]
+
             total_distributions = self.distribution_metrics["distributions_executed"]
             
             self.distribution_metrics["average_distribution_time"] = (
@@ -474,10 +543,12 @@ class MobileDistributionManager:
     async def execute_distribution(self, request: MobileDistributionRequest, 
                                  platform_adaptations: Dict[MobilePlatformType, Any], 
                                  distribution_id: str) -> Dict[str, Any]:
-        """Execute distribution across multiple platforms"""
+        """
+        Execute distribution across multiple platforms"""
         platform_results = []
         
         # Determine distribution order based on strategy
+
         distribution_order = self._determine_distribution_order(request, platform_adaptations)
         
         # Execute distribution based on strategy
@@ -499,8 +570,11 @@ class MobileDistributionManager:
             )
         
         # Determine overall status
+
         successful_distributions = len([r for r in platform_results if r.status == DistributionStatus.COMPLETED])
+
         total_distributions = len(platform_results)
+
         
         if successful_distributions == total_distributions:
             overall_status = DistributionStatus.COMPLETED
@@ -519,9 +593,11 @@ class MobileDistributionManager:
                                     platform_adaptations: Dict[MobilePlatformType, Any]) -> List[MobilePlatformType]:
         """Determine optimal distribution order"""
         platforms = list(request.target_platforms)
+
         
         if request.distribution_strategy == DistributionStrategy.PRIORITY_BASED:
             # Order by platform popularity for mobile
+
             mobile_priority = {
                 MobilePlatformType.TIKTOK: 1,
                 MobilePlatformType.INSTAGRAM: 2,
@@ -533,34 +609,41 @@ class MobileDistributionManager:
         elif request.distribution_strategy == DistributionStrategy.PERFORMANCE_BASED:
             # Order by adaptation scores
             platforms.sort(key=lambda p: platform_adaptations.get(p, {}).adaptation_score or 0, reverse=True)
+
         
         return platforms
     
     async def _execute_simultaneous_distribution(self, request: MobileDistributionRequest,
                                                platform_adaptations: Dict[MobilePlatformType, Any],
                                                distribution_order: List[MobilePlatformType]) -> List[PlatformDistributionResult]:
-        """Execute simultaneous distribution to all platforms"""
+        """
+        Execute simultaneous distribution to all platforms"""
         tasks = []
         for platform in distribution_order:
             task = asyncio.create_task(
                 self._distribute_to_platform(platform, request, platform_adaptations[platform])
             )
+
             tasks.append(task)
+
         
         return await asyncio.gather(*tasks)
     
     async def _execute_sequential_distribution(self, request: MobileDistributionRequest,
                                              platform_adaptations: Dict[MobilePlatformType, Any],
                                              distribution_order: List[MobilePlatformType]) -> List[PlatformDistributionResult]:
-        """Execute sequential distribution to platforms"""
+        """
+        Execute sequential distribution to platforms"""
         results = []
         for platform in distribution_order:
             result = await self._distribute_to_platform(platform, request, platform_adaptations[platform])
+
             results.append(result)
             
             # Add delay between distributions if needed
             if request.distribution_settings.get("sequential_delay", 0) > 0:
                 await asyncio.sleep(request.distribution_settings["sequential_delay"])
+
         
         return results
     
@@ -569,33 +652,43 @@ class MobileDistributionManager:
                                                distribution_order: List[MobilePlatformType]) -> List[PlatformDistributionResult]:
         """Execute mobile-first distribution strategy"""
         # Prioritize mobile-native platforms
+
         mobile_native = [MobilePlatformType.TIKTOK, MobilePlatformType.INSTAGRAM, MobilePlatformType.SNAPCHAT]
+
         mobile_platforms = [p for p in distribution_order if p in mobile_native]
+
         other_platforms = [p for p in distribution_order if p not in mobile_native]
         
         # Distribute to mobile platforms first
+
         mobile_results = []
         for platform in mobile_platforms:
             result = await self._distribute_to_platform(platform, request, platform_adaptations[platform])
+
             mobile_results.append(result)
         
         # Then distribute to other platforms
+
         other_results = []
         for platform in other_platforms:
             result = await self._distribute_to_platform(platform, request, platform_adaptations[platform])
+
             other_results.append(result)
+
         
         return mobile_results + other_results
     
     async def _execute_default_distribution(self, request: MobileDistributionRequest,
                                           platform_adaptations: Dict[MobilePlatformType, Any],
                                           distribution_order: List[MobilePlatformType]) -> List[PlatformDistributionResult]:
-        """Execute default distribution strategy"""
+        """
+        Execute default distribution strategy"""
         return await self._execute_simultaneous_distribution(request, platform_adaptations, distribution_order)
     
     async def _distribute_to_platform(self, platform: MobilePlatformType, request: MobileDistributionRequest,
                                      adaptation: Any) -> PlatformDistributionResult:
-        """Distribute content to specific platform"""
+        """
+        Distribute content to specific platform"""
         try:
             # Simulate platform-specific distribution
             await asyncio.sleep(0.5)  # Simulate distribution time
@@ -613,9 +706,11 @@ class MobileDistributionManager:
                 },
                 distribution_url=f"https://{platform.value}.com/content/{request.content_id}"
             )
+
             
         except Exception as e:
             logger.error(f"Distribution to {platform.value} failed: {e}")
+
             return PlatformDistributionResult(
                 platform=platform,
                 status=DistributionStatus.FAILED,
@@ -635,42 +730,54 @@ class MobilePlatformAdapter:
         self.platform_specifications = {}
         self.adaptation_cache = {}
         self._initialize_platform_specifications()
+
         
     async def adapt_content_for_platform(self, request: MobilePlatformRequest) -> PlatformAdaptationResult:
-        """Adapt content for specific mobile platform"""
+        """
+        Adapt content for specific mobile platform"""
         adaptation_id = f"adapt_{uuid.uuid4().hex[:8]}"
         
         # Get platform specifications
+
         platform_spec = self.platform_specifications.get(request.platform, {})
         
         # Determine required adaptations
+
         required_adaptations = self._determine_required_adaptations(request, platform_spec)
         
         # Apply adaptations
+
         adaptations_applied = []
+
         output_variants = {}
         
         for adaptation_type in required_adaptations:
             try:
                 adaptation_result = await self._apply_adaptation(adaptation_type, request, platform_spec)
+
                 adaptations_applied.append(adaptation_type)
+
                 output_variants[adaptation_type.value] = adaptation_result
                 
             except Exception as e:
                 logger.error(f"Adaptation {adaptation_type.value} failed: {e}")
         
         # Calculate mobile compatibility for device categories
+
         mobile_compatibility = {}
         for device_category in request.device_categories:
             compatibility = self._calculate_device_compatibility(
                 device_category, adaptations_applied, platform_spec
             )
+
             mobile_compatibility[device_category] = compatibility
         
         # Calculate overall adaptation score
+
         adaptation_score = self._calculate_adaptation_score(
             adaptations_applied, mobile_compatibility, request.optimization_level
         )
+
         
         return PlatformAdaptationResult(
             adaptation_id=adaptation_id,
@@ -685,6 +792,8 @@ class MobilePlatformAdapter:
     async def optimize_platform_performance(self, platform: MobilePlatformType) -> Dict[str, Any]:
         """Optimize performance for specific platform"""
         platform_spec = self.platform_specifications.get(platform, {})
+
+
         
         optimizations = {
             "format_optimization": "applied",
@@ -705,6 +814,7 @@ class MobilePlatformAdapter:
                 "story_format_optimization": "applied",
                 "mobile_hashtag_optimization": "applied"
             })
+
         
         return {
             "platform": platform.value,
@@ -770,6 +880,7 @@ class MobilePlatformAdapter:
         # Quality adaptation based on optimization level
         if request.optimization_level in [ContentOptimizationLevel.ADVANCED, ContentOptimizationLevel.PREMIUM]:
             adaptations.append(MobileAdaptationType.QUALITY_ADAPTATION)
+
         
         return adaptations
     
@@ -795,6 +906,7 @@ class MobilePlatformAdapter:
                                      platform_spec: Dict[str, Any]) -> Dict[str, Any]:
         """Apply format conversion adaptation"""
         preferred_formats = platform_spec.get("preferred_formats", ["mp4"])
+
         
         return {
             "status": "applied",
@@ -807,6 +919,7 @@ class MobilePlatformAdapter:
                                            platform_spec: Dict[str, Any]) -> Dict[str, Any]:
         """Apply aspect ratio adjustment"""
         target_aspect_ratio = platform_spec.get("preferred_aspect_ratio", "16:9")
+
         
         return {
             "status": "applied",
@@ -862,16 +975,20 @@ class MobilePlatformAdapter:
         base_score = 0.7
         
         # Bonus for mobile-specific adaptations
+
         mobile_adaptations = [
             MobileAdaptationType.RESOLUTION_OPTIMIZATION,
             MobileAdaptationType.COMPRESSION_OPTIMIZATION,
             MobileAdaptationType.ASPECT_RATIO_ADJUSTMENT
         ]
+
         
         mobile_adaptation_count = len([a for a in adaptations_applied if a in mobile_adaptations])
+
         mobile_bonus = mobile_adaptation_count * 0.1
         
         # Device-specific adjustments
+
         device_adjustments = {
             MobileDeviceCategory.SMARTPHONE: 0.0,
             MobileDeviceCategory.TABLET: -0.05,
@@ -879,35 +996,44 @@ class MobilePlatformAdapter:
             MobileDeviceCategory.SMARTWATCH: -0.15,
             MobileDeviceCategory.SMART_TV: -0.10
         }
+
         
         device_adjustment = device_adjustments.get(device_category, 0.0)
+
         
         return min(1.0, base_score + mobile_bonus + device_adjustment)
     
     def _calculate_adaptation_score(self, adaptations_applied: List[MobileAdaptationType],
                                   mobile_compatibility: Dict[MobileDeviceCategory, float],
                                   optimization_level: ContentOptimizationLevel) -> float:
-        """Calculate overall adaptation score"""
+        """
+        Calculate overall adaptation score"""
         # Base score from adaptations applied
+
         adaptation_score = len(adaptations_applied) * 0.15
         
         # Average mobile compatibility
+
         compatibility_score = sum(mobile_compatibility.values()) / len(mobile_compatibility) if mobile_compatibility else 0.0
         
         # Optimization level bonus
+
         optimization_bonuses = {
             ContentOptimizationLevel.BASIC: 0.0,
             ContentOptimizationLevel.STANDARD: 0.1,
             ContentOptimizationLevel.ADVANCED: 0.2,
             ContentOptimizationLevel.PREMIUM: 0.3
         }
+
         optimization_bonus = optimization_bonuses.get(optimization_level, 0.0)
+
         
         return min(1.0, adaptation_score + compatibility_score * 0.5 + optimization_bonus)
 
 
 class MobileProjectManagement:
-    """Mobile project management with project coordination"""
+    """
+        Mobile project management with project coordination"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -915,10 +1041,12 @@ class MobileProjectManagement:
         self.project_templates = {}
         
     async def create_mobile_project(self, request: MobileProjectRequest) -> MobileProjectResult:
-        """Create mobile-focused project"""
+        """
+        Create mobile-focused project"""
         project_id = f"proj_{uuid.uuid4().hex[:8]}"
         
         # Create project structure
+
         project = {
             "project_id": project_id,
             "creator_id": request.creator_id,
@@ -934,10 +1062,12 @@ class MobileProjectManagement:
         }
         
         # Add default mobile project tasks
+
         default_tasks = await self._create_default_mobile_tasks(project_id, request)
         project["tasks"] = default_tasks
         
         # Add default milestones
+
         default_milestones = await self._create_default_milestones(project_id, request)
         project["milestones"] = default_milestones
         
@@ -971,8 +1101,11 @@ class MobileProjectManagement:
             project_timeline={"distribution_start": datetime.utcnow()},
             mobile_focused=distribution_request.mobile_optimization
         )
+
+
         
         project_result = await self.create_mobile_project(project_request)
+
         
         return {
             "project_id": project_result.project_id,

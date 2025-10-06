@@ -27,7 +27,8 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class CreatorType(Enum):
-    """Creator type enumeration"""
+    """
+        Creator type enumeration"""
     BLOGGER = "blogger"
     YOUTUBER = "youtuber"
     PODCASTER = "podcaster"
@@ -74,7 +75,8 @@ class CreatorSEOProfile:
 
 @dataclass
 class AudienceMatch:
-    """Audience SEO match result"""
+    """
+        Audience SEO match result"""
     audience_segment: AudienceSegment
     match_score: float
     seo_strategy: Dict[str, Any]
@@ -84,7 +86,8 @@ class AudienceMatch:
 
 @dataclass
 class BrandOptimization:
-    """Brand SEO optimization result"""
+    """
+        Brand SEO optimization result"""
     brand_authority_score: float
     optimization_opportunities: List[str]
     brand_keyword_strategy: Dict[str, Any]
@@ -93,7 +96,8 @@ class BrandOptimization:
 
 @dataclass
 class CreatorSEOStrategy:
-    """Creator SEO strategy"""
+    """
+        Creator SEO strategy"""
     strategy_id: str
     creator_profile: CreatorSEOProfile
     audience_matches: List[AudienceMatch]
@@ -104,7 +108,8 @@ class CreatorSEOStrategy:
     success_metrics: Dict[str, float]
 
 class CreatorSEOIntelligence:
-    """Creator SEO intelligence system"""
+    """
+        Creator SEO intelligence system"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -117,30 +122,37 @@ class CreatorSEOIntelligence:
         content_samples: List[str] = None,
         competitor_analysis: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Analyze creator SEO profile"""
+        """
+        Analyze creator SEO profile"""
         try:
             # Analyze creator niche SEO potential
+
             niche_analysis = await self._analyze_niche_seo_potential(creator_profile)
             
             # Creator content SEO analysis
+
             content_analysis = await self._analyze_creator_content_seo(
                 creator_profile, content_samples or []
             )
             
             # Audience SEO alignment
+
             audience_alignment = await self._analyze_audience_seo_alignment(
                 creator_profile
             )
             
             # Competitive positioning
+
             competitive_positioning = await self._analyze_competitive_positioning(
                 creator_profile, competitor_analysis or {}
             )
             
             # Growth opportunities
+
             growth_opportunities = await self._identify_growth_opportunities(
                 creator_profile, niche_analysis, content_analysis
             )
+
             
             return {
                 "creator_id": creator_profile.creator_id,
@@ -159,6 +171,7 @@ class CreatorSEOIntelligence:
             
         except Exception as e:
             logger.error(f"Creator SEO profile analysis failed: {str(e)}")
+
             raise
     
     async def _analyze_niche_seo_potential(
@@ -183,12 +196,16 @@ class CreatorSEOIntelligence:
     ) -> Dict[str, Any]:
         """Analyze creator content for SEO"""
         total_score = 0.0
+
         content_scores = []
         
         for content in content_samples:
             score = await self._score_content_seo(content, profile)
+
             content_scores.append(score)
+
             total_score += score
+
         
         avg_score = total_score / len(content_samples) if content_samples else 0.0
         
@@ -214,6 +231,7 @@ class CreatorSEOIntelligence:
             alignment_scores[audience.value] = await self._calculate_audience_alignment(
                 profile, audience
             )
+
         
         return {
             "alignment_scores": alignment_scores,
@@ -283,6 +301,7 @@ class CreatorSEOIntelligence:
                 "potential_impact": 0.70,
                 "implementation_effort": "high"
             })
+
         
         return opportunities
     
@@ -294,10 +313,14 @@ class CreatorSEOIntelligence:
     ) -> float:
         """Calculate overall creator SEO score"""
         niche_score = niche_analysis.get("growth_potential", 0.5) * 0.3
+
         content_score = content_analysis.get("average_seo_score", 0.5) * 0.4
+
         
         alignment_scores = audience_alignment.get("alignment_scores", {})
+
         avg_alignment = sum(alignment_scores.values()) / len(alignment_scores) if alignment_scores else 0.5
+
         alignment_score = avg_alignment * 0.3
         
         return min(niche_score + content_score + alignment_score, 1.0)
@@ -323,6 +346,7 @@ class CreatorSEOIntelligence:
             "Implement consistent SEO content strategy",
             "Build topical authority in niche"
         ])
+
         
         return recommendations
     
@@ -355,16 +379,20 @@ class CreatorSEOIntelligence:
         content_samples: List[str],
         profile: CreatorSEOProfile
     ) -> List[str]:
-        """Identify content optimization opportunities"""
+        """
+        Identify content optimization opportunities"""
         optimizations = []
         
         if not content_samples:
             return ["Create more content samples for analysis"]
+
         
         avg_length = sum(len(content) for content in content_samples) / len(content_samples)
+
         
         if avg_length < 500:
             optimizations.append("Increase average content length for better SEO")
+
         
         optimizations.extend([
             f"Include more {profile.niche} specific keywords",
@@ -372,12 +400,14 @@ class CreatorSEOIntelligence:
             "Optimize meta descriptions and titles",
             "Include call-to-actions for engagement"
         ])
+
         
         return optimizations
     
     async def _analyze_format_performance(self, formats: List[str]) -> Dict[str, float]:
         """Analyze content format performance"""
         performance = {}
+
         
         format_scores = {
             "video": 0.85,
@@ -389,6 +419,7 @@ class CreatorSEOIntelligence:
         
         for format in formats:
             performance[format] = format_scores.get(format, 0.50)
+
         
         return performance
     
@@ -399,6 +430,7 @@ class CreatorSEOIntelligence:
     ) -> float:
         """Calculate audience alignment score"""
         # Simplified alignment calculation
+
         base_alignment = 0.6
         
         # Bonus for target audience match
@@ -406,14 +438,18 @@ class CreatorSEOIntelligence:
             base_alignment += 0.3
         
         # Bonus for content format alignment
+
         audience_preferred_formats = {
             AudienceSegment.GEN_Z: ["video", "social_media"],
             AudienceSegment.PROFESSIONALS: ["blog_post", "newsletter"],
             AudienceSegment.STUDENTS: ["video", "blog_post"]
         }
+
         
         preferred = audience_preferred_formats.get(audience, [])
+
         format_match = any(fmt in profile.content_formats for fmt in preferred)
+
         
         if format_match:
             base_alignment += 0.1
@@ -426,11 +462,13 @@ class CreatorSEOIntelligence:
         
         for audience in profile.target_audience:
             keyword_mapping[audience.value] = await self._get_audience_keywords(audience)
+
         
         return keyword_mapping
     
     async def _get_audience_keywords(self, audience: AudienceSegment) -> List[str]:
-        """Get keywords for audience segment"""
+        """
+        Get keywords for audience segment"""
         audience_keywords = {
             AudienceSegment.GEN_Z: ["trendy", "viral", "social media", "quick tips"],
             AudienceSegment.PROFESSIONALS: ["career", "productivity", "business", "leadership"],
@@ -454,7 +492,8 @@ class CreatorSEOIntelligence:
         profile: CreatorSEOProfile,
         competitor_data: Dict[str, Any]
     ) -> List[str]:
-        """Identify differentiation opportunities"""
+        """
+        Identify differentiation opportunities"""
         return [
             f"Unique {profile.creator_type.value} perspective",
             f"Deep expertise in {profile.niche}",
@@ -476,22 +515,27 @@ class CreatorTypeSEOEngine:
         content: str,
         optimization_goals: List[str] = None
     ) -> Dict[str, Any]:
-        """Optimize content for specific creator type"""
+        """
+        Optimize content for specific creator type"""
         try:
             # Get type-specific strategy
+
             type_strategy = await self._get_creator_type_strategy(
                 creator_profile.creator_type
             )
             
             # Apply type-specific optimizations
+
             optimized_content = await self._apply_type_optimizations(
                 content, creator_profile, type_strategy
             )
             
             # Generate type-specific recommendations
+
             recommendations = await self._generate_type_recommendations(
                 creator_profile, type_strategy
             )
+
             
             return {
                 "creator_type": creator_profile.creator_type.value,
@@ -505,6 +549,7 @@ class CreatorTypeSEOEngine:
             
         except Exception as e:
             logger.error(f"Creator type optimization failed: {str(e)}")
+
             raise
     
     async def _get_creator_type_strategy(self, creator_type: CreatorType) -> Dict[str, Any]:
@@ -555,6 +600,7 @@ class CreatorTypeSEOEngine:
             optimized_content += f" {profile.niche}"
         
         # Add creator type context
+
         type_context = f" {profile.creator_type.value}"
         if type_context.lower() not in content.lower():
             optimized_content += type_context
@@ -571,18 +617,22 @@ class CreatorTypeSEOEngine:
         
         if strategy.get("content_focus") == "long_form_content":
             recommendations.append("Create comprehensive, long-form content")
+
         
         if strategy.get("video_seo"):
             recommendations.append("Optimize video titles and descriptions")
+
         
         if strategy.get("transcription_seo"):
             recommendations.append("Include full transcriptions for SEO")
+
         
         recommendations.extend([
             f"Optimize for {profile.creator_type.value} best practices",
             f"Build authority in {profile.niche}",
             "Maintain consistent content schedule"
         ])
+
         
         return recommendations
     
@@ -625,32 +675,39 @@ class CreatorBrandSEOOptimizer:
         competitive_analysis: Dict[str, Any] = None,
         current_performance: Dict[str, Any] = None
     ) -> BrandOptimization:
-        """Optimize creator brand for SEO"""
+        """
+        Optimize creator brand for SEO"""
         try:
             # Calculate brand authority score
+
             authority_score = await self._calculate_brand_authority(
                 creator_profile, current_performance or {}
             )
             
             # Identify optimization opportunities
+
             opportunities = await self._identify_brand_opportunities(
                 creator_profile, competitive_analysis or {}
             )
             
             # Create brand keyword strategy
+
             keyword_strategy = await self._create_brand_keyword_strategy(
                 creator_profile
             )
             
             # Analyze competitive positioning
+
             competitive_positioning = await self._analyze_brand_positioning(
                 creator_profile, competitive_analysis or {}
             )
             
             # Reputation management strategy
+
             reputation_management = await self._create_reputation_strategy(
                 creator_profile
             )
+
             
             return BrandOptimization(
                 brand_authority_score=authority_score,
@@ -659,9 +716,11 @@ class CreatorBrandSEOOptimizer:
                 competitive_positioning=competitive_positioning,
                 reputation_management=reputation_management
             )
+
             
         except Exception as e:
             logger.error(f"Brand SEO optimization failed: {str(e)}")
+
             raise
     
     async def _calculate_brand_authority(
@@ -673,6 +732,7 @@ class CreatorBrandSEOOptimizer:
         base_score = 0.3
         
         # Stage bonus
+
         stage_bonus = {
             BrandingStage.EMERGING: 0.1,
             BrandingStage.GROWING: 0.2,
@@ -682,9 +742,11 @@ class CreatorBrandSEOOptimizer:
         }.get(profile.branding_stage, 0.1)
         
         # Platform diversity bonus
+
         platform_bonus = min(len(profile.platforms) * 0.05, 0.2)
         
         # Performance bonus
+
         performance_bonus = performance.get("authority_metrics", {}).get("score", 0.0) * 0.3
         
         return min(base_score + stage_bonus + platform_bonus + performance_bonus, 1.0)
@@ -715,6 +777,7 @@ class CreatorBrandSEOOptimizer:
                 "Cross-platform brand integration",
                 "Industry partnership opportunities"
             ])
+
         
         return opportunities
     
@@ -812,7 +875,8 @@ class CreatorAudienceSEOMatcher:
         creator_content_analysis: Dict[str, Any],
         current_performance: Dict[str, Any] = None
     ) -> List[AudienceMatch]:
-        """Analyze audience SEO matching"""
+        """
+        Analyze audience SEO matching"""
         try:
             audience_matches = []
             
@@ -823,15 +887,18 @@ class CreatorAudienceSEOMatcher:
                     creator_content_analysis,
                     current_performance or {}
                 )
+
                 audience_matches.append(match)
             
             # Sort by match score
             audience_matches.sort(key=lambda x: x.match_score, reverse=True)
+
             
             return audience_matches
             
         except Exception as e:
             logger.error(f"Audience SEO matching failed: {str(e)}")
+
             raise
     
     async def _analyze_single_audience_match(
@@ -844,29 +911,35 @@ class CreatorAudienceSEOMatcher:
         """Analyze single audience match"""
         
         # Calculate match score
+
         match_score = await self._calculate_audience_match_score(
             audience_segment, content_analysis, performance
         )
         
         # Create SEO strategy for audience
+
         seo_strategy = await self._create_audience_seo_strategy(
             audience_segment, content_analysis
         )
         
         # Generate content recommendations
+
         content_recommendations = await self._generate_audience_content_recommendations(
             audience_segment
         )
         
         # Identify keyword opportunities
+
         keyword_opportunities = await self._identify_audience_keyword_opportunities(
             audience_segment
         )
         
         # Prioritize platforms
+
         platform_priorities = await self._prioritize_platforms_for_audience(
             audience_segment
         )
+
         
         return AudienceMatch(
             audience_segment=audience_segment,
@@ -883,16 +956,22 @@ class CreatorAudienceSEOMatcher:
         content_analysis: Dict[str, Any],
         performance: Dict[str, Any]
     ) -> float:
-        """Calculate audience match score"""
+        """
+        Calculate audience match score"""
         base_score = 0.5
         
         # Content alignment bonus
+
         content_score = content_analysis.get("audience_alignment", {}).get(audience.value, 0.5)
+
         content_bonus = content_score * 0.3
         
         # Performance bonus
+
         audience_performance = performance.get("audience_metrics", {}).get(audience.value, {})
+
         engagement_rate = audience_performance.get("engagement_rate", 0.5)
+
         performance_bonus = engagement_rate * 0.2
         
         return min(base_score + content_bonus + performance_bonus, 1.0)
@@ -1013,6 +1092,7 @@ class CreatorSEOEngine:
         self.type_engine = CreatorTypeSEOEngine(config)
         self.brand_optimizer = CreatorBrandSEOOptimizer(config)
         self.audience_matcher = CreatorAudienceSEOMatcher(config)
+
         
         logger.info("🎨 Creator SEO Engine initialized")
     
@@ -1025,11 +1105,13 @@ class CreatorSEOEngine:
         """Create comprehensive creator SEO strategy"""
         try:
             # Analyze creator SEO profile
+
             profile_analysis = await self.intelligence.analyze_creator_seo_profile(
                 creator_profile, content_samples, competitive_analysis
             )
             
             # Audience matching analysis
+
             audience_matches = await self.audience_matcher.analyze_audience_seo_matching(
                 creator_profile.creator_id,
                 creator_profile.target_audience,
@@ -1038,29 +1120,36 @@ class CreatorSEOEngine:
             )
             
             # Brand optimization
+
             brand_optimization = await self.brand_optimizer.optimize_creator_brand_seo(
                 creator_profile, competitive_analysis, creator_profile.current_metrics
             )
             
             # Create content strategy
+
             content_strategy = await self._create_content_strategy(
                 creator_profile, profile_analysis, audience_matches
             )
             
             # Create platform strategy
+
             platform_strategy = await self._create_platform_strategy(
                 creator_profile, audience_matches
             )
             
             # Create implementation roadmap
+
             implementation_roadmap = await self._create_implementation_roadmap(
                 creator_profile, profile_analysis, audience_matches, brand_optimization
             )
             
             # Define success metrics
+
             success_metrics = await self._define_success_metrics(
                 creator_profile, profile_analysis
             )
+
+
             
             strategy_id = f"creator_seo_strategy_{creator_profile.creator_id}_{datetime.now().strftime('%Y%m%d')}"
             
@@ -1074,9 +1163,11 @@ class CreatorSEOEngine:
                 implementation_roadmap=implementation_roadmap,
                 success_metrics=success_metrics
             )
+
             
         except Exception as e:
             logger.error(f"Comprehensive creator strategy creation failed: {str(e)}")
+
             raise
     
     async def _create_content_strategy(
@@ -1124,17 +1215,20 @@ class CreatorSEOEngine:
                 platform_priorities[platform] += match.match_score
         
         # Sort platforms by priority
+
         sorted_platforms = sorted(
             platform_priorities.items(),
             key=lambda x: x[1],
             reverse=True
         )
+
         
         return {
             "primary_platforms": [p[0] for p in sorted_platforms[:3]],
             "secondary_platforms": [p[0] for p in sorted_platforms[3:6]],
             "platform_specific_strategies": {
                 platform: await self._get_platform_strategy(platform)
+
                 for platform, _ in sorted_platforms[:5]
             },
             "cross_platform_synergy": True
@@ -1197,6 +1291,7 @@ class CreatorSEOEngine:
                 "Optimization recommendations"
             ]
         })
+
         
         return roadmap
     
@@ -1207,6 +1302,7 @@ class CreatorSEOEngine:
     ) -> Dict[str, float]:
         """Define success metrics"""
         current_score = analysis.get("overall_seo_score", 0.5)
+
         
         return {
             "seo_score_improvement": min(current_score + 0.3, 1.0),

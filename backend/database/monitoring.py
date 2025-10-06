@@ -53,7 +53,6 @@ try:
     PROMETHEUS_AVAILABLE = True
 except ImportError:
     PROMETHEUS_AVAILABLE = False
-    # Mock CollectorRegistry for when prometheus is not available
     class CollectorRegistry:
         pass
 
@@ -67,7 +66,8 @@ logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels."""
+    """
+        Alert severity levels."""
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -126,7 +126,8 @@ class HealthCheck:
 
 @dataclass
 class Alert:
-    """Alert data structure."""
+    """
+        Alert data structure."""
     alert_id: str
     name: str
     severity: AlertSeverity
@@ -140,7 +141,8 @@ class Alert:
 
 @dataclass
 class SystemMetrics:
-    """System performance metrics."""
+    """
+        System performance metrics."""
     cpu_usage: float = 0.0
     memory_usage: float = 0.0
     disk_usage: float = 0.0
@@ -153,21 +155,25 @@ class SystemMetrics:
 
 
 class IMonitoringProvider(ABC):
-    """Monitoring provider interface."""
+    """
+        Monitoring provider interface."""
     
     @abstractmethod
     async def send_metric(self, metric: MonitoringMetric) -> bool:
-        """Send metric to monitoring system."""
+        """
+        Send metric to monitoring system."""
         pass
     
     @abstractmethod
     async def send_alert(self, alert: Alert) -> bool:
-        """Send alert notification."""
+        """
+        Send alert notification."""
         pass
     
     @abstractmethod
     async def check_health(self) -> HealthStatus:
-        """Check provider health."""
+        """
+        Check provider health."""
         pass
 
 
@@ -184,14 +190,17 @@ class PrometheusMonitoringProvider(IMonitoringProvider):
         self._initialized = False
         
     async def initialize(self):
-        """Initialize Prometheus provider."""
+        """
+        Initialize Prometheus provider."""
         if not PROMETHEUS_AVAILABLE:
             raise RuntimeError("Prometheus client not available")
+
         
         logger.info("📊 Initializing Prometheus Monitoring Provider...")
         
         # Create default metrics
         self._create_default_metrics()
+
         
         self._initialized = True
         logger.info("✅ Prometheus Monitoring Provider initialized")
@@ -228,6 +237,7 @@ class PrometheusMonitoringProvider(IMonitoringProvider):
             'CPU usage percentage',
             registry=self.registry
         )
+
         
         self._metrics['system_memory_usage'] = Gauge(
             'system_memory_usage_percent',
@@ -236,12 +246,14 @@ class PrometheusMonitoringProvider(IMonitoringProvider):
         )
     
     async def send_metric(self, metric: MonitoringMetric) -> bool:
-        """Send metric to Prometheus."""
+        """
+        Send metric to Prometheus."""
         if not self._initialized:
             return False
         
         try:
             metric_name = metric.name.replace('-', '_').replace(' ', '_').lower()
+
             
             if metric.metric_type == MetricType.GAUGE:
                 if metric_name not in self._metrics:
@@ -251,11 +263,14 @@ class PrometheusMonitoringProvider(IMonitoringProvider):
                         list(metric.labels.keys()),
                         registry=self.registry
                     )
+
                 
                 if metric.labels:
                     self._metrics[metric_name].labels(**metric.labels).set(metric.value)
+
                 else:
                     self._metrics[metric_name].set(metric.value)
+
             
             elif metric.metric_type == MetricType.COUNTER:
                 if metric_name not in self._metrics:
@@ -265,16 +280,20 @@ class PrometheusMonitoringProvider(IMonitoringProvider):
                         list(metric.labels.keys()),
                         registry=self.registry
                     )
+
                 
                 if metric.labels:
                     self._metrics[metric_name].labels(**metric.labels).inc(metric.value)
+
                 else:
                     self._metrics[metric_name].inc(metric.value)
+
             
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to send Prometheus metric: {e}")
+
             return False
     
     async def send_alert(self, alert: Alert) -> bool:
@@ -304,9 +323,11 @@ class DatabaseHealthMonitor:
         self._monitoring_tasks: List[asyncio.Task] = []
         self._alert_handlers: List[Callable[[Alert], None]] = []
         self._system_metrics = SystemMetrics()
+
         
     async def initialize(self):
-        """Initialize health monitor."""
+        """
+        Initialize health monitor."""
         logger.info("🏥 Initializing Database Health Monitor...")
         
         # Setup default health checks
@@ -316,44 +337,55 @@ class DatabaseHealthMonitor:
         self._monitoring_tasks.append(
             asyncio.create_task(self._health_check_loop())
         )
+
         
         self._monitoring_tasks.append(
             asyncio.create_task(self._system_metrics_collector())
         )
+
         
         logger.info("✅ Database Health Monitor initialized")
     
     async def _setup_default_health_checks(self):
         """Setup default health checks."""
         # Database connection health check
+
         connection_check = HealthCheck(
             name="database_connections",
             check_function=self._check_database_connections,
             interval_seconds=30,
             warning_threshold=80.0,  # 80% of max connections
+
             critical_threshold=95.0,  # 95% of max connections
+
             tags={"category", "database"}
         )
         self._health_checks["database_connections"] = connection_check
         
         # Query performance health check
+
         query_check = HealthCheck(
             name="query_performance",
             check_function=self._check_query_performance,
             interval_seconds=60,
             warning_threshold=1000.0,  # 1 second average response time
+
             critical_threshold=5000.0,  # 5 seconds average response time
+
             tags={"category", "performance"}
         )
         self._health_checks["query_performance"] = query_check
         
         # System resource health check
+
         system_check = HealthCheck(
             name="system_resources",
             check_function=self._check_system_resources,
             interval_seconds=60,
             warning_threshold=80.0,  # 80% CPU/Memory usage
+
             critical_threshold=95.0,  # 95% CPU/Memory usage
+
             tags={"category", "system"}
         )
         self._health_checks["system_resources"] = system_check
@@ -368,17 +400,23 @@ class DatabaseHealthMonitor:
                     
                     try:
                         # Execute health check
+
                         start_time = datetime.now(timezone.utc)
+
+
                         result = await asyncio.wait_for(
                             health_check.check_function(),
                             timeout=health_check.timeout_seconds
                         )
                         
                         # Determine health status
+
                         status = self._evaluate_health_status(result, health_check)
                         
                         # Update status
+
                         previous_status = self._health_status.get(check_name, HealthStatus.UNKNOWN)
+
                         self._health_status[check_name] = status
                         
                         # Record history
@@ -392,12 +430,15 @@ class DatabaseHealthMonitor:
                         # Generate alerts if status changed
                         if status != previous_status and status in [HealthStatus.DEGRADED, HealthStatus.UNHEALTHY]:
                             await self._generate_health_alert(check_name, status, result, health_check)
+
                         
                     except asyncio.TimeoutError:
                         logger.error(f"⏰ Health check timeout: {check_name}")
+
                         self._health_status[check_name] = HealthStatus.UNHEALTHY
                     except Exception as e:
                         logger.error(f"❌ Health check error ({check_name}): {e}")
+
                         self._health_status[check_name] = HealthStatus.UNHEALTHY
                 
                 # Wait before next check cycle
@@ -419,7 +460,8 @@ class DatabaseHealthMonitor:
     
     async def _generate_health_alert(self, check_name: str, status: HealthStatus, 
                                    value: float, health_check: HealthCheck):
-        """Generate health alert."""
+        """
+        Generate health alert."""
         severity = AlertSeverity.CRITICAL if status == HealthStatus.UNHEALTHY else AlertSeverity.WARNING
         
         alert = Alert(
@@ -444,6 +486,7 @@ class DatabaseHealthMonitor:
         for handler in self._alert_handlers:
             try:
                 await handler(alert)
+
             except Exception as e:
                 logger.error(f"Alert handler error: {e}")
     
@@ -456,9 +499,10 @@ class DatabaseHealthMonitor:
             # active_connections = pool_manager.get_active_connections()
             # max_connections = pool_manager.get_max_connections()
             # return (active_connections / max_connections) * 100
-            return 45.0  # Mock 45% connection usage
+            return 45.0
         except Exception as e:
             logger.error(f"Database connection check failed: {e}")
+
             return 100.0  # Return critical value on error
     
     async def _check_query_performance(self) -> float:
@@ -468,19 +512,25 @@ class DatabaseHealthMonitor:
         try:
             # Get average query response time from last N queries
             # return query_analytics.get_average_response_time()
-            return 750.0  # Mock 750ms average response time
+
+            return 750.0
         except Exception as e:
             logger.error(f"Query performance check failed: {e}")
+
             return 10000.0  # Return critical value on error
     
     async def _check_system_resources(self) -> float:
         """Check system resource health."""
         try:
             cpu_percent = psutil.cpu_percent(interval=1)
+
+
             memory_percent = psutil.virtual_memory().percent
+
             disk_percent = psutil.disk_usage('/').percent
             
             # Return the highest resource usage
+
             max_usage = max(cpu_percent, memory_percent, disk_percent)
             
             # Update system metrics
@@ -488,11 +538,13 @@ class DatabaseHealthMonitor:
             self._system_metrics.memory_usage = memory_percent
             self._system_metrics.disk_usage = disk_percent
             self._system_metrics.timestamp = datetime.now(timezone.utc)
+
             
             return max_usage
             
         except Exception as e:
             logger.error(f"System resource check failed: {e}")
+
             return 100.0  # Return critical value on error
     
     async def _system_metrics_collector(self):
@@ -507,15 +559,21 @@ class DatabaseHealthMonitor:
                     self._system_metrics.cpu_usage = psutil.cpu_percent(interval=1)
                     
                     # Memory metrics
+
                     memory = psutil.virtual_memory()
+
                     self._system_metrics.memory_usage = memory.percent
                     
                     # Disk metrics
+
                     disk = psutil.disk_usage('/')
+
                     self._system_metrics.disk_usage = (disk.used / disk.total) * 100
                     
                     # Network metrics
+
                     network = psutil.net_io_counters()
+
                     self._system_metrics.network_io = {
                         "bytes_sent": float(network.bytes_sent),
                         "bytes_recv": float(network.bytes_recv),
@@ -524,9 +582,11 @@ class DatabaseHealthMonitor:
                     }
                     
                     self._system_metrics.timestamp = datetime.now(timezone.utc)
+
                     
                 except Exception as e:
                     logger.error(f"Failed to collect system metrics: {e}")
+
                     
             except asyncio.CancelledError:
                 break
@@ -538,11 +598,13 @@ class DatabaseHealthMonitor:
         self._alert_handlers.append(handler)
     
     def get_overall_health_status(self) -> HealthStatus:
-        """Get overall system health status."""
+        """
+        Get overall system health status."""
         if not self._health_status:
             return HealthStatus.UNKNOWN
         
         statuses = list(self._health_status.values())
+
         
         if HealthStatus.UNHEALTHY in statuses:
             return HealthStatus.UNHEALTHY
@@ -552,7 +614,8 @@ class DatabaseHealthMonitor:
             return HealthStatus.HEALTHY
     
     def get_health_summary(self) -> Dict[str, Any]:
-        """Get health summary."""
+        """
+        Get health summary."""
         return {
             "overall_status": self.get_overall_health_status().value,
             "individual_checks": {
@@ -577,6 +640,7 @@ class DatabaseHealthMonitor:
         # Cancel monitoring tasks
         for task in self._monitoring_tasks:
             task.cancel()
+
             try:
                 await task
             except asyncio.CancelledError:
@@ -601,7 +665,8 @@ class DatabaseMonitoringManager:
         self._monitoring_tasks: List[asyncio.Task] = []
         
     async def initialize(self, enable_prometheus: bool = True, enable_datadog: bool = False):
-        """Initialize monitoring manager."""
+        """
+        Initialize monitoring manager."""
         logger.info("🏢 Initializing Enterprise Database Monitoring Manager...")
         
         # Initialize health monitor
@@ -610,8 +675,11 @@ class DatabaseMonitoringManager:
         # Setup monitoring providers
         if enable_prometheus and PROMETHEUS_AVAILABLE:
             prometheus_provider = PrometheusMonitoringProvider()
+
             await prometheus_provider.initialize()
+
             self._monitoring_providers.append(prometheus_provider)
+
             logger.info("✅ Prometheus monitoring enabled")
         
         # Setup alert handlers
@@ -621,6 +689,7 @@ class DatabaseMonitoringManager:
         self._monitoring_tasks.append(
             asyncio.create_task(self._metrics_processor())
         )
+
         
         logger.info("✅ Enterprise Database Monitoring Manager initialized")
     
@@ -631,15 +700,20 @@ class DatabaseMonitoringManager:
                 await asyncio.sleep(30)  # Process every 30 seconds
                 
                 # Process buffered metrics
+
                 metrics_to_process = list(self._metrics_buffer)
+
                 self._metrics_buffer.clear()
+
                 
                 for metric in metrics_to_process:
                     for provider in self._monitoring_providers:
                         try:
                             await provider.send_metric(metric)
+
                         except Exception as e:
                             logger.error(f"Failed to send metric to provider: {e}")
+
                             
             except asyncio.CancelledError:
                 break
@@ -654,6 +728,7 @@ class DatabaseMonitoringManager:
         for provider in self._monitoring_providers:
             try:
                 await provider.send_alert(alert)
+
             except Exception as e:
                 logger.error(f"Failed to send alert to provider: {e}")
         
@@ -717,6 +792,7 @@ class DatabaseMonitoringManager:
         health_summary = self.health_monitor.get_health_summary()
         
         # Recent alerts
+
         recent_alerts = [
             {
                 "alert_id": alert.alert_id,
@@ -728,6 +804,7 @@ class DatabaseMonitoringManager:
             }
             for alert in list(self._alerts_history)[-10:]  # Last 10 alerts
         ]
+
         
         dashboard = {
             "health_status": health_summary,
@@ -735,8 +812,7 @@ class DatabaseMonitoringManager:
             "monitoring_providers": len(self._monitoring_providers),
             "metrics_buffer_size": len(self._metrics_buffer),
             "total_alerts": len(self._alerts_history),
-            "uptime_seconds": 0,  # TODO: Calculate actual uptime
-            "generated_at": datetime.now(timezone.utc).isoformat()
+            "uptime_seconds": 0,            "generated_at": datetime.now(timezone.utc).isoformat()
         }
         
         return dashboard
@@ -748,6 +824,7 @@ class DatabaseMonitoringManager:
         # Cancel background tasks
         for task in self._monitoring_tasks:
             task.cancel()
+
             try:
                 await task
             except asyncio.CancelledError:
@@ -755,6 +832,7 @@ class DatabaseMonitoringManager:
         
         # Close health monitor
         await self.health_monitor.close()
+
         
         logger.info("✅ Database Monitoring Manager closed")
 

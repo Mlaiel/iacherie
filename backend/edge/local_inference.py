@@ -30,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class ModelType(str, Enum):
-    """Supported AI model types."""
+    """
+        Supported AI model types."""
     TEXT_GENERATION = "text_generation"
     IMAGE_CLASSIFICATION = "image_classification"
     OBJECT_DETECTION = "object_detection"
@@ -94,7 +95,8 @@ class ModelConfig:
 
 @dataclass
 class InferenceRequest:
-    """Inference request."""
+    """
+        Inference request."""
     request_id: str
     model_id: str
     input_data: Any
@@ -108,7 +110,8 @@ class InferenceRequest:
 
 @dataclass
 class InferenceResult:
-    """Inference result."""
+    """
+        Inference result."""
     request_id: str
     model_id: str
     output_data: Any
@@ -130,7 +133,8 @@ class InferenceResult:
 
 @dataclass
 class ModelPerformanceMetrics:
-    """Model performance metrics."""
+    """
+        Model performance metrics."""
     model_id: str
     total_requests: int
     successful_requests: int
@@ -147,7 +151,8 @@ class ModelPerformanceMetrics:
 
 
 class LocalInferenceEngine:
-    """High-performance local AI inference engine."""
+    """
+        High-performance local AI inference engine."""
     
     def __init__(
         self,
@@ -160,6 +165,7 @@ class LocalInferenceEngine:
     ):
         self.model_cache_dir = Path(model_cache_dir)
         self.model_cache_dir.mkdir(exist_ok=True)
+
         
         self.max_models_in_memory = max_models_in_memory
         self.max_concurrent_requests = max_concurrent_requests
@@ -192,6 +198,7 @@ class LocalInferenceEngine:
         self.cpu_count = psutil.cpu_count()
         self.total_memory = psutil.virtual_memory().total
         self.gpu_available = self._check_gpu_availability()
+
         
         logger.info(f"Local inference engine initialized")
         logger.info(f"CPU cores: {self.cpu_count}, Memory: {self.total_memory // 1024**3}GB")
@@ -205,12 +212,15 @@ class LocalInferenceEngine:
         # Start worker tasks
         for i in range(self.max_concurrent_requests):
             task = asyncio.create_task(self._inference_worker(f"worker_{i}"))
+
             self.worker_tasks.append(task)
         
         # Start monitoring task
         if self.metrics_enabled:
             monitor_task = asyncio.create_task(self._performance_monitor())
+
             self.worker_tasks.append(monitor_task)
+
         
         logger.info("Inference engine started")
     
@@ -228,7 +238,9 @@ class LocalInferenceEngine:
         # Unload all models
         with self.model_lock:
             self.loaded_models.clear()
+
             self.model_configs.clear()
+
         
         logger.info("Inference engine stopped")
     
@@ -240,15 +252,19 @@ class LocalInferenceEngine:
         except ImportError:
             try:
                 from core.tensorflow_singleton import get_tensorflow
+
                 tf = get_tensorflow()
+
                 return len(tf.config.list_physical_devices('GPU')) > 0 and self.enable_gpu
             except ImportError:
                 return False
     
     def _get_gpu_info(self) -> str:
-        """Get GPU information."""
+        """
+        Get GPU information."""
         try:
             gpus = GPUtil.getGPUs()
+
             if gpus:
                 gpu = gpus[0]
                 return f"{gpu.name} ({gpu.memoryTotal}MB)"
@@ -290,12 +306,15 @@ class LocalInferenceEngine:
             # Preload model if requested
             if preload:
                 await self._load_model(model_config.model_id)
+
             
             logger.info(f"Model registered: {model_config.model_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to register model {model_config.model_id}: {e}")
+
             return False
     
     async def unregister_model(self, model_id: str) -> bool:
@@ -313,10 +332,12 @@ class LocalInferenceEngine:
                     del self.model_last_used[model_id]
             
             logger.info(f"Model unregistered: {model_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Failed to unregister model {model_id}: {e}")
+
             return False
     
     async def infer(
@@ -330,6 +351,8 @@ class LocalInferenceEngine:
     ) -> InferenceResult:
         """Perform inference on input data."""
         request_id = self._generate_request_id()
+
+
         
         request = InferenceRequest(
             request_id=request_id,
@@ -348,6 +371,7 @@ class LocalInferenceEngine:
         self.active_requests[request_id] = request
         
         # Wait for result with timeout
+
         start_time = time.time()
         while request_id in self.active_requests:
             if time.time() - start_time > timeout_seconds:
@@ -374,6 +398,7 @@ class LocalInferenceEngine:
                     created_at=request.created_at,
                     completed_at=datetime.now()
                 )
+
             
             await asyncio.sleep(0.1)
         
@@ -383,6 +408,7 @@ class LocalInferenceEngine:
     async def _inference_worker(self, worker_name: str):
         """Worker task for processing inference requests."""
         logger.info(f"Inference worker {worker_name} started")
+
         
         while self.workers_running:
             try:
@@ -391,6 +417,7 @@ class LocalInferenceEngine:
                     priority, timestamp, request = await asyncio.wait_for(
                         self.request_queue.get(), timeout=1.0
                     )
+
                 except asyncio.TimeoutError:
                     continue
                 
@@ -406,43 +433,71 @@ class LocalInferenceEngine:
                 
             except Exception as e:
                 logger.error(f"Worker {worker_name} error: {e}")
+
                 await asyncio.sleep(1.0)
+
         
         logger.info(f"Inference worker {worker_name} stopped")
     
     async def _process_request(self, request: InferenceRequest) -> InferenceResult:
         """Process a single inference request."""
         start_time = time.time()
+
         queue_time = start_time - request.created_at.timestamp()
+
         
         try:
             # Load model if not in memory
+
             model_load_start = time.time()
+
+
             model = await self._load_model(request.model_id)
+
+
             model_load_time = (time.time() - model_load_start) * 1000
             
             # Preprocessing
+
             preprocessing_start = time.time()
+
+
             processed_input = await self._preprocess_input(
                 request.model_id, 
                 request.input_data, 
                 request.preprocessing_params
             )
+
+
             preprocessing_time = (time.time() - preprocessing_start) * 1000
             
             # Inference
+
             inference_start = time.time()
+
+
             raw_output = await self._run_inference(request.model_id, processed_input)
+
+
             inference_time = (time.time() - inference_start) * 1000
             
             # Postprocessing
+
             postprocessing_start = time.time()
+
+
             final_output = await self._postprocess_output(request.model_id, raw_output)
+
+
             postprocessing_time = (time.time() - postprocessing_start) * 1000
             
             # Calculate metrics
+
             total_time = (time.time() - start_time) * 1000
+
             memory_usage = self._get_memory_usage()
+
+
             gpu_utilization = self._get_gpu_utilization()
             
             # Update performance metrics
@@ -453,6 +508,8 @@ class LocalInferenceEngine:
                 memory_usage,
                 True
             )
+
+
             
             result = InferenceResult(
                 request_id=request.request_id,
@@ -473,6 +530,7 @@ class LocalInferenceEngine:
                 created_at=request.created_at,
                 completed_at=datetime.now()
             )
+
             
             return result
             
@@ -485,6 +543,8 @@ class LocalInferenceEngine:
                 0.0,
                 False
             )
+
+
             
             error_result = InferenceResult(
                 request_id=request.request_id,
@@ -505,8 +565,10 @@ class LocalInferenceEngine:
                 created_at=request.created_at,
                 completed_at=datetime.now()
             )
+
             
             logger.error(f"Inference failed for request {request.request_id}: {e}")
+
             return error_result
     
     async def _load_model(self, model_id: str) -> Any:
@@ -515,6 +577,7 @@ class LocalInferenceEngine:
             # Check if model is already loaded
             if model_id in self.loaded_models:
                 self.model_last_used[model_id] = datetime.now()
+
                 return self.loaded_models[model_id]
             
             # Check if we need to unload old models
@@ -522,7 +585,9 @@ class LocalInferenceEngine:
                 await self._evict_least_used_model()
             
             # Load model
+
             config = self.model_configs[model_id]
+
             model = await self._load_model_from_file(config)
             
             # Optimize model if enabled
@@ -538,6 +603,7 @@ class LocalInferenceEngine:
                 self.performance_metrics[model_id].load_count += 1
             
             logger.info(f"Model loaded: {model_id}")
+
             return model
     
     async def _load_model_from_file(self, config: ModelConfig) -> Any:
@@ -559,9 +625,14 @@ class LocalInferenceEngine:
         """Load PyTorch model."""
         try:
             import torch
+
             device = torch.device(config.device)
+
+
             model = torch.load(config.model_path, map_location=device)
+
             model.eval()
+
             return model
         except ImportError:
             raise RuntimeError("PyTorch not available")
@@ -570,8 +641,12 @@ class LocalInferenceEngine:
         """Load TensorFlow model."""
         try:
             from core.tensorflow_singleton import get_tensorflow
+
             tf = get_tensorflow()
+
+
             model = tf.saved_model.load(config.model_path)
+
             return model
         except ImportError:
             raise RuntimeError("TensorFlow not available")
@@ -580,12 +655,16 @@ class LocalInferenceEngine:
         """Load ONNX model."""
         try:
             import onnxruntime as ort
+
             
             providers = ['CPUExecutionProvider']
             if config.device.startswith('cuda') and self.gpu_available:
                 providers.insert(0, 'CUDAExecutionProvider')
+
+
             
             session = ort.InferenceSession(config.model_path, providers=providers)
+
             return session
         except ImportError:
             raise RuntimeError("ONNX Runtime not available")
@@ -597,10 +676,14 @@ class LocalInferenceEngine:
         return model
     
     async def _load_huggingface_model(self, config: ModelConfig) -> Any:
-        """Load HuggingFace model."""
+        """
+        Load HuggingFace model."""
         try:
             model = AutoModel.from_pretrained(config.model_path)
+
+
             tokenizer = AutoTokenizer.from_pretrained(config.model_path)
+
             
             return {"model": model, "tokenizer": tokenizer}
         except ImportError:
@@ -616,11 +699,13 @@ class LocalInferenceEngine:
         return model
     
     async def _evict_least_used_model(self):
-        """Evict the least recently used model."""
+        """
+        Evict the least recently used model."""
         if not self.loaded_models:
             return
         
         # Find least recently used model
+
         lru_model_id = min(
             self.model_last_used.keys(),
             key=lambda x: self.model_last_used[x]
@@ -654,8 +739,10 @@ class LocalInferenceEngine:
         return input_data
     
     async def _run_inference(self, model_id: str, input_data: Any) -> Any:
-        """Run inference on preprocessed input."""
+        """
+        Run inference on preprocessed input."""
         model = self.loaded_models[model_id]
+
         config = self.model_configs[model_id]
         
         if config.backend == InferenceBackend.PYTORCH:
@@ -668,8 +755,10 @@ class LocalInferenceEngine:
             # Generic inference
             if hasattr(model, 'predict'):
                 return model.predict(input_data)
+
             elif hasattr(model, '__call__'):
                 return model(input_data)
+
             else:
                 raise RuntimeError(f"Don't know how to run inference with {config.backend}")
     
@@ -680,10 +769,14 @@ class LocalInferenceEngine:
             with torch.no_grad():
                 if isinstance(input_data, np.ndarray):
                     input_tensor = torch.from_numpy(input_data)
+
                 else:
                     input_tensor = torch.tensor(input_data)
+
+
                 
                 output = model(input_tensor)
+
                 return output.cpu().numpy() if hasattr(output, 'cpu') else output
         except ImportError:
             raise RuntimeError("PyTorch not available")
@@ -692,13 +785,19 @@ class LocalInferenceEngine:
         """Run TensorFlow inference."""
         try:
             from core.tensorflow_singleton import get_tensorflow
+
             tf = get_tensorflow()
+
             if isinstance(input_data, np.ndarray):
                 input_tensor = tf.constant(input_data)
+
             else:
                 input_tensor = tf.constant(input_data)
+
+
             
             output = model(input_tensor)
+
             return output.numpy() if hasattr(output, 'numpy') else output
         except ImportError:
             raise RuntimeError("TensorFlow not available")
@@ -707,7 +806,9 @@ class LocalInferenceEngine:
         """Run ONNX inference."""
         try:
             input_name = session.get_inputs()[0].name
+
             output = session.run(None, {input_name: input_data})
+
             return output[0] if len(output) == 1 else output
         except Exception as e:
             raise RuntimeError(f"ONNX inference failed: {e}")
@@ -724,24 +825,30 @@ class LocalInferenceEngine:
         return raw_output
     
     def _extract_confidence_scores(self, output: Any) -> Optional[List[float]]:
-        """Extract confidence scores from output."""
+        """
+        Extract confidence scores from output."""
         if isinstance(output, np.ndarray):
             if output.ndim == 1:
                 return output.tolist()
+
             elif output.ndim == 2 and output.shape[0] == 1:
                 return output[0].tolist()
+
         
         return None
     
     def _get_memory_usage(self) -> float:
-        """Get current memory usage in MB."""
+        """
+        Get current memory usage in MB."""
         process = psutil.Process()
         return process.memory_info().rss / 1024 / 1024
     
     def _get_gpu_utilization(self) -> Optional[float]:
-        """Get GPU utilization percentage."""
+        """
+        Get GPU utilization percentage."""
         try:
             gpus = GPUtil.getGPUs()
+
             if gpus:
                 return gpus[0].load * 100
         except:
@@ -756,9 +863,11 @@ class LocalInferenceEngine:
         memory_usage: float,
         success: bool
     ):
-        """Update performance metrics for a model."""
+        """
+        Update performance metrics for a model."""
         if model_id not in self.performance_metrics:
             return
+
         
         metrics = self.performance_metrics[model_id]
         metrics.total_requests += 1
@@ -769,6 +878,7 @@ class LocalInferenceEngine:
             metrics.failed_requests += 1
         
         # Update averages
+
         total_requests = metrics.total_requests
         metrics.average_inference_time_ms = (
             (metrics.average_inference_time_ms * (total_requests - 1) + inference_time) / total_requests
@@ -779,6 +889,7 @@ class LocalInferenceEngine:
         metrics.average_memory_usage_mb = (
             (metrics.average_memory_usage_mb * (total_requests - 1) + memory_usage) / total_requests
         )
+
         
         if memory_usage > metrics.peak_memory_usage_mb:
             metrics.peak_memory_usage_mb = memory_usage
@@ -787,6 +898,7 @@ class LocalInferenceEngine:
         metrics.last_used = datetime.now()
         
         # Calculate throughput (requests per second over last minute)
+
         uptime = (datetime.now() - self.engine_start_time).total_seconds()
         metrics.uptime_seconds = uptime
         
@@ -794,12 +906,17 @@ class LocalInferenceEngine:
             metrics.throughput_requests_per_second = total_requests / uptime
     
     async def _performance_monitor(self):
-        """Monitor performance and log metrics."""
+        """
+        Monitor performance and log metrics."""
         while self.workers_running:
             try:
                 # Log system metrics
+
                 cpu_percent = psutil.cpu_percent()
+
+
                 memory = psutil.virtual_memory()
+
                 
                 logger.info(
                     f"System metrics - CPU: {cpu_percent}%, "
@@ -816,11 +933,13 @@ class LocalInferenceEngine:
                             f"Avg inference: {metrics.average_inference_time_ms:.1f}ms, "
                             f"Throughput: {metrics.throughput_requests_per_second:.2f} req/s"
                         )
+
                 
                 await asyncio.sleep(60)  # Monitor every minute
                 
             except Exception as e:
                 logger.error(f"Performance monitor error: {e}")
+
                 await asyncio.sleep(60)
     
     def _generate_request_id(self) -> str:
@@ -834,15 +953,18 @@ class LocalInferenceEngine:
         return list(self.model_configs.keys())
     
     def get_loaded_models(self) -> List[str]:
-        """Get list of currently loaded models."""
+        """
+        Get list of currently loaded models."""
         return list(self.loaded_models.keys())
     
     def get_model_metrics(self, model_id: str) -> Optional[ModelPerformanceMetrics]:
-        """Get performance metrics for a specific model."""
+        """
+        Get performance metrics for a specific model."""
         return self.performance_metrics.get(model_id)
     
     def get_engine_status(self) -> Dict[str, Any]:
-        """Get overall engine status."""
+        """
+        Get overall engine status."""
         return {
             "status": "running" if self.workers_running else "stopped",
             "uptime_seconds": (datetime.now() - self.engine_start_time).total_seconds(),
@@ -882,7 +1004,8 @@ async def quick_inference(
     input_data: Any,
     timeout: int = 30
 ) -> Any:
-    """Quick inference utility."""
+    """
+        Quick inference utility."""
     result = await engine.infer(
         model_id=model_id,
         input_data=input_data,
@@ -899,9 +1022,11 @@ if __name__ == "__main__":
     # Example usage
     async def main():
         engine = await create_inference_engine()
+
         
         try:
             # Register a mock model
+
             config = ModelConfig(
                 model_id="test_model",
                 model_type=ModelType.TEXT_GENERATION,
@@ -921,26 +1046,36 @@ if __name__ == "__main__":
             
             # For demonstration, create a dummy model file
             import pickle
+
             dummy_model = lambda x: f"Processed: {x}"
             with open("./test_model.pkl", "wb") as f:
                 pickle.dump(dummy_model, f)
+
+
             
             success = await engine.register_model(config, preload=True)
+
             print(f"Model registered: {success}")
             
             # Perform inference
+
             result = await engine.infer(
                 model_id="test_model",
                 input_data="Hello World",
                 priority=7
             )
+
             
             print(f"Inference result: {result.output_data}")
+
             print(f"Processing time: {result.processing_time_ms:.2f}ms")
             
             # Get engine status
+
             status = engine.get_engine_status()
+
             print(f"Engine status: {status}")
+
             
         finally:
             await engine.stop()

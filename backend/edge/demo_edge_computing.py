@@ -57,7 +57,8 @@ from backend.edge import (
 
 
 async def demo_edge_inference():
-    """Demonstrate edge AI inference orchestration."""
+    """
+        Demonstrate edge AI inference orchestration."""
     print("\n" + "="*60)
     print("🧠 EDGE AI INFERENCE ORCHESTRATION DEMO")
     print("="*60)
@@ -79,10 +80,12 @@ async def demo_edge_inference():
         print("✅ Edge inference orchestrator started")
         
         # Get status
+
         status = orchestrator.get_engine_status()
         print(f"📊 Orchestrator status: {status['edge_orchestrator']['optimization_strategy']}")
         
         # Get metrics
+
         metrics = orchestrator.get_metrics()
         print(f"📈 Current metrics - Requests: {metrics.total_requests}, Avg latency: {metrics.average_latency_ms:.2f}ms")
         
@@ -90,9 +93,12 @@ async def demo_edge_inference():
         orchestrator._update_request_metrics(25.5, success=True)
         orchestrator._update_request_metrics(18.3, success=True)
         orchestrator._update_request_metrics(31.2, success=True)
+
+
         
         updated_metrics = orchestrator.get_metrics()
         print(f"📈 Updated metrics - Requests: {updated_metrics.total_requests}, Avg latency: {updated_metrics.average_latency_ms:.2f}ms")
+
         
     finally:
         await orchestrator.stop()
@@ -120,6 +126,7 @@ async def demo_5g_mec_integration():
         print("✅ MEC integration layer started")
         
         # Register a MEC service
+
         service_id = await integration.register_mec_service(
             service_name="edge-ai-inference",
             service_type=ServiceType.AI_INFERENCE,
@@ -130,6 +137,7 @@ async def demo_5g_mec_integration():
         print(f"📝 Registered MEC service: {service_id}")
         
         # Create a network slice for URLLC (Ultra-Reliable Low-Latency Communication)
+
         slice_id = await integration.create_network_slice(
             slice_profile=SliceProfile.URLLC,
             latency_requirement_ms=5,
@@ -139,6 +147,7 @@ async def demo_5g_mec_integration():
         print(f"🍰 Created network slice: {slice_id} (URLLC)")
         
         # Create another slice for enhanced mobile broadband
+
         embb_slice_id = await integration.create_network_slice(
             slice_profile=SliceProfile.EMBB,
             latency_requirement_ms=50,
@@ -148,14 +157,17 @@ async def demo_5g_mec_integration():
         print(f"🍰 Created network slice: {embb_slice_id} (eMBB)")
         
         # Setup QoS flow
+
         session_id = "demo-session-001"
         qos_profile = {"latency_ms": 10, "bandwidth_mbps": 50, "priority": "high"}
         await integration.setup_qos_flow(session_id, slice_id, qos_profile)
         print(f"⚡ Setup QoS flow for session: {session_id}")
         
         # Get status
+
         status = integration.get_integration_status()
         print(f"📊 Integration status - Services: {len(status['services'])}, Slices: {len(status['network_slices'])}")
+
         
     finally:
         await integration.stop()
@@ -172,6 +184,7 @@ async def demo_iot_mesh_network():
     config = IoTMeshConfig(
         network_name="iacherie-demo-mesh",
         auto_healing_enabled=False,  # Disable for demo
+
         device_heartbeat_interval_seconds=60  # Disable frequent heartbeats
     )
     
@@ -183,6 +196,7 @@ async def demo_iot_mesh_network():
         print("✅ IoT mesh orchestrator started")
         
         # Register different types of devices
+
         gateway_id = await orchestrator.register_device(
             device_name="edge-gateway-01",
             device_type=DeviceType.GATEWAY,
@@ -192,6 +206,8 @@ async def demo_iot_mesh_network():
             location={"latitude": 52.5200, "longitude": 13.4050}
         )
         print(f"🔧 Registered gateway: {gateway_id}")
+
+
         
         sensor_id = await orchestrator.register_device(
             device_name="temp-humidity-sensor-01",
@@ -202,6 +218,8 @@ async def demo_iot_mesh_network():
             location={"latitude": 52.5210, "longitude": 13.4060}
         )
         print(f"🌡️ Registered sensor: {sensor_id}")
+
+
         
         camera_id = await orchestrator.register_device(
             device_name="smart-camera-01",
@@ -224,6 +242,7 @@ async def demo_iot_mesh_network():
         await orchestrator.create_device_group("ai_devices", [gateway_id, camera_id])
         
         # Send a message through the mesh
+
         message = {
             "type": "sensor_reading",
             "temperature": 23.5,
@@ -234,15 +253,18 @@ async def demo_iot_mesh_network():
         print(f"📤 Sent message from sensor to gateway")
         
         # Broadcast a message to all AI devices
+
         broadcast_msg = {
             "type": "ai_model_update",
             "model_version": "v2.1.0",
             "update_url": "https://models.iacherie.com/v2.1.0"
         }
+
         devices_reached = await orchestrator.broadcast_message(gateway_id, broadcast_msg, target_group="ai_devices")
         print(f"📢 Broadcast reached {devices_reached} devices")
         
         # Orchestrate computation
+
         task_result = await orchestrator.orchestrate_computation(
             task_definition={"type": "image_analysis", "priority": "high"},
             required_capabilities=[DeviceCapability.AI_INFERENCE, DeviceCapability.COMPUTE],
@@ -251,8 +273,10 @@ async def demo_iot_mesh_network():
         print(f"🧮 Computation orchestrated: {task_result.get('selected_device', 'none')}")
         
         # Get network status
+
         status = orchestrator.get_network_status()
         print(f"📊 Network status - Devices: {status['metrics']['total_devices']}, Active: {status['metrics']['active_devices']}")
+
         
     finally:
         await orchestrator.stop()
@@ -269,6 +293,7 @@ async def demo_fog_computing():
     config = FogComputingConfig(
         orchestrator_name="iacherie-fog-demo",
         enable_auto_scaling=False,  # Disable for demo
+
         task_timeout_seconds=30,
         heartbeat_interval_seconds=60  # Disable frequent heartbeats
     )
@@ -281,6 +306,7 @@ async def demo_fog_computing():
         print("✅ Fog computing orchestrator started")
         
         # Register fog nodes at different tiers
+
         edge_node_id = await orchestrator.register_fog_node(
             node_name="edge-server-berlin",
             tier=ProcessingTier.FOG_TIER,
@@ -296,6 +322,8 @@ async def demo_fog_computing():
             network_bandwidth_mbps=1000.0
         )
         print(f"🔧 Registered edge node: {edge_node_id}")
+
+
         
         cloud_node_id = await orchestrator.register_fog_node(
             node_name="cloud-instance-eu-central",
@@ -335,6 +363,7 @@ async def demo_fog_computing():
             }
         
         # Submit tasks with different priorities and requirements
+
         task1_id = await orchestrator.submit_task(
             task_name="real-time-image-classification",
             workload_type=WorkloadType.AI_INFERENCE,
@@ -350,6 +379,8 @@ async def demo_fog_computing():
             target_tier=ProcessingTier.FOG_TIER  # Prefer edge processing
         )
         print(f"🎯 Submitted high-priority AI inference task: {task1_id}")
+
+
         
         task2_id = await orchestrator.submit_task(
             task_name="sensor-data-aggregation",
@@ -364,6 +395,8 @@ async def demo_fog_computing():
             estimated_duration_seconds=2.0
         )
         print(f"📊 Submitted data aggregation task: {task2_id}")
+
+
         
         task3_id = await orchestrator.submit_task(
             task_name="batch-analytics-processing",
@@ -387,21 +420,27 @@ async def demo_fog_computing():
         # Check task statuses
         for task_id, task_name in [(task1_id, "Image Classification"), (task2_id, "Data Aggregation"), (task3_id, "Batch Processing")]:
             status = await orchestrator.get_task_status(task_id)
+
             if status:
                 print(f"📋 {task_name}: {status['status']}")
+
             else:
                 print(f"❓ {task_name}: Status unknown")
         
         # Get node statuses
         for node_id, node_name in [(edge_node_id, "Edge Node"), (cloud_node_id, "Cloud Node")]:
             status = await orchestrator.get_node_status(node_id)
+
             if status:
                 cpu_util = status['resource_utilization'].get('cpu', 0)
+
                 print(f"🖥️ {node_name}: {status['running_tasks']} tasks, CPU: {cpu_util:.1%}")
         
         # Get orchestrator status
+
         status = orchestrator.get_orchestrator_status()
         print(f"📊 Orchestrator metrics - Total tasks: {status['metrics']['total_tasks']}, Completed: {status['metrics']['completed_tasks']}")
+
         
     finally:
         await orchestrator.stop()
@@ -421,16 +460,19 @@ async def demo_integration():
         resource_monitoring_enabled=False,
         metrics_collection_enabled=False
     ))
+
     
     mec_integration = MECIntegrationLayer(MECIntegrationConfig(
         monitoring_interval_seconds=300,
         qos_management_enabled=False
     ))
+
     
     iot_mesh = IoTMeshOrchestrator(IoTMeshConfig(
         auto_healing_enabled=False,
         device_heartbeat_interval_seconds=300
     ))
+
     
     fog_computing = FogComputingOrchestrator(FogComputingConfig(
         enable_auto_scaling=False,
@@ -448,6 +490,7 @@ async def demo_integration():
         
         # Register components that work together
         # 1. Register an edge node in fog computing
+
         fog_node_id = await fog_computing.register_fog_node(
             node_name="integrated-edge-node",
             tier=ProcessingTier.FOG_TIER,
@@ -456,6 +499,7 @@ async def demo_integration():
         )
         
         # 2. Register a MEC service for AI inference
+
         mec_service_id = await mec_integration.register_mec_service(
             service_name="integrated-ai-service",
             service_type=ServiceType.AI_INFERENCE,
@@ -464,12 +508,14 @@ async def demo_integration():
         )
         
         # 3. Register IoT devices that will use these services
+
         iot_device_id = await iot_mesh.register_device(
             device_name="integrated-smart-sensor",
             device_type=DeviceType.SENSOR,
             capabilities=[DeviceCapability.SENSING, DeviceCapability.AI_INFERENCE],
             protocols=[CommunicationProtocol.CELLULAR_5G, CommunicationProtocol.WIFI]
         )
+
         
         print(f"🔧 Registered fog node: {fog_node_id[:8]}...")
         print(f"📡 Registered MEC service: {mec_service_id[:8]}...")
@@ -479,15 +525,21 @@ async def demo_integration():
         print("🤝 Components integrated and ready for coordinated edge computing!")
         
         # Get status from all components
+
         edge_status = edge_inference.get_engine_status()
+
         mec_status = mec_integration.get_integration_status()
+
         iot_status = iot_mesh.get_network_status()
+
         fog_status = fog_computing.get_orchestrator_status()
+
         
         print(f"📊 Edge Inference: {edge_status['edge_orchestrator']['optimization_strategy']}")
         print(f"📊 MEC Integration: {len(mec_status['services'])} services, {len(mec_status['network_slices'])} slices")
         print(f"📊 IoT Mesh: {iot_status['metrics']['total_devices']} devices")
         print(f"📊 Fog Computing: {fog_status['metrics']['total_nodes']} nodes")
+
         
     finally:
         # Stop all components
@@ -517,11 +569,13 @@ async def main():
         await demo_iot_mesh_network()
         await demo_fog_computing()
         await demo_integration()
+
         
         print("\n" + "="*80)
         print("🎉 EDGE COMPUTING LAYER DEMONSTRATION COMPLETED SUCCESSFULLY!")
         print("All components are working correctly and ready for production use.")
         print("="*80)
+
         
     except Exception as e:
         logger.error(f"Demo failed: {e}")

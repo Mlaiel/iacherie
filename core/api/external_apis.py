@@ -16,7 +16,8 @@ import json
 logger = logging.getLogger(__name__)
 
 class APIProtocol(Enum):
-    """Protocoles d'API"""
+    """
+Protocoles d'API"""
     REST = "rest"
     GRAPHQL = "graphql"
     WEBSOCKET = "websocket"
@@ -24,7 +25,8 @@ class APIProtocol(Enum):
     RPC = "rpc"
 
 class AuthMethod(Enum):
-    """Méthodes d'authentification"""
+    """
+Méthodes d'authentification"""
     API_KEY = "api_key"
     BEARER_TOKEN = "bearer_token"
     OAUTH2 = "oauth2"
@@ -33,7 +35,8 @@ class AuthMethod(Enum):
     NONE = "none"
 
 class ExternalAPI:
-    """Classe représentant une API externe"""
+    """
+Classe représentant une API externe"""
     
     def __init__(self, name: str, base_url: str, protocol: APIProtocol = APIProtocol.REST):
         self.id = str(uuid.uuid4())
@@ -52,7 +55,8 @@ class ExternalAPI:
         self.metadata = {}
         
     def set_auth(self, method: AuthMethod, credentials: Dict[str, str]):
-        """Configure l'authentification"""
+        """
+Configure l'authentification"""
         self.auth_method = method
         
         if method == AuthMethod.API_KEY:
@@ -72,7 +76,8 @@ class ExternalAPI:
         logger.info(f"Auth configured for {self.name}: {method.value}")
     
     def make_request(self, endpoint: str, method: str = "GET", data: Dict = None) -> Dict[str, Any]:
-        """Effectue une requête vers l'API externe (simulation)"""
+        """
+Effectue une requête vers l'API externe (simulation)"""
         url = f"{self.base_url}{endpoint}"
         self.last_used = datetime.now()
         
@@ -92,7 +97,8 @@ class ExternalAPI:
         return response
     
     def health_check(self) -> Dict[str, Any]:
-        """Vérifie la santé de l'API externe"""
+        """
+Vérifie la santé de l'API externe"""
         try:
             response = self.make_request('/health', 'GET')
             is_healthy = response.get('status_code', 500) < 400
@@ -114,7 +120,8 @@ class ExternalAPI:
             }
 
 class ExternalAPIRegistry:
-    """Registre des APIs externes"""
+    """
+Registre des APIs externes"""
     
     def __init__(self):
         self.apis = {}
@@ -122,38 +129,45 @@ class ExternalAPIRegistry:
         logger.info("ExternalAPIRegistry initialized - EXTERNAL API MANAGEMENT READY!")
     
     def register_api(self, api: ExternalAPI) -> str:
-        """Enregistre une API externe"""
+        """
+Enregistre une API externe"""
         self.apis[api.id] = api
         logger.info(f"External API registered: {api.name} ({api.id})")
         return api.id
     
     def get_api(self, api_id: str) -> Optional[ExternalAPI]:
-        """Récupère une API par ID"""
+        """
+Récupère une API par ID"""
         return self.apis.get(api_id)
     
     def get_api_by_name(self, name: str) -> Optional[ExternalAPI]:
-        """Récupère une API par nom"""
+        """
+Récupère une API par nom"""
         for api in self.apis.values():
             if api.name == name:
                 return api
         return None
     
     def list_apis(self) -> List[ExternalAPI]:
-        """Liste toutes les APIs"""
+        """
+Liste toutes les APIs"""
         return list(self.apis.values())
     
     def create_api_group(self, group_name: str, api_ids: List[str]):
-        """Crée un groupe d'APIs"""
+        """
+Crée un groupe d'APIs"""
         self.api_groups[group_name] = api_ids
         logger.info(f"API group created: {group_name} with {len(api_ids)} APIs")
     
     def get_api_group(self, group_name: str) -> List[ExternalAPI]:
-        """Récupère un groupe d'APIs"""
+        """
+Récupère un groupe d'APIs"""
         api_ids = self.api_groups.get(group_name, [])
         return [self.apis[api_id] for api_id in api_ids if api_id in self.apis]
     
     def health_check_all(self) -> Dict[str, Any]:
-        """Vérifie la santé de toutes les APIs"""
+        """
+Vérifie la santé de toutes les APIs"""
         results = []
         for api in self.apis.values():
             results.append(api.health_check())
@@ -170,7 +184,8 @@ class ExternalAPIRegistry:
         }
 
 class ExternalAPIManager:
-    """Gestionnaire d'APIs externes principal"""
+    """
+Gestionnaire d'APIs externes principal"""
     
     def __init__(self):
         self.registry = ExternalAPIRegistry()
@@ -179,13 +194,15 @@ class ExternalAPIManager:
         logger.info("ExternalAPIManager initialized - EXTERNAL API SYSTEM OPERATIONAL!")
     
     def create_api(self, name: str, base_url: str, protocol: str = "rest") -> str:
-        """Crée une nouvelle API externe"""
+        """
+Crée une nouvelle API externe"""
         api_protocol = APIProtocol(protocol.lower())
         api = ExternalAPI(name, base_url, api_protocol)
         return self.registry.register_api(api)
     
     def configure_auth(self, api_name: str, auth_method: str, credentials: Dict[str, str]) -> bool:
-        """Configure l'authentification pour une API"""
+        """
+Configure l'authentification pour une API"""
         api = self.registry.get_api_by_name(api_name)
         if api:
             method = AuthMethod(auth_method.lower())
@@ -194,7 +211,8 @@ class ExternalAPIManager:
         return False
     
     def make_api_call(self, api_name: str, endpoint: str, method: str = "GET", data: Dict = None) -> Dict[str, Any]:
-        """Effectue un appel vers une API externe"""
+        """
+Effectue un appel vers une API externe"""
         api = self.registry.get_api_by_name(api_name)
         if not api:
             return {
@@ -206,7 +224,8 @@ class ExternalAPIManager:
         return api.make_request(endpoint, method, data)
     
     def get_api_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques des APIs externes"""
+        """
+Retourne les statistiques des APIs externes"""
         apis = self.registry.list_apis()
         return {
             'total_apis': len(apis),
@@ -234,32 +253,37 @@ class ExternalAPIManager:
 
 # Instances prédéfinies pour les APIs courantes
 class CommonAPIs:
-    """APIs communes prêtes à l'emploi"""
+    """
+APIs communes prêtes à l'emploi"""
     
     @staticmethod
     def create_freesound_api() -> ExternalAPI:
-        """Crée une instance de l'API Freesound"""
+        """
+Crée une instance de l'API Freesound"""
         api = ExternalAPI("freesound", "https://freesound.org/apiv2", APIProtocol.REST)
         api.set_auth(AuthMethod.API_KEY, {'api_key': 'demo_key'})
         return api
     
     @staticmethod
     def create_openai_api() -> ExternalAPI:
-        """Crée une instance de l'API OpenAI"""
+        """
+Crée une instance de l'API OpenAI"""
         api = ExternalAPI("openai", "https://api.openai.com/v1", APIProtocol.REST)
         api.set_auth(AuthMethod.BEARER_TOKEN, {'token': 'demo_token'})
         return api
     
     @staticmethod
     def create_google_tts_api() -> ExternalAPI:
-        """Crée une instance de l'API Google TTS"""
+        """
+Crée une instance de l'API Google TTS"""
         api = ExternalAPI("google_tts", "https://texttospeech.googleapis.com/v1", APIProtocol.REST)
         api.set_auth(AuthMethod.API_KEY, {'api_key': 'demo_key'})
         return api
     
     @staticmethod
     def create_security_scanner_api() -> ExternalAPI:
-        """Crée une instance de l'API Security Scanner"""
+        """
+Crée une instance de l'API Security Scanner"""
         api = ExternalAPI("security_scanner", "https://api.securityscanner.local/v1", APIProtocol.REST)
         api.set_auth(AuthMethod.JWT, {'token': 'demo_jwt'})
         return api
@@ -269,7 +293,8 @@ external_api_manager = ExternalAPIManager()
 
 # Auto-configuration des APIs communes
 def setup_common_apis():
-    """Configure les APIs communes"""
+    """
+Configure les APIs communes"""
     try:
         # Freesound API
         freesound_api = CommonAPIs.create_freesound_api()
@@ -297,27 +322,33 @@ setup_common_apis()
 
 # Fonctions utilitaires
 def get_external_api(name: str) -> Optional[ExternalAPI]:
-    """Récupère une API externe par nom"""
+    """
+Récupère une API externe par nom"""
     return external_api_manager.registry.get_api_by_name(name)
 
 def call_external_api(api_name: str, endpoint: str, method: str = "GET", data: Dict = None) -> Dict[str, Any]:
-    """Appelle une API externe"""
+    """
+Appelle une API externe"""
     return external_api_manager.make_api_call(api_name, endpoint, method, data)
 
 def create_external_api(name: str, base_url: str, protocol: str = "rest") -> str:
-    """Crée une nouvelle API externe"""
+    """
+Crée une nouvelle API externe"""
     return external_api_manager.create_api(name, base_url, protocol)
 
 def configure_api_auth(api_name: str, auth_method: str, credentials: Dict[str, str]) -> bool:
-    """Configure l'authentification d'une API"""
+    """
+Configure l'authentification d'une API"""
     return external_api_manager.configure_auth(api_name, auth_method, credentials)
 
 def health_check_apis() -> Dict[str, Any]:
-    """Vérifie la santé de toutes les APIs externes"""
+    """
+Vérifie la santé de toutes les APIs externes"""
     return external_api_manager.registry.health_check_all()
 
 def get_api_statistics() -> Dict[str, Any]:
-    """Récupère les statistiques des APIs"""
+    """
+Récupère les statistiques des APIs"""
     return external_api_manager.get_api_stats()
 
 # Exports

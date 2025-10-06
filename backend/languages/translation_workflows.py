@@ -31,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowStatus(Enum):
-    """Translation workflow statuses"""
+    """
+        Translation workflow statuses"""
     PENDING = "pending"
     ASSIGNED = "assigned"
     IN_PROGRESS = "in_progress"
@@ -99,7 +100,8 @@ class TranslatorProfile:
 
 @dataclass
 class WorkflowStep:
-    """Individual step in translation workflow"""
+    """
+        Individual step in translation workflow"""
     step_id: str
     step_type: str
     assigned_to: Optional[str] = None
@@ -135,7 +137,8 @@ class TranslationJob:
 
 @dataclass
 class TranslationVersion:
-    """Version of translation with history"""
+    """
+        Version of translation with history"""
     version_id: str
     job_id: str
     content: str
@@ -166,7 +169,8 @@ class ReviewFeedback:
 
 @dataclass
 class WorkflowTemplate:
-    """Template defining workflow steps"""
+    """
+        Template defining workflow steps"""
     template_id: str
     name: str
     workflow_type: WorkflowType
@@ -178,7 +182,8 @@ class WorkflowTemplate:
 
 @dataclass
 class CollaborationSession:
-    """Real-time collaboration session"""
+    """
+        Real-time collaboration session"""
     session_id: str
     job_id: str
     participants: List[str]
@@ -196,7 +201,8 @@ class TranslationWorkflowEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize translation workflow engine"""
+        """
+        Initialize translation workflow engine"""
         self.config = config or {}
         
         # Storage for workflow data
@@ -221,6 +227,7 @@ class TranslationWorkflowEngine:
         
         # Load sample translators (would come from database in production)
         self._load_sample_translators()
+
         
         logger.info("TranslationWorkflowEngine initialized")
     
@@ -247,19 +254,27 @@ class TranslationWorkflowEngine:
             Created TranslationJob
         """
         job_id = str(uuid.uuid4())
+
         word_count = len(source_content.split())
+
         
         if deadline is None:
             # Estimate deadline based on word count and workflow type
+
             hours_per_1000_words = {
                 WorkflowType.EXPRESS: 4,
                 WorkflowType.STANDARD: 8,
                 WorkflowType.PREMIUM: 16,
                 WorkflowType.HYBRID: 6
             }
+
             
             estimated_hours = (word_count / 1000) * hours_per_1000_words.get(workflow_type, 8)
+
+
             deadline = datetime.now(timezone.utc) + timedelta(hours=estimated_hours)
+
+
         
         job = TranslationJob(
             job_id=job_id,
@@ -274,6 +289,7 @@ class TranslationWorkflowEngine:
             client_id=client_id,
             created_at=datetime.now(timezone.utc)
         )
+
         
         self.translation_jobs[job_id] = job
         self.workflow_stats["total_jobs"] += 1
@@ -281,8 +297,10 @@ class TranslationWorkflowEngine:
         
         # Initialize workflow
         await self._initialize_job_workflow(job)
+
         
         logger.info(f"Translation job created: {job_id} ({source_language} -> {target_language})")
+
         
         return job
     
@@ -290,22 +308,27 @@ class TranslationWorkflowEngine:
                               translator_id: Optional[str] = None) -> bool:
         """
         Assign translator to a job (automatic if translator_id not provided)
+
         
         Args:
             job_id: Job identifier
             translator_id: Specific translator to assign (optional)
+
             
         Returns:
             Success status
         """
         if job_id not in self.translation_jobs:
             return False
+
         
         job = self.translation_jobs[job_id]
         
         if translator_id is None:
             # Auto-assign best available translator
+
             translator_id = await self._find_best_translator(job)
+
         
         if translator_id and translator_id in self.translators:
             translator = self.translators[translator_id]
@@ -321,8 +344,10 @@ class TranslationWorkflowEngine:
                 
                 # Update workflow step
                 await self._update_workflow_step(job_id, "translation", "assigned", translator_id)
+
                 
                 logger.info(f"Translator {translator_id} assigned to job {job_id}")
+
                 return True
         
         return False
@@ -344,6 +369,8 @@ class TranslationWorkflowEngine:
         """
         if job_id not in self.translation_jobs:
             raise ValueError(f"Job {job_id} not found")
+
+
         
         job = self.translation_jobs[job_id]
         
@@ -351,8 +378,11 @@ class TranslationWorkflowEngine:
             raise ValueError("Translator not assigned to this job")
         
         # Create new version
+
         version_id = str(uuid.uuid4())
+
         version_number = len(self.translation_versions.get(job_id, [])) + 1
+
         
         version = TranslationVersion(
             version_id=version_id,
@@ -363,6 +393,7 @@ class TranslationWorkflowEngine:
             version_number=version_number,
             change_summary=change_summary
         )
+
         
         if job_id not in self.translation_versions:
             self.translation_versions[job_id] = []
@@ -377,8 +408,10 @@ class TranslationWorkflowEngine:
         
         # Update workflow step
         await self._update_workflow_step(job_id, "review", "pending")
+
         
         logger.info(f"Translation submitted for job {job_id}, version {version_number}")
+
         
         return version_id
     
@@ -394,6 +427,7 @@ class TranslationWorkflowEngine:
             reviewer_id: Reviewer identifier
             review_type: Type of review
             score: Quality score (0.0-1.0)
+
             comments: Review comments
             suggestions: Improvement suggestions
             approved: Whether translation is approved
@@ -402,6 +436,8 @@ class TranslationWorkflowEngine:
             Review ID
         """
         review_id = str(uuid.uuid4())
+
+
         
         review = ReviewFeedback(
             review_id=review_id,
@@ -415,6 +451,7 @@ class TranslationWorkflowEngine:
             approved=approved,
             created_at=datetime.now(timezone.utc)
         )
+
         
         if job_id not in self.review_feedback:
             self.review_feedback[job_id] = []
@@ -422,6 +459,7 @@ class TranslationWorkflowEngine:
         self.review_feedback[job_id].append(review)
         
         # Update job status based on review
+
         job = self.translation_jobs[job_id]
         
         if approved and score >= 0.8:
@@ -430,8 +468,10 @@ class TranslationWorkflowEngine:
         elif not approved or score < 0.6:
             job.status = WorkflowStatus.REJECTED
             await self._request_revision(job_id, version_id, suggestions)
+
         
         logger.info(f"Review submitted for job {job_id}: {score:.2f} ({'approved' if approved else 'rejected'})")
+
         
         return review_id
     
@@ -450,14 +490,19 @@ class TranslationWorkflowEngine:
         session_id = str(uuid.uuid4())
         
         # Get current content for collaboration
+
         job = self.translation_jobs.get(job_id)
         if not job:
             raise ValueError(f"Job {job_id} not found")
+
+
         
         current_content = job.source_content
+
         versions = self.translation_versions.get(job_id, [])
         if versions:
             current_content = versions[-1].content
+
         
         session = CollaborationSession(
             session_id=session_id,
@@ -467,10 +512,12 @@ class TranslationWorkflowEngine:
             last_activity=datetime.now(timezone.utc),
             shared_content=current_content
         )
+
         
         self.collaboration_sessions[session_id] = session
         
         logger.info(f"Collaboration session started for job {job_id} with {len(participants)} participants")
+
         
         return session
     
@@ -484,14 +531,17 @@ class TranslationWorkflowEngine:
             user_id: User making comment
             comment: Comment text
             position: Position in text (optional)
+
             
         Returns:
             Success status
         """
         if session_id not in self.collaboration_sessions:
             return False
+
         
         session = self.collaboration_sessions[session_id]
+
         
         comment_data = {
             "comment_id": str(uuid.uuid4()),
@@ -503,6 +553,7 @@ class TranslationWorkflowEngine:
         
         session.comments.append(comment_data)
         session.last_activity = datetime.now(timezone.utc)
+
         
         return True
     
@@ -522,8 +573,10 @@ class TranslationWorkflowEngine:
         """
         if session_id not in self.collaboration_sessions:
             return False
+
         
         session = self.collaboration_sessions[session_id]
+
         
         change_log = {
             "change_id": str(uuid.uuid4()),
@@ -535,6 +588,7 @@ class TranslationWorkflowEngine:
         
         session.changes_log.append(change_log)
         session.last_activity = datetime.now(timezone.utc)
+
         
         return True
     
@@ -550,15 +604,22 @@ class TranslationWorkflowEngine:
         """
         if job_id not in self.translation_jobs:
             return {"error": "Job not found"}
+
         
         job = self.translation_jobs[job_id]
+
         versions = self.translation_versions.get(job_id, [])
+
         reviews = self.review_feedback.get(job_id, [])
         
         # Calculate progress
+
         template = self.workflow_templates.get(job.workflow_type.value)
+
         total_steps = len(template.steps) if template else 5
+
         completed_steps = len(job.completed_steps)
+
         progress_percentage = (completed_steps / total_steps) * 100
         
         return {
@@ -587,39 +648,54 @@ class TranslationWorkflowEngine:
             Analytics data
         """
         # Calculate metrics
+
         total_jobs = len(self.translation_jobs)
-        completed_jobs = len([j for j in self.translation_jobs.values() 
+
+        completed_jobs = len([j for j in self.translation_jobs.values()
+ 
                              if j.status == WorkflowStatus.COMPLETED])
-        active_jobs = len([j for j in self.translation_jobs.values() 
+
+        active_jobs = len([j for j in self.translation_jobs.values()
+ 
                           if j.status in [WorkflowStatus.ASSIGNED, WorkflowStatus.IN_PROGRESS, 
                                          WorkflowStatus.UNDER_REVIEW]])
         
         # Calculate average completion time
+
         completed_times = []
         for job in self.translation_jobs.values():
             if job.status == WorkflowStatus.COMPLETED:
                 # This would be calculated from actual completion timestamps
-                completion_time = timedelta(hours=24)  # Placeholder
-                completed_times.append(completion_time.total_seconds())
+
+                completion_time = timedelta(hours=24)
+
         
-        avg_completion_time = (sum(completed_times) / len(completed_times) 
+        avg_completion_time = (sum(completed_times) / len(completed_times)
+ 
                               if completed_times else 0) / 3600  # Convert to hours
         
         # Calculate quality metrics
+
         all_reviews = []
         for reviews in self.review_feedback.values():
             all_reviews.extend(reviews)
+
+
         
-        avg_quality_score = (sum(r.score for r in all_reviews) / len(all_reviews) 
+        avg_quality_score = (sum(r.score for r in all_reviews) / len(all_reviews)
+ 
                            if all_reviews else 0.0)
         
         # Status distribution
+
         status_distribution = {}
         for status in WorkflowStatus:
             count = len([j for j in self.translation_jobs.values() if j.status == status])
+
             status_distribution[status.value] = count
         
         # Language pair statistics
+
         language_pairs = {}
         for job in self.translation_jobs.values():
             pair = f"{job.source_language}-{job.target_language}"
@@ -659,6 +735,7 @@ class TranslationWorkflowEngine:
                 translator.active_jobs < 5):
                 
                 # Calculate score based on specialization, rating, and availability
+
                 score = translator.rating
                 
                 if job.domain in translator.specializations:
@@ -668,16 +745,19 @@ class TranslationWorkflowEngine:
                 score -= translator.active_jobs * 0.1
                 
                 candidates.append((translator_id, score))
+
         
         if candidates:
             # Return translator with highest score
             candidates.sort(key=lambda x: x[1], reverse=True)
+
             return candidates[0][0]
         
         return None
     
     async def _assign_reviewer(self, job: TranslationJob):
-        """Assign reviewer to a job"""
+        """
+        Assign reviewer to a job"""
         # Find available reviewer with appropriate qualifications
         for translator_id, translator in self.translators.items():
             if (translator_id != job.assigned_translator and
@@ -690,11 +770,13 @@ class TranslationWorkflowEngine:
     
     async def _update_workflow_step(self, job_id: str, step_name: str, 
                                   status: str, assigned_to: Optional[str] = None):
-        """Update workflow step status"""
+        """
+        Update workflow step status"""
         job = self.translation_jobs[job_id]
         
         if status == "completed" and step_name not in job.completed_steps:
             job.completed_steps.append(step_name)
+
         
         job.current_step = step_name
         
@@ -707,6 +789,7 @@ class TranslationWorkflowEngine:
     async def _finalize_translation(self, job_id: str, version_id: str):
         """Finalize approved translation"""
         job = self.translation_jobs[job_id]
+
         versions = self.translation_versions.get(job_id, [])
         
         # Mark version as final
@@ -744,6 +827,7 @@ class TranslationWorkflowEngine:
             "suggestions": suggestions,
             "requested_at": datetime.now(timezone.utc).isoformat()
         })
+
         
         logger.info(f"Revision requested for job {job_id}")
     
@@ -874,6 +958,7 @@ class TranslationWorkflowEngine:
         
         for translator_data in sample_translators:
             profile = TranslatorProfile(**translator_data)
+
             self.translators[profile.translator_id] = profile
     
     async def get_workflow_capabilities(self) -> Dict[str, Any]:

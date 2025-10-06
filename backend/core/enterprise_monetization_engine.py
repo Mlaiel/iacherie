@@ -17,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 
 class EnterpriseMonetizationEngine:
-    """Enterprise monetization and revenue management system"""
+    """
+        Enterprise monetization and revenue management system"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -30,6 +31,7 @@ class EnterpriseMonetizationEngine:
         # Initialize default subscription plans
         self._initialize_subscription_plans()
         self._initialize_pricing_models()
+
         
         self.logger.info("✅ EnterpriseMonetizationEngine initialized")
     
@@ -123,9 +125,13 @@ class EnterpriseMonetizationEngine:
                     "success": False,
                     "error": "Invalid plan ID"
                 }
+
             
             plan = self.subscription_plans[plan_id]
+
             subscription_id = str(uuid.uuid4())
+
+
             
             subscription = {
                 "subscription_id": subscription_id,
@@ -143,10 +149,12 @@ class EnterpriseMonetizationEngine:
             }
             
             # Store subscription (in production, use database)
+
             if user_id not in self.revenue_streams:
                 self.revenue_streams[user_id] = {"subscriptions": []}
             
             self.revenue_streams[user_id]["subscriptions"].append(subscription)
+
             
             return {
                 "success": True,
@@ -156,6 +164,7 @@ class EnterpriseMonetizationEngine:
             
         except Exception as e:
             self.logger.error(f"Subscription creation failed: {str(e)}")
+
             return {
                 "success": False,
                 "error": "Subscription creation failed",
@@ -166,6 +175,8 @@ class EnterpriseMonetizationEngine:
         """Process payment transaction"""
         try:
             transaction_id = str(uuid.uuid4())
+
+
             
             transaction = {
                 "transaction_id": transaction_id,
@@ -182,6 +193,7 @@ class EnterpriseMonetizationEngine:
             
             # Update revenue analytics
             self._update_revenue_analytics(transaction)
+
             
             return {
                 "success": True,
@@ -191,6 +203,7 @@ class EnterpriseMonetizationEngine:
             
         except Exception as e:
             self.logger.error(f"Payment processing failed: {str(e)}")
+
             return {
                 "success": False,
                 "error": "Payment processing failed",
@@ -200,6 +213,7 @@ class EnterpriseMonetizationEngine:
     def _update_revenue_analytics(self, transaction: Dict[str, Any]):
         """Update revenue analytics with new transaction"""
         today = datetime.utcnow().date().isoformat()
+
         
         if "daily_revenue" not in self.revenue_analytics:
             self.revenue_analytics["daily_revenue"] = {}
@@ -210,6 +224,7 @@ class EnterpriseMonetizationEngine:
                 "transactions": 0,
                 "currency": "USD"
             }
+
         
         daily = self.revenue_analytics["daily_revenue"][today]
         daily["total"] += transaction["amount"]
@@ -222,6 +237,8 @@ class EnterpriseMonetizationEngine:
                 transaction["amount"] 
                 for transaction in self.payment_transactions
             )
+
+
             
             active_subscriptions = 0
             for user_streams in self.revenue_streams.values():
@@ -241,6 +258,7 @@ class EnterpriseMonetizationEngine:
             
         except Exception as e:
             self.logger.error(f"Revenue report generation failed: {str(e)}")
+
             return {
                 "error": "Report generation failed",
                 "message": str(e)
@@ -251,14 +269,19 @@ class EnterpriseMonetizationEngine:
         try:
             if plan_id not in self.subscription_plans:
                 return {"error": "Invalid plan ID"}
+
             
             plan = self.subscription_plans[plan_id]
+
             base_price = plan["price"]
             
             # Apply yearly discount if applicable
             if billing_cycle == "yearly":
                 yearly_discount = self.pricing_models["subscription"]["discount_yearly"]
+
                 discounted_price = base_price * Decimal(str(1 - yearly_discount))
+
+
                 annual_price = discounted_price * 12
                 
                 return {
@@ -279,6 +302,7 @@ class EnterpriseMonetizationEngine:
             
         except Exception as e:
             self.logger.error(f"Pricing calculation failed: {str(e)}")
+
             return {"error": "Pricing calculation failed"}
     
     def get_health_status(self) -> Dict[str, Any]:

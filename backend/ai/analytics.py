@@ -34,7 +34,8 @@ from datetime import datetime, timedelta
 import json
 
 class AnalyticsManager:
-    """Enterprise Analytics Manager with professional implementation"""
+    """
+        Enterprise Analytics Manager with professional implementation"""
     
     def __init__(self, config: Optional[Dict] = None):
         self.config = config or {
@@ -58,7 +59,8 @@ class AnalyticsManager:
         }
 
 class AnalyticsEngine:
-    """Enterprise Analytics Engine with professional AI algorithms"""
+    """
+        Enterprise Analytics Engine with professional AI algorithms"""
     
     def __init__(self, config: Optional[Dict] = None):
         self.config = config or {'processing_level': 'enterprise'}
@@ -74,7 +76,8 @@ class AnalyticsEngine:
         }
 
 class TrendManager:
-    """Enterprise Trend Analysis Manager"""
+    """
+        Enterprise Trend Analysis Manager"""
     
     def __init__(self, config: Optional[Dict] = None):
         self.config = config or {'trend_analysis': 'advanced'}
@@ -111,7 +114,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AnalyticsRequest:
-    """Request structure for analytics operations"""
+    """
+        Request structure for analytics operations"""
     request_id: str
     analysis_type: str  # 'trend', 'engagement', 'audience', 'competitor'
     data: Dict[str, Any]
@@ -123,7 +127,8 @@ class AnalyticsRequest:
 
 @dataclass
 class AnalyticsResponse:
-    """Response structure for analytics operations"""
+    """
+        Response structure for analytics operations"""
     request_id: str
     success: bool
     analysis_type: str
@@ -135,7 +140,8 @@ class AnalyticsResponse:
     timestamp: datetime = field(default_factory=datetime.now)
 
 class TrendAnalyzer:
-    """Consolidated Trend Analysis - equivalent to agent_trend_analyzer.py"""
+    """
+        Consolidated Trend Analysis - equivalent to agent_trend_analyzer.py"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -144,9 +150,11 @@ class TrendAnalyzer:
         self._initialize()
     
     def _initialize(self):
-        """Initialize trend analysis components"""
+        """
+        Initialize trend analysis components"""
         try:
             self.trend_manager = TrendManager(self.config)
+
             self.trend_engine = TrendEngine(self.config)
         except Exception as e:
             logger.warning(f"Could not initialize trend components: {e}")
@@ -154,9 +162,11 @@ class TrendAnalyzer:
     async def analyze_trends(self, request: AnalyticsRequest) -> AnalyticsResponse:
         """Analyze trends in content, engagement, or market data"""
         start_time = datetime.now()
+
         
         try:
             # Prepare trend analysis
+
             trend_data = {
                 'platform': request.platform,
                 'date_range': request.date_range,
@@ -168,14 +178,21 @@ class TrendAnalyzer:
             # Perform trend analysis
             if self.trend_engine:
                 results = await self._analyze_with_engine(trend_data)
+
             else:
                 results = await self._fallback_trend_analysis(trend_data)
             
             # Generate insights
+
             insights = self._generate_trend_insights(results)
+
+
             metrics = self._extract_trend_metrics(results)
+
+
             
             processing_time = (datetime.now() - start_time).total_seconds()
+
             
             return AnalyticsResponse(
                 request_id=request.request_id,
@@ -186,9 +203,11 @@ class TrendAnalyzer:
                 metrics=metrics,
                 processing_time=processing_time
             )
+
             
         except Exception as e:
             logger.error(f"Trend analysis failed: {e}")
+
             return AnalyticsResponse(
                 request_id=request.request_id,
                 success=False,
@@ -208,7 +227,8 @@ class TrendAnalyzer:
         }
     
     async def _fallback_trend_analysis(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Fallback trend analysis when engine unavailable"""
+        """
+        Fallback trend analysis when engine unavailable"""
         return {
             'trends': ['fallback_trend_data'],
             'patterns': {'growth': 'moderate'},
@@ -217,22 +237,27 @@ class TrendAnalyzer:
         }
     
     def _generate_trend_insights(self, results: Dict[str, Any]) -> List[str]:
-        """Generate human-readable insights from trend results"""
+        """
+        Generate human-readable insights from trend results"""
         insights = []
         
         if results.get('trends'):
             insights.append("Tendances identifiées dans les données")
+
         
         if results.get('patterns', {}).get('growth') == 'high':
             insights.append("Croissance forte détectée")
         elif results.get('patterns', {}).get('growth') == 'moderate':
             insights.append("Croissance modérée observée")
+
+
         
         confidence = results.get('confidence_scores', {}).get('overall', 0)
         if confidence > 0.8:
             insights.append("Prédictions avec haute confiance")
         elif confidence > 0.6:
             insights.append("Prédictions avec confiance modérée")
+
         
         return insights
     
@@ -245,7 +270,8 @@ class TrendAnalyzer:
         }
 
 class EngagementPredictor:
-    """Consolidated Engagement Prediction - equivalent to agent_engagement_predictor.py"""
+    """
+        Consolidated Engagement Prediction - equivalent to agent_engagement_predictor.py"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -254,9 +280,11 @@ class EngagementPredictor:
         self._initialize()
     
     def _initialize(self):
-        """Initialize engagement prediction components"""
+        """
+        Initialize engagement prediction components"""
         try:
             self.engagement_manager = EngagementManager(self.config)
+
             self.engagement_engine = EngagementEngine(self.config)
         except Exception as e:
             logger.warning(f"Could not initialize engagement components: {e}")
@@ -264,9 +292,11 @@ class EngagementPredictor:
     async def predict_engagement(self, request: AnalyticsRequest) -> AnalyticsResponse:
         """Predict engagement for content or campaigns"""
         start_time = datetime.now()
+
         
         try:
             # Prepare engagement prediction
+
             engagement_data = {
                 'content_type': request.data.get('content_type'),
                 'historical_data': request.data.get('historical_data', {}),
@@ -278,14 +308,21 @@ class EngagementPredictor:
             # Perform engagement prediction
             if self.engagement_engine:
                 results = await self._predict_with_engine(engagement_data)
+
             else:
                 results = await self._fallback_engagement_prediction(engagement_data)
             
             # Generate insights
+
             insights = self._generate_engagement_insights(results)
+
+
             metrics = self._extract_engagement_metrics(results)
+
+
             
             processing_time = (datetime.now() - start_time).total_seconds()
+
             
             return AnalyticsResponse(
                 request_id=request.request_id,
@@ -296,9 +333,11 @@ class EngagementPredictor:
                 metrics=metrics,
                 processing_time=processing_time
             )
+
             
         except Exception as e:
             logger.error(f"Engagement prediction failed: {e}")
+
             return AnalyticsResponse(
                 request_id=request.request_id,
                 success=False,
@@ -317,7 +356,8 @@ class EngagementPredictor:
         }
     
     async def _fallback_engagement_prediction(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Fallback engagement prediction"""
+        """
+        Fallback engagement prediction"""
         return {
             'predicted_engagement': {'likes': 100, 'comments': 20, 'shares': 10},
             'optimization_suggestions': ['Publier entre 18h-20h'],
@@ -326,18 +366,23 @@ class EngagementPredictor:
         }
     
     def _generate_engagement_insights(self, results: Dict[str, Any]) -> List[str]:
-        """Generate engagement insights"""
+        """
+        Generate engagement insights"""
         insights = []
+
         
         engagement = results.get('predicted_engagement', {})
         if engagement.get('likes', 0) > 50:
             insights.append("Engagement élevé prévu pour ce contenu")
+
         
         if results.get('best_posting_times'):
             insights.append("Heures optimales de publication identifiées")
+
         
         if results.get('optimization_suggestions'):
             insights.append("Suggestions d'optimisation disponibles")
+
         
         return insights
     
@@ -352,7 +397,8 @@ class EngagementPredictor:
         }
 
 class AudienceAnalyzer:
-    """Consolidated Audience Analysis - equivalent to agent_audience_analyzer.py"""
+    """
+        Consolidated Audience Analysis - equivalent to agent_audience_analyzer.py"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -360,7 +406,8 @@ class AudienceAnalyzer:
         self._initialize()
     
     def _initialize(self):
-        """Initialize audience analysis components"""
+        """
+        Initialize audience analysis components"""
         try:
             self.behavior_agent = UserBehaviorAgent(self.config)
         except Exception as e:
@@ -369,9 +416,11 @@ class AudienceAnalyzer:
     async def analyze_audience(self, request: AnalyticsRequest) -> AnalyticsResponse:
         """Analyze audience behavior and characteristics"""
         start_time = datetime.now()
+
         
         try:
             # Prepare audience analysis
+
             audience_data = {
                 'user_data': request.data.get('user_data', {}),
                 'interaction_history': request.data.get('interaction_history', []),
@@ -382,14 +431,21 @@ class AudienceAnalyzer:
             # Perform audience analysis
             if self.behavior_agent:
                 results = await self._analyze_with_behavior_agent(audience_data)
+
             else:
                 results = await self._fallback_audience_analysis(audience_data)
             
             # Generate insights
+
             insights = self._generate_audience_insights(results)
+
+
             metrics = self._extract_audience_metrics(results)
+
+
             
             processing_time = (datetime.now() - start_time).total_seconds()
+
             
             return AnalyticsResponse(
                 request_id=request.request_id,
@@ -400,9 +456,11 @@ class AudienceAnalyzer:
                 metrics=metrics,
                 processing_time=processing_time
             )
+
             
         except Exception as e:
             logger.error(f"Audience analysis failed: {e}")
+
             return AnalyticsResponse(
                 request_id=request.request_id,
                 success=False,
@@ -422,7 +480,8 @@ class AudienceAnalyzer:
         }
     
     async def _fallback_audience_analysis(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Fallback audience analysis"""
+        """
+        Fallback audience analysis"""
         return {
             'audience_segments': {'primary': 'young_professionals', 'secondary': 'students'},
             'behavioral_patterns': {'peak_activity': 'evenings'},
@@ -432,20 +491,27 @@ class AudienceAnalyzer:
         }
     
     def _generate_audience_insights(self, results: Dict[str, Any]) -> List[str]:
-        """Generate audience insights"""
+        """
+        Generate audience insights"""
         insights = []
+
         
         segments = results.get('audience_segments', {})
         if len(segments) > 1:
             insights.append("Multiple segments d'audience identifiés")
+
+
         
         patterns = results.get('behavioral_patterns', {})
         if patterns.get('peak_activity'):
             insights.append(f"Pic d'activité: {patterns['peak_activity']}")
+
+
         
         engagement = results.get('engagement_patterns', {}).get('response_rate', 0)
         if engagement > 0.1:
             insights.append("Taux d'engagement satisfaisant")
+
         
         return insights
     
@@ -458,7 +524,8 @@ class AudienceAnalyzer:
         }
 
 class CompetitorMonitor:
-    """Consolidated Competitor Monitoring - equivalent to agent_competitor_monitor.py"""
+    """
+        Consolidated Competitor Monitoring - equivalent to agent_competitor_monitor.py"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -466,7 +533,8 @@ class CompetitorMonitor:
         self._initialize()
     
     def _initialize(self):
-        """Initialize competitor monitoring components"""
+        """
+        Initialize competitor monitoring components"""
         try:
             self.competitor_agent = CompetitorMonitoringAgent(self.config)
         except Exception as e:
@@ -475,9 +543,11 @@ class CompetitorMonitor:
     async def monitor_competitors(self, request: AnalyticsRequest) -> AnalyticsResponse:
         """Monitor and analyze competitor activities"""
         start_time = datetime.now()
+
         
         try:
             # Prepare competitor monitoring
+
             competitor_data = {
                 'competitors': request.data.get('competitors', []),
                 'metrics_to_track': request.data.get('metrics', []),
@@ -488,14 +558,21 @@ class CompetitorMonitor:
             # Perform competitor monitoring
             if self.competitor_agent:
                 results = await self._monitor_with_agent(competitor_data)
+
             else:
                 results = await self._fallback_competitor_monitoring(competitor_data)
             
             # Generate insights
+
             insights = self._generate_competitor_insights(results)
+
+
             metrics = self._extract_competitor_metrics(results)
+
+
             
             processing_time = (datetime.now() - start_time).total_seconds()
+
             
             return AnalyticsResponse(
                 request_id=request.request_id,
@@ -506,9 +583,11 @@ class CompetitorMonitor:
                 metrics=metrics,
                 processing_time=processing_time
             )
+
             
         except Exception as e:
             logger.error(f"Competitor monitoring failed: {e}")
+
             return AnalyticsResponse(
                 request_id=request.request_id,
                 success=False,
@@ -528,7 +607,8 @@ class CompetitorMonitor:
         }
     
     async def _fallback_competitor_monitoring(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Fallback competitor monitoring"""
+        """
+        Fallback competitor monitoring"""
         return {
             'competitor_analysis': {'competitor_1': {'engagement': 'high', 'growth': 'moderate'}},
             'performance_comparison': {'relative_position': 'competitive'},
@@ -538,22 +618,29 @@ class CompetitorMonitor:
         }
     
     def _generate_competitor_insights(self, results: Dict[str, Any]) -> List[str]:
-        """Generate competitor insights"""
+        """
+        Generate competitor insights"""
         insights = []
+
         
         analysis = results.get('competitor_analysis', {})
         if analysis:
             insights.append("Analyse concurrentielle complétée")
+
+
         
         opportunities = results.get('market_opportunities', [])
         if opportunities:
             insights.append(f"Opportunités identifiées: {len(opportunities)}")
+
+
         
         threat = results.get('threat_assessment', {}).get('risk_level')
         if threat == 'high':
             insights.append("Niveau de menace élevé détecté")
         elif threat == 'medium':
             insights.append("Niveau de menace modéré")
+
         
         return insights
     
@@ -566,7 +653,8 @@ class CompetitorMonitor:
         }
 
 class AnalyticsHub:
-    """Unified Analytics Hub - Orchestrates all analytics agents"""
+    """
+        Unified Analytics Hub - Orchestrates all analytics agents"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -581,6 +669,7 @@ class AnalyticsHub:
         self.analytics_manager = None
         self.predictive_manager = None
         self._initialize_core_analytics()
+
         
         logger.info("AnalyticsHub initialized with all components")
     
@@ -588,6 +677,7 @@ class AnalyticsHub:
         """Initialize core analytics managers"""
         try:
             self.analytics_manager = AnalyticsManager(self.config)
+
             self.predictive_manager = PredictiveAnalyticsManager(self.config)
         except Exception as e:
             logger.warning(f"Could not initialize core analytics: {e}")
@@ -595,19 +685,25 @@ class AnalyticsHub:
     async def process_analytics_request(self, request: AnalyticsRequest) -> AnalyticsResponse:
         """Process analytics request through appropriate analyzer"""
         logger.info(f"Processing analytics request: {request.analysis_type}")
+
         
         try:
             # Route to appropriate analyzer
             if request.analysis_type == 'trend':
                 return await self.trend_analyzer.analyze_trends(request)
+
             elif request.analysis_type == 'engagement':
                 return await self.engagement_predictor.predict_engagement(request)
+
             elif request.analysis_type == 'audience':
                 return await self.audience_analyzer.analyze_audience(request)
+
             elif request.analysis_type == 'competitor':
                 return await self.competitor_monitor.monitor_competitors(request)
+
             elif request.analysis_type == 'comprehensive':
                 return await self._comprehensive_analysis(request)
+
             else:
                 return AnalyticsResponse(
                     request_id=request.request_id,
@@ -615,9 +711,11 @@ class AnalyticsHub:
                     analysis_type=request.analysis_type,
                     error=f"Unknown analysis type: {request.analysis_type}"
                 )
+
         
         except Exception as e:
             logger.error(f"Analytics processing failed: {e}")
+
             return AnalyticsResponse(
                 request_id=request.request_id,
                 success=False,
@@ -628,9 +726,11 @@ class AnalyticsHub:
     async def _comprehensive_analysis(self, request: AnalyticsRequest) -> AnalyticsResponse:
         """Perform comprehensive analysis using all analyzers"""
         start_time = datetime.now()
+
         
         try:
             # Run all analyses in parallel
+
             tasks = [
                 self.trend_analyzer.analyze_trends(
                     AnalyticsRequest(f"{request.request_id}_trend", "trend", request.data, 
@@ -651,29 +751,38 @@ class AnalyticsHub:
             ]
             
             # Wait for all analyses to complete
+
             results = await asyncio.gather(*tasks, return_exceptions=True)
             
             # Combine results
+
             comprehensive_results = {}
+
             comprehensive_insights = []
+
             comprehensive_metrics = {}
             
             for i, result in enumerate(results):
                 if isinstance(result, Exception):
                     logger.error(f"Analysis {i} failed: {result}")
+
                     continue
                 
                 if result.success:
                     comprehensive_results[result.analysis_type] = result.results
                     if result.insights:
                         comprehensive_insights.extend(result.insights)
+
                     if result.metrics:
                         comprehensive_metrics.update(result.metrics)
             
             # Add overall insights
             comprehensive_insights.append("Analyse complète multi-dimensionnelle effectuée")
+
+
             
             processing_time = (datetime.now() - start_time).total_seconds()
+
             
             return AnalyticsResponse(
                 request_id=request.request_id,
@@ -684,9 +793,11 @@ class AnalyticsHub:
                 metrics=comprehensive_metrics,
                 processing_time=processing_time
             )
+
             
         except Exception as e:
             logger.error(f"Comprehensive analysis failed: {e}")
+
             return AnalyticsResponse(
                 request_id=request.request_id,
                 success=False,
@@ -710,7 +821,8 @@ class AnalyticsHub:
 
 # Convenience functions for easy import and usage
 async def analyze_trends(data: Dict[str, Any], config: Optional[Dict[str, Any]] = None) -> AnalyticsResponse:
-    """Convenience function for trend analysis"""
+    """
+        Convenience function for trend analysis"""
     hub = AnalyticsHub(config)
     request = AnalyticsRequest(
         request_id=f"trend_{datetime.now().timestamp()}",

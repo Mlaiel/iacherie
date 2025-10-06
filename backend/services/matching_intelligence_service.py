@@ -107,7 +107,8 @@ class CreatorProfile:
 
 @dataclass
 class MatchingResult:
-    """Résultat de matching"""
+    """
+        Résultat de matching"""
     creator1_id: str
     creator2_id: str
     overall_score: float
@@ -123,7 +124,8 @@ class MatchingResult:
 
 @dataclass
 class CompatibilityScore:
-    """Score de compatibilité détaillé"""
+    """
+        Score de compatibilité détaillé"""
     total_score: float
     skill_compatibility: float
     style_similarity: float
@@ -137,7 +139,8 @@ class CompatibilityScore:
     market_opportunity: float
 
 class AIMatchmaker:
-    """Moteur de matching IA principal"""
+    """
+        Moteur de matching IA principal"""
     
     def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
         self.redis = redis_client
@@ -148,7 +151,8 @@ class AIMatchmaker:
         self.profile_embeddings = {}
         
     async def initialize_ai_models(self) -> Dict[str, Any]:
-        """Initialiser les modèles IA"""
+        """
+        Initialiser les modèles IA"""
         try:
             # Charger les modèles pré-entraînés
             await self._load_pretrained_models()
@@ -161,8 +165,10 @@ class AIMatchmaker:
             
             # Charger les embeddings existants
             await self._load_profile_embeddings()
+
             
             logger.info("🧠 AI Matchmaker models initialized successfully")
+
             
             return {
                 "neural_model_loaded": self.neural_model is not None,
@@ -173,6 +179,7 @@ class AIMatchmaker:
             
         except Exception as e:
             logger.error(f"Failed to initialize AI models: {e}")
+
             raise
     
     async def generate_intelligent_matches(
@@ -183,43 +190,52 @@ class AIMatchmaker:
         """Générer des matches intelligents"""
         try:
             # Récupérer le profil du créateur
+
             creator_profile = await self._get_enhanced_creator_profile(creator_id)
             
             # Obtenir les candidats potentiels
+
             candidate_profiles = await self._get_matching_candidates(
                 creator_profile, matching_request
             )
             
             # Appliquer les filtres préliminaires
+
             filtered_candidates = await self._apply_preliminary_filters(
                 creator_profile, candidate_profiles, matching_request
             )
             
             # Calculer les scores de matching avec multiple méthodes
+
             matching_results = []
             
             for candidate in filtered_candidates:
                 # Matching basé sur le contenu
+
                 content_score = await self._content_based_matching(
                     creator_profile, candidate
                 )
                 
                 # Filtrage collaboratif
+
                 collaborative_score = await self._collaborative_filtering_matching(
                     creator_profile, candidate
                 )
                 
                 # Matching neural
+
                 neural_score = await self._neural_network_matching(
                     creator_profile, candidate
                 )
                 
                 # Analyse comportementale
+
                 behavioral_score = await self._behavioral_matching(
                     creator_profile, candidate
                 )
                 
                 # Score d'ensemble
+
                 ensemble_score = await self._ensemble_matching(
                     creator_profile, candidate, {
                         'content': content_score,
@@ -230,19 +246,24 @@ class AIMatchmaker:
                 )
                 
                 # Calculer la compatibilité détaillée
+
                 compatibility = await self._calculate_detailed_compatibility(
                     creator_profile, candidate
                 )
                 
                 # Générer l'explication du match
+
                 match_explanation = await self._generate_match_explanation(
                     creator_profile, candidate, compatibility
                 )
                 
                 # Prédire la probabilité de succès
+
                 success_probability = await self._predict_collaboration_success(
                     creator_profile, candidate, compatibility
                 )
+
+
                 
                 match_result = MatchingResult(
                     creator1_id=creator_id,
@@ -270,6 +291,7 @@ class AIMatchmaker:
                     confidence_level=ensemble_score['confidence'],
                     matching_method=MatchingMethod.ENSEMBLE_METHOD
                 )
+
                 
                 matching_results.append(match_result)
             
@@ -280,6 +302,7 @@ class AIMatchmaker:
             )
             
             # Appliquer la diversification des résultats
+
             diversified_results = await self._diversify_matching_results(
                 matching_results, matching_request
             )
@@ -288,13 +311,16 @@ class AIMatchmaker:
             await self._save_matching_results_for_learning(
                 creator_id, diversified_results
             )
+
             
             logger.info(f"Generated {len(diversified_results)} intelligent matches for creator {creator_id}")
+
             
             return diversified_results[:matching_request.get('max_results', 10)]
             
         except Exception as e:
             logger.error(f"Failed to generate intelligent matches: {e}")
+
             raise
 
     async def _content_based_matching(
@@ -305,32 +331,38 @@ class AIMatchmaker:
         """Matching basé sur le contenu"""
         try:
             # Analyser la similarité des compétences
+
             skill_similarity = await self._calculate_skill_similarity(
                 creator_profile.skills, candidate_profile.skills
             )
             
             # Analyser la similarité du style créatif
+
             style_similarity = await self._calculate_style_similarity(
                 creator_profile.creative_style, candidate_profile.creative_style
             )
             
             # Analyser la compatibilité d'expérience
+
             experience_compatibility = await self._calculate_experience_compatibility(
                 creator_profile.experience, candidate_profile.experience
             )
             
             # Analyser la similarité du portfolio
+
             portfolio_similarity = await self._calculate_portfolio_similarity(
                 creator_profile.portfolio, candidate_profile.portfolio
             )
             
             # Calculer le score composite
+
             content_score = (
                 skill_similarity * 0.3 +
                 style_similarity * 0.25 +
                 experience_compatibility * 0.25 +
                 portfolio_similarity * 0.2
             )
+
             
             return {
                 "overall_score": content_score,
@@ -342,6 +374,7 @@ class AIMatchmaker:
             
         except Exception as e:
             logger.error(f"Failed content-based matching: {e}")
+
             raise
 
     async def _neural_network_matching(
@@ -355,19 +388,23 @@ class AIMatchmaker:
                 await self.initialize_ai_models()
             
             # Préparer les features pour le modèle neural
+
             features = await self._prepare_neural_features(
                 creator_profile, candidate_profile
             )
             
             # Prédiction avec le modèle neural
+
             neural_prediction = self.neural_model.predict(
                 np.array([features]), verbose=0
             )[0]
             
             # Calculer les scores individuels via attention mechanism
+
             attention_scores = await self._calculate_attention_scores(
                 features, neural_prediction
             )
+
             
             return {
                 "overall_score": float(neural_prediction[0]),
@@ -393,19 +430,23 @@ class MatchingAlgorithm:
         profile1: CreatorProfile,
         profile2: CreatorProfile
     ) -> CompatibilityScore:
-        """Calculer la compatibilité complète"""
+        """
+        Calculer la compatibilité complète"""
         try:
             # Compatibilité des compétences
+
             skill_compatibility = await self._calculate_skill_compatibility(
                 profile1.skills, profile2.skills
             )
             
             # Similarité de style
+
             style_similarity = await self._calculate_advanced_style_similarity(
                 profile1.creative_style, profile2.creative_style
             )
             
             # Match d'expérience
+
             experience_match = await self._calculate_experience_match(
                 profile1.experience, profile2.experience
             )
@@ -416,26 +457,31 @@ class MatchingAlgorithm:
             )
             
             # Fit de communication
+
             communication_fit = await self._calculate_communication_fit(
                 profile1.communication_style, profile2.communication_style
             )
             
             # Synergie créative
+
             creative_synergy = await self._calculate_creative_synergy(
                 profile1, profile2
             )
             
             # Prédiction de succès
+
             success_prediction = await self._predict_success_probability(
                 profile1, profile2
             )
             
             # Évaluation des risques
+
             risk_assessment = await self._assess_collaboration_risks(
                 profile1, profile2
             )
             
             # Potentiel de croissance
+
             growth_potential = await self._calculate_growth_potential(
                 profile1, profile2
             )
@@ -456,6 +502,7 @@ class MatchingAlgorithm:
                 success_prediction * 0.10 +
                 (1 - risk_assessment) * 0.05  # Inverser le risque
             )
+
             
             return CompatibilityScore(
                 total_score=total_score,
@@ -470,9 +517,11 @@ class MatchingAlgorithm:
                 growth_potential=growth_potential,
                 market_opportunity=market_opportunity
             )
+
             
         except Exception as e:
             logger.error(f"Failed to calculate comprehensive compatibility: {e}")
+
             raise
 
     async def _calculate_skill_compatibility(
@@ -483,43 +532,59 @@ class MatchingAlgorithm:
         """Calculer la compatibilité des compétences"""
         try:
             # Compétences communes
+
             common_skills = set(skills1.keys()) & set(skills2.keys())
+
             
             if not common_skills:
                 # Analyser les compétences complémentaires
                 return await self._calculate_complementary_skills(skills1, skills2)
             
             # Calculer la similarité pour les compétences communes
+
             similarities = []
             for skill in common_skills:
                 level1 = skills1[skill]
+
                 level2 = skills2[skill]
                 
                 # Différence de niveau optimale (ni trop similaire, ni trop différente)
+
+
                 level_diff = abs(level1 - level2)
+
                 
                 if level_diff < 0.2:  # Très similaire
+
                     similarity = 0.8
                 elif level_diff < 0.4:  # Complémentaire
+
                     similarity = 1.0
                 elif level_diff < 0.6:  # Différent mais workable
+
                     similarity = 0.6
                 else:  # Trop différent
+
                     similarity = 0.3
                 
                 similarities.append(similarity)
             
             # Analyser les compétences uniques comme bonus
+
             unique_bonus = await self._calculate_unique_skills_bonus(
                 skills1, skills2, common_skills
             )
+
+
             
             base_compatibility = np.mean(similarities) if similarities else 0.0
             
             return min(1.0, base_compatibility + unique_bonus)
+
             
         except Exception as e:
             logger.error(f"Failed to calculate skill compatibility: {e}")
+
             return 0.5
 
 class IntelligentMatching:
@@ -535,34 +600,41 @@ class IntelligentMatching:
         creator_id: str,
         matching_preferences: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Exécuter le pipeline de matching intelligent complet"""
+        """
+        Exécuter le pipeline de matching intelligent complet"""
         try:
             # Phase 1: Préparation et analyse du profil
+
             profile_analysis = await self._analyze_creator_profile_for_matching(
                 creator_id
             )
             
             # Phase 2: Génération des matches candidats
+
             candidate_matches = await self.ai_matchmaker.generate_intelligent_matches(
                 creator_id, matching_preferences
             )
             
             # Phase 3: Optimisation des résultats
+
             optimized_matches = await self._optimize_matching_results(
                 candidate_matches, matching_preferences
             )
             
             # Phase 4: Personnalisation selon les préférences
+
             personalized_matches = await self._personalize_matches(
                 optimized_matches, matching_preferences
             )
             
             # Phase 5: Validation et scoring final
+
             validated_matches = await self._validate_and_rescore_matches(
                 personalized_matches
             )
             
             # Phase 6: Génération des insights et recommandations
+
             matching_insights = await self._generate_matching_insights(
                 creator_id, validated_matches, profile_analysis
             )
@@ -571,6 +643,8 @@ class IntelligentMatching:
             await self._update_learning_models(
                 creator_id, validated_matches, matching_preferences
             )
+
+
             
             pipeline_result = {
                 "creator_id": creator_id,
@@ -585,6 +659,7 @@ class IntelligentMatching:
             }
             
             logger.info(f"Executed intelligent matching pipeline for creator {creator_id}: {len(validated_matches)} matches")
+
             
             return {
                 "success": True,
@@ -596,6 +671,7 @@ class IntelligentMatching:
             
         except Exception as e:
             logger.error(f"Failed to execute intelligent matching pipeline: {e}")
+
             raise
 
 class MatchingIntelligenceService:
@@ -609,23 +685,30 @@ class MatchingIntelligenceService:
         self.intelligent_matching = IntelligentMatching(
             self.ai_matchmaker, self.matching_algorithm
         )
+
         
     async def initialize_service(self) -> Dict[str, Any]:
-        """Initialiser le service de matching"""
+        """
+        Initialiser le service de matching"""
         try:
             # Initialiser les modèles IA
             ai_status = await self.ai_matchmaker.initialize_ai_models()
             
             # Charger les données d'apprentissage
+
             learning_data = await self._load_learning_data()
             
             # Configurer les algorithmes
+
             algorithm_config = await self._configure_matching_algorithms()
             
             # Préparer le cache de matching
+
             cache_status = await self._prepare_matching_cache()
+
             
             logger.info("🎯 Matching Intelligence Service initialized successfully")
+
             
             return {
                 "service": "MatchingIntelligenceService",
@@ -640,6 +723,7 @@ class MatchingIntelligenceService:
             
         except Exception as e:
             logger.error(f"Failed to initialize matching intelligence service: {e}")
+
             raise
     
     async def find_optimal_matches(
@@ -650,16 +734,19 @@ class MatchingIntelligenceService:
         """Trouver les matches optimaux"""
         try:
             # Exécuter le pipeline intelligent complet
+
             pipeline_result = await self.intelligent_matching.execute_intelligent_matching_pipeline(
                 creator_id, matching_request
             )
             
             # Enrichir les résultats avec des données contextuelles
+
             enriched_matches = await self._enrich_matching_results(
                 pipeline_result["pipeline_result"]["top_matches"]
             )
             
             # Générer des recommandations d'actions
+
             action_recommendations = await self._generate_action_recommendations(
                 creator_id, enriched_matches
             )
@@ -668,6 +755,8 @@ class MatchingIntelligenceService:
             quality_metrics = await self._calculate_matching_quality_metrics(
                 enriched_matches
             )
+
+
             
             matching_response = {
                 "creator_id": creator_id,
@@ -682,8 +771,10 @@ class MatchingIntelligenceService:
             
             # Sauvegarder pour analytics
             await self._save_matching_analytics(creator_id, matching_response)
+
             
             logger.info(f"Found {len(enriched_matches)} optimal matches for creator {creator_id}")
+
             
             return {
                 "success": True,
@@ -692,6 +783,7 @@ class MatchingIntelligenceService:
             
         except Exception as e:
             logger.error(f"Failed to find optimal matches: {e}")
+
             raise
     
     # Méthodes privées pour l'implémentation détaillée...

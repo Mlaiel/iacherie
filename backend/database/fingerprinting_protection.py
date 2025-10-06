@@ -48,7 +48,8 @@ Base = declarative_base()
 # ================================
 
 class ContentType(Enum):
-    """Content type enumeration for fingerprinting."""
+    """
+        Content type enumeration for fingerprinting."""
     AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
@@ -491,7 +492,8 @@ class FraudDetection(Base):
 
 
 class BlacklistEntry(Base):
-    """Blacklist management for suspicious users, content, and patterns."""
+    """
+        Blacklist management for suspicious users, content, and patterns."""
     __tablename__ = 'blacklist_entries'
     __table_args__ = (
         Index('idx_blacklist_entry_type', 'entry_type'),
@@ -538,7 +540,8 @@ class BlacklistEntry(Base):
 # ================================
 
 class VectorEmbedding(Base):
-    """Vector embeddings for semantic content analysis."""
+    """
+        Vector embeddings for semantic content analysis."""
     __tablename__ = 'vector_embeddings'
     __table_args__ = (
         Index('idx_vector_embedding_content', 'content_id'),
@@ -574,7 +577,8 @@ class VectorEmbedding(Base):
 # ================================
 
 def get_fingerprinting_protection_models():
-    """Get all fingerprinting and protection models."""
+    """
+        Get all fingerprinting and protection models."""
     return [
         ContentFingerprint,
         FingerprintMatch,
@@ -590,7 +594,8 @@ def get_fingerprinting_protection_models():
 
 
 def create_fingerprinting_protection_tables(engine):
-    """Create all fingerprinting and protection tables."""
+    """
+        Create all fingerprinting and protection tables."""
     try:
         Base.metadata.create_all(engine, tables=[model.__table__ for model in get_fingerprinting_protection_models()])
         logger.info("Successfully created fingerprinting and protection tables")

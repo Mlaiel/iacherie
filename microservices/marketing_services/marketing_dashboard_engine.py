@@ -102,15 +102,21 @@ class MarketingDashboardEngine:
     - A/B testing dashboard pour campaign optimization
     """
     
-    def __init__(self, dashboard_config: DashboardConfig):
-        self.dashboard_config = dashboard_config
+    def __init__(self, dashboard_config: DashboardConfig = None):
+        self.dashboard_config = dashboard_config or DashboardConfig(
+            dashboard_type=DashboardType.PERFORMANCE,
+            refresh_rate_seconds=30,
+            enable_real_time=True,
+            enable_drill_down=True,
+            export_formats=['pdf', 'excel']
+        )
         self.active_dashboards: Dict[str, Dict] = {}
         self.kpi_definitions: Dict[str, KPIDefinition] = {}
         self.widgets: Dict[str, DashboardWidget] = {}
         self.data_sources: Dict[str, Any] = {}
         self.alert_thresholds: Dict[str, Dict] = {}
         
-        logger.info(f"Marketing Dashboard Engine initialized for {dashboard_config.dashboard_type.value}")
+        logger.info(f"Marketing Dashboard Engine initialized for {self.dashboard_config.dashboard_type.value}")
     
     async def create_executive_dashboard(self, executive_config: Dict[str, Any]) -> Dict[str, Any]:
         """

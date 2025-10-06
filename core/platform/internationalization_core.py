@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class InternationalizationCore:
-    """Advanced InternationalizationCore System"""
+    """
+Advanced InternationalizationCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class InternationalizationCore:
 # Module exports
 __all__ = ["InternationalizationCore"]
 
-logger.info("🌐 InternationalizationCore module loaded")
+logger.info("🌐 InternationalizationCore module initialized")

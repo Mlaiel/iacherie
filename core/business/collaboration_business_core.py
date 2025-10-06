@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class CollaborationType(Enum):
-    """Types of collaborations supported"""
+    """
+Types of collaborations supported"""
     PROJECT_COLLABORATION = "project_collaboration"
     CONTENT_COLLABORATION = "content_collaboration"
     SKILL_EXCHANGE = "skill_exchange"
@@ -30,7 +31,8 @@ class CollaborationType(Enum):
     JOINT_VENTURE = "joint_venture"
 
 class CollaborationStatus(Enum):
-    """Status of collaboration"""
+    """
+Status of collaboration"""
     PROPOSED = "proposed"
     NEGOTIATING = "negotiating"
     ACTIVE = "active"
@@ -39,14 +41,16 @@ class CollaborationStatus(Enum):
     PAUSED = "paused"
 
 class PartnershipTier(Enum):
-    """Partnership tier levels"""
+    """
+Partnership tier levels"""
     BASIC = "basic"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
     STRATEGIC = "strategic"
 
 class RevenueShareModel(Enum):
-    """Revenue sharing models"""
+    """
+Revenue sharing models"""
     EQUAL_SPLIT = "equal_split"
     CONTRIBUTION_BASED = "contribution_based"
     INVESTMENT_BASED = "investment_based"
@@ -55,7 +59,8 @@ class RevenueShareModel(Enum):
 
 @dataclass
 class CollaborationProfile:
-    """Creator collaboration profile"""
+    """
+Creator collaboration profile"""
     creator_id: str
     collaboration_preferences: Dict[str, Any]
     available_skills: List[str]
@@ -71,7 +76,8 @@ class CollaborationProfile:
 
 @dataclass
 class PartnershipAgreement:
-    """Partnership agreement structure"""
+    """
+Partnership agreement structure"""
     partnership_id: str
     participants: List[str]
     partnership_type: CollaborationType
@@ -90,7 +96,8 @@ class PartnershipAgreement:
 
 @dataclass
 class CollaborationProject:
-    """Collaboration project management"""
+    """
+Collaboration project management"""
     project_id: str
     project_name: str
     description: str
@@ -111,7 +118,8 @@ class CollaborationProject:
 
 @dataclass
 class RevenueDistribution:
-    """Revenue distribution tracking"""
+    """
+Revenue distribution tracking"""
     distribution_id: str
     collaboration_id: str
     total_revenue: float
@@ -132,7 +140,8 @@ class CollaborationBusinessCore:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize collaboration business core"""
+        """
+Initialize collaboration business core"""
         self.config = config or {}
         self.collaboration_profiles: Dict[str, CollaborationProfile] = {}
         self.partnerships: Dict[str, PartnershipAgreement] = {}
@@ -161,7 +170,8 @@ class CollaborationBusinessCore:
         creator_id: str, 
         preferences: Dict[str, Any]
     ) -> CollaborationProfile:
-        """Create collaboration profile for creator"""
+        """
+Create collaboration profile for creator"""
         try:
             profile = CollaborationProfile(
                 creator_id=creator_id,
@@ -193,7 +203,8 @@ class CollaborationBusinessCore:
         target_id: str, 
         partnership_details: Dict[str, Any]
     ) -> PartnershipAgreement:
-        """Propose new partnership between creators"""
+        """
+Propose new partnership between creators"""
         try:
             partnership_id = str(uuid.uuid4())
             
@@ -230,7 +241,8 @@ class CollaborationBusinessCore:
             raise
     
     async def accept_partnership(self, partnership_id: str, acceptor_id: str) -> bool:
-        """Accept partnership proposal"""
+        """
+Accept partnership proposal"""
         try:
             if partnership_id not in self.partnerships:
                 raise ValueError(f"Partnership not found: {partnership_id}")
@@ -258,7 +270,8 @@ class CollaborationBusinessCore:
         partnership_id: str, 
         project_details: Dict[str, Any]
     ) -> CollaborationProject:
-        """Create collaboration project from partnership"""
+        """
+Create collaboration project from partnership"""
         try:
             if partnership_id not in self.partnerships:
                 raise ValueError(f"Partnership not found: {partnership_id}")
@@ -299,7 +312,8 @@ class CollaborationBusinessCore:
         project_id: str, 
         progress_data: Dict[str, Any]
     ) -> bool:
-        """Update project progress and metrics"""
+        """
+Update project progress and metrics"""
         try:
             if project_id not in self.projects:
                 raise ValueError(f"Project not found: {project_id}")
@@ -338,7 +352,8 @@ class CollaborationBusinessCore:
         collaboration_id: str, 
         total_revenue: float
     ) -> RevenueDistribution:
-        """Calculate revenue distribution based on partnership agreement"""
+        """
+Calculate revenue distribution based on partnership agreement"""
         try:
             if collaboration_id not in self.partnerships:
                 raise ValueError(f"Partnership not found: {collaboration_id}")
@@ -378,7 +393,8 @@ class CollaborationBusinessCore:
         creator_id: str, 
         max_recommendations: int = 10
     ) -> List[Dict[str, Any]]:
-        """Get collaboration recommendations for creator"""
+        """
+Get collaboration recommendations for creator"""
         try:
             if creator_id not in self.collaboration_profiles:
                 raise ValueError(f"Creator profile not found: {creator_id}")
@@ -427,7 +443,8 @@ class CollaborationBusinessCore:
             raise
     
     async def get_collaboration_analytics(self, creator_id: str) -> Dict[str, Any]:
-        """Get collaboration analytics for creator"""
+        """
+Get collaboration analytics for creator"""
         try:
             if creator_id not in self.collaboration_profiles:
                 raise ValueError(f"Creator profile not found: {creator_id}")
@@ -465,7 +482,8 @@ class CollaborationBusinessCore:
             raise
     
     def get_core_metrics(self) -> Dict[str, Any]:
-        """Get core collaboration metrics"""
+        """
+Get core collaboration metrics"""
         return {
             'collaboration_business_core_metrics': self.metrics.copy(),
             'core_status': 'operational',

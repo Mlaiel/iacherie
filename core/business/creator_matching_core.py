@@ -23,7 +23,8 @@ from collections import defaultdict
 logger = logging.getLogger(__name__)
 
 class MatchingAlgorithm(Enum):
-    """Types of matching algorithms"""
+    """
+Types of matching algorithms"""
     SKILL_BASED = "skill_based"
     AI_COMPATIBILITY = "ai_compatibility"
     PROJECT_BASED = "project_based"
@@ -31,7 +32,8 @@ class MatchingAlgorithm(Enum):
     HYBRID_INTELLIGENT = "hybrid_intelligent"
 
 class CompatibilityFactor(Enum):
-    """Factors affecting compatibility"""
+    """
+Factors affecting compatibility"""
     SKILL_COMPLEMENT = "skill_complement"
     COMMUNICATION_STYLE = "communication_style"
     WORK_SCHEDULE = "work_schedule"
@@ -41,7 +43,8 @@ class CompatibilityFactor(Enum):
     GEOGRAPHIC_PROXIMITY = "geographic_proximity"
 
 class MatchQuality(Enum):
-    """Quality levels of matches"""
+    """
+Quality levels of matches"""
     PERFECT = "perfect"          # 90-100%
     EXCELLENT = "excellent"      # 80-89%
     GOOD = "good"               # 70-79%
@@ -51,7 +54,8 @@ class MatchQuality(Enum):
 
 @dataclass
 class CreatorSkillProfile:
-    """Detailed creator skill profile for matching"""
+    """
+Detailed creator skill profile for matching"""
     creator_id: str
     primary_skills: List[str]
     secondary_skills: List[str]
@@ -67,7 +71,8 @@ class CreatorSkillProfile:
 
 @dataclass
 class CollaborationPreferences:
-    """Creator collaboration preferences"""
+    """
+Creator collaboration preferences"""
     creator_id: str
     preferred_project_types: List[str]
     preferred_collaboration_duration: Tuple[int, int]  # min, max days
@@ -84,7 +89,8 @@ class CollaborationPreferences:
 
 @dataclass
 class MatchingCriteria:
-    """Criteria for creator matching"""
+    """
+Criteria for creator matching"""
     requesting_creator_id: str
     project_type: Optional[str] = None
     required_skills: List[str] = field(default_factory=list)
@@ -101,7 +107,8 @@ class MatchingCriteria:
 
 @dataclass
 class CompatibilityAnalysis:
-    """Detailed compatibility analysis between creators"""
+    """
+Detailed compatibility analysis between creators"""
     creator1_id: str
     creator2_id: str
     overall_compatibility: float
@@ -118,7 +125,8 @@ class CompatibilityAnalysis:
 
 @dataclass
 class CreatorMatch:
-    """Creator match result"""
+    """
+Creator match result"""
     match_id: str
     requesting_creator_id: str
     matched_creator_id: str
@@ -135,7 +143,8 @@ class CreatorMatch:
 
 @dataclass
 class MatchingSession:
-    """Creator matching session tracking"""
+    """
+Creator matching session tracking"""
     session_id: str
     creator_id: str
     criteria: MatchingCriteria
@@ -155,7 +164,8 @@ class CreatorMatchingCore:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize creator matching core"""
+        """
+Initialize creator matching core"""
         self.config = config or {}
         self.skill_profiles: Dict[str, CreatorSkillProfile] = {}
         self.collaboration_preferences: Dict[str, CollaborationPreferences] = {}
@@ -184,7 +194,8 @@ class CreatorMatchingCore:
         logger.info("Creator Matching Core initialized")
     
     def _initialize_compatibility_model(self) -> Dict[str, Any]:
-        """Initialize AI compatibility model"""
+        """
+Initialize AI compatibility model"""
         # Simulated AI model weights and parameters
         return {
             'skill_weight': 0.35,
@@ -197,7 +208,8 @@ class CreatorMatchingCore:
         }
     
     def _initialize_skill_embeddings(self) -> Dict[str, List[float]]:
-        """Initialize skill embedding vectors"""
+        """
+Initialize skill embedding vectors"""
         # Simulated skill embeddings for compatibility calculation
         skills = [
             'music_production', 'video_editing', 'photography', 'writing', 'social_media',
@@ -216,7 +228,8 @@ class CreatorMatchingCore:
         creator_id: str, 
         profile_data: Dict[str, Any]
     ) -> CreatorSkillProfile:
-        """Create detailed skill profile for creator"""
+        """
+Create detailed skill profile for creator"""
         try:
             profile = CreatorSkillProfile(
                 creator_id=creator_id,
@@ -246,7 +259,8 @@ class CreatorMatchingCore:
         creator_id: str, 
         preferences_data: Dict[str, Any]
     ) -> CollaborationPreferences:
-        """Set collaboration preferences for creator"""
+        """
+Set collaboration preferences for creator"""
         try:
             preferences = CollaborationPreferences(
                 creator_id=creator_id,
@@ -277,7 +291,8 @@ class CreatorMatchingCore:
         creator1_id: str, 
         creator2_id: str
     ) -> CompatibilityAnalysis:
-        """Calculate detailed compatibility between two creators"""
+        """
+Calculate detailed compatibility between two creators"""
         try:
             if creator1_id not in self.skill_profiles or creator2_id not in self.skill_profiles:
                 raise ValueError("Creator skill profiles not found")
@@ -356,7 +371,8 @@ class CreatorMatchingCore:
         profile1: CreatorSkillProfile, 
         profile2: CreatorSkillProfile
     ) -> float:
-        """Calculate skill complementarity score"""
+        """
+Calculate skill complementarity score"""
         try:
             # Find complementary skills
             complementary_score = 0.0
@@ -401,7 +417,8 @@ class CreatorMatchingCore:
         prefs1: Optional[CollaborationPreferences], 
         prefs2: Optional[CollaborationPreferences]
     ) -> float:
-        """Calculate communication style compatibility"""
+        """
+Calculate communication style compatibility"""
         try:
             if not prefs1 or not prefs2:
                 return 0.5  # Neutral score if preferences not available
@@ -445,7 +462,8 @@ class CreatorMatchingCore:
         prefs1: Optional[CollaborationPreferences], 
         prefs2: Optional[CollaborationPreferences]
     ) -> float:
-        """Calculate work schedule compatibility"""
+        """
+Calculate work schedule compatibility"""
         try:
             if not prefs1 or not prefs2:
                 return 0.5
@@ -481,7 +499,8 @@ class CreatorMatchingCore:
         prefs1: Optional[CollaborationPreferences], 
         prefs2: Optional[CollaborationPreferences]
     ) -> float:
-        """Calculate project preferences compatibility"""
+        """
+Calculate project preferences compatibility"""
         try:
             if not prefs1 or not prefs2:
                 return 0.5
@@ -518,7 +537,8 @@ class CreatorMatchingCore:
         profile1: CreatorSkillProfile, 
         profile2: CreatorSkillProfile
     ) -> List[str]:
-        """Identify potential synergies between creators"""
+        """
+Identify potential synergies between creators"""
         synergies = []
         
         # Teaching-learning synergies
@@ -548,7 +568,8 @@ class CreatorMatchingCore:
         prefs1: Optional[CollaborationPreferences], 
         prefs2: Optional[CollaborationPreferences]
     ) -> List[str]:
-        """Identify potential risk factors in collaboration"""
+        """
+Identify potential risk factors in collaboration"""
         risks = []
         
         # Skill level mismatches
@@ -576,7 +597,8 @@ class CreatorMatchingCore:
         profile1: CreatorSkillProfile, 
         profile2: CreatorSkillProfile
     ) -> List[str]:
-        """Recommend project types based on creator profiles"""
+        """
+Recommend project types based on creator profiles"""
         recommendations = []
         
         # Find common skill areas
@@ -597,7 +619,8 @@ class CreatorMatchingCore:
         return recommendations
     
     async def find_matches(self, criteria: MatchingCriteria) -> List[CreatorMatch]:
-        """Find creator matches based on criteria"""
+        """
+Find creator matches based on criteria"""
         try:
             start_time = datetime.utcnow()
             matches = []
@@ -670,7 +693,8 @@ class CreatorMatchingCore:
             raise
     
     def _determine_match_quality(self, compatibility_score: float) -> MatchQuality:
-        """Determine match quality based on compatibility score"""
+        """
+Determine match quality based on compatibility score"""
         if compatibility_score >= 0.9:
             return MatchQuality.PERFECT
         elif compatibility_score >= 0.8:
@@ -685,7 +709,8 @@ class CreatorMatchingCore:
             return MatchQuality.LOW
     
     def _extract_skill_synergies(self, analysis: CompatibilityAnalysis) -> List[Dict[str, Any]]:
-        """Extract skill synergies from compatibility analysis"""
+        """
+Extract skill synergies from compatibility analysis"""
         synergies = []
         for opportunity in analysis.synergy_opportunities:
             synergies.append({
@@ -696,7 +721,8 @@ class CreatorMatchingCore:
         return synergies
     
     def _create_project_recommendations(self, analysis: CompatibilityAnalysis) -> List[Dict[str, Any]]:
-        """Create project recommendations from compatibility analysis"""
+        """
+Create project recommendations from compatibility analysis"""
         recommendations = []
         for project_type in analysis.recommended_project_types:
             recommendations.append({
@@ -708,13 +734,15 @@ class CreatorMatchingCore:
         return recommendations
     
     def _estimate_collaboration_value(self, analysis: CompatibilityAnalysis) -> float:
-        """Estimate potential collaboration value"""
+        """
+Estimate potential collaboration value"""
         # Simple value estimation based on compatibility and success prediction
         base_value = analysis.overall_compatibility * analysis.success_prediction
         return base_value * 1000  # Scale to monetary units
     
     def _calculate_match_confidence(self, analysis: CompatibilityAnalysis) -> float:
-        """Calculate confidence in the match"""
+        """
+Calculate confidence in the match"""
         # Confidence based on number of factors and their consistency
         factor_scores = list(analysis.factor_scores.values())
         if not factor_scores:
@@ -728,7 +756,8 @@ class CreatorMatchingCore:
         return min(max(confidence, 0.0), 1.0)
     
     def _generate_match_reasons(self, analysis: CompatibilityAnalysis) -> List[str]:
-        """Generate human-readable reasons for the match"""
+        """
+Generate human-readable reasons for the match"""
         reasons = []
         
         if analysis.factor_scores.get(CompatibilityFactor.SKILL_COMPLEMENT, 0) > 0.8:
@@ -749,7 +778,8 @@ class CreatorMatchingCore:
         return reasons
     
     def get_core_metrics(self) -> Dict[str, Any]:
-        """Get core matching metrics"""
+        """
+Get core matching metrics"""
         return {
             'creator_matching_core_metrics': self.metrics.copy(),
             'core_status': 'operational',

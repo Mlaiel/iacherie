@@ -31,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 
 class CulturalDimension(Enum):
-    """Hofstede's cultural dimensions"""
+    """
+        Hofstede's cultural dimensions"""
     POWER_DISTANCE = "power_distance"
     INDIVIDUALISM = "individualism"
     MASCULINITY = "masculinity"
@@ -125,7 +126,8 @@ class CulturalAdapter:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize cultural adapter"""
+        """
+        Initialize cultural adapter"""
         self.config = config or {}
         self.cultural_profiles = self._load_cultural_profiles()
         self.adaptation_rules = self._load_adaptation_rules()
@@ -156,29 +158,41 @@ class CulturalAdapter:
                 raise ValueError("Empty content provided for cultural adaptation")
             
             # Get cultural profiles
+
             source_profile = self._get_cultural_profile(request.source_culture)
+
+
             target_profile = self._get_cultural_profile(request.target_culture)
+
             
             if not target_profile:
                 logger.warning(f"No cultural profile found for {request.target_culture}")
+
                 return self._create_minimal_adaptation(request)
             
             # Check cache
+
             cache_key = self._generate_cache_key(request)
+
             if cache_key in self.cache:
                 cached_result = self.cache[cache_key]
                 logger.debug(f"Cache hit for cultural adaptation")
+
                 return cached_result
             
             # Perform adaptation steps
+
             adapted_content = request.content
+
             adaptations_made = []
+
             cultural_notes = []
             
             # 1. Communication style adaptation
             adapted_content, style_adaptations = await self._adapt_communication_style(
                 adapted_content, source_profile, target_profile, request.context_type
             )
+
             adaptations_made.extend(style_adaptations)
             
             # 2. Cultural sensitivity filtering
@@ -186,27 +200,34 @@ class CulturalAdapter:
                 adapted_content, sensitivity_notes = await self._apply_sensitivity_filters(
                     adapted_content, target_profile
                 )
+
                 cultural_notes.extend(sensitivity_notes)
             
             # 3. Context-specific adaptations
             adapted_content, context_adaptations = await self._apply_context_adaptations(
                 adapted_content, target_profile, request.context_type
             )
+
             adaptations_made.extend(context_adaptations)
             
             # 4. Regional customization
             adapted_content, regional_adaptations = await self._apply_regional_customizations(
                 adapted_content, target_profile, request.adaptation_level
             )
+
             adaptations_made.extend(regional_adaptations)
             
             # 5. Final validation and quality check
+
             confidence_score = await self._calculate_adaptation_confidence(
                 request.content, adapted_content, target_profile
             )
             
             # Create result
+
             processing_time = (datetime.now(timezone.utc) - start_time).total_seconds()
+
+
             
             result = AdaptationResult(
                 adapted_content=adapted_content,
@@ -231,11 +252,13 @@ class CulturalAdapter:
             
             logger.info(f"Cultural adaptation completed: {request.source_culture} -> {request.target_culture} "
                        f"(Confidence: {confidence_score:.2f})")
+
             
             return result
             
         except Exception as e:
             logger.error(f"Cultural adaptation failed: {e}")
+
             return self._create_fallback_adaptation(request)
     
     async def get_cultural_profile(self, culture_code: str) -> Optional[CulturalProfile]:
@@ -262,31 +285,39 @@ class CulturalAdapter:
             Cultural distance analysis
         """
         profile1 = self._get_cultural_profile(culture1)
+
         profile2 = self._get_cultural_profile(culture2)
+
         
         if not profile1 or not profile2:
             return {"error": "Cultural profile not found"}
         
         # Calculate Hofstede dimension distances
+
         dimension_distances = {}
+
         hofstede_attrs = [
             'power_distance', 'individualism', 'masculinity',
             'uncertainty_avoidance', 'long_term_orientation', 'indulgence'
         ]
+
         
         total_distance = 0
         for attr in hofstede_attrs:
             dist = abs(getattr(profile1, attr) - getattr(profile2, attr))
+
             dimension_distances[attr] = dist
             total_distance += dist
         
         # Calculate communication style distances
+
         communication_distance = (
             abs(profile1.directness_preference - profile2.directness_preference) +
             abs(profile1.formality_level - profile2.formality_level) +
             abs(profile1.context_dependency - profile2.context_dependency) +
             abs(profile1.hierarchy_awareness - profile2.hierarchy_awareness)
         ) / 4
+
         
         overall_distance = (total_distance / len(hofstede_attrs) + communication_distance) / 2
         
@@ -312,6 +343,7 @@ class CulturalAdapter:
         profile = self._get_cultural_profile(target_culture)
         if not profile:
             return ["Cultural profile not available"]
+
         
         recommendations = []
         
@@ -320,6 +352,7 @@ class CulturalAdapter:
             recommendations.append("Use indirect communication style; avoid being too blunt or direct")
         elif profile.directness_preference > 0.7:
             recommendations.append("Be direct and clear in communication; indirectness may be seen as unclear")
+
         
         if profile.formality_level > 0.7:
             recommendations.append("Maintain formal tone and use appropriate titles and honorifics")
@@ -341,6 +374,7 @@ class CulturalAdapter:
         # Add taboo warnings
         if profile.taboo_topics:
             recommendations.append(f"Avoid discussing: {', '.join(profile.taboo_topics)}")
+
         
         return recommendations
     
@@ -348,54 +382,70 @@ class CulturalAdapter:
                                        target_profile: CulturalProfile, context: str) -> Tuple[str, List[str]]:
         """Adapt communication style based on cultural preferences"""
         adaptations = []
+
         adapted_content = content
         
         # Formality adaptation
         if target_profile.formality_level > 0.7:
             # Make more formal
+
             formal_replacements = self.communication_patterns.get("formality", {}).get("formal", {})
+
             for informal, formal in formal_replacements.items():
                 if informal.lower() in adapted_content.lower():
                     adapted_content = re.sub(
                         re.escape(informal), formal, adapted_content, flags=re.IGNORECASE
                     )
+
                     adaptations.append(f"formality: {informal} -> {formal}")
+
         
         elif target_profile.formality_level < 0.3:
             # Make more informal
+
             informal_replacements = self.communication_patterns.get("formality", {}).get("informal", {})
+
             for formal, informal in informal_replacements.items():
                 if formal.lower() in adapted_content.lower():
                     adapted_content = re.sub(
                         re.escape(formal), informal, adapted_content, flags=re.IGNORECASE
                     )
+
                     adaptations.append(f"informality: {formal} -> {informal}")
         
         # Directness adaptation
         if target_profile.directness_preference < 0.3:
             # Make more indirect
+
             direct_patterns = self.communication_patterns.get("directness", {}).get("soften", {})
+
             for pattern, replacement in direct_patterns.items():
                 adapted_content = re.sub(pattern, replacement, adapted_content, flags=re.IGNORECASE)
+
                 if pattern in content.lower():
                     adaptations.append(f"directness: softened direct language")
         
         # Context dependency adaptation
         if target_profile.context_dependency > 0.7:
             # Add more context for high-context cultures
+
             context_enhancers = self.communication_patterns.get("context", {}).get("enhance", [])
+
             for enhancer in context_enhancers:
                 if enhancer["trigger"] in adapted_content.lower():
                     adapted_content = adapted_content.replace(
                         enhancer["trigger"], enhancer["enhanced"]
                     )
+
                     adaptations.append(f"context: added contextual information")
+
         
         return adapted_content, adaptations
     
     async def _apply_sensitivity_filters(self, content: str, target_profile: CulturalProfile) -> Tuple[str, List[str]]:
         """Apply cultural sensitivity filters"""
         cultural_notes = []
+
         filtered_content = content
         
         # Check for taboo topics
@@ -406,20 +456,24 @@ class CulturalAdapter:
         # Religious sensitivity
         if target_profile.religious_considerations:
             religious_filters = self.sensitivity_filters.get("religious", {})
+
             for consideration in target_profile.religious_considerations:
                 if consideration in religious_filters:
                     filters = religious_filters[consideration]
                     for pattern, replacement in filters.items():
                         if re.search(pattern, filtered_content, re.IGNORECASE):
                             filtered_content = re.sub(pattern, replacement, filtered_content, flags=re.IGNORECASE)
+
                             cultural_notes.append(f"religious_sensitivity: adjusted {pattern}")
         
         # Color symbolism adaptation
         if target_profile.color_symbolism:
             color_filters = self.sensitivity_filters.get("colors", {})
+
             for color, meaning in target_profile.color_symbolism.items():
                 if color in content.lower() and meaning in ["negative", "taboo"]:
                     cultural_notes.append(f"Color sensitivity: {color} has {meaning} connotations in this culture")
+
         
         return filtered_content, cultural_notes
     
@@ -427,7 +481,9 @@ class CulturalAdapter:
                                        context_type: str) -> Tuple[str, List[str]]:
         """Apply context-specific adaptations"""
         adaptations = []
+
         adapted_content = content
+
         
         context_rules = self.adaptation_rules.get(context_type, {})
         
@@ -435,29 +491,40 @@ class CulturalAdapter:
         if context_type == "business":
             if target_profile.hierarchy_awareness > 0.7:
                 # Add hierarchy-aware language
+
                 hierarchy_patterns = context_rules.get("hierarchy", {})
+
                 for pattern, replacement in hierarchy_patterns.items():
                     if re.search(pattern, adapted_content, re.IGNORECASE):
                         adapted_content = re.sub(pattern, replacement, adapted_content, flags=re.IGNORECASE)
+
                         adaptations.append(f"business_hierarchy: {pattern} -> {replacement}")
+
             
             if target_profile.relationship_priority > 0.6:
                 # Add relationship-building elements
+
                 relationship_enhancers = context_rules.get("relationship_building", [])
+
                 for enhancer in relationship_enhancers:
                     if enhancer["condition"] in adapted_content.lower():
                         adapted_content = enhancer["addition"] + " " + adapted_content
                         adaptations.append("business_relationship: added relationship element")
+
                         break
         
         # Marketing context adaptations
         elif context_type == "marketing":
             if target_profile.individualism < 0.3:
                 # Emphasize collective benefits
+
                 collective_patterns = context_rules.get("collective_messaging", {})
+
                 for individual_term, collective_term in collective_patterns.items():
                     adapted_content = adapted_content.replace(individual_term, collective_term)
+
                     adaptations.append(f"marketing_collective: {individual_term} -> {collective_term}")
+
         
         return adapted_content, adaptations
     
@@ -465,6 +532,7 @@ class CulturalAdapter:
                                            adaptation_level: AdaptationLevel) -> Tuple[str, List[str]]:
         """Apply regional customizations based on adaptation level"""
         adaptations = []
+
         customized_content = content
         
         if adaptation_level == AdaptationLevel.MINIMAL:
@@ -473,17 +541,22 @@ class CulturalAdapter:
         # Time and date references
         if target_profile.time_orientation == "polychronic" and adaptation_level in [AdaptationLevel.COMPREHENSIVE, AdaptationLevel.NATIVE]:
             time_patterns = self.adaptation_rules.get("temporal", {}).get("polychronic", {})
+
             for strict_time, flexible_time in time_patterns.items():
                 customized_content = customized_content.replace(strict_time, flexible_time)
+
                 adaptations.append(f"temporal: {strict_time} -> {flexible_time}")
         
         # Regional expressions
         if adaptation_level == AdaptationLevel.NATIVE:
             regional_expressions = self.adaptation_rules.get("regional_expressions", {}).get(target_profile.region, {})
+
             for standard_expr, regional_expr in regional_expressions.items():
                 if standard_expr in customized_content:
                     customized_content = customized_content.replace(standard_expr, regional_expr)
+
                     adaptations.append(f"regional_expression: {standard_expr} -> {regional_expr}")
+
         
         return customized_content, adaptations
     
@@ -491,17 +564,23 @@ class CulturalAdapter:
                                              target_profile: CulturalProfile) -> float:
         """Calculate confidence score for adaptation quality"""
         # Simple confidence calculation based on adaptation extent and profile completeness
+
         adaptation_ratio = 1 - (len(set(original.split()) & set(adapted.split())) / len(original.split()))
+
         profile_completeness = self._calculate_profile_completeness(target_profile)
         
         # Combine factors
+
         confidence = (adaptation_ratio * 0.4 + profile_completeness * 0.6)
         return min(max(confidence, 0.0), 1.0)
     
     def _calculate_profile_completeness(self, profile: CulturalProfile) -> float:
-        """Calculate how complete a cultural profile is"""
+        """
+        Calculate how complete a cultural profile is"""
         # Count non-default values
+
         total_fields = 12  # Number of key cultural dimensions and preferences
+
         non_default_fields = 0
         
         if profile.power_distance != 0.5: non_default_fields += 1
@@ -520,11 +599,13 @@ class CulturalAdapter:
         return non_default_fields / total_fields
     
     def _get_cultural_profile(self, culture_code: str) -> Optional[CulturalProfile]:
-        """Get cultural profile for a culture/language code"""
+        """
+        Get cultural profile for a culture/language code"""
         return self.cultural_profiles.get(culture_code)
     
     def _interpret_cultural_distance(self, distance: float) -> str:
-        """Interpret cultural distance score"""
+        """
+        Interpret cultural distance score"""
         if distance < 0.2:
             return "very_similar"
         elif distance < 0.4:
@@ -542,12 +623,15 @@ class CulturalAdapter:
         
         if profile.power_distance > 0.7:
             recommendations.append("Respect hierarchy in meetings; address senior members first")
+
         
         if profile.uncertainty_avoidance > 0.7:
             recommendations.append("Provide detailed plans and minimize ambiguity")
+
         
         if profile.relationship_priority > 0.6:
             recommendations.append("Invest time in relationship building before business discussions")
+
         
         return recommendations
     
@@ -557,9 +641,11 @@ class CulturalAdapter:
         
         if profile.personal_space_norm > 0.7:
             recommendations.append("Maintain appropriate physical distance during interactions")
+
         
         if profile.greeting_style:
             recommendations.append(f"Appropriate greetings: {', '.join(profile.greeting_style)}")
+
         
         return recommendations
     
@@ -596,6 +682,7 @@ class CulturalAdapter:
         """Load cultural profiles for different languages/regions"""
         # This would load comprehensive cultural data from a database
         # For now, returning key cultural profiles
+
         profiles = {}
         
         # Western cultures
@@ -646,6 +733,7 @@ class CulturalAdapter:
             business_etiquette={"punctuality": "essential", "thoroughness": "valued"},
             taboo_topics=["nazi_era", "personal_finances", "east_west_germany"]
         )
+
         
         return profiles
     

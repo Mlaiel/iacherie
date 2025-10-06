@@ -178,9 +178,11 @@ if spacy and nlp is None:
         nlp = spacy.load("en_core_web_sm")
     except OSError:
         logger.warning("Modèle spaCy 'en_core_web_sm' non trouvé")
+
         nlp = None
     except Exception as e:
         logger.warning(f"Problème de configuration spaCy: {e}")
+
         nlp = None
 
 class ContentFormat(Enum):
@@ -265,7 +267,8 @@ class ContentMetrics:
 
 @dataclass
 class FormatOptimization:
-    """Résultat d'optimisation de format ultra-avancé"""
+    """
+        Résultat d'optimisation de format ultra-avancé"""
     format_type: ContentFormat
     optimization_score: float
     quality_level: ContentQuality
@@ -284,7 +287,8 @@ class FormatOptimization:
 
 @dataclass
 class VoiceSearchOptimization:
-    """Optimisation de recherche vocale"""
+    """
+        Optimisation de recherche vocale"""
     query_type: VoiceSearchType
     optimization_score: float
     featured_snippet_potential: float
@@ -297,7 +301,8 @@ class VoiceSearchOptimization:
 
 @dataclass
 class MultiFormatStrategy:
-    """Stratégie multi-format"""
+    """
+        Stratégie multi-format"""
     primary_format: ContentFormat
     supporting_formats: List[ContentFormat]
     cross_format_synergy_score: float
@@ -308,7 +313,8 @@ class MultiFormatStrategy:
     resource_allocation: Dict[str, float]
 
 class ContentFormatAnalyzer:
-    """Analyseur de format de contenu ultra-avancé"""
+    """
+        Analyseur de format de contenu ultra-avancé"""
     
     def __init__(self):
         self.supported_formats = {
@@ -321,25 +327,33 @@ class ContentFormatAnalyzer:
         self._initialize_ml_models()
     
     def _initialize_ml_models(self):
-        """Initialise les modèles ML avec gestion d'erreurs"""
+        """
+        Initialise les modèles ML avec gestion d'erreurs"""
         try:
             if pipeline:
                 self.ml_models['sentiment'] = pipeline("sentiment-analysis")
+
                 self.ml_models['text_generation'] = pipeline("text-generation", 
                                                            model="gpt2")
+
                 self.ml_models['summarization'] = pipeline("summarization")
+
                 self.ml_models['question_answering'] = pipeline("question-answering")
+
                 logger.info("Modèles ML initialisés avec succès")
+
             else:
                 logger.warning("Transformers non disponible - modèles ML désactivés")
         except Exception as e:
             logger.error(f"Erreur initialisation ML: {e}")
+
             self.ml_models = {}
     
     async def analyze_content_format(self, file_path: str) -> ContentFormat:
         """Analyse le format de contenu"""
         try:
             file_extension = Path(file_path).suffix.lower()
+
             
             for format_type, extensions in self.supported_formats.items():
                 if file_extension in extensions:
@@ -349,12 +363,14 @@ class ContentFormatAnalyzer:
             return await self._analyze_by_content(file_path)
         except Exception as e:
             logger.error(f"Erreur analyse format: {e}")
+
             return ContentFormat.TEXT
     
     async def _analyze_by_content(self, file_path: str) -> ContentFormat:
         """Analyse par contenu"""
         try:
             mime_type, _ = mimetypes.guess_type(file_path)
+
             
             if mime_type:
                 if mime_type.startswith('video/'):
@@ -369,6 +385,7 @@ class ContentFormatAnalyzer:
             return ContentFormat.TEXT
         except Exception as e:
             logger.error(f"Erreur analyse contenu: {e}")
+
             return ContentFormat.TEXT
 
 class ContentFormatSEOOptimizer:
@@ -385,8 +402,10 @@ class ContentFormatSEOOptimizer:
         if SentimentIntensityAnalyzer:
             try:
                 self.sentiment_analyzer = SentimentIntensityAnalyzer()
+
             except Exception as e:
                 logger.warning(f"Erreur init sentiment analyzer: {e}")
+
                 self.sentiment_analyzer = None
         else:
             self.sentiment_analyzer = None
@@ -396,8 +415,10 @@ class ContentFormatSEOOptimizer:
                 self.keyword_extractor = yake.KeywordExtractor(
                     lan="en", n=3, dedupLim=0.7, top=20
                 )
+
             except Exception as e:
                 logger.warning(f"Erreur init keyword extractor: {e}")
+
                 self.keyword_extractor = None
         else:
             self.keyword_extractor = None
@@ -427,14 +448,18 @@ class ContentFormatSEOOptimizer:
                 
                 # Modèle de score SEO
                 self.prediction_models['seo_score'] = self._create_seo_model()
+
             else:
                 logger.warning("TensorFlow non disponible - modèles prédictifs désactivés")
+
                 
             if KMeans:
                 # Modèle de tendances
                 self.prediction_models['trends'] = self._create_trends_model()
+
             else:
                 logger.warning("scikit-learn non disponible - modèle de tendances désactivé")
+
             
             logger.info("Modèles prédictifs initialisés")
         except Exception as e:
@@ -451,11 +476,14 @@ class ContentFormatSEOOptimizer:
                 tf.keras.layers.Dense(32, activation='relu'),
                 tf.keras.layers.Dense(1, activation='sigmoid')
             ])
+
             model.compile(optimizer='adam', loss='binary_crossentropy', 
                          metrics=['accuracy'])
+
             return model
         except Exception as e:
             logger.error(f"Erreur création modèle engagement: {e}")
+
             return None
     
     def _create_seo_model(self):
@@ -471,10 +499,13 @@ class ContentFormatSEOOptimizer:
                 tf.keras.layers.Dense(32, activation='relu'),
                 tf.keras.layers.Dense(1, activation='sigmoid')
             ])
+
             model.compile(optimizer='adam', loss='mse', metrics=['mae'])
+
             return model
         except Exception as e:
             logger.error(f"Erreur création modèle SEO: {e}")
+
             return None
     
     def _create_trends_model(self):
@@ -485,6 +516,7 @@ class ContentFormatSEOOptimizer:
             return KMeans(n_clusters=5, random_state=42)
         except Exception as e:
             logger.error(f"Erreur création modèle tendances: {e}")
+
             return None
     
     async def optimize_content_format(
@@ -504,11 +536,13 @@ class ContentFormatSEOOptimizer:
                 format_type = await self._detect_format(content)
             
             # Analyse du contenu
+
             content_analysis = await self._analyze_content_comprehensive(
                 content, format_type
             )
             
             # Extraction des métriques
+
             content_metrics = await self._extract_content_metrics(
                 content, format_type
             )
@@ -519,16 +553,19 @@ class ContentFormatSEOOptimizer:
             )
             
             # Optimisations techniques
+
             technical_specs = await self._generate_technical_specs(
                 content, format_type
             )
             
             # Adaptations par plateforme
+
             platform_adaptations = await self._generate_platform_adaptations(
                 content, format_type, target_platforms or []
             )
             
             # Prédictions de performance
+
             performance_predictions = await self._predict_performance(
                 content_analysis, format_type, target_platforms
             )
@@ -539,16 +576,19 @@ class ContentFormatSEOOptimizer:
             )
             
             # Roadmap d'optimisation
+
             optimization_roadmap = await self._create_optimization_roadmap(
                 content_analysis, format_type, optimization_level
             )
             
             # Analyse compétitive
+
             competitive_analysis = await self._perform_competitive_analysis(
                 content, format_type, target_keywords
             )
             
             # Éléments tendance
+
             trending_elements = await self._identify_trending_elements(
                 content, format_type
             )
@@ -559,11 +599,13 @@ class ContentFormatSEOOptimizer:
             )
             
             # Potentiel de monétisation
+
             monetization_potential = await self._assess_monetization_potential(
                 content_analysis, format_type
             )
             
             # Calcul du score d'optimisation
+
             optimization_score = await self._calculate_optimization_score(
                 content_metrics, recommendations, technical_specs
             )
@@ -577,6 +619,8 @@ class ContentFormatSEOOptimizer:
             seo_enhancements = await self._create_seo_enhancements(
                 content_analysis, format_type, target_keywords
             )
+
+
             
             processing_time = time.time() - start_time
             
@@ -584,8 +628,10 @@ class ContentFormatSEOOptimizer:
             await self._cache_optimization_results(
                 content, format_type, optimization_score
             )
+
             
             logger.info(f"Optimisation {format_type.value} terminée en {processing_time:.2f}s")
+
             
             return FormatOptimization(
                 format_type=format_type,
@@ -604,9 +650,11 @@ class ContentFormatSEOOptimizer:
                 accessibility_features=accessibility_features,
                 monetization_potential=monetization_potential
             )
+
             
         except Exception as e:
             logger.error(f"Erreur optimisation format: {e}")
+
             raise
     
     async def _detect_format(self, content: Union[str, bytes, Path]) -> ContentFormat:
@@ -614,15 +662,19 @@ class ContentFormatSEOOptimizer:
         try:
             if isinstance(content, Path):
                 return await self.analyzer.analyze_content_format(str(content))
+
             elif isinstance(content, str):
                 if self._is_url(content):
                     return await self._detect_format_from_url(content)
+
                 else:
                     return await self._detect_format_from_text(content)
+
             else:
                 return await self._detect_format_from_bytes(content)
         except Exception as e:
             logger.error(f"Erreur détection format: {e}")
+
             return ContentFormat.TEXT
     
     def _is_url(self, content: str) -> bool:
@@ -637,7 +689,8 @@ class ContentFormatSEOOptimizer:
         return url_pattern.match(content) is not None
     
     async def _detect_format_from_url(self, url: str) -> ContentFormat:
-        """Détecte le format depuis une URL"""
+        """
+        Détecte le format depuis une URL"""
         try:
             if 'youtube.com' in url or 'youtu.be' in url:
                 return ContentFormat.VIDEO
@@ -651,6 +704,7 @@ class ContentFormatSEOOptimizer:
                 return ContentFormat.TEXT
         except Exception as e:
             logger.error(f"Erreur détection URL: {e}")
+
             return ContentFormat.TEXT
     
     async def _detect_format_from_text(self, text: str) -> ContentFormat:
@@ -673,6 +727,7 @@ class ContentFormatSEOOptimizer:
                 return ContentFormat.TEXT
         except Exception as e:
             logger.error(f"Erreur détection texte: {e}")
+
             return ContentFormat.TEXT
     
     async def _detect_format_from_bytes(self, data: bytes) -> ContentFormat:
@@ -691,6 +746,7 @@ class ContentFormatSEOOptimizer:
                 return ContentFormat.TEXT
         except Exception as e:
             logger.error(f"Erreur détection bytes: {e}")
+
             return ContentFormat.TEXT
 
     async def _analyze_content_comprehensive(
@@ -714,6 +770,7 @@ class ContentFormatSEOOptimizer:
             return analysis
         except Exception as e:
             logger.error(f"Erreur analyse comprehensive: {e}")
+
             return {}
     
     async def _get_basic_stats(
@@ -725,12 +782,15 @@ class ContentFormatSEOOptimizer:
         try:
             if format_type in [ContentFormat.VIDEO, ContentFormat.AUDIO]:
                 return await self._get_media_stats(content, format_type)
+
             elif format_type == ContentFormat.IMAGE:
                 return await self._get_image_stats(content)
+
             else:
                 return await self._get_text_stats(content)
         except Exception as e:
             logger.error(f"Erreur stats de base: {e}")
+
             return {}
     
     async def _get_media_stats(
@@ -742,11 +802,13 @@ class ContentFormatSEOOptimizer:
         try:
             if isinstance(content, str) and self._is_url(content):
                 return {'source': 'url', 'url': content}
+
             
             file_path = Path(content) if not isinstance(content, Path) else content
             
             if format_type == ContentFormat.VIDEO:
                 clip = VideoFileClip(str(file_path))
+
                 return {
                     'duration': clip.duration,
                     'fps': clip.fps,
@@ -756,6 +818,7 @@ class ContentFormatSEOOptimizer:
                 }
             elif format_type == ContentFormat.AUDIO:
                 y, sr = librosa.load(str(file_path))
+
                 return {
                     'duration': len(y) / sr,
                     'sample_rate': sr,
@@ -765,6 +828,7 @@ class ContentFormatSEOOptimizer:
                 }
         except Exception as e:
             logger.error(f"Erreur stats média: {e}")
+
             return {}
     
     async def _get_image_stats(self, content: Union[str, Path]) -> Dict[str, Any]:
@@ -772,6 +836,7 @@ class ContentFormatSEOOptimizer:
         try:
             if isinstance(content, str) and self._is_url(content):
                 return {'source': 'url', 'url': content}
+
             
             file_path = Path(content) if not isinstance(content, Path) else content
             
@@ -786,14 +851,20 @@ class ContentFormatSEOOptimizer:
                 }
         except Exception as e:
             logger.error(f"Erreur stats image: {e}")
+
             return {}
     
     async def _get_text_stats(self, content: str) -> Dict[str, Any]:
         """Stats pour texte"""
         try:
             words = content.split()
+
+
             sentences = re.split(r'[.!?]+', content)
+
+
             paragraphs = content.split('\n\n')
+
             
             return {
                 'character_count': len(content),
@@ -805,6 +876,7 @@ class ContentFormatSEOOptimizer:
             }
         except Exception as e:
             logger.error(f"Erreur stats texte: {e}")
+
             return {}
     
     async def _analyze_linguistics(self, content: str) -> Dict[str, Any]:
@@ -812,17 +884,21 @@ class ContentFormatSEOOptimizer:
         try:
             if not nlp:
                 logger.warning("spaCy non disponible - analyse linguistique limitée")
+
                 return {'entities': [], 'pos_tags': [], 'noun_phrases': [], 'language_detected': 'en'}
+
             
             doc = nlp(content[:1000000])  # Limite pour performance
             
             # Extraction d'entités
+
             entities = [(ent.text, ent.label_) for ent in doc.ents]
             
             # Analyse POS
             pos_tags = [(token.text, token.pos_) for token in doc]
             
             # Extraction de phrases clés
+
             noun_phrases = [chunk.text for chunk in doc.noun_chunks]
             
             return {
@@ -833,46 +909,68 @@ class ContentFormatSEOOptimizer:
             }
         except Exception as e:
             logger.error(f"Erreur analyse linguistique: {e}")
+
             return {'entities': [], 'pos_tags': [], 'noun_phrases': [], 'language_detected': 'en'}
     
     async def _analyze_semantics(self, content: str) -> Dict[str, Any]:
         """Analyse sémantique avec gestion d'erreurs"""
         try:
             # Extraction de mots-clés avec YAKE si disponible
+
             keywords = []
             if yake:
                 keyword_extractor = yake.KeywordExtractor(lan="en", n=3, dedupLim=0.7, top=20)
+
+
                 keywords = keyword_extractor.extract_keywords(content)
+
             else:
                 logger.warning("YAKE non disponible - extraction de mots-clés basique")
                 # Extraction basique par fréquence
+
                 words = re.findall(r'\b\w+\b', content.lower())
+
+
                 word_freq = {}
                 for word in words:
                     if len(word) > 3:  # Mots de plus de 3 caractères
                         word_freq[word] = word_freq.get(word, 0) + 1
                 # Top 20 mots les plus fréquents
+
                 keywords = [(word, freq) for word, freq in sorted(word_freq.items(), key=lambda x: x[1], reverse=True)[:20]]
             
             # Analyse de similarité sémantique
+
             sentences = re.split(r'[.!?]+', content)
+
+
             avg_similarity = 0.0
             
             if TfidfVectorizer and cosine_similarity and len(sentences) > 1:
                 try:
                     vectorizer = TfidfVectorizer(stop_words='english')
+
+
                     tfidf_matrix = vectorizer.fit_transform(sentences)
+
+
                     similarity_matrix = cosine_similarity(tfidf_matrix)
+
                     if np:
                         avg_similarity = np.mean(similarity_matrix)
+
                     else:
                         avg_similarity = 0.5  # Valeur par défaut
                 except Exception as e:
                     logger.warning(f"Erreur calcul similarité: {e}")
+
+
                     avg_similarity = 0.5
             else:
                 if not TfidfVectorizer:
                     logger.warning("scikit-learn non disponible - analyse sémantique limitée")
+
+
                 avg_similarity = 0.5
             
             return {
@@ -883,6 +981,7 @@ class ContentFormatSEOOptimizer:
             }
         except Exception as e:
             logger.error(f"Erreur analyse sémantique: {e}")
+
             return {'keywords': [], 'semantic_coherence': 0.5, 'topic_diversity': 0, 'content_density': 0}
     
     async def _analyze_technical(
@@ -902,6 +1001,7 @@ class ContentFormatSEOOptimizer:
             return technical_analysis
         except Exception as e:
             logger.error(f"Erreur analyse technique: {e}")
+
             return {}
     
     async def _check_format_compliance(
@@ -911,7 +1011,9 @@ class ContentFormatSEOOptimizer:
     ) -> Dict[str, Any]:
         """Vérifie la conformité du format"""
         compliance_score = 0.8  # Score par défaut
+
         issues = []
+
         recommendations = []
         
         try:
@@ -921,7 +1023,9 @@ class ContentFormatSEOOptimizer:
                     file_size = content.stat().st_size
                     if file_size > 100 * 1024 * 1024:  # 100MB
                         issues.append("Taille de fichier élevée")
+
                         recommendations.append("Compresser la vidéo")
+
                         compliance_score -= 0.1
             
             elif format_type == ContentFormat.IMAGE:
@@ -930,23 +1034,31 @@ class ContentFormatSEOOptimizer:
                     with Image.open(content) as img:
                         if max(img.size) > 2048:
                             issues.append("Résolution très élevée")
+
                             recommendations.append("Optimiser la résolution")
+
                             compliance_score -= 0.1
             
             elif format_type in [ContentFormat.TEXT, ContentFormat.BLOG_POST]:
                 # Vérifications spécifiques texte
+
                 word_count = len(content.split()) if isinstance(content, str) else 0
                 if word_count < 300:
                     issues.append("Contenu trop court")
+
                     recommendations.append("Étendre le contenu")
+
                     compliance_score -= 0.2
                 elif word_count > 2000:
                     issues.append("Contenu très long")
+
                     recommendations.append("Diviser en sections")
+
                     compliance_score -= 0.1
             
         except Exception as e:
             logger.error(f"Erreur vérification conformité: {e}")
+
         
         return {
             'compliance_score': max(0.0, compliance_score),
@@ -984,6 +1096,7 @@ class ContentFormatSEOOptimizer:
                         'effort': 'low'
                     }
                 ])
+
             
             elif format_type == ContentFormat.IMAGE:
                 opportunities.extend([
@@ -1000,6 +1113,7 @@ class ContentFormatSEOOptimizer:
                         'effort': 'low'
                     }
                 ])
+
             
             elif format_type in [ContentFormat.TEXT, ContentFormat.BLOG_POST]:
                 opportunities.extend([
@@ -1022,9 +1136,11 @@ class ContentFormatSEOOptimizer:
                         'effort': 'low'
                     }
                 ])
+
             
         except Exception as e:
             logger.error(f"Erreur identification opportunités: {e}")
+
         
         return opportunities
     
@@ -1046,6 +1162,7 @@ class ContentFormatSEOOptimizer:
             return seo_factors
         except Exception as e:
             logger.error(f"Erreur analyse SEO technique: {e}")
+
             return {}
     
     async def _analyze_performance_metrics(
@@ -1065,6 +1182,7 @@ class ContentFormatSEOOptimizer:
             return metrics
         except Exception as e:
             logger.error(f"Erreur analyse performance: {e}")
+
             return {}
     
     async def _analyze_sentiment(self, content: str) -> Dict[str, Any]:
@@ -1083,7 +1201,10 @@ class ContentFormatSEOOptimizer:
             if SentimentIntensityAnalyzer:
                 try:
                     sentiment_analyzer = SentimentIntensityAnalyzer()
+
+
                     vader_scores = sentiment_analyzer.polarity_scores(content)
+
                     sentiment_result.update({
                         'vader_compound': vader_scores['compound'],
                         'vader_positive': vader_scores['pos'],
@@ -1091,8 +1212,10 @@ class ContentFormatSEOOptimizer:
                         'vader_neutral': vader_scores['neu'],
                         'overall_sentiment': self._categorize_sentiment(vader_scores['compound'])
                     })
+
                 except Exception as e:
                     logger.warning(f"Erreur VADER sentiment: {e}")
+
             else:
                 logger.warning("NLTK/VADER non disponible - analyse de sentiment basique")
             
@@ -1100,14 +1223,17 @@ class ContentFormatSEOOptimizer:
             if 'sentiment' in self.ml_models and self.ml_models['sentiment']:
                 try:
                     ml_result = self.ml_models['sentiment'](content[:512])
+
                     sentiment_result['ml_sentiment'] = ml_result[0] if ml_result else None
                 except Exception as e:
                     logger.warning(f"Erreur ML sentiment: {e}")
+
             
             return sentiment_result
             
         except Exception as e:
             logger.error(f"Erreur analyse sentiment: {e}")
+
             return {
                 'vader_compound': 0.0,
                 'vader_positive': 0.0,
@@ -1127,21 +1253,29 @@ class ContentFormatSEOOptimizer:
             return 'neutral'
     
     async def _analyze_keywords(self, content: str) -> Dict[str, Any]:
-        """Analyse des mots-clés"""
+        """
+        Analyse des mots-clés"""
         try:
             # Extraction avec YAKE
             keywords = self.keyword_extractor.extract_keywords(content)
             
             # Analyse de densité
             words = content.lower().split()
+
+
             word_freq = {}
             for word in words:
                 word_freq[word] = word_freq.get(word, 0) + 1
+
             
             total_words = len(words)
+
+
             keyword_density = {}
             for keyword, score in keywords:
                 count = word_freq.get(keyword.lower(), 0)
+
+
                 density = (count / total_words) * 100 if total_words > 0 else 0
                 keyword_density[keyword] = density
             
@@ -1153,6 +1287,7 @@ class ContentFormatSEOOptimizer:
             }
         except Exception as e:
             logger.error(f"Erreur analyse mots-clés: {e}")
+
             return {}
     
     async def _analyze_readability(self, content: str) -> Dict[str, Any]:
@@ -1166,6 +1301,7 @@ class ContentFormatSEOOptimizer:
                     'avg_word_length': 5.0,
                     'readability_level': 'standard'
                 }
+
             
             readability_result = {}
             
@@ -1173,21 +1309,28 @@ class ContentFormatSEOOptimizer:
             if flesch_reading_ease and automated_readability_index:
                 try:
                     flesch_score = flesch_reading_ease(content)
+
+
                     ari_score = automated_readability_index(content)
+
                     readability_result.update({
                         'flesch_reading_ease': flesch_score,
                         'automated_readability_index': ari_score,
                         'readability_level': self._categorize_readability(flesch_score)
                     })
+
                 except Exception as e:
                     logger.warning(f"Erreur calcul textstat: {e}")
+
                     readability_result.update({
                         'flesch_reading_ease': 50.0,
                         'automated_readability_index': 10.0,
                         'readability_level': 'standard'
                     })
+
             else:
                 logger.warning("textstat non disponible - analyse de lisibilité basique")
+
                 readability_result.update({
                     'flesch_reading_ease': 50.0,
                     'automated_readability_index': 10.0,
@@ -1195,22 +1338,34 @@ class ContentFormatSEOOptimizer:
                 })
             
             # Analyse de structure (toujours disponible)
+
+
             sentences = re.split(r'[.!?]+', content)
+
+
             sentences = [s for s in sentences if s.strip()]
+
             avg_sentence_length = sum(len(s.split()) for s in sentences) / max(len(sentences), 1)
+
+
             
             words = content.split()
+
+
             avg_word_length = sum(len(w) for w in words) / max(len(words), 1)
+
             
             readability_result.update({
                 'avg_sentence_length': avg_sentence_length,
                 'avg_word_length': avg_word_length
             })
+
             
             return readability_result
             
         except Exception as e:
             logger.error(f"Erreur analyse lisibilité: {e}")
+
             return {
                 'flesch_reading_ease': 50.0,
                 'automated_readability_index': 10.0,
@@ -1241,35 +1396,45 @@ class ContentFormatSEOOptimizer:
         content: Union[str, bytes, Path], 
         format_type: ContentFormat
     ) -> Dict[str, Any]:
-        """Analyse de structure du contenu"""
+        """
+        Analyse de structure du contenu"""
         try:
             if format_type in [ContentFormat.TEXT, ContentFormat.BLOG_POST]:
                 return await self._analyze_text_structure(content)
+
             elif format_type == ContentFormat.VIDEO:
                 return await self._analyze_video_structure(content)
+
             elif format_type == ContentFormat.AUDIO:
                 return await self._analyze_audio_structure(content)
+
             elif format_type == ContentFormat.IMAGE:
                 return await self._analyze_image_structure(content)
+
             else:
                 return {}
         except Exception as e:
             logger.error(f"Erreur analyse structure: {e}")
+
             return {}
     
     async def _analyze_text_structure(self, content: str) -> Dict[str, Any]:
         """Analyse structure du texte"""
         try:
             # Détection des titres
+
             headings = re.findall(r'^#+\s+(.+)$', content, re.MULTILINE)
             
             # Détection des listes
+
             lists = re.findall(r'^\s*[-*+]\s+(.+)$', content, re.MULTILINE)
             
             # Détection des liens
+
             links = re.findall(r'\[([^\]]+)\]\(([^)]+)\)', content)
             
             # Paragraphes
+
             paragraphs = [p for p in content.split('\n\n') if p.strip()]
             
             return {
@@ -1285,6 +1450,7 @@ class ContentFormatSEOOptimizer:
             }
         except Exception as e:
             logger.error(f"Erreur analyse structure texte: {e}")
+
             return {}
 
     async def _analyze_video_structure(self, content: Union[str, Path]) -> Dict[str, Any]:
@@ -1303,6 +1469,7 @@ class ContentFormatSEOOptimizer:
             }
         except Exception as e:
             logger.error(f"Erreur analyse structure vidéo: {e}")
+
             return {}
     
     async def _analyze_audio_structure(self, content: Union[str, Path]) -> Dict[str, Any]:
@@ -1319,6 +1486,7 @@ class ContentFormatSEOOptimizer:
             }
         except Exception as e:
             logger.error(f"Erreur analyse structure audio: {e}")
+
             return {}
     
     async def _analyze_image_structure(self, content: Union[str, Path]) -> Dict[str, Any]:
@@ -1335,6 +1503,7 @@ class ContentFormatSEOOptimizer:
             }
         except Exception as e:
             logger.error(f"Erreur analyse structure image: {e}")
+
             return {}
 
 class VoiceSearchOptimizationEngine:
@@ -1349,13 +1518,15 @@ class VoiceSearchOptimizationEngine:
         self._initialize_voice_components()
     
     def _initialize_voice_components(self):
-        """Initialise les composants de recherche vocale"""
+        """
+        Initialise les composants de recherche vocale"""
         try:
             # Pipeline NLP pour questions
             self.nlp_pipeline = pipeline("question-answering")
             
             # Classificateur d'intention
             self.intent_recognizer = pipeline("text-classification")
+
             
             logger.info("Composants de recherche vocale initialisés")
         except Exception as e:
@@ -1371,43 +1542,54 @@ class VoiceSearchOptimizationEngine:
         """Optimise le contenu pour la recherche vocale avec IA ultra-avancée"""
         try:
             # Analyse du type de requête
+
             query_type = await self._classify_query_type(content, target_queries)
             
             # Extraction de mots-clés conversationnels
+
             conversational_keywords = await self._extract_conversational_keywords_advanced(content)
             
             # Identification des paires question-réponse
+
             question_answer_pairs = await self._identify_question_answers_ai(content)
             
             # Optimisation locale
+
             local_seo_factors = await self._optimize_for_local_voice_advanced(
                 content, location_context
             )
             
             # Optimisation pour featured snippets
+
             snippet_optimization = await self._optimize_for_snippets_advanced(content)
             
             # Compatibilité avec assistants vocaux
+
             voice_device_compatibility = await self._assess_voice_device_compatibility(content)
             
             # Score de langage naturel
+
             natural_language_score = await self._calculate_natural_language_score(content)
             
             # Pertinence sémantique
+
             semantic_relevance = await self._calculate_semantic_relevance(
                 content, target_queries
             )
             
             # Score d'optimisation global
+
             optimization_score = await self._calculate_voice_optimization_score(
                 conversational_keywords, question_answer_pairs, local_seo_factors,
                 natural_language_score, semantic_relevance
             )
             
             # Potentiel featured snippet
+
             featured_snippet_potential = await self._calculate_featured_snippet_potential(
                 content, snippet_optimization
             )
+
             
             return VoiceSearchOptimization(
                 query_type=query_type,
@@ -1420,9 +1602,11 @@ class VoiceSearchOptimizationEngine:
                 natural_language_score=natural_language_score,
                 semantic_relevance=semantic_relevance
             )
+
             
         except Exception as e:
             logger.error(f"Erreur optimisation recherche vocale: {e}")
+
             raise
     
     async def _classify_query_type(
@@ -1435,9 +1619,13 @@ class VoiceSearchOptimizationEngine:
             content_lower = content.lower()
             
             # Mots-clés indicateurs
+
             question_indicators = ['what', 'how', 'why', 'when', 'where', 'which', 'who']
+
             command_indicators = ['play', 'show', 'open', 'start', 'stop', 'call']
+
             local_indicators = ['near', 'nearby', 'location', 'address', 'directions']
+
             commercial_indicators = ['buy', 'price', 'cost', 'purchase', 'order']
             
             # Analyse des indicateurs
@@ -1457,6 +1645,7 @@ class VoiceSearchOptimizationEngine:
                 
         except Exception as e:
             logger.error(f"Erreur classification requête: {e}")
+
             return VoiceSearchType.CONVERSATIONAL
     
     async def _extract_conversational_keywords_advanced(self, content: str) -> List[str]:
@@ -1465,6 +1654,7 @@ class VoiceSearchOptimizationEngine:
             keywords = []
             
             # Mots-clés conversationnels de base
+
             base_conversational = [
                 "how to", "what is", "where can", "best way", "how do i",
                 "what are", "where is", "when should", "why does", "which is",
@@ -1473,7 +1663,9 @@ class VoiceSearchOptimizationEngine:
             ]
             
             # Recherche dans le contenu
+
             content_lower = content.lower()
+
             for phrase in base_conversational:
                 if phrase in content_lower:
                     keywords.append(phrase)
@@ -1484,20 +1676,25 @@ class VoiceSearchOptimizationEngine:
                     doc = nlp(content[:1000])  # Limite pour performance
                     for sent in doc.sents:
                         sent_text = sent.text.lower().strip()
+
                         if sent_text.endswith('?'):
                             keywords.append(sent_text)
+
                 except Exception as e:
                     logger.warning(f"Erreur NLP conversationnel: {e}")
             
             # Génération de variations
+
             variations = []
             for keyword in keywords:
                 variations.extend(self._generate_keyword_variations(keyword))
+
             
             return list(set(keywords + variations))[:50]  # Limite pour performance
             
         except Exception as e:
             logger.error(f"Erreur extraction mots-clés conversationnels: {e}")
+
             return []
     
     def _generate_keyword_variations(self, keyword: str) -> List[str]:
@@ -1506,6 +1703,7 @@ class VoiceSearchOptimizationEngine:
         
         try:
             # Variations avec synonymes
+
             synonyms_map = {
                 'how to': ['how can i', 'how do i', 'what is the way to'],
                 'what is': ['what are', 'define', 'explain'],
@@ -1517,16 +1715,20 @@ class VoiceSearchOptimizationEngine:
                 variations.extend(synonyms_map[keyword])
             
             # Variations avec préfixes/suffixes
+
             prefixes = ['', 'the ', 'a ', 'an ']
+
             suffixes = ['', ' for beginners', ' step by step', ' guide']
             
             for prefix in prefixes:
                 for suffix in suffixes:
                     if prefix + keyword + suffix != keyword:
                         variations.append(prefix + keyword + suffix)
+
         
         except Exception as e:
             logger.error(f"Erreur génération variations: {e}")
+
         
         return variations[:10]  # Limite les variations
     
@@ -1536,21 +1738,30 @@ class VoiceSearchOptimizationEngine:
             qa_pairs = []
             
             # Recherche de questions explicites
+
             questions = re.findall(r'([^.!?]*\?)', content)
+
             
             for question in questions:
                 question = question.strip()
+
                 if len(question) > 10:  # Filtre les questions trop courtes
                     # Recherche de la réponse suivante
+
                     question_index = content.find(question)
+
                     if question_index != -1:
                         # Texte après la question
+
                         after_question = content[question_index + len(question):question_index + len(question) + 500]
                         
                         # Première phrase comme réponse potentielle
+
                         answer_match = re.match(r'([^.!?]*[.!?])', after_question.strip())
+
                         if answer_match:
                             answer = answer_match.group(1).strip()
+
                             if len(answer) > 10:
                                 qa_pairs.append({
                                     'question': question,
@@ -1562,6 +1773,7 @@ class VoiceSearchOptimizationEngine:
             if self.nlp_pipeline:
                 try:
                     # Questions génériques pour extraction d'informations
+
                     generic_questions = [
                         "What is this about?",
                         "How does this work?",
@@ -1572,25 +1784,30 @@ class VoiceSearchOptimizationEngine:
                     for question in generic_questions:
                         try:
                             result = self.nlp_pipeline(question=question, context=content[:1000])
+
                             if result['score'] > 0.5:  # Seuil de confiance
                                 qa_pairs.append({
                                     'question': question,
                                     'answer': result['answer'],
                                     'confidence': result['score']
                                 })
+
                         except Exception as e:
                             logger.warning(f"Erreur ML Q&A: {e}")
+
                 
                 except Exception as e:
                     logger.warning(f"Erreur pipeline Q&A: {e}")
             
             # Tri par confiance
             qa_pairs.sort(key=lambda x: x['confidence'], reverse=True)
+
             
             return qa_pairs[:20]  # Limite pour performance
             
         except Exception as e:
             logger.error(f"Erreur identification Q&A: {e}")
+
             return []
     
     async def _optimize_for_local_voice_advanced(
@@ -1609,15 +1826,18 @@ class VoiceSearchOptimizationEngine:
                 'near_me_optimization': {},
                 'local_schema_suggestions': []
             }
+
             
             content_lower = content.lower()
             
             # Mots-clés de localisation
+
             location_keywords = [
                 'near me', 'nearby', 'close to', 'in my area', 'local',
                 'around here', 'directions to', 'address', 'location',
                 'open now', 'hours', 'phone number', 'contact'
             ]
+
             
             found_keywords = [kw for kw in location_keywords if kw in content_lower]
             local_factors['location_keywords'] = found_keywords
@@ -1667,6 +1887,7 @@ class VoiceSearchOptimizationEngine:
             
         except Exception as e:
             logger.error(f"Erreur optimisation locale: {e}")
+
             return {}
     
     async def _optimize_for_snippets_advanced(self, content: str) -> Dict[str, Any]:
@@ -1682,6 +1903,7 @@ class VoiceSearchOptimizationEngine:
             }
             
             # Recherche d'opportunités de listes
+
             list_patterns = [
                 r'steps? to',
                 r'ways? to',
@@ -1693,6 +1915,7 @@ class VoiceSearchOptimizationEngine:
             
             for pattern in list_patterns:
                 matches = re.findall(pattern, content, re.IGNORECASE)
+
                 if matches:
                     snippet_optimization['snippet_opportunities'].append({
                         'type': 'list',
@@ -1702,6 +1925,7 @@ class VoiceSearchOptimizationEngine:
                     })
             
             # Recherche de définitions
+
             definition_patterns = [
                 r'(\w+) is (?:a|an|the) ([^.]+)',
                 r'(\w+) refers to ([^.]+)',
@@ -1710,6 +1934,7 @@ class VoiceSearchOptimizationEngine:
             
             for pattern in definition_patterns:
                 matches = re.findall(pattern, content, re.IGNORECASE)
+
                 for match in matches:
                     snippet_optimization['definition_opportunities'].append({
                         'term': match[0],
@@ -1718,9 +1943,12 @@ class VoiceSearchOptimizationEngine:
                     })
             
             # Réponses structurées
+
             sentences = re.split(r'[.!?]+', content)
+
             for sentence in sentences:
                 sentence = sentence.strip()
+
                 if 30 <= len(sentence) <= 160:  # Longueur optimale pour snippets
                     snippet_optimization['structured_answers'].append({
                         'text': sentence,
@@ -1729,7 +1957,9 @@ class VoiceSearchOptimizationEngine:
                     })
             
             # Optimisations de paragraphe
+
             paragraphs = content.split('\n\n')
+
             for i, paragraph in enumerate(paragraphs):
                 if 50 <= len(paragraph) <= 300:
                     snippet_optimization['paragraph_snippets'].append({
@@ -1738,11 +1968,13 @@ class VoiceSearchOptimizationEngine:
                         'length': len(paragraph),
                         'optimization_potential': 'high'
                     })
+
             
             return snippet_optimization
             
         except Exception as e:
             logger.error(f"Erreur optimisation snippets: {e}")
+
             return {}
     
     async def _assess_voice_device_compatibility(self, content: str) -> Dict[str, float]:
@@ -1754,6 +1986,7 @@ class VoiceSearchOptimizationEngine:
                 'siri': 0.0,
                 'cortana': 0.0
             }
+
             
             content_lower = content.lower()
             
@@ -1766,6 +1999,7 @@ class VoiceSearchOptimizationEngine:
             }
             
             # Score de base pour chaque assistant
+
             base_score = sum(factors.values()) / len(factors)
             
             # Ajustements spécifiques par assistant
@@ -1778,15 +2012,18 @@ class VoiceSearchOptimizationEngine:
             
         except Exception as e:
             logger.error(f"Erreur évaluation compatibilité: {e}")
+
             return {'alexa': 0.5, 'google_assistant': 0.5, 'siri': 0.5, 'cortana': 0.5}
     
     async def _calculate_natural_language_score(self, content: str) -> float:
         """Calcule le score de langage naturel"""
         try:
             score = 0.0
+
             content_lower = content.lower()
             
             # Facteurs de langage naturel
+
             factors = {
                 'contractions': len(re.findall(r"[a-z]+'[a-z]+", content_lower)) / max(len(content.split()), 1),
                 'conversational_words': len(re.findall(r'\b(well|so|actually|basically|really)\b', content_lower)) / max(len(content.split()), 1),
@@ -1796,13 +2033,18 @@ class VoiceSearchOptimizationEngine:
             }
             
             # Moyenne pondérée
+
             weights = [0.2, 0.25, 0.2, 0.2, 0.15]
+
             score = sum(factor * weight for factor, weight in zip(factors.values(), weights))
+
             
             return min(score, 1.0)
+
             
         except Exception as e:
             logger.error(f"Erreur calcul score langage naturel: {e}")
+
             return 0.5
     
     async def _calculate_semantic_relevance(
@@ -1819,12 +2061,17 @@ class VoiceSearchOptimizationEngine:
             vectorizer = TfidfVectorizer(stop_words='english')
             
             # Corpus avec contenu + requêtes
+
             corpus = [content] + target_queries
+
             tfidf_matrix = vectorizer.fit_transform(corpus)
             
             # Similarité entre contenu et requêtes
+
             content_vector = tfidf_matrix[0]
+
             query_vectors = tfidf_matrix[1:]
+
             
             similarities = []
             for query_vector in query_vectors:
@@ -1832,12 +2079,15 @@ class VoiceSearchOptimizationEngine:
                 similarities.append(similarity)
             
             # Moyenne des similarités
+
             avg_similarity = sum(similarities) / len(similarities) if similarities else 0.0
             
             return min(avg_similarity, 1.0)
+
             
         except Exception as e:
             logger.error(f"Erreur calcul pertinence sémantique: {e}")
+
             return 0.5
     
     async def _calculate_voice_optimization_score(
@@ -1851,6 +2101,7 @@ class VoiceSearchOptimizationEngine:
         """Calcule le score global d'optimisation vocale"""
         try:
             # Facteurs avec pondération
+
             factors = {
                 'conversational_keywords': min(len(conversational_keywords) / 10, 1.0),  # 20%
                 'qa_pairs': min(len(question_answer_pairs) / 5, 1.0),  # 25%
@@ -1858,16 +2109,20 @@ class VoiceSearchOptimizationEngine:
                 'natural_language': natural_language_score,  # 25%
                 'semantic_relevance': semantic_relevance  # 15%
             }
+
             
             weights = [0.2, 0.25, 0.15, 0.25, 0.15]
             
             # Score pondéré
             score = sum(factor * weight for factor, weight in zip(factors.values(), weights))
+
             
             return min(score, 1.0)
+
             
         except Exception as e:
             logger.error(f"Erreur calcul score optimisation vocale: {e}")
+
             return 0.5
     
     async def _calculate_featured_snippet_potential(
@@ -1880,6 +2135,7 @@ class VoiceSearchOptimizationEngine:
             score = 0.0
             
             # Facteurs de snippet
+
             factors = {
                 'snippet_opportunities': len(snippet_optimization.get('snippet_opportunities', [])) / 5,
                 'structured_answers': len(snippet_optimization.get('structured_answers', [])) / 10,
@@ -1888,6 +2144,7 @@ class VoiceSearchOptimizationEngine:
             }
             
             # Score moyen
+
             score = sum(factors.values()) / len(factors)
             
             # Bonus pour contenu bien structuré
@@ -1899,9 +2156,11 @@ class VoiceSearchOptimizationEngine:
                 score += 0.1
             
             return min(score, 1.0)
+
             
         except Exception as e:
             logger.error(f"Erreur calcul potentiel snippet: {e}")
+
             return 0.3
 
 class MultiFormatContentSEOOptimizer:
@@ -1919,7 +2178,8 @@ class MultiFormatContentSEOOptimizer:
         self._initialize_multi_format_models()
     
     def _initialize_platform_adapters(self) -> Dict[PlatformType, Any]:
-        """Initialise les adaptateurs de plateforme"""
+        """
+        Initialise les adaptateurs de plateforme"""
         return {
             PlatformType.YOUTUBE: YouTubeAdapter(self.config),
             PlatformType.INSTAGRAM: InstagramAdapter(self.config),
@@ -1931,7 +2191,8 @@ class MultiFormatContentSEOOptimizer:
         }
     
     def _initialize_multi_format_models(self):
-        """Initialise les modèles ML multi-format"""
+        """
+        Initialise les modèles ML multi-format"""
         try:
             # Modèle de synergie cross-format
             self.ml_models['cross_format_synergy'] = self._create_synergy_model()
@@ -1941,6 +2202,7 @@ class MultiFormatContentSEOOptimizer:
             
             # Modèle d'allocation de ressources
             self.ml_models['resource_allocation'] = self._create_allocation_model()
+
             
             logger.info("Modèles multi-format initialisés")
         except Exception as e:
@@ -1960,7 +2222,8 @@ class MultiFormatContentSEOOptimizer:
         return model
     
     def _create_performance_model(self):
-        """Crée le modèle de prédiction de performance"""
+        """
+        Crée le modèle de prédiction de performance"""
         model = tf.keras.Sequential([
             tf.keras.layers.Dense(256, activation='relu'),
             tf.keras.layers.BatchNormalization(),
@@ -1973,7 +2236,8 @@ class MultiFormatContentSEOOptimizer:
         return model
     
     def _create_allocation_model(self):
-        """Crée le modèle d'allocation de ressources"""
+        """
+        Crée le modèle d'allocation de ressources"""
         return KMeans(n_clusters=3, random_state=42)  # 3 niveaux de ressources
     
     async def optimize_multi_format_content(
@@ -1984,56 +2248,67 @@ class MultiFormatContentSEOOptimizer:
         budget_constraints: Dict[str, float] = None,
         optimization_level: OptimizationLevel = OptimizationLevel.ENTERPRISE
     ) -> Dict[str, Any]:
-        """Optimise le contenu multi-format avec coordination IA ultra-avancée"""
+        """
+        Optimise le contenu multi-format avec coordination IA ultra-avancée"""
         try:
             start_time = time.time()
             
             # Optimisation individuelle des formats
+
             format_optimizations = await self._optimize_individual_formats(
                 content_pieces, target_keywords, target_platforms, optimization_level
             )
             
             # Stratégie cross-format
+
             cross_format_strategy = await self._create_cross_format_strategy_advanced(
                 content_pieces, format_optimizations, target_platforms
             )
             
             # Coordination intelligente
+
             coordination_plan = await self._create_coordination_plan(
                 format_optimizations, cross_format_strategy
             )
             
             # Prédictions de performance
+
             performance_predictions = await self._predict_multi_format_performance(
                 format_optimizations, cross_format_strategy
             )
             
             # Allocation de ressources optimale
+
             resource_allocation = await self._optimize_resource_allocation(
                 format_optimizations, budget_constraints
             )
             
             # Timeline de distribution
+
             distribution_timeline = await self._create_distribution_timeline(
                 format_optimizations, target_platforms
             )
             
             # Analyse de synergie
+
             synergy_analysis = await self._analyze_format_synergy(
                 content_pieces, format_optimizations
             )
             
             # ROI projections
+
             roi_projections = await self._calculate_roi_projections(
                 format_optimizations, performance_predictions, resource_allocation
             )
             
             # Plan de repurposing
+
             repurposing_plan = await self._create_repurposing_plan(
                 content_pieces, format_optimizations
             )
             
             # Monitoring et alertes
+
             monitoring_setup = await self._setup_monitoring_alerts(
                 format_optimizations, performance_predictions
             )
@@ -2044,9 +2319,12 @@ class MultiFormatContentSEOOptimizer:
             )
             
             # Recommandations d'amélioration
+
             improvement_recommendations = await self._generate_improvement_recommendations(
                 format_optimizations, synergy_analysis, performance_predictions
             )
+
+
             
             processing_time = time.time() - start_time
             
@@ -2054,8 +2332,10 @@ class MultiFormatContentSEOOptimizer:
             await self._save_optimization_history(
                 content_pieces, format_optimizations, unified_seo_score
             )
+
             
             logger.info(f"Optimisation multi-format terminée en {processing_time:.2f}s")
+
             
             return {
                 "format_optimizations": format_optimizations,
@@ -2081,6 +2361,7 @@ class MultiFormatContentSEOOptimizer:
             
         except Exception as e:
             logger.error(f"Erreur optimisation multi-format: {e}")
+
             raise
     
     async def _optimize_individual_formats(
@@ -2095,20 +2376,24 @@ class MultiFormatContentSEOOptimizer:
             format_optimizations = {}
             
             # Optimisation parallèle pour performance
+
             tasks = []
             for format_type, content in content_pieces.items():
                 task = self.format_optimizer.optimize_content_format(
                     content, format_type, target_keywords, target_platforms, optimization_level
                 )
+
                 tasks.append((format_type, task))
             
             # Exécution parallèle
+
             results = await asyncio.gather(*[task for _, task in tasks], return_exceptions=True)
             
             # Compilation des résultats
             for (format_type, _), result in zip(tasks, results):
                 if isinstance(result, Exception):
                     logger.error(f"Erreur optimisation {format_type}: {result}")
+
                     continue
                 
                 format_optimizations[format_type.value] = result
@@ -2117,6 +2402,7 @@ class MultiFormatContentSEOOptimizer:
             
         except Exception as e:
             logger.error(f"Erreur optimisation formats individuels: {e}")
+
             return {}
     
     async def _create_cross_format_strategy_advanced(
@@ -2128,30 +2414,38 @@ class MultiFormatContentSEOOptimizer:
         """Crée une stratégie cross-format avancée"""
         try:
             # Analyse des formats disponibles
+
             available_formats = list(content_pieces.keys())
             
             # Détermination du format primaire (meilleur score)
+
+
             primary_format = await self._determine_primary_format(format_optimizations)
             
             # Formats de support
+
             supporting_formats = [f for f in available_formats if f != primary_format]
             
             # Calcul de synergie
+
             synergy_score = await self._calculate_cross_format_synergy(
                 content_pieces, format_optimizations
             )
             
             # Plan de repurposing
+
             repurposing_plan = await self._create_content_repurposing_plan(
                 content_pieces, format_optimizations
             )
             
             # Timeline de distribution
+
             distribution_timeline = await self._create_optimized_timeline(
                 format_optimizations, target_platforms
             )
             
             # Mapping plateforme-format
+
             platform_optimization_map = await self._create_platform_format_map(
                 format_optimizations, target_platforms
             )
@@ -2162,9 +2456,11 @@ class MultiFormatContentSEOOptimizer:
             )
             
             # Allocation de ressources
+
             resource_allocation = await self._calculate_optimal_resource_allocation(
                 format_optimizations, synergy_score
             )
+
             
             return MultiFormatStrategy(
                 primary_format=primary_format,
@@ -2176,6 +2472,7 @@ class MultiFormatContentSEOOptimizer:
                 roi_projections=roi_projections,
                 resource_allocation=resource_allocation
             )
+
             
         except Exception as e:
             logger.error(f"Erreur création stratégie cross-format: {e}")
@@ -2201,15 +2498,19 @@ class MultiFormatContentSEOOptimizer:
                 return ContentFormat.TEXT
             
             # Trouve le format avec le meilleur score
+
             best_format = max(
                 format_optimizations.items(),
                 key=lambda x: x[1].optimization_score
             )
+
             
             return ContentFormat(best_format[0].upper())
+
             
         except Exception as e:
             logger.error(f"Erreur détermination format primaire: {e}")
+
             return ContentFormat.TEXT
     
     async def _calculate_cross_format_synergy(
@@ -2221,6 +2522,7 @@ class MultiFormatContentSEOOptimizer:
         try:
             if len(content_pieces) < 2:
                 return 0.5  # Pas de synergie possible avec un seul format
+
             
             synergy_factors = {
                 'format_diversity': len(content_pieces) / 7,  # Max 7 formats principaux
@@ -2231,16 +2533,21 @@ class MultiFormatContentSEOOptimizer:
             }
             
             # Moyenne pondérée
+
             weights = [0.2, 0.25, 0.25, 0.15, 0.15]
+
             synergy_score = sum(
                 factor * weight 
                 for factor, weight in zip(synergy_factors.values(), weights)
             )
+
             
             return min(synergy_score, 1.0)
+
             
         except Exception as e:
             logger.error(f"Erreur calcul synergie: {e}")
+
             return 0.5
     
     async def _calculate_quality_consistency(
@@ -2251,21 +2558,29 @@ class MultiFormatContentSEOOptimizer:
         try:
             if not format_optimizations:
                 return 0.0
+
             
             scores = [opt.optimization_score for opt in format_optimizations.values()]
             
             # Écart-type pour mesurer la cohérence
+
             mean_score = sum(scores) / len(scores)
+
+
             variance = sum((score - mean_score) ** 2 for score in scores) / len(scores)
+
+
             std_dev = variance ** 0.5
             
             # Consistance inversement proportionnelle à l'écart-type
+
             consistency = 1.0 - min(std_dev / 0.5, 1.0)  # Normalisation
             
             return consistency
             
         except Exception as e:
             logger.error(f"Erreur calcul cohérence qualité: {e}")
+
             return 0.5
     
     async def _calculate_content_coherence(
@@ -2275,6 +2590,7 @@ class MultiFormatContentSEOOptimizer:
         """Calcule la cohérence du contenu entre formats"""
         try:
             # Extraction du texte de tous les formats
+
             text_contents = []
             
             for format_type, content in content_pieces.items():
@@ -2286,6 +2602,7 @@ class MultiFormatContentSEOOptimizer:
                         try:
                             with open(content, 'r', encoding='utf-8') as f:
                                 text_contents.append(f.read())
+
                         except Exception:
                             pass
             
@@ -2293,10 +2610,14 @@ class MultiFormatContentSEOOptimizer:
                 return 0.7  # Score par défaut
             
             # Similarité sémantique entre contenus
+
             vectorizer = TfidfVectorizer(stop_words='english')
+
+
             tfidf_matrix = vectorizer.fit_transform(text_contents)
             
             # Similarité moyenne
+
             similarities = []
             for i in range(len(text_contents)):
                 for j in range(i + 1, len(text_contents)):
@@ -2304,13 +2625,17 @@ class MultiFormatContentSEOOptimizer:
                         tfidf_matrix[i], tfidf_matrix[j]
                     )[0][0]
                     similarities.append(similarity)
+
+
             
             coherence = sum(similarities) / len(similarities) if similarities else 0.5
             
             return min(coherence, 1.0)
+
             
         except Exception as e:
             logger.error(f"Erreur calcul cohérence contenu: {e}")
+
             return 0.5
     
     async def _calculate_platform_coverage(
@@ -2320,18 +2645,24 @@ class MultiFormatContentSEOOptimizer:
         """Calcule la couverture de plateformes"""
         try:
             all_platforms = set()
+
             
             for optimization in format_optimizations.values():
                 platforms = optimization.platform_adaptations.keys()
+
                 all_platforms.update(platforms)
             
             # Score basé sur le nombre de plateformes couvertes
+
             platform_coverage = len(all_platforms) / len(PlatformType)
+
             
             return min(platform_coverage, 1.0)
+
             
         except Exception as e:
             logger.error(f"Erreur calcul couverture plateformes: {e}")
+
             return 0.5
     
     async def _calculate_audience_overlap(
@@ -2342,27 +2673,38 @@ class MultiFormatContentSEOOptimizer:
         try:
             # Simulation d'analyse d'audience
             # En production, ceci utiliserait des données d'audience réelles
+
             
             audience_scores = []
             for optimization in format_optimizations.values():
                 # Score basé sur les métriques de contenu
+
                 engagement_pred = optimization.performance_predictions.get('engagement', 0.5)
+
                 audience_scores.append(engagement_pred)
+
             
             if not audience_scores:
                 return 0.5
             
             # Variance de l'audience (plus elle est faible, plus le chevauchement est élevé)
+
+
             mean_score = sum(audience_scores) / len(audience_scores)
+
+
             variance = sum((score - mean_score) ** 2 for score in audience_scores) / len(audience_scores)
             
             # Chevauchement inversement proportionnel à la variance
+
             overlap = 1.0 - min(variance, 1.0)
+
             
             return overlap
             
         except Exception as e:
             logger.error(f"Erreur calcul chevauchement audience: {e}")
+
             return 0.5
     
     async def _calculate_unified_score_advanced(
@@ -2376,10 +2718,13 @@ class MultiFormatContentSEOOptimizer:
                 return 0.0
             
             # Scores individuels
+
             individual_scores = [opt.optimization_score for opt in format_optimizations.values()]
+
             base_score = sum(individual_scores) / len(individual_scores)
             
             # Bonus de synergie
+
             synergy_bonus = synergy_analysis.get('cross_format_synergy_score', 0.0) * 0.2
             
             # Bonus de diversité
@@ -2387,20 +2732,26 @@ class MultiFormatContentSEOOptimizer:
             
             # Bonus de qualité
             quality_bonus = 0.0
+
             high_quality_count = sum(
-                1 for opt in format_optimizations.values() 
+                1 for opt in format_optimizations.values()
+ 
                 if opt.quality_level in [ContentQuality.HIGH, ContentQuality.PREMIUM, ContentQuality.VIRAL_POTENTIAL]
             )
+
             if high_quality_count > 0:
                 quality_bonus = (high_quality_count / len(format_optimizations)) * 0.15
             
             # Score final
+
             unified_score = base_score + synergy_bonus + diversity_bonus + quality_bonus
             
             return min(unified_score, 1.0)
+
             
         except Exception as e:
             logger.error(f"Erreur calcul score unifié: {e}")
+
             return 0.5
 
 # Classes d'adaptation par plateforme
@@ -2411,7 +2762,8 @@ class PlatformAdapter:
         self.config = config
     
     async def adapt_content(self, content: str, format_type: ContentFormat) -> Dict[str, Any]:
-        """Adapte le contenu pour la plateforme"""
+        """
+        Adapte le contenu pour la plateforme"""
         return {"adapted_content": content}
 
 class YouTubeAdapter(PlatformAdapter):
@@ -2429,7 +2781,9 @@ class YouTubeAdapter(PlatformAdapter):
     
     async def _optimize_youtube_title(self, content: str) -> str:
         # Optimisation titre YouTube (60 caractères max)
+
         words = content.split()[:10]  # Premiers mots
+
         title = " ".join(words)
         return title[:60] + "..." if len(title) > 60 else title
     
@@ -2519,11 +2873,15 @@ class PerformancePredictor:
         return {"engagement": 0.7, "reach": 0.6, "conversion": 0.5}
 
 # Export des classes principales
+# === ALIAS COMPATIBILITÉ ===
+FormatAnalysis = FormatOptimization
+
 __all__ = [
     'ContentFormatSEOOptimizer',
     'VoiceSearchOptimizationEngine', 
     'MultiFormatContentSEOOptimizer',
     'FormatOptimization',
+    'FormatAnalysis',
     'VoiceSearchOptimization',
     'MultiFormatStrategy',
     'ContentFormat',

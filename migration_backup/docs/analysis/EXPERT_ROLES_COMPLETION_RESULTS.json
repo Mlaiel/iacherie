@@ -1,5 +1,0 @@
-{
-  "success": false,
-  "error": "name 'services' is not defined",
-  "rollback_points": 3
-}

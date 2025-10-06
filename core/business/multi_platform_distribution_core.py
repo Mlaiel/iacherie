@@ -22,7 +22,8 @@ from collections import defaultdict
 logger = logging.getLogger(__name__)
 
 class GlobalRegion(Enum):
-    """Global regions for distribution"""
+    """
+Global regions for distribution"""
     NORTH_AMERICA = "north_america"
     EUROPE = "europe"
     ASIA_PACIFIC = "asia_pacific"
@@ -31,7 +32,8 @@ class GlobalRegion(Enum):
     OCEANIA = "oceania"
 
 class LocalizationLevel(Enum):
-    """Content localization levels"""
+    """
+Content localization levels"""
     NONE = "none"
     BASIC = "basic"
     STANDARD = "standard"
@@ -39,7 +41,8 @@ class LocalizationLevel(Enum):
     NATIVE = "native"
 
 class SynchronizationMode(Enum):
-    """Platform synchronization modes"""
+    """
+Platform synchronization modes"""
     SIMULTANEOUS = "simultaneous"
     CASCADING = "cascading"
     OPTIMIZED_TIMING = "optimized_timing"
@@ -47,7 +50,8 @@ class SynchronizationMode(Enum):
     AI_ORCHESTRATED = "ai_orchestrated"
 
 class CrossPlatformStrategy(Enum):
-    """Cross-platform optimization strategies"""
+    """
+Cross-platform optimization strategies"""
     UNIFIED_MESSAGING = "unified_messaging"
     PLATFORM_ADAPTED = "platform_adapted"
     SEQUENTIAL_STORYTELLING = "sequential_storytelling"
@@ -55,7 +59,8 @@ class CrossPlatformStrategy(Enum):
     CROSS_POLLINATION = "cross_pollination"
 
 class DistributionStatus(Enum):
-    """Distribution execution status"""
+    """
+Distribution execution status"""
     PLANNED = "planned"
     QUEUED = "queued"
     PROCESSING = "processing"
@@ -67,7 +72,8 @@ class DistributionStatus(Enum):
 
 @dataclass
 class GlobalDistributionPlan:
-    """Comprehensive global distribution plan"""
+    """
+Comprehensive global distribution plan"""
     plan_id: str
     content_id: str
     creator_id: str
@@ -85,7 +91,8 @@ class GlobalDistributionPlan:
 
 @dataclass
 class PlatformOrchestration:
-    """Platform orchestration configuration"""
+    """
+Platform orchestration configuration"""
     orchestration_id: str
     platforms: List[str]
     sequencing_rules: Dict[str, Any]
@@ -100,7 +107,8 @@ class PlatformOrchestration:
 
 @dataclass
 class ContentLocalization:
-    """Content localization data"""
+    """
+Content localization data"""
     localization_id: str
     source_content_id: str
     target_region: GlobalRegion
@@ -117,7 +125,8 @@ class ContentLocalization:
 
 @dataclass
 class GlobalPerformanceMetrics:
-    """Global distribution performance metrics"""
+    """
+Global distribution performance metrics"""
     metrics_id: str
     content_id: str
     reporting_period: Tuple[datetime, datetime]
@@ -134,7 +143,8 @@ class GlobalPerformanceMetrics:
 
 @dataclass
 class PlatformSynchronization:
-    """Platform synchronization tracking"""
+    """
+Platform synchronization tracking"""
     sync_id: str
     plan_id: str
     platforms_involved: List[str]
@@ -157,7 +167,8 @@ class MultiPlatformDistributionCore:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize multi-platform distribution core"""
+        """
+Initialize multi-platform distribution core"""
         self.config = config or {}
         self.global_distribution_plans: Dict[str, GlobalDistributionPlan] = {}
         self.platform_orchestrations: Dict[str, PlatformOrchestration] = {}
@@ -189,7 +200,8 @@ class MultiPlatformDistributionCore:
         logger.info("Multi-Platform Distribution Core initialized")
     
     def _initialize_regional_configs(self) -> Dict[GlobalRegion, Dict[str, Any]]:
-        """Initialize regional configuration data"""
+        """
+Initialize regional configuration data"""
         return {
             GlobalRegion.NORTH_AMERICA: {
                 'primary_languages': ['en'],
@@ -248,7 +260,8 @@ class MultiPlatformDistributionCore:
         }
     
     def _initialize_orchestration_algorithms(self) -> Dict[str, Any]:
-        """Initialize platform orchestration algorithms"""
+        """
+Initialize platform orchestration algorithms"""
         return {
             'optimization_engine': {
                 'algorithm': 'multi_objective_optimization',
@@ -270,7 +283,8 @@ class MultiPlatformDistributionCore:
         }
     
     def _initialize_localization_services(self) -> Dict[str, Any]:
-        """Initialize content localization services"""
+        """
+Initialize content localization services"""
         return {
             'translation_services': {
                 'providers': ['google_translate_api', 'deepl', 'microsoft_translator', 'human_translators'],
@@ -293,7 +307,8 @@ class MultiPlatformDistributionCore:
         }
     
     def _initialize_global_analytics(self) -> Dict[str, Any]:
-        """Initialize global analytics infrastructure"""
+        """
+Initialize global analytics infrastructure"""
         return {
             'data_collection': {
                 'regional_analytics': 'platform_native_apis',
@@ -321,7 +336,8 @@ class MultiPlatformDistributionCore:
         creator_id: str, 
         global_strategy: Dict[str, Any]
     ) -> GlobalDistributionPlan:
-        """Create comprehensive global distribution plan"""
+        """
+Create comprehensive global distribution plan"""
         try:
             plan_id = str(uuid.uuid4())
             
@@ -403,7 +419,8 @@ class MultiPlatformDistributionCore:
             raise
     
     async def _analyze_global_distribution_potential(self, content_id: str) -> Dict[str, Any]:
-        """Analyze content potential for global distribution"""
+        """
+Analyze content potential for global distribution"""
         try:
             # Simulate comprehensive content analysis
             analysis = {
@@ -439,7 +456,8 @@ class MultiPlatformDistributionCore:
         content_analysis: Dict[str, Any], 
         global_strategy: Dict[str, Any]
     ) -> CrossPlatformStrategy:
-        """Determine optimal cross-platform strategy"""
+        """
+Determine optimal cross-platform strategy"""
         try:
             primary_goal = global_strategy.get('primary_goal', 'reach')
             content_type = content_analysis.get('content_category', 'general')
@@ -465,7 +483,8 @@ class MultiPlatformDistributionCore:
         content_analysis: Dict[str, Any], 
         global_strategy: Dict[str, Any]
     ) -> Dict[GlobalRegion, Dict[str, Any]]:
-        """Configure regional targeting parameters"""
+        """
+Configure regional targeting parameters"""
         try:
             regional_targeting = {}
             target_regions = global_strategy.get('target_regions', list(GlobalRegion))
@@ -512,7 +531,8 @@ class MultiPlatformDistributionCore:
         content_analysis: Dict[str, Any], 
         global_strategy: Dict[str, Any]
     ) -> str:
-        """Calculate priority level for region"""
+        """
+Calculate priority level for region"""
         monetization_potential = content_analysis.get(
             'monetization_potential_by_region', {}
         ).get(region, 0.5)
@@ -530,7 +550,8 @@ class MultiPlatformDistributionCore:
         monetization_potential: float, 
         global_strategy: Dict[str, Any]
     ) -> float:
-        """Calculate budget allocation percentage for region"""
+        """
+Calculate budget allocation percentage for region"""
         base_allocation = 100 / len(global_strategy.get('target_regions', [GlobalRegion]))
         
         # Adjust based on monetization potential
@@ -543,7 +564,8 @@ class MultiPlatformDistributionCore:
         region: GlobalRegion, 
         content_analysis: Dict[str, Any]
     ) -> LocalizationLevel:
-        """Determine required localization level for region"""
+        """
+Determine required localization level for region"""
         complexity = content_analysis.get('localization_complexity', 'medium')
         universal_appeal = content_analysis.get('universal_appeal_score', 0.5)
         
@@ -561,7 +583,8 @@ class MultiPlatformDistributionCore:
         region: GlobalRegion, 
         content_analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Plan content adaptations for specific region"""
+        """
+Plan content adaptations for specific region"""
         regional_config = self.regional_configurations.get(region, {})
         
         return {
@@ -584,7 +607,8 @@ class MultiPlatformDistributionCore:
         }
     
     def _plan_visual_modifications(self, region: GlobalRegion) -> List[str]:
-        """Plan visual modifications for region"""
+        """
+Plan visual modifications for region"""
         modifications = {
             GlobalRegion.MIDDLE_EAST_AFRICA: ['cultural_sensitivity_review', 'modest_clothing_check'],
             GlobalRegion.ASIA_PACIFIC: ['color_symbolism_check', 'gesture_appropriateness'],
@@ -595,7 +619,8 @@ class MultiPlatformDistributionCore:
         return modifications.get(region, ['standard_review'])
     
     def _get_regional_preferred_formats(self, region: GlobalRegion) -> List[str]:
-        """Get preferred content formats for region"""
+        """
+Get preferred content formats for region"""
         format_preferences = {
             GlobalRegion.ASIA_PACIFIC: ['vertical_video', 'short_form', 'mobile_optimized'],
             GlobalRegion.NORTH_AMERICA: ['horizontal_video', 'long_form', 'high_quality'],
@@ -606,7 +631,8 @@ class MultiPlatformDistributionCore:
         return format_preferences.get(region, ['standard_format'])
     
     def _get_regional_engagement_strategies(self, region: GlobalRegion) -> List[str]:
-        """Get engagement strategies for region"""
+        """
+Get engagement strategies for region"""
         strategies = {
             GlobalRegion.ASIA_PACIFIC: ['hashtag_challenges', 'influencer_collaboration', 'gaming_integration'],
             GlobalRegion.NORTH_AMERICA: ['user_generated_content', 'brand_partnerships', 'trending_topics'],
@@ -617,7 +643,8 @@ class MultiPlatformDistributionCore:
         return strategies.get(region, ['general_engagement'])
     
     async def execute_global_distribution(self, plan_id: str) -> Dict[str, Any]:
-        """Execute global distribution plan"""
+        """
+Execute global distribution plan"""
         try:
             if plan_id not in self.global_distribution_plans:
                 raise ValueError(f"Distribution plan not found: {plan_id}")
@@ -662,7 +689,8 @@ class MultiPlatformDistributionCore:
             raise
     
     async def _create_platform_orchestration(self, plan: GlobalDistributionPlan) -> PlatformOrchestration:
-        """Create platform orchestration for the plan"""
+        """
+Create platform orchestration for the plan"""
         try:
             orchestration_id = str(uuid.uuid4())
             
@@ -721,7 +749,8 @@ class MultiPlatformDistributionCore:
         sync_mode: SynchronizationMode, 
         platforms: List[str]
     ) -> Dict[str, Any]:
-        """Create platform sequencing rules"""
+        """
+Create platform sequencing rules"""
         if sync_mode == SynchronizationMode.SIMULTANEOUS:
             return {
                 'mode': 'simultaneous',
@@ -747,7 +776,8 @@ class MultiPlatformDistributionCore:
             }
     
     async def _build_dependency_matrix(self, platforms: List[str]) -> Dict[str, List[str]]:
-        """Build platform dependency matrix"""
+        """
+Build platform dependency matrix"""
         # Simplified dependency rules
         dependencies = {
             'youtube': [],  # No dependencies
@@ -765,7 +795,8 @@ class MultiPlatformDistributionCore:
         platforms: List[str], 
         strategy: CrossPlatformStrategy
     ) -> Dict[str, Any]:
-        """Configure cross-platform synergies"""
+        """
+Configure cross-platform synergies"""
         synergies = {
             'content_cross_referencing': True,
             'hashtag_coordination': True,
@@ -783,7 +814,8 @@ class MultiPlatformDistributionCore:
         return synergies
     
     async def _setup_performance_monitoring(self) -> Dict[str, Any]:
-        """Setup performance monitoring configuration"""
+        """
+Setup performance monitoring configuration"""
         return {
             'real_time_metrics': ['reach', 'engagement', 'conversion'],
             'monitoring_frequency': 'every_5_minutes',
@@ -796,7 +828,8 @@ class MultiPlatformDistributionCore:
         }
     
     async def _configure_automated_adjustments(self) -> Dict[str, Any]:
-        """Configure automated adjustment rules"""
+        """
+Configure automated adjustment rules"""
         return {
             'budget_reallocation': {
                 'enabled': True,
@@ -816,7 +849,8 @@ class MultiPlatformDistributionCore:
         }
     
     async def _create_escalation_triggers(self) -> List[Dict[str, Any]]:
-        """Create escalation triggers for issues"""
+        """
+Create escalation triggers for issues"""
         return [
             {
                 'condition': 'platform_api_failure',
@@ -836,7 +870,8 @@ class MultiPlatformDistributionCore:
         ]
     
     async def _define_success_criteria(self, plan: GlobalDistributionPlan) -> Dict[str, float]:
-        """Define success criteria for orchestration"""
+        """
+Define success criteria for orchestration"""
         return {
             'minimum_reach_achievement': 0.8,  # 80% of target reach
             'minimum_engagement_rate': 0.02,  # 2% engagement rate
@@ -846,7 +881,8 @@ class MultiPlatformDistributionCore:
         }
     
     def get_core_metrics(self) -> Dict[str, Any]:
-        """Get core multi-platform distribution metrics"""
+        """
+Get core multi-platform distribution metrics"""
         total_plans = len(self.global_distribution_plans)
         total_orchestrations = len(self.platform_orchestrations)
         total_localizations = len(self.content_localizations)

@@ -23,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 
 class MidjourneyAction(str, Enum):
-    """Midjourney action types."""
+    """
+        Midjourney action types."""
     IMAGINE = "imagine"
     UPSCALE = "upscale"
     VARIATION = "variation"
@@ -84,7 +85,8 @@ class MidjourneyPrompt:
     no_words: Optional[List[str]] = None  # Negative prompts
     
     def to_prompt_string(self) -> str:
-        """Convert to Midjourney prompt string."""
+        """
+        Convert to Midjourney prompt string."""
         prompt = self.text
         
         if self.aspect_ratio:
@@ -134,7 +136,8 @@ class MidjourneyJob:
 
 @dataclass
 class MidjourneyImage:
-    """Midjourney generated image."""
+    """
+        Midjourney generated image."""
     image_id: str
     url: str
     proxy_url: Optional[str]
@@ -150,7 +153,8 @@ class MidjourneyImage:
 
 
 class MidjourneyIntegration:
-    """Professional Midjourney API integration."""
+    """
+        Professional Midjourney API integration."""
     
     def __init__(
         self,
@@ -183,11 +187,13 @@ class MidjourneyIntegration:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+        Async context manager exit."""
         await self.close()
     
     async def _ensure_session(self):
-        """Ensure HTTP session is available."""
+        """
+        Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
                 "Authorization": f"Bearer {self.api_token}",
@@ -212,7 +218,8 @@ class MidjourneyIntegration:
         polling_interval: int = 10,
         metadata: Optional[Dict[str, Any]] = None
     ) -> MidjourneyJob:
-        """Generate images from text prompt."""
+        """
+        Generate images from text prompt."""
         await self._ensure_session()
         
         # Convert prompt to string if needed
@@ -220,6 +227,7 @@ class MidjourneyIntegration:
             prompt_str = prompt.to_prompt_string()
         else:
             prompt_str = prompt
+
         
         data = {
             "type": "imagine",
@@ -235,12 +243,18 @@ class MidjourneyIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Midjourney API error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 job_id = result["messageId"]
                 
                 # Create job tracking
+
                 job = MidjourneyJob(
                     job_id=job_id,
                     action=MidjourneyAction.IMAGINE,
@@ -252,19 +266,23 @@ class MidjourneyIntegration:
                     updated_at=datetime.now(),
                     metadata=metadata or {}
                 )
+
                 
                 self.active_jobs[job_id] = job
                 self.request_count += 1
                 
                 logger.info(f"Imagine job submitted: {job_id}")
+
                 
                 if wait_for_completion:
                     return await self._wait_for_completion(job_id, polling_interval)
+
                 else:
                     return job
         
         except Exception as e:
             logger.error(f"Imagine request failed: {e}")
+
             raise
     
     async def upscale(
@@ -277,6 +295,8 @@ class MidjourneyIntegration:
     ) -> MidjourneyJob:
         """Upscale a specific image from a grid."""
         await self._ensure_session()
+
+
         
         data = {
             "type": "upscale",
@@ -293,13 +313,21 @@ class MidjourneyIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Midjourney upscale error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 new_job_id = result["messageId"]
                 
                 # Create upscale job tracking
+
                 original_job = self.active_jobs.get(job_id) or self._find_completed_job(job_id)
+
+
                 original_prompt = original_job.prompt if original_job else f"Upscale from {job_id}"
                 
                 job = MidjourneyJob(
@@ -313,19 +341,23 @@ class MidjourneyIntegration:
                     updated_at=datetime.now(),
                     metadata=metadata or {}
                 )
+
                 
                 self.active_jobs[new_job_id] = job
                 self.request_count += 1
                 
                 logger.info(f"Upscale job submitted: {new_job_id}")
+
                 
                 if wait_for_completion:
                     return await self._wait_for_completion(new_job_id, polling_interval)
+
                 else:
                     return job
         
         except Exception as e:
             logger.error(f"Upscale request failed: {e}")
+
             raise
     
     async def variation(
@@ -338,6 +370,8 @@ class MidjourneyIntegration:
     ) -> MidjourneyJob:
         """Create variations of a specific image."""
         await self._ensure_session()
+
+
         
         data = {
             "type": "variation",
@@ -354,13 +388,21 @@ class MidjourneyIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Midjourney variation error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 new_job_id = result["messageId"]
                 
                 # Create variation job tracking
+
                 original_job = self.active_jobs.get(job_id) or self._find_completed_job(job_id)
+
+
                 original_prompt = original_job.prompt if original_job else f"Variation from {job_id}"
                 
                 job = MidjourneyJob(
@@ -374,19 +416,23 @@ class MidjourneyIntegration:
                     updated_at=datetime.now(),
                     metadata=metadata or {}
                 )
+
                 
                 self.active_jobs[new_job_id] = job
                 self.request_count += 1
                 
                 logger.info(f"Variation job submitted: {new_job_id}")
+
                 
                 if wait_for_completion:
                     return await self._wait_for_completion(new_job_id, polling_interval)
+
                 else:
                     return job
         
         except Exception as e:
             logger.error(f"Variation request failed: {e}")
+
             raise
     
     async def describe(
@@ -398,6 +444,8 @@ class MidjourneyIntegration:
     ) -> MidjourneyJob:
         """Generate text description from image."""
         await self._ensure_session()
+
+
         
         data = {
             "type": "describe",
@@ -413,12 +461,18 @@ class MidjourneyIntegration:
             ) as response:
                 if response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Midjourney describe error: {error_data}")
+
+
                 
                 result = await response.json()
+
+
                 job_id = result["messageId"]
                 
                 # Create describe job tracking
+
                 job = MidjourneyJob(
                     job_id=job_id,
                     action=MidjourneyAction.DESCRIBE,
@@ -430,24 +484,29 @@ class MidjourneyIntegration:
                     updated_at=datetime.now(),
                     metadata=metadata or {}
                 )
+
                 
                 self.active_jobs[job_id] = job
                 self.request_count += 1
                 
                 logger.info(f"Describe job submitted: {job_id}")
+
                 
                 if wait_for_completion:
                     return await self._wait_for_completion(job_id, polling_interval)
+
                 else:
                     return job
         
         except Exception as e:
             logger.error(f"Describe request failed: {e}")
+
             raise
     
     async def get_job_status(self, job_id: str) -> Optional[MidjourneyJob]:
         """Get current status of a job."""
         await self._ensure_session()
+
         
         try:
             async with self.session.get(f"{self.base_url}/message/{job_id}") as response:
@@ -455,7 +514,10 @@ class MidjourneyIntegration:
                     return None
                 elif response.status != 200:
                     error_data = await response.json()
+
                     raise Exception(f"Midjourney status error: {error_data}")
+
+
                 
                 result = await response.json()
                 
@@ -463,8 +525,11 @@ class MidjourneyIntegration:
                 if job_id in self.active_jobs:
                     job = self.active_jobs[job_id]
                     job.status = result.get("status", "unknown")
+
                     job.progress = result.get("progress", 0)
+
                     job.updated_at = datetime.now()
+
                     
                     if result.get("attachments"):
                         job.image_urls = [att["url"] for att in result["attachments"]]
@@ -475,18 +540,22 @@ class MidjourneyIntegration:
                     # Move to completed if done
                     if job.status in ["completed", "failed"]:
                         self.completed_jobs.append(job)
+
                         del self.active_jobs[job_id]
                         
                         if job.status == "completed":
                             self.generation_count += len(job.image_urls)
+
                     
                     return job
                 else:
                     # Create job from response
                     return self._job_from_response(job_id, result)
+
         
         except Exception as e:
             logger.error(f"Failed to get job status: {e}")
+
             raise
     
     async def _wait_for_completion(
@@ -497,23 +566,31 @@ class MidjourneyIntegration:
     ) -> MidjourneyJob:
         """Wait for job completion with polling."""
         start_time = time.time()
+
         
         while time.time() - start_time < max_wait_time:
             job = await self.get_job_status(job_id)
+
             
             if job is None:
                 raise Exception(f"Job {job_id} not found")
+
             
             if job.status == "completed":
                 logger.info(f"Job completed: {job_id}")
+
                 return job
             elif job.status == "failed":
                 error_msg = job.error_message or "Job failed"
                 logger.error(f"Job failed: {job_id} - {error_msg}")
+
                 raise Exception(f"Job failed: {error_msg}")
+
             
             logger.info(f"Job {job_id} progress: {job.progress}%")
+
             await asyncio.sleep(polling_interval)
+
         
         raise Exception(f"Job {job_id} timed out after {max_wait_time} seconds")
     
@@ -526,6 +603,7 @@ class MidjourneyIntegration:
         return MidjourneyJob(
             job_id=job_id,
             action=MidjourneyAction.IMAGINE,  # Default
+
             prompt=response.get("content", ""),
             status=response.get("status", "unknown"),
             progress=response.get("progress", 0),
@@ -543,10 +621,12 @@ class MidjourneyIntegration:
         return None
     
     async def get_images_from_job(self, job_id: str) -> List[MidjourneyImage]:
-        """Extract individual images from job."""
+        """
+        Extract individual images from job."""
         job = await self.get_job_status(job_id)
         if not job or not job.image_urls:
             return []
+
         
         images = []
         for i, url in enumerate(job.image_urls):
@@ -556,33 +636,43 @@ class MidjourneyIntegration:
                 proxy_url=None,
                 filename=f"midjourney_{job_id}_{i}.png",
                 width=1024,  # Default, would need to fetch actual dimensions
+
                 height=1024,
                 size_bytes=0,  # Would need to fetch actual size
+
                 job_id=job_id,
                 prompt=job.prompt,
                 index=i + 1,
                 created_at=job.created_at,
                 metadata=job.metadata
             )
+
             images.append(image)
+
         
         return images
     
     async def download_image(self, image_url: str) -> bytes:
         """Download image data from URL."""
         await self._ensure_session()
+
         
         try:
             async with self.session.get(image_url) as response:
                 if response.status != 200:
                     raise Exception(f"Failed to download image: {response.status}")
+
+
                 
                 image_data = await response.read()
+
                 logger.info(f"Downloaded image: {len(image_data)} bytes")
+
                 return image_data
         
         except Exception as e:
             logger.error(f"Image download failed: {e}")
+
             raise
     
     def get_usage_stats(self) -> Dict[str, Any]:
@@ -606,11 +696,13 @@ class MidjourneyIntegration:
         return breakdown
     
     def get_active_jobs(self) -> List[MidjourneyJob]:
-        """Get list of currently active jobs."""
+        """
+        Get list of currently active jobs."""
         return list(self.active_jobs.values())
     
     def get_completed_jobs(self) -> List[MidjourneyJob]:
-        """Get list of completed jobs."""
+        """
+        Get list of completed jobs."""
         return self.completed_jobs.copy()
 
 
@@ -620,7 +712,8 @@ async def create_midjourney_integration(
     server_id: str,
     channel_id: str
 ) -> MidjourneyIntegration:
-    """Create and initialize Midjourney integration."""
+    """
+        Create and initialize Midjourney integration."""
     integration = MidjourneyIntegration(
         api_token=api_token,
         server_id=server_id,
@@ -637,7 +730,8 @@ async def quick_image_generation(
     channel_id: str,
     aspect_ratio: AspectRatio = AspectRatio.SQUARE
 ) -> List[str]:
-    """Quick image generation utility."""
+    """
+        Quick image generation utility."""
     mj_prompt = MidjourneyPrompt(text=prompt, aspect_ratio=aspect_ratio)
     
     async with MidjourneyIntegration(api_token, server_id, channel_id) as midjourney:
@@ -649,28 +743,39 @@ if __name__ == "__main__":
     # Example usage
     async def main():
         import os
+
         api_token = os.getenv("MIDJOURNEY_API_TOKEN")
+
         server_id = os.getenv("MIDJOURNEY_SERVER_ID")
+
         channel_id = os.getenv("MIDJOURNEY_CHANNEL_ID")
+
         
         if not all([api_token, server_id, channel_id]):
             print("Please set MIDJOURNEY_API_TOKEN, MIDJOURNEY_SERVER_ID, and MIDJOURNEY_CHANNEL_ID")
+
             return
         
         async with MidjourneyIntegration(api_token, server_id, channel_id) as midjourney:
             # Test image generation
+
             prompt = MidjourneyPrompt(
                 text="A beautiful sunset over mountains",
                 aspect_ratio=AspectRatio.LANDSCAPE,
                 quality=ImageQuality.HIGH,
                 style=StylePreset.PHOTOGRAPHIC
             )
+
+
             
             job = await midjourney.imagine(prompt, wait_for_completion=True)
+
             print(f"Generated {len(job.image_urls)} images")
             
             # Test usage stats
+
             stats = midjourney.get_usage_stats()
+
             print(f"Usage stats: {stats}")
     
     asyncio.run(main())

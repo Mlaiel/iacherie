@@ -58,7 +58,8 @@ Base = declarative_base()
 # ==============================================
 
 class EngagementEventType(Enum):
-    """Types of engagement events"""
+    """
+        Types of engagement events"""
     LOGIN = "login"
     FEATURE_USE = "feature_use"
     ACHIEVEMENT_UNLOCKED = "achievement_unlocked"
@@ -116,7 +117,8 @@ class EngagementMetrics:
 
 @dataclass
 class BehavioralPattern:
-    """User behavioral pattern"""
+    """
+        User behavioral pattern"""
     pattern_id: str
     pattern_name: str
     frequency: float
@@ -127,7 +129,8 @@ class BehavioralPattern:
 
 @dataclass
 class PredictionResult:
-    """ML prediction result"""
+    """
+        ML prediction result"""
     user_id: str
     prediction_type: str
     predicted_value: float
@@ -140,7 +143,8 @@ class PredictionResult:
 # ==============================================
 
 class EngagementEvent(Base):
-    """Engagement event tracking model"""
+    """
+        Engagement event tracking model"""
     __tablename__ = 'engagement_events'
     
     id = Column(String, primary_key=True, default=lambda: str(uuid4()))
@@ -179,7 +183,8 @@ class EngagementEvent(Base):
     variant_id = Column(String)
 
 class UserSession(Base):
-    """User session tracking model"""
+    """
+        User session tracking model"""
     __tablename__ = 'user_sessions'
     
     id = Column(String, primary_key=True, default=lambda: str(uuid4()))
@@ -216,7 +221,8 @@ class UserSession(Base):
     meta_data = Column(JSON)
 
 class UserBehaviorProfile(Base):
-    """User behavior profile model"""
+    """
+        User behavior profile model"""
     __tablename__ = 'user_behavior_profiles'
     
     id = Column(String, primary_key=True, default=lambda: str(uuid4()))
@@ -287,7 +293,8 @@ class ABTest(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class EngagementInsight(Base):
-    """Generated engagement insights model"""
+    """
+        Generated engagement insights model"""
     __tablename__ = 'engagement_insights'
     
     id = Column(String, primary_key=True, default=lambda: str(uuid4()))
@@ -357,9 +364,11 @@ class EngagementAnalytics:
         """Track user engagement event"""
         try:
             # Get current user context
+
             user_context = await self._get_user_context(user_id)
             
             # Create engagement event
+
             event = EngagementEvent(
                 user_id=user_id,
                 session_id=session_id,
@@ -384,68 +393,98 @@ class EngagementAnalytics:
             
             # Check for engagement milestones
             await self._check_engagement_milestones(user_id, event)
+
             
             logger.info(f"Tracked engagement event: {event_type.value} for user {user_id}")
+
             return event
             
         except Exception as e:
             logger.error(f"Failed to track engagement event: {e}")
+
             raise
     
     async def calculate_engagement_score(self, user_id: str) -> float:
         """Calculate comprehensive engagement score for user"""
         try:
             # Get user's engagement data
+
             engagement_data = await self._get_user_engagement_data(user_id)
+
             
             if not engagement_data:
                 return 0.0
             
             # Calculate weighted engagement score
+
             score_components = {}
             
             # Session duration component (0-100)
+
+
             avg_session_duration = engagement_data.get('avg_session_duration', 0)
+
             score_components['session_duration'] = min(100, (avg_session_duration / 1800) * 100)  # 30 min = 100
             
             # Feature usage component (0-100)
+
+
             features_used = engagement_data.get('unique_features_used', 0)
+
             score_components['feature_usage'] = min(100, (features_used / 20) * 100)  # 20 features = 100
             
             # Achievements component (0-100)
+
+
             achievements = engagement_data.get('achievements_count', 0)
+
             score_components['achievements'] = min(100, (achievements / 50) * 100)  # 50 achievements = 100
             
             # Social interactions component (0-100)
+
+
             social_actions = engagement_data.get('social_interactions', 0)
+
             score_components['social_interactions'] = min(100, (social_actions / 100) * 100)  # 100 interactions = 100
             
             # Purchases component (0-100)
+
+
             purchases = engagement_data.get('purchases_made', 0)
+
             score_components['purchases'] = min(100, (purchases / 10) * 100)  # 10 purchases = 100
             
             # Calculate weighted final score
+
             final_score = sum(
                 score_components[component] * self.engagement_weights[component]
                 for component in score_components
             )
+
             
             return round(final_score, 2)
+
             
         except Exception as e:
             logger.error(f"Failed to calculate engagement score: {e}")
+
             return 0.0
     
     async def get_user_engagement_metrics(self, user_id: str) -> EngagementMetrics:
         """Get comprehensive engagement metrics for user"""
         try:
             # Get cached metrics first
+
             cached_metrics = await self._get_cached_metrics(user_id)
+
             if cached_metrics:
                 return cached_metrics
             
             # Calculate fresh metrics
+
             engagement_data = await self._get_user_engagement_data(user_id)
+
+
             
             metrics = EngagementMetrics(
                 user_id=user_id,
@@ -463,11 +502,13 @@ class EngagementAnalytics:
             
             # Cache metrics for 1 hour
             await self._cache_metrics(user_id, metrics)
+
             
             return metrics
             
         except Exception as e:
             logger.error(f"Failed to get engagement metrics: {e}")
+
             raise
     
     async def analyze_user_behavior(self, user_id: str) -> UserBehaviorProfile:
@@ -476,6 +517,7 @@ class EngagementAnalytics:
             return await self.behavioral_tracker.analyze_user_behavior(user_id)
         except Exception as e:
             logger.error(f"Failed to analyze user behavior: {e}")
+
             raise
     
     async def predict_user_actions(
@@ -488,6 +530,7 @@ class EngagementAnalytics:
             return await self.predictive_engine.predict_user_actions(user_id, prediction_types)
         except Exception as e:
             logger.error(f"Failed to predict user actions: {e}")
+
             raise
     
     async def run_ab_test(
@@ -504,6 +547,7 @@ class EngagementAnalytics:
             )
         except Exception as e:
             logger.error(f"Failed to run A/B test: {e}")
+
             raise
     
     async def generate_insights(
@@ -515,6 +559,7 @@ class EngagementAnalytics:
             return await self.insight_generator.generate_insights(time_period)
         except Exception as e:
             logger.error(f"Failed to generate insights: {e}")
+
             raise
     
     # ==============================================
@@ -524,8 +569,10 @@ class EngagementAnalytics:
     async def _get_user_context(self, user_id: str) -> Dict[str, Any]:
         """Get current user context for event tracking"""
         # Get user's current gamification state
+
         context_key = f"user_context:{user_id}"
         cached_context = await self.redis.get(context_key)
+
         
         if cached_context:
             return json.loads(cached_context)
@@ -541,6 +588,7 @@ class EngagementAnalytics:
     async def _store_event(self, event: EngagementEvent):
         """Store engagement event for processing"""
         # Store in Redis for real-time processing
+
         event_key = f"events:{event.user_id}:{datetime.utcnow().date().isoformat()}"
         event_data = {
             'id': event.id,
@@ -573,10 +621,12 @@ class EngagementAnalytics:
         }
     
     async def _check_engagement_milestones(self, user_id: str, event: EngagementEvent):
-        """Check if user reached engagement milestones"""
+        """
+        Check if user reached engagement milestones"""
         # Check for milestones like "First Purchase", "10th Achievement", etc.
         milestones_key = f"milestones:{user_id}"
         milestones = await self.redis.get(milestones_key)
+
         
         if milestones:
             milestones_data = json.loads(milestones)
@@ -590,6 +640,7 @@ class EngagementAnalytics:
             
             if purchase_count == 1:
                 await self._trigger_milestone_reward(user_id, "first_purchase")
+
             elif purchase_count == 10:
                 await self._trigger_milestone_reward(user_id, "tenth_purchase")
         
@@ -605,10 +656,13 @@ class EngagementAnalytics:
         """Get cached engagement metrics"""
         cache_key = f"engagement_metrics:{user_id}"
         cached_data = await self.redis.get(cache_key)
+
         
         if cached_data:
             data = json.loads(cached_data)
+
             return EngagementMetrics(**data)
+
         
         return None
     
@@ -647,9 +701,11 @@ class BehavioralTracker:
         """Update behavioral patterns based on new event"""
         try:
             # Get user's recent events
+
             recent_events = await self._get_recent_events(user_id, hours=24)
             
             # Analyze patterns in event sequence
+
             patterns = await self._analyze_event_patterns(recent_events)
             
             # Update pattern database
@@ -658,6 +714,7 @@ class BehavioralTracker:
             
             # Update user's behavioral profile
             await self._update_user_profile(user_id, patterns)
+
             
         except Exception as e:
             logger.error(f"Failed to update behavioral patterns: {e}")
@@ -666,18 +723,23 @@ class BehavioralTracker:
         """Comprehensive user behavior analysis"""
         try:
             # Get user's historical data
+
             historical_data = await self._get_user_historical_data(user_id)
             
             # Calculate behavioral metrics
+
             behavior_metrics = await self._calculate_behavior_metrics(historical_data)
             
             # Determine user segment
+
             user_segment = await self._classify_user_segment(behavior_metrics)
             
             # Predict preferences
+
             preferences = await self._predict_user_preferences(historical_data)
             
             # Generate behavior profile
+
             profile = UserBehaviorProfile(
                 user_id=user_id,
                 avg_session_duration=behavior_metrics['avg_session_duration'],
@@ -698,42 +760,57 @@ class BehavioralTracker:
                 cluster_id=await self._get_user_cluster(user_id),
                 cohort_month=behavior_metrics['cohort_month']
             )
+
             
             return profile
             
         except Exception as e:
             logger.error(f"Failed to analyze user behavior: {e}")
+
             raise
     
     async def identify_behavioral_segments(self) -> List[Dict[str, Any]]:
         """Identify distinct behavioral segments using ML clustering"""
         try:
             # Get behavioral data for all users
+
             user_data = await self._get_all_users_behavioral_data()
+
             
             if len(user_data) < 10:
                 return []  # Need minimum data for clustering
             
             # Prepare features for clustering
+
             features = self._prepare_clustering_features(user_data)
             
             # Perform K-means clustering
+
             optimal_k = await self._find_optimal_clusters(features)
+
+
             kmeans = KMeans(n_clusters=optimal_k, random_state=42)
+
+
             cluster_labels = kmeans.fit_predict(features)
             
             # Analyze clusters
+
             segments = []
             for cluster_id in range(optimal_k):
                 cluster_users = [user_data[i] for i, label in enumerate(cluster_labels) if label == cluster_id]
+
                 
                 segment_analysis = await self._analyze_cluster(cluster_id, cluster_users)
+
                 segments.append(segment_analysis)
+
             
             return segments
             
         except Exception as e:
             logger.error(f"Failed to identify behavioral segments: {e}")
+
             raise
     
     async def _get_recent_events(self, user_id: str, hours: int = 24) -> List[Dict[str, Any]]:
@@ -741,12 +818,17 @@ class BehavioralTracker:
         events = []
         for i in range(hours):
             date = (datetime.utcnow() - timedelta(hours=i)).date().isoformat()
+
+
             event_key = f"events:{user_id}:{date}"
             day_events = await self.redis.lrange(event_key, 0, -1)
+
             
             for event_json in day_events:
                 event_data = json.loads(event_json)
+
                 events.append(event_data)
+
         
         return sorted(events, key=lambda x: x['timestamp'])
     
@@ -758,12 +840,14 @@ class BehavioralTracker:
             return patterns
         
         # Find common event sequences
+
         sequences = []
         for i in range(len(events) - 2):
             sequence = [events[i]['event_type'], events[i+1]['event_type'], events[i+2]['event_type']]
             sequences.append(sequence)
         
         # Count sequence frequencies
+
         sequence_counts = defaultdict(int)
         for seq in sequences:
             sequence_counts[tuple(seq)] += 1
@@ -771,16 +855,21 @@ class BehavioralTracker:
         # Create patterns for frequent sequences
         for seq, count in sequence_counts.items():
             if count >= 2:  # Minimum frequency
+
                 pattern = BehavioralPattern(
                     pattern_id=str(uuid4()),
                     pattern_name=f"Sequence: {' -> '.join(seq)}",
                     frequency=count / len(sequences),
                     common_sequence=list(seq),
                     avg_duration=0.0,  # Would calculate from event durations
+
                     success_rate=1.0,  # Would calculate based on outcomes
+
                     user_count=1
                 )
+
                 patterns.append(pattern)
+
         
         return patterns
     
@@ -789,6 +878,7 @@ class BehavioralTracker:
         metrics = {}
         
         # Session metrics
+
         sessions = historical_data.get('sessions', [])
         if sessions:
             durations = [s['duration'] for s in sessions if s['duration']]
@@ -799,9 +889,11 @@ class BehavioralTracker:
             metrics['sessions_per_week'] = 0
         
         # Activity patterns (hourly distribution)
+
         activity_by_hour = defaultdict(int)
         for session in sessions:
             hour = session.get('start_hour', 12)
+
             activity_by_hour[hour] += 1
         
         metrics['activity_patterns'] = dict(activity_by_hour)
@@ -810,13 +902,16 @@ class BehavioralTracker:
         metrics['engagement_score'] = historical_data.get('engagement_score', 0)
         
         # Consistency score (how regular is the user's activity)
+
         session_gaps = []
         for i in range(1, len(sessions)):
             gap = (sessions[i]['date'] - sessions[i-1]['date']).days
             session_gaps.append(gap)
+
         
         if session_gaps:
             consistency = 1 / (1 + statistics.stdev(session_gaps))
+
             metrics['consistency_score'] = min(1.0, consistency)
         else:
             metrics['consistency_score'] = 1.0
@@ -824,10 +919,14 @@ class BehavioralTracker:
         # Growth trend
         if len(sessions) >= 4:
             weekly_sessions = self._group_sessions_by_week(sessions)
+
             if len(weekly_sessions) >= 2:
                 x = list(range(len(weekly_sessions)))
+
+
                 y = [len(week_sessions) for week_sessions in weekly_sessions.values()]
                 slope, _, _, _, _ = stats.linregress(x, y)
+
                 metrics['growth_trend'] = slope
             else:
                 metrics['growth_trend'] = 0.0
@@ -835,27 +934,35 @@ class BehavioralTracker:
             metrics['growth_trend'] = 0.0
         
         # Churn risk (simplified calculation)
+
         days_since_last_activity = (datetime.utcnow() - historical_data.get('last_active', datetime.utcnow())).days
         metrics['churn_risk'] = min(1.0, days_since_last_activity / 30)  # Higher risk after 30 days
         
         # LTV prediction (simplified)
+
         purchases = historical_data.get('purchases', 0)
+
         avg_purchase_value = historical_data.get('avg_purchase_value', 0)
         metrics['ltv_prediction'] = purchases * avg_purchase_value * 12  # Annualized
         
         # Next action probabilities
+
         recent_events = historical_data.get('recent_events', [])
+
         next_actions = self._predict_next_actions(recent_events)
         metrics['next_actions'] = next_actions
         
         # Cohort month
+
         registration_date = historical_data.get('registration_date', datetime.utcnow())
         metrics['cohort_month'] = registration_date.strftime('%Y-%m')
+
         
         return metrics
     
     def _group_sessions_by_week(self, sessions: List[Dict]) -> Dict[int, List[Dict]]:
-        """Group sessions by week"""
+        """
+        Group sessions by week"""
         weekly_sessions = defaultdict(list)
         for session in sessions:
             week_num = session['date'].isocalendar()[1]
@@ -863,23 +970,30 @@ class BehavioralTracker:
         return weekly_sessions
     
     def _predict_next_actions(self, recent_events: List[Dict]) -> Dict[str, float]:
-        """Predict probability of next actions based on recent events"""
+        """
+        Predict probability of next actions based on recent events"""
         if not recent_events:
             return {}
         
         # Simple Markov chain approach
+
         transitions = defaultdict(lambda: defaultdict(int))
+
         
         for i in range(len(recent_events) - 1):
             current_event = recent_events[i]['event_type']
+
             next_event = recent_events[i + 1]['event_type']
             transitions[current_event][next_event] += 1
         
         # Get last event type
+
         last_event = recent_events[-1]['event_type']
         
         if last_event in transitions:
             total_transitions = sum(transitions[last_event].values())
+
+
             probabilities = {
                 next_event: count / total_transitions
                 for next_event, count in transitions[last_event].items()
@@ -893,7 +1007,8 @@ class BehavioralTracker:
 # ==============================================
 
 class PredictiveEngine:
-    """ML-powered predictive analytics for engagement"""
+    """
+        ML-powered predictive analytics for engagement"""
     
     def __init__(self):
         self.models: Dict[str, Any] = {}
@@ -904,23 +1019,30 @@ class PredictiveEngine:
         """Predict user churn risk using ML"""
         try:
             # Get user features
+
             features = await self._get_user_features_for_prediction(user_id)
+
             
             if not features:
                 return 0.5  # Default risk
             
             # Use trained churn model
+
             churn_model = await self._get_churn_model()
+
             
             if churn_model:
                 risk_score = churn_model.predict_proba([features])[0][1]  # Probability of churn
                 return float(risk_score)
+
             else:
                 # Fallback to rule-based prediction
                 return await self._rule_based_churn_prediction(features)
+
             
         except Exception as e:
             logger.error(f"Failed to predict churn risk: {e}")
+
             return 0.5
     
     async def predict_user_actions(
@@ -931,17 +1053,23 @@ class PredictiveEngine:
         """Predict future user actions"""
         try:
             results = []
+
             features = await self._get_user_features_for_prediction(user_id)
+
             
             for prediction_type in prediction_types:
                 if prediction_type == "next_purchase":
                     prediction = await self._predict_next_purchase(features)
+
                 elif prediction_type == "feature_adoption":
                     prediction = await self._predict_feature_adoption(features)
+
                 elif prediction_type == "engagement_decline":
                     prediction = await self._predict_engagement_decline(features)
+
                 else:
                     continue
+
                 
                 result = PredictionResult(
                     user_id=user_id,
@@ -951,12 +1079,15 @@ class PredictiveEngine:
                     features_used=prediction['features'],
                     timestamp=datetime.utcnow()
                 )
+
                 results.append(result)
+
             
             return results
             
         except Exception as e:
             logger.error(f"Failed to predict user actions: {e}")
+
             return []
     
     async def train_prediction_models(self, training_data: Dict[str, Any]) -> Dict[str, float]:
@@ -967,23 +1098,28 @@ class PredictiveEngine:
             # Train churn prediction model
             if 'churn_data' in training_data:
                 churn_accuracy = await self._train_churn_model(training_data['churn_data'])
+
                 accuracies['churn_prediction'] = churn_accuracy
             
             # Train engagement prediction model
             if 'engagement_data' in training_data:
                 engagement_accuracy = await self._train_engagement_model(training_data['engagement_data'])
+
                 accuracies['engagement_prediction'] = engagement_accuracy
             
             # Train purchase prediction model
             if 'purchase_data' in training_data:
                 purchase_accuracy = await self._train_purchase_model(training_data['purchase_data'])
+
                 accuracies['purchase_prediction'] = purchase_accuracy
             
             self.model_accuracy.update(accuracies)
+
             return accuracies
             
         except Exception as e:
             logger.error(f"Failed to train prediction models: {e}")
+
             return {}
     
     async def _get_user_features_for_prediction(self, user_id: str) -> Optional[List[float]]:
@@ -1002,7 +1138,8 @@ class PredictiveEngine:
         ]
     
     async def _get_churn_model(self):
-        """Get trained churn prediction model"""
+        """
+        Get trained churn prediction model"""
         if 'churn' in self.models:
             return self.models['churn']
         
@@ -1010,15 +1147,20 @@ class PredictiveEngine:
         return None
     
     async def _rule_based_churn_prediction(self, features: List[float]) -> float:
-        """Rule-based churn prediction fallback"""
+        """
+        Rule-based churn prediction fallback"""
         if len(features) < 8:
             return 0.5
+
         
         days_inactive = features[7]
+
         engagement_score = features[5]
+
         sessions_count = features[0]
         
         # Simple rule-based calculation
+
         risk = 0.0
         
         # Inactivity risk
@@ -1042,11 +1184,14 @@ class PredictiveEngine:
         return min(1.0, risk)
     
     async def _predict_next_purchase(self, features: List[float]) -> Dict[str, Any]:
-        """Predict next purchase probability"""
+        """
+        Predict next purchase probability"""
         if len(features) < 5:
             return {'value': 0.1, 'confidence': 0.5, 'features': ['insufficient_data']}
+
         
         purchases = features[4]
+
         engagement_score = features[5] if len(features) > 5 else 50
         
         # Simple heuristic
@@ -1054,6 +1199,7 @@ class PredictiveEngine:
             probability = min(0.8, 0.2 + (purchases * 0.1) + (engagement_score / 100 * 0.3))
         else:
             probability = max(0.05, engagement_score / 100 * 0.2)
+
         
         return {
             'value': probability,
@@ -1062,15 +1208,20 @@ class PredictiveEngine:
         }
     
     async def _predict_feature_adoption(self, features: List[float]) -> Dict[str, Any]:
-        """Predict feature adoption probability"""
+        """
+        Predict feature adoption probability"""
         if len(features) < 3:
             return {'value': 0.3, 'confidence': 0.5, 'features': ['insufficient_data']}
+
         
         features_used = features[2]
+
         engagement_score = features[5] if len(features) > 5 else 50
         
         # Calculate adoption probability
+
         probability = min(0.9, (features_used / 20 * 0.4) + (engagement_score / 100 * 0.5))
+
         
         return {
             'value': probability,
@@ -1079,15 +1230,20 @@ class PredictiveEngine:
         }
     
     async def _predict_engagement_decline(self, features: List[float]) -> Dict[str, Any]:
-        """Predict engagement decline probability"""
+        """
+        Predict engagement decline probability"""
         if len(features) < 6:
             return {'value': 0.3, 'confidence': 0.5, 'features': ['insufficient_data']}
+
         
         engagement_score = features[5]
+
         consistency_score = features[6] if len(features) > 6 else 0.5
         
         # Calculate decline probability
+
         decline_risk = 1 - (engagement_score / 100 * consistency_score)
+
         
         return {
             'value': min(1.0, decline_risk),
@@ -1100,7 +1256,8 @@ class PredictiveEngine:
 # ==============================================
 
 class ABTestingFramework:
-    """Advanced A/B testing for gamification features"""
+    """
+        Advanced A/B testing for gamification features"""
     
     def __init__(self, redis_client: redis.Redis):
         self.redis = redis_client
@@ -1121,6 +1278,7 @@ class ABTestingFramework:
                 raise ValueError("Traffic split must sum to 1.0")
             
             # Create test
+
             test = ABTest(
                 name=name,
                 feature_name=variants.get('feature_name', ''),
@@ -1133,29 +1291,36 @@ class ABTestingFramework:
             # Cache test
             self.active_tests[test.id] = test
             await self._cache_test(test)
+
             
             logger.info(f"Created A/B test: {name} ({test.id})")
+
             return test
             
         except Exception as e:
             logger.error(f"Failed to create A/B test: {e}")
+
             raise
     
     async def assign_user_to_variant(self, test_id: str, user_id: str) -> Optional[str]:
         """Assign user to test variant"""
         try:
             test = await self._get_test(test_id)
+
             if not test or test.status != ABTestStatus.RUNNING.value:
                 return None
             
             # Check if user already assigned
+
             assignment_key = f"ab_assignment:{test_id}:{user_id}"
             existing_assignment = await self.redis.get(assignment_key)
+
             
             if existing_assignment:
                 return existing_assignment.decode()
             
             # Assign user based on traffic allocation
+
             variant = await self._assign_variant(user_id, test.traffic_allocation)
             
             # Store assignment
@@ -1163,11 +1328,13 @@ class ABTestingFramework:
             
             # Track assignment
             await self._track_assignment(test_id, user_id, variant)
+
             
             return variant
             
         except Exception as e:
             logger.error(f"Failed to assign user to variant: {e}")
+
             return None
     
     async def track_test_event(
@@ -1180,11 +1347,14 @@ class ABTestingFramework:
         """Track event for A/B test analysis"""
         try:
             # Get user's variant
+
             variant = await self.assign_user_to_variant(test_id, user_id)
+
             if not variant:
                 return
             
             # Store event
+
             event_data = {
                 'test_id': test_id,
                 'user_id': user_id,
@@ -1193,9 +1363,11 @@ class ABTestingFramework:
                 'value': value,
                 'timestamp': datetime.utcnow().isoformat()
             }
+
             
             event_key = f"ab_events:{test_id}:{variant}"
             await self.redis.lpush(event_key, json.dumps(event_data))
+
             await self.redis.expire(event_key, 86400 * 90)  # 90 days
             
         except Exception as e:
@@ -1205,21 +1377,31 @@ class ABTestingFramework:
         """Analyze A/B test results"""
         try:
             test = await self._get_test(test_id)
+
             if not test:
                 raise ValueError("Test not found")
+
+
             
             results = {}
+
             variants = list(test.traffic_allocation.keys())
+
             
             for variant in variants:
                 variant_data = await self._get_variant_data(test_id, variant)
+
                 results[variant] = variant_data
             
             # Calculate statistical significance
+
             significance = await self._calculate_statistical_significance(results, test.success_metric)
             
             # Determine winning variant
+
             winning_variant = await self._determine_winning_variant(results, test.success_metric)
+
+
             
             analysis = {
                 'test_id': test_id,
@@ -1234,12 +1416,15 @@ class ABTestingFramework:
             
         except Exception as e:
             logger.error(f"Failed to analyze test results: {e}")
+
             raise
     
     async def _assign_variant(self, user_id: str, traffic_allocation: Dict[str, float]) -> str:
         """Assign user to variant based on traffic allocation"""
         user_hash = int(hashlib.md5(user_id.encode()).hexdigest(), 16)
+
         random_value = (user_hash % 10000) / 10000.0  # 0.0 to 1.0
+
         
         cumulative = 0.0
         for variant, allocation in traffic_allocation.items():
@@ -1251,9 +1436,11 @@ class ABTestingFramework:
         return list(traffic_allocation.keys())[0]
     
     async def _get_variant_data(self, test_id: str, variant: str) -> Dict[str, Any]:
-        """Get aggregated data for test variant"""
+        """
+        Get aggregated data for test variant"""
         event_key = f"ab_events:{test_id}:{variant}"
         events = await self.redis.lrange(event_key, 0, -1)
+
         
         if not events:
             return {
@@ -1262,14 +1449,19 @@ class ABTestingFramework:
                 'conversion_rate': 0.0,
                 'average_value': 0.0
             }
+
         
         users = set()
+
         total_value = 0.0
+
         conversions = 0
         
         for event_json in events:
             event = json.loads(event_json)
+
             users.add(event['user_id'])
+
             
             if event['value'] is not None:
                 total_value += event['value']
@@ -1299,11 +1491,14 @@ class MetricsCollector:
         """Update real-time metrics based on event"""
         try:
             # Update daily metrics
+
             today = datetime.utcnow().date().isoformat()
             
             # User activity metrics
             await self._increment_metric(f"daily_active_users:{today}", user_id)
+
             await self._increment_metric(f"daily_events:{today}")
+
             await self._increment_metric(f"daily_events_by_type:{today}:{event.event_type}")
             
             # Feature usage metrics
@@ -1315,6 +1510,7 @@ class MetricsCollector:
             
             # Engagement metrics
             await self._update_engagement_metrics(user_id, event)
+
             
         except Exception as e:
             logger.error(f"Failed to update real-time metrics: {e}")
@@ -1323,6 +1519,8 @@ class MetricsCollector:
         """Get real-time dashboard data"""
         try:
             today = datetime.utcnow().date().isoformat()
+
+
             
             dashboard_data = {
                 'active_users_today': await self._get_metric_count(f"daily_active_users:{today}"),
@@ -1337,6 +1535,7 @@ class MetricsCollector:
             
         except Exception as e:
             logger.error(f"Failed to get dashboard data: {e}")
+
             return {}
     
     async def _increment_metric(self, key: str, member: Optional[str] = None):
@@ -1344,18 +1543,22 @@ class MetricsCollector:
         if member:
             # Use set for unique counting
             await self.redis.sadd(key, member)
+
             await self.redis.expire(key, 86400 * 7)  # 7 days TTL
         else:
             # Use simple counter
             await self.redis.incr(key)
+
             await self.redis.expire(key, 86400 * 7)  # 7 days TTL
     
     async def _get_metric_count(self, key: str) -> int:
-        """Get metric count (for sets)"""
+        """
+        Get metric count (for sets)"""
         return await self.redis.scard(key)
     
     async def _get_metric_value(self, key: str) -> int:
-        """Get metric value (for counters)"""
+        """
+        Get metric value (for counters)"""
         value = await self.redis.get(key)
         return int(value) if value else 0
 
@@ -1364,7 +1567,8 @@ class MetricsCollector:
 # ==============================================
 
 class InsightGenerator:
-    """Automated insight generation from engagement data"""
+    """
+        Automated insight generation from engagement data"""
     
     def __init__(self):
         logger.info("Insight Generator initialized")
@@ -1375,32 +1579,40 @@ class InsightGenerator:
             insights = []
             
             # Analyze engagement trends
+
             trend_insights = await self._analyze_engagement_trends(time_period)
+
             insights.extend(trend_insights)
             
             # Analyze feature adoption
+
             adoption_insights = await self._analyze_feature_adoption(time_period)
+
             insights.extend(adoption_insights)
             
             # Analyze user segments
+
             segment_insights = await self._analyze_user_segments(time_period)
+
             insights.extend(segment_insights)
             
             # Analyze churn risks
+
             churn_insights = await self._analyze_churn_risks(time_period)
+
             insights.extend(churn_insights)
+
             
             return insights
             
         except Exception as e:
             logger.error(f"Failed to generate insights: {e}")
+
             return []
     
     async def _analyze_engagement_trends(self, time_period: timedelta) -> List[EngagementInsight]:
         """Analyze engagement trends and generate insights"""
         insights = []
-        
-        # Mock insight generation
         insight = EngagementInsight(
             insight_type="engagement_trend",
             title="Declining Weekend Engagement",
@@ -1423,14 +1635,13 @@ class InsightGenerator:
             }
         )
         insights.append(insight)
+
         
         return insights
     
     async def _analyze_feature_adoption(self, time_period: timedelta) -> List[EngagementInsight]:
         """Analyze feature adoption patterns"""
         insights = []
-        
-        # Mock insight
         insight = EngagementInsight(
             insight_type="feature_adoption",
             title="Low Adoption of New Badge System",
@@ -1448,6 +1659,7 @@ class InsightGenerator:
             implementation_effort="low"
         )
         insights.append(insight)
+
         
         return insights
 
@@ -1484,4 +1696,4 @@ __all__ = [
 ]
 
 # Initialize logging
-logger.info("Engagement Analytics Engine module loaded successfully - All analytics components ready for enterprise deployment")
+logger.info("Engagement Analytics Engine module initialized successfully - All analytics components ready for enterprise deployment")

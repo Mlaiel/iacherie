@@ -35,14 +35,7 @@ from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+from protection.utils.redis_compat import aioredis, REDIS_AVAILABLE
 from sqlalchemy.ext.asyncio import AsyncSession
 import ipaddress
 import re
@@ -50,7 +43,8 @@ import re
 logger = logging.getLogger(__name__)
 
 class SecurityLevel(Enum):
-    """Security level enumeration"""
+    """
+        Security level enumeration"""
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -108,7 +102,8 @@ class SecurityProtocol:
 
 @dataclass
 class ContentProtection:
-    """Content protection configuration"""
+    """
+        Content protection configuration"""
     protection_id: str
     content_id: str
     drm_type: DRMType
@@ -123,7 +118,8 @@ class ContentProtection:
 
 @dataclass
 class DRMSystem:
-    """DRM system configuration"""
+    """
+        DRM system configuration"""
     drm_id: str
     drm_type: DRMType
     license_server: str
@@ -137,7 +133,8 @@ class DRMSystem:
 
 @dataclass
 class AccessControl:
-    """Access control configuration"""
+    """
+        Access control configuration"""
     access_id: str
     resource_id: str
     control_type: AccessControlType
@@ -151,7 +148,8 @@ class AccessControl:
 
 @dataclass
 class SecurityThreat:
-    """Security threat detection result"""
+    """
+        Security threat detection result"""
     threat_id: str
     threat_type: str
     threat_level: ThreatLevel
@@ -166,7 +164,8 @@ class SecurityThreat:
 
 @dataclass
 class SecurityAudit:
-    """Security audit log entry"""
+    """
+        Security audit log entry"""
     audit_id: str
     event_type: SecurityEvent
     user_id: Optional[str]
@@ -181,33 +180,42 @@ class SecurityAudit:
     risk_score: float
 
 class StreamingContentProtection:
-    """Streaming content protection system"""
+    """
+        Streaming content protection system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Optional[Any]):
         self.redis = redis_client
         self.encryption_keys = {}
         self.protection_policies = {}
         self.active_protections = {}
         
     async def initialize_content_protection(self) -> Dict[str, Any]:
-        """Initialize content protection system"""
+        """
+        Initialize content protection system"""
         try:
             # Generate master encryption keys
+
             master_keys = await self._generate_master_encryption_keys()
             
             # Setup protection policies
+
             protection_policies = await self._setup_protection_policies()
             
             # Initialize DRM systems
+
             drm_systems = await self._initialize_drm_systems()
             
             # Configure watermarking
+
             watermarking = await self._configure_watermarking_system()
             
             # Setup content monitoring
+
             content_monitoring = await self._setup_content_monitoring()
+
             
             logger.info(f"🔒 Content Protection initialized with {len(drm_systems)} DRM systems")
+
             
             return {
                 "master_keys_generated": len(master_keys),
@@ -225,6 +233,7 @@ class StreamingContentProtection:
             
         except Exception as e:
             logger.error(f"Failed to initialize content protection: {e}")
+
             raise
 
     async def apply_content_protection(
@@ -237,34 +246,41 @@ class StreamingContentProtection:
         """Apply content protection to streaming content"""
         try:
             # Analyze content for protection requirements
+
             protection_analysis = await self._analyze_protection_requirements(
                 content_data, protection_level
             )
             
             # Apply encryption
+
             encrypted_content = await self._apply_content_encryption(
                 content_data, protection_analysis
             )
             
             # Setup DRM protection
+
             drm_protection = await self._setup_drm_protection(
                 content_id, encrypted_content, drm_requirements
             )
             
             # Apply watermarking
+
             watermarked_content = await self._apply_watermarking(
                 encrypted_content, content_id, protection_analysis
             )
             
             # Configure access controls
+
             access_controls = await self._configure_content_access_controls(
                 content_id, protection_level
             )
             
             # Setup monitoring
+
             monitoring_config = await self._setup_content_protection_monitoring(content_id)
             
             # Store protection metadata
+
             protection_metadata = ContentProtection(
                 protection_id=str(uuid.uuid4()),
                 content_id=content_id,
@@ -278,8 +294,10 @@ class StreamingContentProtection:
                 quality_restrictions={},
                 watermark_config=protection_analysis.get("watermark_config", {})
             )
+
             
             await self._store_protection_metadata(protection_metadata)
+
             
             return {
                 "success": True,
@@ -293,36 +311,45 @@ class StreamingContentProtection:
             
         except Exception as e:
             logger.error(f"Failed to apply content protection: {e}")
+
             raise
 
 class DRMStreamingController:
     """DRM streaming controller"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.drm_systems = {}
         self.license_servers = {}
         
     async def initialize_drm_controller(self) -> Dict[str, Any]:
-        """Initialize DRM controller"""
+        """
+        Initialize DRM controller"""
         try:
             # Setup DRM systems
+
             drm_systems = await self._setup_drm_systems()
             
             # Initialize license servers
+
             license_servers = await self._initialize_license_servers()
             
             # Configure key management
+
             key_management = await self._configure_key_management()
             
             # Setup certificate management
+
             certificate_management = await self._setup_certificate_management()
             
             # Configure compliance monitoring
+
             compliance_monitoring = await self._configure_compliance_monitoring()
+
             
             logger.info(f"🔐 DRM Controller initialized with {len(drm_systems)} systems")
+
             
             return {
                 "drm_systems": len(drm_systems),
@@ -334,6 +361,7 @@ class DRMStreamingController:
             
         except Exception as e:
             logger.error(f"Failed to initialize DRM controller: {e}")
+
             raise
 
     async def handle_license_request(
@@ -346,21 +374,27 @@ class DRMStreamingController:
         """Handle DRM license request"""
         try:
             # Validate user authorization
+
             auth_validation = await self._validate_user_authorization(user_id, content_id)
+
             if not auth_validation["authorized"]:
                 raise PermissionError("User not authorized for content")
             
             # Validate device
+
             device_validation = await self._validate_device(device_info, drm_type)
+
             if not device_validation["valid"]:
                 raise ValueError("Device not supported or authorized")
             
             # Generate license
+
             license_data = await self._generate_drm_license(
                 drm_type, content_id, user_id, device_info
             )
             
             # Configure license restrictions
+
             license_restrictions = await self._configure_license_restrictions(
                 content_id, user_id, device_info
             )
@@ -372,6 +406,7 @@ class DRMStreamingController:
             
             # Update usage analytics
             await self._update_drm_analytics(drm_type, content_id, "license_issued")
+
             
             return {
                 "success": True,
@@ -384,12 +419,13 @@ class DRMStreamingController:
             
         except Exception as e:
             logger.error(f"Failed to handle license request: {e}")
+
             raise
 
 class StreamingRightsValidator:
     """Streaming rights validation system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.rights_database = {}
@@ -402,35 +438,43 @@ class StreamingRightsValidator:
         action: str,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate streaming rights for user action"""
+        """
+        Validate streaming rights for user action"""
         try:
             # Get content rights information
+
             content_rights = await self._get_content_rights(content_id)
             
             # Get user permissions
+
             user_permissions = await self._get_user_permissions(user_id)
             
             # Check geographic restrictions
+
             geo_validation = await self._validate_geographic_rights(
                 content_rights, context.get("user_location")
             )
             
             # Check time-based restrictions
+
             time_validation = await self._validate_time_restrictions(
                 content_rights, datetime.utcnow()
             )
             
             # Check device restrictions
+
             device_validation = await self._validate_device_restrictions(
                 content_rights, context.get("device_info", {})
             )
             
             # Check subscription/payment status
+
             subscription_validation = await self._validate_subscription_status(
                 user_id, content_rights
             )
             
             # Calculate overall validation result
+
             validation_result = (
                 geo_validation["valid"] and
                 time_validation["valid"] and
@@ -442,6 +486,7 @@ class StreamingRightsValidator:
             await self._log_rights_validation(
                 content_id, user_id, action, validation_result, context
             )
+
             
             return {
                 "valid": validation_result,
@@ -460,12 +505,13 @@ class StreamingRightsValidator:
             
         except Exception as e:
             logger.error(f"Failed to validate streaming rights: {e}")
+
             raise
 
 class SecurityMonitoring:
     """Security monitoring and threat detection"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Optional[Any]):
         self.redis = redis_client
         self.threat_patterns = {}
         self.security_rules = {}
@@ -477,31 +523,39 @@ class SecurityMonitoring:
         user_activity: Dict[str, Any],
         system_metrics: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Monitor streaming security in real-time"""
+        """
+        Monitor streaming security in real-time"""
         try:
             # Analyze user behavior patterns
+
             behavior_analysis = await self._analyze_user_behavior(user_activity)
             
             # Detect security anomalies
+
             anomaly_detection = await self._detect_security_anomalies(
                 user_activity, system_metrics
             )
             
             # Check for known threat patterns
+
             threat_detection = await self._detect_threat_patterns(user_activity)
             
             # Validate session integrity
+
             session_validation = await self._validate_session_integrity(session_id)
             
             # Check rate limiting violations
+
             rate_limit_check = await self._check_rate_limiting(user_activity)
             
             # Generate security alerts
+
             security_alerts = await self._generate_security_alerts(
                 behavior_analysis, anomaly_detection, threat_detection
             )
             
             # Apply automated responses
+
             automated_responses = await self._apply_automated_security_responses(
                 security_alerts, session_id
             )
@@ -510,6 +564,7 @@ class SecurityMonitoring:
             await self._update_threat_intelligence(
                 behavior_analysis, anomaly_detection, threat_detection
             )
+
             
             return {
                 "security_status": "monitored",
@@ -526,12 +581,13 @@ class SecurityMonitoring:
             
         except Exception as e:
             logger.error(f"Failed to monitor streaming security: {e}")
+
             raise
 
 class ThreatDetection:
     """Advanced threat detection system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Optional[Any]):
         self.redis = redis_client
         self.ml_models = {}
         self.threat_signatures = {}
@@ -543,50 +599,64 @@ class ThreatDetection:
         user_behavior: Dict[str, Any],
         system_state: Dict[str, Any]
     ) -> List[SecurityThreat]:
-        """Detect streaming-related security threats"""
+        """
+        Detect streaming-related security threats"""
         try:
             detected_threats = []
             
             # Network-based threat detection
+
             network_threats = await self._detect_network_threats(network_traffic)
+
             detected_threats.extend(network_threats)
             
             # Behavior-based threat detection
+
             behavior_threats = await self._detect_behavior_threats(user_behavior)
+
             detected_threats.extend(behavior_threats)
             
             # System-based threat detection
+
             system_threats = await self._detect_system_threats(system_state)
+
             detected_threats.extend(system_threats)
             
             # Content protection threats
+
             content_threats = await self._detect_content_protection_threats(
                 network_traffic, user_behavior
             )
+
             detected_threats.extend(content_threats)
             
             # DRM violation detection
+
             drm_threats = await self._detect_drm_violations(
                 network_traffic, user_behavior
             )
+
             detected_threats.extend(drm_threats)
             
             # Prioritize and filter threats
+
             prioritized_threats = await self._prioritize_threats(detected_threats)
             
             # Generate threat intelligence
             await self._generate_threat_intelligence(prioritized_threats)
+
             
             return prioritized_threats
             
         except Exception as e:
             logger.error(f"Failed to detect streaming threats: {e}")
+
             raise
 
 class StreamingSecurityGuardian:
     """Unified streaming security guardian - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         
@@ -607,24 +677,32 @@ class StreamingSecurityGuardian:
         """Initialize security guardian system"""
         try:
             # Initialize content protection
+
             content_protection_status = await self.content_protection.initialize_content_protection()
             
             # Initialize DRM controller
+
             drm_status = await self.drm_controller.initialize_drm_controller()
             
             # Setup security monitoring
+
             monitoring_status = await self._setup_security_monitoring()
             
             # Configure threat detection
+
             threat_detection_status = await self._configure_threat_detection()
             
             # Initialize incident response
+
             incident_response = await self._initialize_incident_response()
             
             # Setup security analytics
+
             security_analytics = await self._setup_security_analytics()
+
             
             logger.info("🔒 Streaming Security Guardian fully initialized")
+
             
             return {
                 "security_status": "initialized",
@@ -646,6 +724,7 @@ class StreamingSecurityGuardian:
             
         except Exception as e:
             logger.error(f"Failed to initialize security guardian: {e}")
+
             raise
     
     async def secure_streaming_session(
@@ -658,14 +737,17 @@ class StreamingSecurityGuardian:
         """Secure a streaming session with comprehensive protection"""
         try:
             # Validate streaming rights
+
             rights_validation = await self.rights_validator.validate_streaming_rights(
                 content_id, user_id, "stream", security_requirements
             )
+
             
             if not rights_validation["valid"]:
                 raise PermissionError("User not authorized to stream content")
             
             # Apply content protection
+
             content_protection = await self.content_protection.apply_content_protection(
                 content_id, 
                 security_requirements.get("content_data", b""), 
@@ -674,17 +756,21 @@ class StreamingSecurityGuardian:
             )
             
             # Handle DRM licensing
+
             drm_license = await self.drm_controller.handle_license_request(
                 DRMType.AES_256, content_id, user_id, security_requirements.get("device_info", {})
             )
             
             # Setup security monitoring
+
             monitoring_setup = await self.security_monitoring.monitor_streaming_security(
                 session_id, {"user_id": user_id}, {}
             )
             
             # Initialize threat detection
+
             threat_monitoring = await self._initialize_session_threat_monitoring(session_id)
+
             
             return {
                 "success": True,
@@ -700,6 +786,7 @@ class StreamingSecurityGuardian:
             
         except Exception as e:
             logger.error(f"Failed to secure streaming session: {e}")
+
             raise
     
     # Additional helper methods implementation...
@@ -714,6 +801,7 @@ class StreamingSecurityGuardian:
             }
         except Exception as e:
             logger.error(f"Failed to setup security monitoring: {e}")
+
             return {}
 
     async def _configure_threat_detection(self) -> Dict[str, Any]:
@@ -727,6 +815,7 @@ class StreamingSecurityGuardian:
             }
         except Exception as e:
             logger.error(f"Failed to configure threat detection: {e}")
+
             return {}
 
 # Export main classes

@@ -16,7 +16,8 @@ import os
 # ===== STORAGE TYPES =====
 
 class StorageType(str, Enum):
-    """Storage backend types"""
+    """
+        Storage backend types"""
     LOCAL = "local"
     S3 = "s3"
     AZURE_BLOB = "azure_blob"
@@ -221,7 +222,8 @@ class ImageProcessingConfig:
 
 @dataclass
 class VideoProcessingConfig:
-    """Video processing configuration"""
+    """
+        Video processing configuration"""
     enabled: bool = True
     auto_transcode: bool = True
     target_format: VideoFormat = VideoFormat.MP4
@@ -263,7 +265,8 @@ class FileProcessingConfig:
 
 @dataclass
 class StorageSecurityConfig:
-    """Storage security configuration"""
+    """
+        Storage security configuration"""
     encryption_at_rest: bool = True
     encryption_type: EncryptionType = EncryptionType.AES_256
     encryption_key: Optional[str] = None
@@ -295,7 +298,8 @@ class StorageConfig:
 # ===== ENVIRONMENT-SPECIFIC CONFIGURATIONS =====
 
 def get_development_storage_config() -> StorageConfig:
-    """Get development storage configuration"""
+    """
+        Get development storage configuration"""
     return StorageConfig(
         default_backend=StorageType.LOCAL,
         local=LocalStorageConfig(

@@ -19,7 +19,8 @@ import logging
 
 @dataclass
 class APIEndpoint:
-    """API endpoint configuration"""
+    """
+        API endpoint configuration"""
     path: str
     method: str
     handler: Callable
@@ -30,7 +31,8 @@ class APIEndpoint:
 
 @dataclass
 class APIRequest:
-    """API request representation"""
+    """
+        API request representation"""
     endpoint: str
     method: str
     data: Dict[str, Any]
@@ -59,20 +61,25 @@ class OptimizedAPIHandler:
         try:
             self.endpoints[f"{endpoint.method}:{endpoint.path}"] = endpoint
             self.logger.info(f"Registered endpoint: {endpoint.method} {endpoint.path}")
+
             return True
         except Exception as e:
             self.logger.error(f"Failed to register endpoint: {e}")
+
             return False
     
     async def handle_request(self, request: APIRequest) -> Dict[str, Any]:
         """Handle an API request with optimization"""
         start_time = time.time()
         request.request_id = self._generate_request_id(request)
+
         
         try:
             # Find endpoint
+
             endpoint_key = f"{request.method}:{request.endpoint}"
             endpoint = self.endpoints.get(endpoint_key)
+
             
             if not endpoint:
                 return self._error_response("Endpoint not found", 404)
@@ -83,14 +90,20 @@ class OptimizedAPIHandler:
                 return self._error_response("Rate limit exceeded", 429)
             
             # Check cache
+
             cache_key = self._generate_cache_key(request)
+
+
             cached_response = self._get_cached_response(cache_key, endpoint.cache_ttl)
+
             
             if cached_response:
                 self.performance_metrics["cached_responses"] += 1
+
                 response = cached_response
             else:
                 # Process request
+
                 response = await self._process_request(request, endpoint)
                 
                 # Cache successful responses
@@ -98,27 +111,34 @@ class OptimizedAPIHandler:
                     self._cache_response(cache_key, response)
             
             # Update metrics
+
             processing_time = time.time() - start_time
             self._update_metrics(processing_time, True)
+
             
             return response
             
         except Exception as e:
             processing_time = time.time() - start_time
             self._update_metrics(processing_time, False)
+
             
             self.logger.error(f"Request {request.request_id} failed: {e}")
+
             return self._error_response("Internal server error", 500)
     
     def _check_rate_limit(self, request: APIRequest, endpoint: APIEndpoint) -> bool:
         """Check if request is within rate limits"""
         user_key = request.user_id or request.request_id
+
         now = datetime.now()
+
         
         if user_key not in self.rate_limits:
             self.rate_limits[user_key] = []
         
         # Remove old requests (older than 1 minute)
+
         cutoff_time = now - timedelta(minutes=1)
         self.rate_limits[user_key] = [
             req_time for req_time in self.rate_limits[user_key]
@@ -134,7 +154,8 @@ class OptimizedAPIHandler:
         return True
     
     def _generate_cache_key(self, request: APIRequest) -> str:
-        """Generate cache key for request"""
+        """
+        Generate cache key for request"""
         key_data = f"{request.endpoint}:{request.method}:{json.dumps(request.data, sort_keys=True)}"
         return hashlib.md5(key_data.encode()).hexdigest()
     
@@ -160,6 +181,7 @@ class OptimizedAPIHandler:
         # Limit cache size
         if len(self.cache) > 1000:
             # Remove oldest entries
+
             oldest_keys = sorted(
                 self.cache.keys(),
                 key=lambda k: self.cache[k]["timestamp"]
@@ -173,11 +195,14 @@ class OptimizedAPIHandler:
             # Validate request data if schema provided
             if endpoint.validation_schema:
                 validation_result = self._validate_request(request.data, endpoint.validation_schema)
+
                 if not validation_result["valid"]:
                     return self._error_response(f"Validation error: {validation_result['errors']}", 400)
             
             # Call the endpoint handler
+
             result = await endpoint.handler(request.data)
+
             
             return {
                 "status": "success",
@@ -192,16 +217,20 @@ class OptimizedAPIHandler:
     def _validate_request(self, data: Dict[str, Any], schema: Dict) -> Dict[str, Any]:
         """Validate request data against schema"""
         # Simplified validation - in real scenario would use jsonschema or pydantic
+
         errors = []
         
         for field, requirements in schema.items():
             if requirements.get("required", False) and field not in data:
                 errors.append(f"Missing required field: {field}")
+
             
             if field in data:
                 field_type = requirements.get("type")
+
                 if field_type and not isinstance(data[field], field_type):
                     errors.append(f"Invalid type for {field}: expected {field_type.__name__}")
+
         
         return {
             "valid": len(errors) == 0,
@@ -230,8 +259,11 @@ class OptimizedAPIHandler:
             self.performance_metrics["successful_requests"] += 1
         
         # Update average response time
+
         total_requests = self.performance_metrics["total_requests"]
+
         current_avg = self.performance_metrics["average_response_time"]
+
         new_avg = ((current_avg * (total_requests - 1)) + processing_time) / total_requests
         self.performance_metrics["average_response_time"] = new_avg
     
@@ -241,11 +273,14 @@ class OptimizedAPIHandler:
             self.performance_metrics["successful_requests"] / 
             max(self.performance_metrics["total_requests"], 1)
         )
+
+
         
         cache_hit_rate = (
             self.performance_metrics["cached_responses"] /
             max(self.performance_metrics["total_requests"], 1)
         )
+
         
         return {
             **self.performance_metrics,

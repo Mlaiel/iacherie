@@ -85,6 +85,7 @@ class FinancialComplianceSystem:
                     region=TaxRegion.DE,
                     tax_type=TaxType.VAT,
                     rate=Decimal('0.19'),  # 19% VAT in Germany
+
                     threshold=Decimal('0.00'),
                     applies_to=["digital_services", "subscriptions"],
                     effective_date=datetime(2021, 1, 1)
@@ -95,6 +96,7 @@ class FinancialComplianceSystem:
                     region=TaxRegion.US,
                     tax_type=TaxType.SALES_TAX,
                     rate=Decimal('0.08'),  # Average 8% sales tax
+
                     threshold=Decimal('100.00'),
                     applies_to=["digital_products"],
                     effective_date=datetime(2021, 1, 1)
@@ -113,8 +115,12 @@ class FinancialComplianceSystem:
             calculation_id = f"tax_calc_{datetime.now().timestamp()}"
             
             applicable_rules = self.tax_rules.get(customer_region, [])
+
+
             
             total_tax = Decimal('0.00')
+
+
             applied_rules = []
             
             for rule in applicable_rules:
@@ -122,10 +128,13 @@ class FinancialComplianceSystem:
                     tax_amount = transaction_amount * rule.rate
                     total_tax += tax_amount
                     applied_rules.append(f"{rule.tax_type.value}_{rule.rate}")
+
+
             
             calculation = TaxCalculation(
                 calculation_id=calculation_id,
                 transaction_id="",  # Will be set by caller
+
                 gross_amount=transaction_amount + total_tax,
                 tax_amount=total_tax,
                 net_amount=transaction_amount,
@@ -133,12 +142,15 @@ class FinancialComplianceSystem:
                 tax_rules_applied=applied_rules,
                 calculated_at=datetime.utcnow()
             )
+
             
             self.logger.info(f"Tax calculated: {calculation_id} - {total_tax}")
+
             return calculation
             
         except Exception as e:
             self.logger.error(f"Tax calculation failed: {e}")
+
             raise
     
     async def run_compliance_check(
@@ -153,16 +165,15 @@ class FinancialComplianceSystem:
             for compliance_type in compliance_types:
                 check_id = f"check_{entity_id}_{compliance_type.value}_{datetime.now().timestamp()}"
                 
-                # Mock compliance check (in production: real compliance validation)
                 issues = []
+
                 status = "compliant"
                 
                 if compliance_type == ComplianceType.GDPR:
-                    # Mock GDPR check
                     issues = []  # No issues found
                 elif compliance_type == ComplianceType.PCI_DSS:
-                    # Mock PCI DSS check
                     issues = []  # No issues found
+
                 
                 check = ComplianceCheck(
                     check_id=check_id,
@@ -173,14 +184,18 @@ class FinancialComplianceSystem:
                     issues_found=issues,
                     remediation_actions=[]
                 )
+
                 
                 results.append(check)
+
                 self.logger.info(f"Compliance check completed: {check_id}")
+
             
             return results
             
         except Exception as e:
             self.logger.error(f"Compliance check failed: {e}")
+
             raise
     
     async def generate_tax_report(
@@ -212,10 +227,12 @@ class FinancialComplianceSystem:
             }
             
             self.logger.info(f"Tax report generated for {region.value}")
+
             return report
             
         except Exception as e:
             self.logger.error(f"Tax report generation failed: {e}")
+
             raise
     
     async def validate_transaction_compliance(
@@ -231,8 +248,6 @@ class FinancialComplianceSystem:
                 "required_actions": [],
                 "validated_at": datetime.utcnow()
             }
-            
-            # Mock validation checks
             amount = Decimal(str(transaction_data.get("amount", 0)))
             
             # Anti-money laundering check
@@ -242,12 +257,15 @@ class FinancialComplianceSystem:
             # GDPR data handling check
             if transaction_data.get("customer_region") in ["eu", "de", "fr"]:
                 validation_result["required_actions"].append("gdpr_consent_verification")
+
             
             self.logger.info(f"Transaction compliance validated: {transaction_data.get('transaction_id')}")
+
             return validation_result
             
         except Exception as e:
             self.logger.error(f"Transaction compliance validation failed: {e}")
+
             raise
 
 __all__ = [

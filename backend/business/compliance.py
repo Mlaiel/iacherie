@@ -22,7 +22,8 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceType(Enum):
-    """Types of compliance requirements."""
+    """
+        Types of compliance requirements."""
     DATA_PROTECTION = "data_protection"
     COPYRIGHT = "copyright"
     CONTENT_POLICY = "content_policy"
@@ -106,7 +107,8 @@ class ComplianceManager:
     """
     
     def __init__(self):
-        """Initialize the compliance manager."""
+        """
+        Initialize the compliance manager."""
         self.compliance_rules: Dict[str, ComplianceRule] = {}
         self.violations: Dict[str, ComplianceViolation] = {}
         self.audits: Dict[str, ComplianceAudit] = {}
@@ -115,7 +117,8 @@ class ComplianceManager:
         self._load_default_rules()
     
     def _load_default_rules(self):
-        """Load default compliance rules."""
+        """
+        Load default compliance rules."""
         default_rules = [
             # GDPR/Data Protection Rules
             ComplianceRule(
@@ -222,21 +225,26 @@ class ComplianceManager:
         try:
             self.compliance_rules[rule.rule_id] = rule
             self.logger.info(f"Added compliance rule: {rule.name} ({rule.rule_id})")
+
             return rule.rule_id
         except Exception as e:
             self.logger.error(f"Failed to add compliance rule {rule.rule_id}: {str(e)}")
+
             raise
     
     async def check_compliance(self, entity_id: str, entity_type: str, entity_data: Dict[str, Any]) -> Dict[str, Any]:
         """Check compliance for a specific entity."""
         try:
             violations = []
+
             compliance_status = ComplianceStatus.COMPLIANT
             
             for rule in self.compliance_rules.values():
                 violation = await self._check_rule_compliance(rule, entity_id, entity_type, entity_data)
+
                 if violation:
                     violations.append(violation)
+
                     if violation.severity in [ComplianceSeverity.CRITICAL, ComplianceSeverity.HIGH]:
                         compliance_status = ComplianceStatus.NON_COMPLIANT
                     elif compliance_status == ComplianceStatus.COMPLIANT:
@@ -265,6 +273,7 @@ class ComplianceManager:
             
         except Exception as e:
             self.logger.error(f"Error checking compliance for {entity_id}: {str(e)}")
+
             return {
                 "entity_id": entity_id,
                 "compliance_status": "error",
@@ -285,16 +294,21 @@ class ComplianceManager:
             
             elif rule.rule_id == "data_retention":
                 retention_date = entity_data.get("created_at")
+
                 if retention_date:
                     # Check if data is older than 7 years (example retention period)
+
                     if isinstance(retention_date, str):
                         retention_date = datetime.fromisoformat(retention_date.replace('Z', '+00:00'))
+
                     elif isinstance(retention_date, datetime):
                         pass
                     else:
                         retention_date = datetime.utcnow()
+
                     
                     if datetime.utcnow() - retention_date > timedelta(days=2555):  # ~7 years
+
                         violation_description = "Data exceeds retention period"
             
             elif rule.rule_id == "copyright_protection":
@@ -338,12 +352,14 @@ class ComplianceManager:
                     severity=rule.severity,
                     metadata={"rule_name": rule.name}
                 )
+
                 return violation
             
             return None
             
         except Exception as e:
             self.logger.error(f"Error checking rule compliance {rule.rule_id}: {str(e)}")
+
             return None
     
     async def start_compliance_audit(self, audit_type: ComplianceType, scope: str) -> str:
@@ -354,17 +370,21 @@ class ComplianceManager:
                 audit_type=audit_type,
                 scope=scope
             )
+
             
             self.audits[audit.audit_id] = audit
             
             # Start audit process asynchronously
             asyncio.create_task(self._run_compliance_audit(audit.audit_id))
+
             
             self.logger.info(f"Started compliance audit: {audit_type.value} ({audit.audit_id})")
+
             return audit.audit_id
             
         except Exception as e:
             self.logger.error(f"Error starting compliance audit: {str(e)}")
+
             raise
     
     async def _run_compliance_audit(self, audit_id: str) -> None:
@@ -373,11 +393,15 @@ class ComplianceManager:
             audit = self.audits[audit_id]
             
             # Get relevant rules for audit type
-            relevant_rules = [rule for rule in self.compliance_rules.values() 
+
+            relevant_rules = [rule for rule in self.compliance_rules.values()
+ 
                             if rule.compliance_type == audit.audit_type]
             
             # Simulate audit process
+
             total_checks = len(relevant_rules) * 10  # Assume 10 entities per rule
+
             compliant_checks = 0
             
             for rule in relevant_rules:
@@ -385,10 +409,14 @@ class ComplianceManager:
                 for i in range(10):
                     entity_id = f"entity_{i}"
                     entity_data = self._generate_sample_entity_data(audit.audit_type)
+
+
                     
                     violation = await self._check_rule_compliance(rule, entity_id, "audit_entity", entity_data)
+
                     if violation:
                         audit.findings.append(violation)
+
                     else:
                         compliant_checks += 1
             
@@ -401,8 +429,10 @@ class ComplianceManager:
             # Complete audit
             audit.status = "completed"
             audit.completed_at = datetime.utcnow()
+
             
             self.logger.info(f"Completed compliance audit: {audit_id} (Score: {audit.score:.1f}%)")
+
             
         except Exception as e:
             audit.status = "failed"
@@ -411,6 +441,7 @@ class ComplianceManager:
     def _generate_sample_entity_data(self, audit_type: ComplianceType) -> Dict[str, Any]:
         """Generate sample entity data for audit testing."""
         import random
+
         
         base_data = {
             "created_at": datetime.utcnow() - timedelta(days=random.randint(1, 1000)),
@@ -439,24 +470,30 @@ class ComplianceManager:
                 "amount": random.randint(10, 15000),
                 "aml_checked": random.choice([True, False])
             })
+
         
         return base_data
     
     def _generate_audit_recommendations(self, audit: ComplianceAudit) -> List[str]:
         """Generate recommendations based on audit findings."""
         recommendations = []
+
         
         critical_findings = [f for f in audit.findings if f.severity == ComplianceSeverity.CRITICAL]
+
         high_findings = [f for f in audit.findings if f.severity == ComplianceSeverity.HIGH]
         
         if critical_findings:
             recommendations.append(f"Immediately address {len(critical_findings)} critical compliance violations")
+
         
         if high_findings:
             recommendations.append(f"Prioritize resolution of {len(high_findings)} high-severity violations")
+
         
         if audit.score < 90:
             recommendations.append("Implement additional compliance monitoring and controls")
+
         
         if audit.score < 70:
             recommendations.append("Consider comprehensive compliance program review")
@@ -464,10 +501,13 @@ class ComplianceManager:
         # Type-specific recommendations
         if audit.audit_type == ComplianceType.DATA_PROTECTION:
             recommendations.append("Enhance data protection training for staff")
+
             recommendations.append("Review and update privacy policies")
         elif audit.audit_type == ComplianceType.COPYRIGHT:
             recommendations.append("Strengthen copyright verification processes")
+
             recommendations.append("Implement automated copyright detection")
+
         
         return recommendations
     
@@ -476,17 +516,21 @@ class ComplianceManager:
         try:
             if violation_id not in self.violations:
                 return False
+
             
             violation = self.violations[violation_id]
             violation.status = "resolved"
             violation.resolved_at = datetime.utcnow()
+
             violation.metadata["resolution_notes"] = resolution_notes
             
             self.logger.info(f"Resolved compliance violation: {violation_id}")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Error resolving violation {violation_id}: {str(e)}")
+
             return False
     
     async def get_compliance_dashboard(self) -> Dict[str, Any]:
@@ -494,26 +538,37 @@ class ComplianceManager:
         try:
             # Calculate overall compliance scores
             for compliance_type in ComplianceType:
-                relevant_violations = [v for v in self.violations.values() 
+                relevant_violations = [v for v in self.violations.values()
+ 
                                      if self.compliance_rules.get(v.rule_id, {}).compliance_type == compliance_type]
+
                 relevant_rules = [r for r in self.compliance_rules.values() if r.compliance_type == compliance_type]
                 
                 if relevant_rules:
                     # Simple scoring: 100% - (violations * penalty)
+
+
                     penalty_per_violation = {
                         ComplianceSeverity.CRITICAL: 25,
                         ComplianceSeverity.HIGH: 15,
                         ComplianceSeverity.MEDIUM: 10,
                         ComplianceSeverity.LOW: 5
                     }
+
                     
                     total_penalty = sum(penalty_per_violation.get(v.severity, 5) for v in relevant_violations)
+
+
                     score = max(0, 100 - total_penalty)
+
                     self.compliance_scores[compliance_type] = score
+
             
             overall_score = sum(self.compliance_scores.values()) / len(self.compliance_scores) if self.compliance_scores else 100
+
             
             open_violations = [v for v in self.violations.values() if v.status == "open"]
+
             critical_violations = [v for v in open_violations if v.severity == ComplianceSeverity.CRITICAL]
             
             return {
@@ -532,20 +587,29 @@ class ComplianceManager:
             
         except Exception as e:
             self.logger.error(f"Error getting compliance dashboard: {str(e)}")
+
             return {"error": str(e)}
     
     async def generate_compliance_report(self, compliance_type: Optional[ComplianceType] = None) -> Dict[str, Any]:
         """Generate a comprehensive compliance report."""
         try:
             if compliance_type:
-                violations = [v for v in self.violations.values() 
+                violations = [v for v in self.violations.values()
+ 
                             if self.compliance_rules.get(v.rule_id, {}).compliance_type == compliance_type]
+
                 rules = [r for r in self.compliance_rules.values() if r.compliance_type == compliance_type]
+
                 audits = [a for a in self.audits.values() if a.audit_type == compliance_type]
             else:
                 violations = list(self.violations.values())
+
+
                 rules = list(self.compliance_rules.values())
+
+
                 audits = list(self.audits.values())
+
             
             return {
                 "report_type": f"{compliance_type.value if compliance_type else 'overall'}_compliance_report",
@@ -560,6 +624,7 @@ class ComplianceManager:
                 },
                 "violations_by_severity": {
                     severity.value: len([v for v in violations if v.severity == severity])
+
                     for severity in ComplianceSeverity
                 },
                 "recent_violations": [
@@ -585,6 +650,7 @@ class ComplianceManager:
             
         except Exception as e:
             self.logger.error(f"Error generating compliance report: {str(e)}")
+
             return {"error": str(e)}
     
     def get_compliance_summary(self) -> Dict[str, Any]:
@@ -598,6 +664,7 @@ class ComplianceManager:
                 "severity_levels": [cs.value for cs in ComplianceSeverity],
                 "rules_by_type": {
                     ct.value: len([r for r in self.compliance_rules.values() if r.compliance_type == ct])
+
                     for ct in ComplianceType
                 },
                 "violations_by_status": {
@@ -612,4 +679,5 @@ class ComplianceManager:
             }
         except Exception as e:
             self.logger.error(f"Error getting compliance summary: {str(e)}")
+
             return {}

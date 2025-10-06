@@ -1,4 +1,5 @@
-"""IA Chérie Core Platform - Notification System Core
+"""
+IA Chérie Core Platform - Notification System Core
 =================================================
 
 Enterprise-grade notification system providing multi-channel messaging,
@@ -26,7 +27,8 @@ import time
 logger = logging.getLogger(__name__)
 
 class NotificationChannel(str, Enum):
-    """Notification delivery channels"""
+    """
+Notification delivery channels"""
     EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
@@ -38,7 +40,8 @@ class NotificationChannel(str, Enum):
     TELEGRAM = "telegram"
 
 class NotificationPriority(str, Enum):
-    """Notification priority levels"""
+    """
+Notification priority levels"""
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -46,7 +49,8 @@ class NotificationPriority(str, Enum):
     CRITICAL = "critical"
 
 class NotificationStatus(str, Enum):
-    """Notification delivery status"""
+    """
+Notification delivery status"""
     PENDING = "pending"
     SENDING = "sending"
     SENT = "sent"
@@ -57,7 +61,8 @@ class NotificationStatus(str, Enum):
     RATE_LIMITED = "rate_limited"
 
 class TemplateType(str, Enum):
-    """Notification template types"""
+    """
+Notification template types"""
     WELCOME = "welcome"
     VERIFICATION = "verification"
     PASSWORD_RESET = "password_reset"
@@ -74,7 +79,8 @@ class TemplateType(str, Enum):
 
 @dataclass
 class NotificationTemplate:
-    """Notification template definition"""
+    """
+Notification template definition"""
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     template_type: TemplateType = TemplateType.CUSTOM
@@ -92,7 +98,8 @@ class NotificationTemplate:
 
 @dataclass
 class UserPreferences:
-    """User notification preferences"""
+    """
+User notification preferences"""
     user_id: str
     email_enabled: bool = True
     sms_enabled: bool = False
@@ -109,7 +116,8 @@ class UserPreferences:
 
 @dataclass
 class NotificationRequest:
-    """Notification request"""
+    """
+Notification request"""
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     template_id: Optional[str] = None
     template_type: Optional[TemplateType] = None
@@ -131,7 +139,8 @@ class NotificationRequest:
 
 @dataclass
 class NotificationDelivery:
-    """Notification delivery record"""
+    """
+Notification delivery record"""
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     request_id: str = ""
     channel: NotificationChannel = NotificationChannel.EMAIL
@@ -152,7 +161,8 @@ class NotificationDelivery:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class NotificationProvider(ABC):
-    """Abstract notification provider"""
+    """
+Abstract notification provider"""
     
     def __init__(self, name: str, channel: NotificationChannel):
         self.name = name
@@ -162,27 +172,32 @@ class NotificationProvider(ABC):
         
     @abstractmethod
     async def send(self, delivery: NotificationDelivery) -> bool:
-        """Send notification"""
+        """
+Send notification"""
         pass
     
     @abstractmethod
     async def get_delivery_status(self, tracking_id: str) -> Optional[str]:
-        """Get delivery status from provider"""
+        """
+Get delivery status from provider"""
         pass
     
     @abstractmethod
     def validate_recipient(self, address: str) -> bool:
-        """Validate recipient address"""
+        """
+Validate recipient address"""
         pass
 
 class EmailProvider(NotificationProvider):
-    """Email notification provider"""
+    """
+Email notification provider"""
     
     def __init__(self, name: str = "EmailProvider"):
         super().__init__(name, NotificationChannel.EMAIL)
         
     async def send(self, delivery: NotificationDelivery) -> bool:
-        """Send email notification"""
+        """
+Send email notification"""
         try:
             # Simulate email sending
             await asyncio.sleep(0.1)
@@ -208,24 +223,28 @@ class EmailProvider(NotificationProvider):
             return False
     
     async def get_delivery_status(self, tracking_id: str) -> Optional[str]:
-        """Get email delivery status"""
+        """
+Get email delivery status"""
         # Simulate status check
         await asyncio.sleep(0.05)
         return NotificationStatus.DELIVERED.value
     
     def validate_recipient(self, address: str) -> bool:
-        """Validate email address"""
+        """
+Validate email address"""
         email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         return re.match(email_pattern, address) is not None
 
 class SMSProvider(NotificationProvider):
-    """SMS notification provider"""
+    """
+SMS notification provider"""
     
     def __init__(self, name: str = "SMSProvider"):
         super().__init__(name, NotificationChannel.SMS)
         
     async def send(self, delivery: NotificationDelivery) -> bool:
-        """Send SMS notification"""
+        """
+Send SMS notification"""
         try:
             # Simulate SMS sending
             await asyncio.sleep(0.2)
@@ -251,24 +270,28 @@ class SMSProvider(NotificationProvider):
             return False
     
     async def get_delivery_status(self, tracking_id: str) -> Optional[str]:
-        """Get SMS delivery status"""
+        """
+Get SMS delivery status"""
         # Simulate status check
         await asyncio.sleep(0.05)
         return NotificationStatus.DELIVERED.value
     
     def validate_recipient(self, address: str) -> bool:
-        """Validate phone number"""
+        """
+Validate phone number"""
         phone_pattern = r'^\+?[1-9]\d{1,14}$'
         return re.match(phone_pattern, address) is not None
 
 class PushProvider(NotificationProvider):
-    """Push notification provider"""
+    """
+Push notification provider"""
     
     def __init__(self, name: str = "PushProvider"):
         super().__init__(name, NotificationChannel.PUSH)
         
     async def send(self, delivery: NotificationDelivery) -> bool:
-        """Send push notification"""
+        """
+Send push notification"""
         try:
             # Simulate push notification sending
             await asyncio.sleep(0.1)
@@ -294,25 +317,29 @@ class PushProvider(NotificationProvider):
             return False
     
     async def get_delivery_status(self, tracking_id: str) -> Optional[str]:
-        """Get push notification delivery status"""
+        """
+Get push notification delivery status"""
         # Simulate status check
         await asyncio.sleep(0.05)
         return NotificationStatus.DELIVERED.value
     
     def validate_recipient(self, address: str) -> bool:
-        """Validate device token"""
+        """
+Validate device token"""
         # Simple validation for device token (should be hex string)
         return len(address) >= 32 and all(c in '0123456789abcdefABCDEF' for c in address)
 
 class TemplateEngine:
-    """Notification template engine"""
+    """
+Notification template engine"""
     
     def __init__(self):
         self.templates: Dict[str, NotificationTemplate] = {}
         self._load_default_templates()
     
     def _load_default_templates(self):
-        """Load default notification templates"""
+        """
+Load default notification templates"""
         default_templates = [
             NotificationTemplate(
                 id="welcome_email",
@@ -349,17 +376,20 @@ class TemplateEngine:
             self.templates[template.id] = template
     
     def register_template(self, template: NotificationTemplate):
-        """Register notification template"""
+        """
+Register notification template"""
         self.templates[template.id] = template
         logger.info(f"Registered template: {template.name}")
     
     def get_template(self, template_id: str) -> Optional[NotificationTemplate]:
-        """Get template by ID"""
+        """
+Get template by ID"""
         return self.templates.get(template_id)
     
     def render_template(self, template_id: str, data: Dict[str, Any], 
                        language: str = "en") -> Dict[str, str]:
-        """Render template with data"""
+        """
+Render template with data"""
         template = self.templates.get(template_id)
         if not template:
             raise Exception(f"Template not found: {template_id}")
@@ -390,7 +420,8 @@ class TemplateEngine:
         }
     
     def _render_string(self, template: str, data: Dict[str, Any]) -> str:
-        """Render template string with data"""
+        """
+Render template string with data"""
         result = template
         for key, value in data.items():
             placeholder = f"{{{{{key}}}}}"
@@ -398,7 +429,8 @@ class TemplateEngine:
         return result
 
 class RateLimiter:
-    """Rate limiter for notifications"""
+    """
+Rate limiter for notifications"""
     
     def __init__(self):
         self.limits: Dict[str, Dict[str, Any]] = {}
@@ -406,14 +438,16 @@ class RateLimiter:
         self.reset_times: Dict[str, Dict[str, datetime]] = {}
     
     def set_limit(self, key: str, limit: int, window_seconds: int):
-        """Set rate limit for a key"""
+        """
+Set rate limit for a key"""
         self.limits[key] = {
             'limit': limit,
             'window_seconds': window_seconds
         }
     
     async def check_limit(self, key: str, identifier: str) -> bool:
-        """Check if request is within rate limit"""
+        """
+Check if request is within rate limit"""
         if key not in self.limits:
             return True
         
@@ -444,7 +478,8 @@ class RateLimiter:
         return True
 
 class NotificationSystemCore:
-    """Core notification system"""
+    """
+Core notification system"""
     
     def __init__(self, level: str = "enterprise"):
         self.level = level
@@ -474,7 +509,8 @@ class NotificationSystemCore:
         logger.info(f"Notification System Core initialized - Level: {level}")
     
     async def initialize(self) -> bool:
-        """Initialize notification system"""
+        """
+Initialize notification system"""
         try:
             logger.info("Notification System Core initialized successfully")
             return True
@@ -483,7 +519,8 @@ class NotificationSystemCore:
             return False
     
     async def start(self) -> bool:
-        """Start notification system"""
+        """
+Start notification system"""
         try:
             self.is_running = True
             
@@ -499,7 +536,8 @@ class NotificationSystemCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop notification system"""
+        """
+Stop notification system"""
         try:
             self.is_running = False
             
@@ -518,7 +556,8 @@ class NotificationSystemCore:
             return False
     
     async def health_check(self) -> bool:
-        """Check system health"""
+        """
+Check system health"""
         try:
             # Check if workers are running
             active_workers = len([task for task in self.processing_tasks if not task.done()])
@@ -543,7 +582,8 @@ class NotificationSystemCore:
             return False
     
     def _initialize_providers(self):
-        """Initialize notification providers"""
+        """
+Initialize notification providers"""
         # Email providers
         self.providers[NotificationChannel.EMAIL] = [EmailProvider()]
         
@@ -557,7 +597,8 @@ class NotificationSystemCore:
         self.providers[NotificationChannel.IN_APP] = []
     
     def _setup_rate_limits(self):
-        """Setup default rate limits"""
+        """
+Setup default rate limits"""
         # Per user limits
         self.rate_limiter.set_limit("user_email_hourly", 10, 3600)  # 10 emails per hour per user
         self.rate_limiter.set_limit("user_sms_daily", 5, 86400)     # 5 SMS per day per user
@@ -568,7 +609,8 @@ class NotificationSystemCore:
         self.rate_limiter.set_limit("global_sms_per_minute", 100, 60)     # 100 SMS per minute globally
     
     async def _notification_processor(self, worker_id: str):
-        """Background notification processor"""
+        """
+Background notification processor"""
         while self.is_running:
             try:
                 if self.delivery_queue:
@@ -584,7 +626,8 @@ class NotificationSystemCore:
                 await asyncio.sleep(1)
     
     async def _process_delivery(self, delivery: NotificationDelivery):
-        """Process notification delivery"""
+        """
+Process notification delivery"""
         try:
             start_time = time.time()
             
@@ -645,7 +688,8 @@ class NotificationSystemCore:
             logger.error(f"Failed to process delivery {delivery.id}: {str(e)}")
     
     async def _check_delivery_status(self, delivery: NotificationDelivery, provider: NotificationProvider):
-        """Check delivery status after sending"""
+        """
+Check delivery status after sending"""
         try:
             # Wait a bit before checking status
             await asyncio.sleep(5)
@@ -664,7 +708,8 @@ class NotificationSystemCore:
             logger.error(f"Failed to check delivery status for {delivery.id}: {str(e)}")
     
     async def send_notification(self, request: NotificationRequest) -> str:
-        """Send notification"""
+        """
+Send notification"""
         try:
             # Get user preferences
             preferences = self.user_preferences.get(request.recipient_id)
@@ -726,7 +771,8 @@ class NotificationSystemCore:
     
     def _is_channel_enabled(self, preferences: UserPreferences, channel: NotificationChannel, 
                            template_type: Optional[TemplateType]) -> bool:
-        """Check if channel is enabled for user"""
+        """
+Check if channel is enabled for user"""
         # Check global channel preferences
         if channel == NotificationChannel.EMAIL and not preferences.email_enabled:
             return False
@@ -745,7 +791,8 @@ class NotificationSystemCore:
         return True
     
     def _is_in_quiet_hours(self, preferences: UserPreferences) -> bool:
-        """Check if current time is in user's quiet hours"""
+        """
+Check if current time is in user's quiet hours"""
         if not preferences.quiet_hours_start or not preferences.quiet_hours_end:
             return False
         
@@ -763,7 +810,8 @@ class NotificationSystemCore:
             return current_time >= start_time or current_time <= end_time
     
     def _get_next_allowed_time(self, preferences: UserPreferences) -> datetime:
-        """Get next allowed time outside quiet hours"""
+        """
+Get next allowed time outside quiet hours"""
         # Simplified - schedule for end of quiet hours
         now = datetime.utcnow()
         if preferences.quiet_hours_end:
@@ -775,7 +823,8 @@ class NotificationSystemCore:
         return now + timedelta(hours=1)
     
     def _get_recipient_address(self, request: NotificationRequest) -> Optional[str]:
-        """Get recipient address for notification channel"""
+        """
+Get recipient address for notification channel"""
         if request.channel == NotificationChannel.EMAIL:
             return request.recipient_email
         elif request.channel == NotificationChannel.SMS:
@@ -787,35 +836,41 @@ class NotificationSystemCore:
         return None
     
     def register_provider(self, channel: NotificationChannel, provider: NotificationProvider):
-        """Register notification provider"""
+        """
+Register notification provider"""
         if channel not in self.providers:
             self.providers[channel] = []
         self.providers[channel].append(provider)
         logger.info(f"Registered {provider.name} for channel {channel.value}")
     
     def register_template(self, template: NotificationTemplate):
-        """Register notification template"""
+        """
+Register notification template"""
         self.template_engine.register_template(template)
     
     def set_user_preferences(self, user_id: str, preferences: UserPreferences):
-        """Set user notification preferences"""
+        """
+Set user notification preferences"""
         preferences.user_id = user_id
         preferences.updated_at = datetime.utcnow()
         self.user_preferences[user_id] = preferences
         logger.info(f"Updated preferences for user {user_id}")
     
     def get_user_preferences(self, user_id: str) -> Optional[UserPreferences]:
-        """Get user notification preferences"""
+        """
+Get user notification preferences"""
         return self.user_preferences.get(user_id)
     
     def get_delivery_status(self, delivery_id: str) -> Optional[NotificationDelivery]:
-        """Get delivery status"""
+        """
+Get delivery status"""
         return self.deliveries.get(delivery_id)
     
     def get_delivery_stats(self, user_id: Optional[str] = None, 
                           channel: Optional[NotificationChannel] = None,
                           days: int = 30) -> Dict[str, Any]:
-        """Get delivery statistics"""
+        """
+Get delivery statistics"""
         since = datetime.utcnow() - timedelta(days=days)
         
         filtered_deliveries = []
@@ -846,7 +901,8 @@ class NotificationSystemCore:
         }
     
     def get_system_metrics(self) -> Dict[str, Any]:
-        """Get system metrics"""
+        """
+Get system metrics"""
         avg_processing_time = (
             self.metrics['total_processing_time'] / self.metrics['notifications_sent']
             if self.metrics['notifications_sent'] > 0 else 0
@@ -884,7 +940,8 @@ async def send_notification(recipient_id: str, channel: NotificationChannel,
                            subject: str, body: str, template_id: Optional[str] = None,
                            data: Optional[Dict[str, Any]] = None,
                            priority: NotificationPriority = NotificationPriority.NORMAL) -> str:
-    """Send notification"""
+    """
+Send notification"""
     request = NotificationRequest(
         recipient_id=recipient_id,
         channel=channel,
@@ -898,7 +955,8 @@ async def send_notification(recipient_id: str, channel: NotificationChannel,
 
 def set_user_notification_preferences(user_id: str, email_enabled: bool = True,
                                      sms_enabled: bool = False, push_enabled: bool = True) -> bool:
-    """Set user notification preferences"""
+    """
+Set user notification preferences"""
     preferences = UserPreferences(
         user_id=user_id,
         email_enabled=email_enabled,
@@ -909,7 +967,8 @@ def set_user_notification_preferences(user_id: str, email_enabled: bool = True,
     return True
 
 def get_notification_status(delivery_id: str) -> Optional[NotificationDelivery]:
-    """Get notification delivery status"""
+    """
+Get notification delivery status"""
     return notification_system_core.get_delivery_status(delivery_id)
 
 # Module exports
@@ -922,4 +981,4 @@ __all__ = [
     "get_notification_status"
 ]
 
-logger.info("Notification System Core module loaded")
+logger.info("Notification System Core module initialized")

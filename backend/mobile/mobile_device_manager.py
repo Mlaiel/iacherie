@@ -22,7 +22,8 @@ import re
 logger = logging.getLogger(__name__)
 
 class DeviceType(Enum):
-    """Mobile device types"""
+    """
+        Mobile device types"""
     SMARTPHONE = "smartphone"
     TABLET = "tablet"
     FOLDABLE = "foldable"
@@ -84,7 +85,8 @@ class DeviceCapabilities:
 
 @dataclass
 class DeviceProfile:
-    """Comprehensive device profile"""
+    """
+        Comprehensive device profile"""
     device_id: str
     device_type: DeviceType
     os: OperatingSystem
@@ -98,7 +100,8 @@ class DeviceProfile:
 
 @dataclass
 class CompatibilityResult:
-    """Compatibility check result"""
+    """
+        Compatibility check result"""
     compatible: bool
     compatibility_score: float
     supported_features: List[str]
@@ -108,7 +111,8 @@ class CompatibilityResult:
 
 @dataclass
 class DeviceOptimization:
-    """Device-specific optimization settings"""
+    """
+        Device-specific optimization settings"""
     device_id: str
     optimization_profile: str
     settings: Dict[str, Any]
@@ -117,10 +121,12 @@ class DeviceOptimization:
     power_management: Dict[str, Any]
 
 class MobileDeviceManager:
-    """Advanced mobile device management system"""
+    """
+        Advanced mobile device management system"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize mobile device manager"""
+        """
+        Initialize mobile device manager"""
         self.config = config or {}
         self.device_profiles = {}
         self.capability_database = {}
@@ -148,6 +154,7 @@ class MobileDeviceManager:
         self.device_profiler = DeviceProfiler(self.config)
         self.compatibility_checker = CompatibilityChecker(self.config)
         self.hardware_adapter = HardwareAdapter(self.config)
+
         
         logger.info("📱 Mobile Device Manager initialized with comprehensive device management capabilities")
     
@@ -157,6 +164,7 @@ class MobileDeviceManager:
             device_id = device_info.get('device_id') or f"device_{uuid.uuid4().hex[:8]}"
             
             # Create device profile
+
             device_profile = await self.device_profiler.create_device_profile(device_info, device_id)
             
             # Store device profile
@@ -170,12 +178,15 @@ class MobileDeviceManager:
             # Update metrics
             self.device_metrics["devices_profiled"] += 1
             self._update_device_diversity_score()
+
             
             logger.info(f"Device {device_id} registered successfully: {device_profile.manufacturer} {device_profile.model}")
+
             return device_profile
             
         except Exception as e:
             logger.error(f"Failed to register device: {e}")
+
             raise
     
     async def get_device_capabilities(self, device_id: str) -> Optional[DeviceCapabilities]:
@@ -186,22 +197,28 @@ class MobileDeviceManager:
         # Attempt to profile device if not found
         if self.auto_profiling:
             device_info = await self._detect_device_info(device_id)
+
             if device_info:
                 profile = await self.register_device(device_info)
+
                 return profile.capabilities
         
         return None
     
     async def check_compatibility(self, device_id: str, requirements: Dict[str, Any]) -> CompatibilityResult:
-        """Check device compatibility against requirements"""
+        """
+        Check device compatibility against requirements"""
         try:
             # Check cache first
+
             cache_key = f"{device_id}_{hash(json.dumps(requirements, sort_keys=True))}"
             if cache_key in self.compatibility_cache:
                 return self.compatibility_cache[cache_key]
             
             # Get device capabilities
+
             capabilities = await self.get_device_capabilities(device_id)
+
             if not capabilities:
                 return CompatibilityResult(
                     compatible=False,
@@ -213,6 +230,7 @@ class MobileDeviceManager:
                 )
             
             # Perform compatibility check
+
             compatibility_result = await self.compatibility_checker.check_compatibility(
                 capabilities, requirements
             )
@@ -224,22 +242,27 @@ class MobileDeviceManager:
             # Update metrics
             self.device_metrics["compatibility_checks"] += 1
             self._update_average_compatibility_score(compatibility_result.compatibility_score)
+
             
             return compatibility_result
             
         except Exception as e:
             logger.error(f"Compatibility check failed for device {device_id}: {e}")
+
             raise
     
     async def optimize_for_device(self, device_id: str, optimization_goals: Dict[str, Any]) -> DeviceOptimization:
         """Create device-specific optimization settings"""
         try:
             # Get device profile
+
             device_profile = self.device_profiles.get(device_id)
+
             if not device_profile:
                 raise ValueError(f"Device {device_id} not found")
             
             # Generate optimization settings
+
             optimization = await self.hardware_adapter.generate_optimization_settings(
                 device_profile, optimization_goals
             )
@@ -254,6 +277,7 @@ class MobileDeviceManager:
             
         except Exception as e:
             logger.error(f"Device optimization failed for {device_id}: {e}")
+
             raise
     
     async def get_recommended_settings(self, device_id: str, use_case: str) -> Dict[str, Any]:
@@ -263,14 +287,18 @@ class MobileDeviceManager:
             return {}
         
         # Generate use case specific recommendations
+
         recommendations = await self._generate_use_case_recommendations(device_profile, use_case)
+
         
         return recommendations
     
     async def monitor_device_performance(self, device_id: str) -> Dict[str, Any]:
-        """Monitor real-time device performance"""
+        """
+        Monitor real-time device performance"""
         if not self.performance_monitoring:
             return {}
+
         
         performance_data = {
             "device_id": device_id,
@@ -300,12 +328,19 @@ class MobileDeviceManager:
             return
         
         # Calculate diversity based on different factors
+
         manufacturers = set(profile.manufacturer for profile in self.device_profiles.values())
+
         os_types = set(profile.os for profile in self.device_profiles.values())
+
         device_types = set(profile.device_type for profile in self.device_profiles.values())
+
+
         
         diversity_factors = [len(manufacturers), len(os_types), len(device_types)]
+
         max_expected = [10, 5, 7]  # Expected maximum diversity
+
         
         diversity_score = sum(min(1.0, factor / max_val) for factor, max_val in zip(diversity_factors, max_expected)) / len(diversity_factors)
         self.device_metrics["device_diversity_score"] = diversity_score
@@ -313,6 +348,7 @@ class MobileDeviceManager:
     def _update_average_compatibility_score(self, new_score: float):
         """Update average compatibility score"""
         current_avg = self.device_metrics["average_compatibility_score"]
+
         total_checks = self.device_metrics["compatibility_checks"]
         
         self.device_metrics["average_compatibility_score"] = (
@@ -357,6 +393,7 @@ class MobileDeviceManager:
                 "performance_settings": {"cpu_boost": True, "gpu_boost": True, "thermal_management": True},
                 "power_settings": {"performance_mode": True, "haptic_feedback": True}
             })
+
         
         return recommendations
     
@@ -365,11 +402,13 @@ class MobileDeviceManager:
         return 45.2  # Simulated
     
     async def _get_memory_usage(self, device_id: str) -> float:
-        """Get current memory usage for device"""
+        """
+        Get current memory usage for device"""
         return 68.5  # Simulated
     
     async def _get_battery_status(self, device_id: str) -> Dict[str, Any]:
-        """Get current battery status for device"""
+        """
+        Get current battery status for device"""
         return {
             "level": 78,
             "charging": False,
@@ -394,6 +433,7 @@ class MobileDeviceManager:
         """Analyze distribution of registered devices"""
         if not self.device_profiles:
             return {}
+
         
         distribution = {
             "by_manufacturer": {},
@@ -404,18 +444,22 @@ class MobileDeviceManager:
         
         for profile in self.device_profiles.values():
             # Manufacturer distribution
+
             manufacturer = profile.manufacturer
             distribution["by_manufacturer"][manufacturer] = distribution["by_manufacturer"].get(manufacturer, 0) + 1
             
             # OS distribution
+
             os_name = profile.os.value
             distribution["by_os"][os_name] = distribution["by_os"].get(os_name, 0) + 1
             
             # Device type distribution
+
             device_type = profile.device_type.value
             distribution["by_device_type"][device_type] = distribution["by_device_type"].get(device_type, 0) + 1
             
             # Performance tier distribution
+
             perf_tier = profile.performance_tier.value
             distribution["by_performance_tier"][perf_tier] = distribution["by_performance_tier"].get(perf_tier, 0) + 1
         
@@ -447,27 +491,38 @@ class DeviceProfiler:
         self.config = config
         
     async def create_device_profile(self, device_info: Dict[str, Any], device_id: str) -> DeviceProfile:
-        """Create comprehensive device profile"""
+        """
+        Create comprehensive device profile"""
         # Extract basic device information
+
         manufacturer = device_info.get('manufacturer', 'Unknown')
+
         model = device_info.get('model', 'Unknown Model')
+
         os_name = device_info.get('os', 'android').lower()
+
         os_version = device_info.get('os_version', '1.0')
         
         # Determine device type
+
         device_type = self._determine_device_type(device_info)
         
         # Determine operating system
+
         operating_system = self._determine_operating_system(os_name)
         
         # Create device capabilities
+
         capabilities = await self._analyze_device_capabilities(device_info)
         
         # Determine performance tier
+
         performance_tier = self._determine_performance_tier(capabilities)
         
         # Analyze form factor
+
         form_factor = self._analyze_form_factor(device_info, capabilities)
+
         
         return DeviceProfile(
             device_id=device_id,
@@ -481,9 +536,12 @@ class DeviceProfiler:
         )
     
     def _determine_device_type(self, device_info: Dict[str, Any]) -> DeviceType:
-        """Determine device type from device information"""
+        """
+        Determine device type from device information"""
         device_type_hint = device_info.get('device_type', '').lower()
+
         model = device_info.get('model', '').lower()
+
         
         if 'tablet' in device_type_hint or 'ipad' in model:
             return DeviceType.TABLET
@@ -497,8 +555,10 @@ class DeviceProfiler:
             return DeviceType.SMARTPHONE
     
     def _determine_operating_system(self, os_name: str) -> OperatingSystem:
-        """Determine operating system from name"""
+        """
+        Determine operating system from name"""
         os_name = os_name.lower()
+
         
         if 'ios' in os_name:
             return OperatingSystem.IOS
@@ -516,20 +576,30 @@ class DeviceProfiler:
             return OperatingSystem.ANDROID  # Default
     
     async def _analyze_device_capabilities(self, device_info: Dict[str, Any]) -> DeviceCapabilities:
-        """Analyze device capabilities"""
+        """
+        Analyze device capabilities"""
         # Extract or estimate device capabilities
+
         cpu_cores = device_info.get('cpu_cores', 8)
+
         cpu_frequency = device_info.get('cpu_frequency', 2.4)
+
         ram_gb = device_info.get('ram_gb', 4.0)
+
         storage_gb = device_info.get('storage_gb', 64.0)
+
         gpu_model = device_info.get('gpu_model', 'Integrated GPU')
         
         # Display specifications
+
         display_width = device_info.get('display_width', 1080)
+
         display_height = device_info.get('display_height', 2340)
+
         display_density = device_info.get('display_density', 420)
         
         # Camera specifications
+
         camera_specs = device_info.get('camera_specs', {
             'rear_camera_mp': 48,
             'front_camera_mp': 12,
@@ -537,12 +607,14 @@ class DeviceProfiler:
         })
         
         # Sensors
+
         sensors = device_info.get('sensors', [
             'accelerometer', 'gyroscope', 'magnetometer',
             'proximity', 'ambient_light', 'fingerprint'
         ])
         
         # Connectivity
+
         connectivity = device_info.get('connectivity', [
             NetworkType.WIFI, NetworkType.CELLULAR_4G, NetworkType.BLUETOOTH
         ])
@@ -550,11 +622,15 @@ class DeviceProfiler:
             connectivity = [NetworkType(conn) for conn in connectivity if conn in [nt.value for nt in NetworkType]]
         
         # Battery
+
         battery_capacity = device_info.get('battery_capacity', 4000)
         
         # OS information
+
         os_version = device_info.get('os_version', '11.0')
+
         api_level = device_info.get('api_level')
+
         
         return DeviceCapabilities(
             device_id=device_info.get('device_id', ''),
@@ -574,13 +650,19 @@ class DeviceProfiler:
         )
     
     def _determine_performance_tier(self, capabilities: DeviceCapabilities) -> PerformanceTier:
-        """Determine performance tier based on capabilities"""
+        """
+        Determine performance tier based on capabilities"""
         # Performance scoring based on key specs
+
         cpu_score = capabilities.cpu_cores * capabilities.cpu_frequency
+
         ram_score = capabilities.ram_gb
+
         gpu_score = 1.0 if 'mali' in capabilities.gpu_model.lower() or 'adreno' in capabilities.gpu_model.lower() else 0.5
+
         
         total_score = (cpu_score * 0.4) + (ram_score * 0.4) + (gpu_score * 0.2)
+
         
         if total_score >= 20:
             return PerformanceTier.FLAGSHIP
@@ -592,7 +674,8 @@ class DeviceProfiler:
             return PerformanceTier.ENTRY_LEVEL
     
     def _analyze_form_factor(self, device_info: Dict[str, Any], capabilities: DeviceCapabilities) -> Dict[str, Any]:
-        """Analyze device form factor"""
+        """
+        Analyze device form factor"""
         width, height = capabilities.display_resolution
         
         return {
@@ -612,9 +695,12 @@ class CompatibilityChecker:
         
     async def check_compatibility(self, capabilities: DeviceCapabilities, 
                                 requirements: Dict[str, Any]) -> CompatibilityResult:
-        """Check device compatibility against requirements"""
+        """
+        Check device compatibility against requirements"""
         supported_features = []
+
         unsupported_features = []
+
         compatibility_scores = []
         
         # Check each requirement
@@ -622,46 +708,66 @@ class CompatibilityChecker:
             if requirement == 'min_ram_gb':
                 if capabilities.ram_gb >= expected_value:
                     supported_features.append(f"RAM: {capabilities.ram_gb}GB")
+
                     compatibility_scores.append(1.0)
+
                 else:
                     unsupported_features.append(f"Insufficient RAM: {capabilities.ram_gb}GB < {expected_value}GB")
+
                     compatibility_scores.append(0.0)
+
             
             elif requirement == 'min_os_version':
                 if self._compare_versions(capabilities.os_version, expected_value) >= 0:
                     supported_features.append(f"OS Version: {capabilities.os_version}")
+
                     compatibility_scores.append(1.0)
+
                 else:
                     unsupported_features.append(f"Outdated OS: {capabilities.os_version} < {expected_value}")
+
                     compatibility_scores.append(0.0)
+
             
             elif requirement == 'required_sensors':
                 missing_sensors = set(expected_value) - set(capabilities.sensors)
+
                 if not missing_sensors:
                     supported_features.append(f"All sensors available: {', '.join(expected_value)}")
+
                     compatibility_scores.append(1.0)
+
                 else:
                     unsupported_features.append(f"Missing sensors: {', '.join(missing_sensors)}")
+
                     compatibility_scores.append(len(set(expected_value) & set(capabilities.sensors)) / len(expected_value))
+
             
             elif requirement == 'min_battery_capacity':
                 if capabilities.battery_capacity >= expected_value:
                     supported_features.append(f"Battery: {capabilities.battery_capacity}mAh")
+
                     compatibility_scores.append(1.0)
+
                 else:
                     unsupported_features.append(f"Low battery capacity: {capabilities.battery_capacity}mAh < {expected_value}mAh")
+
                     compatibility_scores.append(capabilities.battery_capacity / expected_value)
         
         # Calculate overall compatibility score
+
         overall_score = sum(compatibility_scores) / len(compatibility_scores) if compatibility_scores else 0.0
         
         # Generate optimization recommendations
+
         optimization_recommendations = self._generate_optimization_recommendations(
             capabilities, unsupported_features
         )
         
         # Estimate performance
+
         performance_estimation = self._estimate_performance(capabilities, requirements)
+
         
         return CompatibilityResult(
             compatible=overall_score >= 0.8,
@@ -676,14 +782,18 @@ class CompatibilityChecker:
         """Compare two version strings"""
         def normalize_version(v):
             return [int(x) for x in re.sub(r'[^\d.]', '', v).split('.') if x.isdigit()]
+
         
         v1_parts = normalize_version(version1)
+
         v2_parts = normalize_version(version2)
         
         # Pad shorter version with zeros
+
         max_len = max(len(v1_parts), len(v2_parts))
         v1_parts.extend([0] * (max_len - len(v1_parts)))
         v2_parts.extend([0] * (max_len - len(v2_parts)))
+
         
         for v1, v2 in zip(v1_parts, v2_parts):
             if v1 > v2:
@@ -694,20 +804,25 @@ class CompatibilityChecker:
     
     def _generate_optimization_recommendations(self, capabilities: DeviceCapabilities, 
                                              unsupported_features: List[str]) -> List[str]:
-        """Generate optimization recommendations"""
+        """
+        Generate optimization recommendations"""
         recommendations = []
         
         if any('RAM' in feature for feature in unsupported_features):
             recommendations.append("Enable memory optimization and close background apps")
+
         
         if any('OS' in feature for feature in unsupported_features):
             recommendations.append("Update to the latest OS version")
+
         
         if any('sensor' in feature for feature in unsupported_features):
             recommendations.append("Use alternative sensor implementations or disable sensor-dependent features")
+
         
         if any('battery' in feature.lower() for feature in unsupported_features):
             recommendations.append("Enable power saving mode and optimize battery usage")
+
         
         return recommendations
     
@@ -715,8 +830,12 @@ class CompatibilityChecker:
                             requirements: Dict[str, Any]) -> Dict[str, Any]:
         """Estimate device performance for the requirements"""
         # Performance estimation based on device capabilities
+
         cpu_performance = min(1.0, (capabilities.cpu_cores * capabilities.cpu_frequency) / 20.0)
+
         memory_performance = min(1.0, capabilities.ram_gb / 8.0)
+
+
         
         overall_performance = (cpu_performance + memory_performance) / 2.0
         
@@ -736,21 +855,28 @@ class HardwareAdapter:
         
     async def generate_optimization_settings(self, device_profile: DeviceProfile, 
                                            optimization_goals: Dict[str, Any]) -> DeviceOptimization:
-        """Generate device-specific optimization settings"""
+        """
+        Generate device-specific optimization settings"""
         # Determine optimization profile based on device
+
         optimization_profile = self._determine_optimization_profile(device_profile)
         
         # Generate settings based on profile and goals
+
         settings = self._generate_settings(device_profile, optimization_goals)
         
         # Generate performance adjustments
+
         performance_adjustments = self._generate_performance_adjustments(device_profile)
         
         # Generate quality settings
+
         quality_settings = self._generate_quality_settings(device_profile, optimization_goals)
         
         # Generate power management settings
+
         power_management = self._generate_power_management_settings(device_profile)
+
         
         return DeviceOptimization(
             device_id=device_profile.device_id,
@@ -762,7 +888,8 @@ class HardwareAdapter:
         )
     
     def _determine_optimization_profile(self, device_profile: DeviceProfile) -> str:
-        """Determine optimization profile for device"""
+        """
+        Determine optimization profile for device"""
         if device_profile.performance_tier == PerformanceTier.FLAGSHIP:
             return "performance_maximized"
         elif device_profile.performance_tier == PerformanceTier.HIGH_END:
@@ -800,6 +927,7 @@ class HardwareAdapter:
                 "rendering_scale": min(settings["rendering_scale"], 0.85),
                 "vsync": False
             })
+
         
         return settings
     
@@ -828,6 +956,7 @@ class HardwareAdapter:
                 "audio_quality": "high",
                 "compression_level": "low"
             })
+
         
         return base_quality
     

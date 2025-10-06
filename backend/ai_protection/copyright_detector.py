@@ -26,20 +26,22 @@ try:
     from core.tensorflow_singleton import get_tensorflow
     tf = get_tensorflow()
     # from sentence_transformers import SentenceTransformer
+    from core.sentence_transformers_singleton import get_sentence_transformer
     import torch
     DETECTION_AVAILABLE = True
 except ImportError:
     DETECTION_AVAILABLE = False
 
 # Import existing detection functionality
-from ...core.fingerprinting import ContentFingerprint
-from ...protection.monitoring import ViolationDetector
+from core.security.copyright_fingerprinting_core import CopyrightFingerprintingCore
+from protection.monitoring.violation_detection import ViolationDetector
 
 logger = logging.getLogger(__name__)
 
 
 class ViolationType(Enum):
-    """Types of copyright violations"""
+    """
+        Types of copyright violations"""
     EXACT_MATCH = "exact_match"
     PARTIAL_MATCH = "partial_match"
     DERIVATIVE_WORK = "derivative_work"
@@ -75,7 +77,8 @@ class CopyrightMatch:
 
 @dataclass
 class DetectionResult:
-    """Copyright detection result"""
+    """
+        Copyright detection result"""
     content_id: str
     violations_detected: bool
     total_matches: int
@@ -86,7 +89,8 @@ class DetectionResult:
 
 
 class CopyrightDetector:
-    """AI-powered copyright violation detection system"""
+    """
+        AI-powered copyright violation detection system"""
     
     def __init__(self, 
                  similarity_threshold: float = 0.8,
@@ -108,7 +112,9 @@ class CopyrightDetector:
         if DETECTION_AVAILABLE and enable_deep_learning:
             try:
                 self.text_model = get_sentence_transformer('all-MiniLM-L6-v2')
+
                 logger.info("Text similarity model loaded")
+
             except Exception as e:
                 logger.warning(f"Failed to load text model: {e}")
                 
@@ -131,7 +137,9 @@ class CopyrightDetector:
         Args:
             content_id: Unique content identifier
             content_data: Content data (bytes for media, string for text)
+
             content_type: Type of content (audio, video, image, text)
+
             owner_id: Content owner identifier
             metadata: Additional metadata
             
@@ -140,11 +148,13 @@ class CopyrightDetector:
         """
         try:
             # Generate content fingerprint based on type
+
             fingerprint = await self._generate_content_fingerprint(
                 content_data, content_type
             )
             
             # Store in content database
+
             content_record = {
                 'content_id': content_id,
                 'owner_id': owner_id,
@@ -166,6 +176,7 @@ class CopyrightDetector:
             
         except Exception as e:
             logger.error(f"Content registration failed: {e}")
+
             return {
                 'success': False,
                 'error': str(e)
@@ -188,13 +199,18 @@ class CopyrightDetector:
         """
         try:
             start_time = asyncio.get_event_loop().time()
+
+
             
             detection_id = str(uuid.uuid4())
             
             # Generate fingerprint for suspected content
+
             suspected_fingerprint = await self._generate_content_fingerprint(
                 suspected_content, content_type
             )
+
+
             
             matches = []
             
@@ -202,15 +218,20 @@ class CopyrightDetector:
             for original_content_id, original_record in self._content_database.items():
                 if original_record['content_type'] == content_type:
                     # Calculate similarity
+
                     similarity = await self._calculate_similarity(
                         suspected_fingerprint,
                         original_record['fingerprint'],
                         content_type
                     )
+
                     
                     if similarity['score'] >= self.similarity_threshold:
                         # Determine violation type
+
                         violation_type = self._determine_violation_type(similarity)
+
+
                         
                         match = CopyrightMatch(
                             match_id=str(uuid.uuid4()),
@@ -224,13 +245,18 @@ class CopyrightDetector:
                             timestamp=datetime.now(),
                             platform_info=platform_info
                         )
+
                         
                         matches.append(match)
+
+
             
             processing_time = asyncio.get_event_loop().time() - start_time
             
             # Generate detection summary
+
             summary = self._generate_detection_summary(matches)
+
             
             return DetectionResult(
                 content_id=detection_id,
@@ -240,9 +266,11 @@ class CopyrightDetector:
                 processing_time=processing_time,
                 detection_summary=summary
             )
+
             
         except Exception as e:
             logger.error(f"Violation detection failed: {e}")
+
             return DetectionResult(
                 content_id="",
                 violations_detected=False,
@@ -267,6 +295,7 @@ class CopyrightDetector:
         results = []
         
         # Process in parallel for efficiency
+
         tasks = []
         for content_item in content_batch:
             task = self.detect_violations(
@@ -274,7 +303,10 @@ class CopyrightDetector:
                 content_item['content_type'],
                 content_item.get('platform_info')
             )
+
             tasks.append(task)
+
+
         
         results = await asyncio.gather(*tasks, return_exceptions=True)
         
@@ -290,6 +322,7 @@ class CopyrightDetector:
                     detection_summary={},
                     error=str(result)
                 )
+
         
         return results
     
@@ -310,10 +343,14 @@ class CopyrightDetector:
             platform_results = await self.batch_detect_violations(content_list)
             
             # Aggregate results
+
             total_violations = sum(1 for r in platform_results if r.violations_detected)
+
+
             total_matches = sum(r.total_matches for r in platform_results)
             
             # Group by violation type
+
             violation_types = {}
             for result in platform_results:
                 for match in result.matches:
@@ -323,6 +360,7 @@ class CopyrightDetector:
                     violation_types[violation_type] += 1
             
             # Calculate risk score
+
             risk_score = min((total_violations / len(content_list)) * 100, 100) if content_list else 0
             
             return {
@@ -339,6 +377,7 @@ class CopyrightDetector:
             
         except Exception as e:
             logger.error(f"Platform analysis failed: {e}")
+
             return {
                 'platform': platform_name,
                 'error': str(e),
@@ -360,12 +399,18 @@ class CopyrightDetector:
         """
         try:
             # Get original content info
+
             original_content = self._content_database.get(violation_match.original_content_id)
+
             
             if not original_content:
                 raise ValueError("Original content not found")
+
+
             
             notice_id = str(uuid.uuid4())
+
+
             
             notice = {
                 'notice_id': notice_id,
@@ -397,6 +442,7 @@ class CopyrightDetector:
             
         except Exception as e:
             logger.error(f"Takedown notice generation failed: {e}")
+
             return {
                 'success': False,
                 'error': str(e)
@@ -409,16 +455,24 @@ class CopyrightDetector:
         try:
             if content_type == 'audio':
                 return await self._generate_audio_fingerprint(content_data)
+
             elif content_type == 'video':
                 return await self._generate_video_fingerprint(content_data)
+
             elif content_type == 'image':
                 return await self._generate_image_fingerprint(content_data)
+
             elif content_type == 'text':
                 return await self._generate_text_fingerprint(content_data)
+
             else:
                 # Generic hash for other types
+
                 content_bytes = content_data if isinstance(content_data, bytes) else content_data.encode()
+
+
                 hash_value = hashlib.sha256(content_bytes).hexdigest()
+
                 return {
                     'hash': hash_value,
                     'type': 'generic',
@@ -427,13 +481,16 @@ class CopyrightDetector:
                 
         except Exception as e:
             logger.error(f"Fingerprint generation failed: {e}")
+
             raise
     
     async def _generate_audio_fingerprint(self, audio_data: bytes) -> Dict[str, Any]:
         """Generate audio fingerprint using spectral features"""
         if not DETECTION_AVAILABLE:
             # Fallback to simple hash
+
             hash_value = hashlib.sha256(audio_data).hexdigest()
+
             return {'hash': hash_value, 'type': 'audio_hash', 'features': []}
         
         try:
@@ -443,17 +500,24 @@ class CopyrightDetector:
             
             with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as tmp_file:
                 tmp_file.write(audio_data)
+
                 tmp_file.flush()
                 
                 # Extract features
                 y, sr = librosa.load(tmp_file.name, sr=22050)
                 
                 # Spectral features
+
                 mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
+
+
                 chroma = librosa.feature.chroma(y=y, sr=sr)
+
+
                 spectral_centroid = librosa.feature.spectral_centroid(y=y, sr=sr)
                 
                 # Combine features
+
                 features = np.concatenate([
                     np.mean(mfcc, axis=1),
                     np.mean(chroma, axis=1),
@@ -461,8 +525,12 @@ class CopyrightDetector:
                 ])
                 
                 # Generate hash from features
+
                 features_str = ','.join(f'{f:.6f}' for f in features)
+
+
                 hash_value = hashlib.sha256(features_str.encode()).hexdigest()
+
                 
                 return {
                     'hash': hash_value,
@@ -473,33 +541,50 @@ class CopyrightDetector:
                 
         except Exception as e:
             logger.warning(f"Audio fingerprint generation failed, using fallback: {e}")
+
+
             hash_value = hashlib.sha256(audio_data).hexdigest()
+
             return {'hash': hash_value, 'type': 'audio_hash', 'features': []}
     
     async def _generate_image_fingerprint(self, image_data: bytes) -> Dict[str, Any]:
         """Generate image fingerprint using perceptual hashing"""
         if not DETECTION_AVAILABLE:
             hash_value = hashlib.sha256(image_data).hexdigest()
+
             return {'hash': hash_value, 'type': 'image_hash', 'features': []}
         
         try:
             import io
             
             # Load image
+
             image = Image.open(io.BytesIO(image_data))
+
+
             image = image.convert('RGB')
             
             # Resize for consistent fingerprinting
+
             image = image.resize((64, 64))
             
             # Convert to grayscale and calculate hash
+
             gray = image.convert('L')
+
+
             pixels = list(gray.getdata())
             
             # Generate perceptual hash
+
             avg = sum(pixels) / len(pixels)
+
+
             hash_bits = ''.join('1' if pixel > avg else '0' for pixel in pixels)
+
+
             hash_value = hashlib.sha256(hash_bits.encode()).hexdigest()
+
             
             return {
                 'hash': hash_value,
@@ -510,22 +595,32 @@ class CopyrightDetector:
             
         except Exception as e:
             logger.warning(f"Image fingerprint generation failed, using fallback: {e}")
+
+
             hash_value = hashlib.sha256(image_data).hexdigest()
+
             return {'hash': hash_value, 'type': 'image_hash', 'features': []}
     
     async def _generate_text_fingerprint(self, text_data: str) -> Dict[str, Any]:
         """Generate text fingerprint using semantic embeddings"""
         try:
             # Clean text
+
             clean_text = ' '.join(text_data.split())
+
             
             if self.text_model:
                 # Generate semantic embedding
+
                 embedding = self.text_model.encode(clean_text)
                 
                 # Generate hash from embedding
+
                 embedding_str = ','.join(f'{f:.6f}' for f in embedding)
+
+
                 hash_value = hashlib.sha256(embedding_str.encode()).hexdigest()
+
                 
                 return {
                     'hash': hash_value,
@@ -535,12 +630,19 @@ class CopyrightDetector:
                 }
             else:
                 # Fallback to n-gram based fingerprint
+
                 words = clean_text.lower().split()
+
+
                 ngrams = [' '.join(words[i:i+3]) for i in range(len(words)-2)]
                 
                 # Hash n-grams
+
                 ngrams_str = '|'.join(sorted(ngrams))
+
+
                 hash_value = hashlib.sha256(ngrams_str.encode()).hexdigest()
+
                 
                 return {
                     'hash': hash_value,
@@ -551,7 +653,10 @@ class CopyrightDetector:
                 
         except Exception as e:
             logger.warning(f"Text fingerprint generation failed, using fallback: {e}")
+
+
             hash_value = hashlib.sha256(text_data.encode()).hexdigest()
+
             return {'hash': hash_value, 'type': 'text_hash', 'features': []}
     
     async def _calculate_similarity(self,
@@ -580,17 +685,30 @@ class CopyrightDetector:
             # Feature-based similarity for advanced fingerprints
             if fingerprint1.get('features') and fingerprint2.get('features'):
                 features1 = np.array(fingerprint1['features'])
+
+
                 features2 = np.array(fingerprint2['features'])
+
                 
                 if len(features1) == len(features2):
                     # Calculate cosine similarity
+
                     dot_product = np.dot(features1, features2)
+
+
                     norm1 = np.linalg.norm(features1)
+
+
                     norm2 = np.linalg.norm(features2)
+
                     
                     if norm1 > 0 and norm2 > 0:
                         similarity = dot_product / (norm1 * norm2)
+
+
                         confidence = min(abs(similarity), 1.0)
+
+
                         
                         algorithm_map = {
                             'audio': DetectionAlgorithm.AUDIO_FINGERPRINTING,
@@ -618,6 +736,7 @@ class CopyrightDetector:
             
         except Exception as e:
             logger.error(f"Similarity calculation failed: {e}")
+
             return {
                 'score': 0.0,
                 'confidence': 0.0,
@@ -628,7 +747,9 @@ class CopyrightDetector:
     def _determine_violation_type(self, similarity: Dict[str, Any]) -> ViolationType:
         """Determine violation type based on similarity"""
         score = similarity['score']
+
         match_type = similarity['metadata'].get('match_type', '')
+
         
         if score >= 0.95 or match_type == 'exact_hash':
             return ViolationType.EXACT_MATCH
@@ -640,7 +761,8 @@ class CopyrightDetector:
             return ViolationType.UNAUTHORIZED_USE
     
     def _generate_detection_summary(self, matches: List[CopyrightMatch]) -> Dict[str, Any]:
-        """Generate summary of detection results"""
+        """
+        Generate summary of detection results"""
         if not matches:
             return {
                 'violation_detected': False,
@@ -649,7 +771,9 @@ class CopyrightDetector:
             }
         
         # Calculate statistics
+
         confidences = [match.confidence for match in matches]
+
         violation_types = [match.violation_type.value for match in matches]
         
         return {
@@ -664,7 +788,8 @@ class CopyrightDetector:
                           violation_match: CopyrightMatch,
                           original_content: Dict[str, Any],
                           contact_info: Dict[str, Any]) -> str:
-        """Generate DMCA takedown notice text"""
+        """
+        Generate DMCA takedown notice text"""
         return f"""
 DMCA TAKEDOWN NOTICE
 
@@ -697,11 +822,164 @@ Signature: [Electronic Signature]
         """.strip()
     
     async def _generate_video_fingerprint(self, video_data: bytes) -> Dict[str, Any]:
-        """Generate video fingerprint (placeholder - requires video processing)"""
-        # For now, use simple hash - in production, extract keyframes and analyze
-        hash_value = hashlib.sha256(video_data).hexdigest()
-        return {
-            'hash': hash_value,
-            'type': 'video_hash',
-            'features': []
-        }
+        """
+        Generate video fingerprint with real keyframe extraction and perceptual hashing"""
+        try:
+            import tempfile
+            import cv2
+            import numpy as np
+            
+            # Save video data to temporary file
+            with tempfile.NamedTemporaryFile(suffix='.mp4', delete=False) as temp_file:
+                temp_file.write(video_data)
+
+
+                temp_path = temp_file.name
+            
+            try:
+                # Open video with OpenCV
+                cap = cv2.VideoCapture(temp_path)
+
+                
+                if not cap.isOpened():
+                    logger.warning("Could not open video, falling back to hash")
+
+
+                    hash_value = hashlib.sha256(video_data).hexdigest()
+
+                    return {'hash': hash_value, 'type': 'video_hash_fallback', 'features': []}
+                
+                # Extract video metadata
+
+                fps = int(cap.get(cv2.CAP_PROP_FPS))
+
+
+                total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+
+                duration = total_frames / fps if fps > 0 else 0
+                
+                # Extract keyframes (1 frame per second)
+
+
+                keyframe_hashes = []
+
+                keyframe_features = []
+
+                frame_interval = max(fps, 1)  # Extract 1 frame per second
+
+                
+                frame_count = 0
+
+                extracted = 0
+
+                max_keyframes = 50  # Limit to 50 keyframes
+                
+                while cap.isOpened() and extracted < max_keyframes:
+                    ret, frame = cap.read()
+
+                    if not ret:
+                        break
+                    
+                    if frame_count % frame_interval == 0:
+                        # Resize frame for faster processing
+
+                        frame_resized = cv2.resize(frame, (128, 128))
+                        
+                        # Convert to grayscale for perceptual hash
+
+                        gray = cv2.cvtColor(frame_resized, cv2.COLOR_BGR2GRAY)
+                        
+                        # Generate perceptual hash (DCT-based)
+
+
+                        dct = cv2.dct(np.float32(gray))
+
+
+                        dct_low = dct[:8, :8]
+
+                        med = np.median(dct_low)
+
+
+                        phash = ''.join(['1' if x > med else '0' for x in dct_low.flatten()])
+
+                        
+                        keyframe_hashes.append(phash)
+                        
+                        # Extract color histogram features
+
+                        hist_b = cv2.calcHist([frame_resized], [0], None, [32], [0, 256])
+
+
+                        hist_g = cv2.calcHist([frame_resized], [1], None, [32], [0, 256])
+
+
+                        hist_r = cv2.calcHist([frame_resized], [2], None, [32], [0, 256])
+
+
+                        
+                        color_features = np.concatenate([hist_b, hist_g, hist_r]).flatten().tolist()
+
+                        keyframe_features.append({
+                            'frame_number': frame_count,
+                            'timestamp': frame_count / fps if fps > 0 else 0,
+                            'phash': phash,
+                            'color_histogram': color_features[:10]  # First 10 bins for size
+                        })
+
+                        
+                        extracted += 1
+                    
+                    frame_count += 1
+                
+                cap.release()
+                
+                # Generate overall video fingerprint
+
+                combined_hash = hashlib.sha256(''.join(keyframe_hashes).encode()).hexdigest()
+                
+                # Calculate average color distribution
+                if keyframe_features:
+                    avg_color = np.mean([kf['color_histogram'] for kf in keyframe_features], axis=0).tolist()
+
+                else:
+                    avg_color = []
+                
+                return {
+                    'hash': combined_hash,
+                    'type': 'video_perceptual_fingerprint',
+                    'features': keyframe_features,
+                    'metadata': {
+                        'fps': fps,
+                        'duration_seconds': duration,
+                        'total_frames': total_frames,
+                        'keyframes_extracted': len(keyframe_hashes),
+                        'average_color_distribution': avg_color
+                    },
+                    'keyframe_hashes': keyframe_hashes
+                }
+                
+            finally:
+                # Clean up temporary file
+                import os
+                try:
+                    os.unlink(temp_path)
+
+                except:
+                    pass
+        
+        except ImportError:
+            logger.warning("OpenCV not available, using fallback hash method")
+
+
+            hash_value = hashlib.sha256(video_data).hexdigest()
+
+            return {'hash': hash_value, 'type': 'video_hash_fallback', 'features': []}
+        
+        except Exception as e:
+            logger.error(f"Error generating video fingerprint: {e}")
+            # Fallback to simple hash
+
+            hash_value = hashlib.sha256(video_data).hexdigest()
+
+            return {'hash': hash_value, 'type': 'video_hash_error', 'features': [], 'error': str(e)}

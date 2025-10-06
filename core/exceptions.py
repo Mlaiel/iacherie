@@ -1,4 +1,5 @@
-"""Core Exceptions Module
+"""
+Core Exceptions Module
 ======================
 
 Basic exception classes for the data ingestion module.
@@ -9,70 +10,84 @@ Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 
 class BaseIngestionError(Exception):
-    """Base exception for ingestion module"""
+    """
+Base exception for ingestion module"""
     pass
 
 
 class IngestionError(BaseIngestionError):
-    """General ingestion error"""
+    """
+General ingestion error"""
     pass
 
 
 class WorkflowError(BaseIngestionError):
-    """Workflow execution error"""
+    """
+Workflow execution error"""
     pass
 
 
 class ValidationError(BaseIngestionError):
-    """Content validation error"""
+    """
+Content validation error"""
     pass
 
 
 class PipelineException(BaseIngestionError):
-    """Pipeline execution error"""
+    """
+Pipeline execution error"""
     pass
 
 
 class ProcessingError(BaseIngestionError):
-    """Content processing error"""
+    """
+Content processing error"""
     pass
 
 
 class TransformationError(BaseIngestionError):
-    """Content transformation error"""
+    """
+Content transformation error"""
     pass
 
 
 class RoutingError(BaseIngestionError):
-    """Content routing error"""
+    """
+Content routing error"""
     pass
 
 
 class StreamingError(BaseIngestionError):
-    """Streaming operation error"""
+    """
+Streaming operation error"""
     pass
 
 
 class BatchProcessingError(BaseIngestionError):
-    """Batch processing error"""
+    """
+Batch processing error"""
     pass
 
 
 class ConnectionError(BaseIngestionError):
-    """Connection error"""
+    """
+Connection error"""
     pass
 
 
 class SecurityError(BaseIngestionError):
-    """Security validation error"""
+    """
+Security validation error"""
     pass
 
 
 class QualityError(BaseIngestionError):
-    """Quality assessment error"""
+    """
+Quality assessment error"""
     pass
 
 
 class MetadataExtractionError(BaseIngestionError):
-    """Metadata extraction error"""
+    """
+Metadata extraction error"""
     pass

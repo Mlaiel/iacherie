@@ -47,7 +47,8 @@ Base = declarative_base()
 
 
 class AchievementTier(str, Enum):
-    """Achievement difficulty tiers."""
+    """
+        Achievement difficulty tiers."""
     BRONZE = "bronze"
     SILVER = "silver" 
     GOLD = "gold"
@@ -115,7 +116,8 @@ class Achievement:
 
 @dataclass
 class UserAchievementProgress:
-    """User progress tracking for achievements."""
+    """
+        User progress tracking for achievements."""
     user_id: str
     achievement_id: str
     status: AchievementStatus
@@ -133,13 +135,15 @@ class AchievementSystem:
     """
     
     def __init__(self, database_connection=None, cache_client=None):
-        """Initialize the achievement system."""
+        """
+        Initialize the achievement system."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.db = database_connection
         self.cache = cache_client
         self.achievements: Dict[str, Achievement] = {}
         self.user_progress: Dict[str, Dict[str, UserAchievementProgress]] = {}
         self.achievement_templates = self._initialize_achievement_templates()
+
         
         self.logger.info("AchievementSystem initialized")
     
@@ -163,6 +167,7 @@ class AchievementSystem:
             points=10,
             rarity_score=0.95
         )
+
         
         templates["content_creator"] = Achievement(
             id="content_creator",
@@ -181,6 +186,7 @@ class AchievementSystem:
             rarity_score=0.75,
             prerequisites=["first_upload"]
         )
+
         
         templates["viral_sensation"] = Achievement(
             id="viral_sensation",
@@ -232,6 +238,7 @@ class AchievementSystem:
             points=25,
             rarity_score=0.60
         )
+
         
         templates["money_maker"] = Achievement(
             id="money_maker",
@@ -250,6 +257,7 @@ class AchievementSystem:
             rarity_score=0.25,
             prerequisites=["first_dollar"]
         )
+
         
         return templates
     
@@ -261,12 +269,15 @@ class AchievementSystem:
             # Load additional achievements from database if available
             if self.db:
                 await self._load_achievements_from_db()
+
             
             self.logger.info(f"✅ {len(self.achievements)} achievements loaded")
+
             return True
             
         except Exception as e:
             self.logger.error(f"❌ Failed to initialize achievements: {e}")
+
             return False
     
     async def track_user_metric(
@@ -291,6 +302,7 @@ class AchievementSystem:
                     continue
                 
                 # Check if achievement uses this metric
+
                 relevant_requirements = [
                     req for req in achievement.requirements 
                     if req.metric_key == metric_key
@@ -311,6 +323,8 @@ class AchievementSystem:
                         progress_data={},
                         completion_percentage=0.0
                     )
+
+
                 
                 progress = self.user_progress[user_id][achievement_id]
                 
@@ -323,29 +337,35 @@ class AchievementSystem:
                     if await self._check_achievement_completion(user_id, achievement):
                         progress.status = AchievementStatus.UNLOCKED
                         progress.unlocked_at = datetime.utcnow()
+
                         progress.completion_percentage = 100.0
                         newly_unlocked.append(achievement_id)
+
                         
                         self.logger.info(f"🏆 Achievement unlocked: {user_id} - {achievement.title}")
                         
                         # Award achievement rewards
                         await self._award_achievement_rewards(user_id, achievement)
+
                     else:
                         # Update progress percentage
                         progress.completion_percentage = await self._calculate_completion_percentage(
                             user_id, achievement
                         )
+
                         if progress.completion_percentage > 0:
                             progress.status = AchievementStatus.IN_PROGRESS
             
             # Cache user progress if cache available
             if self.cache and user_id in self.user_progress:
                 await self._cache_user_progress(user_id)
+
             
             return newly_unlocked
             
         except Exception as e:
             self.logger.error(f"Error tracking user metric: {e}")
+
             return []
     
     async def _check_achievement_completion(
@@ -360,6 +380,7 @@ class AchievementSystem:
             
             if achievement.id not in self.user_progress[user_id]:
                 return False
+
             
             progress = self.user_progress[user_id][achievement.id]
             
@@ -367,6 +388,7 @@ class AchievementSystem:
             for prereq_id in achievement.prerequisites:
                 if prereq_id not in self.user_progress[user_id]:
                     return False
+
                 
                 prereq_progress = self.user_progress[user_id][prereq_id]
                 if prereq_progress.status != AchievementStatus.UNLOCKED:
@@ -375,6 +397,7 @@ class AchievementSystem:
             # Check all requirements
             for requirement in achievement.requirements:
                 user_value = progress.progress_data.get(requirement.metric_key, 0)
+
                 
                 if requirement.comparison_type == "greater_equal":
                     if user_value < requirement.required_value:
@@ -390,6 +413,7 @@ class AchievementSystem:
             
         except Exception as e:
             self.logger.error(f"Error checking achievement completion: {e}")
+
             return False
     
     async def _calculate_completion_percentage(
@@ -404,45 +428,60 @@ class AchievementSystem:
             
             if achievement.id not in self.user_progress[user_id]:
                 return 0.0
+
             
             progress = self.user_progress[user_id][achievement.id]
+
             total_requirements = len(achievement.requirements)
+
             
             if total_requirements == 0:
                 return 100.0
+
             
             completed_requirements = 0
+
             requirement_percentages = []
             
             for requirement in achievement.requirements:
                 user_value = progress.progress_data.get(requirement.metric_key, 0)
+
+
                 required_value = requirement.required_value
                 
                 if requirement.comparison_type == "greater_equal":
                     if user_value >= required_value:
                         completed_requirements += 1
                         requirement_percentages.append(100.0)
+
                     else:
                         percentage = min(100.0, (user_value / required_value) * 100.0)
+
                         requirement_percentages.append(percentage)
+
                 elif requirement.comparison_type == "equal":
                     if user_value == required_value:
                         completed_requirements += 1
                         requirement_percentages.append(100.0)
+
                     else:
                         requirement_percentages.append(0.0)
+
                 elif requirement.comparison_type == "less_equal":
                     if user_value <= required_value:
                         completed_requirements += 1
                         requirement_percentages.append(100.0)
+
                     else:
                         requirement_percentages.append(0.0)
             
             # Average of all requirement percentages
             return sum(requirement_percentages) / len(requirement_percentages)
+
             
         except Exception as e:
             self.logger.error(f"Error calculating completion percentage: {e}")
+
             return 0.0
     
     async def _award_achievement_rewards(
@@ -458,24 +497,30 @@ class AchievementSystem:
                         user_id, reward.currency, reward.amount, 
                         f"Achievement: {achievement.title}"
                     )
+
                 elif reward.reward_type == "badge":
                     await self._award_badge(
                         user_id, reward.currency, reward.description
                     )
+
                 elif reward.reward_type == "nft":
                     await self._award_nft(
                         user_id, reward.currency, achievement.title
                     )
+
                 elif reward.reward_type == "percentage":
                     await self._apply_percentage_boost(
                         user_id, reward.currency, reward.amount
                     )
+
             
             self.logger.info(f"✅ Rewards awarded for achievement: {achievement.title}")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Error awarding achievement rewards: {e}")
+
             return False
     
     async def _award_currency(
@@ -489,9 +534,11 @@ class AchievementSystem:
         try:
             # Implementation would integrate with virtual economy system
             self.logger.info(f"💰 Awarded {amount} {currency} to {user_id}: {description}")
+
             return True
         except Exception as e:
             self.logger.error(f"Error awarding currency: {e}")
+
             return False
     
     async def _award_badge(
@@ -504,9 +551,11 @@ class AchievementSystem:
         try:
             # Implementation would integrate with badge system
             self.logger.info(f"🏅 Awarded badge {badge_type} to {user_id}: {description}")
+
             return True
         except Exception as e:
             self.logger.error(f"Error awarding badge: {e}")
+
             return False
     
     async def _award_nft(
@@ -519,9 +568,11 @@ class AchievementSystem:
         try:
             # Implementation would integrate with NFT system
             self.logger.info(f"🎨 Awarded NFT {nft_type} to {user_id}: {title}")
+
             return True
         except Exception as e:
             self.logger.error(f"Error awarding NFT: {e}")
+
             return False
     
     async def _apply_percentage_boost(
@@ -534,9 +585,11 @@ class AchievementSystem:
         try:
             # Implementation would integrate with user profile system
             self.logger.info(f"⚡ Applied {percentage*100}% {boost_type} boost to {user_id}")
+
             return True
         except Exception as e:
             self.logger.error(f"Error applying percentage boost: {e}")
+
             return False
     
     async def get_user_achievements(
@@ -549,12 +602,14 @@ class AchievementSystem:
         try:
             if user_id not in self.user_progress:
                 return []
+
             
             user_achievements = []
             
             for achievement_id, progress in self.user_progress[user_id].items():
                 if achievement_id not in self.achievements:
                     continue
+
                 
                 achievement = self.achievements[achievement_id]
                 
@@ -569,11 +624,13 @@ class AchievementSystem:
                     "achievement": achievement,
                     "progress": progress
                 })
+
             
             return user_achievements
             
         except Exception as e:
             self.logger.error(f"Error getting user achievements: {e}")
+
             return []
     
     async def get_achievement_leaderboard(
@@ -585,6 +642,7 @@ class AchievementSystem:
         try:
             if achievement_id not in self.achievements:
                 return []
+
             
             leaderboard = []
             
@@ -607,11 +665,13 @@ class AchievementSystem:
                 ),
                 reverse=True
             )
+
             
             return leaderboard[:limit]
             
         except Exception as e:
             self.logger.error(f"Error getting achievement leaderboard: {e}")
+
             return []
     
     async def get_user_achievement_summary(self, user_id: str) -> Dict[str, Any]:
@@ -626,8 +686,10 @@ class AchievementSystem:
                     "total_points": 0,
                     "categories": {}
                 }
+
             
             user_achievements = self.user_progress[user_id]
+
             summary = {
                 "total_achievements": len(self.achievements),
                 "unlocked": 0,
@@ -640,6 +702,7 @@ class AchievementSystem:
             for achievement_id, progress in user_achievements.items():
                 if achievement_id not in self.achievements:
                     continue
+
                 
                 achievement = self.achievements[achievement_id]
                 
@@ -653,6 +716,7 @@ class AchievementSystem:
                     summary["locked"] += 1
                 
                 # Count by category
+
                 category = achievement.category.value
                 if category not in summary["categories"]:
                     summary["categories"][category] = {
@@ -675,6 +739,7 @@ class AchievementSystem:
             
         except Exception as e:
             self.logger.error(f"Error getting user achievement summary: {e}")
+
             return {}
     
     async def _load_achievements_from_db(self) -> bool:
@@ -682,9 +747,11 @@ class AchievementSystem:
         try:
             # Implementation would load from database
             self.logger.info("📊 Additional achievements loaded from database")
+
             return True
         except Exception as e:
             self.logger.error(f"Error loading achievements from database: {e}")
+
             return False
     
     async def _cache_user_progress(self, user_id: str) -> bool:
@@ -695,9 +762,11 @@ class AchievementSystem:
             
             # Implementation would cache to Redis/Memcached
             self.logger.debug(f"💾 Cached progress for user: {user_id}")
+
             return True
         except Exception as e:
             self.logger.error(f"Error caching user progress: {e}")
+
             return False
 
 
@@ -722,12 +791,14 @@ async def track_metric(
     value: Union[int, float],
     metadata: Optional[Dict[str, Any]] = None
 ) -> List[str]:
-    """Convenience function to track user metric."""
+    """
+        Convenience function to track user metric."""
     system = await get_achievement_system()
     return await system.track_user_metric(user_id, metric_key, value, metadata)
 
 
 async def get_user_achievement_summary(user_id: str) -> Dict[str, Any]:
-    """Convenience function to get user achievement summary."""
+    """
+        Convenience function to get user achievement summary."""
     system = await get_achievement_system()
     return await system.get_user_achievement_summary(user_id)

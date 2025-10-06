@@ -52,7 +52,8 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityLevel(str, Enum):
-    """Security protection levels."""
+    """
+        Security protection levels."""
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -142,7 +143,8 @@ class ProtectionStatus:
 
 @dataclass
 class ComplianceReport:
-    """Compliance verification report."""
+    """
+        Compliance verification report."""
     content_id: str
     standard: ComplianceStandard
     compliant: bool
@@ -153,7 +155,8 @@ class ComplianceReport:
 
 
 class ContentProtectionEngine:
-    """Core content protection engine."""
+    """
+        Core content protection engine."""
     
     def __init__(self, config: SecurityConfig):
         self.config = config
@@ -168,12 +171,15 @@ class ContentProtectionEngine:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=30)
             )
+
             
             self.logger.info(f"✅ Content Protection Engine initialized with {self.config.security_level.value} security")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Failed to initialize protection engine: {e}")
+
             return False
     
     async def protect_content(self, content_id: str, content_data: bytes, metadata: Dict[str, Any]) -> ProtectionStatus:
@@ -188,6 +194,7 @@ class ContentProtectionEngine:
             # Apply watermarking if enabled
             if ProtectionType.WATERMARK in self.config.protection_types:
                 watermark_result = await self._apply_watermark(content_data, metadata)
+
                 if watermark_result:
                     protection_status.watermark_id = watermark_result["watermark_id"]
                     protection_status.active_protections.append(ProtectionType.WATERMARK)
@@ -195,6 +202,7 @@ class ContentProtectionEngine:
             # Apply DRM if enabled
             if ProtectionType.DRM in self.config.protection_types and self.config.drm_enabled:
                 drm_result = await self._apply_drm(content_data, metadata)
+
                 if drm_result:
                     protection_status.drm_license_id = drm_result["license_id"]
                     protection_status.active_protections.append(ProtectionType.DRM)
@@ -202,26 +210,32 @@ class ContentProtectionEngine:
             # Generate content fingerprint
             if ProtectionType.FINGERPRINTING in self.config.protection_types:
                 fingerprint = await self._generate_fingerprint(content_data)
+
                 protection_status.fingerprint_hash = fingerprint
                 protection_status.active_protections.append(ProtectionType.FINGERPRINTING)
             
             # Apply access controls
             if ProtectionType.ACCESS_CONTROL in self.config.protection_types:
                 await self._setup_access_controls(content_id, metadata)
+
                 protection_status.active_protections.append(ProtectionType.ACCESS_CONTROL)
             
             # Verify compliance
+
             compliance_results = await self._verify_compliance(content_data, metadata)
+
             protection_status.compliance_status = compliance_results
             
             # Store protection status
             self.protected_content[content_id] = protection_status
             
             self.logger.info(f"✅ Content {content_id} protected with {len(protection_status.active_protections)} protection types")
+
             return protection_status
             
         except Exception as e:
             self.logger.error(f"Error protecting content {content_id}: {e}")
+
             return ProtectionStatus(
                 content_id=content_id,
                 protection_level=SecurityLevel.LOW,
@@ -235,16 +249,22 @@ class ContentProtectionEngine:
             watermark_id = f"wm_{uuid4().hex[:16]}"
             
             # Create watermark based on content type
+
             content_type = metadata.get("content_type", "unknown")
+
             
             if content_type.startswith("image"):
                 watermark_data = await self._apply_image_watermark(content_data, watermark_id)
+
             elif content_type.startswith("video"):
                 watermark_data = await self._apply_video_watermark(content_data, watermark_id)
+
             elif content_type.startswith("audio"):
                 watermark_data = await self._apply_audio_watermark(content_data, watermark_id)
+
             else:
                 watermark_data = await self._apply_generic_watermark(content_data, watermark_id)
+
             
             return {
                 "watermark_id": watermark_id,
@@ -254,12 +274,15 @@ class ContentProtectionEngine:
             
         except Exception as e:
             self.logger.error(f"Watermarking error: {e}")
+
             return None
     
     async def _apply_image_watermark(self, image_data: bytes, watermark_id: str) -> Dict[str, Any]:
         """Apply watermark to image content."""
         # Implement image watermarking algorithm
+
         watermark_hash = hashlib.sha256(image_data + watermark_id.encode()).hexdigest()
+
         
         return {
             "type": "image",
@@ -271,7 +294,9 @@ class ContentProtectionEngine:
     async def _apply_video_watermark(self, video_data: bytes, watermark_id: str) -> Dict[str, Any]:
         """Apply watermark to video content."""
         # Implement video watermarking algorithm
+
         watermark_hash = hashlib.sha256(video_data + watermark_id.encode()).hexdigest()
+
         
         return {
             "type": "video",
@@ -283,7 +308,9 @@ class ContentProtectionEngine:
     async def _apply_audio_watermark(self, audio_data: bytes, watermark_id: str) -> Dict[str, Any]:
         """Apply watermark to audio content."""
         # Implement audio watermarking algorithm
+
         watermark_hash = hashlib.sha256(audio_data + watermark_id.encode()).hexdigest()
+
         
         return {
             "type": "audio",
@@ -295,6 +322,7 @@ class ContentProtectionEngine:
     async def _apply_generic_watermark(self, content_data: bytes, watermark_id: str) -> Dict[str, Any]:
         """Apply generic watermark to unknown content types."""
         watermark_hash = hashlib.sha256(content_data + watermark_id.encode()).hexdigest()
+
         
         return {
             "type": "generic",
@@ -309,10 +337,14 @@ class ContentProtectionEngine:
             license_id = f"drm_{uuid4().hex[:16]}"
             
             # Generate encryption key
+
             encryption_key = secrets.token_bytes(32)  # 256-bit key
             
             # Encrypt content (simplified)
+
+
             content_hash = hashlib.sha256(content_data).hexdigest()
+
             
             return {
                 "license_id": license_id,
@@ -324,24 +356,30 @@ class ContentProtectionEngine:
             
         except Exception as e:
             self.logger.error(f"DRM application error: {e}")
+
             return None
     
     async def _generate_fingerprint(self, content_data: bytes) -> str:
         """Generate content fingerprint for piracy detection."""
         try:
             # Create robust fingerprint
+
             content_hash = hashlib.sha256(content_data).hexdigest()
             
             # Add perceptual hashing for media content
+
             perceptual_hash = hashlib.md5(content_data[:1024] + content_data[-1024:]).hexdigest()
             
             # Combine hashes
+
             fingerprint = hashlib.sha256((content_hash + perceptual_hash).encode()).hexdigest()
+
             
             return fingerprint
             
         except Exception as e:
             self.logger.error(f"Fingerprint generation error: {e}")
+
             return hashlib.sha256(content_data).hexdigest()
     
     async def _setup_access_controls(self, content_id: str, metadata: Dict[str, Any]) -> bool:
@@ -360,11 +398,14 @@ class ContentProtectionEngine:
                 access_rules["subscription_level"] = metadata["subscription_required"]
             
             # Store access rules (in production, this would be in a database)
+
             self.logger.info(f"Access controls configured for content {content_id}")
+
             return True
             
         except Exception as e:
             self.logger.error(f"Access control setup error: {e}")
+
             return False
     
     async def _verify_compliance(self, content_data: bytes, metadata: Dict[str, Any]) -> Dict[ComplianceStandard, bool]:
@@ -374,10 +415,12 @@ class ContentProtectionEngine:
         for standard in self.config.compliance_standards:
             try:
                 is_compliant = await self._check_compliance_standard(standard, content_data, metadata)
+
                 compliance_results[standard] = is_compliant
                 
             except Exception as e:
                 self.logger.error(f"Compliance check error for {standard.value}: {e}")
+
                 compliance_results[standard] = False
         
         return compliance_results
@@ -398,8 +441,10 @@ class ContentProtectionEngine:
             return True  # Default to compliant for unknown standards
     
     async def _check_gdpr_compliance(self, metadata: Dict[str, Any]) -> bool:
-        """Check GDPR compliance."""
+        """
+        Check GDPR compliance."""
         # Check for personal data handling compliance
+
         required_fields = ["privacy_policy", "data_processing_consent", "right_to_erasure"]
         return all(metadata.get(field) for field in required_fields)
     
@@ -423,10 +468,15 @@ class ContentProtectionEngine:
     async def _check_wcag_compliance(self, content_data: bytes, metadata: Dict[str, Any]) -> bool:
         """Check Web Content Accessibility Guidelines compliance."""
         # Basic accessibility checks
+
         accessibility_features = metadata.get("accessibility_features", {})
+
+
         
         required_features = ["alt_text", "captions", "audio_description"]
+
         content_type = metadata.get("content_type", "")
+
         
         if content_type.startswith("video"):
             return accessibility_features.get("captions", False)
@@ -434,6 +484,7 @@ class ContentProtectionEngine:
             return accessibility_features.get("alt_text", False)
         elif content_type.startswith("audio"):
             return accessibility_features.get("transcript", False)
+
         
         return True
     
@@ -443,23 +494,31 @@ class ContentProtectionEngine:
         
         try:
             protection_status = self.protected_content.get(content_id)
+
             if not protection_status:
                 return threats
             
             # Check for piracy
+
             piracy_threats = await self._scan_for_piracy(content_id, protection_status)
+
             threats.extend(piracy_threats)
             
             # Check for unauthorized distribution
+
             distribution_threats = await self._scan_unauthorized_distribution(content_id)
+
             threats.extend(distribution_threats)
             
             # Check for fake engagement
+
             engagement_threats = await self._scan_fake_engagement(content_id)
+
             threats.extend(engagement_threats)
             
             # Update threat count
             protection_status.threat_count = len(threats)
+
             protection_status.last_scan = datetime.utcnow()
             
             # Store active threats
@@ -470,6 +529,7 @@ class ContentProtectionEngine:
             
         except Exception as e:
             self.logger.error(f"Threat scanning error for content {content_id}: {e}")
+
             return []
     
     async def _scan_for_piracy(self, content_id: str, protection_status: ProtectionStatus) -> List[SecurityThreat]:
@@ -480,8 +540,10 @@ class ContentProtectionEngine:
             if protection_status.fingerprint_hash:
                 # Simulate piracy detection using fingerprint
                 # In production, this would query various piracy detection services
+
                 
                 piracy_sites = await self._query_piracy_databases(protection_status.fingerprint_hash)
+
                 
                 for site in piracy_sites:
                     threat = SecurityThreat(
@@ -493,12 +555,15 @@ class ContentProtectionEngine:
                         evidence=site,
                         confidence_score=site.get("confidence", 0.8)
                     )
+
                     threats.append(threat)
+
             
             return threats
             
         except Exception as e:
             self.logger.error(f"Piracy scanning error: {e}")
+
             return []
     
     async def _query_piracy_databases(self, fingerprint: str) -> List[Dict[str, Any]]:
@@ -527,7 +592,9 @@ class ContentProtectionEngine:
         
         try:
             # Check if content appears on unauthorized platforms
+
             unauthorized_platforms = await self._check_unauthorized_platforms(content_id)
+
             
             for platform_info in unauthorized_platforms:
                 threat = SecurityThreat(
@@ -540,18 +607,22 @@ class ContentProtectionEngine:
                     evidence=platform_info,
                     confidence_score=platform_info.get("confidence", 0.7)
                 )
+
                 threats.append(threat)
+
             
             return threats
             
         except Exception as e:
             self.logger.error(f"Unauthorized distribution scanning error: {e}")
+
             return []
     
     async def _check_unauthorized_platforms(self, content_id: str) -> List[Dict[str, Any]]:
         """Check for content on unauthorized platforms."""
         # Simulate unauthorized platform detection
         await asyncio.sleep(0.1)
+
         
         return [
             {
@@ -568,10 +639,13 @@ class ContentProtectionEngine:
         
         try:
             # Analyze engagement patterns for anomalies
+
             engagement_data = await self._get_engagement_data(content_id)
+
             
             if engagement_data:
                 bot_score = await self._analyze_bot_activity(engagement_data)
+
                 
                 if bot_score > self.config.fraud_detection_threshold:
                     threat = SecurityThreat(
@@ -583,12 +657,15 @@ class ContentProtectionEngine:
                         evidence={"bot_score": bot_score, "engagement_data": engagement_data},
                         confidence_score=bot_score
                     )
+
                     threats.append(threat)
+
             
             return threats
             
         except Exception as e:
             self.logger.error(f"Fake engagement scanning error: {e}")
+
             return []
     
     async def _get_engagement_data(self, content_id: str) -> Optional[Dict[str, Any]]:
@@ -607,7 +684,9 @@ class ContentProtectionEngine:
         bot_score = 0.0
         
         # Check for suspicious patterns
+
         likes = engagement_data.get("likes", 0)
+
         comments = engagement_data.get("comments", 0)
         
         # Unusually high like-to-comment ratio might indicate bots
@@ -617,6 +696,7 @@ class ContentProtectionEngine:
                 bot_score += 0.3
         
         # Check geographic distribution anomalies
+
         geo_dist = engagement_data.get("geographic_distribution", {})
         if len(geo_dist) == 1:  # All engagement from one location
             bot_score += 0.4
@@ -630,30 +710,39 @@ class ContentProtectionEngine:
         """Take action on detected threat."""
         try:
             threat = self.active_threats.get(threat_id)
+
             if not threat:
                 return False
             
             if action == "dmca_takedown":
                 success = await self._initiate_dmca_takedown(threat)
+
             elif action == "platform_report":
                 success = await self._report_to_platform(threat)
+
             elif action == "block_access":
                 success = await self._block_content_access(threat)
+
             elif action == "legal_notice":
                 success = await self._send_legal_notice(threat)
+
             else:
                 self.logger.warning(f"Unknown action: {action}")
+
                 return False
             
             if success:
                 threat.actions_taken.append(action)
+
                 threat.status = "action_taken"
                 self.logger.info(f"Action '{action}' taken for threat {threat_id}")
+
             
             return success
             
         except Exception as e:
             self.logger.error(f"Error taking action on threat {threat_id}: {e}")
+
             return False
     
     async def _initiate_dmca_takedown(self, threat: SecurityThreat) -> bool:
@@ -661,11 +750,13 @@ class ContentProtectionEngine:
         try:
             # Simulate DMCA takedown process
             self.logger.info(f"Initiating DMCA takedown for threat {threat.threat_id}")
+
             await asyncio.sleep(0.5)  # Simulate processing time
             return True
             
         except Exception as e:
             self.logger.error(f"DMCA takedown error: {e}")
+
             return False
     
     async def _report_to_platform(self, threat: SecurityThreat) -> bool:
@@ -673,11 +764,14 @@ class ContentProtectionEngine:
         try:
             # Simulate platform reporting
             self.logger.info(f"Reporting threat {threat.threat_id} to platform {threat.platform}")
+
             await asyncio.sleep(0.3)
+
             return True
             
         except Exception as e:
             self.logger.error(f"Platform reporting error: {e}")
+
             return False
     
     async def _block_content_access(self, threat: SecurityThreat) -> bool:
@@ -685,11 +779,14 @@ class ContentProtectionEngine:
         try:
             # Simulate access blocking
             self.logger.info(f"Blocking access for content {threat.content_id}")
+
             await asyncio.sleep(0.2)
+
             return True
             
         except Exception as e:
             self.logger.error(f"Access blocking error: {e}")
+
             return False
     
     async def _send_legal_notice(self, threat: SecurityThreat) -> bool:
@@ -697,17 +794,21 @@ class ContentProtectionEngine:
         try:
             # Simulate legal notice sending
             self.logger.info(f"Sending legal notice for threat {threat.threat_id}")
+
             await asyncio.sleep(0.4)
+
             return True
             
         except Exception as e:
             self.logger.error(f"Legal notice error: {e}")
+
             return False
     
     async def generate_compliance_report(self, content_id: str, standard: ComplianceStandard) -> ComplianceReport:
         """Generate detailed compliance report."""
         try:
             protection_status = self.protected_content.get(content_id)
+
             if not protection_status:
                 return ComplianceReport(
                     content_id=content_id,
@@ -715,13 +816,19 @@ class ContentProtectionEngine:
                     compliant=False,
                     issues=["Content not found in protection system"]
                 )
+
+
             
             is_compliant = protection_status.compliance_status.get(standard, False)
+
+
             issues = []
+
             recommendations = []
             
             if not is_compliant:
                 issues, recommendations = await self._analyze_compliance_issues(standard, protection_status)
+
             
             return ComplianceReport(
                 content_id=content_id,
@@ -737,9 +844,11 @@ class ContentProtectionEngine:
                     }
                 ]
             )
+
             
         except Exception as e:
             self.logger.error(f"Compliance report generation error: {e}")
+
             return ComplianceReport(
                 content_id=content_id,
                 standard=standard,
@@ -750,16 +859,20 @@ class ContentProtectionEngine:
     async def _analyze_compliance_issues(self, standard: ComplianceStandard, protection_status: ProtectionStatus) -> Tuple[List[str], List[str]]:
         """Analyze compliance issues and provide recommendations."""
         issues = []
+
         recommendations = []
         
         if standard == ComplianceStandard.GDPR:
             issues = ["Missing privacy policy link", "No data processing consent record"]
+
             recommendations = ["Add privacy policy metadata", "Implement consent tracking"]
         elif standard == ComplianceStandard.DMCA:
             issues = ["No copyright clearance documentation", "Missing DMCA agent contact"]
+
             recommendations = ["Provide copyright clearance proof", "Add DMCA agent information"]
         elif standard == ComplianceStandard.WCAG:
             issues = ["Missing accessibility features", "No alternative text for images"]
+
             recommendations = ["Add captions for video content", "Provide alt text for images"]
         
         return issues, recommendations
@@ -768,6 +881,7 @@ class ContentProtectionEngine:
         """Cleanup resources."""
         if self.session:
             await self.session.close()
+
         
         self.protected_content.clear()
         self.active_threats.clear()
@@ -796,11 +910,14 @@ class SecurityProtectionManager:
     async def create_protection_engine(self, engine_id: str, config: Optional[SecurityConfig] = None) -> ContentProtectionEngine:
         """Create a new protection engine."""
         engine_config = config or self.default_config
+
         engine = ContentProtectionEngine(engine_config)
+
         
         if await engine.initialize():
             self.protection_engines[engine_id] = engine
             self.logger.info(f"✅ Protection engine {engine_id} created")
+
             return engine
         else:
             raise Exception(f"Failed to initialize protection engine {engine_id}")
@@ -816,13 +933,16 @@ class SecurityProtectionManager:
         metadata: Dict[str, Any],
         engine_id: Optional[str] = None
     ) -> ProtectionStatus:
-        """Protect content using specified or default engine."""
+        """
+        Protect content using specified or default engine."""
         if engine_id and engine_id in self.protection_engines:
             engine = self.protection_engines[engine_id]
         else:
             # Use or create default engine
             if "default" not in self.protection_engines:
                 await self.create_protection_engine("default")
+
+
             engine = self.protection_engines["default"]
         
         return await engine.protect_content(content_id, content_data, metadata)
@@ -835,6 +955,7 @@ class SecurityProtectionManager:
             engine_threats = {}
             for content_id in engine.protected_content.keys():
                 threats = await engine.scan_for_threats(content_id)
+
                 if threats:
                     engine_threats[content_id] = threats
             
@@ -844,7 +965,8 @@ class SecurityProtectionManager:
         return all_threats
     
     async def get_global_security_dashboard(self) -> Dict[str, Any]:
-        """Get comprehensive security dashboard."""
+        """
+        Get comprehensive security dashboard."""
         dashboard = {
             "total_protected_content": 0,
             "active_threats": 0,
@@ -873,6 +995,7 @@ class SecurityProtectionManager:
         cleanup_tasks = [engine.cleanup() for engine in self.protection_engines.values()]
         if cleanup_tasks:
             await asyncio.gather(*cleanup_tasks, return_exceptions=True)
+
         
         self.protection_engines.clear()
         self.logger.info("✅ All security protection engines cleaned up")

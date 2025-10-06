@@ -22,7 +22,8 @@ import time
 logger = logging.getLogger(__name__)
 
 class PerformanceMetricType(Enum):
-    """Performance metric types"""
+    """
+        Performance metric types"""
     CPU_USAGE = "cpu_usage"
     MEMORY_USAGE = "memory_usage"
     BATTERY_USAGE = "battery_usage"
@@ -64,7 +65,8 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceReport:
-    """Performance report structure"""
+    """
+        Performance report structure"""
     report_id: str
     device_id: str
     generated_at: datetime
@@ -76,7 +78,8 @@ class PerformanceReport:
 
 @dataclass
 class OptimizationRecommendation:
-    """Optimization recommendation structure"""
+    """
+        Optimization recommendation structure"""
     recommendation_id: str
     category: OptimizationCategory
     title: str
@@ -88,7 +91,8 @@ class OptimizationRecommendation:
 
 @dataclass
 class MonitoringConfig:
-    """Performance monitoring configuration"""
+    """
+        Performance monitoring configuration"""
     metrics_to_track: List[PerformanceMetricType]
     collection_interval: int = 60  # seconds
     mobile_optimization: bool = True
@@ -96,10 +100,12 @@ class MonitoringConfig:
     performance_thresholds: Dict[str, float] = field(default_factory=dict)
 
 class MobilePerformanceMonitor:
-    """Advanced mobile performance monitoring system"""
+    """
+        Advanced mobile performance monitoring system"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize mobile performance monitor"""
+        """
+        Initialize mobile performance monitor"""
         self.config = config or {}
         self.monitoring_config = MonitoringConfig(
             metrics_to_track=list(PerformanceMetricType),
@@ -129,6 +135,7 @@ class MobilePerformanceMonitor:
             config = custom_config or self.monitoring_config
             
             # Initialize monitoring session
+
             monitoring_session = {
                 "monitor_id": monitor_id,
                 "device_id": device_id,
@@ -142,24 +149,31 @@ class MobilePerformanceMonitor:
             self.active_monitors[monitor_id] = monitoring_session
             
             # Start metrics collection
+
             collection_task = asyncio.create_task(
                 self._collect_performance_metrics(monitor_id)
             )
+
             
             return monitor_id
             
         except Exception as e:
             logger.error(f"Failed to start performance monitoring: {e}")
+
             raise
     
     async def collect_current_metrics(self, device_id: str) -> List[PerformanceMetric]:
         """Collect current performance metrics for device"""
         metrics = []
+
         timestamp = datetime.utcnow()
+
         
         try:
             # CPU usage
+
             cpu_usage = psutil.cpu_percent(interval=1)
+
             metrics.append(PerformanceMetric(
                 metric_id=f"metric_{uuid.uuid4().hex[:8]}",
                 metric_type=PerformanceMetricType.CPU_USAGE,
@@ -171,7 +185,9 @@ class MobilePerformanceMonitor:
             ))
             
             # Memory usage
+
             memory = psutil.virtual_memory()
+
             metrics.append(PerformanceMetric(
                 metric_id=f"metric_{uuid.uuid4().hex[:8]}",
                 metric_type=PerformanceMetricType.MEMORY_USAGE,
@@ -183,7 +199,10 @@ class MobilePerformanceMonitor:
             ))
             
             # Network usage (simulated for mobile)
+
+
             network_usage = await self._collect_network_metrics(device_id)
+
             metrics.append(PerformanceMetric(
                 metric_id=f"metric_{uuid.uuid4().hex[:8]}",
                 metric_type=PerformanceMetricType.NETWORK_USAGE,
@@ -195,7 +214,10 @@ class MobilePerformanceMonitor:
             ))
             
             # Battery usage (simulated for mobile)
+
+
             battery_metrics = await self._collect_battery_metrics(device_id)
+
             metrics.append(PerformanceMetric(
                 metric_id=f"metric_{uuid.uuid4().hex[:8]}",
                 metric_type=PerformanceMetricType.BATTERY_USAGE,
@@ -207,7 +229,9 @@ class MobilePerformanceMonitor:
             ))
             
             # Mobile-specific metrics
+
             mobile_metrics = await self._collect_mobile_specific_metrics(device_id)
+
             metrics.append(PerformanceMetric(
                 metric_id=f"metric_{uuid.uuid4().hex[:8]}",
                 metric_type=PerformanceMetricType.MOBILE_SPECIFIC,
@@ -217,12 +241,15 @@ class MobilePerformanceMonitor:
                 device_id=device_id,
                 mobile_context=mobile_metrics
             ))
+
             
             self.monitor_metrics["metrics_collected"] += len(metrics)
+
             return metrics
             
         except Exception as e:
             logger.error(f"Failed to collect performance metrics: {e}")
+
             return []
     
     async def generate_performance_report(self, device_id: str, 
@@ -234,21 +261,29 @@ class MobilePerformanceMonitor:
             # Collect metrics for time range
             if time_range:
                 start_time, end_time = time_range
+
                 metrics = await self._get_historical_metrics(device_id, start_time, end_time)
+
             else:
                 metrics = await self.collect_current_metrics(device_id)
             
             # Calculate performance score
+
             performance_score = self._calculate_performance_score(metrics)
             
             # Determine performance level
+
             performance_level = self._determine_performance_level(performance_score)
             
             # Generate optimization recommendations
+
             recommendations = await self._generate_optimization_recommendations(device_id, metrics)
             
             # Generate mobile insights
+
             mobile_insights = await self._generate_mobile_insights(device_id, metrics)
+
+
             
             report = PerformanceReport(
                 report_id=report_id,
@@ -260,28 +295,35 @@ class MobilePerformanceMonitor:
                 optimization_recommendations=[rec.title for rec in recommendations],
                 mobile_insights=mobile_insights
             )
+
             
             self.monitor_metrics["reports_generated"] += 1
             return report
             
         except Exception as e:
             logger.error(f"Failed to generate performance report: {e}")
+
             raise
     
     async def get_optimization_recommendations(self, device_id: str) -> List[OptimizationRecommendation]:
         """Get personalized optimization recommendations"""
         try:
             # Collect current metrics
+
             metrics = await self.collect_current_metrics(device_id)
             
             # Generate recommendations
+
             recommendations = await self._generate_optimization_recommendations(device_id, metrics)
+
             
             self.monitor_metrics["optimizations_suggested"] += len(recommendations)
+
             return recommendations
             
         except Exception as e:
             logger.error(f"Failed to get optimization recommendations: {e}")
+
             return []
     
     async def get_performance_analytics(self) -> Dict[str, Any]:
@@ -300,7 +342,9 @@ class MobilePerformanceMonitor:
             
             while session["status"] == "active":
                 # Collect metrics
+
                 metrics = await self.collect_current_metrics(session["device_id"])
+
                 session["metrics_history"].extend(metrics)
                 
                 # Check for performance alerts
@@ -308,9 +352,11 @@ class MobilePerformanceMonitor:
                 
                 # Wait for next collection interval
                 await asyncio.sleep(session["config"].collection_interval)
+
                 
         except Exception as e:
             logger.error(f"Performance metrics collection failed: {e}")
+
             session["status"] = "error"
     
     async def _collect_network_metrics(self, device_id: str) -> Dict[str, Any]:
@@ -350,16 +396,21 @@ class MobilePerformanceMonitor:
         """Calculate overall performance score"""
         if not metrics:
             return 0.0
+
         
         metric_scores = {}
         
         for metric in metrics:
             if metric.metric_type == PerformanceMetricType.CPU_USAGE:
                 # Lower CPU usage is better (invert score)
+
                 metric_scores["cpu"] = max(0.0, 1.0 - metric.value / 100.0)
+
             elif metric.metric_type == PerformanceMetricType.MEMORY_USAGE:
                 # Lower memory usage is better (invert score)
+
                 metric_scores["memory"] = max(0.0, 1.0 - metric.value / 100.0)
+
             elif metric.metric_type == PerformanceMetricType.BATTERY_USAGE:
                 # Lower battery usage rate is better
                 metric_scores["battery"] = max(0.0, 1.0 - metric.value / 20.0)  # Assume 20% per hour is max
@@ -367,8 +418,11 @@ class MobilePerformanceMonitor:
                 metric_scores["mobile"] = metric.value
         
         # Calculate weighted average
+
         weights = {"cpu": 0.25, "memory": 0.25, "battery": 0.30, "mobile": 0.20}
+
         total_score = sum(metric_scores.get(key, 0.5) * weight for key, weight in weights.items())
+
         
         return min(1.0, max(0.0, total_score))
     
@@ -387,7 +441,8 @@ class MobilePerformanceMonitor:
     
     async def _generate_optimization_recommendations(self, device_id: str, 
                                                    metrics: List[PerformanceMetric]) -> List[OptimizationRecommendation]:
-        """Generate optimization recommendations based on metrics"""
+        """
+        Generate optimization recommendations based on metrics"""
         recommendations = []
         
         # Analyze metrics for optimization opportunities
@@ -402,6 +457,7 @@ class MobilePerformanceMonitor:
                     implementation_difficulty="Medium",
                     expected_improvement="15-25% CPU usage reduction"
                 ))
+
             
             elif metric.metric_type == PerformanceMetricType.MEMORY_USAGE and metric.value > 85:
                 recommendations.append(OptimizationRecommendation(
@@ -413,6 +469,7 @@ class MobilePerformanceMonitor:
                     implementation_difficulty="Low",
                     expected_improvement="20-30% memory usage reduction"
                 ))
+
             
             elif metric.metric_type == PerformanceMetricType.BATTERY_USAGE and metric.value > 15:
                 recommendations.append(OptimizationRecommendation(
@@ -435,6 +492,7 @@ class MobilePerformanceMonitor:
             implementation_difficulty="Low",
             expected_improvement="5-10% battery life extension"
         ))
+
         
         return recommendations
     
@@ -493,10 +551,11 @@ class MobilePerformanceMonitor:
                                     end_time: datetime) -> List[PerformanceMetric]:
         """Get historical performance metrics for time range"""
         # Implementation would retrieve from database
-        return await self.collect_current_metrics(device_id)  # Placeholder
+        return await self.collect_current_metrics(device_id)
     
-    async def _analyze_performance_trends(self) -> Dict[str, Any]:
-        """Analyze performance trends"""
+    async def _analyze_performance_trends(self, metrics_history: List[PerformanceMetric]) -> Dict[str, Any]:
+        """
+        Analyze performance trends"""
         return {
             "cpu_trend": "stable",
             "memory_trend": "improving",
@@ -518,7 +577,8 @@ class PerformanceTracker:
         self.metrics_buffer = []
         
     async def track_metric(self, metric: PerformanceMetric):
-        """Track individual performance metric"""
+        """
+        Track individual performance metric"""
         self.metrics_buffer.append(metric)
         
         # Flush buffer if it gets too large
@@ -526,19 +586,22 @@ class PerformanceTracker:
             await self._flush_metrics()
     
     async def _flush_metrics(self):
-        """Flush metrics buffer to storage"""
+        """
+        Flush metrics buffer to storage"""
         # Implementation would save to database
         self.metrics_buffer.clear()
 
 
 class MetricsCollector:
-    """Advanced metrics collection system"""
+    """
+        Advanced metrics collection system"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         
     async def collect_system_metrics(self) -> Dict[str, Any]:
-        """Collect comprehensive system metrics"""
+        """
+        Collect comprehensive system metrics"""
         return {
             "cpu_usage": psutil.cpu_percent(),
             "memory_usage": psutil.virtual_memory().percent,

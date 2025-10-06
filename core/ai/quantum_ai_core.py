@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class QuantumAICore:
-    """Advanced QuantumAICore System"""
+    """
+Advanced QuantumAICore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class QuantumAICore:
 # Module exports
 __all__ = ["QuantumAICore"]
 
-logger.info("⚛️ QuantumAICore module loaded")
+logger.info("⚛️ QuantumAICore module initialized")

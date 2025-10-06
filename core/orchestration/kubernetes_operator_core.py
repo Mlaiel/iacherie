@@ -21,7 +21,8 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class KubernetesOperatorCore:
-    """Advanced KubernetesOperatorCore System"""
+    """
+Advanced KubernetesOperatorCore System"""
     
     def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
@@ -31,4 +32,4 @@ class KubernetesOperatorCore:
 # Module exports
 __all__ = ["KubernetesOperatorCore"]
 
-logger.info("☸️ KubernetesOperatorCore module loaded")
+logger.info("☸️ KubernetesOperatorCore module initialized")

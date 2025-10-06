@@ -47,7 +47,7 @@ try:
     # from transformers import pipeline, AutoTokenizer, AutoModel
     import torch
     import networkx as nx
-    from gensim.models import Word2Vec, Doc2Vec
+    # from gensim.models import Word2Vec, Doc2Vec  # Temporairement désactivé pour éviter conflit Azure
     from textblob import TextBlob
     import spacy
 except ImportError as e:
@@ -231,7 +231,8 @@ class CollaborationIntelligenceEngine:
         self._initialize_intelligence_engine()
     
     def _initialize_intelligence_engine(self):
-        """Initialise le moteur d'intelligence"""
+        """
+        Initialise le moteur d'intelligence"""
         # Créer les modèles d'IA par défaut
         self._create_default_ai_models()
         
@@ -242,7 +243,8 @@ class CollaborationIntelligenceEngine:
         self._configure_recommendation_pipelines()
     
     def _create_default_ai_models(self):
-        """Crée les modèles d'IA par défaut"""
+        """
+        Crée les modèles d'IA par défaut"""
         default_models = [
             {
                 'name': 'Collaboration Success Predictor',
@@ -293,10 +295,12 @@ class CollaborationIntelligenceEngine:
         
         for model_config in default_models:
             model = AIModel(**model_config)
+
             self.ai_models[model.id] = model
     
     def _initialize_learning_systems(self):
-        """Initialise les systèmes d'apprentissage"""
+        """
+        Initialise les systèmes d'apprentissage"""
         self.learning_systems = {
             'supervised_learning': {
                 'enabled': True,
@@ -319,7 +323,8 @@ class CollaborationIntelligenceEngine:
         }
     
     def _configure_recommendation_pipelines(self):
-        """Configure les pipelines de recommandations"""
+        """
+        Configure les pipelines de recommandations"""
         self.recommendation_pipelines = {
             RecommendationType.COLLABORATION_MATCH: {
                 'models': ['Creator-Brand Matcher', 'Collaboration Success Predictor'],
@@ -342,30 +347,38 @@ class CollaborationIntelligenceEngine:
         }
     
     async def predict_collaboration_success(self, collaboration_data: Dict) -> Prediction:
-        """Prédit le succès d'une collaboration"""
+        """
+        Prédit le succès d'une collaboration"""
         try:
             # Trouver le modèle approprié
             model = await self._get_model_by_purpose('Prédire le succès des collaborations')
+
             
             if not model:
                 raise ValueError("Modèle de prédiction introuvable")
             
             # Extraire les features
+
             features = await self._extract_collaboration_features(collaboration_data)
             
             # Faire la prédiction
+
             prediction_result = await self._make_prediction(model, features)
             
             # Calculer la confiance
+
             confidence = await self._calculate_prediction_confidence(model, features, prediction_result)
             
             # Analyser les facteurs contributeurs
+
             factors = await self._analyze_prediction_factors(model, features, prediction_result)
             
             # Générer des scénarios alternatifs
+
             alternative_scenarios = await self._generate_alternative_scenarios(collaboration_data, model)
             
             # Créer la prédiction
+
             prediction = Prediction(
                 model_id=model.id,
                 target_entity_id=collaboration_data.get('id', ''),
@@ -388,12 +401,15 @@ class CollaborationIntelligenceEngine:
             # Persister
             if self.db_session:
                 await self._persist_prediction(prediction)
+
             
             logger.info(f"Prédiction succès collaboration: {prediction_result:.2%} (confiance: {confidence:.2%})")
+
             return prediction
             
         except Exception as e:
             logger.error(f"Erreur prédiction succès collaboration: {e}")
+
             raise
     
     async def generate_personalized_recommendations(self, user_id: str, 
@@ -403,9 +419,11 @@ class CollaborationIntelligenceEngine:
             recommendations = []
             
             # Analyser le profil utilisateur
+
             user_profile = await self._analyze_user_profile(user_id)
             
             # Analyser le contexte actuel
+
             current_context = await self._analyze_current_context(user_id, context)
             
             # Générer des recommandations pour chaque type
@@ -413,14 +431,17 @@ class CollaborationIntelligenceEngine:
                 type_recommendations = await self._generate_recommendations_by_type(
                     user_id, rec_type, user_profile, current_context, pipeline_config
                 )
+
                 recommendations.extend(type_recommendations)
             
             # Filtrer et prioriser les recommandations
+
             filtered_recommendations = await self._filter_and_prioritize_recommendations(
                 recommendations, user_profile, current_context
             )
             
             # Personnaliser les recommandations
+
             personalized_recommendations = await self._personalize_recommendations(
                 filtered_recommendations, user_profile
             )
@@ -432,12 +453,15 @@ class CollaborationIntelligenceEngine:
             if self.db_session:
                 for rec in personalized_recommendations:
                     await self._persist_recommendation(rec)
+
             
             logger.info(f"Recommandations générées: {len(personalized_recommendations)} pour {user_id}")
+
             return personalized_recommendations
             
         except Exception as e:
             logger.error(f"Erreur génération recommandations: {e}")
+
             return []
     
     async def detect_collaboration_opportunities(self, user_id: str) -> List[Dict[str, Any]]:
@@ -446,44 +470,55 @@ class CollaborationIntelligenceEngine:
             opportunities = []
             
             # Analyser le réseau de l'utilisateur
+
             network_analysis = await self._analyze_user_network(user_id)
             
             # Analyser les tendances du marché
             market_trends = await self._analyze_market_trends()
             
             # Analyser le profil et les capacités
+
             user_capabilities = await self._analyze_user_capabilities(user_id)
             
             # Détecter les opportunités par type
             
             # 1. Opportunités basées sur le réseau
+
             network_opportunities = await self._detect_network_opportunities(
                 user_id, network_analysis
             )
+
             opportunities.extend(network_opportunities)
             
             # 2. Opportunités basées sur les tendances
+
             trend_opportunities = await self._detect_trend_opportunities(
                 user_id, market_trends, user_capabilities
             )
+
             opportunities.extend(trend_opportunities)
             
             # 3. Opportunités basées sur les gaps
+
             gap_opportunities = await self._detect_gap_opportunities(
                 user_id, user_capabilities
             )
+
             opportunities.extend(gap_opportunities)
             
             # 4. Opportunités basées sur la saisonnalité
             seasonal_opportunities = await self._detect_seasonal_opportunities(
                 user_id, user_capabilities
             )
+
             opportunities.extend(seasonal_opportunities)
             
             # Scorer et classer les opportunités
+
             scored_opportunities = await self._score_opportunities(opportunities, user_id)
             
             # Filtrer les meilleures opportunités
+
             top_opportunities = sorted(scored_opportunities, 
                                      key=lambda x: x['score'], reverse=True)[:10]
             
@@ -491,29 +526,37 @@ class CollaborationIntelligenceEngine:
             
         except Exception as e:
             logger.error(f"Erreur détection opportunités: {e}")
+
             return []
     
     async def optimize_collaboration_parameters(self, collaboration_id: str) -> Dict[str, Any]:
         """Optimise les paramètres d'une collaboration"""
         try:
             # Récupérer les données de collaboration
+
             collaboration_data = await self._get_collaboration_data(collaboration_id)
             
             # Identifier les paramètres optimisables
+
             optimizable_params = await self._identify_optimizable_parameters(collaboration_data)
+
+
             
             optimization_results = {}
             
             for param_name, param_config in optimizable_params.items():
                 # Optimiser chaque paramètre
+
                 optimized_value = await self._optimize_parameter(
                     collaboration_data, param_name, param_config
                 )
                 
                 # Calculer l'impact attendu
+
                 expected_impact = await self._calculate_optimization_impact(
                     collaboration_data, param_name, optimized_value
                 )
+
                 
                 optimization_results[param_name] = {
                     'current_value': param_config['current_value'],
@@ -524,7 +567,9 @@ class CollaborationIntelligenceEngine:
                 }
             
             # Générer des recommandations d'implémentation
+
             implementation_plan = await self._generate_implementation_plan(optimization_results)
+
             
             return {
                 'collaboration_id': collaboration_id,
@@ -536,6 +581,7 @@ class CollaborationIntelligenceEngine:
             
         except Exception as e:
             logger.error(f"Erreur optimisation paramètres collaboration: {e}")
+
             raise
     
     async def learn_from_collaboration_outcome(self, collaboration_id: str, 
@@ -543,6 +589,7 @@ class CollaborationIntelligenceEngine:
         """Apprend des résultats d'une collaboration"""
         try:
             # Créer un événement d'apprentissage
+
             learning_event = LearningEvent(
                 event_type='collaboration_outcome',
                 source_entity_id=collaboration_id,
@@ -566,12 +613,15 @@ class CollaborationIntelligenceEngine:
             # Vérifier si retrain nécessaire
             if await self._should_retrain_models():
                 await self._trigger_model_retraining()
+
             
             logger.info(f"Apprentissage enregistré pour collaboration {collaboration_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Erreur apprentissage outcome collaboration: {e}")
+
             return False
     
     async def generate_strategic_insights(self, scope: str = 'platform') -> List[CollaborationInsight]:
@@ -580,35 +630,48 @@ class CollaborationIntelligenceEngine:
             insights = []
             
             # Analyser les tendances globales
+
             trend_insights = await self._analyze_platform_trends()
+
             insights.extend(trend_insights)
             
             # Analyser les patterns de succès
+
             success_insights = await self._analyze_success_patterns()
+
             insights.extend(success_insights)
             
             # Analyser les inefficacités
+
             efficiency_insights = await self._analyze_efficiency_opportunities()
+
             insights.extend(efficiency_insights)
             
             # Analyser l'évolution du marché
             market_insights = await self._analyze_market_evolution()
+
             insights.extend(market_insights)
             
             # Analyser les nouveaux segments
+
             segment_insights = await self._analyze_emerging_segments()
+
             insights.extend(segment_insights)
             
             # Filtrer et prioriser les insights
+
             prioritized_insights = await self._prioritize_insights(insights, scope)
             
             # Enrichir avec des recommandations d'action
+
             enriched_insights = await self._enrich_insights_with_actions(prioritized_insights)
+
             
             return enriched_insights
             
         except Exception as e:
             logger.error(f"Erreur génération insights stratégiques: {e}")
+
             return []
 
 # ==========================================
@@ -634,9 +697,11 @@ class PredictiveAnalyticsEngine:
         
     async def predict_multi_timeframe(self, entity_id: str, entity_type: str,
                                     prediction_targets: List[str]) -> Dict[str, Any]:
-        """Fait des prédictions sur plusieurs échéances"""
+        """
+        Fait des prédictions sur plusieurs échéances"""
         try:
             timeframes = ['1_week', '1_month', '3_months', '6_months', '1_year']
+
             predictions = {}
             
             for target in prediction_targets:
@@ -644,22 +709,28 @@ class PredictiveAnalyticsEngine:
                 
                 for timeframe in timeframes:
                     # Ajuster le modèle pour l'échéance
+
                     adjusted_model = await self._adjust_model_for_timeframe(target, timeframe)
                     
                     # Extraire les features adaptées à l'échéance
+
                     features = await self._extract_timeframe_features(entity_id, entity_type, timeframe)
                     
                     # Faire la prédiction
+
                     prediction = await self._make_timeframe_prediction(
                         adjusted_model, features, timeframe
                     )
+
                     
                     target_predictions[timeframe] = prediction
                 
                 predictions[target] = target_predictions
             
             # Analyser la cohérence entre échéances
+
             consistency_analysis = await self._analyze_prediction_consistency(predictions)
+
             
             return {
                 'entity_id': entity_id,
@@ -670,25 +741,33 @@ class PredictiveAnalyticsEngine:
             
         except Exception as e:
             logger.error(f"Erreur prédictions multi-timeframe: {e}")
+
             raise
     
     async def model_complex_scenarios(self, scenario_config: Dict) -> Dict[str, Any]:
         """Modélise des scénarios complexes"""
         try:
             # Définir les variables du scénario
+
             scenario_variables = scenario_config['variables']
             
             # Créer les combinaisons de scénarios
+
             scenarios = await self._generate_scenario_combinations(scenario_variables)
+
+
             
             scenario_results = {}
             
             for scenario_name, scenario_params in scenarios.items():
                 # Simuler le scénario
+
                 simulation_result = await self._simulate_scenario(scenario_params, scenario_config)
                 
                 # Calculer les métriques de résultat
+
                 result_metrics = await self._calculate_scenario_metrics(simulation_result)
+
                 
                 scenario_results[scenario_name] = {
                     'parameters': scenario_params,
@@ -698,7 +777,9 @@ class PredictiveAnalyticsEngine:
                 }
             
             # Analyser les scénarios
+
             scenario_analysis = await self._analyze_scenarios(scenario_results)
+
             
             return {
                 'scenarios': scenario_results,
@@ -709,6 +790,7 @@ class PredictiveAnalyticsEngine:
             
         except Exception as e:
             logger.error(f"Erreur modélisation scénarios: {e}")
+
             raise
 
 # ==========================================
@@ -733,24 +815,31 @@ class BehavioralAnalyticsEngine:
         self.personality_analyzers = {}
         
     async def analyze_user_behavior_patterns(self, user_id: str) -> Dict[str, Any]:
-        """Analyse les patterns comportementaux d'un utilisateur"""
+        """
+        Analyse les patterns comportementaux d'un utilisateur"""
         try:
             # Récupérer l'historique comportemental
+
             behavior_history = await self._get_user_behavior_history(user_id)
             
             # Analyser les patterns temporels
+
             temporal_patterns = await self._analyze_temporal_patterns(behavior_history)
             
             # Analyser les patterns de décision
+
             decision_patterns = await self._analyze_decision_patterns(behavior_history)
             
             # Analyser les patterns de communication
+
             communication_patterns = await self._analyze_communication_patterns(behavior_history)
             
             # Analyser les patterns de collaboration
+
             collaboration_patterns = await self._analyze_collaboration_patterns(behavior_history)
             
             # Créer le profil comportemental
+
             behavioral_profile = {
                 'user_id': user_id,
                 'temporal_patterns': temporal_patterns,
@@ -766,19 +855,24 @@ class BehavioralAnalyticsEngine:
             
         except Exception as e:
             logger.error(f"Erreur analyse patterns comportementaux: {e}")
+
             raise
     
     async def predict_user_behavior(self, user_id: str, context: Dict) -> Dict[str, Any]:
         """Prédit le comportement futur d'un utilisateur"""
         try:
             # Analyser le profil comportemental actuel
+
             behavioral_profile = await self.analyze_user_behavior_patterns(user_id)
             
             # Analyser le contexte de la prédiction
+
             context_features = await self._extract_context_features(context)
             
             # Faire les prédictions comportementales
+
             predictions = {}
+
             
             behavior_types = [
                 'response_likelihood', 'engagement_level', 'decision_speed',
@@ -789,12 +883,15 @@ class BehavioralAnalyticsEngine:
                 prediction = await self._predict_specific_behavior(
                     user_id, behavior_type, behavioral_profile, context_features
                 )
+
                 predictions[behavior_type] = prediction
             
             # Générer des recommandations d'interaction
+
             interaction_recommendations = await self._generate_interaction_recommendations(
                 predictions, behavioral_profile, context
             )
+
             
             return {
                 'user_id': user_id,
@@ -807,6 +904,7 @@ class BehavioralAnalyticsEngine:
             
         except Exception as e:
             logger.error(f"Erreur prédiction comportement utilisateur: {e}")
+
             raise
 
 # ==========================================
@@ -841,6 +939,8 @@ async def create_collaboration_intelligence(redis_url: Optional[str] = None,
                 from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
                 import logging
                 logging.warning(f"Using Redis compatibility layer: {e}")
+
+
             redis_client = await aioredis.from_url(redis_url)
         except Exception as e:
             logger.warning(f"Impossible de se connecter à Redis: {e}")

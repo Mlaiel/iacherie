@@ -38,7 +38,8 @@ from contextlib import asynccontextmanager
 logger = logging.getLogger(__name__)
 
 class SagaState(str, Enum):
-    """Saga execution states"""
+    """
+Saga execution states"""
     PENDING = "pending"
     RUNNING = "running"
     COMPENSATING = "compensating"
@@ -47,7 +48,8 @@ class SagaState(str, Enum):
     FAILED = "failed"
 
 class StepState(str, Enum):
-    """Individual step states"""
+    """
+Individual step states"""
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -56,13 +58,15 @@ class StepState(str, Enum):
     COMPENSATING = "compensating"
 
 class SagaType(str, Enum):
-    """Types of saga patterns"""
+    """
+Types of saga patterns"""
     ORCHESTRATION = "orchestration"  # Central coordinator
     CHOREOGRAPHY = "choreography"    # Decentralized event-driven
 
 @dataclass
 class SagaEvent:
-    """Saga event for choreography pattern"""
+    """
+Saga event for choreography pattern"""
     event_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     saga_id: str = ""
     event_type: str = ""
@@ -73,7 +77,8 @@ class SagaEvent:
 
 @dataclass
 class CompensationAction:
-    """Compensation action for saga steps"""
+    """
+Compensation action for saga steps"""
     action_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     step_name: str = ""
     compensation_function: Optional[Callable] = None
@@ -84,7 +89,8 @@ class CompensationAction:
 
 @dataclass
 class SagaStep:
-    """Individual step in a saga"""
+    """
+Individual step in a saga"""
     step_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     service_name: str = ""
@@ -103,7 +109,8 @@ class SagaStep:
 
 @dataclass
 class SagaDefinition:
-    """Definition of a saga workflow"""
+    """
+Definition of a saga workflow"""
     saga_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
@@ -115,7 +122,8 @@ class SagaDefinition:
 
 @dataclass
 class SagaExecution:
-    """Runtime execution of a saga"""
+    """
+Runtime execution of a saga"""
     execution_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     saga_definition: SagaDefinition = None
     state: SagaState = SagaState.PENDING
@@ -132,23 +140,28 @@ class SagaExecution:
     events: List[SagaEvent] = field(default_factory=list)
 
 class SagaStepExecutor(ABC):
-    """Abstract base class for saga step executors"""
+    """
+Abstract base class for saga step executors"""
     
     @abstractmethod
     async def execute(self, step: SagaStep, input_data: Dict[str, Any]) -> Any:
-        """Execute saga step"""
+        """
+Execute saga step"""
         pass
     
     @abstractmethod
     async def compensate(self, step: SagaStep, compensation_data: Dict[str, Any]) -> bool:
-        """Compensate saga step"""
+        """
+Compensate saga step"""
         pass
 
 class LocalSagaStepExecutor(SagaStepExecutor):
-    """Local function-based saga step executor"""
+    """
+Local function-based saga step executor"""
     
     async def execute(self, step: SagaStep, input_data: Dict[str, Any]) -> Any:
-        """Execute local function"""
+        """
+Execute local function"""
         if step.action_function:
             if asyncio.iscoroutinefunction(step.action_function):
                 return await step.action_function(input_data)
@@ -158,7 +171,8 @@ class LocalSagaStepExecutor(SagaStepExecutor):
             raise ValueError(f"No action function defined for step {step.name}")
     
     async def compensate(self, step: SagaStep, compensation_data: Dict[str, Any]) -> bool:
-        """Execute compensation function"""
+        """
+Execute compensation function"""
         if step.compensation_action and step.compensation_action.compensation_function:
             try:
                 compensation_func = step.compensation_action.compensation_function
@@ -173,18 +187,21 @@ class LocalSagaStepExecutor(SagaStepExecutor):
         return True
 
 class HttpSagaStepExecutor(SagaStepExecutor):
-    """HTTP-based saga step executor"""
+    """
+HTTP-based saga step executor"""
     
     def __init__(self, http_client: Any = None):
         self.http_client = http_client or self._create_default_client()
     
     def _create_default_client(self):
-        """Create default HTTP client"""
+        """
+Create default HTTP client"""
         import aiohttp
         return aiohttp.ClientSession()
     
     async def execute(self, step: SagaStep, input_data: Dict[str, Any]) -> Any:
-        """Execute HTTP request"""
+        """
+Execute HTTP request"""
         # Implementation would make HTTP calls to microservices
         # For now, return mock success
         logger.info(f"Executing HTTP step {step.name} for service {step.service_name}")
@@ -192,13 +209,15 @@ class HttpSagaStepExecutor(SagaStepExecutor):
         return {"status": "success", "step": step.name}
     
     async def compensate(self, step: SagaStep, compensation_data: Dict[str, Any]) -> bool:
-        """Execute HTTP compensation"""
+        """
+Execute HTTP compensation"""
         logger.info(f"Compensating HTTP step {step.name}")
         await asyncio.sleep(0.1)  # Simulate network call
         return True
 
 class SagaOrchestrator:
-    """Saga orchestrator for centralized saga execution"""
+    """
+Saga orchestrator for centralized saga execution"""
     
     def __init__(self, step_executor: SagaStepExecutor):
         self.step_executor = step_executor
@@ -206,7 +225,8 @@ class SagaOrchestrator:
         self._lock = asyncio.Lock()
     
     async def execute_saga(self, saga_definition: SagaDefinition, input_data: Dict[str, Any]) -> SagaExecution:
-        """Execute a saga"""
+        """
+Execute a saga"""
         execution = SagaExecution(
             saga_definition=saga_definition,
             input_data=input_data,
@@ -238,7 +258,8 @@ class SagaOrchestrator:
         return execution
     
     async def _execute_sequential(self, execution: SagaExecution):
-        """Execute saga steps sequentially"""
+        """
+Execute saga steps sequentially"""
         steps = execution.saga_definition.steps
         
         for step in steps:
@@ -251,7 +272,8 @@ class SagaOrchestrator:
                 execution.completed_steps.append(step.step_id)
     
     async def _execute_parallel(self, execution: SagaExecution):
-        """Execute saga steps in parallel where possible"""
+        """
+Execute saga steps in parallel where possible"""
         steps = execution.saga_definition.steps
         remaining_steps = steps.copy()
         
@@ -284,7 +306,8 @@ class SagaOrchestrator:
             remaining_steps = [s for s in remaining_steps if s not in ready_steps]
     
     async def _can_execute_step(self, step: SagaStep, execution: SagaExecution) -> bool:
-        """Check if a step can be executed"""
+        """
+Check if a step can be executed"""
         if step.state != StepState.PENDING:
             return False
         
@@ -296,7 +319,8 @@ class SagaOrchestrator:
         return True
     
     async def _execute_step(self, step: SagaStep, execution: SagaExecution):
-        """Execute individual saga step"""
+        """
+Execute individual saga step"""
         step.state = StepState.RUNNING
         step.started_at = datetime.utcnow()
         execution.current_step = step.step_id
@@ -338,7 +362,8 @@ class SagaOrchestrator:
         execution.failed_steps.append(step.step_id)
     
     async def _compensate_saga(self, execution: SagaExecution):
-        """Compensate saga by undoing completed steps"""
+        """
+Compensate saga by undoing completed steps"""
         execution.state = SagaState.COMPENSATING
         
         # Compensate steps in reverse order
@@ -353,7 +378,8 @@ class SagaOrchestrator:
         execution.state = SagaState.ABORTED
 
     async def _compensate_step(self, step: SagaStep, execution: SagaExecution):
-        """Compensate individual step"""
+        """
+Compensate individual step"""
         if not step.compensation_action:
             logger.info(f"No compensation defined for step {step.name}")
             return
@@ -389,7 +415,8 @@ class SagaOrchestrator:
         logger.error(f"Compensation failed permanently for step {step.name}")
 
 class SagaChoreographer:
-    """Saga choreographer for event-driven saga execution"""
+    """
+Saga choreographer for event-driven saga execution"""
     
     def __init__(self, event_bus: Any = None):
         self.event_bus = event_bus
@@ -398,13 +425,15 @@ class SagaChoreographer:
         self._lock = asyncio.Lock()
     
     def register_handler(self, event_type: str, handler: Callable):
-        """Register event handler for choreography"""
+        """
+Register event handler for choreography"""
         if event_type not in self.saga_handlers:
             self.saga_handlers[event_type] = []
         self.saga_handlers[event_type].append(handler)
     
     async def start_saga(self, saga_definition: SagaDefinition, input_data: Dict[str, Any]) -> str:
-        """Start a choreographed saga"""
+        """
+Start a choreographed saga"""
         execution = SagaExecution(
             saga_definition=saga_definition,
             input_data=input_data,
@@ -427,7 +456,8 @@ class SagaChoreographer:
         return execution.execution_id
     
     async def handle_event(self, event: SagaEvent):
-        """Handle incoming saga event"""
+        """
+Handle incoming saga event"""
         handlers = self.saga_handlers.get(event.event_type, [])
         
         for handler in handlers:
@@ -440,7 +470,8 @@ class SagaChoreographer:
                 logger.error(f"Event handler failed for {event.event_type}: {e}")
     
     async def publish_event(self, event: SagaEvent):
-        """Publish saga event"""
+        """
+Publish saga event"""
         if self.event_bus:
             await self.event_bus.publish(event)
         else:
@@ -448,7 +479,8 @@ class SagaChoreographer:
             await self.handle_event(event)
 
 class SagaPatternCore:
-    """Advanced enterprise saga pattern core"""
+    """
+Advanced enterprise saga pattern core"""
     
     def __init__(self, level: str = "enterprise"):
         self.level = level
@@ -465,7 +497,8 @@ class SagaPatternCore:
         self._setup_example_sagas()
     
     def _get_performance_config(self) -> Dict[str, Any]:
-        """Get performance configuration based on level"""
+        """
+Get performance configuration based on level"""
         configs = {
             "basic": {
                 "max_concurrent_sagas": 10,
@@ -495,7 +528,8 @@ class SagaPatternCore:
         return configs.get(self.level, configs["enterprise"])
     
     def _setup_example_sagas(self):
-        """Setup example saga definitions"""
+        """
+Setup example saga definitions"""
         # Content processing saga
         content_saga = SagaDefinition(
             name="content_processing_saga",
@@ -577,7 +611,6 @@ class SagaPatternCore:
         
         self.saga_definitions["user_registration"] = user_saga
     
-    # Mock functions for example sagas
     async def _mock_validate_content(self, data: Dict[str, Any]) -> Dict[str, Any]:
         await asyncio.sleep(0.1)
         return {"validation_status": "passed", "content_id": data.get("content_id")}
@@ -627,7 +660,8 @@ class SagaPatternCore:
         logger.info("Sent cancellation email")
     
     async def initialize(self) -> bool:
-        """Initialize saga pattern core"""
+        """
+Initialize saga pattern core"""
         try:
             logger.info(f"🚀 Initializing SagaPatternCore - Level: {self.level}")
             
@@ -639,7 +673,8 @@ class SagaPatternCore:
             return False
     
     async def register_saga_definition(self, saga_definition: SagaDefinition) -> bool:
-        """Register a new saga definition"""
+        """
+Register a new saga definition"""
         try:
             self.saga_definitions[saga_definition.name] = saga_definition
             logger.info(f"✅ Saga definition registered: {saga_definition.name}")
@@ -649,7 +684,8 @@ class SagaPatternCore:
             return False
     
     async def execute_saga(self, saga_name: str, input_data: Dict[str, Any]) -> Optional[SagaExecution]:
-        """Execute a saga by name"""
+        """
+Execute a saga by name"""
         try:
             saga_definition = self.saga_definitions.get(saga_name)
             if not saga_definition:
@@ -677,11 +713,13 @@ class SagaPatternCore:
             return None
     
     async def get_saga_status(self, execution_id: str) -> Optional[SagaExecution]:
-        """Get saga execution status"""
+        """
+Get saga execution status"""
         return self.saga_executions.get(execution_id)
     
     async def cancel_saga(self, execution_id: str) -> bool:
-        """Cancel running saga"""
+        """
+Cancel running saga"""
         try:
             execution = self.saga_executions.get(execution_id)
             if not execution:
@@ -704,7 +742,8 @@ class SagaPatternCore:
             return False
     
     async def get_saga_metrics(self) -> Dict[str, Any]:
-        """Get saga execution metrics"""
+        """
+Get saga execution metrics"""
         total_sagas = len(self.saga_executions)
         completed_sagas = sum(1 for ex in self.saga_executions.values() if ex.state == SagaState.COMPLETED)
         failed_sagas = sum(1 for ex in self.saga_executions.values() if ex.state == SagaState.FAILED)
@@ -721,7 +760,8 @@ class SagaPatternCore:
         }
     
     async def health_check(self) -> bool:
-        """Health check for saga pattern core"""
+        """
+Health check for saga pattern core"""
         try:
             # Check if we have saga definitions and can create executions
             return len(self.saga_definitions) > 0 and self.enabled
@@ -730,7 +770,8 @@ class SagaPatternCore:
             return False
     
     async def start(self) -> bool:
-        """Start saga pattern service"""
+        """
+Start saga pattern service"""
         try:
             logger.info("🚀 Starting SagaPatternCore service")
             self.enabled = True
@@ -740,7 +781,8 @@ class SagaPatternCore:
             return False
     
     async def stop(self) -> bool:
-        """Stop saga pattern service"""
+        """
+Stop saga pattern service"""
         try:
             logger.info("🛑 Stopping SagaPatternCore service")
             self.enabled = False

@@ -59,7 +59,8 @@ class MultilingualContent(Base):
     updated_at = Column(DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class TranslationManagement(Base):
-    """Automated translation workflow management."""
+    """
+        Automated translation workflow management."""
     __tablename__ = 'translation_management'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -80,7 +81,8 @@ class TranslationManagement(Base):
     completed_at = Column(DateTime(timezone=True), nullable=True)
 
 class CulturalLocalization(Base):
-    """Cultural adaptation and localization."""
+    """
+        Cultural adaptation and localization."""
     __tablename__ = 'cultural_localization'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -102,7 +104,8 @@ class CulturalLocalization(Base):
     updated_at = Column(DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class LanguageDetection(Base):
-    """Automatic language detection for content."""
+    """
+        Automatic language detection for content."""
     __tablename__ = 'language_detection'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -120,7 +123,8 @@ class LanguageDetection(Base):
     detected_at = Column(DateTime(timezone=True), default=datetime.utcnow)
 
 class RegionalCompliance(Base):
-    """Regional regulatory compliance tracking."""
+    """
+        Regional regulatory compliance tracking."""
     __tablename__ = 'regional_compliance'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -143,7 +147,8 @@ class RegionalCompliance(Base):
     created_at = Column(DateTime(timezone=True), default=datetime.utcnow)
 
 class LinguisticAnalytics(Base):
-    """Linguistic analytics and engagement tracking."""
+    """
+        Linguistic analytics and engagement tracking."""
     __tablename__ = 'linguistic_analytics'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

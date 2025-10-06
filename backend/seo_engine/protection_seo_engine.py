@@ -49,7 +49,8 @@ import io
 logger = logging.getLogger(__name__)
 
 class ProtectionLevel(Enum):
-    """Niveaux de protection avancés"""
+    """
+        Niveaux de protection avancés"""
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -117,7 +118,8 @@ class ContentFingerprint:
 
 @dataclass
 class ProtectionStrategy:
-    """Stratégie de protection ultra-avancée"""
+    """
+        Stratégie de protection ultra-avancée"""
     strategy_id: str
     protection_level: ProtectionLevel
     protected_assets: List[str] = field(default_factory=list)
@@ -152,7 +154,8 @@ class LocalBusinessProfile:
 
 @dataclass
 class LocalSEOStrategy:
-    """Stratégie SEO local avancée"""
+    """
+        Stratégie SEO local avancée"""
     strategy_id: str
     business_profile: LocalBusinessProfile
     geographic_scope: GeographicScope
@@ -180,7 +183,8 @@ class ProtectionSEOEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialise le moteur de protection SEO"""
+        """
+        Initialise le moteur de protection SEO"""
         self.config = config or {}
         self.protected_content: Dict[str, ContentFingerprint] = {}
         self.active_threats: Dict[str, ThreatAlert] = {}
@@ -220,11 +224,14 @@ class ProtectionSEOEngine:
             
             # Configuration de la surveillance
             await self._setup_monitoring_infrastructure()
+
             
             logger.info("✅ Moteur de protection initialisé")
+
             
         except Exception as e:
             logger.error(f"❌ Erreur initialisation protection: {e}")
+
             raise
     
     async def _load_threat_detection_models(self) -> None:
@@ -250,11 +257,14 @@ class ProtectionSEOEngine:
                 n_estimators=100,
                 random_state=42
             )
+
             
             logger.info("🤖 Modèles de détection de menaces chargés")
+
             
         except Exception as e:
             logger.error(f"❌ Erreur chargement modèles: {e}")
+
             raise
     
     async def _initialize_threat_patterns(self) -> None:
@@ -297,7 +307,8 @@ class ProtectionSEOEngine:
         }
     
     async def _setup_monitoring_infrastructure(self) -> None:
-        """Configure l'infrastructure de surveillance"""
+        """
+        Configure l'infrastructure de surveillance"""
         # Configuration des intervals de surveillance
         self.monitoring_config = {
             'real_time_scan_interval': 300,     # 5 minutes
@@ -331,6 +342,7 @@ class ProtectionSEOEngine:
             logger.info(f"🛡️ Protection du contenu {content_id} - Niveau: {protection_level.value}")
             
             # Génération de l'empreinte digitale
+
             fingerprint = await self._generate_content_fingerprint(
                 content_id,
                 content,
@@ -338,6 +350,7 @@ class ProtectionSEOEngine:
             )
             
             # Application des mesures de protection
+
             protection_measures = await self._apply_protection_measures(
                 fingerprint,
                 protection_level
@@ -348,14 +361,17 @@ class ProtectionSEOEngine:
             
             # Démarrage de la surveillance
             await self._start_content_monitoring(content_id)
+
             
             self.protection_metrics['content_protected'] += 1
             
             logger.info(f"✅ Contenu {content_id} protégé avec {len(protection_measures)} mesures")
+
             return fingerprint
             
         except Exception as e:
             logger.error(f"❌ Erreur protection contenu: {e}")
+
             raise
     
     async def _generate_content_fingerprint(
@@ -366,25 +382,33 @@ class ProtectionSEOEngine:
     ) -> ContentFingerprint:
         """Génère une empreinte digitale unique du contenu"""
         # Hash principal du contenu
+
         content_hash = hashlib.sha256(content.encode()).hexdigest()
         
         # Empreinte textuelle normalisée
+
         normalized_content = re.sub(r'\s+', ' ', content.lower().strip())
+
         text_fingerprint = hashlib.md5(normalized_content.encode()).hexdigest()
         
         # Hashes d'images si présentes
+
         image_hashes = []
         if 'images' in metadata:
             for image_data in metadata['images']:
                 try:
                     # Simulation de hash d'image
+
                     image_hash = hashlib.sha1(str(image_data).encode()).hexdigest()[:16]
                     image_hashes.append(image_hash)
+
                 except Exception as e:
                     logger.warning(f"Erreur hash image: {e}")
         
         # Watermarks de protection
+
         watermarks = await self._generate_protection_watermarks(content_id)
+
         
         return ContentFingerprint(
             content_id=content_id,
@@ -400,6 +424,7 @@ class ProtectionSEOEngine:
         watermarks = []
         
         # Watermark temporel
+
         timestamp_mark = base64.b64encode(
             f"{content_id}_{int(time.time())}".encode()
         ).decode()[:20]
@@ -416,6 +441,7 @@ class ProtectionSEOEngine:
             f"{content_id}_TRACE_{datetime.now().isoformat()}".encode()
         ).hexdigest()[:16]
         watermarks.append(f"TR_{trace_mark}")
+
         
         return watermarks
     
@@ -433,6 +459,7 @@ class ProtectionSEOEngine:
             "Content registration",
             "Basic monitoring"
         ])
+
         
         if level in [ProtectionLevel.STANDARD, ProtectionLevel.ADVANCED, 
                     ProtectionLevel.ENTERPRISE, ProtectionLevel.MILITARY_GRADE]:
@@ -441,6 +468,7 @@ class ProtectionSEOEngine:
                 "Automated DMCA protection",
                 "Real-time monitoring"
             ])
+
         
         if level in [ProtectionLevel.ADVANCED, ProtectionLevel.ENTERPRISE, 
                     ProtectionLevel.MILITARY_GRADE]:
@@ -450,6 +478,7 @@ class ProtectionSEOEngine:
                 "Advanced watermarking",
                 "Legal action automation"
             ])
+
         
         if level in [ProtectionLevel.ENTERPRISE, ProtectionLevel.MILITARY_GRADE]:
             measures.extend([
@@ -458,6 +487,7 @@ class ProtectionSEOEngine:
                 "24/7 SOC monitoring",
                 "Incident response team"
             ])
+
         
         if level == ProtectionLevel.MILITARY_GRADE:
             measures.extend([
@@ -466,6 +496,7 @@ class ProtectionSEOEngine:
                 "Advanced forensics",
                 "Government-grade security"
             ])
+
         
         return measures
     
@@ -492,6 +523,7 @@ class ProtectionSEOEngine:
         
         Args:
             scan_scope: Portée du scan (basic, standard, comprehensive)
+
             target_sources: Sources spécifiques à scanner
             
         Returns:
@@ -499,6 +531,8 @@ class ProtectionSEOEngine:
         """
         try:
             logger.info(f"🔍 Démarrage scan menaces - Portée: {scan_scope}")
+
+
             
             detected_threats = []
             
@@ -509,9 +543,11 @@ class ProtectionSEOEngine:
             # Scan de chaque source
             for source in target_sources:
                 source_threats = await self._scan_source_for_threats(source)
+
                 detected_threats.extend(source_threats)
             
             # Analyse et classification des menaces
+
             classified_threats = await self._classify_and_prioritize_threats(detected_threats)
             
             # Enregistrement des menaces actives
@@ -520,14 +556,18 @@ class ProtectionSEOEngine:
             
             # Déclenchement des réponses automatiques
             await self._trigger_automated_responses(classified_threats)
+
             
             self.protection_metrics['threats_detected'] += len(classified_threats)
+
             
             logger.info(f"✅ Scan terminé - {len(classified_threats)} menaces détectées")
+
             return classified_threats
             
         except Exception as e:
             logger.error(f"❌ Erreur scan menaces: {e}")
+
             raise
     
     async def _get_default_scan_sources(self, scope: str) -> List[str]:
@@ -541,6 +581,7 @@ class ProtectionSEOEngine:
                 "social_media_platforms",
                 "content_aggregators"
             ])
+
         
         if scope in ["standard", "comprehensive"]:
             sources.extend([
@@ -549,6 +590,7 @@ class ProtectionSEOEngine:
                 "blog_platforms",
                 "image_search_engines"
             ])
+
         
         if scope == "comprehensive":
             sources.extend([
@@ -557,6 +599,7 @@ class ProtectionSEOEngine:
                 "file_sharing_platforms",
                 "international_domains"
             ])
+
         
         return sources
     
@@ -570,13 +613,17 @@ class ProtectionSEOEngine:
             
             if source == "google_search":
                 threats.extend(await self._scan_google_for_content_theft())
+
             elif source == "social_media_platforms":
                 threats.extend(await self._scan_social_media_for_brand_abuse())
+
             elif source == "content_aggregators":
                 threats.extend(await self._scan_aggregators_for_piracy())
+
             
         except Exception as e:
             logger.warning(f"Erreur scan source {source}: {e}")
+
         
         return threats
     
@@ -586,11 +633,13 @@ class ProtectionSEOEngine:
         
         for content_id, fingerprint in self.protected_content.items():
             # Simulation de recherche Google avec des extraits du contenu
+
             content_excerpt = fingerprint.metadata.get('excerpt', '')[:100]
             
             if len(content_excerpt) > 20:
                 # Simulation de résultats suspects
                 if np.random.random() < 0.15:  # 15% de chance de trouver du contenu suspect
+
                     threat_data = {
                         'content_id': content_id,
                         'source': 'google_search',
@@ -600,6 +649,7 @@ class ProtectionSEOEngine:
                         'detected_text': content_excerpt
                     }
                     threats.append(threat_data)
+
         
         return threats
     
@@ -608,10 +658,12 @@ class ProtectionSEOEngine:
         threats = []
         
         # Simulation de détection d'abus de marque
+
         brand_terms = ["iacherie", "fahed mlaiel", "seo engine"]
         
         for term in brand_terms:
             if np.random.random() < 0.08:  # 8% de chance de détecter un abus
+
                 threat_data = {
                     'source': 'social_media',
                     'threat_type': ThreatType.BRAND_IMPERSONATION,
@@ -621,6 +673,7 @@ class ProtectionSEOEngine:
                     'platform': np.random.choice(['twitter', 'facebook', 'instagram'])
                 }
                 threats.append(threat_data)
+
         
         return threats
     
@@ -631,6 +684,7 @@ class ProtectionSEOEngine:
         # Simulation de détection de piratage sur agrégateurs
         for content_id, fingerprint in list(self.protected_content.items())[:5]:  # Limiter pour simulation
             if np.random.random() < 0.12:  # 12% de chance de détecter du piratage
+
                 threat_data = {
                     'content_id': content_id,
                     'source': 'content_aggregator',
@@ -640,6 +694,7 @@ class ProtectionSEOEngine:
                     'violation_type': 'unauthorized_republication'
                 }
                 threats.append(threat_data)
+
         
         return threats
     
@@ -652,15 +707,18 @@ class ProtectionSEOEngine:
         
         for threat_data in raw_threats:
             # Génération d'un ID unique pour l'alerte
+
             alert_id = f"threat_{int(time.time())}_{len(classified_threats)}"
             
             # Classification de la sévérité
             severity = await self._calculate_threat_severity(threat_data)
             
             # Génération d'actions de mitigation
+
             mitigation_actions = await self._generate_mitigation_actions(threat_data)
             
             # Création de l'alerte
+
             threat_alert = ThreatAlert(
                 alert_id=alert_id,
                 threat_type=threat_data.get('threat_type', ThreatType.CONTENT_PIRACY),
@@ -671,17 +729,20 @@ class ProtectionSEOEngine:
                 threat_level=await self._calculate_threat_level(threat_data),
                 mitigation_actions=mitigation_actions
             )
+
             
             classified_threats.append(threat_alert)
         
         # Tri par niveau de menace décroissant
         classified_threats.sort(key=lambda x: x.threat_level, reverse=True)
+
         
         return classified_threats
     
     async def _calculate_threat_severity(self, threat_data: Dict[str, Any]) -> str:
         """Calcule la sévérité d'une menace"""
         similarity = threat_data.get('similarity_score', 0.0)
+
         threat_type = threat_data.get('threat_type', ThreatType.CONTENT_PIRACY)
         
         # Facteurs de sévérité
@@ -707,9 +768,11 @@ class ProtectionSEOEngine:
     async def _calculate_threat_level(self, threat_data: Dict[str, Any]) -> int:
         """Calcule le niveau de menace (1-10)"""
         similarity = threat_data.get('similarity_score', 0.0)
+
         threat_type = threat_data.get('threat_type', ThreatType.CONTENT_PIRACY)
         
         # Calcul de base
+
         level = int(similarity * 10)
         
         # Ajustements selon le type
@@ -717,6 +780,7 @@ class ProtectionSEOEngine:
             level = min(10, level + 2)
         elif threat_type == ThreatType.BRAND_IMPERSONATION:
             level = min(10, level + 1)
+
         
         return max(1, min(10, level))
     
@@ -724,9 +788,12 @@ class ProtectionSEOEngine:
         self,
         threat_data: Dict[str, Any]
     ) -> List[str]:
-        """Génère les actions de mitigation pour une menace"""
+        """
+        Génère les actions de mitigation pour une menace"""
         actions = []
+
         threat_type = threat_data.get('threat_type', ThreatType.CONTENT_PIRACY)
+
         
         if threat_type == ThreatType.CONTENT_PIRACY:
             actions.extend([
@@ -756,6 +823,7 @@ class ProtectionSEOEngine:
                 "Préparer une action en justice",
                 "Évaluer les dommages"
             ])
+
         
         return actions
     
@@ -767,6 +835,7 @@ class ProtectionSEOEngine:
         for threat in threats:
             if threat.severity in ["critical", "high"]:
                 await self._execute_immediate_response(threat)
+
             elif threat.severity == "medium":
                 await self._schedule_delayed_response(threat)
             
@@ -819,6 +888,7 @@ class ProtectionSEOEngine:
         logger.info(f"🚫 Signalement abus de marque pour {threat.alert_id}")
         
         # Simulation de signalement
+
         report_data = {
             'threat_id': threat.alert_id,
             'abusive_url': threat.source_url,
@@ -849,6 +919,7 @@ class ProtectionSEOEngine:
         
         # Simulation de notification
         # Dans la réalité, cela enverrait des emails, SMS, notifications push
+
         notification_data = {
             'threat_id': threat.alert_id,
             'severity': threat.severity,
@@ -860,22 +931,33 @@ class ProtectionSEOEngine:
         """Retourne le statut complet de la protection"""
         try:
             # Calcul des métriques en temps réel
+
             total_threats = len(self.active_threats)
+
+
             critical_threats = len([
                 t for t in self.active_threats.values()
+
                 if t.severity == "critical"
             ])
+
+
             
             high_threats = len([
                 t for t in self.active_threats.values()
+
                 if t.severity == "high"
             ])
             
             # Calcul de l'efficacité de protection
+
             protection_effectiveness = self._calculate_protection_effectiveness()
             
             # Analyse des tendances
+
             threat_trends = await self._analyze_threat_trends()
+
+
             
             status = {
                 'protection_overview': {
@@ -889,8 +971,10 @@ class ProtectionSEOEngine:
                 'threat_breakdown': {
                     threat_type.value: len([
                         t for t in self.active_threats.values()
+
                         if t.threat_type == threat_type
                     ])
+
                     for threat_type in ThreatType
                 },
                 'protection_metrics': self.protection_metrics.copy(),
@@ -904,39 +988,51 @@ class ProtectionSEOEngine:
             
         except Exception as e:
             logger.error(f"❌ Erreur status protection: {e}")
+
             raise
     
     def _calculate_protection_effectiveness(self) -> float:
         """Calcule l'efficacité de la protection"""
         total_threats = self.protection_metrics.get('threats_detected', 0)
+
         mitigated_threats = self.protection_metrics.get('threats_mitigated', 0)
+
         false_positives = self.protection_metrics.get('false_positives', 0)
+
         
         if total_threats == 0:
             return 100.0  # Pas de menaces = protection efficace
         
         # Calcul basé sur le taux de mitigation et la précision
+
         mitigation_rate = (mitigated_threats / total_threats) * 100
+
         precision = ((total_threats - false_positives) / total_threats) * 100 if total_threats > 0 else 100
+
         
         effectiveness = (mitigation_rate * 0.7 + precision * 0.3)
         return min(100.0, effectiveness)
     
     async def _analyze_threat_trends(self) -> Dict[str, Any]:
-        """Analyse les tendances des menaces"""
+        """
+        Analyse les tendances des menaces"""
         # Analyse des menaces des 24 dernières heures
+
         recent_threats = [
             threat for threat in self.active_threats.values()
+
             if (datetime.now() - threat.detected_at).total_seconds() < 86400
         ]
         
         # Analyse par type
+
         threat_type_counts = Counter([t.threat_type.value for t in recent_threats])
         
         # Analyse de sévérité
         severity_counts = Counter([t.severity for t in recent_threats])
         
         # Calcul des tendances
+
         threat_velocity = len(recent_threats) / 24  # Menaces par heure
         
         return {
@@ -947,21 +1043,26 @@ class ProtectionSEOEngine:
         }
     
     async def _generate_security_recommendations(self) -> List[str]:
-        """Génère des recommandations de sécurité"""
+        """
+        Génère des recommandations de sécurité"""
         recommendations = []
         
         # Analyse basée sur les métriques actuelles
+
         effectiveness = self._calculate_protection_effectiveness()
+
         
         if effectiveness < 70:
             recommendations.append(
                 "Renforcer les mesures de protection - efficacité sous-optimale"
             )
+
         
         if self.protection_metrics.get('false_positives', 0) > 5:
             recommendations.append(
                 "Calibrer les modèles de détection - trop de faux positifs"
             )
+
         
         if len(self.active_threats) > 20:
             recommendations.append(
@@ -975,6 +1076,7 @@ class ProtectionSEOEngine:
             "Former l'équipe aux nouvelles menaces",
             "Tester les procédures de réponse aux incidents"
         ])
+
         
         return recommendations
     
@@ -989,6 +1091,7 @@ class ProtectionSEOEngine:
         
         # Calcul du score global de conformité
         total_score = sum(compliance_checks.values())
+
         compliance_score = (total_score / len(compliance_checks)) * 100
         
         return {
@@ -998,36 +1101,44 @@ class ProtectionSEOEngine:
         }
     
     async def _check_gdpr_compliance(self) -> float:
-        """Vérifie la conformité GDPR"""
+        """
+        Vérifie la conformité GDPR"""
         # Simulation de vérification GDPR
         # Dans la réalité, cela vérifierait les vraies politiques et procédures
         return 0.95  # 95% de conformité
     
     async def _check_dmca_compliance(self) -> float:
-        """Vérifie la conformité DMCA"""
+        """
+        Vérifie la conformité DMCA"""
         return 0.98  # 98% de conformité
     
     async def _check_iso27001_compliance(self) -> float:
-        """Vérifie la conformité ISO 27001"""
+        """
+        Vérifie la conformité ISO 27001"""
         return 0.88  # 88% de conformité
     
     async def _check_soc2_compliance(self) -> float:
-        """Vérifie la conformité SOC 2"""
+        """
+        Vérifie la conformité SOC 2"""
         return 0.92  # 92% de conformité
     
     async def cleanup(self) -> None:
-        """Nettoie les ressources du moteur de protection"""
+        """
+        Nettoie les ressources du moteur de protection"""
         try:
             if self.session:
                 await self.session.close()
             
             # Archivage des menaces résolues
+
             resolved_threats = [
                 threat for threat in self.active_threats.values()
+
                 if threat.status == 'resolved'
             ]
             
             # Sauvegarde des métriques critiques
+
             critical_metrics = {
                 'total_content_protected': len(self.protected_content),
                 'threats_mitigated': self.protection_metrics.get('threats_mitigated', 0),
@@ -1035,9 +1146,11 @@ class ProtectionSEOEngine:
             }
             
             logger.info(f"🧹 Nettoyage protection terminé - {critical_metrics}")
+
             
         except Exception as e:
             logger.error(f"❌ Erreur lors du nettoyage protection: {e}")
+
             raise
 
 class AILocalSEOOptimizer:
@@ -1054,7 +1167,8 @@ class AILocalSEOOptimizer:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialise l'optimiseur SEO local"""
+        """
+        Initialise l'optimiseur SEO local"""
         self.config = config or {}
         self.business_profiles: Dict[str, LocalBusinessProfile] = {}
         self.local_strategies: Dict[str, LocalSEOStrategy] = {}
@@ -1093,11 +1207,14 @@ class AILocalSEOOptimizer:
             
             # Configuration de la surveillance des avis
             await self._setup_review_monitoring()
+
             
             logger.info("✅ Optimiseur SEO local initialisé")
+
             
         except Exception as e:
             logger.error(f"❌ Erreur initialisation SEO local: {e}")
+
             raise
     
     async def _load_citation_sources(self) -> None:
@@ -1126,7 +1243,8 @@ class AILocalSEOOptimizer:
         }
     
     async def _setup_geolocation_tools(self) -> None:
-        """Configure les outils de géolocalisation"""
+        """
+        Configure les outils de géolocalisation"""
         # Configuration des paramètres de géolocalisation
         self.geo_config = {
             'precision_radius_km': 1.0,
@@ -1137,7 +1255,8 @@ class AILocalSEOOptimizer:
         }
     
     async def _setup_review_monitoring(self) -> None:
-        """Configure la surveillance des avis"""
+        """
+        Configure la surveillance des avis"""
         self.review_config = {
             'monitoring_frequency': 'hourly',
             'sentiment_analysis': True,
@@ -1167,14 +1286,17 @@ class AILocalSEOOptimizer:
             logger.info(f"📍 Création profil entreprise: {business_data.get('name', 'N/A')}")
             
             # Géocodage de l'adresse
+
             coordinates = await self._geocode_address(business_data.get('address', ''))
             
             # Génération d'un ID unique
+
             business_id = hashlib.md5(
                 f"{business_data.get('name', '')}_{business_data.get('address', '')}".encode()
             ).hexdigest()[:16]
             
             # Création du profil de base
+
             profile = LocalBusinessProfile(
                 business_id=business_id,
                 name=business_data.get('name', ''),
@@ -1192,15 +1314,21 @@ class AILocalSEOOptimizer:
             await self._enrich_business_profile(profile, business_data)
             
             # Analyse de la concurrence locale
+
             competitor_analysis = await self._analyze_local_competitors(profile)
+
             profile.competitor_analysis = competitor_analysis
             
             # Profil des avis
+
             review_profile = await self._analyze_review_profile(profile)
+
             profile.review_profile = review_profile
             
             # Profil des citations
+
             citation_profile = await self._analyze_citation_profile(profile)
+
             profile.citation_profile = citation_profile
             
             # Enregistrement du profil
@@ -1208,10 +1336,12 @@ class AILocalSEOOptimizer:
             self.local_metrics['businesses_optimized'] += 1
             
             logger.info(f"✅ Profil créé pour {profile.name} - ID: {business_id}")
+
             return profile
             
         except Exception as e:
             logger.error(f"❌ Erreur création profil entreprise: {e}")
+
             raise
     
     async def _geocode_address(self, address: str) -> Tuple[float, float]:
@@ -1219,17 +1349,24 @@ class AILocalSEOOptimizer:
         try:
             if not address:
                 return (0.0, 0.0)
+
+
             
             location = self.geocoder.geocode(address)
+
             if location:
                 return (round(location.latitude, self.geo_config['coordinate_precision']),
                        round(location.longitude, self.geo_config['coordinate_precision']))
+
             else:
                 logger.warning(f"Impossible de géocoder l'adresse: {address}")
+
                 return (0.0, 0.0)
+
                 
         except Exception as e:
             logger.error(f"Erreur géocodage: {e}")
+
             return (0.0, 0.0)
     
     async def _enrich_business_profile(
@@ -1254,19 +1391,23 @@ class AILocalSEOOptimizer:
         services: List[str],
         custom_keywords: List[str]
     ) -> List[str]:
-        """Génère des mots-clés géo-localisés"""
+        """
+        Génère des mots-clés géo-localisés"""
         keywords = []
         
         # Mots-clés de base
+
         base_terms = [category.lower()] + [service.lower() for service in services]
         
         # Modificateurs géographiques
+
         geo_modifiers = [
             "près de moi", "local", "à proximité", "dans ma ville",
             "autour de moi", "proche", "dans la région"
         ]
         
         # Modificateurs commerciaux
+
         commercial_modifiers = [
             "meilleur", "pas cher", "professionnel", "de qualité",
             "rapide", "expert", "spécialisé", "recommandé"
@@ -1288,6 +1429,7 @@ class AILocalSEOOptimizer:
         keywords.extend(custom_keywords)
         
         # Suppression des doublons et limitation
+
         unique_keywords = list(set(keywords))
         return unique_keywords[:30]  # Limiter à 30 mots-clés
     
@@ -1303,10 +1445,13 @@ class AILocalSEOOptimizer:
         
         for keyword in profile.target_keywords[:10]:  # Vérifier top 10 keywords
             # Simulation de position (1-100, 0 si pas classé)
+
+
             position = np.random.choice(
                 [0] + list(range(1, 101)),
                 p=[0.3] + [0.7/100] * 100  # 30% chance de ne pas être classé
             )
+
             
             if position > 0:
                 rankings[keyword] = position
@@ -1317,9 +1462,11 @@ class AILocalSEOOptimizer:
         self,
         profile: LocalBusinessProfile
     ) -> Dict[str, Any]:
-        """Analyse les concurrents locaux"""
+        """
+        Analyse les concurrents locaux"""
         try:
             # Recherche de concurrents dans le rayon défini
+
             competitors = await self._find_local_competitors(
                 profile.coordinates,
                 profile.category,
@@ -1327,6 +1474,7 @@ class AILocalSEOOptimizer:
             )
             
             # Analyse détaillée des top concurrents
+
             competitor_analysis = {
                 'total_competitors': len(competitors),
                 'top_competitors': competitors[:5],
@@ -1339,6 +1487,7 @@ class AILocalSEOOptimizer:
             
         except Exception as e:
             logger.error(f"Erreur analyse concurrents: {e}")
+
             return {}
     
     async def _find_local_competitors(
@@ -1355,8 +1504,13 @@ class AILocalSEOOptimizer:
         
         for i in range(np.random.randint(3, 15)):
             # Génération de coordonnées aléatoires dans le rayon
+
             lat_offset = np.random.uniform(-0.1, 0.1)
+
+
             lng_offset = np.random.uniform(-0.1, 0.1)
+
+
             
             competitor = {
                 'name': f"Concurrent {category} {i+1}",
@@ -1371,6 +1525,7 @@ class AILocalSEOOptimizer:
         
         # Tri par distance
         competitors.sort(key=lambda x: x['distance_km'])
+
         
         return competitors
     
@@ -1381,9 +1536,12 @@ class AILocalSEOOptimizer:
         """Évalue le paysage concurrentiel local"""
         if not competitors:
             return {'density': 'low', 'intensity': 'low'}
+
         
         competitor_count = len(competitors)
+
         avg_rating = np.mean([c['rating'] for c in competitors])
+
         avg_reviews = np.mean([c['review_count'] for c in competitors])
         
         # Classification de la densité concurrentielle
@@ -1415,30 +1573,38 @@ class AILocalSEOOptimizer:
         profile: LocalBusinessProfile,
         competitors: List[Dict[str, Any]]
     ) -> List[str]:
-        """Identifie les opportunités concurrentielles"""
+        """
+        Identifie les opportunités concurrentielles"""
         opportunities = []
         
         if not competitors:
             opportunities.append("Marché local peu concurrentiel - opportunité de leadership")
+
             return opportunities
+
         
         avg_rating = np.mean([c['rating'] for c in competitors])
+
         avg_reviews = np.mean([c['review_count'] for c in competitors])
         
         # Opportunités basées sur l'analyse
         if avg_rating < 4.0:
             opportunities.append("Ratings concurrents faibles - opportunité de différenciation qualité")
+
         
         if avg_reviews < 50:
             opportunities.append("Peu d'avis concurrents - opportunité de dominer les avis")
+
         
         if len(competitors) < 5:
             opportunities.append("Faible densité concurrentielle - opportunité d'expansion rapide")
         
         # Opportunités géographiques
+
         competitor_distances = [c['distance_km'] for c in competitors]
         if min(competitor_distances) > 2.0:
             opportunities.append("Gaps géographiques - opportunité de proximité")
+
         
         return opportunities
     
@@ -1454,10 +1620,12 @@ class AILocalSEOOptimizer:
             return threats
         
         # Analyse des menaces
+
         strong_competitors = [c for c in competitors if c['rating'] > 4.5 and c['review_count'] > 200]
         
         if strong_competitors:
             threats.append(f"{len(strong_competitors)} concurrents très forts détectés")
+
         
         if len(competitors) > 15:
             threats.append("Marché saturé - forte concurrence")
@@ -1466,6 +1634,7 @@ class AILocalSEOOptimizer:
         very_close_competitors = [c for c in competitors if c['distance_km'] < 1.0]
         if very_close_competitors:
             threats.append(f"{len(very_close_competitors)} concurrents très proches")
+
         
         return threats
     
@@ -1476,6 +1645,7 @@ class AILocalSEOOptimizer:
         """Analyse le profil d'avis de l'entreprise"""
         # Simulation d'analyse d'avis
         # Dans la réalité, cela analyserait les vrais avis depuis multiple sources
+
         
         review_profile = {
             'total_reviews': np.random.randint(5, 300),
@@ -1502,32 +1672,42 @@ class AILocalSEOOptimizer:
         
         # Calcul du score de santé des avis
         review_profile['health_score'] = self._calculate_review_health_score(review_profile)
+
         
         return review_profile
     
     def _calculate_review_health_score(self, review_profile: Dict[str, Any]) -> float:
-        """Calcule le score de santé des avis"""
+        """
+        Calcule le score de santé des avis"""
         factors = []
         
         # Facteur de rating moyen
+
         avg_rating = review_profile.get('average_rating', 0)
+
         rating_factor = (avg_rating / 5.0) * 100
         factors.append(rating_factor * 0.4)
         
         # Facteur de volume d'avis
+
         total_reviews = review_profile.get('total_reviews', 0)
+
         volume_factor = min(100, (total_reviews / 100) * 100)
         factors.append(volume_factor * 0.3)
         
         # Facteur de vélocité
         velocity = review_profile.get('review_velocity', 0)
+
         velocity_factor = min(100, (velocity / 5) * 100)
         factors.append(velocity_factor * 0.2)
         
         # Facteur de sentiment
+
         sentiment = review_profile.get('sentiment_breakdown', {})
+
         sentiment_factor = sentiment.get('positive', 0)
         factors.append(sentiment_factor * 0.1)
+
         
         return sum(factors)
     
@@ -1535,7 +1715,8 @@ class AILocalSEOOptimizer:
         self,
         profile: LocalBusinessProfile
     ) -> Dict[str, Any]:
-        """Analyse le profil de citations de l'entreprise"""
+        """
+        Analyse le profil de citations de l'entreprise"""
         citation_profile = {
             'total_citations': 0,
             'nap_consistency_score': 0.0,
@@ -1549,6 +1730,7 @@ class AILocalSEOOptimizer:
         for tier, sources in self.citation_sources.items():
             for source, data in sources.items():
                 # Probabilité d'avoir une citation selon le tier
+
                 prob = 0.8 if tier == 'tier_1' else 0.6 if tier == 'tier_2' else 0.3
                 
                 if np.random.random() < prob:
@@ -1564,8 +1746,10 @@ class AILocalSEOOptimizer:
         # Calcul du score de cohérence NAP
         consistent_citations = sum(
             1 for citation in citation_profile['citation_sources'].values()
+
             if citation.get('nap_consistent', False)
         )
+
         
         if citation_profile['total_citations'] > 0:
             citation_profile['nap_consistency_score'] = (
@@ -1581,26 +1765,33 @@ class AILocalSEOOptimizer:
         citation_profile['citation_opportunities'] = await self._identify_citation_opportunities(
             citation_profile
         )
+
         
         return citation_profile
     
     def _calculate_citation_quality_score(self, citation_profile: Dict[str, Any]) -> float:
-        """Calcule le score de qualité des citations"""
+        """
+        Calcule le score de qualité des citations"""
         total_citations = citation_profile.get('total_citations', 0)
+
         
         if total_citations == 0:
             return 0.0
+
         
         quality_scores = {
             'excellent': 100,
             'good': 80,
             'needs_improvement': 50
         }
+
         
         total_quality = 0
         for citation in citation_profile.get('citation_sources', {}).values():
             quality = citation.get('quality', 'needs_improvement')
+
             total_quality += quality_scores.get(quality, 50)
+
         
         return total_quality / total_citations
     
@@ -1608,12 +1799,15 @@ class AILocalSEOOptimizer:
         self,
         citation_profile: Dict[str, Any]
     ) -> List[str]:
-        """Identifie les opportunités de citations"""
+        """
+        Identifie les opportunités de citations"""
         opportunities = []
         
         # Opportunités basées sur les sources manquantes
+
         missing_tier1 = [
             source for source in self.citation_sources['tier_1'].keys()
+
             if source in citation_profile.get('missing_sources', [])
         ]
         
@@ -1627,6 +1821,7 @@ class AILocalSEOOptimizer:
         # Opportunités de qualité
         if citation_profile.get('citation_quality_score', 0) < 80:
             opportunities.append("Optimiser la qualité des citations existantes")
+
         
         return opportunities
     
@@ -1650,45 +1845,55 @@ class AILocalSEOOptimizer:
         try:
             if business_id not in self.business_profiles:
                 raise ValueError(f"Profil entreprise {business_id} non trouvé")
+
+
             
             profile = self.business_profiles[business_id]
             
             logger.info(f"🎯 Optimisation SEO local pour {profile.name}")
             
             # Génération de l'ID de stratégie
+
             strategy_id = f"local_seo_{int(time.time())}_{business_id}"
             
             # Sélection des facteurs d'optimisation
+
             optimization_factors = await self._select_optimization_factors(
                 profile,
                 optimization_goals
             )
             
             # Stratégie de mots-clés géo-localisés
+
             keyword_strategy = await self._create_local_keyword_strategy(
                 profile,
                 geographic_scope
             )
             
             # Plan de contenu local
+
             content_plan = await self._create_local_content_plan(
                 profile,
                 keyword_strategy
             )
             
             # Stratégie de citations
+
             citation_strategy = await self._create_citation_strategy(profile)
             
             # Gestion des avis
+
             review_management = await self._create_review_management_strategy(profile)
             
             # Cibles de performance
+
             performance_targets = await self._set_local_performance_targets(
                 profile,
                 optimization_goals
             )
             
             # Roadmap d'implémentation
+
             implementation_roadmap = await self._create_implementation_roadmap(
                 optimization_factors,
                 keyword_strategy,
@@ -1702,6 +1907,7 @@ class AILocalSEOOptimizer:
             )
             
             # Création de la stratégie
+
             strategy = LocalSEOStrategy(
                 strategy_id=strategy_id,
                 business_profile=profile,
@@ -1715,14 +1921,17 @@ class AILocalSEOOptimizer:
                 implementation_roadmap=implementation_roadmap,
                 roi_projection=roi_projection
             )
+
             
             self.local_strategies[strategy_id] = strategy
             
             logger.info(f"✅ Stratégie SEO local créée - ROI projeté: {roi_projection:.1f}%")
+
             return strategy
             
         except Exception as e:
             logger.error(f"❌ Erreur optimisation SEO local: {e}")
+
             raise
     
     async def _select_optimization_factors(
@@ -1743,18 +1952,22 @@ class AILocalSEOOptimizer:
         # Facteurs basés sur les objectifs
         for goal in goals:
             goal_lower = goal.lower()
+
             
             if 'avis' in goal_lower or 'review' in goal_lower:
                 if LocalSEOFactor.CUSTOMER_REVIEWS not in factors:
                     factors.append(LocalSEOFactor.CUSTOMER_REVIEWS)
+
             
             if 'citation' in goal_lower:
                 if LocalSEOFactor.LOCAL_CITATIONS not in factors:
                     factors.append(LocalSEOFactor.LOCAL_CITATIONS)
+
             
             if 'contenu' in goal_lower or 'content' in goal_lower:
                 if LocalSEOFactor.LOCAL_CONTENT not in factors:
                     factors.append(LocalSEOFactor.LOCAL_CONTENT)
+
             
             if 'proximité' in goal_lower or 'proximity' in goal_lower:
                 if LocalSEOFactor.PROXIMITY_SIGNALS not in factors:
@@ -1764,10 +1977,12 @@ class AILocalSEOOptimizer:
         if profile.review_profile.get('health_score', 0) < 70:
             if LocalSEOFactor.CUSTOMER_REVIEWS not in factors:
                 factors.append(LocalSEOFactor.CUSTOMER_REVIEWS)
+
         
         if profile.citation_profile.get('nap_consistency_score', 0) < 90:
             if LocalSEOFactor.LOCAL_CITATIONS not in factors:
                 factors.append(LocalSEOFactor.LOCAL_CITATIONS)
+
         
         return factors
     
@@ -1776,11 +1991,14 @@ class AILocalSEOOptimizer:
         profile: LocalBusinessProfile,
         scope: GeographicScope
     ) -> Dict[str, Any]:
-        """Crée une stratégie de mots-clés locaux"""
+        """
+        Crée une stratégie de mots-clés locaux"""
         # Détermination des zones géographiques cibles
+
         target_locations = await self._determine_target_locations(profile, scope)
         
         # Recherche de mots-clés par zone
+
         keyword_data = {}
         for location in target_locations:
             location_keywords = await self._research_location_keywords(
@@ -1788,10 +2006,14 @@ class AILocalSEOOptimizer:
                 profile.services,
                 location
             )
+
             keyword_data[location] = location_keywords
         
         # Priorisation des mots-clés
+
         prioritized_keywords = await self._prioritize_local_keywords(keyword_data)
+
+
         
         strategy = {
             'target_locations': target_locations,
@@ -1809,11 +2031,14 @@ class AILocalSEOOptimizer:
         profile: LocalBusinessProfile,
         scope: GeographicScope
     ) -> List[str]:
-        """Détermine les zones géographiques à cibler"""
+        """
+        Détermine les zones géographiques à cibler"""
         locations = []
         
         # Extraction de la ville/région de l'adresse principale
+
         address_parts = profile.address.split(',')
+
         
         if scope == GeographicScope.HYPERLOCAL:
             # Quartiers et codes postaux
@@ -1826,13 +2051,17 @@ class AILocalSEOOptimizer:
             # Ville et environs immédiats
             if len(address_parts) >= 2:
                 city = address_parts[-2].strip()
+
                 locations.append(city)
+
                 locations.append(f"{city} et environs")
         elif scope == GeographicScope.REGIONAL:
             # Région/département
             if len(address_parts) >= 2:
                 region = address_parts[-1].strip()
+
                 locations.append(region)
+
                 locations.extend(profile.service_areas[:3])  # Top 3 zones de service
         
         # Zones de service spécifiques
@@ -1851,10 +2080,12 @@ class AILocalSEOOptimizer:
         keywords = {}
         
         # Mots-clés principaux
+
         main_terms = [category] + services[:5]
         
         for term in main_terms:
             # Combinaisons avec la localisation
+
             location_variants = [
                 f"{term} {location}",
                 f"{term} à {location}",
@@ -1895,9 +2126,14 @@ class AILocalSEOOptimizer:
                 
                 # Calcul du score de priorité
                 volume_score = min(100, keyword_info['search_volume'] / 10)
+
+
                 
                 competition_scores = {'low': 100, 'medium': 70, 'high': 40}
+
                 competition_score = competition_scores.get(keyword_info['competition'], 70)
+
+
                 
                 difficulty_score = 100 - keyword_info['difficulty']
                 
@@ -1906,11 +2142,13 @@ class AILocalSEOOptimizer:
                     competition_score * 0.3 +
                     difficulty_score * 0.3
                 )
+
                 
                 all_keywords.append(keyword_info)
         
         # Tri par score de priorité
         all_keywords.sort(key=lambda x: x['priority_score'], reverse=True)
+
         
         return all_keywords[:20]  # Top 20 mots-clés prioritaires
     
@@ -1918,7 +2156,8 @@ class AILocalSEOOptimizer:
         self,
         profile: LocalBusinessProfile
     ) -> List[str]:
-        """Identifie les opportunités de mots-clés long tail"""
+        """
+        Identifie les opportunités de mots-clés long tail"""
         long_tail = []
         
         # Combinaisons spécifiques aux services
@@ -1930,6 +2169,7 @@ class AILocalSEOOptimizer:
                 f"spécialiste {service} certifié",
                 f"{service} pas cher de qualité"
             ])
+
         
         return long_tail[:15]
     
@@ -1946,17 +2186,25 @@ class AILocalSEOOptimizer:
         }
         
         # Mots-clés saisonniers basés sur la catégorie
+
         category_lower = profile.category.lower()
+
         
         if any(term in category_lower for term in ['jardin', 'paysage', 'extérieur']):
             seasonal['printemps'].extend(['préparation jardin', 'plantation'])
+
             seasonal['été'].extend(['entretien pelouse', 'arrosage'])
+
             seasonal['automne'].extend(['taille arbres', 'ramassage feuilles'])
+
             seasonal['hiver'].extend(['protection plantes', 'déneigement'])
+
         
         if any(term in category_lower for term in ['climatisation', 'chauffage']):
             seasonal['été'].extend(['climatisation', 'rafraîchissement'])
+
             seasonal['hiver'].extend(['chauffage', 'isolation'])
+
         
         return seasonal
     
@@ -1964,11 +2212,13 @@ class AILocalSEOOptimizer:
         self,
         profile: LocalBusinessProfile
     ) -> List[str]:
-        """Trouve les gaps de mots-clés par rapport aux concurrents"""
+        """
+        Trouve les gaps de mots-clés par rapport aux concurrents"""
         gaps = []
         
         # Simulation d'analyse des gaps concurrentiels
         # Dans la réalité, cela analyserait les vrais mots-clés des concurrents
+
         
         competitor_keywords = [
             f"{profile.category} premium",
@@ -1979,11 +2229,14 @@ class AILocalSEOOptimizer:
         ]
         
         # Identification des gaps (mots-clés que nous ne ciblons pas encore)
+
         current_keywords = set(profile.target_keywords)
+
         
         for keyword in competitor_keywords:
             if keyword not in current_keywords:
                 gaps.append(keyword)
+
         
         return gaps[:10]
     
@@ -2008,7 +2261,8 @@ class AILocalSEOOptimizer:
         self,
         profile: LocalBusinessProfile
     ) -> List[Dict[str, Any]]:
-        """Définit les piliers de contenu local"""
+        """
+        Définit les piliers de contenu local"""
         pillars = [
             {
                 'name': 'Expertise Locale',
@@ -2036,7 +2290,8 @@ class AILocalSEOOptimizer:
         self,
         profile: LocalBusinessProfile
     ) -> Dict[str, List[str]]:
-        """Crée un calendrier de contenu local"""
+        """
+        Crée un calendrier de contenu local"""
         calendar = {
             'mensuel': [
                 'Article expert du mois',
@@ -2065,7 +2320,8 @@ class AILocalSEOOptimizer:
         profile: LocalBusinessProfile,
         keyword_strategy: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Planifie les pages de localisation"""
+        """
+        Planifie les pages de localisation"""
         location_pages = []
         
         for location in keyword_strategy.get('target_locations', []):
@@ -2075,6 +2331,7 @@ class AILocalSEOOptimizer:
                 'title_template': f"{profile.category} à {location} | {profile.name}",
                 'target_keywords': [
                     kw['keyword'] for kw in keyword_strategy.get('priority_keywords', [])
+
                     if location.lower() in kw['keyword'].lower()
                 ][:5],
                 'content_sections': [
@@ -2086,6 +2343,7 @@ class AILocalSEOOptimizer:
                 ]
             }
             location_pages.append(page)
+
         
         return location_pages[:10]  # Limiter à 10 pages de localisation
     
@@ -2128,6 +2386,7 @@ class AILocalSEOOptimizer:
                 'estimated_length': '600-1000 mots'
             }
         ])
+
         
         return topics[:20]
     
@@ -2170,7 +2429,8 @@ class AILocalSEOOptimizer:
         self,
         profile: LocalBusinessProfile
     ) -> Dict[str, Any]:
-        """Planifie le schema markup local"""
+        """
+        Planifie le schema markup local"""
         schema_plan = {
             'local_business': {
                 'type': 'LocalBusiness',
@@ -2205,38 +2465,48 @@ class AILocalSEOOptimizer:
         business_id: str,
         analysis_period_days: int = 30
     ) -> Dict[str, Any]:
-        """Analyse les performances SEO local"""
+        """
+        Analyse les performances SEO local"""
         try:
             if business_id not in self.business_profiles:
                 raise ValueError(f"Profil entreprise {business_id} non trouvé")
+
+
             
             profile = self.business_profiles[business_id]
             
             # Collecte des métriques de performance
+
             performance_data = await self._collect_local_performance_metrics(
                 profile,
                 analysis_period_days
             )
             
             # Analyse des rankings locaux
+
             ranking_analysis = await self._analyze_local_rankings(profile)
             
             # Analyse des citations
+
             citation_analysis = await self._analyze_citation_performance(profile)
             
             # Analyse des avis
+
             review_analysis = await self._analyze_review_performance(profile)
             
             # Analyse GMB
             gmb_analysis = await self._analyze_gmb_performance(profile)
             
             # Recommandations d'optimisation
+
             optimization_recommendations = await self._generate_local_optimization_recommendations(
                 performance_data,
                 ranking_analysis,
                 citation_analysis,
                 review_analysis
             )
+
+
             
             analysis = {
                 'business_id': business_id,
@@ -2258,6 +2528,7 @@ class AILocalSEOOptimizer:
             
         except Exception as e:
             logger.error(f"❌ Erreur analyse performance SEO local: {e}")
+
             raise
     
     async def _collect_local_performance_metrics(
@@ -2267,6 +2538,7 @@ class AILocalSEOOptimizer:
     ) -> Dict[str, Any]:
         """Collecte les métriques de performance locale"""
         # Simulation de collecte de métriques réelles
+
         metrics = {
             'local_traffic_increase': np.random.uniform(5, 25),
             'local_impressions': np.random.randint(1000, 10000),
@@ -2285,7 +2557,8 @@ class AILocalSEOOptimizer:
         self,
         profile: LocalBusinessProfile
     ) -> Dict[str, Any]:
-        """Analyse les rankings locaux"""
+        """
+        Analyse les rankings locaux"""
         analysis = {
             'total_keywords_tracked': len(profile.target_keywords),
             'keywords_in_top3': np.random.randint(2, 8),
@@ -2298,6 +2571,7 @@ class AILocalSEOOptimizer:
         }
         
         # Calcul du score de ranking
+
         total_tracked = analysis['total_keywords_tracked']
         if total_tracked > 0:
             analysis['ranking_score'] = (
@@ -2315,34 +2589,42 @@ class AILocalSEOOptimizer:
         citations: Dict[str, Any],
         reviews: Dict[str, Any]
     ) -> float:
-        """Calcule le score SEO local global"""
+        """
+        Calcule le score SEO local global"""
         scores = []
         
         # Score de performance (30%)
+
         perf_score = min(100, performance.get('local_traffic_increase', 0) * 4)
         scores.append(perf_score * 0.3)
         
         # Score de rankings (25%)
+
         ranking_score = rankings.get('ranking_score', 0)
         scores.append(ranking_score * 0.25)
         
         # Score de citations (25%)
+
         citation_score = citations.get('citation_score', 0)
         scores.append(citation_score * 0.25)
         
         # Score d'avis (20%)
+
         review_score = reviews.get('review_score', 0)
         scores.append(review_score * 0.2)
+
         
         return sum(scores)
     
     async def cleanup(self) -> None:
-        """Nettoie les ressources de l'optimiseur local"""
+        """
+        Nettoie les ressources de l'optimiseur local"""
         try:
             if self.session:
                 await self.session.close()
             
             # Sauvegarde des métriques importantes
+
             summary_metrics = {
                 'total_businesses': len(self.business_profiles),
                 'total_strategies': len(self.local_strategies),
@@ -2351,9 +2633,11 @@ class AILocalSEOOptimizer:
             }
             
             logger.info(f"🧹 Nettoyage SEO local terminé - {summary_metrics}")
+
             
         except Exception as e:
             logger.error(f"❌ Erreur lors du nettoyage SEO local: {e}")
+
             raise
 
 # Instances globales des moteurs
@@ -2361,11 +2645,25 @@ protection_seo_engine = ProtectionSEOEngine()
 local_seo_optimizer = AILocalSEOOptimizer()
 
 # Export des classes et fonctions
+# === ALIASES COMPATIBILITÉ ===
+ProtectionSEOIntegrationEngine = ProtectionSEOEngine
+CopyrightSEOProtection = ProtectionSEOEngine
+AntiPiracySEOStrategy = ProtectionStrategy
+ContentAuthenticitySEOBooster = ProtectionSEOEngine
+LocalSEOOptimization = LocalSEOStrategy
+AuthenticityBoost = ContentFingerprint
+
 __all__ = [
     'ProtectionSEOEngine',
+    'ProtectionSEOIntegrationEngine',
+    'CopyrightSEOProtection',
+    'AntiPiracySEOStrategy',
+    'ContentAuthenticitySEOBooster',
     'AILocalSEOOptimizer',
     'ProtectionStrategy',
     'LocalSEOStrategy',
+    'LocalSEOOptimization',
+    'AuthenticityBoost',
     'ProtectionLevel',
     'ThreatType',
     'LocalSEOFactor',
@@ -2382,6 +2680,8 @@ if __name__ == "__main__":
     async def test_protection_and_local_engines():
         # Test moteur de protection
         await protection_seo_engine.initialize()
+
+
         
         test_content = "Contenu original à protéger avec watermark unique."
         test_metadata = {
@@ -2389,17 +2689,22 @@ if __name__ == "__main__":
             'author': 'Fahed Mlaiel',
             'category': 'SEO'
         }
+
         
         fingerprint = await protection_seo_engine.protect_content(
             test_content,
             test_metadata,
             ProtectionLevel.ADVANCED
         )
+
+
         
         threats = await protection_seo_engine.scan_for_threats()
         
         # Test optimiseur SEO local
         await local_seo_optimizer.initialize()
+
+
         
         test_business = {
             'name': 'Expert SEO Local',
@@ -2409,14 +2714,18 @@ if __name__ == "__main__":
             'website': 'https://expert-seo-local.com',
             'services': ['SEO local', 'Optimisation GMB', 'Citations locales']
         }
+
         
         business_profile = await local_seo_optimizer.create_local_business_profile(test_business)
+
+
         
         local_strategy = await local_seo_optimizer.optimize_local_seo(
             business_profile.business_id,
             ['Améliorer visibilité locale', 'Augmenter avis clients'],
             GeographicScope.LOCAL
         )
+
         
         print(f"✅ Tests réussis:")
         print(f"🛡️ Protection: {len(protection_seo_engine.protected_content)} contenus protégés")

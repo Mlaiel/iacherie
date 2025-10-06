@@ -94,7 +94,8 @@ class NetworkSliceConfig:
 
 @dataclass
 class MECServiceRegistration:
-    """MEC service registration information."""
+    """
+        MEC service registration information."""
     service_id: str
     service_name: str
     service_type: ServiceType
@@ -149,6 +150,7 @@ class MECIntegrationLayer:
         """Start the MEC integration layer."""
         if self.running:
             logger.warning("MEC integration layer already running")
+
             return
         
         self.running = True
@@ -160,16 +162,19 @@ class MECIntegrationLayer:
         self.background_tasks.append(
             asyncio.create_task(self._integration_monitor())
         )
+
         
         if self.config.qos_management_enabled:
             self.background_tasks.append(
                 asyncio.create_task(self._qos_monitor())
             )
+
         
         if self.config.service_migration_enabled:
             self.background_tasks.append(
                 asyncio.create_task(self._migration_manager())
             )
+
         
         logger.info("MEC integration layer started")
     
@@ -183,6 +188,7 @@ class MECIntegrationLayer:
         # Cancel background tasks
         for task in self.background_tasks:
             task.cancel()
+
             try:
                 await task
             except asyncio.CancelledError:
@@ -192,6 +198,7 @@ class MECIntegrationLayer:
         
         # Stop the MEC orchestrator
         await self.mec_orchestrator.stop()
+
         
         logger.info("MEC integration layer stopped")
     
@@ -208,6 +215,8 @@ class MECIntegrationLayer:
     ) -> str:
         """Register a MEC service with the integration layer."""
         service_id = str(uuid.uuid4())
+
+
         
         registration = MECServiceRegistration(
             service_id=service_id,
@@ -222,6 +231,7 @@ class MECIntegrationLayer:
             supported_slices=supported_slices or [],
             registration_time=datetime.now()
         )
+
         
         self.registered_services[service_id] = registration
         
@@ -230,6 +240,7 @@ class MECIntegrationLayer:
             "service_id": service_id,
             "registration": registration
         })
+
         
         logger.info(f"Registered MEC service: {service_name} (ID: {service_id})")
         return service_id
@@ -238,7 +249,9 @@ class MECIntegrationLayer:
         """Unregister a MEC service."""
         if service_id not in self.registered_services:
             logger.warning(f"Service {service_id} not found for unregistration")
+
             return False
+
         
         registration = self.registered_services.pop(service_id)
         
@@ -247,6 +260,7 @@ class MECIntegrationLayer:
             "service_id": service_id,
             "registration": registration
         })
+
         
         logger.info(f"Unregistered MEC service: {registration.service_name}")
         return True
@@ -278,6 +292,7 @@ class MECIntegrationLayer:
             bandwidth_requirement_mbps=bandwidth_requirement_mbps,
             reliability_requirement=reliability_requirement
         )
+
         
         self.network_slices[slice_id] = slice_config
         
@@ -286,6 +301,7 @@ class MECIntegrationLayer:
             "slice_id": slice_id,
             "config": slice_config
         })
+
         
         logger.info(f"Created network slice: {slice_profile} (ID: {slice_id})")
         return slice_id
@@ -294,7 +310,9 @@ class MECIntegrationLayer:
         """Delete a network slice."""
         if slice_id not in self.network_slices:
             logger.warning(f"Network slice {slice_id} not found")
+
             return False
+
         
         slice_config = self.network_slices.pop(slice_id)
         
@@ -303,6 +321,7 @@ class MECIntegrationLayer:
             "slice_id": slice_id,
             "config": slice_config
         })
+
         
         logger.info(f"Deleted network slice: {slice_id}")
         return True
@@ -316,14 +335,19 @@ class MECIntegrationLayer:
         """Deploy a registered service to a specific network slice."""
         if service_id not in self.registered_services:
             raise ValueError(f"Service {service_id} not registered")
+
         
         if slice_id not in self.network_slices:
             raise ValueError(f"Network slice {slice_id} not found")
+
+
         
         service_reg = self.registered_services[service_id]
+
         slice_config = self.network_slices[slice_id]
         
         # Use the underlying MEC orchestrator to deploy the service
+
         deployment_id = await self.mec_orchestrator.deploy_service(
             service_type=service_reg.service_type,
             image_name=f"{service_reg.service_name}:latest",
@@ -331,6 +355,7 @@ class MECIntegrationLayer:
             qos_requirements=service_reg.qos_requirements,
             target_node_id=target_node_id
         )
+
         
         logger.info(f"Deployed service {service_id} to slice {slice_id}")
         return deployment_id
@@ -344,6 +369,7 @@ class MECIntegrationLayer:
         """Setup QoS flow for a session."""
         if slice_id not in self.network_slices:
             logger.error(f"Network slice {slice_id} not found")
+
             return False
         
         # Store session information
@@ -372,11 +398,13 @@ class MECIntegrationLayer:
         })
         
         # Use the underlying MEC orchestrator for migration
+
         migration_id = await self.mec_orchestrator.migrate_service(
             service_instance_id=service_instance_id,
             target_node_id=target_node_id,
             migration_reason=migration_reason
         )
+
         
         logger.info(f"Triggered service migration: {migration_id}")
         return migration_id
@@ -435,11 +463,13 @@ class MECIntegrationLayer:
         return sst_mapping.get(slice_profile, 1)
     
     async def _trigger_event(self, event_type: str, event_data: Dict[str, Any]):
-        """Trigger event handlers."""
+        """
+        Trigger event handlers."""
         if event_type in self.event_handlers:
             for handler in self.event_handlers[event_type]:
                 try:
                     await handler(event_data)
+
                 except Exception as e:
                     logger.error(f"Event handler error for {event_type}: {e}")
     
@@ -454,9 +484,11 @@ class MECIntegrationLayer:
                     pass
                 
                 await asyncio.sleep(self.config.monitoring_interval_seconds)
+
                 
             except Exception as e:
                 logger.error(f"Integration monitor error: {e}")
+
                 await asyncio.sleep(60)
     
     async def _qos_monitor(self):
@@ -481,11 +513,13 @@ class MECIntegrationLayer:
                         #         "slice_id": slice_id,
                         #         "violation_type": "latency"
                         #     })
+
                 
                 await asyncio.sleep(10)  # Check every 10 seconds
                 
             except Exception as e:
                 logger.error(f"QoS monitor error: {e}")
+
                 await asyncio.sleep(60)
     
     async def _migration_manager(self):
@@ -499,9 +533,11 @@ class MECIntegrationLayer:
                 # - Trigger automatic migrations
                 
                 await asyncio.sleep(30)
+
                 
             except Exception as e:
                 logger.error(f"Migration manager error: {e}")
+
                 await asyncio.sleep(60)
 
 
@@ -517,9 +553,11 @@ async def create_mec_integration_layer(
 
 # Example usage
 async def main():
-    """Example usage of the MEC integration layer."""
+    """
+        Example usage of the MEC integration layer."""
     try:
         # Create configuration
+
         config = MECIntegrationConfig(
             integration_protocol=IntegrationProtocol.REST_API,
             qos_management_enabled=True,
@@ -527,10 +565,13 @@ async def main():
         )
         
         # Create and start integration layer
+
         integration = await create_mec_integration_layer(config)
+
         
         try:
             # Register a service
+
             service_id = await integration.register_mec_service(
                 service_name="ai-inference-service",
                 service_type=ServiceType.AI_INFERENCE,
@@ -538,24 +579,32 @@ async def main():
                 capabilities=["image_classification", "object_detection"],
                 qos_requirements={"latency_ms": 50, "throughput_rps": 100}
             )
+
             print(f"Registered service: {service_id}")
             
             # Create a network slice
+
             slice_id = await integration.create_network_slice(
                 slice_profile=SliceProfile.URLLC,
                 latency_requirement_ms=10,
                 bandwidth_requirement_mbps=100,
                 reliability_requirement=0.99999
             )
+
             print(f"Created network slice: {slice_id}")
             
             # Get status
+
             status = integration.get_integration_status()
+
             print("MEC Integration Status:")
+
             print(json.dumps(status, indent=2, default=str))
+
             
         finally:
             await integration.stop()
+
             
     except Exception as e:
         logger.error(f"Example failed: {e}")

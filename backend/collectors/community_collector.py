@@ -24,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 # Individual platform collector classes (simplified implementations)
 class DiscordCollector(BaseCollector):
-    """Discord content collector."""
+    """
+        Discord content collector."""
     def __init__(self, **kwargs):
         super().__init__("discord", rate_limit=50)
     
@@ -66,14 +67,17 @@ class CommunityCollector(BaseCollector):
     """
     
     def __init__(self, platform_configs: Optional[Dict[str, Dict]] = None):
-        """Initialize with platform-specific configurations."""
+        """
+        Initialize with platform-specific configurations."""
         super().__init__("community", rate_limit=100)
         
         # Initialize individual platform collectors
+
         configs = platform_configs or {}
         
         self.discord = DiscordCollector(**configs.get('discord', {}))
         self.reddit = RedditCollector(**configs.get('reddit', {}))
+
         
         self.collectors = {
             'discord': self.discord,
@@ -91,20 +95,25 @@ class CommunityCollector(BaseCollector):
             query: Search query
             config: Collection configuration
             platforms: List of platforms to search (default: all)
+
             
         Returns:
             List of collected community content from all platforms
         """
         if platforms is None:
             platforms = list(self.collectors.keys())
+
+
         
         results = []
+
         tasks = []
         
         # Create search tasks for each platform
         for platform in platforms:
             if platform in self.collectors:
                 task = self.collectors[platform].search_content(query, config)
+
                 tasks.append((platform, task))
         
         # Execute searches concurrently
@@ -112,9 +121,12 @@ class CommunityCollector(BaseCollector):
             try:
                 platform_results = await task
                 results.extend(platform_results)
+
                 logger.info(f"Collected {len(platform_results)} community results from {platform}")
+
             except Exception as e:
                 logger.error(f"Community search failed for {platform}: {e}")
+
         
         return results
     
@@ -125,6 +137,7 @@ class CommunityCollector(BaseCollector):
         Args:
             content_id: ID of community content to retrieve
             platform: Specific platform (auto-detect if None)
+
             
         Returns:
             Detailed community content information
@@ -136,10 +149,12 @@ class CommunityCollector(BaseCollector):
         for platform_name, collector in self.collectors.items():
             try:
                 result = await collector.get_content_details(content_id)
+
                 if result:
                     return result
             except Exception as e:
                 logger.debug(f"Community content not found on {platform_name}: {e}")
+
         
         return None
     
@@ -158,21 +173,28 @@ class CommunityCollector(BaseCollector):
         """
         if platforms is None:
             platforms = list(self.collectors.keys())
+
+
         
         results = []
+
         tasks = []
         
         for platform in platforms:
             if platform in self.collectors:
                 task = self.collectors[platform].get_user_content(user_id, config)
+
                 tasks.append((platform, task))
+
         
         for platform, task in tasks:
             try:
                 platform_results = await task
                 results.extend(platform_results)
+
             except Exception as e:
                 logger.error(f"User community content collection failed for {platform}: {e}")
+
         
         return results
     
@@ -193,12 +215,15 @@ class CommunityCollector(BaseCollector):
             platforms = list(self.collectors.keys())
         
         # Create async generators for each platform
+
         generators = []
         for platform in platforms:
             if platform in self.collectors:
                 try:
                     gen = self.collectors[platform].monitor_hashtags(hashtags, config)
+
                     generators.append(gen)
+
                 except Exception as e:
                     logger.error(f"Community hashtag monitoring failed for {platform}: {e}")
         
@@ -207,11 +232,14 @@ class CommunityCollector(BaseCollector):
             for i, gen in enumerate(generators[:]):
                 try:
                     result = await gen.__anext__()
+
                     yield result
                 except StopAsyncIteration:
                     generators.remove(gen)
+
                 except Exception as e:
                     logger.error(f"Community hashtag monitoring error: {e}")
+
                     generators.remove(gen)
     
     async def get_trending_content(self, config: CollectionConfig,
@@ -228,21 +256,28 @@ class CommunityCollector(BaseCollector):
         """
         if platforms is None:
             platforms = list(self.collectors.keys())
+
+
         
         results = []
+
         tasks = []
         
         for platform in platforms:
             if platform in self.collectors:
                 task = self.collectors[platform].get_trending_content(config)
+
                 tasks.append((platform, task))
+
         
         for platform, task in tasks:
             try:
                 platform_results = await task
                 results.extend(platform_results)
+
             except Exception as e:
                 logger.error(f"Trending community content collection failed for {platform}: {e}")
+
         
         return results
     
@@ -267,9 +302,12 @@ class CommunityCollector(BaseCollector):
                     platform_mentions = await collector.search_content(keyword, config)
                     
                     # Filter for actual mentions (not just keyword matches)
+
+
                     relevant_mentions = []
                     for mention in platform_mentions:
                         content_text = f"{mention.title} {mention.description}".lower()
+
                         if any(keyword.lower() in content_text for keyword in brand_keywords):
                             mention.metadata['mention_type'] = 'brand_mention'
                             mention.metadata['mentioned_keywords'] = [
@@ -277,13 +315,17 @@ class CommunityCollector(BaseCollector):
                                 if kw.lower() in content_text
                             ]
                             relevant_mentions.append(mention)
+
                     
                     mentions.extend(relevant_mentions)
+
                     
                 logger.info(f"Found {len(relevant_mentions)} brand mentions on {platform_name}")
+
                 
             except Exception as e:
                 logger.error(f"Brand mention monitoring failed for {platform_name}: {e}")
+
         
         return mentions
     
@@ -305,6 +347,7 @@ class CommunityCollector(BaseCollector):
         }
         
         # Group content by platform
+
         platform_content = {}
         for content in content_list:
             platform = content.platform
@@ -321,10 +364,12 @@ class CommunityCollector(BaseCollector):
                 'neutral_count': 0,
                 'avg_sentiment': 0.0
             }
+
             
             total_sentiment = 0.0
             for item in content:
                 # Use existing sentiment score or default to neutral
+
                 sentiment_score = item.sentiment_score or 0.0
                 total_sentiment += sentiment_score
                 
@@ -344,6 +389,7 @@ class CommunityCollector(BaseCollector):
         # Calculate overall sentiment
         if sentiment_data['sentiment_scores']:
             avg_sentiment = sum(sentiment_data['sentiment_scores']) / len(sentiment_data['sentiment_scores'])
+
             if avg_sentiment > 0.1:
                 sentiment_data['overall_sentiment'] = 'positive'
             elif avg_sentiment < -0.1:
@@ -375,16 +421,21 @@ class CommunityCollector(BaseCollector):
                 'engagement_trend': 'stable'
             }
         }
+
         
         config = CollectionConfig(max_results=200)
+
         cutoff_date = datetime.now() - timedelta(days=days)
+
         
         for platform_name, collector in self.collectors.items():
             try:
                 # Search for topic-related content
+
                 topic_content = await collector.search_content(topic, config)
                 
                 # Filter by date range
+
                 recent_content = [
                     content for content in topic_content
                     if datetime.fromtimestamp(content.timestamp) >= cutoff_date
@@ -393,15 +444,21 @@ class CommunityCollector(BaseCollector):
                 if recent_content:
                     total_engagement = sum(
                         content.engagement_metrics.get('total_engagement', 0)
+
                         for content in recent_content
                         if content.engagement_metrics
                     )
+
+
                     
                     total_comments = sum(
                         content.engagement_metrics.get('comments', 0)
+
                         for content in recent_content
                         if content.engagement_metrics
                     )
+
+
                     
                     platform_metrics = {
                         'posts_count': len(recent_content),
@@ -413,11 +470,13 @@ class CommunityCollector(BaseCollector):
                     
                     engagement_data['platforms'][platform_name] = platform_metrics
                     engagement_data['overall_metrics']['total_posts'] += len(recent_content)
+
                     engagement_data['overall_metrics']['total_comments'] += total_comments
                     engagement_data['overall_metrics']['total_engagement'] += total_engagement
                 
             except Exception as e:
                 logger.error(f"Community engagement tracking failed for {platform_name}: {e}")
+
                 engagement_data['platforms'][platform_name] = {'error': str(e)}
         
         return engagement_data
@@ -435,5 +494,6 @@ class CommunityCollector(BaseCollector):
         
         for platform_name, collector in self.collectors.items():
             status['platforms'][platform_name] = collector.get_platform_info()
+
         
         return status

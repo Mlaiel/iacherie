@@ -26,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics"""
+    """
+        Types of metrics"""
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -95,7 +96,8 @@ class UnifiedMetricsCollector:
         self.collection_count = 0
         
     def _register_collectors(self):
-        """Register all metric collectors"""
+        """
+        Register all metric collectors"""
         self.collectors = {
             MetricCategory.BUSINESS: self._collect_business_metrics,
             MetricCategory.PERFORMANCE: self._collect_performance_metrics,
@@ -108,16 +110,21 @@ class UnifiedMetricsCollector:
         }
     
     async def start_collection(self, interval: int = 60):
-        """Start automated metrics collection"""
+        """
+        Start automated metrics collection"""
         self.running = True
         logger.info(f"Starting unified metrics collection with {interval}s interval")
+
         
         while self.running:
             try:
                 await self.collect_all_metrics()
+
                 await asyncio.sleep(interval)
+
             except Exception as e:
                 logger.error(f"Error in metrics collection: {e}")
+
                 await asyncio.sleep(interval)
     
     async def stop_collection(self):
@@ -128,13 +135,16 @@ class UnifiedMetricsCollector:
     async def collect_all_metrics(self):
         """Collect metrics from all categories"""
         timestamp = datetime.now()
+
         collected_metrics = {}
         
         for category, collector in self.collectors.items():
             try:
                 category_metrics = await collector()
+
                 if category_metrics:
                     collected_metrics.update(category_metrics)
+
             except Exception as e:
                 logger.error(f"Failed to collect {category.value} metrics: {e}")
         
@@ -142,6 +152,7 @@ class UnifiedMetricsCollector:
         self.metrics.update(collected_metrics)
         
         # Create snapshot
+
         snapshot = MetricSnapshot(
             timestamp=timestamp,
             metrics=collected_metrics.copy(),
@@ -166,14 +177,17 @@ class UnifiedMetricsCollector:
         metrics["revenue_total"] = Metric(
             name="revenue_total",
             value=Decimal("245327.89"),  # Simulated
+
             metric_type=MetricType.GAUGE,
             category=MetricCategory.BUSINESS,
             tags={"period": "total", "currency": "USD"}
         )
+
         
         metrics["revenue_monthly"] = Metric(
             name="revenue_monthly",
             value=Decimal("23450.67"),  # Simulated
+
             metric_type=MetricType.GAUGE,
             category=MetricCategory.BUSINESS,
             tags={"period": "monthly", "currency": "USD"}
@@ -183,10 +197,12 @@ class UnifiedMetricsCollector:
         metrics["active_users"] = Metric(
             name="active_users",
             value=1847,  # Simulated
+
             metric_type=MetricType.GAUGE,
             category=MetricCategory.BUSINESS,
             tags={"period": "daily"}
         )
+
         
         metrics["conversion_rate"] = Metric(
             name="conversion_rate",
@@ -200,10 +216,12 @@ class UnifiedMetricsCollector:
         metrics["content_created"] = Metric(
             name="content_created",
             value=156,  # Simulated
+
             metric_type=MetricType.COUNTER,
             category=MetricCategory.BUSINESS,
             tags={"period": "daily", "type": "audio"}
         )
+
         
         return metrics
     
@@ -216,7 +234,9 @@ class UnifiedMetricsCollector:
             import psutil
             
             # CPU metrics
+
             cpu_percent = psutil.cpu_percent(interval=1)
+
             metrics["cpu_usage"] = Metric(
                 name="cpu_usage",
                 value=cpu_percent,
@@ -226,7 +246,9 @@ class UnifiedMetricsCollector:
             )
             
             # Memory metrics
+
             memory = psutil.virtual_memory()
+
             metrics["memory_usage"] = Metric(
                 name="memory_usage",
                 value=memory.percent,
@@ -234,6 +256,7 @@ class UnifiedMetricsCollector:
                 category=MetricCategory.PERFORMANCE,
                 tags={"unit": "percent"}
             )
+
             
             metrics["memory_available"] = Metric(
                 name="memory_available",
@@ -244,7 +267,9 @@ class UnifiedMetricsCollector:
             )
             
             # Disk metrics
+
             disk = psutil.disk_usage('/')
+
             metrics["disk_usage"] = Metric(
                 name="disk_usage",
                 value=(disk.used / disk.total) * 100,
@@ -254,7 +279,9 @@ class UnifiedMetricsCollector:
             )
             
             # Network metrics
+
             network = psutil.net_io_counters()
+
             metrics["network_bytes_sent"] = Metric(
                 name="network_bytes_sent",
                 value=network.bytes_sent,
@@ -262,6 +289,7 @@ class UnifiedMetricsCollector:
                 category=MetricCategory.PERFORMANCE,
                 tags={"unit": "bytes", "direction": "sent"}
             )
+
             
             metrics["network_bytes_recv"] = Metric(
                 name="network_bytes_recv",
@@ -270,10 +298,12 @@ class UnifiedMetricsCollector:
                 category=MetricCategory.PERFORMANCE,
                 tags={"unit": "bytes", "direction": "received"}
             )
+
             
         except ImportError:
             # Fallback to simulated metrics when psutil not available
             logger.warning("psutil not available, using simulated metrics")
+
             
             metrics["cpu_usage"] = Metric(
                 name="cpu_usage",
@@ -282,6 +312,7 @@ class UnifiedMetricsCollector:
                 category=MetricCategory.PERFORMANCE,
                 tags={"unit": "percent", "simulated": "true"}
             )
+
             
             metrics["memory_usage"] = Metric(
                 name="memory_usage",
@@ -290,14 +321,17 @@ class UnifiedMetricsCollector:
                 category=MetricCategory.PERFORMANCE,
                 tags={"unit": "percent", "simulated": "true"}
             )
+
             
             metrics["memory_available"] = Metric(
                 name="memory_available",
                 value=8.0,  # 8GB simulated
+
                 metric_type=MetricType.GAUGE,
                 category=MetricCategory.PERFORMANCE,
                 tags={"unit": "gb", "simulated": "true"}
             )
+
             
             metrics["disk_usage"] = Metric(
                 name="disk_usage",
@@ -306,6 +340,7 @@ class UnifiedMetricsCollector:
                 category=MetricCategory.PERFORMANCE,
                 tags={"unit": "percent", "mount": "/", "simulated": "true"}
             )
+
             
             metrics["network_bytes_sent"] = Metric(
                 name="network_bytes_sent",
@@ -314,6 +349,7 @@ class UnifiedMetricsCollector:
                 category=MetricCategory.PERFORMANCE,
                 tags={"unit": "bytes", "direction": "sent", "simulated": "true"}
             )
+
             
             metrics["network_bytes_recv"] = Metric(
                 name="network_bytes_recv",
@@ -322,6 +358,7 @@ class UnifiedMetricsCollector:
                 category=MetricCategory.PERFORMANCE,
                 tags={"unit": "bytes", "direction": "received", "simulated": "true"}
             )
+
         
         return metrics
     
@@ -337,18 +374,22 @@ class UnifiedMetricsCollector:
             category=MetricCategory.AI_ML,
             tags={"model": "content_classifier", "version": "v2.1"}
         )
+
         
         metrics["inference_latency"] = Metric(
             name="inference_latency",
             value=45.2,  # milliseconds
+
             metric_type=MetricType.HISTOGRAM,
             category=MetricCategory.AI_ML,
             tags={"model": "content_classifier", "unit": "ms"}
         )
+
         
         metrics["predictions_count"] = Metric(
             name="predictions_count",
             value=8472,  # Daily predictions
+
             metric_type=MetricType.COUNTER,
             category=MetricCategory.AI_ML,
             tags={"model": "content_classifier", "period": "daily"}
@@ -362,6 +403,7 @@ class UnifiedMetricsCollector:
             category=MetricCategory.AI_ML,
             tags={"model": "content_classifier", "phase": "training"}
         )
+
         
         return metrics
     
@@ -373,14 +415,17 @@ class UnifiedMetricsCollector:
         metrics["content_uploads"] = Metric(
             name="content_uploads",
             value=156,  # Daily uploads
+
             metric_type=MetricType.COUNTER,
             category=MetricCategory.CONTENT,
             tags={"type": "audio", "period": "daily"}
         )
+
         
         metrics["content_processing_time"] = Metric(
             name="content_processing_time",
             value=2.34,  # seconds
+
             metric_type=MetricType.HISTOGRAM,
             category=MetricCategory.CONTENT,
             tags={"type": "audio", "unit": "seconds"}
@@ -390,6 +435,7 @@ class UnifiedMetricsCollector:
         metrics["content_quality_score"] = Metric(
             name="content_quality_score",
             value=8.7,  # Out of 10
+
             metric_type=MetricType.GAUGE,
             category=MetricCategory.CONTENT,
             tags={"type": "audio", "scale": "0-10"}
@@ -399,10 +445,12 @@ class UnifiedMetricsCollector:
         metrics["copyright_checks"] = Metric(
             name="copyright_checks",
             value=156,  # Daily checks
+
             metric_type=MetricType.COUNTER,
             category=MetricCategory.CONTENT,
             tags={"type": "copyright", "period": "daily"}
         )
+
         
         return metrics
     
@@ -414,14 +462,17 @@ class UnifiedMetricsCollector:
         metrics["user_sessions"] = Metric(
             name="user_sessions",
             value=2341,  # Daily sessions
+
             metric_type=MetricType.COUNTER,
             category=MetricCategory.USER,
             tags={"period": "daily"}
         )
+
         
         metrics["avg_session_duration"] = Metric(
             name="avg_session_duration",
             value=18.5,  # minutes
+
             metric_type=MetricType.GAUGE,
             category=MetricCategory.USER,
             tags={"unit": "minutes"}
@@ -431,10 +482,12 @@ class UnifiedMetricsCollector:
         metrics["user_satisfaction"] = Metric(
             name="user_satisfaction",
             value=4.6,  # Out of 5
+
             metric_type=MetricType.GAUGE,
             category=MetricCategory.USER,
             tags={"scale": "1-5", "source": "ratings"}
         )
+
         
         return metrics
     
@@ -446,14 +499,17 @@ class UnifiedMetricsCollector:
         metrics["services_healthy"] = Metric(
             name="services_healthy",
             value=12,  # Number of healthy services
+
             metric_type=MetricType.GAUGE,
             category=MetricCategory.SYSTEM,
             tags={"status": "healthy"}
         )
+
         
         metrics["services_degraded"] = Metric(
             name="services_degraded",
             value=1,  # Number of degraded services
+
             metric_type=MetricType.GAUGE,
             category=MetricCategory.SYSTEM,
             tags={"status": "degraded"}
@@ -463,18 +519,22 @@ class UnifiedMetricsCollector:
         metrics["db_connections"] = Metric(
             name="db_connections",
             value=47,  # Active connections
+
             metric_type=MetricType.GAUGE,
             category=MetricCategory.SYSTEM,
             tags={"type": "postgresql", "status": "active"}
         )
+
         
         metrics["db_query_time"] = Metric(
             name="db_query_time",
             value=12.3,  # milliseconds
+
             metric_type=MetricType.HISTOGRAM,
             category=MetricCategory.SYSTEM,
             tags={"type": "postgresql", "unit": "ms"}
         )
+
         
         return metrics
     
@@ -490,6 +550,7 @@ class UnifiedMetricsCollector:
             category=MetricCategory.REVENUE,
             tags={"period": "daily", "currency": "USD"}
         )
+
         
         metrics["subscription_revenue"] = Metric(
             name="subscription_revenue",
@@ -507,6 +568,7 @@ class UnifiedMetricsCollector:
             category=MetricCategory.REVENUE,
             tags={"status": "active"}
         )
+
         
         metrics["churn_rate"] = Metric(
             name="churn_rate",
@@ -515,6 +577,7 @@ class UnifiedMetricsCollector:
             category=MetricCategory.REVENUE,
             tags={"period": "monthly", "unit": "percent"}
         )
+
         
         return metrics
     
@@ -526,14 +589,17 @@ class UnifiedMetricsCollector:
         metrics["collaboration_sessions"] = Metric(
             name="collaboration_sessions",
             value=89,  # Daily collaboration sessions
+
             metric_type=MetricType.COUNTER,
             category=MetricCategory.COLLABORATION,
             tags={"period": "daily"}
         )
+
         
         metrics["shared_projects"] = Metric(
             name="shared_projects",
             value=234,  # Total shared projects
+
             metric_type=MetricType.GAUGE,
             category=MetricCategory.COLLABORATION,
             tags={"status": "active"}
@@ -547,6 +613,7 @@ class UnifiedMetricsCollector:
             category=MetricCategory.COLLABORATION,
             tags={"unit": "percent"}
         )
+
         
         return metrics
     
@@ -555,14 +622,17 @@ class UnifiedMetricsCollector:
         return self.metrics.get(name)
     
     def get_metrics_by_category(self, category: MetricCategory) -> Dict[str, Metric]:
-        """Get all metrics for a specific category"""
+        """
+        Get all metrics for a specific category"""
         return {
             name: metric for name, metric in self.metrics.items()
+
             if metric.category == category
         }
     
     def get_metrics_snapshot(self, period: MetricPeriod = MetricPeriod.HOUR) -> MetricSnapshot:
-        """Get metrics snapshot for a specific period"""
+        """
+        Get metrics snapshot for a specific period"""
         # For now, return the latest snapshot
         if self.snapshots:
             return self.snapshots[-1]
@@ -574,31 +644,43 @@ class UnifiedMetricsCollector:
         )
     
     def get_metric_history(self, metric_name: str, hours: int = 24) -> List[Tuple[datetime, float]]:
-        """Get metric history for the specified time period"""
+        """
+        Get metric history for the specified time period"""
         history = []
+
         cutoff_time = datetime.now() - timedelta(hours=hours)
+
         
         for snapshot in self.snapshots:
             if snapshot.timestamp >= cutoff_time and metric_name in snapshot.metrics:
                 metric = snapshot.metrics[metric_name]
                 history.append((snapshot.timestamp, float(metric.value)))
+
         
         return history
     
     def calculate_metric_trend(self, metric_name: str, hours: int = 24) -> Dict[str, Any]:
-        """Calculate trend analysis for a metric"""
+        """
+        Calculate trend analysis for a metric"""
         history = self.get_metric_history(metric_name, hours)
+
         
         if len(history) < 2:
             return {"trend": "insufficient_data", "change": 0, "direction": "stable"}
+
         
         values = [value for _, value in history]
+
         timestamps = [ts for ts, _ in history]
         
         # Calculate simple trend
+
         first_value = values[0]
+
         last_value = values[-1]
+
         change_percent = ((last_value - first_value) / first_value) * 100 if first_value != 0 else 0
+
         
         direction = "increasing" if change_percent > 5 else "decreasing" if change_percent < -5 else "stable"
         
@@ -618,6 +700,7 @@ class UnifiedMetricsCollector:
             "total_metrics": len(self.metrics),
             "categories": {
                 category.value: len(self.get_metrics_by_category(category))
+
                 for category in MetricCategory
             },
             "collection_count": self.collection_count,
@@ -638,25 +721,30 @@ async def start_metrics_collection(interval: int = 60):
 
 
 async def stop_metrics_collection():
-    """Stop the global metrics collection"""
+    """
+        Stop the global metrics collection"""
     await metrics_collector.stop_collection()
 
 
 def get_metric(name: str) -> Optional[Metric]:
-    """Get a specific metric"""
+    """
+        Get a specific metric"""
     return metrics_collector.get_metric(name)
 
 
 def get_business_metrics() -> Dict[str, Metric]:
-    """Get all business metrics"""
+    """
+        Get all business metrics"""
     return metrics_collector.get_metrics_by_category(MetricCategory.BUSINESS)
 
 
 def get_performance_metrics() -> Dict[str, Metric]:
-    """Get all performance metrics"""
+    """
+        Get all performance metrics"""
     return metrics_collector.get_metrics_by_category(MetricCategory.PERFORMANCE)
 
 
 def get_system_summary() -> Dict[str, Any]:
-    """Get system metrics summary"""
+    """
+        Get system metrics summary"""
     return metrics_collector.get_system_summary()

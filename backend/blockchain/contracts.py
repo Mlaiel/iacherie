@@ -47,7 +47,8 @@ logger = logging.getLogger(__name__)
 # =============================================================================
 
 class ContentType(Enum):
-    """Types of content that can be copyrighted"""
+    """
+        Types of content that can be copyrighted"""
     MUSIC = "music"
     VIDEO = "video"
     IMAGE = "image"
@@ -119,7 +120,8 @@ class CopyrightRecord:
     license_terms: Optional[str] = None
 
 class CopyrightRegistry:
-    """Enterprise copyright registry with blockchain immutability"""
+    """
+        Enterprise copyright registry with blockchain immutability"""
     
     def __init__(self, web3_provider: Web3, contract_address: str):
         self.web3 = web3_provider
@@ -136,9 +138,12 @@ class CopyrightRegistry:
         description: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Register copyright for content"""
+        """
+        Register copyright for content"""
         try:
             content_id = str(uuid.uuid4())
+
+
             record = CopyrightRecord(
                 content_id=content_id,
                 creator_address=creator_address,
@@ -158,12 +163,15 @@ class CopyrightRegistry:
             if creator_address not in self.content_by_creator:
                 self.content_by_creator[creator_address] = []
             self.content_by_creator[creator_address].append(content_id)
+
             
             logger.info(f"Copyright registered: {content_id} for {creator_address}")
+
             return content_id
             
         except Exception as e:
             logger.error(f"Error registering copyright: {str(e)}")
+
             raise
 
     async def verify_ownership(self, content_id: str, address: str) -> bool:
@@ -171,12 +179,15 @@ class CopyrightRegistry:
         try:
             if content_id not in self.registry:
                 return False
+
             
             record = self.registry[content_id]
             return record.creator_address.lower() == address.lower()
+
             
         except Exception as e:
             logger.error(f"Error verifying ownership: {str(e)}")
+
             return False
 
 # =============================================================================
@@ -195,7 +206,8 @@ class Permission:
     conditions: Dict[str, Any] = field(default_factory=dict)
 
 class AccessController:
-    """Enterprise access control with granular permissions"""
+    """
+        Enterprise access control with granular permissions"""
     
     def __init__(self):
         self.roles: Dict[str, Set[str]] = {}  # role -> permissions
@@ -212,9 +224,12 @@ class AccessController:
         granted_by: str,
         expires_at: Optional[datetime] = None
     ) -> str:
-        """Grant permission to user for resource"""
+        """
+        Grant permission to user for resource"""
         try:
             permission_id = str(uuid.uuid4())
+
+
             permission = Permission(
                 resource_id=resource_id,
                 resource_type=resource_type,
@@ -223,19 +238,24 @@ class AccessController:
                 granted_at=datetime.utcnow(),
                 expires_at=expires_at
             )
+
             
             self.permissions[permission_id] = permission
             
             # Update resource access index
             if resource_id not in self.resource_access:
                 self.resource_access[resource_id] = set()
+
             self.resource_access[resource_id].add(user_address)
+
             
             logger.info(f"Permission granted: {permission_id}")
+
             return permission_id
             
         except Exception as e:
             logger.error(f"Error granting permission: {str(e)}")
+
             raise
 
     async def check_permission(
@@ -263,6 +283,7 @@ class AccessController:
             
         except Exception as e:
             logger.error(f"Error checking permission: {str(e)}")
+
             return False
             
     def _access_level_sufficient(self, granted: AccessLevel, required: AccessLevel) -> bool:
@@ -282,7 +303,8 @@ class AccessController:
 
 @dataclass
 class License:
-    """License record"""
+    """
+        License record"""
     license_id: str
     licensor: str
     licensee: str
@@ -295,7 +317,8 @@ class License:
     active: bool = True
 
 class LicensingSystem:
-    """Enterprise licensing system with automated management"""
+    """
+        Enterprise licensing system with automated management"""
     
     def __init__(self):
         self.licenses: Dict[str, License] = {}
@@ -312,17 +335,24 @@ class LicensingSystem:
         price: Optional[Decimal] = None,
         duration_days: Optional[int] = None
     ) -> str:
-        """Create new license"""
+        """
+        Create new license"""
         try:
             license_id = str(uuid.uuid4())
             
             # Get base terms from template
+
             base_terms = self.templates.get(license_type, {})
+
+
             terms = {**base_terms, **(custom_terms or {})}
+
             
             expires_at = None
             if duration_days:
                 expires_at = datetime.utcnow() + timedelta(days=duration_days)
+
+
                 
             license = License(
                 license_id=license_id,
@@ -335,6 +365,7 @@ class LicensingSystem:
                 issued_at=datetime.utcnow(),
                 expires_at=expires_at
             )
+
             
             self.licenses[license_id] = license
             
@@ -342,12 +373,15 @@ class LicensingSystem:
             if content_id not in self.content_licenses:
                 self.content_licenses[content_id] = []
             self.content_licenses[content_id].append(license_id)
+
             
             logger.info(f"License created: {license_id}")
+
             return license_id
             
         except Exception as e:
             logger.error(f"Error creating license: {str(e)}")
+
             raise
 
     async def validate_license(self, license_id: str) -> bool:
@@ -355,6 +389,7 @@ class LicensingSystem:
         try:
             if license_id not in self.licenses:
                 return False
+
                 
             license = self.licenses[license_id]
             
@@ -369,6 +404,7 @@ class LicensingSystem:
             
         except Exception as e:
             logger.error(f"Error validating license: {str(e)}")
+
             return False
 
 # =============================================================================
@@ -391,7 +427,8 @@ class EscrowContract:
     dispute_id: Optional[str] = None
 
 class EscrowManager:
-    """Enterprise escrow management with multi-party support"""
+    """
+        Enterprise escrow management with multi-party support"""
     
     def __init__(self):
         self.escrows: Dict[str, EscrowContract] = {}
@@ -405,9 +442,12 @@ class EscrowManager:
         currency: str,
         conditions: Dict[str, Any]
     ) -> str:
-        """Create new escrow contract"""
+        """
+        Create new escrow contract"""
         try:
             escrow_id = str(uuid.uuid4())
+
+
             escrow = EscrowContract(
                 escrow_id=escrow_id,
                 payer=payer,
@@ -418,6 +458,7 @@ class EscrowManager:
                 status=EscrowStatus.CREATED,
                 created_at=datetime.utcnow()
             )
+
             
             self.escrows[escrow_id] = escrow
             
@@ -426,12 +467,15 @@ class EscrowManager:
                 if user not in self.user_escrows:
                     self.user_escrows[user] = []
                 self.user_escrows[user].append(escrow_id)
+
             
             logger.info(f"Escrow created: {escrow_id}")
+
             return escrow_id
             
         except Exception as e:
             logger.error(f"Error creating escrow: {str(e)}")
+
             raise
 
     async def fund_escrow(self, escrow_id: str, funder: str) -> bool:
@@ -439,6 +483,7 @@ class EscrowManager:
         try:
             if escrow_id not in self.escrows:
                 return False
+
                 
             escrow = self.escrows[escrow_id]
             
@@ -450,12 +495,15 @@ class EscrowManager:
                 
             escrow.status = EscrowStatus.FUNDED
             escrow.funded_at = datetime.utcnow()
+
             
             logger.info(f"Escrow funded: {escrow_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Error funding escrow: {str(e)}")
+
             return False
 
     async def release_escrow(self, escrow_id: str, releaser: str) -> bool:
@@ -463,6 +511,7 @@ class EscrowManager:
         try:
             if escrow_id not in self.escrows:
                 return False
+
                 
             escrow = self.escrows[escrow_id]
             
@@ -470,18 +519,22 @@ class EscrowManager:
                 return False
                 
             # Check if releaser has authority (payer or authorized party)
+
             if escrow.payer != releaser:
                 # Additional authorization logic here
                 pass
                 
             escrow.status = EscrowStatus.COMPLETED
             escrow.released_at = datetime.utcnow()
+
             
             logger.info(f"Escrow released: {escrow_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Error releasing escrow: {str(e)}")
+
             return False
 
 # =============================================================================
@@ -497,7 +550,8 @@ class RoyaltyShare:
 
 @dataclass
 class RoyaltyDistribution:
-    """Royalty distribution record"""
+    """
+        Royalty distribution record"""
     distribution_id: str
     content_id: str
     total_amount: Decimal
@@ -507,7 +561,8 @@ class RoyaltyDistribution:
     transaction_hashes: List[str] = field(default_factory=list)
 
 class RoyaltyDistributor:
-    """Automated royalty distribution system"""
+    """
+        Automated royalty distribution system"""
     
     def __init__(self):
         self.distributions: Dict[str, RoyaltyDistribution] = {}
@@ -518,20 +573,25 @@ class RoyaltyDistributor:
         content_id: str,
         shares: List[RoyaltyShare]
     ) -> bool:
-        """Configure royalty shares for content"""
+        """
+        Configure royalty shares for content"""
         try:
             # Validate shares sum to 100%
             total_percentage = sum(share.percentage for share in shares)
+
             if total_percentage != Decimal('100'):
                 raise ValueError(f"Royalty shares must sum to 100%, got {total_percentage}%")
+
             
             self.content_royalties[content_id] = shares
             
             logger.info(f"Royalties configured for content: {content_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Error configuring royalties: {str(e)}")
+
             return False
 
     async def distribute_royalties(
@@ -544,17 +604,25 @@ class RoyaltyDistributor:
         try:
             if content_id not in self.content_royalties:
                 raise ValueError(f"No royalty configuration found for content: {content_id}")
+
+
             
             distribution_id = str(uuid.uuid4())
+
+
             shares = self.content_royalties[content_id]
             
             # Calculate individual amounts
+
             transaction_hashes = []
             for share in shares:
                 amount = total_amount * (share.percentage / Decimal('100'))
                 # Here would be actual blockchain transaction
+
                 tx_hash = f"0x{hashlib.sha256(f'{distribution_id}_{share.recipient}_{amount}'.encode()).hexdigest()}"
                 transaction_hashes.append(tx_hash)
+
+
             
             distribution = RoyaltyDistribution(
                 distribution_id=distribution_id,
@@ -565,14 +633,17 @@ class RoyaltyDistributor:
                 distributed_at=datetime.utcnow(),
                 transaction_hashes=transaction_hashes
             )
+
             
             self.distributions[distribution_id] = distribution
             
             logger.info(f"Royalties distributed: {distribution_id}")
+
             return distribution_id
             
         except Exception as e:
             logger.error(f"Error distributing royalties: {str(e)}")
+
             raise
 
 # =============================================================================
@@ -597,11 +668,13 @@ class Dispute:
     arbitrator: Optional[str] = None
 
 class DisputeResolver:
-    """Enterprise dispute resolution system"""
+    """
+        Enterprise dispute resolution system"""
     
     def __init__(self):
         self.disputes: Dict[str, Dispute] = {}
         self.arbitrators: Set[str] = set()
+
         
     async def create_dispute(
         self,
@@ -613,9 +686,12 @@ class DisputeResolver:
         license_id: Optional[str] = None,
         escrow_id: Optional[str] = None
     ) -> str:
-        """Create new dispute"""
+        """
+        Create new dispute"""
         try:
             dispute_id = str(uuid.uuid4())
+
+
             dispute = Dispute(
                 dispute_id=dispute_id,
                 plaintiff=plaintiff,
@@ -628,14 +704,17 @@ class DisputeResolver:
                 status=DisputeStatus.PENDING,
                 created_at=datetime.utcnow()
             )
+
             
             self.disputes[dispute_id] = dispute
             
             logger.info(f"Dispute created: {dispute_id}")
+
             return dispute_id
             
         except Exception as e:
             logger.error(f"Error creating dispute: {str(e)}")
+
             raise
 
     async def assign_arbitrator(self, dispute_id: str, arbitrator: str) -> bool:
@@ -646,16 +725,19 @@ class DisputeResolver:
                 
             if arbitrator not in self.arbitrators:
                 return False
+
                 
             dispute = self.disputes[dispute_id]
             dispute.arbitrator = arbitrator
             dispute.status = DisputeStatus.IN_PROGRESS
             
             logger.info(f"Arbitrator assigned to dispute: {dispute_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Error assigning arbitrator: {str(e)}")
+
             return False
 
 # =============================================================================
@@ -677,7 +759,8 @@ class MultiSigTransaction:
     created_at: datetime = field(default_factory=datetime.utcnow)
 
 class MultiSignatureWallet:
-    """Enterprise multi-signature wallet management"""
+    """
+        Enterprise multi-signature wallet management"""
     
     def __init__(self, wallet_id: str, owners: List[str], required_signatures: int):
         self.wallet_id = wallet_id
@@ -694,12 +777,17 @@ class MultiSignatureWallet:
         currency: str,
         data: Optional[str] = None
     ) -> str:
-        """Propose new multi-sig transaction"""
+        """
+        Propose new multi-sig transaction"""
         try:
             if proposer not in self.owners:
                 raise ValueError("Proposer must be wallet owner")
+
+
             
             tx_id = str(uuid.uuid4())
+
+
             transaction = MultiSigTransaction(
                 tx_id=tx_id,
                 wallet_id=self.wallet_id,
@@ -709,15 +797,18 @@ class MultiSignatureWallet:
                 data=data,
                 required_signatures=self.required_signatures
             )
+
             
             self.transactions[tx_id] = transaction
             self.nonce += 1
             
             logger.info(f"Multi-sig transaction proposed: {tx_id}")
+
             return tx_id
             
         except Exception as e:
             logger.error(f"Error proposing transaction: {str(e)}")
+
             raise
 
     async def sign_transaction(self, tx_id: str, signer: str, signature: str) -> bool:
@@ -728,6 +819,7 @@ class MultiSignatureWallet:
                 
             if signer not in self.owners:
                 return False
+
                 
             transaction = self.transactions[tx_id]
             
@@ -739,12 +831,15 @@ class MultiSignatureWallet:
             # Check if enough signatures
             if len(transaction.signatures) >= transaction.required_signatures:
                 await self._execute_transaction(tx_id)
+
             
             logger.info(f"Transaction signed: {tx_id} by {signer}")
+
             return True
             
         except Exception as e:
             logger.error(f"Error signing transaction: {str(e)}")
+
             return False
             
     async def _execute_transaction(self, tx_id: str) -> bool:
@@ -756,10 +851,12 @@ class MultiSignatureWallet:
             transaction.executed = True
             
             logger.info(f"Multi-sig transaction executed: {tx_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Error executing transaction: {str(e)}")
+
             return False
 
 # =============================================================================
@@ -777,12 +874,14 @@ class VestingSchedule:
     released_amount: Decimal = field(default=Decimal('0'))
 
 class TimeLockedVault:
-    """Enterprise time-locked vault with vesting schedules"""
+    """
+        Enterprise time-locked vault with vesting schedules"""
     
     def __init__(self, vault_id: str):
         self.vault_id = vault_id
         self.schedules: Dict[str, VestingSchedule] = {}
         self.total_locked: Decimal = Decimal('0')
+
         
     async def create_vesting_schedule(
         self,
@@ -792,11 +891,18 @@ class TimeLockedVault:
         cliff_months: int,
         vesting_months: int
     ) -> bool:
-        """Create new vesting schedule"""
+        """
+        Create new vesting schedule"""
         try:
             start_time = datetime.utcnow()
+
+
             cliff_duration = timedelta(days=cliff_months * 30)
+
+
             vesting_duration = timedelta(days=vesting_months * 30)
+
+
             
             schedule = VestingSchedule(
                 beneficiary=beneficiary,
@@ -805,15 +911,18 @@ class TimeLockedVault:
                 cliff_duration=cliff_duration,
                 vesting_duration=vesting_duration
             )
+
             
             self.schedules[schedule_id] = schedule
             self.total_locked += total_amount
             
             logger.info(f"Vesting schedule created: {schedule_id}")
+
             return True
             
         except Exception as e:
             logger.error(f"Error creating vesting schedule: {str(e)}")
+
             return False
 
     async def calculate_vested_amount(self, schedule_id: str) -> Decimal:
@@ -821,8 +930,11 @@ class TimeLockedVault:
         try:
             if schedule_id not in self.schedules:
                 return Decimal('0')
+
+
                 
             schedule = self.schedules[schedule_id]
+
             now = datetime.utcnow()
             
             # Check if cliff period has passed
@@ -834,19 +946,28 @@ class TimeLockedVault:
                 return schedule.total_amount
             
             # Calculate proportional vesting
+
             vesting_elapsed = now - (schedule.start_time + schedule.cliff_duration)
+
+
             remaining_vesting = schedule.vesting_duration - schedule.cliff_duration
             
             if remaining_vesting.total_seconds() <= 0:
                 return schedule.total_amount
+
                 
             vested_ratio = vesting_elapsed.total_seconds() / remaining_vesting.total_seconds()
+
+
             vested_amount = schedule.total_amount * Decimal(str(vested_ratio))
+
             
             return min(vested_amount, schedule.total_amount)
+
             
         except Exception as e:
             logger.error(f"Error calculating vested amount: {str(e)}")
+
             return Decimal('0')
 
     async def release_vested_tokens(self, schedule_id: str) -> Decimal:
@@ -854,9 +975,14 @@ class TimeLockedVault:
         try:
             if schedule_id not in self.schedules:
                 return Decimal('0')
+
+
                 
             schedule = self.schedules[schedule_id]
+
             vested_amount = await self.calculate_vested_amount(schedule_id)
+
+
             releasable_amount = vested_amount - schedule.released_amount
             
             if releasable_amount <= 0:
@@ -867,10 +993,12 @@ class TimeLockedVault:
             self.total_locked -= releasable_amount
             
             logger.info(f"Tokens released: {releasable_amount} for schedule {schedule_id}")
+
             return releasable_amount
             
         except Exception as e:
             logger.error(f"Error releasing tokens: {str(e)}")
+
             return Decimal('0')
 
 # =============================================================================
@@ -900,13 +1028,17 @@ class EnterpriseContractsManager:
             
             # Initialize subsystems
             await self._setup_license_templates()
+
             await self._setup_default_arbitrators()
+
             
             logger.info("Enterprise Contracts Manager initialized successfully")
+
             return True
             
         except Exception as e:
             logger.error(f"Error initializing contracts manager: {str(e)}")
+
             return False
             
     async def _setup_license_templates(self):
@@ -951,9 +1083,11 @@ class EnterpriseContractsManager:
             return {
                 "copyright_registrations": len(self.copyright_registry.registry),
                 "active_licenses": len([l for l in self.licensing_system.licenses.values() if l.active]),
-                "active_escrows": len([e for e in self.escrow_manager.escrows.values() 
+                "active_escrows": len([e for e in self.escrow_manager.escrows.values()
+ 
                                      if e.status in [EscrowStatus.CREATED, EscrowStatus.FUNDED]]),
-                "pending_disputes": len([d for d in self.dispute_resolver.disputes.values() 
+                "pending_disputes": len([d for d in self.dispute_resolver.disputes.values()
+ 
                                        if d.status == DisputeStatus.PENDING]),
                 "multi_sig_wallets": len(self.multi_sig_wallets),
                 "time_locked_vaults": len(self.time_locked_vaults),
@@ -962,6 +1096,7 @@ class EnterpriseContractsManager:
             
         except Exception as e:
             logger.error(f"Error getting system status: {str(e)}")
+
             return {}
 
 # =============================================================================

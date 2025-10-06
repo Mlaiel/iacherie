@@ -47,7 +47,8 @@ logger = logging.getLogger(__name__)
 
 
 class EmergingPlatformType(str, Enum):
-    """Supported emerging platform types."""
+    """
+        Supported emerging platform types."""
     DISCORD = "discord"
     TELEGRAM = "telegram"
     REDDIT = "reddit"
@@ -151,7 +152,8 @@ class EmergingPlatformResponse:
 
 @dataclass
 class CommunityAnalytics:
-    """Community engagement analytics data."""
+    """
+        Community engagement analytics data."""
     platform: EmergingPlatformType
     community_id: str
     total_members: int = 0
@@ -170,7 +172,8 @@ class CommunityAnalytics:
 
 
 class BaseEmergingConnector:
-    """Base class for emerging platform connectors."""
+    """
+        Base class for emerging platform connectors."""
     
     def __init__(self, platform: EmergingPlatformType, credentials: Dict[str, Any]):
         self.platform = platform
@@ -196,18 +199,24 @@ class BaseEmergingConnector:
                 timeout=aiohttp.ClientTimeout(total=30),
                 headers=self._get_default_headers()
             )
+
+
             
             authenticated = await self.authenticate()
+
             if authenticated:
                 self.authenticated = True
                 self.logger.info(f"✅ {self.platform.value} connector initialized")
+
                 return True
             else:
                 self.logger.error(f"❌ {self.platform.value} authentication failed")
+
                 return False
                 
         except Exception as e:
             self.logger.error(f"Error initializing {self.platform.value} connector: {e}")
+
             return False
     
     def _get_default_headers(self) -> Dict[str, str]:
@@ -224,7 +233,8 @@ class BaseEmergingConnector:
         return True
     
     async def post_content(self, metadata: CommunityContentMetadata) -> EmergingPlatformResponse:
-        """Post content to the platform."""
+        """
+        Post content to the platform."""
         if not self.authenticated:
             return EmergingPlatformResponse(
                 success=False,
@@ -251,7 +261,8 @@ class BaseEmergingConnector:
     
     async def get_community_analytics(self, community_id: str, 
                                     date_range: Tuple[datetime, datetime]) -> CommunityAnalytics:
-        """Get community analytics."""
+        """
+        Get community analytics."""
         # Platform-specific analytics implementation
         return CommunityAnalytics(
             platform=self.platform,
@@ -259,12 +270,14 @@ class BaseEmergingConnector:
         )
     
     async def setup_webhook(self, webhook_url: str, events: List[str]) -> bool:
-        """Setup webhook for real-time events."""
+        """
+        Setup webhook for real-time events."""
         # Platform-specific webhook setup
         return True
     
     async def close(self):
-        """Close the connector and cleanup resources."""
+        """
+        Close the connector and cleanup resources."""
         if self.websocket_connection:
             await self.websocket_connection.close()
         if self.session:
@@ -272,7 +285,8 @@ class BaseEmergingConnector:
 
 
 class DiscordConnector(BaseEmergingConnector):
-    """Discord Bot API connector with community management."""
+    """
+        Discord Bot API connector with community management."""
     
     def __init__(self, credentials: Dict[str, Any]):
         super().__init__(EmergingPlatformType.DISCORD, credentials)
@@ -292,6 +306,7 @@ class DiscordConnector(BaseEmergingConnector):
                 
         except Exception as e:
             self.logger.error(f"Discord authentication error: {e}")
+
             return False
     
     async def post_content(self, metadata: CommunityContentMetadata) -> EmergingPlatformResponse:
@@ -301,6 +316,7 @@ class DiscordConnector(BaseEmergingConnector):
                 "Authorization": f"Bot {self.credentials.get('bot_token')}",
                 **self._get_default_headers()
             }
+
             
             message_data = {
                 "content": metadata.content,
@@ -316,6 +332,7 @@ class DiscordConnector(BaseEmergingConnector):
                     "timestamp": datetime.utcnow().isoformat()
                 }
                 message_data["embeds"].append(embed)
+
             
             async with self.session.post(
                 f"{self.api_base}/channels/{metadata.channel_id}/messages",
@@ -324,21 +341,25 @@ class DiscordConnector(BaseEmergingConnector):
             ) as response:
                 if response.status == 200:
                     data = await response.json()
+
                     return EmergingPlatformResponse(
                         success=True,
                         platform=self.platform,
                         message_id=data.get("id"),
                         url=f"https://discord.com/channels/{metadata.community_id}/{metadata.channel_id}/{data.get('id')}"
                     )
+
                 else:
                     return EmergingPlatformResponse(
                         success=False,
                         platform=self.platform,
                         error_message=f"Message post failed: {response.status}"
                     )
+
                     
         except Exception as e:
             self.logger.error(f"Discord post error: {e}")
+
             return EmergingPlatformResponse(
                 success=False,
                 platform=self.platform,
@@ -353,6 +374,7 @@ class DiscordConnector(BaseEmergingConnector):
                 "Authorization": f"Bot {self.credentials.get('bot_token')}",
                 **self._get_default_headers()
             }
+
             
             guild_data = {
                 "name": name,
@@ -366,21 +388,25 @@ class DiscordConnector(BaseEmergingConnector):
                                        json=guild_data, headers=headers) as response:
                 if response.status == 201:
                     data = await response.json()
+
                     return EmergingPlatformResponse(
                         success=True,
                         platform=self.platform,
                         community_id=data.get("id"),
                         url=f"https://discord.gg/{data.get('id')}"
                     )
+
                 else:
                     return EmergingPlatformResponse(
                         success=False,
                         platform=self.platform,
                         error_message=f"Guild creation failed: {response.status}"
                     )
+
                     
         except Exception as e:
             self.logger.error(f"Discord guild creation error: {e}")
+
             return EmergingPlatformResponse(
                 success=False,
                 platform=self.platform,
@@ -403,6 +429,7 @@ class TelegramConnector(BaseEmergingConnector):
                 
         except Exception as e:
             self.logger.error(f"Telegram authentication error: {e}")
+
             return False
     
     async def post_content(self, metadata: CommunityContentMetadata) -> EmergingPlatformResponse:
@@ -419,22 +446,28 @@ class TelegramConnector(BaseEmergingConnector):
                                        json=message_data) as response:
                 if response.status == 200:
                     data = await response.json()
+
+
                     result = data.get("result", {})
+
                     return EmergingPlatformResponse(
                         success=True,
                         platform=self.platform,
                         message_id=str(result.get("message_id")),
                         url=f"https://t.me/c/{metadata.channel_id}/{result.get('message_id')}"
                     )
+
                 else:
                     return EmergingPlatformResponse(
                         success=False,
                         platform=self.platform,
                         error_message=f"Message send failed: {response.status}"
                     )
+
                     
         except Exception as e:
             self.logger.error(f"Telegram post error: {e}")
+
             return EmergingPlatformResponse(
                 success=False,
                 platform=self.platform,
@@ -458,15 +491,18 @@ class RedditConnector(BaseEmergingConnector):
                 "username": self.credentials.get("username"),
                 "password": self.credentials.get("password")
             }
+
             
             auth_headers = {
                 "User-Agent": "iacherie-Reddit-Bot/1.0"
             }
+
             
             auth = aiohttp.BasicAuth(
                 self.credentials.get("client_id"),
                 self.credentials.get("client_secret")
             )
+
             
             async with self.session.post(f"{self.auth_base}/access_token",
                                        data=auth_data,
@@ -474,12 +510,15 @@ class RedditConnector(BaseEmergingConnector):
                                        auth=auth) as response:
                 if response.status == 200:
                     data = await response.json()
+
                     self.credentials["access_token"] = data.get("access_token")
+
                     return True
                 return False
                 
         except Exception as e:
             self.logger.error(f"Reddit authentication error: {e}")
+
             return False
     
     async def post_content(self, metadata: CommunityContentMetadata) -> EmergingPlatformResponse:
@@ -489,6 +528,7 @@ class RedditConnector(BaseEmergingConnector):
                 "Authorization": f"Bearer {self.credentials.get('access_token')}",
                 "User-Agent": "iacherie-Reddit-Bot/1.0"
             }
+
             
             post_data = {
                 "api_type": "json",
@@ -504,29 +544,35 @@ class RedditConnector(BaseEmergingConnector):
                                        headers=headers) as response:
                 if response.status == 200:
                     data = await response.json()
+
                     if data.get("json", {}).get("errors"):
                         return EmergingPlatformResponse(
                             success=False,
                             platform=self.platform,
                             error_message=str(data["json"]["errors"])
                         )
+
                     else:
                         post_data = data.get("json", {}).get("data", {})
+
                         return EmergingPlatformResponse(
                             success=True,
                             platform=self.platform,
                             content_id=post_data.get("name"),
                             url=post_data.get("url")
                         )
+
                 else:
                     return EmergingPlatformResponse(
                         success=False,
                         platform=self.platform,
                         error_message=f"Post submission failed: {response.status}"
                     )
+
                     
         except Exception as e:
             self.logger.error(f"Reddit post error: {e}")
+
             return EmergingPlatformResponse(
                 success=False,
                 platform=self.platform,
@@ -555,9 +601,11 @@ class Web3Connector(BaseEmergingConnector):
             metadata_hash = await self._upload_to_ipfs(metadata)
             
             # Simulate NFT minting transaction
+
             transaction_hash = hashlib.sha256(
                 f"{metadata.title}{metadata.creator_address}{time.time()}".encode()
             ).hexdigest()
+
             
             return EmergingPlatformResponse(
                 success=True,
@@ -571,9 +619,11 @@ class Web3Connector(BaseEmergingConnector):
                     "royalty_percentage": metadata.royalty_percentage
                 }
             )
+
                     
         except Exception as e:
             self.logger.error(f"NFT minting error: {e}")
+
             return EmergingPlatformResponse(
                 success=False,
                 platform=self.platform,
@@ -583,6 +633,7 @@ class Web3Connector(BaseEmergingConnector):
     async def _upload_to_ipfs(self, metadata: Web3ContentMetadata) -> str:
         """Upload metadata to IPFS."""
         # Simulate IPFS upload
+
         content_hash = hashlib.sha256(
             json.dumps(metadata.custom_metadata, sort_keys=True).encode()
         ).hexdigest()
@@ -606,20 +657,26 @@ class EmergingPlatformManager:
                 EmergingPlatformType.REDDIT: RedditConnector,
                 EmergingPlatformType.WEB3_COLLECTIVE: Web3Connector
             }
+
             
             connector_class = connector_classes.get(platform)
+
             if connector_class:
                 connector = connector_class(credentials)
+
                 if await connector.initialize():
                     self.connectors[platform] = connector
                     self.logger.info(f"✅ Added {platform.value} connector")
+
                     return True
                     
             self.logger.error(f"❌ Failed to add {platform.value} connector")
+
             return False
             
         except Exception as e:
             self.logger.error(f"Error adding {platform.value} connector: {e}")
+
             return False
     
     async def post_to_platform(self, platform: EmergingPlatformType, 
@@ -633,7 +690,8 @@ class EmergingPlatformManager:
     async def create_community_on_platform(self, platform: EmergingPlatformType, 
                                          name: str, description: str, 
                                          community_type: CommunityType) -> Optional[EmergingPlatformResponse]:
-        """Create community on specific platform."""
+        """
+        Create community on specific platform."""
         connector = self.connectors.get(platform)
         if connector:
             return await connector.create_community(name, description, community_type)
@@ -642,7 +700,8 @@ class EmergingPlatformManager:
     async def get_platform_analytics(self, platform: EmergingPlatformType, 
                                    community_id: str, 
                                    date_range: Tuple[datetime, datetime]) -> Optional[CommunityAnalytics]:
-        """Get analytics for community on specific platform."""
+        """
+        Get analytics for community on specific platform."""
         connector = self.connectors.get(platform)
         if connector:
             return await connector.get_community_analytics(community_id, date_range)
@@ -650,15 +709,21 @@ class EmergingPlatformManager:
     
     async def cross_platform_post(self, metadata: CommunityContentMetadata, 
                                 platforms: List[EmergingPlatformType]) -> Dict[EmergingPlatformType, EmergingPlatformResponse]:
-        """Post content across multiple emerging platforms."""
+        """
+        Post content across multiple emerging platforms."""
         results = {}
         
         for platform in platforms:
             connector = self.connectors.get(platform)
+
             if connector:
                 # Adapt content for platform
+
                 adapted_metadata = self._adapt_content_for_platform(metadata, platform)
+
+
                 result = await connector.post_content(adapted_metadata)
+
                 results[platform] = result
             else:
                 results[platform] = EmergingPlatformResponse(
@@ -666,6 +731,7 @@ class EmergingPlatformManager:
                     platform=platform,
                     error_message="Platform not configured"
                 )
+
         
         return results
     
@@ -710,7 +776,8 @@ class EmergingPlatformManager:
         return list(self.connectors.keys())
     
     async def close_all(self):
-        """Close all connectors."""
+        """
+        Close all connectors."""
         for connector in self.connectors.values():
             await connector.close()
 
@@ -720,7 +787,8 @@ _emerging_manager: Optional[EmergingPlatformManager] = None
 
 
 async def get_emerging_platform_manager() -> EmergingPlatformManager:
-    """Get the global emerging platform manager instance."""
+    """
+        Get the global emerging platform manager instance."""
     global _emerging_manager
     
     if _emerging_manager is None:

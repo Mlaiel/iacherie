@@ -140,7 +140,7 @@ from .rights_validation_processor import RightsValidationProcessor, get_rights_p
 from .fingerprint_generation_engine import FingerprintGenerationEngine, get_fingerprint_engine
 from .watermark_processor import WatermarkProcessor, get_watermark_processor
 from .copyright_compliance_checker import CopyrightComplianceChecker, get_compliance_checker
-from .anti_piracy_processor import AntiPiracyProcessor, get_anti_piracy_processor
+from .anti_piracy_engine import AntiPiracyProcessor, get_anti_piracy_processor
 from .blockchain_registration_handler import BlockchainRegistrationHandler, get_blockchain_handler
 
 # New enterprise components - Phase 3: Advanced IA Processing (Priority 2)

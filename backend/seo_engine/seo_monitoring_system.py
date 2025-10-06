@@ -28,7 +28,8 @@ logger = logging.getLogger(__name__)
 # === ÉNUMÉRATIONS ===
 
 class MonitoringLevel(Enum):
-    """Niveaux de monitoring"""
+    """
+        Niveaux de monitoring"""
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -79,7 +80,8 @@ class SEOMetric:
 
 @dataclass
 class SEOAlert:
-    """Alerte SEO"""
+    """
+        Alerte SEO"""
     id: str
     title: str
     description: str
@@ -94,7 +96,8 @@ class SEOAlert:
 
 @dataclass
 class PerformanceDashboard:
-    """Dashboard de performance"""
+    """
+        Dashboard de performance"""
     overall_health: HealthStatus
     seo_score: float
     key_metrics: Dict[str, SEOMetric]
@@ -105,7 +108,8 @@ class PerformanceDashboard:
 
 @dataclass
 class MonitoringReport:
-    """Rapport de monitoring"""
+    """
+        Rapport de monitoring"""
     period_start: datetime
     period_end: datetime
     metrics_summary: Dict[str, Any]
@@ -125,7 +129,8 @@ class SEOMonitoringSystem:
     """
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize SEO monitoring system"""
+        """
+        Initialize SEO monitoring system"""
         self.config = config or {}
         self.monitoring_level = MonitoringLevel(
             self.config.get('monitoring_level', 'enterprise')
@@ -169,6 +174,7 @@ class SEOMonitoringSystem:
         try:
             if self.monitoring_active:
                 logger.warning("Monitoring system already active")
+
                 return
             
             self.monitoring_active = True
@@ -182,11 +188,14 @@ class SEOMonitoringSystem:
                 self._performance_analysis(),
                 return_exceptions=True
             )
+
             
             logger.info("🚀 SEO Monitoring System started successfully")
+
             
         except Exception as e:
             logger.error(f"Failed to start monitoring system: {e}")
+
             self.monitoring_active = False
             raise
     
@@ -224,8 +233,10 @@ class SEOMonitoringSystem:
             
             # Calculer la tendance
             await self._calculate_metric_trend(name)
+
             
             logger.debug(f"📊 Metric recorded: {name} = {value} {unit}")
+
             
         except Exception as e:
             logger.error(f"Failed to record metric {name}: {e}")
@@ -257,22 +268,30 @@ class SEOMonitoringSystem:
         """Générer le dashboard de performance"""
         try:
             # Calculer la santé globale
+
             overall_health = await self._calculate_overall_health()
             
             # Score SEO global
+
             seo_score = await self._calculate_global_seo_score()
             
             # Métriques clés
+
             key_metrics = await self._get_key_metrics()
             
             # Alertes actives
+
             active_alerts = await self._get_active_alerts()
             
             # Tendances de performance
+
             performance_trends = await self._get_performance_trends()
             
             # Calcul uptime
+
             uptime_percentage = await self._calculate_uptime()
+
+
             
             dashboard = PerformanceDashboard(
                 overall_health=overall_health,
@@ -283,11 +302,13 @@ class SEOMonitoringSystem:
                 uptime_percentage=uptime_percentage,
                 last_updated=datetime.utcnow()
             )
+
             
             return dashboard
             
         except Exception as e:
             logger.error(f"Failed to generate dashboard: {e}")
+
             raise
     
     async def generate_monitoring_report(
@@ -298,15 +319,19 @@ class SEOMonitoringSystem:
         """Générer un rapport de monitoring"""
         try:
             # Résumé des métriques
+
             metrics_summary = await self._analyze_metrics_period(start_date, end_date)
             
             # Résumé des alertes
+
             alerts_summary = await self._analyze_alerts_period(start_date, end_date)
             
             # Analyse de performance
+
             performance_analysis = await self._analyze_performance_period(start_date, end_date)
             
             # Recommandations
+
             recommendations = await self._generate_monitoring_recommendations(
                 metrics_summary, alerts_summary, performance_analysis
             )
@@ -315,6 +340,8 @@ class SEOMonitoringSystem:
             health_score = await self._calculate_period_health_score(
                 metrics_summary, alerts_summary
             )
+
+
             
             report = MonitoringReport(
                 period_start=start_date,
@@ -325,11 +352,13 @@ class SEOMonitoringSystem:
                 recommendations=recommendations,
                 health_score=health_score
             )
+
             
             return report
             
         except Exception as e:
             logger.error(f"Failed to generate monitoring report: {e}")
+
             raise
     
     # === MÉTHODES PRIVÉES ===
@@ -343,9 +372,11 @@ class SEOMonitoringSystem:
                 
                 # Attendre l'intervalle suivant
                 await asyncio.sleep(self.monitoring_intervals["real_time"])
+
                 
             except Exception as e:
                 logger.error(f"Real-time monitoring error: {e}")
+
                 await asyncio.sleep(5)
     
     async def _periodic_health_checks(self):
@@ -357,9 +388,11 @@ class SEOMonitoringSystem:
                 
                 # Attendre l'intervalle suivant
                 await asyncio.sleep(self.monitoring_intervals["medium_term"])
+
                 
             except Exception as e:
                 logger.error(f"Health check error: {e}")
+
                 await asyncio.sleep(30)
     
     async def _alert_processing(self):
@@ -371,11 +404,13 @@ class SEOMonitoringSystem:
                 
                 # Vérifier les alertes à résoudre automatiquement
                 await self._auto_resolve_alerts()
+
                 
                 await asyncio.sleep(60)  # Vérifier toutes les minutes
                 
             except Exception as e:
                 logger.error(f"Alert processing error: {e}")
+
                 await asyncio.sleep(10)
     
     async def _performance_analysis(self):
@@ -387,16 +422,20 @@ class SEOMonitoringSystem:
                 
                 # Détecter les anomalies
                 await self._detect_performance_anomalies()
+
                 
                 await asyncio.sleep(self.monitoring_intervals["long_term"])
+
                 
             except Exception as e:
                 logger.error(f"Performance analysis error: {e}")
+
                 await asyncio.sleep(60)
     
     async def _collect_real_time_metrics(self):
         """Collecter les métriques en temps réel"""
         # Simulation de collecte de métriques (à remplacer par vraies sources)
+
         current_time = datetime.utcnow()
         
         # Métriques SEO simulées
@@ -421,6 +460,7 @@ class SEOMonitoringSystem:
                 threshold_value=metric.threshold_min,
                 timestamp=datetime.utcnow()
             )
+
             alerts_to_create.append(alert)
         
         # Vérifier seuil maximum
@@ -435,6 +475,7 @@ class SEOMonitoringSystem:
                 threshold_value=metric.threshold_max,
                 timestamp=datetime.utcnow()
             )
+
             alerts_to_create.append(alert)
         
         # Stocker les alertes
@@ -446,17 +487,20 @@ class SEOMonitoringSystem:
         """Calculer la tendance d'une métrique"""
         if metric_name not in self.metrics_store:
             return
+
         
         metrics = list(self.metrics_store[metric_name])
         if len(metrics) < 3:
             return
         
         # Prendre les 10 dernières valeurs
+
         recent_values = [m.value for m in metrics[-10:]]
         
         # Calculer la tendance
         if len(recent_values) >= 2:
             slope = (recent_values[-1] - recent_values[0]) / len(recent_values)
+
             
             if slope > 0.1:
                 trend = "increasing"
@@ -490,9 +534,11 @@ class SEOMonitoringSystem:
             return HealthStatus.HEALTHY
     
     async def _calculate_global_seo_score(self) -> float:
-        """Calculer le score SEO global"""
+        """
+        Calculer le score SEO global"""
         if "seo_score" not in self.metrics_store:
             return 0.0
+
         
         recent_scores = [m.value for m in list(self.metrics_store["seo_score"])[-5:]]
         return statistics.mean(recent_scores) if recent_scores else 0.0
@@ -500,6 +546,7 @@ class SEOMonitoringSystem:
     async def _get_key_metrics(self) -> Dict[str, SEOMetric]:
         """Obtenir les métriques clés"""
         key_metrics = {}
+
         key_metric_names = [
             "seo_score", "page_load_time", "organic_traffic", 
             "conversion_rate", "bounce_rate"
@@ -516,36 +563,45 @@ class SEOMonitoringSystem:
         return [alert for alert in self.alerts_store.values() if not alert.resolved]
     
     async def _get_performance_trends(self) -> Dict[str, List[float]]:
-        """Obtenir les tendances de performance"""
+        """
+        Obtenir les tendances de performance"""
         trends = {}
         for metric_name, metrics in self.metrics_store.items():
             trends[metric_name] = [m.value for m in list(metrics)[-20:]]
         return trends
     
     async def _calculate_uptime(self) -> float:
-        """Calculer le pourcentage d'uptime"""
+        """
+        Calculer le pourcentage d'uptime"""
         if not self.start_time:
             return 0.0
+
         
         total_time = (datetime.utcnow() - self.start_time).total_seconds()
         
         # Calculer le temps de downtime basé sur les alertes critiques
+
         downtime = 0
         for alert in self.alerts_store.values():
             if alert.severity in [AlertSeverity.CRITICAL, AlertSeverity.EMERGENCY]:
                 if alert.resolved and alert.resolution_time:
                     downtime += (alert.resolution_time - alert.timestamp).total_seconds()
+
                 elif not alert.resolved:
                     downtime += (datetime.utcnow() - alert.timestamp).total_seconds()
+
+
         
         uptime_percentage = max(0, (total_time - downtime) / total_time * 100)
         return min(100, uptime_percentage)
     
     async def _perform_health_check(self):
-        """Effectuer une vérification de santé"""
+        """
+        Effectuer une vérification de santé"""
         self.last_health_check = datetime.utcnow()
         
         # Vérifier la disponibilité des composants
+
         components_health = {
             "content_engine": await self._check_component_health("content"),
             "intelligence_hub": await self._check_component_health("intelligence"),
@@ -569,13 +625,16 @@ class SEOMonitoringSystem:
         return True
     
     async def _process_pending_alerts(self):
-        """Traiter les alertes en attente"""
+        """
+        Traiter les alertes en attente"""
         # Logique de traitement des alertes
         pass
     
     async def _auto_resolve_alerts(self):
-        """Résoudre automatiquement certaines alertes"""
+        """
+        Résoudre automatiquement certaines alertes"""
         current_time = datetime.utcnow()
+
         
         for alert in self.alerts_store.values():
             if not alert.resolved:
@@ -588,16 +647,19 @@ class SEOMonitoringSystem:
                         alert.resolved = True
                         alert.resolution_time = current_time
                         alert.actions_taken.append("Auto-resolved: metric improved")
+
                         logger.info(f"✅ Alert auto-resolved: {alert.title}")
     
     async def _has_metric_improved(self, alert: SEOAlert) -> bool:
         """Vérifier si une métrique s'est améliorée"""
         if alert.metric_name not in self.metrics_store:
             return False
+
         
         recent_metrics = list(self.metrics_store[alert.metric_name])[-3:]
         if not recent_metrics:
             return False
+
         
         recent_value = recent_metrics[-1].value
         
@@ -615,12 +677,14 @@ class SEOMonitoringSystem:
         pass
     
     async def _detect_performance_anomalies(self):
-        """Détecter les anomalies de performance"""
+        """
+        Détecter les anomalies de performance"""
         # Utiliser des algorithmes de détection d'anomalies
         pass
     
     async def _analyze_metrics_period(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Analyser les métriques pour une période"""
+        """
+        Analyser les métriques pour une période"""
         return {
             "total_metrics_collected": sum(len(metrics) for metrics in self.metrics_store.values()),
             "average_seo_score": await self._calculate_global_seo_score(),
@@ -636,6 +700,7 @@ class SEOMonitoringSystem:
         """Analyser les alertes pour une période"""
         alerts_in_period = [
             alert for alert in self.alerts_store.values()
+
             if start_date <= alert.timestamp <= end_date
         ]
         
@@ -669,6 +734,7 @@ class SEOMonitoringSystem:
         # Recommandations basées sur les alertes
         if alerts_summary["critical_alerts"] > 0:
             recommendations.append("Investigate and resolve critical alerts immediately")
+
         
         if alerts_summary["warning_alerts"] > 10:
             recommendations.append("Review threshold configurations to reduce noise")
@@ -676,6 +742,7 @@ class SEOMonitoringSystem:
         # Recommandations de performance
         if performance_analysis["uptime_percentage"] < 99.0:
             recommendations.append("Implement redundancy measures to improve uptime")
+
         
         if performance_analysis["average_response_time"] > 2.0:
             recommendations.append("Optimize system performance to reduce response times")
@@ -683,6 +750,7 @@ class SEOMonitoringSystem:
         # Recommandations SEO
         if metrics_summary["average_seo_score"] < 80:
             recommendations.append("Focus on content optimization to improve SEO scores")
+
         
         return recommendations
     
@@ -699,12 +767,14 @@ class SEOMonitoringSystem:
         base_score -= alerts_summary["warning_alerts"] * 2
         
         # Bonus pour les résolutions
+
         resolution_rate = alerts_summary["resolved_alerts"] / max(alerts_summary["total_alerts"], 1)
         base_score += resolution_rate * 5
         
         # Bonus pour performance
         if metrics_summary.get("performance_improvement", 0) > 0:
             base_score += min(metrics_summary["performance_improvement"], 10)
+
         
         return max(0, min(100, base_score))
 
@@ -724,6 +794,7 @@ class AlertSystem:
         self.notification_channels = {}
         self.escalation_rules = {}
         self.alert_history = deque(maxlen=10000)
+
         
         logger.info("🚨 Alert System initialized")
     
@@ -744,6 +815,7 @@ class AlertSystem:
     async def send_alert_notification(self, alert: SEOAlert, channels: List[str] = None):
         """Envoyer une notification d'alerte"""
         channels = channels or list(self.notification_channels.keys())
+
         
         for channel_name in channels:
             if channel_name in self.notification_channels:
@@ -758,14 +830,19 @@ class AlertSystem:
             
             if channel_type == "email":
                 await self._send_email_notification(alert, channel["config"])
+
             elif channel_type == "slack":
                 await self._send_slack_notification(alert, channel["config"])
+
             elif channel_type == "webhook":
                 await self._send_webhook_notification(alert, channel["config"])
+
             elif channel_type == "sms":
                 await self._send_sms_notification(alert, channel["config"])
+
             
             logger.info(f"📨 Alert notification sent via {channel_type}: {alert.title}")
+
             
         except Exception as e:
             logger.error(f"Failed to send notification via {channel['type']}: {e}")
@@ -844,8 +921,10 @@ class PerformanceTracker:
         """Obtenir un résumé de performance"""
         if metric_name not in self.performance_data:
             return {}
+
         
         data_points = self.performance_data[metric_name]
+
         values = [point["value"] for point in data_points]
         
         if not values:
@@ -867,6 +946,7 @@ class PerformanceTracker:
         
         if len(data_points) > 1:
             previous_max = max(point["value"] for point in data_points[:-1])
+
             if value > previous_max:
                 logger.info(f"🏆 New performance record for {metric_name}: {value}")
     
@@ -876,7 +956,9 @@ class PerformanceTracker:
             return "insufficient_data"
         
         recent_avg = statistics.mean(values[-5:])
+
         older_avg = statistics.mean(values[-10:-5]) if len(values) >= 10 else statistics.mean(values[:-5])
+
         
         if recent_avg > older_avg * 1.05:
             return "improving"
@@ -889,8 +971,10 @@ class PerformanceTracker:
         """Calculer le taux d'amélioration"""
         if len(values) < 2:
             return 0.0
+
         
         initial_value = values[0]
+
         current_value = values[-1]
         
         if initial_value == 0:
@@ -899,26 +983,37 @@ class PerformanceTracker:
         return ((current_value - initial_value) / initial_value) * 100
     
     async def _calculate_goal_progress(self, metric_name: str) -> Dict[str, Any]:
-        """Calculer le progrès vers l'objectif"""
+        """
+        Calculer le progrès vers l'objectif"""
         if metric_name not in self.performance_goals:
             return {}
+
         
         goal = self.performance_goals[metric_name]
+
         current_data = self.performance_data.get(metric_name, [])
+
         
         if not current_data:
             return {"progress": 0.0, "on_track": False}
+
         
         current_value = current_data[-1]["value"]
+
         target_value = goal["target"]
         
         # Calculer le progrès (simplifié)
+
         progress = (current_value / target_value) * 100
         
         # Vérifier si on est sur la bonne voie
+
         days_elapsed = (datetime.utcnow() - goal["set_date"]).days
+
         total_days = (goal["deadline"] - goal["set_date"]).days
+
         expected_progress = (days_elapsed / total_days) * 100 if total_days > 0 else 0
+
         
         on_track = progress >= expected_progress * 0.9  # 90% du progrès attendu
         

@@ -24,6 +24,12 @@ from .ipfs_storage import IPFSStorage, StorageManager
 from .enterprise_contracts import (
     EnterpriseContractsManager, CopyrightRegistry, AccessController,
     LicensingSystem, EscrowManager, RoyaltyDistributor, DisputeResolver,
+    MultiSigWallet  # Fixed: was MultiSignatureWallet
+    # TimeLockedVault removed - class doesn't exist
+)
+
+# Import from contracts.py (full implementations)
+from .contracts import (
     MultiSignatureWallet, TimeLockedVault
 )
 
@@ -71,7 +77,8 @@ __all__ = [
     # Enterprise Contracts Suite
     "EnterpriseContractsManager", "CopyrightRegistry", "AccessController",
     "LicensingSystem", "EscrowManager", "RoyaltyDistributor", "DisputeResolver",
-    "MultiSignatureWallet", "TimeLockedVault",
+    "MultiSigWallet",  # Fixed: was MultiSignatureWallet (from enterprise_contracts)
+    "MultiSignatureWallet", "TimeLockedVault",  # Full implementations from contracts.py
     
     # NFT Engine Suite
     "NFTEngineSuiteManager", "MintingEngine", "CollectionOrchestrator",

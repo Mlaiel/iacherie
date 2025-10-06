@@ -31,14 +31,7 @@ import json
 import uuid
 import statistics
 # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+from protection.utils.redis_compat import aioredis, REDIS_AVAILABLE
 from sqlalchemy.ext.asyncio import AsyncSession
 import numpy as np
 from collections import defaultdict, deque
@@ -47,7 +40,8 @@ import psutil
 logger = logging.getLogger(__name__)
 
 class AdaptationStrategy(Enum):
-    """Adaptation strategy type"""
+    """
+        Adaptation strategy type"""
     CONSERVATIVE = "conservative"
     MODERATE = "moderate"
     AGGRESSIVE = "aggressive"
@@ -125,7 +119,8 @@ class NetworkCondition:
 
 @dataclass
 class DeviceCapability:
-    """Device capability profile"""
+    """
+        Device capability profile"""
     device_id: str
     device_type: DeviceType
     screen_resolution: Tuple[int, int]
@@ -142,7 +137,8 @@ class DeviceCapability:
 
 @dataclass
 class QualityProfile:
-    """Streaming quality profile"""
+    """
+        Streaming quality profile"""
     profile_id: str
     quality_level: QualityLevel
     resolution: Tuple[int, int]
@@ -158,7 +154,8 @@ class QualityProfile:
 
 @dataclass
 class AdaptationRule:
-    """Adaptation rule configuration"""
+    """
+        Adaptation rule configuration"""
     rule_id: str
     rule_name: str
     trigger_conditions: Dict[str, Any]
@@ -172,7 +169,8 @@ class AdaptationRule:
 
 @dataclass
 class StreamingSession:
-    """Streaming session state"""
+    """
+        Streaming session state"""
     session_id: str
     user_id: str
     stream_id: str
@@ -188,7 +186,8 @@ class StreamingSession:
 
 @dataclass
 class AdaptationEvent:
-    """Adaptation event record"""
+    """
+        Adaptation event record"""
     event_id: str
     session_id: str
     trigger: AdaptationTrigger
@@ -202,35 +201,46 @@ class AdaptationEvent:
     timestamp: datetime
 
 class NetworkAnalyzer:
-    """Network condition analysis system"""
+    """
+        Network condition analysis system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Optional[Any]):
         self.redis = redis_client
         self.network_monitors = {}
         self.condition_history = defaultdict(deque)
+
         
     async def initialize_network_analyzer(self) -> Dict[str, Any]:
-        """Initialize network analysis system"""
+        """
+        Initialize network analysis system"""
         try:
             # Setup network monitoring
+
             network_monitoring = await self._setup_network_monitoring()
             
             # Configure bandwidth detection
+
             bandwidth_detection = await self._configure_bandwidth_detection()
             
             # Setup latency monitoring
+
             latency_monitoring = await self._setup_latency_monitoring()
             
             # Configure packet loss detection
+
             packet_loss_detection = await self._configure_packet_loss_detection()
             
             # Setup connection stability analysis
+
             stability_analysis = await self._setup_connection_stability_analysis()
             
             # Configure geographic optimization
+
             geographic_optimization = await self._configure_geographic_optimization()
+
             
             logger.info("🌐 Network Analyzer initialized")
+
             
             return {
                 "network_monitoring": network_monitoring,
@@ -249,6 +259,7 @@ class NetworkAnalyzer:
             
         except Exception as e:
             logger.error(f"Failed to initialize network analyzer: {e}")
+
             raise
 
     async def analyze_network_conditions(
@@ -262,43 +273,52 @@ class NetworkAnalyzer:
             condition_id = str(uuid.uuid4())
             
             # Detect network type
+
             network_type = await self._detect_network_type(connection_data)
             
             # Measure bandwidth
+
             bandwidth_measurement = await self._measure_bandwidth(
                 user_id, connection_data
             )
             
             # Measure latency
+
             latency_measurement = await self._measure_latency(
                 user_id, connection_data
             )
             
             # Detect packet loss
+
             packet_loss_measurement = await self._measure_packet_loss(
                 user_id, connection_data
             )
             
             # Calculate jitter
+
             jitter_measurement = await self._calculate_jitter(
                 user_id, connection_data
             )
             
             # Assess connection stability
+
             stability_assessment = await self._assess_connection_stability(
                 user_id, bandwidth_measurement, latency_measurement
             )
             
             # Get geographic information
+
             geographic_info = await self._get_geographic_information(connection_data)
             
             # Calculate quality of service score
+
             qos_score = await self._calculate_qos_score(
                 bandwidth_measurement, latency_measurement, 
                 packet_loss_measurement, stability_assessment
             )
             
             # Create network condition record
+
             network_condition = NetworkCondition(
                 condition_id=condition_id,
                 user_id=user_id,
@@ -320,8 +340,10 @@ class NetworkAnalyzer:
             
             # Update condition history
             self.condition_history[user_id].append(network_condition)
+
             if len(self.condition_history[user_id]) > 100:
                 self.condition_history[user_id].popleft()
+
             
             return {
                 "success": True,
@@ -339,12 +361,13 @@ class NetworkAnalyzer:
             
         except Exception as e:
             logger.error(f"Failed to analyze network conditions: {e}")
+
             raise
 
 class DeviceDetector:
     """Device capability detection system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Optional[Any]):
         self.redis = redis_client
         self.device_profiles = {}
         self.capability_cache = {}
@@ -355,50 +378,62 @@ class DeviceDetector:
         device_info: Dict[str, Any],
         performance_hints: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Detect device capabilities for streaming optimization"""
+        """
+        Detect device capabilities for streaming optimization"""
         try:
             device_id = str(uuid.uuid4())
             
             # Parse user agent
+
             user_agent_analysis = await self._parse_user_agent(user_agent)
             
             # Detect device type
+
             device_type = await self._detect_device_type(
                 user_agent_analysis, device_info
             )
             
             # Detect screen capabilities
+
             screen_capabilities = await self._detect_screen_capabilities(device_info)
             
             # Assess processing power
+
             processing_assessment = await self._assess_processing_power(
                 device_info, performance_hints
             )
             
             # Detect codec support
+
             codec_support = await self._detect_codec_support(
                 user_agent_analysis, device_info
             )
             
             # Detect protocol support
+
             protocol_support = await self._detect_protocol_support(
                 user_agent_analysis, device_info
             )
             
             # Check hardware acceleration
+
             hardware_acceleration = await self._check_hardware_acceleration(
                 device_info, performance_hints
             )
             
             # Assess battery status (for mobile devices)
+
+
             battery_assessment = await self._assess_battery_status(device_info)
             
             # Determine performance tier
+
             performance_tier = await self._determine_performance_tier(
                 processing_assessment, screen_capabilities, codec_support
             )
             
             # Create device capability profile
+
             device_capability = DeviceCapability(
                 device_id=device_id,
                 device_type=device_type,
@@ -417,6 +452,7 @@ class DeviceDetector:
             
             # Cache device capability
             await self._cache_device_capability(device_capability)
+
             
             return {
                 "success": True,
@@ -435,32 +471,40 @@ class DeviceDetector:
             
         except Exception as e:
             logger.error(f"Failed to detect device capabilities: {e}")
+
             raise
 
 class QualityManager:
     """Quality profile management system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client: Optional[Any]):
         self.redis = redis_client
         self.quality_profiles = {}
         self.optimization_rules = {}
         
     async def initialize_quality_manager(self) -> Dict[str, Any]:
-        """Initialize quality management system"""
+        """
+        Initialize quality management system"""
         try:
             # Setup quality profiles
+
             quality_profiles = await self._setup_quality_profiles()
             
             # Configure encoding presets
+
             encoding_presets = await self._configure_encoding_presets()
             
             # Setup quality optimization rules
+
             optimization_rules = await self._setup_quality_optimization_rules()
             
             # Configure adaptive algorithms
+
             adaptive_algorithms = await self._configure_adaptive_algorithms()
+
             
             logger.info(f"📺 Quality Manager initialized with {len(quality_profiles)} profiles")
+
             
             return {
                 "quality_profiles": len(quality_profiles),
@@ -471,6 +515,7 @@ class QualityManager:
             
         except Exception as e:
             logger.error(f"Failed to initialize quality manager: {e}")
+
             raise
 
     async def select_optimal_quality(
@@ -482,33 +527,41 @@ class QualityManager:
         """Select optimal quality profile based on conditions"""
         try:
             # Analyze device constraints
+
             device_constraints = await self._analyze_device_constraints(device_capability)
             
             # Analyze network constraints
+
             network_constraints = await self._analyze_network_constraints(network_condition)
             
             # Apply user preferences
+
             preference_constraints = await self._apply_user_preferences(
                 user_preferences or {}, device_constraints, network_constraints
             )
             
             # Calculate optimal quality parameters
+
             optimal_parameters = await self._calculate_optimal_quality_parameters(
                 device_constraints, network_constraints, preference_constraints
             )
             
             # Select best matching quality profile
+
             selected_profile = await self._select_quality_profile(optimal_parameters)
             
             # Validate quality selection
+
             quality_validation = await self._validate_quality_selection(
                 selected_profile, device_capability, network_condition
             )
             
             # Calculate adaptation confidence
+
             adaptation_confidence = await self._calculate_adaptation_confidence(
                 selected_profile, optimal_parameters, quality_validation
             )
+
             
             return {
                 "success": True,
@@ -524,12 +577,13 @@ class QualityManager:
             
         except Exception as e:
             logger.error(f"Failed to select optimal quality: {e}")
+
             raise
 
 class AdaptationEngine:
     """Adaptive streaming engine"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         self.adaptation_algorithms = {}
@@ -542,51 +596,62 @@ class AdaptationEngine:
         trigger_data: Dict[str, Any],
         adaptation_strategy: AdaptationStrategy
     ) -> Dict[str, Any]:
-        """Execute quality adaptation for streaming session"""
+        """
+        Execute quality adaptation for streaming session"""
         try:
             event_id = str(uuid.uuid4())
             
             # Get current streaming session
+
             streaming_session = await self._get_streaming_session(session_id)
+
             if not streaming_session:
                 raise ValueError("Streaming session not found")
             
             # Analyze adaptation trigger
+
             trigger_analysis = await self._analyze_adaptation_trigger(
                 trigger, trigger_data, streaming_session
             )
             
             # Calculate new quality requirements
+
             quality_requirements = await self._calculate_new_quality_requirements(
                 streaming_session, trigger_analysis, adaptation_strategy
             )
             
             # Select new quality profile
+
             new_quality = await self._select_adaptation_quality_profile(
                 quality_requirements, streaming_session
             )
             
             # Plan adaptation execution
+
             adaptation_plan = await self._plan_adaptation_execution(
                 streaming_session, new_quality, adaptation_strategy
             )
             
             # Execute adaptation
+
             adaptation_execution = await self._execute_adaptation_plan(
                 streaming_session, adaptation_plan
             )
             
             # Monitor adaptation performance
+
             adaptation_monitoring = await self._monitor_adaptation_performance(
                 streaming_session, adaptation_execution
             )
             
             # Update session state
+
             session_update = await self._update_streaming_session_state(
                 streaming_session, new_quality, adaptation_execution
             )
             
             # Create adaptation event record
+
             adaptation_event = AdaptationEvent(
                 event_id=event_id,
                 session_id=session_id,
@@ -598,11 +663,13 @@ class AdaptationEngine:
                 adaptation_duration_ms=adaptation_execution["duration_ms"],
                 performance_impact=adaptation_monitoring["performance_impact"],
                 user_satisfaction=None,  # To be updated based on user feedback
+
                 timestamp=datetime.utcnow()
             )
             
             # Store adaptation event
             await self._store_adaptation_event(adaptation_event)
+
             
             return {
                 "success": True,
@@ -619,12 +686,13 @@ class AdaptationEngine:
             
         except Exception as e:
             logger.error(f"Failed to execute quality adaptation: {e}")
+
             raise
 
 class StreamingAdaptiveController:
     """Unified streaming adaptive controller - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client: Optional[Any], db_session: AsyncSession):
         self.redis = redis_client
         self.db = db_session
         
@@ -644,24 +712,32 @@ class StreamingAdaptiveController:
         """Initialize adaptive streaming controller"""
         try:
             # Initialize network analyzer
+
             network_status = await self.network_analyzer.initialize_network_analyzer()
             
             # Initialize quality manager
+
             quality_status = await self.quality_manager.initialize_quality_manager()
             
             # Setup adaptation rules
+
             adaptation_rules = await self._setup_adaptation_rules()
             
             # Configure learning algorithms
+
             learning_algorithms = await self._configure_learning_algorithms()
             
             # Setup session monitoring
+
             session_monitoring = await self._setup_session_monitoring()
             
             # Configure performance optimization
+
             performance_optimization = await self._configure_performance_optimization()
+
             
             logger.info("🎛️ Streaming Adaptive Controller fully initialized")
+
             
             return {
                 "controller_status": "initialized",
@@ -683,6 +759,7 @@ class StreamingAdaptiveController:
             
         except Exception as e:
             logger.error(f"Failed to initialize adaptive controller: {e}")
+
             raise
     
     async def start_adaptive_streaming_session(
@@ -698,17 +775,20 @@ class StreamingAdaptiveController:
             session_id = str(uuid.uuid4())
             
             # Detect device capabilities
+
             device_detection = await self.device_detector.detect_device_capabilities(
                 user_agent, connection_data.get("device_info", {}), 
                 connection_data.get("performance_hints", {})
             )
             
             # Analyze network conditions
+
             network_analysis = await self.network_analyzer.analyze_network_conditions(
                 user_id, session_id, connection_data
             )
             
             # Select optimal quality
+
             quality_selection = await self.quality_manager.select_optimal_quality(
                 device_detection["device_capability"],
                 network_analysis["network_condition"],
@@ -716,6 +796,7 @@ class StreamingAdaptiveController:
             )
             
             # Create streaming session
+
             streaming_session = StreamingSession(
                 session_id=session_id,
                 user_id=user_id,
@@ -733,15 +814,19 @@ class StreamingAdaptiveController:
             
             # Store streaming session
             await self._store_streaming_session(streaming_session)
+
             self.streaming_sessions[session_id] = streaming_session
             
             # Setup session monitoring
+
             monitoring_setup = await self._setup_streaming_session_monitoring(streaming_session)
             
             # Configure adaptation triggers
+
             trigger_configuration = await self._configure_session_adaptation_triggers(
                 streaming_session
             )
+
             
             return {
                 "success": True,
@@ -757,6 +842,7 @@ class StreamingAdaptiveController:
             
         except Exception as e:
             logger.error(f"Failed to start adaptive streaming session: {e}")
+
             raise
     
     # Additional helper methods implementation...
@@ -771,6 +857,7 @@ class StreamingAdaptiveController:
             }
         except Exception as e:
             logger.error(f"Failed to setup adaptation rules: {e}")
+
             return {}
 
     async def _configure_learning_algorithms(self) -> Dict[str, Any]:
@@ -784,6 +871,7 @@ class StreamingAdaptiveController:
             }
         except Exception as e:
             logger.error(f"Failed to configure learning algorithms: {e}")
+
             return {}
 
 # Export main classes

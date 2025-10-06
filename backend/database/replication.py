@@ -68,7 +68,8 @@ logger = logging.getLogger(__name__)
 
 
 class ReplicationMode(Enum):
-    """Replication mode enumeration."""
+    """
+        Replication mode enumeration."""
     MASTER_SLAVE = "master_slave"
     MASTER_MASTER = "master_master"
     REPLICA_SET = "replica_set"
@@ -122,7 +123,8 @@ class ReplicationNode:
 
 @dataclass
 class ReplicationConfig:
-    """Replication configuration."""
+    """
+        Replication configuration."""
     config_id: str
     database_name: str
     replication_mode: ReplicationMode
@@ -140,7 +142,8 @@ class ReplicationConfig:
 
 @dataclass
 class ReplicationMetrics:
-    """Replication performance metrics."""
+    """
+        Replication performance metrics."""
     timestamp: datetime
     total_nodes: int
     healthy_nodes: int
@@ -156,7 +159,8 @@ class ReplicationMetrics:
 
 @dataclass
 class ShardConfig:
-    """Sharding configuration."""
+    """
+        Sharding configuration."""
     shard_id: str
     shard_key: str
     min_value: Any
@@ -169,36 +173,43 @@ class ShardConfig:
 
 
 class IReplicationProvider(ABC):
-    """Replication provider interface."""
+    """
+        Replication provider interface."""
     
     @abstractmethod
     async def initialize_replication(self, config: ReplicationConfig) -> bool:
-        """Initialize replication setup."""
+        """
+        Initialize replication setup."""
         pass
     
     @abstractmethod
     async def start_replication(self) -> bool:
-        """Start replication process."""
+        """
+        Start replication process."""
         pass
     
     @abstractmethod
     async def stop_replication(self) -> bool:
-        """Stop replication process."""
+        """
+        Stop replication process."""
         pass
     
     @abstractmethod
     async def get_replication_status(self) -> ReplicationStatus:
-        """Get current replication status."""
+        """
+        Get current replication status."""
         pass
     
     @abstractmethod
     async def promote_slave_to_master(self, node_id: str) -> bool:
-        """Promote slave node to master."""
+        """
+        Promote slave node to master."""
         pass
     
     @abstractmethod
     async def get_metrics(self) -> ReplicationMetrics:
-        """Get replication metrics."""
+        """
+        Get replication metrics."""
         pass
 
 
@@ -229,10 +240,13 @@ class PostgreSQLReplicationProvider(IReplicationProvider):
             failovers_count=0,
             uptime_percentage=100.0
         )
+
         
     async def initialize_replication(self, config: ReplicationConfig) -> bool:
-        """Initialize PostgreSQL replication."""
+        """
+        Initialize PostgreSQL replication."""
         logger.info(f"🐘 Initializing PostgreSQL replication: {config.config_id}")
+
         
         try:
             self._config = config
@@ -251,13 +265,16 @@ class PostgreSQLReplicationProvider(IReplicationProvider):
             for node in config.nodes:
                 if node.role == NodeRole.SLAVE:
                     await self._configure_slave_replication(node)
+
             
             self._replication_status = ReplicationStatus.ACTIVE
             logger.info("✅ PostgreSQL replication initialized")
+
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to initialize PostgreSQL replication: {e}")
+
             self._replication_status = ReplicationStatus.FAILED
             return False
     
@@ -291,17 +308,21 @@ class PostgreSQLReplicationProvider(IReplicationProvider):
             self._monitoring_tasks.append(
                 asyncio.create_task(self._monitor_replication_lag())
             )
+
             
             self._monitoring_tasks.append(
                 asyncio.create_task(self._health_monitor())
             )
+
             
             self._replication_status = ReplicationStatus.ACTIVE
             logger.info("🚀 PostgreSQL replication started")
+
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to start PostgreSQL replication: {e}")
+
             return False
     
     async def _monitor_replication_lag(self):
@@ -310,19 +331,26 @@ class PostgreSQLReplicationProvider(IReplicationProvider):
             try:
                 if self._replication_status != ReplicationStatus.ACTIVE:
                     await asyncio.sleep(10)
+
                     continue
+
                 
                 total_lag = 0.0
+
                 max_lag = 0.0
+
                 healthy_nodes = 0
                 
                 for node_id, node in self._nodes.items():
                     if node.role == NodeRole.SLAVE:
                         try:
                             # Check replication lag
+
                             lag = await self._get_replication_lag(node)
+
                             node.lag_seconds = lag
                             total_lag += lag
+
                             max_lag = max(max_lag, lag)
                             
                             # Update health status
@@ -332,27 +360,38 @@ class PostgreSQLReplicationProvider(IReplicationProvider):
                             else:
                                 node.is_healthy = False
                                 logger.warning(f"⚠️ High replication lag on {node_id}: {lag}s")
+
                             
                             node.last_heartbeat = datetime.now(timezone.utc)
+
                             
                         except Exception as e:
                             logger.error(f"Failed to check lag for {node_id}: {e}")
+
                             node.is_healthy = False
                 
                 # Update metrics
+
                 slave_count = sum(1 for n in self._nodes.values() if n.role == NodeRole.SLAVE)
+
                 self._metrics.average_lag = total_lag / max(slave_count, 1)
+
                 self._metrics.max_lag = max_lag
                 self._metrics.healthy_nodes = healthy_nodes + (1 if self._master_node and self._master_node.is_healthy else 0)
+
                 self._metrics.total_nodes = len(self._nodes)
+
                 self._metrics.timestamp = datetime.now(timezone.utc)
+
                 
                 await asyncio.sleep(self._config.heartbeat_interval_seconds)
+
                 
             except asyncio.CancelledError:
                 break
             except Exception as e:
                 logger.error(f"Replication lag monitoring error: {e}")
+
                 await asyncio.sleep(30)
     
     async def _get_replication_lag(self, node: ReplicationNode) -> float:
@@ -361,10 +400,10 @@ class PostgreSQLReplicationProvider(IReplicationProvider):
             # In a real implementation, this would query:
             # SELECT EXTRACT(EPOCH FROM (now() - pg_last_xact_replay_timestamp()));
             # For now, return a mock value
-            return 0.5  # Mock lag of 0.5 seconds
-            
+            return 0.5            
         except Exception as e:
             logger.error(f"Failed to get replication lag for {node.node_id}: {e}")
+
             return 999.0  # Return high lag on error
     
     async def _health_monitor(self):
@@ -376,13 +415,16 @@ class PostgreSQLReplicationProvider(IReplicationProvider):
                 # Check master health
                 if self._master_node:
                     master_healthy = await self._check_node_health(self._master_node)
+
                     self._master_node.is_healthy = master_healthy
                     
                     if not master_healthy and self._config.auto_failover_enabled:
                         await self._trigger_failover()
                 
                 # Update overall status
+
                 healthy_ratio = self._metrics.healthy_nodes / max(self._metrics.total_nodes, 1)
+
                 
                 if healthy_ratio >= 0.8:
                     self._replication_status = ReplicationStatus.ACTIVE
@@ -401,36 +443,43 @@ class PostgreSQLReplicationProvider(IReplicationProvider):
         try:
             # In a real implementation, this would establish a connection
             # and run a simple query to verify database availability
-            return True  # Mock healthy status
-            
+            return True            
         except Exception as e:
             logger.error(f"Health check failed for {node.node_id}: {e}")
+
             return False
     
     async def _trigger_failover(self):
         """Trigger automatic failover to best available slave."""
         logger.warning("🚨 Triggering automatic failover...")
+
         
         try:
             # Find best slave for promotion
+
             candidates = [
-                node for node in self._nodes.values() 
+                node for node in self._nodes.values()
+ 
                 if node.role == NodeRole.SLAVE and node.is_healthy
             ]
             
             if not candidates:
                 logger.error("❌ No healthy slaves available for failover")
+
                 return
             
             # Choose slave with lowest lag and highest priority
+
             best_slave = min(candidates, key=lambda n: (n.lag_seconds, -n.priority))
             
             # Promote slave to master
             if await self.promote_slave_to_master(best_slave.node_id):
                 self._metrics.failovers_count += 1
                 logger.info(f"✅ Failover completed: {best_slave.node_id} promoted to master")
+
             else:
                 logger.error("❌ Failover failed")
+
                 
         except Exception as e:
             logger.error(f"❌ Failover process failed: {e}")
@@ -439,6 +488,7 @@ class PostgreSQLReplicationProvider(IReplicationProvider):
         """Promote slave node to master."""
         try:
             node = self._nodes.get(node_id)
+
             if not node or node.role != NodeRole.SLAVE:
                 return False
             
@@ -458,10 +508,12 @@ class PostgreSQLReplicationProvider(IReplicationProvider):
             self._master_node = node
             
             logger.info(f"✅ Node {node_id} promoted to master")
+
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to promote node {node_id}: {e}")
+
             return False
     
     async def stop_replication(self) -> bool:
@@ -470,19 +522,23 @@ class PostgreSQLReplicationProvider(IReplicationProvider):
             # Cancel monitoring tasks
             for task in self._monitoring_tasks:
                 task.cancel()
+
                 try:
                     await task
                 except asyncio.CancelledError:
                     pass
             
             self._monitoring_tasks.clear()
+
             self._replication_status = ReplicationStatus.STOPPED
             
             logger.info("🛑 PostgreSQL replication stopped")
+
             return True
             
         except Exception as e:
             logger.error(f"❌ Failed to stop PostgreSQL replication: {e}")
+
             return False
     
     async def get_replication_status(self) -> ReplicationStatus:
@@ -490,7 +546,8 @@ class PostgreSQLReplicationProvider(IReplicationProvider):
         return self._replication_status
     
     async def get_metrics(self) -> ReplicationMetrics:
-        """Get PostgreSQL replication metrics."""
+        """
+        Get PostgreSQL replication metrics."""
         self._metrics.timestamp = datetime.now(timezone.utc)
         return self._metrics
 
@@ -510,8 +567,10 @@ class ShardingManager:
         self._monitoring_tasks: List[asyncio.Task] = []
         
     async def initialize(self, database_name: str, shard_key: str, initial_shards: int = 4):
-        """Initialize sharding for database."""
+        """
+        Initialize sharding for database."""
         logger.info(f"🔀 Initializing sharding for {database_name} with {initial_shards} shards")
+
         
         try:
             # Create initial shard configurations
@@ -524,8 +583,10 @@ class ShardingManager:
                     min_value=i * (2**32 // initial_shards),
                     max_value=(i + 1) * (2**32 // initial_shards) - 1,
                     target_node=f"node_{i % 4}",  # Distribute across 4 nodes
+
                     metadata={"database": database_name}
                 )
+
                 
                 self._shard_configs[shard_id] = shard_config
             
@@ -533,16 +594,20 @@ class ShardingManager:
             self._monitoring_tasks.append(
                 asyncio.create_task(self._shard_monitoring_loop())
             )
+
             
             logger.info(f"✅ Sharding initialized for {database_name}")
+
             
         except Exception as e:
             logger.error(f"❌ Failed to initialize sharding: {e}")
+
             raise
     
     def get_shard_for_key(self, key: str) -> str:
         """Get shard ID for a given key."""
         # Calculate hash of the key
+
         key_hash = int(hashlib.md5(key.encode()).hexdigest(), 16) % (2**32)
         
         # Find appropriate shard
@@ -554,13 +619,15 @@ class ShardingManager:
         return next(iter(self._shard_configs.keys()))
     
     async def _shard_monitoring_loop(self):
-        """Monitor shard health and balance."""
+        """
+        Monitor shard health and balance."""
         while True:
             try:
                 await asyncio.sleep(300)  # Check every 5 minutes
                 
                 if self._rebalancing_enabled:
                     await self._check_shard_balance()
+
                 
             except asyncio.CancelledError:
                 break
@@ -571,24 +638,33 @@ class ShardingManager:
         """Check if shards need rebalancing."""
         try:
             # Calculate shard statistics
+
             total_size = sum(shard.data_size_mb for shard in self._shard_configs.values())
+
+
             avg_size = total_size / len(self._shard_configs)
             
             # Find unbalanced shards
+
             oversized_shards = [
                 shard for shard in self._shard_configs.values()
+
                 if shard.data_size_mb > avg_size * 1.5  # 50% above average
             ]
+
             
             undersized_shards = [
                 shard for shard in self._shard_configs.values()
+
                 if shard.data_size_mb < avg_size * 0.5  # 50% below average
             ]
             
             if oversized_shards:
                 logger.info(f"🔄 Rebalancing needed: {len(oversized_shards)} oversized shards")
+
                 for shard in oversized_shards[:1]:  # Rebalance one at a time
                     await self._split_shard(shard.shard_id)
+
             
         except Exception as e:
             logger.error(f"Shard balance check failed: {e}")
@@ -599,7 +675,9 @@ class ShardingManager:
             original_shard = self._shard_configs[shard_id]
             
             # Create two new shards
+
             midpoint = (original_shard.min_value + original_shard.max_value) // 2
+
             
             new_shard_1 = ShardConfig(
                 shard_id=f"{shard_id}_split_1",
@@ -608,6 +686,8 @@ class ShardingManager:
                 max_value=midpoint,
                 target_node=original_shard.target_node
             )
+
+
             
             new_shard_2 = ShardConfig(
                 shard_id=f"{shard_id}_split_2",
@@ -623,6 +703,7 @@ class ShardingManager:
             del self._shard_configs[shard_id]
             
             logger.info(f"✅ Shard split completed: {shard_id} -> {new_shard_1.shard_id}, {new_shard_2.shard_id}")
+
             
         except Exception as e:
             logger.error(f"❌ Failed to split shard {shard_id}: {e}")
@@ -630,7 +711,9 @@ class ShardingManager:
     def get_shard_statistics(self) -> Dict[str, Any]:
         """Get sharding statistics."""
         total_size = sum(shard.data_size_mb for shard in self._shard_configs.values())
+
         total_documents = sum(shard.document_count for shard in self._shard_configs.values())
+
         
         return {
             "total_shards": len(self._shard_configs),
@@ -665,7 +748,8 @@ class DatabaseReplicationManager:
         self._monitoring_tasks: List[asyncio.Task] = []
         
     async def initialize(self):
-        """Initialize replication manager."""
+        """
+        Initialize replication manager."""
         logger.info("🏢 Initializing Enterprise Database Replication Manager...")
         
         # Initialize sharding manager
@@ -675,6 +759,7 @@ class DatabaseReplicationManager:
         self._monitoring_tasks.append(
             asyncio.create_task(self._global_monitoring_loop())
         )
+
         
         logger.info("✅ Enterprise Database Replication Manager initialized")
     
@@ -688,17 +773,21 @@ class DatabaseReplicationManager:
         provider = self._replication_providers.get(database_name)
         if not provider:
             logger.error(f"No replication provider for: {database_name}")
+
             return False
         
         try:
             success = await provider.initialize_replication(config)
+
             if success:
                 success = await provider.start_replication()
+
             
             return success
             
         except Exception as e:
             logger.error(f"❌ Failed to setup replication for {database_name}: {e}")
+
             return False
     
     async def _global_monitoring_loop(self):
@@ -711,17 +800,21 @@ class DatabaseReplicationManager:
                 for db_name, provider in self._replication_providers.items():
                     try:
                         metrics = await provider.get_metrics()
+
                         self._global_metrics[db_name] = metrics
                         
                         # Check for issues
                         if metrics.average_lag > 10.0:  # 10 second lag threshold
                             logger.warning(f"⚠️ High replication lag in {db_name}: {metrics.average_lag}s")
+
                         
                         if metrics.healthy_nodes / max(metrics.total_nodes, 1) < 0.5:
                             logger.error(f"🚨 Majority of nodes unhealthy in {db_name}")
+
                             
                     except Exception as e:
                         logger.error(f"Failed to collect metrics for {db_name}: {e}")
+
                 
             except asyncio.CancelledError:
                 break
@@ -737,15 +830,21 @@ class DatabaseReplicationManager:
             "sharding_stats": self.sharding_manager.get_shard_statistics(),
             "generated_at": datetime.now(timezone.utc).isoformat()
         }
+
         
         total_nodes = 0
+
         healthy_nodes = 0
         
         # Collect status from all databases
         for db_name, provider in self._replication_providers.items():
             try:
                 status = await provider.get_replication_status()
+
+
                 metrics = self._global_metrics.get(db_name)
+
+
                 
                 database_info = {
                     "status": status.value,
@@ -787,14 +886,17 @@ class DatabaseReplicationManager:
         try:
             if target_node:
                 return await provider.promote_slave_to_master(target_node)
+
             else:
                 # Provider will choose best candidate
                 # This would need to be implemented in the provider
                 logger.info(f"🔄 Triggering automatic failover for {database_name}")
+
                 return True
                 
         except Exception as e:
             logger.error(f"❌ Failover failed for {database_name}: {e}")
+
             return False
     
     async def close(self):
@@ -805,13 +907,16 @@ class DatabaseReplicationManager:
         for db_name, provider in self._replication_providers.items():
             try:
                 await provider.stop_replication()
+
                 logger.info(f"✅ Stopped replication for {db_name}")
+
             except Exception as e:
                 logger.error(f"❌ Error stopping replication for {db_name}: {e}")
         
         # Cancel monitoring tasks
         for task in self._monitoring_tasks:
             task.cancel()
+
             try:
                 await task
             except asyncio.CancelledError:

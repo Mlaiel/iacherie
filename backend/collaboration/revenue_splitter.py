@@ -20,7 +20,8 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueType(Enum):
-    """Types of revenue sources"""
+    """
+        Types of revenue sources"""
     CONTENT_SALES = "content_sales"
     STREAMING_ROYALTIES = "streaming_royalties"
     ADVERTISING = "advertising"
@@ -112,7 +113,8 @@ class DistributionCalculation:
 
 @dataclass
 class PaymentTransaction:
-    """Individual payment transaction"""
+    """
+        Individual payment transaction"""
     transaction_id: str
     creator_id: str
     amount: Decimal
@@ -130,7 +132,8 @@ class PaymentTransaction:
 
 @dataclass
 class RevenueSplit:
-    """Complete revenue split configuration and tracking"""
+    """
+        Complete revenue split configuration and tracking"""
     split_id: str
     project_id: str
     revenue_shares: List[RevenueShare]
@@ -152,7 +155,8 @@ class RevenueSplit:
 
 @dataclass
 class RevenueAnalytics:
-    """Revenue analytics and reporting"""
+    """
+        Revenue analytics and reporting"""
     split_id: str
     total_revenue: Decimal
     revenue_by_source: Dict[RevenueType, Decimal]
@@ -167,7 +171,8 @@ class RevenueAnalytics:
 
 
 class RevenueSplitter:
-    """AI-powered automatic revenue distribution system"""
+    """
+        AI-powered automatic revenue distribution system"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -187,6 +192,7 @@ class RevenueSplitter:
         # Minimum thresholds
         self.minimum_payout_threshold = Decimal(str(self.config.get('minimum_payout', 10.0)))
         self.maximum_hold_period_days = self.config.get('maximum_hold_period_days', 30)
+
         
         logger.info("RevenueSplitter initialized with automated distribution capabilities")
     
@@ -203,7 +209,9 @@ class RevenueSplitter:
             logger.info(f"Creating revenue split {split_id} for project {project_id}")
             
             # Convert creator share dictionaries to RevenueShare objects
+
             revenue_shares = []
+
             total_percentage = 0.0
             
             for share_data in creator_shares:
@@ -219,7 +227,9 @@ class RevenueSplitter:
                     tax_details=share_data.get('tax_details', {}),
                     special_conditions=share_data.get('special_conditions', [])
                 )
+
                 revenue_shares.append(share)
+
                 total_percentage += share.percentage
             
             # Validate total percentage
@@ -227,6 +237,7 @@ class RevenueSplitter:
                 raise ValueError(f"Total percentage must equal 100%, got {total_percentage}%")
             
             # Create revenue split
+
             revenue_split = RevenueSplit(
                 split_id=split_id,
                 project_id=project_id,
@@ -243,10 +254,12 @@ class RevenueSplitter:
             self.revenue_splits[split_id] = revenue_split
             
             logger.info(f"Revenue split {split_id} created with {len(revenue_shares)} participants")
+
             return revenue_split
             
         except Exception as e:
             logger.error(f"Revenue split creation failed: {e}")
+
             raise
     
     async def add_revenue(
@@ -257,15 +270,21 @@ class RevenueSplitter:
         """Add new revenue to be distributed"""
         if split_id not in self.revenue_splits:
             raise ValueError(f"Revenue split {split_id} not found")
+
+
         
         revenue_split = self.revenue_splits[split_id]
         
         # Create revenue source
+
         source_id = f"rev_{len(revenue_split.revenue_sources) + 1}_{datetime.now().strftime('%Y%m%d%H%M')}"
         
         gross_amount = Decimal(str(revenue_data['amount']))
+
         fees_deducted = Decimal(str(revenue_data.get('fees_deducted', 0)))
+
         net_amount = gross_amount - fees_deducted
+
         
         revenue_source = RevenueSource(
             source_id=source_id,
@@ -290,6 +309,7 @@ class RevenueSplitter:
             if (revenue_split.distribution_frequency == DistributionFrequency.REAL_TIME or
                 revenue_split.distribution_frequency == DistributionFrequency.THRESHOLD_BASED):
                 await self._check_distribution_trigger(revenue_split)
+
         
         logger.info(f"Added revenue {source_id}: ${net_amount} to split {split_id}")
         return revenue_source
@@ -302,6 +322,8 @@ class RevenueSplitter:
         """Calculate revenue distribution for creators"""
         if split_id not in self.revenue_splits:
             raise ValueError(f"Revenue split {split_id} not found")
+
+
         
         revenue_split = self.revenue_splits[split_id]
         
@@ -310,9 +332,13 @@ class RevenueSplitter:
             sources = [s for s in revenue_split.revenue_sources if s.source_id in revenue_sources]
         else:
             # Get undistributed revenue
+
             distributed_sources = set()
+
             for dist in revenue_split.distributions:
                 distributed_sources.update(dist.calculation_details.get('revenue_sources', []))
+
+
             
             sources = [s for s in revenue_split.revenue_sources if s.source_id not in distributed_sources]
         
@@ -320,21 +346,27 @@ class RevenueSplitter:
             raise ValueError("No revenue sources available for distribution")
         
         # Calculate total revenue
+
         total_revenue = sum(source.net_amount for source in sources)
         
         # Calculate fees
+
         platform_fees = total_revenue * Decimal(str(revenue_split.platform_fee_percentage / 100))
+
         processing_fees = total_revenue * Decimal(str(revenue_split.processing_fee_percentage / 100))
         
         # Calculate net distributable amount
+
         net_distributable = total_revenue - platform_fees - processing_fees
         
         # Calculate creator distributions
+
         creator_distributions = await self._calculate_creator_distributions(
             revenue_split, net_distributable, sources
         )
         
         # Calculate tax withholdings
+
         tax_withholdings = await self._calculate_tax_withholdings(
             revenue_split, creator_distributions
         )
@@ -345,6 +377,7 @@ class RevenueSplitter:
                 creator_distributions[creator_id] -= tax_amount
         
         # Create distribution calculation
+
         calculation_id = f"calc_{len(revenue_split.distributions) + 1}_{datetime.now().strftime('%Y%m%d%H%M')}"
         
         distribution = DistributionCalculation(
@@ -369,6 +402,7 @@ class RevenueSplitter:
         # Add to revenue split
         revenue_split.distributions.append(distribution)
         revenue_split.updated_at = datetime.now()
+
         
         logger.info(f"Calculated distribution {calculation_id}: ${net_distributable} to {len(creator_distributions)} creators")
         return distribution
@@ -382,36 +416,49 @@ class RevenueSplitter:
         """Process payments to creators based on distribution calculation"""
         if split_id not in self.revenue_splits:
             raise ValueError(f"Revenue split {split_id} not found")
+
+
         
         revenue_split = self.revenue_splits[split_id]
         
         # Find distribution calculation
+
         distribution = next((d for d in revenue_split.distributions if d.calculation_id == calculation_id), None)
         if not distribution:
             raise ValueError(f"Distribution calculation {calculation_id} not found")
+
+
         
         payment_transactions = []
         
         for creator_id, amount in distribution.creator_distributions.items():
             # Skip if amount is below minimum payout threshold
+
             creator_share = next((s for s in revenue_split.revenue_shares if s.creator_id == creator_id), None)
+
             if creator_share and amount < Decimal(str(creator_share.minimum_payout)):
                 logger.info(f"Skipping payment to {creator_id}: ${amount} below minimum ${creator_share.minimum_payout}")
+
                 continue
             
             # Create payment transaction
+
             transaction = await self._create_payment_transaction(
                 creator_id, amount, distribution.calculation_details.get('currency', 'USD'),
                 creator_share, payment_options
             )
+
             
             payment_transactions.append(transaction)
+
             revenue_split.payments.append(transaction)
         
         # Update total distributed amount
+
         total_paid = sum(t.amount for t in payment_transactions)
         revenue_split.total_revenue_distributed += total_paid
         revenue_split.updated_at = datetime.now()
+
         
         logger.info(f"Processed {len(payment_transactions)} payments totaling ${total_paid}")
         return payment_transactions
@@ -420,44 +467,59 @@ class RevenueSplitter:
         """Generate comprehensive revenue analytics"""
         if split_id not in self.revenue_splits:
             raise ValueError(f"Revenue split {split_id} not found")
+
+
         
         revenue_split = self.revenue_splits[split_id]
         
         # Calculate revenue by source type
+
         revenue_by_source = {}
         for source in revenue_split.revenue_sources:
             revenue_type = source.revenue_type
             if revenue_type not in revenue_by_source:
                 revenue_by_source[revenue_type] = Decimal('0.00')
+
             revenue_by_source[revenue_type] += source.net_amount
         
         # Calculate revenue by platform
+
         revenue_by_platform = {}
         for source in revenue_split.revenue_sources:
             platform = source.platform
             if platform not in revenue_by_platform:
                 revenue_by_platform[platform] = Decimal('0.00')
+
             revenue_by_platform[platform] += source.net_amount
         
         # Calculate creator earnings
+
         creator_earnings = {}
         for payment in revenue_split.payments:
             if payment.status == PaymentStatus.COMPLETED:
                 creator_id = payment.creator_id
                 if creator_id not in creator_earnings:
                     creator_earnings[creator_id] = Decimal('0.00')
+
                 creator_earnings[creator_id] += payment.amount
         
         # Calculate performance metrics
+
         distribution_efficiency = await self._calculate_distribution_efficiency(revenue_split)
+
         average_payout_time = await self._calculate_average_payout_time(revenue_split)
+
         payment_success_rate = await self._calculate_payment_success_rate(revenue_split)
         
         # Generate revenue trends
+
         revenue_trends = await self._generate_revenue_trends(revenue_split)
         
         # Generate performance metrics
+
         performance_metrics = await self._generate_performance_metrics(revenue_split)
+
+
         
         analytics = RevenueAnalytics(
             split_id=split_id,
@@ -471,6 +533,7 @@ class RevenueSplitter:
             revenue_trends=revenue_trends,
             performance_metrics=performance_metrics
         )
+
         
         return analytics
     
@@ -488,35 +551,51 @@ class RevenueSplitter:
             # Simple percentage-based distribution
             for share in revenue_split.revenue_shares:
                 amount = net_distributable * Decimal(str(share.percentage / 100))
+
                 distributions[share.creator_id] = amount.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+
         
         elif revenue_split.distribution_method == DistributionMethod.EQUAL_SPLIT:
             # Equal distribution among all creators
+
             amount_per_creator = net_distributable / len(revenue_split.revenue_shares)
+
             for share in revenue_split.revenue_shares:
                 distributions[share.creator_id] = amount_per_creator.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+
         
         elif revenue_split.distribution_method == DistributionMethod.CONTRIBUTION_WEIGHTED:
             # Weight by contribution factors
+
             total_weight = sum(share.contribution_weight for share in revenue_split.revenue_shares)
+
             
             for share in revenue_split.revenue_shares:
                 weight_ratio = Decimal(str(share.contribution_weight / total_weight))
+
+
                 amount = net_distributable * weight_ratio
                 distributions[share.creator_id] = amount.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+
         
         elif revenue_split.distribution_method == DistributionMethod.PERFORMANCE_BASED:
             # Calculate based on performance metrics
+
             distributions = await self._calculate_performance_based_distribution(
                 revenue_split, net_distributable, sources
             )
+
         
         elif revenue_split.distribution_method == DistributionMethod.HYBRID:
             # Combine percentage and performance-based
+
             base_distributions = {}
             
             # 70% based on percentage, 30% based on performance
+
             base_amount = net_distributable * Decimal('0.7')
+
+
             performance_amount = net_distributable * Decimal('0.3')
             
             # Calculate base distributions
@@ -524,6 +603,7 @@ class RevenueSplitter:
                 base_distributions[share.creator_id] = base_amount * Decimal(str(share.percentage / 100))
             
             # Calculate performance distributions
+
             performance_distributions = await self._calculate_performance_based_distribution(
                 revenue_split, performance_amount, sources
             )
@@ -531,13 +611,17 @@ class RevenueSplitter:
             # Combine distributions
             for creator_id in base_distributions:
                 total = base_distributions[creator_id] + performance_distributions.get(creator_id, Decimal('0.00'))
+
                 distributions[creator_id] = total.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+
         
         else:
             # Default to percentage-based
             for share in revenue_split.revenue_shares:
                 amount = net_distributable * Decimal(str(share.percentage / 100))
+
                 distributions[share.creator_id] = amount.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+
         
         return distributions
     
@@ -547,16 +631,20 @@ class RevenueSplitter:
         distributable_amount: Decimal,
         sources: List[RevenueSource]
     ) -> Dict[str, Decimal]:
-        """Calculate performance-based distribution"""
+        """
+        Calculate performance-based distribution"""
         
         distributions = {}
         
         # Analyze attribution data from revenue sources
+
         creator_contributions = {}
+
         total_contribution_score = 0.0
         
         for share in revenue_split.revenue_shares:
             creator_id = share.creator_id
+
             contribution_score = 0.0
             
             # Calculate contribution score based on attribution data
@@ -566,14 +654,17 @@ class RevenueSplitter:
                 # Example attribution factors
                 if 'views' in attribution:
                     creator_views = attribution.get('views', {}).get(creator_id, 0)
+
                     contribution_score += creator_views * 0.1
                 
                 if 'engagement' in attribution:
                     creator_engagement = attribution.get('engagement', {}).get(creator_id, 0)
+
                     contribution_score += creator_engagement * 0.3
                 
                 if 'content_quality' in attribution:
                     creator_quality = attribution.get('content_quality', {}).get(creator_id, 0)
+
                     contribution_score += creator_quality * 0.2
             
             # Apply performance bonus eligibility
@@ -587,13 +678,18 @@ class RevenueSplitter:
         if total_contribution_score > 0:
             for creator_id, contribution_score in creator_contributions.items():
                 contribution_ratio = Decimal(str(contribution_score / total_contribution_score))
+
+
                 amount = distributable_amount * contribution_ratio
                 distributions[creator_id] = amount.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
         else:
             # Fallback to equal distribution
+
             amount_per_creator = distributable_amount / len(revenue_split.revenue_shares)
+
             for share in revenue_split.revenue_shares:
                 distributions[share.creator_id] = amount_per_creator.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+
         
         return distributions
     
@@ -602,7 +698,8 @@ class RevenueSplitter:
         revenue_split: RevenueSplit,
         creator_distributions: Dict[str, Decimal]
     ) -> Dict[str, Decimal]:
-        """Calculate tax withholdings for each creator"""
+        """
+        Calculate tax withholdings for each creator"""
         
         tax_withholdings = {}
         
@@ -614,11 +711,14 @@ class RevenueSplitter:
             
             if creator_id not in creator_distributions:
                 continue
+
             
             amount = creator_distributions[creator_id]
+
             tax_details = share.tax_details
             
             # Calculate tax withholding based on creator's tax information
+
             withholding_rate = 0.0
             
             if 'tax_status' in tax_details:
@@ -626,23 +726,33 @@ class RevenueSplitter:
                 
                 if tax_status == 'us_resident':
                     # No withholding for US residents (they handle their own taxes)
+
+
                     withholding_rate = 0.0
                 elif tax_status == 'non_us_resident':
                     # 30% withholding for non-US residents (default rate)
+
+
                     withholding_rate = 0.30
                 elif tax_status == 'treaty_country':
                     # Reduced rate for treaty countries
+
                     withholding_rate = tax_details.get('treaty_rate', 0.15)
             
             # Apply minimum withholding threshold
+
             minimum_withholding = Decimal(str(tax_details.get('minimum_withholding', 0)))
+
+
             
             withholding_amount = amount * Decimal(str(withholding_rate))
+
             if withholding_amount < minimum_withholding:
                 withholding_amount = minimum_withholding
             
             if withholding_amount > Decimal('0.00'):
                 tax_withholdings[creator_id] = withholding_amount.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+
         
         return tax_withholdings
     
@@ -654,11 +764,13 @@ class RevenueSplitter:
         creator_share: Optional[RevenueShare],
         payment_options: Optional[Dict[str, Any]] = None
     ) -> PaymentTransaction:
-        """Create a payment transaction for a creator"""
+        """
+        Create a payment transaction for a creator"""
         
         transaction_id = f"txn_{creator_id}_{datetime.now().strftime('%Y%m%d%H%M%S')}"
         
         # Determine payment method
+
         payment_method = 'bank_transfer'  # Default
         if creator_share:
             payment_method = creator_share.payment_method
@@ -666,9 +778,11 @@ class RevenueSplitter:
             payment_method = payment_options['payment_method']
         
         # Calculate transaction fees
+
         transaction_fees = await self._calculate_transaction_fees(amount, payment_method)
         
         # Create transaction
+
         transaction = PaymentTransaction(
             transaction_id=transaction_id,
             creator_id=creator_id,
@@ -686,6 +800,7 @@ class RevenueSplitter:
         
         # Process payment (simulated)
         await self._process_payment_transaction(transaction)
+
         
         return transaction
     
@@ -702,11 +817,13 @@ class RevenueSplitter:
         
         # Simulate success/failure
         import random
+
         success_rate = 0.95  # 95% success rate
         
         if random.random() < success_rate:
             transaction.status = PaymentStatus.COMPLETED
             transaction.completed_at = datetime.now()
+
             transaction.reference_id = f"ref_{transaction.transaction_id}"
             
             # Simulate blockchain hash if blockchain enabled
@@ -729,18 +846,24 @@ class RevenueSplitter:
             'crypto': 0.01,         # 1%
             'wire_transfer': 0.0025 # 0.25%
         }
+
         
         rate = fee_rates.get(payment_method, 0.029)  # Default to 2.9%
         fee = amount * Decimal(str(rate))
+
         
         return fee.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
     async def _check_distribution_trigger(self, revenue_split: RevenueSplit):
-        """Check if automatic distribution should be triggered"""
+        """
+        Check if automatic distribution should be triggered"""
         
         # Calculate undistributed revenue
+
         distributed_amount = sum(d.net_distributable for d in revenue_split.distributions)
+
         undistributed_amount = revenue_split.total_revenue_collected - distributed_amount
+
         
         should_distribute = False
         
@@ -754,8 +877,11 @@ class RevenueSplitter:
         if should_distribute:
             try:
                 distribution = await self.calculate_distribution(revenue_split.split_id)
+
                 await self.process_payments(revenue_split.split_id, distribution.calculation_id)
+
                 logger.info(f"Automatic distribution triggered for split {revenue_split.split_id}")
+
             except Exception as e:
                 logger.error(f"Automatic distribution failed for split {revenue_split.split_id}: {e}")
     
@@ -764,23 +890,28 @@ class RevenueSplitter:
         
         if not revenue_split.revenue_sources:
             return 0.0
+
         
         total_collected = revenue_split.total_revenue_collected
+
         total_distributed = revenue_split.total_revenue_distributed
         
         if total_collected == Decimal('0.00'):
             return 0.0
+
         
         efficiency = float(total_distributed / total_collected)
         return min(1.0, efficiency)
     
     async def _calculate_average_payout_time(self, revenue_split: RevenueSplit) -> float:
-        """Calculate average time from revenue collection to payout (in hours)"""
+        """
+        Calculate average time from revenue collection to payout (in hours)"""
         
         completed_payments = [p for p in revenue_split.payments if p.status == PaymentStatus.COMPLETED]
         
         if not completed_payments:
             return 0.0
+
         
         total_time = 0.0
         
@@ -792,28 +923,36 @@ class RevenueSplitter:
         return total_time / len(completed_payments)
     
     async def _calculate_payment_success_rate(self, revenue_split: RevenueSplit) -> float:
-        """Calculate payment success rate"""
+        """
+        Calculate payment success rate"""
         
         if not revenue_split.payments:
             return 0.0
+
         
         successful_payments = len([p for p in revenue_split.payments if p.status == PaymentStatus.COMPLETED])
+
         total_payments = len(revenue_split.payments)
+
         
         return successful_payments / total_payments
     
     async def _generate_revenue_trends(self, revenue_split: RevenueSplit) -> List[Dict[str, Any]]:
-        """Generate revenue trend data"""
+        """
+        Generate revenue trend data"""
         
         trends = []
         
         # Group revenue by date
+
         daily_revenue = {}
         
         for source in revenue_split.revenue_sources:
             date_key = source.collection_date.strftime('%Y-%m-%d')
+
             if date_key not in daily_revenue:
                 daily_revenue[date_key] = Decimal('0.00')
+
             daily_revenue[date_key] += source.net_amount
         
         # Convert to trend format
@@ -823,11 +962,13 @@ class RevenueSplitter:
                 'revenue': float(amount),
                 'currency': 'USD'
             })
+
         
         return trends
     
     async def _generate_performance_metrics(self, revenue_split: RevenueSplit) -> Dict[str, Any]:
-        """Generate detailed performance metrics"""
+        """
+        Generate detailed performance metrics"""
         
         metrics = {}
         
@@ -837,6 +978,7 @@ class RevenueSplitter:
         metrics['total_payments'] = len(revenue_split.payments)
         
         # Payment status breakdown
+
         status_counts = {}
         for payment in revenue_split.payments:
             status = payment.status.value
@@ -844,6 +986,7 @@ class RevenueSplitter:
         metrics['payment_status_breakdown'] = status_counts
         
         # Revenue source breakdown
+
         source_counts = {}
         for source in revenue_split.revenue_sources:
             revenue_type = source.revenue_type.value
@@ -854,10 +997,12 @@ class RevenueSplitter:
         metrics['average_revenue_per_source'] = float(
             revenue_split.total_revenue_collected / max(len(revenue_split.revenue_sources), 1)
         )
+
         
         metrics['total_fees_collected'] = float(
             sum(d.platform_fees + d.processing_fees for d in revenue_split.distributions)
         )
+
         
         return metrics
 
