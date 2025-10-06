@@ -2,6 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  output: 'standalone', // Required for Docker deployment
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if
