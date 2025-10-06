@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: iacherie-config
+  namespace: iacherie-prod
+data:
+  # Application Configuration
+  ENVIRONMENT: "production"
+  DEBUG: "false"
+  LOG_LEVEL: "info"
+  HOST: "0.0.0.0"
+  PORT: "8000"
+  WORKERS: "4"
+  API_V1_PREFIX: "/api/v1"
+  
+  # CORS Origins
+  CORS_ORIGINS: "https://iacherie.com,https://www.iacherie.com,https://iacherie.eu,https://www.iacherie.eu,https://iacherie.de,https://www.iacherie.de,https://iacherie.online,https://www.iacherie.online"
+  
+  # Database URLs (will use secrets for credentials)
+  DATABASE_URL: "postgresql://postgres:${POSTGRES_PASSWORD}@postgres-service:5432/iacherie"
+  REDIS_URL: "redis://redis-service:6379/0"
+  
+  # Model Configuration
+  MAX_TOKENS: "2048"
+  MODEL_CACHE_DIR: "/app/models"
+  
+  # Feature Flags
+  ENTERPRISE_MODE: "true"
+  MONITORING_ENABLED: "true"
+  ANALYTICS_ENABLED: "true"
+  SECURITY_LEVEL: "high"
+  
+  # API Configuration
+  JWT_ALGORITHM: "HS256"
+  JWT_EXPIRATION: "3600"
+  
+  # Hugging Face Models
+  HUGGINGFACE_MODEL: "gpt2-large"
+  GOOGLE_GEMINI_MODEL: "gemini-pro"
+  
+  # RunwayML Configuration
+  RUNWAYML_CREDITS_REMAINING: "680"
+  RUNWAYML_DANGER_MODE: "true"
+  
+  # Azure Configuration
+  AZURE_DOMAIN: "mlaiellive.onmicrosoft.com"
+  AZURE_SCOPE: "api://bda4c2e1-d69b-447e-813e-b12b8601705d/all"
+  
+  # Social Media API Versions
+  FACEBOOK_MARKETING_API_VERSION: "v18.0"
+  
+  # URLs
+  LIBRETRANSLATE_URL: "https://libretranslate.com"
+  SUPABASE_URL: "https://xebzzrabmseuegzckypi.supabase.co"
+  
+  # IDs (non-sensibles)
+  GOOGLE_ANALYTICS_MEASUREMENT_ID: "G-N9ES98QD5D"
+  ALGOLIA_APPLICATION_ID: "9SKRFV3KRW"
+  PINECONE_ENVIRONMENT: "us-east-1"
+  
+  # Application IDs
+  DISCORD_APPLICATION_ID: "1422349936938324052"
+  TWITTER_APP_ID: "29857261"
+  INSTAGRAM_APP_ID: "1811443232814774"
+  FACEBOOK_APP_ID: "811077928272845"
+  UNSPLASH_APPLICATION_ID: "810341"
+  HUGGINGFACE_CLIENT_ID: "a697a1d3-f7fd-496a-b87c-e9834b378383"
+  YOUTUBE_CLIENT_ID: "329063366855-v3s5vcac3oopnev9kh81skkfoe43ijed.apps.googleusercontent.com"
+  REDDIT_CLIENT_ID: "uWkgmNPbT7x2vVTBsgA09Q"
+  
+  # Tenant IDs
+  AZURE_TENANT_ID: "ab00519b-6849-4cdf-ba7e-79bba7fd6510"
+  AZURE_CLIENT_ID: "bda4c2e1-d69b-447e-813e-b12b8601705d"
+  AZURE_SECRET_ID: "21145ec8-8ef3-4f2f-b585-60397736e320"
+  
+  # Twilio (non-sensitive)
+  TWILIO_PHONE_NUMBER: "+1xxxxxxxxxx"
