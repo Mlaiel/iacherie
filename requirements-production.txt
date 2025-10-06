@@ -1,7 +1,8 @@
 # IA Chérie Platform - Production Requirements
 # Production-specific optimizations and security enhancements
 
-# Production performance optimizations
+# Production ASGI server
+uvicorn[standard]==0.27.0
 gunicorn[gthread]==21.2.0
 uvloop==0.19.0
 httptools==0.6.1
