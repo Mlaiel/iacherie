@@ -1,0 +1,68 @@
+# Google Cloud Build Configuration
+# Build and deploy IA Chérie backend with complete dependencies
+
+timeout: 3600s  # 60 minutes timeout
+options:
+  machineType: 'E2_HIGHCPU_32'  # 32 vCPU for faster builds
+  diskSizeGb: 100
+  logging: CLOUD_LOGGING_ONLY
+  
+substitutions:
+  _IMAGE_NAME: 'gcr.io/${PROJECT_ID}/backend:latest'
+  _REGION: 'europe-west1'
+
+steps:
+  # Step 1: Build Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'build-backend-image'
+    args:
+      - 'build'
+      - '-f'
+      - 'Dockerfile.backend'
+      - '-t'
+      - '${_IMAGE_NAME}'
+      - '--build-arg'
+      - 'BUILDKIT_INLINE_CACHE=1'
+      - '.'
+    timeout: 3000s  # 50 minutes for build
+    
+  # Step 2: Push to Google Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'push-backend-image'
+    args:
+      - 'push'
+      - '${_IMAGE_NAME}'
+    timeout: 600s  # 10 minutes for push
+    
+  # Step 3: Deploy to Cloud Run (optional, if using Cloud Run)
+  # - name: 'gcr.io/cloud-builders/gcloud'
+  #   id: 'deploy-cloud-run'
+  #   args:
+  #     - 'run'
+  #     - 'deploy'
+  #     - 'iacherie-backend'
+  #     - '--image'
+  #     - '${_IMAGE_NAME}'
+  #     - '--region'
+  #     - '${_REGION}'
+  #     - '--platform'
+  #     - 'managed'
+  #     - '--allow-unauthenticated'
+  #     - '--memory'
+  #     - '4Gi'
+  #     - '--cpu'
+  #     - '2'
+  #     - '--max-instances'
+  #     - '10'
+  #     - '--timeout'
+  #     - '300'
+
+images:
+  - '${_IMAGE_NAME}'
+
+# Artifacts to save
+artifacts:
+  objects:
+    location: 'gs://${PROJECT_ID}_cloudbuild/logs'
+    paths:
+      - 'build-*.log'
