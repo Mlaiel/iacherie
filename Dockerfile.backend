@@ -38,14 +38,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq5 \
     curl \
     # Audio/video runtime libraries
-    libavcodec61 \
-    libavformat61 \
-    libavutil59 \
-    libswresample5 \
+    libavcodec-extra \
+    libavformat-extra \
+    libavutil58 \
+    libswresample4 \
     libsamplerate0 \
-    libtag1v5 \
+    libtag1v6 \
     libchromaprint1 \
-    libfftw3-3 \
+    libfftw3-double3 \
     libyaml-0-2 \
     libeigen3-dev \
     ffmpeg \
