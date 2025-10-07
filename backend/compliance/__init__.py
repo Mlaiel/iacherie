@@ -107,6 +107,28 @@ from .environmental_compliance import (
     SustainabilityReporter, EnvironmentalRegulationCompliance
 )
 
+# Guardian & EduVerify modules (content protection & educational verification)
+from .guardian_compliance import (
+    GuardianComplianceEngine, ContentSafetyGuardian, ThreatDetectionSystem,
+    PolicyEnforcementEngine, AccessControlGuardian, SecurityLevel, ThreatLevel,
+    ThreatType, ContentStatus, GuardianAction, PolicyType, ThreatScore,
+    ContentScanResult, GuardianPolicy, SecurityEvent, UserBehaviorProfile
+)
+
+from .eduverify_compliance import (
+    EduVerifyEngine, EducationalContentValidator, AgeAppropriateValidator,
+    EducationalStandardsCompliance, LearningObjectivesValidator, EducationalLevel,
+    AgeGroup, ContentQuality, EducationalStandard, VerificationStatus as EduVerificationStatus,
+    BloomTaxonomy, EducationalMetadata, QualityScore, AgeAppropriatenessResult,
+    LearningObjective, EducationalVerificationResult, EducationalCertification
+)
+
+from .guardian_eduverify_integration import (
+    GuardianEduVerifyOrchestrator, UnifiedComplianceEngine, CrossModuleAnalytics,
+    DataFlowCoordinator, CombinedDecisionEngine, ProcessingStage, UnifiedStatus,
+    DecisionConfidence, UnifiedProcessingResult, CrossModuleMetrics, SyncedData
+)
+
 __all__ = [
     # Core compliance modules
     "GDPRCompliance", "GDPRRequestType", "ConsentPurpose", "ProcessingLawfulBasis",
@@ -171,13 +193,30 @@ __all__ = [
     
     "EnvironmentalComplianceEngine", "CarbonFootprintCompliance", "EnergyEfficiencyMonitor",
     "SustainableDevelopmentCompliance", "EnvironmentalImpactAssessor", "GreenTechnologyValidator",
-    "SustainabilityReporter", "EnvironmentalRegulationCompliance"
+    "SustainabilityReporter", "EnvironmentalRegulationCompliance",
+    
+    # Guardian & EduVerify modules
+    "GuardianComplianceEngine", "ContentSafetyGuardian", "ThreatDetectionSystem",
+    "PolicyEnforcementEngine", "AccessControlGuardian", "SecurityLevel", "ThreatLevel",
+    "ThreatType", "ContentStatus", "GuardianAction", "PolicyType", "ThreatScore",
+    "ContentScanResult", "GuardianPolicy", "SecurityEvent", "UserBehaviorProfile",
+    
+    "EduVerifyEngine", "EducationalContentValidator", "AgeAppropriateValidator",
+    "EducationalStandardsCompliance", "LearningObjectivesValidator", "EducationalLevel",
+    "AgeGroup", "ContentQuality", "EducationalStandard", "EduVerificationStatus",
+    "BloomTaxonomy", "EducationalMetadata", "QualityScore", "AgeAppropriatenessResult",
+    "LearningObjective", "EducationalVerificationResult", "EducationalCertification",
+    
+    "GuardianEduVerifyOrchestrator", "UnifiedComplianceEngine", "CrossModuleAnalytics",
+    "DataFlowCoordinator", "CombinedDecisionEngine", "ProcessingStage", "UnifiedStatus",
+    "DecisionConfidence", "UnifiedProcessingResult", "CrossModuleMetrics", "SyncedData"
 ]
 
 # Module initialization
 import logging
 logger = logging.getLogger(__name__)
 logger.info("🛡️ Enterprise Compliance Module initialized - Consolidated Architecture")
-logger.info("📁 18 compliance files with 4 consolidated orchestrators + 10 enterprise engines")
+logger.info("📁 21 compliance files with 4 consolidated orchestrators + 10 enterprise engines + 3 Guardian/EduVerify modules")
 logger.info("✅ Architecture compliance: 3-level maximum depth respected")
+logger.info("🎓 Guardian & EduVerify: Content Protection + Educational Verification System active")
 logger.info("⚠️ Protected by copyright - Unauthorized use prohibited")
