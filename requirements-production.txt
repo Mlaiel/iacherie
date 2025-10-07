@@ -108,3 +108,50 @@ pyjwt==2.10.1
 
 # Data processing (required by analytics modules)
 pandas==2.2.3
+
+# ========================================
+# 🔴 CRITICAL DEPENDENCIES (REQUIRED)
+# ========================================
+# Without these, critical features will fail to load
+
+# CRITICAL: Required by protection.fingerprinting.monitoring (fixes /api/generate/image 404)
+matplotlib>=3.7.0
+seaborn>=0.13.0  # Statistical data visualization (used with matplotlib)
+
+# CRITICAL: System monitoring and resource tracking
+psutil>=5.9.0  # CPU, memory, disk usage monitoring
+
+# CRITICAL: Metrics and monitoring (Prometheus integration)
+prometheus-client>=0.19.0  # Already in file but ensuring it's present
+
+# ========================================
+# 🟡 OPTIONAL BUT HIGHLY RECOMMENDED
+# ========================================
+# These enable advanced features and better performance
+
+# NLP and Text Processing
+spacy>=3.5.0  # NLP features for text generation, SEO, content classification
+textblob>=0.17.1  # Sentiment analysis and text processing
+
+# Image Processing & Fingerprinting
+imagehash>=4.3.1  # Perceptual image hashing for duplicate detection
+Pillow>=10.2.0  # Already in file (image processing)
+opencv-python-headless>=4.10.0  # Already in file (computer vision)
+
+# Audio Processing & Fingerprinting
+acoustid>=1.2.2  # Audio fingerprinting for copyright protection
+pyacoustid>=1.2.2  # Chromaprint-based audio identification
+essentia>=2.1b6.dev1034  # Advanced audio analysis (may require system libs)
+librosa>=0.10.1  # Already in file (audio processing)
+
+# Video Processing
+moviepy>=1.0.3  # Video editing and processing
+ffmpeg-python>=0.2.0  # Python bindings for FFmpeg
+
+# Machine Learning & Scientific Computing
+scipy>=1.11.4  # Scientific computing (required by many ML libraries)
+scikit-image>=0.22.0  # Image processing algorithms
+networkx>=3.2  # Graph algorithms (used by some analytics)
+
+# Natural Language Download (for spacy models)
+# Note: After installation, run: python -m spacy download en_core_web_sm

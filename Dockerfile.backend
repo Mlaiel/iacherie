@@ -31,6 +31,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=builder /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
+# Variables d'environnement pour désactiver ALSA et audio
+ENV ALSA_CARD=-1 \
+    SDL_AUDIODRIVER=dummy \
+    AUDIODEV=null \
+    PYGAME_HIDE_SUPPORT_PROMPT=1 \
+    MPLCONFIGDIR=/tmp/matplotlib
+
 # Créer un utilisateur non-root
 RUN useradd -m -u 1000 appuser && \
     mkdir -p /app /app/models && \
