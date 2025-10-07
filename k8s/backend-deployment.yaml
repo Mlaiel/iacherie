@@ -278,19 +278,19 @@ spec:
           httpGet:
             path: /health
             port: 8000
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          timeoutSeconds: 5
-          failureThreshold: 3
+          initialDelaySeconds: 90  # Increased from 30s - ML packages (NumPy, scikit-learn) loading
+          periodSeconds: 15        # Increased from 10s
+          timeoutSeconds: 10       # Increased from 5s
+          failureThreshold: 5      # Increased from 3
         
         readinessProbe:
           httpGet:
             path: /health
             port: 8000
-          initialDelaySeconds: 10
-          periodSeconds: 5
-          timeoutSeconds: 3
-          failureThreshold: 3
+          initialDelaySeconds: 60  # Increased from 10s - Allow full startup
+          periodSeconds: 10        # Increased from 5s
+          timeoutSeconds: 5        # Increased from 3s
+          failureThreshold: 5      # Increased from 3
         
         volumeMounts:
         - name: models-cache

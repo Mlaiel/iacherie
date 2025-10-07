@@ -21,6 +21,11 @@ from collections import defaultdict
 import re
 import mimetypes
 import hashlib
+import logging
+
+# Setup logger
+logger = logging.getLogger(__name__)
+
 try:
     import magic
 except ImportError:

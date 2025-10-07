@@ -1,0 +1,66 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: iacherie-ingress
+  namespace: iacherie-prod
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: "iacherie-ip"
+    networking.gke.io/managed-certificates: "iacherie-cert"
+    kubernetes.io/ingress.allow-http: "true"
+    # Authentification basique temporaire pour les tests
+    nginx.ingress.kubernetes.io/auth-type: basic
+    nginx.ingress.kubernetes.io/auth-secret: basic-auth
+    nginx.ingress.kubernetes.io/auth-realm: "IA Chérie - Accès Protégé"
+spec:
+  rules:
+  - host: iacherie.com
+    http:
+      paths:
+      - path: /api/*
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: backend-service
+            port:
+              number: 8000
+      - path: /*
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: frontend-service
+            port:
+              number: 3000
+  - host: www.iacherie.com
+    http:
+      paths:
+      - path: /api/*
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: backend-service
+            port:
+              number: 8000
+      - path: /*
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: frontend-service
+            port:
+              number: 3000
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: iacherie-cert
+  namespace: iacherie-prod
+spec:
+  domains:
+    - iacherie.com
+    - www.iacherie.com
+    - iacherie.eu
+    - www.iacherie.eu
+    - iacherie.de
+    - www.iacherie.de
+    - iacherie.online
+    - www.iacherie.online

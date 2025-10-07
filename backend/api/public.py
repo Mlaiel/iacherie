@@ -17,25 +17,51 @@ from fastapi.responses import JSONResponse, HTMLResponse
 from pydantic import BaseModel, EmailStr, Field
 import asyncio
 
-try:
-    from ...core.database import database_manager
-    from ...core.security import security_manager
-    from ...core.cache import cache_manager
-    from ...core.logging import logger
-    from ...ai_engine.content_processor import content_processor
-    from ...ai_engine.fingerprinting import fingerprint_engine
-except ImportError:
-    class MockManager:
-        def __getattr__(self, name):
-            return lambda *args, **kwargs: {"status": "mocked"}
+import logging
+logger = logging.getLogger(__name__)
 
+# Mock managers for optional dependencies
+class MockManager:
+    def __getattr__(self, name):
+        return lambda *args, **kwargs: {"status": "mocked", "message": "Service not available"}
     
+    async def __call__(self, *args, **kwargs):
+        return {"status": "mocked"}
+
+try:
+    from backend.core.database_core import DatabaseCore, DatabaseConfig, DatabaseClusterType, DatabaseEnvironment
+    import os
+    
+    # Create database configuration
+    db_config = DatabaseConfig(
+        cluster_type=DatabaseClusterType.POSTGRES_XL,
+        environment=DatabaseEnvironment.PRODUCTION,
+        host=os.getenv("DATABASE_HOST", "localhost"),
+        port=int(os.getenv("DATABASE_PORT", "5432")),
+        database=os.getenv("DATABASE_NAME", "iacherie"),
+        username=os.getenv("DATABASE_USER", "postgres"),
+        password=os.getenv("DATABASE_PASSWORD", ""),
+        ssl_enabled=True,
+        pool_size=10,
+        max_overflow=20
+    )
+    database_manager = DatabaseCore(config=db_config)
+    logger.info("DatabaseCore initialized successfully")
+except Exception as e:
+    logger.warning(f"DatabaseCore not available: {e}, using mock")
     database_manager = MockManager()
+
+try:
+    from core import CoreEngine
+    security_manager = CoreEngine()
+except ImportError:
+    logger.warning("SecurityCore not available, using mock")
     security_manager = MockManager()
-    cache_manager = MockManager()
-    logger = MockManager()
-    content_processor = MockManager()
-    fingerprint_engine = MockManager()
+
+# Optional services
+cache_manager = MockManager()
+content_processor = MockManager()
+fingerprint_engine = MockManager()
 
 # ========================================
 # PUBLIC API MODELS

@@ -51,6 +51,7 @@ try:
     from .routes.security_protection_routes import router as security_router
     from .routes.streaming_routes import router as streaming_router
     from .routes.studios_generators_routes import router as studios_router
+    from .routes.generation import router as generation_router  # ⭐ AI GENERATION ENDPOINTS
     ROUTES_AVAILABLE = True
 except ImportError as e:
     import logging
@@ -76,6 +77,7 @@ except ImportError as e:
     security_router = APIRouter()
     streaming_router = APIRouter()
     studios_router = APIRouter()
+    generation_router = APIRouter()  # ⭐ Dummy for generation
 
 # Consolidated modules - importing from existing files only
 from .middleware import (
@@ -521,7 +523,8 @@ if ROUTES_AVAILABLE:
     enterprise_router_manager.register_router("security", security_router, "/health", priority=1)
     enterprise_router_manager.register_router("streaming", streaming_router, "/health", priority=1)
     enterprise_router_manager.register_router("studios", studios_router, "/health", priority=1)
-    logging.info("✅ Successfully registered 18 specialized route modules")
+    enterprise_router_manager.register_router("generation", generation_router, "/health", priority=1)  # ⭐ AI GENERATION
+    logging.info("✅ Successfully registered 19 specialized route modules (including AI generation)")
 else:
     logging.warning("⚠️ Specialized routes not available - using fallback routers")
 
@@ -555,6 +558,7 @@ __all__ = [
     "security_router",
     "streaming_router",
     "studios_router",
+    "generation_router",  # ⭐ AI GENERATION ROUTER
     "ROUTES_AVAILABLE",
     
     # Middleware
