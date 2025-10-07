@@ -140,7 +140,7 @@ opencv-python-headless>=4.10.0  # Already in file (computer vision)
 
 # Audio Processing & Fingerprinting
 pyacoustid>=1.2.2  # Chromaprint-based audio identification and fingerprinting
-# Note: essentia requires system libraries (libessentia-dev) - skipping for Docker
+essentia>=2.1b6.dev1034  # Advanced audio analysis (system libs now installed in Dockerfile)
 # librosa>=0.10.1  # Already included earlier in file (line 82)
 
 # Video Processing

@@ -7,6 +7,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     g++ \
     build-essential \
     libpq-dev \
+    # Audio processing libraries
+    libavcodec-dev \
+    libavformat-dev \
+    libavutil-dev \
+    libswresample-dev \
+    libsamplerate0-dev \
+    libtag1-dev \
+    libchromaprint-dev \
+    libfftw3-dev \
+    libyaml-dev \
+    # Essentia dependencies
+    libeigen3-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Créer un virtualenv
@@ -25,6 +37,18 @@ FROM python:3.11-slim
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq5 \
     curl \
+    # Audio/video runtime libraries
+    libavcodec61 \
+    libavformat61 \
+    libavutil59 \
+    libswresample5 \
+    libsamplerate0 \
+    libtag1v5 \
+    libchromaprint1 \
+    libfftw3-3 \
+    libyaml-0-2 \
+    libeigen3-dev \
+    ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
 # Copier le virtualenv depuis builder
