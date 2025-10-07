@@ -329,7 +329,8 @@ async function generateImageIntelligent(request: ImageGenerationRequest) {
     
     try {
       // Appeler le backend Python pour utiliser le modèle interne
-      const backendResponse = await fetch('http://localhost:8000/api/generate/image', {
+      const backendURL = process.env.BACKEND_INTERNAL_URL || 'http://backend-service:8000';
+      const backendResponse = await fetch(`${backendURL}/api/generate/image`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

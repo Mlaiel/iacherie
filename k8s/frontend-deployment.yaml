@@ -27,6 +27,8 @@ spec:
         env:
         - name: NODE_ENV
           value: "production"
+        - name: BACKEND_INTERNAL_URL
+          value: "http://backend-service:8000"
         - name: NEXT_PUBLIC_API_URL
           value: "https://iacherie.com/api"
         - name: NEXT_PUBLIC_WS_URL
