@@ -9,7 +9,6 @@ options:
   
 substitutions:
   _IMAGE_NAME: 'gcr.io/${PROJECT_ID}/backend:latest'
-  _REGION: 'europe-west1'
 
 steps:
   # Step 1: Build Docker image
