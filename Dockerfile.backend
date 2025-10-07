@@ -37,18 +37,13 @@ FROM python:3.11-slim
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq5 \
     curl \
-    # Audio/video runtime libraries
-    libavcodec-extra \
-    libavformat-extra \
-    libavutil58 \
-    libswresample4 \
+    # Audio/video libraries (ffmpeg includes most dependencies)
+    ffmpeg \
     libsamplerate0 \
-    libtag1v6 \
     libchromaprint1 \
     libfftw3-double3 \
     libyaml-0-2 \
     libeigen3-dev \
-    ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
 # Copier le virtualenv depuis builder
