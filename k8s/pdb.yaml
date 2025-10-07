@@ -1,0 +1,25 @@
+---
+# PDB pour le Backend
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: iacherie-backend-pdb
+  namespace: iacherie-prod
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: iacherie-backend
+
+---
+# PDB pour le Frontend
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: iacherie-frontend-pdb
+  namespace: iacherie-prod
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: iacherie-frontend
