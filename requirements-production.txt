@@ -114,6 +114,9 @@ pandas==2.2.3
 # ========================================
 # Without these, critical features will fail to load
 
+# CRITICAL: OpenAI integration (used throughout the platform)
+openai>=1.6.0  # DMCA automation, AI generation, intelligent selector
+
 # CRITICAL: Required by protection.fingerprinting.monitoring (fixes /api/generate/image 404)
 matplotlib>=3.7.0
 seaborn>=0.13.0  # Statistical data visualization (used with matplotlib)
@@ -132,11 +135,14 @@ prometheus-client>=0.19.0  # Already in file but ensuring it's present
 # NLP and Text Processing
 spacy>=3.5.0  # NLP features for text generation, SEO, content classification
 textblob>=0.17.1  # Sentiment analysis and text processing
+textstat>=0.7.3  # Text readability statistics and metrics
 
 # Image Processing & Fingerprinting
 imagehash>=4.3.1  # Perceptual image hashing for duplicate detection
 Pillow>=10.2.0  # Already in file (image processing)
 opencv-python-headless>=4.10.0  # Already in file (computer vision)
+colorthief>=0.2.1  # Color palette extraction from images
+ultralytics>=8.0.0  # YOLO object detection and segmentation
 
 # Audio Processing & Fingerprinting
 pyacoustid>=1.2.2  # Chromaprint-based audio identification and fingerprinting
@@ -152,5 +158,192 @@ scipy>=1.11.4  # Scientific computing (required by many ML libraries)
 scikit-image>=0.22.0  # Image processing algorithms
 networkx>=3.2  # Graph algorithms (used by some analytics)
 
+# Security & Encryption
+PyNaCl>=1.5.0  # Encryption library (nacl module)
+python-multipart>=0.0.6  # Multipart form data parsing
+
+# Geolocation & Intelligence
+geoip2>=4.7.0  # MaxMind GeoIP2 for geolocation intelligence
+geopy>=2.4.0  # Geocoding library
+
 # Natural Language Download (for spacy models)
 # Note: After installation, run: python -m spacy download en_core_web_sm
+
+# ========================================
+# 🟣 EXTENDED AI & ML CAPABILITIES
+# ========================================
+# Additional AI APIs and advanced ML models
+
+# AI API Clients
+anthropic>=0.7.0  # Anthropic Claude API
+google-generativeai>=0.3.0  # Google Gemini API
+replicate>=0.20.0  # Replicate API for ML models
+together>=0.2.0  # Together AI API
+
+# Advanced ML Models
+diffusers>=0.24.0  # Hugging Face Diffusion models (Stable Diffusion, etc.)
+timm>=0.9.0  # PyTorch Image Models (500+ pretrained models)
+sentence-transformers>=2.2.0  # Sentence embeddings for semantic search
+albumentations>=1.3.0  # Advanced image augmentation
+imgaug>=0.4.0  # Image augmentation library
+
+# Gradient Boosting Libraries
+catboost>=1.2.0  # CatBoost gradient boosting
+xgboost>=2.0.0  # XGBoost gradient boosting
+lightgbm>=4.1.0  # LightGBM gradient boosting
+
+# ML Utilities
+optuna>=3.5.0  # Hyperparameter optimization
+shap>=0.44.0  # Model explainability (SHAP values)
+
+# ========================================
+# 🟣 EXTENDED MEDIA PROCESSING
+# ========================================
+
+# Advanced Image Processing
+imageio>=2.33.0  # Image I/O with many formats
+imageio-ffmpeg>=0.4.9  # FFmpeg integration for imageio
+av>=11.0.0  # PyAV - Python bindings for FFmpeg (better than ffmpeg-python)
+pillow-heif>=0.14.0  # HEIF/HEIC image format support
+
+# Advanced Audio Processing
+pydub>=0.25.1  # Audio manipulation and processing
+soundfile>=0.12.1  # Audio file I/O (WAV, FLAC, etc.)
+aubio>=0.4.9  # Real-time audio analysis
+pyworld>=0.3.4  # Speech analysis and synthesis (WORLD vocoder)
+
+# ========================================
+# 🟣 WEB & ASYNC UTILITIES
+# ========================================
+
+# Async Libraries
+aiohttp>=3.9.0  # Async HTTP client/server
+aiofiles>=23.2.0  # Async file operations
+aioredis>=2.0.1  # Async Redis client
+aiomysql>=0.2.0  # Async MySQL client
+aiosqlite>=0.19.0  # Async SQLite client
+aiosmtplib>=3.0.0  # Async SMTP client
+aiokafka>=0.10.0  # Async Apache Kafka client
+asyncio-mqtt>=0.16.0  # Async MQTT client
+
+# Server-Sent Events
+httpx-sse>=0.4.0  # SSE support for HTTPX
+sse-starlette>=2.0.0  # SSE support for Starlette/FastAPI
+
+# WebSocket
+websocket-client>=1.7.0  # WebSocket client library
+
+# ========================================
+# 🟣 DATA PROCESSING & PARSING
+# ========================================
+
+# HTML/XML Processing
+beautifulsoup4>=4.12.0  # HTML/XML parsing
+lxml>=5.0.0  # Fast XML/HTML parser
+html5lib>=1.1  # HTML5 parser
+bleach>=6.1.0  # HTML sanitization
+markdown>=3.5.0  # Markdown to HTML conversion
+
+# Text Processing
+langdetect>=1.0.9  # Language detection
+ftfy>=6.1.0  # Fix Unicode text issues
+unidecode>=1.3.0  # ASCII transliteration
+better-profanity>=0.7.0  # Profanity filter
+
+# Data Validation
+email-validator>=2.1.0  # Email validation
+phonenumbers>=8.13.0  # Phone number parsing/validation
+validators>=0.22.0  # General data validation
+
+# Date/Time
+python-dateutil>=2.8.2  # Date utilities
+pytz>=2023.3  # Timezone library
+arrow>=1.3.0  # Better dates and times
+pendulum>=3.0.0  # Advanced date/time library
+
+# Document Processing
+pypdf2>=3.0.0  # PDF manipulation
+reportlab>=4.0.0  # PDF generation
+python-magic>=0.4.27  # File type detection
+filetype>=1.2.0  # File type detection (pure Python)
+
+# Barcodes & QR Codes
+qrcode>=7.4.0  # QR code generation
+python-barcode>=0.15.0  # Barcode generation
+
+# Configuration
+pyyaml>=6.0.1  # YAML parser
+toml>=0.10.2  # TOML parser
+python-dotenv>=1.0.0  # .env file support
+
+# Encoding
+base58>=2.1.1  # Base58 encoding/decoding
+
+# Internationalization
+babel>=2.14.0  # Internationalization utilities
+
+# ========================================
+# 🟣 CLOUD & INFRASTRUCTURE
+# ========================================
+
+# AWS
+boto3>=1.34.0  # AWS SDK
+
+# Google Cloud
+google-cloud-storage>=2.14.0  # GCP Cloud Storage
+google-cloud-pubsub>=2.19.0  # GCP Pub/Sub
+
+# Azure
+azure-storage-blob>=12.19.0  # Azure Blob Storage
+
+# Service Discovery
+python-consul>=1.1.0  # Consul client
+etcd3>=0.12.0  # etcd v3 client
+
+# Task Queue & Scheduling
+celery>=5.3.0  # Distributed task queue
+kombu>=5.3.0  # Messaging library (used by Celery)
+flower>=2.0.0  # Celery monitoring tool
+apscheduler>=3.10.0  # Advanced Python scheduler
+croniter>=2.0.0  # Cron expression iterator
+cron-descriptor>=1.4.0  # Convert cron to human-readable text
+
+# ========================================
+# 🟣 MONITORING & VISUALIZATION
+# ========================================
+
+# GPU Monitoring
+GPUtil>=1.4.0  # GPU utilization monitoring
+py3nvml>=0.2.7  # NVIDIA GPU monitoring (more detailed)
+
+# Visualization & Dashboards
+plotly>=5.18.0  # Interactive visualizations
+dash>=2.14.0  # Web-based dashboards
+dash-bootstrap-components>=1.5.0  # Bootstrap components for Dash
+
+# CLI & UI
+click>=8.1.0  # Command-line interface creation
+rich>=13.7.0  # Rich terminal output
+tqdm>=4.66.0  # Progress bars
+
+# ========================================
+# 🟣 TESTING & DEVELOPMENT
+# ========================================
+
+# Testing Libraries
+hypothesis>=6.96.0  # Property-based testing
+faker>=22.0.0  # Fake data generation for tests
+
+# SSL/TLS
+certifi>=2023.11.17  # SSL certificate bundle
+
+# ========================================
+# 📝 INSTALLATION NOTES
+# ========================================
+# After installing all dependencies:
+# 1. Download spacy model: python -m spacy download en_core_web_sm
+# 2. For GPU support: Ensure CUDA drivers are installed
+# 3. For audio: ffmpeg must be available in system PATH
+# 4. For essentia: System libraries already configured in Dockerfile
+# 5. For GeoIP2: Download MaxMind GeoLite2 database
+# 6. For Celery: Configure Redis or RabbitMQ as message broker
