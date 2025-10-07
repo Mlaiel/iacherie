@@ -1,0 +1,75 @@
+# Fichiers de développement
+.git
+.gitignore
+.vscode
+.idea
+*.md
+README.*
+LICENSE
+
+# Node modules et frontend
+node_modules
+frontend/
+desktop/
+mobile/
+
+# Python cache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info
+dist
+build
+.pytest_cache
+.coverage
+htmlcov/
+
+# Environnements virtuels
+venv/
+env/
+ENV/
+.venv
+
+# Docker
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# Kubernetes
+k8s/
+
+# Tests
+tests/
+__tests__/
+*.test.py
+*.test.ts
+
+# Logs et temporaires
+*.log
+logs/
+tmp/
+temp/
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Documentation
+docs/
+*.md
+GUIDE_*.md
+README*.md
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.circleci/
+
+# Divers
+*.sqlite
+*.db
+.env.example
