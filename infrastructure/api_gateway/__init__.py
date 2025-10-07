@@ -74,10 +74,27 @@ try:
 except ImportError:
     APIVersionManager = None
 
-__version__ = "1.0.0"
+try:
+    from .analytics import GatewayAnalytics
+except ImportError:
+    GatewayAnalytics = None
+
+try:
+    from .circuit_breaker import CircuitBreaker, CircuitBreakerRegistry
+except ImportError:
+    CircuitBreaker = None
+    CircuitBreakerRegistry = None
+
+try:
+    from .grpc_api import GRPCGateway, GRPCServiceMeshIntegration
+except ImportError:
+    GRPCGateway = None
+    GRPCServiceMeshIntegration = None
+
+__version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Enterprise API Gateway for Creator Platform"
+__description__ = "Enterprise API Gateway for Creator Platform - Phase 3 Complete"
 
 # Exports
 __all__ = [
@@ -93,7 +110,12 @@ __all__ = [
     'MiddlewareStack',
     'APIDocumentationGenerator',
     'APITestingFramework',
-    'APIVersionManager'
+    'APIVersionManager',
+    'GatewayAnalytics',
+    'CircuitBreaker',
+    'CircuitBreakerRegistry',
+    'GRPCGateway',
+    'GRPCServiceMeshIntegration'
 ]
 
 # Configuration for iacherie creator platform APIs
