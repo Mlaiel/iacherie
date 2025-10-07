@@ -69,3 +69,4 @@ pympler==1.1
 # Dépendances optionnelles pour éviter les installations runtime
 langdetect==1.0.9  # Détection de langue
 
+Pillow==10.2.0  # Pour le traitement d'images (PIL)
