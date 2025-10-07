@@ -139,10 +139,9 @@ Pillow>=10.2.0  # Already in file (image processing)
 opencv-python-headless>=4.10.0  # Already in file (computer vision)
 
 # Audio Processing & Fingerprinting
-acoustid>=1.2.2  # Audio fingerprinting for copyright protection
-pyacoustid>=1.2.2  # Chromaprint-based audio identification
-essentia>=2.1b6.dev1034  # Advanced audio analysis (may require system libs)
-librosa>=0.10.1  # Already in file (audio processing)
+pyacoustid>=1.2.2  # Chromaprint-based audio identification and fingerprinting
+# Note: essentia requires system libraries (libessentia-dev) - skipping for Docker
+# librosa>=0.10.1  # Already included earlier in file (line 82)
 
 # Video Processing
 moviepy>=1.0.3  # Video editing and processing
