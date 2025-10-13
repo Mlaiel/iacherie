@@ -1,0 +1,61 @@
+# Docker ignore file for MedCare-AI microservice
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# ML Models (large files, should be in model registry)
+ml_models/*.pkl
+ml_models/*.h5
+ml_models/*.pt
+ml_models/*.onnx
+
+# Logs
+*.log
+logs/
+
+# Uploads (should use external storage in production)
+uploads/
+/tmp/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# Documentation (included separately)
+*.md
+!README.md
+
+# Development files
+tests/
+training/
+notebooks/

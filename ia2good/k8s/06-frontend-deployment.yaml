@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ia2good-frontend
+  namespace: ia2good
+  labels:
+    app: ia2good-frontend
+    tier: frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ia2good-frontend
+  template:
+    metadata:
+      labels:
+        app: ia2good-frontend
+        tier: frontend
+    spec:
+      containers:
+      - name: ia2good-frontend
+        image: ia2good-frontend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
+        
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 3
+        
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 2
+          failureThreshold: 3
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ia2good-frontend-service
+  namespace: ia2good
+  labels:
+    app: ia2good-frontend
+spec:
+  selector:
+    app: ia2good-frontend
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+    protocol: TCP
+  type: ClusterIP
+  sessionAffinity: ClientIP
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: ia2good-frontend-hpa
+  namespace: ia2good
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ia2good-frontend
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 80

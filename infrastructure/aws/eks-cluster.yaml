@@ -1,0 +1,78 @@
+---
+# Configuration eksctl pour IA Chérie
+# Optimisé pour AWS Free Tier + $100 crédits
+# Coût estimé: ~$60-80/mois (couvert par crédits)
+
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: iacherie-cluster
+  region: eu-central-1
+  version: "1.31"
+
+# Configuration VPC
+vpc:
+  cidr: 10.0.0.0/16
+  nat:
+    gateway: Single  # 1 NAT Gateway au lieu de 3 (économie)
+
+# Configuration IAM
+iam:
+  withOIDC: true
+  serviceAccounts:
+    - metadata:
+        name: aws-load-balancer-controller
+        namespace: kube-system
+      wellKnownPolicies:
+        awsLoadBalancerController: true
+
+# Node Groups
+managedNodeGroups:
+  - name: iacherie-nodes
+    instanceType: t3.medium  # 2 vCPU, 4 GB RAM (Free Tier eligible)
+    minSize: 2
+    maxSize: 4
+    desiredCapacity: 2
+    volumeSize: 30  # 30 GB gp3 (dans Free Tier)
+    volumeType: gp3
+    privateNetworking: true
+    
+    # Tags pour suivi des coûts
+    tags:
+      Project: iacherie
+      Environment: production
+      ManagedBy: eksctl
+      
+    # IAM permissions
+    iam:
+      withAddonPolicies:
+        imageBuilder: true
+        autoScaler: true
+        externalDNS: true
+        certManager: true
+        albIngress: true
+        cloudWatch: true
+        ebs: true
+
+# Addons EKS
+addons:
+  - name: vpc-cni
+    version: latest
+  - name: coredns
+    version: latest
+  - name: kube-proxy
+    version: latest
+  - name: aws-ebs-csi-driver
+    version: latest
+    wellKnownPolicies:
+      ebsCSIController: true
+
+# CloudWatch Logs (optionnel, peut augmenter les coûts)
+cloudWatch:
+  clusterLogging:
+    enableTypes: ["api", "audit", "authenticator"]
+    logRetentionInDays: 7  # Réduit pour économiser
+
+# Configuration réseau
+availabilityZones: ["eu-central-1a", "eu-central-1b"]

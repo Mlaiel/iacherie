@@ -1,0 +1,20 @@
+{
+  "config_id": "config_85030d60",
+  "name": "musician_quality_threshold",
+  "config_type": "creator_profile",
+  "environment": "production",
+  "value": 0.85,
+  "description": "Default quality_threshold for musician",
+  "creator_types": [
+    "musician"
+  ],
+  "is_secret": false,
+  "is_encrypted": false,
+  "version": "1.0.0",
+  "created_at": "2025-09-12T02:03:26.926865",
+  "updated_at": "2025-09-12T02:03:26.926867",
+  "created_by": "system",
+  "tags": [],
+  "dependencies": [],
+  "validation_schema": null
+}

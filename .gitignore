@@ -1,0 +1,128 @@
+/tmp/
+test_gamification_complete.py
+demo_gamification_complete.py
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Security files - should never be committed
+.master_key
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+
+# Frontend build artifacts and dependencies
+frontend/node_modules/
+frontend/.next/
+frontend/dist/
+frontend/build/
+frontend/out/
+frontend/.turbo/
+desktop/node_modules/
+desktop/dist/
+desktop/build/
+mobile/react_native/node_modules/
+
+# Environments and build artifacts
+.env
+.env.local
+.env.development.local
+.env.staging.local  
+.env.production.local
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Application specific
+logs/
+storage/uploads/
+backups/temp/
+
+# Test artifacts and temporary files
+test_*.py
+demo_*.py
+*.log
+*.tmp
+/tmp/test_backups/
+cache/
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+
+# Security sensitive files
+secrets/
+private_keys/
+certificates/
+*.pem
+*.key
+
+# Development additions
+.vscode/settings.json.local
+.env.local
+*.local
+profile.svg
+profiles/
+bandit-report.json
+safety-report.json
+htmlcov/
+.coverage
+.nyc_output
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+reports/
+test_reports/
+
+# SDK builds
+sdk/python/build/
+sdk/python/dist/
+sdk/python/*.egg-info/
+__pycache__/
+*.pyc
+data/pipelines/__pycache__/
+
+# IA Chérie - Protection fichiers sensibles avec clés API
+*.md
+!README.md
+*_analysis.json
+*_api_*.json
+*_report.json
+diagnostic_*.json
+mega_api_*.json
+ia_cherie_*.json
+# Fichiers avec clés sensibles
+*.md
+.env*
+api_analysis_*.json
+# Exclusions pour fichiers volumineux
+migration_backup/frontend/node_modules/
+docs/analysis/security_scan_results.json
+*.node
+*.so
+*.dll
+*.dylib
+*.wasm
+*.map

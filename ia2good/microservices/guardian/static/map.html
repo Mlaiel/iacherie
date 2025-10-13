@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardian Volunteer - Real-time Map</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        
+        .sidebar {
+            width: 350px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar h1 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stat-card h3 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        
+        .stat-card p {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        
+        .controls {
+            margin-bottom: 20px;
+        }
+        
+        .controls button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 8px;
+            background: #667eea;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .controls button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+        
+        .controls button.active {
+            background: #28a745;
+        }
+        
+        .mission-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .mission-item {
+            background: white;
+            border: 1px solid #e0e0e0;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .mission-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+        }
+        
+        .mission-item h4 {
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .mission-item p {
+            color: #666;
+            font-size: 12px;
+            margin: 3px 0;
+        }
+        
+        .category-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .category-environment { background: #28a745; }
+        .category-animal { background: #ff6b6b; }
+        .category-homeless { background: #ffa500; }
+        .category-humanitarian { background: #667eea; }
+        
+        #map {
+            flex: 1;
+            height: 100vh;
+        }
+        
+        .status-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 15px;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        
+        .status-indicator.connected {
+            color: #28a745;
+        }
+        
+        .status-indicator.disconnected {
+            color: #dc3545;
+        }
+        
+        .pulse {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        .connected .pulse {
+            background: #28a745;
+        }
+        
+        .disconnected .pulse {
+            background: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h1>🌍 Guardian Volunteer</h1>
+            
+            <!-- Statistics -->
+            <div class="stats">
+                <div class="stat-card">
+                    <h3 id="total-missions">0</h3>
+                    <p>Active Missions</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="total-volunteers">0</h3>
+                    <p>Active Volunteers</p>
+                </div>
+            </div>
+            
+            <!-- Controls -->
+            <div class="controls">
+                <button onclick="toggleRealTimeTracking()" id="tracking-btn">
+                    Enable Real-time Tracking
+                </button>
+                <button onclick="showHeatmap()">Show Mission Heatmap</button>
+                <button onclick="findNearbyMissions()">Find Nearby Missions</button>
+                <button onclick="refreshData()">🔄 Refresh Data</button>
+            </div>
+            
+            <!-- Mission List -->
+            <h3 style="margin-bottom: 10px; color: #333;">Active Missions</h3>
+            <div class="mission-list" id="mission-list">
+                <p style="color: #999; text-align: center; padding: 20px;">
+                    Loading missions...
+                </p>
+            </div>
+        </div>
+        
+        <!-- Map -->
+        <div id="map"></div>
+        
+        <!-- Status Indicator -->
+        <div class="status-indicator disconnected" id="status">
+            <span class="pulse"></span>
+            <span id="status-text">Disconnected</span>
+        </div>
+    </div>
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+        // Configuration
+        const GUARDIAN_API = 'http://localhost:8001';
+        const WS_URL = 'ws://localhost:8001/api/guardian/geo/ws/map';
+        
+        // Initialize map
+        const map = L.map('map').setView([34.0522, -118.2437], 11); // Los Angeles
+        
+        // Add tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+        
+        // Markers storage
+        let missionMarkers = {};
+        let volunteerMarkers = {};
+        let heatmapLayer = null;
+        let ws = null;
+        let trackingEnabled = false;
+        
+        // Custom icons
+        const missionIcon = (category) => {
+            const colors = {
+                environment: '#28a745',
+                animal: '#ff6b6b',
+                homeless: '#ffa500',
+                humanitarian: '#667eea'
+            };
+            
+            return L.divIcon({
+                html: `<div style="background: ${colors[category] || '#667eea'}; 
+                             width: 30px; height: 30px; border-radius: 50%; 
+                             border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+                             display: flex; align-items: center; justify-content: center;
+                             color: white; font-weight: bold;">📍</div>`,
+                className: 'custom-marker',
+                iconSize: [30, 30]
+            });
+        };
+        
+        const volunteerIcon = L.divIcon({
+            html: `<div style="background: #007bff; 
+                         width: 25px; height: 25px; border-radius: 50%; 
+                         border: 2px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+                         display: flex; align-items: center; justify-content: center;
+                         color: white; font-size: 12px;">👤</div>`,
+            className: 'custom-marker',
+            iconSize: [25, 25]
+        });
+        
+        // WebSocket connection
+        function connectWebSocket() {
+            ws = new WebSocket(WS_URL);
+            
+            ws.onopen = () => {
+                console.log('WebSocket connected');
+                updateStatus(true);
+            };
+            
+            ws.onmessage = (event) => {
+                const message = JSON.parse(event.data);
+                handleWebSocketMessage(message);
+            };
+            
+            ws.onclose = () => {
+                console.log('WebSocket disconnected');
+                updateStatus(false);
+                // Reconnect after 5 seconds
+                setTimeout(connectWebSocket, 5000);
+            };
+            
+            ws.onerror = (error) => {
+                console.error('WebSocket error:', error);
+                updateStatus(false);
+            };
+        }
+        
+        function handleWebSocketMessage(message) {
+            if (message.type === 'initial_state') {
+                loadMissions(message.data.missions);
+                loadVolunteers(message.data.volunteers);
+            } else if (message.type === 'mission_location_update') {
+                addOrUpdateMission(message.data);
+            } else if (message.type === 'volunteer_location_update') {
+                addOrUpdateVolunteer(message.data);
+            }
+        }
+        
+        function updateStatus(connected) {
+            const statusEl = document.getElementById('status');
+            const statusText = document.getElementById('status-text');
+            
+            if (connected) {
+                statusEl.className = 'status-indicator connected';
+                statusText.textContent = 'Connected';
+            } else {
+                statusEl.className = 'status-indicator disconnected';
+                statusText.textContent = 'Disconnected';
+            }
+        }
+        
+        // Load missions
+        async function loadMissions(missions = null) {
+            if (!missions) {
+                const response = await fetch(`${GUARDIAN_API}/api/guardian/geo/missions/locations`);
+                const data = await response.json();
+                missions = data.missions;
+            }
+            
+            document.getElementById('total-missions').textContent = missions.length;
+            
+            // Clear existing markers
+            Object.values(missionMarkers).forEach(marker => map.removeLayer(marker));
+            missionMarkers = {};
+            
+            // Add mission markers
+            missions.forEach(mission => addOrUpdateMission(mission));
+            
+            // Update mission list
+            updateMissionList(missions);
+        }
+        
+        function addOrUpdateMission(mission) {
+            const { mission_id, location, category, status } = mission;
+            
+            // Remove old marker if exists
+            if (missionMarkers[mission_id]) {
+                map.removeLayer(missionMarkers[mission_id]);
+            }
+            
+            // Add new marker
+            const marker = L.marker(
+                [location.latitude, location.longitude],
+                { icon: missionIcon(category) }
+            ).addTo(map);
+            
+            marker.bindPopup(`
+                <b>Mission #${mission_id}</b><br>
+                Category: ${category}<br>
+                Status: ${status}<br>
+                Volunteers: ${mission.volunteers_count || 0}
+            `);
+            
+            missionMarkers[mission_id] = marker;
+        }
+        
+        // Load volunteers
+        async function loadVolunteers(volunteers = null) {
+            if (!volunteers) {
+                const response = await fetch(`${GUARDIAN_API}/api/guardian/geo/volunteers/locations`);
+                const data = await response.json();
+                volunteers = data.volunteers;
+            }
+            
+            document.getElementById('total-volunteers').textContent = volunteers.length;
+            
+            // Clear existing markers
+            Object.values(volunteerMarkers).forEach(marker => map.removeLayer(marker));
+            volunteerMarkers = {};
+            
+            // Add volunteer markers
+            volunteers.forEach(volunteer => addOrUpdateVolunteer(volunteer));
+        }
+        
+        function addOrUpdateVolunteer(volunteer) {
+            const { volunteer_id, location, active, mission_id } = volunteer;
+            
+            if (!active) return;
+            
+            // Remove old marker if exists
+            if (volunteerMarkers[volunteer_id]) {
+                map.removeLayer(volunteerMarkers[volunteer_id]);
+            }
+            
+            // Add new marker
+            const marker = L.marker(
+                [location.latitude, location.longitude],
+                { icon: volunteerIcon }
+            ).addTo(map);
+            
+            marker.bindPopup(`
+                <b>Volunteer #${volunteer_id}</b><br>
+                ${mission_id ? `Mission: #${mission_id}` : 'Not assigned'}<br>
+                Last update: ${new Date(location.timestamp).toLocaleTimeString()}
+            `);
+            
+            volunteerMarkers[volunteer_id] = marker;
+        }
+        
+        // Update mission list
+        function updateMissionList(missions) {
+            const listEl = document.getElementById('mission-list');
+            
+            if (missions.length === 0) {
+                listEl.innerHTML = '<p style="color: #999; text-align: center; padding: 20px;">No active missions</p>';
+                return;
+            }
+            
+            listEl.innerHTML = missions.map(mission => `
+                <div class="mission-item" onclick="focusMission(${mission.mission_id})">
+                    <h4>Mission #${mission.mission_id}</h4>
+                    <span class="category-badge category-${mission.category}">${mission.category}</span>
+                    <p>📍 ${mission.location.address || 'Location set'}</p>
+                    <p>👥 ${mission.volunteers_count || 0} volunteers</p>
+                </div>
+            `).join('');
+        }
+        
+        function focusMission(missionId) {
+            const marker = missionMarkers[missionId];
+            if (marker) {
+                map.setView(marker.getLatLng(), 15);
+                marker.openPopup();
+            }
+        }
+        
+        // Real-time tracking
+        function toggleRealTimeTracking() {
+            trackingEnabled = !trackingEnabled;
+            const btn = document.getElementById('tracking-btn');
+            
+            if (trackingEnabled) {
+                btn.textContent = 'Disable Real-time Tracking';
+                btn.classList.add('active');
+                startLocationTracking();
+            } else {
+                btn.textContent = 'Enable Real-time Tracking';
+                btn.classList.remove('active');
+                stopLocationTracking();
+            }
+        }
+        
+        let watchId = null;
+        function startLocationTracking() {
+            if (navigator.geolocation) {
+                watchId = navigator.geolocation.watchPosition(
+                    (position) => {
+                        const { latitude, longitude } = position.coords;
+                        // Send location to server
+                        if (ws && ws.readyState === WebSocket.OPEN) {
+                            ws.send(JSON.stringify({
+                                type: 'update_location',
+                                volunteer_id: 1, // Would be actual user ID
+                                location: { latitude, longitude }
+                            }));
+                        }
+                    },
+                    (error) => console.error('Geolocation error:', error),
+                    { enableHighAccuracy: true, maximumAge: 10000 }
+                );
+            }
+        }
+        
+        function stopLocationTracking() {
+            if (watchId) {
+                navigator.geolocation.clearWatch(watchId);
+                watchId = null;
+            }
+        }
+        
+        // Heatmap
+        async function showHeatmap() {
+            const response = await fetch(`${GUARDIAN_API}/api/guardian/geo/heatmap`);
+            const data = await response.json();
+            
+            // Remove old heatmap
+            if (heatmapLayer) {
+                map.removeLayer(heatmapLayer);
+            }
+            
+            // Add heatmap visualization (simplified with circles)
+            heatmapLayer = L.layerGroup();
+            
+            data.points.forEach(point => {
+                L.circle([point.latitude, point.longitude], {
+                    radius: point.intensity * 1000,
+                    color: '#ff6b6b',
+                    fillColor: '#ff6b6b',
+                    fillOpacity: 0.3
+                }).addTo(heatmapLayer);
+            });
+            
+            heatmapLayer.addTo(map);
+        }
+        
+        // Find nearby missions
+        async function findNearbyMissions() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(async (position) => {
+                    const { latitude, longitude } = position.coords;
+                    const response = await fetch(
+                        `${GUARDIAN_API}/api/guardian/geo/nearby-missions?lat=${latitude}&lon=${longitude}&radius_km=10`
+                    );
+                    const data = await response.json();
+                    
+                    alert(`Found ${data.total_found} missions within 10km`);
+                    
+                    // Focus on user location
+                    map.setView([latitude, longitude], 13);
+                    L.marker([latitude, longitude]).addTo(map)
+                        .bindPopup('Your Location')
+                        .openPopup();
+                });
+            }
+        }
+        
+        // Refresh data
+        async function refreshData() {
+            await loadMissions();
+            await loadVolunteers();
+        }
+        
+        // Initialize
+        connectWebSocket();
+        loadMissions();
+        loadVolunteers();
+        
+        // Periodic refresh (every 30 seconds)
+        setInterval(refreshData, 30000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,417 @@
+# ===========================================
+# POSTGRESQL CONFIGURATION - IACHERIE UTILS
+# ===========================================
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+# Module: PostgreSQL Enterprise Configuration
+# Purpose: High-performance PostgreSQL setup for creator economy platform
+
+postgresql:
+  # =======================
+  # CONNECTION CONFIGURATION
+  # =======================
+  connection:
+    # Primary Database
+    primary:
+      host: "postgres-primary.iacherie.com"
+      port: 5432
+      database: "iacherie_production"
+      username: "iacherie_app"
+      password: "${POSTGRES_PASSWORD}"
+      application_name: "iacherie_api"
+      
+    # SSL Configuration
+    ssl:
+      mode: "require"
+      cert_file: "/etc/ssl/certs/postgres-client.crt"
+      key_file: "/etc/ssl/private/postgres-client.key"
+      ca_file: "/etc/ssl/certs/postgres-ca.crt"
+      crl_file: "/etc/ssl/certs/postgres-crl.pem"
+      
+    # Connection Pool (PgBouncer)
+    pooling:
+      enabled: true
+      pool_mode: "transaction"
+      max_client_conn: 1000
+      default_pool_size: 100
+      min_pool_size: 10
+      reserve_pool_size: 20
+      server_lifetime: 3600
+      server_idle_timeout: 600
+
+  # =======================
+  # PERFORMANCE TUNING
+  # =======================
+  performance:
+    # Memory Settings
+    memory:
+      shared_buffers: "2GB"                    # 25% of RAM
+      effective_cache_size: "6GB"              # 75% of RAM
+      work_mem: "64MB"                         # Per query operation
+      maintenance_work_mem: "512MB"            # Maintenance operations
+      temp_buffers: "32MB"                     # Temporary tables
+      
+    # Query Planning
+    query_planning:
+      random_page_cost: 1.1                    # SSD optimized
+      seq_page_cost: 1.0                       # Sequential read cost
+      cpu_tuple_cost: 0.01                     # CPU processing cost
+      cpu_index_tuple_cost: 0.005              # Index tuple cost
+      cpu_operator_cost: 0.0025                # Operator cost
+      
+    # Parallel Query
+    parallel_query:
+      max_parallel_workers: 8
+      max_parallel_workers_per_gather: 4
+      max_parallel_maintenance_workers: 4
+      parallel_tuple_cost: 0.1
+      parallel_setup_cost: 1000.0
+      min_parallel_table_scan_size: "8MB"
+      min_parallel_index_scan_size: "512kB"
+      
+    # Background Writer
+    background_writer:
+      bgwriter_delay: "200ms"
+      bgwriter_lru_maxpages: 100
+      bgwriter_lru_multiplier: 2.0
+      bgwriter_flush_after: "512kB"
+
+  # =======================
+  # WAL AND CHECKPOINT CONFIGURATION
+  # =======================
+  wal:
+    # WAL Settings
+    settings:
+      wal_level: "replica"                     # Enable replication
+      wal_buffers: "16MB"                      # WAL buffer size
+      wal_writer_delay: "200ms"                # WAL writer frequency
+      wal_writer_flush_after: "1MB"            # Flush threshold
+      
+    # Checkpoints
+    checkpoints:
+      checkpoint_timeout: "15min"              # Maximum time between checkpoints
+      checkpoint_completion_target: 0.9        # Spread checkpoint I/O
+      checkpoint_flush_after: "256kB"          # Background flush
+      checkpoint_warning: "30s"                # Warning threshold
+      
+    # Archiving
+    archiving:
+      archive_mode: "on"
+      archive_command: "cp %p /backup/wal/%f"
+      archive_timeout: "60s"
+      max_wal_size: "4GB"
+      min_wal_size: "1GB"
+
+  # =======================
+  # REPLICATION CONFIGURATION
+  # =======================
+  replication:
+    # Master Configuration
+    master:
+      max_wal_senders: 10                      # Maximum WAL sender processes
+      wal_keep_segments: 256                   # WAL segments to keep
+      wal_sender_timeout: "60s"                # Sender timeout
+      synchronous_standby_names: "standby1,standby2"
+      synchronous_commit: "remote_apply"       # Synchronous replication
+      
+    # Hot Standby
+    hot_standby:
+      hot_standby: "on"                        # Enable read queries on standby
+      max_standby_archive_delay: "30s"         # Archive delay
+      max_standby_streaming_delay: "30s"       # Streaming delay
+      wal_receiver_status_interval: "10s"      # Status update interval
+      hot_standby_feedback: "on"               # Send feedback to master
+      
+    # Standby Servers
+    standby_servers:
+      - name: "standby1"
+        host: "postgres-standby-1.iacherie.com"
+        port: 5432
+        sync_priority: 1
+        application_name: "standby1"
+        
+      - name: "standby2"
+        host: "postgres-standby-2.iacherie.com"
+        port: 5432
+        sync_priority: 2
+        application_name: "standby2"
+
+  # =======================
+  # SECURITY CONFIGURATION
+  # =======================
+  security:
+    # Authentication
+    authentication:
+      password_encryption: "scram-sha-256"
+      ssl_prefer_server_ciphers: "on"
+      ssl_ciphers: "HIGH:MEDIUM:+3DES:!aNULL"
+      ssl_protocols: "TLSv1.2,TLSv1.3"
+      
+    # Access Control
+    access_control:
+      listen_addresses: "*"
+      max_connections: 1000
+      superuser_reserved_connections: 3
+      
+    # pg_hba.conf rules
+    hba_rules:
+      - type: "hostssl"
+        database: "iacherie_production"
+        user: "iacherie_app"
+        address: "10.0.0.0/8"
+        method: "scram-sha-256"
+        
+      - type: "hostssl"
+        database: "iacherie_production"
+        user: "iacherie_readonly"
+        address: "10.0.0.0/8"
+        method: "scram-sha-256"
+        
+      - type: "hostssl"
+        database: "all"
+        user: "postgres"
+        address: "127.0.0.1/32"
+        method: "scram-sha-256"
+
+  # =======================
+  # DATABASE CONFIGURATION
+  # =======================
+  databases:
+    # Main Application Database
+    iacherie_production:
+      owner: "iacherie_app"
+      encoding: "UTF8"
+      lc_collate: "en_US.UTF-8"
+      lc_ctype: "en_US.UTF-8"
+      template: "template0"
+      
+      # Schemas
+      schemas:
+        - name: "public"
+          owner: "iacherie_app"
+          
+        - name: "auth"
+          owner: "iacherie_app"
+          
+        - name: "content"
+          owner: "iacherie_app"
+          
+        - name: "analytics"
+          owner: "iacherie_app"
+          
+        - name: "ai_processing"
+          owner: "iacherie_app"
+          
+    # Analytics Database
+    iacherie_analytics:
+      owner: "iacherie_analytics"
+      encoding: "UTF8"
+      lc_collate: "en_US.UTF-8"
+      lc_ctype: "en_US.UTF-8"
+      template: "template0"
+      
+    # Audit Database
+    iacherie_audit:
+      owner: "iacherie_audit"
+      encoding: "UTF8"
+      lc_collate: "en_US.UTF-8"
+      lc_ctype: "en_US.UTF-8"
+      template: "template0"
+
+  # =======================
+  # USER MANAGEMENT
+  # =======================
+  users:
+    # Application User
+    iacherie_app:
+      password: "${POSTGRES_APP_PASSWORD}"
+      createdb: false
+      createrole: false
+      inherit: true
+      login: true
+      replication: false
+      connection_limit: 500
+      
+    # Read-only User
+    iacherie_readonly:
+      password: "${POSTGRES_READONLY_PASSWORD}"
+      createdb: false
+      createrole: false
+      inherit: true
+      login: true
+      replication: false
+      connection_limit: 100
+      
+    # Analytics User
+    iacherie_analytics:
+      password: "${POSTGRES_ANALYTICS_PASSWORD}"
+      createdb: false
+      createrole: false
+      inherit: true
+      login: true
+      replication: false
+      connection_limit: 50
+      
+    # Backup User
+    iacherie_backup:
+      password: "${POSTGRES_BACKUP_PASSWORD}"
+      createdb: false
+      createrole: false
+      inherit: true
+      login: true
+      replication: true
+      connection_limit: 5
+
+  # =======================
+  # EXTENSIONS
+  # =======================
+  extensions:
+    # Core Extensions
+    core:
+      - name: "uuid-ossp"
+        schema: "public"
+        
+      - name: "pgcrypto"
+        schema: "public"
+        
+      - name: "hstore"
+        schema: "public"
+        
+      - name: "ltree"
+        schema: "public"
+        
+    # Full-Text Search
+    full_text_search:
+      - name: "pg_trgm"
+        schema: "public"
+        
+      - name: "unaccent"
+        schema: "public"
+        
+    # JSON Processing
+    json:
+      - name: "jsonb_plpython3u"
+        schema: "public"
+        
+    # Statistics and Analytics
+    analytics:
+      - name: "pg_stat_statements"
+        schema: "public"
+        
+      - name: "pg_buffercache"
+        schema: "public"
+        
+    # Geographic Data (if needed)
+    geographic:
+      - name: "postgis"
+        schema: "public"
+        enabled: false
+
+  # =======================
+  # BACKUP CONFIGURATION
+  # =======================
+  backup:
+    # Continuous Archiving
+    continuous_archiving:
+      enabled: true
+      archive_command: "pgbackrest --stanza=iacherie archive-push %p"
+      archive_timeout: "60s"
+      
+    # Physical Backups (pg_basebackup)
+    physical_backups:
+      enabled: true
+      schedule: "0 2 * * *"  # Daily at 2 AM
+      retention_days: 30
+      compression: true
+      
+    # Logical Backups (pg_dump)
+    logical_backups:
+      enabled: true
+      schedule: "0 1 * * *"  # Daily at 1 AM
+      format: "custom"
+      compression: 9
+      retention_days: 7
+      
+    # Point-in-Time Recovery
+    point_in_time_recovery:
+      enabled: true
+      recovery_target_timeline: "latest"
+      restore_command: "pgbackrest --stanza=iacherie archive-get %f %p"
+
+  # =======================
+  # MONITORING
+  # =======================
+  monitoring:
+    # Performance Monitoring
+    performance:
+      log_statement: "mod"                     # Log modifications
+      log_duration: true                       # Log query duration
+      log_min_duration_statement: "1000ms"     # Log slow queries
+      log_checkpoints: true                    # Log checkpoints
+      log_connections: true                    # Log connections
+      log_disconnections: true                # Log disconnections
+      log_lock_waits: true                     # Log lock waits
+      
+    # Statistics
+    statistics:
+      track_activities: true
+      track_counts: true
+      track_io_timing: true
+      track_functions: "all"
+      
+    # Health Checks
+    health_checks:
+      enabled: true
+      check_interval: 30
+      connection_check: true
+      replication_lag_check: true
+      disk_space_check: true
+      
+    # Alerting
+    alerting:
+      slow_queries: true
+      replication_lag_threshold: "10s"
+      connection_usage_threshold: "80%"
+      disk_usage_threshold: "85%"
+
+  # =======================
+  # MAINTENANCE
+  # =======================
+  maintenance:
+    # Vacuum Configuration
+    vacuum:
+      autovacuum: "on"
+      autovacuum_max_workers: 6
+      autovacuum_naptime: "15s"
+      autovacuum_vacuum_threshold: 50
+      autovacuum_vacuum_scale_factor: 0.1
+      autovacuum_analyze_threshold: 50
+      autovacuum_analyze_scale_factor: 0.05
+      autovacuum_vacuum_cost_delay: "2ms"
+      autovacuum_vacuum_cost_limit: 400
+      
+    # Statistics
+    auto_explain:
+      enabled: true
+      log_min_duration: "1000ms"
+      log_analyze: true
+      log_buffers: true
+      log_timing: true
+      log_triggers: true
+      log_verbose: true
+      
+    # Scheduled Maintenance
+    scheduled_maintenance:
+      analyze_schedule: "0 3 * * 0"  # Weekly ANALYZE
+      vacuum_schedule: "0 4 * * 0"   # Weekly VACUUM
+      reindex_schedule: "0 5 * * 0"  # Weekly REINDEX
+
+# ========================================
+# COPYRIGHT AND INTELLECTUAL PROPERTY
+# ========================================
+copyright:
+  notice: "© 2025 Fahed Mlaiel. All rights reserved."
+  owner: "Fahed Mlaiel"
+  contact: "mlaiel@live.de"
+  license: "Proprietary"
+  unauthorized_use_prohibited: true

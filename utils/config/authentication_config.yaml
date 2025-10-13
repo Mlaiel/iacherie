@@ -1,0 +1,513 @@
+"""
+Authentication Configuration
+============================
+
+Comprehensive authentication system configuration with multi-factor authentication,
+single sign-on, biometric authentication, and adaptive security.
+
+⚠️  LEGAL NOTICE:
+==========================================
+© 2025 Fahed Mlaiel <mlaiel@live.de>
+ALL RIGHTS RESERVED - PROPRIETARY CODE
+
+Author: Fahed Mlaiel <mlaiel@live.de>
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
+"""
+
+# Authentication Framework Configuration
+authentication_framework:
+  architecture: "zero_trust"
+  strategy: "defense_in_depth"
+  adaptive_authentication: true
+  risk_based_authentication: true
+  continuous_authentication: true
+
+# Primary Authentication Methods
+primary_authentication:
+  # Password-based authentication
+  password:
+    enabled: true
+    policy:
+      min_length: 12
+      max_length: 128
+      complexity_requirements:
+        uppercase: true
+        lowercase: true
+        numbers: true
+        special_characters: true
+        unicode_support: true
+      
+      # Advanced password policies
+      dictionary_check: true
+      common_password_prevention: true
+      keyboard_pattern_detection: true
+      repeated_character_limit: 3
+      personal_info_check: true
+      
+      # Password aging
+      max_age_days: 90
+      min_age_days: 1
+      password_history: 12
+      
+      # Account lockout
+      max_attempts: 3
+      lockout_duration_minutes: 15
+      progressive_lockout: true
+      
+  # Passwordless authentication
+  passwordless:
+    enabled: true
+    methods:
+      - "webauthn"
+      - "magic_links"
+      - "biometric"
+      - "hardware_tokens"
+    preferred_method: "webauthn"
+    fallback_enabled: true
+
+# Multi-Factor Authentication (MFA)
+mfa:
+  # MFA enforcement
+  enforcement:
+    required: true
+    grace_period_days: 7
+    enforcement_scope: "all_users"
+    bypass_emergency_codes: true
+    
+  # Time-based One-Time Password (TOTP)
+  totp:
+    enabled: true
+    algorithm: "SHA-256"
+    digits: 6
+    period: 30
+    window: 1
+    issuer: "IA Chérie"
+    
+    # TOTP providers
+    providers:
+      - name: "Google Authenticator"
+        supported: true
+      - name: "Authy"
+        supported: true
+      - name: "Microsoft Authenticator"
+        supported: true
+      - name: "1Password"
+        supported: true
+        
+  # SMS-based authentication
+  sms:
+    enabled: true
+    provider: "twilio"
+    template: "Your IA Chérie verification code is: {code}"
+    code_length: 6
+    expiry_minutes: 5
+    rate_limiting:
+      max_attempts_per_hour: 5
+      max_attempts_per_day: 20
+      
+  # Email-based authentication
+  email:
+    enabled: true
+    template: "email_verification"
+    code_length: 8
+    expiry_minutes: 10
+    secure_delivery: true
+    
+  # Hardware tokens
+  hardware_tokens:
+    enabled: true
+    supported_types:
+      - "yubikey"
+      - "fido2"
+      - "u2f"
+    vendor_support:
+      yubikey: true
+      solokeys: true
+      google_titan: true
+      
+  # Backup codes
+  backup_codes:
+    enabled: true
+    count: 10
+    length: 8
+    single_use: true
+    regeneration_policy: "after_use"
+
+# WebAuthn Configuration
+webauthn:
+  # Relying Party configuration
+  relying_party:
+    id: "iacherie.com"
+    name: "IA Chérie"
+    origins:
+      - "https://iacherie.com"
+      - "https://app.iacherie.com"
+      
+  # Authenticator requirements
+  authenticator_selection:
+    authenticator_attachment: "cross-platform"
+    resident_key: "preferred"
+    user_verification: "required"
+    
+  # Supported algorithms
+  algorithms:
+    - "ES256"    # ECDSA w/ SHA-256
+    - "ES384"    # ECDSA w/ SHA-384
+    - "ES512"    # ECDSA w/ SHA-512
+    - "RS256"    # RSASSA-PKCS1-v1_5 w/ SHA-256
+    
+  # Attestation
+  attestation:
+    conveyance: "direct"
+    trusted_attestation_roots: true
+    
+  # Timeout and retry
+  timeout: 60000            # 60 seconds
+  retry_attempts: 3
+
+# Biometric Authentication
+biometric:
+  enabled: true
+  
+  # Supported biometric types
+  types:
+    fingerprint:
+      enabled: true
+      matching_threshold: 0.85
+      template_encryption: true
+      
+    face_recognition:
+      enabled: true
+      liveness_detection: true
+      spoofing_detection: true
+      matching_threshold: 0.90
+      
+    voice_recognition:
+      enabled: true
+      text_dependent: true
+      noise_reduction: true
+      matching_threshold: 0.88
+      
+    iris_scanning:
+      enabled: false          # Future implementation
+      
+  # Biometric template security
+  template_security:
+    encryption: "AES-256-GCM"
+    hashing: "SHA-256"
+    local_storage_only: true
+    template_revocation: true
+
+# Single Sign-On (SSO)
+sso:
+  enabled: true
+  
+  # SAML 2.0 configuration
+  saml:
+    enabled: true
+    version: "2.0"
+    
+    # Identity providers
+    identity_providers:
+      - name: "Azure AD"
+        entity_id: "https://sts.windows.net/{tenant-id}/"
+        sso_url: "https://login.microsoftonline.com/{tenant-id}/saml2"
+        certificate: "${AZURE_SAML_CERT}"
+        
+      - name: "Okta"
+        entity_id: "http://www.okta.com/{org-id}"
+        sso_url: "https://{org-id}.okta.com/app/{app-id}/sso/saml"
+        certificate: "${OKTA_SAML_CERT}"
+        
+  # OAuth 2.0 / OpenID Connect
+  oauth:
+    enabled: true
+    
+    # OAuth providers
+    providers:
+      google:
+        client_id: "${GOOGLE_OAUTH_CLIENT_ID}"
+        client_secret: "${GOOGLE_OAUTH_CLIENT_SECRET}"
+        scope: "openid email profile"
+        
+      microsoft:
+        client_id: "${MICROSOFT_OAUTH_CLIENT_ID}"
+        client_secret: "${MICROSOFT_OAUTH_CLIENT_SECRET}"
+        tenant: "${MICROSOFT_TENANT_ID}"
+        
+      github:
+        client_id: "${GITHUB_OAUTH_CLIENT_ID}"
+        client_secret: "${GITHUB_OAUTH_CLIENT_SECRET}"
+        scope: "user:email"
+        
+  # Just-In-Time (JIT) provisioning
+  jit_provisioning:
+    enabled: true
+    create_users: true
+    update_attributes: true
+    default_role: "user"
+
+# Adaptive Authentication
+adaptive_authentication:
+  enabled: true
+  
+  # Risk assessment factors
+  risk_factors:
+    location:
+      enabled: true
+      geolocation_tracking: true
+      trusted_locations: true
+      
+    device:
+      enabled: true
+      device_fingerprinting: true
+      trusted_devices: true
+      
+    behavior:
+      enabled: true
+      behavioral_biometrics: true
+      typing_patterns: true
+      mouse_dynamics: true
+      
+    time:
+      enabled: true
+      unusual_hours_detection: true
+      timezone_anomalies: true
+      
+    network:
+      enabled: true
+      ip_reputation: true
+      tor_detection: true
+      vpn_detection: true
+      
+  # Risk scoring
+  risk_scoring:
+    algorithm: "machine_learning"
+    threshold_low: 0.3
+    threshold_medium: 0.6
+    threshold_high: 0.8
+    
+  # Response actions
+  response_actions:
+    low_risk:
+      - "allow_access"
+    medium_risk:
+      - "require_mfa"
+      - "security_questions"
+    high_risk:
+      - "block_access"
+      - "require_admin_approval"
+      - "force_password_reset"
+
+# Session Management
+session_management:
+  # Session configuration
+  session:
+    timeout_idle: 30         # minutes
+    timeout_absolute: 480    # 8 hours
+    concurrent_limit: 3
+    
+  # Session tokens
+  tokens:
+    type: "jwt"
+    algorithm: "RS256"
+    expiration: 3600         # 1 hour
+    refresh_enabled: true
+    refresh_expiration: 604800  # 7 days
+    
+  # Session security
+  security:
+    secure_cookies: true
+    httponly_cookies: true
+    samesite_policy: "Strict"
+    cookie_encryption: true
+    
+  # Session monitoring
+  monitoring:
+    anomaly_detection: true
+    concurrent_session_alerts: true
+    session_hijacking_detection: true
+
+# API Authentication
+api_authentication:
+  # API keys
+  api_keys:
+    enabled: true
+    rotation_required: true
+    rotation_interval_days: 90
+    scope_based_access: true
+    rate_limiting: true
+    
+  # JWT tokens
+  jwt:
+    enabled: true
+    algorithm: "RS256"
+    issuer: "https://api.iacherie.com"
+    audience: "iacherie-api"
+    expiration: 3600
+    
+  # OAuth 2.0 for APIs
+  oauth_api:
+    enabled: true
+    grant_types:
+      - "client_credentials"
+      - "authorization_code"
+      - "refresh_token"
+    scopes:
+      - "read"
+      - "write"
+      - "admin"
+
+# Account Security Features
+account_security:
+  # Account recovery
+  account_recovery:
+    methods:
+      - "email_verification"
+      - "security_questions"
+      - "backup_codes"
+      - "admin_approval"
+    security_questions:
+      min_questions: 3
+      custom_questions: true
+      
+  # Account verification
+  verification:
+    email_verification: true
+    phone_verification: true
+    identity_verification: false  # Future implementation
+    
+  # Suspicious activity detection
+  suspicious_activity:
+    enabled: true
+    
+    # Detection patterns
+    patterns:
+      - "multiple_failed_logins"
+      - "login_from_new_location"
+      - "login_from_new_device"
+      - "unusual_access_patterns"
+      - "impossible_travel"
+      
+    # Response actions
+    actions:
+      - "send_security_alert"
+      - "require_additional_verification"
+      - "temporary_account_lock"
+
+# Password Management
+password_management:
+  # Password strength validation
+  strength_validation:
+    enabled: true
+    minimum_score: 3         # Out of 4
+    real_time_feedback: true
+    
+  # Password breach checking
+  breach_checking:
+    enabled: true
+    service: "haveibeenpwned"
+    api_key: "${HIBP_API_KEY}"
+    
+  # Password generation
+  generation:
+    length: 16
+    character_sets:
+      - "uppercase"
+      - "lowercase"
+      - "numbers"
+      - "symbols"
+    exclude_ambiguous: true
+
+# Security Questions
+security_questions:
+  enabled: true
+  
+  # Predefined questions
+  predefined_questions:
+    - "What was the name of your first pet?"
+    - "What is your mother's maiden name?"
+    - "What was the make of your first car?"
+    - "What elementary school did you attend?"
+    - "What is the name of the town where you were born?"
+    
+  # Custom questions
+  custom_questions:
+    enabled: true
+    min_length: 10
+    max_length: 200
+    
+  # Answer requirements
+  answer_requirements:
+    min_length: 3
+    case_insensitive: true
+    fuzzy_matching: false
+
+# User Onboarding Security
+onboarding_security:
+  # Registration security
+  registration:
+    email_verification_required: true
+    phone_verification_required: false
+    captcha_required: true
+    terms_acceptance_required: true
+    
+  # Initial security setup
+  initial_setup:
+    force_password_change: false
+    mfa_setup_required: true
+    security_questions_required: true
+    
+# Device Management
+device_management:
+  enabled: true
+  
+  # Device registration
+  registration:
+    automatic_registration: true
+    device_naming: true
+    device_approval: false
+    
+  # Device tracking
+  tracking:
+    device_fingerprinting: true
+    track_browsers: true
+    track_mobile_apps: true
+    
+  # Device security
+  security:
+    trusted_devices: true
+    device_certificates: false
+    remote_wipe: false
+
+# Audit and Compliance
+audit:
+  # Authentication logging
+  logging:
+    successful_logins: true
+    failed_logins: true
+    password_changes: true
+    mfa_events: true
+    account_lockouts: true
+    
+  # Compliance requirements
+  compliance:
+    password_policy_enforcement: true
+    access_review_required: true
+    privileged_access_monitoring: true
+    
+# Integration Settings
+integration:
+  # LDAP/Active Directory
+  ldap:
+    enabled: false
+    server: "${LDAP_SERVER}"
+    port: 636
+    use_ssl: true
+    base_dn: "${LDAP_BASE_DN}"
+    
+  # Identity providers
+  identity_providers:
+    ping_identity: false
+    auth0: false
+    firebase_auth: false

@@ -1,0 +1,63 @@
+# ⚡ Redis Gamification Cache Configuration - IA Chérie Enterprise
+# © 2025 Fahed Mlaiel <mlaiel@live.de> - All Rights Reserved
+# Gamification Caching for Creator Economy Platform
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-gamification-cache
+  namespace: iacherie-redis
+  labels:
+    app: iacherie-redis
+    component: gamification-cache
+    environment: enterprise
+    owner: fahed-mlaiel
+    version: "4.0.0"
+  annotations:
+    author: "Fahed Mlaiel <mlaiel@live.de>"
+    license: "Proprietary - All Rights Reserved"
+
+data:
+  gamification_cache_config: |
+    # Gamification Cache Strategy
+    gamification_strategy: "real_time_engagement"
+    
+    # Achievement System
+    achievement_system:
+      user_achievements: "gamification:achievements:{user_id}"
+      achievement_progress: "gamification:progress:{user_id}"
+      achievement_badges: "gamification:badges:{user_id}"
+      achievement_milestones: "gamification:milestones:{user_id}"
+      ttl: 3600  # 1 hour
+      
+    # Point System
+    point_system:
+      user_points: "gamification:points:{user_id}"
+      point_history: "gamification:points:history:{user_id}"
+      point_transactions: "gamification:points:transactions:{user_id}"
+      ttl: 1800  # 30 minutes
+      real_time_updates: true
+      
+    # Leaderboards
+    leaderboards:
+      global_leaderboard: "gamification:leaderboard:global"
+      category_leaderboard: "gamification:leaderboard:{category}"
+      monthly_leaderboard: "gamification:leaderboard:monthly"
+      creator_leaderboard: "gamification:leaderboard:creators"
+      ttl: 900  # 15 minutes
+      
+    # Challenge System
+    challenge_system:
+      active_challenges: "gamification:challenges:active"
+      user_challenges: "gamification:challenges:{user_id}"
+      challenge_progress: "gamification:challenges:progress:{user_id}"
+      challenge_rewards: "gamification:challenges:rewards"
+      ttl: 3600  # 1 hour
+      
+    # Social Features
+    social_features:
+      friend_activities: "gamification:social:activities:{user_id}"
+      social_competitions: "gamification:social:competitions"
+      team_challenges: "gamification:social:teams"
+      ttl: 1800  # 30 minutes
+---

@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+    Info.plist - iOS Application Configuration
+    Ainflue Professional Content Creation Platform
+    
+    Author: Fahed Mlaiel (mlaiel@live.de)
+    Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+    
+    Team Specialties:
+    - Lead AI Developer + Backend Senior + ML Engineer
+    - Database Administrator + Security Expert
+    - Microservices Architect + Audio Processing Specialist
+    - DevOps Engineer + IA Prompt Engineer
+    
+    ⚠️ STRICT COPYRIGHT NOTICE ⚠️
+    This code is proprietary and confidential to Fahed Mlaiel.
+    Any unauthorized use, copying, modification, or distribution
+    without explicit written permission is strictly prohibited.
+    Violations will result in legal action.
+    Contact: mlaiel@live.de for licensing inquiries.
+-->
+<plist version="1.0">
+<dict>
+    <!-- App Identity -->
+    <key>CFBundleDisplayName</key>
+    <string>Ainflue</string>
+    <key>CFBundleName</key>
+    <string>Ainflue</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.fahedmlaiel.ainflue</string>
+    <key>CFBundleVersion</key>
+    <string>1.0.0</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0.0</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    
+    <!-- Deployment Target -->
+    <key>LSMinimumSystemVersion</key>
+    <string>14.0</string>
+    
+    <!-- App Category -->
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.productivity</string>
+    
+    <!-- Device Orientation -->
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    
+    <!-- iPad Specific Orientations -->
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationPortraitUpsideDown</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    
+    <!-- Device Requirements -->
+    <key>UIRequiredDeviceCapabilities</key>
+    <array>
+        <string>arm64</string>
+        <string>microphone</string>
+        <string>camera-flash</string>
+    </array>
+    
+    <!-- Privacy Permissions -->
+    <key>NSCameraUsageDescription</key>
+    <string>Ainflue requires camera access for professional video content creation, live streaming, and advanced visual content capture with AI-powered enhancement.</string>
+    
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Ainflue requires microphone access for high-quality audio recording, voice content creation, and advanced audio processing with AI enhancement.</string>
+    
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Ainflue requires photo library access to import, enhance, and distribute your existing content with AI-powered protection and optimization.</string>
+    
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>Ainflue saves your created and enhanced content to your photo library for easy access and sharing across platforms.</string>
+    
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Ainflue uses location data to provide geo-targeted content optimization, platform-specific distribution, and location-based analytics insights.</string>
+    
+    <key>NSFaceIDUsageDescription</key>
+    <string>Ainflue uses Face ID for secure authentication, protecting your valuable content and revenue data with enterprise-grade biometric security.</string>
+    
+    <key>NSContactsUsageDescription</key>
+    <string>Ainflue accesses contacts to facilitate collaboration invitations and streamline professional networking for content creators.</string>
+    
+    <key>NSCalendarsUsageDescription</key>
+    <string>Ainflue integrates with your calendar to schedule content uploads, manage publishing schedules, and optimize posting times.</string>
+    
+    <!-- Background Modes -->
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>background-processing</string>
+        <string>background-fetch</string>
+        <string>remote-notification</string>
+        <string>audio</string>
+        <string>background-app-refresh</string>
+    </array>
+    
+    <!-- Background Tasks -->
+    <key>BGTaskSchedulerPermittedIdentifiers</key>
+    <array>
+        <string>com.fahedmlaiel.ainflue.backgroundprocessing</string>
+        <string>com.fahedmlaiel.ainflue.sync</string>
+        <string>com.fahedmlaiel.ainflue.analytics</string>
+        <string>com.fahedmlaiel.ainflue.contentprotection</string>
+    </array>
+    
+    <!-- App Transport Security -->
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <false/>
+        <key>NSExceptionDomains</key>
+        <dict>
+            <key>api.ainflue.com</key>
+            <dict>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <false/>
+                <key>NSExceptionMinimumTLSVersion</key>
+                <string>TLSv1.2</string>
+                <key>NSExceptionRequiresForwardSecrecy</key>
+                <true/>
+            </dict>
+        </dict>
+    </dict>
+    
+    <!-- URL Schemes -->
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLName</key>
+            <string>com.fahedmlaiel.ainflue</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>ainflue</string>
+                <string>ainflue-auth</string>
+            </array>
+        </dict>
+    </array>
+    
+    <!-- Launch Screen -->
+    <key>UILaunchStoryboardName</key>
+    <string>LaunchScreen</string>
+    
+    <!-- Status Bar -->
+    <key>UIStatusBarStyle</key>
+    <string>UIStatusBarStyleLightContent</string>
+    <key>UIViewControllerBasedStatusBarAppearance</key>
+    <false/>
+    
+    <!-- App Icon -->
+    <key>CFBundleIcons</key>
+    <dict>
+        <key>CFBundlePrimaryIcon</key>
+        <dict>
+            <key>CFBundleIconFiles</key>
+            <array>
+                <string>AppIcon</string>
+            </array>
+            <key>CFBundleIconName</key>
+            <string>AppIcon</string>
+        </dict>
+    </dict>
+    
+    <!-- File Sharing -->
+    <key>UIFileSharingEnabled</key>
+    <true/>
+    <key>LSSupportsOpeningDocumentsInPlace</key>
+    <true/>
+    
+    <!-- Document Types -->
+    <key>CFBundleDocumentTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleTypeName</key>
+            <string>Audio Files</string>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>public.audio</string>
+                <string>public.mp3</string>
+                <string>public.mpeg-4-audio</string>
+                <string>com.apple.coreaudio-format</string>
+            </array>
+        </dict>
+        <dict>
+            <key>CFBundleTypeName</key>
+            <string>Video Files</string>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>public.movie</string>
+                <string>public.mpeg-4</string>
+                <string>com.apple.quicktime-movie</string>
+            </array>
+        </dict>
+        <dict>
+            <key>CFBundleTypeName</key>
+            <string>Image Files</string>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>public.image</string>
+                <string>public.jpeg</string>
+                <string>public.png</string>
+                <string>public.heif</string>
+            </array>
+        </dict>
+    </array>
+    
+    <!-- Exported Type Identifiers -->
+    <key>UTExportedTypeDeclarations</key>
+    <array>
+        <dict>
+            <key>UTTypeIdentifier</key>
+            <string>com.fahedmlaiel.ainflue.project</string>
+            <key>UTTypeDescription</key>
+            <string>Ainflue Project File</string>
+            <key>UTTypeTagSpecification</key>
+            <dict>
+                <key>public.filename-extension</key>
+                <array>
+                    <string>ainflue</string>
+                </array>
+                <key>public.mime-type</key>
+                <string>application/x-ainflue-project</string>
+            </dict>
+            <key>UTTypeConformsTo</key>
+            <array>
+                <string>public.data</string>
+            </array>
+        </dict>
+    </array>
+    
+    <!-- Scene Configuration -->
+    <key>UIApplicationSceneManifest</key>
+    <dict>
+        <key>UIApplicationSupportsMultipleScenes</key>
+        <false/>
+        <key>UISceneConfigurations</key>
+        <dict>
+            <key>UIWindowSceneSessionRoleApplication</key>
+            <array>
+                <dict>
+                    <key>UISceneConfigurationName</key>
+                    <string>Default Configuration</string>
+                    <key>UISceneDelegateClassName</key>
+                    <string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
+                </dict>
+            </array>
+        </dict>
+    </dict>
+    
+    <!-- Application Query Schemes -->
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>instagram</string>
+        <string>tiktok</string>
+        <string>youtube</string>
+        <string>twitter</string>
+        <string>facebook</string>
+        <string>linkedin</string>
+        <string>spotify</string>
+        <string>soundcloud</string>
+        <string>twitch</string>
+    </array>
+    
+    <!-- Hardware Features -->
+    <key>UIRequiresFullScreen</key>
+    <false/>
+    
+    <!-- Content Protection -->
+    <key>ITSAppUsesNonExemptEncryption</key>
+    <true/>
+    <key>ITSEncryptionExportComplianceCode</key>
+    <string>a5ca2174-0d98-4a70-9c5d-d5b7b1c4b8a2</string>
+    
+    <!-- Capabilities -->
+    <key>UIApplicationSupportsIndirectInputEvents</key>
+    <true/>
+    
+    <!-- Core Data -->
+    <key>NSPersistentStoreFileProtectionKey</key>
+    <string>NSFileProtectionComplete</string>
+    
+    <!-- Networking -->
+    <key>NSAllowsArbitraryLoadsInWebContent</key>
+    <false/>
+    
+    <!-- Analytics and Tracking -->
+    <key>NSUserTrackingUsageDescription</key>
+    <string>Ainflue uses tracking data to provide personalized content recommendations, optimize platform performance, and deliver targeted analytics insights for your content strategy.</string>
+    
+    <!-- Speech Recognition -->
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>Ainflue uses speech recognition for voice-to-text transcription, automated captions, and voice command functionality to enhance content creation workflow.</string>
+    
+    <!-- Motion Sensors -->
+    <key>NSMotionUsageDescription</key>
+    <string>Ainflue uses motion sensors for advanced camera stabilization, gesture-based controls, and immersive content creation features.</string>
+    
+    <!-- Local Network -->
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>Ainflue discovers and connects to local devices for content transfer, wireless collaboration, and professional studio equipment integration.</string>
+</dict>
+</plist>

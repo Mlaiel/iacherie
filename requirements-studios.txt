@@ -1,0 +1,181 @@
+# ============================================================================
+# 🎨 STUDIOS & LIVE STREAMING - Complete Requirements
+# ============================================================================
+# All libraries needed for Audio/Video/Image/Music/Avatar Studios
+# + Live Streaming to TikTok/Instagram/YouTube/Twitch
+# Author: Fahed Mlaiel
+# Date: October 13, 2025
+# ============================================================================
+
+# ============================================================================
+# 🖼️ IMAGE PROCESSING (ImageStudio)
+# ============================================================================
+# Stable Diffusion & Image Generation
+diffusers>=0.25.0
+accelerate>=0.25.0
+safetensors>=0.4.0
+
+# Image Upscaling (Real-ESRGAN)
+basicsr>=1.4.2
+realesrgan>=0.3.0
+facexlib>=0.3.0
+gfpgan>=1.3.8
+
+# Background Removal
+rembg>=2.0.50
+onnxruntime>=1.16.0  # For U²-Net model
+
+# Image Processing
+Pillow>=10.0.1
+imageio>=2.31.0
+imageio-ffmpeg>=0.4.9
+scikit-image>=0.22.0
+
+# ============================================================================
+# 🎵 AUDIO PROCESSING (AudioStudio)
+# ============================================================================
+# Text-to-Speech (Coqui TTS)
+coqui-tts>=0.13.0
+gTTS>=2.5.0  # Google TTS fallback
+
+# Audio Processing
+pydub>=0.25.1
+librosa>=0.10.1
+soundfile>=0.12.1
+audioread>=3.0.1
+
+# Voice Cloning & Enhancement
+noisereduce>=3.0.0
+# speechbrain>=0.5.16  # Optional: for advanced audio processing
+
+# Stem Separation (Demucs)
+# demucs>=4.0.0  # Requires torch 2.0+, install separately
+
+# Audio Analysis
+webrtcvad>=2.0.10  # Voice Activity Detection
+# pyworld>=0.3.4     # Speech analysis (optional)
+
+# ============================================================================
+# 🎬 VIDEO PROCESSING (VideoStudio)
+# ============================================================================
+# Video Generation & Processing
+opencv-python>=4.8.1
+ffmpeg-python>=0.2.0
+moviepy>=1.0.3
+
+# Frame Interpolation (RIFE)
+# Note: RIFE requires manual installation from GitHub
+# git clone https://github.com/hzwer/RIFE
+# Install pytorch 2.0+ first
+
+# Video Upscaling (Real-ESRGAN Video)
+# Uses same libs as image upscaling
+
+# Stable Video Diffusion
+# diffusers already includes SVD support
+
+# ============================================================================
+# 👤 AVATAR & LIP SYNC (AvatarStudio)
+# ============================================================================
+# Lip Sync (Wav2Lip)
+# Note: Wav2Lip requires manual setup
+# git clone https://github.com/Rudrabha/Wav2Lip
+# Weights: wget https://iiitaphyd-my.sharepoint.com/:u:/g/personal/radrabha_m_research_iiit_ac_in/Eb3LEzbfuKlJiR600lQWRxgBIY27JZg80f7V9jtMfbNDaQ?download=1 -O wav2lip_gan.pth
+
+# Portrait Animation (SadTalker)
+face-alignment>=1.4.1
+yacs>=0.1.8
+kornia>=0.7.0
+
+# 3D Avatar Generation
+trimesh>=4.0.0
+# Open3D>=0.18.0  # Optional for 3D visualization
+
+# ============================================================================
+# 🎼 MUSIC GENERATION (MusicStudio)
+# ============================================================================
+# Music Generation (AudioCraft/MusicGen)
+# audiocraft>=1.0.0  # Meta's MusicGen (requires torch 2.0+, install separately)
+
+# Music Analysis
+# essentia>=2.1b6.dev1034  # Music analysis (complex install)
+# madmom>=0.16.1           # Beat tracking
+
+# ============================================================================
+# 📡 LIVE STREAMING (Avatar Live Streaming)
+# ============================================================================
+# Video Streaming
+streamlink>=6.5.0
+python-vlc>=3.0.18121
+
+# WebRTC for browser streaming
+aiortc>=1.6.0
+
+# Stream Encoding/Decoding
+av>=11.0.0  # PyAV for video encoding
+
+# Real-time Processing
+# torch & opencv already included above
+
+# ============================================================================
+# 🌐 SOCIAL MEDIA PLATFORMS (for Live Streaming)
+# ============================================================================
+# TikTok
+# TikTokApi>=6.3.0  # May require browser automation
+
+# Instagram (via Facebook Graph API)
+# facebook-sdk already in main requirements.txt
+
+# YouTube Live
+google-api-python-client>=2.110.0  # Already in main requirements
+google-auth-oauthlib>=1.2.0
+google-auth-httplib2>=0.2.0
+
+# Twitch
+# python-twitch-client>=0.7.1  # Install separately if needed
+
+# ============================================================================
+# 🛠️ UTILITIES
+# ============================================================================
+# GPU Monitoring
+gputil>=1.4.0
+# pynvml>=11.5.0  # NVIDIA only
+
+# Progress Bars
+tqdm>=4.66.0
+
+# Configuration
+omegaconf>=2.3.0
+
+# Async utilities
+# asyncio>=3.4.3  # Built-in module
+aiofiles>=23.2.1
+
+# ============================================================================
+# 🧪 TESTING & DEVELOPMENT
+# ============================================================================
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0
+
+# ============================================================================
+# 📝 NOTES
+# ============================================================================
+# Some models require manual download:
+# 
+# 1. Real-ESRGAN weights (250MB):
+#    wget https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth -P weights/
+#
+# 2. Wav2Lip weights (200MB):
+#    wget "https://iiitaphyd-my.sharepoint.com/:u:/g/personal/radrabha_m_research_iiit_ac_in/Eb3LEzbfuKlJiR600lQWRxgBIY27JZg80f7V9jtMfbNDaQ?download=1" -O weights/wav2lip_gan.pth
+#
+# 3. SadTalker checkpoints:
+#    bash scripts/download_models.sh  # From SadTalker repo
+#
+# 4. Whisper model (auto-downloads on first use):
+#    Will download ~150MB for 'base' model
+#
+# 5. SDXL Turbo (auto-downloads via diffusers):
+#    ~7GB, downloads on first use
+#
+# Total disk space needed: ~15GB for all models

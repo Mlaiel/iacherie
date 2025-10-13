@@ -1,0 +1,18 @@
+{
+  "config_id": "config_49ada9cc",
+  "name": "openai_api_key",
+  "config_type": "security",
+  "environment": "production",
+  "value": "[HIDDEN]",
+  "description": "OpenAI API key for text processing",
+  "creator_types": [],
+  "is_secret": true,
+  "is_encrypted": true,
+  "version": "1.0.0",
+  "created_at": "2025-09-12T02:03:26.924429",
+  "updated_at": "2025-09-12T02:03:26.924432",
+  "created_by": "security_admin",
+  "tags": [],
+  "dependencies": [],
+  "validation_schema": null
+}

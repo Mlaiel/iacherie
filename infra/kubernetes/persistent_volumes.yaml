@@ -1,0 +1,346 @@
+# IA Chérie Infrastructure Module
+# =============================
+# 
+# Enterprise-grade Kubernetes Persistent Volumes for IA Chérie platform
+# Supports multi-cloud deployment and enterprise security
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+# Storage Classes for different performance tiers
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: iacherie-ssd-fast
+  labels:
+    app: iacherie-platform
+    component: storage
+    tier: fast
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: gp3
+  iops: "3000"
+  throughput: "125"
+  encrypted: "true"
+allowVolumeExpansion: true
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
+
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: iacherie-ssd-standard
+  labels:
+    app: iacherie-platform
+    component: storage
+    tier: standard
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: gp3
+  iops: "1000"
+  throughput: "50"
+  encrypted: "true"
+allowVolumeExpansion: true
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
+
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: iacherie-content-storage
+  labels:
+    app: iacherie-platform
+    component: storage
+    tier: content
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: st1
+  encrypted: "true"
+allowVolumeExpansion: true
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
+
+---
+# Database Persistent Volume Claims
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-data-pvc
+  namespace: iacherie-platform
+  labels:
+    app: postgres
+    component: database
+    tier: primary
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: iacherie-ssd-fast
+  resources:
+    requests:
+      storage: 100Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-backup-pvc
+  namespace: iacherie-platform
+  labels:
+    app: postgres
+    component: backup
+    tier: secondary
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: iacherie-ssd-standard
+  resources:
+    requests:
+      storage: 200Gi
+
+---
+# Redis Persistent Volume Claims
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-data-pvc
+  namespace: iacherie-platform
+  labels:
+    app: redis
+    component: cache
+    tier: primary
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: iacherie-ssd-fast
+  resources:
+    requests:
+      storage: 50Gi
+
+---
+# Content Storage Persistent Volume Claims
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: content-upload-pvc
+  namespace: iacherie-platform
+  labels:
+    app: iacherie-platform
+    component: content-storage
+    tier: upload
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: iacherie-content-storage
+  resources:
+    requests:
+      storage: 1Ti
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: content-processed-pvc
+  namespace: iacherie-platform
+  labels:
+    app: iacherie-platform
+    component: content-storage
+    tier: processed
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: iacherie-ssd-standard
+  resources:
+    requests:
+      storage: 2Ti
+
+---
+# AI/ML Model Storage
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ai-models-pvc
+  namespace: iacherie-platform
+  labels:
+    app: iacherie-ai
+    component: model-storage
+    tier: models
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: iacherie-ssd-fast
+  resources:
+    requests:
+      storage: 500Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ai-training-data-pvc
+  namespace: iacherie-platform
+  labels:
+    app: iacherie-ai
+    component: training-storage
+    tier: training
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: iacherie-content-storage
+  resources:
+    requests:
+      storage: 5Ti
+
+---
+# Monitoring Storage
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prometheus-data-pvc
+  namespace: iacherie-platform
+  labels:
+    app: prometheus
+    component: monitoring
+    tier: metrics
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: iacherie-ssd-standard
+  resources:
+    requests:
+      storage: 100Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: grafana-data-pvc
+  namespace: iacherie-platform
+  labels:
+    app: grafana
+    component: monitoring
+    tier: dashboards
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: iacherie-ssd-standard
+  resources:
+    requests:
+      storage: 10Gi
+
+---
+# Log Storage
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: elasticsearch-data-pvc
+  namespace: iacherie-platform
+  labels:
+    app: elasticsearch
+    component: logging
+    tier: logs
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: iacherie-ssd-standard
+  resources:
+    requests:
+      storage: 200Gi
+
+---
+# Backup Storage
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: backup-storage-pvc
+  namespace: iacherie-platform
+  labels:
+    app: backup
+    component: backup-storage
+    tier: backup
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: iacherie-ssd-standard
+  resources:
+    requests:
+      storage: 500Gi
+
+---
+# Shared Configuration Storage
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: shared-config-pvc
+  namespace: iacherie-platform
+  labels:
+    app: iacherie-platform
+    component: shared-config
+    tier: config
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: iacherie-ssd-standard
+  resources:
+    requests:
+      storage: 10Gi
+
+---
+# Audio Processing Storage
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: audio-processing-pvc
+  namespace: iacherie-platform
+  labels:
+    app: iacherie-audio
+    component: audio-processing
+    tier: processing
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: iacherie-ssd-fast
+  resources:
+    requests:
+      storage: 1Ti
+
+---
+# Video Processing Storage  
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: video-processing-pvc
+  namespace: iacherie-platform
+  labels:
+    app: iacherie-video
+    component: video-processing
+    tier: processing
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: iacherie-ssd-fast
+  resources:
+    requests:
+      storage: 5Ti
+
+---
+# Cache Storage for Distributed Processing
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: distributed-cache-pvc
+  namespace: iacherie-platform
+  labels:
+    app: iacherie-cache
+    component: distributed-cache
+    tier: cache
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: iacherie-ssd-fast
+  resources:
+    requests:
+      storage: 200Gi

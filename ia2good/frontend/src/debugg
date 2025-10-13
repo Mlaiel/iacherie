@@ -1,0 +1,1911 @@
+react-dom_client.js?v=93b6b878:17804 Download the React DevTools for a better development experience: https://react.dev/link/react-devtools
+useTranslation.ts:25 🔥 [DEBUG] Initializing translations...
+useTranslation.ts:29 🔥 [DEBUG] Current language: de
+i18n.ts:327 🔥 [DEBUG] Loading translations for all languages...
+i18n.ts:332 🔥 [DEBUG] Loading translations for: en
+i18n.ts:332 🔥 [DEBUG] Loading translations for: fr
+i18n.ts:332 🔥 [DEBUG] Loading translations for: de
+i18n.ts:332 🔥 [DEBUG] Loading translations for: es
+i18n.ts:332 🔥 [DEBUG] Loading translations for: pt
+i18n.ts:332 🔥 [DEBUG] Loading translations for: it
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ru
+i18n.ts:332 🔥 [DEBUG] Loading translations for: zh
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ja
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ko
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ar
+i18n.ts:332 🔥 [DEBUG] Loading translations for: hi
+i18n.ts:332 🔥 [DEBUG] Loading translations for: tr
+i18n.ts:332 🔥 [DEBUG] Loading translations for: pl
+i18n.ts:332 🔥 [DEBUG] Loading translations for: nl
+i18n.ts:332 🔥 [DEBUG] Loading translations for: sv
+i18n.ts:332 🔥 [DEBUG] Loading translations for: da
+i18n.ts:332 🔥 [DEBUG] Loading translations for: no
+i18n.ts:332 🔥 [DEBUG] Loading translations for: fi
+i18n.ts:332 🔥 [DEBUG] Loading translations for: cs
+i18n.ts:332 🔥 [DEBUG] Loading translations for: hu
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ro
+i18n.ts:332 🔥 [DEBUG] Loading translations for: bg
+i18n.ts:332 🔥 [DEBUG] Loading translations for: hr
+i18n.ts:332 🔥 [DEBUG] Loading translations for: sk
+i18n.ts:332 🔥 [DEBUG] Loading translations for: sl
+i18n.ts:332 🔥 [DEBUG] Loading translations for: et
+i18n.ts:332 🔥 [DEBUG] Loading translations for: lv
+i18n.ts:332 🔥 [DEBUG] Loading translations for: lt
+i18n.ts:332 🔥 [DEBUG] Loading translations for: mt
+i18n.ts:332 🔥 [DEBUG] Loading translations for: el
+i18n.ts:332 🔥 [DEBUG] Loading translations for: uk
+i18n.ts:332 🔥 [DEBUG] Loading translations for: be
+i18n.ts:332 🔥 [DEBUG] Loading translations for: th
+i18n.ts:332 🔥 [DEBUG] Loading translations for: vi
+i18n.ts:332 🔥 [DEBUG] Loading translations for: id
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ms
+i18n.ts:332 🔥 [DEBUG] Loading translations for: tl
+i18n.ts:332 🔥 [DEBUG] Loading translations for: bn
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ur
+i18n.ts:332 🔥 [DEBUG] Loading translations for: fa
+i18n.ts:332 🔥 [DEBUG] Loading translations for: he
+i18n.ts:332 🔥 [DEBUG] Loading translations for: sw
+i18n.ts:332 🔥 [DEBUG] Loading translations for: am
+i18n.ts:332 🔥 [DEBUG] Loading translations for: yo
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ig
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ha
+i18n.ts:332 🔥 [DEBUG] Loading translations for: zu
+i18n.ts:332 🔥 [DEBUG] Loading translations for: xh
+i18n.ts:332 🔥 [DEBUG] Loading translations for: af
+useTranslation.ts:25 🔥 [DEBUG] Initializing translations...
+useTranslation.ts:29 🔥 [DEBUG] Current language: de
+i18n.ts:327 🔥 [DEBUG] Loading translations for all languages...
+i18n.ts:332 🔥 [DEBUG] Loading translations for: en
+i18n.ts:332 🔥 [DEBUG] Loading translations for: fr
+i18n.ts:332 🔥 [DEBUG] Loading translations for: de
+i18n.ts:332 🔥 [DEBUG] Loading translations for: es
+i18n.ts:332 🔥 [DEBUG] Loading translations for: pt
+i18n.ts:332 🔥 [DEBUG] Loading translations for: it
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ru
+i18n.ts:332 🔥 [DEBUG] Loading translations for: zh
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ja
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ko
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ar
+i18n.ts:332 🔥 [DEBUG] Loading translations for: hi
+i18n.ts:332 🔥 [DEBUG] Loading translations for: tr
+i18n.ts:332 🔥 [DEBUG] Loading translations for: pl
+i18n.ts:332 🔥 [DEBUG] Loading translations for: nl
+i18n.ts:332 🔥 [DEBUG] Loading translations for: sv
+i18n.ts:332 🔥 [DEBUG] Loading translations for: da
+i18n.ts:332 🔥 [DEBUG] Loading translations for: no
+i18n.ts:332 🔥 [DEBUG] Loading translations for: fi
+i18n.ts:332 🔥 [DEBUG] Loading translations for: cs
+i18n.ts:332 🔥 [DEBUG] Loading translations for: hu
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ro
+i18n.ts:332 🔥 [DEBUG] Loading translations for: bg
+i18n.ts:332 🔥 [DEBUG] Loading translations for: hr
+i18n.ts:332 🔥 [DEBUG] Loading translations for: sk
+i18n.ts:332 🔥 [DEBUG] Loading translations for: sl
+i18n.ts:332 🔥 [DEBUG] Loading translations for: et
+i18n.ts:332 🔥 [DEBUG] Loading translations for: lv
+i18n.ts:332 🔥 [DEBUG] Loading translations for: lt
+i18n.ts:332 🔥 [DEBUG] Loading translations for: mt
+i18n.ts:332 🔥 [DEBUG] Loading translations for: el
+i18n.ts:332 🔥 [DEBUG] Loading translations for: uk
+i18n.ts:332 🔥 [DEBUG] Loading translations for: be
+i18n.ts:332 🔥 [DEBUG] Loading translations for: th
+i18n.ts:332 🔥 [DEBUG] Loading translations for: vi
+i18n.ts:332 🔥 [DEBUG] Loading translations for: id
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ms
+i18n.ts:332 🔥 [DEBUG] Loading translations for: tl
+i18n.ts:332 🔥 [DEBUG] Loading translations for: bn
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ur
+i18n.ts:332 🔥 [DEBUG] Loading translations for: fa
+i18n.ts:332 🔥 [DEBUG] Loading translations for: he
+i18n.ts:332 🔥 [DEBUG] Loading translations for: sw
+i18n.ts:332 🔥 [DEBUG] Loading translations for: am
+i18n.ts:332 🔥 [DEBUG] Loading translations for: yo
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ig
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ha
+i18n.ts:332 🔥 [DEBUG] Loading translations for: zu
+i18n.ts:332 🔥 [DEBUG] Loading translations for: xh
+i18n.ts:332 🔥 [DEBUG] Loading translations for: af
+useTranslation.ts:25 🔥 [DEBUG] Initializing translations...
+useTranslation.ts:29 🔥 [DEBUG] Current language: de
+i18n.ts:327 🔥 [DEBUG] Loading translations for all languages...
+i18n.ts:332 🔥 [DEBUG] Loading translations for: en
+i18n.ts:332 🔥 [DEBUG] Loading translations for: fr
+i18n.ts:332 🔥 [DEBUG] Loading translations for: de
+i18n.ts:332 🔥 [DEBUG] Loading translations for: es
+i18n.ts:332 🔥 [DEBUG] Loading translations for: pt
+i18n.ts:332 🔥 [DEBUG] Loading translations for: it
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ru
+i18n.ts:332 🔥 [DEBUG] Loading translations for: zh
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ja
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ko
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ar
+i18n.ts:332 🔥 [DEBUG] Loading translations for: hi
+i18n.ts:332 🔥 [DEBUG] Loading translations for: tr
+i18n.ts:332 🔥 [DEBUG] Loading translations for: pl
+i18n.ts:332 🔥 [DEBUG] Loading translations for: nl
+i18n.ts:332 🔥 [DEBUG] Loading translations for: sv
+i18n.ts:332 🔥 [DEBUG] Loading translations for: da
+i18n.ts:332 🔥 [DEBUG] Loading translations for: no
+i18n.ts:332 🔥 [DEBUG] Loading translations for: fi
+i18n.ts:332 🔥 [DEBUG] Loading translations for: cs
+i18n.ts:332 🔥 [DEBUG] Loading translations for: hu
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ro
+i18n.ts:332 🔥 [DEBUG] Loading translations for: bg
+i18n.ts:332 🔥 [DEBUG] Loading translations for: hr
+i18n.ts:332 🔥 [DEBUG] Loading translations for: sk
+i18n.ts:332 🔥 [DEBUG] Loading translations for: sl
+i18n.ts:332 🔥 [DEBUG] Loading translations for: et
+i18n.ts:332 🔥 [DEBUG] Loading translations for: lv
+i18n.ts:332 🔥 [DEBUG] Loading translations for: lt
+i18n.ts:332 🔥 [DEBUG] Loading translations for: mt
+i18n.ts:332 🔥 [DEBUG] Loading translations for: el
+i18n.ts:332 🔥 [DEBUG] Loading translations for: uk
+i18n.ts:332 🔥 [DEBUG] Loading translations for: be
+i18n.ts:332 🔥 [DEBUG] Loading translations for: th
+i18n.ts:332 🔥 [DEBUG] Loading translations for: vi
+i18n.ts:332 🔥 [DEBUG] Loading translations for: id
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ms
+i18n.ts:332 🔥 [DEBUG] Loading translations for: tl
+i18n.ts:332 🔥 [DEBUG] Loading translations for: bn
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ur
+i18n.ts:332 🔥 [DEBUG] Loading translations for: fa
+i18n.ts:332 🔥 [DEBUG] Loading translations for: he
+i18n.ts:332 🔥 [DEBUG] Loading translations for: sw
+i18n.ts:332 🔥 [DEBUG] Loading translations for: am
+i18n.ts:332 🔥 [DEBUG] Loading translations for: yo
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ig
+i18n.ts:332 🔥 [DEBUG] Loading translations for: ha
+i18n.ts:332 🔥 [DEBUG] Loading translations for: zu
+i18n.ts:332 🔥 [DEBUG] Loading translations for: xh
+i18n.ts:332 🔥 [DEBUG] Loading translations for: af
+App.tsx:152 SolidarityMap-AI initialized
+i18n.ts:337 ❌ Failed to load translations for pt: Error: Unknown variable dynamic import: ../locales/pt.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for it: Error: Unknown variable dynamic import: ../locales/it.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ru: Error: Unknown variable dynamic import: ../locales/ru.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ja: Error: Unknown variable dynamic import: ../locales/ja.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ko: Error: Unknown variable dynamic import: ../locales/ko.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ar: Error: Unknown variable dynamic import: ../locales/ar.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for hi: Error: Unknown variable dynamic import: ../locales/hi.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for tr: Error: Unknown variable dynamic import: ../locales/tr.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for pl: Error: Unknown variable dynamic import: ../locales/pl.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for nl: Error: Unknown variable dynamic import: ../locales/nl.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for sv: Error: Unknown variable dynamic import: ../locales/sv.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for da: Error: Unknown variable dynamic import: ../locales/da.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for no: Error: Unknown variable dynamic import: ../locales/no.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for fi: Error: Unknown variable dynamic import: ../locales/fi.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for cs: Error: Unknown variable dynamic import: ../locales/cs.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for hu: Error: Unknown variable dynamic import: ../locales/hu.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ro: Error: Unknown variable dynamic import: ../locales/ro.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for bg: Error: Unknown variable dynamic import: ../locales/bg.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for hr: Error: Unknown variable dynamic import: ../locales/hr.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for sk: Error: Unknown variable dynamic import: ../locales/sk.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for sl: Error: Unknown variable dynamic import: ../locales/sl.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for et: Error: Unknown variable dynamic import: ../locales/et.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for lv: Error: Unknown variable dynamic import: ../locales/lv.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for lt: Error: Unknown variable dynamic import: ../locales/lt.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for mt: Error: Unknown variable dynamic import: ../locales/mt.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for el: Error: Unknown variable dynamic import: ../locales/el.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for uk: Error: Unknown variable dynamic import: ../locales/uk.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for be: Error: Unknown variable dynamic import: ../locales/be.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for th: Error: Unknown variable dynamic import: ../locales/th.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for vi: Error: Unknown variable dynamic import: ../locales/vi.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for id: Error: Unknown variable dynamic import: ../locales/id.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ms: Error: Unknown variable dynamic import: ../locales/ms.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for tl: Error: Unknown variable dynamic import: ../locales/tl.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for bn: Error: Unknown variable dynamic import: ../locales/bn.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ur: Error: Unknown variable dynamic import: ../locales/ur.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for fa: Error: Unknown variable dynamic import: ../locales/fa.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for he: Error: Unknown variable dynamic import: ../locales/he.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for sw: Error: Unknown variable dynamic import: ../locales/sw.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for am: Error: Unknown variable dynamic import: ../locales/am.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for yo: Error: Unknown variable dynamic import: ../locales/yo.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ig: Error: Unknown variable dynamic import: ../locales/ig.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ha: Error: Unknown variable dynamic import: ../locales/ha.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for zu: Error: Unknown variable dynamic import: ../locales/zu.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for xh: Error: Unknown variable dynamic import: ../locales/xh.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for af: Error: Unknown variable dynamic import: ../locales/af.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for pt: Error: Unknown variable dynamic import: ../locales/pt.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for it: Error: Unknown variable dynamic import: ../locales/it.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ru: Error: Unknown variable dynamic import: ../locales/ru.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ja: Error: Unknown variable dynamic import: ../locales/ja.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ko: Error: Unknown variable dynamic import: ../locales/ko.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ar: Error: Unknown variable dynamic import: ../locales/ar.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for hi: Error: Unknown variable dynamic import: ../locales/hi.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for tr: Error: Unknown variable dynamic import: ../locales/tr.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for pl: Error: Unknown variable dynamic import: ../locales/pl.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for nl: Error: Unknown variable dynamic import: ../locales/nl.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for sv: Error: Unknown variable dynamic import: ../locales/sv.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for da: Error: Unknown variable dynamic import: ../locales/da.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for no: Error: Unknown variable dynamic import: ../locales/no.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for fi: Error: Unknown variable dynamic import: ../locales/fi.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for cs: Error: Unknown variable dynamic import: ../locales/cs.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for hu: Error: Unknown variable dynamic import: ../locales/hu.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ro: Error: Unknown variable dynamic import: ../locales/ro.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for bg: Error: Unknown variable dynamic import: ../locales/bg.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for hr: Error: Unknown variable dynamic import: ../locales/hr.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for sk: Error: Unknown variable dynamic import: ../locales/sk.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for sl: Error: Unknown variable dynamic import: ../locales/sl.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for et: Error: Unknown variable dynamic import: ../locales/et.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for lv: Error: Unknown variable dynamic import: ../locales/lv.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for lt: Error: Unknown variable dynamic import: ../locales/lt.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for mt: Error: Unknown variable dynamic import: ../locales/mt.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for el: Error: Unknown variable dynamic import: ../locales/el.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for uk: Error: Unknown variable dynamic import: ../locales/uk.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for be: Error: Unknown variable dynamic import: ../locales/be.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for th: Error: Unknown variable dynamic import: ../locales/th.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for vi: Error: Unknown variable dynamic import: ../locales/vi.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for id: Error: Unknown variable dynamic import: ../locales/id.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ms: Error: Unknown variable dynamic import: ../locales/ms.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for tl: Error: Unknown variable dynamic import: ../locales/tl.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for bn: Error: Unknown variable dynamic import: ../locales/bn.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ur: Error: Unknown variable dynamic import: ../locales/ur.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for fa: Error: Unknown variable dynamic import: ../locales/fa.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for he: Error: Unknown variable dynamic import: ../locales/he.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for sw: Error: Unknown variable dynamic import: ../locales/sw.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for am: Error: Unknown variable dynamic import: ../locales/am.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for yo: Error: Unknown variable dynamic import: ../locales/yo.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ig: Error: Unknown variable dynamic import: ../locales/ig.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ha: Error: Unknown variable dynamic import: ../locales/ha.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for zu: Error: Unknown variable dynamic import: ../locales/zu.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for xh: Error: Unknown variable dynamic import: ../locales/xh.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for af: Error: Unknown variable dynamic import: ../locales/af.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for pt: Error: Unknown variable dynamic import: ../locales/pt.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for it: Error: Unknown variable dynamic import: ../locales/it.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ru: Error: Unknown variable dynamic import: ../locales/ru.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ja: Error: Unknown variable dynamic import: ../locales/ja.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ko: Error: Unknown variable dynamic import: ../locales/ko.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ar: Error: Unknown variable dynamic import: ../locales/ar.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for hi: Error: Unknown variable dynamic import: ../locales/hi.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for tr: Error: Unknown variable dynamic import: ../locales/tr.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for pl: Error: Unknown variable dynamic import: ../locales/pl.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for nl: Error: Unknown variable dynamic import: ../locales/nl.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for sv: Error: Unknown variable dynamic import: ../locales/sv.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for da: Error: Unknown variable dynamic import: ../locales/da.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for no: Error: Unknown variable dynamic import: ../locales/no.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for fi: Error: Unknown variable dynamic import: ../locales/fi.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for cs: Error: Unknown variable dynamic import: ../locales/cs.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for hu: Error: Unknown variable dynamic import: ../locales/hu.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ro: Error: Unknown variable dynamic import: ../locales/ro.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for bg: Error: Unknown variable dynamic import: ../locales/bg.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for hr: Error: Unknown variable dynamic import: ../locales/hr.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for sk: Error: Unknown variable dynamic import: ../locales/sk.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for sl: Error: Unknown variable dynamic import: ../locales/sl.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for et: Error: Unknown variable dynamic import: ../locales/et.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for lv: Error: Unknown variable dynamic import: ../locales/lv.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for lt: Error: Unknown variable dynamic import: ../locales/lt.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for mt: Error: Unknown variable dynamic import: ../locales/mt.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for el: Error: Unknown variable dynamic import: ../locales/el.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for uk: Error: Unknown variable dynamic import: ../locales/uk.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for be: Error: Unknown variable dynamic import: ../locales/be.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for th: Error: Unknown variable dynamic import: ../locales/th.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for vi: Error: Unknown variable dynamic import: ../locales/vi.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for id: Error: Unknown variable dynamic import: ../locales/id.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ms: Error: Unknown variable dynamic import: ../locales/ms.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for tl: Error: Unknown variable dynamic import: ../locales/tl.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for bn: Error: Unknown variable dynamic import: ../locales/bn.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ur: Error: Unknown variable dynamic import: ../locales/ur.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for fa: Error: Unknown variable dynamic import: ../locales/fa.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for he: Error: Unknown variable dynamic import: ../locales/he.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for sw: Error: Unknown variable dynamic import: ../locales/sw.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for am: Error: Unknown variable dynamic import: ../locales/am.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for yo: Error: Unknown variable dynamic import: ../locales/yo.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ig: Error: Unknown variable dynamic import: ../locales/ig.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for ha: Error: Unknown variable dynamic import: ../locales/ha.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for zu: Error: Unknown variable dynamic import: ../locales/zu.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for xh: Error: Unknown variable dynamic import: ../locales/xh.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:337 ❌ Failed to load translations for af: Error: Unknown variable dynamic import: ../locales/af.ts
+    at dynamic-import-helper.js:10:9
+    at new Promise (<anonymous>)
+    at default (dynamic-import-helper.js:6:10)
+    at i18n.ts:333:30
+    at Array.map (<anonymous>)
+    at loadTranslations (i18n.ts:330:24)
+    at initialize (useTranslation.ts:31:13)
+    at useTranslation.ts:36:5
+    at react-stack-bottom-frame (react-dom_client.js?v=93b6b878:16242:20)
+    at runWithFiberInDEV (react-dom_client.js?v=93b6b878:726:18)
+(anonymous) @ i18n.ts:337
+i18n.ts:334 🔥 [DEBUG] Successfully loaded: fr
+i18n.ts:334 🔥 [DEBUG] Successfully loaded: fr
+i18n.ts:334 🔥 [DEBUG] Successfully loaded: fr
+i18n.ts:334 🔥 [DEBUG] Successfully loaded: en
+i18n.ts:334 🔥 [DEBUG] Successfully loaded: en
+i18n.ts:334 🔥 [DEBUG] Successfully loaded: en
+i18n.ts:334 🔥 [DEBUG] Successfully loaded: es
+i18n.ts:334 🔥 [DEBUG] Successfully loaded: es
+i18n.ts:334 🔥 [DEBUG] Successfully loaded: es
+i18n.ts:334 🔥 [DEBUG] Successfully loaded: zh
+i18n.ts:334 🔥 [DEBUG] Successfully loaded: zh
+i18n.ts:334 🔥 [DEBUG] Successfully loaded: zh
+i18n.ts:334 🔥 [DEBUG] Successfully loaded: de
+i18n.ts:346 🔥 [DEBUG] Registered translations for: en
+i18n.ts:346 🔥 [DEBUG] Registered translations for: fr
+i18n.ts:346 🔥 [DEBUG] Registered translations for: de
+i18n.ts:346 🔥 [DEBUG] Registered translations for: es
+i18n.ts:346 🔥 [DEBUG] Registered translations for: zh
+i18n.ts:350 🔥 [DEBUG] All translations loaded. Available languages: Array(5)
+useTranslation.ts:32 🔥 [DEBUG] Translations loaded
+i18n.ts:334 🔥 [DEBUG] Successfully loaded: de
+i18n.ts:346 🔥 [DEBUG] Registered translations for: en
+i18n.ts:346 🔥 [DEBUG] Registered translations for: fr
+i18n.ts:346 🔥 [DEBUG] Registered translations for: de
+i18n.ts:346 🔥 [DEBUG] Registered translations for: es
+i18n.ts:346 🔥 [DEBUG] Registered translations for: zh
+i18n.ts:350 🔥 [DEBUG] All translations loaded. Available languages: Array(5)
+useTranslation.ts:32 🔥 [DEBUG] Translations loaded
+i18n.ts:334 🔥 [DEBUG] Successfully loaded: de
+i18n.ts:346 🔥 [DEBUG] Registered translations for: en
+i18n.ts:346 🔥 [DEBUG] Registered translations for: fr
+i18n.ts:346 🔥 [DEBUG] Registered translations for: de
+i18n.ts:346 🔥 [DEBUG] Registered translations for: es
+i18n.ts:346 🔥 [DEBUG] Registered translations for: zh
+i18n.ts:350 🔥 [DEBUG] All translations loaded. Available languages: Array(5)
+useTranslation.ts:32 🔥 [DEBUG] Translations loaded
+i18n.ts:354 🔥 [DEBUG] Translating key: header.title for language: de
+i18n.ts:358 🔥 [DEBUG] Available translations for de : true
+i18n.ts:365 🔥 [DEBUG] Found translation: SolidarityMap
+i18n.ts:354 🔥 [DEBUG] Translating key: header.subtitle for language: de
+i18n.ts:358 🔥 [DEBUG] Available translations for de : true
+i18n.ts:365 🔥 [DEBUG] Found translation: Gemeinschaftshilfe-Plattform
+i18n.ts:354 🔥 [DEBUG] Translating key: header.total for language: de
+i18n.ts:358 🔥 [DEBUG] Available translations for de : true
+i18n.ts:365 🔥 [DEBUG] Found translation: Fälle
+i18n.ts:354 🔥 [DEBUG] Translating key: header.helped for language: de
+i18n.ts:358 🔥 [DEBUG] Available translations for de : true
+i18n.ts:365 🔥 [DEBUG] Found translation: Geholfen
+i18n.ts:354 🔥 [DEBUG] Translating key: nav.cases for language: de
+i18n.ts:358 🔥 [DEBUG] Available translations for de : true
+i18n.ts:365 🔥 [DEBUG] Found translation: Fälle
+i18n.ts:354 🔥 [DEBUG] Translating key: nav.stats for language: de
+i18n.ts:358 🔥 [DEBUG] Available translations for de : true
+i18n.ts:365 🔥 [DEBUG] Found translation: Stats
+i18n.ts:354 🔥 [DEBUG] Translating key: nav.report for language: de
+i18n.ts:358 🔥 [DEBUG] Available translations for de : true
+i18n.ts:365 🔥 [DEBUG] Found translation: Melden
+i18n.ts:354 🔥 [DEBUG] Translating key: nav.people for language: de
+i18n.ts:358 🔥 [DEBUG] Available translations for de : true
+i18n.ts:365 🔥 [DEBUG] Found translation: Menschen
+i18n.ts:354 🔥 [DEBUG] Translating key: nav.settings for language: de
+i18n.ts:358 🔥 [DEBUG] Available translations for de : true
+i18n.ts:365 🔥 [DEBUG] Found translation: Einstellungen
+i18n.ts:354 🔥 [DEBUG] Translating key: settings.language for language: de
+i18n.ts:358 🔥 [DEBUG] Available translations for de : true
+i18n.ts:365 🔥 [DEBUG] Found translation: Sprache
+i18n.ts:354 🔥 [DEBUG] Translating key: common.filter for language: de
+i18n.ts:358 🔥 [DEBUG] Available translations for de : true
+i18n.ts:365 🔥 [DEBUG] Found translation: Filter
+i18n.ts:354 🔥 [DEBUG] Translating key: cases.allCases for language: de
+i18n.ts:358 🔥 [DEBUG] Available translations for de : true
+i18n.ts:365 🔥 [DEBUG] Found translation: Alle Fälle
+i18n.ts:354 🔥 [DEBUG] Translating key: cases.people for language: de
+i18n.ts:358 🔥 [DEBUG] Available translations for de : true
+i18n.ts:365 🔥 [DEBUG] Found translation: 👤 Menschen
+i18n.ts:354 🔥 [DEBUG] Translating key: cases.animals for language: de
+i18n.ts:358 🔥 [DEBUG] Available translations for de : true
+i18n.ts:365 🔥 [DEBUG] Found translation: 🐕 Tiere
+i18n.ts:354 🔥 [DEBUG] Translating key: cases.allStatus for language: de
+i18n.ts:358 🔥 [DEBUG] Available translations for de : true
+i18n.ts:365 🔥 [DEBUG] Found translation: Alle Status
+i18n.ts:354 🔥 [DEBUG] Translating key: cases.status.open for language: de
+i18n.ts:358 🔥 [DEBUG] Available translations for de : true
+i18n.ts:365 🔥 [DEBUG] Found translation: offen
+i18n.ts:354 🔥 [DEBUG] Translating key: cases.status.inProgress for language: de
+i18n.ts:358 🔥 [DEBUG] Available translations for de : true
+i18n.ts:365 🔥 [DEBUG] Found translation: wird geholfen
+i18n.ts:354 🔥 [DEBUG] Translating key: cases.status.helped for language: de
+i18n.ts:358 🔥 [DEBUG] Available translations for de : true
+i18n.ts:365 🔥 [DEBUG] Found translation: geholfen
+/_spark/kv/solidarity-cases:1  Failed to load resource: the server responded with a status of 429 ()
+chunk-2T664JH7.js?v=93b6b878:72 Uncaught (in promise) Error: Failed to fetch KV key: 
+    at KVClient.getKey (chunk-2T664JH7.js?v=93b6b878:72:29)
+    at async KVClient.getOrSetKey (chunk-2T664JH7.js?v=93b6b878:89:27)
+    at async getOrSetKey (@github_spark_hooks.js?v=93b6b878:44:16)
+/_spark/kv/accessibility-settings:1  Failed to load resource: the server responded with a status of 429 ()
+/_spark/kv/volunteer-notifications:1  Failed to load resource: the server responded with a status of 429 ()
+chunk-2T664JH7.js?v=93b6b878:72 Uncaught (in promise) Error: Failed to fetch KV key: 
+    at KVClient.getKey (chunk-2T664JH7.js?v=93b6b878:72:29)
+    at async KVClient.getOrSetKey (chunk-2T664JH7.js?v=93b6b878:89:27)
+    at async getOrSetKey (@github_spark_hooks.js?v=93b6b878:44:16)
+chunk-2T664JH7.js?v=93b6b878:72 Uncaught (in promise) Error: Failed to fetch KV key: 
+    at KVClient.getKey (chunk-2T664JH7.js?v=93b6b878:72:29)
+    at async KVClient.getOrSetKey (chunk-2T664JH7.js?v=93b6b878:89:27)
+    at async getOrSetKey (@github_spark_hooks.js?v=93b6b878:44:16)
+/_spark/kv/volunteer-profiles:1  Failed to load resource: the server responded with a status of 429 ()
+chunk-2T664JH7.js?v=93b6b878:72 Uncaught (in promise) Error: Failed to fetch KV key: 
+    at KVClient.getKey (chunk-2T664JH7.js?v=93b6b878:72:29)
+    at async KVClient.getOrSetKey (chunk-2T664JH7.js?v=93b6b878:89:27)
+    at async getOrSetKey (@github_spark_hooks.js?v=93b6b878:44:16)
+/_spark/kv/volunteer-activities:1  Failed to load resource: the server responded with a status of 429 ()
+chunk-2T664JH7.js?v=93b6b878:72 Uncaught (in promise) Error: Failed to fetch KV key: 
+    at KVClient.getKey (chunk-2T664JH7.js?v=93b6b878:72:29)
+    at async KVClient.getOrSetKey (chunk-2T664JH7.js?v=93b6b878:89:27)
+    at async getOrSetKey (@github_spark_hooks.js?v=93b6b878:44:16)
+/_spark/kv/solidarity-cases:1  Failed to load resource: the server responded with a status of 429 ()
+chunk-2T664JH7.js?v=93b6b878:72 Uncaught (in promise) Error: Failed to fetch KV key: 
+    at KVClient.getKey (chunk-2T664JH7.js?v=93b6b878:72:29)
+    at async KVClient.getOrSetKey (chunk-2T664JH7.js?v=93b6b878:89:27)
+    at async getOrSetKey (@github_spark_hooks.js?v=93b6b878:44:16)
+/_spark/kv/accessibility-settings:1  Failed to load resource: the server responded with a status of 429 ()
+chunk-2T664JH7.js?v=93b6b878:72 Uncaught (in promise) Error: Failed to fetch KV key: 
+    at KVClient.getKey (chunk-2T664JH7.js?v=93b6b878:72:29)
+    at async KVClient.getOrSetKey (chunk-2T664JH7.js?v=93b6b878:89:27)
+    at async getOrSetKey (@github_spark_hooks.js?v=93b6b878:44:16)
+/_spark/kv/solidarity-cases:1  Failed to load resource: the server responded with a status of 429 ()
+chunk-2T664JH7.js?v=93b6b878:72 Uncaught (in promise) Error: Failed to fetch KV key: 
+    at KVClient.getKey (chunk-2T664JH7.js?v=93b6b878:72:29)
+    at async KVClient.getOrSetKey (chunk-2T664JH7.js?v=93b6b878:89:27)
+    at async getOrSetKey (@github_spark_hooks.js?v=93b6b878:44:16)

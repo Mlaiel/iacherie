@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Platform Monitoring Dashboard -->
+<!-- © 2025 Fahed Mlaiel - Ainflue Studio -->
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="dashboardGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a202c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2d3748;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="300" fill="url(#dashboardGradient)" rx="12"/>
+  
+  <!-- Header -->
+  <rect x="10" y="10" width="380" height="40" fill="#2d3748" stroke="#4a5568" stroke-width="1" rx="6"/>
+  <text x="20" y="32" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">Content Monitoring Dashboard</text>
+  
+  <!-- Platform Cards -->
+  <g id="platforms">
+    <!-- YouTube -->
+    <rect x="20" y="60" width="80" height="60" fill="#ff4444" fill-opacity="0.2" stroke="#ff4444" stroke-width="2" rx="4"/>
+    <text x="30" y="78" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#ffffff">YouTube</text>
+    <text x="30" y="92" font-family="Arial, sans-serif" font-size="8" fill="#cbd5e0">142 matches</text>
+    <text x="30" y="105" font-family="Arial, sans-serif" font-size="8" fill="#ff4444">3 violations</text>
+    
+    <!-- Spotify -->
+    <rect x="110" y="60" width="80" height="60" fill="#00ff88" fill-opacity="0.2" stroke="#00ff88" stroke-width="2" rx="4"/>
+    <text x="120" y="78" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#ffffff">Spotify</text>
+    <text x="120" y="92" font-family="Arial, sans-serif" font-size="8" fill="#cbd5e0">89 matches</text>
+    <text x="120" y="105" font-family="Arial, sans-serif" font-size="8" fill="#00ff88">0 violations</text>
+    
+    <!-- TikTok -->
+    <rect x="200" y="60" width="80" height="60" fill="#ff6b00" fill-opacity="0.2" stroke="#ff6b00" stroke-width="2" rx="4"/>
+    <text x="210" y="78" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#ffffff">TikTok</text>
+    <text x="210" y="92" font-family="Arial, sans-serif" font-size="8" fill="#cbd5e0">234 matches</text>
+    <text x="210" y="105" font-family="Arial, sans-serif" font-size="8" fill="#ff6b00">12 violations</text>
+    
+    <!-- Instagram -->
+    <rect x="290" y="60" width="80" height="60" fill="#9f40ff" fill-opacity="0.2" stroke="#9f40ff" stroke-width="2" rx="4"/>
+    <text x="300" y="78" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#ffffff">Instagram</text>
+    <text x="300" y="92" font-family="Arial, sans-serif" font-size="8" fill="#cbd5e0">67 matches</text>
+    <text x="300" y="105" font-family="Arial, sans-serif" font-size="8" fill="#9f40ff">1 violation</text>
+  </g>
+  
+  <!-- Real-time Activity Graph -->
+  <rect x="20" y="140" width="360" height="120" fill="#2d3748" stroke="#4a5568" stroke-width="1" rx="6"/>
+  <text x="30" y="158" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff">Real-time Monitoring Activity</text>
+  
+  <!-- Activity Graph -->
+  <g transform="translate(30, 170)">
+    <polyline points="0,80 50,70 100,60 150,45 200,50 250,35 300,40 340,30" 
+              fill="none" stroke="#00ff88" stroke-width="2"/>
+    <circle cx="340" cy="30" r="3" fill="#00ff88"/>
+  </g>
+  
+  <!-- Status Indicators -->
+  <g transform="translate(20, 270)">
+    <circle cx="10" cy="10" r="5" fill="#00ff88"/>
+    <text x="20" y="15" font-family="Arial, sans-serif" font-size="10" fill="#ffffff">System Online</text>
+    
+    <circle cx="120" cy="10" r="5" fill="#00ff88"/>
+    <text x="130" y="15" font-family="Arial, sans-serif" font-size="10" fill="#ffffff">AI Active</text>
+    
+    <circle cx="220" cy="10" r="5" fill="#ff6b00"/>
+    <text x="230" y="15" font-family="Arial, sans-serif" font-size="10" fill="#ffffff">16 Pending</text>
+  </g>
+</svg>

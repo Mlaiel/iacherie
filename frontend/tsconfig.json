@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["dom", "dom.iterable", "ES6"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "jsxImportSource": "react",
+    "incremental": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node", "react", "react-dom"],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "@/core/*": ["./core/*"],
+      "@/business/*": ["./business/*"],
+      "@/presentation/*": ["./presentation/*"],
+      "@/infrastructure/*": ["./infrastructure/*"],
+      "@/components/*": ["./components/*"],
+      "@/lib/*": ["./lib/*"],
+      "@/hooks/*": ["./hooks/*"],
+      "@/store/*": ["./store/*"],
+      "@/app/*": ["./app/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "core", "business", "presentation", "infrastructure", "components", "lib", "hooks", "store", "app"],
+  "exclude": ["node_modules"]
+}

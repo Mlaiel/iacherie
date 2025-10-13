@@ -1,0 +1,10 @@
+"""IA Chérie Platform Examples
+
+Examples and demonstrations of the IA Chérie platform capabilities.
+
+Author: Fahed Mlaiel (mlaiel@live.de)
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+"""
+
+__version__ = "1.0.0"
+__author__ = "Fahed Mlaiel"

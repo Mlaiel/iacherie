@@ -1,0 +1,4 @@
+# ML models directory
+# Trained models (.pkl, .h5) should be stored here
+# These files are typically not committed to git due to size
+# Use Git LFS or external model registry (S3, GCS) for production

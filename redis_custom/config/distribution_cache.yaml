@@ -1,0 +1,54 @@
+# ⚡ Redis Distribution Cache Configuration - IA Chérie Enterprise
+# © 2025 Fahed Mlaiel <mlaiel@live.de> - All Rights Reserved
+# Content Distribution Caching for Creator Economy Platform
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-distribution-cache
+  namespace: iacherie-redis
+  labels:
+    app: iacherie-redis
+    component: distribution-cache
+    environment: enterprise
+    owner: fahed-mlaiel
+    version: "4.0.0"
+  annotations:
+    author: "Fahed Mlaiel <mlaiel@live.de>"
+    license: "Proprietary - All Rights Reserved"
+
+data:
+  distribution_cache_config: |
+    # Distribution Cache Strategy
+    distribution_strategy: "multi_cdn_optimized"
+    
+    # CDN Cache Configuration
+    cdn_cache:
+      cdn_urls: "distribution:cdn:urls:{content_id}"
+      cdn_status: "distribution:cdn:status:{content_id}"
+      cdn_performance: "distribution:cdn:performance:{content_id}"
+      ttl: 3600  # 1 hour
+      
+    # Geographic Distribution
+    geographic_distribution:
+      region_performance: "distribution:region:{region_id}"
+      nearest_cdn: "distribution:nearest:{user_location}"
+      region_content: "distribution:region:content:{region_id}"
+      ttl: 7200  # 2 hours
+      
+    # Platform Distribution
+    platform_distribution:
+      youtube_sync: "distribution:youtube:{creator_id}"
+      instagram_sync: "distribution:instagram:{creator_id}"
+      tiktok_sync: "distribution:tiktok:{creator_id}"
+      twitter_sync: "distribution:twitter:{creator_id}"
+      ttl: 1800  # 30 minutes
+      
+    # Distribution Analytics
+    distribution_analytics:
+      delivery_performance: "distribution:analytics:performance"
+      bandwidth_usage: "distribution:analytics:bandwidth"
+      geographic_reach: "distribution:analytics:reach"
+      platform_engagement: "distribution:analytics:engagement"
+      ttl: 900  # 15 minutes
+---

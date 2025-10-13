@@ -1,0 +1,48 @@
+{
+  "extends": [
+    "@react-native",
+    "eslint:recommended",
+    "@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "react",
+    "react-native"
+  ],
+  "env": {
+    "react-native/react-native": true,
+    "es6": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2021,
+    "sourceType": "module"
+  },
+  "rules": {
+    "react-native/no-unused-styles": "warn",
+    "react-native/split-platform-components": "error",
+    "react-native/no-inline-styles": "warn",
+    "react-native/no-color-literals": "warn",
+    "react-native/no-raw-text": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "prefer-const": "error",
+    "no-console": "warn"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "ignorePatterns": [
+    "node_modules/",
+    "build/",
+    "dist/",
+    "*.config.js",
+    "metro.config.js"
+  ]
+}

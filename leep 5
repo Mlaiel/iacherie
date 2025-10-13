@@ -1,0 +1,64 @@
+{
+    "TargetHealthDescriptions": [
+        {
+            "Target": {
+                "Id": "i-0ef6350233a056cd8",
+                "Port": 31324
+            },
+            "HealthCheckPort": "31324",
+            "TargetHealth": {
+                "State": "healthy"
+            },
+            "AdministrativeOverride": {
+                "State": "no_override",
+                "Reason": "AdministrativeOverride.NoOverride",
+                "Description": "No override is currently active on target"
+            }
+        },
+        {
+            "Target": {
+                "Id": "i-00a0761a132d783a3",
+                "Port": 31324
+            },
+            "HealthCheckPort": "31324",
+            "TargetHealth": {
+                "State": "healthy"
+            },
+            "AdministrativeOverride": {
+                "State": "no_override",
+                "Reason": "AdministrativeOverride.NoOverride",
+                "Description": "No override is currently active on target"
+            }
+        },
+        {
+            "Target": {
+                "Id": "i-04d213f4427660d16",
+                "Port": 31324
+            },
+            "HealthCheckPort": "31324",
+            "TargetHealth": {
+                "State": "healthy"
+            },
+            "AdministrativeOverride": {
+                "State": "no_override",
+                "Reason": "AdministrativeOverride.NoOverride",
+                "Description": "No override is currently active on target"
+            }
+        },
+        {
+            "Target": {
+                "Id": "i-097200371a9438a1f",
+                "Port": 31324
+            },
+            "HealthCheckPort": "31324",
+            "TargetHealth": {
+                "State": "healthy"
+            },
+            "AdministrativeOverride": {
+                "State": "no_override",
+                "Reason": "AdministrativeOverride.NoOverride",
+                "Description": "No override is currently active on target"
+            }
+        }
+    ]
+}

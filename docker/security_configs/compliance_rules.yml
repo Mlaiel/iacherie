@@ -1,0 +1,11 @@
+# Compliance Rules Configuration
+frameworks:
+  - CIS_Docker_Benchmark
+  - NIST_Cybersecurity_Framework
+  - GDPR
+audit_logging: enabled
+compliance_checks:
+  - user_namespaces
+  - read_only_containers
+  - no_privileged_containers
+  - resource_limits

@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: jaeger-agent
+    component: jaeger
+  name: jaeger-agent
+  namespace: jaeger-system
+spec:
+  ports:
+  - name: port-6831
+    port: 6831
+    protocol: TCP
+    targetPort: 6831
+  - name: port-6832
+    port: 6832
+    protocol: TCP
+    targetPort: 6832
+  - name: port-5778
+    port: 5778
+    protocol: TCP
+    targetPort: 5778
+  - name: port-14271
+    port: 14271
+    protocol: TCP
+    targetPort: 14271
+  selector:
+    app: jaeger-agent
+  type: ClusterIP

@@ -1,0 +1,235 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ia2good-ingress
+  namespace: ia2good
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    
+    # CORS pour API
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "https://ia2good.com, https://www.ia2good.com, https://iacherie.com"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, DELETE, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    
+    # Rate limiting (plus souple pour IA2GOOD car humanitaire)
+    nginx.ingress.kubernetes.io/limit-rps: "100"
+    nginx.ingress.kubernetes.io/limit-connections: "50"
+    
+    # Timeouts (plus élevés pour IA car processing long)
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "120"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "120"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
+    
+    # Body size (pour upload audio/images)
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+    
+    # WebSocket support (pour MedCare telemedicine)
+    nginx.ingress.kubernetes.io/websocket-services: "medcare-api-service"
+    
+spec:
+  tls:
+  - hosts:
+    - ia2good.com
+    - www.ia2good.com
+    - volunteer.ia2good.com
+    - eduverify.ia2good.com
+    - medcare.ia2good.com
+    secretName: ia2good-tls-cert
+  
+  rules:
+  # =============================================
+  # MAIN DOMAIN: ia2good.com
+  # =============================================
+  - host: ia2good.com
+    http:
+      paths:
+      # Frontend (served by ia2good-frontend)
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ia2good-frontend-service
+            port:
+              number: 80
+      
+      # API Guardian (Volunteer matching)
+      - path: /api/guardian
+        pathType: Prefix
+        backend:
+          service:
+            name: ia2good-api-service
+            port:
+              number: 8001
+      
+      # API EduVerify
+      - path: /api/eduverify
+        pathType: Prefix
+        backend:
+          service:
+            name: eduverify-api-service
+            port:
+              number: 8002
+      
+      # API MedCare
+      - path: /api/medcare
+        pathType: Prefix
+        backend:
+          service:
+            name: medcare-api-service
+            port:
+              number: 8003
+      
+      # Proxy to IACherie AI models
+      - path: /api/ai
+        pathType: Prefix
+        backend:
+          service:
+            name: iacherie-api-service
+            port:
+              number: 8000
+  
+  # =============================================
+  # WWW redirect
+  # =============================================
+  - host: www.ia2good.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ia2good-frontend-service
+            port:
+              number: 80
+  
+  # =============================================
+  # SUBDOMAIN: volunteer.ia2good.com (Guardian)
+  # =============================================
+  - host: volunteer.ia2good.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ia2good-frontend-service
+            port:
+              number: 80
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: ia2good-api-service
+            port:
+              number: 8001
+  
+  # =============================================
+  # SUBDOMAIN: eduverify.ia2good.com
+  # =============================================
+  - host: eduverify.ia2good.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ia2good-frontend-service
+            port:
+              number: 80
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: eduverify-api-service
+            port:
+              number: 8002
+  
+  # =============================================
+  # SUBDOMAIN: medcare.ia2good.com
+  # =============================================
+  - host: medcare.ia2good.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ia2good-frontend-service
+            port:
+              number: 80
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: medcare-api-service
+            port:
+              number: 8003
+
+---
+# =============================================
+# INGRESS FOR OTHER IA2GOOD DOMAINS
+# =============================================
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ia2good-additional-domains
+  namespace: ia2good
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    
+    # Redirect ia2good.info to /about
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      if ($host = "ia2good.info") {
+        return 301 https://ia2good.com/about$request_uri;
+      }
+    
+spec:
+  tls:
+  - hosts:
+    - ia2good.info
+    - ia2good.store
+    - ia2good.de
+    secretName: ia2good-additional-tls
+  
+  rules:
+  # ia2good.info → Redirect to /about
+  - host: ia2good.info
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ia2good-frontend-service
+            port:
+              number: 80
+  
+  # ia2good.store → Redirect to /donate
+  - host: ia2good.store
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ia2good-frontend-service
+            port:
+              number: 80
+  
+  # ia2good.de → German version
+  - host: ia2good.de
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ia2good-frontend-service
+            port:
+              number: 80

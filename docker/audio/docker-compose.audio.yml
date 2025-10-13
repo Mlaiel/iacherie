@@ -1,0 +1,76 @@
+# Docker Compose for Audio Services
+# Audio processing, analysis, and enhancement services
+# Author: Fahed Mlaiel (mlaiel@live.de)
+
+version: '3.8'
+
+services:
+  # Source separation service
+  source-separation:
+    build:
+      context: ../..
+      dockerfile: docker/audio/source_separation.dockerfile
+      target: production
+    container_name: iacherie-source-separation
+    ports:
+      - "8011:8011"
+    environment:
+      - SERVICE_NAME=source_separation
+      - MODEL_TYPE=spleeter
+      - STEMS_COUNT=4
+    volumes:
+      - separation_storage:/app/storage
+      - separation_models:/app/models
+      - separation_logs:/app/logs
+      - separation_cache:/app/cache
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8011/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - audio-network
+
+  # Audio processing service
+  audio-processing:
+    build:
+      context: ../..
+      dockerfile: docker/audio/audio_processing.dockerfile
+      target: production
+    container_name: iacherie-audio-processing
+    ports:
+      - "8012:8012"
+    environment:
+      - SERVICE_NAME=audio_processing
+      - SAMPLE_RATE=44100
+      - BIT_DEPTH=16
+    volumes:
+      - audio_storage:/app/storage
+      - audio_cache:/app/cache
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8012/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - audio-network
+
+networks:
+  audio-network:
+    driver: bridge
+
+volumes:
+  separation_storage:
+    driver: local
+  separation_models:
+    driver: local
+  separation_logs:
+    driver: local
+  separation_cache:
+    driver: local
+  audio_storage:
+    driver: local
+  audio_cache:
+    driver: local

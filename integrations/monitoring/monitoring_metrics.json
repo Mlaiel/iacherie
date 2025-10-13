@@ -1,0 +1,466 @@
+{
+  "timestamp": "2025-09-11T07:48:04.755111",
+  "session": "SESSION_5_FEBRUARY_2025",
+  "metrics": {
+    "timestamp": "2025-09-11 07:48:04.755111",
+    "total_services": 24,
+    "healthy_services": 21,
+    "degraded_services": 3,
+    "down_services": 0,
+    "avg_response_time": 6.764362255732219,
+    "overall_health": "warning",
+    "services": [
+      {
+        "service_name": "openai_integration",
+        "status": "healthy",
+        "response_time_ms": 10.264396667480469,
+        "last_check": "2025-09-11 07:48:04.703549",
+        "error_count": 5,
+        "success_rate": 99.93732853351905,
+        "metadata": {
+          "service_type": "ai",
+          "provider": "openai",
+          "capabilities": [
+            "text",
+            "image",
+            "audio"
+          ]
+        }
+      },
+      {
+        "service_name": "anthropic_integration",
+        "status": "healthy",
+        "response_time_ms": 10.488510131835938,
+        "last_check": "2025-09-11 07:48:04.714047",
+        "error_count": 0,
+        "success_rate": 98.91148570075242,
+        "metadata": {
+          "service_type": "ai",
+          "provider": "anthropic",
+          "capabilities": [
+            "text",
+            "image",
+            "audio"
+          ]
+        }
+      },
+      {
+        "service_name": "google_ai_integration",
+        "status": "healthy",
+        "response_time_ms": 10.406017303466797,
+        "last_check": "2025-09-11 07:48:04.724462",
+        "error_count": 3,
+        "success_rate": 99.42134723253497,
+        "metadata": {
+          "service_type": "ai",
+          "provider": "google",
+          "capabilities": [
+            "text",
+            "image",
+            "audio"
+          ]
+        }
+      },
+      {
+        "service_name": "azure_ai_integration",
+        "status": "healthy",
+        "response_time_ms": 10.289669036865234,
+        "last_check": "2025-09-11 07:48:04.734763",
+        "error_count": 0,
+        "success_rate": 96.39375449607022,
+        "metadata": {
+          "service_type": "ai",
+          "provider": "azure",
+          "capabilities": [
+            "text",
+            "image",
+            "audio"
+          ]
+        }
+      },
+      {
+        "service_name": "aws_ai_integration",
+        "status": "healthy",
+        "response_time_ms": 10.202884674072266,
+        "last_check": "2025-09-11 07:48:04.744975",
+        "error_count": 1,
+        "success_rate": 95.8504655763014,
+        "metadata": {
+          "service_type": "ai",
+          "provider": "aws",
+          "capabilities": [
+            "text",
+            "image",
+            "audio"
+          ]
+        }
+      },
+      {
+        "service_name": "huggingface_integration",
+        "status": "healthy",
+        "response_time_ms": 10.08749008178711,
+        "last_check": "2025-09-11 07:48:04.755069",
+        "error_count": 5,
+        "success_rate": 96.1987020091922,
+        "metadata": {
+          "service_type": "ai",
+          "provider": "huggingface",
+          "capabilities": [
+            "text",
+            "image",
+            "audio"
+          ]
+        }
+      },
+      {
+        "service_name": "stripe_integration",
+        "status": "healthy",
+        "response_time_ms": 5.95545768737793,
+        "last_check": "2025-09-11 07:48:04.699260",
+        "error_count": 0,
+        "success_rate": 99.57265258355478,
+        "metadata": {
+          "service_type": "payment",
+          "provider": "stripe",
+          "supported_currencies": [
+            "USD",
+            "EUR",
+            "GBP"
+          ],
+          "fraud_protection": true
+        }
+      },
+      {
+        "service_name": "paypal_integration",
+        "status": "healthy",
+        "response_time_ms": 5.379199981689453,
+        "last_check": "2025-09-11 07:48:04.704647",
+        "error_count": 2,
+        "success_rate": 98.88606642369754,
+        "metadata": {
+          "service_type": "payment",
+          "provider": "paypal",
+          "supported_currencies": [
+            "USD",
+            "EUR",
+            "GBP"
+          ],
+          "fraud_protection": true
+        }
+      },
+      {
+        "service_name": "apple_pay_integration",
+        "status": "healthy",
+        "response_time_ms": 5.18345832824707,
+        "last_check": "2025-09-11 07:48:04.709835",
+        "error_count": 1,
+        "success_rate": 99.59767996067404,
+        "metadata": {
+          "service_type": "payment",
+          "provider": "apple",
+          "supported_currencies": [
+            "USD",
+            "EUR",
+            "GBP"
+          ],
+          "fraud_protection": true
+        }
+      },
+      {
+        "service_name": "google_pay_integration",
+        "status": "healthy",
+        "response_time_ms": 5.298376083374023,
+        "last_check": "2025-09-11 07:48:04.715139",
+        "error_count": 1,
+        "success_rate": 99.99279142760405,
+        "metadata": {
+          "service_type": "payment",
+          "provider": "google",
+          "supported_currencies": [
+            "USD",
+            "EUR",
+            "GBP"
+          ],
+          "fraud_protection": true
+        }
+      },
+      {
+        "service_name": "square_integration",
+        "status": "healthy",
+        "response_time_ms": 5.205392837524414,
+        "last_check": "2025-09-11 07:48:04.720352",
+        "error_count": 2,
+        "success_rate": 98.87545879917185,
+        "metadata": {
+          "service_type": "payment",
+          "provider": "square",
+          "supported_currencies": [
+            "USD",
+            "EUR",
+            "GBP"
+          ],
+          "fraud_protection": true
+        }
+      },
+      {
+        "service_name": "wise_integration",
+        "status": "healthy",
+        "response_time_ms": 5.196809768676758,
+        "last_check": "2025-09-11 07:48:04.725557",
+        "error_count": 0,
+        "success_rate": 98.23291168388354,
+        "metadata": {
+          "service_type": "payment",
+          "provider": "wise",
+          "supported_currencies": [
+            "USD",
+            "EUR",
+            "GBP"
+          ],
+          "fraud_protection": true
+        }
+      },
+      {
+        "service_name": "instagram_business_api",
+        "status": "healthy",
+        "response_time_ms": 8.140087127685547,
+        "last_check": "2025-09-11 07:48:04.701456",
+        "error_count": 3,
+        "success_rate": 96.39043065737798,
+        "metadata": {
+          "service_type": "social_media",
+          "platform": "instagram",
+          "content_types": [
+            "video",
+            "image",
+            "text"
+          ],
+          "rate_limited": true
+        }
+      },
+      {
+        "service_name": "youtube_content_id_api",
+        "status": "degraded",
+        "response_time_ms": 8.357524871826172,
+        "last_check": "2025-09-11 07:48:04.709822",
+        "error_count": 7,
+        "success_rate": 93.09693942928985,
+        "metadata": {
+          "service_type": "social_media",
+          "platform": "youtube",
+          "content_types": [
+            "video",
+            "image",
+            "text"
+          ],
+          "rate_limited": true
+        }
+      },
+      {
+        "service_name": "tiktok_creator_api",
+        "status": "degraded",
+        "response_time_ms": 8.4075927734375,
+        "last_check": "2025-09-11 07:48:04.718236",
+        "error_count": 4,
+        "success_rate": 92.27031649028004,
+        "metadata": {
+          "service_type": "social_media",
+          "platform": "tiktok",
+          "content_types": [
+            "video",
+            "image",
+            "text"
+          ],
+          "rate_limited": true
+        }
+      },
+      {
+        "service_name": "linkedin_creator_api",
+        "status": "degraded",
+        "response_time_ms": 8.401632308959961,
+        "last_check": "2025-09-11 07:48:04.726644",
+        "error_count": 7,
+        "success_rate": 93.05005467393077,
+        "metadata": {
+          "service_type": "social_media",
+          "platform": "linkedin",
+          "content_types": [
+            "video",
+            "image",
+            "text"
+          ],
+          "rate_limited": true
+        }
+      },
+      {
+        "service_name": "twitter_api_v2",
+        "status": "healthy",
+        "response_time_ms": 8.134603500366211,
+        "last_check": "2025-09-11 07:48:04.734785",
+        "error_count": 3,
+        "success_rate": 95.48419894595983,
+        "metadata": {
+          "service_type": "social_media",
+          "platform": "twitter",
+          "content_types": [
+            "video",
+            "image",
+            "text"
+          ],
+          "rate_limited": true
+        }
+      },
+      {
+        "service_name": "pinterest_business_api",
+        "status": "healthy",
+        "response_time_ms": 8.092880249023438,
+        "last_check": "2025-09-11 07:48:04.742886",
+        "error_count": 1,
+        "success_rate": 96.28808759349215,
+        "metadata": {
+          "service_type": "social_media",
+          "platform": "pinterest",
+          "content_types": [
+            "video",
+            "image",
+            "text"
+          ],
+          "rate_limited": true
+        }
+      },
+      {
+        "service_name": "aws_integration",
+        "status": "healthy",
+        "response_time_ms": 3.1006336212158203,
+        "last_check": "2025-09-11 07:48:04.697152",
+        "error_count": 1,
+        "success_rate": 99.69326134837443,
+        "metadata": {
+          "service_type": "cloud",
+          "provider": "aws",
+          "services": [
+            "compute",
+            "storage",
+            "database"
+          ],
+          "regions": [
+            "us-east-1",
+            "eu-west-1"
+          ]
+        }
+      },
+      {
+        "service_name": "gcp_integration",
+        "status": "healthy",
+        "response_time_ms": 3.1909942626953125,
+        "last_check": "2025-09-11 07:48:04.700355",
+        "error_count": 0,
+        "success_rate": 99.59998881307109,
+        "metadata": {
+          "service_type": "cloud",
+          "provider": "gcp",
+          "services": [
+            "compute",
+            "storage",
+            "database"
+          ],
+          "regions": [
+            "us-east-1",
+            "eu-west-1"
+          ]
+        }
+      },
+      {
+        "service_name": "azure_integration",
+        "status": "healthy",
+        "response_time_ms": 3.202199935913086,
+        "last_check": "2025-09-11 07:48:04.703564",
+        "error_count": 1,
+        "success_rate": 99.25013682376404,
+        "metadata": {
+          "service_type": "cloud",
+          "provider": "azure",
+          "services": [
+            "compute",
+            "storage",
+            "database"
+          ],
+          "regions": [
+            "us-east-1",
+            "eu-west-1"
+          ]
+        }
+      },
+      {
+        "service_name": "firebase_integration",
+        "status": "healthy",
+        "response_time_ms": 3.1604766845703125,
+        "last_check": "2025-09-11 07:48:04.706729",
+        "error_count": 0,
+        "success_rate": 99.57589621697277,
+        "metadata": {
+          "service_type": "cloud",
+          "provider": "firebase",
+          "services": [
+            "compute",
+            "storage",
+            "database"
+          ],
+          "regions": [
+            "us-east-1",
+            "eu-west-1"
+          ]
+        }
+      },
+      {
+        "service_name": "supabase_integration",
+        "status": "healthy",
+        "response_time_ms": 3.111124038696289,
+        "last_check": "2025-09-11 07:48:04.709845",
+        "error_count": 0,
+        "success_rate": 99.62962650983123,
+        "metadata": {
+          "service_type": "cloud",
+          "provider": "supabase",
+          "services": [
+            "compute",
+            "storage",
+            "database"
+          ],
+          "regions": [
+            "us-east-1",
+            "eu-west-1"
+          ]
+        }
+      },
+      {
+        "service_name": "vercel_integration",
+        "status": "healthy",
+        "response_time_ms": 3.087282180786133,
+        "last_check": "2025-09-11 07:48:04.712944",
+        "error_count": 0,
+        "success_rate": 99.33155110574779,
+        "metadata": {
+          "service_type": "cloud",
+          "provider": "vercel",
+          "services": [
+            "compute",
+            "storage",
+            "database"
+          ],
+          "regions": [
+            "us-east-1",
+            "eu-west-1"
+          ]
+        }
+      }
+    ]
+  },
+  "thresholds": {
+    "response_time_warning": 1000,
+    "response_time_critical": 5000,
+    "success_rate_warning": 95.0,
+    "success_rate_critical": 85.0
+  },
+  "history_count": 1
+}

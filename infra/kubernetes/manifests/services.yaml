@@ -1,0 +1,324 @@
+# IA Chérie Infrastructure Module
+# =============================
+# 
+# Enterprise-grade infrastructure management for IA Chérie platform
+# Supports multi-cloud deployment and enterprise security
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iacherie-api-service
+  namespace: iacherie-platform
+  labels:
+    app: iacherie-api
+    component: backend-api
+    part-of: iacherie-platform
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: /health
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-interval: "10"
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-timeout: "5"
+    service.beta.kubernetes.io/aws-load-balancer-healthy-threshold: "2"
+    service.beta.kubernetes.io/aws-load-balancer-unhealthy-threshold: "2"
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+    protocol: TCP
+  - name: https
+    port: 443
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    app: iacherie-api
+    version: v1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iacherie-api-internal
+  namespace: iacherie-platform
+  labels:
+    app: iacherie-api
+    component: backend-api
+    part-of: iacherie-platform
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  - name: metrics
+    port: 8090
+    targetPort: 8090
+    protocol: TCP
+  selector:
+    app: iacherie-api
+    version: v1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iacherie-ai-engine-service
+  namespace: iacherie-platform
+  labels:
+    app: iacherie-ai-engine
+    component: ai-processing
+    part-of: iacherie-platform
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  - name: metrics
+    port: 8090
+    targetPort: 8090
+    protocol: TCP
+  selector:
+    app: iacherie-ai-engine
+    version: v1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iacherie-mobile-api-service
+  namespace: iacherie-platform
+  labels:
+    app: iacherie-mobile-api
+    component: mobile-backend
+    part-of: iacherie-platform
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: /health
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+    protocol: TCP
+  - name: https
+    port: 443
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    app: iacherie-mobile-api
+    version: v1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iacherie-mobile-api-internal
+  namespace: iacherie-platform
+  labels:
+    app: iacherie-mobile-api
+    component: mobile-backend
+    part-of: iacherie-platform
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  - name: metrics
+    port: 8090
+    targetPort: 8090
+    protocol: TCP
+  selector:
+    app: iacherie-mobile-api
+    version: v1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iacherie-worker-metrics
+  namespace: iacherie-platform
+  labels:
+    app: iacherie-worker
+    component: background-worker
+    part-of: iacherie-platform
+spec:
+  type: ClusterIP
+  ports:
+  - name: metrics
+    port: 8090
+    targetPort: 8090
+    protocol: TCP
+  selector:
+    app: iacherie-worker
+    version: v1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iacherie-database
+  namespace: iacherie-platform
+  labels:
+    app: postgresql
+    component: database
+    part-of: iacherie-platform
+spec:
+  type: ExternalName
+  externalName: iacherie-prod-db.cluster-xyz.us-west-2.rds.amazonaws.com
+  ports:
+  - name: postgresql
+    port: 5432
+    protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iacherie-redis
+  namespace: iacherie-platform
+  labels:
+    app: redis
+    component: cache
+    part-of: iacherie-platform
+spec:
+  type: ExternalName
+  externalName: iacherie-prod-redis.xyz.cache.amazonaws.com
+  ports:
+  - name: redis
+    port: 6379
+    protocol: TCP
+---
+# Headless service for StatefulSet workloads
+apiVersion: v1
+kind: Service
+metadata:
+  name: iacherie-headless
+  namespace: iacherie-platform
+  labels:
+    app: iacherie-platform
+    component: headless
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    app: iacherie-api
+---
+# Service for monitoring stack
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-server
+  namespace: monitoring
+  labels:
+    app: prometheus
+    component: server
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 9090
+    targetPort: 9090
+    protocol: TCP
+  selector:
+    app: prometheus
+    component: server
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+  namespace: monitoring
+  labels:
+    app: grafana
+    component: dashboard
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: 3000
+    protocol: TCP
+  selector:
+    app: grafana
+---
+# Service Monitor for Prometheus
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: iacherie-api-monitor
+  namespace: iacherie-platform
+  labels:
+    app: iacherie-api
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: iacherie-api
+  endpoints:
+  - port: metrics
+    interval: 30s
+    path: /metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: iacherie-ai-engine-monitor
+  namespace: iacherie-platform
+  labels:
+    app: iacherie-ai-engine
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: iacherie-ai-engine
+  endpoints:
+  - port: metrics
+    interval: 30s
+    path: /metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: iacherie-mobile-api-monitor
+  namespace: iacherie-platform
+  labels:
+    app: iacherie-mobile-api
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: iacherie-mobile-api
+  endpoints:
+  - port: metrics
+    interval: 30s
+    path: /metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: iacherie-worker-monitor
+  namespace: iacherie-platform
+  labels:
+    app: iacherie-worker
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: iacherie-worker
+  endpoints:
+  - port: metrics
+    interval: 30s
+    path: /metrics

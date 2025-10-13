@@ -1,0 +1,39 @@
+# ⚡ Redis Persistence Tuning Configuration - IA Chérie Enterprise
+# © 2025 Fahed Mlaiel <mlaiel@live.de> - All Rights Reserved
+# Optimized Persistence for Creator Economy Platform
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-persistence-tuning
+  namespace: iacherie-redis
+  labels:
+    app: iacherie-redis
+    component: persistence-tuning
+    environment: enterprise
+    owner: fahed-mlaiel
+    version: "4.0.0"
+  annotations:
+    author: "Fahed Mlaiel <mlaiel@live.de>"
+    license: "Proprietary - All Rights Reserved"
+
+data:
+  persistence_config: |
+    # RDB Configuration
+    save: "900 1 300 10 60 10000"
+    rdbcompression: true
+    rdbchecksum: true
+    
+    # AOF Configuration
+    appendonly: true
+    appendfilename: "appendonly.aof"
+    appendfsync: "everysec"
+    no-appendfsync-on-rewrite: false
+    
+    # Creator-specific persistence
+    creator_persistence:
+      profile_data: "high_durability"
+      content_metadata: "medium_durability"
+      session_data: "low_durability"
+      revenue_data: "maximum_durability"
+---

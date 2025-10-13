@@ -1,0 +1,151 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iacherie-worker
+  namespace: iacherie
+  labels:
+    app: iacherie-worker
+    component: background-processing
+    environment: production
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: iacherie-worker
+  template:
+    metadata:
+      labels:
+        app: iacherie-worker
+        component: background-processing
+    spec:
+      serviceAccountName: iacherie-worker-service-account
+      containers:
+      - name: celery-worker
+        image: iacherie/worker:latest
+        command: ["celery", "worker", "-A", "iacherie.worker", "--loglevel=info"]
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: iacherie-secrets
+              key: database-url
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: iacherie-secrets
+              key: redis-url
+        - name: CELERY_BROKER_URL
+          valueFrom:
+            secretKeyRef:
+              name: iacherie-secrets
+              key: celery-broker-url
+        - name: STORAGE_BUCKET
+          valueFrom:
+            configMapKeyRef:
+              name: iacherie-config
+              key: storage-bucket
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        volumeMounts:
+        - name: worker-temp
+          mountPath: /tmp/worker
+        - name: media-processing
+          mountPath: /app/media
+      - name: celery-beat
+        image: iacherie/worker:latest
+        command: ["celery", "beat", "-A", "iacherie.worker", "--loglevel=info"]
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: iacherie-secrets
+              key: database-url
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: iacherie-secrets
+              key: redis-url
+        - name: CELERY_BROKER_URL
+          valueFrom:
+            secretKeyRef:
+              name: iacherie-secrets
+              key: celery-broker-url
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
+      volumes:
+      - name: worker-temp
+        emptyDir:
+          sizeLimit: 10Gi
+      - name: media-processing
+        persistentVolumeClaim:
+          claimName: media-processing-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iacherie-worker-metrics
+  namespace: iacherie
+  labels:
+    app: iacherie-worker
+spec:
+  selector:
+    app: iacherie-worker
+  ports:
+  - name: metrics
+    port: 9090
+    targetPort: 9090
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: iacherie-worker-service-account
+  namespace: iacherie
+  labels:
+    app: iacherie
+    component: worker
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: iacherie
+  name: iacherie-worker-role
+rules:
+- apiGroups: [""]
+  resources: ["configmaps", "secrets"]
+  verbs: ["get", "list"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: iacherie-worker-role-binding
+  namespace: iacherie
+subjects:
+- kind: ServiceAccount
+  name: iacherie-worker-service-account
+  namespace: iacherie
+roleRef:
+  kind: Role
+  name: iacherie-worker-role
+  apiGroup: rbac.authorization.k8s.io

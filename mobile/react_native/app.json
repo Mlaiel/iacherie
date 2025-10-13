@@ -1,0 +1,219 @@
+{
+  "expo": {
+    "name": "IA Chérie",
+    "slug": "iacherie-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "scheme": "iacherie",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1f2937"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "platforms": ["ios", "android"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.fahedmlaiel.iacherie",
+      "buildNumber": "1",
+      "config": {
+        "usesNonExemptEncryption": true
+      },
+      "infoPlist": {
+        "NSCameraUsageDescription": "IA Chérie requires camera access for professional video content creation, live streaming, and advanced visual content capture with AI-powered enhancement.",
+        "NSMicrophoneUsageDescription": "IA Chérie requires microphone access for high-quality audio recording, voice content creation, and advanced audio processing with AI enhancement.",
+        "NSPhotoLibraryUsageDescription": "IA Chérie requires photo library access to import, enhance, and distribute your existing content with AI-powered protection and optimization.",
+        "NSPhotoLibraryAddUsageDescription": "IA Chérie saves your created and enhanced content to your photo library for easy access and sharing across platforms.",
+        "NSLocationWhenInUseUsageDescription": "IA Chérie uses location data to provide geo-targeted content optimization, platform-specific distribution, and location-based analytics insights.",
+        "NSFaceIDUsageDescription": "IA Chérie uses Face ID for secure authentication, protecting your valuable content and revenue data with enterprise-grade biometric security.",
+        "NSContactsUsageDescription": "IA Chérie accesses contacts to facilitate collaboration invitations and streamline professional networking for content creators.",
+        "NSCalendarsUsageDescription": "IA Chérie integrates with your calendar to schedule content uploads, manage publishing schedules, and optimize posting times.",
+        "NSUserTrackingUsageDescription": "IA Chérie uses tracking data to provide personalized content recommendations, optimize platform performance, and deliver targeted analytics insights for your content strategy.",
+        "NSSpeechRecognitionUsageDescription": "IA Chérie uses speech recognition for voice-to-text transcription, automated captions, and voice command functionality to enhance content creation workflow.",
+        "NSMotionUsageDescription": "IA Chérie uses motion sensors for advanced camera stabilization, gesture-based controls, and immersive content creation features.",
+        "NSLocalNetworkUsageDescription": "IA Chérie discovers and connects to local devices for content transfer, wireless collaboration, and professional studio equipment integration.",
+        "ITSAppUsesNonExemptEncryption": true,
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLName": "com.fahedmlaiel.iacherie",
+            "CFBundleURLSchemes": ["iacherie", "iacherie-auth"]
+          }
+        ],
+        "UIBackgroundModes": [
+          "background-processing",
+          "background-fetch",
+          "remote-notification",
+          "audio",
+          "background-app-refresh"
+        ],
+        "BGTaskSchedulerPermittedIdentifiers": [
+          "com.fahedmlaiel.iacherie.backgroundprocessing",
+          "com.fahedmlaiel.iacherie.sync",
+          "com.fahedmlaiel.iacherie.analytics",
+          "com.fahedmlaiel.iacherie.contentprotection"
+        ]
+      },
+      "associatedDomains": [
+        "applinks:iacherie.com",
+        "applinks:www.iacherie.com",
+        "applinks:app.iacherie.com"
+      ]
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#1f2937"
+      },
+      "package": "com.iacherie.mobile",
+      "versionCode": 1,
+      "compileSdkVersion": 34,
+      "targetSdkVersion": 34,
+      "minSdkVersion": 26,
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.INTERNET",
+        "android.permission.ACCESS_NETWORK_STATE",
+        "android.permission.WAKE_LOCK",
+        "android.permission.USE_FINGERPRINT",
+        "android.permission.USE_BIOMETRIC",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.VIBRATE",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.RECEIVE_BOOT_COMPLETED"
+      ],
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "iacherie.com"
+            },
+            {
+              "scheme": "https", 
+              "host": "www.iacherie.com"
+            },
+            {
+              "scheme": "iacherie"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ],
+      "config": {
+        "googleServicesFile": "./google-services.json"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro",
+      "config": {
+        "firebase": {
+          "config": {
+            "apiKey": "your-firebase-api-key",
+            "authDomain": "iacherie-app.firebaseapp.com",
+            "projectId": "iacherie-app",
+            "storageBucket": "iacherie-app.appspot.com",
+            "messagingSenderId": "123456789",
+            "appId": "1:123456789:web:abcdef123456"
+          }
+        }
+      }
+    },
+    "notification": {
+      "icon": "./assets/notification-icon.png",
+      "color": "#3B82F6",
+      "iosDisplayInForeground": true,
+      "androidMode": "default",
+      "androidCollapsedTitle": "#{unread_notifications} new notifications"
+    },
+    "updates": {
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 5000
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow IA Chérie to access your camera for content creation.",
+          "microphonePermission": "Allow IA Chérie to access your microphone for audio recording.",
+          "recordAudioAndroid": true
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "IA Chérie accesses your photo library to import and enhance your content."
+        }
+      ],
+      [
+        "expo-document-picker",
+        {
+          "iCloudContainerEnvironment": "Production"
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#3B82F6",
+          "sounds": ["./assets/notification-sound.wav"],
+          "mode": "production"
+        }
+      ],
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "IA Chérie uses Face ID for secure authentication to protect your valuable content and revenue data."
+        }
+      ],
+      [
+        "expo-secure-store"
+      ],
+      [
+        "expo-av",
+        {
+          "microphonePermission": "Allow IA Chérie to access your microphone for audio recording and processing."
+        }
+      ]
+    ],
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "iacherie",
+            "project": "iacherie-mobile"
+          }
+        }
+      ]
+    },
+    "extra": {
+      "apiUrl": "https://api.iacherie.com",
+      "aiProcessingEndpoint": "/api/ai/process",
+      "uploadEndpoint": "/api/mobile/upload",
+      "websocketUrl": "wss://ws.iacherie.com",
+      "cdnUrl": "https://cdn.iacherie.com",
+      "supportUrl": "https://support.iacherie.com",
+      "privacyPolicyUrl": "https://iacherie.com/privacy",
+      "termsOfServiceUrl": "https://iacherie.com/terms",
+      "appVersion": "1.0.0",
+      "buildNumber": "1",
+      "environment": "production",
+      "sentryDsn": "https://your-sentry-dsn@sentry.io/project-id",
+      "analyticsEnabled": true,
+      "crashReportingEnabled": true,
+      "performanceMonitoringEnabled": true
+    }
+  }
+}

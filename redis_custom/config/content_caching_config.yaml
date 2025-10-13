@@ -1,0 +1,51 @@
+# ⚡ Redis Content Caching Configuration - IA Chérie Enterprise
+# © 2025 Fahed Mlaiel <mlaiel@live.de> - All Rights Reserved
+# Content Caching Optimization for Creator Economy Platform
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-content-caching-config
+  namespace: iacherie-redis
+  labels:
+    app: iacherie-redis
+    component: content-caching-config
+    environment: enterprise
+    owner: fahed-mlaiel
+    version: "4.0.0"
+  annotations:
+    author: "Fahed Mlaiel <mlaiel@live.de>"
+    license: "Proprietary - All Rights Reserved"
+
+data:
+  content_caching_config: |
+    # Content Cache Configuration
+    content_cache_strategy: "multi_tier"
+    
+    # Content Metadata Caching
+    content_metadata:
+      cache_key_pattern: "content:meta:{content_id}"
+      ttl: 7200  # 2 hours
+      tier: "L1"
+      preload_on_upload: true
+      
+    # Content Thumbnails
+    content_thumbnails:
+      cache_key_pattern: "content:thumb:{content_id}:{size}"
+      ttl: 86400  # 24 hours
+      tier: "L2"
+      sizes: ["small", "medium", "large"]
+      
+    # Content Processing Status
+    content_processing:
+      cache_key_pattern: "content:processing:{content_id}"
+      ttl: 3600  # 1 hour
+      real_time_updates: true
+      
+    # Creator Content Performance
+    content_performance:
+      views: "content:stats:views:{content_id}"
+      engagement: "content:stats:engagement:{content_id}"
+      revenue: "content:stats:revenue:{content_id}"
+      ttl: 1800  # 30 minutes
+---

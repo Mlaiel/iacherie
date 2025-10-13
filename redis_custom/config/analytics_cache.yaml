@@ -1,0 +1,64 @@
+# ⚡ Redis Analytics Cache Configuration - IA Chérie Enterprise
+# © 2025 Fahed Mlaiel <mlaiel@live.de> - All Rights Reserved
+# Analytics Caching for Creator Economy Platform
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-analytics-cache
+  namespace: iacherie-redis
+  labels:
+    app: iacherie-redis
+    component: analytics-cache
+    environment: enterprise
+    owner: fahed-mlaiel
+    version: "4.0.0"
+  annotations:
+    author: "Fahed Mlaiel <mlaiel@live.de>"
+    license: "Proprietary - All Rights Reserved"
+
+data:
+  analytics_cache_config: |
+    # Analytics Cache Strategy
+    analytics_strategy: "real_time_with_aggregation"
+    
+    # Real-time Analytics
+    real_time_analytics:
+      live_views: "analytics:live:views:{content_id}"
+      current_users: "analytics:live:users"
+      active_sessions: "analytics:live:sessions"
+      real_time_engagement: "analytics:live:engagement"
+      ttl: 60  # 1 minute
+      
+    # Creator Analytics
+    creator_analytics:
+      creator_performance: "analytics:creator:performance:{creator_id}"
+      audience_insights: "analytics:creator:audience:{creator_id}"
+      content_analytics: "analytics:creator:content:{creator_id}"
+      revenue_analytics: "analytics:creator:revenue:{creator_id}"
+      ttl: 1800  # 30 minutes
+      
+    # Content Analytics
+    content_analytics:
+      content_performance: "analytics:content:performance:{content_id}"
+      engagement_metrics: "analytics:content:engagement:{content_id}"
+      view_statistics: "analytics:content:views:{content_id}"
+      sharing_statistics: "analytics:content:shares:{content_id}"
+      ttl: 3600  # 1 hour
+      
+    # Platform Analytics
+    platform_analytics:
+      platform_overview: "analytics:platform:overview"
+      user_behavior: "analytics:platform:behavior"
+      trending_topics: "analytics:platform:trending"
+      platform_growth: "analytics:platform:growth"
+      ttl: 7200  # 2 hours
+      
+    # Aggregated Analytics
+    aggregated_analytics:
+      daily_aggregates: "analytics:daily:{date}"
+      weekly_aggregates: "analytics:weekly:{week}"
+      monthly_aggregates: "analytics:monthly:{month}"
+      yearly_aggregates: "analytics:yearly:{year}"
+      ttl: 86400  # 24 hours
+---

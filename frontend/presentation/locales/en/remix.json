@@ -1,0 +1,10 @@
+{
+  "remix": "Remix",
+  "studio": "Studio",
+  "tracks": "Tracks",
+  "effects": "Effects",
+  "export": "Export",
+  "import": "Import",
+  "save_project": "Save Project",
+  "load_project": "Load Project"
+}

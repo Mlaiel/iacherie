@@ -1,0 +1,370 @@
+"""
+Docker Environment Configuration
+===============================
+
+Docker-specific configuration optimized for containerized deployment
+with container networking, volume management, and orchestration support.
+
+⚠️  LEGAL NOTICE:
+==========================================
+© 2025 Fahed Mlaiel <mlaiel@live.de>
+ALL RIGHTS RESERVED - PROPRIETARY CODE
+
+Author: Fahed Mlaiel <mlaiel@live.de>
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
+"""
+
+# Docker Environment Settings
+environment:
+  name: "docker"
+  debug: false
+  testing: false
+  hot_reload: false
+  profiling_enabled: false
+  containerized: true
+  
+# Performance Settings (Container-optimized)
+performance:
+  # Container-optimized performance targets
+  cache_operations_p95: 2
+  database_operations_p95: 100
+  file_operations_p95: 200
+  
+  # Memory settings for containers
+  memory:
+    max_heap_size_mb: 512     # Conservative for containers
+    gc_strategy: "g1gc"
+    gc_threshold: 0.7
+    
+  # CPU settings for containers
+  cpu:
+    max_worker_threads: 8
+    enable_cpu_affinity: false  # Let container scheduler handle
+    
+# Security Settings (Container security)
+security:
+  # Container-appropriate encryption
+  encryption:
+    symmetric_algorithm: "AES-256-GCM"
+    asymmetric_algorithm: "RSA-4096"
+    key_rotation_days: 90
+    kdf_iterations: 100000
+    
+  # Container authentication
+  authentication:
+    jwt_algorithm: "RS256"
+    access_token_expire_minutes: 30
+    refresh_token_expire_days: 14
+    max_login_attempts: 5
+    require_mfa: true
+    password_min_length: 10
+    
+  # Container validation
+  validation:
+    max_input_size: 10485760  # 10MB
+    scan_for_xss: true
+    scan_for_sql_injection: true
+    scan_for_nosql_injection: true
+    check_file_headers: true
+    
+# Database Settings (Docker)
+database:
+  # Container database connection
+  url: "${DATABASE_URL}"      # Environment variable from container
+  pool_size: 10
+  max_overflow: 15
+  pool_timeout: 30
+  echo_sql: false
+  
+  # Container-specific settings
+  auto_create_tables: false
+  drop_tables_on_startup: false
+  seed_test_data: false
+  
+  # Container health checks
+  health_check_enabled: true
+  health_check_interval: 30
+  
+# Cache Settings (Docker)
+cache:
+  # Container cache configuration
+  l1_max_size: 1000
+  l1_ttl_seconds: 300
+  l2_ttl_seconds: 1800
+  
+  # Container Redis connection
+  redis_url: "${REDIS_URL}"   # Environment variable from container
+  enable_compression: true
+  
+# Logging Configuration (Container)
+logging:
+  level: "INFO"
+  format: "json"              # Structured logs for containers
+  enable_console: true        # Container stdout/stderr
+  enable_file: false          # No file logging in containers
+  structured_logging: true
+  include_trace: false
+  log_sql_queries: false
+  
+  # Container-specific logging
+  log_to_stdout: true
+  buffer_logs: false          # Immediate output for containers
+  
+# File Management (Container)
+file_management:
+  max_file_size_mb: 50
+  temp_directory: "/tmp/iacherie"  # Container temp directory
+  scan_for_malware: true
+  enable_optimization: true
+  
+  # Container file permissions
+  file_permissions: 644
+  directory_permissions: 755
+  
+# Rate Limiting (Container)
+rate_limiting:
+  default_rpm: 60
+  burst_rpm: 120
+  enable_per_user_limits: true
+  enable_ip_blocking: true
+  
+  # Container-specific rate limiting
+  use_redis_for_state: true   # Shared state across containers
+  
+# Monitoring (Container)
+monitoring:
+  enable_prometheus: true
+  metrics_retention_days: 30
+  cpu_threshold: 75.0
+  memory_threshold: 80.0
+  disk_threshold: 90.0
+  
+  # Container monitoring
+  container_metrics_enabled: true
+  export_container_stats: true
+  
+# Creator Economy (Container)
+creator_economy:
+  # Content processing in containers
+  content_processing:
+    enable_async_processing: true
+    max_processing_time_seconds: 300
+    enable_preview_generation: true
+    use_shared_storage: true    # Container shared volumes
+    
+  # Container collaboration
+  collaboration:
+    max_collaborators: 8
+    enable_real_time_features: true
+    websocket_url: "${WEBSOCKET_URL}"
+    
+  # Container monetization
+  monetization:
+    test_mode: false
+    commission_rate: 0.15
+    minimum_payout: 10.0
+    
+# Container Configuration
+container:
+  # Container runtime settings
+  runtime: "docker"
+  
+  # Container networking
+  network:
+    mode: "bridge"
+    dns_servers:
+      - "8.8.8.8"
+      - "8.8.4.4"
+    
+  # Container volumes
+  volumes:
+    # Data persistence
+    data_volume: "/var/lib/iacherie"
+    logs_volume: "/var/log/iacherie"
+    temp_volume: "/tmp"
+    
+    # Shared volumes
+    shared_data: "/shared/data"
+    shared_config: "/shared/config"
+    
+  # Container resources
+  resources:
+    cpu_limit: "1000m"        # 1 CPU core
+    memory_limit: "1Gi"       # 1GB memory
+    memory_request: "512Mi"   # 512MB requested
+    cpu_request: "500m"       # 0.5 CPU requested
+    
+# Health Checks (Container)
+health_checks:
+  enabled: true
+  startup_probe:
+    path: "/health/startup"
+    initial_delay_seconds: 30
+    period_seconds: 10
+    timeout_seconds: 5
+    failure_threshold: 30
+    
+  liveness_probe:
+    path: "/health/live"
+    initial_delay_seconds: 60
+    period_seconds: 20
+    timeout_seconds: 5
+    failure_threshold: 3
+    
+  readiness_probe:
+    path: "/health/ready"
+    initial_delay_seconds: 5
+    period_seconds: 10
+    timeout_seconds: 5
+    failure_threshold: 3
+    
+# External Services (Container)
+external_services:
+  # Service discovery in containers
+  service_discovery:
+    enabled: true
+    consul_url: "${CONSUL_URL}"
+    
+  # AI Services (Container)
+  openai:
+    api_key: "${OPENAI_API_KEY}"
+    model: "gpt-4"
+    mock_responses: false
+    
+  # Payment Services (Container)
+  stripe:
+    publishable_key: "${STRIPE_PUBLISHABLE_KEY}"
+    secret_key: "${STRIPE_SECRET_KEY}"
+    webhook_secret: "${STRIPE_WEBHOOK_SECRET}"
+    
+  # Email Services (Container)
+  sendgrid:
+    api_key: "${SENDGRID_API_KEY}"
+    mock_emails: false
+    
+# API Configuration (Container)
+api:
+  # Container networking
+  bind_host: "0.0.0.0"        # Bind to all interfaces in container
+  bind_port: 8000
+  
+  # Container CORS
+  cors_origins:
+    - "${FRONTEND_URL}"
+    - "${APP_URL}"
+  
+  # Container API limits
+  request_timeout: 30
+  max_request_size: 10485760  # 10MB
+  
+# Security Headers (Container)
+security_headers:
+  content_security_policy: "default-src 'self'"
+  x_frame_options: "DENY"
+  x_content_type_options: "nosniff"
+  strict_transport_security: "max-age=31536000"
+  
+# Container Orchestration
+orchestration:
+  # Docker Compose settings
+  compose:
+    version: "3.8"
+    restart_policy: "unless-stopped"
+    
+  # Service dependencies
+  depends_on:
+    - "database"
+    - "redis"
+    - "rabbitmq"
+    
+# Environment Variables (Container)
+environment_variables:
+  # Required environment variables for container
+  required:
+    - "DATABASE_URL"
+    - "REDIS_URL"
+    - "SECRET_KEY"
+    - "JWT_SECRET"
+    
+  # Optional environment variables
+  optional:
+    - "OPENAI_API_KEY"
+    - "STRIPE_SECRET_KEY"
+    - "SENDGRID_API_KEY"
+    
+# Container Startup
+startup:
+  # Container initialization
+  init_scripts:
+    - "/scripts/wait-for-db.sh"
+    - "/scripts/run-migrations.sh"
+    - "/scripts/warm-cache.sh"
+    
+  # Graceful shutdown
+  shutdown_timeout: 30
+  
+# Container Security
+container_security:
+  # Run as non-root user
+  user_id: 1001
+  group_id: 1001
+  
+  # Security options
+  read_only_root_filesystem: false
+  allow_privilege_escalation: false
+  run_as_non_root: true
+  
+  # Security context
+  security_context:
+    capabilities:
+      drop:
+        - "ALL"
+      add:
+        - "NET_BIND_SERVICE"
+        
+# Container Storage
+storage:
+  # Persistent volumes
+  persistent_volumes:
+    data:
+      size: "10Gi"
+      access_mode: "ReadWriteOnce"
+      storage_class: "standard"
+      
+  # Temporary storage
+  ephemeral_storage:
+    size_limit: "2Gi"
+    
+# Container Networking
+networking:
+  # Service mesh configuration
+  service_mesh:
+    enabled: false
+    sidecar_injection: false
+    
+  # Load balancing
+  load_balancer:
+    type: "ClusterIP"
+    session_affinity: "None"
+    
+# Container Monitoring
+container_monitoring:
+  # Metrics collection
+  metrics:
+    enabled: true
+    port: 9090
+    path: "/metrics"
+    
+  # Logging
+  log_aggregation:
+    enabled: true
+    driver: "json-file"
+    
+# Container Scaling
+scaling:
+  # Auto-scaling configuration
+  horizontal_pod_autoscaler:
+    enabled: false
+    min_replicas: 1
+    max_replicas: 10
+    target_cpu_utilization: 70

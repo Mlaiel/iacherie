@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="leftChannelGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff4444;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#ffaa44;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#44ff44;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="rightChannelGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4444ff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#aa44ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#44ffff;stop-opacity:1" />
+    </linearGradient>
+    <filter id="meterGlow">
+      <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="300" fill="#1a1a1a"/>
+  
+  <!-- Meter Panel -->
+  <rect x="50" y="50" width="300" height="200" fill="#2a2a2a" stroke="#555" stroke-width="2" rx="8"/>
+  
+  <!-- Left Channel Meter -->
+  <rect x="80" y="70" width="40" height="160" fill="#333" stroke="#666" stroke-width="1" rx="4"/>
+  <rect x="85" y="75" width="30" height="150" fill="#111"/>
+  
+  <!-- Left Channel Level -->
+  <rect x="85" y="140" width="30" height="85" fill="url(#leftChannelGradient)" filter="url(#meterGlow)"/>
+  
+  <!-- Right Channel Meter -->
+  <rect x="280" y="70" width="40" height="160" fill="#333" stroke="#666" stroke-width="1" rx="4"/>
+  <rect x="285" y="75" width="30" height="150" fill="#111"/>
+  
+  <!-- Right Channel Level -->
+  <rect x="285" y="120" width="30" height="105" fill="url(#rightChannelGradient)" filter="url(#meterGlow)"/>
+  
+  <!-- Center Correlation Meter -->
+  <rect x="170" y="70" width="60" height="20" fill="#333" stroke="#666" stroke-width="1" rx="4"/>
+  <rect x="175" y="75" width="50" height="10" fill="#111"/>
+  
+  <!-- Correlation Indicator -->
+  <rect x="190" y="75" width="20" height="10" fill="#44ff44" filter="url(#meterGlow)"/>
+  
+  <!-- Phase Correlation Display -->
+  <circle cx="200" cy="130" r="30" fill="#333" stroke="#666" stroke-width="2"/>
+  <circle cx="200" cy="130" r="25" fill="#111"/>
+  
+  <!-- Phase Vector -->
+  <line x1="200" y1="130" x2="215" y2="115" stroke="#44ff44" stroke-width="3" filter="url(#meterGlow)"/>
+  <circle cx="215" cy="115" r="3" fill="#44ff44"/>
+  
+  <!-- Stereo Width Indicator -->
+  <rect x="170" y="180" width="60" height="20" fill="#333" stroke="#666" stroke-width="1" rx="4"/>
+  <rect x="175" y="185" width="50" height="10" fill="#111"/>
+  <rect x="180" y="185" width="30" height="10" fill="#ffaa44" filter="url(#meterGlow)"/>
+  
+  <!-- Scale Markings -->
+  <g stroke="#666" stroke-width="0.5">
+    <!-- Left scale -->
+    <line x1="75" y1="75" x2="85" y2="75"/>
+    <line x1="75" y1="95" x2="85" y2="95"/>
+    <line x1="75" y1="115" x2="85" y2="115"/>
+    <line x1="75" y1="135" x2="85" y2="135"/>
+    <line x1="75" y1="155" x2="85" y2="155"/>
+    <line x1="75" y1="175" x2="85" y2="175"/>
+    <line x1="75" y1="195" x2="85" y2="195"/>
+    <line x1="75" y1="215" x2="85" y2="215"/>
+    
+    <!-- Right scale -->
+    <line x1="315" y1="75" x2="325" y2="75"/>
+    <line x1="315" y1="95" x2="325" y2="95"/>
+    <line x1="315" y1="115" x2="325" y2="115"/>
+    <line x1="315" y1="135" x2="325" y2="135"/>
+    <line x1="315" y1="155" x2="325" y2="155"/>
+    <line x1="315" y1="175" x2="325" y2="175"/>
+    <line x1="315" y1="195" x2="325" y2="195"/>
+    <line x1="315" y1="215" x2="325" y2="215"/>
+  </g>
+  
+  <!-- Labels -->
+  <g fill="#00ff88" font-family="Arial, sans-serif" font-size="12">
+    <text x="150" y="30">Professional Stereo Meter</text>
+    <text x="10" y="290">© Ainflue Studio - Fahed Mlaiel</text>
+    
+    <!-- Channel labels -->
+    <text x="85" y="270" font-size="10">L</text>
+    <text x="295" y="270" font-size="10">R</text>
+    
+    <!-- dB scale -->
+    <text x="60" y="80" font-size="8">0</text>
+    <text x="55" y="100" font-size="8">-6</text>
+    <text x="50" y="120" font-size="8">-12</text>
+    <text x="50" y="140" font-size="8">-18</text>
+    <text x="50" y="160" font-size="8">-24</text>
+    <text x="50" y="180" font-size="8">-30</text>
+    <text x="50" y="200" font-size="8">-36</text>
+    <text x="50" y="220" font-size="8">-∞</text>
+    
+    <!-- Feature labels -->
+    <text x="160" y="65" font-size="8">CORRELATION</text>
+    <text x="170" y="175" font-size="8">WIDTH</text>
+    <text x="180" y="125" font-size="8">PHASE</text>
+  </g>
+  
+  <!-- Peak Hold Indicators -->
+  <rect x="85" y="75" width="30" height="2" fill="#ff4444"/>
+  <rect x="285" y="75" width="30" height="2" fill="#ff4444"/>
+</svg>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Revenue Growth Trend Chart -->
+<!-- © 2025 Fahed Mlaiel - Ainflue Studio -->
+<svg width="500" height="350" viewBox="0 0 500 350" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="revenueGradient" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:0.1" />
+      <stop offset="100%" style="stop-color:#00ff88;stop-opacity:0.8" />
+    </linearGradient>
+    <linearGradient id="chartBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a202c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2d3748;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="500" height="350" fill="url(#chartBg)" rx="12"/>
+  
+  <!-- Header -->
+  <text x="30" y="35" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#ffffff">Revenue Growth Analysis</text>
+  <text x="30" y="55" font-family="Arial, sans-serif" font-size="12" fill="#cbd5e0">Monthly revenue trend - Last 12 months</text>
+  
+  <!-- Chart Area -->
+  <rect x="80" y="80" width="380" height="200" fill="none" stroke="#4a5568" stroke-width="1" rx="4"/>
+  
+  <!-- Grid Lines -->
+  <g stroke="#4a5568" stroke-width="0.5" opacity="0.3">
+    <!-- Horizontal lines -->
+    <line x1="80" y1="120" x2="460" y2="120"/>
+    <line x1="80" y1="160" x2="460" y2="160"/>
+    <line x1="80" y1="200" x2="460" y2="200"/>
+    <line x1="80" y1="240" x2="460" y2="240"/>
+    
+    <!-- Vertical lines -->
+    <line x1="140" y1="80" x2="140" y2="280"/>
+    <line x1="200" y1="80" x2="200" y2="280"/>
+    <line x1="260" y1="80" x2="260" y2="280"/>
+    <line x1="320" y1="80" x2="320" y2="280"/>
+    <line x1="380" y1="80" x2="380" y2="280"/>
+    <line x1="420" y1="80" x2="420" y2="280"/>
+  </g>
+  
+  <!-- Y-axis labels -->
+  <g font-family="Arial, sans-serif" font-size="10" fill="#cbd5e0" text-anchor="end">
+    <text x="75" y="85">$50k</text>
+    <text x="75" y="125">$40k</text>
+    <text x="75" y="165">$30k</text>
+    <text x="75" y="205">$20k</text>
+    <text x="75" y="245">$10k</text>
+    <text x="75" y="285">$0</text>
+  </g>
+  
+  <!-- X-axis labels -->
+  <g font-family="Arial, sans-serif" font-size="10" fill="#cbd5e0" text-anchor="middle">
+    <text x="110" y="300">Jan</text>
+    <text x="140" y="300">Feb</text>
+    <text x="170" y="300">Mar</text>
+    <text x="200" y="300">Apr</text>
+    <text x="230" y="300">May</text>
+    <text x="260" y="300">Jun</text>
+    <text x="290" y="300">Jul</text>
+    <text x="320" y="300">Aug</text>
+    <text x="350" y="300">Sep</text>
+    <text x="380" y="300">Oct</text>
+    <text x="410" y="300">Nov</text>
+    <text x="440" y="300">Dec</text>
+  </g>
+  
+  <!-- Revenue trend line with area -->
+  <path d="M 110,260 L 140,240 L 170,220 L 200,200 L 230,180 L 260,160 L 290,140 L 320,130 L 350,115 L 380,105 L 410,95 L 440,90"
+        fill="none" stroke="#00ff88" stroke-width="3" filter="url(#glow)"/>
+  
+  <!-- Area under curve -->
+  <path d="M 110,260 L 140,240 L 170,220 L 200,200 L 230,180 L 260,160 L 290,140 L 320,130 L 350,115 L 380,105 L 410,95 L 440,90 L 440,280 L 110,280 Z"
+        fill="url(#revenueGradient)"/>
+  
+  <!-- Data points -->
+  <g fill="#00ff88" stroke="#1a202c" stroke-width="2">
+    <circle cx="110" cy="260" r="4"/>
+    <circle cx="140" cy="240" r="4"/>
+    <circle cx="170" cy="220" r="4"/>
+    <circle cx="200" cy="200" r="4"/>
+    <circle cx="230" cy="180" r="4"/>
+    <circle cx="260" cy="160" r="4"/>
+    <circle cx="290" cy="140" r="4"/>
+    <circle cx="320" cy="130" r="4"/>
+    <circle cx="350" cy="115" r="4"/>
+    <circle cx="380" cy="105" r="4"/>
+    <circle cx="410" cy="95" r="4"/>
+    <circle cx="440" cy="90" r="4"/>
+  </g>
+  
+  <!-- Current value highlight -->
+  <circle cx="440" cy="90" r="8" fill="none" stroke="#00ff88" stroke-width="2" opacity="0.8">
+    <animate attributeName="r" values="8;12;8" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.8;0.4;0.8" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Statistics Box -->
+  <rect x="320" y="90" width="120" height="80" fill="#2d3748" stroke="#4a5568" stroke-width="1" rx="6"/>
+  <text x="330" y="108" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff">Current Month</text>
+  <text x="330" y="125" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#00ff88">$47,250</text>
+  <text x="330" y="140" font-family="Arial, sans-serif" font-size="10" fill="#cbd5e0">↗ +18.5% vs last month</text>
+  <text x="330" y="155" font-family="Arial, sans-serif" font-size="10" fill="#cbd5e0">↗ +312% vs last year</text>
+</svg>

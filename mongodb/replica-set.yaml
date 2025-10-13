@@ -1,0 +1,526 @@
+# MongoDB Replica Set Configuration for IA Influencer Agent Platform
+# Production-ready replica set deployment with high availability
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongodb-replica-set-config
+  namespace: ia-influencer
+  labels:
+    app: mongodb
+    component: replica-set
+    environment: production
+data:
+  # Primary replica set configuration
+  mongod.conf: |
+    # MongoDB configuration for IA Influencer Platform
+    # Optimized for document storage, analytics, and real-time data
+    
+    # Network interfaces
+    net:
+      port: 27017
+      bindIp: 0.0.0.0
+      maxIncomingConnections: 1000
+      wireObjectCheck: true
+      compression:
+        compressors: "snappy,zstd,zlib"
+    
+    # Storage configuration
+    storage:
+      dbPath: /data/db
+      journal:
+        enabled: true
+        commitIntervalMs: 100
+      directoryPerDB: true
+      syncPeriodSecs: 60
+      engine: wiredTiger
+      wiredTiger:
+        engineConfig:
+          cacheSizeGB: 2
+          journalCompressor: snappy
+          directoryForIndexes: true
+        collectionConfig:
+          blockCompressor: snappy
+        indexConfig:
+          prefixCompression: true
+    
+    # Replication
+    replication:
+      replSetName: "ia-influencer-rs"
+      oplogSizeMB: 2048
+      enableMajorityReadConcern: true
+    
+    # Sharding (if part of sharded cluster)
+    # sharding:
+    #   clusterRole: shardsvr
+    
+    # Process management
+    processManagement:
+      fork: false
+      pidFilePath: /data/mongod.pid
+      timeZoneInfo: /usr/share/zoneinfo
+    
+    # Security
+    security:
+      authorization: enabled
+      keyFile: /data/keyfile
+      clusterAuthMode: keyFile
+    
+    # Logging
+    systemLog:
+      destination: file
+      logAppend: true
+      path: /data/logs/mongod.log
+      logRotate: reopen
+      component:
+        accessControl:
+          verbosity: 1
+        command:
+          verbosity: 1
+        replication:
+          verbosity: 1
+        sharding:
+          verbosity: 1
+    
+    # Profiling and monitoring
+    operationProfiling:
+      mode: slowOp
+      slowOpThresholdMs: 100
+      slowOpSampleRate: 1.0
+    
+    # Set parameters for optimization
+    setParameter:
+      # Connection pool settings
+      connPoolMaxShardedConnsPerHost: 200
+      connPoolMaxConnsPerHost: 200
+      
+      # Write concern
+      journalCommitInterval: 100
+      
+      # Read preferences
+      maxTimeMS: 30000
+      
+      # Memory management
+      internalQueryExecMaxBlockingSortBytes: 33554432
+      
+      # Concurrency
+      wiredTigerConcurrentReadTransactions: 128
+      wiredTigerConcurrentWriteTransactions: 128
+      
+      # Performance
+      notablescan: false
+      
+  # Replica set initialization script
+  replica-set-init.js: |
+    // MongoDB Replica Set Initialization for IA Influencer Platform
+    
+    // Wait for MongoDB to be ready
+    function waitForMongoDB() {
+      var connected = false;
+      while (!connected) {
+        try {
+          db.runCommand({ping: 1});
+          connected = true;
+          print("MongoDB is ready");
+        } catch (e) {
+          print("Waiting for MongoDB to start...");
+          sleep(1000);
+        }
+      }
+    }
+    
+    waitForMongoDB();
+    
+    // Replica set configuration
+    var config = {
+      _id: "ia-influencer-rs",
+      version: 1,
+      protocolVersion: 1,
+      writeConcernMajorityJournalDefault: true,
+      members: [
+        {
+          _id: 0,
+          host: "mongodb-primary.ia-influencer.svc.cluster.local:27017",
+          priority: 2,
+          tags: {
+            role: "primary",
+            datacenter: "primary"
+          }
+        },
+        {
+          _id: 1,
+          host: "mongodb-secondary-1.ia-influencer.svc.cluster.local:27017",
+          priority: 1,
+          tags: {
+            role: "secondary",
+            datacenter: "primary"
+          }
+        },
+        {
+          _id: 2,
+          host: "mongodb-secondary-2.ia-influencer.svc.cluster.local:27017",
+          priority: 1,
+          tags: {
+            role: "secondary",
+            datacenter: "secondary"
+          }
+        },
+        {
+          _id: 3,
+          host: "mongodb-arbiter.ia-influencer.svc.cluster.local:27017",
+          arbiterOnly: true,
+          priority: 0,
+          tags: {
+            role: "arbiter",
+            datacenter: "primary"
+          }
+        }
+      ],
+      settings: {
+        chainingAllowed: true,
+        heartbeatIntervalMillis: 2000,
+        heartbeatTimeoutSecs: 10,
+        electionTimeoutMillis: 10000,
+        catchUpTimeoutMillis: 60000,
+        getLastErrorModes: {
+          multiDataCenter: {
+            datacenter: 2
+          },
+          multiRole: {
+            role: 2
+          }
+        },
+        getLastErrorDefaults: {
+          w: "majority",
+          wtimeout: 5000
+        }
+      }
+    };
+    
+    // Initialize replica set
+    try {
+      var result = rs.initiate(config);
+      if (result.ok === 1) {
+        print("Replica set initialized successfully");
+        print(JSON.stringify(result, null, 2));
+      } else {
+        print("Failed to initialize replica set:");
+        print(JSON.stringify(result, null, 2));
+      }
+    } catch (e) {
+      if (e.message.includes("already initialized")) {
+        print("Replica set already initialized");
+      } else {
+        print("Error initializing replica set: " + e.message);
+        throw e;
+      }
+    }
+    
+    // Wait for replica set to be stable
+    function waitForReplicaSet() {
+      var maxAttempts = 30;
+      var attempt = 0;
+      
+      while (attempt < maxAttempts) {
+        try {
+          var status = rs.status();
+          if (status.ok === 1) {
+            var primaryCount = 0;
+            var secondaryCount = 0;
+            
+            status.members.forEach(function(member) {
+              if (member.state === 1) primaryCount++;  // PRIMARY
+              if (member.state === 2) secondaryCount++; // SECONDARY
+            });
+            
+            if (primaryCount === 1 && secondaryCount >= 1) {
+              print("Replica set is stable with " + primaryCount + " primary and " + secondaryCount + " secondaries");
+              return;
+            }
+          }
+        } catch (e) {
+          print("Waiting for replica set to stabilize... attempt " + (attempt + 1));
+        }
+        
+        sleep(5000);
+        attempt++;
+      }
+      
+      throw new Error("Replica set did not stabilize within expected time");
+    }
+    
+    waitForReplicaSet();
+    
+    // Create application user accounts
+    db = db.getSiblingDB('admin');
+    
+    // Create root admin user
+    try {
+      db.createUser({
+        user: "admin",
+        pwd: passwordPrompt(),
+        roles: [
+          { role: "root", db: "admin" }
+        ]
+      });
+      print("Admin user created successfully");
+    } catch (e) {
+      if (e.message.includes("already exists")) {
+        print("Admin user already exists");
+      } else {
+        print("Error creating admin user: " + e.message);
+      }
+    }
+    
+    // Switch to application database
+    db = db.getSiblingDB('ia_influencer');
+    
+    // Create application users
+    var appUsers = [
+      {
+        user: "ia_influencer_app",
+        roles: [
+          { role: "readWrite", db: "ia_influencer" },
+          { role: "dbAdmin", db: "ia_influencer" }
+        ]
+      },
+      {
+        user: "ia_influencer_analytics",
+        roles: [
+          { role: "read", db: "ia_influencer" },
+          { role: "read", db: "ia_influencer_analytics" }
+        ]
+      },
+      {
+        user: "ia_influencer_backup",
+        roles: [
+          { role: "backup", db: "admin" },
+          { role: "read", db: "ia_influencer" }
+        ]
+      }
+    ];
+    
+    appUsers.forEach(function(userDef) {
+      try {
+        db.createUser({
+          user: userDef.user,
+          pwd: passwordPrompt(),
+          roles: userDef.roles
+        });
+        print("User " + userDef.user + " created successfully");
+      } catch (e) {
+        if (e.message.includes("already exists")) {
+          print("User " + userDef.user + " already exists");
+        } else {
+          print("Error creating user " + userDef.user + ": " + e.message);
+        }
+      }
+    });
+    
+    print("Replica set initialization completed successfully");
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongodb-replica-set
+  namespace: ia-influencer
+  labels:
+    app: mongodb
+    component: replica-set
+spec:
+  serviceName: mongodb-replica-set
+  replicas: 4  # 2 secondaries + 1 primary + 1 arbiter
+  selector:
+    matchLabels:
+      app: mongodb
+      component: replica-set
+  template:
+    metadata:
+      labels:
+        app: mongodb
+        component: replica-set
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo:7.0
+        command:
+        - mongod
+        - --config=/etc/mongod.conf
+        - --replSet=ia-influencer-rs
+        ports:
+        - containerPort: 27017
+          name: mongodb
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-credentials
+              key: root-username
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-credentials
+              key: root-password
+        volumeMounts:
+        - name: mongodb-config
+          mountPath: /etc/mongod.conf
+          subPath: mongod.conf
+        - name: mongodb-data
+          mountPath: /data/db
+        - name: mongodb-logs
+          mountPath: /data/logs
+        - name: mongodb-keyfile
+          mountPath: /data/keyfile
+          subPath: keyfile
+          readOnly: true
+        resources:
+          requests:
+            memory: "4Gi"
+            cpu: "1000m"
+          limits:
+            memory: "8Gi"
+            cpu: "2000m"
+        livenessProbe:
+          exec:
+            command:
+            - mongo
+            - --eval
+            - "db.adminCommand('ping')"
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          exec:
+            command:
+            - mongo
+            - --eval
+            - "db.adminCommand('ping')"
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 3
+      volumes:
+      - name: mongodb-config
+        configMap:
+          name: mongodb-replica-set-config
+      - name: mongodb-keyfile
+        secret:
+          secretName: mongodb-keyfile
+          defaultMode: 0400
+  volumeClaimTemplates:
+  - metadata:
+      name: mongodb-data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: fast-ssd
+      resources:
+        requests:
+          storage: 100Gi
+  - metadata:
+      name: mongodb-logs
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: standard
+      resources:
+        requests:
+          storage: 10Gi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-replica-set
+  namespace: ia-influencer
+  labels:
+    app: mongodb
+    component: replica-set
+spec:
+  clusterIP: None
+  selector:
+    app: mongodb
+    component: replica-set
+  ports:
+  - port: 27017
+    targetPort: 27017
+    name: mongodb
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-primary
+  namespace: ia-influencer
+  labels:
+    app: mongodb
+    component: primary
+spec:
+  selector:
+    app: mongodb
+    component: replica-set
+    statefulset.kubernetes.io/pod-name: mongodb-replica-set-0
+  ports:
+  - port: 27017
+    targetPort: 27017
+    name: mongodb
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-secondary-1
+  namespace: ia-influencer
+  labels:
+    app: mongodb
+    component: secondary
+spec:
+  selector:
+    app: mongodb
+    component: replica-set
+    statefulset.kubernetes.io/pod-name: mongodb-replica-set-1
+  ports:
+  - port: 27017
+    targetPort: 27017
+    name: mongodb
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-secondary-2
+  namespace: ia-influencer
+  labels:
+    app: mongodb
+    component: secondary
+spec:
+  selector:
+    app: mongodb
+    component: replica-set
+    statefulset.kubernetes.io/pod-name: mongodb-replica-set-2
+  ports:
+  - port: 27017
+    targetPort: 27017
+    name: mongodb
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-arbiter
+  namespace: ia-influencer
+  labels:
+    app: mongodb
+    component: arbiter
+spec:
+  selector:
+    app: mongodb
+    component: replica-set
+    statefulset.kubernetes.io/pod-name: mongodb-replica-set-3
+  ports:
+  - port: 27017
+    targetPort: 27017
+    name: mongodb

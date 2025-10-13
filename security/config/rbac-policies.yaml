@@ -1,0 +1,533 @@
+# Role-Based Access Control (RBAC) Policies
+# Comprehensive RBAC configuration for IA Influencer Agent Platform
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+
+rbac_config:
+  version: "1.0"
+  name: "IA-Influencer-RBAC"
+  description: "Role-based access control for AI-powered influencer platform"
+  
+  # Global settings
+  settings:
+    enable_inheritance: true
+    enable_delegation: true
+    default_deny: true
+    audit_all_access: true
+    session_timeout: "8h"
+    max_concurrent_sessions: 5
+    
+  # Resource definitions
+  resources:
+    # User management
+    users:
+      endpoints:
+        - "/api/v1/users"
+        - "/api/v1/users/{id}"
+        - "/api/v1/users/{id}/profile"
+        - "/api/v1/users/{id}/preferences"
+        - "/api/v1/users/{id}/subscription"
+      operations: ["create", "read", "update", "delete", "list"]
+      
+    # Content management
+    content:
+      endpoints:
+        - "/api/v1/content"
+        - "/api/v1/content/{id}"
+        - "/api/v1/content/{id}/metadata"
+        - "/api/v1/content/{id}/analytics"
+        - "/api/v1/content/{id}/fingerprint"
+      operations: ["create", "read", "update", "delete", "list", "upload", "download", "analyze"]
+      
+    # Analytics
+    analytics:
+      endpoints:
+        - "/api/v1/analytics"
+        - "/api/v1/analytics/dashboard"
+        - "/api/v1/analytics/reports"
+        - "/api/v1/analytics/insights"
+      operations: ["read", "export", "configure"]
+      
+    # Payment and monetization
+    payment:
+      endpoints:
+        - "/api/v1/payment"
+        - "/api/v1/payment/methods"
+        - "/api/v1/payment/transactions"
+        - "/api/v1/revenue"
+        - "/api/v1/billing"
+      operations: ["read", "create", "update", "process", "refund"]
+      
+    # Collaboration
+    collaboration:
+      endpoints:
+        - "/api/v1/collaboration"
+        - "/api/v1/collaboration/requests"
+        - "/api/v1/collaboration/projects"
+        - "/api/v1/collaboration/participants"
+      operations: ["create", "read", "update", "delete", "invite", "join", "leave"]
+      
+    # Platform integrations
+    integrations:
+      endpoints:
+        - "/api/v1/integrations"
+        - "/api/v1/integrations/spotify"
+        - "/api/v1/integrations/youtube"
+        - "/api/v1/integrations/instagram"
+        - "/api/v1/integrations/tiktok"
+      operations: ["read", "connect", "disconnect", "configure", "sync"]
+      
+    # AI and generation
+    ai_generation:
+      endpoints:
+        - "/api/v1/ai"
+        - "/api/v1/ai/generate"
+        - "/api/v1/ai/analyze"
+        - "/api/v1/ai/fingerprint"
+        - "/api/v1/ai/recommendations"
+      operations: ["use", "configure", "train", "deploy"]
+      
+    # Administration
+    admin:
+      endpoints:
+        - "/api/v1/admin"
+        - "/api/v1/admin/users"
+        - "/api/v1/admin/system"
+        - "/api/v1/admin/security"
+        - "/api/v1/admin/audit"
+      operations: ["create", "read", "update", "delete", "configure", "monitor"]
+
+  # Role definitions
+  roles:
+    # Basic creator roles
+    free_creator:
+      description: "Free tier creator with basic features"
+      inherits: []
+      permissions:
+        users:
+          - "read:own"
+          - "update:own"
+        content:
+          - "create:limited"
+          - "read:own"
+          - "update:own"
+          - "delete:own"
+          - "upload:limited"
+        analytics:
+          - "read:basic"
+        integrations:
+          - "read:own"
+          - "connect:basic"
+      limits:
+        content_uploads_per_month: 10
+        storage_limit: "1GB"
+        ai_generations_per_month: 50
+        collaboration_requests_per_month: 5
+        
+    professional_creator:
+      description: "Professional tier creator with enhanced features"
+      inherits: ["free_creator"]
+      permissions:
+        content:
+          - "create:standard"
+          - "upload:standard"
+          - "analyze:advanced"
+        analytics:
+          - "read:advanced"
+          - "export:reports"
+        collaboration:
+          - "create"
+          - "read:own"
+          - "update:own"
+          - "invite"
+          - "join"
+        ai_generation:
+          - "use:standard"
+        integrations:
+          - "connect:advanced"
+          - "sync:automated"
+      limits:
+        content_uploads_per_month: 100
+        storage_limit: "50GB"
+        ai_generations_per_month: 500
+        collaboration_requests_per_month: 25
+        
+    enterprise_creator:
+      description: "Enterprise tier creator with full features"
+      inherits: ["professional_creator"]
+      permissions:
+        content:
+          - "create:unlimited"
+          - "upload:unlimited"
+          - "analyze:enterprise"
+        analytics:
+          - "read:full"
+          - "export:custom"
+          - "configure:dashboards"
+        collaboration:
+          - "create:unlimited"
+          - "read:extended"
+          - "update:extended"
+          - "invite:unlimited"
+          - "manage:projects"
+        ai_generation:
+          - "use:enterprise"
+          - "configure:models"
+        payment:
+          - "read:own"
+          - "create:invoices"
+        integrations:
+          - "connect:enterprise"
+          - "configure:webhooks"
+      limits:
+        content_uploads_per_month: -1  # unlimited
+        storage_limit: "1TB"
+        ai_generations_per_month: -1  # unlimited
+        collaboration_requests_per_month: -1  # unlimited
+        
+    # Collaboration roles
+    collaborator:
+      description: "External collaborator invited to projects"
+      inherits: []
+      permissions:
+        users:
+          - "read:own"
+          - "update:own"
+        content:
+          - "read:assigned"
+          - "update:assigned"
+        collaboration:
+          - "read:assigned"
+          - "update:assigned"
+          - "leave"
+        analytics:
+          - "read:project"
+      limits:
+        content_uploads_per_month: 20
+        storage_limit: "5GB"
+        
+    project_manager:
+      description: "Manager of collaboration projects"
+      inherits: ["collaborator"]
+      permissions:
+        collaboration:
+          - "create:projects"
+          - "read:managed"
+          - "update:managed"
+          - "delete:managed"
+          - "invite:participants"
+          - "remove:participants"
+          - "manage:permissions"
+        analytics:
+          - "read:project_full"
+          - "export:project_reports"
+      limits:
+        content_uploads_per_month: 50
+        storage_limit: "20GB"
+        
+    # Administrative roles
+    content_moderator:
+      description: "Content moderation and compliance"
+      inherits: []
+      permissions:
+        content:
+          - "read:all"
+          - "update:moderation"
+          - "delete:violating"
+          - "flag:inappropriate"
+        users:
+          - "read:basic"
+          - "update:moderation_status"
+        analytics:
+          - "read:moderation"
+        admin:
+          - "read:content_reports"
+      limits: {}
+      
+    platform_admin:
+      description: "Platform administration and configuration"
+      inherits: ["content_moderator"]
+      permissions:
+        users:
+          - "create"
+          - "read:all"
+          - "update:all"
+          - "delete"
+          - "list"
+        content:
+          - "read:all"
+          - "update:all"
+          - "delete:all"
+          - "analyze:all"
+        analytics:
+          - "read:platform"
+          - "export:all"
+          - "configure:all"
+        payment:
+          - "read:all"
+          - "process:all"
+          - "refund"
+        collaboration:
+          - "read:all"
+          - "update:all"
+          - "delete:all"
+        integrations:
+          - "read:all"
+          - "configure:all"
+        ai_generation:
+          - "use:all"
+          - "configure:all"
+          - "train:models"
+        admin:
+          - "read:all"
+          - "configure:platform"
+          - "monitor:system"
+      limits: {}
+      
+    super_admin:
+      description: "Full system administration"
+      inherits: ["platform_admin"]
+      permissions:
+        admin:
+          - "create:all"
+          - "read:all"
+          - "update:all"
+          - "delete:all"
+          - "configure:security"
+          - "configure:system"
+          - "monitor:all"
+          - "audit:all"
+      limits: {}
+
+  # Permission definitions
+  permissions:
+    # Operation types
+    operations:
+      create: "Create new resources"
+      read: "View resources"
+      update: "Modify existing resources"
+      delete: "Remove resources"
+      list: "List multiple resources"
+      upload: "Upload content"
+      download: "Download content"
+      analyze: "Run AI analysis"
+      use: "Use AI features"
+      configure: "Configure settings"
+      monitor: "Monitor system"
+      audit: "Access audit logs"
+      invite: "Invite users"
+      join: "Join collaborations"
+      leave: "Leave collaborations"
+      connect: "Connect integrations"
+      disconnect: "Disconnect integrations"
+      sync: "Synchronize data"
+      process: "Process payments"
+      refund: "Issue refunds"
+      flag: "Flag content"
+      
+    # Scope modifiers
+    scopes:
+      own: "User's own resources"
+      assigned: "Resources assigned to user"
+      managed: "Resources managed by user"
+      project: "Project-specific resources"
+      basic: "Basic level access"
+      standard: "Standard level access"
+      advanced: "Advanced level access"
+      enterprise: "Enterprise level access"
+      full: "Full access level"
+      all: "All resources"
+      limited: "Limited quota"
+      unlimited: "Unlimited quota"
+
+  # Attribute-Based Access Control (ABAC) rules
+  abac_rules:
+    # Content ownership rules
+    content_ownership:
+      rule: "user.id == resource.owner_id OR user.role IN ['platform_admin', 'super_admin']"
+      resources: ["content"]
+      operations: ["read", "update", "delete"]
+      
+    # Collaboration project access
+    collaboration_access:
+      rule: "user.id IN resource.participants OR user.id == resource.owner_id OR user.role IN ['project_manager', 'platform_admin']"
+      resources: ["collaboration"]
+      operations: ["read", "update"]
+      
+    # Subscription tier access
+    tier_based_access:
+      rule: "user.subscription_tier == 'enterprise' OR user.subscription_tier == 'professional'"
+      resources: ["ai_generation"]
+      operations: ["use:advanced", "use:enterprise"]
+      
+    # Geographic restrictions
+    geographic_access:
+      rule: "user.country NOT IN ['restricted_countries'] OR user.role IN ['platform_admin', 'super_admin']"
+      resources: ["payment", "content"]
+      operations: ["create", "process"]
+      
+    # Time-based access
+    business_hours:
+      rule: "current_time.hour >= 6 AND current_time.hour <= 22 OR user.role IN ['platform_admin', 'super_admin']"
+      resources: ["admin"]
+      operations: ["configure", "delete"]
+
+  # Dynamic permissions
+  dynamic_permissions:
+    # Creator tier-based permissions
+    creator_tier_permissions:
+      condition: "user.subscription_tier"
+      mappings:
+        free:
+          role: "free_creator"
+        professional:
+          role: "professional_creator"
+        enterprise:
+          role: "enterprise_creator"
+          
+    # Collaboration role assignments
+    collaboration_roles:
+      condition: "collaboration.role"
+      mappings:
+        participant:
+          permissions:
+            - "collaboration:read:assigned"
+            - "collaboration:update:assigned"
+        manager:
+          permissions:
+            - "collaboration:read:managed"
+            - "collaboration:update:managed"
+            - "collaboration:invite"
+        owner:
+          permissions:
+            - "collaboration:read:owned"
+            - "collaboration:update:owned"
+            - "collaboration:delete:owned"
+            - "collaboration:manage:all"
+
+  # Security policies
+  security_policies:
+    # Multi-factor authentication requirements
+    mfa_requirements:
+      admin_operations:
+        required_roles: ["platform_admin", "super_admin"]
+        operations: ["admin:configure", "admin:delete", "users:delete"]
+        mfa_methods: ["totp", "webauthn"]
+        
+      financial_operations:
+        required_operations: ["payment:process", "payment:refund"]
+        mfa_methods: ["totp", "sms"]
+        
+    # IP restrictions
+    ip_restrictions:
+      admin_access:
+        required_roles: ["platform_admin", "super_admin"]
+        allowed_ip_ranges:
+          - "10.0.0.0/8"
+          - "172.16.0.0/12"
+          - "192.168.0.0/16"
+        operations: ["admin:configure:security"]
+        
+    # Rate limiting
+    rate_limits:
+      api_calls:
+        free_creator: "1000/hour"
+        professional_creator: "5000/hour"
+        enterprise_creator: "20000/hour"
+        collaborator: "2000/hour"
+        
+      content_uploads:
+        free_creator: "10/day"
+        professional_creator: "100/day"
+        enterprise_creator: "unlimited"
+        
+    # Session security
+    session_security:
+      concurrent_sessions:
+        free_creator: 2
+        professional_creator: 5
+        enterprise_creator: 10
+        platform_admin: 3
+        super_admin: 2
+        
+      session_timeout:
+        default: "8h"
+        admin: "4h"
+        high_privilege: "2h"
+
+  # Audit configuration
+  audit:
+    enabled: true
+    log_all_access: true
+    log_failed_attempts: true
+    retention_period: "7y"
+    
+    # Events to audit
+    events:
+      authentication:
+        - "login_success"
+        - "login_failure"
+        - "logout"
+        - "mfa_challenge"
+        - "mfa_success"
+        - "mfa_failure"
+        
+      authorization:
+        - "permission_granted"
+        - "permission_denied"
+        - "role_assigned"
+        - "role_removed"
+        - "privilege_escalation"
+        
+      resource_access:
+        - "resource_created"
+        - "resource_read"
+        - "resource_updated"
+        - "resource_deleted"
+        - "bulk_operations"
+        
+      admin_operations:
+        - "user_created"
+        - "user_deleted"
+        - "role_modified"
+        - "system_configured"
+        - "security_settings_changed"
+
+  # Integration with external systems
+  integrations:
+    ldap:
+      enabled: false
+      server: "ldap.company.com"
+      base_dn: "dc=company,dc=com"
+      user_filter: "(uid={username})"
+      group_mapping:
+        "cn=creators,ou=groups": "professional_creator"
+        "cn=admins,ou=groups": "platform_admin"
+        
+    oauth2:
+      role_claim: "roles"
+      scope_mapping:
+        creator: "professional_creator"
+        admin: "platform_admin"
+        
+    api_gateway:
+      enforcement_point: "kong"
+      policy_decision_point: "opa"
+      
+  # Compliance settings
+  compliance:
+    gdpr:
+      data_subject_rights: true
+      consent_management: true
+      data_minimization: true
+      
+    sox:
+      segregation_of_duties: true
+      audit_trail: true
+      approval_workflows: true
+      
+    pci_dss:
+      least_privilege: true
+      regular_access_review: true
+      strong_authentication: true

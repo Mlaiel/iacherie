@@ -1,0 +1,28 @@
+# ⚠️ FICHIERS REQUIREMENTS OBSOLÈTES
+
+## Ces fichiers sont OBSOLÈTES depuis le 11 octobre 2025
+
+**NE PAS UTILISER pour l'installation !**
+
+Utilisez `requirements-all.txt` à la place.
+
+### Fichiers obsolètes :
+- requirements-production.txt
+- requirements-ai-leader.txt
+- requirements-security.txt
+- requirements-ai.txt
+- requirements-ml.txt
+- requirements-audio.txt
+- requirements-core.txt
+- requirements-pipeline.txt
+- requirements-dev.txt
+- requirements-complete.txt
+
+### Raison :
+Ces fichiers contenaient des conflits de versions qui empêchaient l'installation correcte des dépendances.
+
+### Migration :
+Voir `REQUIREMENTS_MIGRATION.md` pour les détails complets.
+
+### Nouveau fichier à utiliser :
+✅ **requirements-all.txt** - Fichier unifié avec 494 packages, tous conflits résolus

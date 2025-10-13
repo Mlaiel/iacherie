@@ -1,0 +1,76 @@
+# MedCare-AI Microservice Requirements
+# Telemedicine and AI Diagnostic Service
+
+# FastAPI Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# Database
+psycopg2-binary==2.9.9
+sqlalchemy==2.0.23
+asyncpg==0.29.0  # Async PostgreSQL driver
+alembic==1.13.0  # Database migrations
+
+# Authentication
+python-jose[cryptography]==3.3.0
+pyjwt==2.8.0  # JWT tokens
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+
+# ML/AI Libraries
+numpy==1.26.2
+scikit-learn==1.3.2
+# tensorflow==2.15.0  # For CNN models (heavy, install if needed)
+# torch==2.1.1  # Alternative to TensorFlow (heavy, install if needed)
+# transformers==4.35.2  # For BioBERT/ClinicalBERT
+Pillow==10.1.0  # Image processing
+opencv-python-headless==4.8.1.78  # Computer vision (headless for server deployment)
+
+# OCR and Document Processing
+pytesseract==0.3.10  # OCR for images
+PyPDF2==3.0.1  # PDF text extraction
+pdf2image==1.16.3  # Convert PDF pages to images
+python-magic==0.4.27  # File type detection
+pydicom==2.4.3  # DICOM medical imaging format
+
+# Translation
+deep-translator==1.11.4  # Multi-language translation
+langdetect==1.0.9  # Language detection
+
+# Medical/Healthcare
+# icd10-cm==0.0.1  # ICD-10 codes
+
+# File Processing
+reportlab==4.0.7  # PDF creation
+qrcode[pil]==7.4.2  # QR code generation
+
+# Payment Processing
+stripe==7.4.0  # For solidarity contributions
+
+# WebRTC/Video
+# twilio==8.10.0  # For video calls (if using Twilio)
+
+# Utils
+python-dateutil==2.8.2
+pytz==2023.3
+
+# HTTP Client
+httpx==0.25.2
+
+# Redis (for caching and real-time features)
+redis==5.0.1
+
+# Monitoring
+# sentry-sdk[fastapi]==1.38.0
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+
+# Code Quality
+# black==23.11.0
+# isort==5.12.0
+# flake8==6.1.0

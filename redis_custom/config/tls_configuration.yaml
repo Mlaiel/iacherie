@@ -1,0 +1,346 @@
+# ⚡ Redis TLS Configuration - IA Chérie Enterprise
+# © 2025 Fahed Mlaiel <mlaiel@live.de> - All Rights Reserved
+# Enterprise TLS 1.3 Configuration for Redis Cluster
+
+# ========================================================================================
+# ⚠️  PROTECTION PROPRIÉTÉ INTELLECTUELLE - Fahed Mlaiel (mlaiel@live.de)
+# TOUS DROITS RÉSERVÉS - Utilisation commerciale strictement encadrée
+# ========================================================================================
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-tls-configuration
+  namespace: iacherie-redis
+  labels:
+    app: iacherie-redis
+    component: tls-configuration
+    environment: enterprise
+    owner: fahed-mlaiel
+    version: "4.0.0"
+    security-level: "maximum"
+  annotations:
+    author: "Fahed Mlaiel <mlaiel@live.de>"
+    license: "Proprietary - All Rights Reserved"
+    description: "Enterprise TLS 1.3 Configuration for Redis"
+    tls-version: "1.3"
+    encryption-strength: "maximum"
+
+data:
+  # ===================================================================================
+  # TLS 1.3 CORE CONFIGURATION
+  # ===================================================================================
+  tls_core_config: |
+    # Enable TLS for all connections
+    port 0
+    tls-port 16379
+    
+    # TLS protocol versions (TLS 1.3 only)
+    tls-protocols "TLSv1.3"
+    tls-min-version "1.3"
+    
+    # Certificate files
+    tls-cert-file /etc/redis/ssl/certs/redis-server.crt
+    tls-key-file /etc/redis/ssl/private/redis-server.key
+    tls-key-file-pass /etc/redis/ssl/private/redis-server.pass
+    tls-ca-cert-file /etc/redis/ssl/ca/iacherie-ca.crt
+    tls-ca-cert-dir /etc/redis/ssl/ca/
+    
+    # DH parameters for perfect forward secrecy
+    tls-dh-params-file /etc/redis/ssl/dh/dhparam.pem
+
+  # ===================================================================================
+  # CIPHER SUITES & CRYPTOGRAPHIC CONFIGURATION
+  # ===================================================================================
+  crypto_config: |
+    # TLS 1.3 cipher suites (strongest only)
+    tls-ciphersuites "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256"
+    
+    # Prefer server cipher order
+    tls-prefer-server-ciphers yes
+    
+    # Session configuration
+    tls-session-caching yes
+    tls-session-cache-size 20000
+    tls-session-cache-timeout 60
+    
+    # Protocol options
+    tls-compression no
+    tls-renegotiation no
+
+  # ===================================================================================
+  # CLIENT TLS CONFIGURATION
+  # ===================================================================================
+  client_tls_config: |
+    # Client certificate verification
+    tls-auth-clients yes
+    tls-auth-clients-optional no
+    
+    # Client certificate requirements
+    tls-client-cert-file /etc/redis/ssl/clients/client.crt
+    tls-client-key-file /etc/redis/ssl/clients/client.key
+    
+    # Certificate revocation
+    tls-crl-file /etc/redis/ssl/crl/iacherie-crl.pem
+    tls-crl-dir /etc/redis/ssl/crl/
+
+  # ===================================================================================
+  # CLUSTER TLS CONFIGURATION
+  # ===================================================================================
+  cluster_tls_config: |
+    # Enable TLS for cluster communication
+    tls-cluster yes
+    tls-cluster-cert-file /etc/redis/ssl/cluster/cluster.crt
+    tls-cluster-key-file /etc/redis/ssl/cluster/cluster.key
+    tls-cluster-key-file-pass /etc/redis/ssl/cluster/cluster.pass
+    tls-cluster-ca-cert-file /etc/redis/ssl/ca/iacherie-ca.crt
+    
+    # Cluster-specific cipher suites
+    tls-cluster-ciphersuites "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"
+
+  # ===================================================================================
+  # REPLICATION TLS CONFIGURATION
+  # ===================================================================================
+  replication_tls_config: |
+    # Enable TLS for replication
+    tls-replication yes
+    tls-repl-cert-file /etc/redis/ssl/replication/repl.crt
+    tls-repl-key-file /etc/redis/ssl/replication/repl.key
+    tls-repl-key-file-pass /etc/redis/ssl/replication/repl.pass
+    tls-repl-ca-cert-file /etc/redis/ssl/ca/iacherie-ca.crt
+    
+    # Replication-specific cipher suites
+    tls-repl-ciphersuites "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"
+
+  # ===================================================================================
+  # CERTIFICATE MANAGEMENT
+  # ===================================================================================
+  certificate_management: |
+    # Certificate validity periods
+    server_cert_validity: 365  # days
+    client_cert_validity: 90   # days
+    ca_cert_validity: 3650      # days
+    
+    # Certificate key sizes
+    rsa_key_size: 4096
+    ec_curve: secp384r1
+    
+    # Certificate extensions
+    key_usage: "digitalSignature,keyEncipherment"
+    extended_key_usage: "serverAuth,clientAuth"
+    
+    # Subject Alternative Names
+    san_dns:
+      - "redis.iacherie.com"
+      - "redis-cluster.iacherie.com"
+      - "redis-sentinel.iacherie.com"
+    san_ip:
+      - "10.0.0.10"
+      - "10.0.0.11"
+      - "10.0.0.12"
+
+  # ===================================================================================
+  # CERTIFICATE GENERATION SCRIPTS
+  # ===================================================================================
+  cert_generation: |
+    #!/bin/bash
+    # Certificate Generation Script for IA Chérie Redis Enterprise
+    # © 2025 Fahed Mlaiel <mlaiel@live.de>
+    
+    # Create directories
+    mkdir -p /etc/redis/ssl/{ca,certs,private,clients,cluster,replication,dh,crl}
+    chmod 700 /etc/redis/ssl/private
+    
+    # Generate CA private key
+    openssl genpkey -algorithm RSA -out /etc/redis/ssl/ca/ca-key.pem -pkcs8 -aes256 -pass pass:iacherie_ca_2025_secure
+    
+    # Generate CA certificate
+    openssl req -new -x509 -days 3650 -key /etc/redis/ssl/ca/ca-key.pem -out /etc/redis/ssl/ca/iacherie-ca.crt \
+      -passin pass:iacherie_ca_2025_secure \
+      -subj "/C=DE/ST=Berlin/L=Berlin/O=IA Chérie Enterprise/OU=Security/CN=IA Chérie Redis CA/emailAddress=mlaiel@live.de"
+    
+    # Generate server private key
+    openssl genpkey -algorithm RSA -out /etc/redis/ssl/private/redis-server.key -pkcs8 -aes256 -pass pass:iacherie_server_2025_secure
+    
+    # Generate server certificate signing request
+    openssl req -new -key /etc/redis/ssl/private/redis-server.key -out /etc/redis/ssl/certs/redis-server.csr \
+      -passin pass:iacherie_server_2025_secure \
+      -subj "/C=DE/ST=Berlin/L=Berlin/O=IA Chérie Enterprise/OU=Redis/CN=redis.iacherie.com/emailAddress=mlaiel@live.de"
+    
+    # Generate server certificate
+    openssl x509 -req -in /etc/redis/ssl/certs/redis-server.csr -CA /etc/redis/ssl/ca/iacherie-ca.crt \
+      -CAkey /etc/redis/ssl/ca/ca-key.pem -CAcreateserial -out /etc/redis/ssl/certs/redis-server.crt \
+      -days 365 -passin pass:iacherie_ca_2025_secure \
+      -extensions v3_req -extfile <(echo "[v3_req]"; echo "subjectAltName=DNS:redis.iacherie.com,DNS:redis-cluster.iacherie.com,IP:10.0.0.10")
+    
+    # Generate DH parameters
+    openssl dhparam -out /etc/redis/ssl/dh/dhparam.pem 4096
+    
+    # Set proper permissions
+    chmod 600 /etc/redis/ssl/private/*
+    chmod 644 /etc/redis/ssl/certs/*
+    chmod 644 /etc/redis/ssl/ca/*
+
+  # ===================================================================================
+  # TLS MONITORING & VALIDATION
+  # ===================================================================================
+  tls_monitoring: |
+    # Certificate expiry monitoring
+    cert_expiry_warning_days: 30
+    cert_expiry_critical_days: 7
+    
+    # TLS connection monitoring
+    tls_handshake_timeout: 10000  # milliseconds
+    tls_connection_logging: enabled
+    tls_error_logging: detailed
+    
+    # Security metrics
+    cipher_strength_monitoring: enabled
+    protocol_version_tracking: true
+    certificate_chain_validation: strict
+
+  # ===================================================================================
+  # TLS PERFORMANCE OPTIMIZATION
+  # ===================================================================================
+  tls_performance: |
+    # Session resumption
+    tls-session-caching yes
+    tls-session-cache-size 20000
+    tls-session-cache-timeout 300
+    
+    # Hardware acceleration
+    tls-engine-acceleration auto
+    
+    # Buffer sizes
+    tls-send-buffer-size 16384
+    tls-recv-buffer-size 16384
+    
+    # Compression (disabled for security)
+    tls-compression no
+
+  # ===================================================================================
+  # CREATOR ECONOMY TLS FEATURES
+  # ===================================================================================
+  creator_tls_config: |
+    # Creator-specific certificate management
+    creator_cert_rotation: 30  # days
+    content_encryption_in_transit: aes_256_gcm
+    collaboration_tls_enforcement: strict
+    
+    # Creator API TLS requirements
+    api_tls_version_min: "1.3"
+    api_cipher_requirements: "maximum_security"
+    api_cert_pinning: enabled
+    
+    # Content delivery TLS
+    cdn_tls_termination: backend
+    media_streaming_encryption: required
+    thumbnail_delivery_tls: enforced
+
+  # ===================================================================================
+  # COMPLIANCE TLS CONFIGURATION
+  # ===================================================================================
+  compliance_tls: |
+    # GDPR compliance
+    gdpr_data_encryption_in_transit: tls_1_3
+    gdpr_key_management: enterprise
+    
+    # SOX compliance
+    sox_encryption_standards: fips_140_2
+    sox_key_escrow: enabled
+    
+    # PCI DSS compliance
+    pci_strong_cryptography: enabled
+    pci_key_rotation: quarterly
+    pci_secure_transmission: enforced
+    
+    # HIPAA compliance
+    hipaa_encryption_in_transit: required
+    hipaa_integrity_controls: enabled
+
+  # ===================================================================================
+  # TLS TROUBLESHOOTING & DIAGNOSTICS
+  # ===================================================================================
+  tls_diagnostics: |
+    # Debug configuration
+    tls-debug-level: warning
+    tls-log-file: /var/log/redis/tls-debug.log
+    
+    # Connection testing
+    connection_test_interval: 300  # seconds
+    handshake_monitoring: enabled
+    certificate_validation_logging: true
+    
+    # Performance metrics
+    tls_latency_monitoring: enabled
+    cipher_performance_tracking: true
+    session_reuse_rate_monitoring: enabled
+
+---
+# TLS validation and testing script
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-tls-validation
+  namespace: iacherie-redis
+data:
+  validate_tls.sh: |
+    #!/bin/bash
+    # TLS Validation Script for IA Chérie Redis Enterprise
+    # © 2025 Fahed Mlaiel <mlaiel@live.de>
+    
+    echo "🔐 Validating Redis TLS Configuration..."
+    
+    # Test TLS 1.3 connection
+    echo "Testing TLS 1.3 connection..."
+    openssl s_client -connect localhost:16379 -tls1_3 -quiet -verify_return_error
+    
+    # Verify certificate chain
+    echo "Verifying certificate chain..."
+    openssl verify -CAfile /etc/redis/ssl/ca/iacherie-ca.crt /etc/redis/ssl/certs/redis-server.crt
+    
+    # Test cipher suites
+    echo "Testing cipher suites..."
+    openssl s_client -connect localhost:16379 -cipher TLS_AES_256_GCM_SHA384
+    
+    # Check certificate expiry
+    echo "Checking certificate expiry..."
+    openssl x509 -in /etc/redis/ssl/certs/redis-server.crt -noout -dates
+    
+    # Test Redis connection with TLS
+    echo "Testing Redis connection with TLS..."
+    redis-cli -h localhost -p 16379 --tls --cert /etc/redis/ssl/clients/client.crt \
+      --key /etc/redis/ssl/clients/client.key --cacert /etc/redis/ssl/ca/iacherie-ca.crt ping
+    
+    echo "✅ TLS validation completed"
+
+  monitor_tls.sh: |
+    #!/bin/bash
+    # TLS Monitoring Script for IA Chérie Redis Enterprise
+    # © 2025 Fahed Mlaiel <mlaiel@live.de>
+    
+    echo "📊 Monitoring Redis TLS Status..."
+    
+    # Check certificate expiry
+    CERT_EXPIRY=$(openssl x509 -in /etc/redis/ssl/certs/redis-server.crt -noout -enddate | cut -d= -f2)
+    EXPIRY_TIMESTAMP=$(date -d "$CERT_EXPIRY" +%s)
+    CURRENT_TIMESTAMP=$(date +%s)
+    DAYS_UNTIL_EXPIRY=$(( (EXPIRY_TIMESTAMP - CURRENT_TIMESTAMP) / 86400 ))
+    
+    if [ $DAYS_UNTIL_EXPIRY -lt 7 ]; then
+      echo "🚨 CRITICAL: Certificate expires in $DAYS_UNTIL_EXPIRY days"
+    elif [ $DAYS_UNTIL_EXPIRY -lt 30 ]; then
+      echo "⚠️  WARNING: Certificate expires in $DAYS_UNTIL_EXPIRY days"
+    else
+      echo "✅ Certificate valid for $DAYS_UNTIL_EXPIRY days"
+    fi
+    
+    # Monitor TLS connections
+    TLS_CONNECTIONS=$(redis-cli info clients | grep connected_clients | cut -d: -f2)
+    echo "📊 Active TLS connections: $TLS_CONNECTIONS"
+    
+    # Check TLS performance
+    echo "⚡ TLS Performance Metrics:"
+    redis-cli --latency-history -h localhost -p 16379 --tls -i 1 &
+    sleep 5
+    pkill -f "redis-cli --latency-history"

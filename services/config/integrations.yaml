@@ -1,0 +1,426 @@
+# Platform Integrations Configuration Enterprise
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Version: 1.0.0 Enterprise Creator Economy Platform
+# ⚠️ AVERTISSEMENT LÉGAL: Configuration propriétaire - Utilisation commerciale interdite sans autorisation
+
+# YouTube Integration
+youtube:
+  api:
+    version: "v3"
+    api_key: "${YOUTUBE_API_KEY}"
+    quota_limit: 10000
+    
+  oauth:
+    client_id: "${YOUTUBE_CLIENT_ID}"
+    client_secret: "${YOUTUBE_CLIENT_SECRET}"
+    redirect_uri: "https://creator.iacherie.com/auth/youtube/callback"
+    scopes:
+      - "https://www.googleapis.com/auth/youtube.readonly"
+      - "https://www.googleapis.com/auth/youtube.upload"
+      - "https://www.googleapis.com/auth/youtube.force-ssl"
+      - "https://www.googleapis.com/auth/youtubepartner"
+      
+  upload:
+    max_file_size: "128GB"
+    supported_formats: ["mp4", "mov", "avi", "wmv", "flv", "webm", "mkv"]
+    chunk_size: "8MB"
+    retry_attempts: 5
+    
+  analytics:
+    metrics:
+      - "views"
+      - "likes"
+      - "dislikes"  
+      - "comments"
+      - "shares"
+      - "subscribers_gained"
+      - "watch_time"
+      - "revenue"
+    dimensions:
+      - "day"
+      - "country"
+      - "age_group"
+      - "gender"
+      - "traffic_source"
+      
+  rate_limiting:
+    requests_per_second: 100
+    upload_quota_cost: 1600
+    daily_quota_limit: 1000000
+    
+  webhook:
+    url: "https://api.iacherie.com/webhooks/youtube"
+    events:
+      - "video_uploaded"
+      - "video_processed"
+      - "analytics_updated"
+
+# Spotify Integration  
+spotify:
+  api:
+    base_url: "https://api.spotify.com/v1"
+    auth_url: "https://accounts.spotify.com/api/token"
+    
+  oauth:
+    client_id: "${SPOTIFY_CLIENT_ID}"
+    client_secret: "${SPOTIFY_CLIENT_SECRET}"
+    redirect_uri: "https://creator.iacherie.com/auth/spotify/callback"
+    scopes:
+      - "user-read-private"
+      - "user-read-email"
+      - "playlist-read-private"
+      - "playlist-modify-public"
+      - "playlist-modify-private"
+      - "user-library-read"
+      - "user-library-modify"
+      
+  upload:
+    supported_formats: ["mp3", "wav", "flac", "aac", "ogg"]
+    max_file_size: "200MB"
+    audio_quality: "320kbps"
+    
+  analytics:
+    metrics:
+      - "streams"
+      - "monthly_listeners"
+      - "followers"
+      - "playlist_adds"
+      - "skip_rate"
+      - "completion_rate"
+    refresh_interval: 3600
+    
+  distribution:
+    territories: "worldwide"
+    release_delay_hours: 24
+    metadata_validation: true
+    
+  rate_limiting:
+    requests_per_second: 100
+    burst_limit: 1000
+    
+# Instagram Integration
+instagram:
+  api:
+    version: "v18.0"
+    base_url: "https://graph.instagram.com"
+    
+  oauth:
+    client_id: "${INSTAGRAM_CLIENT_ID}"
+    client_secret: "${INSTAGRAM_CLIENT_SECRET}"
+    redirect_uri: "https://creator.iacherie.com/auth/instagram/callback"
+    scopes:
+      - "instagram_basic"
+      - "instagram_content_publish"
+      - "pages_read_engagement"
+      - "business_management"
+      
+  media:
+    image:
+      supported_formats: ["jpg", "jpeg", "png"]
+      max_file_size: "30MB"
+      min_resolution: "320x320"
+      max_resolution: "8192x8192"
+      
+    video:
+      supported_formats: ["mp4", "mov"]
+      max_file_size: "4GB"
+      max_duration: 3600  # 60 minutes
+      min_duration: 3
+      
+    stories:
+      duration: 15
+      supported_formats: ["mp4", "mov", "jpg", "jpeg", "png"]
+      
+  publishing:
+    scheduled_posts: true
+    auto_hashtags: true
+    location_tagging: true
+    user_tagging: true
+    
+  analytics:
+    metrics:
+      - "impressions"
+      - "reach"
+      - "likes"
+      - "comments"
+      - "shares"
+      - "saves"
+      - "profile_visits"
+      - "website_clicks"
+    insights_retention_days: 90
+    
+  rate_limiting:
+    posts_per_hour: 25
+    api_calls_per_hour: 200
+
+# TikTok Integration
+tiktok:
+  api:
+    version: "v2"
+    base_url: "https://open-api.tiktok.com"
+    
+  oauth:
+    client_key: "${TIKTOK_CLIENT_KEY}"
+    client_secret: "${TIKTOK_CLIENT_SECRET}"
+    redirect_uri: "https://creator.iacherie.com/auth/tiktok/callback"
+    scopes:
+      - "user.info.basic"
+      - "video.list"
+      - "video.upload"
+      - "video.publish"
+      
+  video:
+    supported_formats: ["mp4", "mov", "mpeg", "3gp", "avi"]
+    max_file_size: "4GB"
+    max_duration: 180  # 3 minutes for most users
+    min_duration: 15
+    resolution: "720x1280"  # 9:16 aspect ratio
+    
+  effects:
+    filters: true
+    music_library: true
+    sound_effects: true
+    transitions: true
+    
+  analytics:
+    metrics:
+      - "views"
+      - "likes"
+      - "shares"
+      - "comments"
+      - "completion_rate"
+      - "reach"
+      - "engagement_rate"
+    real_time_updates: true
+    
+  rate_limiting:
+    uploads_per_day: 10
+    api_calls_per_day: 1000
+
+# Twitter/X Integration
+twitter:
+  api:
+    version: "v2"
+    base_url: "https://api.twitter.com/2"
+    
+  oauth:
+    consumer_key: "${TWITTER_CONSUMER_KEY}"
+    consumer_secret: "${TWITTER_CONSUMER_SECRET}"
+    access_token: "${TWITTER_ACCESS_TOKEN}"
+    access_token_secret: "${TWITTER_ACCESS_TOKEN_SECRET}"
+    
+  content:
+    tweet:
+      max_characters: 280
+      media_limit: 4
+      
+    thread:
+      max_tweets: 25
+      auto_numbering: true
+      
+    media:
+      image:
+        supported_formats: ["jpg", "jpeg", "png", "gif", "webp"]
+        max_file_size: "5MB"
+        
+      video:
+        supported_formats: ["mp4", "mov"]
+        max_file_size: "512MB"
+        max_duration: 140
+        
+  analytics:
+    metrics:
+      - "impressions"
+      - "engagements"
+      - "retweets"
+      - "likes"
+      - "replies"
+      - "clicks"
+      - "follows"
+    api_v2_features: true
+    
+  rate_limiting:
+    tweets_per_15min: 300
+    api_calls_per_15min: 900
+
+# LinkedIn Integration
+linkedin:
+  api:
+    version: "v2"
+    base_url: "https://api.linkedin.com/v2"
+    
+  oauth:
+    client_id: "${LINKEDIN_CLIENT_ID}"
+    client_secret: "${LINKEDIN_CLIENT_SECRET}"
+    redirect_uri: "https://creator.iacherie.com/auth/linkedin/callback"
+    scopes:
+      - "r_liteprofile"
+      - "r_emailaddress"
+      - "w_member_social"
+      - "rw_organization_admin"
+      
+  publishing:
+    text_posts: true
+    image_posts: true
+    video_posts: true
+    article_publishing: true
+    
+  media:
+    image:
+      supported_formats: ["jpg", "jpeg", "png"]
+      max_file_size: "20MB"
+      
+    video:
+      supported_formats: ["mp4", "mov", "wmv", "avi"]
+      max_file_size: "5GB"
+      max_duration: 600  # 10 minutes
+      
+  analytics:
+    metrics:
+      - "clicks"
+      - "impressions"
+      - "reactions"
+      - "comments"
+      - "shares"
+      - "follows"
+    company_page_analytics: true
+    
+# Facebook Integration
+facebook:
+  api:
+    version: "v18.0"
+    base_url: "https://graph.facebook.com"
+    
+  oauth:
+    app_id: "${FACEBOOK_APP_ID}"
+    app_secret: "${FACEBOOK_APP_SECRET}"
+    redirect_uri: "https://creator.iacherie.com/auth/facebook/callback"
+    scopes:
+      - "email"
+      - "public_profile"
+      - "pages_manage_posts"
+      - "pages_read_engagement"
+      - "publish_video"
+      
+  pages:
+    auto_discovery: true
+    multi_page_management: true
+    
+  publishing:
+    scheduled_posts: true
+    cross_posting: true
+    story_publishing: true
+    
+  analytics:
+    page_insights: true
+    post_insights: true
+    video_insights: true
+    audience_insights: true
+
+# Twitch Integration
+twitch:
+  api:
+    base_url: "https://api.twitch.tv/helix"
+    
+  oauth:
+    client_id: "${TWITCH_CLIENT_ID}"
+    client_secret: "${TWITCH_CLIENT_SECRET}"
+    redirect_uri: "https://creator.iacherie.com/auth/twitch/callback"
+    scopes:
+      - "user:read:email"
+      - "channel:read:stream_key"
+      - "analytics:read:games"
+      - "clips:edit"
+      
+  streaming:
+    rtmp_url: "rtmp://live.twitch.tv/live"
+    max_bitrate: "6000kbps"
+    recommended_resolution: "1920x1080"
+    frame_rate: 60
+    
+  clips:
+    max_duration: 60
+    auto_generation: true
+    
+  analytics:
+    stream_analytics: true
+    game_analytics: true
+    clip_analytics: true
+
+# Discord Integration
+discord:
+  bot:
+    token: "${DISCORD_BOT_TOKEN}"
+    application_id: "${DISCORD_APPLICATION_ID}"
+    
+  webhooks:
+    content_notifications: "${DISCORD_WEBHOOK_CONTENT}"
+    analytics_reports: "${DISCORD_WEBHOOK_ANALYTICS}"
+    
+  features:
+    slash_commands: true
+    embed_messages: true
+    file_attachments: true
+    voice_integration: false
+
+# Pinterest Integration
+pinterest:
+  api:
+    version: "v5"
+    base_url: "https://api.pinterest.com/v5"
+    
+  oauth:
+    client_id: "${PINTEREST_CLIENT_ID}"
+    client_secret: "${PINTEREST_CLIENT_SECRET}"
+    scopes:
+      - "boards:read"
+      - "pins:read"
+      - "pins:write"
+      
+  pins:
+    supported_formats: ["jpg", "jpeg", "png", "gif"]
+    max_file_size: "32MB"
+    min_resolution: "600x315"
+    
+# Webhook Configuration
+webhooks:
+  global:
+    timeout_seconds: 30
+    retry_attempts: 3
+    retry_delay_seconds: 5
+    
+  security:
+    signature_verification: true
+    ip_whitelist: true
+    rate_limiting: true
+    
+  events:
+    content_published: true
+    analytics_updated: true
+    error_occurred: true
+
+# Global Integration Settings
+global:
+  oauth:
+    token_refresh_margin: 300  # 5 minutes before expiry
+    auto_refresh: true
+    
+  rate_limiting:
+    global_burst_limit: 10000
+    per_platform_limit: 1000
+    
+  error_handling:
+    max_retries: 3
+    backoff_strategy: "exponential"
+    circuit_breaker: true
+    
+  caching:
+    access_tokens: 3600
+    api_responses: 300
+    user_profiles: 1800
+    
+  monitoring:
+    api_health_checks: true
+    response_time_tracking: true
+    error_rate_monitoring: true
+    quota_usage_tracking: true

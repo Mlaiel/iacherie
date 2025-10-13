@@ -1,0 +1,86 @@
+# Docker Compose for Monetization Services
+# Revenue tracking, payment processing, and monetization analytics
+# Author: Fahed Mlaiel (mlaiel@live.de)
+
+version: '3.8'
+
+services:
+  # Revenue tracker service
+  revenue-tracker:
+    build:
+      context: ../..
+      dockerfile: docker/monetization/revenue_tracker.dockerfile
+      target: production
+    container_name: iacherie-revenue-tracker
+    ports:
+      - "8040:8040"
+    environment:
+      - ENVIRONMENT=${ENVIRONMENT:-production}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - REDIS_HOST=redis-master
+      - POSTGRES_HOST=postgres-master
+      - MONITORING_ENABLED=true
+      - SERVICE_NAME=revenue_tracker
+      - TRACKING_INTERVAL=3600
+      - REAL_TIME_UPDATES=true
+      - ANALYTICS_RETENTION_DAYS=365
+    volumes:
+      - revenue_storage:/app/storage
+      - revenue_logs:/app/logs
+      - revenue_cache:/app/cache
+      - revenue_data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8040/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - monetization-network
+
+  # Payment processor service
+  payment-processor:
+    build:
+      context: ../..
+      dockerfile: docker/monetization/payment_processor.dockerfile
+      target: production
+    container_name: iacherie-payment-processor
+    ports:
+      - "8041:8041"
+    environment:
+      - SERVICE_NAME=payment_processor
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - PAYPAL_CLIENT_ID=${PAYPAL_CLIENT_ID}
+      - CRYPTO_ENABLED=true
+    volumes:
+      - payment_storage:/app/storage
+      - payment_logs:/app/logs
+      - payment_keys:/app/keys
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8041/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - monetization-network
+
+networks:
+  monetization-network:
+    driver: bridge
+
+volumes:
+  revenue_storage:
+    driver: local
+  revenue_logs:
+    driver: local
+  revenue_cache:
+    driver: local
+  revenue_data:
+    driver: local
+  payment_storage:
+    driver: local
+  payment_logs:
+    driver: local
+  payment_keys:
+    driver: local

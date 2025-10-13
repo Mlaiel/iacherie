@@ -1,0 +1,23 @@
+# Test Dependencies - Backend Testing Suite (Simplified)
+# ========================================================
+
+# Core testing framework
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.0.0
+pytest-mock>=3.0.0
+
+# Testing utilities
+faker>=20.0.0
+freezegun>=1.2.0
+
+# Async testing support
+aiohttp>=3.8.0
+aiofiles>=23.0.0
+aioredis>=2.0.0
+asyncpg>=0.28.0
+
+# Utility libraries for mocking
+pydantic>=2.0.0
+python-multipart>=0.0.6
+bcrypt>=4.0.0
