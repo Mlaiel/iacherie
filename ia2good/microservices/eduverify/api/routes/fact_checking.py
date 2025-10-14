@@ -13,7 +13,7 @@ from models.fact_check import (
     FactCheckList,
 )
 from services.fact_checker import FactCheckerService
-from database import get_db, FactCheckModel
+from eduverify_database import get_db, FactCheckModel
 import uuid as uuid_lib
 from datetime import datetime
 

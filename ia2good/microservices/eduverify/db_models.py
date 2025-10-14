@@ -11,7 +11,7 @@ from sqlalchemy.orm import relationship
 import uuid
 import enum
 
-from database import Base
+from eduverify_database import Base
 
 
 # Enums

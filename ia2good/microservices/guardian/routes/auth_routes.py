@@ -8,10 +8,8 @@ from fastapi.security import HTTPAuthorizationCredentials
 from pydantic import BaseModel, EmailStr
 from datetime import timedelta
 from typing import Optional
-import sys
-sys.path.append('/workspaces/iacherie/ia2good/microservices/guardian')
 
-from utils.jwt_utils import (
+from guardian_utils.jwt_utils import (
     create_access_token, 
     create_refresh_token,
     verify_password,

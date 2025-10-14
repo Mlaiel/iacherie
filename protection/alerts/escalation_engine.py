@@ -47,13 +47,14 @@ except ImportError:
 # Optional SQLAlchemy with fallback
 try:
     from sqlalchemy.ext.asyncio import AsyncSession
-    from sqlalchemy import select, update, and_, or_
+    from sqlalchemy import select, update, delete, and_, or_
     SQLALCHEMY_AVAILABLE = True
 except ImportError:
     SQLALCHEMY_AVAILABLE = False
     AsyncSession = None
     def select(*args): return None
     def update(*args): return None
+    def delete(*args): return None
     def and_(*args): return None
     def or_(*args): return None
 

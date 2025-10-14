@@ -81,20 +81,20 @@ from ..models import FingerprintResult, SimilarityMatch
 
 # Import multilingual support
 try:
-    from ...conversational.multilingual_support.enhanced_644_language_support import (
+    from ...conversational.multilingual_support.lang_support import (
         Enhanced644LanguageSupport, LanguageProfile, LanguageDetectionResult
     )
     MULTILINGUAL_AVAILABLE = True
 except ImportError:
     try:
         # Fallback to config module that we know exists
-        from ...config.enhanced_644_language_support import (
+        from ...config.lang_support import (
             Enhanced644LanguageSupport, LanguageProfile, LanguageDetectionResult
         )
         MULTILINGUAL_AVAILABLE = True
     except ImportError:
-        # Import from our working config module - no fallback needed
-        from config.enhanced_644_language_support import Enhanced644LanguageSupport
+        # Import from protection.config module (copied there for accessibility)
+        from ..config.lang_support import Enhanced644LanguageSupport
         
         # Create authentic implementations for missing classes
         class LanguageProfile:

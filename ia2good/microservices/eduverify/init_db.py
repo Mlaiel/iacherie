@@ -11,7 +11,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
-from database import Base
+from eduverify_database import Base
 from config import settings
 
 print("=" * 60)

@@ -1,15 +1,15 @@
 """
-Authentication Middleware pour Guardian
+Authentication Middleware pour EduVerify
 Protège les routes avec JWT
+
+Note: Uses eduverify_utils (renamed from utils) to avoid conflicts with workspace/utils
 """
 
 from fastapi import Request, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from typing import Optional
-import sys
-sys.path.append('/workspaces/iacherie/ia2good/microservices/guardian')
 
-from utils.jwt_utils import verify_token
+from eduverify_utils.jwt_utils import verify_token
 
 security = HTTPBearer()
 

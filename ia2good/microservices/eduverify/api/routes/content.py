@@ -21,7 +21,7 @@ from models.content import (
     LiveLectureStart,
 )
 from services.content_processor import ContentProcessorService
-from database import get_db, ContentModel
+from eduverify_database import get_db, ContentModel
 from config import settings
 
 router = APIRouter(prefix="/eduverify/content", tags=["eduverify-content"])

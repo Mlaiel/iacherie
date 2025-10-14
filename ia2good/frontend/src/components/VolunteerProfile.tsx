@@ -18,17 +18,17 @@ import {
   MapPin,
   Clock,
   Star,
-  Question as Award,
+  Medal,
   TrendUp,
   Calendar,
   Users,
   Shield,
   Phone,
-  Question as Mail,
-  Question as Edit,
-  Question as Settings,
+  EnvelopeSimple,
+  PencilSimple,
+  Gear,
   ChartBar,
-  Activity,
+  Pulse,
   Target
 } from '@phosphor-icons/react'
 import type { VolunteerProfile as VolunteerProfileType, VolunteerActivity, CaseReport, Badge as BadgeType } from '@/lib/types'
@@ -176,11 +176,11 @@ export function VolunteerProfile({
             {isOwnProfile && (
               <div className="flex flex-col gap-2">
                 <Button onClick={onEditProfile} variant="outline" size="sm">
-                  <Edit size={16} className="mr-2" />
+                  <PencilSimple size={16} className="mr-2" />
                   Edit Profile
                 </Button>
                 <Button variant="outline" size="sm">
-                  <Settings size={16} className="mr-2" />
+                  <Gear size={16} className="mr-2" />
                   Settings
                 </Button>
               </div>
@@ -194,7 +194,7 @@ export function VolunteerProfile({
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <TabsList>
             <TabsTrigger value="activity">
-              <Activity size={16} className="mr-2" />
+              <Pulse size={16} className="mr-2" />
               Activity
             </TabsTrigger>
             <TabsTrigger value="impact">
@@ -202,7 +202,7 @@ export function VolunteerProfile({
               Impact
             </TabsTrigger>
             <TabsTrigger value="badges">
-              <Award size={16} className="mr-2" />
+              <Medal size={16} className="mr-2" />
               Badges
             </TabsTrigger>
             <TabsTrigger value="skills">
@@ -406,7 +406,7 @@ export function VolunteerProfile({
                 </div>
               ) : (
                 <div className="text-center py-8 text-muted-foreground">
-                  <Award size={48} className="mx-auto mb-4 opacity-50" />
+                  <Medal size={48} className="mx-auto mb-4 opacity-50" />
                   <p>Keep volunteering to earn achievement badges!</p>
                 </div>
               )}

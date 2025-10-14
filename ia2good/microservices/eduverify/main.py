@@ -2,14 +2,35 @@
 EduVerify Main Application
 FastAPI application for educational AI platform
 """
+
+import os
+import sys
+import logging
+
+# CRITICAL: Configure Python paths BEFORE any other imports
+# Order matters: EduVerify local modules MUST come before workspace modules
+eduverify_root = os.path.abspath(os.path.dirname(__file__))
+root_workspace = os.path.abspath(os.path.join(eduverify_root, '../../../..'))
+shared_services_path = os.path.abspath(os.path.join(eduverify_root, '../../shared-services'))
+
+# Step 1: Remove any existing paths to avoid duplicates
+for path in [eduverify_root, shared_services_path, root_workspace]:
+    while path in sys.path:
+        sys.path.remove(path)
+
+# Step 2: Add paths in correct priority order
+# Priority 1: EduVerify local modules (database, config, utils, api)
+sys.path.insert(0, eduverify_root)
+
+# Priority 2: Shared services (common utilities)
+sys.path.insert(1, shared_services_path)
+
+# Priority 3: Workspace root (backend, protection, etc.) - LAST to avoid conflicts
+sys.path.append(root_workspace)
+
+# Now safe to import FastAPI and other dependencies
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import logging
-import sys
-import os
-
-# Add shared-services to path for IACherie AI integration
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../shared-services'))
 
 from config import settings
 
@@ -200,7 +221,7 @@ async def startup_event():
     
     # Initialize database - create all tables if not exist
     try:
-        from database import init_db
+        from eduverify_database import init_db
         init_db()
         logger.info("✅ Database initialized successfully")
     except Exception as e:
@@ -229,7 +250,7 @@ async def shutdown_event():
             logger.error(f"❌ Error closing AI integration: {e}")
     
     # Close database connections gracefully
-    from database import engine
+    from eduverify_database import engine
     engine.dispose()
     logger.info("✅ Database connections closed")
 

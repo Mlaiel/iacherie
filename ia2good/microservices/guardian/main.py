@@ -6,14 +6,38 @@ Author: Fahed Mlaiel
 Created: 2025-10-12
 """
 
-from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
-from contextlib import asynccontextmanager
 import os
 import sys
 import logging
 from datetime import datetime
+
+# CRITICAL: Configure Python paths BEFORE any other imports
+# Order matters: Guardian local modules MUST come before workspace modules
+# to avoid naming conflicts (e.g., guardian/utils vs workspace/utils)
+guardian_root = os.path.abspath(os.path.dirname(__file__))
+root_workspace = os.path.abspath(os.path.join(guardian_root, '../../../..'))
+shared_services_path = os.path.abspath(os.path.join(guardian_root, '../../shared-services'))
+
+# Step 1: Remove any existing paths to avoid duplicates
+for path in [guardian_root, shared_services_path, root_workspace]:
+    while path in sys.path:
+        sys.path.remove(path)
+
+# Step 2: Add paths in correct priority order
+# Priority 1: Guardian local modules (utils, middleware, routes, config, database, services)
+sys.path.insert(0, guardian_root)
+
+# Priority 2: Shared services (common utilities)
+sys.path.insert(1, shared_services_path)
+
+# Priority 3: Workspace root (backend, protection, etc.) - LAST to avoid conflicts
+sys.path.append(root_workspace)
+
+# Now safe to import FastAPI and other dependencies
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from contextlib import asynccontextmanager
 
 # Setup logging
 logging.basicConfig(
@@ -22,17 +46,13 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Add shared services to path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../shared-services'))
+# Confirm paths are configured correctly
+logger.info(f"✅ Guardian root (priority 1): {guardian_root}")
+logger.info(f"✅ Shared services (priority 2): {shared_services_path}")
+logger.info(f"✅ Workspace root (priority 3): {root_workspace}")
 
 # Import configuration
-try:
-    from config import Settings as GuardianSettings
-except ImportError:
-    import sys
-    import os
-    sys.path.insert(0, os.path.dirname(__file__))
-    from config import Settings as GuardianSettings
+from config import Settings as GuardianSettings
 Settings = GuardianSettings
 
 settings = Settings()
@@ -40,34 +60,18 @@ settings = Settings()
 # Force IACherie URL
 os.environ["IACHERIE_API_URL"] = settings.IACHERIE_API_URL
 
-# Import routes
-try:
-    from routes.missions import router as missions_router
-    from routes.volunteers import router as volunteers_router
-    from routes.ai_routes import router as ai_router
-    from routes.ai_learning_routes import router as ai_learning_router
-    from routes.geo_routes import router as geo_router
-    from routes.streaming_routes import router as streaming_router
-    from routes.videochat_routes import router as videochat_router
-    from routes.files_routes import router as files_router
-    from routes.chat_routes import router as chat_router
-    from routes.admin_routes import router as admin_router
-    from routes.auth_routes import router as auth_router
-except ImportError:
-    import sys
-    import os
-    sys.path.insert(0, os.path.dirname(__file__))
-    from routes.missions import router as missions_router
-    from routes.volunteers import router as volunteers_router
-    from routes.ai_routes import router as ai_router
-    from routes.ai_learning_routes import router as ai_learning_router
-    from routes.geo_routes import router as geo_router
-    from routes.streaming_routes import router as streaming_router
-    from routes.videochat_routes import router as videochat_router
-    from routes.files_routes import router as files_router
-    from routes.chat_routes import router as chat_router
-    from routes.admin_routes import router as admin_router
-    from routes.auth_routes import router as auth_router
+# Import routes (paths already configured above)
+from routes.missions import router as missions_router
+from routes.volunteers import router as volunteers_router
+from routes.ai_routes import router as ai_router
+from routes.ai_learning_routes import router as ai_learning_router
+from routes.geo_routes import router as geo_router
+from routes.streaming_routes import router as streaming_router
+from routes.videochat_routes import router as videochat_router
+from routes.files_routes import router as files_router
+from routes.chat_routes import router as chat_router
+from routes.admin_routes import router as admin_router
+from routes.auth_routes import router as auth_router
 
 # Database
 try:

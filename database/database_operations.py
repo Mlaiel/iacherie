@@ -75,18 +75,14 @@ try:
     except ImportError:
         # Fallback to aioredis with error handling
         try:
-            # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    pass  # Redis warning suppressed
+            import aioredis
             ASYNC_REDIS_CLIENT = aioredis.Redis
             REDIS_AVAILABLE = True
         except (ImportError, TypeError) as e:
+            # Handle Python 3.12 TimeoutError duplicate base class issue
+            from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+            import logging
+            logger = logging.getLogger(__name__)
             logger.warning(f"Redis async client not available: {e}")
             ASYNC_REDIS_CLIENT = None
             REDIS_AVAILABLE = False

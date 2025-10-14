@@ -19,7 +19,7 @@ from models.quiz import (
     Difficulty
 )
 from services.quiz_generator import QuizGeneratorService
-from database import get_db, ContentModel, QuizModel, QuestionModel
+from eduverify_database import get_db, ContentModel, QuizModel, QuestionModel
 
 router = APIRouter(prefix="/eduverify/quizzes", tags=["eduverify-quizzes"])
 

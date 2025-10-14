@@ -12,7 +12,7 @@ from models.user_progress import (
     ProgressStats,
     ProgressList,
 )
-from database import get_db, ContentModel, QuizModel, FactCheckModel, ChatroomModel
+from eduverify_database import get_db, ContentModel, QuizModel, FactCheckModel, ChatroomModel, QuizSubmissionModel
 
 router = APIRouter(prefix="/eduverify/analytics", tags=["eduverify-analytics"])
 

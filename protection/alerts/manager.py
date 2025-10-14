@@ -1346,7 +1346,7 @@ Apply compliance tracking and requirements"""
 Execute enterprise workflow for alert"""
         return {
             'success': True,
-            'workflow_id': f"workflow_{uuid.uuid4().hex[:8]}",
+            'workflow_id': f"workflow_{uuid4().hex[:8]}",
             'steps_executed': 5,
             'automation_applied': True,
             'approvals_required': False,

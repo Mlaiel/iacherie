@@ -10,7 +10,7 @@ import logging
 from datetime import datetime
 from pydantic import BaseModel
 import httpx
-from database import get_db, ChatroomModel, ChatMessageModel
+from eduverify_database import get_db, ChatroomModel, ChatMessageModel
 import uuid as uuid_lib
 
 logger = logging.getLogger(__name__)

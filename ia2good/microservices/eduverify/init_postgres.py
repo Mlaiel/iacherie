@@ -12,7 +12,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 from sqlalchemy import create_engine, text
-from database import Base, engine
+from eduverify_database import Base, engine
 from config import settings
 
 def init_database():
