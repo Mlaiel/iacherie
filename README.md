@@ -1,4 +1,4 @@
-# 🎨 IA CHÉRIE – Enterprise AI Content Creator Platform
+# 🎨 iacherie – Enterprise AI Content Creator Platform
 
 **Enterprise-grade KI-Plattform für Content Creation, Automatisierung, Distribution und digitale Zusammenarbeit**
 
@@ -10,19 +10,19 @@
 
 ## 🚀 Überblick
 
-**iacheerie** ist eine umfangreiche KI-gestützte Plattform für Content Creator, Influencer und digitale Unternehmen.
+**iacherie** ist eine umfangreiche KI-gestützte Plattform für Content Creator, Influencer und digitale Unternehmen.
 
 Das Projekt verbindet künstliche Intelligenz, Automatisierung, externe KI-APIs, interne KI-Agenten, Datenanalyse, Content Creation, Social-Media-Management und digitale Distribution in einer modularen Plattformarchitektur.
 
 Das Ziel besteht darin, wiederkehrende digitale Aufgaben durch KI zu automatisieren und Content Creators eine zentrale technische Umgebung für Erstellung, Optimierung, Analyse und Distribution bereitzustellen.
 
-IA CHÉRIE wurde als umfangreiches technisches Eigenprojekt entwickelt und enthält eine große Anzahl miteinander verbundener Komponenten, Services und Integrationen.
+iacherie wurde als umfangreiches technisches Eigenprojekt entwickelt und enthält eine große Anzahl miteinander verbundener Komponenten, Services und Integrationen.
 
 ---
 
 # 🧠 KI-Kern des Projekts
 
-Ein zentraler Bestandteil von iacheerie ist die Integration verschiedener KI-Modelle und spezialisierter KI-Dienste.
+Ein zentraler Bestandteil von iacherie ist die Integration verschiedener KI-Modelle und spezialisierter KI-Dienste.
 
 Das System ist nicht auf einen einzelnen KI-Anbieter beschränkt, sondern wurde für die Zusammenarbeit verschiedener Modelle und APIs konzipiert.
 
@@ -112,7 +112,7 @@ iacheerie wurde als modulare Plattform mit mehreren technischen Ebenen konzipier
                          IA2GOOD
 Die Architektur wurde mit Blick auf Erweiterbarkeit, Modularität und spätere Skalierung entwickelt.
 
-🎨 iacheerie – Creator Platform
+🎨 iacherie – Creator Platform
 
 Die Hauptplattform unterstützt Content Creator und Influencer bei verschiedenen digitalen Aufgaben.
 
@@ -141,7 +141,7 @@ LinkedIn
 X / Twitter
 🎨 KI Content Creation
 
-iacheerie enthält verschiedene spezialisierte Content-Studios.
+iacherie enthält verschiedene spezialisierte Content-Studios.
 
 🖼️ Image Studio
 
@@ -202,7 +202,7 @@ Zusammenfassungen
 Content-Rewriting
 🔎 SEO & Content Intelligence
 
-IA CHÉRIE verbindet KI mit Suchmaschinenoptimierung und Datenanalyse.
+iacherie verbindet KI mit Suchmaschinenoptimierung und Datenanalyse.
 
 Funktionen umfassen:
 
@@ -284,7 +284,7 @@ Spenden
 Referral-Systeme
 🌍 IA2GOOD – Humanitarian AI Platform
 
-Ein wichtiger Bestandteil des IA-CHÉRIE-Ökosystems ist IA2GOOD.
+Ein wichtiger Bestandteil des iacherie-Ökosystems ist IA2GOOD.
 
 IA2GOOD ist als eigenständige Open-Source-Plattform konzipiert und verwendet KI und digitale Technologien für humanitäre Anwendungen.
 
@@ -655,7 +655,7 @@ Die tatsächliche Anzahl unterstützter Sprachen hängt vom jeweils verwendeten 
 
 💡 Entwicklungsphilosophie
 
-iacheerie wurde mit einem praktischen Ansatz entwickelt:
+iacherie wurde mit einem praktischen Ansatz entwickelt:
 
 KI soll nicht nur Inhalte erzeugen, sondern reale Arbeitsprozesse automatisieren.
 
@@ -672,7 +672,7 @@ Skalierbarkeit
 verantwortungsvoller KI-Nutzung
 🌍 Vision
 
-Die langfristige Vision von iacheerie ist eine Plattform, auf der KI nicht nur als einzelnes Werkzeug verwendet wird, sondern als intelligenter Bestandteil kompletter digitaler Workflows.
+Die langfristige Vision von iacherie ist eine Plattform, auf der KI nicht nur als einzelnes Werkzeug verwendet wird, sondern als intelligenter Bestandteil kompletter digitaler Workflows.
 
 KI-Modelle
     +
@@ -689,7 +689,7 @@ Benutzeroberfläche
 Intelligente digitale Systeme
 📌 Projektstatus
 
-IA CHÉRIE befindet sich in aktiver Entwicklung.
+iacherie befindet sich in aktiver Entwicklung.
 
 Die Plattform enthält bereits eine umfangreiche technische Codebasis, verschiedene Frontend- und Backend-Komponenten, zahlreiche Integrationen und modulare Services.
 
@@ -772,10 +772,11 @@ mlaiel@live.de
 
 ❤️ Schlussgedanke
 
-IA CHÉRIE entstand aus der Idee, künstliche Intelligenz nicht nur als Chatbot zu verwenden, sondern daraus vollständige technische Systeme zu entwickeln.
+iacherie entstand aus der Idee, künstliche Intelligenz nicht nur als Chatbot zu verwenden, sondern daraus vollständige technische Systeme zu entwickeln.
 
 Von der Idee über die Architektur und API-Integration bis hin zu Frontend, Backend, Automatisierung und KI-Agenten soll ein vollständiger technischer Workflow entstehen.
 
 **KI ist nicht nur ein Werkzeug.
 
 KI kann Teil des gesamten Systems werden.**
+© 2025–2026 Fahed Mlaiel – iacherie
